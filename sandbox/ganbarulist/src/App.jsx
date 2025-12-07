@@ -411,29 +411,33 @@ export default function App() {
             </div>
 
             {/* Floating Footer Counter */}
-            <motion.div
-                initial={{ y: 100 }}
-                animate={{ y: 0 }}
-                className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-sm bg-white/80 backdrop-blur-md border-2 border-white/50 p-3 rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.1)] flex items-center justify-between px-6 z-50"
-            >
-                <span className="font-bold text-gray-600">今日のがんばり</span>
-                <div className="flex items-center gap-1">
-                    <motion.span
-                        key={completedCount}
-                        initial={{ scale: 1.5, color: '#FDA4AF' }}
-                        animate={{ scale: 1, color: '#EC4899' }}
-                        className="text-4xl font-black bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-transparent bg-clip-text"
-                    >
-                        {completedCount}
-                    </motion.span>
+            <div className="fixed bottom-6 left-0 right-0 z-50 pointer-events-none">
+                <div className="max-w-xl mx-auto pl-4 pr-6 flex justify-end">
                     <motion.div
-                        animate={{ rotate: [0, 10, -10, 0] }}
-                        transition={{ repeat: Infinity, duration: 2, repeatDelay: 1 }}
+                        initial={{ y: 100, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        className="pointer-events-auto bg-white/80 backdrop-blur-md border-2 border-white/50 p-3 rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.1)] flex items-center gap-4 pl-6 pr-4"
                     >
-                        <span className="text-3xl">🌸</span>
+                        <span className="font-bold text-gray-600">今日のがんばり</span>
+                        <div className="flex items-center gap-1">
+                            <motion.span
+                                key={completedCount}
+                                initial={{ scale: 1.5, color: '#FDA4AF' }}
+                                animate={{ scale: 1, color: '#EC4899' }}
+                                className="text-4xl font-black bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-transparent bg-clip-text"
+                            >
+                                {completedCount}
+                            </motion.span>
+                            <motion.div
+                                animate={{ rotate: [0, 10, -10, 0] }}
+                                transition={{ repeat: Infinity, duration: 2, repeatDelay: 1 }}
+                            >
+                                <span className="text-3xl">🌸</span>
+                            </motion.div>
+                        </div>
                     </motion.div>
                 </div>
-            </motion.div>
+            </div>
 
         </div>
     );
