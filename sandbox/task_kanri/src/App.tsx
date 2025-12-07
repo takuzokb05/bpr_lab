@@ -110,7 +110,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#FFFDF5] text-[#374151] pb-40 font-sans font-bold">
-      {/* Jackpot Modal - FIX: Force Fullscreen Centering */}
+      {/* Jackpot Modal */}
       <AnimatePresence>
         {showJackpot && (
           <motion.div
@@ -139,41 +139,60 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      <div className="max-w-md mx-auto p-6 pt-12 overflow-x-hidden">
+      <div className="max-w-xl mx-auto px-4 py-8 sm:py-12 relative overflow-x-hidden">
         {/* Header */}
-        <header className="mb-8 text-center flex flex-col items-center">
+        <header className="mb-10 text-center flex flex-col items-center">
           <LogoTitle />
 
-          <div className="mx-auto w-fit min-w-[12rem] bg-white border-4 border-[#fbcfe8] rounded-full px-8 py-3 shadow-sm whitespace-nowrap mt-6">
+          <div className="mx-auto w-fit min-w-[12rem] bg-white border-2 border-[#fbcfe8] rounded-full px-8 py-3 shadow-[0px_4px_0px_0px_rgba(0,0,0,0.05)] whitespace-nowrap mt-8">
             <span className="font-bold text-gray-500 tracking-widest text-lg">
               {new Date().toLocaleDateString('ja-JP', { month: 'long', day: 'numeric', weekday: 'short' })}
             </span>
           </div>
         </header>
 
-        {/* Quick Add Buttons */}
-        <div className="flex gap-4 justify-between mb-10 w-full">
-          <QuickAddButton label="洗濯" color="bg-[#dbeafe] text-[#2563eb]" icon={<Shirt size={28} />} onClick={() => addTask('洗濯')} />
-          <QuickAddButton label="掃除" color="bg-[#fef9c3] text-[#a16207]" icon={<SprayCan size={28} />} onClick={() => addTask('掃除')} />
-          <QuickAddButton label="買い物" color="bg-[#fee2e2] text-[#dc2626]" icon={<ShoppingCart size={28} />} onClick={() => addTask('買い物')} />
+        {/* Quick Add Buttons (Circles) */}
+        <div className="flex gap-4 sm:gap-6 justify-center mb-10 overflow-x-auto py-4 no-scrollbar">
+          <QuickAddButton
+            label="洗濯"
+            color="bg-[#BAE6FD] border-[#7DD3FC]"
+            icon={<Shirt size={32} className="text-[#0369A1]" strokeWidth={2.5} />}
+            onClick={() => addTask('洗濯')}
+          />
+          <QuickAddButton
+            label="掃除"
+            color="bg-[#FDE047] border-[#FACC15]"
+            icon={<SprayCan size={32} className="text-[#A16207]" strokeWidth={2.5} />}
+            onClick={() => addTask('掃除')}
+          />
+          <QuickAddButton
+            label="買い物"
+            color="bg-[#FCA5A5] border-[#F87171]"
+            icon={<ShoppingCart size={32} className="text-[#B91C1C]" strokeWidth={2.5} />}
+            onClick={() => addTask('買い物')}
+          />
         </div>
 
         {/* Input Area */}
-        <div className="mb-12">
+        <div className="mb-12 relative">
           <input
             type="text"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && addTask(inputValue)}
             placeholder="入力してえらい～"
-            className="w-full h-16 bg-white border-4 border-[#fed7aa] rounded-full px-8 text-xl font-bold outline-none text-gray-700 placeholder:text-[#fed7aa] focus:border-[#fb923c] transition-colors shadow-sm text-center"
+            className="w-full h-20 bg-white border-4 border-[#fed7aa] rounded-full px-10 text-xl font-bold outline-none text-gray-700 placeholder:text-[#fed7aa] focus:border-[#fb923c] transition-all shadow-[inset_2px_2px_4px_rgba(0,0,0,0.05)] text-center"
           />
         </div>
 
         {/* Active List */}
         <div className="mb-10">
-          <h2 className="text-2xl font-black text-gray-700 ml-4 mb-4">がんばる！</h2>
-          <ul className="space-y-6">
+          <div className="flex items-center gap-2 mb-6 px-2">
+            <Sparkles size={28} className="text-yellow-400 animate-pulse" />
+            <h2 className="text-2xl font-black text-gray-700">がんばる！</h2>
+          </div>
+
+          <ul className="space-y-4">
             <AnimatePresence mode="popLayout">
               {activeTasks.map(task => (
                 <TaskCard
@@ -188,40 +207,57 @@ export default function App() {
         </div>
 
         {/* Completed List */}
-        <div>
-          <h2 className="text-2xl font-black text-gray-400 ml-4 mb-4">がんばったこと</h2>
-          <ul className="space-y-6 opacity-60">
-            <AnimatePresence mode="popLayout">
-              {completedTasks.slice(0, 5).map(task => (
-                <TaskCard
-                  key={task.id}
-                  task={task}
-                  onToggle={() => toggleTask(task.id, task.completed)}
-                  onDelete={() => deleteTask(task.id)}
-                  isCompleted
-                />
-              ))}
-            </AnimatePresence>
-          </ul>
-        </div>
+        {completedTasks.length > 0 && (
+          <div className="mt-8">
+            <div className="flex items-center gap-2 mb-6 px-2 opacity-60">
+              <CheckCircle size={24} className="text-gray-400" />
+              <h2 className="text-xl font-bold text-gray-400">がんばったこと</h2>
+            </div>
+            <ul className="space-y-4 opacity-60 hover:opacity-100 transition-opacity">
+              <AnimatePresence mode="popLayout">
+                {completedTasks.slice(0, 5).map(task => (
+                  <TaskCard
+                    key={task.id}
+                    task={task}
+                    onToggle={() => toggleTask(task.id, task.completed)}
+                    onDelete={() => deleteTask(task.id)}
+                    isCompleted
+                  />
+                ))}
+              </AnimatePresence>
+            </ul>
+          </div>
+        )}
       </div>
 
       {/* Floating Footer */}
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-max max-w-[90%]">
-        <div className="bg-white/90 backdrop-blur-md border-4 border-[#fbcfe8] rounded-full px-8 py-3 shadow-lg flex items-center gap-4">
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-sm">
+        <div className="bg-white/90 backdrop-blur-md border-[3px] border-white/50 p-3 rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.1)] flex items-center justify-between px-8">
           <span className="font-bold text-gray-600 whitespace-nowrap text-lg">今日のがんばり</span>
-          <motion.span
-            key={completedTasks.length}
-            initial={{ scale: 1.5, rotate: -20 }}
-            animate={{ scale: 1, rotate: 0 }}
-            className="text-4xl font-black text-[#f472b6]"
-          >
-            {completedTasks.length}
-          </motion.span>
-          <span className="text-3xl">🌸</span>
+          <div className="flex items-center gap-1">
+            <motion.span
+              key={completedTasks.length}
+              initial={{ scale: 1.5, color: '#F472B6' }}
+              animate={{ scale: 1, color: '#DB2777' }}
+              className="text-4xl font-black text-[#f472b6]"
+            >
+              {completedTasks.length}
+            </motion.span>
+            <span className="text-3xl">🌸</span>
+          </div>
         </div>
       </div>
     </div>
+  );
+}
+
+// Helper for Footer Icon
+function CheckCircle({ size, className }: { size: number, className?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+      <polyline points="22 4 12 14.01 9 11.01" />
+    </svg>
   );
 }
 
@@ -283,14 +319,14 @@ function QuickAddButton({ label, icon, color, onClick }: { label: string, icon: 
     <motion.button
       onClick={onClick}
       className={clsx(
-        "flex-1 flex flex-col items-center justify-center gap-1 px-2 py-4 rounded-full font-bold shadow-sm transition-transform min-w-0",
+        "flex flex-col items-center justify-center p-2 rounded-full border-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] active:shadow-none transition-all w-24 h-24 shrink-0",
         color
       )}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
+      whileHover={{ scale: 1.1, rotate: 3 }}
+      whileTap={{ scale: 0.9 }}
     >
-      {icon}
-      <span className="text-sm">{label}</span>
+      <div className="mb-1">{icon}</div>
+      <span className="text-sm font-bold text-gray-700">{label}</span>
     </motion.button>
   );
 }
@@ -304,37 +340,41 @@ function TaskCard({ task, onToggle, onDelete, isCompleted }: { task: Task, onTog
       exit={{ opacity: 0, scale: 0.8 }}
       transition={{ type: "spring", stiffness: 400, damping: 25 }}
       className={clsx(
-        "bg-white rounded-[2rem] border-4 p-4 flex items-center justify-between shadow-sm group",
+        "bg-white rounded-3xl p-5 border-4 flex items-center justify-between shadow-[0px_4px_0px_0px_#E5E7EB] group mb-3",
         isCompleted ? "border-[#f3f4f6]" : "border-[#ffedd5]"
       )}
     >
-      <div className="flex items-center gap-4 flex-1 min-w-0">
-        <motion.button
+      <div className="flex items-center gap-5 flex-1 min-w-0 pointer-events-auto cursor-pointer" onClick={onToggle}>
+        <motion.div
           className={clsx(
-            "w-12 h-12 rounded-full border-4 flex items-center justify-center cursor-pointer flex-shrink-0 transition-colors",
-            isCompleted ? "border-[#fecaca] bg-[#fecaca]" : "border-[#fed7aa] bg-white hover:bg-[#fff7ed]"
+            "w-12 h-12 rounded-full border-4 flex items-center justify-center flex-shrink-0 transition-colors duration-300",
+            isCompleted ? "border-[#fecaca] bg-[#fecaca]" : "border-[#fed7aa] bg-white group-hover:bg-[#fff7ed]"
           )}
-          onClick={onToggle}
-          whileTap={{ scale: 0.8 }}
         >
           {isCompleted ? (
-            <Flower size={24} className="text-[#dc2626]" strokeWidth={3} />
+            <motion.div
+              initial={{ scale: 0, rotate: -45 }}
+              animate={{ scale: 1, rotate: 0 }}
+            >
+              <Flower size={24} className="text-[#dc2626]" strokeWidth={3} />
+            </motion.div>
           ) : (
             <div className="w-2 h-2 rounded-full bg-[#fed7aa]" />
           )}
-        </motion.button>
+        </motion.div>
 
-        <span className={clsx("text-xl font-bold truncate tracking-wide text-gray-700", isCompleted && "line-through text-gray-300")}>
+        <span className={clsx("text-xl font-bold truncate tracking-wide text-gray-700 transition-all", isCompleted && "line-through text-gray-300 decoration-4 decoration-gray-200")}>
           {task.text}
         </span>
       </div>
 
       <motion.button
         onClick={(e) => { e.stopPropagation(); onDelete(); }}
-        className="text-gray-300 hover:text-red-400 transition-colors p-2 shrink-0"
+        className="p-3 bg-red-50 text-red-400 rounded-full hover:bg-red-100 transition-colors"
+        whileHover={{ scale: 1.1, rotate: 10 }}
         whileTap={{ scale: 0.9 }}
       >
-        <Trash2 size={28} />
+        <Trash2 size={24} strokeWidth={2.5} />
       </motion.button>
     </motion.li>
   );
