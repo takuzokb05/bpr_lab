@@ -91,7 +91,7 @@ export default function App() {
       confetti({
         particleCount: 150,
         spread: 100,
-        origin: { x: 0.5, y: 0.5 }, // Centered
+        origin: { x: 0.5, y: 0.5 },
         zIndex: 60,
         colors: ['#ff99c8', '#fcf6bd', '#d0f4de', '#a9def9', '#e4c1f9']
       });
@@ -109,7 +109,7 @@ export default function App() {
   const completedTasks = tasks.filter(t => t.completed);
 
   return (
-    <div className="min-h-screen bg-[#FFFDF5] text-[#374151] pb-40 font-sans font-bold">
+    <div className="min-h-screen bg-[#FFFDF5] text-[#4B5563] pb-32 font-sans font-bold selection:bg-[#FDA4AF] selection:text-white">
       {/* Jackpot Modal */}
       <AnimatePresence>
         {showJackpot && (
@@ -139,60 +139,61 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      <div className="max-w-xl mx-auto px-4 py-8 sm:py-16 relative overflow-x-hidden">
+      <div className="max-w-xl mx-auto px-4 py-8 sm:py-12 relative">
         {/* Header */}
-        <header className="mb-16 text-center flex flex-col items-center">
+        <header className="mb-8 text-center relative">
           <LogoTitle />
 
-          <div className="mx-auto w-fit min-w-[14rem] bg-white border-2 border-[#fbcfe8] rounded-full px-10 py-4 shadow-[0px_4px_0px_0px_rgba(0,0,0,0.05)] whitespace-nowrap mt-12">
-            <span className="font-bold text-gray-500 tracking-widest text-xl">
-              {new Date().toLocaleDateString('ja-JP', { month: 'long', day: 'numeric', weekday: 'short' })}
-            </span>
-          </div>
+          <p className="text-gray-500 font-bold text-lg mt-4 bg-white/50 inline-block px-4 py-1 rounded-full border-2 border-gray-100">
+            {new Date().toLocaleDateString('ja-JP', { month: 'long', day: 'numeric', weekday: 'short' })}
+          </p>
         </header>
 
-        {/* Quick Add Buttons (Circles) */}
-        <div className="flex gap-4 sm:gap-8 justify-center mb-16 overflow-x-auto py-4 no-scrollbar">
+        {/* Quick Add Buttons */}
+        <div className="flex justify-center gap-3 sm:gap-4 mb-8 overflow-x-auto py-2 no-scrollbar">
           <QuickAddButton
             label="洗濯"
-            color="bg-[#BAE6FD] border-[#7DD3FC]"
-            icon={<Shirt size={36} className="text-[#0369A1]" strokeWidth={2.5} />}
+            color="bg-[#BAE6FD]"
+            borderColor="border-gray-700"
+            icon={<Shirt size={32} className="text-gray-700 mb-1" strokeWidth={2.5} />}
             onClick={() => addTask('洗濯')}
           />
           <QuickAddButton
             label="掃除"
-            color="bg-[#FDE047] border-[#FACC15]"
-            icon={<SprayCan size={36} className="text-[#A16207]" strokeWidth={2.5} />}
+            color="bg-[#FDE047]"
+            borderColor="border-gray-700"
+            icon={<SprayCan size={32} className="text-gray-700 mb-1" strokeWidth={2.5} />}
             onClick={() => addTask('掃除')}
           />
           <QuickAddButton
             label="買い物"
-            color="bg-[#FCA5A5] border-[#F87171]"
-            icon={<ShoppingCart size={36} className="text-[#B91C1C]" strokeWidth={2.5} />}
+            color="bg-[#FCA5A5]"
+            borderColor="border-gray-700"
+            icon={<ShoppingCart size={32} className="text-gray-700 mb-1" strokeWidth={2.5} />}
             onClick={() => addTask('買い物')}
           />
         </div>
 
         {/* Input Area */}
-        <div className="mb-20 relative">
+        <div className="flex gap-2 mb-8 relative z-20">
           <input
             type="text"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && addTask(inputValue)}
-            placeholder="入力してえらい～"
-            className="w-full h-24 bg-white border-4 border-[#fed7aa] rounded-full px-10 text-2xl font-bold outline-none text-gray-700 placeholder:text-[#fed7aa] focus:border-[#fb923c] transition-all shadow-[inset_2px_2px_4px_rgba(0,0,0,0.05)] text-center"
+            placeholder="なにをがんばる？"
+            className="flex-1 bg-white border-4 border-[#D1D5DB] rounded-full px-6 py-4 text-xl font-bold placeholder-gray-300 focus:outline-none focus:border-[#FDA4AF] focus:ring-4 focus:ring-[#FDA4AF]/20 transition-all shadow-[inset_2px_2px_4px_rgba(0,0,0,0.05)] w-full text-center"
           />
         </div>
 
         {/* Active List */}
-        <div className="mb-16">
-          <div className="flex items-center gap-2 mb-8 px-2">
-            <Sparkles size={32} className="text-yellow-400 animate-pulse" />
-            <h2 className="text-3xl font-black text-gray-700">がんばる！</h2>
+        <div className="space-y-2 mb-8">
+          <div className="flex items-center gap-2 mb-4 px-2">
+            <Sparkles size={24} className="text-yellow-400 animate-pulse" />
+            <h2 className="text-2xl font-black text-gray-700">やるリスト</h2>
           </div>
 
-          <ul className="space-y-6">
+          <ul className="space-y-2">
             <AnimatePresence mode="popLayout">
               {activeTasks.map(task => (
                 <TaskCard
@@ -208,12 +209,12 @@ export default function App() {
 
         {/* Completed List */}
         {completedTasks.length > 0 && (
-          <div className="mt-12">
-            <div className="flex items-center gap-2 mb-8 px-2 opacity-60">
-              <CheckCircle size={28} className="text-gray-400" />
-              <h2 className="text-2xl font-bold text-gray-400">がんばったこと</h2>
+          <div className="mt-8 opacity-60 hover:opacity-100 transition-opacity">
+            <div className="flex items-center gap-2 mb-2 px-2">
+              <CheckCircle size={20} className="text-gray-400" />
+              <h3 className="text-lg font-bold text-gray-400">終わったこと</h3>
             </div>
-            <ul className="space-y-6 opacity-60 hover:opacity-100 transition-opacity">
+            <ul className="space-y-2">
               <AnimatePresence mode="popLayout">
                 {completedTasks.slice(0, 5).map(task => (
                   <TaskCard
@@ -231,22 +232,29 @@ export default function App() {
       </div>
 
       {/* Floating Footer */}
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-sm">
-        <div className="bg-white/90 backdrop-blur-md border-[3px] border-white/50 p-3 rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.1)] flex items-center justify-between px-8">
-          <span className="font-bold text-gray-600 whitespace-nowrap text-lg">今日のがんばり</span>
-          <div className="flex items-center gap-1">
-            <motion.span
-              key={completedTasks.length}
-              initial={{ scale: 1.5, color: '#F472B6' }}
-              animate={{ scale: 1, color: '#DB2777' }}
-              className="text-4xl font-black text-[#f472b6]"
-            >
-              {completedTasks.length}
-            </motion.span>
+      <motion.div
+        initial={{ y: 100 }}
+        animate={{ y: 0 }}
+        className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-sm bg-white/80 backdrop-blur-md border-2 border-white/50 p-3 rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.1)] flex items-center justify-between px-6 z-50"
+      >
+        <span className="font-bold text-gray-600">今日のがんばり</span>
+        <div className="flex items-center gap-1">
+          <motion.span
+            key={completedTasks.length}
+            initial={{ scale: 1.5, color: '#FDA4AF' }}
+            animate={{ scale: 1, color: '#EC4899' }}
+            className="text-4xl font-black bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-transparent bg-clip-text"
+          >
+            {completedTasks.length}
+          </motion.span>
+          <motion.div
+            animate={{ rotate: [0, 10, -10, 0] }}
+            transition={{ repeat: Infinity, duration: 2, repeatDelay: 1 }}
+          >
             <span className="text-3xl">🌸</span>
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
@@ -263,40 +271,40 @@ function CheckCircle({ size, className }: { size: number, className?: string }) 
 
 function LogoTitle() {
   const chars = "がんばるリスト".split('');
-  const colors = ['#ff99c8', '#facc15', '#6ee7b7', '#a9def9', '#e4c1f9'];
+  const colors = ['text-pink-400', 'text-yellow-400', 'text-blue-400', 'text-green-400', 'text-purple-400', 'text-orange-400', 'text-teal-400'];
 
   return (
-    <div className="flex items-center justify-center gap-1 select-none flex-wrap">
+    <div className="flex justify-center items-baseline gap-1 relative z-10 mb-2">
+      {/* Cloud Background SVG - from ref */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[180%] -z-10 opacity-80 pointer-events-none">
+        <svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+          <path fill="#FFFFFF" d="M45.7,29.6C44.3,19.6,35.7,12,25.5,12c-8.9,0-16.6,5.8-19.4,13.8C2.5,27.3,0,30.8,0,34.8c0,7.9,6.2,14.4,14,14.8
+                c1.1,0,2.1-0.1,3.1-0.3c2.4,5.9,8.2,10.1,14.9,10.1c5.6,0,10.6-2.9,13.6-7.3c2.1,1.6,4.7,2.5,7.5,2.5c6.8,0,12.3-5.5,12.3-12.3
+                C65.4,36.1,56.8,30.2,45.7,29.6z" transform="scale(3) translate(10, 0)" />
+        </svg>
+      </div>
+
       <motion.div
         animate={{ rotate: [0, 10, -10, 0] }}
         transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
         className="mr-2"
       >
-        <Sparkles className="text-[#facc15]" size={40} />
+        <Sparkles className="text-yellow-400" size={32} />
       </motion.div>
 
       {chars.map((char, index) => (
         <motion.span
           key={index}
-          className="text-6xl md:text-7xl font-black inline-block relative my-1"
-          style={{
-            color: colors[index % colors.length],
-            // Thick white outline + Soft Shadow
-            textShadow: `
-                            3px 3px 0 #fff, -3px 3px 0 #fff, 3px -3px 0 #fff, -3px -3px 0 #fff,
-                            3px 0 0 #fff, -3px 0 0 #fff, 0 3px 0 #fff, 0 -3px 0 #fff,
-                            4px 4px 0 rgba(0,0,0,0.1)
-                        `
-          }}
+          className={`text-4xl sm:text-5xl font-black ${colors[index % colors.length]} drop-shadow-sm inline-block`}
           animate={{
-            y: [0, -8, 0],
-            rotate: [0, Math.random() * 6 - 3, 0]
+            y: [0, -5, 0],
+            rotate: [0, Math.random() * 4 - 2, 0]
           }}
           transition={{
             repeat: Infinity,
             duration: 2.5,
             ease: "easeInOut",
-            delay: index * 0.15
+            delay: index * 0.1
           }}
         >
           {char}
@@ -308,25 +316,22 @@ function LogoTitle() {
         transition={{ repeat: Infinity, duration: 3, ease: "easeInOut", delay: 1 }}
         className="ml-2"
       >
-        <Leaf className="text-[#6ee7b7]" size={40} />
+        <Leaf className="text-green-400" size={32} />
       </motion.div>
     </div>
   );
 }
 
-function QuickAddButton({ label, icon, color, onClick }: { label: string, icon: React.ReactNode, color: string, onClick: () => void }) {
+function QuickAddButton({ label, icon, color, borderColor, onClick }: { label: string, icon: React.ReactNode, color: string, borderColor: string, onClick: () => void }) {
   return (
     <motion.button
       onClick={onClick}
-      className={clsx(
-        "flex flex-col items-center justify-center p-2 rounded-full border-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] active:shadow-none transition-all w-24 h-24 shrink-0",
-        color
-      )}
+      className={`flex flex-col items-center justify-center p-3 sm:p-4 rounded-full ${color} border-2 sm:border-4 border-gray-700 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:shadow-none transition-colors w-20 h-20 sm:w-24 sm:h-24 shrink-0`}
       whileHover={{ scale: 1.1, rotate: 3 }}
       whileTap={{ scale: 0.9 }}
     >
-      <div className="mb-1">{icon}</div>
-      <span className="text-sm font-bold text-gray-700">{label}</span>
+      {icon}
+      <span className="text-xs sm:text-sm font-bold text-gray-700">{label}</span>
     </motion.button>
   );
 }
@@ -335,43 +340,36 @@ function TaskCard({ task, onToggle, onDelete, isCompleted }: { task: Task, onTog
   return (
     <motion.li
       layout
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.8 }}
-      transition={{ type: "spring", stiffness: 400, damping: 25 }}
-      className={clsx(
-        "bg-white rounded-3xl p-5 border-4 flex items-center justify-between shadow-[0px_4px_0px_0px_#E5E7EB] group mb-6",
-        isCompleted ? "border-[#f3f4f6]" : "border-[#ffedd5]"
-      )}
+      initial={{ opacity: 0, y: -20, scale: 0.8 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ scale: 0, opacity: 0 }}
+      transition={{ type: "spring", stiffness: 500, damping: 30 }}
+      className={`bg-white rounded-3xl p-4 mb-3 border-2 sm:border-4 border-gray-200 shadow-[0px_4px_0px_0px_#E5E7EB] flex items-center justify-between group ${isCompleted ? "opacity-60" : ""}`}
     >
-      <div className="flex items-center gap-5 flex-1 min-w-0 pointer-events-auto cursor-pointer" onClick={onToggle}>
-        <motion.div
-          className={clsx(
-            "w-12 h-12 rounded-full border-4 flex items-center justify-center flex-shrink-0 transition-colors duration-300",
-            isCompleted ? "border-[#fecaca] bg-[#fecaca]" : "border-[#fed7aa] bg-white group-hover:bg-[#fff7ed]"
-          )}
-        >
+      <div className="flex items-center gap-4 flex-1 cursor-pointer" onClick={onToggle}>
+        <div className={`relative w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 sm:border-4 transition-colors duration-300 flex items-center justify-center ${isCompleted ? 'bg-[#6EE7B7] border-[#6EE7B7]' : 'bg-white border-gray-300'}`}>
           {isCompleted ? (
             <motion.div
               initial={{ scale: 0, rotate: -45 }}
               animate={{ scale: 1, rotate: 0 }}
+              transition={{ type: "spring", stiffness: 500, damping: 20 }}
             >
-              <Flower size={24} className="text-[#dc2626]" strokeWidth={3} />
+              <Flower size={20} className="text-white" strokeWidth={4} />
             </motion.div>
           ) : (
-            <div className="w-2 h-2 rounded-full bg-[#fed7aa]" />
+            <div className="w-0" />
           )}
-        </motion.div>
+        </div>
 
-        <span className={clsx("text-xl font-bold truncate tracking-wide text-gray-700 transition-all", isCompleted && "line-through text-gray-300 decoration-4 decoration-gray-200")}>
+        <span className={`text-lg sm:text-xl font-bold text-gray-700 transition-all duration-300 ${isCompleted ? 'line-through text-gray-300 decoration-4 decoration-gray-300' : ''}`}>
           {task.text}
         </span>
       </div>
 
       <motion.button
         onClick={(e) => { e.stopPropagation(); onDelete(); }}
-        className="p-3 bg-red-50 text-red-400 rounded-full hover:bg-red-100 transition-colors"
-        whileHover={{ scale: 1.1, rotate: 10 }}
+        className="p-2 bg-red-50 text-red-400 rounded-full hover:bg-red-100 transition-colors"
+        whileHover={{ scale: 1.1, rotate: 15 }}
         whileTap={{ scale: 0.9 }}
       >
         <Trash2 size={24} strokeWidth={2.5} />
