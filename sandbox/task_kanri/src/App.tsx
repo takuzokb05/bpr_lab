@@ -139,60 +139,60 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      <div className="max-w-xl mx-auto px-4 py-8 sm:py-12 relative overflow-x-hidden">
+      <div className="max-w-xl mx-auto px-4 py-8 sm:py-16 relative overflow-x-hidden">
         {/* Header */}
-        <header className="mb-10 text-center flex flex-col items-center">
+        <header className="mb-16 text-center flex flex-col items-center">
           <LogoTitle />
 
-          <div className="mx-auto w-fit min-w-[12rem] bg-white border-2 border-[#fbcfe8] rounded-full px-8 py-3 shadow-[0px_4px_0px_0px_rgba(0,0,0,0.05)] whitespace-nowrap mt-8">
-            <span className="font-bold text-gray-500 tracking-widest text-lg">
+          <div className="mx-auto w-fit min-w-[14rem] bg-white border-2 border-[#fbcfe8] rounded-full px-10 py-4 shadow-[0px_4px_0px_0px_rgba(0,0,0,0.05)] whitespace-nowrap mt-12">
+            <span className="font-bold text-gray-500 tracking-widest text-xl">
               {new Date().toLocaleDateString('ja-JP', { month: 'long', day: 'numeric', weekday: 'short' })}
             </span>
           </div>
         </header>
 
         {/* Quick Add Buttons (Circles) */}
-        <div className="flex gap-4 sm:gap-6 justify-center mb-10 overflow-x-auto py-4 no-scrollbar">
+        <div className="flex gap-4 sm:gap-8 justify-center mb-16 overflow-x-auto py-4 no-scrollbar">
           <QuickAddButton
             label="洗濯"
             color="bg-[#BAE6FD] border-[#7DD3FC]"
-            icon={<Shirt size={32} className="text-[#0369A1]" strokeWidth={2.5} />}
+            icon={<Shirt size={36} className="text-[#0369A1]" strokeWidth={2.5} />}
             onClick={() => addTask('洗濯')}
           />
           <QuickAddButton
             label="掃除"
             color="bg-[#FDE047] border-[#FACC15]"
-            icon={<SprayCan size={32} className="text-[#A16207]" strokeWidth={2.5} />}
+            icon={<SprayCan size={36} className="text-[#A16207]" strokeWidth={2.5} />}
             onClick={() => addTask('掃除')}
           />
           <QuickAddButton
             label="買い物"
             color="bg-[#FCA5A5] border-[#F87171]"
-            icon={<ShoppingCart size={32} className="text-[#B91C1C]" strokeWidth={2.5} />}
+            icon={<ShoppingCart size={36} className="text-[#B91C1C]" strokeWidth={2.5} />}
             onClick={() => addTask('買い物')}
           />
         </div>
 
         {/* Input Area */}
-        <div className="mb-12 relative">
+        <div className="mb-20 relative">
           <input
             type="text"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && addTask(inputValue)}
             placeholder="入力してえらい～"
-            className="w-full h-20 bg-white border-4 border-[#fed7aa] rounded-full px-10 text-xl font-bold outline-none text-gray-700 placeholder:text-[#fed7aa] focus:border-[#fb923c] transition-all shadow-[inset_2px_2px_4px_rgba(0,0,0,0.05)] text-center"
+            className="w-full h-24 bg-white border-4 border-[#fed7aa] rounded-full px-10 text-2xl font-bold outline-none text-gray-700 placeholder:text-[#fed7aa] focus:border-[#fb923c] transition-all shadow-[inset_2px_2px_4px_rgba(0,0,0,0.05)] text-center"
           />
         </div>
 
         {/* Active List */}
-        <div className="mb-10">
-          <div className="flex items-center gap-2 mb-6 px-2">
-            <Sparkles size={28} className="text-yellow-400 animate-pulse" />
-            <h2 className="text-2xl font-black text-gray-700">がんばる！</h2>
+        <div className="mb-16">
+          <div className="flex items-center gap-2 mb-8 px-2">
+            <Sparkles size={32} className="text-yellow-400 animate-pulse" />
+            <h2 className="text-3xl font-black text-gray-700">がんばる！</h2>
           </div>
 
-          <ul className="space-y-4">
+          <ul className="space-y-6">
             <AnimatePresence mode="popLayout">
               {activeTasks.map(task => (
                 <TaskCard
@@ -208,12 +208,12 @@ export default function App() {
 
         {/* Completed List */}
         {completedTasks.length > 0 && (
-          <div className="mt-8">
-            <div className="flex items-center gap-2 mb-6 px-2 opacity-60">
-              <CheckCircle size={24} className="text-gray-400" />
-              <h2 className="text-xl font-bold text-gray-400">がんばったこと</h2>
+          <div className="mt-12">
+            <div className="flex items-center gap-2 mb-8 px-2 opacity-60">
+              <CheckCircle size={28} className="text-gray-400" />
+              <h2 className="text-2xl font-bold text-gray-400">がんばったこと</h2>
             </div>
-            <ul className="space-y-4 opacity-60 hover:opacity-100 transition-opacity">
+            <ul className="space-y-6 opacity-60 hover:opacity-100 transition-opacity">
               <AnimatePresence mode="popLayout">
                 {completedTasks.slice(0, 5).map(task => (
                   <TaskCard
@@ -340,7 +340,7 @@ function TaskCard({ task, onToggle, onDelete, isCompleted }: { task: Task, onTog
       exit={{ opacity: 0, scale: 0.8 }}
       transition={{ type: "spring", stiffness: 400, damping: 25 }}
       className={clsx(
-        "bg-white rounded-3xl p-5 border-4 flex items-center justify-between shadow-[0px_4px_0px_0px_#E5E7EB] group mb-3",
+        "bg-white rounded-3xl p-5 border-4 flex items-center justify-between shadow-[0px_4px_0px_0px_#E5E7EB] group mb-6",
         isCompleted ? "border-[#f3f4f6]" : "border-[#ffedd5]"
       )}
     >
