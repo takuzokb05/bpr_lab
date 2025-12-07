@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import type { Task } from './types';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, ShoppingCart, Shirt, Trash2, SprayCan, Flower, Sparkles, Leaf } from 'lucide-react';
+import { ShoppingCart, Shirt, Trash2, SprayCan, Flower, Sparkles, Leaf } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import clsx from 'clsx';
 
