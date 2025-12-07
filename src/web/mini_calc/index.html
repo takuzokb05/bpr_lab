@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>四則演算ツール</title>
+    <link rel="stylesheet" href="../mini_calc/style.css" />
+  </head>
+  <body>
+    <h1>2 つの数字で四則演算</h1>
+    <label for="valueA">数字 A</label>
+    <input type="number" id="valueA" placeholder="例: 10" />
+
+    <label for="valueB">数字 B</label>
+    <input type="number" id="valueB" placeholder="例: 5" />
+
+    <label for="operator">演算</label>
+    <select id="operator">
+      <option value="add">足し算 (A + B)</option>
+      <option value="subtract">引き算 (A - B)</option>
+      <option value="multiply">掛け算 (A × B)</option>
+      <option value="divide">割り算 (A ÷ B)</option>
+    </select>
+
+    <button id="calcButton" type="button">計算する</button>
+
+    <p id="result">ここに結果が表示されます</p>
+
+    <script>
+      const valueA = document.getElementById("valueA");
+      const valueB = document.getElementById("valueB");
+      const operator = document.getElementById("operator");
+      const result = document.getElementById("result");
+      const button = document.getElementById("calcButton");
+
+      button.addEventListener("click", () => {
+        const a = Number(valueA.value);
+        const b = Number(valueB.value);
+
+        if (Number.isNaN(a) || Number.isNaN(b)) {
+          result.textContent = "数字を入力してください。";
+          return;
+        }
+
+        let calcResult;
+
+        switch (operator.value) {
+          case "add":
+            calcResult = a + b;
+            break;
+          case "subtract":
+            calcResult = a - b;
+            break;
+          case "multiply":
+            calcResult = a * b;
+            break;
+          case "divide":
+            if (b === 0) {
+              result.textContent = "0 で割ることはできません。";
+              return;
+            }
+            calcResult = a / b;
+            break;
+          default:
+            result.textContent = "演算方法を選択してください。";
+            return;
+        }
+
+        result.textContent = `結果: ${calcResult}`;
+      });
+    </script>
+  </body>
+</html>
+

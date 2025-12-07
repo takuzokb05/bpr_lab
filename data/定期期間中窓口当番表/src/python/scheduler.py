@@ -26,9 +26,10 @@ except ImportError as exc:  # pragma: no cover - import guard
 
 # ---- Configuration ---------------------------------------------------------
 
-BASE_DIR = Path(__file__).resolve().parent
-DATA_DIR = BASE_DIR
-OUTPUT_DIR = BASE_DIR / "output"
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+INPUT_DIR = PROJECT_ROOT / "input"
+OUTPUT_DIR = PROJECT_ROOT / "output"
+DATA_DIR = INPUT_DIR
 OUTPUT_FILE = OUTPUT_DIR / "schedule.xlsx"
 
 TARGET_PERIOD = (

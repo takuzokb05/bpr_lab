@@ -21,16 +21,16 @@
 
 | ファイル | 役割 |
 |----------|------|
-| `scheduler.py` | OR-Tools CP-SAT を使ったメインスクリプト。データ読込・制約構築・目的関数定義・結果出力を一括で行う。 |
-| `data/staff.csv` | 職員基本情報。所属グループ、曜日可否、AM/PM 可否、年次区分などの恒常データ。 |
-| `data/schedule_config.csv` | 各営業日の必要窓数（AM/PM）と繁忙フラグ。祝日・休日はスクリプト側で除外。 |
-| `data/special_constraints.csv` | 個別例外（研修・年休など）。日付単位で AM/PM 可否を上書き。空でも実行可。 |
+| `src/python/scheduler.py` | OR-Tools CP-SAT を使ったメインスクリプト。データ読込・制約構築・目的関数定義・結果出力を一括で行う。 |
+| `input/staff.csv` | 職員基本情報。所属グループ、曜日可否、AM/PM 可否、年次区分などの恒常データ。 |
+| `input/schedule_config.csv` | 各営業日の必要窓数（AM/PM）と繁忙フラグ。祝日・休日はスクリプト側で除外。 |
+| `input/special_constraints.csv` | 個別例外（研修・年休など）。日付単位で AM/PM 可否を上書き。空でも実行可。 |
 | `output/schedule.xlsx` | CP-SAT の解をデータフレーム形式で保存。`date, weekday, period, staff_id, name, group, busy` が列。 |
 | `output/窓口当番表_完成版.xlsx` | schedule.xlsx を所定フォーマット（午前1〜4/午後1〜4）へ転記した成果物。Excel マクロや別スクリプトで生成。 |
 
 ## 3. 入力 CSV 仕様（必須）
 
-### staff.csv
+### input/staff.csv
 | 列名 | 型 | 意味 |
 |------|----|------|
 | `staff_id` | int | 社員ID（ユニーク、1始まり推奨） |
@@ -41,7 +41,7 @@
 | `pm_ok` | bool | 午後帯の恒常的な勤務可否。同上。 |
 | `year1` | bool | 新人フラグ。新人制約で使用。 |
 
-### schedule_config.csv
+### input/schedule_config.csv
 | 列名 | 型 | 意味 |
 |------|----|------|
 | `date` | ISO 日付 (YYYY-MM-DD) | 期間内の各日。脚注で祝日は自動除外。 |
@@ -49,7 +49,7 @@
 | `pm_slots` | int | 午後の必要枠数。 |
 | `busy` | int(0/1) | 繁忙マーク。目的関数には直接使っていないが集計で活用可能。 |
 
-### special_constraints.csv
+### input/special_constraints.csv
 | 列名 | 型 | 意味 |
 |------|----|------|
 | `staff_id` | int | 対象職員 |
@@ -93,20 +93,25 @@ Minimize(
 
 ## 6. 実行方法
 
-1. 依存ライブラリをインストール  
+1. 依存ライブラリをインストール（ルート直下で実行）  
    ```bash
    pip install ortools pandas openpyxl jpholiday
    ```
-2. `scheduler.py` と同じディレクトリで実行  
+2. プロジェクト直下で `src/python` に移動しスクリプトを実行  
    ```bash
+   cd src/python
    python scheduler.py
    ```
-3. 出力  
+   または `python src/python/scheduler.py` としても可。
+3. 出力確認  
    - `output/schedule.xlsx` に DataFrame 形式の割当表が生成されます。  
    - Excel を開いたままだと書き込みに失敗する場合、タイムスタンプ付きファイルへフォールバック保存します。
 
 > **Windows 例**  
-> `C:\Users\xxx\...\定期期間中窓口当番表> python scheduler.py`
+> ```
+> C:\Users\xxx\...\定期期間中窓口当番表> cd src\python
+> C:\Users\xxx\...\定期期間中窓口当番表\src\python> python scheduler.py
+> ```
 
 ## 7. フォーマットへの書き出し処理
 
