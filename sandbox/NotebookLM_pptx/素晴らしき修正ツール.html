@@ -1,0 +1,2328 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NotebookLM Slide Remaster (Gemini 3 Pro - Full Remaster)</title>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
+
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gray: colors.zinc,
+                        primary: colors.zinc[900],
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    animation: { 'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite' }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Dela+Gothic+One&family=DotGothic16&family=Inter:wght@300;400;500;600;700&family=Kiwi+Maru:wght@300;400;500&family=M+PLUS+1p:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;500;700&family=Shippori+Mincho:wght@400;500;700&family=Yusei+Magic&family=Zen+Maru+Gothic:wght@400;500;700&display=swap');
+
+        :root {
+            --color-bg: #fafafa;
+            /* zinc-50 */
+            --color-surface: #ffffff;
+            --color-surface-highlight: #f4f4f5;
+            /* zinc-100 */
+            --color-text-main: #18181b;
+            /* zinc-900 */
+            --color-text-muted: #71717a;
+            /* zinc-500 */
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text-main);
+            -webkit-font-smoothing: antialiased;
+            letter-spacing: -0.01em;
+        }
+
+        /* Gestalt: Solid State UI */
+        .glass {
+            background: #ffffff;
+            /* border: 1px solid #e4e4e7; Removed for surface design */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            /* shadow-md */
+        }
+
+        .glass-panel {
+            background: #fafafa;
+            /* zinc-50 */
+            /* border: 1px solid #e4e4e7; Removed */
+            transition: background-color 0.2s ease;
+        }
+
+        /* Fitts' Law: Larger touch targets & clearer states */
+        .btn-base {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-base:active {
+            transform: scale(0.98);
+        }
+
+        /* Aesthetic-Usability: Smooth Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.4s ease-out forwards;
+        }
+
+        /* Scrollbar aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+            border: 2px solid var(--color-bg);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+
+        /* Utilities */
+        .text-neon {
+            color: var(--color-neon);
+        }
+
+        .bg-neon {
+            background-color: var(--color-neon);
+        }
+
+        .border-neon {
+            border-color: var(--color-neon);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef, useCallback } = React;
+
+        // --- Utility: Robust JSON Parser ---
+        const safeJsonParse = (text) => {
+            try {
+                const match = text.match(/\{[\s\S]*\}/);
+                if (!match) return null;
+                return JSON.parse(match[0]);
+            } catch (e) {
+                console.error("JSON Parse Error:", e);
+                return null;
+            }
+        };
+
+        // --- Utility: Base64 to Blob URL ---
+        const base64ToBlobUrl = (base64, mimeType = 'image/png') => {
+            try {
+                const byteCharacters = atob(base64);
+                const byteNumbers = new Array(byteCharacters.length);
+                for (let i = 0; i < byteCharacters.length; i++) {
+                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                }
+                const byteArray = new Uint8Array(byteNumbers);
+                const blob = new Blob([byteArray], { type: mimeType });
+                return URL.createObjectURL(blob);
+            } catch (e) {
+                console.error("Blob conversion failed:", e);
+                return null;
+            }
+        };
+
+        const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+        // --- Component: Image Preview Modal (Lightbox) ---
+        const ImagePreviewModal = ({ isOpen, slide, imageUrl, onClose }) => {
+            if (!isOpen || (!slide && !imageUrl)) return null;
+            const imgSrc = imageUrl || slide?.displayImage;
+            return (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-md animate-in fade-in duration-200" onClick={onClose}>
+                    <div className="relative max-w-full max-h-full p-4" onClick={e => e.stopPropagation()}>
+                        <button onClick={onClose} className="absolute top-4 right-4 z-50 bg-black/50 text-white rounded-full p-2 hover:bg-white/20 transition-colors">✕</button>
+                        <div className="relative">
+                            <img src={imgSrc} className="max-h-[90vh] max-w-[90vw] rounded shadow-2xl border border-slate-700" />
+                            {slide && slide.textData && slide.textData.map((t, idx) => (
+                                <div key={idx} className="absolute border border-neon/30 bg-neon/5 hover:bg-neon/20 transition-colors"
+                                    title={`Text: ${t.content}`}
+                                    style={{ left: `${t.x_pct}%`, top: `${t.y_pct}%`, width: `${t.width_pct}%`, height: '10%' }}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // --- Component: Skeleton Slide (Loading State) ---
+        const SkeletonSlide = () => (
+            <div className="relative aspect-video bg-zinc-100 rounded-lg overflow-hidden shrink-0">
+                <div className="absolute inset-0 animate-pulse">
+                    {/* Header Bar */}
+                    <div className="h-1/6 bg-zinc-200/50 w-full mb-4"></div>
+
+                    <div className="flex h-full p-4 gap-4">
+                        {/* Left Content */}
+                        <div className="w-1/3 space-y-3">
+                            <div className="h-4 bg-zinc-200 rounded w-3/4"></div>
+                            <div className="h-4 bg-zinc-200 rounded w-1/2"></div>
+                            <div className="h-20 bg-zinc-200/50 rounded w-full mt-4"></div>
+                        </div>
+                        {/* Right Content */}
+                        <div className="flex-1 space-y-4">
+                            <div className="h-full bg-zinc-200/30 rounded"></div>
+                        </div>
+                    </div>
+
+                    {/* Floating Badge */}
+                    <div className="absolute bottom-4 right-4 w-24 h-6 bg-zinc-200 rounded-full"></div>
+                </div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="bg-white/90 backdrop-blur px-4 py-2 rounded-full shadow-lg border border-zinc-100">
+                        <div className="flex items-center gap-3">
+                            <div className="w-2 h-2 bg-zinc-900 rounded-full animate-ping"></div>
+                            <span className="text-xs font-mono text-zinc-900 tracking-widest">AI PROCESSING...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+
+        // --- Component: Studio Mode (Canvas Editor) ---
+        // Refactored to include AI capabilities and Onion Skinning per user request
+        const StudioModal = ({ isOpen, slide, onClose, onSave, apiKey, modelConfig, ratio, onPreview }) => {
+            if (!isOpen || !slide) return null;
+
+            // -- State --
+            const [mode, setMode] = useState('cursor'); // cursor, brush, eraser, dropper, text, ai
+            const [brushColor, setBrushColor] = useState('#000000');
+            const [brushSize, setBrushSize] = useState(10);
+            const [texts, setTexts] = useState(slide.textData ? JSON.parse(JSON.stringify(slide.textData)) : []);
+            const [selectedTextId, setSelectedTextId] = useState(null);
+
+            // Current working background (initialized from slide, but mutable in session)
+            const [workingBgImage, setWorkingBgImage] = useState(slide.bgImage || slide.originalImage);
+
+            // UX: Comparision & Onion Skin
+            const [onionOpacity, setOnionOpacity] = useState(0); // 0.0 to 1.0
+
+            // AI State
+            const [aiPrompt, setAiPrompt] = useState("");
+            const [aiCreativity, setAiCreativity] = useState(0.5); // 0.0 to 1.0
+            const [isAiGenerating, setIsAiGenerating] = useState(false);
+            const [aiError, setAiError] = useState("");
+
+            // Canvas Refs
+            const containerRef = useRef(null);
+            const canvasRef = useRef(null); // Paint Layer
+            const bgRef = useRef(null); // Base Image
+
+            // Undo/Redo
+            const [history, setHistory] = useState([]);
+            const [historyStep, setHistoryStep] = useState(-1);
+
+            // Helpers
+            const [scale, setScale] = useState(1); // Auto-fit scale
+            const [zoom, setZoom] = useState(1); // User zoom multiplier
+            const [pan, setPan] = useState({ x: 0, y: 0 });
+            const [isPanning, setIsPanning] = useState(false);
+            const panStart = useRef({ x: 0, y: 0 });
+
+            const [isDrawing, setIsDrawing] = useState(false);
+            const lastPos = useRef({ x: 0, y: 0 });
+
+            useEffect(() => {
+                // Initialize Canvas Size to match Image
+                const img = new Image();
+                img.src = slide.bgImage || slide.originalImage;
+                img.onload = () => {
+                    if (canvasRef.current && containerRef.current) {
+                        canvasRef.current.width = img.width;
+                        canvasRef.current.height = img.height;
+
+                        // Fit to container
+                        const contW = containerRef.current.clientWidth;
+                        const contH = containerRef.current.clientHeight;
+                        const scaleW = contW / img.width;
+                        const scaleH = contH / img.height;
+                        setScale(Math.min(scaleW, scaleH) * 0.9); // 90% fit
+
+
+                        // Save initial blank state
+                        saveHistory();
+
+                        // If AI generated something, we need to load that into bgRef probably?
+                        // Currently checks slide.bgImage || slide.originalImage
+                    }
+                };
+            }, [slide]);
+
+            // Keyboard Shortcuts
+            useEffect(() => {
+                const handleKeyDown = (e) => {
+                    // Ignore shortcuts if user is typing in an input or textarea
+                    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+                    // Tools
+                    switch (e.key.toLowerCase()) {
+                        case 'v': setMode('cursor'); break;
+                        case 'b': setMode('brush'); break;
+                        case 'e': setMode('eraser'); break;
+                        case 'i': setMode('dropper'); break;
+                        case 't': setMode('text'); break;
+                        case 'h': setMode('hand'); break;
+                        case 'a': setMode('ai'); break;
+                    }
+
+                    // Undo / Redo
+                    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') {
+                        e.preventDefault();
+                        if (e.shiftKey) {
+                            redo();
+                        } else {
+                            undo();
+                        }
+                    }
+                    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'y') {
+                        e.preventDefault();
+                        redo();
+                    }
+
+                    // Save
+                    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
+                        e.preventDefault();
+                        handleDownload('save');
+                    }
+
+                    // Delete (Text)
+                    if (e.key === 'Delete' || e.key === 'Backspace') {
+                        if (mode === 'text' || mode === 'cursor') deleteText();
+                    }
+                };
+
+                window.addEventListener('keydown', handleKeyDown);
+                return () => window.removeEventListener('keydown', handleKeyDown);
+            }, [mode, historyStep, history, selectedTextId]); // Dependencies needed for closures
+
+            // AI State
+            const [aiCandidateCount, setAiCandidateCount] = useState(1);
+            const [aiCandidates, setAiCandidates] = useState(null); // Array of base64 images
+
+            // AI Logic
+            const runAiRemaster = async () => {
+                if (!aiPrompt) return alert("Please enter instructions for the AI.");
+                setIsAiGenerating(true);
+                setAiError("");
+                setAiCandidates(null);
+
+                try {
+                    // 1. Capture Current Canvas State (Composite of BG + Paint) to send to AI
+                    const tempCanvas = document.createElement('canvas');
+                    tempCanvas.width = canvasRef.current.width;
+                    tempCanvas.height = canvasRef.current.height;
+                    const ctx = tempCanvas.getContext('2d');
+                    ctx.drawImage(bgRef.current, 0, 0, tempCanvas.width, tempCanvas.height);
+                    ctx.drawImage(canvasRef.current, 0, 0);
+
+                    const currentVisual = tempCanvas.toDataURL('image/jpeg', 0.8);
+                    const imagePart = {
+                        inline_data: { mime_type: "image/jpeg", data: currentVisual.split(',')[1] }
+                    };
+
+                    // 2. Construct Prompt based on Creativity
+                    const strengthDesc = aiCreativity < 0.4
+                        ? "Strictly maintain original layout and structure. Enhance only resolution and lighting. High fidelity."
+                        : (aiCreativity > 0.7
+                            ? "Reimagine the visual style completely. Use modern, trending aesthetic. High impact, 8k resolution."
+                            : "Refine and polish. Remove artifacts, improve color grading and sharpness. Professional presentation quality.");
+
+                    const prompt = `
+                    You are an expert Presentation Designer.
+                    [TASK] Remaster this slide image to be visually stunning and professional.
+                    [INSTRUCTIONS] ${aiPrompt}
+                    [MODE] ${strengthDesc} (Creativity: ${aiCreativity})
+                    [REQUIREMENTS] 
+                    - Output Resolution: 4K, Ultra HD.
+                    - Style: Modern, clean, professional.
+                    - Maintain Aspect Ratio: ${ratio || '16:9'}. 
+                    - NO TEXT IN OUTPUT unless part of the artistic background.
+                    - Return ONLY the generated image.
+                    `;
+
+                    // 3. API Call Helper (for parallel execution)
+                    const fetchImage = async () => {
+                        const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelConfig.image}:generateContent?key=${apiKey}`;
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                contents: [{ parts: [{ text: prompt }, imagePart] }],
+                                generationConfig: {
+                                    responseModalities: ["TEXT", "IMAGE"]
+                                }
+                            })
+                        });
+
+                        if (!response.ok) {
+                            const err = await response.text();
+                            // Parse detailed error if possible
+                            let errMsg = err;
+                            try { errMsg = JSON.parse(err).error.message; } catch (e) { }
+                            throw new Error(errMsg);
+                        }
+
+                        return await response.json();
+                    };
+
+                    // 4. Execute (Parallel if count > 1)
+                    const promises = [];
+                    for (let i = 0; i < aiCandidateCount; i++) {
+                        promises.push(fetchImage());
+                    }
+
+                    const results = await Promise.allSettled(promises);
+                    const newCandidates = [];
+                    let lastError = null;
+
+                    results.forEach(res => {
+                        if (res.status === 'fulfilled') {
+                            const data = res.value;
+                            if (data.candidates) {
+                                data.candidates.forEach(c => {
+                                    // Check Safety
+                                    if (c.finishReason === 'SAFETY') {
+                                        lastError = { message: "Generation blocked by Safety Filters." };
+                                        return;
+                                    }
+
+                                    const p = c.content?.parts?.find(p => p.inline_data || p.inlineData);
+                                    if (p) {
+                                        const raw = p.inline_data || p.inlineData;
+                                        newCandidates.push(`data:${raw.mime_type};base64,${raw.data}`);
+                                    } else {
+                                        // Check for Text fallback (common if model config is wrong)
+                                        const textP = c.content?.parts?.find(p => p.text);
+                                        if (textP) {
+                                            console.warn("Model returned text:", textP.text);
+                                            lastError = { message: "Model returned text instead of image. Check Model ID." };
+                                        }
+                                    }
+                                });
+                            }
+                        } else {
+                            console.error("Partial Failure:", res.reason);
+                            lastError = res.reason;
+                        }
+                    });
+
+                    if (newCandidates.length > 0) {
+                        setAiCandidates(newCandidates);
+                        // Always show selection UI, never auto-apply
+                        // This fixes the issue where user cannot see the result before it vanishes / commits
+                    } else {
+                        throw new Error(lastError ? lastError.message : "Image generation failed (No candidates returned).");
+                    }
+
+                } catch (e) {
+                    console.error(e);
+                    setAiError(e.message);
+                } finally {
+                    setIsAiGenerating(false);
+                }
+            };
+
+            const applyAiResult = async (base64) => {
+                // 1. Update State
+                setWorkingBgImage(base64);
+
+                // 2. Clear Paint layer (baked in)
+                const pCtx = canvasRef.current.getContext('2d');
+                pCtx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+
+                // 3. Save History (Pass new BG explicitely because State update is async)
+                saveHistory(null, base64);
+
+                setAiCandidates(null); // Clear selection UI
+                setMode('cursor'); // Exit AI mode
+            };
+
+            // -- History Logic --
+            const saveHistory = (overrideTexts = null, overrideBg = null) => {
+                const canvas = canvasRef.current;
+                if (!canvas) return;
+
+                const dataUrl = canvas.toDataURL(); // Paint layer
+                // Use provided texts or current state (deep copy)
+                const textData = JSON.parse(JSON.stringify(overrideTexts || texts));
+
+                // Use provided BG or current state
+                const bgSrc = overrideBg || workingBgImage;
+
+                const newHistory = history.slice(0, historyStep + 1);
+                newHistory.push({ image: dataUrl, texts: textData, bgImage: bgSrc }); // Store BG too
+
+                // Limit history
+                if (newHistory.length > 20) newHistory.shift();
+                setHistory(newHistory);
+                setHistoryStep(newHistory.length - 1);
+            };
+
+            const undo = () => {
+                if (historyStep > 0) {
+                    const prevStep = historyStep - 1;
+                    loadHistory(history[prevStep]);
+                    setHistoryStep(prevStep);
+                }
+            };
+
+            const redo = () => {
+                if (historyStep < history.length - 1) {
+                    const nextStep = historyStep + 1;
+                    loadHistory(history[nextStep]);
+                    setHistoryStep(nextStep);
+                }
+            };
+
+            const loadHistory = (stepData) => {
+                if (!stepData) return;
+
+                // Robust handling
+                const paintSrc = typeof stepData === 'string' ? stepData : stepData.image;
+                const textData = typeof stepData === 'string' ? [] : stepData.texts || [];
+                const bgSrc = stepData.bgImage || slide.originalImage;
+
+                // 1. Restore Background
+                if (bgSrc) {
+                    setWorkingBgImage(bgSrc);
+                }
+
+                // 2. Restore Texts
+                setTexts(textData);
+
+                // 3. Restore Paint Layer
+                const img = new Image();
+                img.src = paintSrc;
+                img.onload = () => {
+                    const ctx = canvasRef.current.getContext('2d');
+                    ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+                    ctx.drawImage(img, 0, 0);
+                };
+
+                // Restore Texts
+                if (textData) {
+                    setTexts(JSON.parse(JSON.stringify(textData)));
+                }
+            };
+
+            // -- Drawing Logic --
+            const getPos = (e) => {
+                const rect = canvasRef.current.getBoundingClientRect();
+                const scaleX = canvasRef.current.width / rect.width;
+                const scaleY = canvasRef.current.height / rect.height;
+                return {
+                    x: (e.clientX - rect.left) * scaleX,
+                    y: (e.clientY - rect.top) * scaleY
+                };
+            };
+
+            const startDraw = (e) => {
+                if (mode === 'hand') {
+                    setIsPanning(true);
+                    panStart.current = { x: e.clientX - pan.x, y: e.clientY - pan.y };
+                    return;
+                }
+
+                if (mode === 'cursor' || mode === 'text') {
+                    // Handle Text Deselect
+                    if (e.target === canvasRef.current) setSelectedTextId(null);
+                    return;
+                }
+
+                setIsDrawing(true);
+                const pos = getPos(e);
+                lastPos.current = pos;
+
+                const ctx = canvasRef.current.getContext('2d');
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.lineWidth = brushSize;
+                ctx.strokeStyle = brushColor;
+                ctx.globalCompositeOperation = mode === 'eraser' ? 'destination-out' : 'source-over';
+
+                ctx.beginPath();
+                ctx.moveTo(pos.x, pos.y);
+                ctx.lineTo(pos.x, pos.y); // Dot
+                ctx.stroke();
+            };
+
+            const [magnifier, setMagnifier] = useState({ show: false, x: 0, y: 0, color: '#000000', zoomImg: '' });
+
+            const draw = (e) => {
+                if (isPanning) {
+                    setPan({
+                        x: e.clientX - panStart.current.x,
+                        y: e.clientY - panStart.current.y
+                    });
+                    return;
+                }
+
+                if (!isDrawing) return;
+                const pos = getPos(e);
+                const ctx = canvasRef.current.getContext('2d');
+                ctx.beginPath();
+                ctx.moveTo(lastPos.current.x, lastPos.current.y);
+                ctx.lineTo(pos.x, pos.y);
+                ctx.stroke();
+                lastPos.current = pos;
+            };
+
+            const stopDraw = () => {
+
+                if (isPanning) {
+                    setIsPanning(false);
+                    return;
+                }
+                if (isDrawing) {
+                    setIsDrawing(false);
+                    saveHistory();
+                }
+            };
+
+            const pickColor = (e) => {
+                // To pick color, we need to read from the Base Image + Paint Layer
+                // We create a temp canvas to combine them for picking
+                const tempCanvas = document.createElement('canvas');
+                tempCanvas.width = canvasRef.current.width;
+                tempCanvas.height = canvasRef.current.height;
+                const tCtx = tempCanvas.getContext('2d');
+
+                // Draw Base
+                tCtx.drawImage(bgRef.current, 0, 0, tempCanvas.width, tempCanvas.height);
+                // Draw Paint
+                tCtx.drawImage(canvasRef.current, 0, 0);
+
+                const pos = getPos(e);
+                const p = tCtx.getImageData(pos.x, pos.y, 1, 1).data;
+                const hex = "#" + ((1 << 24) + (p[0] << 16) + (p[1] << 8) + p[2]).toString(16).slice(1);
+                setBrushColor(hex);
+                setMode('brush'); // Auto switch back to brush
+            };
+
+            // -- Text Logic --
+            const handleTextDrag = (idx, e) => {
+                // Simple drag implementation could be complex in React without lib. 
+                // For now, we will assume user uses the inputs to fine-tune or we implement basic delta drag
+            };
+
+            // We'll use a simple "Click to select, Drag unavailable without lib, use Nudge or Inputs" 
+
+            const draggingText = useRef(null);
+            const resizingText = useRef(null);
+            const rotatingText = useRef(null);
+
+            const startTextDrag = (e, index) => {
+                if (mode !== 'cursor') return;
+                e.preventDefault();
+                e.stopPropagation();
+                setSelectedTextId(index);
+                draggingText.current = {
+                    index,
+                    startX: e.clientX,
+                    startY: e.clientY,
+                    startPctX: texts[index].x_pct,
+                    startPctY: texts[index].y_pct
+                };
+            };
+
+            const startTextRotate = (e, index) => {
+                e.preventDefault();
+                e.stopPropagation();
+                // Calculate center of the text box for rotation origin
+                const el = document.getElementById(`text-box-${index}`);
+                const rect = el.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+
+                rotatingText.current = {
+                    index,
+                    centerX,
+                    centerY,
+                    startRotation: texts[index].rotation || 0,
+                    startAngle: Math.atan2(e.clientY - centerY, e.clientX - centerX)
+                };
+            };
+
+            const startTextResize = (e, index) => {
+                e.preventDefault();
+                e.stopPropagation();
+                resizingText.current = {
+                    index,
+                    startX: e.clientX,
+                    startWidth: texts[index].width_pct || 20 // default fallbacks
+                };
+            };
+
+            const onMouseMoveGlobal = (e) => {
+                if (draggingText.current) {
+                    const { index, startX, startY, startPctX, startPctY } = draggingText.current;
+                    const rect = containerRef.current.getBoundingClientRect();
+                    const deltaX = e.clientX - startX;
+                    const deltaY = e.clientY - startY;
+
+                    const deltaPctX = (deltaX / rect.width) * 100;
+                    const deltaPctY = (deltaY / rect.height) * 100;
+
+                    const newTexts = [...texts];
+                    newTexts[index].x_pct = startPctX + deltaPctX;
+                    newTexts[index].y_pct = startPctY + deltaPctY;
+                    setTexts(newTexts);
+                } else if (resizingText.current) {
+                    const { index, startX, startWidth } = resizingText.current;
+                    const rect = containerRef.current.getBoundingClientRect();
+                    const deltaX = e.clientX - startX;
+                    const deltaPctW = (deltaX / rect.width) * 100;
+
+                    const newTexts = [...texts];
+                    newTexts[index].width_pct = Math.max(5, startWidth + deltaPctW); // Min width 5%
+                    setTexts(newTexts);
+                } else if (rotatingText.current) {
+                    const { index, centerX, centerY, startRotation, startAngle } = rotatingText.current;
+                    const currentAngle = Math.atan2(e.clientY - centerY, e.clientX - centerX);
+                    const deltaAngle = (currentAngle - startAngle) * (180 / Math.PI);
+
+                    const newTexts = [...texts];
+                    newTexts[index].rotation = (startRotation + deltaAngle);
+                    setTexts(newTexts);
+                }
+            };
+
+            const onMouseUpGlobal = () => {
+                if (draggingText.current || resizingText.current || rotatingText.current) {
+                    saveHistory(); // Auto-save after manipulation
+                }
+                draggingText.current = null;
+                resizingText.current = null;
+                rotatingText.current = null;
+            };
+
+            useEffect(() => {
+                window.addEventListener('mousemove', onMouseMoveGlobal);
+                window.addEventListener('mouseup', onMouseUpGlobal);
+                return () => {
+                    window.removeEventListener('mousemove', onMouseMoveGlobal);
+                    window.removeEventListener('mouseup', onMouseUpGlobal);
+                };
+            }, [texts]); // Re-bind for simplicity or use refs for texts
+
+            const addText = () => {
+                const newTexts = [...texts, {
+                    content: "New Text", role: "Body",
+                    x_pct: 40, y_pct: 40, width_pct: 20,
+                    color_hex: "#ffffff", fontSize: 24, fontWeight: "normal",
+                    rotation: 0
+                }];
+                setTexts(newTexts);
+                saveHistory(newTexts);
+            };
+
+            const deleteText = () => {
+                if (selectedTextId !== null) {
+                    const newTexts = texts.filter((_, i) => i !== selectedTextId);
+                    setTexts(newTexts);
+                    setSelectedTextId(null);
+                    saveHistory(newTexts);
+                }
+            };
+
+            // -- Export Logic --
+            const handleDownload = async (formatOrSave) => {
+                // 1. Create Composition Canvas
+                const finalCanvas = document.createElement('canvas');
+                finalCanvas.width = canvasRef.current.width;
+                finalCanvas.height = canvasRef.current.height;
+                const fCtx = finalCanvas.getContext('2d');
+
+                // 2. Draw Base
+                fCtx.drawImage(bgRef.current, 0, 0, finalCanvas.width, finalCanvas.height);
+
+                // 3. Draw Paint Layer
+                fCtx.drawImage(canvasRef.current, 0, 0);
+
+                if (formatOrSave === 'save') {
+                    // Save back to App
+                    const combinedDataUrl = finalCanvas.toDataURL('image/png', 1.0);
+                    onSave(combinedDataUrl, texts);
+                    return;
+                }
+
+                // 4. Draw Texts (Rasterize) for Export Only
+                // ... (existing text rasterization for export) ...
+                const format = formatOrSave;
+
+
+                // 4. Draw Texts (Rasterize)
+                texts.forEach(t => {
+                    const x = (t.x_pct / 100) * finalCanvas.width;
+                    const y = (t.y_pct / 100) * finalCanvas.height;
+                    const w = (t.width_pct / 100) * finalCanvas.width;
+
+                    // Approximate Styling
+                    const fontSize = (t.fontSize || (t.role === 'Title' ? 40 : 20)) * (finalCanvas.width / 1280);
+                    const isBold = t.fontWeight === 'bold' || t.role === 'Title';
+
+                    // Match CSS Font Stack exactly to ensure similar metrics
+                    const fontFamily = t.fontFamily || '"Inter", "Noto Sans JP", sans-serif';
+
+                    fCtx.font = `${isBold ? 'bold' : 'normal'} ${fontSize}px ${fontFamily}`;
+                    fCtx.fillStyle = t.color_hex || '#ffffff';
+                    fCtx.textAlign = 'left';
+                    fCtx.textBaseline = 'top';
+
+                    // Padding Adjustment for p-1 (approx 4px at 1280px scale)
+                    const padding = 4 * (finalCanvas.width / 1280);
+                    const adjX = x + padding;
+                    const adjY = y + padding;
+                    const adjW = w - (padding * 2);
+
+                    // Strict Wrap (Character-based for CJK support)
+                    const paragraphs = t.content.split('\n');
+                    let testY = adjY;
+                    const lineHeight = fontSize * 1.5; // Slightly deeper leading for readability in export
+
+                    paragraphs.forEach(paragraph => {
+                        let line = '';
+                        for (let i = 0; i < paragraph.length; i++) {
+                            const char = paragraph[i];
+                            const testLine = line + char;
+                            const metrics = fCtx.measureText(testLine);
+
+                            // Check if adding this character exceeds width
+                            if (metrics.width > adjW && line.length > 0) {
+                                fCtx.fillText(line, adjX, testY);
+                                line = char;
+                                testY += lineHeight;
+                            } else {
+                                line = testLine;
+                            }
+                        }
+                        fCtx.fillText(line, adjX, testY); // Draw remaining characters
+                        testY += lineHeight; // Newline for next paragraph
+                    });
+                });
+
+                // 5. Download
+                const link = document.createElement('a');
+                link.download = `Studio_Export_${Date.now()}.${format}`;
+                link.href = finalCanvas.toDataURL(`image/${format}`, 0.9);
+                link.click();
+            };
+
+            // -- Pan/Zoom Helpers --
+            const handleZoom = (delta) => {
+                setZoom(prev => Math.max(0.1, Math.min(5, prev + delta)));
+            };
+
+            const resetView = () => {
+                setZoom(1);
+                setPan({ x: 0, y: 0 });
+            };
+
+            const renderScale = scale * zoom;
+
+            return (
+                <div className="fixed inset-0 z-[100] flex flex-col bg-white text-zinc-900">
+                    {/* Header */}
+                    <div className="h-14 bg-white shadow-sm flex items-center justify-between px-4 z-20 relative">
+                        <div className="flex items-center gap-4">
+                            <h2 className="font-semibold tracking-tight text-zinc-900 flex items-center gap-2"><span className="text-zinc-400">■</span> Studio Mode</h2>
+                            <div className="flex bg-zinc-100 rounded p-1 gap-1">
+                                <button onClick={undo} disabled={historyStep <= 0} className="p-2 hover:bg-zinc-200 rounded disabled:opacity-30 text-zinc-600" title="Undo">↩</button>
+                                <button onClick={redo} disabled={historyStep >= history.length - 1} className="p-2 hover:bg-zinc-200 rounded disabled:opacity-30 text-zinc-600" title="Redo">↪</button>
+                            </div>
+                            <div className="h-6 w-px bg-zinc-200 mx-2"></div>
+                            <button onClick={() => setMode('cursor')} className={`p-2 rounded ${mode === 'cursor' ? 'bg-zinc-900 text-white' : 'hover:bg-zinc-100 text-zinc-600'}`} title="Select/Move (v)">↖</button>
+                            <button onClick={() => setMode('hand')} className={`p-2 rounded ${mode === 'hand' ? 'bg-zinc-900 text-white' : 'hover:bg-zinc-100 text-zinc-600'}`} title="Pan (H)">✋</button>
+                            <button onClick={() => setMode('brush')} className={`p-2 rounded ${mode === 'brush' ? 'bg-zinc-900 text-white' : 'hover:bg-zinc-100 text-zinc-600'}`} title="Brush (b)">🖌️</button>
+                            <button onClick={() => setMode('eraser')} className={`p-2 rounded ${mode === 'eraser' ? 'bg-zinc-900 text-white' : 'hover:bg-zinc-100 text-zinc-600'}`} title="Eraser (e)">🧹</button>
+                            <div className="h-6 w-px bg-zinc-200 mx-2"></div>
+                            <button onClick={() => setMode('ai')} className={`p-2 rounded flex items-center gap-2 ${mode === 'ai' ? 'bg-indigo-600 text-white shadow-sm' : 'hover:bg-zinc-100 text-zinc-600'}`} title="AI Remaster">
+                                <span>✨</span> <span className="text-xs font-bold hidden md:inline">AI MAGIC</span>
+                            </button>
+
+                            {/* Zoom Controls */}
+                            <div className="h-6 w-px bg-zinc-200 mx-2"></div>
+                            <div className="flex bg-zinc-100 rounded p-1 items-center">
+                                <button onClick={() => handleZoom(-0.1)} className="px-2 hover:bg-zinc-200 rounded text-zinc-600">-</button>
+                                <span className="text-xs w-12 text-center text-zinc-600">{Math.round(zoom * 100)}%</span>
+                                <button onClick={() => handleZoom(0.1)} className="px-2 hover:bg-zinc-200 rounded text-zinc-600">+</button>
+                                <button onClick={resetView} className="ml-2 text-[10px] text-zinc-400 hover:text-zinc-600">RESET</button>
+                            </div>
+
+                            {/* UX: Compare - Onion Skin Slider */}
+                            <div className="h-6 w-px bg-zinc-200 mx-2"></div>
+                            <div className="flex items-center gap-2 bg-zinc-100 rounded px-3 py-1">
+                                <span className="text-xs text-zinc-500">Onion Skin</span>
+                                <input
+                                    type="range" min="0" max="1" step="0.1"
+                                    value={onionOpacity}
+                                    onChange={e => setOnionOpacity(parseFloat(e.target.value))}
+                                    className="w-20 accent-zinc-900 h-1 bg-zinc-300 rounded-lg appearance-none cursor-pointer"
+                                />
+                                <span className="text-[10px] w-8 text-zinc-600">{Math.round(onionOpacity * 100)}%</span>
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <button onClick={() => addText()} className="px-3 py-1.5 text-xs bg-zinc-100 hover:bg-zinc-200 text-zinc-900 border border-zinc-200 rounded font-medium">＋ Text</button>
+                            <button onClick={() => handleDownload('save')} className="px-4 py-1.5 bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-bold rounded shadow-sm border border-zinc-900">SAVE & CLOSE</button>
+                            <div className="h-6 w-px bg-zinc-200 mx-2"></div>
+                            <button onClick={() => handleDownload('png')} className="px-3 py-1.5 bg-white hover:bg-zinc-50 text-zinc-700 text-xs font-bold rounded border border-zinc-300">PNG</button>
+                            <button onClick={() => handleDownload('jpg')} className="px-3 py-1.5 bg-white hover:bg-zinc-50 text-zinc-700 text-xs font-bold rounded border border-zinc-300">JPG</button>
+                            <div className="h-6 w-px bg-zinc-200 mx-2"></div>
+                            <button onClick={onClose} className="text-zinc-400 hover:text-zinc-700 text-sm">Cancel</button>
+                        </div>
+                    </div>
+
+                    {/* Main Workspace */}
+                    <div className="flex-1 flex overflow-hidden">
+                        {/* Left Sidebar (Tool Properties) */}
+                        <div className="w-64 bg-zinc-50 p-4 space-y-6 overflow-y-auto z-10 text-zinc-700 shadow-[1px_0_0_0_rgba(0,0,0,0.03)]">
+
+                            {/* AI Panel */}
+                            {mode === 'ai' && (
+                                <div className="space-y-4 animate-in slide-in-from-left duration-200">
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <span className="text-xl animate-pulse-fast">✨</span>
+                                        <h3 className="text-zinc-800 font-bold text-sm">AIで背景を再生成</h3>
+                                    </div>
+
+                                    {aiError && (
+                                        <div className="p-2 bg-red-500/20 border border-red-500/50 rounded text-[10px] text-red-200">
+                                            {aiError}
+                                        </div>
+                                    )}
+
+                                    {/* Magic Input Area */}
+                                    <div className="relative group">
+                                        <div className="absolute -inset-0.5 bg-gradient-to-r from-violet-200 to-indigo-200 rounded-xl opacity-30 group-hover:opacity-100 transition duration-500 blur"></div>
+                                        <div className="relative bg-white rounded-xl shadow-sm border border-zinc-200">
+                                            <textarea
+                                                value={aiPrompt}
+                                                onChange={e => setAiPrompt(e.target.value)}
+                                                placeholder="どのような背景にしますか？&#13;&#10;(例: シンプルな白背景、テック企業のオフィス風...)"
+                                                className="w-full bg-transparent p-3 text-xs text-zinc-700 placeholder-zinc-400 outline-none resize-none h-24 rounded-xl"
+                                            />
+
+                                            {/* Floating Action Button */}
+                                            <div className="p-2 flex justify-end">
+                                                <button
+                                                    onClick={runAiRemaster}
+                                                    disabled={isAiGenerating}
+                                                    className="bg-zinc-900 hover:bg-violet-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-sm transition-all flex items-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed group-hover:shadow-md"
+                                                >
+                                                    {isAiGenerating ? (
+                                                        <>
+                                                            <span className="animate-spin text-xs">⟳</span> 生成中...
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <span>🪄</span> 生成する
+                                                        </>
+                                                    )}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Advanced Options */}
+                                    <div className="space-y-4 pt-2">
+                                        {/* Creativity */}
+                                        <div className="space-y-2">
+                                            <div className="flex justify-between items-center">
+                                                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Creativity Level</label>
+                                                <span className="text-[10px] font-mono text-violet-600 bg-violet-50 px-1.5 py-0.5 rounded">{Math.round(aiCreativity * 100)}%</span>
+                                            </div>
+                                            <div className="relative h-1.5 bg-zinc-100 rounded-full overflow-hidden">
+                                                <div
+                                                    className="absolute top-0 left-0 h-full bg-gradient-to-r from-violet-400 to-indigo-500"
+                                                    style={{ width: `${aiCreativity * 100}%` }}
+                                                ></div>
+                                                <input
+                                                    type="range" min="0" max="1" step="0.1"
+                                                    value={aiCreativity}
+                                                    onChange={e => setAiCreativity(parseFloat(e.target.value))}
+                                                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                                />
+                                            </div>
+                                            <div className="flex justify-between text-[9px] text-zinc-400">
+                                                <span>補正 (Repair)</span>
+                                                <span>創造 (Redesign)</span>
+                                            </div>
+                                        </div>
+
+                                        {/* Count */}
+                                        <div className="space-y-2">
+                                            <div className="flex justify-between items-center">
+                                                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Output Count</label>
+                                                <span className="text-[10px] font-mono text-zinc-600 bg-zinc-100 px-1.5 py-0.5 rounded">{aiCandidateCount}枚</span>
+                                            </div>
+                                            <div className="relative h-1.5 bg-zinc-100 rounded-full overflow-hidden">
+                                                <div
+                                                    className="absolute top-0 left-0 h-full bg-zinc-800"
+                                                    style={{ width: `${(aiCandidateCount / 4) * 100}%` }}
+                                                ></div>
+                                                <input
+                                                    type="range" min="1" max="4" step="1"
+                                                    value={aiCandidateCount}
+                                                    onChange={e => setAiCandidateCount(parseInt(e.target.value))}
+                                                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                                />
+                                            </div>
+                                            <div className="flex justify-between text-[9px] text-zinc-400">
+                                                <span>1 (Faster)</span>
+                                                <span>4 (Variations)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="p-3 bg-indigo-50/50 rounded-xl border border-indigo-100/50">
+                                        <p className="text-[10px] text-indigo-400 leading-relaxed flex gap-2">
+                                            <span>💡</span>
+                                            <span>
+                                                <strong>Hint:</strong> 不要な文字やオブジェクトは、先に<span className="font-bold underline cursor-pointer" onClick={() => setMode('brush')}>ブラシ(B)</span>で塗りつぶしておくと、より綺麗に消えます。
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            )}
+
+                            {(mode === 'brush' || mode === 'eraser') && (
+                                <div>
+                                    <h3 className="text-xs font-bold text-zinc-400 mb-3">BRUSH SETTINGS</h3>
+                                    <div className="space-y-4">
+                                        <div>
+                                            <label className="text-xs text-zinc-500">Size: {brushSize}px</label>
+                                            <input type="range" min="1" max="100" value={brushSize} onChange={e => setBrushSize(Number(e.target.value))} className="w-full accent-zinc-900 bg-zinc-200 h-1 rounded-lg appearance-none" />
+                                        </div>
+                                        {mode === 'brush' && (
+                                            <div>
+                                                <label className="text-xs text-zinc-500">Color</label>
+                                                <div className="flex gap-2 mt-1">
+                                                    <input type="color" value={brushColor} onChange={e => setBrushColor(e.target.value)} className="w-8 h-8 rounded border border-zinc-200 cursor-pointer" />
+                                                    <div className="text-xs font-mono self-center text-zinc-600 uppercase">{brushColor}</div>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+
+                            {selectedTextId !== null && (
+                                <div>
+                                    <h3 className="text-xs font-bold text-zinc-400 mb-3 block flex justify-between">
+                                        TEXT PROPERTIES
+                                        <button onClick={deleteText} className="text-red-500 hover:text-red-600 font-medium">Delete</button>
+                                    </h3>
+                                    {/* Text Inputs */}
+                                    <div className="space-y-3">
+                                        <textarea
+                                            value={texts[selectedTextId].content}
+                                            onChange={e => {
+                                                const newTexts = [...texts];
+                                                newTexts[selectedTextId].content = e.target.value;
+                                                setTexts(newTexts);
+                                            }}
+                                            className="w-full h-24 bg-zinc-50 border-zinc-300 rounded p-2 text-sm text-zinc-900 border focus:border-zinc-500 outline-none"
+                                        />
+
+                                        {/* Font Family Selector */}
+                                        <div>
+                                            <label className="text-xs text-zinc-400 mb-1 block">Font</label>
+                                            <select
+                                                value={texts[selectedTextId].fontFamily || 'Noto Sans JP'}
+                                                onChange={e => {
+                                                    const newTexts = [...texts];
+                                                    newTexts[selectedTextId].fontFamily = e.target.value;
+                                                    setTexts(newTexts);
+                                                }}
+                                                className="w-full bg-zinc-50 border border-zinc-300 rounded p-2 text-xs text-zinc-900 outline-none focus:border-zinc-500"
+                                            >
+                                                {[
+                                                    { name: 'Standard (Noto Sans)', value: 'Noto Sans JP' },
+                                                    { name: 'Meiryo Style (M PLUS 1p)', value: '"M PLUS 1p", sans-serif' },
+                                                    { name: 'UD Gothic (BIZ UDPGothic)', value: '"BIZ UDPGothic", sans-serif' },
+                                                    { name: 'Formal (Noto Serif)', value: 'Noto Serif JP' },
+                                                    { name: 'Modern Round (Zen Maru)', value: '"Zen Maru Gothic", sans-serif' },
+                                                    { name: 'Impact (Dela Gothic)', value: '"Dela Gothic One", cursive' },
+                                                    { name: 'Pixel (DotGothic16)', value: '"DotGothic16", sans-serif' },
+                                                    { name: 'Marker (Yusei Magic)', value: '"Yusei Magic", sans-serif' },
+                                                    { name: 'Storybook (Kiwi Maru)', value: '"Kiwi Maru", serif' },
+                                                    { name: 'Emotional (Shippori)', value: '"Shippori Mincho", serif' },
+                                                ].map(f => <option key={f.value} value={f.value}>{f.name}</option>)}
+                                            </select>
+                                        </div>
+
+                                        <input type="color" value={texts[selectedTextId].color_hex || '#ffffff'} onChange={e => {
+                                            const newTexts = [...texts];
+                                            newTexts[selectedTextId].color_hex = e.target.value;
+                                            setTexts(newTexts);
+                                        }} className="w-full h-8 cursor-pointer border border-zinc-200 rounded" />
+
+                                        {/* Rotation Slider */}
+                                        {/* Rotation Slider Removed relative to user request for direct manipulation */}
+
+                                        <div className="grid grid-cols-2 gap-2">
+                                            <button
+                                                onClick={() => {
+                                                    const newTexts = [...texts];
+                                                    const w = newTexts[selectedTextId].fontWeight;
+                                                    newTexts[selectedTextId].fontWeight = w === 'bold' ? 'normal' : 'bold';
+                                                    setTexts(newTexts);
+                                                }}
+                                                className={`p-1 rounded border ${texts[selectedTextId].fontWeight === 'bold' ? 'bg-zinc-900 text-white border-zinc-900' : 'bg-white border-zinc-300 text-zinc-700'}`}
+                                            >B</button>
+                                            {/* Font Size Simple Stepper */}
+                                            <div className="flex items-center bg-zinc-100 rounded border border-zinc-200">
+                                                <button onClick={() => {
+                                                    const newTexts = [...texts];
+                                                    newTexts[selectedTextId].fontSize = (newTexts[selectedTextId].fontSize || 24) - 2;
+                                                    setTexts(newTexts);
+                                                }} className="px-2 text-zinc-600 hover:text-black">-</button>
+                                                <span className="flex-1 text-center text-xs text-zinc-900">{texts[selectedTextId].fontSize || 24}</span>
+                                                <button onClick={() => {
+                                                    const newTexts = [...texts];
+                                                    newTexts[selectedTextId].fontSize = (newTexts[selectedTextId].fontSize || 24) + 2;
+                                                    setTexts(newTexts);
+                                                }} className="px-2 text-zinc-600 hover:text-black">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Canvas Area */}
+                        <div
+                            className={`flex-1 bg-zinc-100 overflow-hidden flex items-center justify-center relative ${mode === 'hand' ? 'cursor-grab active:cursor-grabbing' : ''}`}
+                            onMouseDown={mode === 'hand' ? startDraw : undefined}
+                            onMouseMove={mode === 'hand' ? draw : undefined}
+                            onMouseUp={mode === 'hand' ? stopDraw : undefined}
+                            onMouseLeave={mode === 'hand' ? stopDraw : undefined}
+                        >
+                            {/* The "Stage" */}
+                            <div
+                                ref={containerRef}
+                                className="relative shadow-xl bg-white transition-transform duration-75 ease-out origin-center"
+                                style={{
+                                    width: slide.originalImage ? 1280 * renderScale : '100%',
+                                    height: slide.originalImage ? 720 * renderScale : '100%',
+                                    transform: `translate(${pan.x}px, ${pan.y}px)`,
+                                    maxWidth: 'none',
+                                    maxHeight: 'none',
+                                    flexShrink: 0
+                                }}
+                            >
+                                {/* 1. Base Image Layer */}
+                                <img
+                                    ref={bgRef}
+                                    src={workingBgImage}
+                                    draggable={false}
+                                    className="absolute inset-0 w-full h-full object-contain pointer-events-none select-none transition-opacity duration-200"
+                                />
+
+                                {/* UX: Onion Skin Layer (Original) */}
+                                {slide.originalImage && onionOpacity > 0 && (
+                                    <img
+                                        src={slide.originalImage}
+                                        draggable={false}
+                                        className="absolute inset-0 w-full h-full object-contain pointer-events-none select-none z-[60]"
+                                        style={{ opacity: onionOpacity }}
+                                    />
+                                )}
+
+                                {/* 2. Paint Layer */}
+                                <canvas
+                                    ref={canvasRef}
+                                    width={1280}
+                                    height={720}
+                                    className={`absolute inset-0 w-full h-full object-contain touch-none ${mode === 'hand' ? 'pointer-events-none' : 'cursor-crosshair'}`}
+                                    onMouseDown={startDraw}
+                                    onMouseMove={draw}
+                                    onMouseUp={stopDraw}
+                                    onMouseLeave={stopDraw}
+                                />
+
+                                {/* 3. Text Overlay Layer */}
+                                <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                                    {texts.map((t, i) => (
+                                        <div
+                                            key={i}
+                                            id={`text-box-${i}`}
+                                            onMouseDown={(e) => startTextDrag(e, i)}
+                                            className={`absolute p-1 group pointer-events-auto break-words hover:ring-1 hover:ring-neon/50 cursor-move ${selectedTextId === i ? 'ring-1 ring-neon bg-neon/10' : ''}`}
+                                            style={{
+                                                left: `${t.x_pct}%`,
+                                                top: `${t.y_pct}%`,
+                                                width: `${t.width_pct}%`,
+                                                color: t.color_hex || '#ffffff',
+                                                fontSize: `${(t.fontSize || (t.role === 'Title' ? 32 : 14)) * renderScale}px`, // Visually scale
+                                                fontWeight: t.fontWeight || (t.role === 'Title' ? 'bold' : 'normal'),
+                                                lineHeight: 1.2,
+                                                whiteSpace: 'pre-wrap', // Enable multiline support
+                                                fontFamily: t.fontFamily || 'Noto Sans JP',
+                                                transform: `rotate(${t.rotation || 0}deg)`,
+                                                transformOrigin: 'center center'
+                                            }}
+                                        >
+                                            {t.content}
+                                            {/* Handles (Resizing) */}
+                                            {selectedTextId === i && (
+                                                <div
+                                                    className="absolute -right-1 -bottom-1 w-4 h-4 bg-neon rounded-full cursor-se-resize flex items-center justify-center border border-black z-50 pointer-events-auto hover:scale-125 transition-transform"
+                                                    onMouseDown={(e) => {
+                                                        e.stopPropagation();
+                                                        e.preventDefault();
+                                                        startTextResize(e, i);
+                                                    }}
+                                                >
+                                                    <div className="w-1.5 h-1.5 bg-black rounded-full" />
+                                                </div>
+                                            )}
+
+                                            {/* Handles (Rotation) */}
+                                            {selectedTextId === i && (
+                                                <div
+                                                    className="absolute -top-6 left-1/2 -translate-x-1/2 w-6 h-6 flex items-center justify-center cursor-grabbing z-50 group/rotate"
+                                                    onMouseDown={(e) => {
+                                                        e.stopPropagation();
+                                                        e.preventDefault();
+                                                        startTextRotate(e, i);
+                                                    }}
+                                                >
+                                                    <div className="w-0.5 h-3 bg-neon absolute bottom-0 left-1/2 -translate-x-1/2"></div>
+                                                    <div className="w-3 h-3 rounded-full bg-neon border border-black hover:scale-125 transition-transform" />
+                                                </div>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Magnifier Loupe */}
+                            {magnifier.show && (
+                                <div
+                                    className="absolute pointer-events-none z-50 rounded-full border-2 border-white overflow-hidden shadow-2xl bg-black flex flex-col items-center justify-center"
+                                    style={{
+                                        width: '120px',
+                                        height: '120px',
+                                        left: magnifier.x,
+                                        top: magnifier.y,
+                                        transform: 'translate(10%, 10%)', // Closer to cursor (Bottom Right)
+                                        pointerEvents: 'none'
+                                    }}
+                                >
+                                    <div className="relative w-full h-full">
+                                        {/* Zoomed pixelated image */}
+                                        <img
+                                            src={magnifier.zoomImg}
+                                            className="w-full h-full object-contain image-pixelated"
+                                            style={{ imageRendering: 'pixelated' }}
+                                        />
+                                        {/* Crosshair */}
+                                        <div className="absolute inset-0 flex items-center justify-center opacity-50">
+                                            <div className="w-full h-px bg-cyan-400"></div>
+                                            <div className="h-full w-px bg-cyan-400 absolute"></div>
+                                        </div>
+                                    </div>
+                                    {/* Color Value Label */}
+                                    <div className="absolute bottom-0 w-full bg-black/80 text-[10px] text-white font-mono text-center py-1 border-t border-white/10">
+                                        <span style={{ color: magnifier.color }}>●</span> {magnifier.color}
+                                    </div>
+                                </div>
+                            )}
+                            {/* AI Result Selection Overlay */}
+                            {aiCandidates && (
+                                <div className="absolute inset-0 bg-white/95 z-[100] flex flex-col items-center justify-center p-8 animate-fade-in-up">
+                                    <div className="text-center mb-8">
+                                        <div className="w-16 h-16 rounded-full bg-violet-100 flex items-center justify-center mx-auto mb-4 animate-bounce">
+                                            <span className="text-2xl">✨</span>
+                                        </div>
+                                        <h2 className="text-2xl font-semibold tracking-tight text-zinc-900 mb-2">Generation Complete!</h2>
+                                        <p className="text-zinc-500">Compare and select your favorite result.</p>
+                                    </div>
+
+                                    {/* Comparison Grid */}
+                                    <div className="flex gap-8 w-full max-w-6xl justify-center items-start">
+
+                                        {/* Original (Input) */}
+                                        <div className="flex flex-col items-center gap-2">
+                                            <div className="relative aspect-video w-[300px] bg-zinc-200 rounded-xl overflow-hidden opacity-80 border-2 border-zinc-200 grayscale-[0.3] group">
+                                                {/* Use 'slide' prop, not 'studioTarget' */}
+                                                <img src={slide.displayImage || slide.originalImage} className="w-full h-full object-cover" />
+                                                <div className="absolute top-2 left-2 bg-black/50 text-white text-[10px] px-2 py-1 rounded backdrop-blur-md">ORIGINAL</div>
+
+                                                {/* Magnifier */}
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        e.stopPropagation(); // Prevent anything else
+                                                        if (onPreview) onPreview(slide.displayImage || slide.originalImage);
+                                                    }}
+                                                    className="absolute bottom-2 right-2 p-1.5 bg-white/80 rounded-full shadow-sm hover:scale-110 transition-transform opacity-0 group-hover:opacity-100"
+                                                    title="Zoom"
+                                                >
+                                                    🔍
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        {/* Divider */}
+                                        <div className="w-px h-[200px] bg-zinc-200 self-center hidden md:block"></div>
+
+                                        {/* Candidates */}
+                                        <div className={`grid gap-6 ${aiCandidates.length === 1 ? 'grid-cols-1 w-[400px]' : (aiCandidates.length === 2 ? 'grid-cols-2' : 'grid-cols-2 md:grid-cols-2 lg:grid-cols-4')}`}>
+                                            {aiCandidates.map((img, idx) => (
+                                                <div
+                                                    key={idx}
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        e.stopPropagation();
+                                                        applyAiResult(img);
+                                                    }}
+                                                    className="group cursor-pointer relative aspect-video bg-zinc-100 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all border-2 border-transparent hover:border-violet-500 w-full"
+                                                >
+                                                    <img src={img} className="w-full h-full object-cover" />
+                                                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                                        <span className="bg-white text-zinc-900 font-bold px-4 py-2 rounded-full shadow-lg transform scale-90 group-hover:scale-100 transition-transform">
+                                                            Select This
+                                                        </span>
+                                                    </div>
+                                                    <div className="absolute top-2 right-2 bg-violet-600 text-white text-[10px] font-bold px-2 py-1 rounded shadow-sm">
+                                                        #{idx + 1}
+                                                    </div>
+
+                                                    {/* Magnifier for Candidate */}
+                                                    <button
+                                                        onClick={(e) => {
+                                                            e.preventDefault();
+                                                            e.stopPropagation();
+                                                            if (onPreview) onPreview(img);
+                                                        }}
+                                                        className="absolute bottom-2 right-2 p-1.5 bg-white/90 rounded-full shadow-sm hover:scale-110 transition-transform opacity-0 group-hover:opacity-100 z-10 pointer-events-auto text-zinc-700"
+                                                        title="Zoom"
+                                                    >
+                                                        🔍
+                                                    </button>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    <button
+                                        onClick={() => { setAiCandidates(null); setIsAiGenerating(false); }}
+                                        className="mt-12 px-6 py-2 border border-zinc-300 text-zinc-500 rounded-full hover:bg-zinc-100 hover:text-red-500 text-xs font-bold tracking-wide uppercase transition-colors"
+                                    >
+                                        Discard All
+                                    </button>
+                                </div>
+                            )}
+
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // --- Main App ---
+        const App = () => {
+            const [apiKey, setApiKey] = useState(localStorage.getItem('gemini_api_key') || '');
+            const [importFiles, setImportFiles] = useState(null); // Changed from single file to FileList
+
+
+            // App Status: 'idle' -> 'scanning' -> 'selecting' -> 'processing' -> 'done'
+            const [appStatus, setAppStatus] = useState('idle');
+
+            const [progress, setProgress] = useState({ current: 0, total: 0, msg: '' });
+            const [slides, setSlides] = useState([]);
+            const [logs, setLogs] = useState([]);
+
+            // Selection Helper
+            const [selectAll, setSelectAll] = useState(false);
+
+            const [modelConfig, setModelConfig] = useState({
+                vision: 'gemini-3-pro-preview',
+                image: 'gemini-3-pro-image-preview'
+            });
+            const [presentationRatio, setPresentationRatio] = useState("16:9");
+            const [redesignTarget, setRedesignTarget] = useState(null);
+            const [previewTarget, setPreviewTarget] = useState(null);
+            const [studioTarget, setStudioTarget] = useState(null);
+
+            const addLog = (msg) => setLogs(prev => [`[${new Date().toLocaleTimeString()}] ${msg} `, ...prev]);
+
+            const handleApiKeyChange = (e) => {
+                const key = e.target.value;
+                setApiKey(key);
+                localStorage.setItem('gemini_api_key', key);
+            };
+
+            const callGemini = async (model, data) => {
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+                    if (!response.ok) {
+                        if (response.status === 503) throw new Error("503 Service Overloaded - Retrying...");
+                        const errText = await response.text();
+                        let errObj;
+                        try { errObj = JSON.parse(errText); } catch (e) { errObj = { error: { message: errText } }; }
+                        throw new Error(errObj.error?.message || `API Error ${response.status}`);
+                    }
+                    return await response.json();
+                } catch (error) {
+                    console.error("Gemini API Call Failed:", error);
+                    throw error;
+                }
+            };
+
+            // --- Phase 1b: Image Import (Direct) ---
+            async function scanImages(fileList) {
+                setAppStatus('scanning');
+                setSlides([]);
+                setLogs([]);
+
+                const newSlides = [];
+                for (let i = 0; i < fileList.length; i++) {
+                    const file = fileList[i];
+                    setProgress({ current: i + 1, total: fileList.length, msg: `Importing Image ${i + 1}...` });
+
+                    try {
+                        const base64 = await new Promise((resolve) => {
+                            const reader = new FileReader();
+                            reader.onload = (e) => resolve(e.target.result);
+                            reader.readAsDataURL(file);
+                        });
+                        const blobUrl = URL.createObjectURL(file); // Direct blob from file
+
+                        // Detect ratio from first image
+                        if (i === 0) {
+                            const img = new Image();
+                            img.src = blobUrl;
+                            await new Promise(r => img.onload = r);
+                            const ratioVal = img.width / img.height;
+                            const detectedRatio = ratioVal < 1.5 ? "4:3" : "16:9";
+                            setPresentationRatio(detectedRatio);
+                            addLog(`📐 Ratio Detected from Image 1: ${detectedRatio}`);
+                        }
+
+                        newSlides.push({
+                            id: i + 1,
+                            status: 'ORIGINAL',
+                            isSelected: false,
+                            originalImage: base64,
+                            displayImage: blobUrl,
+                            bgImage: null,
+                            textData: [],
+                            bgType: 'ORIGINAL'
+                        });
+                    } catch (e) {
+                        addLog(`Error reading image ${file.name}: ${e.message}`);
+                    }
+                }
+                setSlides(newSlides);
+                setAppStatus('selecting');
+                setProgress({ current: 0, total: 0, msg: 'Select images to remaster.' });
+                addLog(`Import Complete. ${newSlides.length} images ready.`);
+            }
+
+            const handleStartImport = () => {
+                if (!importFiles || !apiKey) return alert("Please set API Key & File(s)");
+
+                // Check if first file is PDF
+                if (importFiles[0].type === 'application/pdf') {
+                    scanPdf(importFiles[0]);
+                } else {
+                    scanImages(importFiles);
+                }
+            };
+
+            // --- UX: Sample Data Loader ---
+            const handleLoadSample = async () => {
+                if (!apiKey) return alert("Please enter your API Key first to try the sample.");
+
+                setAppStatus('scanning');
+                setProgress({ current: 0, total: 1, msg: 'Generating Sample Slide...' });
+
+                // Create a dynamic sample slide using canvas
+                const cvs = document.createElement('canvas');
+                cvs.width = 1280;
+                cvs.height = 720;
+                const ctx = cvs.getContext('2d');
+
+                // Draw a "bad" slide to remaster
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, 1280, 720);
+
+                // Bad title
+                ctx.fillStyle = '#000000';
+                ctx.font = 'bold 60px Arial';
+                ctx.fillText("QUARTERLY REPORT 2024", 100, 150);
+
+                // Bad chart (hand drawn looking)
+                ctx.beginPath();
+                ctx.moveTo(100, 500);
+                ctx.lineTo(100, 250);
+                ctx.lineTo(1100, 250); // Axes
+                ctx.strokeStyle = '#333';
+                ctx.lineWidth = 5;
+                ctx.stroke();
+
+                // Squiggly line
+                ctx.beginPath();
+                ctx.moveTo(100, 500);
+                ctx.bezierCurveTo(400, 400, 600, 550, 1100, 100);
+                ctx.strokeStyle = 'blue';
+                ctx.lineWidth = 8;
+                ctx.stroke();
+
+                ctx.fillStyle = 'red';
+                ctx.font = '40px Arial';
+                ctx.fillText("Growth!!", 800, 150);
+
+                const sampleBase64 = cvs.toDataURL('image/jpeg', 0.8);
+                const sampleBlob = base64ToBlobUrl(sampleBase64.split(',')[1], 'image/jpeg');
+
+                await sleep(500);
+
+                setSlides([{
+                    id: 1,
+                    status: 'ORIGINAL',
+                    isSelected: false,
+                    originalImage: sampleBase64,
+                    displayImage: sampleBlob,
+                    bgImage: null,
+                    textData: [],
+                    bgType: 'ORIGINAL'
+                }]);
+
+                setPresentationRatio("16:9");
+                setAppStatus('selecting');
+                setProgress({ current: 0, total: 0, msg: 'Sample Loaded. Try the "Remaster This" button!' });
+            };
+
+            // --- Phase 1: Local Scan (PDF -> Images) ---
+            async function scanPdf(file) {
+                // file is now passed as argument
+                setAppStatus('scanning');
+                setSlides([]);
+                setLogs([]);
+
+                try {
+                    const reader = new FileReader();
+                    reader.onload = async function () {
+                        const typedarray = new Uint8Array(this.result);
+                        const pdf = await pdfjsLib.getDocument(typedarray).promise;
+                        const totalPages = pdf.numPages;
+
+                        // Detect Ratio from Page 1
+                        const page1 = await pdf.getPage(1);
+                        const vp = page1.getViewport({ scale: 1.0 });
+                        const ratioVal = vp.width / vp.height;
+                        const detectedRatio = ratioVal < 1.5 ? "4:3" : "16:9";
+                        setPresentationRatio(detectedRatio);
+                        addLog(`📐 Ratio Detected: ${detectedRatio}`);
+
+                        const scannedSlides = [];
+                        for (let i = 1; i <= totalPages; i++) {
+                            setProgress({ current: i, total: totalPages, msg: `Scanning Page ${i}...` });
+                            try {
+                                const page = await pdf.getPage(i);
+                                const viewport = page.getViewport({ scale: 2.0 });
+                                const canvas = document.createElement('canvas');
+                                canvas.width = viewport.width;
+                                canvas.height = viewport.height;
+                                const ctx = canvas.getContext('2d');
+                                await page.render({ canvasContext: ctx, viewport }).promise;
+                                const base64 = canvas.toDataURL('image/jpeg', 0.8);
+                                const blobUrl = base64ToBlobUrl(base64.split(',')[1], 'image/jpeg');
+
+                                scannedSlides.push({
+                                    id: i,
+                                    status: 'ORIGINAL', // ORIGINAL, PROCESSING, REMASTERED, ERROR
+                                    isSelected: false,
+                                    originalImage: base64,
+                                    displayImage: blobUrl, // Init with original
+                                    bgImage: null, // Filled only if remastered
+                                    textData: [], // Filled only if remastered
+                                    bgType: 'ORIGINAL'
+                                });
+                            } catch (e) {
+                                addLog(`Scan Error Page ${i}: ${e.message}`);
+                            }
+                        }
+                        setSlides(scannedSlides);
+                        setAppStatus('selecting'); // Move to selection phase
+                        setProgress({ current: 0, total: 0, msg: 'Select slides to remaster.' });
+                        addLog(`Scan Complete. ${scannedSlides.length} slides ready.`);
+                    };
+                    reader.readAsArrayBuffer(file);
+                } catch (e) {
+                    addLog(`Critical Scan Error: ${e.message}`);
+                    setAppStatus('idle');
+                }
+            }
+
+            // --- Phase 2: Selection Logic ---
+            const toggleSelection = (id) => {
+                setSlides(prev => prev.map(s => s.id === id ? { ...s, isSelected: !s.isSelected } : s));
+            };
+
+            const toggleAll = () => {
+                const newState = !selectAll;
+                setSelectAll(newState);
+                setSlides(prev => prev.map(s => ({ ...s, isSelected: newState })));
+            };
+
+            // --- UX: Auto-Save / Restore ---
+            // --- UX: Auto-Save / Restore (IndexedDB) ---
+            // Helper: Simple Promisified IndexedDB
+            const dbName = 'NotebookLM_Remaster_DB';
+            const storeName = 'sessions';
+
+            const openDB = () => {
+                return new Promise((resolve, reject) => {
+                    const request = indexedDB.open(dbName, 1);
+                    request.onupgradeneeded = (event) => {
+                        const db = event.target.result;
+                        if (!db.objectStoreNames.contains(storeName)) {
+                            db.createObjectStore(storeName, { keyPath: 'id' });
+                        }
+                    };
+                    request.onsuccess = (event) => resolve(event.target.result);
+                    request.onerror = (event) => reject(event.target.error);
+                });
+            };
+
+            const saveSessionToIDB = async (data) => {
+                try {
+                    const db = await openDB();
+                    return new Promise((resolve, reject) => {
+                        const tx = db.transaction(storeName, 'readwrite');
+                        const store = tx.objectStore(storeName);
+                        // We use a fixed ID 'current_session' to overwrite
+                        store.put({ id: 'current_session', slides: data, timestamp: Date.now() });
+                        tx.oncomplete = () => resolve();
+                        tx.onerror = () => reject(tx.error);
+                    });
+                } catch (e) {
+                    console.error("IDB Save Error:", e);
+                }
+            };
+
+            const loadSessionFromIDB = async () => {
+                try {
+                    const db = await openDB();
+                    return new Promise((resolve, reject) => {
+                        const tx = db.transaction(storeName, 'readonly');
+                        const store = tx.objectStore(storeName);
+                        const request = store.get('current_session');
+                        request.onsuccess = () => resolve(request.result);
+                        request.onerror = () => reject(request.error);
+                    });
+                } catch (e) {
+                    console.error("IDB Load Error:", e);
+                    return null;
+                }
+            };
+
+            const clearSessionIDB = async () => {
+                const db = await openDB();
+                const tx = db.transaction(storeName, 'readwrite');
+                tx.objectStore(storeName).delete('current_session');
+            };
+
+
+            useEffect(() => {
+                const initRestore = async () => {
+                    const saved = await loadSessionFromIDB();
+                    if (saved && saved.slides && saved.slides.length > 0) {
+                        // Simple restoration check
+                        const restore = window.confirm(`前回の作業セッションが見つかりました (${new Date(saved.timestamp).toLocaleString()})。\n復元しますか？ (キャンセルで新規作成)`);
+                        if (restore) {
+                            // Rehydrate Blob URLs from Base64
+                            const rehydratedSlides = saved.slides.map(s => {
+                                let displayUrl = null;
+                                // 1. Try to restore valid display blob from Base64 sources
+                                if (s.bgImage && s.bgImage.startsWith('data:')) {
+                                    const parts = s.bgImage.split(',');
+                                    const mime = parts[0].match(/:(.*?);/)[1];
+                                    const b64 = parts[1];
+                                    displayUrl = base64ToBlobUrl(b64.trim(), mime);
+                                } else if (s.originalImage && s.originalImage.startsWith('data:')) {
+                                    const parts = s.originalImage.split(',');
+                                    const mime = parts[0].match(/:(.*?);/)[1];
+                                    const b64 = parts[1];
+                                    displayUrl = base64ToBlobUrl(b64, mime);
+                                }
+
+                                return {
+                                    ...s,
+                                    displayImage: displayUrl || s.displayImage // Fallback to whatever was there, though likely broken if blob
+                                };
+                            });
+
+                            setSlides(rehydratedSlides);
+                            setAppStatus('selecting');
+                            addLog("🔄 Session Restored from Auto-Save.");
+                        } else {
+                            clearSessionIDB();
+                        }
+                    }
+                };
+                initRestore();
+            }, []);
+
+            useEffect(() => {
+                if (slides.length > 0) {
+                    // Save to IndexedDB (Async)
+                    saveSessionToIDB(slides);
+                }
+            }, [slides]);
+
+            // --- Helper: Reuseable Vision Analysis ---
+            // --- Helper: Reuseable Vision Analysis ---
+            async function analyzeSlide(base64Image, pageNum) {
+                // Correctly extract MIME type and clean Base64
+                const match = base64Image.match(/^data:(image\/[a-zA-Z+]+);base64,(.+)$/);
+                const mimeType = match ? match[1] : "image/jpeg";
+                const cleanData = match ? match[2] : base64Image.split(',')[1] || base64Image;
+
+                const visionPrompt = `
+                You are a Forensic Design Analyst. Your task is to deconstruct this slide image into a STRICT "Blueprint" (DNA).
+                [MANDATORY ANALYSIS PROTOCOLS]
+                1. SPATIAL LAYOUT & NEGATIVE SPACE: Identify grid and "VOID" (Negative Space) for text.
+                2. MEDIUM DNA: "Vector Art", "3D Render", "Corporate Memphis", etc.
+                3. PHYSICS: Lighting, Texture.
+                4. COLOR ROLES: Background, Accent.
+
+                Return JSON: { "design_dna": { "medium_tag": "", "composition_prompt": "", "lighting_modifier": "", "color_palette": "" }, "texts": [{ "content": "", "role": "Title|Body|Caption", "color_hex": "", "x_pct": number, "y_pct": number, "width_pct": number }] }
+                `;
+
+                try {
+                    const res = await callGemini(modelConfig.vision, {
+                        contents: [{ parts: [{ text: visionPrompt }, { inline_data: { mime_type: mimeType, data: cleanData } }] }]
+                    });
+                    const parsed = safeJsonParse(res.candidates[0].content.parts[0].text);
+                    if (parsed) return parsed;
+                } catch (e) {
+                    console.error(`Analysis failed for ${pageNum}`, e);
+                }
+                return { texts: [], design_dna: { medium_tag: "Corporate", composition_prompt: "", lighting_modifier: "", color_palette: "" } };
+            }
+
+            // --- Phase 3: AI Processing (Selected Only) ---
+            async function performRemaster(slide) {
+                // Correctly extract MIME type and clean Base64
+                const match = slide.originalImage.match(/^data:(image\/[a-zA-Z+]+);base64,(.+)$/);
+                const mimeType = match ? match[1] : "image/jpeg";
+                const cleanData = match ? match[2] : slide.originalImage.split(',')[1];
+
+                // Step 1: Analysis
+                setProgress(p => ({ ...p, msg: `🔍 Analyzing layout & structure (Slide ${slide.id})...` }));
+                const analysis = await analyzeSlide(slide.originalImage, slide.id);
+
+                // Step 2: Generation Setup
+                setProgress(p => ({ ...p, msg: `🎨 Reconstructing background DNA...` }));
+                const cleanPlatePrompt = `
+                [TASK] Create a professional 4K background for this slide.
+                [CRITICAL] REMOVE ALL TEXT. The output must be a clean background image ready for text overlay.
+                [STYLE] Modern, Premium, High Definition. DNA: ${analysis.design_dna.medium_tag}. Lighting: ${analysis.design_dna.lighting_modifier}.
+                [CONSTRAINTS] Maintain original layout and Aspect Ratio (${presentationRatio}). High Fidelity, No Artifacts, Photorealistic or Vector Art (matching original style).
+                `;
+
+                // Step 3: AI Painting
+                setProgress(p => ({ ...p, msg: `✨ Polishing pixels & removing artifacts...` }));
+                const imgRes = await callGemini(modelConfig.image, {
+                    contents: [{
+                        parts: [
+                            { text: cleanPlatePrompt },
+                            { inline_data: { mime_type: mimeType, data: cleanData } }
+                        ]
+                    }],
+                    generationConfig: {
+                        responseModalities: ["TEXT", "IMAGE"]
+                    }
+                });
+
+                const imgPart = imgRes.candidates?.[0]?.content?.parts?.find(p => p.inline_data || p.inlineData);
+                if (!imgPart) throw new Error("Image Generation Failed");
+
+                const data = imgPart.inline_data || imgPart.inlineData;
+                const finalBgImage = `data:${data.mime_type || data.mimeType}; base64, ${data.data} `;
+                const finalBlobUrl = base64ToBlobUrl(data.data, data.mime_type || data.mimeType);
+
+                return {
+                    bgImage: finalBgImage,
+                    displayImage: finalBlobUrl,
+                    bgType: 'AI_REMASTERED',
+                    textData: analysis.texts || []
+                };
+            }
+
+            async function runBatchRemaster() {
+                const targets = slides.filter(s => s.isSelected);
+                if (targets.length === 0) return alert("No slides selected for remastering.");
+
+                setAppStatus('processing');
+
+                for (let i = 0; i < targets.length; i++) {
+                    const slide = targets[i];
+                    setProgress({ current: i + 1, total: targets.length, msg: `Remastering Phase: Slide ${slide.id}...` });
+
+                    // Mark as processing
+                    setSlides(prev => prev.map(s => s.id === slide.id ? { ...s, status: 'PROCESSING' } : s));
+
+                    try {
+                        const result = await performRemaster(slide);
+                        setSlides(prev => prev.map(s => s.id === slide.id ? {
+                            ...s,
+                            ...result,
+                            status: 'REMASTERED'
+                        } : s));
+                        addLog(`✅ Slide ${slide.id} Remastered.`);
+                    } catch (e) {
+                        addLog(`❌ Slide ${slide.id} Failed: ${e.message} `);
+                        setSlides(prev => prev.map(s => s.id === slide.id ? { ...s, status: 'ERROR' } : s));
+                    }
+                    // Rate limit buffer
+                    await sleep(1000);
+                }
+
+                setAppStatus('done');
+                addLog('Batch Processing Complete.');
+            }
+
+            // --- Handlers & Helpers ---
+            const handleApplyRedesign = async (newImageBase64) => {
+                if (!redesignTarget) {
+                    console.error("No redesign target found");
+                    return;
+                }
+
+                console.log("Applying redesign with image length:", newImageBase64 ? newImageBase64.length : "null");
+
+                if (!newImageBase64 || typeof newImageBase64 !== 'string') {
+                    console.error("Invalid image data for apply", newImageBase64);
+                    alert("Error: Invalid image data. Please try again.");
+                    return;
+                }
+
+                // If this is an ORIGINAL slide being edited for the first time, WE MUST EXTRACT TEXT
+                // otherwise the user gets a background with no text overlay.
+                let detectedTexts = redesignTarget.textData || [];
+                if (detectedTexts.length === 0 && redesignTarget.status === 'ORIGINAL') {
+                    addLog(`📝 Analyzing Text for Slide ${redesignTarget.id}(First Edit)...`);
+                    const rawBase64 = redesignTarget.originalImage.split(',')[1];
+                    const analysis = await analyzeSlide(rawBase64, redesignTarget.id);
+                    detectedTexts = analysis.texts;
+                }
+
+                setSlides(prevSlides => prevSlides.map(s => {
+                    if (s.id === redesignTarget.id) {
+                        const match = newImageBase64.match(/:(.*?);/);
+                        if (!match) return s;
+                        const mime = match[1];
+                        const bin = atob(newImageBase64.split(',')[1]);
+                        const buf = new Uint8Array(bin.length).map((_, i) => bin.charCodeAt(i));
+                        const newBlobUrl = URL.createObjectURL(new Blob([buf], { type: mime }));
+
+                        return {
+                            ...s,
+                            bgImage: newImageBase64,
+                            displayImage: newBlobUrl,
+                            textData: detectedTexts, // Ensure text is included
+                            status: 'REMASTERED',
+                            bgType: 'USER_REDESIGNED'
+                        };
+                    }
+                    return s;
+                }));
+                setRedesignTarget(null);
+                addLog(`✨ Slide ${redesignTarget.id} Updated by User.`);
+            };
+
+            const generatePptx = () => {
+                const pptx = new PptxGenJS();
+                pptx.layout = presentationRatio === "4:3" ? 'LAYOUT_4x3' : 'LAYOUT_16x9';
+
+                slides.forEach(slide => {
+                    const s = pptx.addSlide();
+
+                    // Logic: If ORIGINAL, just the image. If REMASTERED, clean plate + text.
+                    const isOriginal = slide.status === 'ORIGINAL' || !slide.bgImage;
+                    const bgSource = comesFromOriginal(slide) ? slide.originalImage : slide.bgImage;
+
+                    s.addImage({ data: bgSource, x: 0, y: 0, w: '100%', h: '100%', sizing: { type: 'contain', w: '100%', h: '100%' } });
+
+                    if (!isOriginal && slide.textData) {
+                        slide.textData.forEach(t => {
+                            const isTitle = t.role === 'Title';
+                            const fontSize = isTitle ? 32 : 14;
+                            const isBold = isTitle;
+                            s.addText(t.content, {
+                                x: `${t.x_pct}% `, y: `${t.y_pct}% `, w: `${t.width_pct}% `, h: 1,
+                                fontSize: fontSize, color: t.color_hex ? t.color_hex.replace('#', '') : '363636', bold: isBold,
+                                fill: { color: 'FFFFFF', transparency: 100 } // Transparent background for text
+                            });
+                        });
+                    }
+                });
+                pptx.writeFile({ fileName: `Remastered_Select_${Date.now()}.pptx` });
+            };
+
+            const comesFromOriginal = (s) => s.status === 'ORIGINAL' || !s.bgImage;
+
+            return (
+                <div className="min-h-screen text-zinc-900 p-6 md:p-12 flex flex-col items-center max-w-7xl mx-auto font-sans bg-zinc-50">
+                    {/* Header: Clean & Minimal */}
+                    <header className="w-full flex justify-between items-center mb-10 pb-6 border-b border-zinc-200">
+                        <div className="flex flex-col">
+                            <div className="flex items-center gap-3 mb-1">
+                                <span className="text-zinc-900 text-xl font-bold">●</span>
+                                <h1 className="text-4xl font-bold tracking-tight text-zinc-900">NotebookLM <span className="font-light text-zinc-400">Remaster</span></h1>
+                            </div>
+                            <p className="text-sm text-zinc-500 pl-7 leading-relaxed">AI FORCE MULTIPLIER • GEMINI 3 PRO</p>
+                        </div>
+                        <div className="flex items-center gap-4">
+                            <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full border ${apiKey ? 'bg-zinc-100 border-zinc-200 text-zinc-700' : 'bg-red-50 border-red-200 text-red-600'}`}>
+                                <div className={`w-2 h-2 rounded-full ${apiKey ? 'bg-zinc-900' : 'bg-red-500'}`}></div>
+                                <span className="text-[10px] font-bold tracking-wider">{apiKey ? 'SYSTEM ONLINE' : 'API KEY REQUIRED'}</span>
+                            </div>
+                        </div>
+                    </header>
+
+                    {/* Main Control Grid: Gestalt Proximity & Common Region */}
+                    <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-8 mb-12 animate-fade-in-up">
+
+                        {/* Left Panel: Inputs & Configuration */}
+                        <div className="md:col-span-5 space-y-6">
+                            <div className="glass p-8 rounded-2xl relative overflow-hidden group">
+                                {/* API Key Section - Simplified & Persisted */}
+                                <div className="mb-6">
+                                    <div className="flex justify-between items-center mb-2">
+                                        <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">System Access</label>
+                                        <div className="flex items-center gap-2">
+                                            {apiKey && <span className="text-[10px] text-zinc-600">● READY</span>}
+                                        </div>
+                                    </div>
+                                    <div className="relative group/input">
+                                        <input
+                                            type="password"
+                                            value={apiKey}
+                                            onChange={handleApiKeyChange}
+                                            className="w-full bg-zinc-50 border border-zinc-200 rounded p-2 pl-8 text-xs text-zinc-800 outline-none focus:border-zinc-400 focus:bg-white transition-all placeholder-zinc-400"
+                                            placeholder="Gemini API Key (Auto-saved)"
+                                        />
+                                        <span className="absolute left-2.5 top-2 text-[10px] text-zinc-400">🔑</span>
+                                    </div>
+                                </div>
+
+                                {/* Import Section: Neutral Canvas */}
+                                <div>
+                                    <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-2 block">02. Source Material</label>
+                                    {appStatus === 'idle' ? (
+                                        <div
+                                            className="border-2 border-dashed border-zinc-200 rounded-xl p-8 text-center cursor-pointer hover:border-zinc-400 hover:bg-zinc-50 transition-all group/drop relative"
+                                            onClick={() => document.getElementById('fileInput').click()}
+                                        >
+                                            <input type="file" id="fileInput" accept="application/pdf, image/*" multiple className="hidden" onChange={(e) => setImportFiles(e.target.files)} />
+                                            <div className="text-4xl mb-4 text-zinc-300 group-hover/drop:text-zinc-600 transition-colors transform group-hover/drop:scale-110 duration-200">📂</div>
+                                            <p className="text-zinc-900 font-bold mb-1">Import PDF or Images</p>
+                                            <p className="text-xs text-zinc-500">{importFiles ? `${importFiles.length} file(s) ready` : "Drag & Drop or Click to Browse"}</p>
+                                        </div>
+                                    ) : (
+                                        <div className="p-6 bg-zinc-50 rounded-xl border border-zinc-200 flex items-center justify-between">
+                                            <div className="flex items-center gap-3">
+                                                <div className="text-2xl">📑</div>
+                                                <div>
+                                                    <p className="font-bold text-zinc-900 text-sm">Source Loaded</p>
+                                                    <p className="text-xs text-zinc-500">{slides.length} Slides Processed</p>
+                                                </div>
+                                            </div>
+                                            <button onClick={() => setAppStatus('idle')} className="text-xs text-zinc-400 hover:text-zinc-700 underline">Reset</button>
+                                        </div>
+                                    )}
+
+                                    {/* Primary CTA: Solid, No Glow */}
+                                    {appStatus === 'idle' && importFiles && apiKey && (
+                                        <button
+                                            onClick={handleStartImport}
+                                            className="mt-6 w-full py-4 bg-zinc-900 text-white font-bold tracking-wide rounded-lg hover:bg-zinc-800 hover:shadow-lg active:scale-[0.99] transition-all btn-base"
+                                        >
+                                            INITIALIZE SCAN SEQUENCE
+                                        </button>
+                                    )}
+
+                                    {/* UX: Onboarding / Empty State Actions */}
+                                    {appStatus === 'idle' && !importFiles && (
+                                        <div className="mt-8 pt-6 border-t border-zinc-200">
+                                            <div className="flex justify-between items-center mb-4">
+                                                <h3 className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">or try now</h3>
+                                            </div>
+                                            <div className="flex gap-4">
+                                                <button
+                                                    onClick={handleLoadSample}
+                                                    className="flex-1 bg-white hover:bg-zinc-50 border border-zinc-200 hover:border-indigo-300 p-3 rounded-lg flex items-center justify-center gap-3 transition-all group shadow-sm hover:shadow-md"
+                                                >
+                                                    <span className="text-xl grayscale group-hover:grayscale-0 transition-all">✨</span>
+                                                    <div className="text-left">
+                                                        <div className="text-xs font-bold text-zinc-700 group-hover:text-indigo-600 transition-colors">Load Sample Slide</div>
+                                                        <div className="text-[10px] text-zinc-400">Test the "Hand-Drawn to Pro" flow</div>
+                                                    </div>
+                                                </button>
+                                            </div>
+
+                                            {/* Visual Flow Hint */}
+                                            <div className="mt-8 flex justify-center items-center gap-4 opacity-30 select-none pointer-events-none">
+                                                <div className="text-center">
+                                                    <div className="w-8 h-10 border border-current rounded flex items-center justify-center">📄</div>
+                                                    <div className="text-[9px] mt-1 font-mono">INPUT</div>
+                                                </div>
+                                                <div className="text-xs">→</div>
+                                                <div className="text-center">
+                                                    <div className="w-10 h-10 border border-current rounded-full flex items-center justify-center">🔮</div>
+                                                    <div className="text-[9px] mt-1 font-mono">AI REMASTER</div>
+                                                </div>
+                                                <div className="text-xs">→</div>
+                                                <div className="text-center">
+                                                    <div className="w-12 h-8 border-2 border-current rounded flex items-center justify-center">🖥️</div>
+                                                    <div className="text-[9px] mt-1 font-mono">4K PPTX</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Right Panel: Mission Control (Status) */}
+                        <div className="md:col-span-7 space-y-4 flex flex-col">
+                            <div className="glass p-1 rounded-2xl flex-1 flex flex-col min-h-[300px]">
+                                <div className="p-4 border-b border-zinc-200 bg-zinc-50 rounded-t-xl flex justify-between items-center">
+                                    <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-2">
+                                        <span className={`w-1.5 h-1.5 rounded-full ${appStatus === 'idle' ? 'bg-zinc-400' : 'bg-indigo-600 animate-pulse'}`}></span>
+                                        System Status
+                                    </span>
+                                    <span className="font-mono text-[10px] text-zinc-400">ID: {Date.now().toString().slice(-6)}</span>
+                                </div>
+
+                                <div className="flex-1 p-8 flex flex-col justify-center items-center text-center relative overflow-hidden">
+                                    {/* Background Graphic */}
+                                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.02)_0%,transparent_70%)] pointer-events-none"></div>
+
+                                    {appStatus === 'idle' ? (
+                                        <div className="text-zinc-600 space-y-2 max-w-sm">
+                                            <div className="text-4xl mb-2 opacity-30 text-zinc-300">📡</div>
+                                            <p className="font-medium text-zinc-700">System Standby</p>
+                                            <p className="text-sm text-zinc-500">Awaiting user configuration. Please provide authentication and source material to begin.</p>
+                                        </div>
+                                    ) : (
+                                        <div className="w-full max-w-md space-y-6 relative z-10">
+                                            <div className="flex justify-between items-end">
+                                                <span className="text-2xl font-bold text-zinc-900 uppercase tracking-tight">{appStatus}</span>
+                                                <span className="font-mono text-zinc-900 text-xl">{Math.round((progress.current / Math.max(progress.total, 1)) * 100)}%</span>
+                                            </div>
+
+                                            {/* Progress Bar (Minimal) */}
+                                            <div className="h-1.5 bg-zinc-100 rounded-full overflow-hidden w-full">
+                                                <div
+                                                    className="h-full bg-indigo-600 transition-all duration-300 ease-out shadow-sm"
+                                                    style={{ width: `${(progress.current / Math.max(progress.total, 1)) * 100}%` }}
+                                                ></div>
+                                            </div>
+
+                                            <div className="bg-white rounded-lg p-3 shadow-md ring-1 ring-black/5 text-left">
+                                                <span className="text-xs text-zinc-400 font-mono block mb-1">$ processing...</span>
+                                                <p className="text-sm text-zinc-800 font-mono animate-pulse">{progress.msg}</p>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Collapsible Logs (Cognitive Load Reduction) */}
+                                <div className="bg-zinc-50 p-2 max-h-32 overflow-y-auto font-mono text-[10px] text-zinc-500 border-t border-zinc-200 mx-2 mb-2 rounded">
+                                    {logs.length > 0 ? logs.map((l, i) => <div key={i} className="py-0.5 border-b border-zinc-200 last:border-0">{l}</div>) : <div className="text-center italic opacity-30">No active logs</div>}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Action Bar (Visible in Selecting/Done) */}
+                    {/* Action Bar (Visible in Selecting/Done) - Fitts' Law Optimization */}
+                    {(appStatus === 'selecting' || appStatus === 'done' || appStatus === 'processing') && (
+                        <div className="sticky top-6 z-40 w-full bg-white/90 backdrop-blur-xl border border-zinc-200 p-4 rounded-2xl shadow-xl flex flex-col md:flex-row justify-between items-center mb-12 animate-fade-in-up">
+
+                            {/* Selection Status */}
+                            <div className="flex items-center gap-6 mb-4 md:mb-0">
+                                <button onClick={toggleAll} className="text-xs font-bold text-zinc-500 hover:text-zinc-900 transition-colors uppercase tracking-wider">
+                                    {selectAll ? '[-] Deselect All' : '[+] Select All'}
+                                </button>
+                                <div className="text-sm font-bold bg-zinc-100 px-3 py-1 rounded-full border border-zinc-200">
+                                    <span className="text-zinc-900">{slides.filter(s => s.isSelected).length}</span> <span className="text-zinc-500">Selected</span>
+                                </div>
+                            </div>
+
+                            {/* Primary Actions */}
+                            <div className="flex gap-4">
+                                {/* Smart Remaster Button: Explicit Selection Only */}
+                                {(() => {
+                                    // Count only SELECTED slides that need remastering
+                                    // Count any SELECTED slides
+                                    const selectedCount = slides.filter(s => s.isSelected).length;
+
+                                    if (slides.length === 0) return null;
+
+                                    if (selectedCount === 0) {
+                                        // Disabled State indicating action needed
+                                        return (
+                                            <button
+                                                disabled
+                                                className="bg-zinc-100 text-zinc-400 font-bold text-xs uppercase tracking-wide px-6 py-3 rounded-lg border border-zinc-200 cursor-not-allowed shadow-none"
+                                            >
+                                                Select Slides to Remaster
+                                            </button>
+                                        );
+                                    }
+
+                                    return (
+                                        <button
+                                            onClick={() => setTimeout(runBatchRemaster, 0)}
+                                            className="bg-zinc-900 hover:bg-violet-600 text-white font-bold text-xs uppercase tracking-wide px-6 py-3 rounded-lg shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all flex items-center gap-2 group animate-in fade-in zoom-in duration-300"
+                                        >
+                                            <span className="text-lg group-hover:rotate-12 transition-transform">✨</span>
+                                            Run Magic Remaster ({selectedCount})
+                                        </button>
+                                    );
+                                })()}
+                                <button
+                                    onClick={generatePptx}
+                                    className="px-8 py-3 bg-white text-zinc-900 text-sm font-bold rounded-lg shadow-sm border border-zinc-200 hover:bg-zinc-50 hover:border-zinc-300 transition-all flex items-center gap-2"
+                                >
+                                    <span>💾</span> EXPORT PPTX
+                                </button>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Slide Grid (Selection Interface) - Miller's Rule (Chunking) & Gestalt Proximity */}
+                    {slides.length > 0 && (
+                        <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 pb-20">
+                            {slides.map((slide) => {
+                                if (slide.status === 'PROCESSING') {
+                                    return <SkeletonSlide key={slide.id} />;
+                                }
+                                return (
+                                    <div
+                                        key={slide.id}
+                                        onClick={() => toggleSelection(slide.id)}
+                                        className={`relative group rounded-xl overflow-hidden cursor-pointer transition-all duration-300 border bg-white ${slide.isSelected
+                                            ? 'border-zinc-900 ring-1 ring-zinc-900/10 shadow-lg'
+                                            : 'border-zinc-200 hover:border-zinc-300 hover:-translate-y-1 hover:shadow-md'
+                                            }`}
+                                    >
+                                        {/* Status Badge */}
+                                        <div className="absolute top-3 right-3 z-20 flex flex-col items-end gap-1">
+                                            <span className={`px-2 py-1 text-[10px] font-bold rounded-md shadow-sm border ${slide.status === 'REMASTERED' ? 'bg-zinc-900 text-white border-zinc-900' :
+                                                slide.status === 'PROCESSING' ? 'bg-blue-500 text-white border-blue-600 animate-pulse' :
+                                                    slide.status === 'ERROR' ? 'bg-red-500 text-white border-red-600' :
+                                                        'bg-white text-zinc-500 border-zinc-200'
+                                                }`}>
+                                                {slide.status}
+                                            </span>
+                                        </div>
+
+                                        {/* Selection Checkbox (Visual) */}
+                                        <div className={`absolute top-3 left-3 z-20 w-6 h-6 rounded-md border flex items-center justify-center transition-all duration-200 shadow-sm ${slide.isSelected
+                                            ? 'bg-zinc-900 border-zinc-900 scale-100'
+                                            : 'bg-white/80 border-zinc-300 text-transparent hover:border-zinc-400'
+                                            }`}>
+                                            {slide.isSelected && <span className="text-white text-sm font-bold">✓</span>}
+                                        </div>
+
+                                        {/* Comparing Image Container */}
+                                        <div
+                                            className="aspect-video w-full bg-zinc-100 relative group/image overflow-hidden"
+                                            onMouseMove={(e) => {
+                                                if (slide.status !== 'REMASTERED') return;
+                                                const rect = e.currentTarget.getBoundingClientRect();
+                                                const x = e.clientX - rect.left;
+                                                const pct = Math.max(0, Math.min(100, (x / rect.width) * 100));
+                                                e.currentTarget.style.setProperty('--compare-pos', `${pct}%`);
+                                            }}
+                                            onMouseLeave={(e) => {
+                                                e.currentTarget.style.setProperty('--compare-pos', '50%');
+                                            }}
+                                            style={{ '--compare-pos': '100%' }} // Default show full remastered
+                                        >
+                                            {/* 1. Underlying: Original (Only if Remastered) */}
+                                            {slide.status === 'REMASTERED' && (
+                                                <img
+                                                    src={slide.originalImage}
+                                                    className="absolute inset-0 w-full h-full object-cover"
+                                                />
+                                            )}
+
+                                            {/* 2. Overlying: New Image (Clipped) */}
+                                            <div
+                                                className={`absolute inset-0 w-full h-full ${slide.status === 'REMASTERED' ? 'compare-clip' : ''}`}
+                                                style={slide.status === 'REMASTERED' ? { clipPath: 'polygon(0 0, var(--compare-pos) 0, var(--compare-pos) 100%, 0 100%)' } : {}}
+                                            >
+                                                <img
+                                                    src={slide.displayImage}
+                                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                                    loading="lazy"
+                                                />
+                                                {/* Text Overlay Hints */}
+                                                {!comesFromOriginal(slide) && slide.textData.map((t, idx) => (
+                                                    <div key={idx} className="absolute border border-blue-500/30 bg-blue-500/5" style={{ left: `${t.x_pct}%`, top: `${t.y_pct}%`, width: `${t.width_pct}%`, height: '10%' }} />
+                                                ))}
+                                            </div>
+
+                                            {/* Slider Handle */}
+                                            {slide.status === 'REMASTERED' && (
+                                                <div
+                                                    className="absolute top-0 bottom-0 w-0.5 bg-white shadow-[0_0_10px_rgba(0,0,0,0.5)] z-10 pointer-events-none"
+                                                    style={{ left: 'var(--compare-pos)' }}
+                                                >
+                                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-white rounded-full shadow-md flex items-center justify-center">
+                                                        <svg className="w-3 h-3 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 9l4-4 4 4m0 6l-4 4-4-4" transform="rotate(90 12 12)" /></svg>
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {/* Hover Actions */}
+                                            <div className="absolute inset-0 bg-white/60 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-3 backdrop-blur-[2px]" onClick={e => e.stopPropagation()}>
+                                                <button
+                                                    onClick={() => setPreviewTarget(slide)}
+                                                    className="w-10 h-10 flex items-center justify-center rounded-full bg-white text-zinc-700 hover:text-black transition-all border border-zinc-200 hover:scale-110 shadow-sm"
+                                                    title="View Fullscreen"
+                                                >
+                                                    🔍
+                                                </button>
+                                                <button
+                                                    onClick={() => { if (!slide.isSelected) toggleSelection(slide.id); setStudioTarget({ ...slide }); }}
+                                                    className="px-4 py-2 rounded-full bg-zinc-900 text-white font-bold text-xs shadow-lg hover:bg-zinc-800 hover:scale-105 transition-all flex items-center gap-1"
+                                                    title="Open Studio"
+                                                >
+                                                    <span>🎨</span> EDIT / AI
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        {/* Footer Info */}
+                                        <div className="p-3 bg-white border-t border-zinc-100 flex justify-between items-center text-[10px] text-zinc-500 font-mono">
+                                            <span>SLIDE {String(slide.id).padStart(2, '0')}</span>
+                                            <span>{slide.originalImage ? 'IMG' : 'RAW'}</span>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    )}
+
+                    {studioTarget && (
+                        <StudioModal
+                            isOpen={!!studioTarget}
+                            slide={studioTarget}
+                            apiKey={apiKey}
+                            modelConfig={modelConfig}
+                            ratio={presentationRatio}
+                            onPreview={setPreviewTarget}
+                            onClose={() => setStudioTarget(null)}
+                            onSave={(newImageBase64, newTextData) => {
+                                setSlides(prev => prev.map(s => s.id === studioTarget.id ? {
+                                    ...s,
+                                    bgImage: newImageBase64, // Combined Image
+                                    displayImage: newImageBase64,
+                                    textData: newTextData,
+                                    status: 'REMASTERED',
+                                    bgType: 'STUDIO_EDITED'
+                                } : s));
+                                setStudioTarget(null);
+                                addLog(`✅ Slide ${studioTarget.id} Studio Edit Saved.`);
+                            }}
+                        />
+                    )}
+
+                    {/* Image Preview Overlay */}
+                    {previewTarget && (
+                        <div
+                            className="fixed inset-0 z-[200] bg-black/95 flex items-center justify-center p-8 animate-in fade-in duration-200 cursor-zoom-out"
+                            onClick={() => setPreviewTarget(null)}
+                        >
+                            <button
+                                className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors z-[210] p-2 hover:bg-white/10 rounded-full"
+                                onClick={() => setPreviewTarget(null)}
+                            >
+                                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" /></svg>
+                            </button>
+                            <img
+                                src={typeof previewTarget === 'string' ? previewTarget : (previewTarget.displayImage || previewTarget.originalImage)}
+                                className="max-w-full max-h-full object-contain rounded shadow-2xl cursor-default"
+                                onClick={e => e.stopPropagation()}
+                            />
+                            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/50 text-xs font-mono bg-black/50 px-4 py-2 rounded-full backdrop-blur-md">
+                                {typeof previewTarget === 'string' ? 'PREVIEW' : `PREVIEW: SLIDE ${String(previewTarget.id).padStart(2, '0')}`}
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>
