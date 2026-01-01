@@ -94,10 +94,30 @@ class LLMClient:
         
         return processed_messages
     
-    def generate_stream(self, provider: str, model: str, messages: List[Dict]) -> Iterator[str]:
+    def generate_stream(self, provider: str, model: str, messages: List[Dict], extra_system_prompt: str = "") -> Iterator[str]:
         """ストリーミング生成（統一インターフェース）"""
+        
+        # extra_system_prompt の注入 (app.pyからの強制結合)
+        current_messages = [m.copy() for m in messages] # Deep copy的に複製
+        if extra_system_prompt:
+            # 枠組みを付けて強化
+            formatted_extra = f"""
+【現在の戦況と絶対ルール】
+{extra_system_prompt}
+-------------------
+"""
+            system_found = False
+            for m in current_messages:
+                if m['role'] == 'system':
+                    # 既存のシステムプロンプトの「前」に結合して最優先事項とする
+                    m['content'] = f"{formatted_extra}\n\n{m['content']}"
+                    system_found = True
+                    break
+            if not system_found:
+                current_messages.insert(0, {"role": "system", "content": formatted_extra})
+
         # マルチモーダル対応
-        processed_messages = self._prepare_multimodal_content(messages, provider)
+        processed_messages = self._prepare_multimodal_content(current_messages, provider)
         
         if provider == "openai":
             yield from self._openai_stream(model, processed_messages)
@@ -184,9 +204,9 @@ class LLMClient:
         except Exception as e:
             yield f"[Claude エラー: {str(e)}]"
     
-    def generate(self, provider: str, model: str, messages: List[Dict]) -> str:
+    def generate(self, provider: str, model: str, messages: List[Dict], extra_system_prompt: str = "") -> str:
         """非ストリーミング生成（後方互換性のため）"""
         result = ""
-        for chunk in self.generate_stream(provider, model, messages):
+        for chunk in self.generate_stream(provider, model, messages, extra_system_prompt):
             result += chunk
         return result

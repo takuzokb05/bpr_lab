@@ -131,6 +131,33 @@ def extract_json(text):
 
 # === ヘルパー関数 ===
 
+def auto_update_board(room_id, messages):
+    """
+    議事録（共通メモリ）を自動更新する
+    議論の最新状態を反映させ、AIの認識ズレを防ぐ
+    """
+    try:
+        # 直近の議論（最大10件）から要約を生成
+        recent_log = "\n".join([f"{m['agent_name']}: {m['content']}" for m in messages[-10:] if m['role'] != 'system'])
+        
+        prompt = f"""
+以下の議論ログから、最新の「決定事項」と「ネクストアクション」を箇条書きでまとめてください。
+Markdown形式で出力せよ。
+
+【議論ログ】
+{recent_log}
+"""
+        # 軽量モデル（デフォルト）で要約
+        summary = llm_client.generate("openai", "gpt-4o-mini", [{"role":"user", "content": prompt}])
+        
+        # DB更新
+        db.update_room_board(room_id, summary)
+        st.toast("✍️ 議事録を自動更新しました", icon="📝")
+        return summary
+    except Exception as e:
+        print(f"Update Board Error: {e}")
+        return None
+
 def generate_agent_response(agent, room_id, messages, room_agents):
     """
     統制ロジックの核（完全版）
@@ -174,40 +201,38 @@ def generate_agent_response(agent, room_id, messages, room_agents):
     # 4. 統合システムプロンプト構築
     member_list = "\n".join([f"- {a['name']} (ID:{a['id']}): {a['role'][:30]}..." for a in room_agents])
     
-    final_system_prompt = f"""
-あなたは【{agent['name']}】です。
-役割: {agent['role']}
-
+    # AIの脳に直接注入する「絶対ルール」
+    extra_system_prompt = f"""
 {goal_text}
 
 {phase_msg}
 
-【現在の合意事項（決定事項）】
+【現在の合意事項（最新の議事録）】
 {board_md}
 
-【参加メンバー】
+【参加メンバー一覧（ID付き）】
 {member_list}
 
 {role_instr}
 
 【ルール】
-- 200文字以内で簡潔に。
-- 議事録（決定事項）と矛盾する発言は禁止。
+- 議事録の内容を蒸し返さず、一歩進んだ議論をしてください。
 """
 
-    # 5. メッセージ構築 (System + Context)
-    # 直近ログのみ渡す（トークン節約＆最新の火種重視）
+    # 5. メッセージ構築 (Systemは llm_client 側で結合されるが、念のためここでも最小限定義)
+    base_system = f"あなたは【{agent['name']}】です。\n役割: {agent['role']}\n200文字以内で簡潔に発言してください。"
+
+    # 直近ログ（最新5件）
     recent_msgs = [m for m in messages if m['role'] != 'system'][-5:]
     clean_history = []
     for m in recent_msgs:
-         # NEXTタグは読む必要はない（すでに制御に使われた）ので消してもいいが、
-         # 文脈として誰を指名したかは重要なので残すか？いや、ノイズになるので消す。
          cln = re.sub(r"\[\[NEXT:.*?\]\]", "", m['content']).strip()
          clean_history.append({"role": m['role'], "content": cln})
 
-    input_msgs = [{"role": "system", "content": final_system_prompt}] + clean_history
+    input_msgs = [{"role": "system", "content": base_system}] + clean_history
     
-    return llm_client.generate(agent['provider'], agent['model'], input_msgs)
+    # llm_client に extra_system_prompt を渡し、脳の最上層に注入させる
+    return llm_client.generate(agent['provider'], agent['model'], input_msgs, extra_system_prompt=extra_system_prompt)
 
 @st.dialog("エージェント管理")
 def manage_agents():
@@ -828,6 +853,7 @@ def render_active_chat(room_id, auto_mode):
     if should_run:
         time.sleep(1.5) # 間を取る
         
+        with container:
             room_agents = db.get_room_agents(room_id)
             if not room_agents: return
 
@@ -889,6 +915,15 @@ def render_active_chat(room_id, auto_mode):
                     
                     # DB保存 (タグ付きのまま保存し、ロジックで利用する)
                     db.add_message(room_id, "assistant", response, next_agent['id'])
+                    
+                    # 議事録自動更新 (3ターンに1回)
+                    # 最新の文脈を反映させる
+                    turn_count = len([m for m in messages if m['role'] == 'assistant']) + 1
+                    if turn_count % 3 == 0:
+                        # 最新のメッセージを含めた状態で更新
+                        # (DBには保存済みだが、messagesリストにはまだないので簡易的に構築)
+                        temp_msgs = messages + [{'role':'assistant', 'content':response, 'agent_name':next_agent['name']}]
+                        auto_update_board(room_id, temp_msgs)
                     
                     # Fragmentリラン (次のターンへ)
                     st.rerun()
