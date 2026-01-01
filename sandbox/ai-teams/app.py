@@ -131,6 +131,15 @@ def extract_json(text):
 def manage_agents():
     tab_new, tab_edit = st.tabs(["➕ 新規作成", "📝 編集・削除"])
     
+    # カテゴリ定義
+    CATEGORIES = {
+        "facilitation": "🎯 ファシリテーション",
+        "logic": "🧠 論理・分析",
+        "creative": "🎨 クリエイティブ",
+        "empathy": "💝 共感・サポート",
+        "specialist": "🔧 スペシャリスト"
+    }
+    
     with tab_new:
         st.subheader("新しいエージェントを作成")
         name = st.text_input("名前", placeholder="例: 論理担当", key="new_name")
@@ -143,11 +152,17 @@ def manage_agents():
         with c2:
             models = MODEL_OPTIONS.get(provider, ["default"])
             model = st.selectbox("モデル", models, key="new_model")
-        color = st.color_picker("イメージカラー", "#3b82f6", key="new_color")
+        
+        c3, c4 = st.columns(2)
+        with c3:
+            color = st.color_picker("イメージカラー", "#3b82f6", key="new_color")
+        with c4:
+            category = st.selectbox("カテゴリ", list(CATEGORIES.keys()), 
+                                   format_func=lambda x: CATEGORIES[x], key="new_category")
         
         if st.button("作成", key="create_btn", type="primary"):
             if name and role:
-                db.create_agent(name, icon, color, role, model, provider)
+                db.create_agent(name, icon, color, role, model, provider, category)
                 st.success(f"{name} を作成しました")
                 time.sleep(1)
                 st.rerun()
@@ -164,14 +179,22 @@ def manage_agents():
             st.divider()
             e_name = st.text_input("名前", value=target['name'], key=f"e_name_{target_id}")
             e_role = st.text_area("役割", value=target['role'], height=150, key=f"e_role_{target_id}")
-            e_provider = st.selectbox("プロバイダー", ["openai", "google", "anthropic"], 
-                                    index=["openai","google","anthropic"].index(target['provider']) if target['provider'] in ["openai","google","anthropic"] else 0,
-                                    key=f"e_prov_{target_id}")
-            e_model = st.selectbox("モデル", MODEL_OPTIONS.get(e_provider, [target['model']]), key=f"e_mod_{target_id}")
+            
+            ec1, ec2 = st.columns(2)
+            with ec1:
+                e_provider = st.selectbox("プロバイダー", ["openai", "google", "anthropic"], 
+                                        index=["openai","google","anthropic"].index(target['provider']) if target['provider'] in ["openai","google","anthropic"] else 0,
+                                        key=f"e_prov_{target_id}")
+            with ec2:
+                e_model = st.selectbox("モデル", MODEL_OPTIONS.get(e_provider, [target['model']]), key=f"e_mod_{target_id}")
+            
+            e_category = st.selectbox("カテゴリ", list(CATEGORIES.keys()),
+                                     index=list(CATEGORIES.keys()).index(target.get('category', 'specialist')) if target.get('category') in CATEGORIES else 4,
+                                     format_func=lambda x: CATEGORIES[x], key=f"e_cat_{target_id}")
             
             c1, c2 = st.columns([1,1])
             if c1.button("💾 保存", key=f"save_{target_id}"):
-                db.update_agent(target_id, e_name, target['icon'], target['color'], e_role, e_model, e_provider)
+                db.update_agent(target_id, e_name, target['icon'], target['color'], e_role, e_model, e_provider, e_category)
                 st.success("更新しました")
                 time.sleep(1)
                 st.rerun()
@@ -191,36 +214,108 @@ with st.sidebar:
     
     # 新規作成ボタン (最上部・最大)
     # 新規作成ダイアログ & ボタン
-    @st.dialog("＋ 新しい会議室を作成")
+    @st.dialog("＋ 新しい会議室を作成", width="large")
     def create_new_room_dialog():
         default_title = f"会議 {datetime.now().strftime('%m/%d %H:%M')}"
         title = st.text_input("会議名", value=default_title)
         
         all_agents = db.get_all_agents()
-        # デフォルトエージェントを選択状態に
+        
+        # カテゴリ定義
+        CATEGORIES = {
+            "recommended": "⭐ おすすめ",
+            "facilitation": "🎯 ファシリテーション",
+            "logic": "🧠 論理・分析",
+            "creative": "🎨 クリエイティブ",
+            "empathy": "💝 共感・サポート",
+            "specialist": "🔧 スペシャリスト"
+        }
+        
+        # カテゴリ別にエージェントを整理
+        categorized_agents = {cat: [] for cat in CATEGORIES.keys()}
+        
+        # デフォルトエージェント（おすすめ）
         default_ids = [a['id'] for a in all_agents if a.get('system_default')]
+        categorized_agents["recommended"] = [a for a in all_agents if a.get('system_default')]
         
-        agent_options = {a['id']: f"{a['icon']} {a['name']}" for a in all_agents}
+        # カテゴリ別に分類
+        for agent in all_agents:
+            cat = agent.get('category', 'specialist')
+            if cat in categorized_agents:
+                categorized_agents[cat].append(agent)
         
-        selected_ids = st.multiselect(
-            "参加メンバー",
-            options=list(agent_options.keys()),
-            format_func=lambda x: agent_options[x],
-            default=default_ids
-        )
+        # 選択状態を保持
+        if 'selected_agent_ids' not in st.session_state:
+            st.session_state.selected_agent_ids = set(default_ids)
+        
+        st.markdown("### 👥 チームメンバーを選択")
+        st.caption("カテゴリごとにタブで整理されています。複数選択可能です。")
+        
+        # タブでカテゴリ分け (Hick's Law対策)
+        tabs = st.tabs([CATEGORIES[cat] for cat in CATEGORIES.keys()])
+        
+        for i, (cat_key, cat_name) in enumerate(CATEGORIES.items()):
+            with tabs[i]:
+                agents_in_cat = categorized_agents[cat_key]
+                
+                if not agents_in_cat:
+                    st.info(f"このカテゴリにはエージェントがいません")
+                    continue
+                
+                # グリッド表示 (1行に3枚のカード)
+                cols = st.columns(3)
+                for j, agent in enumerate(agents_in_cat):
+                    with cols[j % 3]:
+                        # カード形式で表示
+                        is_selected = agent['id'] in st.session_state.selected_agent_ids
+                        
+                        # チェックボックスの状態変更を検知
+                        selected = st.checkbox(
+                            f"{agent['icon']} **{agent['name']}**",
+                            value=is_selected,
+                            key=f"agent_select_{cat_key}_{agent['id']}"
+                        )
+                        
+                        # 役割の簡易説明
+                        role_preview = agent['role'][:60] + "..." if len(agent['role']) > 60 else agent['role']
+                        st.caption(role_preview)
+                        
+                        # 選択状態を更新
+                        if selected and agent['id'] not in st.session_state.selected_agent_ids:
+                            st.session_state.selected_agent_ids.add(agent['id'])
+                        elif not selected and agent['id'] in st.session_state.selected_agent_ids:
+                            st.session_state.selected_agent_ids.discard(agent['id'])
+        
+        # 選択中のメンバー表示
+        st.divider()
+        selected_count = len(st.session_state.selected_agent_ids)
+        st.markdown(f"### 選択中: {selected_count}名")
+        
+        if selected_count > 0:
+            selected_agents = [a for a in all_agents if a['id'] in st.session_state.selected_agent_ids]
+            cols_display = st.columns(min(selected_count, 6))
+            for idx, agent in enumerate(selected_agents[:6]):
+                with cols_display[idx]:
+                    st.markdown(f"{agent['icon']}")
+                    st.caption(agent['name'])
+            if selected_count > 6:
+                st.caption(f"他 {selected_count - 6}名")
         
         first_prompt = st.text_area("最初の指示 (任意)", placeholder="例: 今期のマーケティング施策についてブレストしたい")
         
         if st.button("🚀 会議を開始", type="primary", use_container_width=True):
-            # create_room(title, description, agent_ids)
-            # descriptionをpromptとして保存
-            new_id = db.create_room(title, first_prompt, selected_ids)
-            
-            if first_prompt:
-                db.add_message(new_id, "user", first_prompt)
-            
-            st.session_state.current_room_id = new_id
-            st.rerun()
+            if len(st.session_state.selected_agent_ids) == 0:
+                st.error("少なくとも1名のエージェントを選択してください")
+            else:
+                new_id = db.create_room(title, first_prompt, list(st.session_state.selected_agent_ids))
+                
+                if first_prompt:
+                    db.add_message(new_id, "user", first_prompt)
+                
+                # 選択状態をリセット
+                st.session_state.selected_agent_ids = set(default_ids)
+                st.session_state.current_room_id = new_id
+                st.rerun()
 
     if st.button("＋ 新しい会議室", type="primary", use_container_width=True, key="sidebar_new_room_btn"):
         create_new_room_dialog()
