@@ -129,50 +129,89 @@ def extract_json(text):
 # ==========================================
 # === ヘルパー関数 ===
 
-def build_hierarchical_context(room_id, all_messages):
-    """
-    階層型コンテキストを構築
-    1. 不動のゴール: 最初のユーザーメッセージ
-    2. 決定事項: 現在のボード内容
-    3. 直近の文脈: 最新3件
-    """
-    if not all_messages:
-        return []
-        
-    # 1. 不動のゴール（最初のユーザー発言）
-    first_msg = next((m for m in all_messages if m['role'] == 'user'), None)
-    goal_text = f"【プロジェクトのゴール】\n{first_msg['content']}" if first_msg else "【プロジェクトのゴール】\n議題はまだ設定されていません。"
-    
-    # 2. 決定事項（ボード内容）
-    room = db.get_room(room_id)
-    board_text = f"【現在の決定事項・議事録】\n{room['board_content']}" if room and room['board_content'] else "【現在の決定事項・議事録】\n特になし"
-    
-    # 3. 直近の文脈（最新3件 + 添付ファイル）
-    # systemメッセージは除外
-    chat_msgs = [m for m in all_messages if m['role'] != 'system'][-3:]
-    
-    context_messages = []
-    
-    # システムプロンプトとして構造化情報を注入
-    structured_system = f"""{goal_text}\n\n{board_text}\n\nこれらを踏まえ、直近の会話の流れに従って発言してください。"""
-    context_messages.append({"role": "system", "content": structured_system})
-    
-    # 直近メッセージを追加（添付ファイル情報も保持）
-    for m in chat_msgs:
-        msg_data = {"role": m['role'], "content": m['content']}
-        if m.get('attachments'): msg_data['attachments'] = m['attachments']
-        context_messages.append(msg_data)
-        
-    return context_messages
+# === ヘルパー関数 ===
 
-def get_phase_instruction(turn_count):
-    """ターン数に応じたフェーズ指示を返す"""
+def generate_agent_response(agent, room_id, messages, room_agents):
+    """
+    エージェントの応答を生成（統制ロジックの中核）
+    1. 議事録の取得（共通メモリ）
+    2. フェーズ情報の取得（アジェンダ制御）
+    3. 階層型プロンプトの構築
+    4. LLM実行
+    """
+    # 1. 議事録取得（共通メモリ）
+    room = db.get_room(room_id)
+    board_content = room.get('board_content', "特になし")
+    
+    # 2. フェーズ制御（アジェンダ管理）
+    turn_count = len([m for m in messages if m['role'] == 'assistant'])
     if turn_count <= 5:
-        return "【現在のフェーズ: 1. 発散・ブレスト】\n質より量を重視してください。批判は控え、アイデアを広げてください。"
-    elif turn_count <= 10:
-        return "【現在のフェーズ: 2. 選別・検証】\n実現可能性、コスト、リスクの観点からアイデアを絞り込んでください。"
+        phase_msg = "【現在のフェーズ: 1. 発散・ブレスト】\n質より量を重視してください。批判は控え、アイデアを広げてください。"
+    elif turn_count <= 12:
+        phase_msg = "【現在のフェーズ: 2. 選別・検証】\n実現可能性、コスト、リスクの観点からアイデアを絞り込んでください。"
     else:
-        return "【現在のフェーズ: 3. 収束・具体化】\n議論をまとめ、次の具体的なアクションプラン（Who/What/When）を決定してください。"
+        phase_msg = "【現在のフェーズ: 3. 収束・具体化】\n議論をまとめ、次の具体的なToDoアクションプランを決定してください。"
+        
+    # 3. コンテキスト構築（階層型）
+    first_msg = next((m for m in messages if m['role'] == 'user'), None)
+    goal_text = f"【プロジェクトのゴール】\n{first_msg['content']}" if first_msg else "議題未設定"
+    
+    # モデレーター判定
+    is_moderator = agent.get('category') == 'facilitation'
+    
+    # モデレーター用指示
+    mod_instr = ""
+    if is_moderator:
+        mod_instr = """
+あなたは進行役ですが、単に順番を回すだけでは不十分です。
+1. フェーズに合わせて議論を誘導してください。
+2. メンバーの発言に対し、別の視点を持つメンバー（例：アクセル役の意見にブレーキ役）を指名し、「発想の衝突」や「深掘り」を演出してください。
+3. 文末に必ず `[[NEXT: agent_id]]` を付与してバトンを渡してください。
+"""
+    else:
+        mod_instr = """
+1. 議事録（決定事項）の内容は「前提事実」として認識し、単になぞるような発言は避けてください。
+2. 直近の会話（最新の火種）に対して、あなたの専門性から『Yes, and（肯定して拡げる）』または『No, because（反論して深める）』で鋭く反応してください。
+3. 必要であれば、次に意見を聞きたい人を `[[NEXT: agent_id]]` で指名できます（指名なしならモデレーターに返してください）。
+"""
+    
+    # 参加者リスト
+    member_list = "\n".join([f"- {a['name']} (ID:{a['id']}): {a['role'][:30]}..." for a in room_agents])
+
+    system_prompt = f"""
+あなたは【{agent['name']}】です。
+役割: {agent['role']}
+
+{phase_msg}
+
+【現在の合意事項（決定事項）】
+{board_content}
+
+【現在の会議参加メンバー】
+{member_list}
+
+{mod_instr}
+
+【発言ルール】
+- 簡潔に発言してください（200文字以内）
+- 自分の役割（{agent.get('category', 'specialist')}）に徹してください。
+- 議事録の内容を蒸し返さず、直近の会話に反応してください。
+- 最後に必ず `[[NEXT: 次の話者のID]]` を出力してバトンを渡してください。
+"""
+
+    context_msgs = [{"role": "system", "content": system_prompt}]
+    
+    # 直近ログ（最新5件）
+    recent_msgs = [m for m in messages if m['role'] != 'system'][-5:]
+    for m in recent_msgs:
+        # NEXTタグを除去して入力
+        clean_content = re.sub(r"\[\[NEXT:.*?\]\]", "", m['content']).strip()
+        msg_data = {"role": m['role'], "content": clean_content}
+        if m.get('attachments'): 
+            msg_data['attachments'] = m['attachments']
+        context_msgs.append(msg_data)
+        
+    return llm_client.generate(agent['provider'], agent['model'], context_msgs)
 
 @st.dialog("エージェント管理")
 def manage_agents():
@@ -824,58 +863,8 @@ def render_active_chat(room_id, auto_mode):
                 ph.markdown(f":grey[{next_agent['name']} が思考中...]")
                 
                 try:
-                    # --- 2. 階層型コンテキスト構築 ---
-                    context = build_hierarchical_context(room_id, messages)
-                    
-                    # --- 3. フェーズ制御 & プロンプト注入 ---
-                    turn_count = len([m for m in messages if m['role'] == 'assistant'])
-                    phase_instr = get_phase_instruction(turn_count)
-                    
-                    # 参加者リスト
-                    member_list = "\n".join([f"- {a['name']} (ID:{a['id']}): {a['role'][:30]}..." for a in room_agents])
-                    
-                    # システムプロンプト作成
-                    is_moderator = next_agent.get('category') == 'facilitation'
-                    
-                    # モデレーター用追加指示
-                    mod_instr = ""
-                    if is_moderator:
-                        mod_instr = """
-あなたは進行役ですが、単に順番を回すだけでは不十分です。
-1. フェーズに合わせて議論を誘導してください。
-2. メンバーの発言に対し、別の視点を持つメンバー（例：アクセル役の意見にブレーキ役）を指名し、「発想の衝突」や「深掘り」を演出してください。
-3. 文末に必ず `[[NEXT: agent_id]]` を付与してください。
-"""
-                    else:
-                        mod_instr = """
-1. 議事録（決定事項）の内容は「前提事実」として認識し、単になぞるような発言は避けてください。
-2. 直近の会話（最新の火種）に対して、あなたの専門性から『Yes, and（肯定して拡げる）』または『No, because（反論して深める）』で鋭く反応してください。
-3. 必要であれば、次に意見を聞きたい人を `[[NEXT: agent_id]]` で指名できます（指名なしならモデレーターに返してください）。
-"""
-                    
-                    sys_prompt = f"""
-あなたは【{next_agent['name']}】です。
-役割: {next_agent['role']}
-
-{phase_instr}
-
-【現在の会議参加メンバー】
-{member_list}
-
-{mod_instr}
-
-【発言ルール】
-- 簡潔に発言してください（200文字以内）
-- 自分の役割（{next_agent.get('category', 'specialist')}）に徹してください。
-- 文脈（ゴールと決定事項）を完全に把握し、"今" 話すべきことに集中してください。
-- 最後に必ず `[[NEXT: 次の話者のID]]` を出力してバトンを渡してください。
-"""
-                    
-                    # システムメッセージを先頭に追加
-                    input_msgs = [{"role": "system", "content": sys_prompt}] + context
-                    
-                    # LLM呼び出し
-                    response = llm_client.generate(next_agent['provider'], next_agent['model'], input_msgs)
+                    # 統合された統制ロジック関数を呼び出し
+                    response = generate_agent_response(next_agent, room_id, messages, room_agents)
                     
                     # UX: 完了トースト
                     st.toast(f"{next_agent['name']} が発言しました", icon="✅")
