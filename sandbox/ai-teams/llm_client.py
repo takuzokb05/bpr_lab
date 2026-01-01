@@ -1,6 +1,6 @@
 """
 AI Teams - LLM Client Wrapper
-各社APIの統一インターフェース（ストリーミング対応）
+各社APIの統一インターフェース（ストリーミング + マルチモーダル対応）
 """
 import openai
 import anthropic
@@ -9,6 +9,8 @@ import warnings
 warnings.filterwarnings('ignore', category=FutureWarning, module='google.generativeai')
 
 from typing import List, Dict, Iterator, Optional
+import base64
+import json
 
 class LLMClient:
     """LLM APIの統一クライアント"""
@@ -24,14 +26,85 @@ class LLMClient:
         if api_keys.get("anthropic"):
             self.anthropic_client = anthropic.Anthropic(api_key=api_keys["anthropic"])
     
+    def _prepare_multimodal_content(self, messages: List[Dict], provider: str) -> List[Dict]:
+        """マルチモーダルコンテンツの準備（プロバイダー別）"""
+        processed_messages = []
+        
+        for msg in messages:
+            # attachmentsがある場合は処理
+            if msg.get('attachments'):
+                try:
+                    attachments = json.loads(msg['attachments']) if isinstance(msg['attachments'], str) else msg['attachments']
+                    
+                    if provider == "openai":
+                        # OpenAI形式: content配列
+                        content_parts = [{"type": "text", "text": msg['content']}]
+                        for att in attachments:
+                            if att['type'].startswith('image/'):
+                                content_parts.append({
+                                    "type": "image_url",
+                                    "image_url": {
+                                        "url": f"data:{att['type']};base64,{att['data']}"
+                                    }
+                                })
+                        processed_messages.append({
+                            "role": msg['role'],
+                            "content": content_parts
+                        })
+                    
+                    elif provider == "anthropic":
+                        # Anthropic形式: content配列
+                        content_parts = []
+                        for att in attachments:
+                            if att['type'].startswith('image/'):
+                                # 画像タイプを変換
+                                media_type = att['type']
+                                content_parts.append({
+                                    "type": "image",
+                                    "source": {
+                                        "type": "base64",
+                                        "media_type": media_type,
+                                        "data": att['data']
+                                    }
+                                })
+                        content_parts.append({"type": "text", "text": msg['content']})
+                        processed_messages.append({
+                            "role": msg['role'],
+                            "content": content_parts
+                        })
+                    
+                    elif provider == "google":
+                        # Gemini形式: テキストに画像情報を追加
+                        # 注: Geminiは別途処理が必要
+                        processed_messages.append({
+                            "role": msg['role'],
+                            "content": msg['content'],
+                            "attachments": attachments
+                        })
+                    
+                except Exception as e:
+                    # エラー時はテキストのみ
+                    processed_messages.append({
+                        "role": msg['role'],
+                        "content": msg['content'] + f"\n[添付ファイル処理エラー: {e}]"
+                    })
+            else:
+                # 添付なしの場合はそのまま
+                processed_messages.append(msg)
+        
+        return processed_messages
+    
     def generate_stream(self, provider: str, model: str, messages: List[Dict]) -> Iterator[str]:
         """ストリーミング生成（統一インターフェース）"""
+        # マルチモーダル対応
+        processed_messages = self._prepare_multimodal_content(messages, provider)
+        
         if provider == "openai":
-            yield from self._openai_stream(model, messages)
+            yield from self._openai_stream(model, processed_messages)
         elif provider == "google":
-            yield from self._google_stream(model, messages)
+            yield from self._google_stream(model, processed_messages)
         elif provider == "anthropic":
-            yield from self._anthropic_stream(model, messages)
+            yield from self._anthropic_stream(model, processed_messages)
         else:
             yield f"[エラー: 不明なプロバイダー {provider}]"
     
@@ -58,13 +131,32 @@ class LLMClient:
         try:
             model_instance = genai.GenerativeModel(model)
             
-            # メッセージ形式を変換
-            prompt = "\n".join([f"{m['role']}: {m['content']}" for m in messages])
+            # 画像がある場合は特別処理
+            has_images = any(msg.get('attachments') for msg in messages)
             
-            response = model_instance.generate_content(
-                prompt,
-                stream=True
-            )
+            if has_images:
+                # 最後のメッセージに画像がある場合
+                last_msg = messages[-1]
+                if last_msg.get('attachments'):
+                    import PIL.Image
+                    import io
+                    
+                    parts = [last_msg['content']]
+                    for att in last_msg['attachments']:
+                        if att['type'].startswith('image/'):
+                            img_bytes = base64.b64decode(att['data'])
+                            img = PIL.Image.open(io.BytesIO(img_bytes))
+                            parts.append(img)
+                    
+                    response = model_instance.generate_content(parts, stream=True)
+                else:
+                    # メッセージ形式を変換
+                    prompt = "\n".join([f"{m['role']}: {m['content']}" for m in messages])
+                    response = model_instance.generate_content(prompt, stream=True)
+            else:
+                # メッセージ形式を変換
+                prompt = "\n".join([f"{m['role']}: {m['content']}" for m in messages])
+                response = model_instance.generate_content(prompt, stream=True)
             
             for chunk in response:
                 if chunk.text:

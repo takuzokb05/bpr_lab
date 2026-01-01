@@ -624,6 +624,37 @@ def render_active_chat(room_id, auto_mode):
                 # ヘッダー
                 st.markdown(f"<div class='agent-header'><span class='agent-name'>{msg.get('agent_name', 'User')}</span><span class='agent-role'>({r_name[:15]}...)</span></div>", unsafe_allow_html=True)
                 
+                # 添付ファイルの表示
+                if msg.get('attachments'):
+                    import base64
+                    try:
+                        attachments = json.loads(msg['attachments'])
+                        for att in attachments:
+                            file_name = att.get('name', 'file')
+                            file_type = att.get('type', '')
+                            file_data = att.get('data', '')
+                            
+                            # 画像の場合は表示
+                            if file_type.startswith('image/'):
+                                st.image(base64.b64decode(file_data), caption=file_name, use_container_width=True)
+                            # PDFの場合はダウンロードリンク
+                            elif file_type == 'application/pdf':
+                                st.markdown(f"📄 **{file_name}** ({att.get('size', 0) // 1024} KB)")
+                                st.download_button(
+                                    label="PDFをダウンロード",
+                                    data=base64.b64decode(file_data),
+                                    file_name=file_name,
+                                    mime=file_type,
+                                    key=f"download_{msg['id']}_{file_name}"
+                                )
+                            # テキストファイルの場合は内容プレビュー
+                            elif file_type.startswith('text/'):
+                                text_content = base64.b64decode(file_data).decode('utf-8')
+                                with st.expander(f"📝 {file_name}"):
+                                    st.code(text_content[:500] + ("..." if len(text_content) > 500 else ""))
+                    except Exception as e:
+                        st.caption(f"⚠️ 添付ファイルの表示エラー: {e}")
+                
                 # 本文 (タグを非表示にする)
                 clean_content = re.sub(r"\[\[NEXT:.*?\]\]", "", msg['content']).strip()
                 st.write(clean_content)
@@ -655,10 +686,44 @@ def render_active_chat(room_id, auto_mode):
         db.add_message(room_id, "user", "現状の論点を整理してください。")
         st.rerun()
 
+    # ファイルアップロード機能
+    st.markdown("---")
+    st.caption("📎 ファイル添付（画像・PDF・テキスト対応）")
+    
+    uploaded_files = st.file_uploader(
+        "ファイルを選択",
+        type=["png", "jpg", "jpeg", "webp", "gif", "pdf", "txt", "md", "csv", "json"],
+        accept_multiple_files=True,
+        key=f"file_upload_{room_id}",
+        label_visibility="collapsed"
+    )
+    
     # 入力欄
     prompt = st.chat_input("指示を入力...", key=f"chat_{room_id}")
-    if prompt:
-        db.add_message(room_id, "user", prompt)
+    
+    if prompt or uploaded_files:
+        import base64
+        
+        attachments_data = []
+        
+        # ファイルを処理
+        if uploaded_files:
+            for uploaded_file in uploaded_files:
+                file_bytes = uploaded_file.read()
+                file_b64 = base64.b64encode(file_bytes).decode('utf-8')
+                
+                attachments_data.append({
+                    "name": uploaded_file.name,
+                    "type": uploaded_file.type,
+                    "size": len(file_bytes),
+                    "data": file_b64
+                })
+        
+        # メッセージを保存
+        message_text = prompt if prompt else f"[{len(attachments_data)}個のファイルを添付]"
+        attachments_json = json.dumps(attachments_data) if attachments_data else None
+        
+        db.add_message(room_id, "user", message_text, attachments=attachments_json)
         st.rerun()
 
     # === 自動進行ロジック (Fragment内ループ) ===

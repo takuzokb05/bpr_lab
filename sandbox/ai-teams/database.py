@@ -80,11 +80,19 @@ class Database:
             role TEXT NOT NULL,
             agent_id INTEGER,
             content TEXT NOT NULL,
+            attachments TEXT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (room_id) REFERENCES rooms(id),
             FOREIGN KEY (agent_id) REFERENCES agents(id)
         )
         """)
+        
+        # 既存DBへのマイグレーション: attachmentsカラムが存在しない場合は追加
+        try:
+            cursor.execute("SELECT attachments FROM messages LIMIT 1")
+        except:
+            cursor.execute("ALTER TABLE messages ADD COLUMN attachments TEXT")
+            conn.commit()
         
         # ルーム-エージェント関連テーブル
         cursor.execute("""
@@ -828,14 +836,14 @@ class Database:
     
     # ========== メッセージ管理 ==========
     
-    def add_message(self, room_id: int, role: str, content: str, agent_id: int = None):
+    def add_message(self, room_id: int, role: str, content: str, agent_id: int = None, attachments: str = None):
         """メッセージを追加"""
         conn = self.get_connection()
         cursor = conn.cursor()
         cursor.execute("""
-        INSERT INTO messages (room_id, role, agent_id, content)
-        VALUES (?, ?, ?, ?)
-        """, (room_id, role, agent_id, content))
+        INSERT INTO messages (room_id, role, agent_id, content, attachments)
+        VALUES (?, ?, ?, ?, ?)
+        """, (room_id, role, agent_id, content, attachments))
         
         # ルームの更新日時を更新
         cursor.execute("""
