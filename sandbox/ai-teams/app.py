@@ -133,85 +133,81 @@ def extract_json(text):
 
 def generate_agent_response(agent, room_id, messages, room_agents):
     """
-    エージェントの応答を生成（統制ロジックの中核）
-    1. 議事録の取得（共通メモリ）
-    2. フェーズ情報の取得（アジェンダ制御）
-    3. 階層型プロンプトの構築
-    4. LLM実行
+    統制ロジックの核（完全版）
+    1. 議事録・フェーズ・ゴールを結合した「絶対前提」を作成
+    2. V字進行に基づき、役割（司令塔 vs 専門家）に応じた指示を注入
+    3. LLMを実行
     """
-    # 1. 議事録取得（共通メモリ）
+    # 1. コンテキスト取得（共通メモリ）
     room = db.get_room(room_id)
-    board_content = room.get('board_content', "特になし")
-    
-    # 2. フェーズ制御（アジェンダ管理）
-    turn_count = len([m for m in messages if m['role'] == 'assistant'])
-    if turn_count <= 5:
-        phase_msg = "【現在のフェーズ: 1. 発散・ブレスト】\n質より量を重視してください。批判は控え、アイデアを広げてください。"
-    elif turn_count <= 12:
-        phase_msg = "【現在のフェーズ: 2. 選別・検証】\n実現可能性、コスト、リスクの観点からアイデアを絞り込んでください。"
-    else:
-        phase_msg = "【現在のフェーズ: 3. 収束・具体化】\n議論をまとめ、次の具体的なToDoアクションプランを決定してください。"
-        
-    # 3. コンテキスト構築（階層型）
+    board_md = room.get('board_content', 'まだ合意事項はありません。')
     first_msg = next((m for m in messages if m['role'] == 'user'), None)
-    goal_text = f"【プロジェクトのゴール】\n{first_msg['content']}" if first_msg else "議題未設定"
+    goal_text = f"【ゴール】 {first_msg['content']}" if first_msg else "議題未設定"
     
-    # モデレーター判定
+    # 2. フェーズ判定（アジェンダ管理）
+    turn_count = len([m for m in messages if m['role'] == 'assistant'])
+    if turn_count < 5: 
+        phase_msg = "【フェーズ: 1. 発散】批判せず、可能性を広げてください。"
+    elif turn_count < 12: 
+        phase_msg = "【フェーズ: 2. 選別】実現性とコストから、議事録の案を厳しく批評してください。"
+    else: 
+        phase_msg = "【フェーズ: 3. 収束】これまでの結論を具体的なアクションプラン（ToDo）にまとめてください。"
+
+    # 3. 役割別指示（V字進行用）
     is_moderator = agent.get('category') == 'facilitation'
     
-    # モデレーター用指示
-    mod_instr = ""
     if is_moderator:
-        mod_instr = """
-あなたは進行役ですが、単に順番を回すだけでは不十分です。
-1. フェーズに合わせて議論を誘導してください。
-2. メンバーの発言に対し、別の視点を持つメンバー（例：アクセル役の意見にブレーキ役）を指名し、「発想の衝突」や「深掘り」を演出してください。
-3. 文末に必ず `[[NEXT: agent_id]]` を付与してバトンを渡してください。
+        role_instr = """
+あなたは進行役（司令塔）です。
+1. フェーズに従い、議論をリードしてください。
+2. メンバーの発言を要約し、論点を整理してください。
+3. 次に発言させるべきメンバーを指名し、文末に必ず `[[NEXT: agent_id]]` を出力してください。
 """
     else:
-        mod_instr = """
-1. 議事録（決定事項）の内容は「前提事実」として認識し、単になぞるような発言は避けてください。
-2. 直近の会話（最新の火種）に対して、あなたの専門性から『Yes, and（肯定して拡げる）』または『No, because（反論して深める）』で鋭く反応してください。
-3. 必要であれば、次に意見を聞きたい人を `[[NEXT: agent_id]]` で指名できます（指名なしならモデレーターに返してください）。
+        role_instr = """
+あなたは専門家メンバーです。
+1. 議事録（合意事項）を前提とし、蒸し返さないでください。
+2. 司会や他メンバーの問いに、専門的見地から短く鋭く答えてください（Yes,and / No,because）。
+3. 発言後、議論のバトンを必ず司会（モデレーター）に戻してください（NEXTタグは不要）。
 """
-    
-    # 参加者リスト
-    member_list = "\n".join([f"- {a['name']} (ID:{a['id']}): {a['role'][:30]}..." for a in room_agents])
 
-    system_prompt = f"""
+    # 4. 統合システムプロンプト構築
+    member_list = "\n".join([f"- {a['name']} (ID:{a['id']}): {a['role'][:30]}..." for a in room_agents])
+    
+    final_system_prompt = f"""
 あなたは【{agent['name']}】です。
 役割: {agent['role']}
+
+{goal_text}
 
 {phase_msg}
 
 【現在の合意事項（決定事項）】
-{board_content}
+{board_md}
 
-【現在の会議参加メンバー】
+【参加メンバー】
 {member_list}
 
-{mod_instr}
+{role_instr}
 
-【発言ルール】
-- 簡潔に発言してください（200文字以内）
-- 自分の役割（{agent.get('category', 'specialist')}）に徹してください。
-- 議事録の内容を蒸し返さず、直近の会話に反応してください。
-- 最後に必ず `[[NEXT: 次の話者のID]]` を出力してバトンを渡してください。
+【ルール】
+- 200文字以内で簡潔に。
+- 議事録（決定事項）と矛盾する発言は禁止。
 """
 
-    context_msgs = [{"role": "system", "content": system_prompt}]
-    
-    # 直近ログ（最新5件）
+    # 5. メッセージ構築 (System + Context)
+    # 直近ログのみ渡す（トークン節約＆最新の火種重視）
     recent_msgs = [m for m in messages if m['role'] != 'system'][-5:]
+    clean_history = []
     for m in recent_msgs:
-        # NEXTタグを除去して入力
-        clean_content = re.sub(r"\[\[NEXT:.*?\]\]", "", m['content']).strip()
-        msg_data = {"role": m['role'], "content": clean_content}
-        if m.get('attachments'): 
-            msg_data['attachments'] = m['attachments']
-        context_msgs.append(msg_data)
-        
-    return llm_client.generate(agent['provider'], agent['model'], context_msgs)
+         # NEXTタグは読む必要はない（すでに制御に使われた）ので消してもいいが、
+         # 文脈として誰を指名したかは重要なので残すか？いや、ノイズになるので消す。
+         cln = re.sub(r"\[\[NEXT:.*?\]\]", "", m['content']).strip()
+         clean_history.append({"role": m['role'], "content": cln})
+
+    input_msgs = [{"role": "system", "content": final_system_prompt}] + clean_history
+    
+    return llm_client.generate(agent['provider'], agent['model'], input_msgs)
 
 @st.dialog("エージェント管理")
 def manage_agents():
@@ -832,30 +828,44 @@ def render_active_chat(room_id, auto_mode):
     if should_run:
         time.sleep(1.5) # 間を取る
         
-        with container:
             room_agents = db.get_room_agents(room_id)
             if not room_agents: return
 
-            # --- 1. 物理的指名システム ---
+            # --- V字進行型 (The V-Shape Protocol) ---
+            # 1. モデレーターを特定
+            moderator = next((a for a in room_agents if a.get('category') == 'facilitation'), None)
+            if not moderator:
+                moderator = next((a for a in room_agents if "モデレーター" in a['name'] or "司会" in a['name']), room_agents[0])
+            
+            # 2. 次の話者を決定
             next_agent = None
+            last_agent_id = last_msg.get('agent_id')
             
-            # (A) ユーザー発言直後 -> モデレーター(Facilitator)を優先指名
+            # A. ユーザー発言直後 -> モデレーターが起動
             if last_role == 'user':
-                next_agent = next((a for a in room_agents if a.get('category') == 'facilitation'), None)
-                if not next_agent: # フォールバック
-                    next_agent = next((a for a in room_agents if "モデレーター" in a['name'] or "司会" in a['name']), room_agents[0])
+                next_agent = moderator
             
-            # (B) AI発言後 -> [[NEXT: ID]] を解析して指名
-            else:
+            # B. モデレーター発言後 -> 指名されたメンバーへ
+            elif last_agent_id == moderator['id']:
                 last_content = last_msg['content']
                 match = re.search(r"\[\[NEXT:\s*(\d+)\]\]", last_content)
                 if match:
                     t_id = int(match.group(1))
-                    next_agent = next((a for a in room_agents if a['id'] == t_id), None)
+                    if t_id != moderator['id']: # 自分指名回避
+                        next_agent = next((a for a in room_agents if a['id'] == t_id), None)
+                
+                # 指名なしならランダムメンバー（ループ防止）
+                if not next_agent:
+                    others = [a for a in room_agents if a['id'] != moderator['id']]
+                    if others:
+                        next_idx = len(messages) % len(others)
+                        next_agent = others[next_idx]
+                    else:
+                        next_agent = moderator # 誰もいなければ自分
             
-            # (C) フォールバック (指名なし/ID無効) -> モデレーターに戻す
-            if not next_agent:
-                 next_agent = next((a for a in room_agents if a.get('category') == 'facilitation'), room_agents[0])
+            # C. メンバー発言後 -> モデレーターに必ず戻る (V字)
+            else:
+                next_agent = moderator
 
             # 2. 生成プロセス
             with st.chat_message("assistant", avatar=next_agent['icon']):
