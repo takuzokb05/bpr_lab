@@ -859,41 +859,57 @@ def render_active_chat(room_id, auto_mode):
             room_agents = db.get_room_agents(room_id)
             if not room_agents: return
 
-            # --- V字進行型 (The V-Shape Protocol) ---
-            # 1. モデレーターを特定
-            moderator = next((a for a in room_agents if a.get('category') == 'facilitation'), None)
+            # 書記などの裏方を除外 (Active Agentsのみ)
+            # これにより「書記」が勝手に指名されたり発言したりするのを防ぐ
+            active_agents = [a for a in room_agents if "書記" not in a['name']]
+            if not active_agents: active_agents = room_agents # フォールバック
+
+            # モデレーター特定
+            moderator = next((a for a in active_agents if a.get('category') == 'facilitation'), None)
             if not moderator:
-                moderator = next((a for a in room_agents if "モデレーター" in a['name'] or "司会" in a['name']), room_agents[0])
-            
-            # 2. 次の話者を決定
+                moderator = next((a for a in active_agents if "モデレーター" in a['name'] or "司会" in a['name']), active_agents[0])
+
+            # --- V字進行型 v2 (State-Based) ---
+            # Streamlitのrerun対策として、次の話者をsession_stateで管理する
+            state_key = f"next_speaker_{room_id}"
             next_agent = None
             last_agent_id = last_msg.get('agent_id')
-            
-            # A. ユーザー発言直後 -> モデレーターが起動
+
+            # 1. ユーザー発言直後 -> 強制的にモデレーター
             if last_role == 'user':
-                next_agent = moderator
+                st.session_state[state_key] = moderator['id']
             
-            # B. モデレーター発言後 -> 指名されたメンバーへ
-            elif last_agent_id == moderator['id']:
-                last_content = last_msg['content']
-                match = re.search(r"\[\[NEXT:\s*(\d+)\]\]", last_content)
-                if match:
-                    t_id = int(match.group(1))
-                    if t_id != moderator['id']: # 自分指名回避
-                        next_agent = next((a for a in room_agents if a['id'] == t_id), None)
-                
-                # 指名なしならランダムメンバー（ループ防止）
-                if not next_agent:
-                    others = [a for a in room_agents if a['id'] != moderator['id']]
-                    if others:
-                        next_idx = len(messages) % len(others)
-                        next_agent = others[next_idx]
-                    else:
-                        next_agent = moderator # 誰もいなければ自分
-            
-            # C. メンバー発言後 -> モデレーターに必ず戻る (V字)
-            else:
-                next_agent = moderator
+            # 2. AI発言後のバトンパス判定
+            elif last_role == 'assistant':
+                # A. モデレーターが喋った -> 次は指名されたメンバー
+                if last_agent_id == moderator['id']:
+                    match = re.search(r"\[\[NEXT:\s*(\d+)\]\]", last_msg['content'])
+                    if match:
+                        try:
+                            t_id = int(match.group(1))
+                            # IDの有効性チェック
+                            if any(a['id'] == t_id for a in active_agents):
+                                st.session_state[state_key] = t_id
+                        except:
+                            pass
+                # B. メンバーが喋った -> 次は必ずモデレーター
+                else:
+                    st.session_state[state_key] = moderator['id']
+
+            # 3. ステートから次のエージェントを決定
+            target_id = st.session_state.get(state_key)
+            if target_id:
+                next_agent = next((a for a in active_agents if a['id'] == target_id), None)
+
+            # 4. フォールバック（ステート喪失時や指名ミス時）
+            if not next_agent:
+                # メンバーリストからモデレーター以外をランダム選出（無限ループ防止）
+                others = [a for a in active_agents if a['id'] != moderator['id']]
+                if others and last_agent_id == moderator['id']:
+                     next_idx = len(messages) % len(others)
+                     next_agent = others[next_idx]
+                else:
+                     next_agent = moderator
 
             # 2. 生成プロセス
             with st.chat_message("assistant", avatar=next_agent['icon']):
