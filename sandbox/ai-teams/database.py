@@ -130,7 +130,7 @@ class Database:
                 "icon": "💡",
                 "color": "#10b981",
                 "role": "空気を読まない天才。実現性は無視して、水平思考（ラテラルシンキング）で別角度のボールを投げる。",
-                "model": "gemini-3.0-pro",
+                "model": "gemini-3-flash-preview",
                 "provider": "google",
                 "system_default": 1
             },
@@ -139,7 +139,7 @@ class Database:
                 "icon": "🧸",
                 "color": "#ec4899",
                 "role": "ユーザーの代弁者。「それは便利だけど、ユーザーは疲れませんか？」「誰も傷つきませんか？」と感情面をケアする。",
-                "model": "claude-3-5-sonnet-20240620",
+                "model": "claude-3-5-sonnet-20241022",
                 "provider": "anthropic",
                 "system_default": 1
             },
@@ -148,7 +148,7 @@ class Database:
                 "icon": "📝",
                 "color": "#6b7280",
                 "role": "透明な記録者。会話の文脈を読み解き、構造化する能力に特化。",
-                "model": "claude-sonnet-4-20250514",
+                "model": "claude-3-5-sonnet-20241022",
                 "provider": "anthropic",
                 "system_default": 1
             }
