@@ -127,6 +127,53 @@ def extract_json(text):
 # ==========================================
 # エージェント管理モーダル
 # ==========================================
+# === ヘルパー関数 ===
+
+def build_hierarchical_context(room_id, all_messages):
+    """
+    階層型コンテキストを構築
+    1. 不動のゴール: 最初のユーザーメッセージ
+    2. 決定事項: 現在のボード内容
+    3. 直近の文脈: 最新3件
+    """
+    if not all_messages:
+        return []
+        
+    # 1. 不動のゴール（最初のユーザー発言）
+    first_msg = next((m for m in all_messages if m['role'] == 'user'), None)
+    goal_text = f"【プロジェクトのゴール】\n{first_msg['content']}" if first_msg else "【プロジェクトのゴール】\n議題はまだ設定されていません。"
+    
+    # 2. 決定事項（ボード内容）
+    room = db.get_room(room_id)
+    board_text = f"【現在の決定事項・議事録】\n{room['board_content']}" if room and room['board_content'] else "【現在の決定事項・議事録】\n特になし"
+    
+    # 3. 直近の文脈（最新3件 + 添付ファイル）
+    # systemメッセージは除外
+    chat_msgs = [m for m in all_messages if m['role'] != 'system'][-3:]
+    
+    context_messages = []
+    
+    # システムプロンプトとして構造化情報を注入
+    structured_system = f"""{goal_text}\n\n{board_text}\n\nこれらを踏まえ、直近の会話の流れに従って発言してください。"""
+    context_messages.append({"role": "system", "content": structured_system})
+    
+    # 直近メッセージを追加（添付ファイル情報も保持）
+    for m in chat_msgs:
+        msg_data = {"role": m['role'], "content": m['content']}
+        if m.get('attachments'): msg_data['attachments'] = m['attachments']
+        context_messages.append(msg_data)
+        
+    return context_messages
+
+def get_phase_instruction(turn_count):
+    """ターン数に応じたフェーズ指示を返す"""
+    if turn_count <= 5:
+        return "【現在のフェーズ: 1. 発散・ブレスト】\n質より量を重視してください。批判は控え、アイデアを広げてください。"
+    elif turn_count <= 10:
+        return "【現在のフェーズ: 2. 選別・検証】\n実現可能性、コスト、リスクの観点からアイデアを絞り込んでください。"
+    else:
+        return "【現在のフェーズ: 3. 収束・具体化】\n議論をまとめ、次の具体的なアクションプラン（Who/What/When）を決定してください。"
+
 @st.dialog("エージェント管理")
 def manage_agents():
     tab_new, tab_edit = st.tabs(["➕ 新規作成", "📝 編集・削除"])
@@ -726,78 +773,112 @@ def render_active_chat(room_id, auto_mode):
         db.add_message(room_id, "user", message_text, attachments=attachments_json)
         st.rerun()
 
-    # === 自動進行ロジック (Fragment内ループ) ===
-    last_role = messages[-1]['role'] if messages else 'system'
+    # === 自動進行ロジック (Fragment内ループ & 統制システム) ===
+    last_msg = messages[-1] if messages else None
+    last_role = last_msg['role'] if last_msg else 'system'
+    
+    # 実行条件: 
+    # 1. ユーザー発言後 -> 自動実行
+    # 2. auto_mode ON かつ AIの発言後 -> 継続
     should_run = False
     
     if last_role == 'user':
         should_run = True
-    elif auto_mode and last_role == 'assistant' and len(messages) < 32:
-        should_run = True
+    elif auto_mode and last_role == 'assistant' and len(messages) < 60: # 最大ターン拡張
+        if "議論を終了" in last_msg['content']:
+            should_run = False
+        else:
+            should_run = True
         
     if should_run:
-        # 少し待ってから生成（自然な間）
-        time.sleep(1)
+        time.sleep(1.5) # 間を取る
         
         with container:
-            # 1. 次の話者を決定するためのロジック
-            # 基本はラウンドロビンだが、司会のみ「指名権」を持つ
             room_agents = db.get_room_agents(room_id)
             if not room_agents: return
 
-            # 直前の発言者が「司会」かどうか判定（今回は簡易的に、Agentリストの最初を司会とみなす、もしくはRoleで判定）
-            # ここではシンプルに「前の発言に含まれる [[NEXT: ID]] タグ」を確認し、あればその人を、なければ順番に進める
+            # --- 1. 物理的指名システム ---
             next_agent = None
             
-            # 直前のメッセージから指名タグを探す
-            if messages:
-                last_msg_content = messages[-1]['content']
-                match = re.search(r"\[\[NEXT:\s*(\d+)\]\]", last_msg_content)
+            # (A) ユーザー発言直後 -> モデレーター(Facilitator)を優先指名
+            if last_role == 'user':
+                next_agent = next((a for a in room_agents if a.get('category') == 'facilitation'), None)
+                if not next_agent: # フォールバック
+                    next_agent = next((a for a in room_agents if "モデレーター" in a['name'] or "司会" in a['name']), room_agents[0])
+            
+            # (B) AI発言後 -> [[NEXT: ID]] を解析して指名
+            else:
+                last_content = last_msg['content']
+                match = re.search(r"\[\[NEXT:\s*(\d+)\]\]", last_content)
                 if match:
                     t_id = int(match.group(1))
                     next_agent = next((a for a in room_agents if a['id'] == t_id), None)
             
-            # 指名がない、または無効なIDならラウンドロビン
+            # (C) フォールバック (指名なし/ID無効) -> モデレーターに戻す
             if not next_agent:
-                next_idx = len(messages) % len(room_agents)
-                next_agent = room_agents[next_idx]
+                 next_agent = next((a for a in room_agents if a.get('category') == 'facilitation'), room_agents[0])
 
             # 2. 生成プロセス
             with st.chat_message("assistant", avatar=next_agent['icon']):
-                # UX: トースト通知で思考中を演出
-                toast_msg = st.toast(f"🏃‍♂️ {next_agent['name']} が思考中...", icon="🤔")
-                
                 ph = st.empty()
                 ph.markdown(f":grey[{next_agent['name']} が思考中...]")
                 
                 try:
-                    # コンテキスト構築
-                    context = [{"role": ("user" if m['role']=="user" else "assistant"), "content": re.sub(r"\[\[NEXT:.*?\]\]", "", m['content'])} for m in messages[-10:]]
+                    # --- 2. 階層型コンテキスト構築 ---
+                    context = build_hierarchical_context(room_id, messages)
                     
-                    # 動的システムプロンプト構築 (Dynamic Prompt Injection)
-                    # 現在の参加者リストを作成
-                    active_members_txt = "\n".join([f"- {a['name']} (ID:{a['id']}): {a['role'][:50]}..." for a in room_agents])
+                    # --- 3. フェーズ制御 & プロンプト注入 ---
+                    turn_count = len([m for m in messages if m['role'] == 'assistant'])
+                    phase_instr = get_phase_instruction(turn_count)
                     
-                    sys_prompt = f"""
-あなたは{next_agent['name']}です。
-役割: {next_agent['role']}
-
-【現在の会議参加メンバー】
-{active_members_txt}
-※このリストにない人物（田中、佐藤など）には絶対に話しかけないでください。
-
-【指示】
-議論の流れを汲んで、簡潔に（100文字以内）発言してください。
-直前の発言者が自分自身である場合、連続投稿は避けて、他のメンバーに話を振ってください。
-発言の最後に、次に発言すべきメンバーのIDを `[[NEXT: メンバーID]]` の形式で指定してください。
-指定がない場合は、議論の流れで適切だと思う人を指名してください。
+                    # 参加者リスト
+                    member_list = "\n".join([f"- {a['name']} (ID:{a['id']}): {a['role'][:30]}..." for a in room_agents])
+                    
+                    # システムプロンプト作成
+                    is_moderator = next_agent.get('category') == 'facilitation'
+                    
+                    # モデレーター用追加指示
+                    mod_instr = ""
+                    if is_moderator:
+                        mod_instr = """
+あなたは進行役ですが、単に順番を回すだけでは不十分です。
+1. フェーズに合わせて議論を誘導してください。
+2. メンバーの発言に対し、別の視点を持つメンバー（例：アクセル役の意見にブレーキ役）を指名し、「発想の衝突」や「深掘り」を演出してください。
+3. 文末に必ず `[[NEXT: agent_id]]` を付与してください。
+"""
+                    else:
+                        mod_instr = """
+1. 議事録（決定事項）の内容は「前提事実」として認識し、単になぞるような発言は避けてください。
+2. 直近の会話（最新の火種）に対して、あなたの専門性から『Yes, and（肯定して拡げる）』または『No, because（反論して深める）』で鋭く反応してください。
+3. 必要であれば、次に意見を聞きたい人を `[[NEXT: agent_id]]` で指名できます（指名なしならモデレーターに返してください）。
 """
                     
-                    # 生成
-                    response = llm_client.generate(next_agent['provider'], next_agent['model'], [{"role":"system", "content":sys_prompt}] + context)
+                    sys_prompt = f"""
+あなたは【{next_agent['name']}】です。
+役割: {next_agent['role']}
+
+{phase_instr}
+
+【現在の会議参加メンバー】
+{member_list}
+
+{mod_instr}
+
+【発言ルール】
+- 簡潔に発言してください（200文字以内）
+- 自分の役割（{next_agent.get('category', 'specialist')}）に徹してください。
+- 文脈（ゴールと決定事項）を完全に把握し、"今" 話すべきことに集中してください。
+- 最後に必ず `[[NEXT: 次の話者のID]]` を出力してバトンを渡してください。
+"""
+                    
+                    # システムメッセージを先頭に追加
+                    input_msgs = [{"role": "system", "content": sys_prompt}] + context
+                    
+                    # LLM呼び出し
+                    response = llm_client.generate(next_agent['provider'], next_agent['model'], input_msgs)
                     
                     # UX: 完了トースト
-                    toast_msg.toast(f"{next_agent['name']} が発言しました!", icon="✅")
+                    st.toast(f"{next_agent['name']} が発言しました", icon="✅")
                     
                     # 表示用テキスト (タグを除去)
                     display_text = re.sub(r"\[\[NEXT:.*?\]\]", "", response).strip()
