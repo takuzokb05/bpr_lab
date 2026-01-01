@@ -189,6 +189,7 @@ def generate_agent_response(agent, room_id, messages, room_agents):
 1. フェーズに従い、議論をリードしてください。
 2. メンバーの発言を要約し、論点を整理してください。
 3. 次に発言させるべきメンバーを指名し、文末に必ず `[[NEXT: agent_id]]` を出力してください。
+4. 【重要】議論が十分にまとまった、あるいはユーザーから「終了」「まとめ」等の指示があった場合は、まとめの言葉の後に `[[FINISH]]` とだけ出力して議論を終了させてください。
 """
     else:
         role_instr = """
@@ -845,7 +846,8 @@ def render_active_chat(room_id, auto_mode):
     if last_role == 'user':
         should_run = True
     elif auto_mode and last_role == 'assistant' and len(messages) < 60: # 最大ターン拡張
-        if "議論を終了" in last_msg['content']:
+        # 終了判定: タグまたはキーワード
+        if "[[FINISH]]" in last_msg['content'] or "議論を終了" in last_msg['content']:
             should_run = False
         else:
             should_run = True
@@ -906,7 +908,8 @@ def render_active_chat(room_id, auto_mode):
                     st.toast(f"{next_agent['name']} が発言しました", icon="✅")
                     
                     # 表示用テキスト (タグを除去)
-                    display_text = re.sub(r"\[\[NEXT:.*?\]\]", "", response).strip()
+                    display_text = re.sub(r"\[\[NEXT:.*?\]\]", "", response)
+                    display_text = re.sub(r"\[\[FINISH\]\]", "", display_text).strip()
                     
                     # 表示更新
                     role_html = f"<span class='agent-role'>({next_agent.get('role', '')[:10]}...)</span>"
@@ -916,12 +919,18 @@ def render_active_chat(room_id, auto_mode):
                     # DB保存 (タグ付きのまま保存し、ロジックで利用する)
                     db.add_message(room_id, "assistant", response, next_agent['id'])
                     
+                    # 終了処理 (Exit Protocol)
+                    if "[[FINISH]]" in response:
+                        temp_msgs = messages + [{'role':'assistant', 'content':response, 'agent_name':next_agent['name']}]
+                        auto_update_board(room_id, temp_msgs)
+                        st.balloons()
+                        st.toast("🏁 議論が終了しました", icon="🛑")
+                        st.rerun()
+                    
                     # 議事録自動更新 (3ターンに1回)
                     # 最新の文脈を反映させる
                     turn_count = len([m for m in messages if m['role'] == 'assistant']) + 1
                     if turn_count % 3 == 0:
-                        # 最新のメッセージを含めた状態で更新
-                        # (DBには保存済みだが、messagesリストにはまだないので簡易的に構築)
                         temp_msgs = messages + [{'role':'assistant', 'content':response, 'agent_name':next_agent['name']}]
                         auto_update_board(room_id, temp_msgs)
                     
