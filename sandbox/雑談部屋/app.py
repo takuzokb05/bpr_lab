@@ -1,0 +1,752 @@
+import streamlit as st
+import time
+import json
+import re
+import traceback
+from datetime import datetime, timedelta
+from database import Database
+from llm_client import LLMClient
+
+# ==========================================
+# 設定 & CSS
+# ==========================================
+st.set_page_config(
+    page_title="AI Teams: Professional",
+    page_icon="🧠",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+# アクセシビリティ & UX向上CSS
+st.markdown("""
+<style>
+    /* 1. 全体のフォントをモダンに (Mac/Win対応) */
+    html, body, [class*="css"] {
+        font-family: 'Helvetica Neue', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+    }
+
+    /* 2. ヘッダーの余白を削って画面を広く使う */
+    .block-container {
+        padding-top: 2rem;
+        padding-bottom: 5rem;
+    }
+
+    /* 3. サイドバーの背景を少し引き締める（白ベースなら薄いグレー） */
+    section[data-testid="stSidebar"] {
+        background-color: #f8f9fa;
+        border-right: 1px solid #e9ecef;
+    }
+
+    /* 4. エージェントのチャットアイコンを少し大きく */
+    .stChatMessage .stChatMessageAvatar {
+        width: 48px;
+        height: 48px;
+    }
+
+    /* 5. "神の介入ボタン" をフローティングっぽくオシャレに */
+    div.stButton > button:first-child {
+        border-radius: 20px;
+        font-weight: bold;
+        border: none;
+        transition: transform 0.1s;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    div.stButton > button:first-child:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+    
+    /* 特定のボタンの色変え（キーに基づいてCSSセレクタで狙うのは難しいので汎用スタイルで） */
+    /* Primaryボタン（招集など）を目立たせる */
+    button[kind="primary"] {
+        background-color: #000000 !important; /* Notionライクな黒 */
+        color: white !important;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+# データベース & API
+st.cache_resource.clear()
+@st.cache_resource
+def get_database():
+    return Database()
+
+db = get_database()
+
+def load_api_keys():
+    # 1. Streamlit Secrets (Cloud Deploy)
+    try:
+        if "api_keys" in st.secrets:
+            return {
+                "google": st.secrets["api_keys"].get("google", ""),
+                "openai": st.secrets["api_keys"].get("openai", ""),
+                "anthropic": st.secrets["api_keys"].get("anthropic", "")
+            }
+    except:
+        pass
+
+    # 2. Local File
+    try:
+        with open("API_KEY.txt", "r", encoding="utf-8") as f:
+            lines = f.readlines()
+        return {
+            "google": lines[1].strip() if len(lines) > 1 else "",
+            "openai": lines[4].strip() if len(lines) > 4 else "",
+            "anthropic": lines[7].strip() if len(lines) > 7 else ""
+        }
+    except:
+        # 3. Database Fallback
+        return db.get_api_keys()
+
+api_keys = load_api_keys()
+llm_client = LLMClient(api_keys)
+
+if "current_room_id" not in st.session_state:
+    st.session_state.current_room_id = None
+
+# ==========================================
+# 定数 & ヘルパー
+# ==========================================
+MODEL_OPTIONS = {
+    "openai": ["gpt-4o", "gpt-4-turbo", "gpt-3.5-turbo"],
+    "google": ["gemini-3.0-pro", "gemini-2.0-flash-exp", "gemini-1.5-pro", "gemini-1.5-flash"],
+    "anthropic": ["claude-3-5-sonnet-20240620", "claude-3-opus-20240229"]
+}
+
+def extract_json(text):
+    try:
+        return json.loads(text)
+    except:
+        pass
+    match = re.search(r'```json\s*(\{.*?\})\s*```', text, re.DOTALL)
+    if match: return json.loads(match.group(1))
+    match = re.search(r'\{[\s\S]*\}', text)
+    if match: return json.loads(match.group(0))
+    return None
+
+# ==========================================
+# エージェント管理モーダル
+# ==========================================
+@st.dialog("エージェント管理")
+def manage_agents():
+    tab_new, tab_edit = st.tabs(["➕ 新規作成", "📝 編集・削除"])
+    
+    with tab_new:
+        st.subheader("新しいエージェントを作成")
+        name = st.text_input("名前", placeholder="例: 論理担当", key="new_name")
+        icon = st.text_input("アイコン (絵文字)", placeholder="📐", key="new_icon")
+        role = st.text_area("役割プロンプト", placeholder="あなたは論理的な分析官です...", key="new_role")
+        
+        c1, c2 = st.columns(2)
+        with c1:
+            provider = st.selectbox("プロバイダー", ["openai", "google", "anthropic"], key="new_provider")
+        with c2:
+            models = MODEL_OPTIONS.get(provider, ["default"])
+            model = st.selectbox("モデル", models, key="new_model")
+        color = st.color_picker("イメージカラー", "#3b82f6", key="new_color")
+        
+        if st.button("作成", key="create_btn", type="primary"):
+            if name and role:
+                db.create_agent(name, icon, color, role, model, provider)
+                st.success(f"{name} を作成しました")
+                time.sleep(1)
+                st.rerun()
+
+    with tab_edit:
+        agents = db.get_all_agents()
+        target_id = st.selectbox("編集するエージェントを選択", 
+                               options=[a['id'] for a in agents],
+                               format_func=lambda x: next((f"{a['icon']} {a['name']}" for a in agents if a['id'] == x), "Unknown"),
+                               key="edit_select")
+        target = next((a for a in agents if a['id'] == target_id), None)
+        
+        if target:
+            st.divider()
+            e_name = st.text_input("名前", value=target['name'], key=f"e_name_{target_id}")
+            e_role = st.text_area("役割", value=target['role'], height=150, key=f"e_role_{target_id}")
+            e_provider = st.selectbox("プロバイダー", ["openai", "google", "anthropic"], 
+                                    index=["openai","google","anthropic"].index(target['provider']) if target['provider'] in ["openai","google","anthropic"] else 0,
+                                    key=f"e_prov_{target_id}")
+            e_model = st.selectbox("モデル", MODEL_OPTIONS.get(e_provider, [target['model']]), key=f"e_mod_{target_id}")
+            
+            c1, c2 = st.columns([1,1])
+            if c1.button("💾 保存", key=f"save_{target_id}"):
+                db.update_agent(target_id, e_name, target['icon'], target['color'], e_role, e_model, e_provider)
+                st.success("更新しました")
+                time.sleep(1)
+                st.rerun()
+            if c2.button("🗑️ 削除", type="primary", key=f"del_{target_id}"):
+                db.delete_agent(target_id)
+                st.rerun()
+
+# ==========================================
+# サイドバー: ナビゲーション & 管理 (至高のUX構成)
+# ==========================================
+with st.sidebar:
+    st.title("AI Teams 🧠")
+    
+    if st.button("🏠 ホーム", use_container_width=True, key="home_btn"):
+        st.session_state.current_room_id = None
+        st.rerun()
+    
+    # 新規作成ボタン (最上部・最大)
+    # 新規作成ダイアログ & ボタン
+    @st.dialog("＋ 新しい会議室を作成")
+    def create_new_room_dialog():
+        default_title = f"会議 {datetime.now().strftime('%m/%d %H:%M')}"
+        title = st.text_input("会議名", value=default_title)
+        
+        all_agents = db.get_all_agents()
+        # デフォルトエージェントを選択状態に
+        default_ids = [a['id'] for a in all_agents if a.get('system_default')]
+        
+        agent_options = {a['id']: f"{a['icon']} {a['name']}" for a in all_agents}
+        
+        selected_ids = st.multiselect(
+            "参加メンバー",
+            options=list(agent_options.keys()),
+            format_func=lambda x: agent_options[x],
+            default=default_ids
+        )
+        
+        first_prompt = st.text_area("最初の指示 (任意)", placeholder="例: 今期のマーケティング施策についてブレストしたい")
+        
+        if st.button("🚀 会議を開始", type="primary", use_container_width=True):
+            # create_room(title, description, agent_ids)
+            # descriptionをpromptとして保存
+            new_id = db.create_room(title, first_prompt, selected_ids)
+            
+            if first_prompt:
+                db.add_message(new_id, "user", first_prompt)
+            
+            st.session_state.current_room_id = new_id
+            st.rerun()
+
+    if st.button("＋ 新しい会議室", type="primary", use_container_width=True, key="sidebar_new_room_btn"):
+        create_new_room_dialog()
+
+    st.markdown("---")
+
+    # --- 会議室マネージャー (一覧・一括削除) ---
+    @st.dialog("🗂 会議室マネージャー", width="large")
+    def open_room_manager():
+        st.caption("過去の会議室を一覧で管理・削除できます。")
+        all_rooms = db.get_all_rooms()
+        
+        if not all_rooms:
+            st.info("会議室はまだありません。")
+            return
+
+        # データフレーム用のデータ作成
+        df_data = []
+        for r in all_rooms:
+            df_data.append({
+                "ID": r["id"],
+                "delete": False,
+                "title": r["title"],
+                "created_at": r["created_at"][:16],
+                "updated_at": r["updated_at"][:16] if r["updated_at"] else ""
+            })
+
+        # データエディタで表示
+        edited_df = st.data_editor(
+            df_data,
+            column_config={
+                "ID": None, 
+                "delete": st.column_config.CheckboxColumn("削除", default=False),
+                "title": st.column_config.TextColumn("会議名", width="medium", disabled=True), 
+                "created_at": st.column_config.TextColumn("作成日時", width="small", disabled=True),
+                "updated_at": st.column_config.TextColumn("最終更新", width="small", disabled=True),
+            },
+            hide_index=True,
+            use_container_width=True,
+            key="room_manager_editor"
+        )
+
+        # 削除実行
+        selected_rows = [row for row in edited_df if row["delete"]]
+        if selected_rows:
+            st.error(f"⚠️ {len(selected_rows)} 件の会議室を選択中")
+            if st.button("選択した会議室を完全に削除", type="primary"):
+                for row in selected_rows:
+                    db.delete_room(row["ID"])
+                    if st.session_state.current_room_id == row["ID"]:
+                        st.session_state.current_room_id = None
+                st.toast("✅ 削除しました")
+                time.sleep(1)
+                st.rerun()
+
+    if st.button("� 履歴一覧・管理", use_container_width=True):
+        open_room_manager()
+
+    st.caption("📜 History")
+    # All Rooms
+    all_rooms = db.get_all_rooms()
+    all_rooms.sort(key=lambda x: x['updated_at'] or x['created_at'], reverse=True)
+    
+    today = datetime.now().date()
+    yesterday_date = today - timedelta(days=1)
+    
+    # グループ辞書 (挿入順序保持)
+    history_groups = {
+        "🌟 今日": [],
+        "⏮️ 昨日": [],
+        "🗓️ 過去7日間": [],
+        "🗄️ 過去30日間": [],
+        "📂 もっと前": []
+    }
+    
+    for r in all_rooms:
+        try:
+            # 日付解析 (SQLiteの文字列フォーマット依存)
+            ts_str = r.get('updated_at') or r['created_at']
+            if not ts_str: continue
+            
+            # 簡易パース
+            try:
+                dt = datetime.strptime(ts_str, '%Y-%m-%d %H:%M:%S')
+            except:
+                dt = datetime.strptime(ts_str[:19], '%Y-%m-%d %H:%M:%S')
+            
+            r_date = dt.date()
+            diff_days = (today - r_date).days
+            
+            if diff_days == 0:
+                history_groups["🌟 今日"].append(r)
+            elif diff_days == 1:
+                history_groups["⏮️ 昨日"].append(r)
+            elif diff_days <= 7:
+                history_groups["🗓️ 過去7日間"].append(r)
+            elif diff_days <= 30:
+                history_groups["🗄️ 過去30日間"].append(r)
+            else:
+                history_groups["📂 もっと前"].append(r)
+        except:
+             history_groups["📂 もっと前"].append(r)
+
+    # 描画
+    for g_name, g_items in history_groups.items():
+        if not g_items: continue
+        
+        # 今日だけデフォルト展開
+        is_expanded = (g_name == "🌟 今日")
+        
+        with st.expander(f"{g_name} ({len(g_items)})", expanded=is_expanded):
+            for r in g_items:
+                label = r['title']
+                if len(label) > 16: label = label[:15] + "…"
+                
+                # Active状態のデザイン
+                b_type = "primary" if st.session_state.current_room_id == r['id'] else "secondary"
+                
+                if st.button(label, key=f"nav_{r['id']}", type=b_type, use_container_width=True):
+                    st.session_state.current_room_id = r['id']
+                    st.rerun()
+            
+    st.markdown("---")
+    if st.button("👥 エージェント設定", use_container_width=True):
+        manage_agents()
+        
+    auto_mode = st.toggle("自動進行モード", value=True)
+
+    # ルーム内設定 (リネーム & メンバー管理)
+    if st.session_state.current_room_id:
+        room_id = st.session_state.current_room_id
+        st.markdown("---")
+        
+        # 頻繁に使うのでデフォルト展開でも良いが、画面スペース節約のため畳んでおく
+        with st.expander("⚙️ 会議室の設定 & メンバー"):
+            current_room = next((r for r in all_rooms if r['id'] == room_id), None)
+            
+            if current_room:
+                # 1. リネーム
+                new_title = st.text_input("会議室名", value=current_room['title'])
+                if new_title != current_room['title']:
+                    if st.button("名称を更新"):
+                        db.update_room_title(current_room['id'], new_title)
+                        st.session_state.current_room_id = current_room['id']
+                        st.rerun()
+                
+                st.divider()
+                
+                # 2. メンバー管理 (Reactive - コールバック方式)
+                st.caption("👥 参加メンバー (リアルタイム変更)")
+                all_agents = db.get_all_agents()
+                # 初期表示用（まだセッションステートがない場合）
+                current_agent_ids = db.get_room_agent_ids(room_id)
+                
+                agent_map = {a['id']: f"{a['icon']} {a['name']}" for a in all_agents}
+                
+                def on_member_change():
+                    # session_stateから最新の値を取得
+                    key = f"members_{room_id}"
+                    if key in st.session_state:
+                        selected = st.session_state[key]
+                        log = db.update_room_agents_diff(room_id, selected)
+                        if log:
+                            db.add_message(room_id, "system", log)
+                            st.toast("✅ メンバー変更")
+                
+                # Multiselect with Callback
+                # 注意: defaultを指定しつつkeyを指定すると、初回ロード時に警告が出ることがあるが、
+                # keyが未定義の時だけdefaultを使うStreamlitの挙動を利用する。
+                st.multiselect(
+                    "メンバー編集",
+                    options=list(agent_map.keys()),
+                    format_func=lambda x: agent_map[x],
+                    default=current_agent_ids,
+                    key=f"members_{room_id}",
+                    on_change=on_member_change,
+                    label_visibility="collapsed"
+                )
+                
+                # 表示用IDリスト
+                disp_ids = st.session_state.get(f"members_{room_id}", current_agent_ids)
+                
+                # 参加者のアバター表示
+                if disp_ids:
+                    st.write("")
+                    cols_av = st.columns(6)
+                    active_agents = [a for a in all_agents if a['id'] in disp_ids]
+                    for i, ag in enumerate(active_agents):
+                        with cols_av[i % 6]:
+                            st.caption(f"{ag['icon']}")
+
+            st.caption("※ルーム削除は「🗂 履歴一覧・管理」から")
+
+
+def render_dashboard():
+    if st.session_state.current_room_id is None:
+        st.title("🚀 AI Teams Command Center")
+        st.write("各分野のエキスパートAIが、あなたの課題解決を支援します。")
+        
+        st.markdown("---")
+
+        # テンプレート管理ダイアログ
+        @st.dialog("🛠️ ショートカット設定")
+        def configure_template(tpl):
+            new_name = st.text_input("ボタン名", value=tpl['name'])
+            new_prompt = st.text_area("デフォルトの指示プロンプト", value=tpl.get('prompt',''), height=100)
+            
+            all_agents = db.get_all_agents()
+            agent_options = {a['id']: f"{a['icon']} {a['name']}" for a in all_agents}
+            
+            default_ids = st.multiselect(
+                "招集するメンバー",
+                options=list(agent_options.keys()),
+                format_func=lambda x: agent_options[x],
+                default=tpl['default_agent_ids']
+            )
+            
+            if st.button("設定を保存", type="primary"):
+                db.update_template(tpl['id'], new_name, new_prompt, default_ids)
+                st.toast("✅ 設定を更新しました")
+                time.sleep(0.5)
+                st.rerun()
+
+        # グリッドレイアウト
+        c1, c2, c3 = st.columns(3)
+        
+        # スタイル付きのカード表示関数
+        def draw_card(col, tpl):
+            with col:
+                with st.container(border=True):
+                    # ヘッダーエリア
+                    hd_c1, hd_c2 = st.columns([5, 1])
+                    hd_c1.markdown(f"### {tpl['icon']} {tpl['name']}")
+                    if hd_c2.button("⚙️", key=f"conf_{tpl['id']}", help="構成を編集"):
+                         configure_template(tpl)
+
+                    # 説明文（プロンプトの冒頭）
+                    desc = tpl.get('prompt','')[:40] + "..." if tpl.get('prompt') else "（設定なし）"
+                    st.caption(desc)
+                    
+                    st.write("") # Spacer
+                    
+                    if st.button("チームを招集", key=f"launch_{tpl['id']}", use_container_width=True, type="primary"):
+                        # Room作成
+                        new_id = db.create_room(tpl['name'], tpl.get('prompt',''), tpl['default_agent_ids'])
+                        if tpl.get('prompt'):
+                            db.add_message(new_id, "user", tpl['prompt'])
+                        st.session_state.current_room_id = new_id
+                        st.rerun()
+
+        # テンプレート展開
+        try:
+            templates = db.get_templates()
+        except:
+            templates = []
+
+        if not templates:
+             st.info("DB初期化中... リロードしてください")
+        
+        for i, tpl in enumerate(templates):
+            # 3列に割り振るロジック
+            col = [c1, c2, c3][i % 3]
+            draw_card(col, tpl)
+
+        st.markdown("#### 📂 最近のプロジェクト")
+        recents = db.get_all_rooms()
+        recents.sort(key=lambda x: x['updated_at'] or x['created_at'], reverse=True)
+        
+        # 最近のプロジェクトもカードグリッドで
+        rc1, rc2, rc3 = st.columns(3)
+        for i, r in enumerate(recents[:3]):
+            with [rc1, rc2, rc3][i % 3]:
+                with st.container(border=True):
+                    st.markdown(f"**{r['title']}**")
+                    st.caption(f"📅 {r['created_at'][:10]}")
+                    st.caption(f"{r['description'][:30]}..." if r.get('description') else "---")
+                    if st.button("再開", key=f"resume_db_{r['id']}", use_container_width=True):
+                        st.session_state.current_room_id = r['id']
+                        st.rerun()
+
+# ==========================================
+# メイン: ルーム機能 (Unified Fragment)
+# ==========================================
+@st.fragment
+def render_active_chat(room_id, auto_mode):
+    """
+    チャットエリア（Fragment化）
+    画面全体のリロード（ホワイトアウト）を防ぎ、ここだけを更新する。
+    """
+    room = db.get_room(room_id)
+    st.subheader(f"💬 {room['title']}")
+    
+    # チャットコンテナ（スクロール可能）
+    container = st.container(height=650)
+    messages = db.get_room_messages(room_id)
+    
+    with container:
+        if not messages:
+            st.info("👋 ようこそ、オーナー。チームは待機しています。最初の議題を投げかけてください。")
+        
+        for msg in messages:
+            with st.chat_message(msg['role'], avatar=msg.get('icon')):
+                r_name = msg.get('agent_role', 'Participant')
+                if not r_name: r_name = "User" if msg['role'] == "user" else "AI"
+                
+                # ヘッダー
+                st.markdown(f"<div class='agent-header'><span class='agent-name'>{msg.get('agent_name', 'User')}</span><span class='agent-role'>({r_name[:15]}...)</span></div>", unsafe_allow_html=True)
+                
+                # 本文 (タグを非表示にする)
+                clean_content = re.sub(r"\[\[NEXT:.*?\]\]", "", msg['content']).strip()
+                st.write(clean_content)
+                
+                # 👑 ディレクターズ・カット
+                with st.popover("✏️", help="脚本修正 & 死に戻り"):
+                    new_val = st.text_area("修正", value=msg['content'], key=f"edit_area_{msg['id']}", height=120)
+                    st.caption("※以降の未来を消去して再開します")
+                    if st.button("書き換え ↺", key=f"save_edit_{msg['id']}", type="primary"):
+                        db.edit_message_and_truncate(room_id, msg['id'], new_val)
+                        st.rerun()
+
+                # 引用アクション (AIのみ)
+                if msg['role'] != 'user':
+                    c1, c2, _ = st.columns([1,1,10])
+                    if c1.button("🔍", key=f"deep_{msg['id']}"):
+                         db.add_message(room_id, "user", f"@{msg.get('agent_name')}さん、今の「{clean_content[:20]}...」について具体的に説明してください。")
+                         st.rerun()
+                    if c2.button("🔥", key=f"crit_{msg['id']}"):
+                         db.add_message(room_id, "user", f"@{msg.get('agent_name')}さんの意見に反論してください。")
+                         st.rerun()
+
+    # 介入ボタン
+    c_int = st.columns([1, 1, 1, 4])
+    if c_int[0].button("⏹️ 停止", help="議論を打ち切りまとめさせる"):
+        db.add_message(room_id, "user", "議論を終了します。これまでの結論をまとめてください。")
+        st.rerun()
+    if c_int[1].button("🤔 整理", help="論点整理"):
+        db.add_message(room_id, "user", "現状の論点を整理してください。")
+        st.rerun()
+
+    # 入力欄
+    prompt = st.chat_input("指示を入力...", key=f"chat_{room_id}")
+    if prompt:
+        db.add_message(room_id, "user", prompt)
+        st.rerun()
+
+    # === 自動進行ロジック (Fragment内ループ) ===
+    last_role = messages[-1]['role'] if messages else 'system'
+    should_run = False
+    
+    if last_role == 'user':
+        should_run = True
+    elif auto_mode and last_role == 'assistant' and len(messages) < 32:
+        should_run = True
+        
+    if should_run:
+        # 少し待ってから生成（自然な間）
+        time.sleep(1)
+        
+        with container:
+            # 1. 次の話者を決定するためのロジック
+            # 基本はラウンドロビンだが、司会のみ「指名権」を持つ
+            room_agents = db.get_room_agents(room_id)
+            if not room_agents: return
+
+            # 直前の発言者が「司会」かどうか判定（今回は簡易的に、Agentリストの最初を司会とみなす、もしくはRoleで判定）
+            # ここではシンプルに「前の発言に含まれる [[NEXT: ID]] タグ」を確認し、あればその人を、なければ順番に進める
+            next_agent = None
+            
+            # 直前のメッセージから指名タグを探す
+            if messages:
+                last_msg_content = messages[-1]['content']
+                match = re.search(r"\[\[NEXT:\s*(\d+)\]\]", last_msg_content)
+                if match:
+                    t_id = int(match.group(1))
+                    next_agent = next((a for a in room_agents if a['id'] == t_id), None)
+            
+            # 指名がない、または無効なIDならラウンドロビン
+            if not next_agent:
+                next_idx = len(messages) % len(room_agents)
+                next_agent = room_agents[next_idx]
+
+            # 2. 生成プロセス
+            with st.chat_message("assistant", avatar=next_agent['icon']):
+                # UX: トースト通知で思考中を演出
+                toast_msg = st.toast(f"🏃‍♂️ {next_agent['name']} が思考中...", icon="🤔")
+                
+                ph = st.empty()
+                ph.markdown(f":grey[{next_agent['name']} が思考中...]")
+                
+                try:
+                    # コンテキスト構築
+                    context = [{"role": ("user" if m['role']=="user" else "assistant"), "content": re.sub(r"\[\[NEXT:.*?\]\]", "", m['content'])} for m in messages[-10:]]
+                    
+                    # 動的システムプロンプト構築 (Dynamic Prompt Injection)
+                    # 現在の参加者リストを作成
+                    active_members_txt = "\n".join([f"- {a['name']} (ID:{a['id']}): {a['role'][:50]}..." for a in room_agents])
+                    
+                    sys_prompt = f"""
+あなたは{next_agent['name']}です。
+役割: {next_agent['role']}
+
+【現在の会議参加メンバー】
+{active_members_txt}
+※このリストにない人物（田中、佐藤など）には絶対に話しかけないでください。
+
+【指示】
+議論の流れを汲んで、簡潔に（100文字以内）発言してください。
+直前の発言者が自分自身である場合、連続投稿は避けて、他のメンバーに話を振ってください。
+発言の最後に、次に発言すべきメンバーのIDを `[[NEXT: メンバーID]]` の形式で指定してください。
+指定がない場合は、議論の流れで適切だと思う人を指名してください。
+"""
+                    
+                    # 生成
+                    response = llm_client.generate(next_agent['provider'], next_agent['model'], [{"role":"system", "content":sys_prompt}] + context)
+                    
+                    # UX: 完了トースト
+                    toast_msg.toast(f"{next_agent['name']} が発言しました!", icon="✅")
+                    
+                    # 表示用テキスト (タグを除去)
+                    display_text = re.sub(r"\[\[NEXT:.*?\]\]", "", response).strip()
+                    
+                    # 表示更新
+                    role_html = f"<span class='agent-role'>({next_agent.get('role', '')[:10]}...)</span>"
+                    html = f"<div class='agent-header'><span class='agent-name'>{next_agent['name']}</span>{role_html}</div>\n\n{display_text}"
+                    ph.markdown(html, unsafe_allow_html=True)
+                    
+                    # DB保存 (タグ付きのまま保存し、ロジックで利用する)
+                    db.add_message(room_id, "assistant", response, next_agent['id'])
+                    
+                    # Fragmentリラン (次のターンへ)
+                    st.rerun()
+                    
+                except Exception as e:
+                    ph.error(f"Error: {e}")
+                    traceback.print_exc()
+@st.fragment
+def render_room_interface(room_id, auto_mode):
+    col_chat, col_info = st.columns([2, 1.3]) # リキッドレイアウト調整
+    
+    # 左: チャット (Fragmentとして独立)
+    with col_chat:
+        render_active_chat(room_id, auto_mode)
+
+    # 右: 情報パネル
+    with col_info:
+        # DBからルーム情報を取得
+        room = db.get_room(room_id)
+        
+        with st.container(border=True):
+            st.subheader(f"📊 ワークスペース")
+            
+            tab_min, tab_todo, tab_viz = st.tabs(["📝 議事録", "✅ ToDo", "📊 構造図"])
+        
+            with tab_min:
+                if st.button("🔄 議事録を更新", use_container_width=True):
+                    with st.spinner("書記AIが執筆中..."):
+                        try:
+                            scribe = next((a for a in db.get_room_agents(room_id) if "書記" in a['name']), None)
+                            if not scribe: scribe = db.get_room_agents(room_id)[0] 
+                            
+                            all_msgs = db.get_room_messages(room_id)
+                            text = "\n".join([f"{m.get('agent_name','User')}: {m['content']}" for m in all_msgs])
+                            
+                            prompt = f"""議論ログからJSON議事録を作成せよ。Markdownコードは含めるな。
+    出力形式例:
+    {{
+      "topic": "テーマ",
+      "agreements": ["合意1"],
+      "concerns": ["懸念1"],
+      "next_actions": ["TODO1"]
+    }}
+    ログ:
+    {text}"""
+                            res = llm_client.generate(scribe['provider'], scribe['model'], [{"role":"user", "content":prompt}])
+                            new_content = extract_json(res)
+                            if new_content:
+                                db.update_room_board(room_id, new_content)
+                                st.toast("議事録を更新しました")
+                                time.sleep(1)
+                                st.rerun()
+                        except Exception as e:
+                            st.error(f"生成エラー: {e}")
+                
+                content = {}
+                try: content = json.loads(room['board_content'])
+                except: pass
+                
+                # Markdownとして表示 & コピー用
+                md_text = f"## 議題: {content.get('topic','未定')}\n\n"
+                if content.get('agreements'):
+                    md_text += "### ✅ 合意事項\n" + "\n".join([f"- {i}" for i in content['agreements']]) + "\n\n"
+                if content.get('concerns'):
+                    md_text += "### ⚠️ 懸念点\n" + "\n".join([f"- {i}" for i in content['concerns']]) + "\n\n"
+                if content.get('next_actions'):
+                    md_text += "### 🚀 Next Actions\n" + "\n".join([f"- {i}" for i in content['next_actions']])
+                
+                st.markdown(md_text)
+                with st.expander("📋 コピー用Markdown"):
+                    st.code(md_text, language='markdown')
+            
+            with tab_todo:
+                st.write("抽出されたタスク:")
+                if content.get('next_actions'):
+                    for i, action in enumerate(content['next_actions']):
+                        st.checkbox(action, key=f"todo_{room_id}_{i}")
+                else:
+                    st.caption("タスクはまだありません")
+                    
+            with tab_viz:
+                st.caption("議論の構造化マップ (Beta)")
+                st.graphviz_chart("""
+                digraph {
+                  rankdir=LR;
+                  node [shape=box, style=filled, fillcolor="#f0f2f6"];
+                  "User" -> "Moderator" [label="提案"];
+                  "Moderator" -> "Logic" [label="指名"];
+                  "Logic" -> "Idea" [label="指摘"];
+                }
+                """)
+
+
+
+# ==========================================
+# APP ROUTING
+# ==========================================
+if st.session_state.current_room_id:
+    render_room_interface(st.session_state.current_room_id, auto_mode)
+else:
+    render_dashboard()
