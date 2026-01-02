@@ -417,8 +417,9 @@ def generate_agent_response(agent, room_id, messages, room_agents):
     stop_seqs = []
     
     # 全員のアイコンを禁止リストに入れる
+    # 全員のアイコンを禁止リストに入れる（ただし自分自身は除外する：自分のアイコンを装飾で使うことがあるため）
     for a in room_agents:
-        if a['icon']:
+        if a['id'] != agent['id'] and a['icon']:
             stop_seqs.append(f"\n{a['icon']}") # 改行+アイコン
     
     # モデレーターの場合、自分のヘッダーもループ防止で入れる
