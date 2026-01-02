@@ -1008,22 +1008,38 @@ def render_room_interface(room_id, auto_mode):
                         except Exception as e:
                             st.error(f"生成エラー: {e}")
                 
+                content_raw = room.get('board_content')
                 content = {}
-                try: content = json.loads(room['board_content'])
-                except: pass
+                is_json = False
                 
-                # Markdownとして表示 & コピー用
-                md_text = f"## 議題: {content.get('topic','未定')}\n\n"
-                if content.get('agreements'):
-                    md_text += "### ✅ 合意事項\n" + "\n".join([f"- {i}" for i in content['agreements']]) + "\n\n"
-                if content.get('concerns'):
-                    md_text += "### ⚠️ 懸念点\n" + "\n".join([f"- {i}" for i in content['concerns']]) + "\n\n"
-                if content.get('next_actions'):
-                    md_text += "### 🚀 Next Actions\n" + "\n".join([f"- {i}" for i in content['next_actions']])
+                if content_raw:
+                    try:
+                        parsed = json.loads(content_raw)
+                        if isinstance(parsed, dict):
+                            content = parsed
+                            is_json = True
+                    except:
+                        pass
                 
-                st.markdown(md_text)
-                with st.expander("📋 コピー用Markdown"):
-                    st.code(md_text, language='markdown')
+                if is_json:
+                    # JSON構造化データの場合
+                    md_text = f"## 議題: {content.get('topic','未定')}\n\n"
+                    if content.get('agreements'):
+                        md_text += "### ✅ 合意事項\n" + "\n".join([f"- {i}" for i in content['agreements']]) + "\n\n"
+                    if content.get('concerns'):
+                        md_text += "### ⚠️ 懸念点\n" + "\n".join([f"- {i}" for i in content['concerns']]) + "\n\n"
+                    if content.get('next_actions'):
+                        md_text += "### 🚀 Next Actions\n" + "\n".join([f"- {i}" for i in content['next_actions']])
+                    st.markdown(md_text)
+                    copy_text = md_text
+                else:
+                    # Markdownテキストの場合
+                    st.markdown(content_raw if content_raw else "（議事録はまだありません）")
+                    copy_text = content_raw if content_raw else ""
+
+                if copy_text:
+                    with st.expander("📋 コピー用テキスト"):
+                        st.code(copy_text, language='markdown')
             
             with tab_todo:
                 st.write("抽出されたタスク:")
