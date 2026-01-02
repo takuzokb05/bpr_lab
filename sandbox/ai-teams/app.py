@@ -301,6 +301,7 @@ def generate_agent_response(agent, room_id, messages, room_agents):
 [[NEXT: [指名エージェントID]]]
 ```
 
+**重要: 文末に `[[NEXT: ID]]` がない場合、システムエラーとなります。必ず出力してください。**
 ※ 議論が十分に尽くされた場合のみ、まとめの言葉の後に `[[FINISH]]` を出力して終了してください。
 """
     else:
@@ -1056,6 +1057,22 @@ def render_active_chat(room_id, auto_mode):
                     # 統合された統制ロジック関数を呼び出し
                     response = generate_agent_response(next_agent, room_id, messages, room_agents)
                     
+                    # --- 物理サニタイズ（Physical Sanitization） ---
+                    # 1. タグ以降の「蛇足（乗っ取り発言）」を強制切断
+                    cutoff_match = re.search(r'(\[\[NEXT:.*?\]\]|\[\[FINISH\]\])', response, re.DOTALL)
+                    if cutoff_match:
+                        end_pos = cutoff_match.end()
+                        response = response[:end_pos] # タグより後ろは全て捨てる
+                    else:
+                        # タグがない場合でも、幻覚ヘッダーが出現したらそこで切る（一人二役の阻止）
+                        hallucination_match = re.search(r'(\n|^)(🎤|📈|# ペルソナ).*', response, re.DOTALL)
+                        if hallucination_match:
+                             response = response[:hallucination_match.start()]
+
+                    # 2. 幻覚・システム漏れ除去
+                    # プロンプトのヘッダー等が漏れた場合に削除
+                    response = re.sub(r'(^|\n)(🎤|📈|# ペルソナ).*?(\n|$)', r'\1', response)
+
                     # UX: 完了トースト
                     st.toast(f"{next_agent['name']} が発言しました", icon="✅")
                     
