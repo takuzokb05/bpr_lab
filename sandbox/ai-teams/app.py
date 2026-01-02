@@ -1197,7 +1197,6 @@ def render_active_chat(room_id, auto_mode):
             elif last_role == 'assistant':
                 # A. モデレーターが喋った -> 次は指名されたメンバー
                 if last_agent_id == moderator['id']:
-                if last_agent_id == moderator['id']:
                     # === Robust In-Room Routing (Name Priority) ===
                     target_name_found = False
                     
