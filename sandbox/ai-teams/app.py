@@ -240,12 +240,22 @@ def generate_agent_response(agent, room_id, messages, room_agents):
         mode_instruction = "【モード: 協調 (Collaboration)】\n互いの知見を補完し合い、解決策を具体化してください。"
 
     turn_count = len([m for m in messages if m['role'] == 'assistant'])
-    if turn_count < 5: 
-        phase_msg = "【フェーズ: 1. 発散】批判せず、可能性を広げてください。"
-    elif turn_count < 15: # フェーズを少し長く取る
-        phase_msg = "【フェーズ: 2. 選別・深化】実現性、コスト、リスクの観点から徹底的に批評してください。"
+    
+    # 議論の深さを確保するためのフェーズ拡張 (Deep Discussion Logic)
+    if turn_count < 10: 
+        phase_msg = """【フェーズ: 1. 強制発散 (Lateral Thinking)】
+- 最初に出たアイデアに安易に飛びつかないでください。「それもいいですね」という賛同は不要です。
+- 全く異なる角度、あるいは「逆の視点」から対抗案を出してください。
+- 議論の「幅」を広げることが目的です。一つの案を深掘りするのはまだ早すぎます。"""
+    elif turn_count < 30: 
+        phase_msg = """【フェーズ: 2. 批判的検証 (Critical Scrutiny)】
+- ここからは新しいアイデアを出すのを止め、既存の案を「選別」します。
+- 提案されたアイデアの「致命的な欠陥」「リスク」「矛盾」を容赦なく指摘してください。
+- 「本当にそれでうまくいくのか？」と疑う姿勢（Devil's Advocate）が求められます。予定調和を破壊してください。"""
     else: 
-        phase_msg = "【フェーズ: 3. 収束】これまでの結論を具体的なアクションプランに落とし込んでください。"
+        phase_msg = """【フェーズ: 3. 統合と収束 (Convergence)】
+- 批判に耐え抜いたアイデアを再構築し、具体的なアクションプランに落とし込んでください。
+- 複数の案の「良いとこ取り」を行い、至高の解決策（Third Alternative）を練り上げてください。"""
 
     # 3. 役割別指示（V字進行用・長文推奨）
     
@@ -478,6 +488,21 @@ def generate_agent_response(agent, room_id, messages, room_agents):
 
     input_msgs = [{"role": "system", "content": base_system}] + clean_history
     
+    # === Resurrection Logic (ゾンビ化対策ではなく、正規の議論再開) ===
+    # 過去ログに [[FINISH]] が含まれているにもかかわらず、ユーザーが発言して再開した場合、
+    # その旨を強力にシステムプロンプトに注入して、AIが「もう終わった」と勘違いするのを防ぐ。
+    finish_detected = any("[[FINISH]]" in m['content'] for m in recent_msgs)
+    last_is_user = (recent_msgs[-1]['role'] == 'user') if recent_msgs else False
+    
+    if finish_detected and last_is_user:
+        resurrection_msg = """
+        【⚠️ 重要：議論再開の指示】
+        過去のログに「終了([[FINISH]])」が含まれていますが、ユーザーは明示的に議論の継続または深掘りを求めています。
+        これまでの終了判断は全て無効化されました。ユーザーの最新の入力指示に従い、議論を継続してください。
+        勝手に終了させることは厳禁です。
+        """
+        extra_system_prompt += f"\n\n{resurrection_msg}"
+
     # llm_client に extra_system_prompt と stop_sequences を渡し、脳の最上層に注入かつ物理防御
     return llm_client.generate(agent['provider'], agent['model'], input_msgs, extra_system_prompt=extra_system_prompt, stop_sequences=stop_seqs)
 
@@ -1221,13 +1246,13 @@ def render_active_chat(room_id, auto_mode):
                     if extracted_name:
                          clean_target = extracted_name.replace("さん", "").replace("先生", "").strip()
                          # 1. Exact Match
-                         candidate = next((a for a in active_agents if a['name'] == clean_target), None)
+                         candidate = next((a for a in room_agents if a['name'] == clean_target), None)
                          # 2. Partial Match (Target in AgentName)
                          if not candidate:
-                             candidate = next((a for a in active_agents if clean_target in a['name']), None)
+                             candidate = next((a for a in room_agents if clean_target in a['name']), None)
                          # 3. Partial Match (AgentName in Target)
                          if not candidate:
-                             candidate = next((a for a in active_agents if a['name'] in clean_target), None)
+                             candidate = next((a for a in room_agents if a['name'] in clean_target), None)
                          
                          if candidate:
                              st.session_state[state_key] = candidate['id']
@@ -1240,7 +1265,7 @@ def render_active_chat(room_id, auto_mode):
                         if match:
                             try:
                                 t_id = int(match.group(1))
-                                if any(a['id'] == t_id for a in active_agents):
+                                if any(a['id'] == t_id for a in room_agents):
                                     st.session_state[state_key] = t_id
                             except:
                                 pass
@@ -1252,7 +1277,7 @@ def render_active_chat(room_id, auto_mode):
             # 3. ステートから次のエージェントを決定
             target_id = st.session_state.get(state_key)
             if target_id:
-                next_agent = next((a for a in active_agents if a['id'] == target_id), None)
+                next_agent = next((a for a in room_agents if a['id'] == target_id), None)
 
             # 4. フォールバック（ステート喪失時や指名ミス時）
             if not next_agent:
