@@ -337,7 +337,7 @@ def generate_agent_response(agent, room_id, messages, room_agents):
 
 3. **【指名】**
    > [指名エージェント名]
-   [[NEXT: [指名エージェントID]]]
+   [[NEXT: 指名エージェントID]]
    
 ※ 【指名】ブロックは必ず**問いかけなし**で、シンプルにバトンを渡すこと。問いかけは【現在地】に含めるか、次のエージェントへの文脈として渡す。
 ※ アイコン（絵文字）は使用禁止。
@@ -1197,8 +1197,8 @@ def render_active_chat(room_id, auto_mode):
             elif last_role == 'assistant':
                 # A. モデレーターが喋った -> 次は指名されたメンバー
                 if last_agent_id == moderator['id']:
-                    # Hard Stopで "]]" が消えている可能性があるので、閉じ括弧なしでもマッチさせる
-                    match = re.search(r"\[\[NEXT:\s*(\d+)", last_msg['content'])
+                    # Hard Stopで "]]" が消えている可能性があるので、閉じ括弧なしでもマッチさせる+ブラケット許容
+                    match = re.search(r"\[\[NEXT:\s*\[?(\d+)\]?", last_msg['content'])
                     if match:
                         try:
                             t_id = int(match.group(1))
@@ -1252,8 +1252,8 @@ def render_active_chat(room_id, auto_mode):
                     # モデレーターがNEXTタグを忘れて「一人二役」を始めた場合、強制的に介入する
                     if next_agent.get('category') == 'facilitation' or "モデレーター" in next_agent['name']:
                         import random
-                        # 1. 正常なNEXTタグがあるか確認（閉じ括弧なくてもOK）
-                        next_tag_match = re.search(r'\[\[NEXT:\s*(\d+)', response)
+                        # 1. 正常なNEXTタグがあるか確認（閉じ括弧なくてもOK、ブラケット許容）
+                        next_tag_match = re.search(r'\[\[NEXT:\s*\[?(\d+)\]?', response)
                         
                         if next_tag_match:
                             # タグがあるなら、それ以降（独演会）を完全に削除
