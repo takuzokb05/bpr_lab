@@ -1197,16 +1197,38 @@ def render_active_chat(room_id, auto_mode):
             elif last_role == 'assistant':
                 # A. モデレーターが喋った -> 次は指名されたメンバー
                 if last_agent_id == moderator['id']:
+                    # 1. Primary Strategy: ID Extraction (Strict)
                     # Hard Stopで "]]" が消えている可能性があるので、閉じ括弧なしでもマッチさせる+ブラケット許容
                     match = re.search(r"\[\[NEXT:\s*\[?(\d+)\]?", last_msg['content'])
+                    target_found = False
+                    
                     if match:
                         try:
                             t_id = int(match.group(1))
                             # IDの有効性チェック
                             if any(a['id'] == t_id for a in active_agents):
                                 st.session_state[state_key] = t_id
+                                target_found = True
                         except:
                             pass
+                    
+                    # 2. Safety Cushion Strategy: Name Fallback (Soft)
+                    # IDで失敗した場合、テキスト内の指名行 `> 名前` を探す
+                    if not target_found:
+                         # `> 名前` のパターンを探す
+                         name_match = re.search(r"^\s*>\s*(.+)$", last_msg['content'], re.MULTILINE)
+                         if name_match:
+                             extracted_name = name_match.group(1).strip()
+                             # active_agentsの中から名前が部分一致するものを探す (fuzzy match)
+                             # 完全一致 -> 部分一致の順で評価
+                             candidate = next((a for a in active_agents if a['name'] == extracted_name), None)
+                             if not candidate:
+                                 candidate = next((a for a in active_agents if extracted_name in a['name']), None)
+                             
+                             if candidate:
+                                 st.session_state[state_key] = candidate['id']
+                                 # st.toast(f"⛑️ ID検出失敗。名前「{extracted_name}」から {candidate['name']} を復旧しました。")
+                
                 # B. メンバーが喋った -> 次は必ずモデレーター
                 else:
                     st.session_state[state_key] = moderator['id']
