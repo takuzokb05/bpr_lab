@@ -1126,6 +1126,19 @@ def render_active_chat(room_id, auto_mode):
             room_agents = db.get_room_agents(room_id)
             if not room_agents: return
 
+            # === モデレーター強制召還 (Savior Summoning) ===
+            # ルームにモデレーターがいない場合、議論が崩壊するので強制的に連れてくる
+            if not any(a.get('category') == 'facilitation' for a in room_agents):
+                all_ag = db.get_all_agents()
+                real_mod = next((a for a in all_ag if a.get('category') == 'facilitation'), None)
+                if real_mod:
+                    current_ids = [a['id'] for a in room_agents]
+                    if real_mod['id'] not in current_ids:
+                        new_ids = current_ids + [real_mod['id']]
+                        db.update_room_agents_diff(room_id, new_ids)
+                        room_agents.append(real_mod) # メモリ上も追加
+                        st.toast("🪄 モデレーターを自動召還しました")
+
             # 書記などの裏方を除外 (Active Agentsのみ)
             # これにより「書記」が勝手に指名されたり発言したりするのを防ぐ
             active_agents = [a for a in room_agents if "書記" not in a['name']]
