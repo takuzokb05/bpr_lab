@@ -73,6 +73,35 @@ def get_database():
 
 db = get_database()
 
+# --- 2026 Model Migration (Auto-Fix) ---
+# ユーザーの既存データに残っている古いモデルIDを最新版に自動置換する
+if "migration_done_2026" not in st.session_state:
+    try:
+        agents = db.get_all_agents()
+        migration_map = {
+            "claude-3-5-sonnet-20241022": "claude-3-5-sonnet-latest",
+            "claude-3-5-haiku-20241022": "claude-3-5-haiku-latest",
+            "claude-3-5-sonnet-20240620": "claude-3-5-sonnet-latest"
+        }
+        count = 0
+        for ag in agents:
+            current_model = ag['model']
+            if current_model in migration_map:
+                new_model = migration_map[current_model]
+                # 全フィールドを引き継いで更新
+                db.update_agent(
+                    ag['id'], ag['name'], ag['icon'], ag['color'], ag['role'],
+                    new_model, ag['provider'], ag.get('category', 'specialist')
+                )
+                count += 1
+        if count > 0:
+            print(f"✅ Migrated {count} agents to 2026 models.")
+            st.toast(f"システム更新: {count}体のエージェントを最新モデルに移行しました", icon="🆙")
+    except Exception as e:
+        print(f"Migration failed: {e}")
+    
+    st.session_state.migration_done_2026 = True
+
 def load_api_keys():
     # 1. Streamlit Secrets (Cloud Deploy)
     try:
