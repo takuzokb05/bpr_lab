@@ -865,13 +865,22 @@ def render_dashboard():
             new_prompt = st.text_area("デフォルトの指示プロンプト", value=tpl.get('prompt',''), height=100)
             
             all_agents = db.get_all_agents()
-            agent_options = {a['id']: f"{a['icon']} {a['name']}" for a in all_agents}
+            
+            # 除外フィルタ（モデレーター等は自動参加なので選択肢から消す）
+            def is_hidden(a):
+                 return (a.get('category') == 'facilitation') or ("モデレーター" in a['name']) or ("書記" in a['name'])
+
+            visible_agents = [a for a in all_agents if not is_hidden(a)]
+            agent_options = {a['id']: f"{a['icon']} {a['name']}" for a in visible_agents}
+            
+            # デフォルトIDから隠しエージェントを除外して表示用リストを作る
+            current_defaults = [uid for uid in tpl['default_agent_ids'] if uid in agent_options]
             
             default_ids = st.multiselect(
                 "招集するメンバー",
                 options=list(agent_options.keys()),
                 format_func=lambda x: agent_options[x],
-                default=tpl['default_agent_ids']
+                default=current_defaults
             )
             
             if st.button("設定を保存", type="primary"):
