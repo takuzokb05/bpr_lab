@@ -561,12 +561,20 @@ with st.sidebar:
         # カテゴリ別にエージェントを整理
         categorized_agents = {cat: [] for cat in CATEGORIES.keys()}
         
-        # デフォルトエージェント（おすすめ）
-        default_ids = [a['id'] for a in all_agents if a.get('system_default')]
-        categorized_agents["recommended"] = [a for a in all_agents if a.get('system_default')]
+        # 除外対象（自動参加メンバー）
+        def is_hidden(a):
+            # モデレーターと書記は手動選択から隠す
+            # カテゴリ判定 または 名前判定
+            return (a.get('category') == 'facilitation') or ("モデレーター" in a['name']) or ("書記" in a['name'])
+
+        # デフォルトエージェント（おすすめ）から除外
+        default_ids = [a['id'] for a in all_agents if a.get('system_default') and not is_hidden(a)]
+        categorized_agents["recommended"] = [a for a in all_agents if a.get('system_default') and not is_hidden(a)]
         
         # カテゴリ別に分類
         for agent in all_agents:
+            if is_hidden(agent): continue
+            
             cat = agent.get('category', 'specialist')
             if cat in categorized_agents:
                 categorized_agents[cat].append(agent)
