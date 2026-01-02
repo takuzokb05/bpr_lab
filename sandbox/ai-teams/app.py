@@ -1197,37 +1197,54 @@ def render_active_chat(room_id, auto_mode):
             elif last_role == 'assistant':
                 # A. モデレーターが喋った -> 次は指名されたメンバー
                 if last_agent_id == moderator['id']:
-                    # 1. Primary Strategy: ID Extraction (Strict)
-                    # Hard Stopで "]]" が消えている可能性があるので、閉じ括弧なしでもマッチさせる+ブラケット許容
-                    match = re.search(r"\[\[NEXT:\s*\[?(\d+)\]?", last_msg['content'])
-                    target_found = False
+                if last_agent_id == moderator['id']:
+                    # === Robust In-Room Routing (Name Priority) ===
+                    target_name_found = False
                     
-                    if match:
-                        try:
-                            t_id = int(match.group(1))
-                            # IDの有効性チェック
-                            if any(a['id'] == t_id for a in active_agents):
-                                st.session_state[state_key] = t_id
-                                target_found = True
-                        except:
-                            pass
-                    
-                    # 2. Safety Cushion Strategy: Name Fallback (Soft)
-                    # IDで失敗した場合、テキスト内の指名行 `> 名前` を探す
-                    if not target_found:
-                         # `> 名前` のパターンを探す
+                    # 1. Block Parsing: Extract Name from 【指名】 block
+                    extracted_name = None
+                    # A. 【指名】ブロックの中身を解析
+                    block_match = re.search(r"【指名】(.*?)(?:\[\[NEXT:|$)", last_msg['content'], re.DOTALL)
+                    if block_match:
+                        lines = block_match.group(1).strip().split('\n')
+                        for line in lines:
+                            clean_line = line.strip()
+                            if clean_line and "```" not in clean_line and clean_line != ">":
+                                extracted_name = re.sub(r'[^\w\s]', '', clean_line).strip()
+                                break
+                    # B. Fallback: `> Name` pattern
+                    if not extracted_name:
                          name_match = re.search(r"^\s*>\s*(.+)$", last_msg['content'], re.MULTILINE)
                          if name_match:
                              extracted_name = name_match.group(1).strip()
-                             # active_agentsの中から名前が部分一致するものを探す (fuzzy match)
-                             # 完全一致 -> 部分一致の順で評価
-                             candidate = next((a for a in active_agents if a['name'] == extracted_name), None)
-                             if not candidate:
-                                 candidate = next((a for a in active_agents if extracted_name in a['name']), None)
-                             
-                             if candidate:
-                                 st.session_state[state_key] = candidate['id']
-                                 # st.toast(f"⛑️ ID検出失敗。名前「{extracted_name}」から {candidate['name']} を復旧しました。")
+
+                    # 2. Name Matching Logic
+                    if extracted_name:
+                         clean_target = extracted_name.replace("さん", "").replace("先生", "").strip()
+                         # 1. Exact Match
+                         candidate = next((a for a in active_agents if a['name'] == clean_target), None)
+                         # 2. Partial Match (Target in AgentName)
+                         if not candidate:
+                             candidate = next((a for a in active_agents if clean_target in a['name']), None)
+                         # 3. Partial Match (AgentName in Target)
+                         if not candidate:
+                             candidate = next((a for a in active_agents if a['name'] in clean_target), None)
+                         
+                         if candidate:
+                             st.session_state[state_key] = candidate['id']
+                             target_name_found = True
+                             # print(f"Redirected by Name: {candidate['name']}")
+
+                    # 3. ID Extraction (Fallback if Name Match fails)
+                    if not target_name_found:
+                        match = re.search(r"\[\[NEXT:\s*\[?(\d+)\]?", last_msg['content'])
+                        if match:
+                            try:
+                                t_id = int(match.group(1))
+                                if any(a['id'] == t_id for a in active_agents):
+                                    st.session_state[state_key] = t_id
+                            except:
+                                pass
                 
                 # B. メンバーが喋った -> 次は必ずモデレーター
                 else:
