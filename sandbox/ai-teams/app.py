@@ -249,16 +249,34 @@ def generate_agent_response(agent, room_id, messages, room_agents):
 
     # 3. 役割別指示（V字進行用・長文推奨）
     
-    # エージェント・レジストリの構築（全権限の可視化）
+    # === Attention Logic (全体最適化: 誰が喋っていないか？) ===
+    # 直近30ターンの発言者をリスト化
+    names_in_history = [m.get('agent_name', '') for m in messages[-30:]]
+    
     agent_registry = []
+    silent_members = []
+    
     for a in room_agents:
+        # 出現回数カウント
+        count = sum(1 for name in names_in_history if name == a['name'])
+        
+        status_suffix = ""
+        # モデレーター以外で、かつ発言が極端に少ない場合
+        if a['category'] != 'facilitation': 
+            if count == 0:
+                status_suffix = " (⚠️未発言)"
+                silent_members.append(a['name'])
+            elif count == 1:
+                status_suffix = " (発言少)"
+        
         agent_registry.append({
-            "name": a['name'],
+            "name": a['name'] + status_suffix,
             "id": a['id'],
             "role": a['role'][:50] + "...", 
             "category": a.get('category', 'specialist'),
             "icon": a['icon']
         })
+    
     registry_json = json.dumps(agent_registry, ensure_ascii=False, indent=2)
 
     # モデレーターIDの特定（一般メンバーからのパス用）
@@ -266,6 +284,11 @@ def generate_agent_response(agent, room_id, messages, room_agents):
     if not mod_agent: 
         mod_agent = next((a for a in room_agents if "モデレーター" in a['name']), room_agents[0]) # フォールバック
     mod_id = mod_agent['id']
+
+    # 未発言者への誘導メッセージ
+    silence_alert = ""
+    if silent_members:
+        silence_alert = f"\n🚨 **【重要ミッション】**: 議論の偏りを防ぐため、まだ発言していない **{', '.join(silent_members)}** に優先的に話を振ってください。"
 
     is_moderator = agent.get('category') == 'facilitation'
     
@@ -276,7 +299,7 @@ def generate_agent_response(agent, room_id, messages, room_agents):
 与えられた「名簿（Registry）」に基づき、最適なメンバーを指名して議論を構造化します。
 **あなた自身が解決策を出すことは決してありません。**
 ただし、**ユーザーから「アイデアを出せ」「議論せよ」等の指示があった場合は、それを「議題」として設定し、直ちに適切なメンバーを指名して議論を開始してください（拒否は厳禁）。**
-
+{silence_alert}
 
 ### # 入力情報
 1. 会話履歴
