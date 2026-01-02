@@ -909,8 +909,16 @@ def render_dashboard():
                     st.write("") # Spacer
                     
                     if st.button("チームを招集", key=f"launch_{tpl['id']}", use_container_width=True, type="primary"):
+                        # モデレーターを強制追加
+                        all_ag_temp = db.get_all_agents() # templates取得前にDBアクセスコストかかるが許容
+                        facilitators = [a['id'] for a in all_ag_temp if a.get('category') == 'facilitation']
+                        if not facilitators:
+                             facilitators = [a['id'] for a in all_ag_temp if "モデレーター" in a['name']]
+                        
+                        final_ids = list(set(tpl['default_agent_ids'] + facilitators))
+
                         # Room作成
-                        new_id = db.create_room(tpl['name'], tpl.get('prompt',''), tpl['default_agent_ids'])
+                        new_id = db.create_room(tpl['name'], tpl.get('prompt',''), final_ids)
                         if tpl.get('prompt'):
                             db.add_message(new_id, "user", tpl['prompt'])
                         st.session_state.current_room_id = new_id
