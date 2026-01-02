@@ -551,7 +551,6 @@ with st.sidebar:
         # カテゴリ定義
         CATEGORIES = {
             "recommended": "⭐ おすすめ",
-            "facilitation": "🎯 ファシリテーション",
             "logic": "🧠 論理・分析",
             "creative": "🎨 クリエイティブ",
             "empathy": "💝 共感・サポート",
@@ -577,6 +576,7 @@ with st.sidebar:
         
         st.markdown("### 👥 チームメンバーを選択")
         st.caption("カテゴリごとにタブで整理されています。複数選択可能です。")
+        st.info("※ 進行役（AIモデレーター）は自動的に参加します。")
         
         # タブでカテゴリ分け (Hick's Law対策)
         tabs = st.tabs([CATEGORIES[cat] for cat in CATEGORIES.keys()])
@@ -634,7 +634,12 @@ with st.sidebar:
             if len(st.session_state.selected_agent_ids) == 0:
                 st.error("少なくとも1名のエージェントを選択してください")
             else:
-                new_id = db.create_room(title, first_prompt, list(st.session_state.selected_agent_ids))
+                # モデレーターを強制参加させる
+                base_ids = list(st.session_state.selected_agent_ids)
+                facilitators = [a['id'] for a in all_agents if a.get('category') == 'facilitation']
+                final_ids = list(set(base_ids + facilitators))
+                
+                new_id = db.create_room(title, first_prompt, final_ids)
                 
                 if first_prompt:
                     db.add_message(new_id, "user", first_prompt)

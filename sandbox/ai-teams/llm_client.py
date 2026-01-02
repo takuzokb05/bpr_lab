@@ -97,6 +97,12 @@ class LLMClient:
     def generate_stream(self, provider: str, model: str, messages: List[Dict], extra_system_prompt: str = "", stop_sequences: List[str] = None) -> Iterator[str]:
         """ストリーミング生成（統一インターフェース）"""
         
+        # API制限（OpenAIは最大4つ）への対応
+        # 全員分を入れるとエラーになるため、先頭4つ（主要マーカー）のみを物理停止用に使う
+        # 残りはapp.py側の事後カットで対応する
+        if stop_sequences and len(stop_sequences) > 4:
+            stop_sequences = stop_sequences[:4]
+        
         # extra_system_prompt の注入 (app.pyからの強制結合)
         current_messages = [m.copy() for m in messages] # Deep copy的に複製
         if extra_system_prompt:
