@@ -310,6 +310,34 @@ def generate_agent_response(agent, room_id, messages, room_agents):
 
     is_moderator = agent.get('category') == 'facilitation'
     
+    # モデレーター向けの指名戦略 (Routing Strategy)
+    mod_routing_rule = ""
+    if turn_count < 10:
+        mod_routing_rule = """
+### # 進行ルール (PHASE 1: FORCED EXPANSION - ROUND ROBIN)
+**現在は「発散フェーズ」です。全員のアイデアが出揃うまで、議論を深掘りしないでください。**
+1. **最優先事項**: 参加メンバー全員に「プロトタイプの種」や「視点」を出させてください。
+2. 指名方針:
+   - **未発言者（⚠️マークがついているメンバー）を必ず指名してください。**
+   - 既にアイデアを出したメンバーへの「再質問」や「深掘り」は禁止です。次々とマイクを回してください。
+3. 問いかけ例: 「○○さん、あなたの専門領域からはどう見えますか？」「アイデアを出してください。」
+"""
+    elif turn_count < 30:
+        mod_routing_rule = """
+### # 進行ルール (PHASE 2: CRITICAL SCRUTINY)
+**現在は「検証・選別フェーズ」です。**
+1. 出そろったアイデアに対し、容赦ない「欠陥指摘」と「リスク分析」を求めてください。
+2. 論理担当（Logic）や専門家（Specialist）を積極的に指名し、実現可能性を問うてください。
+3. 感情担当（Empathy）には、ユーザーが本当にそれを受け入れるか懸念を出させてください。
+"""
+    else:
+        mod_routing_rule = """
+### # 進行ルール (PHASE 3: CONVERGENCE)
+**現在は「収束フェーズ」です。**
+1. 実行計画（Action Plan）を作成できるメンバーを指名してください。
+2. 最終的な合意形成に向けて、議論をまとめてください。
+"""
+
     if is_moderator:
         role_instr = f"""
 ### # 役割 (DEFINED)
@@ -319,6 +347,8 @@ def generate_agent_response(agent, room_id, messages, room_agents):
 ただし、**ユーザーから「アイデアを出せ」「議論せよ」等の指示があった場合は、それを「議題」として設定し、直ちに適切なメンバーを指名して議論を開始してください（拒否は厳禁）。**
 {silence_alert}
 
+{mod_routing_rule}
+
 ### # 入力情報
 1. 会話履歴
 2. **エージェント・レジストリ**（以下から指名せよ）
@@ -327,7 +357,7 @@ def generate_agent_response(agent, room_id, messages, room_agents):
 ### # 思考プロセス (DYNAMIC_PROTOCOL)
 1. **【要約 (Mirroring)】**: 直前の発言を客観的に整理する。
 2. **【パスの言語変換 (Protocol Switching)】**: 指名する相手の「target_protocol」に合わせて、自分の言葉をシステム内部で翻訳して出力せよ。
-   - **対 HARD (Technical)**: 「ROI」「KPI」「リスク検証」等のビジネス用語を用いて論理的に問う。
+   - **対 HARD (Technical)**: 「ROI」「KPI」「リスク検証」等のビジネス用語を用いて論理的に問う（※フェーズ1ではこれらを封印し、技術的な可能性を問うこと）。
    - **対 SOFT (Emotional)**: **ビジネス用語は厳禁。** 「分析」「評価」という言葉を使わず、「どう思う？」「どんな気持ち？」という日常会話に翻訳して問う。
 3. **【未発言者への配慮】**: 議論に参加していないメンバー（⚠️マーク）がいる場合、最優先で指名する。
 
@@ -335,6 +365,7 @@ def generate_agent_response(agent, room_id, messages, room_agents):
 - パスを出した相手の回答を「〜という意見ですね」などと捏造・予言すること。
 - エモーショナルな相手に「分析してください」と言うこと（世界観の破壊）。
 - 実在しないロール（架空のエージェント）を勝手に作り出すこと。
+- **自分自身（Moderator/Facilitator）を指名すること（無限ループの原因）。必ず他のメンバーにパスを渡せ。**
 
 ### # 出力フォーマット
 以下の3ブロック構成で出力してください。順序厳守。
@@ -354,6 +385,7 @@ def generate_agent_response(agent, room_id, messages, room_agents):
 ```
 
 **重要: 文末に `[[NEXT: ID]]` がない場合、システムエラーとなります。必ず出力してください。**
+※ **ただし、議論を終了させる場合（`[[FINISH]]`を出力する場合）に限り、`[[NEXT: ID]]` は不要です。これが唯一の例外です。**
 ※ 議論が十分に尽くされた場合のみ、まとめの言葉の後に `[[FINISH]]` を出力して終了してください。
 """
     else:
@@ -1270,6 +1302,18 @@ def render_active_chat(room_id, auto_mode):
                                     st.session_state[state_key] = t_id
                             except:
                                 pass
+                    
+                    # === Self-Nomination Guard (無限ループ防止) ===
+                    # モデレーターが自分自身を指名してしまった場合、強制的に他のメンバーに振る
+                    current_next_id = st.session_state.get(state_key)
+                    if current_next_id == moderator['id']:
+                        # 自分以外からランダム、あるいは未発言者優先
+                        others = [a for a in active_agents if a['id'] != moderator['id']]
+                        if others:
+                            import random
+                            fallback = random.choice(others)
+                            st.session_state[state_key] = fallback['id']
+                            st.toast(f"⚠️ モデレーターの自己指名を検知。{fallback['name']} に転送しました。")
                 
                 # B. メンバーが喋った -> 次は必ずモデレーター
                 else:
@@ -1319,7 +1363,10 @@ def render_active_chat(room_id, auto_mode):
                         # 1. 正常なNEXTタグがあるか確認（閉じ括弧なくてもOK、ブラケット許容）
                         next_tag_match = re.search(r'\[\[NEXT:\s*\[?(\d+)\]?', response)
                         
-                        if next_tag_match:
+                        # FINISHタグがある場合は、NEXTタグ強制付与ロジックをスキップする
+                        if "[[FINISH]]" in response:
+                            pass
+                        elif next_tag_match:
                             # タグがあるなら、それ以降（独演会）を完全に削除
                             # マッチした箇所（IDまで）で切る
                             # ただし "]]" がstop_seqsで消えているなら、自分で補完する
