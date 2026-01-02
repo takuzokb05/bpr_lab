@@ -261,6 +261,12 @@ def generate_agent_response(agent, room_id, messages, room_agents):
         })
     registry_json = json.dumps(agent_registry, ensure_ascii=False, indent=2)
 
+    # モデレーターIDの特定（一般メンバーからのパス用）
+    mod_agent = next((a for a in room_agents if a.get('category') == 'facilitation'), None)
+    if not mod_agent: 
+        mod_agent = next((a for a in room_agents if "モデレーター" in a['name']), room_agents[0]) # フォールバック
+    mod_id = mod_agent['id']
+
     is_moderator = agent.get('category') == 'facilitation'
     
     if is_moderator:
@@ -310,7 +316,7 @@ def generate_agent_response(agent, room_id, messages, room_agents):
 1. {mode_instruction}
 2. 断定的な短文ではなく、あなたの専門知識に基づいた深い考察（Chain-of-Thought）を展開してください。
 3. 「なぜそう思うのか」の根拠や前提条件を明示してください。
-4. 発言後、議論のバトンを必ず司会（モデレーター）に戻してください（NEXTタグは不要）。
+4. 発言終了時は、必ず `[[NEXT: {mod_id}]]` を出力して進行役（モデレーター）にマイクを戻してください。
 """
 
     # 4. 統合システムプロンプト構築
@@ -1057,34 +1063,66 @@ def render_active_chat(room_id, auto_mode):
                     # 統合された統制ロジック関数を呼び出し
                     response = generate_agent_response(next_agent, room_id, messages, room_agents)
                     
-                    # --- 物理サニタイズ（Physical Sanitization） ---
-                    # 1. タグ以降の「蛇足（乗っ取り発言）」を強制切断
-                    cutoff_match = re.search(r'(\[\[NEXT:.*?\]\]|\[\[FINISH\]\])', response, re.DOTALL)
-                    if cutoff_match:
-                        end_pos = cutoff_match.end()
-                        response = response[:end_pos] # タグより後ろは全て捨てる
-                    else:
-                        # タグがない場合でも、幻覚ヘッダーが出現したらそこで切る（一人二役の阻止）
-                        hallucination_match = re.search(r'(\n|^)(🎤|📈|# ペルソナ).*', response, re.DOTALL)
-                        if hallucination_match:
-                             response = response[:hallucination_match.start()]
+                    # === モデレーター専用：独り相撲防止救済ロジック (The Savior) ===
+                    # モデレーターがNEXTタグを忘れて「一人二役」を始めた場合、強制的に介入する
+                    if next_agent.get('category') == 'facilitation' or "モデレーター" in next_agent['name']:
+                        import random
+                        # 1. 正常なNEXTタグがあるか確認
+                        next_tag_match = re.search(r'\[\[NEXT:\s*(\d+)\]\]', response)
+                        
+                        if next_tag_match:
+                            # タグがあるなら、それ以降（独演会）を完全に削除
+                            response = response[:next_tag_match.end()]
+                        else:
+                            # 2. タグがない場合、文脈から指名先を推定してタグを捏造・強制終了させる
+                            # "【パス：○○さんへ】" のような記述を探す
+                            pass_match = re.search(r'【パス：(.*?)(さん|へ|、|\])', response)
+                            target_id = None
+                            
+                            if pass_match:
+                                target_name = pass_match.group(1)
+                                # 曖昧検索
+                                for a in active_agents:
+                                    # 名前が含まれている、あるいは役割が含まれている場合
+                                    if a['name'] in target_name or target_name in a['name']:
+                                        target_id = a['id']
+                                        break
+                                # カフェ等の揺らぎ対応
+                                if not target_id and ("中庸" in target_name or "カフェ" in target_name):
+                                    target = next((a for a in active_agents if "カフェ" in a['name'] or "中庸" in a['role']), None)
+                                    if target: target_id = target['id']
 
-                    # 2. 幻覚・システム漏れ除去
-                    # プロンプトのヘッダー等が漏れた場合に削除
-                    response = re.sub(r'(^|\n)(🎤|📈|# ペルソナ).*?(\n|$)', r'\1', response)
+                            # 3. 推定失敗なら、自分以外からランダム選出
+                            if not target_id:
+                                others = [a for a in active_agents if a['id'] != next_agent['id']]
+                                if others:
+                                    target_id = random.choice(others)['id']
+                            
+                            # 4. 強制付与と切断
+                            if target_id:
+                                # パス行が見つかれば、その直後で切断してタグを付ける
+                                if pass_match:
+                                    # pass_match自体は残し、その直後で切る
+                                    line_end = response.find('\n', pass_match.end())
+                                    if line_end == -1: line_end = len(response)
+                                    response = response[:line_end] + f"\n\n[[NEXT: {target_id}]]"
+                                else:
+                                    # パス行すらない場合 -> 幻覚ヘッダーを探して切る
+                                    hallucination = re.search(r'(\n|^)(🎤|📈|# ペルソナ|Thinking|【).*', response, re.DOTALL)
+                                    # 自分のヘッダーは残したいが、2回目のヘッダーは消す... 難しいので、
+                                    # 単純に「最初の200文字以降で改行ヘッダーが出たら切る」等のヒューリスティック
+                                    # ここでは安全に「全文生かしつつ末尾タグ」にするが、幻覚除去は後続の処理に任せる
+                                    response += f"\n\n[[NEXT: {target_id}]]"
+                                    
+                                st.toast("🛡️ モデレーターの独走を強制停止しました", icon="👮")
 
-                    # UX: 完了トースト
-                    st.toast(f"{next_agent['name']} が発言しました", icon="✅")
-                    
-                    # 表示用テキスト (タグを除去)
-                    display_text = re.sub(r"\[\[NEXT:.*?\]\]", "", response)
-                    display_text = re.sub(r"\[\[FINISH\]\]", "", display_text).strip()
-                    
-                    # 表示更新
-                    role_html = f"<span class='agent-role'>({next_agent.get('role', '')[:10]}...)</span>"
-                    html = f"<div class='agent-header'><span class='agent-name'>{next_agent['name']}</span>{role_html}</div>\n\n{display_text}"
-                    ph.markdown(html, unsafe_allow_html=True)
-                    
+                    # --- 共通サニタイズ ---
+                    # 1. 幻覚ヘッダー除去（念押し）
+                    # 改行後に来る「マイク」や「ロール名」等は、AIが勝手に生成した次ターンの可能性が高い
+                    if "[[NEXT:" in response: # 正しいタグがある（はず）
+                         cutoff = response.find("[[NEXT:") + response[response.find("[[NEXT:"):].find("]]") + 2
+                         response = response[:cutoff] # タグより後ろはゴミなので捨てる
+
                     # DB保存 (タグ付きのまま保存し、ロジックで利用する)
                     db.add_message(room_id, "assistant", response, next_agent['id'])
                     
