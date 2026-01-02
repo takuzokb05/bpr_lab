@@ -94,7 +94,7 @@ class LLMClient:
         
         return processed_messages
     
-    def generate_stream(self, provider: str, model: str, messages: List[Dict], extra_system_prompt: str = "") -> Iterator[str]:
+    def generate_stream(self, provider: str, model: str, messages: List[Dict], extra_system_prompt: str = "", stop_sequences: List[str] = None) -> Iterator[str]:
         """ストリーミング生成（統一インターフェース）"""
         
         # extra_system_prompt の注入 (app.pyからの強制結合)
@@ -120,15 +120,15 @@ class LLMClient:
         processed_messages = self._prepare_multimodal_content(current_messages, provider)
         
         if provider == "openai":
-            yield from self._openai_stream(model, processed_messages)
+            yield from self._openai_stream(model, processed_messages, stop_sequences)
         elif provider == "google":
-            yield from self._google_stream(model, processed_messages)
+            yield from self._google_stream(model, processed_messages, stop_sequences)
         elif provider == "anthropic":
-            yield from self._anthropic_stream(model, processed_messages)
+            yield from self._anthropic_stream(model, processed_messages, stop_sequences)
         else:
             yield f"[エラー: 不明なプロバイダー {provider}]"
     
-    def _openai_stream(self, model: str, messages: List[Dict]) -> Iterator[str]:
+    def _openai_stream(self, model: str, messages: List[Dict], stop: List[str] = None) -> Iterator[str]:
         """OpenAI ストリーミング"""
         if not hasattr(self, 'openai_client'):
             yield "[エラー: OpenAI APIキーが設定されていません]"
@@ -139,8 +139,9 @@ class LLMClient:
                 model=model,
                 messages=messages,
                 temperature=0.7,
-                max_tokens=1500,
-                stream=True
+                max_tokens=4096, # 思考の深さを確保するため拡張
+                stream=True,
+                stop=stop
             )
             
             for chunk in stream:
@@ -150,7 +151,7 @@ class LLMClient:
         except Exception as e:
             yield f"[OpenAI エラー: {str(e)}]"
     
-    def _google_stream(self, model: str, messages: List[Dict]) -> Iterator[str]:
+    def _google_stream(self, model: str, messages: List[Dict], stop: List[str] = None) -> Iterator[str]:
         """Google Gemini ストリーミング"""
         if not self.api_keys.get("google"):
              yield "[エラー: Google APIキーが設定されていません]"
@@ -161,6 +162,7 @@ class LLMClient:
             
             # 画像がある場合は特別処理
             has_images = any(msg.get('attachments') for msg in messages)
+            generation_config = genai.types.GenerationConfig(stop_sequences=stop) if stop else None
             
             if has_images:
                 # 最後のメッセージに画像がある場合
@@ -176,15 +178,15 @@ class LLMClient:
                             img = PIL.Image.open(io.BytesIO(img_bytes))
                             parts.append(img)
                     
-                    response = model_instance.generate_content(parts, stream=True)
+                    response = model_instance.generate_content(parts, stream=True, generation_config=generation_config)
                 else:
                     # メッセージ形式を変換
                     prompt = "\n".join([f"{m['role']}: {m['content']}" for m in messages])
-                    response = model_instance.generate_content(prompt, stream=True)
+                    response = model_instance.generate_content(prompt, stream=True, generation_config=generation_config)
             else:
                 # メッセージ形式を変換
                 prompt = "\n".join([f"{m['role']}: {m['content']}" for m in messages])
-                response = model_instance.generate_content(prompt, stream=True)
+                response = model_instance.generate_content(prompt, stream=True, generation_config=generation_config)
             
             for chunk in response:
                 if chunk.text:
@@ -193,7 +195,7 @@ class LLMClient:
         except Exception as e:
             yield f"[Gemini エラー: {str(e)}]"
     
-    def _anthropic_stream(self, model: str, messages: List[Dict]) -> Iterator[str]:
+    def _anthropic_stream(self, model: str, messages: List[Dict], stop: List[str] = None) -> Iterator[str]:
         """Anthropic Claude ストリーミング"""
         if not hasattr(self, 'anthropic_client'):
             yield "[エラー: Anthropic APIキーが設定されていません]"
@@ -206,7 +208,7 @@ class LLMClient:
             
             with self.anthropic_client.messages.stream(
                 model=model,
-                max_tokens=1500,
+                max_tokens=4096, # 思考の深さを確保
                 system=system_msg,
                 messages=user_messages
             ) as stream:
@@ -216,9 +218,9 @@ class LLMClient:
         except Exception as e:
             yield f"[Claude エラー: {str(e)}]"
     
-    def generate(self, provider: str, model: str, messages: List[Dict], extra_system_prompt: str = "") -> str:
+    def generate(self, provider: str, model: str, messages: List[Dict], extra_system_prompt: str = "", stop_sequences: List[str] = None) -> str:
         """非ストリーミング生成（後方互換性のため）"""
         result = ""
-        for chunk in self.generate_stream(provider, model, messages, extra_system_prompt):
+        for chunk in self.generate_stream(provider, model, messages, extra_system_prompt, stop_sequences):
             result += chunk
         return result

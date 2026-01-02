@@ -368,17 +368,58 @@ def generate_agent_response(agent, room_id, messages, room_agents):
 4. 自身のペルソナ（口調・視点）を絶対に崩さず、その立場から議論を支えてください。
 """
 
-    # 直近ログ（最新10件くらい文脈を読む）
-    recent_msgs = [m for m in messages if m['role'] != 'system'][-10:]
+    # === Stop Sequence 作成 (Anti-Impersonation Wall) ===
+    # Roomにいる全エージェントのアイコンと名前を収集し、物理的な生成停止トリガーとする
+    stop_seqs = []
+    
+    # 全員のアイコンと名前を禁止リストに入れる
+    for a in room_agents:
+        if a['icon']:
+            stop_seqs.append(f"\n{a['icon']}") # 改行+アイコン
+        stop_seqs.append(f"\n{a['name']}") # 改行+名前
+        stop_seqs.append(f"\n【{a['name']}") # 改行+隅付き名前
+
+    # 重複排除
+    stop_seqs = list(set(stop_seqs))
+
+    # 直近ログ（最新15件くらい文脈を読む：長文対応のため少し増やす）
+    recent_msgs = [m for m in messages if m['role'] != 'system'][-15:]
     clean_history = []
+    
     for m in recent_msgs:
          cln = re.sub(r"\[\[NEXT:.*?\]\]", "", m['content']).strip()
+         
+         # === History Sanitization (過去の亡霊を除霊) ===
+         # 過去ログに混入している「他人の乗っ取り発言」を削除する
+         # メッセージの途中で「改行+アイコン」が出現したら、そこから先は偽物として切り捨てる
+         min_idx = len(cln)
+         
+         # stop_seqsを使ってスキャン (簡易実装)
+         # 本当は自分のアイコンは除外すべきだが、LLMが自分で自分のアイコンを文中で出すことは稀（あるとしても引用）
+         # 引用なら `> 🎤` となるはずなので `\n🎤` にはマッチしないはず。
+         
+         for stop_mark in stop_seqs:
+             marker = stop_mark.strip() # アイコンや名前のみ
+             if not marker: continue
+             
+             # 改行または行頭 + マーカー
+             pattern = f"(\n|^)\s*{re.escape(marker)}"
+             match = re.search(pattern, cln)
+             
+             if match:
+                 # マッチした場所が、文章の極端な冒頭（0〜10文字目）でないなら切る
+                 # 冒頭にある場合は、その発言者自身のアイコンである可能性が高い（許容）
+                 if match.start() > 10:
+                     if match.start() < min_idx:
+                         min_idx = match.start()
+         
+         cln = cln[:min_idx].strip()
          clean_history.append({"role": m['role'], "content": cln})
 
     input_msgs = [{"role": "system", "content": base_system}] + clean_history
     
-    # llm_client に extra_system_prompt を渡し、脳の最上層に注入させる
-    return llm_client.generate(agent['provider'], agent['model'], input_msgs, extra_system_prompt=extra_system_prompt)
+    # llm_client に extra_system_prompt と stop_sequences を渡し、脳の最上層に注入かつ物理防御
+    return llm_client.generate(agent['provider'], agent['model'], input_msgs, extra_system_prompt=extra_system_prompt, stop_sequences=stop_seqs)
 
 @st.dialog("エージェント管理")
 def manage_agents():
@@ -861,6 +902,31 @@ def render_active_chat(room_id, auto_mode):
     room = db.get_room(room_id)
     st.subheader(f"💬 {room['title']}")
     
+    # === CSS (Fragment内スコープで効かせるためここに配置) ===
+    st.markdown("""
+    <style>
+    /* メッセージ幅の最大化 */
+    .stChatMessage .stMarkdown {
+        max-width: 100% !important;
+    }
+    .stChatMessage {
+        max-width: 100% !important;
+        padding-right: 1rem;
+    }
+    [data-testid="stChatMessageContent"] {
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+    /* 長文用タイポグラフィ */
+    .stMarkdown p {
+        font-size: 1.05rem;
+        line-height: 1.7;
+        letter-spacing: 0.03em;
+        margin-bottom: 0.8rem;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
     # チャットコンテナ（スクロール可能）
     container = st.container(height=650)
     messages = db.get_room_messages(room_id)
@@ -1065,6 +1131,18 @@ def render_active_chat(room_id, auto_mode):
                     # 統合された統制ロジック関数を呼び出し
                     response = generate_agent_response(next_agent, room_id, messages, room_agents)
                     
+                    # === なりすまし切断 (Anti-Impersonation Cutoff) ===
+                    # モデレーターが他人のロール（絵文字ヘッダー）を出し始めたら、そこから先は「乗っ取り」なので削除
+                    # これをSavior Logicの前にやることで、タグが含まれていても消去し、Saviorに正しいタグを作らせる
+                    if next_agent.get('category') == 'facilitation' or "モデレーター" in next_agent['name']:
+                         # 改行後に他人の絵文字ヘッダーが来たらアウト
+                         # 許可する絵文字: 🎤 (自分)
+                         # 拒否する絵文字: 📝💡🔧🔍🧸📊📈🎲🎨 (他人)
+                         stop_pattern = r'\n\s*(📝|💡|🔧|🔍|🧸|📊|📈|🎲|🎨)'
+                         imperson_match = re.search(stop_pattern, response)
+                         if imperson_match:
+                             response = response[:imperson_match.start()]
+                     
                     # === モデレーター専用：独り相撲防止救済ロジック (The Savior) ===
                     # モデレーターがNEXTタグを忘れて「一人二役」を始めた場合、強制的に介入する
                     if next_agent.get('category') == 'facilitation' or "モデレーター" in next_agent['name']:
