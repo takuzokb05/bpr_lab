@@ -79,9 +79,11 @@ if "migration_done_2026" not in st.session_state:
     try:
         agents = db.get_all_agents()
         migration_map = {
-            "claude-3-5-sonnet-20241022": "claude-3-5-sonnet-latest",
-            "claude-3-5-haiku-20241022": "claude-3-5-haiku-latest",
-            "claude-3-5-sonnet-20240620": "claude-3-5-sonnet-latest"
+            "claude-3-5-sonnet-20241022": "claude-sonnet-4-5",
+            "claude-3-5-sonnet-latest": "claude-sonnet-4-5", # 3.5 latestも4.5へ強制移行
+            "claude-3-5-haiku-20241022": "claude-haiku-4-5",
+            "claude-3-5-sonnet-20240620": "claude-sonnet-4-5",
+            "claude-3-5-haiku-latest": "claude-haiku-4-5"
         }
         count = 0
         for ag in agents:
@@ -142,8 +144,7 @@ MODEL_OPTIONS = {
     "anthropic": [
         "claude-opus-4-5", 
         "claude-sonnet-4-5", 
-        "claude-haiku-4-5",
-        "claude-3-5-sonnet-latest"
+        "claude-haiku-4-5"
     ]
 }
 def extract_json(text):
@@ -1084,6 +1085,9 @@ def render_room_interface(room_id, auto_mode):
                 is_json = False
                 
                 if content_raw:
+                    # 改行コードのエスケープを解除 (\n -> 実際の改行)
+                    content_raw = content_raw.replace("\\n", "\n")
+                    
                     try:
                         parsed = json.loads(content_raw)
                         if isinstance(parsed, dict):
