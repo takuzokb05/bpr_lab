@@ -130,6 +130,10 @@ class LLMClient:
     
     def _openai_stream(self, model: str, messages: List[Dict]) -> Iterator[str]:
         """OpenAI ストリーミング"""
+        if not hasattr(self, 'openai_client'):
+            yield "[エラー: OpenAI APIキーが設定されていません]"
+            return
+
         try:
             stream = self.openai_client.chat.completions.create(
                 model=model,
@@ -148,6 +152,10 @@ class LLMClient:
     
     def _google_stream(self, model: str, messages: List[Dict]) -> Iterator[str]:
         """Google Gemini ストリーミング"""
+        if not self.api_keys.get("google"):
+             yield "[エラー: Google APIキーが設定されていません]"
+             return
+             
         try:
             model_instance = genai.GenerativeModel(model)
             
@@ -187,6 +195,10 @@ class LLMClient:
     
     def _anthropic_stream(self, model: str, messages: List[Dict]) -> Iterator[str]:
         """Anthropic Claude ストリーミング"""
+        if not hasattr(self, 'anthropic_client'):
+            yield "[エラー: Anthropic APIキーが設定されていません]"
+            return
+
         try:
             # システムメッセージを分離
             system_msg = next((m["content"] for m in messages if m["role"] == "system"), "")
