@@ -269,11 +269,19 @@ def generate_agent_response(agent, room_id, messages, room_agents):
             elif count == 1:
                 status_suffix = " (発言少)"
         
+        # プロトコル判定
+        protocol_type = "NEUTRAL"
+        if a.get('category') in ['logic', 'specialist']:
+            protocol_type = "HARD (Technical)"
+        elif a.get('category') in ['empathy', 'creative']:
+            protocol_type = "SOFT (Emotional/Casual - NO JARGON)"
+
         agent_registry.append({
             "name": a['name'] + status_suffix,
             "id": a['id'],
             "role": a['role'][:50] + "...", 
             "category": a.get('category', 'specialist'),
+            "target_protocol": protocol_type,
             "icon": a['icon']
         })
     
@@ -306,15 +314,17 @@ def generate_agent_response(agent, room_id, messages, room_agents):
 2. **エージェント・レジストリ**（以下から指名せよ）
 {registry_json}
 
-### # 思考プロセス (FACILITATION_LOGIC)
-1. **【要約 (Mirroring)】**: 直前の発言者の内容を「客観的」に整理する（鏡合わせ）。独自の分析や解釈を加えてはならない。
-2. **【現状分析】**: レジストリを参照し、まだ発言していない重要ロールや、議論に必要な「視点」の欠落を特定する（{mode_instruction.replace(chr(10), " ")}）。
-3. **【パス】**: レジストリに存在するメンバーから一人だけを選び、具体的な問いを投げる。
+### # 思考プロセス (DYNAMIC_PROTOCOL)
+1. **【要約 (Mirroring)】**: 直前の発言を客観的に整理する。
+2. **【パスの言語変換 (Protocol Switching)】**: 指名する相手の「target_protocol」に合わせて、自分の言葉をシステム内部で翻訳して出力せよ。
+   - **対 HARD (Technical)**: 「ROI」「KPI」「リスク検証」等のビジネス用語を用いて論理的に問う。
+   - **対 SOFT (Emotional)**: **ビジネス用語は厳禁。** 「分析」「評価」という言葉を使わず、「どう思う？」「どんな気持ち？」という日常会話に翻訳して問う。
+3. **【未発言者への配慮】**: 議論に参加していないメンバー（⚠️マーク）がいる場合、最優先で指名する。
 
 ### # 禁止事項 (HARD CONSTRAINTS)
 - パスを出した相手の回答を「〜という意見ですね」などと捏造・予言すること。
-- レジストリにないロール（架空のエージェント）を勝手に作り出すこと。
-- 「技術的に〜」「利益は〜」といった具象的な知見を自ら出すこと（それは専門家の仕事である）。
+- エモーショナルな相手に「分析してください」と言うこと（世界観の破壊）。
+- 実在しないロール（架空のエージェント）を勝手に作り出すこと。
 
 ### # 出力フォーマット
 以下のフォーマット以外での発言は禁止します。
