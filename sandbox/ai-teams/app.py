@@ -414,7 +414,8 @@ def generate_agent_response(agent, room_id, messages, room_agents):
     # モデレーターの場合、自分のヘッダーもループ防止で入れる
     if is_moderator:
         stop_seqs.append("\n🎤")
-        stop_seqs.append("[[NEXT:") # Hard Stop: 指名完了と共に停止
+        # stop_seqs.append("[[NEXT:") # これはダメ！IDが出る前に止まってしまう
+        stop_seqs.append("]]")        # これならIDが出た直後に止まる（はず）
         
         # 名前(a['name'])は「〇〇さん、」といった呼びかけで誤爆して止まる可能性があるため除外する
         # stop_seqs.append(f"\n{a['name']}") 
@@ -1196,7 +1197,8 @@ def render_active_chat(room_id, auto_mode):
             elif last_role == 'assistant':
                 # A. モデレーターが喋った -> 次は指名されたメンバー
                 if last_agent_id == moderator['id']:
-                    match = re.search(r"\[\[NEXT:\s*(\d+)\]\]", last_msg['content'])
+                    # Hard Stopで "]]" が消えている可能性があるので、閉じ括弧なしでもマッチさせる
+                    match = re.search(r"\[\[NEXT:\s*(\d+)", last_msg['content'])
                     if match:
                         try:
                             t_id = int(match.group(1))
@@ -1250,12 +1252,24 @@ def render_active_chat(room_id, auto_mode):
                     # モデレーターがNEXTタグを忘れて「一人二役」を始めた場合、強制的に介入する
                     if next_agent.get('category') == 'facilitation' or "モデレーター" in next_agent['name']:
                         import random
-                        # 1. 正常なNEXTタグがあるか確認
-                        next_tag_match = re.search(r'\[\[NEXT:\s*(\d+)\]\]', response)
+                        # 1. 正常なNEXTタグがあるか確認（閉じ括弧なくてもOK）
+                        next_tag_match = re.search(r'\[\[NEXT:\s*(\d+)', response)
                         
                         if next_tag_match:
                             # タグがあるなら、それ以降（独演会）を完全に削除
-                            response = response[:next_tag_match.end()]
+                            # マッチした箇所（IDまで）で切る
+                            # ただし "]]" がstop_seqsで消えているなら、自分で補完する
+                            cutoff_idx = next_tag_match.end()
+                            
+                            # もし "]]" が残っていればそこまで含める
+                            if response[cutoff_idx:].startswith("]]"):
+                                cutoff_idx += 2
+                            else:
+                                # 補完
+                                response = response[:cutoff_idx] + "]]"
+                                cutoff_idx = len(response)
+                                
+                            response = response[:cutoff_idx]
                         else:
                             # 2. タグがない場合、文脈から指名先を推定してタグを捏造・強制終了させる
                             # "【パス：○○さんへ】" のような記述を探す
