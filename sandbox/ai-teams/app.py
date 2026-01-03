@@ -325,20 +325,26 @@ def generate_agent_response(agent, room_id, messages, room_agents):
     elif turn_count < 30:
         mod_routing_rule = """
 ### # 進行ルール (PHASE 2: CRITICAL SCRUTINY)
-**現在は「検証・選別フェーズ」です。**
-1. 出そろったアイデアに対し、容赦ない「欠陥指摘」と「リスク分析」を求めてください。
-2. 論理担当（Logic）や専門家（Specialist）を積極的に指名し、実現可能性を問うてください。
+**現在は「検証・選別フェーズ」です。まだまとめてはいけません。**
+1. 出そろったアイデアに対し、容赦ない「欠陥指摘」と「リスク分析」を行わせてください。
+2. **必ず「論理担当(Logic)」や「専門家(Specialist)」を指名し、実現可能性を厳しく問うてください。**
 3. 感情担当（Empathy）には、ユーザーが本当にそれを受け入れるか懸念を出させてください。
 """
     else:
         mod_routing_rule = """
-### # 進行ルール (PHASE 3: CONVERGENCE)
-**現在は「収束フェーズ」です。**
-1. 実行計画（Action Plan）を作成できるメンバーを指名してください。
-2. 最終的な合意形成に向けて、議論をまとめてください。
+### # 進行ルール (PHASE 3: CONVERGENCE & ACTION)
+**現在は「収束・実行計画フェーズ」です。**
+1. **まだ終了してはいけません。** まず、「具体的なアクションプラン（誰が、いつ、何をするか）」を作成できるメンバー（Logic/Specialist）を指名してください。
+2. そのプランに対して、他のメンバーから最終チェック（ブラッシュアップ）を受けてください。
+3. 全員の合意が形成された後でのみ、終了を検討してください。
 """
 
     if is_moderator:
+        # フェーズによる終了禁止フラグ
+        finish_prohibition = ""
+        if turn_count < 30:
+            finish_prohibition = f"\n⚠️ **【システム警告】現在はフェーズ{1 if turn_count < 10 else 2}（現在 {turn_count}ターン目）です。最低30ターンに達するまで、いかなる理由があろうと議論を終了（[[FINISH]]）させることはシステムによりブロックされます。必ず誰かを指名して議論を継続させてください。**"
+
         role_instr = f"""
 ### # 役割 (DEFINED)
 あなたはプロフェッショナル・ファシリテーターです。
@@ -346,6 +352,7 @@ def generate_agent_response(agent, room_id, messages, room_agents):
 **あなた自身が解決策を出すことは決してありません。**
 ただし、**ユーザーから「アイデアを出せ」「議論せよ」等の指示があった場合は、それを「議題」として設定し、直ちに適切なメンバーを指名して議論を開始してください（拒否は厳禁）。**
 {silence_alert}
+{finish_prohibition}
 
 {mod_routing_rule}
 
@@ -385,8 +392,8 @@ def generate_agent_response(agent, room_id, messages, room_agents):
 ```
 
 **重要: 文末に `[[NEXT: ID]]` がない場合、システムエラーとなります。必ず出力してください。**
-※ **ただし、議論を終了させる場合（`[[FINISH]]`を出力する場合）に限り、`[[NEXT: ID]]` は不要です。これが唯一の例外です。**
-※ 議論が十分に尽くされた場合のみ、まとめの言葉の後に `[[FINISH]]` を出力して終了してください。
+※ **ただし、議論を終了させる場合（`[[FINISH]]`を出力する場合）に限り、`[[NEXT: ID]]` は不要です。**
+※ **【終了条件の厳格化】単に全員が発言しただけでは終了禁止です。「具体的なアクションプラン」が策定され、それに対する「リスク検証」が完了し、メンバー間の「合意」が形成されるまで、粘り強く議論を回してください。安易な早期終了は厳禁です。**
 """
     else:
         role_instr = f"""
@@ -526,9 +533,16 @@ def generate_agent_response(agent, room_id, messages, room_agents):
     # 過去ログに [[FINISH]] が含まれているにもかかわらず、ユーザーが発言して再開した場合、
     # その旨を強力にシステムプロンプトに注入して、AIが「もう終わった」と勘違いするのを防ぐ。
     finish_detected = any("[[FINISH]]" in m['content'] for m in recent_msgs)
-    last_is_user = (recent_msgs[-1]['role'] == 'user') if recent_msgs else False
     
-    if finish_detected and last_is_user:
+    # 最後の発言がユーザー、またはシステムからの介入（警告など）である場合
+    # システム介入も「再開トリガー」とみなすことで、強制ループ解除後などにFINISHモードから抜け出せるようにする
+    last_is_trigger = False
+    if recent_msgs:
+        last_role = recent_msgs[-1]['role']
+        # contentにシステム警告が含まれている場合も考慮
+        last_is_trigger = (last_role == 'user') or (last_role == 'system') or ("【システム警告】" in recent_msgs[-1]['content'])
+    
+    if finish_detected and last_is_trigger:
         resurrection_msg = """
         【⚠️ 重要：議論再開の指示】
         過去のログに「終了([[FINISH]])」が含まれていますが、ユーザーは明示的に議論の継続または深掘りを求めています。
@@ -1372,45 +1386,162 @@ def render_active_chat(room_id, auto_mode):
                          if imperson_match:
                              response = response[:imperson_match.start()]
                      
-                    # === モデレーター専用：独り相撲防止救済ロジック (The Savior) ===
+                     # === モデレーター専用：独り相撲防止救済ロジック (The Savior) ===
                     # モデレーターがNEXTタグを忘れて「一人二役」を始めた場合、強制的に介入する
                     if next_agent.get('category') == 'facilitation' or "モデレーター" in next_agent['name']:
                         import random
-                        # 1. 正常なNEXTタグがあるか確認（閉じ括弧なくてもOK、ブラケット許容）
-                        next_tag_match = re.search(r'\[\[NEXT:\s*\[?(\d+)\]?', response)
                         
-                        # FINISHタグがある場合は、NEXTタグ強制付与ロジックをスキップする
-                        if "[[FINISH]]" in response:
-                            pass
-                        elif next_tag_match:
-                            # タグがあるなら、それ以降（独演会）を完全に削除
-                            # マッチした箇所（IDまで）で切る
-                            # ただし "]]" がstop_seqsで消えているなら、自分で補完する
-                            cutoff_idx = next_tag_match.end()
+                        # 特例：文末に「📈 マーケター」のように、次の話者のアイコンと名前だけ置いて終わっている場合
+                        # これを最強の指名シグナルとして優先する（IDタグよりも優先）
+                        # 末尾50文字くらいを見る
+                        tail_text = response[-50:].strip()
+                        baton_match = re.search(r'(📝|💡|🔧|🔍|🧸|📊|📈|🎲|🎨)\s*([^\s]+)', tail_text)
+                        
+                        forced_target_id = None
+                        if baton_match:
+                            b_icon = baton_match.group(1)
+                            b_name_part = baton_match.group(2) # 名前の一部
                             
-                            # もし "]]" が残っていればそこまで含める
-                            if response[cutoff_idx:].startswith("]]"):
-                                cutoff_idx += 2
-                            else:
-                                # 補完
-                                response = response[:cutoff_idx] + "]]"
-                                cutoff_idx = len(response)
+                            # アイコン一致かつ名前部分一致を探す
+                            for a in room_agents:
+                                if a['icon'] == b_icon:
+                                    # 名前もチェック
+                                    if b_name_part in a['name']:
+                                        forced_target_id = a['id']
+                                        break
+                            
+                            if forced_target_id:
+                                # タグがあろうとなかろうと、強制的にこいつにする
+                                # 既存のタグがあれば消す
+                                response = re.sub(r'\[\[NEXT:.*?\]\]', '', response)
+                                response = response.strip() + f"\n\n[[NEXT: {forced_target_id}]]"
+                                st.toast(f"🎯 バトンパス検知: {b_icon} {b_name_part} へ転送")
+                                # これ以上何もしないでOK
+                        
+                        # バトンパスがなければ通常のチェックへ
+                        if not forced_target_id:
+                            # 1. 正常なNEXTタグがあるか確認（閉じ括弧なくてもOK、ブラケット許容）
+                            next_tag_match = re.search(r'\[\[NEXT:\s*\[?(\d+)\]?', response)
+                            
+                            # FINISHタグがある場合は、NEXTタグ強制付与ロジックをスキップする
+                            if "[[FINISH]]" in response:
+                                pass
+                            elif next_tag_match:
+                                # タグがあるなら、それ以降（独演会）を完全に削除
+                                # マッチした箇所（IDまで）で切る
+                                # ただし "]]" がstop_seqsで消えているなら、自分で補完する
+                                cutoff_idx = next_tag_match.end()
                                 
-                            response = response[:cutoff_idx]
-                        else:
-                            # 2. タグがない場合、文脈から指名先を推定してタグを捏造・強制終了させる
-                            # "【パス：○○さんへ】" のような記述を探す
-                            pass_match = re.search(r'【パス：(.*?)(さん|へ|、|\])', response)
+                                # もし "]]" が残っていればそこまで含める
+                                if response[cutoff_idx:].startswith("]]"):
+                                    cutoff_idx += 2
+                                else:
+                                    # 補完
+                                    response = response[:cutoff_idx] + "]]"
+                                    cutoff_idx = len(response)
+                                    
+                                response = response[:cutoff_idx]
+                            else:
+                                # 2. タグがない場合、文脈から指名先を推定してタグを捏造・強制終了させる
+                                # "【パス：○○さんへ】" のような記述を探す
+                                # より柔軟な正規表現: "指名" や "Next" も拾う
+                                pass_match = re.search(r'(?:【パス|【指名|Next)(?:：|:)\s*(.*?)(?:さん|へ|、|\]|\n|$)', response, re.IGNORECASE)
+                                target_id = None
+                                
+                                if pass_match:
+                                    raw_target = pass_match.group(1).strip()
+                                    # ノイズ除去
+                                    target_name = re.sub(r'(さん|先生|担当|君|氏)', '', raw_target).strip()
+                                    
+                                    # 1. 名前での完全〜部分一致
+                                    for a in active_agents:
+                                        if a['name'] == target_name: # 完全一致優先
+                                            target_id = a['id']
+                                            break
+                                    if not target_id:
+                                        for a in active_agents:
+                                            if target_name in a['name'] or a['name'] in target_name:
+                                                target_id = a['id']
+                                                break
+                                    
+                                    # 2. 役割(role)での検索 fallback
+                                    if not target_id:
+                                        # "論理" -> "論理担当" / "ロジカル" -> "論理担当"
+                                        for a in active_agents:
+                                            if target_name in a['role'] or a['role'] in target_name:
+                                                target_id = a['id']
+                                                break
+                                                
+                                    # 3. カテゴリでの検索 fallback (英語対応)
+                                    if not target_id:
+                                         # data -> analyst, logic -> logic
+                                         for a in active_agents:
+                                             if target_name.lower() in a.get('category','').lower():
+                                                 target_id = a['id']
+                                                 break
+                                    # カフェ等の揺らぎ対応
+                                    if not target_id and ("中庸" in target_name or "カフェ" in target_name):
+                                        target = next((a for a in active_agents if "カフェ" in a['name'] or "中庸" in a['role']), None)
+                                        if target: target_id = target['id']
+    
+                                # 3. 推定失敗なら、自分以外からランダム選出
+                                if not target_id:
+                                    others = [a for a in active_agents if a['id'] != next_agent['id']]
+                                    if others:
+                                        target_id = random.choice(others)['id']
+                                
+                                # 4. 強制付与と切断
+                                if target_id:
+                                    # パス行が見つかれば、その直後で切断してタグを付ける
+                                    if pass_match:
+                                        # pass_match自体は残し、その直後で切る
+                                        line_end = response.find('\n', pass_match.end())
+                                        if line_end == -1: line_end = len(response)
+                                        response = response[:line_end] + f"\n\n[[NEXT: {target_id}]]"
+                                    else:
+                                        # パス行すらない場合 -> 幻覚ヘッダーを探して切る
+                                        hallucination = re.search(r'(\n|^)(🎤|📈|# ペルソナ|Thinking|【).*', response, re.DOTALL)
+                                        # 自分のヘッダーは残したいが、2回目のヘッダーは消す... 難しいので、
+                                        # 単純に「最初の200文字以降で改行ヘッダーが出たら切る」等のヒューリスティック
+                                        # ここでは安全に「全文生かしつつ末尾タグ」にするが、幻覚除去は後続の処理に任せる
+                                        response += f"\n\n[[NEXT: {target_id}]]"
+                                        
+                                    st.toast("🛡️ モデレーターの独走を強制停止しました", icon="👮")
+                            # より柔軟な正規表現: "指名" や "Next" も拾う
+                            pass_match = re.search(r'(?:【パス|【指名|Next)(?:：|:)\s*(.*?)(?:さん|へ|、|\]|\n|$)', response, re.IGNORECASE)
                             target_id = None
                             
                             if pass_match:
-                                target_name = pass_match.group(1)
-                                # 曖昧検索
+                                raw_target = pass_match.group(1).strip()
+                                # ノイズ除去
+                                target_name = re.sub(r'(さん|先生|担当|君|氏)', '', raw_target).strip()
+                                
+                                # 1. 名前での完全〜部分一致
                                 for a in active_agents:
-                                    # 名前が含まれている、あるいは役割が含まれている場合
-                                    if a['name'] in target_name or target_name in a['name']:
+                                    if a['name'] == target_name: # 完全一致優先
                                         target_id = a['id']
                                         break
+                                if not target_id:
+                                    for a in active_agents:
+                                        if target_name in a['name'] or a['name'] in target_name:
+                                            target_id = a['id']
+                                            break
+                                
+                                # 2. 役割(role)での検索 fallback
+                                if not target_id:
+                                    # "論理" -> "論理担当" / "ロジカル" -> "論理担当"
+                                    for a in active_agents:
+                                        if target_name in a['role'] or a['role'] in target_name:
+                                            target_id = a['id']
+                                            break
+                                            
+                                # 3. カテゴリでの検索 fallback (英語対応)
+                                if not target_id:
+                                     # data -> analyst, logic -> logic
+                                     for a in active_agents:
+                                         if target_name.lower() in a.get('category','').lower():
+                                             target_id = a['id']
+                                             break
                                 # カフェ等の揺らぎ対応
                                 if not target_id and ("中庸" in target_name or "カフェ" in target_name):
                                     target = next((a for a in active_agents if "カフェ" in a['name'] or "中庸" in a['role']), None)
