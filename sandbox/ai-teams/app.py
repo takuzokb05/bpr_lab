@@ -451,7 +451,8 @@ def generate_agent_response(agent, room_id, messages, room_agents):
     # 全員のアイコンを禁止リストに入れる
     # 全員のアイコンを禁止リストに入れる（ただし自分自身は除外する：自分のアイコンを装飾で使うことがあるため）
     for a in room_agents:
-        if a['id'] != agent['id'] and a['icon']:
+        # IDを文字列化して比較（型不一致での誤爆回避）
+        if str(a['id']) != str(agent['id']) and a['icon']:
             stop_seqs.append(f"\n{a['icon']}") # 改行+アイコン
     
     # モデレーターの場合、自分のヘッダーもループ防止で入れる
@@ -1342,6 +1343,21 @@ def render_active_chat(room_id, auto_mode):
                 try:
                     # 統合された統制ロジック関数を呼び出し
                     response = generate_agent_response(next_agent, room_id, messages, room_agents)
+                    
+                    # === Empty Response Guard ===
+                    # 生成失敗やフィルタリングで空の応答が返ってきた場合、そのまま進むと無限ループになる
+                    if not response or not response.strip():
+                        st.warning(f"⚠️ {next_agent['name']} からの応答がありませんでした。スキップします。")
+                        
+                        # 次の走者をランダムに決定してリトライ
+                        others = [a for a in active_agents if a['id'] != next_agent['id']]
+                        if others:
+                             import random
+                             fallback = random.choice(others)
+                             st.session_state[state_key] = fallback['id']
+                        
+                        time.sleep(1)
+                        st.rerun()
                     
                     # === なりすまし切断 (Anti-Impersonation Cutoff) ===
                     # モデレーターが他人のロール（絵文字ヘッダー）を出し始めたら、そこから先は「乗っ取り」なので削除
