@@ -210,7 +210,11 @@ class LLMClient:
         try:
             # システムメッセージを分離
             system_msg = next((m["content"] for m in messages if m["role"] == "system"), "")
-            user_messages = [m for m in messages if m["role"] != "system"]
+            # Anthropic APIは厳密なスキーマを要求するため、余計なキー（id, agent_name等）を除去する
+            user_messages = [
+                {"role": m["role"], "content": m["content"]}
+                for m in messages if m["role"] != "system"
+            ]
             
             with self.anthropic_client.messages.stream(
                 model=model,
