@@ -270,107 +270,75 @@ class AgentScheduler:
 
     def get_next_agent_id(self, current_agent_id):
         """
-        次順決定ロジック (System Governance)
+        次順決定ロジック (Nomination-Driven Governance)
+        全エージェントの【指名】欄を絶対的な指示として受理する。
         """
         # 1. ユーザー発言直後は必ずモデレーター
         last_msg = self.messages[-1] if self.messages else None
-        if last_msg and last_msg['role'] == 'user':
+        if not last_msg: return self.facilitator['id']
+        
+        if last_msg['role'] == 'user':
             return self.facilitator['id']
 
-        # IDからエージェント特定
+        # 2. 直前の発言から【指名】を抽出 (Regex Magic)
+        # 末尾にある【指名】ブロックを信頼する
+        extracted_name = self._extract_nomination_target(last_msg['content'])
+        
+        if extracted_name:
+            # 名前からIDを解決
+            # 1. 完全一致
+            target = next((a for a in self.agents if a['name'] == extracted_name), None)
+            # 2. 部分一致
+            if not target:
+                target = next((a for a in self.agents if extracted_name in a['name']), None)
+            
+            if target:
+                # 自己指名防止（特にモデレーター）
+                if target['id'] == current_agent_id:
+                   # 自分を指名してしまった場合、モデレーターへ戻す（または他の人へ）
+                   pass 
+                else:
+                   return target['id']
+
+        # 3. 指名なし、または解決失敗時のフォールバック
         current_agent = next((a for a in self.agents if a['id'] == current_agent_id), None)
-        if not current_agent: return self.facilitator['id']
         
-        last_msg = self.messages[-1]
-        
-        # 2. 現在が専門家の場合 (Specialist Logic)
-        if current_agent['id'] != self.facilitator['id']:
-            # A. 指名解析（もし専門家が明確に「次は○○さん」と言っている場合）
-            nominated_id = self._parse_nomination(last_msg['content'])
-            
-            # B. 直接往復モード (Ping-Pong) の判定
-            # ひとつ前の発言も専門家（モデレーター以外）だった場合、カウンターをチェック
-            is_ping_pong = False
-            if len(self.messages) >= 2:
-                prev_msg = self.messages[-2]
-                if prev_msg['role'] == 'assistant' and prev_msg.get('agent_name'):
-                    # 名前からIDは引けないので、簡易的に「モデレーターではない」で判定
-                    # 本当は agent_id をメッセージに保存しているのでそれを使うべきだが、get_last_agent_idは1つ前しか見ない
-                    # ここでは簡易実装：モデレーター名が含まれていなければOK
-                    if self.facilitator['name'] not in prev_msg['agent_name']:
-                        is_ping_pong = True
-
-            # 専門家同士のラリーは最大2回まで許容 (Sub-turn limit)
-            # しかし、今回は「統治」優先のため、nominated_id が モデレーターなら素直に戻す
-            if nominated_id == self.facilitator['id']:
-                 return self.facilitator['id']
-
-            # 専門家が専門家を指名した場合、2ターン目までなら許容
-            # （実装簡易化：今回はリスク回避のため、専門家 -> モデレーター を基本とするが、
-            #   もしnominated_idがあり、かつPingPong中なら許可するロジック）
-            if is_ping_pong and nominated_id and nominated_id != self.facilitator['id']:
-                 # ここで本来はカウントすべきだが、statelessなので「前回が専門家なら、今回は許す（次はダメ）」とする
-                 # つまり 専門家A(1) -> 専門家B(2) -> モデレーター となる
-                 pass # 許容して nominated_id を返す
-            else:
-                 # 基本はモデレーターに戻す (Anchor)
-                 return self.facilitator['id']
-            
-            if nominated_id: return nominated_id
+        # モデレーター以外なら、とりあえずモデレーターに戻す (Anchor)
+        if current_agent and current_agent['id'] != self.facilitator['id']:
             return self.facilitator['id']
-
             
-        # 3. 現在がモデレーター -> 専門家を指名
-        if current_agent['id'] == self.facilitator['id']:
-            # A. 指名解析 (Parsing)
-            target_id = self._parse_nomination(last_msg['content'])
-            
-            # --- 自己指名 & 曖昧回避 ---
-            if target_id == self.facilitator['id']: target_id = None
-            
-            if target_id: return target_id
-            
-            # B. 解析不能なら、未発言者 (Silent Members) を救済
-            others = [a for a in self.agents if a['id'] != self.facilitator['id']]
-            
-            # 発言履歴から未発言者を探す
-            spoken_ids = set()
-            for m in self.messages:
-                if m.get('agent_id'): spoken_ids.add(m['agent_id'])
-            
-            silent_ones = [a for a in others if a['id'] not in spoken_ids]
-            
-            if silent_ones:
-                # 未発言者がいれば優先的に指名
-                return silent_ones[0]['id']
-            
-            # C. 全員発言済みなら、ランダム (Random/Round-Robin)
-            if others:
-                import random
-                return random.choice(others)['id']
+        # モデレーターが指名に失敗した場合 -> 未発言者救済
+        others = [a for a in self.agents if a['id'] != self.facilitator['id']]
+        spoken_ids = {m.get('agent_id') for m in self.messages if m.get('agent_id')}
+        silent_ones = [a for a in others if a['id'] not in spoken_ids]
         
+        if silent_ones:
+            return silent_ones[0]['id']
+            
+        # ランダム
+        if others:
+            import random
+            return random.choice(others)['id']
+            
         return self.facilitator['id']
 
-    def _parse_nomination(self, content):
-        # 名前が含まれているかチェック
-        # モデレーターの自己指名を防ぐため、facilitatorは除外
-        candidates = [a for a in self.agents] # 全員対象（ただし呼び元でフィルタする）
+    def _extract_nomination_target(self, content):
+        # 末尾の 【指名】 [アイコン] [名前] を探す
+        # 例: 【指名】 🎤 AIモデレーター
+        # 例: 【指名】 🔧 テック担当
         
-        # 1. [[NEXT: ID]] タグ (最強)
-        match = re.search(r"\[\[NEXT:\s*(\d+)\]\]", content)
-        if match:
-            try:
-                t_id = int(match.group(1))
-                if any(a['id'] == t_id for a in candidates):
-                    return t_id
-            except:
-                pass
-
-        # 2. 明示的な氏名
-        for a in candidates:
-            # 名前 または アイコン+名前
-            if a['name'] in content:
-                return a['id']
+        # 最後の【指名】タグ以降を取得
+        matches = re.findall(r'【指名】(.*?)$', content, re.DOTALL | re.MULTILINE)
+        if matches:
+            last_match = matches[-1].strip()
+            # アイコン除去とクリーニング
+            # 絵文字、スペース、カッコ等を除去して純粋な名前を取り出す
+            # 英数字、ひらがな、カタカナ、漢字を残す
+            clean_name = re.sub(r'[^\w\s]', '', last_match).strip()
+            # 空白で分割して、最後の要素を名前とみなすことが多い（[アイコン] [役職] の場合）
+            # しかし "AIモデレーター" のようにスペースがない場合もある
+            # 単純に文字列全体をターゲット候補とする
+            return clean_name
         return None
 
 def generate_audit_report(room_id, messages, room_agents):
@@ -443,7 +411,7 @@ def generate_agent_response(agent, room_id, messages, room_agents):
         mode_instruction = "【モード: 創発 (Emergence)】\n異なる専門領域の視点をぶつけ合い、化学反応を起こしてください。"
     else:
         mode_instruction = "【モード: 協調 (Collaboration)】\n互いの知見を補完し合い、解決策を具体化してください。"
-
+ 
     turn_count = len([m for m in messages if m['role'] == 'assistant'])
     
     # 議論の深さを確保するためのフェーズ拡張 (Deep Discussion Logic)
@@ -544,6 +512,15 @@ def generate_agent_response(agent, room_id, messages, room_agents):
 3. 全員の合意が形成された後でのみ、終了を検討してください。
 """
 
+    # 全員共通の「必須契約」フォーマット
+    common_contract = f"""
+### # 必須出力フォーマット (CONTRACT)
+あなたの発言の**最後**は、必ず以下の形式で、次に発言すべきエージェントを指名してください。
+例外はありません。この形式が守られない場合、システムエラーとなります。
+
+【指名】 [アイコン] [指名エージェント名]
+"""
+
     if is_moderator:
         # フェーズによる終了禁止フラグ
         finish_prohibition = ""
@@ -587,11 +564,10 @@ def generate_agent_response(agent, room_id, messages, room_agents):
    （次に解消すべき矛盾点と、それを解消できる専門家の選定理由）
 
 3. **【指名】**
-   > [指名エージェント名]
-   [[NEXT: 指名エージェントID]]
-   
-※ 【指名】ブロックは必ず**問いかけなし**で、シンプルにバトンを渡すこと。問いかけは【現在地】に含めるか、次のエージェントへの文脈として渡す。
-※ **議論を終了させる場合（`[[FINISH]]`を出力する場合）に限り、`[[NEXT: ID]]` は不要です。**
+   (CONTRACTに従い、指名を行う)
+
+{common_contract}
+※ **議論を終了させる場合（`[[FINISH]]`を出力する場合）に限り、【指名】は不要です。**
 """
     else:
         role_instr = f"""
@@ -599,7 +575,11 @@ def generate_agent_response(agent, room_id, messages, room_agents):
 1. {mode_instruction}
 2. **【長文思考の強制】**: 短い回答は無価値です。あなたの専門領域について、**1000文字〜2000文字**を使って徹底的に深掘りしてください。
 3. **【Chain-of-Thought】**: 結論を急がず、「なぜそうなるのか」という論理ステップを詳細に記述してください。思考の迷いや検討プロセス自体が重要な成果物です。
-4. 発言終了時は、必ず `[[NEXT: {mod_id}]]` を出力して進行役（モデレーター）にマイクを戻してください。
+4. **【主体的な指名】**: あなたの発言の最後で、次のバトンを渡してください。
+   - 他の専門家に直接問いたい場合 -> そのメンバーを指名
+   - 議論を整理したい場合 -> モデレーターを指名 ({mod_agent['name']})
+
+{common_contract}
 """
 
     # 4. 統合システムプロンプト構築
