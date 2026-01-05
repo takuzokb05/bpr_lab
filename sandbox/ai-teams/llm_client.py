@@ -141,6 +141,18 @@ class LLMClient:
             return
 
         try:
+            # o1 preview/mini モデル対応 (ストリーミング未対応 & max_tokens仕様違い)
+            if model.startswith("o1"):
+                # o1系は stream=False で呼ぶ必要がある
+                response = self.openai_client.chat.completions.create(
+                    model=model,
+                    messages=messages,
+                    # max_completion_tokens=... # 必要なら設定
+                    # temperature=1 # o1はtemperature固定推奨だが、一旦デフォルトで
+                )
+                yield response.choices[0].message.content
+                return
+
             stream = self.openai_client.chat.completions.create(
                 model=model,
                 messages=messages,

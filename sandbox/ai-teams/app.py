@@ -299,25 +299,38 @@ class AgentScheduler:
         if last_msg['role'] == 'user':
             return self.facilitator['id']
 
-        # 2. 直前の発言から【指名】を抽出 (Regex Magic)
-        # 末尾にある【指名】ブロックを信頼する
-        extracted_name = self._extract_nomination_target(last_msg['content'])
+        # 2. 直前の発言から【指名】ブロックを取得
+        nomination_text = self._extract_nomination_target(last_msg['content'])
         
-        if extracted_name:
-            # 名前からIDを解決
-            # 1. 完全一致
-            target = next((a for a in self.agents if a['name'] == extracted_name), None)
-            # 2. 部分一致
-            if not target:
-                target = next((a for a in self.agents if extracted_name in a['name']), None)
+        target_id = None
+        
+        if nomination_text:
+            # マッチング戦略A: 包含検索 (Inclusion Search)
+            # "🎲 逆張りマスター" の中に "逆張りマスター" が含まれているかを探す
+            # これが最も確実（アイコンやゴミが残っていてもヒットする）
+            candidates = []
+            for a in self.agents:
+                if a['name'] in nomination_text:
+                    candidates.append(a)
             
-            if target:
-                # 自己指名防止（特にモデレーター）
-                if target['id'] == current_agent_id:
-                   # 自分を指名してしまった場合、モデレーターへ戻す（または他の人へ）
-                   pass 
-                else:
-                   return target['id']
+            # 候補が見つかった場合、最も名前が長いものを採用（"AIモデレーター"と"モデレーター"の競合回避）
+            if candidates:
+                best_match = max(candidates, key=lambda x: len(x['name']))
+                target_id = best_match['id']
+            
+            # マッチング戦略B: クリーニングして検索 (Legacy Fallback)
+            if not target_id:
+                clean_name = re.sub(r'[^\w\s]', '', nomination_text).strip()
+                target_id = next((a['id'] for a in self.agents if a['name'] == clean_name), None)
+                if not target_id:
+                     target_id = next((a['id'] for a in self.agents if clean_name in a['name']), None)
+
+        if target_id:
+            # 自己指名防止（特にモデレーターがループした場合）
+            if str(target_id) == str(current_agent_id):
+                pass # スキップしてフォールバックへ
+            else:
+                return target_id
 
         # 3. 指名なし、または解決失敗時のフォールバック
         current_agent = next((a for a in self.agents if a['id'] == current_agent_id), None)
@@ -343,21 +356,10 @@ class AgentScheduler:
 
     def _extract_nomination_target(self, content):
         # 末尾の 【指名】 [アイコン] [名前] を探す
-        # 例: 【指名】 🎤 AIモデレーター
-        # 例: 【指名】 🔧 テック担当
-        
-        # 最後の【指名】タグ以降を取得
+        # 正規表現を緩めて、後ろの文字列を丸ごと取得する
         matches = re.findall(r'【指名】(.*?)$', content, re.DOTALL | re.MULTILINE)
         if matches:
-            last_match = matches[-1].strip()
-            # アイコン除去とクリーニング
-            # 絵文字、スペース、カッコ等を除去して純粋な名前を取り出す
-            # 英数字、ひらがな、カタカナ、漢字を残す
-            clean_name = re.sub(r'[^\w\s]', '', last_match).strip()
-            # 空白で分割して、最後の要素を名前とみなすことが多い（[アイコン] [役職] の場合）
-            # しかし "AIモデレーター" のようにスペースがない場合もある
-            # 単純に文字列全体をターゲット候補とする
-            return clean_name
+            return matches[-1].strip() # 空白だけ削除して、中身（アイコン含む）はそのまま返す
         return None
 
 def generate_audit_report(room_id, messages, room_agents):
@@ -459,9 +461,13 @@ def generate_agent_response(agent, room_id, messages, room_agents):
     silent_members = []
     
     for a in room_agents:
+        # 書記は指名不可（ただの記録係なので）
+        if "書記" in a['role'] or "議事録" in a['role']:
+            continue
+
         # 出現回数カウント
         count = sum(1 for name in names_in_history if name == a['name'])
-        
+
         status_suffix = ""
         # モデレーター以外で、かつ発言が極端に少ない場合
         if a['category'] != 'facilitation': 
@@ -534,8 +540,8 @@ def generate_agent_response(agent, room_id, messages, room_agents):
     # 全員共通の「必須契約」フォーマット
     common_contract = f"""
 ### # 必須出力フォーマット (CONTRACT)
-あなたの発言の**最後**は、必ず以下の形式で、次に発言すべきエージェントを指名してください。
-例外はありません。この形式が守られない場合、システムエラーとなります。
+1. **思考が先、指名は最後**: いきなり【指名】から書き始めることは厳禁です。必ずあなたの思考・分析・回答を述べた後、**一番最後**に指名を書いてください。
+2. あなたの発言の**末尾**は、必ず以下の形式にしてください。
 
 【指名】 [アイコン] [指名エージェント名]
 """
@@ -574,7 +580,7 @@ def generate_agent_response(agent, room_id, messages, room_agents):
 - 自分自身（Moderator/Facilitator）を指名すること（無限ループの原因）。必ず他のメンバーにパスを渡せ。
 
 ### # 出力フォーマット
-以下の3ブロック構成で出力してください。順序厳守。
+以下の3ブロック構成で出力してください。**この順序とし、各ブロックを省略しないでください。**
 
 1. **【議事要約】**
    （議論の構造的要約と、現在発生している「対立軸」の明示）
@@ -583,6 +589,7 @@ def generate_agent_response(agent, room_id, messages, room_agents):
    （次に解消すべき矛盾点と、それを解消できる専門家の選定理由）
 
 3. **【指名】**
+
    (CONTRACTに従い、指名を行う)
 
 {common_contract}
@@ -593,8 +600,8 @@ def generate_agent_response(agent, room_id, messages, room_agents):
 あなたは専門家メンバーです。
 1. {mode_instruction}
 2. **【長文思考の強制】**: 短い回答は無価値です。あなたの専門領域について、**1000文字〜2000文字**を使って徹底的に深掘りしてください。
-3. **【Chain-of-Thought】**: 結論を急がず、「なぜそうなるのか」という論理ステップを詳細に記述してください。思考の迷いや検討プロセス自体が重要な成果物です。
-4. **【主体的な指名】**: あなたの発言の最後で、次のバトンを渡してください。
+3. **【Chain-of-Thought】**: 論理ステップを省略しないでください。「いきなり指名」は禁止です。まずあなたの見解を述べ尽くしてください。
+4. **【主体的な指名】**: 全ての分析を終えた**最後**に、次のバトンを渡してください。
    - 他の専門家に直接問いたい場合 -> そのメンバーを指名
    - 議論を整理したい場合 -> モデレーターを指名 ({mod_agent['name']})
 
@@ -1661,8 +1668,16 @@ def render_active_chat(room_id, auto_mode):
                     st.rerun()
                     
                 except Exception as e:
-                    ph.error(f"Error: {e}")
-                    traceback.print_exc()
+                    error_msg = str(e)
+                    if "SAFETY" in error_msg or "400" in error_msg:
+                        st.toast(f"⚠️ {next_agent['name']} の発言がAI安全フィルターによりブロックされました。", icon="🛡️")
+                        # 無言で落ちると困るので、システムメッセージとして残すか、リトライするか
+                        # ここでは一旦スキップして次へ（上のEmpty Response Guardで処理されるかもだが、Exceptionはここで捕捉）
+                        time.sleep(1)
+                        st.rerun()
+                    else:
+                        ph.error(f"Error: {e}")
+                        traceback.print_exc()
 @st.fragment
 def render_room_interface(room_id, auto_mode):
     col_chat, col_info = st.columns([2, 1.3]) # リキッドレイアウト調整
