@@ -221,16 +221,25 @@ def auto_update_board(room_id, messages):
 # 統治システム (Governance System)
 # ==========================================
 
-def sanitize_context(messages, agents):
+def sanitize_context(messages, agents, active_agent):
     """
-    コンテキスト・サニタイズ（無菌化）
-    モデレーターの「予言」や「期待」が専門家の人格を汚染しないよう、履歴を洗浄する。
+    コンテキスト・サニタイズ（無菌化・物理隔離）
+    1. モデレーターの「予言」や「期待」を除去。
+    2. 直前の発言の末尾にある「指名コマンド」を削除し、
+       代わりに「あなたへの呼びかけ」に置換することで、
+       前任者のチャットログから呼び出されたのではなく、
+       「システムから指名された」という独立した認知状態を作り出す。
     """
     clean_msgs = []
+    
+    # 最後のメッセージ（トリガーとなった発言）
+    last_idx = len(messages) - 1
+    
     facilitator = next((a for a in agents if a.get('category') == 'facilitation'), None)
     fac_name = facilitator['name'] if facilitator else "モデレーター"
 
-    for m in messages:
+    for i, m in enumerate(messages):
+        # ユーザー発言はそのまま
         if m['role'] != 'assistant':
             clean_msgs.append(m)
             continue
@@ -238,19 +247,29 @@ def sanitize_context(messages, agents):
         content = m['content']
         agent_name = m.get('agent_name', '')
         
-        # モデレーターの発言の場合、要約のみを残す
+        # === 1. モデレーターの予言除去 ===
         if fac_name in agent_name or "モデレーター" in agent_name or "司会" in agent_name:
-            # 1. 【議事要約】ブロックを抽出
+            # 【議事要約】以外をカットする
             summary_match = re.search(r"【議事要約】(.*?)(?:【議論の現在地】|【指名】|$)", content, re.DOTALL)
             if summary_match:
-                clean_content = f"【議事要約】\n{summary_match.group(1).strip()}"
-                clean_msgs.append({'role': 'assistant', 'content': clean_content, 'agent_name': agent_name})
+                content = f"【議事要約】\n{summary_match.group(1).strip()}"
             else:
-                # ブロックが見つからない場合はそのまま（安全策）
-                 clean_msgs.append(m)
-        else:
-            # 専門家の発言はそのまま
-            clean_msgs.append({'role': 'assistant', 'content': content, 'agent_name': agent_name})
+                # 要約が見つからない場合でも、指名ブロックだけは確実に消す
+                content = re.sub(r'【指名】.*', '', content, flags=re.DOTALL)
+                content = re.sub(r'\[\[NEXT:.*', '', content)
+        
+        # === 2. 直前の発言（指名元）の末尾置換 ===
+        if i == last_idx:
+            # まず、前の人の「次の人への指名ブロック」を削除（汚染源の除去）
+            content = re.sub(r'【指名】.*', '', content, flags=re.DOTALL)
+            content = re.sub(r'\[\[NEXT:.*', '', content)
+            
+            # システムによる強制介入メッセージを付与
+            # これにより「前の人の文脈」から断絶させ、「今、あなたが問われている」という状態にする
+            injection = f"\n\n(System: {active_agent['name']}さん、ご指名です。上記の発言を踏まえ、{active_agent['role']}として回答してください。)"
+            content += injection
+            
+        clean_msgs.append({'role': 'assistant', 'content': content, 'agent_name': agent_name})
             
     return clean_msgs
 
@@ -625,21 +644,20 @@ def generate_agent_response(agent, room_id, messages, room_agents):
     # === Stop Sequence 作成 (Anti-Impersonation Wall) ===
     stop_seqs = []
     
-    # 1. 全員のアイコンを禁止リストに入れる（自分以外）
+    # 1. 全員のアイコンを禁止リストに入れる（自分含む！）
+    # 自分が喋り終わった後に、また自分のアイコンを出して喋り出す（多重人格）のを止める
     for a in room_agents:
-        if str(a['id']) != str(agent['id']) and a['icon']:
+        if a['icon']:
             stop_seqs.append(f"\n{a['icon']}")
             
     # 2. 次のターンのヘッダー（例：\n🎤）を停止条件に入れる（全エージェント共通）
-    # これにより「自分の発言が終わって次の人のアイコンが出た瞬間」に止まる
-    
-    # 3. モデレーター専用：[[NEXT: が出た瞬間に止める（その後の「一人二役」を1文字も許さない）
+    stop_seqs.append("\n【") # 次のヘッダーが出そうになったら止める（ただし自分の【指名】は書きたいので注意、だが改行後の【は止めていい）
+
+    # 3. モデレーター専用
     if is_moderator:
         stop_seqs.append("[[NEXT:") 
-        stop_seqs.append("\n🎤") # 自分のアイコンも念のため
     else:
-        # 専門家の場合、モデレーターへのパスで終わるはずだが
-        stop_seqs.append(f"\n{mod_agent['icon']}") if mod_agent and mod_agent.get('icon') else None
+        pass
 
     # 重複排除
     stop_seqs = list(set(stop_seqs))
@@ -648,8 +666,9 @@ def generate_agent_response(agent, room_id, messages, room_agents):
     raw_recent_msgs = [m for m in messages if m['role'] != 'system'][-15:]
     
     # === Context Sanitization (無菌化) ===
-    # 履歴からモデレーターの余計な「予言」や「期待」を削除する
-    clean_history = sanitize_context(raw_recent_msgs, room_agents)
+    # 履歴からモデレーターの余計な「予言」や「期待」を削除し、
+    # さらに直前の指名コマンドを「システム指示」に置換して渡す
+    clean_history = sanitize_context(raw_recent_msgs, room_agents, agent)
     
     # システムプロンプト + 無菌化履歴
     input_msgs = [{"role": "system", "content": base_system}] + clean_history
@@ -1493,93 +1512,49 @@ def render_active_chat(room_id, auto_mode):
                         
                         # バトンパスがなければ通常のチェックへ
                         if not forced_target_id:
-                            # 1. 正常なNEXTタグがあるか確認（閉じ括弧なくてもOK、ブラケット許容）
-                            next_tag_match = re.search(r'\[\[NEXT:\s*\[?(\d+)\]?', response)
+                            # 1. 正常なNEXTタグまたは【指名】があるか確認
+                            # どちらか早い方で切る
                             
-                            # FINISHタグがある場合は、NEXTタグ強制付与ロジックをスキップする
+                            next_tag_match = re.search(r'\[\[NEXT:\s*\[?(\d+)\]?\]?', response)
+                            nomination_match = re.search(r'【指名】(.*?)(?:$|\n)', response)
+                            
+                            cutoff_index = -1
+                            
+                            if next_tag_match:
+                                cutoff_index = next_tag_match.end()
+                                # 閉じ括弧補完
+                                if not response[:cutoff_index].strip().endswith("]]"):
+                                     response = response[:cutoff_index] + "]]"
+                                     cutoff_index = len(response)
+                            
+                            elif nomination_match:
+                                cutoff_index = nomination_match.end()
+                            
+                            # FINISHタグがある場合は何もしない（優先）
                             if "[[FINISH]]" in response:
                                 pass
-                            elif next_tag_match:
-                                # タグがあるなら、それ以降（独演会）を完全に削除
-                                # マッチした箇所（IDまで）で切る
-                                # ただし "]]" がstop_seqsで消えているなら、自分で補完する
-                                cutoff_idx = next_tag_match.end()
-                                
-                                # もし "]]" が残っていればそこまで含める
-                                if response[cutoff_idx:].startswith("]]"):
-                                    cutoff_idx += 2
-                                else:
-                                    # 補完
-                                    response = response[:cutoff_idx] + "]]"
-                                    cutoff_idx = len(response)
-                                    
-                                response = response[:cutoff_idx]
+                            
+                            elif cutoff_index != -1:
+                                # マッチした箇所で物理的に切断
+                                response = response[:cutoff_index]
+                            
                             else:
-                                # 2. タグがない場合、文脈から指名先を推定してタグを捏造・強制終了させる
-                                # "【パス：○○さんへ】" のような記述を探す
-                                # より柔軟な正規表現: "指名" や "Next" も拾う
-                                pass_match = re.search(r'(?:【パス|【指名|Next)(?:：|:)\s*(.*?)(?:さん|へ|、|\]|\n|$)', response, re.IGNORECASE)
-                                target_id = None
+                                # 2. タグも指名もない場合 -> 強制カット＆モデレーター戻し
+                                # 幻覚（次のヘッダー等）が出る前に切る
                                 
-                                if pass_match:
-                                    raw_target = pass_match.group(1).strip()
-                                    # ノイズ除去
-                                    target_name = re.sub(r'(さん|先生|担当|君|氏)', '', raw_target).strip()
-                                    
-                                    # 1. 名前での完全〜部分一致
-                                    for a in active_agents:
-                                        if a['name'] == target_name: # 完全一致優先
-                                            target_id = a['id']
-                                            break
-                                    if not target_id:
-                                        for a in active_agents:
-                                            if target_name in a['name'] or a['name'] in target_name:
-                                                target_id = a['id']
-                                                break
-                                    
-                                    # 2. 役割(role)での検索 fallback
-                                    if not target_id:
-                                        # "論理" -> "論理担当" / "ロジカル" -> "論理担当"
-                                        for a in active_agents:
-                                            if target_name in a['role'] or a['role'] in target_name:
-                                                target_id = a['id']
-                                                break
-                                                
-                                    # 3. カテゴリでの検索 fallback (英語対応)
-                                    if not target_id:
-                                         # data -> analyst, logic -> logic
-                                         for a in active_agents:
-                                             if target_name.lower() in a.get('category','').lower():
-                                                 target_id = a['id']
-                                                 break
-                                    # カフェ等の揺らぎ対応
-                                    if not target_id and ("中庸" in target_name or "カフェ" in target_name):
-                                        target = next((a for a in active_agents if "カフェ" in a['name'] or "中庸" in a['role']), None)
-                                        if target: target_id = target['id']
-    
-                                # 3. 推定失敗なら、自分以外からランダム選出
-                                if not target_id:
-                                    others = [a for a in active_agents if a['id'] != next_agent['id']]
-                                    if others:
-                                        target_id = random.choice(others)['id']
+                                # ヘッダーっぽいものがあればそこで切る
+                                hallucination = re.search(r'(\n|^)(🎤|📈|# ペルソナ|Thinking|【).*', response[200:], re.DOTALL)
+                                if hallucination:
+                                    response = response[:200+hallucination.start()]
                                 
-                                # 4. 強制付与と切断
-                                if target_id:
-                                    # パス行が見つかれば、その直後で切断してタグを付ける
-                                    if pass_match:
-                                        # pass_match自体は残し、その直後で切る
-                                        line_end = response.find('\n', pass_match.end())
-                                        if line_end == -1: line_end = len(response)
-                                        response = response[:line_end] + f"\n\n[[NEXT: {target_id}]]"
-                                    else:
-                                        # パス行すらない場合 -> 幻覚ヘッダーを探して切る
-                                        hallucination = re.search(r'(\n|^)(🎤|📈|# ペルソナ|Thinking|【).*', response, re.DOTALL)
-                                        # 自分のヘッダーは残したいが、2回目のヘッダーは消す... 難しいので、
-                                        # 単純に「最初の200文字以降で改行ヘッダーが出たら切る」等のヒューリスティック
-                                        # ここでは安全に「全文生かしつつ末尾タグ」にするが、幻覚除去は後続の処理に任せる
-                                        response += f"\n\n[[NEXT: {target_id}]]"
-                                        
-                                    st.toast("🛡️ モデレーターの独走を強制停止しました", icon="👮")
+                                # 安全策としてモデレーターへ戻すタグを付与
+                                if is_moderator:
+                                    # モデレーターが指名忘れた -> ランダム
+                                    pass # 下流のAgentSchedulerに任せるのでタグなしでOK
+                                else:
+                                    # 専門家が指名忘れた -> モデレーターへ戻す
+                                    response += f"\n\n[[NEXT: {mod_agent['id']}]]"
+                                    st.toast("🛡️ 指名忘れを検知: モデレーターに戻します", icon="↩️")
                             # より柔軟な正規表現: "指名" や "Next" も拾う
                             pass_match = re.search(r'(?:【パス|【指名|Next)(?:：|:)\s*(.*?)(?:さん|へ|、|\]|\n|$)', response, re.IGNORECASE)
                             target_id = None
