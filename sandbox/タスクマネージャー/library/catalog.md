@@ -39,3 +39,20 @@
 | 017 | Claude CodeのAgent Skillsとは？使い方・設計・活用パターン | ja | 読了 | #skills | articles/2026-03-27_017_Claude_Code_Agent_Skills解説.md |
 | 018 | Claude Code を使いこなすために意識している 5つのこと | ja | 読了 | #workflow #best-practices | articles/2026-03-27_018_Claude_Code_を使いこなすための5つのこと.md |
 | 019 | 【2026年最新】Claude Codeで非エンジニアが業務を自動化する方法10選 | ja | 読了 | #automation #tutorial | articles/2026-03-27_019_Claude_Code_非エンジニア業務自動化.md |
+| 020 | Claude Code and Cowork Can Now Use Your Computer (Engadget) | en | 読了 | #update #automation | articles/2026-03-27_049_Claude_Code_Computer_Use_Engadget.md |
+| 021 | Claude Code Best Practices: Inside the Creator's 100-Line Workflow | en | 読了 | #claude-md #best-practices #workflow | articles/2026-03-27_050_Claude_Code_Creator_Workflow_Boris_Cherny.md |
+| 022 | Extend Claude with Skills — Official Claude Code Docs | en | 読了 | #skills #official | articles/2026-03-27_051_Claude_Code_Skills_Official_Docs.md |
+| 023 | How to Build a Production-Ready Claude Code Skill (TDS) | en | 読了 | #skills #tutorial | articles/2026-03-27_052_Production_Ready_Claude_Code_Skill_Tutorial.md |
+| 024 | Getting Started with MCP: Automating Terraform Security with Claude Code | en | 読了 | #mcp #tutorial #automation | articles/2026-03-27_053_MCP_Terraform_Security_Tutorial.md |
+| 025 | Claude Code MCP Server: Complete Setup Guide | en | 読了 | #mcp #automation | articles/2026-03-27_054_Claude_Code_as_MCP_Server.md |
+| 026 | Hooks Reference — Official Claude Code Docs | en | 読了 | #hooks #official | articles/2026-03-27_055_Claude_Code_Hooks_Official_Reference.md |
+| 027 | Claude Code Hooks Complete Guide (March 2026 Edition) | en | 読了 | #hooks #automation | articles/2026-03-27_056_Claude_Code_Hooks_21_Events_Guide.md |
+| 028 | Claude Code Hooks: Complete Guide with 20+ Ready-to-Use Examples | en | 読了 | #hooks #tutorial | articles/2026-03-27_057_Claude_Code_Hooks_20_Examples.md |
+| 029 | Best Practices for Claude Code — Official Claude Code Docs | en | 読了 | #best-practices #official #claude-md | articles/2026-03-27_058_Claude_Code_Best_Practices_Official.md |
+| 030 | CLAUDE.md Best Practices — 10 Sections to Include (UX Planet) | en | 読了 | #claude-md #best-practices | articles/2026-03-27_059_CLAUDE_md_10_Sections_UX_Planet.md |
+| 031 | Writing a Good CLAUDE.md (HumanLayer) | en | 読了 | #claude-md #best-practices | articles/2026-03-27_060_Writing_Good_CLAUDE_md_HumanLayer.md |
+| 032 | How Should You Configure CLAUDE.md for Better AI Coding? (BSWEN) | en | 読了 | #claude-md #best-practices | articles/2026-03-27_061_CLAUDE_md_Best_Practices_BSWEN.md |
+| 033 | How Anthropic Teams Use Claude Code (Official PDF) | en | 読了 | #team #official #workflow | articles/2026-03-27_062_Anthropic_Teams_Use_Claude_Code_PDF.md |
+| 034 | Anthropic Says Claude Can Now Use Your Computer (CNBC) | en | 読了 | #update #automation | articles/2026-03-27_063_CNBC_Claude_Computer_Use.md |
+| 035 | Everyone Should Be Using Claude Code More (Lenny's Newsletter) | en | 読了 | #workflow #tutorial | articles/2026-03-27_064_Lenny_Newsletter_Claude_Code_NonEngineers.md |
+| 036 | Anthropic Hands Claude Code More Control, But Keeps It on a Leash (TechCrunch) | en | 読了 | #update #automation | articles/2026-03-27_065_TechCrunch_Auto_Mode_Safety_Classifier.md |

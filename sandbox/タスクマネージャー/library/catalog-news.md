@@ -36,3 +36,5 @@
 | 011 | 自律型AIエージェント完全ガイド！業務が激変する最新ツール21選 | ja | 読了 | #agent #tools #japan | articles/2026-03-27_046_自律型AIエージェントツール21選.md |
 | 012 | 【2025年最新版】日本企業のAIエージェント導入最前線！ | ja | 読了 | #agent #japan #tools | articles/2026-03-27_047_日本企業AIエージェント導入最前線.md |
 | 013 | 【2026】AI最新情報15選！ChatGPTの新技術・最新AIを解説 | ja | 読了 | #model-release #openai #google #anthropic #meta | articles/2026-03-27_048_生成AI最新情報2026.md |
+| 014 | Exclusive: Anthropic 'Mythos' AI Model Revealed (Fortune) | en | 読了 | #model-release #anthropic | articles/2026-03-27_066_Fortune_Anthropic_Mythos_Model.md |
+| 015 | Anthropic Tweaks Claude Usage Limits to Manage Capacity (The Register) | en | 読了 | #anthropic #trend | articles/2026-03-27_067_The_Register_Anthropic_Usage_Limits.md |
