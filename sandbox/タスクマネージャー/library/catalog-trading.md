@@ -34,3 +34,16 @@
 | 012 | ChatGPT（生成AI）の売買判断を連携してFX取引を自動化するEA開発 | ja | 読了 | #fx #llm-trading #implementation | articles/2026-03-27_031_ChatGPT連携FX自動売買EA.md |
 | 013 | 茨城大学 鈴木智也 教授【AIを活用したFX取引】インタビュー | ja | 読了 | #fx #risk | articles/2026-03-27_032_AI_FX取引_教授インタビュー.md |
 | 014 | The TRADE predictions series 2026: Artificial intelligence | en | 読了 | #quant #regulation #ml | articles/2026-03-27_033_TRADE_Predictions_AI_2026.md |
+| 015 | From ~$20k to $400k in a Year: My LLM Options Trading Experiment | en | 読了 | #llm-trading #research | articles/2026-03-27_085_LLM_Options_Trading_20k_to_400k.md |
+| 016 | StockBench: Can LLM Agents Trade Stocks Profitably In Real-world Markets? (ArXiv) | en | 読了 | #llm-trading #research | articles/2026-03-27_086_StockBench_LLM_Agents_Real_Markets_ArXiv.md |
+| 017 | AI in Trading: A Practitioners' View (FMSB Spotlight Review, Feb 2026) | en | 読了 | #risk #regulation | articles/2026-03-27_087_FMSB_AI_in_Trading_Spotlight_Feb2026.md |
+| 018 | U.S. Treasury Releases Financial Services AI Risk Management Framework | en | 読了 | #risk #regulation | articles/2026-03-27_088_US_Treasury_AI_Risk_Management_Framework.md |
+| 019 | ESMA Supervisory Briefing on Algorithmic Trading under MiFID II (Feb 2026) | en | 読了 | #regulation | articles/2026-03-27_089_ESMA_MiFID2_Algo_Trading_Feb2026.md |
+| 020 | TradingAgents: Multi-Agents LLM Financial Trading Framework (ArXiv Paper) | en | 読了 | #llm-trading #multi-agent #research | articles/2026-03-27_090_TradingAgents_ArXiv_Paper.md |
+| 021 | AI駆動開発でETH/JPY自動売買ボット（Google Gemini使用） | ja | 読了 | #llm-trading #implementation | articles/2026-03-27_091_ETH_JPY_Gemini_AI_Trading_Bot.md |
+| 022 | 商品先物自動取引AIモデル共同開発（三井物産×Preferred Networks） | ja | 読了 | #ml #implementation | articles/2026-03-27_092_Preferred_Networks_Commodity_Futures_AI.md |
+| 023 | GMOコインと連携できるGPT-Tradeでおまかせ自動売買 | ja | 読了 | #llm-trading #fx | articles/2026-03-27_093_GMO_Coin_GPT_Trade_AI.md |
+| 024 | 投資判断におけるアルゴリズム・AIの利用と法的責任（日本銀行金融研究所） | ja | 読了 | #regulation #research | articles/2026-03-27_094_BOJ_Legal_Liability_AI_Trading.md |
+| 025 | 金融市場取引と機械学習（東京大学松尾・岩澤研究室） | ja | 読了 | #ml #research | articles/2026-03-27_095_Tokyo_Univ_Matuo_Financial_ML_Course.md |
+| 026 | AIがディープラーニングで学ぶトレーディング（MUFGイノベーションハブ） | ja | 読了 | #ml #implementation | articles/2026-03-27_096_MUFG_Deep_Learning_Trading.md |
+| 027 | 金融業界における量子コンピューティング（FPTジャパン） | ja | 読了 | #quant #research | articles/2026-03-27_097_FPT_Japan_Quantum_Finance.md |
