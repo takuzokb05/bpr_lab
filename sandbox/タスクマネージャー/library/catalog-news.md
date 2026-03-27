@@ -38,3 +38,18 @@
 | 013 | 【2026】AI最新情報15選！ChatGPTの新技術・最新AIを解説 | ja | 読了 | #model-release #openai #google #anthropic #meta | articles/2026-03-27_048_生成AI最新情報2026.md |
 | 014 | Exclusive: Anthropic 'Mythos' AI Model Revealed (Fortune) | en | 読了 | #model-release #anthropic | articles/2026-03-27_066_Fortune_Anthropic_Mythos_Model.md |
 | 015 | Anthropic Tweaks Claude Usage Limits to Manage Capacity (The Register) | en | 読了 | #anthropic #trend | articles/2026-03-27_067_The_Register_Anthropic_Usage_Limits.md |
+| 016 | Anthropic Considers IPO as Soon as October 2026 (Bloomberg EN) | en | 読了 | #anthropic #funding | articles/2026-03-27_098_Anthropic_IPO_Bloomberg_Oct2026.md |
+| 017 | アンソロピック、早ければ10月のIPO検討（Bloomberg日本語版） | ja | 読了 | #anthropic #funding #japan | articles/2026-03-27_099_Anthropic_IPO_Bloomberg_JA.md |
+| 018 | White House Releases National AI Policy Framework — Federal Preemption of State Laws | en | 読了 | #regulation | articles/2026-03-27_100_White_House_AI_National_Policy_Framework.md |
+| 019 | OpenAI Preps for IPO in 2026, ChatGPT Must Be 'Productivity Tool' (CNBC) | en | 読了 | #openai #funding | articles/2026-03-27_101_OpenAI_IPO_2026_CNBC.md |
+| 020 | Google TurboQuant: 6x LLM Memory Compression, Memory Chip Stocks Drop (CNBC) | en | 読了 | #google #model-release | articles/2026-03-27_102_Google_TurboQuant_6x_Memory_Compression.md |
+| 021 | 17 US AI Companies That Raised $100M+ in First 7 Weeks of 2026 (TechCrunch) | en | 読了 | #funding | articles/2026-03-27_103_17_US_AI_Companies_100M_Plus_2026.md |
+| 022 | Generative Coding: 10 Breakthrough Technologies 2026 (MIT Technology Review) | en | 読了 | #tools #trend | articles/2026-03-27_104_MIT_Tech_Review_Generative_Coding_2026.md |
+| 023 | Claude Code Users Report Rapid Rate Limit Drain, Suspect Bug (MacRumors) | en | 読了 | #anthropic #trend | articles/2026-03-27_105_Claude_Code_Rate_Limit_Drain_MacRumors.md |
+| 024 | AI Dev Tool Power Rankings March 2026 — Claude 4.6 Opus #1 SWE-bench (LogRocket) | en | 読了 | #tools #anthropic | articles/2026-03-27_106_AI_Dev_Tool_Power_Rankings_March2026.md |
+| 025 | デジタル庁、ガバメントAI用国産LLM選定 — tsuzumi 2・PLaMo 2.0 | ja | 読了 | #japan #model-release | articles/2026-03-27_107_Japan_Gov_LLM_Selection_tsuzumi_PLaMo.md |
+| 026 | ガートナーが展望する2026年のAI戦略テクノロジートレンド（A2A・MCP） | ja | 読了 | #agent #framework #japan | articles/2026-03-27_108_Gartner_AI_Strategy_Tech_Trends_2026.md |
+| 027 | ソフトバンク、自律型AIエージェントプラットフォーム「AGENTIC STAR」発表（3/27） | ja | 読了 | #agent #japan | articles/2026-03-27_109_SoftBank_AGENTIC_STAR_Launch.md |
+| 028 | 「AIエージェント元年」を振り返る — 大和総研（62%試験導入も23%のみスケール） | ja | 読了 | #agent #japan #trend | articles/2026-03-27_110_Daiwa_Research_AI_Agent_Review_2026.md |
+| 029 | Google Cloud 国内120社の生成AI活用事例公開（2026年3月更新） | ja | 読了 | #japan #agent #tools | articles/2026-03-27_111_Google_Cloud_120_GenAI_Cases_Japan.md |
+| 030 | スマホからAIに「このPC作業やっといて」— Claude Computer Use（Gizmodo Japan） | ja | 読了 | #anthropic #japan | articles/2026-03-27_112_Gizmodo_Japan_Claude_Computer_Use.md |
