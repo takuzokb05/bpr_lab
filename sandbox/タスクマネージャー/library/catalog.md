@@ -56,3 +56,20 @@
 | 034 | Anthropic Says Claude Can Now Use Your Computer (CNBC) | en | 読了 | #update #automation | articles/2026-03-27_063_CNBC_Claude_Computer_Use.md |
 | 035 | Everyone Should Be Using Claude Code More (Lenny's Newsletter) | en | 読了 | #workflow #tutorial | articles/2026-03-27_064_Lenny_Newsletter_Claude_Code_NonEngineers.md |
 | 036 | Anthropic Hands Claude Code More Control, But Keeps It on a Leash (TechCrunch) | en | 読了 | #update #automation | articles/2026-03-27_065_TechCrunch_Auto_Mode_Safety_Classifier.md |
+| 037 | 【2026/2/6最新アプデ】Claude Code新機能『エージェントチーム』が革新的だった | ja | 読了 | #update #team #automation | articles/2026-03-27_068_Claude_Code_Agent_Teams_Feature.md |
+| 038 | Claude Code に Auto Mode が登場 ── 第三の道 | ja | 読了 | #update #automation | articles/2026-03-27_069_Claude_Code_Auto_Mode_ja.md |
+| 039 | 【2026年3月最新】Claude Code v2.1.74〜v2.1.84 アップデートまとめ | ja | 読了 | #update | articles/2026-03-27_070_Claude_Code_v2174_v2184_March_2026.md |
+| 040 | Claude Code のスキル機能完全ガイド（3層アーキテクチャ） | ja | 読了 | #skills | articles/2026-03-27_071_Claude_Code_Skills_3Layer_Architecture.md |
+| 041 | Claude Codeの真価は運用設計にある（Skills/Hooks/MCPの使い分け） | ja | 読了 | #skills #hooks #mcp | articles/2026-03-27_072_Claude_Code_Skills_MCP_Design_Philosophy.md |
+| 042 | CLAUDE.mdに本当は何を書くべきなのか（CureApp） | ja | 読了 | #claude-md #best-practices | articles/2026-03-27_073_CLAUDE_md_What_NOT_to_Write_CureApp.md |
+| 043 | 【保存版】claude.mdに本当に書くべきこと ― 良い例・悪い例で徹底解説 | ja | 読了 | #claude-md #best-practices | articles/2026-03-27_074_CLAUDE_md_Good_Bad_Examples_200lines.md |
+| 044 | Anthropicの10部門が実践するClaude Code活用術 | ja | 読了 | #team #official | articles/2026-03-27_075_Anthropic_10_Departments_Use_Cases.md |
+| 045 | 月間400件以上のプルリクエストを生産したClaude Code活用事例 | ja | 読了 | #automation #workflow | articles/2026-03-27_076_Claude_Code_400_PRs_Per_Month.md |
+| 046 | Claude Code による技術的特異点を見届けろ（mizchi） | ja | 読了 | #workflow | articles/2026-03-27_077_Claude_Code_Singularity_Essay.md |
+| 047 | 地味だけど毎日使うAI自動化を11個作った話（非エンジニアCPO） | ja | 読了 | #automation | articles/2026-03-27_078_CPO_11_AI_Automation_Daily_Jobs.md |
+| 048 | Claudeの全てのCHANGELOGを追ってきて | ja | 読了 | #update | articles/2026-03-27_079_All_Claude_Code_CHANGELOG.md |
+| 049 | 【衝撃】Claude Code 2.1.0が神アプデすぎる｜1096コミットで16の革命的新機能 | ja | 読了 | #update | articles/2026-03-27_080_Claude_Code_v210_1096_Commits.md |
+| 050 | 楽天テック：Claude Codeの更新情報を作業中に流し読みする仕組み | ja | 読了 | #hooks #automation | articles/2026-03-27_081_Rakuten_Claude_Code_Spinner_Hooks.md |
+| 051 | Claude Codeで開発ワークフローを自動化：Hooks・Commands・Skillsの実践 | ja | 読了 | #hooks #skills #automation | articles/2026-03-27_082_Claude_Code_Full_Workflow_Hooks_Skills.md |
+| 052 | ClaudeCodeのサブエージェントでテスト修正を自動化してみた | ja | 読了 | #automation #hooks | articles/2026-03-27_083_Claude_Code_Subagent_Auto_Test_Fix.md |
+| 053 | Claude Code Action はじめの一歩：GitHubで使うAI自動化の革命 | ja | 読了 | #automation | articles/2026-03-27_084_Claude_Code_Action_GitHub_Integration.md |
