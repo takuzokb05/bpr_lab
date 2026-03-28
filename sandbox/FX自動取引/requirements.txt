@@ -1,0 +1,31 @@
+# FX自動取引システム Phase 1 依存パッケージ
+
+# === ブローカーAPI ===
+oandapyV20>=0.7.2
+MetaTrader5>=5.0.45
+
+# === データ処理 ===
+pandas>=2.0.0
+numpy>=1.24.0
+
+# === テクニカル指標 ===
+pandas-ta>=0.3.14b
+
+# === バックテスト ===
+Backtesting>=0.3.3
+
+# === Telegram通知 ===
+requests>=2.28.0
+
+# === 環境変数管理 ===
+python-dotenv>=1.0.0
+
+# === データベース ===
+# SQLiteはPython標準ライブラリに含まれる
+
+# === テスト ===
+pytest>=7.0.0
+pytest-cov>=4.0.0
+
+# === ロギング ===
+# loggingはPython標準ライブラリに含まれる
