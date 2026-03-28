@@ -1,12 +1,13 @@
 """
-RSIフィルター + ADXフィルター付き移動平均クロスオーバー戦略
+RSIフィルター + ADXフィルター + MFIフィルター付き移動平均クロスオーバー戦略
 
 MA(短期)とMA(長期)のクロスオーバーに基づくシグナル生成を行い、
 RSIフィルターで買われすぎ/売られすぎ局面でのエントリーを排除し、
-ADXフィルターでトレンドが弱い局面でのエントリーを排除する。
+ADXフィルターでトレンドが弱い局面でのエントリーを排除し、
+MFIフィルター（price+volume）で買われすぎ/売られすぎを排除する。
 損切りはATRベース、利確はリスクリワード比に基づく。
 
-doc 04 セクション5.1 準拠。Phase 2 F15 ADXフィルター追加。
+doc 04 セクション5.1 準拠。Phase 2 F15 ADXフィルター追加。Phase 3 MFIフィルター追加。
 """
 
 import logging
@@ -22,6 +23,10 @@ from src.config import (
     ATR_PERIOD,
     MA_LONG_PERIOD,
     MA_SHORT_PERIOD,
+    MFI_ENABLED,
+    MFI_OVERBOUGHT,
+    MFI_OVERSOLD,
+    MFI_PERIOD,
     MIN_RISK_REWARD,
     RSI_OVERBOUGHT,
     RSI_OVERSOLD,
@@ -34,16 +39,17 @@ logger = logging.getLogger(__name__)
 
 class RsiMaCrossover(StrategyBase):
     """
-    RSIフィルター + ADXフィルター付きMA（移動平均）クロスオーバー戦略
+    RSIフィルター + ADXフィルター + MFIフィルター付きMA（移動平均）クロスオーバー戦略
 
     エントリー条件:
     - ADX >= ADX_THRESHOLD（トレンドが十分に強い）
-    - 買い: MA短期がMA長期を上抜け かつ RSI < RSI_OVERBOUGHT
+    - MFI_ENABLED時: MFIによる買われすぎ/売られすぎフィルタ
+    - 買い: MA短期がMA長期を上抜け かつ RSI < RSI_OVERBOUGHT かつ MFI < MFI_OVERBOUGHT
+    - 売り: MA短期がMA長期を下抜け かつ RSI > RSI_OVERSOLD かつ MFI > MFI_OVERSOLD
+    - それ以外: HOLD
 
     診断情報:
     - generate_signal() 実行後に last_diagnostics プロパティで取得可能
-    - 売り: MA短期がMA長期を下抜け かつ RSI > RSI_OVERSOLD
-    - それ以外: HOLD
 
     損切り: ATRベース（ATR * ATR_MULTIPLIER）
     利確: リスクリワード比 MIN_RISK_REWARD 以上
@@ -127,6 +133,30 @@ class RsiMaCrossover(StrategyBase):
             logger.warning("ADX値がNaNです。HOLDを返します。")
             return Signal.HOLD
 
+        # MFIフィルター: price + volume ベースの買われすぎ/売られすぎ判定（Phase 3 追加）
+        # volume列がない場合はtick_volumeを代用。どちらもなければMFIをスキップ
+        current_mfi = None
+        mfi_available = False
+        if MFI_ENABLED:
+            vol_col = None
+            if "volume" in data.columns:
+                vol_col = "volume"
+            elif "tick_volume" in data.columns:
+                vol_col = "tick_volume"
+
+            if vol_col is not None:
+                mfi_series = ta.mfi(
+                    data["high"], data["low"], data["close"], data[vol_col],
+                    length=MFI_PERIOD,
+                )
+                if mfi_series is not None and not pd.isna(mfi_series.iloc[-1]):
+                    current_mfi = float(mfi_series.iloc[-1])
+                    mfi_available = True
+                else:
+                    logger.debug("MFI計算結果がNaN。MFIフィルターをスキップします。")
+            else:
+                logger.debug("volume/tick_volume列なし。MFIフィルターをスキップします。")
+
         # 診断ログ: 全指標の現在値を出力
         ma_diff = current_ma_short - current_ma_long
         ma_position = "短期>長期" if current_ma_short > current_ma_long else "短期<長期"
@@ -135,9 +165,11 @@ class RsiMaCrossover(StrategyBase):
             crossover = "上抜け(BUY候補)"
         elif prev_ma_short >= prev_ma_long and current_ma_short < current_ma_long:
             crossover = "下抜け(SELL候補)"
+
+        mfi_log = f" MFI={current_mfi:.1f}" if mfi_available else " MFI=N/A"
         logger.debug(
             "指標診断: MA短=%.3f MA長=%.3f 差=%.3f(%s) "
-            "クロス=%s RSI=%.1f ADX=%.1f(閾値%.1f)",
+            "クロス=%s RSI=%.1f ADX=%.1f(閾値%.1f)%s",
             current_ma_short,
             current_ma_long,
             ma_diff,
@@ -146,6 +178,7 @@ class RsiMaCrossover(StrategyBase):
             current_rsi,
             current_adx,
             ADX_THRESHOLD,
+            mfi_log,
         )
 
         # 診断情報を格納（コンソールサマリー用）
@@ -156,6 +189,8 @@ class RsiMaCrossover(StrategyBase):
             "rsi": float(current_rsi),
             "adx": float(current_adx),
             "adx_threshold": ADX_THRESHOLD,
+            "mfi": current_mfi,
+            "mfi_filter": "有効" if mfi_available else ("無効" if not MFI_ENABLED else "データなし"),
         }
 
         if current_adx < ADX_THRESHOLD:
@@ -174,14 +209,27 @@ class RsiMaCrossover(StrategyBase):
             and current_ma_short > current_ma_long
             and current_rsi < RSI_OVERBOUGHT
         ):
+            # MFIフィルター: 買われすぎなら見送り
+            if mfi_available and current_mfi >= MFI_OVERBOUGHT:
+                diag["hold_reason"] = f"MFI買われすぎ({current_mfi:.1f}>={MFI_OVERBOUGHT})"
+                self._diagnostics = diag
+                logger.debug(
+                    "→ HOLD理由: MFIフィルター（MFI=%.1f >= 閾値%d、買われすぎ）",
+                    current_mfi,
+                    MFI_OVERBOUGHT,
+                )
+                return Signal.HOLD
+
             diag["hold_reason"] = None
             self._diagnostics = diag
+            mfi_info = f", MFI={current_mfi:.1f}" if mfi_available else ""
             logger.info(
-                "買いシグナル検出: MA短期(%.5f) > MA長期(%.5f), RSI=%.2f, ADX=%.1f",
+                "買いシグナル検出: MA短期(%.5f) > MA長期(%.5f), RSI=%.2f, ADX=%.1f%s",
                 current_ma_short,
                 current_ma_long,
                 current_rsi,
                 current_adx,
+                mfi_info,
             )
             return Signal.BUY
 
@@ -191,14 +239,27 @@ class RsiMaCrossover(StrategyBase):
             and current_ma_short < current_ma_long
             and current_rsi > RSI_OVERSOLD
         ):
+            # MFIフィルター: 売られすぎなら見送り
+            if mfi_available and current_mfi <= MFI_OVERSOLD:
+                diag["hold_reason"] = f"MFI売られすぎ({current_mfi:.1f}<={MFI_OVERSOLD})"
+                self._diagnostics = diag
+                logger.debug(
+                    "→ HOLD理由: MFIフィルター（MFI=%.1f <= 閾値%d、売られすぎ）",
+                    current_mfi,
+                    MFI_OVERSOLD,
+                )
+                return Signal.HOLD
+
             diag["hold_reason"] = None
             self._diagnostics = diag
+            mfi_info = f", MFI={current_mfi:.1f}" if mfi_available else ""
             logger.info(
-                "売りシグナル検出: MA短期(%.5f) < MA長期(%.5f), RSI=%.2f, ADX=%.1f",
+                "売りシグナル検出: MA短期(%.5f) < MA長期(%.5f), RSI=%.2f, ADX=%.1f%s",
                 current_ma_short,
                 current_ma_long,
                 current_rsi,
                 current_adx,
+                mfi_info,
             )
             return Signal.SELL
 

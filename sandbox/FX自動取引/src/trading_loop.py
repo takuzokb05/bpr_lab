@@ -16,7 +16,9 @@ import pandas_ta as ta
 
 from src.broker_client import BrokerClient
 from src.config import ATR_PERIOD, MAIN_TIMEFRAME
+from src.conviction_scorer import ConvictionScorer
 from src.position_manager import PositionManager
+from src.regime_detector import RegimeDetector
 from src.risk_manager import RiskManager
 from src.strategy.base import Signal, StrategyBase
 
@@ -91,6 +93,10 @@ class TradingLoop:
         self._normal_atr: Optional[float] = None
         self._last_spread: Optional[float] = None
         self._normal_spread: Optional[float] = None
+
+        # Phase 3: レジーム検出 + conviction score
+        self._regime_detector = RegimeDetector()
+        self._conviction_scorer = ConvictionScorer()
 
     # ------------------------------------------------------------------
     # メインループ制御
@@ -283,22 +289,66 @@ class TradingLoop:
                 "スプレッド取得失敗（前回値を継続使用）: %s", e
             )
 
-        # 6. シグナル生成
+        # 6. レジーム検出（Phase 3）
+        regime_info = self._regime_detector.detect(data)
+        logger.info(
+            "レジーム判定: %s (確信度=%.2f, エクスポージャー=%.1f, ADX=%.1f)",
+            regime_info.regime.value,
+            regime_info.confidence,
+            regime_info.exposure_multiplier,
+            regime_info.adx,
+        )
+
+        # レジームがVOLATILEなら取引停止
+        if regime_info.exposure_multiplier == 0.0:
+            logger.warning(
+                "高ボラティリティ検出（ATR比率=%.2f）。新規取引を停止。",
+                regime_info.atr_ratio,
+            )
+            self._iteration_count += 1
+            return None
+
+        # 7. シグナル生成
         signal = self._strategy.generate_signal(data)
 
-        # 7. BUY/SELL シグナルならポジションオープン
+        # 8. BUY/SELL シグナルなら conviction score で評価
         if signal in (Signal.BUY, Signal.SELL):
+            conviction = self._conviction_scorer.score(data, signal, regime_info)
             logger.info(
-                "シグナル検出: %s, instrument=%s",
-                signal.value,
-                self._instrument,
+                "conviction score: %d/10 (倍率=%.1f, 取引=%s) — %s",
+                conviction.score,
+                conviction.position_size_multiplier,
+                conviction.should_trade,
+                conviction.reasoning,
             )
-            order_result = self._position_manager.open_position(
-                instrument=self._instrument,
-                signal=signal,
-                data=data,
-                strategy=self._strategy,
-            )
+
+            if not conviction.should_trade:
+                logger.info(
+                    "conviction不足（%d < 閾値）。シグナル %s を見送り。",
+                    conviction.score,
+                    signal.value,
+                )
+            else:
+                # エクスポージャー倍率 = レジーム倍率 × conviction倍率
+                combined_multiplier = (
+                    regime_info.exposure_multiplier
+                    * conviction.position_size_multiplier
+                )
+                logger.info(
+                    "シグナル実行: %s, instrument=%s, "
+                    "ポジションサイズ倍率=%.2f (レジーム%.1f × conviction%.1f)",
+                    signal.value,
+                    self._instrument,
+                    combined_multiplier,
+                    regime_info.exposure_multiplier,
+                    conviction.position_size_multiplier,
+                )
+                order_result = self._position_manager.open_position(
+                    instrument=self._instrument,
+                    signal=signal,
+                    data=data,
+                    strategy=self._strategy,
+                )
         else:
             logger.debug(
                 "HOLDシグナル: instrument=%s, iteration=%d",

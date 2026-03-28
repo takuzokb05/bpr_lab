@@ -79,6 +79,21 @@ MIN_RISK_REWARD: float = 2.0           # 最小リスクリワード比
 ADX_PERIOD: int = 14                   # ADX計算期間
 ADX_THRESHOLD: float = 20.0            # ADXトレンド判定閾値（25→20に緩和、シグナル機会増加）
 
+# MFIフィルター（Phase 3 追加）
+MFI_PERIOD: int = 14                   # MFI計算期間
+MFI_OVERBOUGHT: int = 80              # MFI買われすぎ閾値
+MFI_OVERSOLD: int = 20                # MFI売られすぎ閾値
+MFI_ENABLED: bool = True              # MFIフィルター有効/無効
+
+# 確信度スコア（Phase 3 追加）
+MIN_CONVICTION_SCORE: int = 4          # 最低確信度スコア（4未満は見送り）
+
+# レジーム検出（Phase 3 追加）
+REGIME_ADX_TRENDING: float = 25.0      # ADXがこの値以上 → TRENDING
+REGIME_ADX_RANGING: float = 20.0       # ADXがこの値未満 → RANGING
+REGIME_ATR_VOLATILE_RATIO: float = 2.0 # ATR/中央値ATR がこの値超 → VOLATILE
+REGIME_BBW_SQUEEZE_RATIO: float = 0.5  # BBW/平均BBW がこの値未満 → RANGING（スクイーズ）
+
 
 # ============================================================
 # タイムフレーム
