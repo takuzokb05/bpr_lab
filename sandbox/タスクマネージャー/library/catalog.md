@@ -73,3 +73,9 @@
 | 051 | Claude Codeで開発ワークフローを自動化：Hooks・Commands・Skillsの実践 | ja | 読了 | #hooks #skills #automation | articles/2026-03-27_082_Claude_Code_Full_Workflow_Hooks_Skills.md |
 | 052 | ClaudeCodeのサブエージェントでテスト修正を自動化してみた | ja | 読了 | #automation #hooks | articles/2026-03-27_083_Claude_Code_Subagent_Auto_Test_Fix.md |
 | 053 | Claude Code Action はじめの一歩：GitHubで使うAI自動化の革命 | ja | 読了 | #automation | articles/2026-03-27_084_Claude_Code_Action_GitHub_Integration.md |
+| 054 | Claude Code by Anthropic – Release Notes (Releasebot) | en | 読了 | #update | articles/2026-03-28_113_Claude_Code_Release_Notes_Releasebot.md |
+| 055 | Claude Code Changelog: Complete Version History (ClaudeFast) | en | 読了 | #update | articles/2026-03-28_114_Claude_Code_Changelog_ClaudeFast.md |
+| 056 | Claude Code Changelog: Complete Update History 2026 (Get AI Perks) | en | 読了 | #update | articles/2026-03-28_115_Claude_Code_Update_History_GetAIPerks.md |
+| 057 | How I Use Claude Code (+ My Best Tips) (Builder.io) | en | 読了 | #workflow #tutorial | articles/2026-03-28_116_How_I_Use_Claude_Code_Builder_io.md |
+| 058 | GitHub – ykdojo/claude-code-tips (45 tips) | en | 読了 | #tutorial #best-practices | articles/2026-03-28_117_Claude_Code_Tips_GitHub_ykdojo.md |
+| 059 | My Claude Code Setup & Workflow (psantanna.com) | en | 読了 | #workflow #tutorial | articles/2026-03-28_118_My_Claude_Code_Setup_psantanna.md |

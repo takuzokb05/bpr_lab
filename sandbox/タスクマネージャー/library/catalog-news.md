@@ -53,3 +53,11 @@
 | 028 | 「AIエージェント元年」を振り返る — 大和総研（62%試験導入も23%のみスケール） | ja | 読了 | #agent #japan #trend | articles/2026-03-27_110_Daiwa_Research_AI_Agent_Review_2026.md |
 | 029 | Google Cloud 国内120社の生成AI活用事例公開（2026年3月更新） | ja | 読了 | #japan #agent #tools | articles/2026-03-27_111_Google_Cloud_120_GenAI_Cases_Japan.md |
 | 030 | スマホからAIに「このPC作業やっといて」— Claude Computer Use（Gizmodo Japan） | ja | 読了 | #anthropic #japan | articles/2026-03-27_112_Gizmodo_Japan_Claude_Computer_Use.md |
+| 031 | The LLM and AI Agent Releases That Actually Matter This Week, March 2026 (DEV Community) | en | 読了 | #model-release #trend | articles/2026-03-28_124_DEV_LLM_Agent_Releases_March2026.md |
+| 032 | 12+ AI Models in March 2026: The Week That Changed AI (Build Fast with AI) | en | 読了 | #model-release #trend | articles/2026-03-28_125_12_AI_Models_March2026_BuildFast.md |
+| 033 | Apple Reimagines Siri with Gemini Integration (Radical Data Science) | en | 読了 | #google #trend | articles/2026-03-28_126_Apple_Siri_Gemini_Integration_2026.md |
+| 034 | Atlassian Cuts 10% of Workforce to Accelerate AI Pivot (Crescendo AI) | en | 読了 | #funding #trend | articles/2026-03-28_127_Atlassian_10pct_Layoff_AI_Pivot.md |
+| 035 | 日本政府、AIエージェント・フィジカルAIに「人の判断必須」指針を策定へ（日経） | ja | 読了 | #regulation #japan #agent | articles/2026-03-28_128_Japan_Gov_AI_Agent_Guidelines_Nikkei.md |
+| 036 | GoogleのAI UIデザインツール「Stitch」が大型アップデート、Figma株が急落 | ja | 読了 | #google #tools #japan | articles/2026-03-28_129_Google_Stitch_Vibe_Design_Figma_Drop.md |
+| 037 | OpenAIの動画生成AI「Sora」が提供終了を発表（WEEL/note） | ja | 読了 | #openai #japan | articles/2026-03-28_130_OpenAI_Sora_Service_End_WEEL.md |
+| 038 | 楽天「Rakuten AI 3.0」発表、NTTデータもITシステム開発の大半をAI自動化へ（Ledge.ai） | ja | 読了 | #japan #trend | articles/2026-03-28_131_Rakuten_AI3_NTTData_AI_Automation.md |

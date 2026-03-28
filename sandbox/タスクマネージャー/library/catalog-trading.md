@@ -47,3 +47,8 @@
 | 025 | 金融市場取引と機械学習（東京大学松尾・岩澤研究室） | ja | 読了 | #ml #research | articles/2026-03-27_095_Tokyo_Univ_Matuo_Financial_ML_Course.md |
 | 026 | AIがディープラーニングで学ぶトレーディング（MUFGイノベーションハブ） | ja | 読了 | #ml #implementation | articles/2026-03-27_096_MUFG_Deep_Learning_Trading.md |
 | 027 | 金融業界における量子コンピューティング（FPTジャパン） | ja | 読了 | #quant #research | articles/2026-03-27_097_FPT_Japan_Quantum_Finance.md |
+| 028 | Are Crypto Trading Bots Worth It in 2026? Truth Behind Automated Trading (Coincub) | en | 読了 | #llm-trading #comparison | articles/2026-03-28_119_Crypto_Trading_Bots_Worth_It_2026_Coincub.md |
+| 029 | AI Trading Revolution: LLM Trading To Kill Wall Street (AI Era) | en | 読了 | #llm-trading #research | articles/2026-03-28_120_AI_Trading_Revolution_LLM_Wall_Street.md |
+| 030 | Open-Source LLM Trading Bot with Full Backtesting (GoPenAI) | en | 読了 | #llm-trading #implementation | articles/2026-03-28_121_OpenSource_LLM_Trading_Bot_Backtesting.md |
+| 031 | 個人もAIで短期売買可能に — ヘッジファンド並みシステム供給（日経） | ja | 読了 | #implementation #japan | articles/2026-03-28_122_Nikkei_AI_Retail_Trading_Hedge_Fund_Grade.md |
+| 032 | 金融DX×AI自動売買の導入事例5選（TWOSTONE&Sons） | ja | 読了 | #implementation #japan | articles/2026-03-28_123_Finance_DX_AI_AutoTrading_5Cases.md |
