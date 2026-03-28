@@ -1,0 +1,72 @@
+URL: https://x.com/itsolelehmann/status/2033919415771713715
+著者: @itsolelehmann (Ole Lehmann)
+日付: 2026-03-17
+種別: X Article
+
+Your Claude skills probably fail 30% of the time and you don't even notice.
+
+I built a method that auto-improves any skill on autopilot, and in this article I'm going to show you exactly how to run it yourself.
+
+You kick it off, and the agent tests and refines the skill over and over without you touching anything.
+
+My landing page copy skill went from passing its quality checks 56% of the time to 92%. With zero manual work at all.
+
+## Where this comes from
+
+Andrej Karpathy (co-founder of OpenAI, former head of AI at Tesla, guy who coined "vibe coding") released a method called autoresearch.
+
+The idea is simple: instead of you manually improving something, you let an AI agent do it for you in a loop.
+
+It tries a small change. Checks if the result got better. Keeps it if it did, throws it out if it didn't.
+
+He used it for machine learning code. But the method works on anything you can measure and improve.
+
+## How one loop auto-improves your skills
+
+You have a recipe that turns out great 7 out of 10 times. Instead of rewriting the whole recipe from scratch, you change one ingredient. You cook it 10 times with that change.
+
+- Did it get better? Keep the change.
+- Did it get worse? Put the old ingredient back.
+
+That's exactly what autoresearch does to your skills.
+
+- The "recipe" is your skill prompt.
+- The "cooking" is running the skill.
+- The "tasting" is scoring the output.
+
+## The checklist that tells the agent exactly what 'good' means
+
+You give the agent a simple checklist of what "good" looks like. That's your only job in this whole process.
+
+Each question checks one specific thing about the output. Pass or fail.
+
+3-6 questions is the sweet spot. More than that and the skill starts gaming the checklist.
+
+## Here's how to run it
+
+Step 1: Download the skill. Drop it into your skills folder in Claude Code or Cowork.
+Step 2: Pick a skill to improve.
+Step 3: The agent asks you 3 things: which skill, test inputs, and checklist questions.
+Step 4: It runs your skill and shows your starting score (baseline).
+Step 5: It opens a live dashboard in your browser.
+Step 6: Walk away. The agent enters the loop autonomously.
+
+## What happened to my landing page skill
+
+56% → 92%. 4 rounds of changes. 3 kept, 1 undone.
+
+Changes the agent made:
+- Added a specific rule for the most common failure
+- Added a banned buzzwords list
+- Added a worked example of a strong landing page section
+- Tried a tighter word count, undid it because the copy got too thin
+
+## This works on way more than skills
+
+The method works on anything you can score.
+- Website speed: 1100ms to 67ms in 67 rounds
+- Cold outreach
+- Newsletter intros
+- Any prompt you use repeatedly
+
+Download the skill: https://github.com/olelehmann100kMRR/autoresearch-skill

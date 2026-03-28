@@ -1,0 +1,9 @@
+URL: https://x.com/gyakuse/status/2034797426285162911
+著者: @gyakuse (逆瀬川)
+日付: 2026-03-20
+種別: 通常ツイート（外部リンク付き）
+
+Claude Codeのアプデで公式に使用率がステータスラインで取れるようになったので泣きながら書きました
+https://nyosegawa.com/posts/claude-code-statusline-rate-limits/
+
+（記事概要: Claude Code v2.1.80で追加されたrate_limitsフィールドを使って、5時間/7日間の使用量をステータスラインにかわいく表示する4つのパターンを紹介）

@@ -1,0 +1,33 @@
+Building a C compiler with a team of parallel Claudes（Anthropic公式）
+
+ソース: https://www.anthropic.com/engineering/building-c-compiler
+公開日: 2026-02-05
+
+## 概要
+16並列のClaude Opus 4.6インスタンスで10万行のRust製Cコンパイラを2週間で構築。
+Linux 6.9、QEMU、FFmpeg、PostgreSQL、Redisのビルドに成功。GCC torture test 99%パス。
+
+## アーキテクチャ
+- 16並列Claude、Docker コンテナ内で実行
+- 約2,000セッション、APIコスト $20,000
+- Git lockファイルでタスク排他制御（current_tasks/にlock作成→完了後解放）
+- Git のネイティブ競合解決で同期
+
+## 役割分担
+- コアコンパイラ開発エージェント
+- コード重複排除エージェント
+- パフォーマンス最適化エージェント
+- アーキテクチャ批評エージェント（Rust設計視点）
+- ドキュメントエージェント
+
+## 成功のカギ
+1. テストの質がほぼ完璧であること（エージェントが自律で解くには必須）
+2. エラー出力をgrep可能に（ERRORプレフィックス、自動パース可能）
+3. --fast フラグで1-10%ランダムサブサンプリング（テスト高速化）
+4. GCCをオラクルにした差分コンパイルで巨大タスクを並列化
+
+## 失敗・課題
+- 16bit x86コード生成がサイズ制限超過
+- 生成コード効率はGCCに大幅に劣る
+- 新機能追加が既存機能を壊すことが頻発
+- アセンブラ・リンカは未完成

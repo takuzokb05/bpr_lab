@@ -1,0 +1,13 @@
+URL: https://x.com/browser_use/status/2035081807209931153
+著者: @browser_use (Browser Use)
+日付: 2026-03-20
+種別: 通常ツイート（動画付き）
+
+Introducing: Browser Use CLI 2.0
+
+The most efficient browser automation CLI tool
+> 2x the speed, half the cost
+> Easily connect to running Chrome
+> Uses direct CDP
+
+Try it now

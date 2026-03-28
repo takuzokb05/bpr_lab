@@ -1,0 +1,31 @@
+claude --dangerously-skip-permissions 完全ガイド
+
+ソース: https://blog.promptlayer.com/claude-dangerously-skip-permissions/
+
+## 要点
+コンテナ内限定の完全自律実行モード。AllowedToolsで制限 + 小スコープで検証してからスケール。
+
+## Permission Modes比較
+- YOLO Mode (--dangerously-skip-permissions): 全確認スキップ。無人実行用
+- Auto-Accept Mode (Shift+Tab): 自動承認だが観察・停止可能
+- Auto Mode: AI判断で承認/拒否
+
+## 安全な使い方
+
+### 必須条件
+- コンテナ/VM内限定（ホストマシン禁止。Anthropic公式も明言）
+- AllowedToolsで安全なツールだけに制限
+- Gitタグ/ステートファイルでチェックポイント
+
+### 実績あるワークフロー
+1. TDD Loop: 失敗テスト書く→テスト実行→コミット→合格まで繰り返し
+2. Bulk Refactor: 複数ファイルのリネーム・lint修正
+3. Multi-Repo Analysis: リポジトリ横断分析
+4. Documentation: セキュリティ監査レポート自動生成
+
+### CI/CD統合
+claude -p "task" --dangerously-skip-permissions --output-format stream-json
+
+## 事故事例
+Wolak incident (2025年10月): rm -rf / がホストマシンで実行された。
+→ コンテナ内なら被害はコンテナ内に限定される

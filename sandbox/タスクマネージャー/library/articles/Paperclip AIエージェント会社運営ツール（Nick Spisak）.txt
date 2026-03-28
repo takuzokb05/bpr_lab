@@ -1,0 +1,35 @@
+URL: https://x.com/NickSpisak_/status/2033518072724705437
+著者: @NickSpisak_ (Nick Spisak)
+日付: 2026-03-16
+種別: X Article
+
+If you use Claude Code, OpenClaw, Codex, OpenCode, Cursor, or any other AI coding agent - Paperclip was built for you.
+
+It's a free, open-source tool that just launched on GitHub and hit 1.6 million views in its first week. It takes every AI agent you already use and organizes them into an actual company - with an org chart, job titles, budgets, goals, and one dashboard to manage all of them.
+
+## The Problem It Solves
+
+Right now you probably have Claude Code in one terminal, maybe Codex in another, Cursor open somewhere else. You're copying outputs between them. You lose track of who's doing what.
+
+Paperclip fixes all of that. Every agent gets a role, a boss, and a budget. Tasks persist across reboots.
+
+Created by @dotta. Completely open source under the MIT license.
+
+## The 8 Features That Matter Most
+
+1. Org Charts - roles, titles, reporting structure
+2. Goal Alignment - company goal → projects → tasks
+3. Heartbeats - agents wake on schedule, check work, sleep
+4. Budget Controls - monthly spending limits per agent
+5. Ticket System - every decision has paper trail
+6. Works With Existing Tools - Claude Code, Codex, Cursor, Bash, HTTP
+7. Multi-Company Support - separate data, budgets, audit trails
+8. Governance - you approve hires, review strategy, pause agents
+
+## How to Set It Up (5 Minutes)
+
+One-command method or manual step-by-step. Requirements: Node.js 20+ and pnpm 9.15+.
+
+## What's Coming Next: ClipMart
+
+A marketplace where you can download entire pre-built companies with one click.

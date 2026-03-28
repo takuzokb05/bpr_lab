@@ -1,0 +1,37 @@
+Claude Codeの「UIがダサい問題」を解決するskill見つけたの巻
+
+8年のプロダクトデザイン経験を凝縮したらしい。ダッシュボード系のUIが一発でまともになるとのこと
+
+Redditで既に393いいね付いてた👇
+9:40 AM · Jan 6, 2026
+·
+120.4K
+ Views
+Relevant
+View quotes
+
+Sekioka Satoshi @ 1日1個何か作る人
+@__SatoshiSsSs__
+·
+Jan 6
+ポイントは「Anthropic公式のfrontend-design skill（Claude Codeで/frontend-designとすれば使えるやつ）との使い分け」
+
+- 公式 → ランディングページ、マーケティング系
+- これ → ダッシュボード、管理画面、データ密度高い系
+
+用途が違うから併用もアリか
+Sekioka Satoshi @ 1日1個何か作る人
+@__SatoshiSsSs__
+·
+Jan 6
+Reddit: 
+https://reddit.com/r/ClaudeAI/comments/1q4l76k/
+
+GitHub: 
+https://github.com/Dammyjay93/claude-design-skill
+⚠️注意点：http://skill.mdじゃなくてhttp://SKILL.md（大文字）にリネームしないと動かないみたい
+
+デモサイト: 
+https://dashboard-v4-eta.vercel.app
+
+比較デモもあるから見てみると違いわかりやすい

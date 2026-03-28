@@ -1,0 +1,26 @@
+Claude Codeで「寝ながら開発」するためにやった工夫（GMO Developers）
+
+ソース: https://developers.gmo.jp/technology/79283/
+
+## 要点
+AppleScript自動入力 + caffeinate + Linear MCP統合で、寝ている間もClaude Codeが開発を進める仕組み。
+
+## 4つの実装方法
+
+### 1. AppleScript自動入力
+5秒ごとにEnterキー自動押下（540回 = 約90分間）。力技だが実用的。
+
+### 2. caffeinate（Mac限定）
+`caffeinate -u -t 7200` でスリープ防止（2時間指定）。
+
+### 3. Linear × MCP統合
+タスク管理サービスLinearとClaude Codeを接続。
+「上から順に実行して、1つ終わったら次に進む」自動遷移を実現。
+
+### 4. 安全対策
+- サンドボックスモード使用
+- 個人マシンのみで試験
+- 破壊されても問題ない隔離環境
+
+## 注意
+著者自ら「寝ている間に壊れている可能性もある」と明記。

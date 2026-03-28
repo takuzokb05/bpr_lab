@@ -1,0 +1,8 @@
+URL: https://x.com/trq212/status/2034761016320696565
+著者: @trq212 (Thariq)
+日付: 2026-03-19
+種別: 通常ツイート（動画付き）
+
+We just released Claude Code channels, which allows you to control your Claude Code session through select MCPs, starting with Telegram and Discord.
+
+Use this to message Claude Code directly from your phone.

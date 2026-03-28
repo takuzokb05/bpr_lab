@@ -1,0 +1,40 @@
+URL: https://x.com/GoogleCloudTech/status/2033953579824758855
+著者: @GoogleCloudTech (Google Cloud Tech)
+日付: 2026-03-17
+種別: X Article
+
+When it comes to SKILL.md, developers tend to fixate on the format—getting the YAML right, structuring directories, and following the spec. But with more than 30 agent tools (like Claude Code, Gemini CLI, and Cursor) standardizing on the same layout, the formatting problem is practically obsolete.
+
+The challenge now is content design. The specification explains how to package a skill, but offers zero guidance on how to structure the logic inside it.
+
+By studying how skills are built across the ecosystem—from Anthropic's repositories to Vercel and Google's internal guidelines— there are five recurring design patterns that can help developers build agents.
+
+## Pattern 1: The Tool Wrapper
+
+A Tool Wrapper gives your agent on-demand context for a specific library. Instead of hardcoding API conventions into your system prompt, you package them into a skill. Your agent only loads this context when it actually works with that technology.
+
+## Pattern 2: The Generator
+
+While the Tool Wrapper applies knowledge, the Generator enforces consistent output. It leverages assets/ for output template and references/ for style guide. The instructions tell the agent to load the template, read the style guide, ask the user for missing variables, and populate the document.
+
+## Pattern 3: The Reviewer
+
+The Reviewer pattern separates what to check from how to check it. You store a modular rubric inside references/review-checklist.md. When a user submits code, the agent loads this checklist and methodically scores the submission, grouping findings by severity.
+
+## Pattern 4: Inversion
+
+Agents inherently want to guess and generate immediately. The Inversion pattern flips this dynamic. Instead of the user driving the prompt and the agent executing, the agent acts as an interviewer. It asks structured questions sequentially and waits for your answers before moving to the next phase.
+
+## Pattern 5: The Pipeline
+
+For complex tasks, the Pipeline pattern enforces a strict, sequential workflow with hard checkpoints. By implementing explicit diamond gate conditions (such as requiring user approval before moving from docstring generation to final assembly), the Pipeline ensures an agent cannot bypass a complex task.
+
+## Choosing the right agent skill pattern
+
+Each pattern answers a different question. Use the decision tree to find the right one for your use-case.
+
+## And finally, patterns compose
+
+These patterns are not mutually exclusive. A Pipeline skill can include a Reviewer step. A Generator can rely on Inversion at the beginning. Thanks to ADK's SkillToolset and progressive disclosure, your agent only spends context tokens on the exact patterns it needs at runtime.
+
+Stop trying to cram complex and fragile instructions into a single system prompt. Break your workflows down, apply the right structural pattern, and build reliable agents.

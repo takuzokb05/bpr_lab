@@ -1,0 +1,66 @@
+URL: https://x.com/arscontexta/status/2023957499183829467
+著者: @arscontexta (Heinrich)
+日付: 2026-02-18
+種別: X Article
+
+people underestimate the power of structured knowledge. it enables entirely new kinds of applications
+
+right now people write skills that capture one aspect of something. a skill for summarizing, a skill for code review and so on. one file with one capability
+
+thats fine for simple tasks but real depth requires something else
+
+## skill graphs
+
+a skill graph is a network of skill files connected with wikilinks
+
+instead of one big file you have many small composable pieces that reference each other. each file is one complete thought, technique or skill and [[wikilinks between them create a traversable graph]]
+
+a skill graph applies the same skill discovery pattern recursively inside the graph itself
+
+every node has a yaml description the agent can scan without reading the whole file
+
+every wiki link carries meaning because its woven into prose so the agent follows relevant paths and skips what doesnt matter
+
+progressive disclosure:
+
+> index → descriptions → links → sections → full content
+
+most decisions happen before reading a single full file
+
+## the primitives
+
+you already have everything you need
+
+- wikilinks that read as prose in sentences, so they carry meaning not just references
+- yaml frontmatter with descriptions so the agent can scan without reading full files
+- MOCs (maps of content) that organize clusters of related skills into navigable sub-topics
+
+## arscontexta plugin
+
+arscontexta is a skill graph that teaches your agent how to build skill graphs
+
+~250 connected markdown files that teach an agent how to build a massive knowledge base aka skill graph for you
+
+## what this enables
+
+- a trading skill graph: risk management, market psychology, position sizing, technical analysis
+- a legal skill graph: contract patterns, compliance requirements, jurisdiction specifics
+- a company skill graph: org structure, product knowledge, processes, onboarding context
+
+none of these fit in one file but all of them work as graphs
+
+## how to build one
+
+the easy way: install the arscontexta claude code plugin, pick the research preset and point it at any topic
+
+the manual way: an index file that tells the agent what exists and how to traverse it. each linked file is a standalone methodology claim (= skill).
+
+## the evolution
+
+skills are context engineering, basically curated knowledge injected where it matters
+
+skill graphs are the next step
+
+instead of one injection the agent navigates a knowledge structure, pulling in exactly what the current situation requires
+
+this is the difference between an agent that follows instructions and an agent that understands a domain

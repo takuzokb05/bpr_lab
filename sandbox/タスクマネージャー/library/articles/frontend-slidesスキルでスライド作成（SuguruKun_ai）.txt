@@ -1,0 +1,11 @@
+URL: https://x.com/SuguruKun_ai/status/2034972820040819101
+著者: @SuguruKun_ai (すぐる)
+日付: 2026-03-20
+種別: 通常ツイート
+ユーザーメモ: macだからWindowsにするなら、の観点
+
+GitHub公開されてるので誰でも使えます：
+https://github.com/zarazhangrui/frontend-slides
+
+Claude Codeのスキルを作り込んでる人とそうじゃない人で、
+アウトプットの質とスピードに差がつく時代が来ると思ってる...

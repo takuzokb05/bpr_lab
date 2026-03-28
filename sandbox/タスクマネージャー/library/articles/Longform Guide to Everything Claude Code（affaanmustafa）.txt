@@ -1,0 +1,64 @@
+URL: https://x.com/affaanmustafa/status/2014040193557471352
+著者: @affaanmustafa (cogsec)
+日付: 2026-01-21
+種別: X Article
+
+In "The Shorthand Guide to Everything Claude Code", I covered the foundational setup. This longform guide goes the techniques that separate productive sessions from wasteful ones.
+
+The themes here: token economics, memory persistence, verification patterns, parallelization strategies, and the compound effects of building reusable workflows.
+
+## Context & Memory Management
+
+- Session memory via .tmp files in .claude folder, one per session
+- Strategic compacting: disable auto compact, manually compact at logical intervals
+- Dynamic System Prompt Injection: --system-prompt has higher authority than user messages, which have higher authority than tool results
+- CLI aliases for scenario-specific context (dev.md, review.md, research.md)
+- Memory Persistence Hooks: PreCompact, SessionComplete, SessionStart
+
+## Continuous Learning / Memory
+
+- When Claude runs into the same problem repeatedly, those patterns must be appended to skills
+- Stop hook on session end: analyzes session for patterns worth extracting, saves as reusable skills in ~/.claude/skills/learned/
+- /learn command for mid-session manual extraction
+- Session Log Pattern: ~/.claude/sessions/YYYY-MM-DD-topic.tmp
+
+## Token Optimization
+
+- Primary: Subagent Architecture — delegate cheapest sufficient model
+- Haiku and Opus combo makes most sense (5x cost difference vs 1.67x for Sonnet)
+- Replace grep with mgrep (half the tokens)
+- Background processes outside Claude via tmux
+- Modular codebase = fewer re-reads = cheaper tokens
+- System Prompt Slimming: ~18k → ~10k tokens possible
+
+## Verification Loops and Evals
+
+- Checkpoint-Based Evals vs Continuous Evals
+- Grader Types: Code-Based, Model-Based, Human
+- Key Metrics: pass@k (works) vs pass^k (consistency)
+- Building Eval Roadmap: start with 20-50 simple tasks from real failures
+
+## Parallelization
+
+- Fork conversations for orthogonal tasks
+- Prefer main chat for code changes, forks for research
+- Don't set arbitrary terminal counts; minimum viable parallelization
+- Git Worktrees for parallel instances
+- The Cascade Method: open new tasks right, sweep left to right, max 3-4 tasks
+
+## Groundwork
+
+- Two-Instance Kickoff Pattern: Instance 1 (Scaffolding Agent) + Instance 2 (Deep Research Agent)
+- llms.txt pattern for LLM-optimized documentation
+- Build reusable patterns — compounds over time, transferable to other agents
+
+## Best Practices for Agents & Sub-Agents
+
+- Sub-Agent Context Problem: summaries miss key details; use Iterative Retrieval Pattern (max 3 cycles)
+- Orchestrator with Sequential Phases: one input → one output per agent
+- Agent Abstraction Tierlist: Tier 1 (Direct Buffs: Subagents, Metaprompting, Asking user) → Tier 2 (High Skill Floor: Long-running, Parallel multi-agent, Role-based, Computer use)
+
+## Tips and Tricks
+
+- Replace MCPs with CLI + skills to free context window
+- With lazy loading, context window issue mostly solved, but token cost still benefits from CLI approach

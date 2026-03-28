@@ -1,0 +1,40 @@
+URL: https://x.com/HiTw93/status/2033911478466843115
+著者: @HiTw93 (Tw93)
+日付: 2026-03-17
+種別: 通常ツイート（引用ツイートで長文記事参照）
+ユーザーメモ: 一連のツイート掘り下げて
+
+Most Claude Code problems are not prompting problems. They are systems-design problems.
+
+I wrote a deep dive on Claude Code's architecture, governance, and engineering internals. If you want the practical takeaway: `npx skills add tw93/claude-health`, then run `/health`.
+
+--- 引用元記事（@HiTw93 / 2033181380432339045）---
+
+# You Don't Know Claude Code: Architecture, Governance, and Engineering Practices
+
+This handbook is written for engineers who already use Claude Code and want workflows that are more predictable, more controllable, and easier to verify.
+
+Based on six months of heavy Claude Code use and roughly $40 per month spent across two accounts.
+
+## 6-Layer Framework
+
+Over-index on one layer and the system becomes unstable. CLAUDE.md grows too long and pollutes its own context. Too many tools make selection noisy. Too many subagents make state drift harder to control.
+
+## Key Sections:
+
+1. Execution Model — iterative agent loop; wrong information is more dangerous than missing information
+2. Concept Boundaries — MCP/Plugin/Tools/Skills/Hooks/Subagents: use Tools and MCP for actions, Skills for reusable methods, Subagents for isolation, Hooks for constraints, Plugins for distribution
+3. Context Engineering — real context cost structure; MCP tool definitions eat 12.5%+ overhead; keep CLAUDE.md short and operational; use /context, /clear, /compact; write Compact Instructions; HANDOFF.md for session continuity
+4. Skills Design — on-demand workflow packages; progressive disclosure; 3 types (Checklist/Workflow/Domain Expert); keep descriptors short; anti-patterns
+5. Tool Design — agent-facing tools differ from human APIs; AskUserQuestion as dedicated tool; Todo→Task evolution; search tool evolution from RAG to Grep
+6. Hooks — deterministic processes, not model judgment; PreToolUse/PostToolUse/SessionStart/Stop; hooks + skills + CLAUDE.md three-layer stack
+7. Subagents — isolation not parallelism; explicit constraints (tools/model/maxTurns/isolation); anti-patterns
+8. Prompt Caching — prefix matching; don't switch models mid-session; compaction flow; defer_loading for lazy tool loading
+9. Verification Loop — no verifier = no engineering agent; define acceptance criteria upfront
+10. Commands — /context, /clear, /compact, /simplify, /rewind, /btw, /insight, double-tap ESC
+11. CLAUDE.md Writing — start with nothing, add only repeated instructions; include build/test/lint commands, directory structure, constraints, NEVER list, Compact Instructions
+12. Field Notes from Kaku project — environment transparency, doctor command, hooks for mixed-language projects
+13. Common Anti-Patterns
+14. Configuration Health Check — `npx skills add tw93/claude-health` then `/health`
+
+Key insight: Three stages of Claude Code use: (1) feature exploration, (2) productivity, (3) autonomous operation under constraints. The question shifts from "how do I use this" to "how do I make the agent operate autonomously under constraints."

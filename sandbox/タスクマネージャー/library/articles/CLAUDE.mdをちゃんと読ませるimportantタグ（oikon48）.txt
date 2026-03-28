@@ -1,0 +1,14 @@
+URL: https://x.com/oikon48/status/2034146114220499396
+著者: @oikon48 (Oikon)
+日付: 2026-03-18
+種別: 通常ツイート
+ユーザーメモ: これは要検証
+
+CLAUDE .md の重要な箇所を
+
+<important if="condition">
+
+で囲むと、Claude CodeがCLAUDE .mdをちゃんと読んでくれるらしい。
+
+Getting Claude to Actually Read Your CLAUDE .md | HumanLayer Blog
+https://www.humanlayer.dev/blog/stop-claude-from-ignoring-your-claude-md

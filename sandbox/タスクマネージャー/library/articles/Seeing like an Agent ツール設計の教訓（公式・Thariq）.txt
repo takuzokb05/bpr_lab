@@ -1,0 +1,49 @@
+URL: https://x.com/trq212/status/2027463795355095314
+著者: @trq212 (Thariq)
+日付: 2026-02-27
+種別: X Article
+
+One of the hardest parts of building an agent harness is constructing its action space.
+
+Claude acts through Tool Calling, but there are a number of ways tools can be constructed in the Claude API with primitives like bash, skills and recently code execution.
+
+Given all these options, how do you design the tools of your agent? You want to give it tools that are shaped to its own abilities. But how do you know what those abilities are? You pay attention, read its outputs, experiment. You learn to see like an agent.
+
+# Improving Elicitation & the AskUserQuestion tool
+
+When building the AskUserQuestion tool, our goal was to improve Claude's ability to ask questions (elicitation).
+
+## Attempt #1 - Editing the ExitPlanTool
+Added a parameter to have an array of questions alongside the plan. Confused Claude because it was simultaneously asked for a plan and questions.
+
+## Attempt #2 - Changing Output Format
+Modified output instructions to serve modified markdown format. Claude was okay at outputting this but not guaranteed — would append extra sentences, omit options, or use different format.
+
+## Attempt #3 - The AskUserQuestion Tool
+Created a tool callable at any point. When triggered, showed a modal to display questions and block the agent's loop until user answered. This allowed structured output and Claude seemed to like calling it.
+
+Most importantly, Claude seemed to like calling this tool and its outputs worked well. Even the best designed tool doesn't work if Claude doesn't understand how to call it.
+
+# Updating with Capabilities - Tasks & Todos
+
+Originally gave Claude TodoWrite tool with periodic reminders. As models improved, they not only didn't need reminders but found it limiting. Replaced TodoWrite with the Task Tool — Tasks are about helping agents communicate with each other, with dependencies and shared updates across subagents.
+
+As model capabilities increase, the tools that your models once needed might now be constraining them. It's important to constantly revisit previous assumptions.
+
+# Designing a Search Interface
+
+Originally used RAG vector database. Switching to Grep tool let Claude search and build context itself. This pattern: as Claude gets smarter, it becomes increasingly good at building its context with the right tools.
+
+Progressive disclosure through Agent Skills: Claude reads skill files, follows references to other files recursively. A common use of skills is to add more search capabilities.
+
+# Progressive Disclosure - The Claude Code Guide Agent
+
+~20 tools in Claude Code. Bar to add new tool is high.
+
+Claude didn't know enough about how to use Claude Code itself. Instead of system prompt (context rot), gave it a link to its docs. Then built the Claude Code Guide subagent with extensive instructions on how to search docs well. Added to Claude's action space without adding a tool.
+
+## An Art, not a Science
+
+Designing tools for your models is as much an art as it is a science. It depends heavily on the model, the goal and the environment.
+
+Experiment often, read your outputs, try new things. See like an agent.

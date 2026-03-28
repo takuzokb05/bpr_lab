@@ -1,0 +1,69 @@
+URL: https://x.com/affaanmustafa/status/2012378465664745795
+著者: @affaanmustafa (cogsec)
+日付: 2026-01-17
+種別: X Article
+
+Here's my complete setup after 10 months of daily use: skills, hooks, subagents, MCPs, plugins, and what actually works.
+
+## Skills and Commands
+
+Skills operate like rules, constricted to certain scopes and workflows. They're shorthand to prompts when you need to execute a particular workflow.
+
+- Skills: ~/.claude/skills - broader workflow definitions
+- Commands: ~/.claude/commands - quick executable prompts
+
+## Hooks
+
+Hooks are trigger-based automations that fire on specific events.
+
+Hook Types:
+1. PreToolUse - Before a tool executes
+2. PostToolUse - After a tool finishes
+3. UserPromptSubmit - When you send a message
+4. Stop - When Claude finishes responding
+5. PreCompact - Before context compaction
+6. Notification - Permission requests
+
+Pro tip: Use the `hookify` plugin to create hooks conversationally.
+
+## Subagents
+
+Subagents are processes your orchestrator can delegate tasks to with limited scopes. They can run in background or foreground.
+
+## Rules and Memory
+
+Your `.rules` folder holds `.md` files with best practices. Two approaches:
+1. Single CLAUDE.md
+2. Rules folder - Modular `.md` files grouped by concern
+
+## MCPs (Model Context Protocol)
+
+MCPs connect Claude to external services directly.
+
+CRITICAL: Context Window Management
+- Have 20-30 MCPs in config, but keep under 10 enabled / under 80 tools active
+
+## Plugins
+
+Plugins package tools for easy installation. LSP Plugins give Claude real-time type checking.
+
+## Tips and Tricks
+
+Keyboard Shortcuts: Ctrl+U, !, @, /, Shift+Enter, Tab, Esc Esc
+Parallel Workflows: /fork, Git Worktrees, tmux
+mgrep > grep
+Other: /rewind, /statusline, /checkpoints, /compact
+GitHub Actions CI/CD for PR review
+Sandboxing with --dangerously-skip-permissions
+
+## On Editors
+
+Zed (Rust-based, fast, Agent Panel Integration) or VSCode/Cursor
+
+## Key Takeaways
+
+1. Don't overcomplicate - treat configuration like fine-tuning
+2. Context window is precious - disable unused MCPs and plugins
+3. Parallel execution - fork conversations, use git worktrees
+4. Automate the repetitive - hooks for formatting, linting, reminders
+5. Scope your subagents - limited tools = focused execution

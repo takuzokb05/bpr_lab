@@ -1,0 +1,35 @@
+Claude Codeで「放置しても止まらない」長期駆動システムを作った（108時間稼働）
+
+ソース: https://qiita.com/Nakatomo/items/736bd40716c3ae495012
+
+## 要点
+task-dispatch→task-execute→task-checkerのループで108時間無人稼働。
+「タスクが失敗するなら人間の指示が悪い」— タスク定義の質が全て。
+
+## アーキテクチャ
+
+### メインループ（task-dispatch）
+- データベースからpendingタスクを取得
+- 子タスクを逐次実行
+- 完了後にステータス更新
+- 全タスク消化までループ
+
+### ワーカーエージェント
+- task-execute: 機能実装 + PR作成
+- task-checker: ビルド・テスト・UI検証
+- task-creator: テストケース付きタスク生成
+
+### 返り値の標準化
+EXECUTE_RESULT: OK / FAILED
+CHECK_RESULT: OK / NG
+→ 機械的に判断可能
+
+### コスト最適化
+- task-dispatch, task-execute, task-creator: Opus
+- task-checker: Sonnet（軽量検証）
+- task-planner: Haiku（API登録のみ）
+
+## 実績
+- 一晩で約15タスク完了（1タスク15-30分）
+- エンジニア1人分の追加戦力
+- ただし人間レビューは必須。ゼロミスは不可能

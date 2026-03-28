@@ -1,0 +1,56 @@
+URL: https://x.com/coreyganim/status/2028470330247803361
+著者: @coreyganim (Corey Ganim)
+日付: 2026-03-02
+種別: X Article
+ユーザーメモ: Cowork
+
+Most people are still using Claude like a chatbot. Ask a question, get an answer, repeat.
+
+That's leaving 90% of the value on the table.
+
+Claude Cowork turns Claude into an autonomous coworker who can read your files, execute multi-step tasks, and deliver finished work to your folder while you do something else.
+
+# What Cowork Actually Is
+
+Cowork is an agentic desktop tool built into the Claude Desktop app.
+
+It gives Claude direct read/write access to folders on your computer, the ability to execute multi-step tasks autonomously, and the capacity to spin up parallel sub-agents for complex work.
+
+No terminal. No command line. No code.
+
+Think of it this way:
+- Chat = Assistant who answers questions
+- Code = Developer who builds software
+- Cowork = Employee who completes tasks
+
+# How to Set It Up (15 Minutes)
+
+Step 1: Get Access — Download Claude Desktop, sign in with a paid plan
+Step 2: Create Your Workspace — dedicated folder for Cowork
+Step 3: Set Up Your Context Files:
+  - about-me.md — Who you are, what you do
+  - brand-voice.md — Tone, phrases, samples
+  - working-preferences.md — How you want Claude to work
+Step 4: Set Global Instructions
+
+# What Plugins to Install
+
+1. Productivity — tasks, calendars, daily workflows
+2. Data Analysis — CSV, SQL, anomalies
+3. One role-specific plugin (Sales/Marketing/Finance/Legal)
+
+# 3 Example Use Cases
+
+1. Organize a Messy Folder — Claude reads, categorizes, renames, creates folder structure
+2. Weekly Research Brief — with /schedule, runs every Monday automatically
+3. Client Deliverable from Raw Notes — synthesizes meeting notes into polished report
+
+# The Mindset Shift
+
+Cowork rewards system engineering, not prompt engineering.
+
+The people thriving spent an afternoon building their context architecture (context files, global instructions, folder structure) and now write 10-word prompts that produce client-ready deliverables.
+
+ChatGPT rewarded clever prompting. Cowork rewards thoughtful setup.
+
+Invest 2 hours upfront. Get it back every single day.

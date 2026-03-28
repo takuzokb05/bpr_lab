@@ -1,0 +1,26 @@
+5時間止まっていたClaude Codeを24時間動かし続ける3つの設定ファイル
+
+ソース: https://qiita.com/yurukusa/items/611b939c4e1871ded117
+
+## 要点
+task-queue.yaml（次タスク明示）+ CLAUDE.md判断ルール表 + mission.md（状態復元）の3ファイル構成で、
+Claude Codeのidle停止を防ぎ、長時間自律動作を実現。
+
+## 3つの設定ファイル
+
+### 1. task-queue.yaml
+「次に何をするか」をYAMLで定義。idle停止を防ぐ。
+status: done / in_progress / pending で管理。blocked_until で時間制約も記載可能。
+
+### 2. CLAUDE.md 判断ルール表
+自律判断と人間への報告の境界を表形式で定義。
+- 自分で判断: 技術選択、実装詳細、エラー対処（3回まで）
+- 聞くべき: $10以上の課金、不可逆削除、外部公開、セキュリティリスク
+
+### 3. mission.md（CLAUDE.mdの外に配置）
+コンテキスト圧縮後の状態復元を数秒で実現。
+「再開時はここから」セクションで現在地を明示。
+
+## 補助ツール
+- no-ask-human.sh: 対話的入力（read -p等）をブロックするHook
+- 更新タイミング: タスク完了時のみ（過度な更新を防止）

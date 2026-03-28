@@ -1,0 +1,77 @@
+
+これまでClaude Codeを使っていて「許可ボタン押すのめんどくさすぎ問題」にイラッとしてた人、朗報です。Claude Codeに新機能「Auto Mode」が追加されました。
+ただし「全部自動でやってくれるやつでしょ？」と思った人、半分正解で半分不正解。
+「--dangerously-skip-permissionsとの違いがわからん！」というわたしみたいな人向けに解説記事を書きました。コピペすれば起動できるようになるので、時間のない方は保存してあとで読んでください。
+Auto Modeは「Claude自身がAI判断で、この操作は許可していいかどうかを決める」モードなので、全部無条件に自動承認するわけじゃないんです。ここ、めちゃくちゃ大事。
+そもそもなぜAuto Modeが必要だったのか
+Claude Codeはファイルの編集やコマンドの実行のたびに「これやっていい？」と確認してきますよね。
+1回2回ならいいけど、長時間のコーディングだと10回20回と確認が出る。
+正直めんどくさい。これが嫌でCoworkにしてるというのもある。
+で、今までClaude Codeで「確認をスキップしたい人」には2つの選択肢しかありませんでした。それが👇
+Auto-Accept Mode → ファイル編集だけ自動。コマンド系は毎回確認が出る
+Dangerously Skip Permissions → 全部ノーチェック。かーなーり危険なやつ
+つまり「ちょうどいい中間」がなかったんです。
+ファイル編集だけ自動じゃ足りないけど、全部ノーチェックは怖い。
+この隙間を埋めるのが Auto Mode。
+Auto Modeの仕組み
+Auto Modeでは、Claude自身が操作ごとに「これは安全か？」をAIが判断します。
+プロジェクト内のファイル読み書き → 安全と判断して自動承認
+外部ネットワークへのアクセスやシステムに影響するコマンド → 危険と判断して確認を出す
+つまり人間が毎回「Yes / No」を押す代わりに、Claudeが代わりに判断してくれる仕組み。
+注意点👇
+・AI判断にトークンを使うので、コストが少し増える
+・判断が完璧とは限らない。Anthropic公式も「隔離環境での使用を推奨」としている
+・あくまでリサーチプレビュー（研究段階のお試し版）
+Auto Modeの始め方は？
+これ、わたしもいまいちわかってませんでした。
+ターミナル（黒い画面）でClaude Codeを使っている場合は、claudeとだけ打つ代わりに、以下のどちらかで起動してください。（これメモまたは保存必須）
+claude --enable-auto-mode
+claude --permission-mode auto
+どちらでもOK。
+ちなみにVS Codeの拡張機能でClaude Codeを使っている場合はAuto Modeは使えないようです（2026年3月時点）
+また、VS Codeの設定（claudeCode.initialPermissionMode）で選べるのは以下の4つだけで、「auto」は選択肢にありません👇
+・default
+・acceptEdits（Auto-Accept Mode）
+・plan
+・bypassPermissions
+つまり最新のAuto Mode を使いたい場合は、ターミナルから「--enable-auto-mode（またはclaude --permission-mode auto）」などのフラグつきでClaudeを起動する必要があります。
+ ちなみにわたしはVS Code内でターミナルを開いてClaude Codeを使ってます。（ファイル構造を見たいし、ファイルも自分でいじりたいので、ただのターミナルだと使いづらい）
+その場合も起動するときにclaude --enable-auto-mode（またはclaude --permission-mode auto） と打てばAuto Modeが使えます。
+Auto Modeと似た機能との比較
+今回の新機能と名前が似てる機能が他にもあって紛らわしいので整理してみました（Claudeがね）👇
+Auto-Accept Mode（従来からの機能）
+いわゆる「acceptEdits」というやつです。これはファイル編集だけ自動承認。コマンドは毎回確認が出ます。
+
+Shift+Tabを押すか、VS Codeではチャット欄下のモード表示をクリック
+→ 「編集の確認だけ省きたい」人向け。普段使いに最適。
+ただ、このモードにしててもこういう感じでしょっちゅう許可を求められるのはわたしだけ？ちょーめんどくさいと思ってました。
+Dangerously Skip Permissions（従来からの機能）
+起動するときにターミナルで「claude --dangerously-skip-permissions」と打つやつです。
+
+すべての確認を無条件でスキップし、AI判断もありません。名前に"Dangerously（危険）"って入ってる通り、仮想環境やコンテナ専用のモードとのこと。
+3つの違いをざっくり言うと
+Auto-Accept Mode = ファイル編集だけ自動。コマンドは確認する
+【NEW】Auto Mode = AIが判断して、安全そうなら自動。危なそうなら確認する
+Dangerously Skip Permissions = 全部自動。何も確認しない
+安全度は Auto-Accept > Auto Mode > Dangerously Skip の順です。
+
+まとめると…
+・Auto Modeは「AIが許可判断する」新機能
+・起動は claude --enable-auto-mode または claude --permission-mode auto
+・Auto Modeを使うならターミナルから起動しよう
+・Auto-Accept Mode（Shift+Tab / acceptEdits）とは別物
+・Dangerously Skip Permissionsとも別物。AI判断の有無が違う
+・安全度順：Auto-Accept > Auto Mode > Dangerously Skip
+今まで「全部ノーチェック（Dangerously Skip）は怖いけど、毎回確認もめんどくさい」だったわたしにとって、ちょうどいい選択肢がやっと来た感じかな〜と思って、さっそく設定してみました。
+この記事の内容は公式情報をClaude Codeに調べてもらいつつ作りましたが、誤りがあるかもしれません。そのときはめんご！（古）
+
+Claude Coworkも超便利です
+昨日、去年までアメリカに住んでたときの確定申告のやり直し作業をしてたんですが、Coworkに助けられすぎて涙出そうでした…超超超便利。
+Claude Coworkは動画コースも出しました。あと3/19（木）21時に無料セミナーやります
+Coworkについてこちら
+
+今回の記事で参考にした公式ドキュメント👇
+Permission Modes: https://code.claude.com/docs/en/permissions
+サンドボックス: https://code.claude.com/docs/en/sandboxing
+VS Code拡張: https://code.claude.com/docs/en/ide-integrations
+CLIリファレンス: https://code.claude.com/docs/en/cli-reference

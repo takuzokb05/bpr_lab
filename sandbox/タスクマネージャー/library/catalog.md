@@ -1,22 +1,39 @@
-# Claude Code 蔵書目録
+# 蔵書目録
 
-テーマ: Claude Code（Anthropic CLI）に関する記事・ドキュメント・チュートリアル
+## 分類タグ一覧
 
-## タグ一覧
+| タグ | 説明 |
+|------|------|
+| agent設計 | エージェントの組織設計・専門分化・協調パターン |
+| ガバナンス | 権限管理・安全運用・Permission Mode |
+| CLAUDE.md | CLAUDE.mdの書き方・構成・ベストプラクティス |
+| スキル | スキル設計・自己改善・命名規約 |
+| UX/デザイン | UI品質・デザインシステム・アクセシビリティ |
+| ワークフロー | 作業手順・自動化・プロンプト技法 |
+| 非エンジニア | 非技術者の活用パターン・段階的学習 |
+| アーキテクチャ | Claude全体の設計思想・SDK・MCP・CI/CD |
+| 読書 | 書籍の読書ノート（/readingスキルで生成。実践ガイド付き） |
 
-- `#update` … バージョンアップ・新機能情報
-- `#hooks` … フック設計・活用
-- `#claude-md` … CLAUDE.md の書き方・設計
-- `#mcp` … Model Context Protocol 連携
-- `#skills` … Agent Skills 設計・活用
-- `#workflow` … 開発ワークフロー全般
-- `#automation` … 自動化・ヘッドレスモード
-- `#tutorial` … チュートリアル・ハンズオン
-- `#best-practices` … ベストプラクティス全般
-- `#team` … チーム・組織での活用
-- `#official` … Anthropic 公式ドキュメント
+## 蔵書一覧
 
-## エントリー一覧
+| # | タイトル | ファイル | 分類 | 要点（1行） | 反映先 | 状態 |
+|---|---------|---------|------|-----------|--------|------|
+| 1 | Self improving skills for agents | `articles/Self improving skills for agents.txt` | スキル | スキルのObserve→Inspect→Amend→Evaluateサイクルで自動進化 | catalog.yaml known_issuesフィールド | 反映済 |
+| 2 | PRマネージャー32人チーム | `articles/PRマネージャー1人の中に、32人のチームがいる話。.txt` | agent設計 | 司令塔(CLAUDE.md)→8部門32エージェント→8スキルの3層組織 | 未反映（中長期: 専門分化エージェント検討） | 読了 |
+| 3 | Claude Codeでyes連打してる人 | `articles/Claude Codeでとりあえずyes連打してる人.txt` | ガバナンス | 権限確認時にリスク4軸（漏洩・外部送信・破壊・設定変更）を%表示 | agent-governance.md リスク分類 + base.md ツール許可ルール（リスク%表示） | 反映済 |
+| 4 | Auto Mode完全解説 | `articles/Claude Code新機能「Auto Mode」完全解説.txt` | ガバナンス | AI判断ベースの中間Permission Mode。隔離環境推奨 | docs/agent-governance.md Permission Mode段階化 | 反映済 |
+| 5 | Most people treat CLAUDE.md like a prompt file | `articles/Most people treat CLAUDE.md like a prompt file..txt` | CLAUDE.md | WHY/WHAT/HOW/WORKFLOWSの4要素構成。短さが精度を上げる | base.md + タスクマネージャーCLAUDE.md全面リファクタ | 反映済 |
+| 6 | デザインシステムを作って工夫したこと（melta UI） | `articles/Claude Codeに特化したデザインシステムを作って工夫したこと.txt` | UX/デザイン, スキル | 禁止パターン76項目明示化。tokens.jsonでAI用SSOT | base.md 禁止パターンセクション | 反映済 |
+| 7 | UIがダサい問題を解決するskill | `articles/Claude Codeの「UIがダサい問題」を解決するskill見つけたの巻.txt` | UX/デザイン | 公式/frontend-design（LP向け）vs コミュニティskill（ダッシュボード向け）の使い分け | 未反映（参考情報として保持） | 読了 |
+| 8 | Claude architect full course | `articles/I want to become a Claude architect (full course)..txt` | アーキテクチャ | Claude Code / Agent SDK / API / MCPの4軸。Production-gradeの実装パターン | 未反映（参考情報として保持） | 読了 |
+| 9 | ask_user_inputスタイル | `articles/もう長いプロンプト不要！Claudeのとチート級呪文「ask_user_inputスタイルでお願い」って入力してみて.txt` | ワークフロー, 非エンジニア | 「ask_user_inputスタイルでお願い」で選択肢カード型の対話に変換 | scaffolder SKILL.md インタラクティブモード + settings-local.json作成時にテスト実施 | 反映済 |
+| 10 | プロンプトプレビュー | `articles/プロンプトプレビュー.url` | ワークフロー | （URLブックマーク。内容未確認） | — | 未読 |
+| 11 | 5 Agent Skill design patterns (ADK) | `articles/5 Agent Skill design patterns every ADK developer should know.txt` | スキル | 5パターン: Tool Wrapper / Generator / Reviewer / Inversion / Pipeline。パターンは合成可能 | 未反映（スキル設計ガイドとして中期検討） | 読了 |
+| 12 | Lessons from Building Claude Code: How We Use Skills | `articles/Lessons from Building Claude Code How We Use Skills.txt` | スキル | Anthropic社内の9カテゴリ分類。Progressive Disclosure・On Demand Hooks・Gotchasセクション・descriptionはモデル向け | 全6スキルにGotchasセクション追加 + catalog.yaml description書き直し | 反映済 |
+| 13 | 非エンジニアの2つのファイル設定 | `articles/Claude Codeを使い始めた非エンジニアが、最初にやるべき「たった2つのファイル設定」.txt` | 非エンジニア, ガバナンス | settings.local.json（鍵）+ CLAUDE.md（ルール表）の二重ロック。両方必要な理由を解説 | agent-governance.md 二重ロック概念 + templates/settings-local.json テンプレート | 反映済 |
+| 14 | チームのCLAUDE.mdが勝手に育つ — Hook自動化 | `articles/チームのCLAUDE.mdが勝手に育つ - Hook機能での自動化.txt` | CLAUDE.md, スキル | SessionEnd + PreCompact Hookで会話履歴→CLAUDE.md更新提案を自動化。Self-improving CLAUDEmd | 未反映（Self-improving skillsと合わせて中期検討） | 読了 |
+
+## 日次収集（2026-03-27〜）
 
 | No. | タイトル | 言語 | 状態 | タグ | ファイル |
 |-----|---------|------|------|-----|--------|
@@ -109,3 +126,74 @@
 | 087 | Anthropic Deprecation Updates — Opus 3 (Jan) & Haiku 3 (Apr 19) (Anthropic Official) | en | 読了 | #update | articles/2026-03-28_159_Anthropic_Deprecation_Opus3_Haiku3.md |
 | 088 | Claude Code SDKとは？CI/CDへの組み込み方 (株式会社一創) | ja | 読了 | #sdk | articles/2026-03-28_160_Claude_Code_SDK_Issoh_Japanese.md |
 | 089 | Claude Code SDK活用：CI連携・SaaS UI・サブエージェント委譲 (AGIラボ) | ja | 読了 | #sdk | articles/2026-03-28_161_Claude_Code_SDK_AGILab_Note.md |
+## 発見パターン（記事横断の傾向）
+
+蔵書を横断して繰り返し出現するテーマ。出現回数が多いほど普遍的な知見。
+
+| パターン | 出現記事 | 知見 | 反映状況 |
+|---------|---------|------|---------|
+| **禁止パターンの明示化** | #5, #6, #13, #26 | AIは「やるな」の暗黙理解が苦手。明示的リスト化が最も効果的 | base.md + browser-tool.md に反映済 |
+| **Progressive Disclosure** | #5, #11, #12, #32, #35, #42 | CLAUDE.mdに全部書かず、詳細はファイル参照で渡す。コンテキスト節約。Skill Graphsは究極形 | base.md + CLAUDE.md構成に反映済 |
+| **二重ロック（仕組み+理由）** | #3, #4, #13, #26 | settings.json（物理的制限）+ CLAUDE.md（理由の理解）の両方が必要 | agent-governance.md に反映済 |
+| **段階的アプローチ** | #9, #13, 非エンジニア調査 | 型1→型2→型3。調査→計画→実行→確認。いきなり複雑なことをしない | base.md 4ステップWF + scaffolder型分類に反映済 |
+| **Gotchasセクション** | #1, #12 | スキルで最も価値が高いのは「よくあるハマりポイント」。運用しながら育てる | 全6スキルに追加済 |
+| **Self-improving ループ** | #1, #14, #28, #37 | 実行→失敗記録→改善→再評価のサイクル。Autoresearchで56%→92%の定量改善実績 | skill-design-patterns.md にAutoresearchパターン追加済 |
+| **descriptionはトリガー条件** | #12, #38, #40 | スキルのdescriptionは人間向け説明ではなく、モデルの発動判定用。キーワード5つ以上が目安 | catalog.yaml description書き直し済 |
+| **allowリスト充実 = 放置に近づく** | #3, #13, #15, #16, #17, #18 | settings.jsonのallowを充実させれば確認頻度が下がる。dangerouslySkipはコンテナ限定の最終手段 | settings.jsonテンプレート3層化 + agent-governance.md自律実行モード |
+| **タスク定義の質が全て** | #15, #17 | 放置運用では「何をするか」の明確さが成否を決める。task-queue.yaml + 完了条件の事前定義 | agent-governance.md 3ファイル構成 |
+| **検証ループの必須化** | #28, #32, #37 | 「no verifier = no engineering agent」。成果物の検証手段を事前定義しないタスクは信頼できない | base.md 4ステップWF に acceptance criteria 追加済 |
+| **コンテキストは有限資源** | #32, #33, #37, #42 | MCP定義で12.5%消費。CLAUDE.md肥大化警告。必要な部分だけ読み込む設計が必須 | base.md CLAUDE.md運用ガイドライン追加済 |
+| **スキル設計パターンは収束中** | #11, #12, #27, #32, #40 | エコシステム全体で5パターン+9カテゴリ+3タイプに収束。skill-design-patterns.mdの信頼性は高い | skill-design-patterns.md 判断ツリー追加済 |
+
+| 15 | 24時間動かす3つの設定ファイル | `articles/24時間動かす3つの設定ファイル.txt` | ワークフロー, ガバナンス | task-queue.yaml + 判断ルール表 + mission.md。idle停止防止と状態復元 | agent-governance.md 自律実行モード | 反映済 |
+| 16 | 寝ながら開発（GMO） | `articles/寝ながら開発GMO.txt` | ワークフロー | caffeinate + Linear MCP + AppleScript自動入力。力技だが実用的 | agent-governance.md 注意事項 | 反映済 |
+| 17 | 放置しても止まらない長期駆動（108時間） | `articles/放置しても止まらない長期駆動.txt` | ワークフロー, agent設計 | task-dispatch→execute→checkerのループ。「タスクの質が全て」 | agent-governance.md 自律実行モード | 反映済 |
+| 18 | dangerously-skip-permissions完全ガイド | `articles/dangerously-skip-permissions完全ガイド.txt` | ガバナンス | コンテナ必須。AllowedToolsで制限。小スコープ→スケール | agent-governance.md Permission Mode全段階 | 反映済 |
+
+| 19 | 非エンジニアが1ヶ月でできたこと | `articles/非エンジニア1ヶ月の成果.txt` | 非エンジニア | Flutterアプリ公開+OSS PR11本+Kaggle4本。「動くものを作りながら学ぶ」 | 参考情報（型3成功事例） | 読了 |
+| 20 | ひとりマーケチーム | `articles/ひとりマーケチーム.txt` | 非エンジニア, ワークフロー | Vibe Marketing。1時間で市場調査→LP→広告戦略一式 | 検討中（マーケ型テンプレート候補） | 読了 |
+| 21 | 諦めてきた自動化を実現する3つのアプローチ | `articles/諦めてきた自動化.txt` | 非エンジニア, ワークフロー | メルマガ翻訳・自動返信・日程調整。GAS/ノーコードで挫折→CC で実現 | 検討中（型2スキルテンプレート候補） | 読了 |
+
+| 22 | 非エンジニアが黒い画面に飛び込んで2ヶ月 | `articles/黒い画面に飛び込んで2ヶ月.txt` | 非エンジニア | 「言語化が最強スキル」「ver.1は雑でいい」「小さな部署を1人で回す」の3つの成長 | 検討中 | 読了 |
+| 23 | Claude Codeはエンジニア以外も全員使うべき | `articles/エンジニア以外も全員使うべき.txt` | 非エンジニア | 勝負の決め手が技術力→「明確な思考・構造化・AI協働設計」に変化 | 検討中 | 読了 |
+
+| 24 | 並列Claudeで10万行Cコンパイラ構築（Anthropic公式） | `articles/並列CコンパイラAnthropic公式.txt` | agent設計, アーキテクチャ | 16並列Claude、Git lockで排他制御、テストの質が全て、$20K/2週間 | 検討中（Agent Teams並列パターンの参考） | 読了 |
+
+| 25 | 構想メモ: もう一人の自分エージェント | `articles/構想メモ_もう一人の自分エージェント.txt` | agent設計 | 会話履歴→判断パターン・価値観抽出→エージェント定義。#14 Hook + 久保さん構想の統合 | 未着手（Hook実装後に開始） | 構想 |
+| 26 | 非エンジニア向け2つのファイル設定（tetumemo） | `articles/非エンジニア向け2つのファイル設定（tetumemo）.txt` | 非エンジニア, ガバナンス | settings.local.json（鍵）+ CLAUDE.md（ルール表）の二重ロック。一行ずつ解説付き | 検討中 | 読了 |
+| 27 | 5つのAgent Skillデザインパターン（GoogleCloudTech） | `articles/5つのAgent Skillデザインパターン（GoogleCloudTech）.txt` | スキル | Tool Wrapper/Generator/Reviewer/Inversion/Pipelineの5パターン。合成可能 | skill-design-patterns.md 判断ツリー | 反映済 |
+| 28 | Autoresearchでスキル自動改善（Ole Lehmann） | `articles/Autoresearchでスキル自動改善（Ole Lehmann）.txt` | スキル | Karpathy発autoresearchをスキルに適用。チェックリスト評価→小変更→keep/revertループで56%→92% | skill-design-patterns.md Autoresearchパターン | 反映済 |
+| 29 | Claude Cowork完全入門（Corey Ganim） | `articles/Claude Cowork完全入門（Corey Ganim）.txt` | ワークフロー, 非エンジニア | Cowork=自律型デスクトップ社員。コンテキストファイル設計が鍵。プロンプト工学→システム工学への転換 | 検討中 | 読了 |
+| 30 | CLAUDE.mdをちゃんと読ませるimportantタグ（oikon48） | `articles/CLAUDE.mdをちゃんと読ませるimportantタグ（oikon48）.txt` | CLAUDE.md | `<important if="condition">`タグでCLAUDE.mdの重要箇所を強調。HumanLayer独自手法、公式裏付けなし。タグ自体に魔法はなく、ルール整理のメタ効果。新モデルでは過剰反応リスクも | 見送り（検証済み） | 読了 |
+| 31 | Paperclip AIエージェント会社運営ツール（Nick Spisak） | `articles/Paperclip AIエージェント会社運営ツール（Nick Spisak）.txt` | agent設計 | 複数AIエージェントを組織図・予算・チケットで管理するOSSツール。Heartbeats機能でスケジュール実行 | 検討中 | 読了 |
+| 32 | Claude Codeシステム設計問題（Tw93 claude-health） | `articles/Claude Codeシステム設計問題（Tw93 claude-health）.txt` | アーキテクチャ, CLAUDE.md | 6層フレームワーク。3段階進化（機能探索→生産性→自律運用）。`/health`で設定診断 | base.md CLAUDE.md運用ガイドライン + 検証ループ | 反映済 |
+| 33 | Shorthand Guide to Everything Claude Code（affaanmustafa） | `articles/Shorthand Guide to Everything Claude Code（affaanmustafa）.txt` | アーキテクチャ, ワークフロー | Skills/Hooks/Subagents/MCPs/Plugins全体像。MCP 80ツール上限。コンテキスト窓は貴重資源 | 検討中 | 読了 |
+| 34 | Claude Code Channels — Telegram/Discord連携（公式・Thariq） | `articles/Claude Code Channels Telegram Discord（公式・Thariq）.txt` | アーキテクチャ | Telegram/DiscordからClaude Codeセッションを操作可能。モバイルからの遠隔制御 | 検討中 | 読了 |
+| 35 | Seeing like an Agent — ツール設計の教訓（公式・Thariq） | `articles/Seeing like an Agent ツール設計の教訓（公式・Thariq）.txt` | アーキテクチャ, スキル | AskUserQuestion誕生経緯。TodoWrite→Task進化。モデル能力向上に合わせてツールも再設計すべし | skill-design-patterns.md ツール定期見直し | 反映済 |
+| 36 | Claude Code使用率ステータスライン表示（逆瀬川） | `articles/Claude Code使用率ステータスライン表示（逆瀬川）.txt` | ワークフロー | v2.1.80のrate_limitsフィールドで5h/7d使用量をステータスラインに表示する4パターン | 検討中 | 読了 |
+| 37 | Longform Guide to Everything Claude Code（affaanmustafa） | `articles/Longform Guide to Everything Claude Code（affaanmustafa）.txt` | アーキテクチャ, ワークフロー | トークン経済学・メモリ永続化・検証ループ・並列化戦略。Haiku+Opus組合せでコスト最適化 | base.md コンテキスト管理 + agent-governance.md 反復取得 | 反映済 |
+| 38 | コピペで使えるClaude スキル50選（Hoshino） | `articles/コピペで使えるClaude スキル50選（Hoshino）.txt` | スキル, 非エンジニア | 営業・ライティング・バックオフィス等50スキルテンプレ。descriptionの書き方で自動起動率9割決まる | 検討中 | 読了 |
+| 39 | Browser Use CLI 2.0リリース | `articles/Browser Use CLI 2.0リリース.txt` | アーキテクチャ | Browser Use CLI 2.0: 2倍速・半額コスト・CDP直接接続。ブラウザ自動化CLIツール | 検討中 | 読了 |
+| 40 | 非エンジニアのためのSkills完全入門（長谷川taichi_we） | `articles/非エンジニアのためのSkills完全入門（長谷川taichi_we）.txt` | スキル, 非エンジニア | SKILL.md=日本語の作業マニュアル。3タイプ分類。descriptionが発動判定の鍵。社員9割が非エンジニア | 検討中 | 読了 |
+| 41 | frontend-slidesスキルでスライド作成（SuguruKun_ai） | `articles/frontend-slidesスキルでスライド作成（SuguruKun_ai）.txt` | スキル | frontend-slidesスキルでスライド自動生成。スキルの作り込みがアウトプット品質を左右する時代 | 検討中 | 読了 |
+| 42 | Skill Graphsでスキルをネットワーク化（arscontexta） | `articles/Skill Graphsでスキルをネットワーク化（arscontexta）.txt` | スキル, アーキテクチャ | wikilink+YAML frontmatterで250+ファイルのスキルグラフ構築。Progressive Disclosureの究極形 | 検討中 | 読了 |
+
+| 43 | frontend-slides スキル導入 | — | スキル | HTMLスライド生成スキル。10.7kスター。依存ゼロ。12テーマ。ブラウザ表示向き | `~/.claude/skills/frontend-slides/` + catalog.yaml | 反映済 |
+| 44 | pptx-from-layouts スキル導入 | — | スキル | テンプレート準拠pptx生成スキル。95/100点。提案書・研修資料向き | `~/.claude/skills/pptx-from-layouts/` + catalog.yaml | 反映済 |
+
+| 45 | バズってるX記事を全自動で収集する方法 | `articles/バズってるX記事を全自動で収集する方法（beku_AI）.txt` | ワークフロー | SocialData API + `url:x.com/i/article` で545件25円。Claude Codeスキル化で全自動リサーチ | 検討中（蔵書一括収集の手段として活用可能性あり） | 読了 |
+| 46 | イシューからはじめよ | `books/イシューからはじめよ.md` | 読書 | イシュー度×解の質=バリュー。解く前に見極める。仮説→ストーリーライン→メッセージの構造化 | — | 読了 |
+| 47 | 解像度が高い人がすべてを手に入れる | `books/解像度が高い人がすべてを手に入れる.md` | 読書 | 解像度=思考のピクセル密度。具体化×抽象化×往復の3層構造。51問のクイズで「ってことは？」の瞬発力を鍛える | — | 読了 |
+| 48 | 最強リーダーの「話す力」 | `books/最強リーダーの話す力.md` | 読書 | セルフ・パペットで「素の自分」と「リーダーの自分」を切り分け。レトリカル・クエスチョン+沈黙で問いを投げる型。語彙精度は「定義する」「能動態で言い切る」 | — | 読了 |
+| 49 | 自分の小さな「箱」から脱出する方法 | `books/自分の小さな箱から脱出する方法.md` | 読書 | 箱=自己欺瞞。相手を「人」でなく「物」として見る状態。テクニックの前提となるマインドセット。3冊のテクニック本が機能する土台 | — | 読了 |
+
+| 50 | SessionStart Hook実装パターン調査（GitHub実例集） | `articles/SessionStart Hook実装パターン調査（GitHub実例集）.txt` | ワークフロー, アーキテクチャ | SessionStart/UserPromptSubmit Hookの実装パターン8種。Issue #10373バグ。krzemienski/cc-setupが最高峰 | session-start.py実装 | 反映済 |
+
+## 統計
+
+- 蔵書数: 48（記事44 + 書籍4）
+- 反映済: 16
+- 読了（未反映）: 28
+- 未読: 1
+- 構想: 1
+- 書籍: 4

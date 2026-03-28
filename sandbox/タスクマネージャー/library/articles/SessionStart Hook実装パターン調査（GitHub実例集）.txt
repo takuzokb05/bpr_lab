@@ -1,0 +1,122 @@
+# SessionStart Hook 実装パターン調査（GitHub実例集）
+
+調査日: 2026-03-27
+調査元: GitHub リポジトリ + 公式ブログ + dev.to
+
+## 重要なバグ
+
+SessionStart Hookは新規セッションで出力が注入されないバグがある（Issue #10373）。
+/clear, /compact, --resume では動く。回避策は /clear を打つか UserPromptSubmit 併用。
+
+## パターン一覧
+
+### 1. セッション初期化（最高峰）— krzemienski/cc-setup
+
+28個のフックスクリプトを持つ最も洗練された設定。
+
+```json
+"SessionStart": [
+  {
+    "matcher": "startup|resume|clear|compact",
+    "hooks": [
+      { "type": "command", "command": "node \"$HOME/.claude/hooks/session-init.cjs\"" },
+      { "type": "command", "command": "node \"$HOME/.claude/hooks/session-sdk-context.js\"" }
+    ]
+  }
+]
+```
+
+session-init.cjs の機能:
+- プロジェクト種別検出
+- git情報収集
+- 環境変数への書き込み（CLAUDE_ENV_FILE）
+- Agent Teams検出
+- コンパクト後のapproval state警告
+
+その他の注目フック:
+| フック | スクリプト | 用途 |
+|--------|----------|------|
+| UserPromptSubmit | dev-rules-reminder.cjs | ルール・Plan注入（重複排除付き） |
+| UserPromptSubmit | skill-activation-forced-eval.js | スキル自動検出・強制評価 |
+| UserPromptSubmit | usage-context-awareness.cjs | コンテキスト使用量監視 |
+| PreToolUse(Write) | descriptive-name.cjs | ファイル名が説明的か検証 |
+| PreToolUse(Edit) | read-before-edit.js | 編集前にRead必須チェック |
+| PreToolUse(Agent) | subagent-context-enforcer.js | サブエージェントコンテキスト強制 |
+| Stop | play-sound.sh | 完了通知音 |
+
+### 2. エージェント間メッセージリレー — ff6347/colony-relay
+
+```json
+"SessionStart": [{ "hooks": [{ "type": "command", "command": ".claude/hooks/relay-start.sh", "timeout": 10 }] }],
+"UserPromptSubmit": [{ "hooks": [{ "type": "command", "command": ".claude/hooks/relay-poll.sh", "timeout": 10 }] }],
+"SessionEnd": [{ "hooks": [{ "type": "command", "command": ".claude/hooks/relay-end.sh", "timeout": 10 }] }]
+```
+
+SessionStartで「online」宣言+最新メッセージ取得、UserPromptSubmitで毎回新メッセージをポーリング。
+
+### 3. 初回プロンプト判定 — saxyguy81/realitycheck
+
+```typescript
+const existingDirectives = ledger.getAllDirectives();
+const isFirstPrompt = existingDirectives.length === 0;
+if (isFirstPrompt) {
+  return { additionalContext: `[RealityCheck Active] This session is monitored...` };
+}
+```
+
+### 4. セッション名自動生成 — danielmiessler/Personal_AI_Infrastructure
+
+session-names.json にセッションIDの名前がなければ初回と判定。AIで2-3語のセッション名を生成。
+
+### 5. 重複排除付きルール注入 — ngocsangyem/ngocsangyem.dev
+
+wasRecentlyInjected(transcript_path) でトランスクリプトを参照し、直近で同じ注入をしていたらスキップ。
+
+### 6. SQLite記憶システム — claude-mem.ai
+
+- SessionStart → 過去10セッション要約注入
+- UserPromptSubmit → 記録
+- PostToolUse → 観察
+- 1秒以内完了が原則。重い処理は非同期Bunワーカーに委譲。
+
+### 7. 公式ブログ推奨パターン — Anthropic
+
+```json
+"UserPromptSubmit": [{
+  "hooks": [{ "type": "command", "command": "cat ./current-sprint-context.md" }]
+}]
+```
+
+UserPromptSubmitはmatcherなし。毎プロンプト発火。stdoutがadditionalContextに。
+
+### 8. compact後ルール再注入 — dev.to/lukaszfryc
+
+```json
+"SessionStart": [{
+  "matcher": "compact",
+  "hooks": [{ "type": "command", "command": "echo 'Post-compaction context: Use Bun...'" }]
+}]
+```
+
+### 9. パッケージ別ルール注入 — sasha_podles
+
+PreToolUse(Read|Edit|Write) で対象ファイルのパッケージを検出し、そのパッケージのRULES.mdを注入。
+
+## 技術的知見
+
+- additionalContext: フックのJSON stdoutで {"additionalContext": "..."} を返すとプロンプトに追加
+- CLAUDE_ENV_FILE: SessionStartで環境変数を永続化可能
+- SessionStart matcher: "startup|resume|clear|compact" で起動理由を分岐
+- 重複排除: wasRecentlyInjected() でトランスクリプト参照
+- Windows注意: SessionStartはv2.0.76以前でハングするバグ（修正済み）
+- fail-open: 全フックは process.exit(0) で終了すべき（エラーでもブロックしない）
+
+## 主要リポジトリ
+
+- https://github.com/krzemienski/cc-setup — 最高峰。28フック
+- https://github.com/xiaobei930/cc-best — 包括的テンプレート
+- https://github.com/ff6347/colony-relay — エージェント間リレー
+- https://github.com/saxyguy81/realitycheck — 品質ゲート
+- https://github.com/danielmiessler/Personal_AI_Infrastructure — セッション名生成
+- https://github.com/launchdarkly-labs/claude-code-session-start-hook — 機能フラグ連携
+- https://docs.claude-mem.ai/hooks-architecture — SQLite記憶システム

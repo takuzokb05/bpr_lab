@@ -1,0 +1,17 @@
+非エンジニアがClaude Codeを使って1ヶ月でできたこと
+
+ソース: https://qiita.com/ussu_ussu_ussu/items/33ba41fadad02215aede
+
+## 成果物
+1. Flutter アプリ「Daily Diary」をGoogle Play公開（v1.0.13まで進化）
+   - タグ機能、データエクスポート、AdMob統合、5言語対応
+2. OSS（team-mirai-volunteer/action-board）に PR 11本マージ
+   - バグ修正、リファクタリング、テスト改善
+3. Kaggle にMLBデータセット4本公開（最大144万行）
+4. Zenn / Qiita に技術記事複数本
+
+## 学び
+- 「とりあえず動くものを作りながら学ぶ」が研究だけの姿勢を変えた
+- 人間が「何を作るか」を判断 → Claude Codeが実装の分業が効く
+- コードレビューは必須。AI出力を盲信するとミスが繰り返される
+- 「何が欲しいか」の明確さが技術知識より重要
