@@ -61,3 +61,13 @@
 | 036 | GoogleのAI UIデザインツール「Stitch」が大型アップデート、Figma株が急落 | ja | 読了 | #google #tools #japan | articles/2026-03-28_129_Google_Stitch_Vibe_Design_Figma_Drop.md |
 | 037 | OpenAIの動画生成AI「Sora」が提供終了を発表（WEEL/note） | ja | 読了 | #openai #japan | articles/2026-03-28_130_OpenAI_Sora_Service_End_WEEL.md |
 | 038 | 楽天「Rakuten AI 3.0」発表、NTTデータもITシステム開発の大半をAI自動化へ（Ledge.ai） | ja | 読了 | #japan #trend | articles/2026-03-28_131_Rakuten_AI3_NTTData_AI_Automation.md |
+| 039 | Anthropic Wins Court Order Blocking Pentagon's AI Supply Chain Risk Designation (Bloomberg / NPR / CNBC) | en | 読了 | #anthropic #regulation | articles/2026-03-28_169_Anthropic_Pentagon_Court_Injunction.md |
+| 040 | Why SoftBank's New $40B Loan Points to a 2026 OpenAI IPO (TechCrunch) | en | 読了 | #openai #funding | articles/2026-03-28_170_SoftBank_40B_Loan_OpenAI_IPO.md |
+| 041 | Harvey (Legal AI) Raises $200M at $11B Valuation (CNBC / Bloomberg) | en | 読了 | #funding | articles/2026-03-28_171_Harvey_Legal_AI_200M_11B.md |
+| 042 | Google DeepMind Partners with Agile Robots for Gemini Robotics (CNBC) | en | 読了 | #google | articles/2026-03-28_172_Google_Agile_Robots_Partnership.md |
+| 043 | Meta Releases Llama 4: Multimodal MoE with 10M Token Context | en | 読了 | #model-release | articles/2026-03-28_173_Meta_Llama4_MoE_Release.md |
+| 044 | OpenAI GPT-5.4 Launch: 1.05M Token Context Window and Tool Search | en | 読了 | #openai #model-release | articles/2026-03-28_174_OpenAI_GPT54_1M_Context_March2026.md |
+| 045 | NousResearch Launches Hermes Agent: Adaptive Agentic Framework | en | 読了 | #model-release | articles/2026-03-28_175_NousResearch_Hermes_Agent_Launch.md |
+| 046 | Microsoft Agent Framework RC: AutoGen + Semantic Kernel Unified | en | 読了 | #tools #framework | articles/2026-03-28_176_Microsoft_Agent_Framework_RC_2026.md |
+| 047 | Google Gemini March 2026 Drop: Personal Intelligence, Memory Import, Lyria 3 Pro | en | 読了 | #google #model-release | articles/2026-03-28_177_Google_Gemini_March_Drop_Updates.md |
+| 048 | 2026年はAIエージェント「実行」の年 — UiPathグローバルレポート (EnterpriseZine) | ja | 読了 | #agent #japan #trend | articles/2026-03-28_178_UiPath_AI_Agent_Report_2026_EnterpriseZine.md |

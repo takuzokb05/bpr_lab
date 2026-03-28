@@ -52,3 +52,10 @@
 | 030 | Open-Source LLM Trading Bot with Full Backtesting (GoPenAI) | en | 読了 | #llm-trading #implementation | articles/2026-03-28_121_OpenSource_LLM_Trading_Bot_Backtesting.md |
 | 031 | 個人もAIで短期売買可能に — ヘッジファンド並みシステム供給（日経） | ja | 読了 | #implementation #japan | articles/2026-03-28_122_Nikkei_AI_Retail_Trading_Hedge_Fund_Grade.md |
 | 032 | 金融DX×AI自動売買の導入事例5選（TWOSTONE&Sons） | ja | 読了 | #implementation #japan | articles/2026-03-28_123_Finance_DX_AI_AutoTrading_5Cases.md |
+| 033 | Comparing LLM-Based Trading Bots: AI Agents, Techniques, and Results (FlowHunt) | en | 読了 | #llm-trading #comparison | articles/2026-03-28_162_Comparing_LLM_Trading_Bots_FlowHunt.md |
+| 034 | AgenticTrading — Multi-Agent FinAgent Framework (Open Finance Lab / GitHub) | en | 読了 | #llm-trading #multi-agent | articles/2026-03-28_163_AgenticTrading_Open_Finance_Lab_GitHub.md |
+| 035 | AI-Trader: Can AI Beat the Market? Live Trading Benchmark (HKUDS / GitHub) | en | 読了 | #llm-trading #research | articles/2026-03-28_164_AI_Trader_HKUDS_Live_Benchmark.md |
+| 036 | AI外国為替自動取引エージェント完全ガイド (Jenova AI) | en | 読了 | #fx #ml | articles/2026-03-28_165_AI_Forex_Automated_Trading_Agent_Jenova.md |
+| 037 | AI in Forex Trading: Institutional Perspective (Dukascopy Swiss Bank) | en | 読了 | #fx #regulation | articles/2026-03-28_166_AI_Forex_Trading_Dukascopy.md |
+| 038 | FX Prime Bot: LLM×MLハイブリッドMT5ボット実装記 (note / yo_hide) | ja | 読了 | #llm-trading #implementation #fx | articles/2026-03-28_167_FX_Prime_Bot_LLM_Hybrid_Note_Yo_Hide.md |
+| 039 | 生成AIでMT4/MT5 EAを作成する実践チュートリアル (note / HandY) | ja | 読了 | #implementation #fx | articles/2026-03-28_168_MT5_EA_GenAI_Code_Generation_HandY.md |

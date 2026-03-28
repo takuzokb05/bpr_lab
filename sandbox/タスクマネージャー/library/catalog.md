@@ -79,3 +79,33 @@
 | 057 | How I Use Claude Code (+ My Best Tips) (Builder.io) | en | 読了 | #workflow #tutorial | articles/2026-03-28_116_How_I_Use_Claude_Code_Builder_io.md |
 | 058 | GitHub – ykdojo/claude-code-tips (45 tips) | en | 読了 | #tutorial #best-practices | articles/2026-03-28_117_Claude_Code_Tips_GitHub_ykdojo.md |
 | 059 | My Claude Code Setup & Workflow (psantanna.com) | en | 読了 | #workflow #tutorial | articles/2026-03-28_118_My_Claude_Code_Setup_psantanna.md |
+| 060 | Every Claude Code Update From March 2026, Explained (Builder.io) | en | 読了 | #update | articles/2026-03-28_132_Claude_Code_March2026_Updates_Builder_io.md |
+| 061 | Claude Code Internals Part 10: MCP Integration (Medium / Kotrotsos) | en | 読了 | #mcp | articles/2026-03-28_133_Claude_Code_Internals_Part10_MCP.md |
+| 062 | Configuring MCP Tools in Claude Code — The Better Way (Scott Spence) | en | 読了 | #mcp | articles/2026-03-28_134_Configuring_MCP_Tools_Claude_Code_Scott_Spence.md |
+| 063 | Claude Code + FastMCP Integration (FastMCP Official) | en | 読了 | #mcp | articles/2026-03-28_135_Claude_Code_FastMCP_Integration.md |
+| 064 | Claude Code Hooks Tutorial: 5 Production Hooks From Scratch (Blake Crosley) | en | 読了 | #hooks | articles/2026-03-28_136_Claude_Code_Hooks_5_Production_Blake_Crosley.md |
+| 065 | Claude Code Hooks: A Practical Guide to Workflow Automation (DataCamp) | en | 読了 | #hooks | articles/2026-03-28_137_Claude_Code_Hooks_DataCamp_Tutorial.md |
+| 066 | claude-code-hooks-mastery (GitHub / disler) | en | 読了 | #hooks | articles/2026-03-28_138_claude_code_hooks_mastery_GitHub_disler.md |
+| 067 | How to Write a Good CLAUDE.md File (Builder.io) | en | 読了 | #claude-md #best-practices | articles/2026-03-28_139_How_to_Write_Good_CLAUDE_md_Builder_io.md |
+| 068 | CLAUDE.md Best Practices — From Basic to Adaptive (DEV Community) | en | 読了 | #claude-md #best-practices | articles/2026-03-28_140_CLAUDE_md_Best_Practices_Basic_Adaptive_DEV.md |
+| 069 | How to Make Claude Code Skills Activate Reliably (Scott Spence) | en | 読了 | #skills | articles/2026-03-28_141_Claude_Code_Skills_Activate_Reliably_Scott_Spence.md |
+| 070 | How We Use Claude Code Skills to Run 1,000+ ML Experiments a Day (Sionic AI / HuggingFace) | en | 読了 | #skills #automation | articles/2026-03-28_142_Claude_Code_Skills_1000_ML_Experiments_Sionic_HuggingFace.md |
+| 071 | claude-code-spec-workflow (GitHub / Pimzino) | en | 読了 | #workflow #automation | articles/2026-03-28_143_claude_code_spec_workflow_GitHub_Pimzino.md |
+| 072 | 前提知識ゼロでもAIで乗り切った！大規模プロジェクトでのClaude Code活用術 (TVer Tech Blog) | ja | 読了 | #workflow | articles/2026-03-28_144_TVer_Tech_Blog_Claude_Code_Large_Project.md |
+| 073 | 【2026年版】Claude Codeのアップデート・最新情報まとめ (AI総合研究所) | ja | 読了 | #update | articles/2026-03-28_145_AI_Souken_Claude_Code_Updates_2026.md |
+| 074 | Claude Codeスキル設定を使いこなす (note / ひで) | ja | 読了 | #skills | articles/2026-03-28_146_Claude_Code_Skills_Settings_Note_Tothinks.md |
+| 075 | Claude Codeの機能が足りなかったらSkillを作ってもらおう (Classmethod DevelopersIO) | ja | 読了 | #skills | articles/2026-03-28_147_Classmethod_Claude_Code_Create_Skills_Itself.md |
+| 076 | 効果的なCLAUDE.mdの書き方 (Zenn / farstep) | ja | 読了 | #claude-md #best-practices | articles/2026-03-28_148_Zenn_Effective_CLAUDE_md_Farstep.md |
+| 077 | CLAUDE.mdやAGENTS.mdのベストプラクティスな書き方 (izanami.dev) | ja | 読了 | #claude-md #best-practices | articles/2026-03-28_149_Izanami_CLAUDE_md_AGENTS_md_Best_Practices.md |
+| 078 | SKILL.mdの書き方完全ガイド — 87%削減の実践 (playpark.co.jp) | ja | 読了 | #skills #best-practices | articles/2026-03-28_150_Playpark_SKILL_md_Complete_Guide.md |
+| 079 | 【2026年最新】Claude Codeでできること20選 (Uravation) | ja | 読了 | #workflow | articles/2026-03-28_151_Uravation_Claude_Code_20_Features.md |
+| 080 | The 2026 MCP Roadmap (Official MCP Blog) | en | 読了 | #mcp | articles/2026-03-28_152_MCP_2026_Roadmap_Official.md |
+| 081 | MCP's Biggest Growing Pains for Production Use (The New Stack) | en | 読了 | #mcp | articles/2026-03-28_153_MCP_Production_Growing_Pains_NewStack.md |
+| 082 | Thirteen New MCP Servers from Cloudflare (Cloudflare Blog) | en | 読了 | #mcp | articles/2026-03-28_154_Cloudflare_13_MCP_Servers.md |
+| 083 | エンジニアが入れるべきMCPサーバー厳選まとめ (Zenn / imohuke) | ja | 読了 | #mcp | articles/2026-03-28_155_MCP_Servers_Curated_Zenn_2026.md |
+| 084 | Claude Agent SDK Overview (Anthropic Official Docs) | en | 読了 | #sdk | articles/2026-03-28_156_Claude_Agent_SDK_Overview_Official.md |
+| 085 | Getting Started with the Claude Agent SDK (KDnuggets) | en | 読了 | #sdk | articles/2026-03-28_157_Claude_Agent_SDK_KDnuggets_Getting_Started.md |
+| 086 | Claude Agent SDK Tutorial — Session Resume & Remote Workspace (DataCamp) | en | 読了 | #sdk | articles/2026-03-28_158_Claude_Agent_SDK_Tutorial_DataCamp.md |
+| 087 | Anthropic Deprecation Updates — Opus 3 (Jan) & Haiku 3 (Apr 19) (Anthropic Official) | en | 読了 | #update | articles/2026-03-28_159_Anthropic_Deprecation_Opus3_Haiku3.md |
+| 088 | Claude Code SDKとは？CI/CDへの組み込み方 (株式会社一創) | ja | 読了 | #sdk | articles/2026-03-28_160_Claude_Code_SDK_Issoh_Japanese.md |
+| 089 | Claude Code SDK活用：CI連携・SaaS UI・サブエージェント委譲 (AGIラボ) | ja | 読了 | #sdk | articles/2026-03-28_161_Claude_Code_SDK_AGILab_Note.md |
