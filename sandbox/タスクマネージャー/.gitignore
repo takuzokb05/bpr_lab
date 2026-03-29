@@ -1,0 +1,10 @@
+# APIキー・認証情報
+.claude/settings.local.json
+.env
+library/scripts/scheduler_prompt_v3.md
+
+# 読書PDF原本（大容量バイナリ）
+library/books/shelf/
+
+# OCR中間データ
+library/books/ocr/
