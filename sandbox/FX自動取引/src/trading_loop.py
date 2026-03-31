@@ -14,13 +14,17 @@ from typing import Optional
 import pandas as pd
 import pandas_ta as ta
 
+from src.ai_advisor import AIAdvisor
+from src.bear_researcher import BearResearcher
 from src.broker_client import BrokerClient
-from src.config import ATR_PERIOD, MAIN_TIMEFRAME
+from src.config import ATR_PERIOD, BEAR_RESEARCHER_ENABLED, MAIN_TIMEFRAME
 from src.conviction_scorer import ConvictionScorer
 from src.position_manager import PositionManager
 from src.regime_detector import RegimeDetector
 from src.risk_manager import RiskManager
+from src.slack_notifier import SlackNotifier
 from src.strategy.base import Signal, StrategyBase
+from src.telegram_notifier import TelegramNotifier
 
 logger = logging.getLogger(__name__)
 
@@ -48,6 +52,10 @@ class TradingLoop:
         granularity: str = MAIN_TIMEFRAME,
         check_interval_sec: int = 60,
         max_consecutive_errors: int = 10,
+        notifier: Optional[TelegramNotifier] = None,
+        ai_advisor: Optional[AIAdvisor] = None,
+        slack_notifier: Optional[SlackNotifier] = None,
+        bear_researcher: Optional[BearResearcher] = None,
     ) -> None:
         """
         Args:
@@ -82,6 +90,11 @@ class TradingLoop:
         self._granularity = granularity
         self._check_interval_sec = check_interval_sec
         self._max_consecutive_errors = max_consecutive_errors
+
+        self._notifier = notifier
+        self._ai_advisor = ai_advisor
+        self._slack_notifier = slack_notifier
+        self._bear_researcher = bear_researcher
 
         self._running: bool = False
         self._iteration_count: int = 0
@@ -137,6 +150,18 @@ class TradingLoop:
                         e,
                         exc_info=True,
                     )
+
+                    # 3回以上の連続エラーで通知
+                    if self._consecutive_error_count >= 3:
+                        error_msg = self._last_error or "不明なエラー"
+                        if self._notifier:
+                            self._notifier.notify_error(
+                                error_msg, self._consecutive_error_count,
+                            )
+                        if self._slack_notifier:
+                            self._slack_notifier.notify_error(
+                                error_msg, self._consecutive_error_count,
+                            )
 
                     # 連続エラー上限超過でループ停止
                     if self._consecutive_error_count > self._max_consecutive_errors:
@@ -216,6 +241,10 @@ class TradingLoop:
             # キルスイッチ発動
             if not self._risk_manager.kill_switch.is_active:
                 self._risk_manager.kill_switch.activate(kill_reason)
+                if self._notifier:
+                    self._notifier.notify_kill_switch(kill_reason, True)
+                if self._slack_notifier:
+                    self._slack_notifier.notify_kill_switch(kill_reason, True)
 
             # EMERGENCY レベルなら全ポジション強制決済
             _, level_name, _ = self._risk_manager.check_drawdown(
@@ -238,6 +267,10 @@ class TradingLoop:
                     self._risk_manager.kill_switch.reason,
                 )
                 self._risk_manager.kill_switch.deactivate()
+                if self._notifier:
+                    self._notifier.notify_kill_switch("自動解除", False)
+                if self._slack_notifier:
+                    self._slack_notifier.notify_kill_switch("自動解除", False)
             else:
                 # 解除条件を満たさない → 新規取引スキップ
                 logger.info(
@@ -334,15 +367,60 @@ class TradingLoop:
                     regime_info.exposure_multiplier
                     * conviction.position_size_multiplier
                 )
+
+                # AIフィルター適用（AIは最終判断しない、倍率調整のみ）
+                ai_eval = "N/A"
+                if self._ai_advisor:
+                    bias = self._ai_advisor.get_bias(self._instrument)
+                    if bias:
+                        ai_eval = bias.evaluate_signal(signal.value)
+                        ai_multiplier = bias.position_size_multiplier(ai_eval)
+                        logger.info(
+                            "AIフィルター: %s (direction=%s, confidence=%.2f) → 倍率%.2f",
+                            ai_eval, bias.direction, bias.confidence, ai_multiplier,
+                        )
+                        if ai_eval == "REJECT":
+                            logger.warning(
+                                "AIフィルター: REJECT（%s）。シグナルを見送り。",
+                                bias.reasoning,
+                            )
+                            self._iteration_count += 1
+                            return None
+                        combined_multiplier *= ai_multiplier
+
+                # Bear Researcher: 逆張り検証（テクニカル矛盾点の検出）
+                if self._bear_researcher:
+                    bear_verdict = self._bear_researcher.verify(
+                        data, signal, regime_info,
+                    )
+                    if bear_verdict.severity >= 0.4:
+                        logger.warning(
+                            "Bear Researcher警告: severity=%.2f, penalty=%.2f, リスク=%s",
+                            bear_verdict.severity,
+                            bear_verdict.penalty_multiplier,
+                            bear_verdict.risk_factors,
+                        )
+                        combined_multiplier *= bear_verdict.penalty_multiplier
+
                 logger.info(
                     "シグナル実行: %s, instrument=%s, "
-                    "ポジションサイズ倍率=%.2f (レジーム%.1f × conviction%.1f)",
+                    "ポジションサイズ倍率=%.2f (レジーム%.1f × conviction%.1f × AI=%s)",
                     signal.value,
                     self._instrument,
                     combined_multiplier,
                     regime_info.exposure_multiplier,
                     conviction.position_size_multiplier,
+                    ai_eval,
                 )
+                if self._notifier:
+                    self._notifier.notify_signal(self._instrument, signal.value)
+                if self._slack_notifier:
+                    self._slack_notifier.notify_signal(
+                        self._instrument,
+                        signal.value,
+                        conviction_score=conviction.score,
+                        regime=regime_info.regime.value,
+                    )
                 order_result = self._position_manager.open_position(
                     instrument=self._instrument,
                     signal=signal,

@@ -13,11 +13,24 @@ from pathlib import Path
 project_root = Path(__file__).resolve().parent
 sys.path.insert(0, str(project_root))
 
-from src.config import MAIN_TIMEFRAME
+from src.ai_advisor import AIAdvisor
+from src.bear_researcher import BearResearcher
+from src.config import (
+    AI_ANALYSIS_DIR,
+    BEAR_RESEARCHER_ENABLED,
+    MAIN_TIMEFRAME,
+    SLACK_ALERTS_WEBHOOK_URL,
+    SLACK_ENABLED,
+    TELEGRAM_ENABLED,
+    TELEGRAM_BOT_TOKEN,
+    TELEGRAM_CHAT_ID,
+)
 from src.mt5_client import Mt5Client
 from src.position_manager import PositionManager
 from src.risk_manager import RiskManager
+from src.slack_notifier import SlackNotifier
 from src.strategy.ma_crossover import RsiMaCrossover
+from src.telegram_notifier import TelegramNotifier, TelegramLogHandler
 from src.trading_loop import TradingLoop
 
 
@@ -68,7 +81,27 @@ def main():
         account = broker.get_account_summary()
         logger.info(f"口座接続成功: {account}")
 
+        # Telegram通知の初期化（設定がある場合のみ）
+        notifier = None
+        if TELEGRAM_ENABLED:
+            try:
+                notifier = TelegramNotifier(
+                    bot_token=TELEGRAM_BOT_TOKEN,
+                    chat_id=TELEGRAM_CHAT_ID,
+                )
+                notifier.start()
+                # WARNING以上のログを自動転送
+                telegram_handler = TelegramLogHandler(notifier)
+                logging.getLogger().addHandler(telegram_handler)
+                logger.info("Telegram通知を有効化しました")
+            except Exception as e:
+                logger.warning("Telegram通知の初期化に失敗（取引は継続）: %s", e)
+                notifier = None
+
         if args.dry_run:
+            if notifier:
+                notifier.notify_bot_status("ドライラン完了")
+                notifier.stop()
             logger.info("ドライラン完了。取引は行いません。")
             return
 
@@ -86,6 +119,24 @@ def main():
         )
         strategy = RsiMaCrossover()
 
+        # AIアドバイザー（market_analysis.jsonがあれば自動読込）
+        ai_advisor = AIAdvisor(analysis_dir=AI_ANALYSIS_DIR)
+        logger.info("AIアドバイザー初期化（分析ディレクトリ: %s）", AI_ANALYSIS_DIR)
+
+        # Slack通知（取引イベントは #ai-alerts へ）
+        slack = None
+        if SLACK_ALERTS_WEBHOOK_URL:
+            try:
+                slack = SlackNotifier(webhook_url=SLACK_ALERTS_WEBHOOK_URL)
+                logger.info("Slack通知を有効化しました（#ai-alerts）")
+            except Exception as e:
+                logger.warning("Slack通知の初期化に失敗（取引は継続）: %s", e)
+
+        # Bear Researcher（逆張り検証）
+        bear = BearResearcher() if BEAR_RESEARCHER_ENABLED else None
+        if bear:
+            logger.info("Bear Researcher（逆張り検証）を有効化しました")
+
         # トレーディングループ
         loop = TradingLoop(
             broker_client=broker,
@@ -95,7 +146,17 @@ def main():
             instrument=args.instrument,
             granularity=args.granularity,
             check_interval_sec=args.interval,
+            notifier=notifier,
+            ai_advisor=ai_advisor,
+            slack_notifier=slack,
+            bear_researcher=bear,
         )
+
+        startup_detail = f"通貨ペア: {args.instrument} | 時間足: {args.granularity} | 間隔: {args.interval}秒"
+        if notifier:
+            notifier.notify_bot_status("起動", startup_detail)
+        if slack:
+            slack.notify_bot_status("起動", startup_detail)
 
         logger.info("トレーディングループ開始")
         try:
@@ -103,6 +164,12 @@ def main():
         except Exception as e:
             logger.exception(f"トレーディングループ異常終了: {e}")
             raise
+        finally:
+            if notifier:
+                notifier.notify_bot_status("停止")
+                notifier.stop()
+            if slack:
+                slack.notify_bot_status("停止")
 
 
 if __name__ == "__main__":

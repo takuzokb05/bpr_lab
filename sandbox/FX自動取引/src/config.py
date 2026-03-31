@@ -94,6 +94,13 @@ REGIME_ADX_RANGING: float = 20.0       # ADXがこの値未満 → RANGING
 REGIME_ATR_VOLATILE_RATIO: float = 2.0 # ATR/中央値ATR がこの値超 → VOLATILE
 REGIME_BBW_SQUEEZE_RATIO: float = 0.5  # BBW/平均BBW がこの値未満 → RANGING（スクイーズ）
 
+# Bear Researcher設定（Phase 3 追加）
+BEAR_RESEARCHER_ENABLED: bool = True
+BEAR_SEVERITY_THRESHOLD: float = 0.4     # この値以上でpenalty適用
+BEAR_MAX_PENALTY: float = 0.5            # 最大減点（倍率0.5まで）
+BEAR_DIVERGENCE_LOOKBACK: int = 5        # ダイバージェンス検出の振り返り期間
+BEAR_SR_ATR_MULTIPLIER: float = 1.5      # サポレジ接近判定のATR倍率
+
 
 # ============================================================
 # タイムフレーム
@@ -137,6 +144,15 @@ MT5_LOT_UNIT: int = 100_000             # 1ロット = 100,000通貨
 
 
 # ============================================================
+# AI市場分析設定（Phase 3 追加）
+# ============================================================
+
+AI_MODEL_ID: str = "claude-sonnet-4-20250514"   # 市場分析に使用するモデル（バージョン固定）
+AI_ANALYSIS_DIR: Path = _project_root / "data"  # market_analysis.json の配置先
+ANTHROPIC_API_KEY: str = os.getenv("ANTHROPIC_API_KEY", "")
+
+
+# ============================================================
 # データベース
 # ============================================================
 
@@ -150,6 +166,15 @@ DB_PATH: Path = _project_root / "data" / "fx_trading.db"
 TELEGRAM_BOT_TOKEN: str = os.getenv("TELEGRAM_BOT_TOKEN", "")
 TELEGRAM_CHAT_ID: str = os.getenv("TELEGRAM_CHAT_ID", "")
 TELEGRAM_ENABLED: bool = bool(TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID)
+
+
+# ============================================================
+# Slack Webhook 設定
+# ============================================================
+
+SLACK_WEBHOOK_URL: str = os.getenv("SLACK_WEBHOOK_URL", "")
+SLACK_ALERTS_WEBHOOK_URL: str = os.getenv("SLACK_ALERTS_WEBHOOK_URL", "")
+SLACK_ENABLED: bool = bool(SLACK_WEBHOOK_URL)
 
 
 # ============================================================
