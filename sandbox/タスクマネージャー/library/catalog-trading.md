@@ -59,3 +59,15 @@
 | 037 | AI in Forex Trading: Institutional Perspective (Dukascopy Swiss Bank) | en | 読了 | #fx #regulation | articles/2026-03-28_166_AI_Forex_Trading_Dukascopy.md |
 | 038 | FX Prime Bot: LLM×MLハイブリッドMT5ボット実装記 (note / yo_hide) | ja | 読了 | #llm-trading #implementation #fx | articles/2026-03-28_167_FX_Prime_Bot_LLM_Hybrid_Note_Yo_Hide.md |
 | 039 | 生成AIでMT4/MT5 EAを作成する実践チュートリアル (note / HandY) | ja | 読了 | #implementation #fx | articles/2026-03-28_168_MT5_EA_GenAI_Code_Generation_HandY.md |
+| 040 | TradingAgents: Multi-Agents LLM Financial Trading Framework | en | 未読 | #llm-trading #ml #web-signal | articles/2026-03-29_195_trading_agents_llm_framework_github.md |
+| 041 | Algorithmic Trading Analysis Report 2026-2035: A $44.34 Bill | en | 未読 | #quant #web-signal | articles/2026-03-29_196_algorithmic_trading_ai_market_2026.md |
+| 042 | 【2026年最新】FX自動売買でAIのおすすめ比較！初心者向けに徹底解説 | ja | 未読 | #fx #web-signal | articles/2026-03-29_197_fx_ai_trading_japan_2026.md |
+| 043 | パイロット運用から収益化へ：金融サービス業界ではAI投資とオープンソースの活用が倍増していることが調査で明らかに | ja | 未読 | #ml #web-signal | articles/2026-03-29_211_nvidia_ai_financial_services_2026.md |
+| 044 | トレーディングボットからエージェントへ：LLMベース投資システム設計論 | en | 未読 | #llm-trading #implementation #web-signal | articles/2026-03-30_226_trading_bot_to_agent_llm_investment_system.md |
+| 045 | AI対応FX自動売買完全ガイド：MT4/MT5 EA × LLM連携の実情と比較 | ja | 未読 | #fx #llm-trading #web-signal | articles/2026-03-30_229_fx_ai_ea_mt4_mt5_llm_hybrid_guide_2026.md |
+| 046 | MT5 × LLM統合：低レイテンシWebhookアーキテクチャによるAI取引システム | en | 未読 | #llm-trading #implementation #fx #web-signal | articles/2026-03-30_237_mt5_llm_integration_webhook_trading_2026.md |
+| 047 | I Created an AI Trading Agent and Monitored Its Performance for 3 Months | en | 未読 | #llm-trading #multi-agent #quant #web-signal | articles/2026-04-01_248_ai_trading_agent_3months_experiment_quantitative.md |
+| 048 | Building an AI Trading Bot with Claude Code: 14 Sessions, 961 Tool Calls (n1n.ai) | en | 未読 | #llm-trading #implementation #multi-agent #web-signal | articles/2026-04-07_195_Claude_Code_Trading_Bot_961_Calls_Case_Study.md |
+| 049 | I gave Claude Code 100k to trade with in the last month and beat the market (Medium) | en | 未読 | #llm-trading #research #web-signal | articles/2026-04-07_196_Claude_Code_100k_Trading_Beat_Market_Medium.md |
+| 050 | Building Async MetaTrader 5 Trading Bots with the aiomql Python Framework (earezki.com) | en | 未読 | #fx #implementation #web-signal | articles/2026-04-07_197_aiomql_MT5_Async_Python_Trading_Guide.md |
+| 051 | I created an AI trading agent and monitored its performance for 3 months (Medium) | en | 未読 | #llm-trading #research #sentiment #web-signal | articles/2026-04-07_198_AI_Trading_Agent_3months_Monitoring_Medium.md |

@@ -71,3 +71,24 @@
 | 046 | Microsoft Agent Framework RC: AutoGen + Semantic Kernel Unified | en | 読了 | #tools #framework | articles/2026-03-28_176_Microsoft_Agent_Framework_RC_2026.md |
 | 047 | Google Gemini March 2026 Drop: Personal Intelligence, Memory Import, Lyria 3 Pro | en | 読了 | #google #model-release | articles/2026-03-28_177_Google_Gemini_March_Drop_Updates.md |
 | 048 | 2026年はAIエージェント「実行」の年 — UiPathグローバルレポート (EnterpriseZine) | ja | 読了 | #agent #japan #trend | articles/2026-03-28_178_UiPath_AI_Agent_Report_2026_EnterpriseZine.md |
+| 049 | 12+ AI Models in March 2026: The Week That Changed AI | en | 未読 | #model-release #web-signal | articles/2026-03-29_198_llm_models_march_2026.md |
+| 050 | Where AI Regulation is Heading in 2026: A Global Outlook | en | 未読 | #regulation #web-signal | articles/2026-03-29_199_ai_regulation_2026_global.md |
+| 051 | Top 9 AI Agent Frameworks as of March 2026 | en | 未読 | #agent #framework #web-signal | articles/2026-03-29_200_ai_agent_frameworks_2026_top9.md |
+| 052 | Top 9 Large Language Models as of March 2026 | en | 未読 | #model-release #web-signal | articles/2026-03-29_201_top9_llm_march_2026_shakudo.md |
+| 053 | 特筆すべきAI関連ニュース（2026年3月22日〜28日） | ja | 未読 | #web-signal | articles/2026-03-29_202_ai_news_march_2026_japan.md |
+| 054 | 【2026年最新】生成AIの規制動向を解説！日本と海外の法律や企業の対策 | ja | 未読 | #japan #regulation #web-signal | articles/2026-03-29_203_ai_regulation_japan_2026.md |
+| 055 | 2025年下半期世界各国のAI規制動向 | ja | 未読 | #regulation #web-signal | articles/2026-03-29_204_ai_regulation_kpmg_global.md |
+| 056 | 2026 AI Legal Forecast: From Innovation to Compliance | en | 未読 | #regulation #web-signal | articles/2026-03-29_209_ai_regulation_legal_forecast_2026.md |
+| 057 | White House Releases AI Regulatory Blueprint: National Polic | en | 未読 | #agent #framework #regulation #web-signal | articles/2026-03-29_214_white_house_ai_policy_framework.md |
+| 058 | AIグローバル規制動向：EU・米国・日本の2025〜2026年比較分析 | ja | 未読 | #regulation #japan #web-signal | articles/2026-03-30_222_ai_regulation_global_2025_2026_japan_eu_us.md |
+| 059 | ソフトバンク「Large Telecom Model」GSMA LLMベンチマーク首位級評価 | ja | 未読 | #model-release #japan #web-signal | articles/2026-03-30_223_softbank_large_telecom_model_gsma_top_ranking.md |
+| 060 | GPT-5.2 vs Gemini 3.1 Pro vs DeepSeek V3.2：2026年最新LLMベンチマーク | en | 未読 | #model-release #web-signal | articles/2026-03-30_234_gpt52_gemini31_deepseek_v32_benchmark_2026.md |
+| 061 | DeepSeek V3.2 vs GPT-5.1 vs Gemini 3 Pro：コスト・性能・用途別LLM選択 | en | 未読 | #model-release #web-signal | articles/2026-03-30_238_deepseek_v32_gpt51_gemini3_model_comparison.md |
+| 062 | New LLMs March 2026: GPT-5.4 Tied for #1 — 9 Releases, 7 Open Weight | en | 未読 | #model-release #openai #web-signal | articles/2026-04-01_245_llm_releases_march_2026_gpt54_7_open_weight.md |
+| 063 | 2026年に押さえておきたいAIトレンド38選 | ja | 未読 | #trend #agent #regulation #japan #web-signal | articles/2026-04-01_247_ai_trends_38_2026_agent_trust_physical_ai_izanami.md |
+| 064 | LLMs in 2026: What's Real, What's Hype, and What's Coming Next | en | 未読 | #trend #model-release #regulation #web-signal | articles/2026-04-01_251_llms_2026_real_vs_hype_infotech_research.md |
+| 065 | Microsoft takes on AI rivals with three new foundational models (TechCrunch, Apr 2) | en | 未読 | #model-release #tools #web-signal | articles/2026-04-07_199_Microsoft_3_Foundational_Models_TechCrunch.md |
+| 066 | PrismML debuts 1-bit LLM in bid to free AI from the cloud (The Register, Apr 4) | en | 未読 | #model-release #trend #web-signal | articles/2026-04-07_200_PrismML_1bit_LLM_Bonsai_Register.md |
+| 067 | AI Update, April 3, 2026: AI News and Views From the Past Week (MarketingProfs) | en | 未読 | #model-release #trend #openai #anthropic #meta #web-signal | articles/2026-04-07_201_AI_Update_April_3_2026_MarketingProfs.md |
+| 068 | Spring 2026 AI Updates: 7 Launches That Change Everything (Mejba.me) | en | 未読 | #model-release #trend #anthropic #openai #google #meta #web-signal | articles/2026-04-07_202_Spring_2026_AI_Model_Updates_7_Launches.md |
+| 069 | 2026 AI Legal Forecast: From Innovation to Compliance (Baker Donelson) | en | 未読 | #regulation #web-signal | articles/2026-04-07_203_AI_Legal_Forecast_2026_BakerDonelson.md |
