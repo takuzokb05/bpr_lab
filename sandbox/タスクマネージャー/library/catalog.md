@@ -193,6 +193,21 @@
 | 154 | The Complete Guide to Building Agents with the Claude Agent SDK (Nader Substack) | en | 未読 | #sdk #web-signal | articles/2026-04-07_192_Claude_Agent_SDK_Complete_Guide_Nader_Substack.md |
 | 155 | 【2026年4月最新】AWSが公開するオープンソースMCPサーバー カテゴリ別早見表 | ja | 未読 | #mcp #web-signal | articles/2026-04-07_193_AWS_MCP_Server_54_List_April_2026.md |
 | 156 | AI Agent Frameworks in 2026: 8 SDKs, ACP, and the Trade-offs Nobody Talks About (Morphllm) | en | 未読 | #sdk #mcp #web-signal | articles/2026-04-07_194_AI_Agent_Frameworks_8_SDKs_ACP_Morphllm.md |
+| 157 | Claude Code Source Code Leak 2026: npm誤公開インシデントの全貌 | en | 未読 | #update #web-signal | articles/2026-04-08_001_Claude_Code_Source_Leak_npm_2026.md |
+| 158 | Claude Code Workflows and Best Practices 2026 (SmartWebtech) | en | 未読 | #workflow #best-practices #web-signal | articles/2026-04-08_002_Claude_Code_Workflows_Best_Practices_SmartWebtech.md |
+| 159 | Claude Code Tips: 10 Real Productivity Workflows for 2026 (F22Labs) | en | 未読 | #workflow #best-practices #web-signal | articles/2026-04-08_003_Claude_Code_10_Productivity_Tips_F22Labs.md |
+| 160 | 50 Claude Code Tips & Tricks for Daily Coding in 2026 (Geeky Gadgets) | en | 未読 | #best-practices #hooks #skills #web-signal | articles/2026-04-08_004_Claude_Code_50_Tips_GeekyGadgets.md |
+| 161 | Claude Code Best Practices: CLAUDE.md, Skills, Hooks, and Workflows (SkillsPlayground) | en | 未読 | #claude-md #skills #hooks #best-practices #web-signal | articles/2026-04-08_005_Claude_Code_Best_Practices_SkillsPlayground.md |
+| 162 | The Complete Guide to Creating and Using Claude Skills 2026 (aifordevelopers) | en | 未読 | #skills #best-practices #web-signal | articles/2026-04-08_006_Claude_Skills_Complete_Guide_2026_aifordevelopers.md |
+| 163 | Claude Code MCP Integration: Connect to Any External Tool (Markaicode) | en | 未読 | #mcp #web-signal | articles/2026-04-08_007_Claude_Code_MCP_Integration_Markaicode.md |
+| 164 | MCP Authentication in Claude Code 2026 (TrueFoundry) | en | 未読 | #mcp #security #web-signal | articles/2026-04-08_008_MCP_Auth_Claude_Code_TrueFoundry.md |
+| 165 | Claude Code MCP Enterprise Integration Guide (Dextralabs) | en | 未読 | #mcp #web-signal | articles/2026-04-08_009_Claude_Code_MCP_Enterprise_Dextralabs.md |
+| 166 | [2026年版] Claude Code を知る。活用する。(DevelopersIO / Classmethod) | ja | 未読 | #workflow #update #web-signal | articles/2026-04-08_010_Claude_Code_2026_DevelopersIO_JA.md |
+| 167 | Claude最新アップデートまとめ 2026年3月版（Voice/Auto/Computer Use）(JINRAI) | ja | 未読 | #update #web-signal | articles/2026-04-08_011_Claude_Update_March2026_jinrai_JA.md |
+| 168 | 【2026年最新】Claude Skills完全ガイド｜自律型アシスタントへの変身方法 (AI Smiley) | ja | 未読 | #skills #best-practices #web-signal | articles/2026-04-08_012_Claude_Skills_Guide_AISmiley_JA.md |
+| 169 | Anthropic API in 2026: What It Is and What Developers Can Build (MarketingScoop) | en | 未読 | #api #sdk #web-signal | articles/2026-04-08_013_Anthropic_API_2026_Guide_MarketingScoop.md |
+| 170 | 【2026年完全版】AI時代に必須のMCPサーバーの作り方 (PeaceFlat) | ja | 未読 | #mcp #tutorial #web-signal | articles/2026-04-08_014_MCP_Server_Build_Guide_2026_PeaceFlat_JA.md |
+| 171 | Anthropic 2026年4月リリースノート集計（全製品）(Releasebot) | en | 未読 | #update #web-signal | articles/2026-04-08_025_Releasebot_Anthropic_April2026_All_Updates.md |
 ## 発見パターン（記事横断の傾向）
 
 蔵書を横断して繰り返し出現するテーマ。出現回数が多いほど普遍的な知見。

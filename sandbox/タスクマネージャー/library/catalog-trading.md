@@ -71,3 +71,6 @@
 | 049 | I gave Claude Code 100k to trade with in the last month and beat the market (Medium) | en | 未読 | #llm-trading #research #web-signal | articles/2026-04-07_196_Claude_Code_100k_Trading_Beat_Market_Medium.md |
 | 050 | Building Async MetaTrader 5 Trading Bots with the aiomql Python Framework (earezki.com) | en | 未読 | #fx #implementation #web-signal | articles/2026-04-07_197_aiomql_MT5_Async_Python_Trading_Guide.md |
 | 051 | I created an AI trading agent and monitored its performance for 3 months (Medium) | en | 未読 | #llm-trading #research #sentiment #web-signal | articles/2026-04-07_198_AI_Trading_Agent_3months_Monitoring_Medium.md |
+| 052 | 自動売買システムの設計図：LLM×マクロシグナル型を選んだ理由 (note / CrafTechLife) | ja | 未読 | #llm-trading #fx #implementation #web-signal | articles/2026-04-08_015_LLM_Macro_Signal_Trading_System_Design_JA.md |
+| 053 | TradingAgents: Multi-Agent LLM Framework — 7エージェント詳説 (AIToolly) | en | 未読 | #llm-trading #multi-agent #research #web-signal | articles/2026-04-08_016_TradingAgents_MultiAgent_LLM_Framework_AIToolly.md |
+| 054 | AIで株式投資トレードを効率化：LLMを活用した判定システムの実験開始 (AI Native JP) | ja | 未読 | #llm-trading #implementation #fx #web-signal | articles/2026-04-08_023_AI_LLM_Stock_Trading_Experiment_Report_JA.md |

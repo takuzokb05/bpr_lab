@@ -92,3 +92,10 @@
 | 067 | AI Update, April 3, 2026: AI News and Views From the Past Week (MarketingProfs) | en | 未読 | #model-release #trend #openai #anthropic #meta #web-signal | articles/2026-04-07_201_AI_Update_April_3_2026_MarketingProfs.md |
 | 068 | Spring 2026 AI Updates: 7 Launches That Change Everything (Mejba.me) | en | 未読 | #model-release #trend #anthropic #openai #google #meta #web-signal | articles/2026-04-07_202_Spring_2026_AI_Model_Updates_7_Launches.md |
 | 069 | 2026 AI Legal Forecast: From Innovation to Compliance (Baker Donelson) | en | 未読 | #regulation #web-signal | articles/2026-04-07_203_AI_Legal_Forecast_2026_BakerDonelson.md |
+| 070 | Microsoft Agent Framework 1.0 リリース：.NETとPython向け本番対応SDK (VSMagazine) | en | 未読 | #framework #tools #web-signal | articles/2026-04-08_017_Microsoft_Agent_Framework_1_0_Production_VSMag.md |
+| 071 | Hermes Agent v0.7.0: 自己改善型オープンソースAIエージェントフレームワーク (DEV.to) | en | 未読 | #framework #tools #web-signal | articles/2026-04-08_018_Hermes_Agent_v070_Self_Improving_NousResearch.md |
+| 072 | New AI Models April 2026: Claude Mythos、DeepSeek R2、GLM-5.1、Gemma 4 (WhatLLM) | en | 未読 | #model-release #anthropic #web-signal | articles/2026-04-08_019_New_AI_Models_April_2026_Mythos_DeepSeekR2_GLM51.md |
+| 073 | White House National AI Policy Framework 2026：連邦AI政策指針の全貌 (Holland & Knight) | en | 未読 | #regulation #web-signal | articles/2026-04-08_020_White_House_National_AI_Policy_Framework_March2026.md |
+| 074 | AI Today: April 2026 AI Model Releases & Developer Impact（価格比較付き）(SearchCans) | en | 未読 | #model-release #trend #web-signal | articles/2026-04-08_021_AI_Model_Releases_April2026_Developer_Impact.md |
+| 075 | 【2026年最新】生成AIの規制動向：日本と海外の法律と企業対策 (株式会社AX) | ja | 未読 | #regulation #japan #web-signal | articles/2026-04-08_022_AI_Regulation_Japan_2026_AX_JA.md |
+| 076 | 2025年下半期世界各国のAI規制動向レポート (KPMG Japan) | ja | 未読 | #regulation #japan #web-signal | articles/2026-04-08_024_KPMG_Global_AI_Regulation_2025H2_Report_JA.md |
