@@ -99,3 +99,8 @@
 | 074 | AI Today: April 2026 AI Model Releases & Developer Impact（価格比較付き）(SearchCans) | en | 未読 | #model-release #trend #web-signal | articles/2026-04-08_021_AI_Model_Releases_April2026_Developer_Impact.md |
 | 075 | 【2026年最新】生成AIの規制動向：日本と海外の法律と企業対策 (株式会社AX) | ja | 未読 | #regulation #japan #web-signal | articles/2026-04-08_022_AI_Regulation_Japan_2026_AX_JA.md |
 | 076 | 2025年下半期世界各国のAI規制動向レポート (KPMG Japan) | ja | 未読 | #regulation #japan #web-signal | articles/2026-04-08_024_KPMG_Global_AI_Regulation_2025H2_Report_JA.md |
+| 077 | LG EXAONE 4.5 発表：33B VLMがGPT-5-mini・Claude 4.5 Sonnetを超えるSTEMベンチマーク (PR Newswire) | en | 未読 | #model-release #web-signal | articles/2026-04-09_014_LG_EXAONE_45_Multimodal_Launch_prnewswire.md |
+| 078 | Meta Muse Spark：Llama後初のプロプライエタリモデル、オープンソース戦略から転換 (VentureBeat) | en | 未読 | #model-release #meta #web-signal | articles/2026-04-09_015_Meta_Muse_Spark_Proprietary_Strategy_Shift_venturebeat.md |
+| 079 | Claude Mythos（Capybara）：Anthropicがリークで判明した次世代モデル (The Decoder) | en | 未読 | #model-release #anthropic #web-signal | articles/2026-04-09_016_Claude_Mythos_Capybara_Leaked_Step_Change_theDecoder.md |
+| 080 | 米国AI州法動向レポート：2026年4月6日版 — Oregon・Idaho・Tennessee新法成立 (Troutman) | en | 未読 | #regulation #web-signal | articles/2026-04-09_017_US_State_AI_Law_Update_April6_troutman.md |
+| 081 | 米国テック・AI規制Q1 2026総括：連邦vs州のAI規制権限争いが本格化 (Global Policy Watch) | en | 未読 | #regulation #web-signal | articles/2026-04-09_018_US_Tech_AI_Regulatory_Q1_2026_globalpolicywatch.md |

@@ -497,4 +497,58 @@ AI Native JPの実験報告から現実的な課題が整理されている：
 - ハルシネーション対策：「買い/売り/静観」の3択回答フォーマットを強制、自由記述を排除
 - マルチモーダル活用：チャート画像をClaude Visionに渡したテクニカル分析の精度検証
 
+---
+
+## 2026-04-09 収集分
+
+### 1. CLAUDE.md / skills への反映提案
+
+#### 1-1. SKILL.md「ルーティングテーブル」パターンの適用
+**出典:** articles/2026-04-09_006_Anthropic_Official_33Page_Skills_Design_Patterns_smartscope.md
+
+**提案内容:**
+Anthropic公式ガイドが推奨する「ルーティングテーブル型SKILL.md」を既存スキルに適用する。現行のSKILL.mdが100行を超えているものはすべてリファクタリング対象。
+- SKILL.md本体: 100行以内（frontmatter + ルーティングロジックのみ）
+- 詳細参照: `references/` ディレクトリ以下に分割ファイルを配置
+- キーワードベースで該当ファイルのみ読み込む設計
+- `model: haiku` 指定で軽量タスクのコスト削減
+
+対象スキル候補: curate, session-start-hook, claude-api（いずれも現状100行超の可能性あり）
+
+#### 1-2. CLAUDE.md に AGENTS.md サポートを追加検討
+**出典:** articles/2026-04-09_007_CLAUDE_md_AGENTS_md_Team_Design_Patterns_homula.md
+
+**提案内容:**
+AGENTS.md（OpenAI Agents SDK / Google ADK互換の標準）が2026年に事実上の標準として普及しつつある。Claude Code以外のLLMエージェントからも本プロジェクトを参照できるよう、AGENTS.mdをCLAUDE.mdの内容と同期した形で追加することを検討する。
+
+---
+
+### 2. Hooks への反映提案
+
+#### 2-1. PermissionDenied フックの実装
+**出典:** articles/2026-04-09_008_Claude_Code_217_Update_New_Hooks_issoh.md / articles/2026-04-09_009_Claude_Code_Hooks_All_12_Events_CI_CD_pixelmojo.md
+
+**提案内容:**
+v2.1.7で追加された`PermissionDenied`フックイベントを活用する。
+- Auto Modeで分類器が拒否した操作を捕捉し、ログに記録する
+- 特定の操作（FX取引システムの本番環境書き込み等）については `{retry: true}` ではなく `{exit: true}` を返してセッションを安全に終了させる
+- 拒否されたツール呼び出しをSlack通知する監視パターンを実装
+
+また、`TeammateIdle`・`TaskCompleted`フックによるマルチエージェント協調の実装が可能になった。並列エージェントが完了したタイミングでの集約処理に活用できる。
+
+---
+
+### 3. FX自動取引システムへの反映提案
+
+#### 3-1. Claude Agent SDK の 1M コンテキスト移行（期限あり）
+**出典:** articles/2026-04-09_013_Claude_Agent_SDK_Deep_Dive_Library_Mode_jidonglab.md
+
+**提案内容（重要：期限 2026-04-30）:**
+`context-1m-2025-08-07` ベータヘッダーが **2026年4月30日** に廃止される。FX自動取引システムでClaude APIを使用している箇所でこのベータヘッダーを使用している場合は、**4月30日までに** Claude Sonnet 4.6 または Claude Opus 4.6 へ移行する必要がある（これらのモデルは1Mコンテキストを標準サポート）。
+
+#### 3-2. MCP v2.1 Server Cards の導入検討
+**出典:** articles/2026-04-09_011_MCP_Technical_Deep_Dive_v21_Server_Cards_dasroot.md
+
+**提案内容:**
+FX自動取引システムのMCPサーバー（市場データ取得・MT5連携等）にServer Cardsを実装する。`/.well-known/mcp.json`を設置することで、クライアントがサーバー接続前にCapabilities・認証要件を自動検出できる。特に複数のClaude Codeセッションや将来的なマルチエージェント環境でサーバー自動検出が有効になる。
 

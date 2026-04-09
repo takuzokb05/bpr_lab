@@ -208,6 +208,19 @@
 | 169 | Anthropic API in 2026: What It Is and What Developers Can Build (MarketingScoop) | en | 未読 | #api #sdk #web-signal | articles/2026-04-08_013_Anthropic_API_2026_Guide_MarketingScoop.md |
 | 170 | 【2026年完全版】AI時代に必須のMCPサーバーの作り方 (PeaceFlat) | ja | 未読 | #mcp #tutorial #web-signal | articles/2026-04-08_014_MCP_Server_Build_Guide_2026_PeaceFlat_JA.md |
 | 171 | Anthropic 2026年4月リリースノート集計（全製品）(Releasebot) | en | 未読 | #update #web-signal | articles/2026-04-08_025_Releasebot_Anthropic_April2026_All_Updates.md |
+| 172 | Understanding Claude Code's Full Stack: MCP, Skills, Subagents, and Hooks (alexop.dev) | en | 未読 | #architecture #mcp #skills #hooks #subagents #web-signal | articles/2026-04-09_001_Understanding_Claude_Code_Full_Stack_alexop.md |
+| 173 | Claude Code Advanced Patterns: Skills, Fork, and Subagents Explained (Trensee) | en | 未読 | #skills #subagents #workflow #web-signal | articles/2026-04-09_002_Claude_Code_Advanced_Patterns_Skills_Fork_Subagents_trensee.md |
+| 174 | A Complete Beginner's Guide to Claude Code: Skills, Agents, Hooks, MCP & Cowork (Towards AI) | en | 未読 | #skills #hooks #mcp #tutorial #web-signal | articles/2026-04-09_003_Complete_Beginners_Guide_Claude_Code_towardsai.md |
+| 175 | How to Use Claude Code Subagents to Parallelize Development (zachwills.net) | en | 未読 | #subagents #workflow #automation #web-signal | articles/2026-04-09_004_Claude_Code_Subagents_Parallelize_Development_zachwills.md |
+| 176 | What Is Claude Code /simplify and /batch? The Built-In Commands (MindStudio) | en | 未読 | #skills #automation #workflow #web-signal | articles/2026-04-09_005_Claude_Code_Simplify_Batch_Commands_mindstudio.md |
+| 177 | Anthropic's 33-Page Official Guide Distilled: 5 Claude Skills Design Patterns (SmartScope) | en | 未読 | #skills #best-practices #web-signal | articles/2026-04-09_006_Anthropic_Official_33Page_Skills_Design_Patterns_smartscope.md |
+| 178 | CLAUDE.md / AGENTS.md 設計パターン完全ガイド — チーム運用フレームワーク（homula） | ja | 未読 | #claude-md #team #best-practices #web-signal | articles/2026-04-09_007_CLAUDE_md_AGENTS_md_Team_Design_Patterns_homula.md |
+| 179 | Claude Code 2.1.7 最新アップデート：新フックイベント・--resume改善（一創） | ja | 未読 | #update #hooks #web-signal | articles/2026-04-09_008_Claude_Code_217_Update_New_Hooks_issoh.md |
+| 180 | Claude Code Hooks: All 12 Events Reference & Production CI/CD Patterns (Pixelmojo) | en | 未読 | #hooks #ci-cd #web-signal | articles/2026-04-09_009_Claude_Code_Hooks_All_12_Events_CI_CD_pixelmojo.md |
+| 181 | Claude API in Production: The Complete Developer Guide 2026 (DEV.to) | en | 未読 | #api #sdk #web-signal | articles/2026-04-09_010_Claude_API_Production_Guide_2026_devto.md |
+| 182 | Model Context Protocol Technical Deep Dive: v2.1 & Server Cards (dasroot.net) | en | 未読 | #mcp #spec #web-signal | articles/2026-04-09_011_MCP_Technical_Deep_Dive_v21_Server_Cards_dasroot.md |
+| 183 | MCP Ecosystem in 2026: What the TypeScript SDK v1.27 Release Tells Us (Context Studios) | en | 未読 | #mcp #ecosystem #web-signal | articles/2026-04-09_012_MCP_Ecosystem_2026_v127_Analysis_contextstudios.md |
+| 184 | Claude Agent SDK Deep Dive: Using Claude Code as a Library (Jidong Lab) | en | 未読 | #sdk #agent #web-signal | articles/2026-04-09_013_Claude_Agent_SDK_Deep_Dive_Library_Mode_jidonglab.md |
 ## 発見パターン（記事横断の傾向）
 
 蔵書を横断して繰り返し出現するテーマ。出現回数が多いほど普遍的な知見。
