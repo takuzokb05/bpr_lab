@@ -104,3 +104,10 @@
 | 079 | Claude Mythos（Capybara）：Anthropicがリークで判明した次世代モデル (The Decoder) | en | 未読 | #model-release #anthropic #web-signal | articles/2026-04-09_016_Claude_Mythos_Capybara_Leaked_Step_Change_theDecoder.md |
 | 080 | 米国AI州法動向レポート：2026年4月6日版 — Oregon・Idaho・Tennessee新法成立 (Troutman) | en | 未読 | #regulation #web-signal | articles/2026-04-09_017_US_State_AI_Law_Update_April6_troutman.md |
 | 081 | 米国テック・AI規制Q1 2026総括：連邦vs州のAI規制権限争いが本格化 (Global Policy Watch) | en | 未読 | #regulation #web-signal | articles/2026-04-09_018_US_Tech_AI_Regulatory_Q1_2026_globalpolicywatch.md |
+| 082 | AI Tools Race Heats Up: Week of April 3–9, 2026（DEV Community） | en | 未読 | #tools #trend #framework #web-signal | articles/2026-04-10_014_AI_Tools_Race_Week_April3_9_2026_DEV.md |
+| 083 | Meta Debuts New AI Model Muse Spark — プロプライエタリ転換（CNBC） | en | 未読 | #model-release #meta #web-signal | articles/2026-04-10_015_Meta_Debuts_New_AI_Model_Muse_Spark_CNBC.md |
+| 084 | 国産LLM「LLM-jp-4」が日本語MT-BenchでGPT-4oを上回った（Qiita/nogataka） | ja | 未読 | #model-release #japan #web-signal | articles/2026-04-10_016_LLM_jp_4_Japan_Domestic_LLM_Surpasses_GPT4o_Qiita.md |
+| 085 | LLM API 徹底比較2026｜GPT-5・Claude Opus 4.6・Gemini 2.5・DeepSeek（renue） | ja | 未読 | #model-release #trend #tools #web-signal | articles/2026-04-10_017_LLM_API_Comparison_2026_OpenAI_Claude_Gemini_DeepSeek_Renue.md |
+| 086 | Who Is Winning the AI Race Right Now (April 2026)（Fordel Studios） | en | 未読 | #trend #tools #anthropic #web-signal | articles/2026-04-10_018_Who_Is_Winning_AI_Race_April_2026_FordelStudios.md |
+| 087 | Memento-Skills: AI エージェントが自身のスキルをリライト（VentureBeat） | en | 未読 | #framework #agent #web-signal | articles/2026-04-10_019_Memento_Skills_AI_Agents_Rewrite_Own_Skills_VentureBeat.md |
+| 088 | New Laws in 2026 Target AI and Deepfakes — 米国州法動向（NBC News） | en | 未読 | #regulation #web-signal | articles/2026-04-10_020_NBCNews_2026_New_Laws_AI_Deepfakes_States.md |

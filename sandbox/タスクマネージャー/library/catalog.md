@@ -221,6 +221,26 @@
 | 182 | Model Context Protocol Technical Deep Dive: v2.1 & Server Cards (dasroot.net) | en | 未読 | #mcp #spec #web-signal | articles/2026-04-09_011_MCP_Technical_Deep_Dive_v21_Server_Cards_dasroot.md |
 | 183 | MCP Ecosystem in 2026: What the TypeScript SDK v1.27 Release Tells Us (Context Studios) | en | 未読 | #mcp #ecosystem #web-signal | articles/2026-04-09_012_MCP_Ecosystem_2026_v127_Analysis_contextstudios.md |
 | 184 | Claude Agent SDK Deep Dive: Using Claude Code as a Library (Jidong Lab) | en | 未読 | #sdk #agent #web-signal | articles/2026-04-09_013_Claude_Agent_SDK_Deep_Dive_Library_Mode_jidonglab.md |
+| 185 | Claude Code What's New Week 14（v2.1.89–2.1.92）公式 | en | 未読 | #update #official #web-signal | articles/2026-04-10_001_Claude_Code_Week14_Whats_New_v2189-92_Official.md |
+| 186 | How I Use Claude Code — Boris Tane の実践ワークフロー | en | 未読 | #workflow #best-practices #web-signal | articles/2026-04-10_002_How_I_Use_Claude_Code_Boris_Tane_Workflow.md |
+| 187 | 【2026年最新】CLAUDE.md書き方完全ガイド｜テンプレート5選 (Uravation) | ja | 未読 | #claude-md #web-signal | articles/2026-04-10_003_CLAUDE_md_Writing_Complete_Guide_Templates_2026_Uravation.md |
+| 188 | Claude Code Skills 完全活用ガイド 2026（Qiita/nogataka） | ja | 未読 | #skills #best-practices #web-signal | articles/2026-04-10_004_Claude_Code_Skills_Complete_Guide_2026_Qiita_Nogataka.md |
+| 189 | Claude Code 9つの神アプデ完全解説（note/masa_wunder） | ja | 未読 | #update #web-signal | articles/2026-04-10_005_Claude_Code_9_Shingod_Updates_Note_Masawunder.md |
+| 190 | Scaling Managed Agents: Brain と Infrastructure の分離（Anthropic Engineering） | en | 未読 | #managed-agents #anthropic #web-signal | articles/2026-04-10_006_Anthropic_Engineering_Scaling_Managed_Agents.md |
+| 191 | With Claude Managed Agents, Anthropic Wants to Run Your AI Agents（The New Stack） | en | 未読 | #managed-agents #anthropic #web-signal | articles/2026-04-10_007_Claude_Managed_Agents_TheNewStack_Analysis.md |
+| 192 | Google Colab MCP Server 公式リリース — 任意 AI エージェントが Colab に接続 | en | 未読 | #mcp #google #web-signal | articles/2026-04-10_008_Google_Colab_MCP_Server_Official_Launch.md |
+| 193 | MCP対応ツール一覧 2026年最新版 — エンタープライズ完全カタログ（homula） | ja | 未読 | #mcp #web-signal | articles/2026-04-10_009_MCP_Tools_Enterprise_Catalog_Homula.md |
+| 194 | metatrader-mcp-server: MCP 経由で AI LLM が MetaTrader で取引（GitHub） | en | 未読 | #mcp #fx #web-signal | articles/2026-04-10_010_MetaTrader_MCP_Server_GitHub_Ariadng.md |
+| 195 | MT5 LLM Integration: Choosing the Right AI for Your Trading System（MQL5） | en | 未読 | #fx #llm-trading #web-signal | articles/2026-04-10_011_MT5_LLM_Integration_Choosing_Right_AI_MQL5.md |
+| 196 | AI Trading Agents vs Expert Advisors (EAs): Complete 2026 Guide | en | 未読 | #fx #llm-trading #web-signal | articles/2026-04-10_012_AI_Trading_Agents_vs_Expert_Advisors_2026_Guide.md |
+| 197 | Testing LLM-Driven Trading on MetaTrader 5（Medium/thibauld） | en | 未読 | #fx #llm-trading #web-signal | articles/2026-04-10_013_Testing_LLM_Driven_Trading_MetaTrader5_Medium.md |
+| 198 | AI Tools Race Heats Up: Week of April 3–9, 2026（DEV Community） | en | 未読 | #tools #trend #web-signal | articles/2026-04-10_014_AI_Tools_Race_Week_April3_9_2026_DEV.md |
+| 199 | Meta Debuts New AI Model Muse Spark（CNBC） | en | 未読 | #model-release #meta #web-signal | articles/2026-04-10_015_Meta_Debuts_New_AI_Model_Muse_Spark_CNBC.md |
+| 200 | 国産LLM「LLM-jp-4」が日本語MT-BenchでGPT-4oを上回った（Qiita） | ja | 未読 | #model-release #japan #web-signal | articles/2026-04-10_016_LLM_jp_4_Japan_Domestic_LLM_Surpasses_GPT4o_Qiita.md |
+| 201 | LLM API 徹底比較2026｜GPT-5・Claude Opus 4.6・Gemini 2.5・DeepSeek（renue） | ja | 未読 | #model-release #trend #web-signal | articles/2026-04-10_017_LLM_API_Comparison_2026_OpenAI_Claude_Gemini_DeepSeek_Renue.md |
+| 202 | Who Is Winning the AI Race Right Now (April 2026)（Fordel Studios） | en | 未読 | #trend #tools #web-signal | articles/2026-04-10_018_Who_Is_Winning_AI_Race_April_2026_FordelStudios.md |
+| 203 | Memento-Skills: AI エージェントが自身のスキルをリライト（VentureBeat） | en | 未読 | #framework #skills #web-signal | articles/2026-04-10_019_Memento_Skills_AI_Agents_Rewrite_Own_Skills_VentureBeat.md |
+| 204 | New Laws in 2026 Target AI and Deepfakes — 米国州法動向（NBC News） | en | 未読 | #regulation #web-signal | articles/2026-04-10_020_NBCNews_2026_New_Laws_AI_Deepfakes_States.md |
 ## 発見パターン（記事横断の傾向）
 
 蔵書を横断して繰り返し出現するテーマ。出現回数が多いほど普遍的な知見。

@@ -74,3 +74,7 @@
 | 052 | 自動売買システムの設計図：LLM×マクロシグナル型を選んだ理由 (note / CrafTechLife) | ja | 未読 | #llm-trading #fx #implementation #web-signal | articles/2026-04-08_015_LLM_Macro_Signal_Trading_System_Design_JA.md |
 | 053 | TradingAgents: Multi-Agent LLM Framework — 7エージェント詳説 (AIToolly) | en | 未読 | #llm-trading #multi-agent #research #web-signal | articles/2026-04-08_016_TradingAgents_MultiAgent_LLM_Framework_AIToolly.md |
 | 054 | AIで株式投資トレードを効率化：LLMを活用した判定システムの実験開始 (AI Native JP) | ja | 未読 | #llm-trading #implementation #fx #web-signal | articles/2026-04-08_023_AI_LLM_Stock_Trading_Experiment_Report_JA.md |
+| 055 | metatrader-mcp-server: MCP 経由で AI LLM が MetaTrader で取引（GitHub/ariadng） | en | 未読 | #fx #implementation #mcp #web-signal | articles/2026-04-10_010_MetaTrader_MCP_Server_GitHub_Ariadng.md |
+| 056 | MT5 LLM Integration: Choosing the Right AI for Your Trading System（MQL5） | en | 未読 | #fx #llm-trading #implementation #web-signal | articles/2026-04-10_011_MT5_LLM_Integration_Choosing_Right_AI_MQL5.md |
+| 057 | AI Trading Agents vs Expert Advisors (EAs): Complete 2026 Guide（Trade Like Master） | en | 未読 | #fx #llm-trading #comparison #web-signal | articles/2026-04-10_012_AI_Trading_Agents_vs_Expert_Advisors_2026_Guide.md |
+| 058 | Testing LLM-Driven Trading on MetaTrader 5（Medium/thibauld） | en | 未読 | #fx #llm-trading #implementation #web-signal | articles/2026-04-10_013_Testing_LLM_Driven_Trading_MetaTrader5_Medium.md |
