@@ -78,3 +78,4 @@
 | 056 | MT5 LLM Integration: Choosing the Right AI for Your Trading System（MQL5） | en | 未読 | #fx #llm-trading #implementation #web-signal | articles/2026-04-10_011_MT5_LLM_Integration_Choosing_Right_AI_MQL5.md |
 | 057 | AI Trading Agents vs Expert Advisors (EAs): Complete 2026 Guide（Trade Like Master） | en | 未読 | #fx #llm-trading #comparison #web-signal | articles/2026-04-10_012_AI_Trading_Agents_vs_Expert_Advisors_2026_Guide.md |
 | 058 | Testing LLM-Driven Trading on MetaTrader 5（Medium/thibauld） | en | 未読 | #fx #llm-trading #implementation #web-signal | articles/2026-04-10_013_Testing_LLM_Driven_Trading_MetaTrader5_Medium.md |
+| 059 | TradingAgents Multi-Agent LLM Framework Guide（DigitalOcean） | en | 未読 | #llm-trading #multi-agent #framework #web-signal | articles/2026-04-11_011_TradingAgents_Guide_DigitalOcean.md |

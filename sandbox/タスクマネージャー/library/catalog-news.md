@@ -111,3 +111,10 @@
 | 086 | Who Is Winning the AI Race Right Now (April 2026)（Fordel Studios） | en | 未読 | #trend #tools #anthropic #web-signal | articles/2026-04-10_018_Who_Is_Winning_AI_Race_April_2026_FordelStudios.md |
 | 087 | Memento-Skills: AI エージェントが自身のスキルをリライト（VentureBeat） | en | 未読 | #framework #agent #web-signal | articles/2026-04-10_019_Memento_Skills_AI_Agents_Rewrite_Own_Skills_VentureBeat.md |
 | 088 | New Laws in 2026 Target AI and Deepfakes — 米国州法動向（NBC News） | en | 未読 | #regulation #web-signal | articles/2026-04-10_020_NBCNews_2026_New_Laws_AI_Deepfakes_States.md |
+| 089 | Weekly Generative AI Roundup April 4–11, 2026: Key Model Moves（Greeden） | en | 未読 | #model-release #trend #weekly #web-signal | articles/2026-04-11_012_Weekly_GenAI_Roundup_April_4-11_Greeden.md |
+| 090 | The AI Labor Report: Weekly Roundup — April 11, 2026（FutureForwarded） | en | 未読 | #labor #market #regulation #web-signal | articles/2026-04-11_013_AI_Labor_Report_April_11_FutureForwarded.md |
+| 091 | AI News Digest April 11: India Bets Big on AI Infrastructure（Asanify） | en | 未読 | #market #infrastructure #geopolitics #web-signal | articles/2026-04-11_014_India_AI_Infrastructure_Investment_April_11.md |
+| 092 | Generative AI Weekly Apr 4–10 2026: Record-Breaking Adoption（Boston IA） | en | 未読 | #market #model-release #adoption #web-signal | articles/2026-04-11_015_GenAI_Adoption_Week_April4-10_BostonIA.md |
+| 093 | AI News & Trends April 2026: Complete Monthly Digest（Humai） | en | 未読 | #model-release #market #monthly #web-signal | articles/2026-04-11_016_AI_News_April_2026_Monthly_Digest_Humai.md |
+| 094 | 1ビットLLM Bonsai 8B・国産LLM-jp-4公開 生成AIウィークリー（TechnoEdge） | ja | 未読 | #model-release #japan #1bit-llm #web-signal | articles/2026-04-11_017_1bit_LLM_Bonsai_LLM-jp-4_TechnoEdge.md |
+| 095 | AI Trending April 2026: Top 5 Developments & Biggest Shifts（BuildEZ） | en | 未読 | #trend #market #regulation #web-signal | articles/2026-04-11_018_AI_Trending_April_2026_Top5_BuildEZ.md |

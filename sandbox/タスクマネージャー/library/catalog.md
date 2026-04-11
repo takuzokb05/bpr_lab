@@ -241,6 +241,26 @@
 | 202 | Who Is Winning the AI Race Right Now (April 2026)（Fordel Studios） | en | 未読 | #trend #tools #web-signal | articles/2026-04-10_018_Who_Is_Winning_AI_Race_April_2026_FordelStudios.md |
 | 203 | Memento-Skills: AI エージェントが自身のスキルをリライト（VentureBeat） | en | 未読 | #framework #skills #web-signal | articles/2026-04-10_019_Memento_Skills_AI_Agents_Rewrite_Own_Skills_VentureBeat.md |
 | 204 | New Laws in 2026 Target AI and Deepfakes — 米国州法動向（NBC News） | en | 未読 | #regulation #web-signal | articles/2026-04-10_020_NBCNews_2026_New_Laws_AI_Deepfakes_States.md |
+| 205 | Best Claude Code Skills & Plugins 2026 Guide（DEV Community） | en | 未読 | #skills #cross-platform #web-signal | articles/2026-04-11_001_Best_Claude_Code_Skills_Plugins_2026_Guide_DEV.md |
+| 206 | Claude Code Has an Internal Skill Nobody Knew About: /skillify（Medium） | en | 未読 | #skills #automation #web-signal | articles/2026-04-11_002_Claude_Code_Skillify_Internal_Skill_Medium.md |
+| 207 | Claude Code 9 Underutilized Features That Transform Your Workflow | en | 未読 | #workflow #hooks #skills #web-signal | articles/2026-04-11_003_Claude_Code_9_Underutilized_Features_Transform.md |
+| 208 | CLAUDE.md運用ベストプラクティス：失敗しないための7つの原則（Zenn） | ja | 未読 | #claude-md #best-practices #web-signal | articles/2026-04-11_004_CLAUDE_md_Best_Practices_7_Principles_Zenn.md |
+| 209 | Claude Code Setup Definitive Guide: CLAUDE.md, MCP, Skills, Hooks（LLMx） | en | 未読 | #mcp #hooks #skills #claude-md #web-signal | articles/2026-04-11_005_Claude_Code_Setup_Definitive_Guide_MCP_Skills_Hooks.md |
+| 210 | Claude Code Ultimate Guide: Beginner to Power User（GitHub/FlorianBruniaux） | en | 未読 | #skills #workflow #mcp #hooks #web-signal | articles/2026-04-11_006_Claude_Code_Ultimate_Guide_GitHub_Florian.md |
+| 211 | Claude Code Best Practices: Lessons From Real Projects（Ranthebuilder） | en | 未読 | #best-practices #workflow #web-signal | articles/2026-04-11_007_Claude_Code_Best_Practices_Real_Projects_Ranthebuilder.md |
+| 212 | Anthropic、Claude CoworkとManaged AgentsのエンタープライズGA発表（9to5Mac） | en | 未読 | #managed-agents #enterprise #web-signal | articles/2026-04-11_008_Anthropic_Claude_Cowork_Managed_Agents_Enterprise.md |
+| 213 | Claude Managed Agents: Honest Pros, Cons, How to Run Agents Yourself（Medium） | en | 未読 | #managed-agents #pricing #web-signal | articles/2026-04-11_009_Claude_Managed_Agents_Honest_Pros_Cons_Medium.md |
+| 214 | Build an AI Agent with the Claude Agent SDK (Tutorial 2026)（SerpAPI） | en | 未読 | #agent-sdk #tutorial #web-signal | articles/2026-04-11_010_Build_AI_Agent_Claude_Agent_SDK_SerpAPI.md |
+| 215 | TradingAgents Multi-Agent LLM Framework Guide（DigitalOcean） | en | 未読 | #llm-trading #multi-agent #web-signal | articles/2026-04-11_011_TradingAgents_Guide_DigitalOcean.md |
+| 216 | Weekly Generative AI Roundup April 4–11, 2026（Greeden） | en | 未読 | #ai-news #model-release #web-signal | articles/2026-04-11_012_Weekly_GenAI_Roundup_April_4-11_Greeden.md |
+| 217 | The AI Labor Report: Weekly Roundup — April 11, 2026（FutureForwarded） | en | 未読 | #ai-news #labor #regulation #web-signal | articles/2026-04-11_013_AI_Labor_Report_April_11_FutureForwarded.md |
+| 218 | AI News Digest April 11: India Bets Big on AI Infrastructure（Asanify） | en | 未読 | #ai-news #market #web-signal | articles/2026-04-11_014_India_AI_Infrastructure_Investment_April_11.md |
+| 219 | Generative AI Weekly Apr 4–10 2026: Record-Breaking Adoption（Boston IA） | en | 未読 | #ai-news #market #model-release #web-signal | articles/2026-04-11_015_GenAI_Adoption_Week_April4-10_BostonIA.md |
+| 220 | AI News & Trends April 2026: Complete Monthly Digest（Humai） | en | 未読 | #ai-news #model-release #market #web-signal | articles/2026-04-11_016_AI_News_April_2026_Monthly_Digest_Humai.md |
+| 221 | 1ビットLLM Bonsai 8B・国産LLM-jp-4公開 生成AIウィークリー（TechnoEdge） | ja | 未読 | #model-release #japan #ai-news #web-signal | articles/2026-04-11_017_1bit_LLM_Bonsai_LLM-jp-4_TechnoEdge.md |
+| 222 | AI Trending April 2026: Top 5 Developments & Biggest Shifts（BuildEZ） | en | 未読 | #ai-news #trend #market #web-signal | articles/2026-04-11_018_AI_Trending_April_2026_Top5_BuildEZ.md |
+| 223 | Claude Code April Week 2: /team-onboarding, Monitor Tool, Vertex AI Setup | en | 未読 | #update #enterprise #web-signal | articles/2026-04-11_019_Claude_Code_April_Week2_Update_Team_Onboarding_Monitor.md |
+| 224 | Claude Codeスキル活用術：作り方から「育てる運用」まで実践解説（ゼロイチラボ） | ja | 未読 | #skills #workflow #web-signal | articles/2026-04-11_020_Claude_Code_Skills_Zerolichi_Lab_Guide_JA.md |
 ## 発見パターン（記事横断の傾向）
 
 蔵書を横断して繰り返し出現するテーマ。出現回数が多いほど普遍的な知見。
