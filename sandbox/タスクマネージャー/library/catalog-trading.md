@@ -79,3 +79,6 @@
 | 057 | AI Trading Agents vs Expert Advisors (EAs): Complete 2026 Guide（Trade Like Master） | en | 未読 | #fx #llm-trading #comparison #web-signal | articles/2026-04-10_012_AI_Trading_Agents_vs_Expert_Advisors_2026_Guide.md |
 | 058 | Testing LLM-Driven Trading on MetaTrader 5（Medium/thibauld） | en | 未読 | #fx #llm-trading #implementation #web-signal | articles/2026-04-10_013_Testing_LLM_Driven_Trading_MetaTrader5_Medium.md |
 | 059 | TradingAgents Multi-Agent LLM Framework Guide（DigitalOcean） | en | 未読 | #llm-trading #multi-agent #framework #web-signal | articles/2026-04-11_011_TradingAgents_Guide_DigitalOcean.md |
+| 060 | Comparing LLM-Based Trading Bots: AI Agents, Techniques, and Results (FlowHunt) | en | 未読 | #llm-trading #comparison #web-signal | articles/2026-04-12_015_Comparing_LLM_Trading_Bots_Comprehensive_FlowHunt.md |
+| 061 | Build an AI Quant Trading Bot: Backtest, Risk Rules, Live Execution 2026 (Markaicode) | en | 未読 | #quant #implementation #llm-trading #web-signal | articles/2026-04-12_016_Build_AI_Quant_Trading_Bot_Backtest_Risk_Markaicode.md |
+| 062 | AI-Based Hyperautomation Framework for Algorithmic Trading (Academic Paper, 2026) | en | 未読 | #research #ml #quant #web-signal | articles/2026-04-12_017_AI_Hyperautomation_Algorithmic_Trading_Academic.md |

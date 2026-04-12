@@ -118,3 +118,6 @@
 | 093 | AI News & Trends April 2026: Complete Monthly Digest（Humai） | en | 未読 | #model-release #market #monthly #web-signal | articles/2026-04-11_016_AI_News_April_2026_Monthly_Digest_Humai.md |
 | 094 | 1ビットLLM Bonsai 8B・国産LLM-jp-4公開 生成AIウィークリー（TechnoEdge） | ja | 未読 | #model-release #japan #1bit-llm #web-signal | articles/2026-04-11_017_1bit_LLM_Bonsai_LLM-jp-4_TechnoEdge.md |
 | 095 | AI Trending April 2026: Top 5 Developments & Biggest Shifts（BuildEZ） | en | 未読 | #trend #market #regulation #web-signal | articles/2026-04-11_018_AI_Trending_April_2026_Top5_BuildEZ.md |
+| 096 | AI Updates Today (April 2026) — Latest AI & LLM Model Releases (llm-stats.com) | en | 未読 | #model-release #trend #web-signal | articles/2026-04-12_018_AI_LLM_Updates_Today_April_2026_LLMStats.md |
+| 097 | Enterprise Agentic AI Landscape 2026: Trust, Flexibility, Vendor Lock-in (Kai Waehner) | en | 未読 | #framework #agent #trend #web-signal | articles/2026-04-12_019_Enterprise_Agentic_AI_Landscape_2026_KaiWaehner.md |
+| 098 | デジタル庁が選んだ「国産LLM」7選！政府生成AI「源内」と企業DXへの衝撃 | ja | 未読 | #japan #regulation #model-release #web-signal | articles/2026-04-12_020_Digital_Agency_Japan_7_National_LLM_Models.md |

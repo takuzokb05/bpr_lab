@@ -261,6 +261,26 @@
 | 222 | AI Trending April 2026: Top 5 Developments & Biggest Shifts（BuildEZ） | en | 未読 | #ai-news #trend #market #web-signal | articles/2026-04-11_018_AI_Trending_April_2026_Top5_BuildEZ.md |
 | 223 | Claude Code April Week 2: /team-onboarding, Monitor Tool, Vertex AI Setup | en | 未読 | #update #enterprise #web-signal | articles/2026-04-11_019_Claude_Code_April_Week2_Update_Team_Onboarding_Monitor.md |
 | 224 | Claude Codeスキル活用術：作り方から「育てる運用」まで実践解説（ゼロイチラボ） | ja | 未読 | #skills #workflow #web-signal | articles/2026-04-11_020_Claude_Code_Skills_Zerolichi_Lab_Guide_JA.md |
+| 225 | Every Claude Code Update From March 2026, Explained (Builder.io) | en | 未読 | #update #automation #web-signal | articles/2026-04-12_001_Claude_Code_March_2026_Updates_BuilderIO.md |
+| 226 | Claude Code Hooks Guide 2026: Automate Your Workflow (Serenities AI) | en | 未読 | #hooks #automation #web-signal | articles/2026-04-12_002_Claude_Code_Hooks_Guide_2026_Serenities.md |
+| 227 | Claude Code HTTP Hooks × GitHub Actions Integration: Production CI/CD Guide | en | 未読 | #hooks #ci-cd #automation #web-signal | articles/2026-04-12_003_Claude_Code_HTTP_Hooks_GitHub_Actions_CICD.md |
+| 228 | Claude Code Hooks: Production Patterns Nobody Talks About (marc0.dev) | en | 未読 | #hooks #automation #web-signal | articles/2026-04-12_004_Claude_Code_Hooks_Production_Patterns_Async.md |
+| 229 | Claude Code Hooks: Complete Guide to All 12 Lifecycle Events (claudefa.st) | en | 未読 | #hooks #official #web-signal | articles/2026-04-12_005_Claude_Code_Hooks_Complete_Guide_12_Events.md |
+| 230 | Claude Code Skills vs MCP Servers: What to Use, How to Install (2026) | en | 未読 | #skills #mcp #web-signal | articles/2026-04-12_006_Claude_Code_Skills_vs_MCP_Servers_DEV.md |
+| 231 | The Ultimate Guide to Claude Code Skills (Corpwaters Substack) | en | 未読 | #skills #web-signal | articles/2026-04-12_007_Ultimate_Guide_Claude_Code_Skills_Corpwaters.md |
+| 232 | Claude Code Skills、結局どれを入れる？用途別おすすめ9選（Zenn） | ja | 未読 | #skills #web-signal | articles/2026-04-12_008_Claude_Code_Skills_Recommended_9_Zenn_JA.md |
+| 233 | CLAUDE.mdの書き方実践ガイド：AIエージェントへのプロジェクト指示書設計7原則【2026年版】 | ja | 未読 | #claude-md #best-practices #web-signal | articles/2026-04-12_009_CLAUDE_md_7_Principles_Project_Instructions_Renue.md |
+| 234 | CLAUDE.md や AGENTS.md のベストプラクティスな書き方 (izanami.dev) | ja | 未読 | #claude-md #best-practices #web-signal | articles/2026-04-12_010_CLAUDE_md_AGENTS_md_Best_Practices_Izanami.md |
+| 235 | MCP's Biggest Growing Pains for Production Use Will Soon Be Solved (The New Stack) | en | 未読 | #mcp #ecosystem #web-signal | articles/2026-04-12_011_MCP_Roadmap_2026_Growing_Pains_TheNewStack.md |
+| 236 | Microsoft Agent Framework Version 1.0 — Production-Ready Release (Official Blog) | en | 未読 | #framework #agent #web-signal | articles/2026-04-12_012_Microsoft_Agent_Framework_1_0_Official_Blog.md |
+| 237 | The Complete Guide to MCP: Building AI-Native Applications in 2026 (DEV.to) | en | 未読 | #mcp #ecosystem #web-signal | articles/2026-04-12_013_Complete_Guide_MCP_AI_Native_Apps_2026_DEV.md |
+| 238 | Claude Agent SDK Demos — Official Anthropic GitHub Repository | en | 未読 | #agent-sdk #official #web-signal | articles/2026-04-12_014_Claude_Agent_SDK_Demos_Official_GitHub.md |
+| 239 | Comparing LLM-Based Trading Bots: AI Agents, Techniques, and Results (FlowHunt) | en | 未読 | #ai-trading #llm-trading #comparison #web-signal | articles/2026-04-12_015_Comparing_LLM_Trading_Bots_Comprehensive_FlowHunt.md |
+| 240 | Build an AI Quant Trading Bot: Backtest, Risk Rules, Live Execution 2026 (Markaicode) | en | 未読 | #ai-trading #implementation #quant #web-signal | articles/2026-04-12_016_Build_AI_Quant_Trading_Bot_Backtest_Risk_Markaicode.md |
+| 241 | AI-Based Hyperautomation Framework for Algorithmic Trading (Academic Paper, 2026) | en | 未読 | #ai-trading #research #ml #web-signal | articles/2026-04-12_017_AI_Hyperautomation_Algorithmic_Trading_Academic.md |
+| 242 | AI Updates Today (April 2026) — Latest AI & LLM Model Releases (llm-stats.com) | en | 未読 | #ai-news #model-release #trend #web-signal | articles/2026-04-12_018_AI_LLM_Updates_Today_April_2026_LLMStats.md |
+| 243 | Enterprise Agentic AI Landscape 2026: Trust, Flexibility, Vendor Lock-in (Kai Waehner) | en | 未読 | #ai-news #framework #agent #web-signal | articles/2026-04-12_019_Enterprise_Agentic_AI_Landscape_2026_KaiWaehner.md |
+| 244 | デジタル庁が選んだ「国産LLM」7選！政府生成AI「源内」と企業DXへの衝撃 | ja | 未読 | #ai-news #japan #regulation #web-signal | articles/2026-04-12_020_Digital_Agency_Japan_7_National_LLM_Models.md |
 ## 発見パターン（記事横断の傾向）
 
 蔵書を横断して繰り返し出現するテーマ。出現回数が多いほど普遍的な知見。
