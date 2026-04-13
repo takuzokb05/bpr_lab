@@ -121,3 +121,7 @@
 | 096 | AI Updates Today (April 2026) — Latest AI & LLM Model Releases (llm-stats.com) | en | 未読 | #model-release #trend #web-signal | articles/2026-04-12_018_AI_LLM_Updates_Today_April_2026_LLMStats.md |
 | 097 | Enterprise Agentic AI Landscape 2026: Trust, Flexibility, Vendor Lock-in (Kai Waehner) | en | 未読 | #framework #agent #trend #web-signal | articles/2026-04-12_019_Enterprise_Agentic_AI_Landscape_2026_KaiWaehner.md |
 | 098 | デジタル庁が選んだ「国産LLM」7選！政府生成AI「源内」と企業DXへの衝撃 | ja | 未読 | #japan #regulation #model-release #web-signal | articles/2026-04-12_020_Digital_Agency_Japan_7_National_LLM_Models.md |
+| 099 | New AI Model Releases and Open Source Projects in April 2026 (Fazm AI) | en | 未読 | #model-release #open-source #web-signal | articles/2026-04-13_019_New_AI_Model_Releases_Open_Source_April_2026_Fazm.md |
+| 100 | 【AI News まとめ】生成AI ニュースレポート — 2026-04-10（Qiita/aakan） | ja | 未読 | #weekly #japan #model-release #web-signal | articles/2026-04-13_020_AI_News_Summary_2026_04_10_Qiita_Aakan.md |
+| 101 | The AI Industry is All In for the 2026 Midterms with Government Regulations Looming (ABC) | en | 未読 | #regulation #politics #web-signal | articles/2026-04-13_021_AI_Industry_2026_Midterms_Government_Regulations_ABC.md |
+| 102 | White House Legislative Recommendations: National AI Policy Framework (Ropes & Gray) | en | 未読 | #regulation #policy #web-signal | articles/2026-04-13_022_White_House_AI_National_Policy_Framework_RopesGray.md |

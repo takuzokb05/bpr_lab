@@ -82,3 +82,4 @@
 | 060 | Comparing LLM-Based Trading Bots: AI Agents, Techniques, and Results (FlowHunt) | en | 未読 | #llm-trading #comparison #web-signal | articles/2026-04-12_015_Comparing_LLM_Trading_Bots_Comprehensive_FlowHunt.md |
 | 061 | Build an AI Quant Trading Bot: Backtest, Risk Rules, Live Execution 2026 (Markaicode) | en | 未読 | #quant #implementation #llm-trading #web-signal | articles/2026-04-12_016_Build_AI_Quant_Trading_Bot_Backtest_Risk_Markaicode.md |
 | 062 | AI-Based Hyperautomation Framework for Algorithmic Trading (Academic Paper, 2026) | en | 未読 | #research #ml #quant #web-signal | articles/2026-04-12_017_AI_Hyperautomation_Algorithmic_Trading_Academic.md |
+| 063 | 【2026年最新】AI対応FX自動売買ツール徹底比較｜MT4/MT5活用法（shadowdia） | ja | 未読 | #fx #ea #llm-trading #web-signal | articles/2026-04-13_018_FX_AI_EA_Autotrade_Guide_Shadowdia.md |

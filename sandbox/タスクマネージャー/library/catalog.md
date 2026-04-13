@@ -281,6 +281,28 @@
 | 242 | AI Updates Today (April 2026) — Latest AI & LLM Model Releases (llm-stats.com) | en | 未読 | #ai-news #model-release #trend #web-signal | articles/2026-04-12_018_AI_LLM_Updates_Today_April_2026_LLMStats.md |
 | 243 | Enterprise Agentic AI Landscape 2026: Trust, Flexibility, Vendor Lock-in (Kai Waehner) | en | 未読 | #ai-news #framework #agent #web-signal | articles/2026-04-12_019_Enterprise_Agentic_AI_Landscape_2026_KaiWaehner.md |
 | 244 | デジタル庁が選んだ「国産LLM」7選！政府生成AI「源内」と企業DXへの衝撃 | ja | 未読 | #ai-news #japan #regulation #web-signal | articles/2026-04-12_020_Digital_Agency_Japan_7_National_LLM_Models.md |
+| 245 | Decoding the Claude Code April 2026 Changelog: 30+ Versions v2.1.69→v2.1.101 (Apiyi) | en | 未読 | #claude-code #update #changelog #web-signal | articles/2026-04-13_001_Claude_Code_April_2026_Changelog_30_Versions_Apiyi.md |
+| 246 | Claude Code 2026: The Daily Operating System Top Developers Actually Use (Medium) | en | 未読 | #claude-code #workflow #best-practices #web-signal | articles/2026-04-13_002_Claude_Code_2026_Daily_OS_Top_Developers_Medium.md |
+| 247 | Claude Code Hooks Tutorial: Automate Workflows with Lifecycle Events (Supalaunch) | en | 未読 | #claude-code #hooks #automation #web-signal | articles/2026-04-13_003_Claude_Code_Hooks_Tutorial_Lifecycle_Events_Supalaunch.md |
+| 248 | 【2026年最新】Claude Code 9つの知られざる機能｜生産性を変革する（Uravation） | ja | 未読 | #claude-code #update #hidden-features #web-signal | articles/2026-04-13_004_Claude_Code_9_Hidden_Features_2026_Uravation.md |
+| 249 | Claude Code Skills vs Subagents - When to Use What? (DEV.to) | en | 未読 | #claude-code #skills #subagents #web-signal | articles/2026-04-13_005_Claude_Code_Skills_vs_Subagents_When_To_Use_DEV.md |
+| 250 | awesome-claude-code-subagents: 100+ Specialized Claude Code Subagents (GitHub) | en | 未読 | #claude-code #subagents #resources #web-signal | articles/2026-04-13_006_Awesome_Claude_Code_Subagents_100plus_GitHub.md |
+| 251 | Claude CodeのSkillsを作成例から徹底理解する（Zenn/acntechjp） | ja | 未読 | #claude-code #skills #progressive-disclosure #web-signal | articles/2026-04-13_007_Claude_Code_Skills_Thorough_Understanding_Zenn_Acntechjp.md |
+| 252 | CLAUDE.mdとは？書き方と設定例でClaude Code出力品質を上げる方法（jinrai） | ja | 未読 | #claude-code #claude-md #best-practices #web-signal | articles/2026-04-13_008_CLAUDE_md_Writing_Guide_Jinrai.md |
+| 253 | Claude Code入門 #2: CLAUDE.mdの書き方と育て方（Qiita/dai_chi） | ja | 未読 | #claude-code #claude-md #continuous-improvement #web-signal | articles/2026-04-13_009_CLAUDE_md_Writing_育て方_Qiita_Daichi.md |
+| 254 | Claude Code Workflow Patterns: Agentic Guide 2026 (Popularaitools) | en | 未読 | #claude-code #workflow #orchestration #web-signal | articles/2026-04-13_010_Claude_Code_Workflow_Patterns_Agentic_Guide_Popularaitools.md |
+| 255 | I Mastered the Claude Code Workflow — Changed Everything (Medium/All About Claude) | en | 未読 | #claude-code #workflow #best-practices #web-signal | articles/2026-04-13_011_I_Mastered_Claude_Code_Workflow_Medium_Mohit.md |
+| 256 | Claude Code Hidden Features Found in Leaked Source: Full List 2026 (WaveSpeed) | en | 未読 | #claude-code #roadmap #hidden-features #web-signal | articles/2026-04-13_012_Claude_Code_Hidden_Features_Leaked_Source_2026_WaveSpeed.md |
+| 257 | Claude Managed Agents: Get to Production 10x Faster (Anthropic Official Blog) | en | 未読 | #claude-ecosystem #managed-agents #official #web-signal | articles/2026-04-13_013_Claude_Managed_Agents_Official_Blog_Anthropic.md |
+| 258 | Claude Managed Agents: Complete Guide to Building Production AI Agents (The AI Corner) | en | 未読 | #claude-ecosystem #managed-agents #implementation #web-signal | articles/2026-04-13_014_Claude_Managed_Agents_Complete_Guide_The_AI_Corner.md |
+| 259 | Anthropic Launches Claude Managed Agents to Speed Up AI Agent Development (SiliconAngle) | en | 未読 | #claude-ecosystem #managed-agents #news #web-signal | articles/2026-04-13_015_Anthropic_Launches_Claude_Managed_Agents_SiliconAngle.md |
+| 260 | From Building to Deploying: The Complete Guide to Claude Managed Agents (Atalupadhyay) | en | 未読 | #claude-ecosystem #managed-agents #deployment #web-signal | articles/2026-04-13_016_Claude_Managed_Agents_Building_to_Deploying_Guide_Atalupadhyay.md |
+| 261 | MCPサーバーが切り拓く！自社サービス運用の新次元（エムスリー技術ブログ） | ja | 未読 | #claude-ecosystem #mcp #enterprise #web-signal | articles/2026-04-13_017_MCP_Server_Future_M3Tech_Blog.md |
+| 262 | 【2026年最新】AI対応FX自動売買ツール徹底比較｜MT4/MT5活用法（shadowdia） | ja | 未読 | #ai-trading #fx #ea #llm-trading #web-signal | articles/2026-04-13_018_FX_AI_EA_Autotrade_Guide_Shadowdia.md |
+| 263 | New AI Model Releases and Open Source Projects in April 2026 (Fazm AI) | en | 未読 | #ai-news #model-release #open-source #web-signal | articles/2026-04-13_019_New_AI_Model_Releases_Open_Source_April_2026_Fazm.md |
+| 264 | 【AI News まとめ】生成AI ニュースレポート — 2026-04-10（Qiita/aakan） | ja | 未読 | #ai-news #weekly #japan #model-release #web-signal | articles/2026-04-13_020_AI_News_Summary_2026_04_10_Qiita_Aakan.md |
+| 265 | The AI Industry is All In for the 2026 Midterms with Government Regulations Looming (ABC) | en | 未読 | #ai-news #regulation #politics #web-signal | articles/2026-04-13_021_AI_Industry_2026_Midterms_Government_Regulations_ABC.md |
+| 266 | White House Legislative Recommendations: National AI Policy Framework (Ropes & Gray) | en | 未読 | #ai-news #regulation #policy #web-signal | articles/2026-04-13_022_White_House_AI_National_Policy_Framework_RopesGray.md |
 ## 発見パターン（記事横断の傾向）
 
 蔵書を横断して繰り返し出現するテーマ。出現回数が多いほど普遍的な知見。
@@ -352,3 +374,4 @@
 - 未読: 1
 - 構想: 1
 - 書籍: 4
+- 日次収集（2026-03-27〜）: 266件（2026-04-13更新）
