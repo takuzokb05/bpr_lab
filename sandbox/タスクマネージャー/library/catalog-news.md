@@ -125,3 +125,5 @@
 | 100 | 【AI News まとめ】生成AI ニュースレポート — 2026-04-10（Qiita/aakan） | ja | 未読 | #weekly #japan #model-release #web-signal | articles/2026-04-13_020_AI_News_Summary_2026_04_10_Qiita_Aakan.md |
 | 101 | The AI Industry is All In for the 2026 Midterms with Government Regulations Looming (ABC) | en | 未読 | #regulation #politics #web-signal | articles/2026-04-13_021_AI_Industry_2026_Midterms_Government_Regulations_ABC.md |
 | 102 | White House Legislative Recommendations: National AI Policy Framework (Ropes & Gray) | en | 未読 | #regulation #policy #web-signal | articles/2026-04-13_022_White_House_AI_National_Policy_Framework_RopesGray.md |
+| 103 | AI事業者ガイドラインv1.2完全解説｜AIエージェント規制と企業対応の5ステップ【2026年版】 (ailead) | ja | 未読 | #regulation #japan #agent #web-signal | articles/2026-04-14_006_Japan_AI_Governance_Guideline_v12_Agent_Regulation.md |
+| 104 | AIのグローバル規制・政策動向：2025年の動きと2026年への示唆 (arakiplaw) | ja | 未読 | #regulation #global #policy #web-signal | articles/2026-04-14_007_AI_Global_Regulation_Policy_2025_2026_arakiplaw.md |

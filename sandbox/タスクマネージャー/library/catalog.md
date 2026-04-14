@@ -303,6 +303,13 @@
 | 264 | 【AI News まとめ】生成AI ニュースレポート — 2026-04-10（Qiita/aakan） | ja | 未読 | #ai-news #weekly #japan #model-release #web-signal | articles/2026-04-13_020_AI_News_Summary_2026_04_10_Qiita_Aakan.md |
 | 265 | The AI Industry is All In for the 2026 Midterms with Government Regulations Looming (ABC) | en | 未読 | #ai-news #regulation #politics #web-signal | articles/2026-04-13_021_AI_Industry_2026_Midterms_Government_Regulations_ABC.md |
 | 266 | White House Legislative Recommendations: National AI Policy Framework (Ropes & Gray) | en | 未読 | #ai-news #regulation #policy #web-signal | articles/2026-04-13_022_White_House_AI_National_Policy_Framework_RopesGray.md |
+| 267 | Anthropic adds repeatable Routines to Claude Code — 仕組みとプラン別制限詳解 (9to5Mac) | en | 未読 | #claude-code #routines #update #web-signal | articles/2026-04-14_001_Claude_Code_Routines_New_Feature_9to5Mac.md |
+| 268 | Claude Code v2.1.101完全ガイド｜5週間30+リリースの注目機能全まとめ (Uravation) | ja | 未読 | #claude-code #update #changelog #web-signal | articles/2026-04-14_002_Claude_Code_v2101_5weeks_30releases_Uravation.md |
+| 269 | AWS Weekly Roundup: Claude Mythosプレビュー in Amazon Bedrock＋AWS Agent Registry (AWS公式) | ja | 未読 | #claude-ecosystem #claude-mythos #aws #bedrock #web-signal | articles/2026-04-14_003_AWS_Claude_Mythos_Bedrock_Preview_Agent_Registry.md |
+| 270 | Claude Agents SDK vs OpenAI Agents SDK vs Google ADK: 2026年包括比較 (Composio) | en | 未読 | #claude-ecosystem #agent-sdk #comparison #web-signal | articles/2026-04-14_004_Claude_Agent_SDK_vs_OpenAI_vs_Google_ADK_Comparison.md |
+| 271 | Claude Code × MCP 実践活用ガイド 2026年最新版【導入・設定・自作・セキュリティ】 (aquallc) | ja | 未読 | #claude-code #mcp #practice #web-signal | articles/2026-04-14_005_Claude_Code_MCP_Practice_Complete_Guide_aquallc.md |
+| 272 | Claude Code Tutorial: Build a Senior Engineer System with CLAUDE.md (2026) (Dev Genius) | en | 未読 | #claude-code #claude-md #tutorial #web-signal | articles/2026-04-14_008_Claude_Code_Senior_Engineer_System_CLAUDE_md_Tutorial.md |
+| 273 | Production-ready Claude Code Workflows — Specialized AI Agents (GitHub: shinpr) | en | 未読 | #claude-code #workflow #subagents #web-signal | articles/2026-04-14_011_Production_Claude_Code_Workflows_GitHub_shinpr.md |
 ## 発見パターン（記事横断の傾向）
 
 蔵書を横断して繰り返し出現するテーマ。出現回数が多いほど普遍的な知見。
@@ -374,4 +381,4 @@
 - 未読: 1
 - 構想: 1
 - 書籍: 4
-- 日次収集（2026-03-27〜）: 266件（2026-04-13更新）
+- 日次収集（2026-03-27〜）: 273件（2026-04-14更新）
