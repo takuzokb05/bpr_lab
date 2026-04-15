@@ -310,6 +310,21 @@
 | 271 | Claude Code × MCP 実践活用ガイド 2026年最新版【導入・設定・自作・セキュリティ】 (aquallc) | ja | 未読 | #claude-code #mcp #practice #web-signal | articles/2026-04-14_005_Claude_Code_MCP_Practice_Complete_Guide_aquallc.md |
 | 272 | Claude Code Tutorial: Build a Senior Engineer System with CLAUDE.md (2026) (Dev Genius) | en | 未読 | #claude-code #claude-md #tutorial #web-signal | articles/2026-04-14_008_Claude_Code_Senior_Engineer_System_CLAUDE_md_Tutorial.md |
 | 273 | Production-ready Claude Code Workflows — Specialized AI Agents (GitHub: shinpr) | en | 未読 | #claude-code #workflow #subagents #web-signal | articles/2026-04-14_011_Production_Claude_Code_Workflows_GitHub_shinpr.md |
+| 274 | Introducing routines in Claude Code — Anthropic公式発表 | en | 未読 | #claude-code #routines #automation #web-signal | articles/2026-04-15_001_Claude_Code_Routines_Official_Anthropic_Blog.md |
+| 275 | Claude Code サブエージェント活用ガイド — 公式ブログ | en | 未読 | #claude-code #subagents #workflow #web-signal | articles/2026-04-15_002_Claude_Code_Subagents_Official_How_When_To_Use.md |
+| 276 | Claude Code デスクトップ大刷新 — 統合ターミナル・高速diff・拡張プレビュー | en | 未読 | #claude-code #update #desktop #web-signal | articles/2026-04-15_003_Claude_Code_Desktop_Redesign_Integrated_Terminal_The_New_Stack.md |
+| 277 | Claude Code Routines — The Register「賢いcronジョブ」批評 | en | 未読 | #claude-code #routines #review #web-signal | articles/2026-04-15_004_Claude_Code_Routines_Cron_Jobs_The_Register.md |
+| 278 | Claude Code Agent Teams — 共有タスクリストで並列実行する実験的機能 | en | 未読 | #claude-code #agent-teams #parallel #web-signal | articles/2026-04-15_005_Claude_Code_Agent_Teams_Parallel_Shared_Task_List_MindStudio.md |
+| 279 | Claude Code エージェントワークフロー5パターン — 順次から完全自律まで | en | 未読 | #claude-code #workflow #agentic #web-signal | articles/2026-04-15_006_Claude_Code_5_Agentic_Workflow_Patterns_Sequential_to_Autonomous_MindStudio.md |
+| 280 | Claude Code Routines完全解説 — スケジュール・API・GitHubイベント自動化（ファネルAI） | ja | 未読 | #claude-code #routines #automation #web-signal | articles/2026-04-15_007_Claude_Code_Routines_Schedule_API_GitHub_JA_FunnelAI.md |
+| 281 | Claude Code Routines — 寝ている間にバグ修正・コードレビューを完了させる仕組み | ja | 未読 | #claude-code #routines #automation #web-signal | articles/2026-04-15_008_Claude_Code_Routines_AI_Autotask_While_Sleeping_Jinrai.md |
+| 282 | Claude Code「ルーチン」新機能まとめ — クラウド動作・3トリガー設計の全貌（Zenn） | ja | 未読 | #claude-code #routines #web-signal | articles/2026-04-15_009_Claude_Code_Routines_Cloud_Autotask_Summary_Zenn.md |
+| 283 | Claude Code Routines = 常駐実行レイヤー — 単なるcronではない設計思想を解説 | ja | 未読 | #claude-code #routines #architecture #web-signal | articles/2026-04-15_010_Claude_Code_Routines_Persistent_Layer_Not_Cron_Qiita_Mguozhen.md |
+| 284 | Claude Code 公式スキル17個全解説 — パワポ・PDF・Excel・スライドを1コマンドで生成 | ja | 未読 | #claude-code #skills #web-signal | articles/2026-04-15_011_Claude_Code_Official_17_Skills_Complete_Guide_TenbinAI.md |
+| 285 | CLAUDE.md設計パターン集 — プロジェクト規模別ベストプラクティスと実例5選 | ja | 未読 | #claude-code #claude-md #patterns #web-signal | articles/2026-04-15_012_CLAUDE_md_Design_Patterns_Project_Scale_Best_Practices_StartLink.md |
+| 286 | Claude Mythos Preview — SWEbench 93.9%・ゼロデイ脆弱性発見でProject Glasswing限定公開 | en | 未読 | #claude-ecosystem #claude-mythos #model-release #web-signal | articles/2026-04-15_013_Claude_Mythos_Preview_Cyber_SWEbench_939_InfoQ.md |
+| 287 | 英国AISI: Claude Mythos Previewのサイバー能力評価 — 独立機関による一次評価 | en | 未読 | #claude-ecosystem #claude-mythos #regulation #web-signal | articles/2026-04-15_014_Claude_Mythos_AISI_Cyber_Capabilities_Evaluation_UK.md |
+| 288 | Azure MCP Server 2.0安定版リリース — 自己ホスト型・マルチツールセット対応強化 | ja | 未読 | #claude-ecosystem #mcp #update #web-signal | articles/2026-04-15_015_Azure_MCP_Server_2_0_Stable_Self_Hosted_Agentic_Codezine.md |
 ## 発見パターン（記事横断の傾向）
 
 蔵書を横断して繰り返し出現するテーマ。出現回数が多いほど普遍的な知見。
@@ -381,4 +396,4 @@
 - 未読: 1
 - 構想: 1
 - 書籍: 4
-- 日次収集（2026-03-27〜）: 273件（2026-04-14更新）
+- 日次収集（2026-03-27〜）: 288件（2026-04-15更新）

@@ -127,3 +127,8 @@
 | 102 | White House Legislative Recommendations: National AI Policy Framework (Ropes & Gray) | en | 未読 | #regulation #policy #web-signal | articles/2026-04-13_022_White_House_AI_National_Policy_Framework_RopesGray.md |
 | 103 | AI事業者ガイドラインv1.2完全解説｜AIエージェント規制と企業対応の5ステップ【2026年版】 (ailead) | ja | 未読 | #regulation #japan #agent #web-signal | articles/2026-04-14_006_Japan_AI_Governance_Guideline_v12_Agent_Regulation.md |
 | 104 | AIのグローバル規制・政策動向：2025年の動きと2026年への示唆 (arakiplaw) | ja | 未読 | #regulation #global #policy #web-signal | articles/2026-04-14_007_AI_Global_Regulation_Policy_2025_2026_arakiplaw.md |
+| 105 | LLM-jp-4 NII公式リリース — 12兆トークン学習・日本語MT-BenchでGPT-4o超え | ja | 未読 | #model-release #japan #open-source #web-signal | articles/2026-04-15_019_LLM_jp4_NII_12T_Tokens_GPT4o_Surpass_OpenSource_Official.md |
+| 106 | 経産省「AI民事責任手引き」v1.0 — 補助型・代替型の2類型で責任分界を整理 | ja | 未読 | #regulation #japan #web-signal | articles/2026-04-15_020_METI_AI_Civil_Liability_Interpretation_Guide_v1_April2026.md |
+| 107 | AI Legal Watch April 2026 — EU AI Act施行・米国立法フレームワーク・州法整理 | en | 未読 | #regulation #web-signal | articles/2026-04-15_021_AI_Legal_Watch_April_2026_EU_US_Regulation_JDSupra.md |
+| 108 | Stanford AI Index 2026 — SWEbench近100%・中国との差1.7%・透明性低下 (IEEE Spectrum) | en | 未読 | #model-release #trend #web-signal | articles/2026-04-15_017_Stanford_AI_Index_2026_SWEbench_Near100_China_Gap_IEEE.md |
+| 109 | Stanford HAI AI Index 2026 — 公式12の重要知見まとめ | en | 未読 | #model-release #trend #web-signal | articles/2026-04-15_018_Stanford_HAI_AI_Index_2026_12_Key_Takeaways_Official.md |

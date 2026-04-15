@@ -85,3 +85,4 @@
 | 063 | 【2026年最新】AI対応FX自動売買ツール徹底比較｜MT4/MT5活用法（shadowdia） | ja | 未読 | #fx #ea #llm-trading #web-signal | articles/2026-04-13_018_FX_AI_EA_Autotrade_Guide_Shadowdia.md |
 | 064 | FXトレードAIマイメイト、レンジ相場最適化「リピートAI」を新実装 (CoinPost) | ja | 未読 | #fx #llm-trading #implementation #web-signal | articles/2026-04-14_009_FX_MyMate_RepeatAI_Range_Strategy_New_Feature.md |
 | 065 | From Trading Bot to Trading Agent: How to Build an AI-based Investment System (Medium) | en | 未読 | #llm-trading #implementation #multi-agent #web-signal | articles/2026-04-14_010_From_Trading_Bot_to_Trading_Agent_LLM_Investment_System.md |
+| 066 | 2026年版 FXベストAIトレーディングエージェント — MT4/MT5統合比較ガイド (GPTrader) | en | 未読 | #fx #llm-trading #mt5 #implementation #web-signal | articles/2026-04-15_016_Best_AI_Trading_Agent_Forex_MT4_MT5_Integration_2026_GPTrader.md |
