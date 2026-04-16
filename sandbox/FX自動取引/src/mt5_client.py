@@ -187,6 +187,9 @@ class Mt5Client(BrokerClient):
     ) -> dict:
         """成行注文を発注する。
 
+        外為ファイネストではSL/TPを注文に含めると10013になるケースがあるため、
+        約定後にTRADE_ACTION_SLTPで後から設定する2ステップ方式を採用。
+
         Args:
             instrument: 通貨ペア（例: "USD_JPY"）
             units: 取引数量（正=買い、負=売り）
@@ -211,14 +214,13 @@ class Mt5Client(BrokerClient):
         price = tick.ask if is_buy else tick.bid
         order_type = mt5.ORDER_TYPE_BUY if is_buy else mt5.ORDER_TYPE_SELL
 
+        # Step 1: SL/TPなしで約定（外為ファイネスト互換）
         request = {
             "action": mt5.TRADE_ACTION_DEAL,
             "symbol": symbol,
             "volume": volume,
             "type": order_type,
             "price": price,
-            "sl": stop_loss,
-            "tp": take_profit,
             "type_filling": mt5.ORDER_FILLING_FOK,
             "type_time": mt5.ORDER_TIME_GTC,
         }
@@ -228,6 +230,24 @@ class Mt5Client(BrokerClient):
 
         # リトライ付き注文送信
         result = self._send_order_with_retry(request)
+
+        # Step 2: SL/TPを後から設定
+        if stop_loss or take_profit:
+            sltp_request = {
+                "action": mt5.TRADE_ACTION_SLTP,
+                "symbol": symbol,
+                "position": result.order,
+                "sl": stop_loss,
+                "tp": take_profit,
+            }
+            sltp_result = mt5.order_send(sltp_request)
+            if sltp_result.retcode != mt5.TRADE_RETCODE_DONE:
+                # SL/TP設定失敗はログに残すが約定自体は成功しているので例外にしない
+                import logging
+                logging.getLogger(__name__).warning(
+                    "SL/TP設定失敗（約定済み）: retcode=%d, comment=%s",
+                    sltp_result.retcode, sltp_result.comment,
+                )
 
         return {
             "status": "filled",
@@ -282,7 +302,7 @@ class Mt5Client(BrokerClient):
         request = self._find_valid_filling(request)
 
         # 注文送信（指値はリトライ不要）
-        result = mt5.order_send(request=request)
+        result = mt5.order_send(request)
         if result.retcode != mt5.TRADE_RETCODE_DONE:
             raise Mt5ClientError(
                 f"MT5注文エラー: retcode={result.retcode}, comment={result.comment}"
@@ -386,7 +406,7 @@ class Mt5Client(BrokerClient):
         # フィリングモード自動検出
         request = self._find_valid_filling(request)
 
-        result = mt5.order_send(request=request)
+        result = mt5.order_send(request)
         if result.retcode != mt5.TRADE_RETCODE_DONE:
             raise Mt5ClientError(
                 f"MT5決済エラー: retcode={result.retcode}, comment={result.comment}"
@@ -507,7 +527,7 @@ class Mt5Client(BrokerClient):
             Mt5ClientError: リトライ不可能なエラー、または最大リトライ超過の場合
         """
         for attempt in range(MAX_RETRIES + 1):
-            result = mt5.order_send(request=request)
+            result = mt5.order_send(request)
 
             if result.retcode == mt5.TRADE_RETCODE_DONE:
                 return result
