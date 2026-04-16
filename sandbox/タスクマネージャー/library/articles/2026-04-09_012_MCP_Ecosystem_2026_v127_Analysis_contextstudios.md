@@ -1,0 +1,10 @@
+# MCP Ecosystem in 2026: What the TypeScript SDK v1.27 Release Actually Tells Us
+
+- URL: https://www.contextstudios.ai/blog/mcp-ecosystem-in-2026-what-the-v127-release-actually-tells-us
+- ソース: web
+- 言語: en
+- テーマ: claude-ecosystem
+- 取得日: 2026-04-09
+
+## 要約
+Context StudiosによるMCP TypeScript SDK v1.27リリース（2026年2月24日）の詳細分析記事。v1.27の4つの主要変更点：①タスクフレームワーク下のelicitation/samplingへのストリーミングメソッド追加、②接続ライフサイクル管理改善、③型安全性強化、④パフォーマンス最適化。MCPエコシステム2026年上半期の状況：登録サーバー数10,000超え、週次新規サーバー追加300件超。AWS提供54種MCPサーバー、Salesforce Hosted MCP Server（ベータ）、OktaのElicitation API統合など企業採用が加速。MCPが「実験的標準」から「基盤的インフラ」へ転換した転換点として分析。

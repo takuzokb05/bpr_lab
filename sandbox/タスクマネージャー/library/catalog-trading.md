@@ -59,3 +59,30 @@
 | 037 | AI in Forex Trading: Institutional Perspective (Dukascopy Swiss Bank) | en | 読了 | #fx #regulation | articles/2026-03-28_166_AI_Forex_Trading_Dukascopy.md |
 | 038 | FX Prime Bot: LLM×MLハイブリッドMT5ボット実装記 (note / yo_hide) | ja | 読了 | #llm-trading #implementation #fx | articles/2026-03-28_167_FX_Prime_Bot_LLM_Hybrid_Note_Yo_Hide.md |
 | 039 | 生成AIでMT4/MT5 EAを作成する実践チュートリアル (note / HandY) | ja | 読了 | #implementation #fx | articles/2026-03-28_168_MT5_EA_GenAI_Code_Generation_HandY.md |
+| 040 | TradingAgents: Multi-Agents LLM Financial Trading Framework | en | 未読 | #llm-trading #ml #web-signal | articles/2026-03-29_195_trading_agents_llm_framework_github.md |
+| 041 | Algorithmic Trading Analysis Report 2026-2035: A $44.34 Bill | en | 未読 | #quant #web-signal | articles/2026-03-29_196_algorithmic_trading_ai_market_2026.md |
+| 042 | 【2026年最新】FX自動売買でAIのおすすめ比較！初心者向けに徹底解説 | ja | 未読 | #fx #web-signal | articles/2026-03-29_197_fx_ai_trading_japan_2026.md |
+| 043 | パイロット運用から収益化へ：金融サービス業界ではAI投資とオープンソースの活用が倍増していることが調査で明らかに | ja | 未読 | #ml #web-signal | articles/2026-03-29_211_nvidia_ai_financial_services_2026.md |
+| 044 | トレーディングボットからエージェントへ：LLMベース投資システム設計論 | en | 未読 | #llm-trading #implementation #web-signal | articles/2026-03-30_226_trading_bot_to_agent_llm_investment_system.md |
+| 045 | AI対応FX自動売買完全ガイド：MT4/MT5 EA × LLM連携の実情と比較 | ja | 未読 | #fx #llm-trading #web-signal | articles/2026-03-30_229_fx_ai_ea_mt4_mt5_llm_hybrid_guide_2026.md |
+| 046 | MT5 × LLM統合：低レイテンシWebhookアーキテクチャによるAI取引システム | en | 未読 | #llm-trading #implementation #fx #web-signal | articles/2026-03-30_237_mt5_llm_integration_webhook_trading_2026.md |
+| 047 | I Created an AI Trading Agent and Monitored Its Performance for 3 Months | en | 未読 | #llm-trading #multi-agent #quant #web-signal | articles/2026-04-01_248_ai_trading_agent_3months_experiment_quantitative.md |
+| 048 | Building an AI Trading Bot with Claude Code: 14 Sessions, 961 Tool Calls (n1n.ai) | en | 未読 | #llm-trading #implementation #multi-agent #web-signal | articles/2026-04-07_195_Claude_Code_Trading_Bot_961_Calls_Case_Study.md |
+| 049 | I gave Claude Code 100k to trade with in the last month and beat the market (Medium) | en | 未読 | #llm-trading #research #web-signal | articles/2026-04-07_196_Claude_Code_100k_Trading_Beat_Market_Medium.md |
+| 050 | Building Async MetaTrader 5 Trading Bots with the aiomql Python Framework (earezki.com) | en | 未読 | #fx #implementation #web-signal | articles/2026-04-07_197_aiomql_MT5_Async_Python_Trading_Guide.md |
+| 051 | I created an AI trading agent and monitored its performance for 3 months (Medium) | en | 未読 | #llm-trading #research #sentiment #web-signal | articles/2026-04-07_198_AI_Trading_Agent_3months_Monitoring_Medium.md |
+| 052 | 自動売買システムの設計図：LLM×マクロシグナル型を選んだ理由 (note / CrafTechLife) | ja | 未読 | #llm-trading #fx #implementation #web-signal | articles/2026-04-08_015_LLM_Macro_Signal_Trading_System_Design_JA.md |
+| 053 | TradingAgents: Multi-Agent LLM Framework — 7エージェント詳説 (AIToolly) | en | 未読 | #llm-trading #multi-agent #research #web-signal | articles/2026-04-08_016_TradingAgents_MultiAgent_LLM_Framework_AIToolly.md |
+| 054 | AIで株式投資トレードを効率化：LLMを活用した判定システムの実験開始 (AI Native JP) | ja | 未読 | #llm-trading #implementation #fx #web-signal | articles/2026-04-08_023_AI_LLM_Stock_Trading_Experiment_Report_JA.md |
+| 055 | metatrader-mcp-server: MCP 経由で AI LLM が MetaTrader で取引（GitHub/ariadng） | en | 未読 | #fx #implementation #mcp #web-signal | articles/2026-04-10_010_MetaTrader_MCP_Server_GitHub_Ariadng.md |
+| 056 | MT5 LLM Integration: Choosing the Right AI for Your Trading System（MQL5） | en | 未読 | #fx #llm-trading #implementation #web-signal | articles/2026-04-10_011_MT5_LLM_Integration_Choosing_Right_AI_MQL5.md |
+| 057 | AI Trading Agents vs Expert Advisors (EAs): Complete 2026 Guide（Trade Like Master） | en | 未読 | #fx #llm-trading #comparison #web-signal | articles/2026-04-10_012_AI_Trading_Agents_vs_Expert_Advisors_2026_Guide.md |
+| 058 | Testing LLM-Driven Trading on MetaTrader 5（Medium/thibauld） | en | 未読 | #fx #llm-trading #implementation #web-signal | articles/2026-04-10_013_Testing_LLM_Driven_Trading_MetaTrader5_Medium.md |
+| 059 | TradingAgents Multi-Agent LLM Framework Guide（DigitalOcean） | en | 未読 | #llm-trading #multi-agent #framework #web-signal | articles/2026-04-11_011_TradingAgents_Guide_DigitalOcean.md |
+| 060 | Comparing LLM-Based Trading Bots: AI Agents, Techniques, and Results (FlowHunt) | en | 未読 | #llm-trading #comparison #web-signal | articles/2026-04-12_015_Comparing_LLM_Trading_Bots_Comprehensive_FlowHunt.md |
+| 061 | Build an AI Quant Trading Bot: Backtest, Risk Rules, Live Execution 2026 (Markaicode) | en | 未読 | #quant #implementation #llm-trading #web-signal | articles/2026-04-12_016_Build_AI_Quant_Trading_Bot_Backtest_Risk_Markaicode.md |
+| 062 | AI-Based Hyperautomation Framework for Algorithmic Trading (Academic Paper, 2026) | en | 未読 | #research #ml #quant #web-signal | articles/2026-04-12_017_AI_Hyperautomation_Algorithmic_Trading_Academic.md |
+| 063 | 【2026年最新】AI対応FX自動売買ツール徹底比較｜MT4/MT5活用法（shadowdia） | ja | 未読 | #fx #ea #llm-trading #web-signal | articles/2026-04-13_018_FX_AI_EA_Autotrade_Guide_Shadowdia.md |
+| 064 | FXトレードAIマイメイト、レンジ相場最適化「リピートAI」を新実装 (CoinPost) | ja | 未読 | #fx #llm-trading #implementation #web-signal | articles/2026-04-14_009_FX_MyMate_RepeatAI_Range_Strategy_New_Feature.md |
+| 065 | From Trading Bot to Trading Agent: How to Build an AI-based Investment System (Medium) | en | 未読 | #llm-trading #implementation #multi-agent #web-signal | articles/2026-04-14_010_From_Trading_Bot_to_Trading_Agent_LLM_Investment_System.md |
+| 066 | 2026年版 FXベストAIトレーディングエージェント — MT4/MT5統合比較ガイド (GPTrader) | en | 未読 | #fx #llm-trading #mt5 #implementation #web-signal | articles/2026-04-15_016_Best_AI_Trading_Agent_Forex_MT4_MT5_Integration_2026_GPTrader.md |

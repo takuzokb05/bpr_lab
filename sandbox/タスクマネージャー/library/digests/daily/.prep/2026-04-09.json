@@ -1,0 +1,259 @@
+{
+  "date": "2026-04-09",
+  "generated_at": "2026-04-16T11:04:31.762822Z",
+  "article_count": 18,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-04-09_001_Understanding_Claude_Code_Full_Stack_alexop.md",
+      "title": "Understanding Claude Code's Full Stack: MCP, Skills, Subagents, and Hooks",
+      "url": "https://alexop.dev/posts/understanding-claude-code-full-stack/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Claude Codeの拡張システム全体を体系的に解説した技術記事。MCPサーバー・Skills・Subagents・Hooksの4レイヤーがどのように連携するかをアーキテクチャ視点で説明。3層構造（Hooks＝ライフサイクルイベント自動化、MCP＝外部ツール接続、Skills＝再利用可能ワークフロー）を明確化。サブエージェントは独立したコンテキストウィンドウでフォーク型並列実行を可能にする。実務では「2〜3 MCPサーバー + 数個カスタムSkill」が最も費用対効果が高いと結論。各レイヤーの使い分け判断フローを図示しており、エコシステム全体の理解に役立つ。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-09_002_Claude_Code_Advanced_Patterns_Skills_Fork_Subagents_trensee.md",
+      "title": "Claude Code Advanced Patterns: Skills, Fork, and Subagents Explained",
+      "url": "https://www.trensee.com/en/blog/explainer-claude-code-skills-fork-subagents-2026-03-31",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Claude Code上級設計パターン解説記事（2026年3月末公開）。Skills・Fork・Subagentsの3機能を組み合わせた高度な自動化ワークフローを具体的なユースケースで説明。Forkはバックグラウンドエージェントを独立したgit worktreeで並列実行する機能で、/batchスキルの内部動作として使われる。スキル連鎖（Skill Graph）パターンでは複数Skillをトリガーチェーンで組み合わせてエンドツーエンドワークフローを構築できる。「コード変更→テスト実行→PRオープン」の完全自動フローを実装例として紹介。Claude Code 2.1.x系での動作確認済み。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-09_003_Complete_Beginners_Guide_Claude_Code_towardsai.md",
+      "title": "A Complete Beginner's Guide to Claude Code: Skills, Agents, Hooks, Plugins, MCP & Cowork",
+      "url": "https://pub.towardsai.net/a-complete-beginners-guide-to-claude-code-skills-agents-hooks-plugins-mcp-085b26b73fdd",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Towards AI掲載のClaude Code完全入門記事（2026年3月）。Skills・Agents・Hooks・Plugins・MCPの全機能を初心者向けに網羅的に解説。Hooksの実装例（PreToolUse・PostToolUse・Stop・Notification等12イベント）のコード例が充実。SkillsとMCPの使い分け判断基準（「コンテキスト的・ワンタイム操作→MCP」「再利用可能ワークフロー→Skill」）を明確に説明。Cowork（非エンジニア向けエージェント機能）も含む最新機能をカバー。Towards AIは査読済みAI技術メディアとして信頼性高い。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-09_004_Claude_Code_Subagents_Parallelize_Development_zachwills.md",
+      "title": "How to Use Claude Code Subagents to Parallelize Development",
+      "url": "https://zachwills.net/how-to-use-claude-code-subagents-to-parallelize-development/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Claude Codeのサブエージェント機能を使った並列開発ワークフローの実践ガイド。独立したタスクを特定するための「並列化可能性チェックリスト」を提示し、適切なサブエージェント設計のパターンを説明。git worktree分離を使った安全な並列実行、共有状態の競合回避、サブエージェント完了後のマージ戦略などの実装ノウハウを詳説。具体的ユースケース：「フロントエンド+バックエンド同時実装」「複数テストスイートの並列実行」「マルチファイルリファクタリング」の3パターン。実プロジェクトで4〜6倍の開発速度向上を報告。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-09_005_Claude_Code_Simplify_Batch_Commands_mindstudio.md",
+      "title": "What Is Claude Code /simplify and /batch? The Built-In Commands That Fix Overengineering",
+      "url": "https://www.mindstudio.ai/blog/claude-code-simplify-batch-commands",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "MindStudio公式ブログによるClaude Code組み込みスキル「/simplify」と「/batch」の詳解記事。/simplifyは変更済みコードをレビューして再利用・品質・効率の観点から問題を発見し自動修正するスキル。/batchは大規模コードベース変更を5〜30の独立ユニットに分解し、バックグラウンドエージェントが並列処理してPRを作成する機能。/batchの内部フロー（コードベース調査→計画提示→承認→並列実行→テスト→PR作成）を詳細に説明。活用例：「全ファイルの型注釈追加」「APIエンドポイント一括リファクタリング」。Claude Code 2.1系の組み込みスキルとして公式ドキュメントに基づく信頼性の高い解説。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-09_006_Anthropic_Official_33Page_Skills_Design_Patterns_smartscope.md",
+      "title": "Anthropic's 33-Page Official Guide Distilled: 5 Claude Skills Design Patterns",
+      "url": "https://smartscope.blog/en/generative-ai/claude/claude-skills-design-patterns-official-guide/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Anthropic公式33ページのAgent Skills設計ガイドを凝縮した技術記事。公式ドキュメントから抽出した5つの設計パターン：①ルーティングテーブル型（SKILL.md 100行以内で13参照ファイル管理）、②Progressive Disclosure型、③モデル指定型（`model: haiku`でコスト削減）、④外部スクリプト分離型、⑤スキルチェーン型。デバッグ方法（/skill-debugコマンド、description改善の判断基準）も詳説。ルーティングテーブル型はコンテキスト消費最小化の最効率パターン。Anthropic公式ドキュメントの一次情報に基づく信頼性の高い記事。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-09_007_CLAUDE_md_AGENTS_md_Team_Design_Patterns_homula.md",
+      "title": "CLAUDE.md / AGENTS.md 設計パターン完全ガイド — チーム運用フレームワーク（2026年版）",
+      "url": "https://www.homula.jp/blog/claude-md-agents-md-team-design-patterns",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "株式会社homulaによるCLAUDE.md・AGENTS.md設計パターンのチーム運用ガイド。CLAUDE.md（Claude Code用）とAGENTS.md（他LLMエージェント互換）の使い分けと両立方法を解説。チーム運用の「責任分担パターン」（プロジェクト共通CLAUDE.md + 個人用~/.claude/CLAUDE.md）、機密情報のgitignore戦略、多言語チームでの英日両立記載法を紹介。Progressive Disclosure実装（@import構文でスキル分割）とCLAUDE.mdの「四半期レビュー」チェックリストを提示。200行超えたら分割という具体的な閾値基準が実践的。MCP対応ツール一覧も付属。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-09_008_Claude_Code_217_Update_New_Hooks_issoh.md",
+      "title": "Claude Code 2.1.7 最新アップデート：新フックイベント・--resume改善・権限制御強化",
+      "url": "https://www.issoh.co.jp/tech/details/10625/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "株式会社一創によるClaude Code v2.1.7アップデートの詳解記事。主要変更点：①--resumeフローの高速化、②新フックイベント追加（TeammateIdle・TaskCompleted・PermissionDenied）、③Windows/MCP/長期セッション安定性改善、④typeahead補完とツールサマリー表示改善。PermissionDeniedフックでは{retry: true}を返すことでモデルに再試行を指示できる新機能を紹介。Auto ModeのClassifier拒否後にフックで介入できるようになったことで細かい権限制御が可能に。--resumeのキャッシュミス問題（v2.1.69以降のリグレッション）の修正についても詳述。公式CHANGELOGに基づく信頼性の高い日本語解説。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-09_009_Claude_Code_Hooks_All_12_Events_CI_CD_pixelmojo.md",
+      "title": "Claude Code Hooks: All 12 Events Reference & Production CI/CD Patterns [2026]",
+      "url": "https://www.pixelmojo.io/blogs/claude-code-hooks-production-quality-ci-cd-patterns",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Claude Codeの全12フックイベントを網羅したリファレンス記事（2026年）。PreToolUse・PostToolUse・PreCompact・Stop・Notification・UserPromptSubmit・SessionStart・TaskCreated・TeammateIdle・TaskCompleted・PermissionDeniedの各イベントの用途・引数・戻り値を表形式で整理。本番CI/CDでの活用パターン：「PreToolUseでgit状態確認→Stopで自動lint実行→PostCompactで圧縮後コンテキスト検証」のパイプライン。新追加のPermissionDeniedフック（{retry:true}返却でリトライ可）とdefer権限決定（ヘッドレスセッションのポーズ＆再開）の実装例も掲載。Hooks設計の「べからず集」も有用。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-09_010_Claude_API_Production_Guide_2026_devto.md",
+      "title": "Claude API in Production: The Complete Developer Guide 2026",
+      "url": "https://dev.to/whoffagents/claude-api-in-production-the-complete-developer-guide-2026-1hf2",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "DEV.to掲載のClaude API本番運用ガイド（2026年版）。最新API機能：max_tokens 300K（output-300k-2026-03-24ベータヘッダー）、Message Batches API、citations機能、Tool helpers（Python/TypeScript SDKベータ）を解説。本番環境のエラーハンドリング（529エラーのバックオフ戦略）、コスト最適化（プロンプトキャッシュで最大90%コスト削減）、組織ID管理（anthropic-organization-idレスポンスヘッダー）などのプロダクション知見を紹介。Claude Agent SDK移行ガイド（旧Claude Code SDKからの名前変更対応）と1Mトークンコンテキスト（Opus 4.6・Sonnet 4.6標準対応）への移行方法も説明。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-09_011_MCP_Technical_Deep_Dive_v21_Server_Cards_dasroot.md",
+      "title": "Model Context Protocol Technical Deep Dive: v2.1 & Server Cards Specification",
+      "url": "https://dasroot.net/posts/2026/04/model-context-protocol-mcp-technical-deep-dive/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "2026年4月公開のMCP技術深掘り記事。MCP v2.1の主要仕様変更：①Server Cards（/.well-known/mcp.json経由のサーバーメタデータ公開、SEP-1649準拠）、②Elicitation APIのストリーミング対応、③MCP TypeScript SDK v1.27のストリーミングメソッド追加。Server Cardsはサーバー接続前にCapabilities・認証要件・利用可能ツールを自動検出できる仕様で、クライアント自動設定・セキュリティ事前検証・UI高速ハイドレーションを実現。MCP v2.1ではWorking Groupsがプロトコル開発主体となりロードマップが「日付ベース」から「優先度ベース」に変更。2026年3月時点でMCPは累計9700万インストールを突破。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-09_012_MCP_Ecosystem_2026_v127_Analysis_contextstudios.md",
+      "title": "MCP Ecosystem in 2026: What the TypeScript SDK v1.27 Release Actually Tells Us",
+      "url": "https://www.contextstudios.ai/blog/mcp-ecosystem-in-2026-what-the-v127-release-actually-tells-us",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Context StudiosによるMCP TypeScript SDK v1.27リリース（2026年2月24日）の詳細分析記事。v1.27の4つの主要変更点：①タスクフレームワーク下のelicitation/samplingへのストリーミングメソッド追加、②接続ライフサイクル管理改善、③型安全性強化、④パフォーマンス最適化。MCPエコシステム2026年上半期の状況：登録サーバー数10,000超え、週次新規サーバー追加300件超。AWS提供54種MCPサーバー、Salesforce Hosted MCP Server（ベータ）、OktaのElicitation API統合など企業採用が加速。MCPが「実験的標準」から「基盤的インフラ」へ転換した転換点として分析。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-09_013_Claude_Agent_SDK_Deep_Dive_Library_Mode_jidonglab.md",
+      "title": "Claude Agent SDK Deep Dive: Using Claude Code as a Library",
+      "url": "https://jidonglab.com/blog/claude-agent-sdk-deep-dive-en/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Jidong LabによるClaude Agent SDK（旧Claude Code SDK）の詳細解説記事。「Claude Codeをライブラリとして使う」コンセプトを説明。SDK3大優位点：①組み込みツール（ファイル読み書き・コマンド実行のボイラープレート不要）、②MCPサーバーとの深い統合（Playwright・Slack・GitHub等）、③18のフックイベントによるエージェント実行への介入機能。Python・TypeScript両SDKでの実装例を提示し、セッション管理（--resumeフラグ）、権限モード設定（bypassPermissions/acceptEdits等）の使い方を説明。`context-1m-2025-08-07`ベータの2026年4月30日廃止と、Claude Sonnet/Opus 4.6への1Mコンテキスト標準移行も解説。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-09_014_LG_EXAONE_45_Multimodal_Launch_prnewswire.md",
+      "title": "LG EXAONE 4.5 発表：33B VLMがGPT-5-mini・Claude 4.5 Sonnetを超えるSTEMベンチマーク",
+      "url": "https://www.prnewswire.com/news-releases/lg-reveals-next-gen-multimodal-ai-exaone-4-5-302736993.html",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "LG AI Researchが2026年4月9日（本日）正式発表した次世代マルチモーダルAIモデル「EXAONE 4.5」の公式プレスリリース。330億パラメータ（33B）のVision-Language Modelで、独自のHybrid Attention architectureとマルチトークン予測による高速推論を実現。5つの主要STEMベンチマーク平均スコア77.3で、GPT-5-mini（73.5）・Claude 4.5 Sonnet（74.6）・Alibaba Qwen-3 235B（77.0）を上回る。13の包括的ベンチマークで3モデルの平均スコアを一貫して超過。対応言語をK・ENから6言語（スペイン語・ドイツ語・日本語・ベトナム語）に拡張。K-EXAONEの約1/7のサイズで同等性能を達成。将来的に音声・動画・物理環境理解に拡張予定。",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "確認済み: LG AI ResearchがEXAONE 4.5を2026-04-09に正式発表。STEM平均スコアはEXAONE 4.5=77.3、GPT-5-mini=73.5、Claude 4.5 Sonnet=74.6（LG自社計測値）。ベンチマーク数値は概ね一致。ただしライセンスは非商用（研究・学術利用のみ）で、プロダクション利用不可の制約あり。"
+    },
+    {
+      "file": "2026-04-09_015_Meta_Muse_Spark_Proprietary_Strategy_Shift_venturebeat.md",
+      "title": "Meta Muse Spark：Llama後初のプロプライエタリモデル、オープンソース戦略から転換",
+      "url": "https://venturebeat.com/technology/goodbye-llama-meta-launches-new-proprietary-ai-model-muse-spark-first-since",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "VentureBeat報道：Metaが2026年4月8日、Superintelligence Labs設立後初の独自プロプライエタリAIモデル「Muse Spark」を発表。従来のLlamaシリーズ（オープンソース戦略）からの戦略転換を意味する重要ニュース。Muse SparkはMeta AIの旧来「オープンサイエンス」路線から離脱した初のクローズドモデル。マルチモーダル認識・推論・ヘルスケア・エージェントタスクで競争力を持ち、より小型のLlama 4相当モデルを「桁違いに少ない計算量」で作成可能。同日Zuckerberg氏はLlama 5もリリース発表（オープンソース継続）。MetaのCapEx 480億ドル（2025-2026年度）投資の成果として位置付け。NVIDIAやDell・HPEなどAIインフラ企業の恩恵が期待される。",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "確認済み: Meta Muse Sparkは2026-04-08にMeta Superintelligence Labs（Alexandr Wang率いる）がリリース。Llama以降初のプロプライエタリモデルという主張は正確。コードネームはAvocado。TechCrunch・Axios・CNBC等複数媒体が報道。"
+    },
+    {
+      "file": "2026-04-09_016_Claude_Mythos_Capybara_Leaked_Step_Change_theDecoder.md",
+      "title": "Claude Mythos（Capybara）：Anthropicがリークで判明した次世代モデル「step change」",
+      "url": "https://the-decoder.com/anthropic-leak-reveals-new-model-claude-mythos-with-dramatically-higher-scores-on-tests-than-any-previous-model/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "The Decoder報道：2026年3月27日、AnthropicのCMS設定ミスにより未発表モデル「Claude Mythos」（内部コード名Capybara）の存在が漏洩。約3000件の未公開アセットと下書きブログ記事が一時的に公開状態になった。Mythosはソフトウェアコーディング・学術推論・サイバーセキュリティの各テストでOpus 4.6を「劇的に上回るスコア」を記録。Anthropicは「step change」と表現。現時点（2026年4月）では約50の限定パートナー組織のみアクセス可能な「Project Glasswing」ゲートプログラムで提供中。OpusよりさらにCapybaraティアとして上位に位置付けられ、サイバーセキュリティ脆弱性検出で特に顕著な性能向上。正式リリース日は未定。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-09_017_US_State_AI_Law_Update_April6_troutman.md",
+      "title": "米国AI州法動向レポート：2026年4月6日版 — Oregon・Idaho・Tennessee新法成立",
+      "url": "https://www.troutmanprivacy.com/2026/04/proposed-state-ai-law-update-april-6-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "Troutman Pepper Lockeによる週次AI州法動向レポート（2026年4月6日版）。新たに成立した法律：①Oregon（SB 1546）・Idaho（S 1297）のチャットボット開示義務法が署名成立、②Tennessee医療AI法成立、③Indiana・Utah・Washington州でAI使用健康保険査定規制法（AIのみでの保険請求否定禁止）が成立。法案進捗：Nebraska（LB 525）チャットボット法が登録ステップ進む、Massachusetts（S 2632）・Rhode Island（HB 7538）・South Carolina（S788）の各委員会通過。連邦レベルでは2025年12月トランプ大統領AI先制規制大統領令を受け、DOJ AI Litigation Task Forceが州法への挑戦権限を持つ。Troutmanは全州AI立法を包括的にトラッキングする信頼性の高い一次情報源。",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "確認済み: Oregon SB 1546（AIコンパニオン規制、Tina Kotek知事署名、2027-01-01施行）、Idaho S 1297（Conversational AI Safety Act、チャットボット規制）、Tennessee SB 1580（医療AI規制、AIが精神科医資格詐称を禁止）の各法律成立を確認。Troutman Pepper・JDSupraの法律専門メディアで裏付け済み。"
+    },
+    {
+      "file": "2026-04-09_018_US_Tech_AI_Regulatory_Q1_2026_globalpolicywatch.md",
+      "title": "米国テック・AI規制Q1 2026総括：連邦vs州のAI規制権限争いが本格化",
+      "url": "https://www.globalpolicywatch.com/2026/04/u-s-tech-legislative-regulatory-update-first-quarter-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "Global Policy WatchによるQ1 2026（1〜3月）の米国テック規制四半期総括。AI関連の主要動向：①議会での複数AI関連法案提出（非合意的な画像・チャットボット・中小企業支援・州規制先制等）、②トランプ政権「ライトタッチ」アプローチを掲げる全国AI政策フレームワーク（National Policy Framework for AI）を3月発表、③DOJ AI Litigation Task Force設置（1月）で違憲な州AI法への挑戦を担当。健康保険AI規制（Indiana HB 1271・Utah SB 319・Washington SB 5395）が3月成立。連邦vs州のAI規制権限争いが本格化し、AI先制大統領令による州法無効化の動きと州政府の対抗が2026年の主要法的論点。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    }
+  ],
+  "fact_checks": [
+    {
+      "article_file": "2026-04-09_014_LG_EXAONE_45_Multimodal_Launch_prnewswire.md",
+      "checked": true,
+      "note": "確認済み: LG AI ResearchがEXAONE 4.5を2026-04-09に正式発表。STEM平均スコアはEXAONE 4.5=77.3、GPT-5-mini=73.5、Claude 4.5 Sonnet=74.6（LG自社計測値）。ベンチマーク数値は概ね一致。ただしライセンスは非商用（研究・学術利用のみ）で、プロダクション利用不可の制約あり。"
+    },
+    {
+      "article_file": "2026-04-09_015_Meta_Muse_Spark_Proprietary_Strategy_Shift_venturebeat.md",
+      "checked": true,
+      "note": "確認済み: Meta Muse Sparkは2026-04-08にMeta Superintelligence Labs（Alexandr Wang率いる）がリリース。Llama以降初のプロプライエタリモデルという主張は正確。コードネームはAvocado。TechCrunch・Axios・CNBC等複数媒体が報道。"
+    },
+    {
+      "article_file": "2026-04-09_017_US_State_AI_Law_Update_April6_troutman.md",
+      "checked": true,
+      "note": "確認済み: Oregon SB 1546（AIコンパニオン規制、Tina Kotek知事署名、2027-01-01施行）、Idaho S 1297（Conversational AI Safety Act、チャットボット規制）、Tennessee SB 1580（医療AI規制、AIが精神科医資格詐称を禁止）の各法律成立を確認。Troutman Pepper・JDSupraの法律専門メディアで裏付け済み。"
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-04-08": 25,
+      "2026-04-07": 25,
+      "2026-04-06": 0,
+      "2026-04-05": 0,
+      "2026-04-04": 0,
+      "2026-04-03": 0,
+      "2026-04-02": 0
+    },
+    "recurring_themes": [
+      "claude",
+      "claude_code",
+      "trading",
+      "mcp",
+      "agent"
+    ]
+  }
+}

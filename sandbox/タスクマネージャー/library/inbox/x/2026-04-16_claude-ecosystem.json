@@ -1,0 +1,434 @@
+{
+  "domain": "claude-ecosystem",
+  "collected_at": "2026-04-16T11:58:39.613821+00:00",
+  "days": 1,
+  "total_fetched": 48,
+  "total_filtered": 2,
+  "tweets": [
+    {
+      "tweet_created_at": "2026-04-15T16:43:58.000000Z",
+      "id": 2044456709687808145,
+      "id_str": "2044456709687808145",
+      "type": "tweet",
+      "conversation_id_str": "2044456709687808145",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Anthropic just introduced the Claude Architect Certification — and it’s not easy.\n\n60 questions.\n5 competency areas.\nOne sitting. No breaks. No external help.\n\nHere’s a simple roadmap to prepare:\n\nWeek 1 — Foundations\n• Claude API\n• Model Context Protocol (MCP)\n• Claude Code\n• Claude 101\n\nWeek 2 — Build\n• Claude Code\n• Agent SDK\n• Anthropic API\n• MCP\n\nWeek 3 — Understand the Exam\n• Exam scenarios\n• Competency areas\n• Required skills\n\nWeek 4 — Practice Systems\n• Multi-tool agent with escalation\n• Team workflow setup\n• Data extraction pipeline\n• Multi-agent research system\n\nWeek 5 — Test Yourself\nPractice exam → Target 850+\n\nWeek 6 — Final Attempt\nOne attempt. Be ready.\n\nA few notes:\n\n• Early access is limited to partners\n• Prep time varies (2–10 weeks depending on skill level)\n\nIf you’re eligible, register here:\nhttps://t.co/YK3O6KCxwm\n\nThis isn’t just a certification.\n\nIt’s a signal of how seriously you build with AI",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1828746905985429504,
+        "id_str": "1828746905985429504",
+        "name": "smrati tiwari",
+        "screen_name": "smratitiwa86867",
+        "location": "Newsletter ",
+        "url": "https://itsdailyai.beehiiv.com/",
+        "description": "AI & tech creator sharing what actually works, not just what’s trending\n\nOpen to collaborations🤝",
+        "protected": false,
+        "verified": true,
+        "followers_count": 5701,
+        "friends_count": 36,
+        "listed_count": 0,
+        "favourites_count": 1214,
+        "statuses_count": 1464,
+        "created_at": "2024-08-28T10:50:24.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1828746905985429504/1768760611",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2012939953697648640/gBayVu71_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 2,
+      "retweet_count": 6,
+      "favorite_count": 18,
+      "views_count": 1559,
+      "bookmark_count": 15,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "anthropic.skilljar.com/claude-certifi…",
+            "expanded_url": "https://anthropic.skilljar.com/claude-certified-architect-foundations-access-request",
+            "indices": [
+              823,
+              846
+            ],
+            "url": "https://t.co/YK3O6KCxwm"
+          }
+        ],
+        "user_mentions": [],
+        "media": [
+          {
+            "display_url": "pic.x.com/m37g8qHIsI",
+            "expanded_url": "https://x.com/smratitiwa86867/status/2044456709687808145/photo/1",
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "features": {
+              "large": {
+                "faces": [
+                  {
+                    "h": 148,
+                    "w": 148,
+                    "x": 406,
+                    "y": 288
+                  }
+                ]
+              }
+            },
+            "id_str": "2044456706185564164",
+            "indices": [
+              276,
+              299
+            ],
+            "media_key": "3_2044456706185564164",
+            "media_url_https": "https://pbs.twimg.com/media/HF9eitLbEAQS9R_.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 437,
+                  "w": 781,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 781,
+                  "w": 781,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 890,
+                  "w": 781,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 952,
+                  "w": 476,
+                  "x": 23,
+                  "y": 0
+                },
+                {
+                  "h": 952,
+                  "w": 781,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 952,
+              "width": 781
+            },
+            "sizes": {
+              "large": {
+                "h": 952,
+                "w": 781
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/m37g8qHIsI"
+          }
+        ],
+        "display_text_range": [
+          0,
+          275
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-15T01:04:28.000000Z",
+      "id": 2044220277115248692,
+      "id_str": "2044220277115248692",
+      "type": "tweet",
+      "conversation_id_str": "2044220277115248692",
+      "community_id_str": "1493446837214187523",
+      "community_name": "Build in Public",
+      "text": null,
+      "full_text": "day 3 - build MCP Server for https://t.co/0Ep5AEnvFx\n\n- offcially on both OpenAI/Anthropic models\n- listed on MCPT and Smithery registries\n- 10/19 views checks out the MCP\n- still building for agents🔥 https://t.co/FELJmlaFdc",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1887340106144727040,
+        "id_str": "1887340106144727040",
+        "name": "Victor",
+        "screen_name": "RotcivWho",
+        "location": "join ecosystem 👉",
+        "url": "https://discord.gg/SkMF5v5Y5u",
+        "description": "build https://t.co/8e8gr0f8pN - ai infra for prediction market",
+        "protected": false,
+        "verified": true,
+        "followers_count": 360,
+        "friends_count": 264,
+        "listed_count": 0,
+        "favourites_count": 5004,
+        "statuses_count": 3315,
+        "created_at": "2025-02-06T03:18:52.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1887340106144727040/1771917222",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1950752939657838593/RmK0IZ5B_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 16,
+      "retweet_count": 1,
+      "favorite_count": 23,
+      "views_count": 470,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "musashi.bot",
+            "expanded_url": "http://musashi.bot",
+            "indices": [
+              29,
+              52
+            ],
+            "url": "https://t.co/0Ep5AEnvFx"
+          }
+        ],
+        "user_mentions": [],
+        "media": [
+          {
+            "allow_download_status": {
+              "allow_download": true
+            },
+            "display_url": "pic.x.com/FELJmlaFdc",
+            "expanded_url": "https://x.com/RotcivWho/status/2044220277115248692/photo/1",
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "features": {
+              "large": {
+                "faces": []
+              }
+            },
+            "id_str": "2044220257150349312",
+            "indices": [
+              201,
+              224
+            ],
+            "media_key": "3_2044220257150349312",
+            "media_url_https": "https://pbs.twimg.com/media/HF6Hfj4asAA6cAN.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 1147,
+                  "w": 2048,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 1330,
+                  "w": 1330,
+                  "x": 359,
+                  "y": 0
+                },
+                {
+                  "h": 1330,
+                  "w": 1167,
+                  "x": 441,
+                  "y": 0
+                },
+                {
+                  "h": 1330,
+                  "w": 665,
+                  "x": 692,
+                  "y": 0
+                },
+                {
+                  "h": 1330,
+                  "w": 2048,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 1330,
+              "width": 2048
+            },
+            "sizes": {
+              "large": {
+                "h": 1330,
+                "w": 2048
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/FELJmlaFdc"
+          },
+          {
+            "allow_download_status": {
+              "allow_download": true
+            },
+            "display_url": "pic.x.com/FELJmlaFdc",
+            "expanded_url": "https://x.com/RotcivWho/status/2044220277115248692/photo/1",
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "features": {
+              "large": {
+                "faces": [
+                  {
+                    "h": 106,
+                    "w": 106,
+                    "x": 1176,
+                    "y": 746
+                  }
+                ]
+              }
+            },
+            "id_str": "2044220257158737920",
+            "indices": [
+              201,
+              224
+            ],
+            "media_key": "3_2044220257158737920",
+            "media_url_https": "https://pbs.twimg.com/media/HF6Hfj6asAA-RVY.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 1147,
+                  "w": 2048,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 1330,
+                  "w": 1330,
+                  "x": 359,
+                  "y": 0
+                },
+                {
+                  "h": 1330,
+                  "w": 1167,
+                  "x": 441,
+                  "y": 0
+                },
+                {
+                  "h": 1330,
+                  "w": 665,
+                  "x": 692,
+                  "y": 0
+                },
+                {
+                  "h": 1330,
+                  "w": 2048,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 1330,
+              "width": 2048
+            },
+            "sizes": {
+              "large": {
+                "h": 1330,
+                "w": 2048
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/FELJmlaFdc"
+          },
+          {
+            "allow_download_status": {
+              "allow_download": true
+            },
+            "display_url": "pic.x.com/FELJmlaFdc",
+            "expanded_url": "https://x.com/RotcivWho/status/2044220277115248692/photo/1",
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "features": {
+              "large": {
+                "faces": []
+              }
+            },
+            "id_str": "2044220257162932224",
+            "indices": [
+              201,
+              224
+            ],
+            "media_key": "3_2044220257162932224",
+            "media_url_https": "https://pbs.twimg.com/media/HF6Hfj7asAAEigL.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 1147,
+                  "w": 2048,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 1394,
+                  "w": 1394,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 1394,
+                  "w": 1223,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 1394,
+                  "w": 697,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 1394,
+                  "w": 2048,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 1394,
+              "width": 2048
+            },
+            "sizes": {
+              "large": {
+                "h": 1394,
+                "w": 2048
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/FELJmlaFdc"
+          }
+        ],
+        "display_text_range": [
+          0,
+          200
+        ]
+      },
+      "is_pinned": false
+    }
+  ]
+}
