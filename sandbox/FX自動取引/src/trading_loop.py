@@ -12,19 +12,19 @@ import time
 from typing import Optional
 
 import pandas as pd
-import pandas_ta as ta
 
 from src.ai_advisor import AIAdvisor
 from src.bear_researcher import BearResearcher
 from src.broker_client import BrokerClient
 from src.config import ATR_PERIOD, BEAR_RESEARCHER_ENABLED, MAIN_TIMEFRAME
 from src.conviction_scorer import ConvictionScorer
+from src.indicator_cache import compute_indicators
+from src.notifier_group import NotifierGroup
 from src.position_manager import PositionManager
 from src.regime_detector import RegimeDetector
 from src.risk_manager import RiskManager
-from src.slack_notifier import SlackNotifier
+from src.signal_coordinator import SignalCoordinator
 from src.strategy.base import Signal, StrategyBase
-from src.telegram_notifier import TelegramNotifier
 
 logger = logging.getLogger(__name__)
 
@@ -52,10 +52,10 @@ class TradingLoop:
         granularity: str = MAIN_TIMEFRAME,
         check_interval_sec: int = 60,
         max_consecutive_errors: int = 10,
-        notifier: Optional[TelegramNotifier] = None,
+        notifier: Optional[NotifierGroup] = None,
         ai_advisor: Optional[AIAdvisor] = None,
-        slack_notifier: Optional[SlackNotifier] = None,
         bear_researcher: Optional[BearResearcher] = None,
+        signal_coordinator: Optional[SignalCoordinator] = None,
     ) -> None:
         """
         Args:
@@ -93,8 +93,8 @@ class TradingLoop:
 
         self._notifier = notifier
         self._ai_advisor = ai_advisor
-        self._slack_notifier = slack_notifier
         self._bear_researcher = bear_researcher
+        self._signal_coordinator = signal_coordinator
 
         self._running: bool = False
         self._iteration_count: int = 0
@@ -158,10 +158,6 @@ class TradingLoop:
                             self._notifier.notify_error(
                                 error_msg, self._consecutive_error_count,
                             )
-                        if self._slack_notifier:
-                            self._slack_notifier.notify_error(
-                                error_msg, self._consecutive_error_count,
-                            )
 
                     # 連続エラー上限超過でループ停止
                     if self._consecutive_error_count > self._max_consecutive_errors:
@@ -219,8 +215,41 @@ class TradingLoop:
         Raises:
             各ステップで発生した例外はそのまま上位に伝播する。
         """
-        order_result: Optional[dict] = None
+        # ステージ1: プリトレードチェック（残高・キルスイッチ）
+        if not self._pre_trade_checks():
+            self._iteration_count += 1
+            return None
 
+        # ステージ2: データ取得・指標計算
+        data, indicators = self._fetch_and_compute()
+
+        # ステージ3: シグナルパイプライン（レジーム→戦略→conviction→AI→Bear）
+        pipeline_result = self._signal_pipeline(data, indicators)
+
+        # ステージ4: 取引実行
+        order_result = None
+        if pipeline_result is not None:
+            signal, combined_multiplier, conviction, regime_info = pipeline_result
+            order_result = self._execute_trade(
+                signal, combined_multiplier, conviction, regime_info, data,
+                indicators=indicators,
+            )
+
+        self._iteration_count += 1
+        return order_result
+
+    # ------------------------------------------------------------------
+    # run_once サブステージ
+    # ------------------------------------------------------------------
+
+    def _pre_trade_checks(self) -> bool:
+        """
+        プリトレードチェック: 残高更新・キルスイッチ評価。
+
+        Returns:
+            True: 取引パイプラインに進んでよい
+            False: このイテレーションはスキップ
+        """
         # 1. 口座残高の取得・更新
         account_summary = self._broker_client.get_account_summary()
         current_balance = account_summary["balance"]
@@ -243,8 +272,6 @@ class TradingLoop:
                 self._risk_manager.kill_switch.activate(kill_reason)
                 if self._notifier:
                     self._notifier.notify_kill_switch(kill_reason, True)
-                if self._slack_notifier:
-                    self._slack_notifier.notify_kill_switch(kill_reason, True)
 
             # EMERGENCY レベルなら全ポジション強制決済
             _, level_name, _ = self._risk_manager.check_drawdown(
@@ -260,7 +287,6 @@ class TradingLoop:
 
         # 3. キルスイッチ発動中の処理
         if self._risk_manager.kill_switch.is_active:
-            # 自動解除判定
             if self._risk_manager.kill_switch.should_auto_deactivate():
                 logger.info(
                     "キルスイッチ自動解除条件を満たしました: reason=%s",
@@ -269,17 +295,22 @@ class TradingLoop:
                 self._risk_manager.kill_switch.deactivate()
                 if self._notifier:
                     self._notifier.notify_kill_switch("自動解除", False)
-                if self._slack_notifier:
-                    self._slack_notifier.notify_kill_switch("自動解除", False)
             else:
-                # 解除条件を満たさない → 新規取引スキップ
                 logger.info(
                     "キルスイッチ発動中のため新規取引をスキップ: reason=%s",
                     self._risk_manager.kill_switch.reason,
                 )
-                self._iteration_count += 1
-                return None
+                return False
 
+        return True
+
+    def _fetch_and_compute(self) -> tuple[pd.DataFrame, dict]:
+        """
+        データ取得・ブローカー同期・指標キャッシュ計算。
+
+        Returns:
+            (価格データ, 指標キャッシュdict)
+        """
         # 4. ブローカーとのポジション同期
         self._position_manager.sync_with_broker()
 
@@ -288,19 +319,18 @@ class TradingLoop:
             self._instrument, 100, self._granularity
         )
 
+        # 5a. 指標キャッシュの一括計算（全モジュールで共有）
+        indicators = compute_indicators(data)
+
         # 5b. ATR/spreadキャッシュ更新（次回イテレーションのキルスイッチ評価用）
-        if len(data) >= ATR_PERIOD + 1:
-            atr_series = ta.atr(
-                data["high"], data["low"], data["close"], length=ATR_PERIOD
-            )
-            if atr_series is not None and not atr_series.empty:
-                current_atr = atr_series.iloc[-1]
-                if not pd.isna(current_atr):
-                    self._last_atr = float(current_atr)
-                    # 通常ATR = 全期間の中央値（安定した基準値）
-                    valid_atr = atr_series.dropna()
-                    if len(valid_atr) > 0:
-                        self._normal_atr = float(valid_atr.median())
+        cached_atr = indicators.get("current_atr")
+        cached_atr_series = indicators.get("atr")
+        if cached_atr is not None:
+            self._last_atr = cached_atr
+            if cached_atr_series is not None:
+                valid_atr = cached_atr_series.dropna()
+                if len(valid_atr) > 0:
+                    self._normal_atr = float(valid_atr.median())
 
         # 5c. spreadキャッシュ更新（キルスイッチのスプレッド監視用）
         try:
@@ -308,10 +338,8 @@ class TradingLoop:
             if current_spread is not None and current_spread >= 0:
                 self._last_spread = current_spread
                 if self._normal_spread is None:
-                    # 初回: 現在値を通常値として設定
                     self._normal_spread = current_spread
                 else:
-                    # EMA（α=0.1）で通常値を更新（急変を平滑化）
                     alpha = 0.1
                     self._normal_spread = (
                         (1 - alpha) * self._normal_spread
@@ -322,122 +350,160 @@ class TradingLoop:
                 "スプレッド取得失敗（前回値を継続使用）: %s", e
             )
 
-        # 6. レジーム検出（Phase 3）
-        regime_info = self._regime_detector.detect(data)
+        return data, indicators
+
+    def _signal_pipeline(
+        self, data: pd.DataFrame, indicators: dict
+    ) -> Optional[tuple]:
+        """
+        シグナルパイプライン: レジーム→戦略→conviction→AI→Bear。
+
+        Returns:
+            (signal, combined_multiplier, conviction, regime_info) または None
+        """
+        # 6. レジーム検出
+        regime_info = self._regime_detector.detect(data, indicators=indicators)
         logger.info(
-            "レジーム判定: %s (確信度=%.2f, エクスポージャー=%.1f, ADX=%.1f)",
+            "[%s] レジーム判定: %s (確信度=%.2f, エクスポージャー=%.1f, ADX=%.1f)",
+            self._instrument,
             regime_info.regime.value,
             regime_info.confidence,
             regime_info.exposure_multiplier,
             regime_info.adx,
         )
 
-        # レジームがVOLATILEなら取引停止
+        # VOLATILEなら取引停止
         if regime_info.exposure_multiplier == 0.0:
             logger.warning(
-                "高ボラティリティ検出（ATR比率=%.2f）。新規取引を停止。",
+                "[%s] 高ボラティリティ検出（ATR比率=%.2f）。新規取引を停止。",
+                self._instrument,
                 regime_info.atr_ratio,
             )
-            self._iteration_count += 1
             return None
 
         # 7. シグナル生成
-        signal = self._strategy.generate_signal(data)
+        signal = self._strategy.generate_signal(data, indicators=indicators)
 
-        # 8. BUY/SELL シグナルなら conviction score で評価
-        if signal in (Signal.BUY, Signal.SELL):
-            conviction = self._conviction_scorer.score(data, signal, regime_info)
-            logger.info(
-                "conviction score: %d/10 (倍率=%.1f, 取引=%s) — %s",
-                conviction.score,
-                conviction.position_size_multiplier,
-                conviction.should_trade,
-                conviction.reasoning,
-            )
-
-            if not conviction.should_trade:
-                logger.info(
-                    "conviction不足（%d < 閾値）。シグナル %s を見送り。",
-                    conviction.score,
-                    signal.value,
-                )
-            else:
-                # エクスポージャー倍率 = レジーム倍率 × conviction倍率
-                combined_multiplier = (
-                    regime_info.exposure_multiplier
-                    * conviction.position_size_multiplier
-                )
-
-                # AIフィルター適用（AIは最終判断しない、倍率調整のみ）
-                ai_eval = "N/A"
-                if self._ai_advisor:
-                    bias = self._ai_advisor.get_bias(self._instrument)
-                    if bias:
-                        ai_eval = bias.evaluate_signal(signal.value)
-                        ai_multiplier = bias.position_size_multiplier(ai_eval)
-                        logger.info(
-                            "AIフィルター: %s (direction=%s, confidence=%.2f) → 倍率%.2f",
-                            ai_eval, bias.direction, bias.confidence, ai_multiplier,
-                        )
-                        if ai_eval == "REJECT":
-                            logger.warning(
-                                "AIフィルター: REJECT（%s）。シグナルを見送り。",
-                                bias.reasoning,
-                            )
-                            self._iteration_count += 1
-                            return None
-                        combined_multiplier *= ai_multiplier
-
-                # Bear Researcher: 逆張り検証（テクニカル矛盾点の検出）
-                if self._bear_researcher:
-                    bear_verdict = self._bear_researcher.verify(
-                        data, signal, regime_info,
-                    )
-                    if bear_verdict.severity >= 0.4:
-                        logger.warning(
-                            "Bear Researcher警告: severity=%.2f, penalty=%.2f, リスク=%s",
-                            bear_verdict.severity,
-                            bear_verdict.penalty_multiplier,
-                            bear_verdict.risk_factors,
-                        )
-                        combined_multiplier *= bear_verdict.penalty_multiplier
-
-                logger.info(
-                    "シグナル実行: %s, instrument=%s, "
-                    "ポジションサイズ倍率=%.2f (レジーム%.1f × conviction%.1f × AI=%s)",
-                    signal.value,
-                    self._instrument,
-                    combined_multiplier,
-                    regime_info.exposure_multiplier,
-                    conviction.position_size_multiplier,
-                    ai_eval,
-                )
-                if self._notifier:
-                    self._notifier.notify_signal(self._instrument, signal.value)
-                if self._slack_notifier:
-                    self._slack_notifier.notify_signal(
-                        self._instrument,
-                        signal.value,
-                        conviction_score=conviction.score,
-                        regime=regime_info.regime.value,
-                    )
-                order_result = self._position_manager.open_position(
-                    instrument=self._instrument,
-                    signal=signal,
-                    data=data,
-                    strategy=self._strategy,
-                )
-        else:
+        if signal not in (Signal.BUY, Signal.SELL):
             logger.debug(
-                "HOLDシグナル: instrument=%s, iteration=%d",
+                "[%s] HOLDシグナル: iteration=%d",
                 self._instrument,
                 self._iteration_count + 1,
             )
+            return None
 
-        # 8. イテレーションカウント更新
-        self._iteration_count += 1
+        # 8. conviction score 評価
+        conviction = self._conviction_scorer.score(
+            data, signal, regime_info, indicators=indicators,
+        )
+        logger.info(
+            "[%s] conviction score: %d/10 (倍率=%.1f, 取引=%s) — %s",
+            self._instrument,
+            conviction.score,
+            conviction.position_size_multiplier,
+            conviction.should_trade,
+            conviction.reasoning,
+        )
 
-        return order_result
+        if not conviction.should_trade:
+            logger.info(
+                "[%s] conviction不足（%d < 閾値）。シグナル %s を見送り。",
+                self._instrument,
+                conviction.score,
+                signal.value,
+            )
+            return None
+
+        # エクスポージャー倍率 = レジーム倍率 × conviction倍率
+        combined_multiplier = (
+            regime_info.exposure_multiplier
+            * conviction.position_size_multiplier
+        )
+
+        # AIフィルター適用
+        ai_eval = "N/A"
+        if self._ai_advisor:
+            bias = self._ai_advisor.get_bias(self._instrument)
+            if bias:
+                ai_eval = bias.evaluate_signal(signal.value)
+                ai_multiplier = bias.position_size_multiplier(ai_eval)
+                logger.info(
+                    "AIフィルター: %s (direction=%s, confidence=%.2f) → 倍率%.2f",
+                    ai_eval, bias.direction, bias.confidence, ai_multiplier,
+                )
+                if ai_eval == "REJECT":
+                    logger.warning(
+                        "AIフィルター: REJECT（%s）。シグナルを見送り。",
+                        bias.reasoning,
+                    )
+                    return None
+                combined_multiplier *= ai_multiplier
+
+        # Bear Researcher: 逆張り検証
+        if self._bear_researcher:
+            bear_verdict = self._bear_researcher.verify(
+                data, signal, regime_info, indicators=indicators,
+            )
+            if bear_verdict.severity >= 0.4:
+                logger.warning(
+                    "Bear Researcher警告: severity=%.2f, penalty=%.2f, リスク=%s",
+                    bear_verdict.severity,
+                    bear_verdict.penalty_multiplier,
+                    bear_verdict.risk_factors,
+                )
+                combined_multiplier *= bear_verdict.penalty_multiplier
+
+        return signal, combined_multiplier, conviction, regime_info
+
+    def _execute_trade(
+        self, signal: Signal, combined_multiplier: float,
+        conviction, regime_info, data: pd.DataFrame,
+        indicators: Optional[dict] = None,
+    ) -> Optional[dict]:
+        """
+        取引実行: 通知 + ポジションオープン。
+
+        Returns:
+            注文結果dict または None
+        """
+        # シグナル協調: クロスペア相関のLLM評価
+        if self._signal_coordinator:
+            adx_val = 0.0
+            if indicators and indicators.get("current_adx") is not None:
+                adx_val = indicators["current_adx"]
+            approved = self._signal_coordinator.register_signal(
+                self._instrument, signal.value, adx=adx_val,
+            )
+            if not approved:
+                logger.info(
+                    "[%s] SignalCoordinator: 相関リスクによりシグナル拒否",
+                    self._instrument,
+                )
+                return None
+
+        logger.info(
+            "[%s] シグナル実行: %s, "
+            "ポジションサイズ倍率=%.2f (レジーム%.1f × conviction%.1f)",
+            self._instrument,
+            signal.value,
+            combined_multiplier,
+            regime_info.exposure_multiplier,
+            conviction.position_size_multiplier,
+        )
+        if self._notifier:
+            self._notifier.notify_signal(
+                self._instrument,
+                signal.value,
+                conviction_score=conviction.score,
+                regime=regime_info.regime.value,
+            )
+        return self._position_manager.open_position(
+            instrument=self._instrument,
+            signal=signal,
+            data=data,
+            strategy=self._strategy,
+            indicators=indicators,
+        )
 
     # ------------------------------------------------------------------
     # プロパティ

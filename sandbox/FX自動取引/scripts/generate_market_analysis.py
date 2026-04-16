@@ -1,23 +1,19 @@
 """
-FX自動取引システム — 日次AI市場環境分析スクリプト
+FX自動取引システム — 日次市場環境分析スクリプト
 
 Windows VPS上でMT5から直接価格データを取得し、
-Claude APIで市場環境を分析してdata/market_analysis.jsonに書き出す。
+テクニカル指標をルールベースで分析してdata/market_analysis.jsonに書き出す。
+センチメントデータ（SocialData API）がある場合のみClaude APIでナラティブ解釈を補完。
 オプションでSlack Webhookにレポートを投稿する。
+
+2パス構成:
+  Path 1（常時）: ルールベース分析 — MA/RSI/ADX/ATRから方向感・確信度・レジームを判定
+  Path 2（条件付き）: LLMセンチメント解釈 — ツイート/経済イベントがある場合のみClaude API
 
 タスクスケジューラで日次実行（JST 6:30）:
   schtasks /Create /TN "FX_MarketAnalysis" ^
     /TR "cmd.exe /c cd /d C:\\bpr_lab\\fx_trading && python scripts/generate_market_analysis.py" ^
     /SC DAILY /ST 06:30 /RL HIGHEST /F
-
-プロンプト設計7鉄則準拠:
-  1. 生OHLCVではなく加工済み指標を渡す
-  2. 出力はJSON固定
-  3. ロール設定が効く
-  4. リスクルールはプロンプトに明示
-  5. Dual-AI検証（将来対応）
-  6. 逆張りプロンプト（リスク要因を列挙させる）
-  7. コンテキスト先行
 """
 
 import argparse
@@ -47,6 +43,7 @@ from src.config import (
     AI_MODEL_ID,
     ANTHROPIC_API_KEY,
     ATR_PERIOD,
+    DEFAULT_INSTRUMENTS,
     MA_LONG_PERIOD,
     MA_SHORT_PERIOD,
     MFI_PERIOD,
@@ -55,9 +52,6 @@ from src.config import (
 )
 
 logger = logging.getLogger(__name__)
-
-# 分析対象の通貨ペア
-DEFAULT_INSTRUMENT = "USD_JPY"
 
 # MT5シンボル接尾辞（外為ファイネスト）
 MT5_SUFFIX = "-"
@@ -78,7 +72,8 @@ SOCIALDATA_TIMEOUT = 30
 
 
 def fetch_mt5_data(
-    symbol: str, timeframe_h4: int = 100, timeframe_d1: int = 30
+    symbol: str, timeframe_h4: int = 100, timeframe_d1: int = 30,
+    _mt5_initialized: bool = False,
 ) -> dict:
     """
     MT5から価格データを取得してテクニカル指標を計算する。
@@ -87,14 +82,17 @@ def fetch_mt5_data(
         symbol: 通貨ペア（例: "USD_JPY"）
         timeframe_h4: H4足の取得本数
         timeframe_d1: D1足の取得本数
+        _mt5_initialized: True の場合、MT5の初期化/シャットダウンをスキップ
+                          （呼び出し元で管理している場合に使用）
 
     Returns:
         テクニカル指標の辞書
     """
     import MetaTrader5 as mt5
 
-    if not mt5.initialize():
-        raise RuntimeError(f"MT5初期化失敗: {mt5.last_error()}")
+    if not _mt5_initialized:
+        if not mt5.initialize():
+            raise RuntimeError(f"MT5初期化失敗: {mt5.last_error()}")
 
     try:
         mt5_symbol = symbol.replace("_", "") + MT5_SUFFIX
@@ -129,7 +127,8 @@ def fetch_mt5_data(
         return indicators
 
     finally:
-        mt5.shutdown()
+        if not _mt5_initialized:
+            mt5.shutdown()
 
 
 def _calculate_indicators(
@@ -406,91 +405,189 @@ def fetch_economic_calendar() -> list[dict]:
 
 
 # ============================================================
-# Claude API 市場分析
+# ルールベース市場分析（LLM不使用、常時実行）
 # ============================================================
 
-# プロンプトテンプレート（7鉄則準拠）
-SYSTEM_PROMPT = """\
-あなたは15年のプロップファーム経験を持つFXアナリストです。
-テクニカル指標・市場センチメント・経済イベントを総合的に分析します。
 
-重要な制約:
-- 「BUY」「SELL」の直接指示は絶対に出さない。方向感のみ示す
-- 高ボラティリティ環境では慎重な判断を推奨
-- 確信度0.3未満の場合はneutralを返す
-- 予測の精度に過度な自信を持たない（「為替市場は基本的にランダム」という前提）
-- 重要経済イベントがある日はconfidenceを下げる（イベント結果は予測不能）
-- SNS投稿はナラティブの参考にするが、個別投稿を鵜呑みにしない
-- 理由は2-3文で簡潔に
-
-出力は必ず以下のJSON形式のみ。説明文やコードブロックは不要:
-{
-  "direction": "bullish" | "bearish" | "neutral",
-  "confidence": 0.0-1.0,
-  "regime": "trending" | "ranging" | "volatile" | "unknown",
-  "key_levels": {
-    "support": <float>,
-    "resistance": <float>
-  },
-  "reasoning": "<string: 2-3文の分析要旨>",
-  "risk_factors": ["<string: リスク要因1>", "<string: リスク要因2>", ...],
-  "market_narrative": "<string: 現在市場を支配しているナラティブを1文で>"
-}"""
-
-USER_PROMPT_TEMPLATE = """\
-以下は{instrument}の直近テクニカル指標サマリーです。
-このデータに基づき、現在の市場環境を分析してください。
-
-## H4足（メインタイムフレーム）
-- 終値: {last_close}
-- RSI(14): {rsi}
-- ADX(14): {adx}
-- ATR(14): {atr}
-- MFI(14): {mfi}
-- MA(20): {ma_20} / MA(50): {ma_50}
-- MA位置: {ma_position}
-- BBW比率: {bbw_ratio}（1.0=平均、低い=スクイーズ）
-- レジーム: {regime}
-
-## 日足（上位足コンテキスト）
-- D1 RSI: {d1_rsi}
-- D1 ADX: {d1_adx}
-- D1トレンド: {d1_trend}
-{sentiment_section}{calendar_section}
-上記を総合的に判断し、方向感・確信度・レジーム・重要水準・リスク要因をJSON形式で回答してください。
-逆張りの視点も含め、この分析が間違っている可能性のある理由も risk_factors に含めてください。
-market_narrativeには、現在の市場を支配しているストーリー（金利差、地政学リスク、リスクオン/オフ等）を1文で記述してください。"""
-
-
-def analyze_with_claude(
-    indicators: dict,
-    sentiment: list[dict] | None = None,
-    economic_events: list[dict] | None = None,
-) -> dict:
+def analyze_rule_based(indicators: dict) -> dict:
     """
-    Claude APIでテクニカル指標+センチメント+経済イベントを分析し、
-    市場環境JSONを返す。
+    テクニカル指標からルールベースで市場環境を判定する（LLM不使用）。
 
-    3層入力（FinMem / TradingAgents方式）:
-    - テクニカル指標（既存）
-    - 市場センチメント（SocialData API: @loopdomナラティブ分析）
-    - 経済イベント（SocialData API: マクロ解釈）
+    RegimeDetector + ConvictionScorerと同等のロジックを使い、
+    テクニカル分類にLLMトークンを消費しない。
 
     Args:
         indicators: fetch_mt5_data()の返却値
+
+    Returns:
+        market_analysis.json互換の辞書
+    """
+    ind = indicators["indicators"]
+    daily = indicators["daily_context"]
+    last_close = indicators["last_close"]
+
+    ma_short = ind.get("ma_20")
+    ma_long = ind.get("ma_50")
+    rsi = ind.get("rsi_14")
+    adx = ind.get("adx_14")
+    atr = ind.get("atr_14")
+    mfi = ind.get("mfi_14")
+    bbw_ratio = ind.get("bbw_ratio")
+    d1_trend = daily.get("d1_trend", "不明")
+
+    # --- direction判定: MA位置 + RSI + D1トレンドから ---
+    direction = "neutral"
+    if ma_short is not None and ma_long is not None and rsi is not None:
+        if ma_short > ma_long and rsi < 70 and d1_trend != "下降":
+            direction = "bullish"
+        elif ma_short < ma_long and rsi > 30 and d1_trend != "上昇":
+            direction = "bearish"
+
+    # --- confidence算出: ADX強度 + 指標一致度 ---
+    if adx is not None:
+        confidence = min(adx / 50.0, 1.0)
+    else:
+        confidence = 0.3
+
+    # ブースト: MAとD1トレンドが一致
+    if direction == "bullish" and d1_trend == "上昇":
+        confidence += 0.1
+    elif direction == "bearish" and d1_trend == "下降":
+        confidence += 0.1
+
+    # ペナルティ: RSI極端値
+    if rsi is not None and (rsi > 70 or rsi < 30):
+        confidence -= 0.2
+
+    # クランプ
+    confidence = max(0.1, min(0.9, confidence))
+
+    # --- regime: ADXベース（RegimeDetector同等） ---
+    regime = ind.get("regime", "unknown")
+
+    # --- key_levels: ATRベースのサポレジ ---
+    if atr is not None:
+        support = round(last_close - atr * 2, 5)
+        resistance = round(last_close + atr * 2, 5)
+    else:
+        support = round(last_close * 0.995, 5)
+        resistance = round(last_close * 1.005, 5)
+    key_levels = {"support": support, "resistance": resistance}
+
+    # --- risk_factors: 矛盾・スクイーズ・中立帯の検出 ---
+    risk_factors = []
+
+    # D1とH4のトレンド矛盾
+    if direction == "bullish" and d1_trend == "下降":
+        risk_factors.append("H4上昇だがD1は下降トレンド — 上位足と矛盾")
+    elif direction == "bearish" and d1_trend == "上昇":
+        risk_factors.append("H4下降だがD1は上昇トレンド — 上位足と矛盾")
+
+    # BBWスクイーズ警告
+    if bbw_ratio is not None and bbw_ratio < 0.7:
+        risk_factors.append(f"BBW比率{bbw_ratio:.2f} — ボラティリティ収縮（ブレイクアウト警戒）")
+
+    # MFI中立帯
+    if mfi is not None and 40 <= mfi <= 60:
+        risk_factors.append(f"MFI{mfi:.1f} — 中立帯で方向性が不明確")
+
+    # RSI極端値
+    if rsi is not None:
+        if rsi > 70:
+            risk_factors.append(f"RSI{rsi:.1f} — 買われすぎ圏で反転リスク")
+        elif rsi < 30:
+            risk_factors.append(f"RSI{rsi:.1f} — 売られすぎ圏で反転リスク")
+
+    # ADX弱い
+    if adx is not None and adx < 20:
+        risk_factors.append(f"ADX{adx:.1f} — トレンド不明確でダマシリスク")
+
+    # --- reasoning: テンプレート文生成 ---
+    direction_ja = {"bullish": "強気", "bearish": "弱気", "neutral": "中立"}
+    regime_ja = {"trending": "トレンド相場", "ranging": "レンジ相場",
+                 "transitional": "過渡期", "unknown": "不明"}
+    ma_desc = ind.get("ma_position", "")
+
+    reasoning = (
+        f"{indicators['instrument']} H4足: {ma_desc}。"
+        f" ADX={adx if adx else 'N/A'}で{regime_ja.get(regime, regime)}。"
+        f" RSI={rsi if rsi else 'N/A'}、方向感は{direction_ja.get(direction, direction)}。"
+    )
+
+    # --- market_narrative ---
+    market_narrative = "テクニカル分析のみ（センチメントデータなし）"
+
+    return {
+        "direction": direction,
+        "confidence": round(confidence, 2),
+        "regime": regime,
+        "key_levels": key_levels,
+        "reasoning": reasoning,
+        "risk_factors": risk_factors,
+        "market_narrative": market_narrative,
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "model": "rule-based",
+        "input_indicators": indicators,
+    }
+
+
+# ============================================================
+# LLMセンチメント分析（条件付き — センチメント/イベントがある場合のみ）
+# ============================================================
+
+# センチメント解釈に特化したプロンプト（テクニカル分類はルールベースに委任）
+SENTIMENT_SYSTEM_PROMPT = """\
+あなたはFX市場のセンチメントアナリストです。
+SNS投稿と経済イベント情報から、市場ナラティブとリスク要因を解釈します。
+
+重要な制約:
+- テクニカル指標の分類（方向感・レジーム等）は行わない — 別途ルールベースで判定済み
+- SNS投稿は群衆心理の参考にするが、個別投稿を鵜呑みにしない
+- 重要経済イベントがある日はリスク要因として明記
+- 理由は簡潔に
+
+出力は必ず以下のJSON形式のみ。説明文やコードブロックは不要:
+{
+  "sentiment_direction": "bullish" | "bearish" | "neutral",
+  "market_narrative": "<string: 市場を支配しているナラティブを1-2文で>",
+  "risk_factors": ["<string: センチメント/イベント由来のリスク要因>", ...],
+  "sentiment_summary": "<string: センチメントの要約を1文で>"
+}"""
+
+SENTIMENT_USER_TEMPLATE = """\
+{instrument}について、以下の市場情報からセンチメントを解釈してください。
+
+## テクニカルサマリー（参考）
+- 終値: {last_close} / レジーム: {regime} / 方向感(ルール判定): {direction}
+{sentiment_section}{calendar_section}
+市場参加者が何を語り、どんなナラティブが支配的かを分析してください。"""
+
+
+def analyze_sentiment_with_claude(
+    indicators: dict,
+    rule_based_direction: str,
+    sentiment: list[dict],
+    economic_events: list[dict],
+) -> dict:
+    """
+    Claude APIでセンチメント+経済イベントのナラティブを解釈する。
+
+    テクニカル分類はルールベースに委任し、LLMはセンチメント解釈に特化。
+    トークン消費を削減しつつ、LLMが真に価値を発揮する領域に集中する。
+
+    Args:
+        indicators: fetch_mt5_data()の返却値
+        rule_based_direction: ルールベースで判定済みの方向感
         sentiment: X投稿リスト（市場センチメント）
         economic_events: 経済イベントリスト
 
     Returns:
-        market_analysis.json に書き込む辞書
+        センチメント分析結果の辞書
     """
     if not ANTHROPIC_API_KEY:
         raise RuntimeError(
             "ANTHROPIC_API_KEYが設定されていません。.envファイルを確認してください。"
         )
-
-    ind = indicators["indicators"]
-    daily = indicators["daily_context"]
 
     # センチメントセクション構築
     sentiment_section = ""
@@ -508,21 +605,11 @@ def analyze_with_claude(
             lines.append(f"- [{e['impact'].upper()}] @{e['handle']}: {e['text'][:120]}")
         calendar_section = "\n".join(lines) + "\n"
 
-    user_prompt = USER_PROMPT_TEMPLATE.format(
+    user_prompt = SENTIMENT_USER_TEMPLATE.format(
         instrument=indicators["instrument"],
         last_close=indicators["last_close"],
-        rsi=ind.get("rsi_14", "N/A"),
-        adx=ind.get("adx_14", "N/A"),
-        atr=ind.get("atr_14", "N/A"),
-        mfi=ind.get("mfi_14", "N/A"),
-        ma_20=ind.get("ma_20", "N/A"),
-        ma_50=ind.get("ma_50", "N/A"),
-        ma_position=ind.get("ma_position", "N/A"),
-        bbw_ratio=ind.get("bbw_ratio", "N/A"),
-        regime=ind.get("regime", "N/A"),
-        d1_rsi=daily.get("d1_rsi", "N/A"),
-        d1_adx=daily.get("d1_adx", "N/A"),
-        d1_trend=daily.get("d1_trend", "N/A"),
+        regime=indicators["indicators"].get("regime", "unknown"),
+        direction=rule_based_direction,
         sentiment_section=sentiment_section,
         calendar_section=calendar_section,
     )
@@ -535,12 +622,12 @@ def analyze_with_claude(
 
     payload = {
         "model": AI_MODEL_ID,
-        "max_tokens": 1024,
-        "system": SYSTEM_PROMPT,
+        "max_tokens": 512,  # センチメント解釈のみなので小さめ
+        "system": SENTIMENT_SYSTEM_PROMPT,
         "messages": [{"role": "user", "content": user_prompt}],
     }
 
-    logger.info("Claude API呼び出し（モデル: %s）...", AI_MODEL_ID)
+    logger.info("Claude API呼び出し（センチメント解釈、モデル: %s）...", AI_MODEL_ID)
 
     resp = requests.post(
         CLAUDE_API_URL, headers=headers, json=payload, timeout=CLAUDE_API_TIMEOUT
@@ -553,20 +640,12 @@ def analyze_with_claude(
     # JSONパース（コードブロック対応）
     json_str = content.strip()
     if json_str.startswith("```"):
-        # ```json ... ``` を除去
         lines = json_str.split("\n")
         json_str = "\n".join(
             line for line in lines if not line.strip().startswith("```")
         )
 
-    analysis = json.loads(json_str)
-
-    # タイムスタンプを追加
-    analysis["timestamp"] = datetime.now(timezone.utc).isoformat()
-    analysis["model"] = AI_MODEL_ID
-    analysis["input_indicators"] = indicators
-
-    return analysis
+    return json.loads(json_str)
 
 
 # ============================================================
@@ -574,84 +653,82 @@ def analyze_with_claude(
 # ============================================================
 
 
-def post_slack_report(analysis: dict, webhook_url: str) -> bool:
-    """
-    分析結果を人間が読める形式でSlackに投稿する。
-
-    Args:
-        analysis: Claude APIの分析結果
-        webhook_url: Slack Incoming Webhook URL
-
-    Returns:
-        成功でTrue
-    """
+def _format_pair_block(analysis: dict) -> dict:
+    """1通貨ペア分のSlack attachmentブロックを生成する。"""
     direction_map = {
-        "bullish": "やや強気",
-        "bearish": "やや弱気",
+        "bullish": "強気",
+        "bearish": "弱気",
         "neutral": "中立",
     }
     regime_map = {
-        "trending": "トレンド相場",
-        "ranging": "レンジ相場",
-        "volatile": "高ボラティリティ",
-        "unknown": "判定不能",
+        "trending": "トレンド",
+        "ranging": "レンジ",
+        "volatile": "高ボラ",
+        "transitional": "過渡期",
+        "unknown": "不明",
     }
+    color_map = {"bullish": "#36a64f", "bearish": "#dc3545", "neutral": "#ffc107"}
 
     direction = analysis.get("direction", "neutral")
     confidence = analysis.get("confidence", 0.0)
     regime = analysis.get("regime", "unknown")
     key_levels = analysis.get("key_levels", {})
-    reasoning = analysis.get("reasoning", "")
-    risk_factors = analysis.get("risk_factors", [])
     indicators = analysis.get("input_indicators", {})
     ind = indicators.get("indicators", {})
-
-    # 方向に応じた色
-    color_map = {"bullish": "#36a64f", "bearish": "#dc3545", "neutral": "#ffc107"}
-    color = color_map.get(direction, "#2196F3")
-
-    instrument = indicators.get("instrument", "USD_JPY")
+    instrument = indicators.get("instrument", "???")
     last_close = indicators.get("last_close", "N/A")
 
-    # リスク要因テキスト
-    risk_text = "\n".join(f"- {r}" for r in risk_factors) if risk_factors else "- なし"
-
+    # コンパクトな1ペア分テキスト
     text = (
-        f"*{instrument} 日次市場環境レポート*\n"
-        f"━━━━━━━━━━━━━━━━━━━━━━━━\n"
-        f"*方向感*: {direction_map.get(direction, direction)} "
-        f"(確信度: {confidence:.2f})\n"
-        f"*レジーム*: {regime_map.get(regime, regime)}\n"
-        f"*終値*: {last_close}\n"
-        f"*ADX*: {ind.get('adx_14', 'N/A')} | "
-        f"*RSI*: {ind.get('rsi_14', 'N/A')} | "
-        f"*MFI*: {ind.get('mfi_14', 'N/A')}\n"
-        f"*サポート*: {key_levels.get('support', 'N/A')} | "
-        f"*レジスタンス*: {key_levels.get('resistance', 'N/A')}\n\n"
-        f"*分析要旨*:\n> {reasoning}\n\n"
-        f"*ナラティブ*: {analysis.get('market_narrative', 'N/A')}\n\n"
-        f"*リスク要因*:\n{risk_text}\n\n"
-        f"_モデル: {analysis.get('model', 'N/A')} | "
-        f"情報源: テクニカル"
-        f"{' + センチメント' + str(analysis.get('input_sources', {}).get('sentiment_tweets', 0)) + '件' if analysis.get('input_sources', {}).get('sentiment_tweets') else ''}"
-        f"{' + 経済イベント' + str(analysis.get('input_sources', {}).get('economic_events', 0)) + '件' if analysis.get('input_sources', {}).get('economic_events') else ''}"
-        f"_"
+        f"*{instrument}*  {last_close}  "
+        f"{direction_map.get(direction, direction)}({confidence:.0%}) "
+        f"| {regime_map.get(regime, regime)}\n"
+        f"ADX {ind.get('adx_14', '-')} / RSI {ind.get('rsi_14', '-')} / "
+        f"MFI {ind.get('mfi_14', '-')}\n"
+        f"S: {key_levels.get('support', '-')}  R: {key_levels.get('resistance', '-')}"
     )
 
+    # リスク要因があれば1行追加
+    risk_factors = analysis.get("risk_factors", [])
+    if risk_factors:
+        text += f"\n:warning: {risk_factors[0]}"
+        if len(risk_factors) > 1:
+            text += f" 他{len(risk_factors)-1}件"
+
+    return {
+        "color": color_map.get(direction, "#2196F3"),
+        "text": text,
+        "mrkdwn_in": ["text"],
+    }
+
+
+def post_slack_report(all_analyses: dict, webhook_url: str) -> bool:
+    """
+    全ペアの分析結果をまとめてSlackに投稿する。
+
+    Args:
+        all_analyses: {"USD_JPY": {...}, "EUR_USD": {...}, ...} 形式
+        webhook_url: Slack Incoming Webhook URL
+
+    Returns:
+        成功でTrue
+    """
+    attachments = []
+    for instrument in all_analyses:
+        analysis = all_analyses[instrument]
+        attachments.append(_format_pair_block(analysis))
+
+    # ヘッダー
+    now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     payload = {
-        "attachments": [
-            {
-                "color": color,
-                "text": text,
-                "mrkdwn_in": ["text"],
-            }
-        ]
+        "text": f":chart_with_upwards_trend: *日次市場環境レポート* ({len(all_analyses)}ペア) — {now}",
+        "attachments": attachments,
     }
 
     try:
         resp = requests.post(webhook_url, json=payload, timeout=10)
         if resp.status_code == 200:
-            logger.info("Slackレポート投稿成功")
+            logger.info("Slackレポート投稿成功（%dペア）", len(all_analyses))
             return True
         logger.warning("Slackレポート投稿失敗 (HTTP %d): %s", resp.status_code, resp.text[:200])
         return False
@@ -665,14 +742,79 @@ def post_slack_report(analysis: dict, webhook_url: str) -> bool:
 # ============================================================
 
 
+def _analyze_single_pair(instrument: str, mt5_initialized: bool = False) -> dict:
+    """
+    1通貨ペア分の分析を実行する（ルールベース + 条件付きLLMセンチメント）。
+
+    Args:
+        instrument: 通貨ペア（例: "USD_JPY"）
+        mt5_initialized: MT5が初期化済みかどうか
+
+    Returns:
+        market_analysis.json互換の分析結果dict
+    """
+    # MT5データ取得
+    logger.info("[%s] MT5からデータ取得中...", instrument)
+    indicators = fetch_mt5_data(instrument, _mt5_initialized=mt5_initialized)
+
+    # Path 1: ルールベース分析（常時実行、LLM不使用）
+    analysis = analyze_rule_based(indicators)
+    logger.info(
+        "[%s] ルールベース: direction=%s, confidence=%.2f, regime=%s",
+        instrument, analysis["direction"], analysis["confidence"], analysis["regime"],
+    )
+
+    # 市場センチメント取得（SocialData API）
+    sentiment = fetch_market_sentiment(instrument)
+
+    # 経済カレンダー取得（全ペア共通なので1回だけ取得したいが、現状はペアごと）
+    economic_events = fetch_economic_calendar()
+
+    # Path 2: LLMセンチメント解釈（センチメント/イベントがある場合のみ）
+    has_sentiment_data = len(sentiment) > 0 or len(economic_events) > 0
+    if has_sentiment_data:
+        logger.info(
+            "[%s] LLMセンチメント分析（ツイート%d件、イベント%d件）...",
+            instrument, len(sentiment), len(economic_events),
+        )
+        try:
+            llm_result = analyze_sentiment_with_claude(
+                indicators, analysis["direction"], sentiment, economic_events
+            )
+            analysis["market_narrative"] = llm_result.get(
+                "market_narrative", analysis["market_narrative"]
+            )
+            analysis["risk_factors"].extend(llm_result.get("risk_factors", []))
+            if llm_result.get("sentiment_direction") == analysis["direction"]:
+                analysis["confidence"] = min(analysis["confidence"] + 0.1, 0.9)
+            analysis["model"] = f"rule-based+{AI_MODEL_ID}"
+        except Exception as e:
+            logger.warning("[%s] LLMセンチメント分析失敗（ルールベース結果を維持）: %s", instrument, e)
+    else:
+        logger.info("[%s] センチメントデータなし - ルールベースのみ", instrument)
+
+    # 入力ソース情報を記録
+    analysis["input_sources"] = {
+        "technical": True,
+        "sentiment_tweets": len(sentiment),
+        "economic_events": len(economic_events),
+        "llm_used": has_sentiment_data,
+    }
+
+    return analysis
+
+
 def main():
     parser = argparse.ArgumentParser(
-        description="FX日次AI市場環境分析（MT5→Claude API→JSON+Slack）"
+        description="FX日次市場環境分析（MT5→ルールベース分析[+LLMセンチメント]→JSON+Slack）"
     )
     parser.add_argument(
-        "--instrument",
-        default=DEFAULT_INSTRUMENT,
-        help="分析対象の通貨ペア（デフォルト: USD_JPY）",
+        "--instruments", nargs="+", default=None,
+        help="分析対象の通貨ペア（複数指定可、デフォルト: DEFAULT_INSTRUMENTS）",
+    )
+    parser.add_argument(
+        "--instrument", default=None,
+        help="分析対象の通貨ペア（単一指定、後方互換用）",
     )
     parser.add_argument(
         "--dry-run",
@@ -692,6 +834,14 @@ def main():
     )
     args = parser.parse_args()
 
+    # 通貨ペアリスト解決（--instrument単一指定 > --instruments複数指定 > デフォルト）
+    if args.instrument:
+        instruments = [args.instrument]
+    elif args.instruments:
+        instruments = args.instruments
+    else:
+        instruments = DEFAULT_INSTRUMENTS
+
     # ログ設定
     logging.basicConfig(
         level=logging.INFO,
@@ -699,26 +849,17 @@ def main():
         handlers=[logging.StreamHandler(sys.stdout)],
     )
 
-    logger.info("=== 日次AI市場環境分析 開始 ===")
-    logger.info("通貨ペア: %s", args.instrument)
+    logger.info("=== 日次市場環境分析 開始（%dペア） ===", len(instruments))
+    logger.info("通貨ペア: %s", instruments)
+
+    # 全ペアの分析結果を格納（ペア名 → 分析dict）
+    all_analyses: dict[str, dict] = {}
 
     if args.dry_run:
-        # ダミーデータで動作確認
         logger.info("ドライラン: ダミーデータを使用")
-        analysis = {
-            "direction": "bullish",
-            "confidence": 0.65,
-            "regime": "trending",
-            "key_levels": {"support": 149.20, "resistance": 150.80},
-            "reasoning": "ドライラン: MA短期が長期を上回り上昇トレンド継続中。ADXが25以上でトレンド強度は十分。",
-            "risk_factors": [
-                "ドライラン: D1 ADXが弱く上位足でトレンド不明確",
-                "ドライラン: 150.80のレジスタンス接近",
-            ],
-            "timestamp": datetime.now(timezone.utc).isoformat(),
-            "model": AI_MODEL_ID,
-            "input_indicators": {
-                "instrument": args.instrument,
+        for instrument in instruments:
+            dummy_indicators = {
+                "instrument": instrument,
                 "timeframe": "H4",
                 "last_close": 150.123,
                 "indicators": {
@@ -737,57 +878,49 @@ def main():
                     "d1_adx": 22.3,
                     "d1_trend": "横ばい",
                 },
-            },
-        }
+            }
+            all_analyses[instrument] = analyze_rule_based(dummy_indicators)
     else:
-        # MT5データ取得（テクニカル指標）
-        logger.info("MT5からデータ取得中...")
-        indicators = fetch_mt5_data(args.instrument)
-        logger.info("テクニカル指標算出完了")
+        # MT5を1回だけ初期化して全ペアを処理
+        import MetaTrader5 as mt5
+        if not mt5.initialize():
+            raise RuntimeError(f"MT5初期化失敗: {mt5.last_error()}")
+        try:
+            for instrument in instruments:
+                try:
+                    analysis = _analyze_single_pair(instrument, mt5_initialized=True)
+                    all_analyses[instrument] = analysis
+                except Exception as e:
+                    logger.error("[%s] 分析失敗（スキップ）: %s", instrument, e)
+        finally:
+            mt5.shutdown()
 
-        # 市場センチメント取得（SocialData API）
-        logger.info("市場センチメント取得中...")
-        sentiment = fetch_market_sentiment(args.instrument)
-
-        # 経済カレンダー取得（SocialData API）
-        logger.info("経済イベント取得中...")
-        economic_events = fetch_economic_calendar()
-
-        # Claude API分析（テクニカル+センチメント+経済イベント）
-        logger.info("Claude APIで分析中（3層入力: テクニカル+センチメント+マクロ）...")
-        analysis = analyze_with_claude(indicators, sentiment, economic_events)
-
-        # 入力ソース情報を記録
-        analysis["input_sources"] = {
-            "technical": True,
-            "sentiment_tweets": len(sentiment),
-            "economic_events": len(economic_events),
-        }
-
-    # JSON出力
+    # JSON出力（ペア名キーのdict形式）
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with open(args.output, "w", encoding="utf-8") as f:
-        json.dump(analysis, f, ensure_ascii=False, indent=2)
-    logger.info("分析結果を保存: %s", args.output)
+        json.dump(all_analyses, f, ensure_ascii=False, indent=2)
+    logger.info("分析結果を保存: %s（%dペア）", args.output, len(all_analyses))
 
     # 結果サマリー
-    logger.info(
-        "分析結果: direction=%s, confidence=%.2f, regime=%s",
-        analysis.get("direction"),
-        analysis.get("confidence", 0),
-        analysis.get("regime"),
-    )
+    for instrument, analysis in all_analyses.items():
+        logger.info(
+            "  %s: direction=%s, confidence=%.2f, regime=%s",
+            instrument,
+            analysis.get("direction"),
+            analysis.get("confidence", 0),
+            analysis.get("regime"),
+        )
 
     # Slackレポート投稿
     if not args.no_slack and SLACK_WEBHOOK_URL:
         logger.info("Slackレポート投稿中...")
-        post_slack_report(analysis, SLACK_WEBHOOK_URL)
+        post_slack_report(all_analyses, SLACK_WEBHOOK_URL)
     elif not SLACK_WEBHOOK_URL:
         logger.info("SLACK_WEBHOOK_URL未設定のためSlack投稿スキップ")
     else:
         logger.info("--no-slackオプションによりSlack投稿スキップ")
 
-    logger.info("=== 日次AI市場環境分析 完了 ===")
+    logger.info("=== 日次市場環境分析 完了（%dペア） ===", len(all_analyses))
 
 
 if __name__ == "__main__":

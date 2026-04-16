@@ -438,33 +438,32 @@ class TestRsiMaCrossoverTakeProfit:
 
 def _make_range_bound_golden_cross_data() -> pd.DataFrame:
     """
-    ゴールデンクロスは発生するが、ADX < 25（レンジ相場）のデータを生成する。
+    ゴールデンクロスは発生するが、ADX < 15（レンジ相場）のデータを生成する。
 
-    小さなspreadと穏やかな値動きにより、ADXが低くなる。
-    既存の旧データ生成ロジックを使用（ADX ≈ 19、閾値25未満）。
+    ほぼ横ばいの値動きにより、ADXが非常に低くなる。
 
     Returns:
-        ゴールデンクロスが最終バーで発生するがADX < 25のOHLCVデータ
+        ゴールデンクロスが最終バーで発生するがADX < 15のOHLCVデータ
     """
     np.random.seed(42)
     n_bars = 120
     prices = np.empty(n_bars)
 
-    # 0-59: 緩やかな下降トレンド
+    # 0-59: ほぼ横ばい（極めて緩やかな下降）
     for i in range(60):
-        prices[i] = 100.0 - i * 0.04 + np.random.normal(0, 0.05)
+        prices[i] = 100.0 - i * 0.01 + np.random.normal(0, 0.02)
 
     # 60-89: 底値圏で横ばい
     for i in range(30):
-        prices[60 + i] = prices[59] + np.random.normal(0, 0.08)
+        prices[60 + i] = prices[59] + np.random.normal(0, 0.03)
 
-    # 90-119: 緩やかな上昇
+    # 90-119: ごく緩やかな上昇（クロスを発生させる程度）
     base = prices[89]
     for i in range(30):
-        prices[90 + i] = base + i * 0.08 + np.random.normal(0, 0.05)
+        prices[90 + i] = base + i * 0.03 + np.random.normal(0, 0.02)
 
-    # 小さいspread → ADXが低くなる
-    df_full = _make_ohlcv(prices, spread=0.001)
+    # 極小spread → ADXが非常に低くなる
+    df_full = _make_ohlcv(prices, spread=0.0005)
     import pandas_ta as ta
 
     ma_short = ta.sma(df_full["close"], length=20)
@@ -494,15 +493,15 @@ class TestAdxFilter:
         self.strategy = RsiMaCrossover()
 
     def test_hold_when_adx_below_threshold(self) -> None:
-        """ADXフィルター: ADX < 25 のレンジ相場ではゴールデンクロスでもHOLD"""
+        """ADXフィルター: ADX < 15 のレンジ相場ではゴールデンクロスでもHOLD"""
         data = _make_range_bound_golden_cross_data()
         signal = self.strategy.generate_signal(data)
         assert signal == Signal.HOLD, (
-            f"ADX < 25 で HOLD が返されるべきだが {signal} が返された"
+            f"ADX < 15 で HOLD が返されるべきだが {signal} が返された"
         )
 
     def test_buy_signal_with_adx_filter(self) -> None:
-        """ADXフィルター通過: ADX > 25 + ゴールデンクロス + RSI < 70 で BUY"""
+        """ADXフィルター通過: ADX > 15 + ゴールデンクロス + RSI < 70 で BUY"""
         data = _make_golden_cross_data()
 
         # データが条件を満たしていることを事前検証
@@ -510,8 +509,8 @@ class TestAdxFilter:
 
         adx_df = ta.adx(data["high"], data["low"], data["close"], length=14)
         adx_val = adx_df["ADX_14"].iloc[-1]
-        assert adx_val > 25.0, (
-            f"テストデータのADXが25を超えるべきだが {adx_val:.2f}"
+        assert adx_val > 15.0, (
+            f"テストデータのADXが15を超えるべきだが {adx_val:.2f}"
         )
 
         signal = self.strategy.generate_signal(data)
@@ -521,7 +520,7 @@ class TestAdxFilter:
         )
 
     def test_sell_signal_with_adx_filter(self) -> None:
-        """ADXフィルター通過: ADX > 25 + デッドクロス + RSI > 30 で SELL"""
+        """ADXフィルター通過: ADX > 15 + デッドクロス + RSI > 30 で SELL"""
         data = _make_dead_cross_data()
 
         # データが条件を満たしていることを事前検証
@@ -529,8 +528,8 @@ class TestAdxFilter:
 
         adx_df = ta.adx(data["high"], data["low"], data["close"], length=14)
         adx_val = adx_df["ADX_14"].iloc[-1]
-        assert adx_val > 25.0, (
-            f"テストデータのADXが25を超えるべきだが {adx_val:.2f}"
+        assert adx_val > 15.0, (
+            f"テストデータのADXが15を超えるべきだが {adx_val:.2f}"
         )
 
         signal = self.strategy.generate_signal(data)

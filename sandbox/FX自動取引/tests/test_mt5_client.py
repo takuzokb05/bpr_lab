@@ -680,16 +680,26 @@ class TestFindValidFilling:
 
     def test_fok_passes_check(self, client, mt5_mock):
         """FOKでorder_checkが通ればFOKが設定される"""
+        # symbol_infoでFOK対応を返す
+        sym_info = MagicMock()
+        sym_info.filling_mode = 1  # SYMBOL_FILLING_FOK
+        mt5_mock.symbol_info.return_value = sym_info
+
         check_ok = MagicMock()
         check_ok.retcode = 0
         mt5_mock.order_check.return_value = check_ok
 
-        request = {"type_filling": 999, "action": 1}
+        request = {"symbol": "USDJPY-", "type_filling": 999, "action": 1}
         result = client._find_valid_filling(request)
         assert result["type_filling"] == mt5_mock.ORDER_FILLING_FOK
 
     def test_fallback_to_ioc(self, client, mt5_mock):
         """FOK失敗→IOCで通る場合、IOCが設定される"""
+        # symbol_infoでFOK+IOC対応を返す
+        sym_info = MagicMock()
+        sym_info.filling_mode = 3  # FOK(1) + IOC(2)
+        mt5_mock.symbol_info.return_value = sym_info
+
         check_fail = MagicMock()
         check_fail.retcode = 10013
         check_fail.comment = "Invalid request"
@@ -697,33 +707,73 @@ class TestFindValidFilling:
         check_ok.retcode = 0
         mt5_mock.order_check.side_effect = [check_fail, check_ok]
 
-        request = {"type_filling": 999, "action": 1}
+        request = {"symbol": "USDJPY-", "type_filling": 999, "action": 1}
         result = client._find_valid_filling(request)
         assert result["type_filling"] == mt5_mock.ORDER_FILLING_IOC
 
     def test_fallback_to_return(self, client, mt5_mock):
         """FOK/IOC両方失敗→RETURNで通る場合"""
+        # symbol_infoでFOK+IOC対応だがorder_checkで両方失敗
+        sym_info = MagicMock()
+        sym_info.filling_mode = 3
+        mt5_mock.symbol_info.return_value = sym_info
+
         check_fail = MagicMock()
         check_fail.retcode = 10013
         check_fail.comment = "Invalid request"
         check_ok = MagicMock()
         check_ok.retcode = 0
+        # FOK失敗 → IOC失敗 → RETURN成功
         mt5_mock.order_check.side_effect = [check_fail, check_fail, check_ok]
 
-        request = {"type_filling": 999, "action": 1}
+        request = {"symbol": "USDJPY-", "type_filling": 999, "action": 1}
         result = client._find_valid_filling(request)
+        assert result["type_filling"] == mt5_mock.ORDER_FILLING_RETURN
+
+    def test_symbol_info_none_fallback(self, client, mt5_mock):
+        """symbol_infoがNoneの場合は従来の全パターン試行にフォールバック"""
+        mt5_mock.symbol_info.return_value = None
+
+        check_fail = MagicMock()
+        check_fail.retcode = 10013
+        check_fail.comment = "Invalid request"
+        check_ok = MagicMock()
+        check_ok.retcode = 0
+        mt5_mock.order_check.side_effect = [check_fail, check_ok]
+
+        request = {"symbol": "USDJPY-", "type_filling": 999, "action": 1}
+        result = client._find_valid_filling(request)
+        assert result["type_filling"] == mt5_mock.ORDER_FILLING_IOC
+
+    def test_filling_mode_return_only(self, client, mt5_mock):
+        """filling_mode=0（FOK/IOCどちらも非対応）の場合、RETURNのみ試行"""
+        sym_info = MagicMock()
+        sym_info.filling_mode = 0  # FOK/IOCどちらも非対応
+        mt5_mock.symbol_info.return_value = sym_info
+
+        check_ok = MagicMock()
+        check_ok.retcode = 0
+        mt5_mock.order_check.return_value = check_ok
+
+        request = {"symbol": "USDJPY-", "type_filling": 999, "action": 1}
+        result = client._find_valid_filling(request)
+        # RETURNのみが候補なので最初にRETURNが試行される
         assert result["type_filling"] == mt5_mock.ORDER_FILLING_RETURN
 
     def test_all_fail_raises(self, client, mt5_mock):
         """全フィリングタイプ失敗時はMt5ClientErrorを投げる"""
         from src.mt5_client import Mt5ClientError
 
+        sym_info = MagicMock()
+        sym_info.filling_mode = 3
+        mt5_mock.symbol_info.return_value = sym_info
+
         check_fail = MagicMock()
         check_fail.retcode = 10013
         check_fail.comment = "Invalid request"
         mt5_mock.order_check.return_value = check_fail
 
-        request = {"type_filling": 999, "action": 1}
+        request = {"symbol": "USDJPY-", "type_filling": 999, "action": 1}
         with pytest.raises(Mt5ClientError, match="全フィリングタイプで失敗"):
             client._find_valid_filling(request)
 

@@ -64,16 +64,20 @@ class RsiMaCrossover(StrategyBase):
         """直近のgenerate_signal()実行時の診断情報を返す。"""
         return self._diagnostics
 
-    def generate_signal(self, data: pd.DataFrame) -> Signal:
+    def generate_signal(self, data: pd.DataFrame, **kwargs) -> Signal:
         """
         MA クロスオーバーとRSIフィルターに基づくシグナルを生成する。
 
         Args:
             data: OHLCV形式のDataFrame（close列が必須、RSI計算にはhigh/low/close列を推奨）
+            **kwargs: indicators（IndicatorCache辞書）等の追加パラメータ
 
         Returns:
             Signal: BUY / SELL / HOLD
         """
+        # IndicatorCacheからの指標取得（キャッシュがあればpandas_ta計算をスキップ）
+        indicators = kwargs.get("indicators")
+
         # データ行数がMA長期期間未満なら計算不能 → HOLD
         if len(data) < MA_LONG_PERIOD:
             logger.warning(
@@ -83,12 +87,22 @@ class RsiMaCrossover(StrategyBase):
             )
             return Signal.HOLD
 
-        # 移動平均の計算
-        ma_short = ta.sma(data["close"], length=MA_SHORT_PERIOD)
-        ma_long = ta.sma(data["close"], length=MA_LONG_PERIOD)
+        # 移動平均の計算（キャッシュ優先）
+        if indicators is not None and indicators.get("ma_short") is not None:
+            ma_short = indicators["ma_short"]
+        else:
+            ma_short = ta.sma(data["close"], length=MA_SHORT_PERIOD)
 
-        # RSIの計算
-        rsi = ta.rsi(data["close"], length=RSI_PERIOD)
+        if indicators is not None and indicators.get("ma_long") is not None:
+            ma_long = indicators["ma_long"]
+        else:
+            ma_long = ta.sma(data["close"], length=MA_LONG_PERIOD)
+
+        # RSIの計算（キャッシュ優先）
+        if indicators is not None and indicators.get("rsi") is not None:
+            rsi = indicators["rsi"]
+        else:
+            rsi = ta.rsi(data["close"], length=RSI_PERIOD)
 
         # いずれかの指標がNoneの場合はHOLD
         if ma_short is None or ma_long is None or rsi is None:
@@ -116,28 +130,34 @@ class RsiMaCrossover(StrategyBase):
             return Signal.HOLD
 
         # ADXフィルター: トレンドの強さを判定（F15追加）
-        # high/low/close列が必要。ADXはDataFrameを返すのでADX列を取得する。
-        adx_df = ta.adx(data["high"], data["low"], data["close"], length=ADX_PERIOD)
-        if adx_df is None:
-            logger.warning("ADX計算に失敗しました。HOLDを返します。")
-            return Signal.HOLD
+        # キャッシュからcurrent_adxを取得、またはpandas_taで計算
+        if indicators is not None and indicators.get("current_adx") is not None:
+            current_adx = indicators["current_adx"]
+        else:
+            adx_df = ta.adx(data["high"], data["low"], data["close"], length=ADX_PERIOD)
+            if adx_df is None:
+                logger.warning("ADX計算に失敗しました。HOLDを返します。")
+                return Signal.HOLD
 
-        adx_col = f"ADX_{ADX_PERIOD}"
-        if adx_col not in adx_df.columns:
-            logger.warning("ADX列が見つかりません: %s。HOLDを返します。", adx_col)
-            return Signal.HOLD
+            adx_col = f"ADX_{ADX_PERIOD}"
+            if adx_col not in adx_df.columns:
+                logger.warning("ADX列が見つかりません: %s。HOLDを返します。", adx_col)
+                return Signal.HOLD
 
-        current_adx = adx_df[adx_col].iloc[-1]
+            current_adx = adx_df[adx_col].iloc[-1]
 
         if pd.isna(current_adx):
             logger.warning("ADX値がNaNです。HOLDを返します。")
             return Signal.HOLD
 
         # MFIフィルター: price + volume ベースの買われすぎ/売られすぎ判定（Phase 3 追加）
-        # volume列がない場合はtick_volumeを代用。どちらもなければMFIをスキップ
+        # キャッシュからcurrent_mfiを取得、またはpandas_taで計算
         current_mfi = None
         mfi_available = False
-        if MFI_ENABLED:
+        if indicators is not None and indicators.get("current_mfi") is not None:
+            current_mfi = indicators["current_mfi"]
+            mfi_available = True
+        elif MFI_ENABLED:
             vol_col = None
             if "volume" in data.columns:
                 vol_col = "volume"

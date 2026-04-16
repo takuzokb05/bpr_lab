@@ -21,15 +21,6 @@ load_dotenv(_env_path)
 
 
 # ============================================================
-# 環境変数（.envから読み込み）
-# ============================================================
-
-OANDA_API_KEY: str = os.getenv("OANDA_API_KEY", "")
-OANDA_ACCOUNT_ID: str = os.getenv("OANDA_ACCOUNT_ID", "")
-OANDA_ENVIRONMENT: str = os.getenv("OANDA_ENVIRONMENT", "practice")
-
-
-# ============================================================
 # リスクパラメータ（doc 04 セクション4.1）
 # ============================================================
 
@@ -58,8 +49,14 @@ MAX_MONTHLY_LOSS: float = 0.10         # 月次: 口座の10%
 MAX_CONSECUTIVE_LOSSES: int = 5        # 5連敗で一時停止
 
 # --- ポジション制限 ---
-MAX_OPEN_POSITIONS: int = 3            # 最大同時ポジション数
+MAX_OPEN_POSITIONS: int = 6            # 最大同時ポジション数（6ペア並行対応）
 MAX_CORRELATION_EXPOSURE: int = 2      # 相関通貨ペアの最大同時保有数
+
+# 通貨ペア相関グループ（同じグループ内のペアは相関リスクあり）
+CORRELATION_GROUPS: dict[str, list[str]] = {
+    "JPY_CROSS": ["USD_JPY", "EUR_JPY", "GBP_JPY"],
+    "USD_GROUP": ["USD_JPY", "EUR_USD", "AUD_USD", "GBP_USD"],
+}
 
 
 # ============================================================
@@ -77,7 +74,7 @@ MIN_RISK_REWARD: float = 2.0           # 最小リスクリワード比
 
 # ADXフィルター（Phase 2 F15 追加）
 ADX_PERIOD: int = 14                   # ADX計算期間
-ADX_THRESHOLD: float = 20.0            # ADXトレンド判定閾値（25→20に緩和、シグナル機会増加）
+ADX_THRESHOLD: float = 15.0            # ADXトレンド判定閾値（20→15に緩和、レンジ期シグナル機会確保）
 
 # MFIフィルター（Phase 3 追加）
 MFI_PERIOD: int = 14                   # MFI計算期間
@@ -89,8 +86,8 @@ MFI_ENABLED: bool = True              # MFIフィルター有効/無効
 MIN_CONVICTION_SCORE: int = 4          # 最低確信度スコア（4未満は見送り）
 
 # レジーム検出（Phase 3 追加）
-REGIME_ADX_TRENDING: float = 25.0      # ADXがこの値以上 → TRENDING
-REGIME_ADX_RANGING: float = 20.0       # ADXがこの値未満 → RANGING
+REGIME_ADX_TRENDING: float = 20.0      # ADXがこの値以上 → TRENDING（25→20に緩和）
+REGIME_ADX_RANGING: float = 15.0       # ADXがこの値未満 → RANGING（20→15に緩和）
 REGIME_ATR_VOLATILE_RATIO: float = 2.0 # ATR/中央値ATR がこの値超 → VOLATILE
 REGIME_BBW_SQUEEZE_RATIO: float = 0.5  # BBW/平均BBW がこの値未満 → RANGING（スクイーズ）
 
@@ -106,7 +103,7 @@ BEAR_SR_ATR_MULTIPLIER: float = 1.5      # サポレジ接近判定のATR倍率
 # タイムフレーム
 # ============================================================
 
-MAIN_TIMEFRAME: str = "H4"             # メインタイムフレーム（4時間足）
+MAIN_TIMEFRAME: str = "H1"             # メインタイムフレーム（1時間足、H4→H1に変更しシグナル頻度向上）
 
 # デフォルト監視通貨ペア（複数ペア同時監視用）
 DEFAULT_INSTRUMENTS: list[str] = [
@@ -150,6 +147,10 @@ MT5_LOT_UNIT: int = 100_000             # 1ロット = 100,000通貨
 AI_MODEL_ID: str = "claude-sonnet-4-20250514"   # 市場分析に使用するモデル（バージョン固定）
 AI_ANALYSIS_DIR: Path = _project_root / "data"  # market_analysis.json の配置先
 ANTHROPIC_API_KEY: str = os.getenv("ANTHROPIC_API_KEY", "")
+
+# トレード事後分析（L1）
+POSTMORTEM_ENABLED: bool = True           # 事後分析の有効/無効
+POSTMORTEM_MODEL_ID: str = AI_MODEL_ID    # 事後分析に使用するモデル
 
 
 # ============================================================
@@ -196,25 +197,6 @@ def validate_config() -> list[ConfigValidationError]:
         バリデーションエラーのリスト。空なら全て正常。
     """
     errors: list[ConfigValidationError] = []
-
-    # --- 環境変数の必須チェック ---
-    if not OANDA_API_KEY:
-        errors.append(ConfigValidationError(
-            "OANDA_API_KEY",
-            "OANDAのAPIキーが設定されていません。.envファイルにOANDA_API_KEYを設定してください。"
-        ))
-
-    if not OANDA_ACCOUNT_ID:
-        errors.append(ConfigValidationError(
-            "OANDA_ACCOUNT_ID",
-            "OANDAの口座IDが設定されていません。.envファイルにOANDA_ACCOUNT_IDを設定してください。"
-        ))
-
-    if OANDA_ENVIRONMENT not in ("practice", "live"):
-        errors.append(ConfigValidationError(
-            "OANDA_ENVIRONMENT",
-            f"OANDA_ENVIRONMENTは 'practice' または 'live' である必要があります。現在の値: '{OANDA_ENVIRONMENT}'"
-        ))
 
     # --- リスクパラメータの範囲チェック ---
     if not (0 < MAX_RISK_PER_TRADE <= 1):

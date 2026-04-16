@@ -70,7 +70,7 @@ class TestConstantDefinitions:
         assert MAX_CONSECUTIVE_LOSSES == 5
 
     def test_position_limits(self):
-        assert MAX_OPEN_POSITIONS == 3
+        assert MAX_OPEN_POSITIONS == 6
         assert MAX_CORRELATION_EXPOSURE == 2
 
     def test_strategy_params(self):
@@ -84,7 +84,7 @@ class TestConstantDefinitions:
         assert MIN_RISK_REWARD == 2.0
 
     def test_timeframe(self):
-        assert MAIN_TIMEFRAME == "H4"
+        assert MAIN_TIMEFRAME == "H1"
 
     def test_api_settings(self):
         assert API_TIMEOUT == 30
@@ -103,69 +103,28 @@ class TestConstantDefinitions:
 class TestValidation:
     """バリデーション機能のテスト"""
 
-    def test_valid_config_with_env_set(self):
-        """環境変数が正しく設定されている場合、エラーなし"""
-        with patch.object(config, "OANDA_API_KEY", "test-key"), \
-             patch.object(config, "OANDA_ACCOUNT_ID", "test-account"), \
-             patch.object(config, "OANDA_ENVIRONMENT", "practice"):
-            errors = validate_config()
-            assert len(errors) == 0
-
-    def test_missing_api_key(self):
-        """OANDA_API_KEY未設定でエラー"""
-        with patch.object(config, "OANDA_API_KEY", ""), \
-             patch.object(config, "OANDA_ACCOUNT_ID", "test-account"), \
-             patch.object(config, "OANDA_ENVIRONMENT", "practice"):
-            errors = validate_config()
-            api_key_errors = [e for e in errors if e.field_name == "OANDA_API_KEY"]
-            assert len(api_key_errors) == 1
-            assert "APIキー" in api_key_errors[0].message
-
-    def test_missing_account_id(self):
-        """OANDA_ACCOUNT_ID未設定でエラー"""
-        with patch.object(config, "OANDA_API_KEY", "test-key"), \
-             patch.object(config, "OANDA_ACCOUNT_ID", ""), \
-             patch.object(config, "OANDA_ENVIRONMENT", "practice"):
-            errors = validate_config()
-            account_errors = [e for e in errors if e.field_name == "OANDA_ACCOUNT_ID"]
-            assert len(account_errors) == 1
-            assert "口座ID" in account_errors[0].message
-
-    def test_invalid_environment(self):
-        """不正なOANDA_ENVIRONMENTでエラー"""
-        with patch.object(config, "OANDA_API_KEY", "test-key"), \
-             patch.object(config, "OANDA_ACCOUNT_ID", "test-account"), \
-             patch.object(config, "OANDA_ENVIRONMENT", "invalid"):
-            errors = validate_config()
-            env_errors = [e for e in errors if e.field_name == "OANDA_ENVIRONMENT"]
-            assert len(env_errors) == 1
+    def test_valid_config(self):
+        """正常な設定値ではエラーなし"""
+        errors = validate_config()
+        assert len(errors) == 0
 
     def test_risk_per_trade_out_of_range(self):
         """MAX_RISK_PER_TRADEが範囲外でエラー"""
-        with patch.object(config, "OANDA_API_KEY", "test-key"), \
-             patch.object(config, "OANDA_ACCOUNT_ID", "test-account"), \
-             patch.object(config, "OANDA_ENVIRONMENT", "practice"), \
-             patch.object(config, "MAX_RISK_PER_TRADE", 1.5):
+        with patch.object(config, "MAX_RISK_PER_TRADE", 1.5):
             errors = validate_config()
             risk_errors = [e for e in errors if e.field_name == "MAX_RISK_PER_TRADE"]
             assert len(risk_errors) >= 1
 
     def test_risk_per_trade_exceeds_hard_limit(self):
         """MAX_RISK_PER_TRADEがハードリミットを超過でエラー"""
-        with patch.object(config, "OANDA_API_KEY", "test-key"), \
-             patch.object(config, "OANDA_ACCOUNT_ID", "test-account"), \
-             patch.object(config, "OANDA_ENVIRONMENT", "practice"), \
-             patch.object(config, "MAX_RISK_PER_TRADE", 0.05), \
+        with patch.object(config, "MAX_RISK_PER_TRADE", 0.05), \
              patch.object(config, "MAX_RISK_PER_TRADE_HARD", 0.02):
             errors = validate_config()
             assert any("超えています" in e.message for e in errors)
 
     def test_leverage_out_of_range(self):
         """MAX_LEVERAGEが日本の法的上限を超過でエラー"""
-        with patch.object(config, "OANDA_API_KEY", "test-key"), \
-             patch.object(config, "OANDA_ACCOUNT_ID", "test-account"), \
-             patch.object(config, "OANDA_ENVIRONMENT", "practice"), \
-             patch.object(config, "MAX_LEVERAGE", 30):
+        with patch.object(config, "MAX_LEVERAGE", 30):
             errors = validate_config()
             lev_errors = [e for e in errors if e.field_name == "MAX_LEVERAGE"]
             assert len(lev_errors) == 1
@@ -173,10 +132,7 @@ class TestValidation:
 
     def test_ma_periods_invalid(self):
         """短期MAが長期MA以上でエラー"""
-        with patch.object(config, "OANDA_API_KEY", "test-key"), \
-             patch.object(config, "OANDA_ACCOUNT_ID", "test-account"), \
-             patch.object(config, "OANDA_ENVIRONMENT", "practice"), \
-             patch.object(config, "MA_SHORT_PERIOD", 50), \
+        with patch.object(config, "MA_SHORT_PERIOD", 50), \
              patch.object(config, "MA_LONG_PERIOD", 20):
             errors = validate_config()
             ma_errors = [e for e in errors if e.field_name == "MA_SHORT_PERIOD"]
@@ -184,10 +140,7 @@ class TestValidation:
 
     def test_rsi_thresholds_invalid(self):
         """RSI閾値が逆転でエラー"""
-        with patch.object(config, "OANDA_API_KEY", "test-key"), \
-             patch.object(config, "OANDA_ACCOUNT_ID", "test-account"), \
-             patch.object(config, "OANDA_ENVIRONMENT", "practice"), \
-             patch.object(config, "RSI_OVERSOLD", 80), \
+        with patch.object(config, "RSI_OVERSOLD", 80), \
              patch.object(config, "RSI_OVERBOUGHT", 20):
             errors = validate_config()
             rsi_errors = [e for e in errors if "RSI" in e.field_name]
@@ -195,18 +148,14 @@ class TestValidation:
 
     def test_validate_or_raise_exits_on_error(self):
         """バリデーションエラー時にSystemExitを送出"""
-        with patch.object(config, "OANDA_API_KEY", ""), \
-             patch.object(config, "OANDA_ACCOUNT_ID", ""):
+        with patch.object(config, "MAX_RISK_PER_TRADE", 5.0):
             with pytest.raises(SystemExit) as exc_info:
                 validate_or_raise()
             assert "設定エラー" in str(exc_info.value)
 
     def test_validate_or_raise_passes_when_valid(self):
         """正常な設定ではSystemExitを送出しない"""
-        with patch.object(config, "OANDA_API_KEY", "test-key"), \
-             patch.object(config, "OANDA_ACCOUNT_ID", "test-account"), \
-             patch.object(config, "OANDA_ENVIRONMENT", "practice"):
-            validate_or_raise()  # 例外が出なければOK
+        validate_or_raise()  # 例外が出なければOK
 
 
 class TestConfigValidationError:

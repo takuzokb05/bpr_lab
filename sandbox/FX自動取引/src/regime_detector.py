@@ -82,12 +82,13 @@ class RegimeDetector:
         self._bb_length = bb_length
         self._bb_std = bb_std
 
-    def detect(self, data: pd.DataFrame) -> RegimeInfo:
+    def detect(self, data: pd.DataFrame, indicators: dict | None = None) -> RegimeInfo:
         """
         OHLCVデータからレジームを判定する。
 
         Args:
             data: OHLCV形式のDataFrame（high, low, close列が必須）
+            indicators: IndicatorCache辞書（キャッシュがあればpandas_ta計算をスキップ）
 
         Returns:
             RegimeInfo: 判定結果
@@ -110,18 +111,27 @@ class RegimeDetector:
                 reasoning=f"データ不足（{len(data)}行 < 必要{min_rows}行）",
             )
 
-        # --- ADX 計算 ---
-        adx_value = self._calc_adx(data)
+        # --- ADX 計算（キャッシュ優先） ---
+        if indicators is not None and indicators.get("current_adx") is not None:
+            adx_value = indicators["current_adx"]
+        else:
+            adx_value = self._calc_adx(data)
         if adx_value is None:
             return self._unknown_result("ADX計算に失敗")
 
-        # --- ATR 計算 + 変化率 ---
-        atr_ratio = self._calc_atr_ratio(data)
+        # --- ATR 計算 + 変化率（キャッシュ優先） ---
+        if indicators is not None and indicators.get("atr_ratio") is not None:
+            atr_ratio = indicators["atr_ratio"]
+        else:
+            atr_ratio = self._calc_atr_ratio(data)
         if atr_ratio is None:
             return self._unknown_result("ATR計算に失敗")
 
-        # --- BBW 計算 + 比率 ---
-        bbw_ratio = self._calc_bbw_ratio(data)
+        # --- BBW 計算 + 比率（キャッシュ優先） ---
+        if indicators is not None and indicators.get("bbw_ratio") is not None:
+            bbw_ratio = indicators["bbw_ratio"]
+        else:
+            bbw_ratio = self._calc_bbw_ratio(data)
         if bbw_ratio is None:
             return self._unknown_result("ボリンジャーバンド計算に失敗")
 

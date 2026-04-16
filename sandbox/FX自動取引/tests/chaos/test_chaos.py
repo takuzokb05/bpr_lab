@@ -24,7 +24,6 @@ import pytest
 
 from src.backtester import BacktestEngine, RsiMaCrossoverBT
 from src.config import KILL_COOLDOWN_MINUTES, KILL_SPREAD_MULTIPLIER, MAX_CONSECUTIVE_LOSSES
-from src.oanda_client import OandaClient
 from src.position_manager import PositionManager, PositionManagerError
 from src.risk_manager import KillSwitch, RiskManager
 from src.strategy.base import Signal
@@ -86,7 +85,7 @@ def _generate_gap_data(n_bars: int = 400, gap_idx: int = 200) -> pd.DataFrame:
 
 
 # ================================================================
-# シナリオ 1: API接続断
+# シナリオ 1: API接続断（MT5版）
 # ================================================================
 
 
@@ -94,58 +93,8 @@ class TestApiDisconnect:
     """
     シナリオ1: API接続断
 
-    OandaClientのHTTP接続を遮断し、以下を検証:
-    - サーバーサイドSL（stop_loss）が設計上常に設定される
-    - 再接続後にポジション照合が成功する
-    - KillSwitchのapi_disconnectが発動する
+    MT5接続断時のキルスイッチ発動を検証。
     """
-
-    def test_server_side_sl_always_required(self):
-        """成行注文は常にSL/TPが必須引数（サーバーサイドSL保証）"""
-        sig = inspect.signature(OandaClient.market_order)
-        params = sig.parameters
-
-        assert "stop_loss" in params
-        assert "take_profit" in params
-        # デフォルト値なし = 呼び出し側が必ず指定する
-        assert params["stop_loss"].default is inspect.Parameter.empty
-        assert params["take_profit"].default is inspect.Parameter.empty
-
-    def test_reconnect_position_reconciliation(self):
-        """API接続断からの復帰: リトライ機構でポジション照合が成功する"""
-        with patch("src.oanda_client.API") as MockAPI:
-            mock_api = MockAPI.return_value
-
-            # 最初の2回はConnectionError（接続断）、3回目で復帰
-            mock_api.request.side_effect = [
-                ConnectionError("Connection refused"),
-                ConnectionError("Connection refused"),
-                {
-                    "trades": [
-                        {
-                            "id": "123",
-                            "instrument": "USD_JPY",
-                            "currentUnits": "1000",
-                            "unrealizedPL": "-500",
-                            "price": "150.0",
-                        }
-                    ]
-                },
-            ]
-
-            client = OandaClient(
-                api_key="test-key",
-                account_id="test-account",
-                environment="practice",
-            )
-
-            with patch("src.oanda_client.time.sleep"):
-                positions = client.get_positions()
-
-            # 再接続後にポジション照合成功
-            assert len(positions) == 1
-            assert positions[0]["trade_id"] == "123"
-            assert positions[0]["instrument"] == "USD_JPY"
 
     def test_kill_switch_api_disconnect(self, caplog):
         """API切断でキルスイッチが発動し、取引が停止する"""
@@ -324,75 +273,8 @@ class TestSimultaneousFailures:
     """
     シナリオ6: 同時多発障害
 
-    API接続断 + スプレッド急拡大を同時注入:
-    - (1) サーバーサイドSLが設定済み（market_orderの設計保証）
-    - (2) 接続復旧後に全ポジション決済を試行
+    複数のキルスイッチ発動条件が同時に発生した場合の動作を検証。
     """
-
-    def test_server_side_sl_survives_disconnect(self):
-        """
-        API接続断でもサーバーサイドSLは保持される。
-
-        OANDA のSL/TPはサーバー側で管理されるため、
-        クライアント接続状態に関係なく有効。
-        market_order は SL/TP を必須引数として要求する設計。
-        """
-        sig = inspect.signature(OandaClient.market_order)
-        params = sig.parameters
-
-        # SL/TPがデフォルト値なしの必須パラメータ
-        assert params["stop_loss"].default is inspect.Parameter.empty
-        assert params["take_profit"].default is inspect.Parameter.empty
-
-    def test_reconnect_closes_all_positions(self):
-        """接続復旧後に全ポジション決済を試行できる"""
-        with patch("src.oanda_client.API") as MockAPI:
-            mock_api = MockAPI.return_value
-
-            mock_api.request.side_effect = [
-                # get_positions: 2ポジション
-                {
-                    "trades": [
-                        {
-                            "id": "101",
-                            "instrument": "USD_JPY",
-                            "currentUnits": "1000",
-                            "unrealizedPL": "-200",
-                            "price": "150.0",
-                        },
-                        {
-                            "id": "102",
-                            "instrument": "EUR_USD",
-                            "currentUnits": "-500",
-                            "unrealizedPL": "-100",
-                            "price": "1.1000",
-                        },
-                    ]
-                },
-                # close_position for trade 101
-                {"orderFillTransaction": {"pl": "-200", "price": "149.5"}},
-                # close_position for trade 102
-                {"orderFillTransaction": {"pl": "-100", "price": "1.1050"}},
-            ]
-
-            client = OandaClient(
-                api_key="test-key",
-                account_id="test-account",
-                environment="practice",
-            )
-
-            # 復旧後: ポジション取得 → 全ポジション決済
-            positions = client.get_positions()
-            assert len(positions) == 2
-
-            close_results = []
-            for pos in positions:
-                result = client.close_position(pos["trade_id"])
-                close_results.append(result)
-
-            assert len(close_results) == 2
-            assert close_results[0]["trade_id"] == "101"
-            assert close_results[1]["trade_id"] == "102"
 
     def test_multiple_kill_reasons_detected(self, caplog):
         """複数の障害原因が同時に検知され、取引が停止する"""

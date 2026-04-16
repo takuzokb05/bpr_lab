@@ -63,6 +63,7 @@ class BearResearcher:
         data: pd.DataFrame,
         signal: Signal,
         regime: Optional[Any] = None,
+        indicators: dict | None = None,
     ) -> BearVerdict:
         """
         シグナルに対する反対論拠を検証する。
@@ -71,6 +72,7 @@ class BearResearcher:
             data: OHLCV形式のDataFrame
             signal: BUY/SELL/HOLDシグナル
             regime: RegimeInfoオブジェクト（オプション）
+            indicators: IndicatorCache辞書（キャッシュがあればpandas_ta計算をスキップ）
 
         Returns:
             BearVerdict: 検証結果
@@ -102,24 +104,24 @@ class BearResearcher:
         is_buy = signal == Signal.BUY
         risk_factors: list[str] = []
 
-        # --- 5つのチェック実行 ---
-        divergence = self._check_divergence(data, is_buy)
+        # --- 5つのチェック実行（指標キャッシュを各チェックに渡す） ---
+        divergence = self._check_divergence(data, is_buy, indicators=indicators)
         if divergence:
             risk_factors.append(divergence)
 
-        sr_risk = self._check_support_resistance(data, is_buy)
+        sr_risk = self._check_support_resistance(data, is_buy, indicators=indicators)
         if sr_risk:
             risk_factors.append(sr_risk)
 
-        htf_risk = self._check_higher_timeframe(data, is_buy)
+        htf_risk = self._check_higher_timeframe(data, is_buy, indicators=indicators)
         if htf_risk:
             risk_factors.append(htf_risk)
 
-        vol_risk = self._check_volume_confirmation(data, is_buy)
+        vol_risk = self._check_volume_confirmation(data, is_buy, indicators=indicators)
         if vol_risk:
             risk_factors.append(vol_risk)
 
-        bb_risk = self._check_bb_squeeze(data)
+        bb_risk = self._check_bb_squeeze(data, indicators=indicators)
         if bb_risk:
             risk_factors.append(bb_risk)
 
@@ -158,14 +160,18 @@ class BearResearcher:
     # チェック項目の実装
     # ================================================================
 
-    def _check_divergence(self, data: pd.DataFrame, is_buy: bool) -> Optional[str]:
+    def _check_divergence(self, data: pd.DataFrame, is_buy: bool, indicators: dict | None = None) -> Optional[str]:
         """
         ダイバージェンス検出: 価格とRSIの方向が乖離しているか。
 
         直近N本の最初と最後で価格・RSIの方向を比較する。
         """
         lookback = BEAR_DIVERGENCE_LOOKBACK
-        rsi = ta.rsi(data["close"], length=RSI_PERIOD)
+        # キャッシュからRSI系列を取得（あればpandas_ta計算をスキップ）
+        if indicators is not None and indicators.get("rsi") is not None:
+            rsi = indicators["rsi"]
+        else:
+            rsi = ta.rsi(data["close"], length=RSI_PERIOD)
         if rsi is None or len(rsi) < lookback:
             return None
 
@@ -192,7 +198,7 @@ class BearResearcher:
         return None
 
     def _check_support_resistance(
-        self, data: pd.DataFrame, is_buy: bool
+        self, data: pd.DataFrame, is_buy: bool, indicators: dict | None = None
     ) -> Optional[str]:
         """
         サポレジ接近: 直近20本の高値/安値からサポレジを推定し、
@@ -207,8 +213,11 @@ class BearResearcher:
         support = float(recent["low"].min())
         current_price = float(data["close"].iloc[-1])
 
-        # ATRを距離の基準に使う
-        atr = ta.atr(data["high"], data["low"], data["close"], length=ATR_PERIOD)
+        # ATRを距離の基準に使う（キャッシュ優先）
+        if indicators is not None and indicators.get("atr") is not None:
+            atr = indicators["atr"]
+        else:
+            atr = ta.atr(data["high"], data["low"], data["close"], length=ATR_PERIOD)
         if atr is None:
             return None
 
@@ -238,12 +247,16 @@ class BearResearcher:
         return None
 
     def _check_higher_timeframe(
-        self, data: pd.DataFrame, is_buy: bool
+        self, data: pd.DataFrame, is_buy: bool, indicators: dict | None = None
     ) -> Optional[str]:
         """
         上位足矛盾: MA長期（50期間）の傾きがシグナル方向と逆か。
         """
-        ma_long = ta.sma(data["close"], length=MA_LONG_PERIOD)
+        # キャッシュからMA長期を取得（あればpandas_ta計算をスキップ）
+        if indicators is not None and indicators.get("ma_long") is not None:
+            ma_long = indicators["ma_long"]
+        else:
+            ma_long = ta.sma(data["close"], length=MA_LONG_PERIOD)
         if ma_long is None or len(ma_long) < 2:
             return None
 
@@ -263,24 +276,28 @@ class BearResearcher:
         return None
 
     def _check_volume_confirmation(
-        self, data: pd.DataFrame, is_buy: bool
+        self, data: pd.DataFrame, is_buy: bool, indicators: dict | None = None
     ) -> Optional[str]:
         """
         ボリューム不支持: MFIが中立帯(40-60)にある場合、
         資金フローが方向性を支持していない。
         """
-        # volume列がない場合はスキップ（リスクとしてカウントしない）
-        if "volume" not in data.columns:
-            return None
+        # キャッシュからcurrent_mfiを取得（あればpandas_ta計算をスキップ）
+        if indicators is not None and indicators.get("current_mfi") is not None:
+            current_mfi = indicators["current_mfi"]
+        else:
+            # volume列がない場合はスキップ（リスクとしてカウントしない）
+            if "volume" not in data.columns:
+                return None
 
-        mfi = ta.mfi(
-            data["high"], data["low"], data["close"], data["volume"],
-            length=MFI_PERIOD,
-        )
-        if mfi is None:
-            return None
+            mfi = ta.mfi(
+                data["high"], data["low"], data["close"], data["volume"],
+                length=MFI_PERIOD,
+            )
+            if mfi is None:
+                return None
 
-        current_mfi = mfi.iloc[-1]
+            current_mfi = mfi.iloc[-1]
         if pd.isna(current_mfi):
             return None
 
@@ -289,34 +306,38 @@ class BearResearcher:
 
         return None
 
-    def _check_bb_squeeze(self, data: pd.DataFrame) -> Optional[str]:
+    def _check_bb_squeeze(self, data: pd.DataFrame, indicators: dict | None = None) -> Optional[str]:
         """
         BBスクイーズ直後: BBW/平均BBWがREGIME_BBW_SQUEEZE_RATIO未満の場合、
         ブレイクアウト方向が不確実。
         """
-        bbands = ta.bbands(data["close"], length=20, std=2.0)
-        if bbands is None:
-            return None
-
-        # BBW（Bandwidth）列を探す
-        bbw_col = "BBB_20_2.0"
-        if bbw_col not in bbands.columns:
-            bbw_candidates = [c for c in bbands.columns if c.startswith("BBB_")]
-            if not bbw_candidates:
+        # キャッシュからbbw_ratioを取得（あればpandas_ta計算をスキップ）
+        if indicators is not None and indicators.get("bbw_ratio") is not None:
+            bbw_ratio = indicators["bbw_ratio"]
+        else:
+            bbands = ta.bbands(data["close"], length=20, std=2.0)
+            if bbands is None:
                 return None
-            bbw_col = bbw_candidates[0]
 
-        bbw = bbands[bbw_col].dropna()
-        if len(bbw) < 2:
-            return None
+            # BBW（Bandwidth）列を探す
+            bbw_col = "BBB_20_2.0"
+            if bbw_col not in bbands.columns:
+                bbw_candidates = [c for c in bbands.columns if c.startswith("BBB_")]
+                if not bbw_candidates:
+                    return None
+                bbw_col = bbw_candidates[0]
 
-        current_bbw = float(bbw.iloc[-1])
-        mean_bbw = float(bbw.mean())
+            bbw = bbands[bbw_col].dropna()
+            if len(bbw) < 2:
+                return None
 
-        if mean_bbw == 0:
-            return None
+            current_bbw = float(bbw.iloc[-1])
+            mean_bbw = float(bbw.mean())
 
-        bbw_ratio = current_bbw / mean_bbw
+            if mean_bbw == 0:
+                return None
+
+            bbw_ratio = current_bbw / mean_bbw
 
         if bbw_ratio < REGIME_BBW_SQUEEZE_RATIO:
             return (

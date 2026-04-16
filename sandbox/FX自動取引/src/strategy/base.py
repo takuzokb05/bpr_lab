@@ -33,12 +33,13 @@ class StrategyBase(ABC):
     """
 
     @abstractmethod
-    def generate_signal(self, data: pd.DataFrame) -> Signal:
+    def generate_signal(self, data: pd.DataFrame, **kwargs) -> Signal:
         """
         価格データからシグナルを生成する。
 
         Args:
             data: OHLCV形式のDataFrame（少なくとも open, high, low, close 列を含む）
+            **kwargs: 追加パラメータ（indicators等）
 
         Returns:
             Signal: BUY / SELL / HOLD のいずれか

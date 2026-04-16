@@ -3,10 +3,14 @@ FX自動取引システム — エントリーポイント
 
 MT5ブローカー接続 → MA Crossover + ADX戦略 → ペーパートレード実行
 VPSのタスクスケジューラから自動起動される。
+マルチペア対応: 複数通貨ペアを並行監視する。
 """
 import argparse
 import logging
+import signal as signal_module
 import sys
+import threading
+from logging.handlers import RotatingFileHandler
 from pathlib import Path
 
 # プロジェクトルートをsys.pathに追加
@@ -18,6 +22,7 @@ from src.bear_researcher import BearResearcher
 from src.config import (
     AI_ANALYSIS_DIR,
     BEAR_RESEARCHER_ENABLED,
+    DEFAULT_INSTRUMENTS,
     MAIN_TIMEFRAME,
     SLACK_ALERTS_WEBHOOK_URL,
     SLACK_ENABLED,
@@ -26,8 +31,10 @@ from src.config import (
     TELEGRAM_CHAT_ID,
 )
 from src.mt5_client import Mt5Client
+from src.notifier_group import NotifierGroup
 from src.position_manager import PositionManager
 from src.risk_manager import RiskManager
+from src.signal_coordinator import SignalCoordinator
 from src.slack_notifier import SlackNotifier
 from src.strategy.ma_crossover import RsiMaCrossover
 from src.telegram_notifier import TelegramNotifier, TelegramLogHandler
@@ -43,7 +50,11 @@ def setup_logging(log_dir: Path):
         level=logging.INFO,
         format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
         handlers=[
-            logging.FileHandler(log_file, encoding="utf-8"),
+            RotatingFileHandler(
+                log_file, encoding="utf-8",
+                maxBytes=10 * 1024 * 1024,  # 10MB
+                backupCount=5,
+            ),
             logging.StreamHandler(sys.stdout),
         ],
     )
@@ -52,10 +63,14 @@ def setup_logging(log_dir: Path):
 def main():
     parser = argparse.ArgumentParser(description="FX自動取引システム")
     parser.add_argument(
-        "--instrument", default="USD_JPY", help="取引通貨ペア（デフォルト: USD_JPY）"
+        "--instruments", nargs="+", default=None,
+        help="取引通貨ペア（複数指定可、デフォルト: DEFAULT_INSTRUMENTS）"
     )
     parser.add_argument(
-        "--granularity", default=MAIN_TIMEFRAME, help="時間足（デフォルト: H4）"
+        "--instrument", default=None, help="取引通貨ペア（単一指定、後方互換用）"
+    )
+    parser.add_argument(
+        "--granularity", default=MAIN_TIMEFRAME, help="時間足（デフォルト: H1）"
     )
     parser.add_argument(
         "--interval", type=int, default=60, help="チェック間隔（秒、デフォルト: 60）"
@@ -65,13 +80,21 @@ def main():
     )
     args = parser.parse_args()
 
+    # 通貨ペアリスト解決（--instrument単一指定 > --instruments複数指定 > デフォルト）
+    if args.instrument:
+        instruments = [args.instrument]
+    elif args.instruments:
+        instruments = args.instruments
+    else:
+        instruments = DEFAULT_INSTRUMENTS
+
     # ログ設定
     data_dir = project_root / "data"
     setup_logging(data_dir)
     logger = logging.getLogger(__name__)
 
     logger.info("=== FX自動取引システム起動 ===")
-    logger.info(f"通貨ペア: {args.instrument}")
+    logger.info(f"通貨ペア: {instruments} ({len(instruments)}ペア)")
     logger.info(f"時間足: {args.granularity}")
     logger.info(f"チェック間隔: {args.interval}秒")
     logger.info(f"ドライラン: {args.dry_run}")
@@ -105,7 +128,7 @@ def main():
             logger.info("ドライラン完了。取引は行いません。")
             return
 
-        # コンポーネント初期化
+        # 共有コンポーネント初期化
         db_path = data_dir / "fx_trading.db"
         risk_manager = RiskManager(
             account_balance=account["balance"],
@@ -117,7 +140,6 @@ def main():
             risk_manager=risk_manager,
             db_path=db_path,
         )
-        strategy = RsiMaCrossover()
 
         # AIアドバイザー（market_analysis.jsonがあれば自動読込）
         ai_advisor = AIAdvisor(analysis_dir=AI_ANALYSIS_DIR)
@@ -137,39 +159,84 @@ def main():
         if bear:
             logger.info("Bear Researcher（逆張り検証）を有効化しました")
 
-        # トレーディングループ
-        loop = TradingLoop(
-            broker_client=broker,
-            position_manager=position_manager,
-            risk_manager=risk_manager,
-            strategy=strategy,
-            instrument=args.instrument,
-            granularity=args.granularity,
-            check_interval_sec=args.interval,
-            notifier=notifier,
-            ai_advisor=ai_advisor,
-            slack_notifier=slack,
-            bear_researcher=bear,
+        # 通知グループ（Telegram + Slack を統合）
+        notifier_group = NotifierGroup([notifier, slack])
+
+        # シグナル協調（クロスペア相関のLLM評価、全ペア共有）
+        coordinator = SignalCoordinator() if len(instruments) > 1 else None
+        if coordinator:
+            logger.info("SignalCoordinator（クロスペア相関判断）を有効化しました")
+
+        # 各通貨ペアのTradingLoopを生成
+        loops: list[TradingLoop] = []
+        for instrument in instruments:
+            # 戦略は各ペアで独立インスタンス（診断情報が競合しないように）
+            strategy = RsiMaCrossover()
+            loop = TradingLoop(
+                broker_client=broker,
+                position_manager=position_manager,
+                risk_manager=risk_manager,
+                strategy=strategy,
+                instrument=instrument,
+                granularity=args.granularity,
+                check_interval_sec=args.interval,
+                notifier=notifier_group,
+                ai_advisor=ai_advisor,
+                bear_researcher=bear,
+                signal_coordinator=coordinator,
+            )
+            loops.append(loop)
+
+        pairs_str = ", ".join(instruments)
+        startup_detail = (
+            f"通貨ペア: {pairs_str} ({len(instruments)}ペア) | "
+            f"時間足: {args.granularity} | 間隔: {args.interval}秒"
         )
+        notifier_group.notify_bot_status("起動", startup_detail)
 
-        startup_detail = f"通貨ペア: {args.instrument} | 時間足: {args.granularity} | 間隔: {args.interval}秒"
-        if notifier:
-            notifier.notify_bot_status("起動", startup_detail)
-        if slack:
-            slack.notify_bot_status("起動", startup_detail)
+        # SIGTERMで全ループを安全に停止（タスクスケジューラのkill対応）
+        def _shutdown_handler(signum, frame):
+            logger.info("シグナル %s 受信: 全ループに停止要求", signum)
+            for lp in loops:
+                lp.stop()
 
-        logger.info("トレーディングループ開始")
+        signal_module.signal(signal_module.SIGTERM, _shutdown_handler)
+
+        logger.info("トレーディングループ開始（%dペア並行）", len(loops))
         try:
-            loop.start()
+            if len(loops) == 1:
+                # 単一ペア: メインスレッドでそのまま実行
+                loops[0].start()
+            else:
+                # マルチペア: スレッドで並行実行
+                threads: list[threading.Thread] = []
+                for loop in loops:
+                    t = threading.Thread(
+                        target=loop.start,
+                        name=f"loop-{loop._instrument}",
+                        daemon=False,
+                    )
+                    threads.append(t)
+                    t.start()
+                    logger.info("スレッド起動: %s", t.name)
+
+                # メインスレッドはKeyboardInterruptを待つ
+                try:
+                    for t in threads:
+                        t.join()
+                except KeyboardInterrupt:
+                    logger.info("KeyboardInterrupt: 全ループに停止要求")
+                    for loop in loops:
+                        loop.stop()
+                    for t in threads:
+                        t.join(timeout=10)
         except Exception as e:
             logger.exception(f"トレーディングループ異常終了: {e}")
             raise
         finally:
+            notifier_group.notify_bot_status("停止")
             if notifier:
-                notifier.notify_bot_status("停止")
-                notifier.stop()
-            if slack:
-                slack.notify_bot_status("停止")
+                notifier.stop()  # Telegramスレッドのクリーンアップ
 
 
 if __name__ == "__main__":

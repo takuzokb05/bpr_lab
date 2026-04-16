@@ -344,7 +344,8 @@ class TestClosePosition:
 class TestCloseAllPositions:
     """close_all_positions メソッドのテスト"""
 
-    def test_close_all_success(self):
+    @patch.object(PositionManager, "_check_correlation_exposure", return_value=(True, ""))
+    def test_close_all_success(self, _mock_corr):
         """全ポジション一括決済"""
         broker = _make_mock_broker()
         pm = _create_position_manager(broker=broker, max_positions=3)
@@ -394,7 +395,8 @@ class TestCloseAllPositions:
         assert pm.position_count == 0
         assert len(pm.trade_history) == 3
 
-    def test_close_all_partial_failure(self):
+    @patch.object(PositionManager, "_check_correlation_exposure", return_value=(True, ""))
+    def test_close_all_partial_failure(self, _mock_corr):
         """一括決済で一部が失敗しても残りは決済を継続する"""
         broker = _make_mock_broker()
         pm = _create_position_manager(broker=broker, max_positions=3)

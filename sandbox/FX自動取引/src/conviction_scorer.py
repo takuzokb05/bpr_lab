@@ -59,6 +59,7 @@ class ConvictionScorer:
         data: pd.DataFrame,
         signal: Signal,
         regime: Optional[Any] = None,
+        indicators: dict | None = None,
     ) -> ConvictionResult:
         """
         テクニカル指標の合流度合いからconviction scoreを計算する。
@@ -68,6 +69,7 @@ class ConvictionScorer:
             signal: 取引シグナル（BUY/SELL/HOLD）
             regime: RegimeInfo オブジェクト（未実装の場合はNone）。
                     regime.regime 属性に "TRENDING" / "RANGING" / "UNKNOWN" を期待する。
+            indicators: IndicatorCache辞書（キャッシュがあればpandas_ta計算をスキップ）
 
         Returns:
             ConvictionResult: スコア・倍率・内訳・理由・トレード可否
@@ -88,7 +90,7 @@ class ConvictionScorer:
         is_buy = signal == Signal.BUY
 
         # --- 1. トレンド一致（0-2） ---
-        trend_score = self._score_trend(data, is_buy)
+        trend_score = self._score_trend(data, is_buy, indicators=indicators)
         components["trend"] = trend_score
         if trend_score == 2:
             reasons.append("MA長期の傾きがシグナル方向と一致")
@@ -98,7 +100,7 @@ class ConvictionScorer:
             reasons.append("MA長期の傾きがシグナル方向と逆行")
 
         # --- 2. ADX強度（0-2） ---
-        adx_score = self._score_adx(data)
+        adx_score = self._score_adx(data, indicators=indicators)
         components["adx"] = adx_score
         if adx_score == 2:
             reasons.append("ADX強（トレンド明確）")
@@ -108,7 +110,7 @@ class ConvictionScorer:
             reasons.append("ADX弱（トレンド不明瞭）")
 
         # --- 3. RSI位置（0-2） ---
-        rsi_score = self._score_rsi(data, is_buy)
+        rsi_score = self._score_rsi(data, is_buy, indicators=indicators)
         components["rsi"] = rsi_score
         if rsi_score == 2:
             reasons.append("RSIが理想的な水準")
@@ -118,7 +120,7 @@ class ConvictionScorer:
             reasons.append("RSIが不適切な水準")
 
         # --- 4. MFI確認（0-2） ---
-        mfi_score = self._score_mfi(data, is_buy)
+        mfi_score = self._score_mfi(data, is_buy, indicators=indicators)
         components["mfi"] = mfi_score
         if mfi_score == 2:
             reasons.append("MFIがシグナル方向を強く支持")
@@ -175,9 +177,13 @@ class ConvictionScorer:
             should_trade=should_trade,
         )
 
-    def _score_trend(self, data: pd.DataFrame, is_buy: bool) -> int:
+    def _score_trend(self, data: pd.DataFrame, is_buy: bool, indicators: dict | None = None) -> int:
         """トレンド一致スコア: シグナル方向とMA長期の傾きが一致するか"""
-        ma_long = ta.sma(data["close"], length=MA_LONG_PERIOD)
+        # キャッシュからMA長期を取得（あればpandas_ta計算をスキップ）
+        if indicators is not None and indicators.get("ma_long") is not None:
+            ma_long = indicators["ma_long"]
+        else:
+            ma_long = ta.sma(data["close"], length=MA_LONG_PERIOD)
         if ma_long is None or len(ma_long) < 2:
             return 0
 
@@ -205,17 +211,21 @@ class ConvictionScorer:
             else:
                 return 0  # 逆行
 
-    def _score_adx(self, data: pd.DataFrame) -> int:
+    def _score_adx(self, data: pd.DataFrame, indicators: dict | None = None) -> int:
         """ADX強度スコア: ADX >= 30 → 2, >= 25 → 1, < 25 → 0"""
-        adx_df = ta.adx(data["high"], data["low"], data["close"], length=ADX_PERIOD)
-        if adx_df is None:
-            return 0
+        # キャッシュからcurrent_adxを取得（あればpandas_ta計算をスキップ）
+        if indicators is not None and indicators.get("current_adx") is not None:
+            current_adx = indicators["current_adx"]
+        else:
+            adx_df = ta.adx(data["high"], data["low"], data["close"], length=ADX_PERIOD)
+            if adx_df is None:
+                return 0
 
-        adx_col = f"ADX_{ADX_PERIOD}"
-        if adx_col not in adx_df.columns:
-            return 0
+            adx_col = f"ADX_{ADX_PERIOD}"
+            if adx_col not in adx_df.columns:
+                return 0
 
-        current_adx = adx_df[adx_col].iloc[-1]
+            current_adx = adx_df[adx_col].iloc[-1]
         if pd.isna(current_adx):
             return 0
 
@@ -226,7 +236,7 @@ class ConvictionScorer:
         else:
             return 0
 
-    def _score_rsi(self, data: pd.DataFrame, is_buy: bool) -> int:
+    def _score_rsi(self, data: pd.DataFrame, is_buy: bool, indicators: dict | None = None) -> int:
         """
         RSI位置スコア:
         - 買い: RSI 40-60 → 2, 30-70 → 1, それ以外 → 0
@@ -234,11 +244,15 @@ class ConvictionScorer:
           ※売りの場合、RSIが高い（70超）のは売りに好都合だが、
             合流度としては「まだ下落余地がある40-60」が理想的
         """
-        rsi = ta.rsi(data["close"], length=RSI_PERIOD)
-        if rsi is None:
-            return 0
+        # キャッシュからcurrent_rsiを取得（あればpandas_ta計算をスキップ）
+        if indicators is not None and indicators.get("current_rsi") is not None:
+            current_rsi = indicators["current_rsi"]
+        else:
+            rsi = ta.rsi(data["close"], length=RSI_PERIOD)
+            if rsi is None:
+                return 0
 
-        current_rsi = rsi.iloc[-1]
+            current_rsi = rsi.iloc[-1]
         if pd.isna(current_rsi):
             return 0
 
@@ -259,21 +273,25 @@ class ConvictionScorer:
             else:
                 return 0
 
-    def _score_mfi(self, data: pd.DataFrame, is_buy: bool) -> int:
+    def _score_mfi(self, data: pd.DataFrame, is_buy: bool, indicators: dict | None = None) -> int:
         """
         MFI確認スコア: シグナル方向とMFIが一致するか
         - 買い: MFI < 40 → 2（資金流入余地大）, 40-60 → 1, > 60 → 0
         - 売り: MFI > 60 → 2（資金流出余地大）, 40-60 → 1, < 40 → 0
         """
-        # volume列がない場合はデフォルト1点
-        if "volume" not in data.columns:
-            return 1
+        # キャッシュからcurrent_mfiを取得（あればpandas_ta計算をスキップ）
+        if indicators is not None and indicators.get("current_mfi") is not None:
+            current_mfi = indicators["current_mfi"]
+        else:
+            # volume列がない場合はデフォルト1点
+            if "volume" not in data.columns:
+                return 1
 
-        mfi = ta.mfi(data["high"], data["low"], data["close"], data["volume"], length=MFI_PERIOD)
-        if mfi is None:
-            return 1
+            mfi = ta.mfi(data["high"], data["low"], data["close"], data["volume"], length=MFI_PERIOD)
+            if mfi is None:
+                return 1
 
-        current_mfi = mfi.iloc[-1]
+            current_mfi = mfi.iloc[-1]
         if pd.isna(current_mfi):
             return 1
 

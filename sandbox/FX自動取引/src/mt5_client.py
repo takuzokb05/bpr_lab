@@ -438,7 +438,8 @@ class Mt5Client(BrokerClient):
     def _find_valid_filling(self, request: dict) -> dict:
         """有効なフィリングモードを自動検出する。
 
-        FOK → IOC → RETURN の順に試行し、order_checkで通るものを採用する。
+        symbol_info().filling_modeのビットマスクから対応モードを判定し、
+        フォールバックとしてorder_checkも試行する。
 
         Args:
             request: 注文リクエストdict
@@ -449,20 +450,46 @@ class Mt5Client(BrokerClient):
         Raises:
             Mt5ClientError: 全フィリングタイプで失敗した場合
         """
+        symbol = request.get("symbol", "")
+        info = mt5.symbol_info(symbol)
+
+        # symbol_info.filling_mode はビットマスク
+        # SYMBOL_FILLING_FOK=1, SYMBOL_FILLING_IOC=2 に対応
+        if info is not None:
+            filling_mode = info.filling_mode
+            # ビットマスクから対応フィリングを優先順に試行
+            candidates = []
+            if filling_mode & 1:  # SYMBOL_FILLING_FOK
+                candidates.append(mt5.ORDER_FILLING_FOK)
+            if filling_mode & 2:  # SYMBOL_FILLING_IOC
+                candidates.append(mt5.ORDER_FILLING_IOC)
+            # RETURN（ビット0x0、つまりExchange実行モード）は常にフォールバック候補
+            candidates.append(mt5.ORDER_FILLING_RETURN)
+
+            for filling in candidates:
+                request["type_filling"] = filling
+                check_result = mt5.order_check(request)
+                if check_result is not None and check_result.retcode == 0:
+                    return request
+
+        # symbol_infoが取れない場合は全パターン試行（従来ロジック）
         filling_types = [
             mt5.ORDER_FILLING_FOK,
             mt5.ORDER_FILLING_IOC,
             mt5.ORDER_FILLING_RETURN,
         ]
 
+        last_comment = "unknown"
         for filling in filling_types:
             request["type_filling"] = filling
             check_result = mt5.order_check(request)
-            if check_result.retcode == 0:
+            if check_result is not None and check_result.retcode == 0:
                 return request
+            if check_result is not None:
+                last_comment = check_result.comment
 
         raise Mt5ClientError(
-            f"全フィリングタイプで失敗しました: {check_result.comment}"
+            f"全フィリングタイプで失敗しました: {last_comment}"
         )
 
     def _send_order_with_retry(self, request: dict) -> object:

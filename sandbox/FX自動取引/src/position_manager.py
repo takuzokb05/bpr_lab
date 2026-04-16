@@ -8,16 +8,18 @@ SPEC_phase2.md F12 準拠。
 
 import logging
 import sqlite3
-from datetime import datetime, timezone
+import threading
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Optional
 
 import pandas as pd
 
 from src.broker_client import BrokerClient
-from src.config import MAX_OPEN_POSITIONS
+from src.config import CORRELATION_GROUPS, MAX_CORRELATION_EXPOSURE, MAX_OPEN_POSITIONS
 from src.risk_manager import RiskManager
 from src.strategy.base import Signal, StrategyBase
+from src.trade_postmortem import TradePostMortem
 
 logger = logging.getLogger(__name__)
 
@@ -61,7 +63,9 @@ class PositionManager:
         self._max_positions = max_positions
         self._open_positions: list[dict] = []
         self._trade_history: list[dict] = []
+        self._lock = threading.Lock()  # マルチスレッド対応: ポジション操作の排他制御
         self._db_path = db_path
+        self._postmortem = TradePostMortem(db_path=db_path)
         if db_path is not None:
             self._init_trades_db()
 
@@ -141,6 +145,45 @@ class PositionManager:
             logger.warning("ポジション決済のDB記録に失敗: %s", e)
 
     # ------------------------------------------------------------------
+    # 相関チェック
+    # ------------------------------------------------------------------
+
+    def _check_correlation_exposure(
+        self, instrument: str
+    ) -> tuple[bool, str]:
+        """
+        相関グループ内のポジション数をチェックする。
+
+        同一グループ内の保有ポジション数が MAX_CORRELATION_EXPOSURE を
+        超過する場合、新規ポジションをブロックする。
+        ロック内から呼ぶこと。
+
+        Args:
+            instrument: 新規オープン対象の通貨ペア
+
+        Returns:
+            (許可フラグ, 理由文字列)。許可時は (True, "")。
+        """
+        for group_name, group_instruments in CORRELATION_GROUPS.items():
+            if instrument not in group_instruments:
+                continue
+
+            # このグループに属する保有ポジション数をカウント
+            count = sum(
+                1 for pos in self._open_positions
+                if pos["instrument"] in group_instruments
+            )
+
+            if count >= MAX_CORRELATION_EXPOSURE:
+                reason = (
+                    f"相関グループ '{group_name}' の保有数が上限に到達 "
+                    f"({count}/{MAX_CORRELATION_EXPOSURE})"
+                )
+                return False, reason
+
+        return True, ""
+
+    # ------------------------------------------------------------------
     # ポジションオープン
     # ------------------------------------------------------------------
 
@@ -150,6 +193,7 @@ class PositionManager:
         signal: Signal,
         data: pd.DataFrame,
         strategy: StrategyBase,
+        indicators: Optional[dict] = None,
     ) -> Optional[dict]:
         """
         シグナルに基づいてポジションを開く。
@@ -176,134 +220,147 @@ class PositionManager:
 
         direction = signal.value  # "BUY" or "SELL"
 
-        # 2. キルスイッチチェック
-        if not self._risk_manager.kill_switch.is_trading_allowed():
-            logger.warning(
-                "キルスイッチ発動中のため取引不可: reason=%s",
-                self._risk_manager.kill_switch.reason,
-            )
-            return None
-
-        # 3. 同一通貨ペアの重複チェック
-        for pos in self._open_positions:
-            if pos["instrument"] == instrument:
-                logger.info(
-                    "同一通貨ペア %s のポジションが既に存在するため取引スキップ: "
-                    "trade_id=%s",
-                    instrument,
-                    pos["trade_id"],
+        with self._lock:
+            # 2. キルスイッチチェック
+            if not self._risk_manager.kill_switch.is_trading_allowed():
+                logger.warning(
+                    "キルスイッチ発動中のため取引不可: reason=%s",
+                    self._risk_manager.kill_switch.reason,
                 )
                 return None
 
-        # 4. 最大ポジション数チェック
-        if len(self._open_positions) >= self._max_positions:
-            logger.info(
-                "最大ポジション数(%d)に達しているため取引スキップ: 現在=%d",
-                self._max_positions,
-                len(self._open_positions),
+            # 3. 同一通貨ペアの重複チェック
+            for pos in self._open_positions:
+                if pos["instrument"] == instrument:
+                    logger.info(
+                        "同一通貨ペア %s のポジションが既に存在するため取引スキップ: "
+                        "trade_id=%s",
+                        instrument,
+                        pos["trade_id"],
+                    )
+                    return None
+
+            # 3b. 相関グループ内のエクスポージャーチェック
+            corr_allowed, corr_reason = self._check_correlation_exposure(instrument)
+            if not corr_allowed:
+                logger.info(
+                    "相関エクスポージャー上限のため取引スキップ: %s", corr_reason
+                )
+                return None
+
+            # 4. 最大ポジション数チェック
+            if len(self._open_positions) >= self._max_positions:
+                logger.info(
+                    "最大ポジション数(%d)に達しているため取引スキップ: 現在=%d",
+                    self._max_positions,
+                    len(self._open_positions),
+                )
+                return None
+
+            # 5. 損失上限チェック
+            is_allowed, reason = self._risk_manager.check_loss_limits(
+                self._trade_history
             )
-            return None
+            if not is_allowed:
+                logger.warning("損失上限に到達のため取引不可: %s", reason)
+                return None
 
-        # 5. 損失上限チェック
-        is_allowed, reason = self._risk_manager.check_loss_limits(
-            self._trade_history
-        )
-        if not is_allowed:
-            logger.warning("損失上限に到達のため取引不可: %s", reason)
-            return None
-
-        # 6. 連続負けチェック
-        _, is_stopped = self._risk_manager.check_consecutive_losses(
-            self._trade_history
-        )
-        if is_stopped:
-            logger.warning("連続負け上限に到達のため取引不可")
-            return None
-
-        # エントリー価格を最新の終値から取得
-        entry_price = float(data["close"].iloc[-1])
-
-        # 7. SL算出（ポジションサイズ計算に必要）
-        stop_loss = strategy.calculate_stop_loss(entry_price, direction, data)
-
-        # stop_loss_pips の算出: JPYクロスと非JPYペアで除数が異なる
-        is_jpy_cross = "JPY" in instrument.upper()
-        pip_unit = 0.01 if is_jpy_cross else 0.0001
-        stop_loss_pips = round(abs(entry_price - stop_loss) / pip_unit, 1)
-
-        # stop_loss_pips が0の場合は安全のため取引しない
-        if stop_loss_pips <= 0:
-            logger.warning(
-                "stop_loss_pipsが0以下のため取引不可: instrument=%s, "
-                "entry=%.5f, sl=%.5f",
-                instrument,
-                entry_price,
-                stop_loss,
+            # 6. 連続負けチェック
+            _, is_stopped = self._risk_manager.check_consecutive_losses(
+                self._trade_history
             )
-            return None
+            if is_stopped:
+                logger.warning("連続負け上限に到達のため取引不可")
+                return None
 
-        # ポジションサイズ算出
-        balance = self._risk_manager.account_balance
-        lot_size = self._risk_manager.calculate_position_size(
-            balance, stop_loss_pips, instrument
-        )
+            # エントリー価格を最新の終値から取得
+            entry_price = float(data["close"].iloc[-1])
 
-        # 8. ポジションサイズが0なら取引不可
-        if lot_size <= 0:
-            logger.info(
-                "ポジションサイズが0のため取引スキップ: instrument=%s", instrument
+            # 7. SL算出（ポジションサイズ計算に必要）
+            stop_loss = strategy.calculate_stop_loss(entry_price, direction, data)
+
+            # stop_loss_pips の算出: JPYクロスと非JPYペアで除数が異なる
+            is_jpy_cross = "JPY" in instrument.upper()
+            pip_unit = 0.01 if is_jpy_cross else 0.0001
+            stop_loss_pips = round(abs(entry_price - stop_loss) / pip_unit, 1)
+
+            # stop_loss_pips が0の場合は安全のため取引しない
+            if stop_loss_pips <= 0:
+                logger.warning(
+                    "stop_loss_pipsが0以下のため取引不可: instrument=%s, "
+                    "entry=%.5f, sl=%.5f",
+                    instrument,
+                    entry_price,
+                    stop_loss,
+                )
+                return None
+
+            # ポジションサイズ算出
+            balance = self._risk_manager.account_balance
+            lot_size = self._risk_manager.calculate_position_size(
+                balance, stop_loss_pips, instrument
             )
-            return None
 
-        # 9. TP算出
-        take_profit = strategy.calculate_take_profit(
-            entry_price, direction, stop_loss
-        )
+            # 8. ポジションサイズが0なら取引不可
+            if lot_size <= 0:
+                logger.info(
+                    "ポジションサイズが0のため取引スキップ: instrument=%s", instrument
+                )
+                return None
 
-        # units計算: lot_size * 1000 の整数変換
-        # BUY → 正, SELL → 負
-        units = int(lot_size * 1000)
-        if units == 0:
-            logger.info(
-                "units が0のため取引スキップ: lot_size=%.6f, instrument=%s",
-                lot_size,
-                instrument,
+            # 9. TP算出
+            take_profit = strategy.calculate_take_profit(
+                entry_price, direction, stop_loss
             )
-            return None
 
-        if signal == Signal.SELL:
-            units = -units
+            # units計算: lot_size * 1000 の整数変換
+            # BUY → 正, SELL → 負
+            units = int(lot_size * 1000)
+            if units == 0:
+                logger.info(
+                    "units が0のため取引スキップ: lot_size=%.6f, instrument=%s",
+                    lot_size,
+                    instrument,
+                )
+                return None
 
-        # 10. 成行注文発注
-        try:
-            order_result = self._broker_client.market_order(
-                instrument=instrument,
-                units=units,
-                stop_loss=stop_loss,
-                take_profit=take_profit,
-            )
-        except Exception as e:
-            raise PositionManagerError(
-                f"成行注文の発注に失敗しました: instrument={instrument}, "
-                f"units={units}, error={e}"
-            ) from e
+            if signal == Signal.SELL:
+                units = -units
 
-        # 11. ローカル状態を更新
-        trade_id = order_result.get("trade_id", order_result.get("order_id", ""))
-        open_price = order_result.get("price", entry_price)
+            # 10. 成行注文発注
+            try:
+                order_result = self._broker_client.market_order(
+                    instrument=instrument,
+                    units=units,
+                    stop_loss=stop_loss,
+                    take_profit=take_profit,
+                )
+            except Exception as e:
+                raise PositionManagerError(
+                    f"成行注文の発注に失敗しました: instrument={instrument}, "
+                    f"units={units}, error={e}"
+                ) from e
 
-        position = {
-            "trade_id": str(trade_id),
-            "instrument": instrument,
-            "units": units,
-            "open_price": float(open_price),
-            "stop_loss": stop_loss,
-            "take_profit": take_profit,
-            "opened_at": datetime.now(timezone.utc),
-            "unrealized_pl": 0.0,
-        }
-        self._open_positions.append(position)
-        self._db_save_open_trade(position)
+            # 11. ローカル状態を更新
+            trade_id = order_result.get("trade_id", order_result.get("order_id", ""))
+            open_price = order_result.get("price", entry_price)
+
+            position = {
+                "trade_id": str(trade_id),
+                "instrument": instrument,
+                "units": units,
+                "open_price": float(open_price),
+                "stop_loss": stop_loss,
+                "take_profit": take_profit,
+                "opened_at": datetime.now(timezone.utc),
+                "unrealized_pl": 0.0,
+            }
+            self._open_positions.append(position)
+            self._db_save_open_trade(position)
+
+            # エントリー時の指標スナップショットを保存（事後分析用）
+            if indicators is not None:
+                self._postmortem.save_entry_snapshot(str(trade_id), indicators)
 
         logger.info(
             "ポジションオープン成功: trade_id=%s, instrument=%s, units=%d, "
@@ -335,68 +392,81 @@ class PositionManager:
         Raises:
             PositionManagerError: ブローカーAPI呼び出しで予期しないエラーが発生した場合
         """
-        # ローカル状態から該当ポジションを検索
-        target_pos = None
-        for pos in self._open_positions:
-            if pos["trade_id"] == trade_id:
-                target_pos = pos
-                break
+        with self._lock:
+            # ローカル状態から該当ポジションを検索
+            target_pos = None
+            for pos in self._open_positions:
+                if pos["trade_id"] == trade_id:
+                    target_pos = pos
+                    break
 
-        if target_pos is None:
-            logger.warning(
-                "決済対象のポジションが見つかりません: trade_id=%s", trade_id
+            if target_pos is None:
+                logger.warning(
+                    "決済対象のポジションが見つかりません: trade_id=%s", trade_id
+                )
+                return None
+
+            # ブローカーに決済リクエスト
+            try:
+                close_result = self._broker_client.close_position(trade_id)
+            except Exception as e:
+                raise PositionManagerError(
+                    f"ポジション決済に失敗しました: trade_id={trade_id}, error={e}"
+                ) from e
+
+            # ローカル状態から削除
+            self._open_positions = [
+                p for p in self._open_positions if p["trade_id"] != trade_id
+            ]
+
+            # 取引履歴に追加（H-2: 決済結果の欠損値を検知・警告）
+            close_price = close_result.get("close_price")
+            realized_pl = close_result.get("realized_pl")
+            pl_unknown = close_price is None or realized_pl is None
+
+            if pl_unknown:
+                logger.warning(
+                    "ブローカーから決済価格または損益が返却されませんでした: "
+                    "trade_id=%s, close_result=%s",
+                    trade_id, close_result,
+                )
+
+            history_entry = {
+                "trade_id": trade_id,
+                "instrument": target_pos["instrument"],
+                "units": target_pos["units"],
+                "open_price": target_pos["open_price"],
+                "close_price": close_price if close_price is not None else 0.0,
+                "pl": realized_pl if realized_pl is not None else 0.0,
+                "pl_unknown": pl_unknown,
+                "opened_at": target_pos["opened_at"],
+                "close_time": datetime.now(timezone.utc),
+            }
+            self._trade_history.append(history_entry)
+            self._db_save_closed_trade(
+                trade_id,
+                history_entry["close_price"],
+                history_entry["pl"],
+                history_entry["close_time"],
             )
-            return None
-
-        # ブローカーに決済リクエスト
-        try:
-            close_result = self._broker_client.close_position(trade_id)
-        except Exception as e:
-            raise PositionManagerError(
-                f"ポジション決済に失敗しました: trade_id={trade_id}, error={e}"
-            ) from e
-
-        # ローカル状態から削除
-        self._open_positions = [
-            p for p in self._open_positions if p["trade_id"] != trade_id
-        ]
-
-        # 取引履歴に追加（H-2: 決済結果の欠損値を検知・警告）
-        close_price = close_result.get("close_price")
-        realized_pl = close_result.get("realized_pl")
-        pl_unknown = close_price is None or realized_pl is None
-
-        if pl_unknown:
-            logger.warning(
-                "ブローカーから決済価格または損益が返却されませんでした: "
-                "trade_id=%s, close_result=%s",
-                trade_id, close_result,
-            )
-
-        history_entry = {
-            "trade_id": trade_id,
-            "instrument": target_pos["instrument"],
-            "units": target_pos["units"],
-            "open_price": target_pos["open_price"],
-            "close_price": close_price if close_price is not None else 0.0,
-            "pl": realized_pl if realized_pl is not None else 0.0,
-            "pl_unknown": pl_unknown,
-            "opened_at": target_pos["opened_at"],
-            "close_time": datetime.now(timezone.utc),
-        }
-        self._trade_history.append(history_entry)
-        self._db_save_closed_trade(
-            trade_id,
-            history_entry["close_price"],
-            history_entry["pl"],
-            history_entry["close_time"],
-        )
 
         logger.info(
             "ポジション決済完了: trade_id=%s, instrument=%s, pl=%.2f",
             trade_id,
             target_pos["instrument"],
             history_entry["pl"],
+        )
+
+        # 事後分析をバックグラウンドでトリガー
+        self._postmortem.trigger_analysis(
+            trade_id=trade_id,
+            instrument=target_pos["instrument"],
+            units=target_pos["units"],
+            open_price=target_pos["open_price"],
+            close_price=history_entry["close_price"],
+            pl=history_entry["pl"],
+            opened_at=target_pos["opened_at"],
+            closed_at=history_entry["close_time"],
         )
 
         return close_result
@@ -494,56 +564,60 @@ class PositionManager:
                 f"ブローカーからのポジション取得に失敗しました: {e}"
             ) from e
 
-        # ブローカー側のtrade_idセット
-        broker_ids = {str(p["trade_id"]) for p in broker_positions}
+        with self._lock:
+            # ブローカー側のtrade_idセット
+            broker_ids = {str(p["trade_id"]) for p in broker_positions}
 
-        # ローカル側のtrade_idセット
-        local_ids = {p["trade_id"] for p in self._open_positions}
+            # ローカル側のtrade_idセット
+            local_ids = {p["trade_id"] for p in self._open_positions}
 
-        # 一致: 両方に存在
-        synced_ids = local_ids & broker_ids
+            # 一致: 両方に存在
+            synced_ids = local_ids & broker_ids
 
-        # ローカルのみ: ブローカーでは既に決済済みの可能性
-        local_only = sorted(local_ids - broker_ids)
+            # ローカルのみ: ブローカーでは既に決済済みの可能性
+            local_only = sorted(local_ids - broker_ids)
 
-        # ブローカーのみ: ローカルが把握していないポジション
-        broker_only = sorted(broker_ids - local_ids)
+            # ブローカーのみ: ローカルが把握していないポジション
+            broker_only = sorted(broker_ids - local_ids)
 
-        # 一致したポジションの未実現損益を更新
-        broker_pos_map = {str(p["trade_id"]): p for p in broker_positions}
-        for pos in self._open_positions:
-            if pos["trade_id"] in synced_ids:
-                broker_pos = broker_pos_map[pos["trade_id"]]
-                pos["unrealized_pl"] = broker_pos.get("unrealized_pl", 0.0)
+            # 一致したポジションの未実現損益を更新
+            broker_pos_map = {str(p["trade_id"]): p for p in broker_positions}
+            for pos in self._open_positions:
+                if pos["trade_id"] in synced_ids:
+                    broker_pos = broker_pos_map[pos["trade_id"]]
+                    pos["unrealized_pl"] = broker_pos.get("unrealized_pl", 0.0)
 
-        # H-3: ローカルのみのポジションを自動除去（ブローカーで決済済み）
-        if local_only:
-            for orphan_id in local_only:
-                target = next(
-                    (p for p in self._open_positions if p["trade_id"] == orphan_id),
-                    None,
-                )
-                if target:
-                    self._open_positions.remove(target)
-                    # 損益不明として履歴に追加（安全側: pl=0, pl_unknown=True）
-                    close_time = datetime.now(timezone.utc)
-                    self._trade_history.append({
-                        "trade_id": orphan_id,
-                        "instrument": target["instrument"],
-                        "units": target["units"],
-                        "open_price": target["open_price"],
-                        "close_price": 0.0,
-                        "pl": 0.0,
-                        "pl_unknown": True,
-                        "opened_at": target["opened_at"],
-                        "close_time": close_time,
-                    })
-                    self._db_save_closed_trade(orphan_id, 0.0, 0.0, close_time)
-                    logger.warning(
-                        "ブローカー側で決済済みのポジションをローカルから除去: "
-                        "trade_id=%s, instrument=%s",
-                        orphan_id, target["instrument"],
+            # H-3: ローカルのみのポジションを自動除去（ブローカーで決済済み）
+            if local_only:
+                for orphan_id in local_only:
+                    target = next(
+                        (p for p in self._open_positions if p["trade_id"] == orphan_id),
+                        None,
                     )
+                    if target:
+                        self._open_positions.remove(target)
+                        # 損益不明として履歴に追加（安全側: pl=0, pl_unknown=True）
+                        close_time = datetime.now(timezone.utc)
+                        self._trade_history.append({
+                            "trade_id": orphan_id,
+                            "instrument": target["instrument"],
+                            "units": target["units"],
+                            "open_price": target["open_price"],
+                            "close_price": 0.0,
+                            "pl": 0.0,
+                            "pl_unknown": True,
+                            "opened_at": target["opened_at"],
+                            "close_time": close_time,
+                        })
+                        self._db_save_closed_trade(orphan_id, 0.0, 0.0, close_time)
+                        logger.warning(
+                            "ブローカー側で決済済みのポジションをローカルから除去: "
+                            "trade_id=%s, instrument=%s",
+                            orphan_id, target["instrument"],
+                        )
+
+            # 古い取引履歴をメモリから除去（DBには残る）
+            self._trim_trade_history()
 
         if broker_only:
             logger.warning(
@@ -577,14 +651,28 @@ class PositionManager:
         Returns:
             ポジション情報dictのリスト（コピー）
         """
-        return list(self._open_positions)
+        with self._lock:
+            return list(self._open_positions)
 
     @property
     def position_count(self) -> int:
         """現在の保有ポジション数"""
-        return len(self._open_positions)
+        with self._lock:
+            return len(self._open_positions)
 
     @property
     def trade_history(self) -> list[dict]:
         """決済済みの取引履歴（損失上限チェック用）"""
-        return list(self._trade_history)
+        with self._lock:
+            return list(self._trade_history)
+
+    def _trim_trade_history(self) -> None:
+        """30日以上前の取引履歴をメモリから除去する（DBには残る）。
+
+        ロック内から呼ぶこと。
+        """
+        cutoff = datetime.now(timezone.utc) - timedelta(days=30)
+        self._trade_history = [
+            t for t in self._trade_history
+            if t.get("close_time", t.get("opened_at")) > cutoff
+        ]
