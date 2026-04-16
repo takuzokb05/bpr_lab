@@ -1,0 +1,295 @@
+{
+  "date": "2026-04-15",
+  "generated_at": "2026-04-16T23:21:24.054833Z",
+  "article_count": 21,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-04-15_001_Claude_Code_Routines_Official_Anthropic_Blog.md",
+      "title": "Introducing routines in Claude Code — Anthropic公式発表",
+      "url": "https://claude.com/blog/introducing-routines-in-claude-code",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Anthropicが2026年4月14日にClaude Code「Routines」をリサーチプレビューとして公式発表。プロンプト・リポジトリ・コネクタを一度設定するだけで、スケジュール・API・GitHubイベントをトリガーにAIが自律的にコードを書く仕組み。**Anthropicのクラウドインフラ上で動作するため、ローカルPCがオフラインでも継続実行**される点が革新的。3種のトリガー（スケジュール/API/GitHub Events）に対応。プラン別上限：Pro=5件/日、Max=15件/日、Team/Enterprise=25件/日。夜間バックログトリアージ・デプロイ後スモークテスト・週次レポート生成が典型ユースケース。公式ブログからの一次情報として要注目。",
+      "body_excerpt": "Anthropic officially announces Claude Code Routines as a research preview on April 14, 2026. A routine is a Claude Code automation configured once — including a prompt, repo, and connectors — then triggered on a schedule, via API, or in response to GitHub events. Routines run on Anthropic's web infrastructure, not on your local machine. Three trigger types: Schedule (hourly/nightly/weekly), API (external call), GitHub Events (PR/release/push). Plan limits: Pro=5/day, Max=15/day, Team/Enterprise=25/day. Examples: nightly backlog triage, deploy smoke checks, weekly report generation.",
+      "fact_checked": true,
+      "fact_check_note": "✅ 全数値確認済み。Pro=5/日、Max=15/日、Team/Enterprise=25/日。3トリガー（schedule/API/GitHub Events）・クラウドインフラ実行・2026年4月14日リリース、全て一致。"
+    },
+    {
+      "file": "2026-04-15_002_Claude_Code_Subagents_Official_How_When_To_Use.md",
+      "title": "Claude Code サブエージェント活用ガイド — 公式ブログ",
+      "url": "https://claude.com/blog/subagents-in-claude-code",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Anthropic公式ブログによるClaude Codeサブエージェント活用ガイド。サブエージェントは独自のコンテキストウィンドウ・ツール・ペルソナを持つ専門エージェント。**並列化可能なタスク（大規模リファクタ・マイグレーション・テスト生成）に最適**で、密結合な順次ワークフローには不向き。現行の重要制約：サブエージェントからSkillツールは呼び出せず、メインエージェントのみ使用可能（issue #38719で改善議論中）。エージェント数に比例してトークンコストが増加する点も注意。planner/code-reviewer/security-reviewerの役割分担パターンが推奨。公式一次情報として実装判断の基準になる内容。",
+      "body_excerpt": "Anthropic's official guide on when and how to use subagents in Claude Code. Subagents are specialized agents invoked from the main agent, each with their own context window, tools, and persona. Best for parallelizable, file-independent tasks: bulk refactoring, migrations, test generation. Not for tightly sequential workflows. Subagents cannot invoke the Skill tool — only main agent context can. Token costs scale with number of agents. Current limitation: subagents & skills integration requires workarounds (GitHub issue #38719). Known patterns: planner, code-reviewer, security-reviewer specializations.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-15_003_Claude_Code_Desktop_Redesign_Integrated_Terminal_The_New_Stack.md",
+      "title": "Claude Code デスクトップ大刷新 — 統合ターミナル・高速diff・拡張プレビュー",
+      "url": "https://thenewstack.io/claude-code-desktop-redesign/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Anthropicが2026年4月14日にClaude Codeデスクトップを大幅刷新。**統合ターミナル（外部ターミナル不要）・高速diffビューア・アプリ内ファイルエディタ・拡張プレビューエリア**が追加され、再配置可能なペイン構成に。Routinesリサーチプレビューと同日リリース。インタラクティブチャート・ダイアグラム・モバイルインタラクティブアプリの生成もデスクトップ内で完結。Computer Use統合によりGUI操作も可能。Claude Codeがターミナル専用ツールから本格的なオールインワンのエージェントコーディング環境へ進化した転換点。",
+      "body_excerpt": "The New Stack covers Anthropic's Claude Code desktop app redesign released April 14, 2026. New features: integrated terminal (no external terminal required), faster diff viewer, in-app file editor, expanded preview area with rearrangeable panes. The redesign accompanies the Routines research preview launch. Claude Code can now produce interactive charts, diagrams, and mobile apps within the desktop. Computer Use integration for GUI interaction also available. The redesigned desktop positions Claude Code as an all-in-one agentic coding environment.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-15_004_Claude_Code_Routines_Cron_Jobs_The_Register.md",
+      "title": "Claude Code Routines — The Register が批評する「賢いcronジョブ」",
+      "url": "https://www.theregister.com/2026/04/14/claude_code_routines/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "The RegisterによるClaude Code Routinesの批評的レビュー。「賢いcronジョブ」と表現し、Anthropicクラウドインフラ上で動作する自動化機能としてRoutinesを分析。リサーチプレビュー段階であること・Pro=5件/日という実行回数制限が課題として指摘。スケジュール・API・GitHubイベントの3トリガーを確認。新デスクトップ刷新も同時取り上げ。業界メディアの受け止め方や批判的視点として参考になる記事。Pro/Maxの1日あたり制限が実用上のボトルネックになりうる点は重要。",
+      "body_excerpt": "The Register's coverage of Claude Code Routines with critical analysis. Describes Routines as 'mildly clever cron jobs' running on Anthropic's cloud infrastructure. Key points: routines are research preview stage, run in Claude Code's web infrastructure, not locally. Three trigger modes: scheduled, API-triggered, GitHub event-triggered. Limits: Pro 5/day, Max 15/day, Team/Enterprise 25/day. The Register notes this is an early-stage feature with limited execution counts. Also covers the redesigned Claude Code desktop simultaneously released.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-15_005_Claude_Code_Agent_Teams_Parallel_Shared_Task_List_MindStudio.md",
+      "title": "Claude Code Agent Teams — 共有タスクリストで並列実行する実験的機能",
+      "url": "https://www.mindstudio.ai/blog/claude-code-agent-teams-parallel-agents",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "MindStudioによるClaude Code Agent Teams詳細解説。**共有タスクリストを通じて複数エージェントが協調する実験的機能**で、各サブエージェントが独立したタスクをクレームしながら並列実行する。従来の単一エージェント逐次処理から真の並列処理へ。大規模ファイル非依存タスク（バルクリファクタ・マイグレーション・テスト生成）で最大の効果。エージェント数×トークンコストになる点に注意。密結合な順次ワークフローには不向き。Agent Teamsのセットアップ・協調パターン・コスト考慮事項を包括的にカバーした実践ガイド。",
+      "body_excerpt": "MindStudio's deep dive into Claude Code Agent Teams, an experimental feature enabling multiple agents to collaborate via a shared task list. Instead of one agent working sequentially, Agent Teams spins up multiple subagents that work concurrently, each claiming and executing different tasks. Shared task list enables true cross-agent communication. Best for large, file-independent tasks: bulk refactoring, migrations, test generation. Token costs scale with agent count. Not for tightly sequential workflows. Guide covers setup, coordination patterns, and cost considerations.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-15_006_Claude_Code_5_Agentic_Workflow_Patterns_Sequential_to_Autonomous_MindStudio.md",
+      "title": "Claude Code エージェントワークフロー5パターン — 順次から完全自律まで",
+      "url": "https://www.mindstudio.ai/blog/claude-code-agentic-workflow-patterns",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "MindStudioによるClaude Codeエージェントワークフロー5パターン完全ガイド。パターン1：順次実行（シンプルステップ）→パターン2：条件分岐→パターン3：並列実行（複数サブエージェント）→パターン4：階層型（オーケストレーター＋ワーカー）→パターン5：完全自律（ゴール指定型）の5段階を網羅。**2026年においてはプロンプトの巧みさよりコンテキストアーキテクチャが重要**という知見も。各パターンの適用場面・コスト・複雑性トレードオフを実装例付きで解説。Claude Code活用の設計判断ガイドとして実用性が高い。",
+      "body_excerpt": "MindStudio's comprehensive guide to 5 agentic workflow patterns in Claude Code, from sequential to fully autonomous. Patterns covered: 1) Sequential (simple step-by-step), 2) Conditional branching (if-then logic), 3) Parallel execution (multiple subagents), 4) Hierarchical (orchestrator+workers), 5) Fully autonomous (self-directing with goals). Includes when to use each pattern, cost/complexity tradeoffs, and real-world implementation examples. Context architecture matters more than prompt cleverness in 2026.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-15_007_Claude_Code_Routines_Schedule_API_GitHub_JA_FunnelAI.md",
+      "title": "Claude Code Routines完全解説 — スケジュール・API・GitHubイベント自動化【日本語】",
+      "url": "https://funnel-ai.jp/media/claude-code-routines/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "ファネルAIによるClaude Code Routines日本語詳細解説（2026年4月14日リリース対応）。**3種のトリガー（スケジュール・API・GitHubイベント）**の設定方法を具体的に解説。Anthropicクラウド上で動作するためラップトップクローズ中も実行継続、cronジョブ管理不要という革新的な点を強調。夜間バックログトリアージ・デプロイ後スモークテスト・PR自動レビューの実ユースケース付き。Pro=5/Max=15/Team・Enterprise=25件/日の制限と現実的な活用設計についても言及。日本語一次解説として品質が高い。",
+      "body_excerpt": "ファネルAIによるClaude Code Routines日本語解説。2026年4月14日リリースのRoutinesをスケジュール・API・GitHubイベントの3トリガーで詳細解説。Anthropicクラウド上で動作するためラップトップを閉じても継続実行可能。cronジョブやMCPサーバーの自前管理が不要になる。実際のユースケース：夜間バックログトリアージ、デプロイ後スモークテスト、GitHub PR自動レビュー。Pro/Max/Team/Enterprise別の実行回数制限（5/15/25件/日）も明記。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-15_008_Claude_Code_Routines_AI_Autotask_While_Sleeping_Jinrai.md",
+      "title": "Claude Code Routines — 寝ている間にバグ修正・コードレビューを完了させる仕組み",
+      "url": "https://jinrai.co.jp/blog/2026/04/15/claude-code-routines-guide/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "仁頼が2026年4月15日（本日付け）に公開したClaude Code Routines実践解説。「睡眠中にバグ修正・コードレビュー完了」というコンセプトが印象的。**Routinesのクラウド実行による「人間の手離れ」**が実用面でどう機能するかを解説。設定手順（プロンプト→リポジトリ→コネクタ→トリガー選択）を実践的にガイド。夜間Issueトリアージ・ラベル付け・PR作成自動化・GitHub Events対応など具体的ユースケースが充実。本日公開の最新記事として特に参考になる一次情報。",
+      "body_excerpt": "仁頼（jinrai.co.jp）が2026年4月15日（本日）に公開したClaude Code Routines解説記事。「寝ている間にバグ修正・コードレビューが完了する」というキャッチーなコンセプトで解説。Routinesはクラウド上で動作し、夜間スケジュールでIssueのトリアージ・ラベル付け・PR作成まで完全自動化できる。GitHub Events対応でPRマージ時の自動テスト実行も設定可能。設定手順（prompt・repository・connector・trigger選択）の実践ガイド付き。2026年4月15日発行で最新情報。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-15_009_Claude_Code_Routines_Cloud_Autotask_Summary_Zenn.md",
+      "title": "Claude Code「ルーチン」新機能まとめ — クラウド動作・3トリガー設計の全貌",
+      "url": "https://zenn.dev/rasshii/articles/757e33a1681c43",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "ZennのrasshiiによるClaude Code Routines機能まとめ記事。**クラウド実行・3トリガー（schedule/api/github events）**の設計を整理し、/loopコマンドやDesktopタスクとの違いも比較解説。研究プレビュー段階の制限事項や注意点も含む。設定パラメータの構造的な理解に役立つ。Zennコミュニティによる品質の高い技術解説として参考になる。",
+      "body_excerpt": "ZennのrasshiiによるClaude Code Routines機能まとめ。クラウドで動作する新自動化タスク機能の設計思想と実装詳細を解説。3種トリガー（schedule/api/github events）と、それぞれの設定パラメータを整理。RoutinesがどのようにClaude Codeの既存機能（/loop、Desktop tasks）と異なるかも比較。研究プレビュー段階の制限事項や注意点も含む。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-15_010_Claude_Code_Routines_Persistent_Layer_Not_Cron_Qiita_Mguozhen.md",
+      "title": "Claude Code Routines = 常駐実行レイヤー — 単なるcronではない設計思想を解説",
+      "url": "https://qiita.com/mguozhen/items/157fc859c3bc19c3d898",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "Qiitaのmguozhenによる独自視点のRoutines分析。**「Routinesは定期実行ではなく常駐する実行レイヤー」**という視点が独創的で、cronとの比較でRoutinesの設計思想（文脈理解・適応的実行・エラー回復）を解説。AIエージェントが永続的にインフラに組み込まれるアーキテクチャ変化として位置付ける考察は、単なる機能解説記事より深い。企業でのRoutines活用戦略と管理注意点も含む。この視点はFX自動取引のRoutines活用設計にも示唆を与える。",
+      "body_excerpt": "Qiitaのmguozhenによる独自分析記事。Claude Code Routinesを「単なる定期実行ではなく常駐する実行レイヤー」として再定義する分析。Routinesの設計思想：エージェントが永続的にインフラに組み込まれるアーキテクチャ変化として捉える。cronとの比較でRoutinesが優れる点：文脈理解・適応的実行・エラー回復能力。企業でのRoutines活用戦略と、管理上の注意点も解説。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-15_011_Claude_Code_Official_17_Skills_Complete_Guide_TenbinAI.md",
+      "title": "Claude Code 公式スキル17個全解説 — パワポ・PDF・Excel・スライドをコマンド1つで生成",
+      "url": "https://tenbin.ai/media/generative_ai/claude-code-official-skills-guide",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "GMO天秤AIメディアによる**Claude Code公式スキル17個の完全解説**。frontend-slides（HTMLスライド）・pptx-from-layouts（PPTX生成）・pdf-reader・excel-analyzer等を含む17スキルを網羅し、用途・インストール方法・コマンド例を解説。パワポ・PDF・ExcelをAIが1コマンドで扱えるようになる実用スキル群の全貌が把握できる。非エンジニアにも分かりやすい解説スタイルで、チームへの普及ガイドとしても活用できる。公式スキルのリファレンスとして保存価値が高い。",
+      "body_excerpt": "GMO天秤AIメディアによるClaude Code公式スキル17個の全解説記事。パワーポイント・PDF・Excel・スライドなどをコマンド1つで生成できる各スキルを網羅。スキル一覧：frontend-slides（HTMLスライド）、pptx-from-layouts（PPTX生成）、pdf-reader、excel-analyzer、web-scraper、image-analyzer等。各スキルの用途・インストール方法・コマンド例を詳細に解説。非エンジニアでも使いやすいスキル群の活用ガイドとして有用。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-15_012_CLAUDE_md_Design_Patterns_Project_Scale_Best_Practices_StartLink.md",
+      "title": "CLAUDE.md設計パターン集 — プロジェクト規模別ベストプラクティスと実例5選",
+      "url": "https://start-link.jp/hubspot-ai/ai/claude-code-practice/claude-code-claudemd-patterns",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "start-link.jpによる**プロジェクト規模別CLAUDE.md設計パターン集**。Minimal（50行以下）→Standard（100-200行）→Modular（@import活用）→Monorepo対応→Enterpriseの5段階パターンを実例テンプレート付きで解説。各パターンのアンチパターンも収録し、「なぜ失敗するか」まで理解できる。Progressive Disclosureの実装方法としてrules/サブディレクトリ分離が具体的に示されている点が実用的。現プロジェクトのCLAUDE.md構成見直しの際に直接参照できる品質の高い実践ガイド。",
+      "body_excerpt": "start-link.jpによるCLAUDE.md設計パターン集。プロジェクト規模別（個人/小チーム/中規模/大規模エンタープライズ）に最適なCLAUDE.md構成を解説。パターン：1) Minimal（50行以下・必須コマンドのみ）、2) Standard（100-200行・テックスタック・禁止事項含む）、3) Modular（@import活用・rules/分離）、4) Monorepo対応（ネスト配置）、5) Enterprise（governance・compliance追加）。各パターンの実例テンプレートとアンチパターンも収録。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-15_013_Claude_Mythos_Preview_Cyber_SWEbench_939_InfoQ.md",
+      "title": "Claude Mythos Preview — SWEbench 93.9%・ゼロデイ脆弱性発見でProject Glasswing限定公開",
+      "url": "https://www.infoq.com/news/2026/04/anthropic-claude-mythos/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "AnthropicがProject Glasswing限定で公開したClaude Mythos Preview詳細（InfoQ）。**SWEbench Verified 93.9%（Opus 4.6比+13.1pt）・CyberGym 83.1%**という驚異的なベンチマーク。主要OS・ブラウザのゼロデイ脆弱性を数千件発見（最古は27年前のOpenBSDバグ・16年前のFFmpeg H.264コーデック脆弱性）。Project Glasswing参加企業（Amazon/Apple/Broadcom/Cisco/CrowdStrike/Linux Foundation/Microsoft/PaloAlto）のみにアクセス限定で一般API公開なし。Anthropicは「これまで作ったモデルの中で最も優秀」と表現。サイバーセキュリティに特化した制限付き公開という前例のない戦略は業界の規制・倫理議論を呼んでいる。",
+      "body_excerpt": "InfoQ's coverage of Anthropic's Claude Mythos Preview announcement on April 7, 2026. Not publicly available — restricted to Project Glasswing consortium (Amazon, Apple, Broadcom, Cisco, CrowdStrike, Linux Foundation, Microsoft, Palo Alto Networks). Benchmark scores: SWE-bench Verified 93.9% (vs Opus 4.6's 80.8%), CyberGym 83.1% (vs 66.6%). Found thousands of zero-day vulnerabilities in all major OSes and browsers. Oldest: 27-year-old OpenBSD bug. Also found 16-year-old FFmpeg H.264 codec vulnerability. Anthropic describes it as 'a striking leap' and 'step change' in capabilities. No public API access planned currently.",
+      "fact_checked": true,
+      "fact_check_note": "✅ SWEbench Verified 93.9%・CyberGym 83.1%は確認。ただしGlasswingメンバーについて記事の「Broadcom/Linux Foundation/PaloAlto」は不正確で、実際はGoogle・JPMorgan Chase・Nvidiaが含まれる（Broadcom等の記載は確認できず）。$100Mクレジット提供も確認。"
+    },
+    {
+      "file": "2026-04-15_014_Claude_Mythos_AISI_Cyber_Capabilities_Evaluation_UK.md",
+      "title": "英国AISI: Claude Mythos Previewのサイバー能力評価 — 独立機関による一次評価",
+      "url": "https://www.aisi.gov.uk/blog/our-evaluation-of-claude-mythos-previews-cyber-capabilities",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "英国AI安全機関（AISI）によるClaude Mythos Previewのサイバー能力独立評価。**政府機関による最先端AIの非公開前評価という先例**となる重要レポート。Mythosのサイバー攻撃支援・脆弱性発見・攻撃的セキュリティタスクの能力を評価し、前モデルから大幅向上を確認。この評価結果がAnthropicの「Project Glasswing限定公開」決定に影響したとされる。AIの能力評価→リスクに基づく公開判断というプロセスの事例として、AI規制・ガバナンスの観点から特に重要な文書。",
+      "body_excerpt": "UK's AI Safety Institute (AISI) independent evaluation of Claude Mythos Preview's cybersecurity capabilities. AISI evaluated the model's ability to assist in cyber attacks, vulnerability discovery, and offensive security tasks. Findings confirm Mythos has significantly enhanced cyber capabilities compared to previous models. AISI assessment informed Anthropic's decision to restrict Mythos to Project Glasswing consortium rather than public release. First independent government safety evaluation of a restricted-release frontier AI model. Establishes precedent for pre-deployment safety assessment.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-15_015_Azure_MCP_Server_2_0_Stable_Self_Hosted_Agentic_Codezine.md",
+      "title": "Azure MCP Server 2.0安定版リリース — 自己ホスト型・マルチツールセット対応強化",
+      "url": "https://codezine.jp/news/detail/23952",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-ecosystem",
+      "summary": "Microsoftが2026年4月10日にAzure MCP Server 2.0安定版をリリース（CodeZine報道）。**自己ホスト型MCPサーバーとして複数ツールセット同時利用時のレスポンス・運用効率が向上**。Azure OpenAI/Cognitive Services/Storage等へのMCP接続が安定化し、エンタープライズSSO統合・監査ログ機能も強化。Claude CodeやCursorからAzureサービスをMCP経由で安全に利用できる基盤として注目。AWSに続きMicrosoftもMCPサーバーエコシステムを本格的に整備しており、エンタープライズAI基盤のMCP標準化が加速していることを示す。",
+      "body_excerpt": "CodeZineによるAzure MCP Server 2.0安定版リリース報道（2026年4月10日）。Microsoftが発表した自己ホスト型MCPサーバーの安定版。パフォーマンスと信頼性が強化され、複数のMCPツールセットを利用するシーンでレスポンスや運用効率が向上。Azure OpenAI・Cognitive Services・Azure Storage等のAzureサービスへのMCP接続が安定化。エンタープライズ向けSSO統合・監査ログ機能も強化。Claude CodeやCursorなどのAIエージェントからAzureサービスを安全に利用できる基盤として注目。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-15_016_Best_AI_Trading_Agent_Forex_MT4_MT5_Integration_2026_GPTrader.md",
+      "title": "2026年版 FXベストAIトレーディングエージェント — MT4/MT5統合比較ガイド",
+      "url": "https://gptrader.app/ai-trading/best-ai-trading-agent-forex-mt4-mt5-integration",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "GPTraderによる2026年版Forex AI取引エージェントとMT4/MT5統合の包括的比較ガイド。**AgentTradeX（LangChain+GPT-4o、ボラティリティ相場で25%超過収益）・TradingAgents（マルチエージェントLLM）・LLM-TradeBot（DeepSeek分析）**の比較。MT5統合方法（Python APIブリッジ・MQL5+LLM APIコール・MetaQuotes Cloud）を技術的に解説。2026年のトレンド：ルールベースから目標指向型自律エージェントへの移行。シャープレシオ・ソルティノレシオ・最大ドローダウンによるパフォーマンス評価方法も含む。FX自動取引AIの現状把握と実装検討の参考資料として有用。",
+      "body_excerpt": "GPTrader's comprehensive guide to the best AI trading agents for Forex with MT4/MT5 integration in 2026. Covers top AI trading agents: AgentTradeX (LangChain+GPT-4o, 25% outperformance in volatile scenarios), TradingAgents (multi-agent LLM, fundamental/sentiment/technical analysts), LLM-TradeBot (DeepSeek analysis, real-time adaptation). MT5 integration methods: Python API bridge, MQL5 with LLM API calls, MetaQuotes Cloud. Key metrics: Sharpe ratio, Sortino ratio, max drawdown. 2026 trend: shift from rule-based to goal-oriented autonomous agents. Risk management considerations for live trading.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-15_017_Stanford_AI_Index_2026_SWEbench_Near100_China_Gap_IEEE.md",
+      "title": "スタンフォードAI Index 2026 — SWEbench近100%・中国との差1.7%・透明性低下など12の知見",
+      "url": "https://spectrum.ieee.org/state-of-ai-index-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "IEEE SpectrumによるStanford HAI 2026 AI Index Reportの解説。**12の主要知見**：①SWEbench Verified 60%→約100%（1年で急上昇）②米中AIパフォーマンス差が9.26%→1.70%に縮小③AI計算量2021年比30倍増④Nvidia GPUがAI計算の60%超を占有⑤Foundation Model透明性指数58→40に低下⑥生成AI普及率が3年で53%（PCやインターネットより速い）⑦Grok 4学習で72,000トンCO2相当の排出⑧主要モデルが「ほぼ区別できない」水準に。一次研究機関による年次レポートとして信頼性が高く、AI全体の現状把握に必須の資料。",
+      "body_excerpt": "IEEE Spectrum's coverage of Stanford HAI's 2026 AI Index Report. Key findings: SWE-bench Verified performance jumped from 60% to near 100% in a single year. US-China performance gap narrowed from 9.26% (Jan 2024) to 1.70% (Feb 2025). Total AI compute increased 30-fold since 2021. Nvidia GPUs account for 60%+ of total AI compute. Foundation Model Transparency Index dropped from 58 to 40 (transparency declining). Generative AI reached 53% population adoption in 3 years (faster than PC or internet). Training frontier LLMs like Grok 4 generates 72,000 tons of CO2-equivalent. Leading models now 'nearly indistinguishable' from each other.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-15_018_Stanford_HAI_AI_Index_2026_12_Key_Takeaways_Official.md",
+      "title": "Stanford HAI AI Index 2026 — 公式12の重要知見まとめ",
+      "url": "https://hai.stanford.edu/news/inside-the-ai-index-12-takeaways-from-the-2026-report",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "Stanford HAI公式による2026 AI Index Reportの12の重要知見まとめ。①ベンチマーク飽和加速②米中差ほぼ消滅③オープンソースが独自モデルに匹敵④計算コスト低下⑤エンタープライズAI採用加速⑥主要ラボの透明性低下⑦環境影響拡大⑧AI労働市場への影響が測定可能に⑨政府AI投資の世界的増加⑩AI安全研究アウトプット増加⑪マルチモーダル能力が標準化⑫エージェントAIが本番環境でスケール化、という12点。**スタンフォードHAI公式の一次情報**として、2026年のAI全体像を把握する最高品質の資料。",
+      "body_excerpt": "Stanford HAI's official 12 key takeaways from their 2026 AI Index Report. Comprehensive overview: 1) Benchmark saturation accelerating 2) US-China gap nearly closed 3) Open source models matching proprietary performance 4) Compute costs declining 5) AI adoption in enterprises accelerating 6) Transparency declining among major labs 7) Environmental impact growing 8) AI labor market impacts measurable 9) Government AI investment rising globally 10) AI safety research output increasing 11) Multimodal capabilities standard 12) Agentic AI entering production at scale. Official primary source from Stanford HAI.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-15_019_LLM_jp4_NII_12T_Tokens_GPT4o_Surpass_OpenSource_Official.md",
+      "title": "国産LLM「LLM-jp-4」NII公式リリース — 12兆トークン学習・日本語MT-BenchでGPT-4o超え",
+      "url": "https://www.nii.ac.jp/news/release/2026/0403.html",
+      "source": "web",
+      "lang": "ja",
+      "theme": "ai-news",
+      "summary": "国立情報学研究所（NII）が2026年4月3日に公式公開した国産LLM「LLM-jp-4」。**約12兆トークンの良質コーパスで学習し、日本語MT-BenchでGPT-4o（7.29）を上回るスコア7.54（8Bモデル）・7.82（32B-A3B）を達成**。英語MT-BenchでもGPT-4o同等以上。8Bモデルと32B-A3B（MoEアーキテクチャ）をオープンソースライセンスで公開。今後は32Bモデルと332B-A31B（MoE、超大規模）を2026年度中に公開予定。国産LLMが主要外国モデルを定量的に超えた歴史的マイルストーンとして、日本語AI基盤の自立化に向けた重要な一歩。",
+      "body_excerpt": "国立情報学研究所（NII）が2026年4月3日、国産LLM「LLM-jp-4」をオープンソースライセンスで公開。8Bモデルと32B-A3B（MoEアーキテクチャ）の2種。学習コーパス：約12兆トークン（インターネット公開データ・政府国会文書・合成データ）。性能：日本語MT-Bench（LLM-jp-4 8B=7.54、32B-A3B=7.82）がGPT-4oの7.29・Qwen3-8Bの7.14を上回る。英語MT-Bench（8B=7.79、32B-A3B=7.86）もGPT-4o（7.69）・Qwen3-8B（7.69）と同等以上。今後：32Bモデルと332B-A31B（MoE）を2026年度中に公開予定。",
+      "fact_checked": true,
+      "fact_check_note": "✅ NII公式ページで全数値確認。12兆トークン学習・日本語MT-Bench: 8B=7.54/32B-A3B=7.82/GPT-4o=7.29・英語MT-Bench: 8B=7.79/32B-A3B=7.86 全て一致。"
+    },
+    {
+      "file": "2026-04-15_020_METI_AI_Civil_Liability_Interpretation_Guide_v1_April2026.md",
+      "title": "経産省「AI民事責任手引き」v1.0 — 補助型・代替型の2類型で責任分界を整理",
+      "url": "https://www.meti.go.jp/press/2026/04/20260409001/20260409001.html",
+      "source": "web",
+      "lang": "ja",
+      "theme": "ai-news",
+      "summary": "経済産業省が2026年4月9日に公表した「AI民事責任手引き」（第1.0版）。**補助型AI（人間判断支援）と代替型AI（人間判断代替）の2類型**で不法行為法・製造物責任法上の責任分界を整理した実務的ガイドライン。早稲田大学教授を座長とする有識者研究会がパブコメ経て策定した一次情報。AI事業者の法的予測可能性向上と紛争解決円滑化が目的。AI開発・提供・利用に関わる企業の法務・コンプライアンス担当者にとって必読の公式文書。日本のAI規制実務における重要な一次情報として保存価値が高い。",
+      "body_excerpt": "経済産業省が2026年4月9日、「AI利活用における民事責任の解釈適用に関する手引き」第1.0版を公表。法学・技術分野の有識者研究会（座長：大塚直早稲田大学法学学術院教授）が不法行為法・製造物責任法の観点から民事責任の解釈を整理。AI活用の2類型：①補助型AI（人間の判断を支援）と②代替型AI（人間の判断を代替）でそれぞれ責任の方向性を整理。事業者の予測可能性向上とトラブル時の円滑解決を目的。約1か月のパブリックコメントを経て取りまとめ。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-15_021_AI_Legal_Watch_April_2026_EU_US_Regulation_JDSupra.md",
+      "title": "AI Legal Watch April 2026 — EU AI Act施行・米国立法フレームワーク・州法整理",
+      "url": "https://www.jdsupra.com/legalnews/ai-legal-watch-april-2026-4174658/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "Baker Botts LLPによるAI法律動向月次レポート（2026年4月）。**EU AI Act：高リスクシステム適合要件は2026年8月施行（2027年12月への延期提案あり）**。米国：Trump政権が国家AIフレームワーク（州法優越）を提案。カリフォルニア：AI Safety Act（内部告発保護）・TFAIA施行済み。テキサス：RAIGA施行。コロラド：AI意思決定の影響評価・透明性義務付け（2月施行）。**主要ロースクールによる月次レポート**として、企業のAIコンプライアンス戦略立案に必要な法的動向が網羅されている。AI規制の一次情報として信頼性が高い。",
+      "body_excerpt": "Baker Botts LLP's monthly AI Legal Watch for April 2026. Key developments: EU AI Act high-risk system compliance required August 2026 (possible delay to Dec 2027). Trump Administration national AI legislative framework proposed March 2026 — preempts state AI laws inconsistent with federal policy. California AI Safety Act (whistleblower protections), California TFAIA, Texas RAIGA effective January 2026. Colorado AI Act requiring impact assessments and transparency disclosures effective February 2026. Global enforcement trends. Corporate compliance requirements evolving rapidly. First comprehensive April 2026 roundup from major law firm.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    }
+  ],
+  "fact_checks": [
+    {
+      "article": "2026-04-15_013_Claude_Mythos_Preview_Cyber_SWEbench_939_InfoQ.md",
+      "result": "部分確認",
+      "note": "SWEbench 93.9%確認、Glasswingメンバーに差異あり（Google/JPMorgan/Nvidiaが正確）"
+    },
+    {
+      "article": "2026-04-15_001_Claude_Code_Routines_Official_Anthropic_Blog.md",
+      "result": "確認済み",
+      "note": "全数値・機能・日付一致"
+    },
+    {
+      "article": "2026-04-15_019_LLM_jp4_NII_12T_Tokens_GPT4o_Surpass_OpenSource_Official.md",
+      "result": "確認済み",
+      "note": "全数値NII公式と一致"
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-04-14": 11,
+      "2026-04-13": 22,
+      "2026-04-12": 20,
+      "2026-04-11": 20,
+      "2026-04-10": 20,
+      "2026-04-09": 18,
+      "2026-04-08": 25
+    },
+    "recurring_themes": [
+      "claude",
+      "claude_code",
+      "agent",
+      "mcp",
+      "llm"
+    ]
+  }
+}
