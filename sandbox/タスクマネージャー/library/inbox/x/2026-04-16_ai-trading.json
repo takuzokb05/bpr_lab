@@ -1,8 +1,317 @@
 {
   "domain": "ai-trading",
-  "collected_at": "2026-04-16T11:59:33.988048+00:00",
+  "collected_at": "2026-04-16T21:12:00.080416+00:00",
   "days": 1,
-  "total_fetched": 61,
-  "total_filtered": 0,
-  "tweets": []
+  "total_fetched": 60,
+  "total_filtered": 3,
+  "tweets": [
+    {
+      "tweet_created_at": "2026-04-16T21:06:43.000000Z",
+      "id": 2044885220269371901,
+      "id_str": "2044885220269371901",
+      "type": "tweet",
+      "conversation_id_str": "2044885220269371901",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "I discovered a trading expert, @eichi31103 His strategies helped me get excellent results quickly. Super valuable, you should follow.🔼🌏🏈🥴\n\nstock Crypto NASDAQ \n#AAPL #EPS\n $ASML $AI https://t.co/opxoeH6thR",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 2044541719669067776,
+        "id_str": "2044541719669067776",
+        "name": "Jenna George",
+        "screen_name": "JennaGeorg75887",
+        "location": "Tunisia",
+        "url": "https://johnson.io",
+        "description": "Believe in husband",
+        "protected": false,
+        "verified": false,
+        "followers_count": 0,
+        "friends_count": 0,
+        "listed_count": 0,
+        "favourites_count": 0,
+        "statuses_count": 3,
+        "created_at": "2026-04-15T22:21:48.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/2044541719669067776/1776320478",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2044653583333773312/fe0uHD0G_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 9,
+      "retweet_count": 9,
+      "favorite_count": 9,
+      "views_count": 7,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [
+          {
+            "indices": [
+              160,
+              165
+            ],
+            "text": "AAPL"
+          },
+          {
+            "indices": [
+              166,
+              170
+            ],
+            "text": "EPS"
+          }
+        ],
+        "symbols": [
+          {
+            "indices": [
+              172,
+              177
+            ],
+            "text": "ASML"
+          },
+          {
+            "indices": [
+              178,
+              181
+            ],
+            "text": "AI"
+          }
+        ],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [
+          {
+            "id_str": "493620456",
+            "indices": [
+              31,
+              42
+            ],
+            "name": "Robert Coleman",
+            "screen_name": "eichi31103"
+          }
+        ],
+        "media": [
+          {
+            "additional_media_info": {
+              "monetizable": false
+            },
+            "display_url": "pic.x.com/opxoeH6thR",
+            "expanded_url": "https://x.com/JennaGeorg75887/status/2044885220269371901/video/1",
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "id_str": "2044885209838239744",
+            "indices": [
+              182,
+              205
+            ],
+            "media_key": "7_2044885209838239744",
+            "media_url_https": "https://pbs.twimg.com/ext_tw_video_thumb/2044885209838239744/pu/img/3jbA1CtiP9vq-FvH.jpg",
+            "original_info": {
+              "focus_rects": [],
+              "height": 512,
+              "width": 716
+            },
+            "sizes": {
+              "large": {
+                "h": 512,
+                "w": 716
+              }
+            },
+            "type": "video",
+            "url": "https://t.co/opxoeH6thR",
+            "video_info": {
+              "aspect_ratio": [
+                179,
+                128
+              ],
+              "duration_millis": 3166,
+              "variants": [
+                {
+                  "content_type": "application/x-mpegURL",
+                  "url": "https://video.twimg.com/ext_tw_video/2044885209838239744/pu/pl/SimB5FdZCkd5heV1.m3u8?tag=12"
+                },
+                {
+                  "bitrate": 256000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/ext_tw_video/2044885209838239744/pu/vid/avc1/376x270/Z1pVOkuHoE6NI3Nm.mp4?tag=12"
+                },
+                {
+                  "bitrate": 832000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/ext_tw_video/2044885209838239744/pu/vid/avc1/502x360/UhLb_xujBTXDZeom.mp4?tag=12"
+                },
+                {
+                  "bitrate": 2176000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/ext_tw_video/2044885209838239744/pu/vid/avc1/716x512/HxwLFj-lzyl4SI_v.mp4?tag=12"
+                }
+              ]
+            }
+          }
+        ],
+        "display_text_range": [
+          0,
+          181
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-16T06:49:51.000000Z",
+      "id": 2044669584129785960,
+      "id_str": "2044669584129785960",
+      "type": "tweet",
+      "conversation_id_str": "2044669584129785960",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "FX•投資に応用できるAIたち【保存版】\n\n① Gemini\n→Googleスプレッドシート連携が最強。\nデータ分析・検証・自動化まで一気にできる\n\n② ChatGPT\n→ロジック設計・プロンプト作成・言語化に最適\n“思考の壁打ち”として必須\n\n③ Claude\n→長文処理・ルール整理が神レベル\nトレードルールの構造化に強い\n\n④ Perplexity AI\n→情報収集特化\n市場ニュース・経済指標の整理が爆速\n\n⑤ TradingView\n→AIというより必須ツール\nPineScript×AIで“自作インジ”が作れる\n\n⑥ Notion AI\n→トレード日記・検証ログの整理\n思考の一貫性を保つ\n\n⑦ GitHub Copilot\n→インジ・EA開発のコード補助\n初心者でも開発速度が一気に上がる\n\n⑧ Midjourney\n→トレード記録の視覚化・SNS発信強化\n（ブランディング用）\n\n⑨ Dune Analytics\n→オンチェーン分析（仮想通貨勢向け）\nデータドリブンな判断ができる\n\n⑩ AutoHotkey\n→トレード環境の自動化\n作業時間を削減して検証に集中\n\n🕚AGIシステム\n→国や大手産業•デジタルインフラ•ブロックチェーン技術などが扱うAI基盤",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1483673472522145792,
+        "id_str": "1483673472522145792",
+        "name": "ゆうのすけ｜トレード設計の専門家",
+        "screen_name": "FX_YUNOSUKE",
+        "location": "「期待値」という名の現場",
+        "url": "https://fx-yunosuke.com/linetw/",
+        "description": "雰囲気売買で−500万→1日10時間の検証。\nFXは予想ではなく、期待値への「条件分岐」だと気づき\n『自立型トレード建築論』を確立。\n\n◆聖杯探しは終了◆\n手法ではなく、あなたの性格に合った\n「負けても崩れないルール」を設計します。\n🔻トレード設計キット無料配布中🔻",
+        "protected": false,
+        "verified": true,
+        "followers_count": 2987,
+        "friends_count": 34,
+        "listed_count": 0,
+        "favourites_count": 3126,
+        "statuses_count": 3874,
+        "created_at": "2022-01-19T05:31:42.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1483673472522145792/1765692758",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1853854936616022016/raW7qjHS_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 2,
+      "favorite_count": 14,
+      "views_count": 412,
+      "bookmark_count": 7,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          163
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-16T19:26:42.000000Z",
+      "id": 2044860050112655645,
+      "id_str": "2044860050112655645",
+      "type": "tweet",
+      "conversation_id_str": "2044860050112655645",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "今週のテーマは、テーマは「AIと自我 PART②」。\n加速する人工知能の進化。それは単なるアルゴリズムの集積か、それとも「魂」の萌芽か。以前放送したPART①をふまえ、脳科学・認知科学の視点から、Dr.苫米地が紐解きます\n\nCosmic Radio 4/16 OA 「AIと自我 PART②」 https://t.co/zBgz8e8f9U @ＹｏｕＴｕｂｅより",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 121500765,
+        "id_str": "121500765",
+        "name": "苫米地英人",
+        "screen_name": "DrTomabechi",
+        "location": "港区, 東京都 JP",
+        "url": "http://www.tomabechi.jp",
+        "description": "Hideto Tomabechi Fellow CyLab CMU (https://t.co/KvrF4W4k28) コグニティブリサーチラボ (https://t.co/nlKpbF13xW) Prof C5I George Mason. Ph.D CMU1993. 日本外交政策学会会長 https://t.co/3vgXjsviKy",
+        "protected": false,
+        "verified": true,
+        "followers_count": 198972,
+        "friends_count": 1768,
+        "listed_count": 0,
+        "favourites_count": 84,
+        "statuses_count": 40001,
+        "created_at": "2010-03-09T18:05:04.000000Z",
+        "profile_banner_url": null,
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1539568764/drtomabechiferrari3_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 1,
+      "retweet_count": 8,
+      "favorite_count": 31,
+      "views_count": 2484,
+      "bookmark_count": 7,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "youtu.be/4iDYxdu_E54?si…",
+            "expanded_url": "https://youtu.be/4iDYxdu_E54?si=iRcmPvHdPnyBIMSA",
+            "indices": [
+              147,
+              170
+            ],
+            "url": "https://t.co/TLJYaw4WRF"
+          },
+          {
+            "display_url": "youtu.be/4iDYxdu_E54?si…",
+            "expanded_url": "https://youtu.be/4iDYxdu_E54?si=iRcmPvHdPnyBIMSA",
+            "indices": [
+              147,
+              170
+            ],
+            "url": "https://t.co/zBgz8e8f9U"
+          }
+        ],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          170
+        ]
+      },
+      "is_pinned": false
+    }
+  ]
 }

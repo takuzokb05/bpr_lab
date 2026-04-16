@@ -1,20 +1,20 @@
 {
   "domain": "claude-code",
-  "collected_at": "2026-04-16T11:57:28.165933+00:00",
+  "collected_at": "2026-04-16T21:10:18.981568+00:00",
   "days": 1,
-  "total_fetched": 62,
+  "total_fetched": 61,
   "total_filtered": 2,
   "tweets": [
     {
-      "tweet_created_at": "2026-04-16T11:32:05.000000Z",
-      "id": 2044740609634689074,
-      "id_str": "2044740609634689074",
-      "type": "tweet",
-      "conversation_id_str": "2044740609634689074",
+      "tweet_created_at": "2026-04-16T21:08:05.000000Z",
+      "id": 2044885566773211269,
+      "id_str": "2044885566773211269",
+      "type": "quote",
+      "conversation_id_str": "2044885566773211269",
       "community_id_str": null,
       "community_name": null,
       "text": null,
-      "full_text": "Cancel your plans tonight.\n\nLearn these instead:\n\n> n8n\n> Claude Code\n> MCP servers\n> Workflow mapping\n> Bottleneck analysis\n> How to write an SOP\n> How to audit a process\n> How to think in systems\n> How to deploy an automation\n> How to document what you built\n> How to hand off work to a machine\n> How to operate what you automate\n\nAnyone can vibe with AI tools.\n\nVery few can actually run them.",
+      "full_text": "INSTEAD OF WATCHING A 2-HOUR CLAUDE CODE COURSE\n\nWATCH SOME NETFLIX TONIGHT",
       "source": "",
       "truncated": false,
       "in_reply_to_status_id": null,
@@ -23,37 +23,178 @@
       "in_reply_to_user_id_str": null,
       "in_reply_to_screen_name": null,
       "user": {
-        "id": 2968471852,
-        "id_str": "2968471852",
-        "name": "Aaron",
-        "screen_name": "IAmAaronWill",
-        "location": "Join 10,000+ (FREE) →",
-        "url": "http://aaronwill.com",
-        "description": "AI Systems Operator | I find the manual work costing your business the most time and eliminate it | Get your workflow audit → https://t.co/bhIijDBgMZ",
+        "id": 1378756322041196552,
+        "id_str": "1378756322041196552",
+        "name": "zaimiri",
+        "screen_name": "zaimiri",
+        "location": "Save time for your business →",
+        "url": "http://noops.solutions",
+        "description": "building AI Agents for businesses & creators | I can help you save 15+ hours per week",
         "protected": false,
         "verified": true,
-        "followers_count": 284117,
-        "friends_count": 190,
+        "followers_count": 54845,
+        "friends_count": 4934,
         "listed_count": 0,
-        "favourites_count": 397778,
-        "statuses_count": 218325,
-        "created_at": "2015-01-08T19:51:45.000000Z",
-        "profile_banner_url": "https://pbs.twimg.com/profile_banners/2968471852/1776191472",
-        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1741825110271471616/aNzmGws6_normal.jpg",
+        "favourites_count": 175496,
+        "statuses_count": 120117,
+        "created_at": "2021-04-04T17:08:23.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1378756322041196552/1755362978",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1956760267330572288/RLKoQJwK_normal.jpg",
         "can_dm": true,
         "affiliation_label": null
       },
-      "quoted_status_id": null,
-      "quoted_status_id_str": null,
-      "is_quote_status": false,
-      "quoted_status": null,
+      "quoted_status_id": 2044871762127565170,
+      "quoted_status_id_str": "2044871762127565170",
+      "is_quote_status": true,
+      "quoted_status": {
+        "tweet_created_at": "2026-04-16T20:13:14.000000Z",
+        "id": 2044871762127565170,
+        "id_str": "2044871762127565170",
+        "type": "tweet",
+        "conversation_id_str": "2044871762127565170",
+        "community_id_str": null,
+        "community_name": null,
+        "text": null,
+        "full_text": "JUST IN: Netflix $NFLX crashes 9% following earnings report. https://t.co/aLgwbPsocv",
+        "source": "",
+        "truncated": false,
+        "in_reply_to_status_id": null,
+        "in_reply_to_status_id_str": null,
+        "in_reply_to_user_id": null,
+        "in_reply_to_user_id_str": null,
+        "in_reply_to_screen_name": null,
+        "user": {
+          "id": 1387497871751196672,
+          "id_str": "1387497871751196672",
+          "name": "Watcher.Guru",
+          "screen_name": "WatcherGuru",
+          "location": "Texas, USA",
+          "url": "https://watcher.guru",
+          "description": "Watcher Guru gives you unparalleled, unbiased coverage of all-things crypto & finance in real-time | Posts Are Not Financial Advice | @BTCPrice",
+          "protected": false,
+          "verified": true,
+          "followers_count": 3935791,
+          "friends_count": 3,
+          "listed_count": 0,
+          "favourites_count": 39819,
+          "statuses_count": 18481,
+          "created_at": "2021-04-28T20:04:12.000000Z",
+          "profile_banner_url": "https://pbs.twimg.com/profile_banners/1387497871751196672/1672776767",
+          "profile_image_url_https": "https://pbs.twimg.com/profile_images/1641221212578754562/DfiC0KW2_normal.png",
+          "can_dm": true,
+          "affiliation_label": null,
+          "verification_info": {
+            "type": "Business"
+          }
+        },
+        "quoted_status_id": null,
+        "quoted_status_id_str": null,
+        "is_quote_status": false,
+        "quoted_status": null,
+        "retweeted_status": null,
+        "quote_count": 67,
+        "reply_count": 362,
+        "retweet_count": 210,
+        "favorite_count": 2268,
+        "views_count": 155025,
+        "bookmark_count": 64,
+        "lang": "en",
+        "entities": {
+          "hashtags": [],
+          "symbols": [
+            {
+              "indices": [
+                17,
+                22
+              ],
+              "text": "NFLX"
+            }
+          ],
+          "timestamps": [],
+          "urls": [],
+          "user_mentions": [],
+          "media": [
+            {
+              "allow_download_status": {
+                "allow_download": true
+              },
+              "display_url": "pic.x.com/aLgwbPsocv",
+              "expanded_url": "https://x.com/WatcherGuru/status/2044871762127565170/photo/1",
+              "ext_media_availability": {
+                "status": "Available"
+              },
+              "features": {
+                "large": {
+                  "faces": []
+                }
+              },
+              "id_str": "2044871758960869376",
+              "indices": [
+                61,
+                84
+              ],
+              "media_key": "3_2044871758960869376",
+              "media_url_https": "https://pbs.twimg.com/media/HGDYB9QXQAAvfmt.jpg",
+              "original_info": {
+                "focus_rects": [
+                  {
+                    "h": 722,
+                    "w": 1290,
+                    "x": 0,
+                    "y": 0
+                  },
+                  {
+                    "h": 1290,
+                    "w": 1290,
+                    "x": 0,
+                    "y": 0
+                  },
+                  {
+                    "h": 1471,
+                    "w": 1290,
+                    "x": 0,
+                    "y": 0
+                  },
+                  {
+                    "h": 1855,
+                    "w": 928,
+                    "x": 0,
+                    "y": 0
+                  },
+                  {
+                    "h": 1855,
+                    "w": 1290,
+                    "x": 0,
+                    "y": 0
+                  }
+                ],
+                "height": 1855,
+                "width": 1290
+              },
+              "sizes": {
+                "large": {
+                  "h": 1855,
+                  "w": 1290
+                }
+              },
+              "type": "photo",
+              "url": "https://t.co/aLgwbPsocv"
+            }
+          ],
+          "display_text_range": [
+            0,
+            60
+          ]
+        },
+        "is_pinned": false
+      },
       "retweeted_status": null,
       "quote_count": 0,
-      "reply_count": 3,
+      "reply_count": 2,
       "retweet_count": 0,
-      "favorite_count": 6,
-      "views_count": 135,
-      "bookmark_count": 4,
+      "favorite_count": 5,
+      "views_count": 37,
+      "bookmark_count": 0,
       "lang": "en",
       "entities": {
         "hashtags": [],
@@ -63,22 +204,22 @@
         "user_mentions": [],
         "display_text_range": [
           0,
-          311
+          75
         ]
       },
       "is_pinned": false
     },
     {
-      "tweet_created_at": "2026-04-16T11:01:16.000000Z",
-      "id": 2044732854819795351,
-      "id_str": "2044732854819795351",
+      "tweet_created_at": "2026-04-16T20:17:07.000000Z",
+      "id": 2044872737672646716,
+      "id_str": "2044872737672646716",
       "type": "tweet",
-      "conversation_id_str": "2044732854819795351",
+      "conversation_id_str": "2044872737672646716",
       "community_id_str": null,
       "community_name": null,
       "text": null,
-      "full_text": "Claude codeが1トークンも使わずにドキュメントを読ませられるって知ってた？どうやるって？NotebookLMのMCPに接続するんだよ！って言ってる人を見かけて宇宙猫になってるところ。",
-      "source": "",
+      "full_text": "To make it easier to migrate your workflows, we've updated the claude-api skill in Claude Code with Opus 4.7 support.\n\nJust say \"migrate to Opus 4.7\" and it updates model names, prompts, and effort settings for you. https://t.co/8EQX8xtfIW",
+      "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
       "truncated": false,
       "in_reply_to_status_id": null,
       "in_reply_to_status_id_str": null,
@@ -86,47 +227,229 @@
       "in_reply_to_user_id_str": null,
       "in_reply_to_screen_name": null,
       "user": {
-        "id": 197029986,
-        "id_str": "197029986",
-        "name": "cuon",
-        "screen_name": "yskmerlion",
+        "id": 2024518793679294464,
+        "id_str": "2024518793679294464",
+        "name": "ClaudeDevs",
+        "screen_name": "ClaudeDevs",
         "location": "",
-        "url": null,
-        "description": "Security /OAやプロダクトの実装方針策定から実装、脆弱性診断、組織構築支援とか評価とか。 CSIRT /SoC構築運用支援。BGP喋れます。 ネットワーク設計、セキュリティアーキテクト。プロダクト設計、実装、運用、情シス、情報セキュリティ責任者など。MoT。https://t.co/Xh85V6ds9c",
+        "url": "",
+        "description": "Official updates for developers building with @ClaudeAI",
         "protected": false,
         "verified": true,
-        "followers_count": 1564,
-        "friends_count": 1232,
-        "listed_count": 0,
-        "favourites_count": 54399,
-        "statuses_count": 65904,
-        "created_at": "2010-09-30T13:55:41.000000Z",
-        "profile_banner_url": "https://pbs.twimg.com/profile_banners/197029986/1672531676",
-        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1344898657/bluesy-bull-1_1__normal.jpg",
-        "can_dm": true,
-        "affiliation_label": null
+        "followers_count": 111359,
+        "friends_count": 2,
+        "listed_count": 517,
+        "favourites_count": 4,
+        "statuses_count": 14,
+        "created_at": "2026-02-19T16:19:46.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/2024518793679294464/1776108340",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2044472418815893504/xf14RxM8_normal.png",
+        "can_dm": false,
+        "affiliation_label": {
+          "label_url": "https://twitter.com/AnthropicAI",
+          "badge_url": "https://pbs.twimg.com/profile_images/1798110641414443008/XP8gyBaY_bigger.jpg",
+          "description": "Anthropic",
+          "label_type": "BusinessLabel",
+          "display_type": "Badge"
+        }
       },
       "quoted_status_id": null,
       "quoted_status_id_str": null,
       "is_quote_status": false,
       "quoted_status": null,
       "retweeted_status": null,
-      "quote_count": 0,
-      "reply_count": 2,
-      "retweet_count": 0,
-      "favorite_count": 7,
-      "views_count": 224,
-      "bookmark_count": 0,
-      "lang": "ja",
+      "quote_count": 2,
+      "reply_count": 28,
+      "retweet_count": 30,
+      "favorite_count": 677,
+      "views_count": 43533,
+      "bookmark_count": 317,
+      "lang": "en",
       "entities": {
         "hashtags": [],
+        "media": [
+          {
+            "additional_media_info": {
+              "monetizable": true
+            },
+            "allow_download_status": {
+              "allow_download": true
+            },
+            "display_url": "pic.x.com/8EQX8xtfIW",
+            "expanded_url": "https://x.com/ClaudeDevs/status/2044872737672646716/video/1",
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "id_str": "2044872469216104448",
+            "indices": [
+              216,
+              239
+            ],
+            "media_key": "13_2044872469216104448",
+            "media_results": {
+              "result": {
+                "media_key": "13_2044872469216104448"
+              }
+            },
+            "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2044872469216104448/img/55MvyyhOi5phHrlG.jpg",
+            "original_info": {
+              "focus_rects": [],
+              "height": 1080,
+              "width": 1920
+            },
+            "sizes": {
+              "large": {
+                "h": 1080,
+                "resize": "fit",
+                "w": 1920
+              },
+              "medium": {
+                "h": 675,
+                "resize": "fit",
+                "w": 1200
+              },
+              "small": {
+                "h": 383,
+                "resize": "fit",
+                "w": 680
+              },
+              "thumb": {
+                "h": 150,
+                "resize": "crop",
+                "w": 150
+              }
+            },
+            "type": "video",
+            "url": "https://t.co/8EQX8xtfIW",
+            "video_info": {
+              "aspect_ratio": [
+                16,
+                9
+              ],
+              "duration_millis": 11050,
+              "variants": [
+                {
+                  "content_type": "application/x-mpegURL",
+                  "url": "https://video.twimg.com/amplify_video/2044872469216104448/pl/dVNwV3OLoQlm0zif.m3u8?tag=21&v=cfc"
+                },
+                {
+                  "bitrate": 256000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2044872469216104448/vid/avc1/480x270/4v2bLiPBTZgtc-VM.mp4?tag=21"
+                },
+                {
+                  "bitrate": 832000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2044872469216104448/vid/avc1/640x360/hkB4MQllZyWV6pT4.mp4?tag=21"
+                },
+                {
+                  "bitrate": 2176000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2044872469216104448/vid/avc1/1280x720/LMhBN-UtwHxU58Ll.mp4?tag=21"
+                },
+                {
+                  "bitrate": 10368000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2044872469216104448/vid/avc1/1920x1080/8SIIJQOSF79mkEYj.mp4?tag=21"
+                }
+              ]
+            }
+          },
+          {
+            "additional_media_info": {
+              "monetizable": true
+            },
+            "allow_download_status": {
+              "allow_download": true
+            },
+            "display_url": "pic.x.com/8EQX8xtfIW",
+            "expanded_url": "https://x.com/ClaudeDevs/status/2044872737672646716/video/1",
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "id_str": "2044872469216104448",
+            "indices": [
+              216,
+              239
+            ],
+            "media_key": "13_2044872469216104448",
+            "media_results": {
+              "result": {
+                "media_key": "13_2044872469216104448"
+              }
+            },
+            "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2044872469216104448/img/55MvyyhOi5phHrlG.jpg",
+            "original_info": {
+              "focus_rects": [],
+              "height": 1080,
+              "width": 1920
+            },
+            "sizes": {
+              "large": {
+                "h": 1080,
+                "resize": "fit",
+                "w": 1920
+              },
+              "medium": {
+                "h": 675,
+                "resize": "fit",
+                "w": 1200
+              },
+              "small": {
+                "h": 383,
+                "resize": "fit",
+                "w": 680
+              },
+              "thumb": {
+                "h": 150,
+                "resize": "crop",
+                "w": 150
+              }
+            },
+            "type": "video",
+            "url": "https://t.co/8EQX8xtfIW",
+            "video_info": {
+              "aspect_ratio": [
+                16,
+                9
+              ],
+              "duration_millis": 11050,
+              "variants": [
+                {
+                  "content_type": "application/x-mpegURL",
+                  "url": "https://video.twimg.com/amplify_video/2044872469216104448/pl/dVNwV3OLoQlm0zif.m3u8?tag=21&v=cfc"
+                },
+                {
+                  "bitrate": 256000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2044872469216104448/vid/avc1/480x270/4v2bLiPBTZgtc-VM.mp4?tag=21"
+                },
+                {
+                  "bitrate": 832000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2044872469216104448/vid/avc1/640x360/hkB4MQllZyWV6pT4.mp4?tag=21"
+                },
+                {
+                  "bitrate": 2176000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2044872469216104448/vid/avc1/1280x720/LMhBN-UtwHxU58Ll.mp4?tag=21"
+                },
+                {
+                  "bitrate": 10368000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2044872469216104448/vid/avc1/1920x1080/8SIIJQOSF79mkEYj.mp4?tag=21"
+                }
+              ]
+            }
+          }
+        ],
         "symbols": [],
         "timestamps": [],
         "urls": [],
         "user_mentions": [],
         "display_text_range": [
           0,
-          96
+          215
         ]
       },
       "is_pinned": false
