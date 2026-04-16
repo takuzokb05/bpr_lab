@@ -8,3 +8,7 @@ library/books/shelf/
 
 # OCR中間データ
 library/books/ocr/
+
+# Pythonキャッシュ
+__pycache__/
+*.pyc
