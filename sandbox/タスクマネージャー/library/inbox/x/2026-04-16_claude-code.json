@@ -1,20 +1,20 @@
 {
   "domain": "claude-code",
-  "collected_at": "2026-04-16T21:10:18.981568+00:00",
+  "collected_at": "2026-04-16T21:40:07.055556+00:00",
   "days": 1,
-  "total_fetched": 61,
-  "total_filtered": 2,
+  "total_fetched": 58,
+  "total_filtered": 3,
   "tweets": [
     {
-      "tweet_created_at": "2026-04-16T21:08:05.000000Z",
-      "id": 2044885566773211269,
-      "id_str": "2044885566773211269",
-      "type": "quote",
-      "conversation_id_str": "2044885566773211269",
+      "tweet_created_at": "2026-04-16T21:33:09.000000Z",
+      "id": 2044891872964063474,
+      "id_str": "2044891872964063474",
+      "type": "tweet",
+      "conversation_id_str": "2044891872964063474",
       "community_id_str": null,
       "community_name": null,
       "text": null,
-      "full_text": "INSTEAD OF WATCHING A 2-HOUR CLAUDE CODE COURSE\n\nWATCH SOME NETFLIX TONIGHT",
+      "full_text": "『Claude Opus 4.7 を Claude Code で使いこなすための要点』\n\nAnthropic が公開した Opus 4.7 のベストプラクティスを、性能を引き出すための「勘どころ」として整理する。\n\n何が変わったのか\n\nOpus 4.7 はコーディング、エンタープライズワークフロー、長時間の Agentic タスクにおいて現時点で最強のモデルだが、Opus 4.6 からの差し替えでそのまま使うと期待通りの挙動にならないことがある。理由は二つ。トークナイザーが更新されたこと、そして特に高 effort 設定と長いセッションの後半で「より深く考える」傾向が強まったこと。この二点がトークン消費とレスポンス特性に影響する。\n\n対話セッションの設計を変える\n\n最大のマインドセット変更は、Opus 4.7 を「ペアプロの相方」ではなく「タスクを委譲する有能なエンジニア」として扱うこと。Opus 4.7 はユーザーのターンごとに推論を深める傾向があり、これが長いセッションでの一貫性と品質を高める反面、トークンを余計に消費する。\n\n具体的には、最初のターンでタスクを十分に仕様化すること。意図、制約、受け入れ基準、関連ファイルの位置まで含めて渡すと出力品質が大きく上がる。曖昧な指示を何ターンにも分けて小出しにするのは、トークン効率と最終品質の両方を落とす。質問はまとめ、ユーザーとのやり取り回数自体を減らすのが望ましい。\n\nClaude Code Max ユーザー向けには auto モードが研究プレビューとして利用可能になっており、Shift+Tab でトグルできる。前提を十分に渡したうえで長時間走らせるタスクに向く。完了通知は、Claude 自身にフック経由でサウンドを鳴らさせればよい。\n\nEffort レベルの選び方\n\nOpus 4.7 では Claude Code のデフォルトが新設の xhigh （high と max の中間）になった。推論とレイテンシのトレードオフを握る最重要パラメータで、Anthropic の推奨は以下のとおり。\n\nlow / medium は、コスト重視・低レイテンシ重視、またはスコープが小さい作業向け。難易度の高いタスクでは上位 effort に劣るが、同 effort で比較すれば Opus 4.6 を上回る（しかも時にトークン消費は少ない）。\n\nhigh は知能とコストのバランス型。並列セッションを走らせる場合や、品質を大きく落とさずコストを抑えたい場合に選ぶ。\n\nxhigh がデフォルトかつ推奨。API 設計、スキーマ設計、レガシーコード移行、大規模コードベースのレビューなど知能感度の高いタスクに最適。max ほどトークンが暴走しない。\n\nmax は本当に難しい問題で最後の一押しを絞り出す用途。収穫逓減が強く、過剰思考に陥りやすい。評価の上限探索や、コストを度外視できる極めて知能感度の高い用途に限定して使うのが賢い。\n\n重要なのは、旧モデルの設定をそのまま移植せず、effort を実験すること。同じタスクの中で effort を切り替えてトークン使用量と推論深度を管理してよい。\n\nAdaptive Thinking への移行\n\nOpus 4.7 では固定の思考予算を指定する Extended Thinking はサポートされない。代わりに Adaptive Thinking が導入され、モデルが各ステップで「考えるかどうか」「どれだけ考えるか」を文脈から自律的に判断する。単純なクエリには即答し、恩恵のないステップでは思考をスキップし、価値のある場所にトークンを集中投下する。Agentic な長時間稼働では、トータルで応答が速くなる。過剰思考の傾向もこのリリースで明確に改善された。\n\n思考量を制御したい場合はプロンプトで直接指示する。もっと考えさせたいなら「見た目より難しい問題だ、慎重にステップバイステップで考えてから答えよ」、逆に速さを優先させたいなら「深く考えるより素早く応答することを優先せよ、迷ったら直接答えよ」といった具合に書く。後者はトークンを節約できるが、難しいステップでは精度を落とす可能性がある。\n\nデフォルト挙動の変化\n\n4.6 用にプロンプトやハーネスを作り込んでいる場合、以下の変化を把握しておく必要がある。\n\n応答長はタスク複雑度にキャリブレーションされるようになった。4.6 のように常に饒舌ではなく、単純な確認には短く、オープンエンドな分析には長く答える。特定の長さやスタイルに依存する用途ではプロンプトで明示すること。Anthropic の知見として、「こうするな」という否定形より、望む声質のポジティブな例を示すほうが効くという示唆が添えられている。\n\nツール呼び出しは減り、推論が増える。多くのケースでこれは結果の改善につながるが、Agentic ワークで積極的な検索やファイル読み込みを期待するなら、いつ・なぜそのツールを使うべきかをプロンプトで明示するのが良い。\n\nサブエージェント生成も保守的になった。ファイルを横断する並列処理や独立アイテムへのファンアウトで並列サブエージェントを活用したいなら、これも明示する。Anthropic の推奨文言は、単一応答で完結できる作業（見えている関数のリファクタなど）にはサブエージェントを作らず、複数アイテムのファンアウトや複数ファイル読み込みでは同一ターン内で複数サブエージェントを立ち上げよ、というもの。\n\n何から試すか\n\nOpus 4.7 は長時間稼働タスクで旧モデルより顕著に強い。これまで「人間の監督がボトルネック」だった領域（複数ファイルにまたがる複雑な変更、曖昧なデバッグ、サービス横断のコードレビュー、マルチステップの Agentic ワーク）が主戦場になる。\n\n実践的な出発点としては、 effort を xhigh に据え置き、最初のターンをどこまで作り込めるかを探るところから。最初のターンの仕様化密度が、Opus 4.7 の性能を引き出す最大のレバーになる。",
       "source": "",
       "truncated": false,
       "in_reply_to_status_id": null,
@@ -23,188 +23,432 @@
       "in_reply_to_user_id_str": null,
       "in_reply_to_screen_name": null,
       "user": {
-        "id": 1378756322041196552,
-        "id_str": "1378756322041196552",
-        "name": "zaimiri",
-        "screen_name": "zaimiri",
-        "location": "Save time for your business →",
-        "url": "http://noops.solutions",
-        "description": "building AI Agents for businesses & creators | I can help you save 15+ hours per week",
+        "id": 3324549434,
+        "id_str": "3324549434",
+        "name": "FabyΔ",
+        "screen_name": "FABYMETAL4",
+        "location": "NVIDIA 🟩🟩🟩🟩🟩🟩🟥🟥  METAL",
+        "url": "https://note.com/fabymetal",
+        "description": "メタラー兼業投資家。2013年にNVIDIA $NVDA に150万円投資し12年間ガチホ中。生成AIの登場に伴う株価上昇で430倍の6億円を達成。米国企業分析、決算分析、AIトレンド、NVIDIAに関する情報発信をしています。たまにメタル界隈にPOPします🤘 https://note.com/fabymetal",
         "protected": false,
         "verified": true,
-        "followers_count": 54845,
-        "friends_count": 4934,
+        "followers_count": 51073,
+        "friends_count": 2346,
         "listed_count": 0,
-        "favourites_count": 175496,
-        "statuses_count": 120117,
-        "created_at": "2021-04-04T17:08:23.000000Z",
-        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1378756322041196552/1755362978",
-        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1956760267330572288/RLKoQJwK_normal.jpg",
+        "favourites_count": 78190,
+        "statuses_count": 30099,
+        "created_at": "2015-08-22T16:10:42.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/3324549434/1697587161",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1579687520304254976/U6czfyIG_normal.jpg",
         "can_dm": true,
         "affiliation_label": null
       },
-      "quoted_status_id": 2044871762127565170,
-      "quoted_status_id_str": "2044871762127565170",
-      "is_quote_status": true,
-      "quoted_status": {
-        "tweet_created_at": "2026-04-16T20:13:14.000000Z",
-        "id": 2044871762127565170,
-        "id_str": "2044871762127565170",
-        "type": "tweet",
-        "conversation_id_str": "2044871762127565170",
-        "community_id_str": null,
-        "community_name": null,
-        "text": null,
-        "full_text": "JUST IN: Netflix $NFLX crashes 9% following earnings report. https://t.co/aLgwbPsocv",
-        "source": "",
-        "truncated": false,
-        "in_reply_to_status_id": null,
-        "in_reply_to_status_id_str": null,
-        "in_reply_to_user_id": null,
-        "in_reply_to_user_id_str": null,
-        "in_reply_to_screen_name": null,
-        "user": {
-          "id": 1387497871751196672,
-          "id_str": "1387497871751196672",
-          "name": "Watcher.Guru",
-          "screen_name": "WatcherGuru",
-          "location": "Texas, USA",
-          "url": "https://watcher.guru",
-          "description": "Watcher Guru gives you unparalleled, unbiased coverage of all-things crypto & finance in real-time | Posts Are Not Financial Advice | @BTCPrice",
-          "protected": false,
-          "verified": true,
-          "followers_count": 3935791,
-          "friends_count": 3,
-          "listed_count": 0,
-          "favourites_count": 39819,
-          "statuses_count": 18481,
-          "created_at": "2021-04-28T20:04:12.000000Z",
-          "profile_banner_url": "https://pbs.twimg.com/profile_banners/1387497871751196672/1672776767",
-          "profile_image_url_https": "https://pbs.twimg.com/profile_images/1641221212578754562/DfiC0KW2_normal.png",
-          "can_dm": true,
-          "affiliation_label": null,
-          "verification_info": {
-            "type": "Business"
-          }
-        },
-        "quoted_status_id": null,
-        "quoted_status_id_str": null,
-        "is_quote_status": false,
-        "quoted_status": null,
-        "retweeted_status": null,
-        "quote_count": 67,
-        "reply_count": 362,
-        "retweet_count": 210,
-        "favorite_count": 2268,
-        "views_count": 155025,
-        "bookmark_count": 64,
-        "lang": "en",
-        "entities": {
-          "hashtags": [],
-          "symbols": [
-            {
-              "indices": [
-                17,
-                22
-              ],
-              "text": "NFLX"
-            }
-          ],
-          "timestamps": [],
-          "urls": [],
-          "user_mentions": [],
-          "media": [
-            {
-              "allow_download_status": {
-                "allow_download": true
-              },
-              "display_url": "pic.x.com/aLgwbPsocv",
-              "expanded_url": "https://x.com/WatcherGuru/status/2044871762127565170/photo/1",
-              "ext_media_availability": {
-                "status": "Available"
-              },
-              "features": {
-                "large": {
-                  "faces": []
-                }
-              },
-              "id_str": "2044871758960869376",
-              "indices": [
-                61,
-                84
-              ],
-              "media_key": "3_2044871758960869376",
-              "media_url_https": "https://pbs.twimg.com/media/HGDYB9QXQAAvfmt.jpg",
-              "original_info": {
-                "focus_rects": [
-                  {
-                    "h": 722,
-                    "w": 1290,
-                    "x": 0,
-                    "y": 0
-                  },
-                  {
-                    "h": 1290,
-                    "w": 1290,
-                    "x": 0,
-                    "y": 0
-                  },
-                  {
-                    "h": 1471,
-                    "w": 1290,
-                    "x": 0,
-                    "y": 0
-                  },
-                  {
-                    "h": 1855,
-                    "w": 928,
-                    "x": 0,
-                    "y": 0
-                  },
-                  {
-                    "h": 1855,
-                    "w": 1290,
-                    "x": 0,
-                    "y": 0
-                  }
-                ],
-                "height": 1855,
-                "width": 1290
-              },
-              "sizes": {
-                "large": {
-                  "h": 1855,
-                  "w": 1290
-                }
-              },
-              "type": "photo",
-              "url": "https://t.co/aLgwbPsocv"
-            }
-          ],
-          "display_text_range": [
-            0,
-            60
-          ]
-        },
-        "is_pinned": false
-      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
       "retweeted_status": null,
       "quote_count": 0,
-      "reply_count": 2,
-      "retweet_count": 0,
-      "favorite_count": 5,
-      "views_count": 37,
-      "bookmark_count": 0,
-      "lang": "en",
+      "reply_count": 0,
+      "retweet_count": 2,
+      "favorite_count": 6,
+      "views_count": 584,
+      "bookmark_count": 1,
+      "lang": "ja",
       "entities": {
         "hashtags": [],
         "symbols": [],
         "timestamps": [],
         "urls": [],
         "user_mentions": [],
+        "media": [
+          {
+            "display_url": "pic.x.com/P4x0TeyGJv",
+            "expanded_url": "https://x.com/FABYMETAL4/status/2044891872964063474/photo/1",
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "features": {
+              "large": {
+                "faces": []
+              }
+            },
+            "id_str": "2044891789455503360",
+            "indices": [
+              163,
+              186
+            ],
+            "media_key": "3_2044891789455503360",
+            "media_url_https": "https://pbs.twimg.com/media/HGDqP4qbsAAXtag.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 672,
+                  "w": 1200,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 675,
+                  "w": 675,
+                  "x": 113,
+                  "y": 0
+                },
+                {
+                  "h": 675,
+                  "w": 592,
+                  "x": 154,
+                  "y": 0
+                },
+                {
+                  "h": 675,
+                  "w": 338,
+                  "x": 281,
+                  "y": 0
+                },
+                {
+                  "h": 675,
+                  "w": 1200,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 675,
+              "width": 1200
+            },
+            "sizes": {
+              "large": {
+                "h": 675,
+                "w": 1200
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/P4x0TeyGJv"
+          }
+        ],
         "display_text_range": [
           0,
-          75
+          162
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-16T21:15:00.000000Z",
+      "id": 2044887304917880996,
+      "id_str": "2044887304917880996",
+      "type": "tweet",
+      "conversation_id_str": "2044887304917880996",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "CLAUDE CODE GETS MCP AUTO-INSTALL\n\n- One command auto-discovers and installs best MCP servers for your stack\n- Instantly adds powerful tools and integrations to Claude Code\n- Saves setup time, fully open source\n\nRepo: https://t.co/tU5MOT5THL https://t.co/25DCS52Ba8",
+      "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1536693901230321666,
+        "id_str": "1536693901230321666",
+        "name": "0xMarioNawfal",
+        "screen_name": "RoundtableSpace",
+        "location": "",
+        "url": "http://roundtable.live",
+        "description": "@MarioNawfal’s Crypto & AI Account",
+        "protected": false,
+        "verified": true,
+        "followers_count": 230550,
+        "friends_count": 6281,
+        "listed_count": 1597,
+        "favourites_count": 177846,
+        "statuses_count": 37125,
+        "created_at": "2022-06-14T12:56:16.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1536693901230321666/1706150593",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2012162102283407360/U-fPj6wg_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null,
+        "verification_info": {
+          "type": "Business"
+        }
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 7,
+      "retweet_count": 2,
+      "favorite_count": 29,
+      "views_count": 12436,
+      "bookmark_count": 16,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "media": [
+          {
+            "display_url": "pic.x.com/25DCS52Ba8",
+            "expanded_url": "https://x.com/RoundtableSpace/status/2044887304917880996/photo/1",
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "features": {
+              "large": {
+                "faces": [
+                  {
+                    "h": 34,
+                    "w": 34,
+                    "x": 330,
+                    "y": 728
+                  }
+                ]
+              },
+              "medium": {
+                "faces": [
+                  {
+                    "h": 34,
+                    "w": 34,
+                    "x": 330,
+                    "y": 728
+                  }
+                ]
+              },
+              "orig": {
+                "faces": [
+                  {
+                    "h": 34,
+                    "w": 34,
+                    "x": 330,
+                    "y": 728
+                  }
+                ]
+              },
+              "small": {
+                "faces": [
+                  {
+                    "h": 29,
+                    "w": 29,
+                    "x": 283,
+                    "y": 626
+                  }
+                ]
+              }
+            },
+            "id_str": "2044870782418083840",
+            "indices": [
+              242,
+              265
+            ],
+            "media_key": "3_2044870782418083840",
+            "media_results": {
+              "result": {
+                "media_key": "3_2044870782418083840"
+              }
+            },
+            "media_url_https": "https://pbs.twimg.com/media/HGDXJHWa4AAtJHM.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 374,
+                  "w": 667,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 667,
+                  "w": 667,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 760,
+                  "w": 667,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 790,
+                  "w": 395,
+                  "x": 178,
+                  "y": 0
+                },
+                {
+                  "h": 790,
+                  "w": 667,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 790,
+              "width": 667
+            },
+            "sizes": {
+              "large": {
+                "h": 790,
+                "resize": "fit",
+                "w": 667
+              },
+              "medium": {
+                "h": 790,
+                "resize": "fit",
+                "w": 667
+              },
+              "small": {
+                "h": 680,
+                "resize": "fit",
+                "w": 574
+              },
+              "thumb": {
+                "h": 150,
+                "resize": "crop",
+                "w": 150
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/25DCS52Ba8"
+          },
+          {
+            "display_url": "pic.x.com/25DCS52Ba8",
+            "expanded_url": "https://x.com/RoundtableSpace/status/2044887304917880996/photo/1",
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "features": {
+              "large": {
+                "faces": [
+                  {
+                    "h": 34,
+                    "w": 34,
+                    "x": 330,
+                    "y": 728
+                  }
+                ]
+              },
+              "medium": {
+                "faces": [
+                  {
+                    "h": 34,
+                    "w": 34,
+                    "x": 330,
+                    "y": 728
+                  }
+                ]
+              },
+              "orig": {
+                "faces": [
+                  {
+                    "h": 34,
+                    "w": 34,
+                    "x": 330,
+                    "y": 728
+                  }
+                ]
+              },
+              "small": {
+                "faces": [
+                  {
+                    "h": 29,
+                    "w": 29,
+                    "x": 283,
+                    "y": 626
+                  }
+                ]
+              }
+            },
+            "id_str": "2044870782418083840",
+            "indices": [
+              242,
+              265
+            ],
+            "media_key": "3_2044870782418083840",
+            "media_results": {
+              "result": {
+                "media_key": "3_2044870782418083840"
+              }
+            },
+            "media_url_https": "https://pbs.twimg.com/media/HGDXJHWa4AAtJHM.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 374,
+                  "w": 667,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 667,
+                  "w": 667,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 760,
+                  "w": 667,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 790,
+                  "w": 395,
+                  "x": 178,
+                  "y": 0
+                },
+                {
+                  "h": 790,
+                  "w": 667,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 790,
+              "width": 667
+            },
+            "sizes": {
+              "large": {
+                "h": 790,
+                "resize": "fit",
+                "w": 667
+              },
+              "medium": {
+                "h": 790,
+                "resize": "fit",
+                "w": 667
+              },
+              "small": {
+                "h": 680,
+                "resize": "fit",
+                "w": 574
+              },
+              "thumb": {
+                "h": 150,
+                "resize": "crop",
+                "w": 150
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/25DCS52Ba8"
+          }
+        ],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "github.com/HKUDS/CatchMe",
+            "expanded_url": "https://github.com/HKUDS/CatchMe",
+            "indices": [
+              218,
+              241
+            ],
+            "url": "https://t.co/tU5MOT5THL"
+          }
+        ],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          241
         ]
       },
       "is_pinned": false
@@ -232,13 +476,13 @@
         "name": "ClaudeDevs",
         "screen_name": "ClaudeDevs",
         "location": "",
-        "url": "",
+        "url": null,
         "description": "Official updates for developers building with @ClaudeAI",
         "protected": false,
         "verified": true,
-        "followers_count": 111359,
+        "followers_count": 119531,
         "friends_count": 2,
-        "listed_count": 517,
+        "listed_count": 568,
         "favourites_count": 4,
         "statuses_count": 14,
         "created_at": "2026-02-19T16:19:46.000000Z",
@@ -258,12 +502,12 @@
       "is_quote_status": false,
       "quoted_status": null,
       "retweeted_status": null,
-      "quote_count": 2,
-      "reply_count": 28,
-      "retweet_count": 30,
-      "favorite_count": 677,
-      "views_count": 43533,
-      "bookmark_count": 317,
+      "quote_count": 4,
+      "reply_count": 38,
+      "retweet_count": 35,
+      "favorite_count": 836,
+      "views_count": 59621,
+      "bookmark_count": 395,
       "lang": "en",
       "entities": {
         "hashtags": [],
