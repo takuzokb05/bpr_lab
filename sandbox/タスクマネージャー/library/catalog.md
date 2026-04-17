@@ -325,6 +325,66 @@
 | 286 | Claude Mythos Preview — SWEbench 93.9%・ゼロデイ脆弱性発見でProject Glasswing限定公開 | en | 未読 | #claude-ecosystem #claude-mythos #model-release #web-signal | articles/2026-04-15_013_Claude_Mythos_Preview_Cyber_SWEbench_939_InfoQ.md |
 | 287 | 英国AISI: Claude Mythos Previewのサイバー能力評価 — 独立機関による一次評価 | en | 未読 | #claude-ecosystem #claude-mythos #regulation #web-signal | articles/2026-04-15_014_Claude_Mythos_AISI_Cyber_Capabilities_Evaluation_UK.md |
 | 288 | Azure MCP Server 2.0安定版リリース — 自己ホスト型・マルチツールセット対応強化 | ja | 未読 | #claude-ecosystem #mcp #update #web-signal | articles/2026-04-15_015_Azure_MCP_Server_2_0_Stable_Self_Hosted_Agentic_Codezine.md |
+| 289 | Claude Opus 4.7 正式リリース: SWE-bench Pro 64.3%・xhigh effort・タスクバジェット | en | 未読 | #claude-ecosystem #model-release #benchmark #web-signal | articles/2026-04-17_001_Claude_Opus_47_Official_Release_Benchmarks_Anthropic.md |
+| 290 | Claude Opus 4.7をClaude Codeで使いこなす要点 (@FABYMETAL4) | ja | 未読 | #claude-code #opus47 #practice #x-signal | articles/2026-04-17_001_X_FABYMETAL4_Claude_Opus_4_7_を_Claude_Code_.md |
+| 291 | Claude Code デスクトップ刷新: 並列セッション・統合ターミナル・ドラッグ&ドロップ | en | 未読 | #claude-code #update #desktop #web-signal | articles/2026-04-17_002_Claude_Code_Desktop_Redesign_Parallel_Sessions_Official_Blog.md |
+| 292 | Claude Code MCP自動インストール機能 (@RoundtableSpace) | en | 未読 | #claude-code #mcp #update #x-signal | articles/2026-04-17_002_X_RoundtableSpace_CLAUDE_CODE_GETS_MCP_AUTO_INST.md |
+| 293 | Claude Code Ultraplan: CLIからクラウド設計→ブラウザレビュー→実行 | en | 未読 | #claude-code #ultraplan #planning #web-signal | articles/2026-04-17_003_Claude_Code_Ultraplan_Cloud_Planning_Review_Medium.md |
+| 294 | Opus 4.7移行ワークフロー更新ガイド (公式@ClaudeDevs) | en | 未読 | #claude-code #opus47 #migration #x-signal | articles/2026-04-17_003_X_ClaudeDevs_To_make_it_easier_to_migrate_y.md |
+| 295 | Claude Code Routines企業導入レビュー: Anthropicインフラでの自律タスク実行 | en | 未読 | #claude-code #routines #enterprise #web-signal | articles/2026-04-17_004_Claude_Code_Routines_Enterprise_Review_VentureBeat.md |
+| 296 | Claude Code v2.1.113 構造変化: バンドルJS起動プラットフォーム (@tututtaa) | ja | 未読 | #claude-code #update #internals #x-signal | articles/2026-04-17_004_X_tututtaa_Claude_Code_v2_1_113の構造変化_1_b.md |
+| 297 | Cloudflare Code Mode MCP: 2500+APIエンドポイントのトークン消費99.9%削減 | en | 未読 | #claude-ecosystem #mcp #cloudflare #web-signal | articles/2026-04-17_005_Cloudflare_Code_Mode_MCP_Token_99pct_Reduction_Official.md |
+| 298 | CLAUDE.mdにコミュニケーションルール: 質問は1ターン1つに絞る (@hyuki) | ja | 未読 | #claude-code #claude-md #practice #x-signal | articles/2026-04-17_005_X_hyuki_CLAUDE_mdにコミュニケーションルールとして_確認が必.md |
+| 299 | Claude Opus 4.7 on Amazon Bedrock GA: ゼロオペレータデータアクセス設計 | en | 未読 | #claude-ecosystem #opus47 #bedrock #web-signal | articles/2026-04-17_006_Claude_Opus_47_Amazon_Bedrock_GA_Enterprise_Inference.md |
+| 300 | Claude Codeトークン消費可視化ツール自作レポート (@kitahara_dev) | ja | 未読 | #claude-code #usage #cost #x-signal | articles/2026-04-17_006_X_kitahara_dev_毎日_200以上Claude_Codeに使っているのに_何に.md |
+| 301 | OpenAI Codex Desktop: バックグラウンドPC操作＋90+プラグイン対応 | en | 未読 | #ai-news #openai #codex #web-signal | articles/2026-04-17_007_OpenAI_Codex_Desktop_Computer_Use_90_Plugins_April2026.md |
+| 302 | 新プロジェクト立ち上げ時のClaude Code活用とCLAUDE.md設計 (@madarco) | en | 未読 | #claude-code #claude-md #practice #x-signal | articles/2026-04-17_007_X_madarco_I_ve_found_this_really_useful_.md |
+| 303 | Eversheds Sutherlandグローバルアイ規制アップデート 2026年4月号 | en | 未読 | #ai-news #regulation #global #web-signal | articles/2026-04-17_008_Eversheds_Global_AI_Regulatory_Bulletin_April2026.md |
+| 304 | Claude Codeにパッケージマネージャーが必要という提案 (@romainbey) | en | 未読 | #claude-code #skills #package-manager #x-signal | articles/2026-04-17_008_X_romainbey_Claude_Code_needs_a_package_ma.md |
+| 305 | Claude Code Routines完全チュートリアル: スケジュール・API・GitHubトリガー | en | 未読 | #claude-code #routines #tutorial #web-signal | articles/2026-04-17_009_Claude_Code_Routines_DEV_Community_Tutorial.md |
+| 306 | スキルインストールCLIツール公式リリース (@DamianoTobasco) | en | 未読 | #claude-code #skills #tools #x-signal | articles/2026-04-17_009_X_DamianoTobasco_Docs_repo_https_t_co_Gwh30E.md |
+| 307 | Claude Code非エンジニア活用: 税理士の顧問先4倍化・Excel集計4h→20min | ja | 未読 | #claude-code #non-engineer #use-case #web-signal | articles/2026-04-17_010_Claude_Code_Non_Engineer_Use_Cases_Tax_Marketing_JA.md |
+| 308 | Claude Code用AES-256暗号化Vaultシークレット管理ツール (@Jorisslagter) | en | 未読 | #claude-code #security #tools #x-signal | articles/2026-04-17_010_X_Jorisslagter_Store_once_Use_everywhere_O.md |
+| 309 | Claude Code公式プラグイン全解説: 17種類の公式スキルとその使い分け | ja | 未読 | #claude-code #skills #plugins #web-signal | articles/2026-04-17_011_Claude_Code_Official_Plugins_Complete_Guide_Zenn_Chmod644.md |
+| 310 | Claude Code Managed Agents: タブレイアウト + Routinesの概観 (@Mosescreates) | ja | 未読 | #claude-code #managed-agents #routines #x-signal | articles/2026-04-17_011_X_Mosescreates_Claude_Code_Managed_Agents_.md |
+| 311 | Claude Codeを使いこなす5つの意識: コンテキスト管理から並列化まで | ja | 未読 | #claude-code #best-practices #context #web-signal | articles/2026-04-17_012_Claude_Code_Usage_Mindset_5_Keys_Zenn_Sunagaku.md |
+| 312 | Claude Codeにファイル作成を頼む実用ハック (@lemonautzest) | en | 未読 | #claude-code #practice #tips #x-signal | articles/2026-04-17_012_X_lemonautzest_SarahAMcManus_winter_fall_jus.md |
+| 313 | Claude CodeスキルとRoutinesの組み合わせ活用: 繰り返し作業の完全自動化 | ja | 未読 | #claude-code #skills #routines #web-signal | articles/2026-04-17_013_Claude_Code_Skills_Routines_SAMURAI_Biz_JA.md |
+| 314 | Claude CodeスキルでStripeリファンド処理を1コマンド実行 (@ihtesham2005) | en | 未読 | #claude-code #skills #stripe #x-signal | articles/2026-04-17_013_X_ihtesham2005_This_is_a_Claude_Code_skill_th.md |
+| 315 | Claude Code 5週間30連続アップデート全まとめ: v2.1.69→v2.1.101 | ja | 未読 | #claude-code #update #roundup #web-signal | articles/2026-04-17_014_Claude_Code_30_Updates_5weeks_Complete_Note_MerryFairy.md |
+| 316 | Claude CodeでStripe MCP経由の初リファンド処理に成功 (@barckcode) | en | 未読 | #claude-code #mcp #stripe #x-signal | articles/2026-04-17_014_X_barckcode_Primera_vez_que_hago_un_reembo.md |
+| 317 | AIエージェントニュース 2026年4月: OpenClaw・エージェントインフラ競争 | en | 未読 | #ai-news #agent-infra #openai #web-signal | articles/2026-04-17_015_Fazm_AI_Agent_News_April_2026_Claude_OpenClaw.md |
+| 318 | Claude Code月500制限に8日で到達した使用レポート (@jrswab) | en | 未読 | #claude-code #usage #cost #x-signal | articles/2026-04-17_015_X_jrswab_8_days_on_a_Claude_Code_seat_f.md |
+| 319 | Claude Opus 4.7: サイバーセキュリティ自動保護機能と新しい安全設計 | en | 未読 | #claude-ecosystem #security #opus47 #web-signal | articles/2026-04-17_016_Claude_Opus_47_Helpnetsecurity_Cybersecurity_Safeguards.md |
+| 320 | Opus 4.7でデザインから反応スペースシミュレーションを生成 (@SkyeSharkie) | en | 未読 | #claude-code #opus47 #use-case #x-signal | articles/2026-04-17_016_X_SkyeSharkie_Here_you_go_I_asked_Opus_4_7_.md |
+| 321 | Claude Designを触ってみた: エンジニア向けOpus 4.7ビジョン活用レポート (@kgsi) | ja | 未読 | #claude-ecosystem #claude-design #review #x-signal | articles/2026-04-17_017_X_kgsi_Claude_Designを一通り触ってみたので_どんなもの.md |
+| 322 | Claude Code音声入力統合への要望とユースケース (@voigt_peter) | en | 未読 | #claude-code #voice #feature-request #x-signal | articles/2026-04-17_018_X_voigt_peter_trq212_I_would_get_a_lot_more_.md |
+| 323 | skill-vetterでサードパーティスキルの依存・権限チェック (@aa22396584) | ja | 未読 | #claude-code #skills #security #x-signal | articles/2026-04-17_019_X_aa22396584_fan128168_skill_vetter这个思路很实用_.md |
+| 324 | AnthropicがClaude Architect認定資格プログラムを導入 (@smratitiwa86867) | en | 未読 | #claude-ecosystem #certification #education #x-signal | articles/2026-04-17_020_X_smratitiwa86867_Anthropic_just_introduced_the_.md |
+| 325 | Anthropic企業評価1.06兆ドル達成 (@Codedsammy001) | en | 未読 | #claude-ecosystem #valuation #funding #x-signal | articles/2026-04-17_021_X_Codedsammy001_Anthropic_is_now_valued_at_1_.md |
+| 326 | DeepSeek、初の外部ラウンドで100億ドル評価額での調達 (@aakashgupta) | en | 未読 | #claude-ecosystem #deepseek #funding #x-signal | articles/2026-04-17_022_X_aakashgupta_DeepSeek_is_raising_its_first_.md |
+| 327 | Claude Design発表でFigma株7%下落 (@MunshiPremChnd) | en | 未読 | #claude-ecosystem #claude-design #figma #x-signal | articles/2026-04-17_023_X_MunshiPremChnd_Figma_stock_slides_7_as_Anth.md |
+| 328 | FigmaからAnthropicCPO離脱とClaude Design競合関係の考察 (@ChikaraKawamura) | ja | 未読 | #claude-ecosystem #claude-design #figma #x-signal | articles/2026-04-17_024_X_ChikaraKawamura_Figma取締役会からAnthropicの最高製品責任者が抜.md |
+| 329 | Claude Design試用レポート: Google Stitchとの比較 (@kapioblog) | ja | 未読 | #claude-ecosystem #claude-design #review #x-signal | articles/2026-04-17_025_X_kapioblog_AnthropicがデザインUI特化の_Claude_Des.md |
+| 330 | Claude Design核心: Opus 4.7ビジョン能力×UIデザインツールの融合 (@latdayo) | ja | 未読 | #claude-ecosystem #claude-design #opus47 #x-signal | articles/2026-04-17_026_X_latdayo_核心_AnthropicがClaude_DesignをLa.md |
+| 331 | Claude Designの全体像: デザインツールを飲み込むAIの時代 (@latdayo) | ja | 未読 | #claude-ecosystem #claude-design #analysis #x-signal | articles/2026-04-17_027_X_latdayo_AnthropicがClaude_Designを出してきた_.md |
+| 332 | Claude Design詳細まとめ: Labs研究プレビュー全機能解説 (@shimesaba_type0) | ja | 未読 | #claude-ecosystem #claude-design #review #x-signal | articles/2026-04-17_028_X_shimesaba_type0_ChatGPT要約_Claude_Design_Anthr.md |
+| 333 | Anthropic MCP: 9700万インストール = インフラ化の証拠 (@DominateQuietly) | en | 未読 | #claude-ecosystem #mcp #adoption #x-signal | articles/2026-04-17_029_X_DominateQuietly_d8kingdom_Anthropic_MCP_at_97M.md |
+| 334 | MCPリリース解説: 珍しい特性とAIエコシステムへの影響 (@NotMetaShredder) | en | 未読 | #claude-ecosystem #mcp #analysis #x-signal | articles/2026-04-17_030_X_NotMetaShredder_anthropic_released_mcp_model_.md |
+| 335 | フランス政府データportal datagouv.frでMCP実験導入 (@AgenticAIFdn) | en | 未読 | #claude-ecosystem #mcp #government #x-signal | articles/2026-04-17_031_X_AgenticAIFdn_datagouv_is_experimenting_with.md |
+| 336 | Microsoft 365 + Azure MCPの活用チュートリアル (@pswider) | en | 未読 | #claude-ecosystem #mcp #microsoft #x-signal | articles/2026-04-17_032_X_pswider_adamweststack_BradGroux_Micr.md |
+| 337 | Anthropicウォッチ中にGoogleが静かに出荷: DeepMind+Gemini 2.5動向 (@aigoldrushh) | en | 未読 | #claude-ecosystem #google #gemini #x-signal | articles/2026-04-17_033_X_aigoldrushh_While_everyone_was_watching_An.md |
+| 338 | AnthropicのOpus 4.7異例ローンチチャート解説 (@aakashgupta) | en | 未読 | #ai-news #anthropic #opus47 #x-signal | articles/2026-04-17_034_X_aakashgupta_Anthropic_just_published_the_m.md |
+| 339 | Anthropic/OpenAI/Google週次競合サマリー (@karankendre) | en | 未読 | #ai-news #competitive #weekly #x-signal | articles/2026-04-17_035_X_karankendre_Anthropic_shipping_Opus_4_7_O.md |
+| 340 | Red Hat AI: Qwen3.6-35B-A3B NVFP4量子化モデル提供開始 (@RedHat_AI) | en | 未読 | #ai-news #qwen #model-release #x-signal | articles/2026-04-17_036_X_RedHat_AI_Qwen3_6_35B_A3B_just_dropped_.md |
+| 341 | UK Sovereign AI基金立ち上げ: AIインフラ国家戦略 (@matthewclifford) | en | 未読 | #ai-news #regulation #uk #x-signal | articles/2026-04-17_037_X_matthewclifford_Extremely_excited_and_proud_to.md |
+| 342 | GoogleがPersonal Intelligence Agentをグローバルロールアウト開始 (@WesRoth) | en | 未読 | #ai-news #google #agent #x-signal | articles/2026-04-17_038_X_WesRoth_Google_started_the_global_roll.md |
+| 343 | Anthropic CoworkGA発表・SaaSの死再燃 (@nikkeibpITpro) | ja | 未読 | #ai-news #cowork #anthropic #x-signal | articles/2026-04-17_039_X_nikkeibpITpro_米アンソロピックがMythos発表に続き_Cowork_一般.md |
+| 344 | Cursor 3.0リリース: 複数AIエージェント並行実行の新UI (@madonomori) | ja | 未読 | #ai-news #cursor #agent #x-signal | articles/2026-04-17_040_X_madonomori_Cursor_3_0_がリリース_複数AIエージェントの並行.md |
+| 345 | freee「Agent Hub」とAPI開放: 申告ソフトのエージェント化 (@Takuma_Uemura) | ja | 未読 | #ai-news #freee #agent #x-signal | articles/2026-04-17_041_X_Takuma_Uemura_freeeから発表された_AIエージェント_Agent_Hu.md |
+| 346 | GPT-Rosalind: OpenAIが製薬特化AI発表、Anthropicに対抗 (@keita_masui) | ja | 未読 | #ai-news #openai #pharma #x-signal | articles/2026-04-17_042_X_keita_masui_製薬特化AI競争_OpenAIがGPT_Rosalindを発.md |
+| 347 | NVIDIA「Ising」量子コンピュータ加速で量子株が世界同時急騰 (@SOU_BTC) | ja | 未読 | #ai-news #nvidia #quantum #x-signal | articles/2026-04-17_043_X_SOU_BTC_NVIDIA_Ising_ショック_量子株が世界同時急騰_.md |
+| 348 | AIラボはモデルカードに加えBeliefとValueの文書化が必要 (@emollick) | en | 未読 | #ai-news #transparency #policy #x-signal | articles/2026-04-17_044_X_emollick_We_need_a_new_document_that_AI.md |
 ## 発見パターン（記事横断の傾向）
 
 蔵書を横断して繰り返し出現するテーマ。出現回数が多いほど普遍的な知見。
@@ -396,4 +456,4 @@
 - 未読: 1
 - 構想: 1
 - 書籍: 4
-- 日次収集（2026-03-27〜）: 288件（2026-04-15更新）
+- 日次収集（2026-03-27〜）: 348件（2026-04-17更新）
