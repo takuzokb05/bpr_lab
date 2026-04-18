@@ -779,6 +779,57 @@ class TestFindValidFilling:
 
 
 # ================================================================
+# _adjust_volume のテスト
+# ================================================================
+
+
+class TestAdjustVolume:
+    """_adjust_volume のテスト（2026-04 retcode 10014 バグ回避）"""
+
+    def _make_symbol_info(self, step=0.01, vmin=0.01, vmax=100.0):
+        info = MagicMock()
+        info.volume_step = step
+        info.volume_min = vmin
+        info.volume_max = vmax
+        return info
+
+    def test_rounds_down_to_step(self, client, mt5_mock):
+        """端数付きvolumeがstepに整列される（0.39037 -> 0.39）"""
+        mt5_mock.symbol_info.return_value = self._make_symbol_info(step=0.01)
+        assert client._adjust_volume("AUDUSD-", 0.39037) == pytest.approx(0.39)
+
+    def test_clamps_to_max(self, client, mt5_mock):
+        """volume_maxを超える場合はvmaxにクランプ"""
+        mt5_mock.symbol_info.return_value = self._make_symbol_info(
+            step=0.01, vmax=50.0
+        )
+        assert client._adjust_volume("USDJPY-", 100.5) == 50.0
+
+    def test_raises_when_below_min(self, client, mt5_mock):
+        """丸め後にvolume_minを下回ればMt5ClientError"""
+        from src.mt5_client import Mt5ClientError
+
+        mt5_mock.symbol_info.return_value = self._make_symbol_info(
+            step=0.1, vmin=0.1
+        )
+        with pytest.raises(Mt5ClientError, match="最小単位"):
+            client._adjust_volume("USDJPY-", 0.05)
+
+    def test_symbol_info_none_passes_through(self, client, mt5_mock):
+        """symbol_infoがNoneなら丸めずそのまま返す"""
+        mt5_mock.symbol_info.return_value = None
+        assert client._adjust_volume("USDJPY-", 0.39037) == 0.39037
+
+    def test_magic_mock_step_passes_through(self, client, mt5_mock):
+        """volume_stepが数値でない（MagicMock等）ならスキップ（既存テスト互換）"""
+        info = MagicMock()
+        info.filling_mode = 2
+        # volume_step を設定しない → MagicMock属性（非数値）
+        mt5_mock.symbol_info.return_value = info
+        assert client._adjust_volume("USDJPY-", 0.1) == 0.1
+
+
+# ================================================================
 # Context Manager のテスト
 # ================================================================
 
