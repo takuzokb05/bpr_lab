@@ -6,11 +6,14 @@ FX自動取引システム — MetaTrader 5 ブローカークライアント
 フィリングモード自動検出を含む。
 """
 
+import logging
 import math
 import time
 
 import MetaTrader5 as mt5
 import pandas as pd
+
+logger = logging.getLogger(__name__)
 
 from src.broker_client import BrokerClient
 
@@ -247,8 +250,7 @@ class Mt5Client(BrokerClient):
             sltp_result = mt5.order_send(sltp_request)
             if sltp_result.retcode != mt5.TRADE_RETCODE_DONE:
                 # SL/TP設定失敗はログに残すが約定自体は成功しているので例外にしない
-                import logging
-                logging.getLogger(__name__).warning(
+                logger.warning(
                     "SL/TP設定失敗（約定済み）: retcode=%d, comment=%s",
                     sltp_result.retcode, sltp_result.comment,
                 )
@@ -496,7 +498,7 @@ class Mt5Client(BrokerClient):
         adjusted = math.floor(volume / step) * step
         # 浮動小数の残差を抑えるため step の桁で丸め直す
         decimals = max(0, -int(math.floor(math.log10(step)))) if step < 1 else 0
-        adjusted = round(adjusted, decimals + 2)
+        adjusted = round(adjusted, decimals)
 
         if isinstance(vmax, (int, float)) and vmax > 0 and adjusted > vmax:
             adjusted = vmax
