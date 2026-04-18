@@ -6,6 +6,7 @@ FX自動取引システム — MetaTrader 5 ブローカークライアント
 フィリングモード自動検出を含む。
 """
 
+import math
 import time
 
 import MetaTrader5 as mt5
@@ -211,6 +212,9 @@ class Mt5Client(BrokerClient):
         if tick is None:
             raise Mt5ClientError(f"ティック情報を取得できません: {symbol}")
 
+        # volume をシンボルの volume_step に整列させる（retcode 10014 回避）
+        volume = self._adjust_volume(symbol, volume)
+
         price = tick.ask if is_buy else tick.bid
         order_type = mt5.ORDER_TYPE_BUY if is_buy else mt5.ORDER_TYPE_SELL
 
@@ -283,6 +287,9 @@ class Mt5Client(BrokerClient):
         symbol = to_mt5_symbol(instrument)
         is_buy = units > 0
         volume = abs(units) / LOT_SIZE
+
+        # volume をシンボルの volume_step に整列させる（retcode 10014 回避）
+        volume = self._adjust_volume(symbol, volume)
 
         order_type = mt5.ORDER_TYPE_BUY_LIMIT if is_buy else mt5.ORDER_TYPE_SELL_LIMIT
 
@@ -455,6 +462,52 @@ class Mt5Client(BrokerClient):
     # 内部ヘルパー
     # ================================================================
 
+    def _adjust_volume(self, symbol: str, volume: float) -> float:
+        """volumeをシンボルのvolume_stepに整列させ、min/maxにクランプする。
+
+        MT5は volume が volume_step の倍数でないと retcode 10014
+        (TRADE_RETCODE_INVALID_VOLUME) で注文を拒否する。
+        さらに _find_valid_filling がその失敗を「Unsupported filling mode」
+        として上書きしてしまうため、真因が見えなくなる（2026-04で発覚）。
+
+        Args:
+            symbol: MT5形式のシンボル（例: "USDJPY-"）
+            volume: 希望するロット数（整列前）
+
+        Returns:
+            volume_stepに整列し、min/maxにクランプしたロット数
+
+        Raises:
+            Mt5ClientError: 丸めた結果が volume_min を下回り取引不可の場合
+        """
+        info = mt5.symbol_info(symbol)
+        if info is None:
+            return volume
+
+        step = getattr(info, "volume_step", None)
+        vmin = getattr(info, "volume_min", None)
+        vmax = getattr(info, "volume_max", None)
+
+        # MagicMock等の非数値属性では丸めをスキップ（既存テスト互換）
+        if not isinstance(step, (int, float)) or step <= 0:
+            return volume
+
+        # 下方向に丸め（過剰ロットを避ける）
+        adjusted = math.floor(volume / step) * step
+        # 浮動小数の残差を抑えるため step の桁で丸め直す
+        decimals = max(0, -int(math.floor(math.log10(step)))) if step < 1 else 0
+        adjusted = round(adjusted, decimals + 2)
+
+        if isinstance(vmax, (int, float)) and vmax > 0 and adjusted > vmax:
+            adjusted = vmax
+        if isinstance(vmin, (int, float)) and vmin > 0 and adjusted < vmin:
+            raise Mt5ClientError(
+                f"ロット数が最小単位を下回ります: symbol={symbol}, "
+                f"要求={volume}, 丸め後={adjusted}, volume_min={vmin}"
+            )
+
+        return adjusted
+
     def _find_valid_filling(self, request: dict) -> dict:
         """有効なフィリングモードを自動検出する。
 
@@ -472,6 +525,8 @@ class Mt5Client(BrokerClient):
         """
         symbol = request.get("symbol", "")
         info = mt5.symbol_info(symbol)
+
+        attempts: list[str] = []
 
         # symbol_info.filling_mode はビットマスク
         # SYMBOL_FILLING_FOK=1, SYMBOL_FILLING_IOC=2 に対応
@@ -491,25 +546,34 @@ class Mt5Client(BrokerClient):
                 check_result = mt5.order_check(request)
                 if check_result is not None and check_result.retcode == 0:
                     return request
+                if check_result is not None:
+                    attempts.append(
+                        f"filling={filling} retcode={check_result.retcode} "
+                        f"comment={check_result.comment}"
+                    )
 
-        # symbol_infoが取れない場合は全パターン試行（従来ロジック）
+        # symbol_infoが取れない場合、またはビットマスクで網羅できなかった場合の全パターン試行
         filling_types = [
             mt5.ORDER_FILLING_FOK,
             mt5.ORDER_FILLING_IOC,
             mt5.ORDER_FILLING_RETURN,
         ]
 
-        last_comment = "unknown"
         for filling in filling_types:
             request["type_filling"] = filling
             check_result = mt5.order_check(request)
             if check_result is not None and check_result.retcode == 0:
                 return request
             if check_result is not None:
-                last_comment = check_result.comment
+                attempts.append(
+                    f"filling={filling} retcode={check_result.retcode} "
+                    f"comment={check_result.comment}"
+                )
 
+        # 最後の試行のcommentだけでなく各試行の詳細を残すことで真因を特定可能にする
+        detail = "; ".join(attempts) if attempts else "order_check=None"
         raise Mt5ClientError(
-            f"全フィリングタイプで失敗しました: {last_comment}"
+            f"全フィリングタイプで失敗しました: {detail}"
         )
 
     def _send_order_with_retry(self, request: dict) -> object:
