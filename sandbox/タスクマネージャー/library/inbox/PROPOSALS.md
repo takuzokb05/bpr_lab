@@ -955,3 +955,57 @@ Claude Design（Anthropic Labs 研究プレビュー）は Opus 4.7 のビジョ
 
 **提案内容（優先度: 低）:**
 英国の UK Sovereign AI 基金立ち上げと、フランス政府 data.gouv.fr での MCP 実験採用が確認された。国家レベルでの AI・MCP インフラ導入が加速しており、規制環境の変化を継続的にモニタリングする必要がある。次回収集時に UK AI Opportunity Action Plan の具体的な施策内容を追跡する。
+
+---
+
+## 2026-04-18 収集分
+
+### 1. Claude Agent SDK コスト最適化（プロンプトキャッシュ修正）
+
+#### 1-1. SDK query() のプロンプトキャッシュ無効化バグ修正 → 最大12倍コスト削減
+**出典:** articles/2026-04-18_011_Claude_Agent_SDK_Guide_2026_Popularaitools.md
+
+**提案内容（優先度: 高）:**
+Claude Agent SDK の最新版で `query()` 呼び出し時のプロンプトキャッシュ無効化バグが修正された。FX自動取引システムや日次収集スクリプトで Claude Agent SDK を使用している場合、最新版にアップデートすることで入力トークンコストを最大12倍削減できる可能性がある。
+- **アクション:** `pip install --upgrade claude-agent-sdk` を実行しバージョン確認
+- `get_context_usage()` メソッドも追加済みのため、コンテキスト使用量をモニタリングするコードを追加する
+
+---
+
+### 2. Anthropic公式スキル構築ガイドとの整合性確認
+
+#### 2-1. 公式ガイドPDFと現行スキルの設計照合
+**出典:** articles/2026-04-18_010_Anthropic_Official_Complete_Guide_Building_Skills_PDF.md
+
+**提案内容（優先度: 中）:**
+Anthropicが「The Complete Guide to Building Skills for Claude」PDF を公開。現行の skills-registry の設計（description・Gotchas・フロントマター）を公式ガイドと照合し、推奨パターンとの乖離を解消する。特に description の書き方とエンタープライズチーム向け共有設計の章が参考になる。
+
+---
+
+### 3. MCP Streamable HTTP への移行計画
+
+#### 3-1. MCP 2026 ロードマップ対応の具体化
+**出典:** articles/2026-04-18_001_MCP_Official_2026_Roadmap_Transport_Governance.md
+
+**提案内容（優先度: 中）:**
+MCP 公式 2026 ロードマップで Streamable HTTP がリモート MCP サーバーの標準トランスポートとして確定。現在 SSE 方式で運用している MCP サーバーがある場合、Streamable HTTP への移行準備を開始する。特に FX 市場データ取得 MCP サーバーは長時間コネクション維持が必要なため、Streamable HTTP のステートレス水平スケール特性が有効。
+
+---
+
+### 4. FX自動取引システムへの反映提案
+
+#### 4-1. AI-Powered EA の 2 層判断アーキテクチャ（ML + LLM 確認）の実装
+**出典:** articles/2026-04-18_017_AI_Powered_EAs_5_Reasons_Outperform_Traditional_MQL5.md
+
+**提案内容（優先度: 高）:**
+MQL5 の実証記事で「ML シグナルエンジン → LLM 確認レイヤー」の 2 段階検証が EAs の市場レジーム適応力を大幅向上させると確認された。現行 FX システムへの適用：
+- **高タイムフレーム方向性**: GPT/Claude で H4・D1 の市場コンテキストを評価（レジームマスター）
+- **高頻度ロジック評価**: DeepSeek R1（ローカル Ollama）で繰り返し判断を高速処理
+- **JSON Mode 強制**: MQL5 側の JSON パースエラーを防ぐため `response_format: json` を必須化
+- **次のアクション:** `sandbox/FX自動取引/` の Phase 4 実装計画に 2 層アーキテクチャの設計を追加
+
+#### 4-2. EA から直接 Claude API を呼び出す軽量パターンの日本語実装例の確認
+**出典:** articles/2026-04-18_018_ChatGPT_FX_Auto_Trading_EA_Development_Note_Sayama.md
+
+**提案内容（優先度: 低）:**
+Note.com の sayama_ocha による ChatGPT × MT5 EA 実装例が公開されており、MQL5 HTTP リクエストから直接 LLM API を呼び出すシンプルアーキテクチャの参考になる。Claude API 向けに変換した場合のレイテンシ・コスト・JSON パース安定性を試算し、現行の Python ブリッジアーキテクチャと比較検討する。

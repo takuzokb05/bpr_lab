@@ -132,3 +132,16 @@
 | 107 | AI Legal Watch April 2026 — EU AI Act施行・米国立法フレームワーク・州法整理 | en | 未読 | #regulation #web-signal | articles/2026-04-15_021_AI_Legal_Watch_April_2026_EU_US_Regulation_JDSupra.md |
 | 108 | Stanford AI Index 2026 — SWEbench近100%・中国との差1.7%・透明性低下 (IEEE Spectrum) | en | 未読 | #model-release #trend #web-signal | articles/2026-04-15_017_Stanford_AI_Index_2026_SWEbench_Near100_China_Gap_IEEE.md |
 | 109 | Stanford HAI AI Index 2026 — 公式12の重要知見まとめ | en | 未読 | #model-release #trend #web-signal | articles/2026-04-15_018_Stanford_HAI_AI_Index_2026_12_Key_Takeaways_Official.md |
+| 110 | Claude Opus 4.7: Benchmarks, Features, and Migration Guide (The AI Corner) | en | 未読 | #model-release #benchmark #opus47 #web-signal | articles/2026-04-18_003_Claude_Opus_47_Benchmarks_Features_Migration_Guide.md |
+| 111 | AINews: Claude Opus 4.7 — Literally One Step Better Than 4.6 in Every Dimension (Latent Space) | en | 未読 | #model-release #benchmark #opus47 #web-signal | articles/2026-04-18_004_Claude_Opus_47_AINews_Latent_Space_One_Step_Better.md |
+| 112 | Cloudflare Agents Week 2026: Every Release Explained (Lushbinary) | en | 未読 | #cloudflare #agent #mcp #web-signal | articles/2026-04-18_005_Cloudflare_Agents_Week_2026_All_Releases_Explained.md |
+| 113 | The Next Evolution of the OpenAI Agents SDK: Sandbox Execution and Security (OpenAI) | en | 未読 | #openai #agent-sdk #web-signal | articles/2026-04-18_006_OpenAI_Agents_SDK_Next_Evolution_Security_Sandbox.md |
+| 114 | New LLM Releases April 2026: Every Major Model Launch This Month (Fazm) | en | 未読 | #model-release #timeline #web-signal | articles/2026-04-18_014_New_LLM_Releases_April_2026_Complete_Timeline_Fazm.md |
+| 115 | AI Weekly: Agents, Models, and Chips — April 9–15, 2026 (DEV Community) | en | 未読 | #weekly #model-release #agent #web-signal | articles/2026-04-18_015_AI_Weekly_April_9_15_2026_Agents_Models_Chips_DEV.md |
+| 116 | AI Companion Apps Are Getting Regulated in April 2026: What Changed (RoboRhythms) | en | 未読 | #regulation #companion #us-law #web-signal | articles/2026-04-18_016_AI_Companion_Chatbot_Regulation_Wave_April_2026.md |
+| 117 | MIT Tech Review: どうなる2026年のAI、本誌が予測する5大トレンド | ja | 未読 | #trend #regulation #japan #web-signal | articles/2026-04-18_020_MIT_TechReview_Japan_2026_AI_5_Trends.md |
+| 118 | NVIDIA & Idaho National Laboratory Launch AI Project — Project Prometheus (@quakes99) | en | 未読 | #nvidia #infrastructure #energy #x-signal | articles/2026-04-18_021_X_quakes99_NVIDIA_Idaho_National_Lab_Nuclear_AI_Project.md |
+| 119 | Perplexity Personal Computer for Mac — 一人称AIコンピューティングの新形態 (@_LaPier) | en | 未読 | #perplexity #desktop #product #x-signal | articles/2026-04-18_022_X_LaPier_Perplexity_Personal_Computer_Mac_Launch.md |
+| 120 | Resolve AI Labs — $40M Series A拡張、バリュエーション$1.5B (@maynkag) | en | 未読 | #funding #agent #reliability #x-signal | articles/2026-04-18_023_X_maynkag_Resolve_AI_Labs_40M_Series_A_1_5B_Valuation.md |
+| 121 | Bloomberg報道: Anthropic、最強モデルClaude Opus 4.7を発表 — Mythosの1週間後 (@business) | en | 未読 | #model-release #anthropic #opus47 #x-signal | articles/2026-04-18_024_X_business_Bloomberg_Anthropic_Claude_Opus_47_Report.md |
+| 122 | NVIDIA「Lyra 2.0」— 一貫性のある広大な3D空間を生成するフレームワーク (@Botan_cr) | ja | 未読 | #nvidia #3d-generation #framework #x-signal | articles/2026-04-18_025_X_Botan_cr_NVIDIA_Lyra_2_0_3D_Space_Generation.md |

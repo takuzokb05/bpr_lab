@@ -86,3 +86,5 @@
 | 064 | FXトレードAIマイメイト、レンジ相場最適化「リピートAI」を新実装 (CoinPost) | ja | 未読 | #fx #llm-trading #implementation #web-signal | articles/2026-04-14_009_FX_MyMate_RepeatAI_Range_Strategy_New_Feature.md |
 | 065 | From Trading Bot to Trading Agent: How to Build an AI-based Investment System (Medium) | en | 未読 | #llm-trading #implementation #multi-agent #web-signal | articles/2026-04-14_010_From_Trading_Bot_to_Trading_Agent_LLM_Investment_System.md |
 | 066 | 2026年版 FXベストAIトレーディングエージェント — MT4/MT5統合比較ガイド (GPTrader) | en | 未読 | #fx #llm-trading #mt5 #implementation #web-signal | articles/2026-04-15_016_Best_AI_Trading_Agent_Forex_MT4_MT5_Integration_2026_GPTrader.md |
+| 067 | 5 Reasons AI-Powered EAs Outperform Traditional Automated Systems in 2026 (MQL5) | en | 未読 | #fx #ea #llm-trading #comparison #web-signal | articles/2026-04-18_017_AI_Powered_EAs_5_Reasons_Outperform_Traditional_MQL5.md |
+| 068 | ChatGPT（生成AI）の売買判断を連携してFX取引を自動化するEAの開発 (Note/Sayama) | ja | 未読 | #fx #chatgpt #ea #implementation #web-signal | articles/2026-04-18_018_ChatGPT_FX_Auto_Trading_EA_Development_Note_Sayama.md |

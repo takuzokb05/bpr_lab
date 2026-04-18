@@ -385,6 +385,31 @@
 | 346 | GPT-Rosalind: OpenAIが製薬特化AI発表、Anthropicに対抗 (@keita_masui) | ja | 未読 | #ai-news #openai #pharma #x-signal | articles/2026-04-17_042_X_keita_masui_製薬特化AI競争_OpenAIがGPT_Rosalindを発.md |
 | 347 | NVIDIA「Ising」量子コンピュータ加速で量子株が世界同時急騰 (@SOU_BTC) | ja | 未読 | #ai-news #nvidia #quantum #x-signal | articles/2026-04-17_043_X_SOU_BTC_NVIDIA_Ising_ショック_量子株が世界同時急騰_.md |
 | 348 | AIラボはモデルカードに加えBeliefとValueの文書化が必要 (@emollick) | en | 未読 | #ai-news #transparency #policy #x-signal | articles/2026-04-17_044_X_emollick_We_need_a_new_document_that_AI.md |
+| 349 | The 2026 MCP Roadmap: Transport Scalability, Governance, Enterprise Readiness (Official) | en | 未読 | #claude-ecosystem #mcp #roadmap #web-signal | articles/2026-04-18_001_MCP_Official_2026_Roadmap_Transport_Governance.md |
+| 350 | Awesome Claude Code: Curated List of Skills, Hooks, Agents, Plugins (GitHub) | en | 未読 | #claude-code #skills #hooks #mcp #web-signal | articles/2026-04-18_002_Awesome_Claude_Code_Curated_List_GitHub_hesreallyhim.md |
+| 351 | Claude Opus 4.7: Benchmarks, Features, and Migration Guide (The AI Corner) | en | 未読 | #ai-news #claude-ecosystem #model-release #web-signal | articles/2026-04-18_003_Claude_Opus_47_Benchmarks_Features_Migration_Guide.md |
+| 352 | AINews: Claude Opus 4.7 — Literally One Step Better Than 4.6 in Every Dimension (Latent Space) | en | 未読 | #ai-news #model-release #benchmark #web-signal | articles/2026-04-18_004_Claude_Opus_47_AINews_Latent_Space_One_Step_Better.md |
+| 353 | Cloudflare Agents Week 2026: Every Release Explained (Lushbinary) | en | 未読 | #ai-news #cloudflare #agent #mcp #web-signal | articles/2026-04-18_005_Cloudflare_Agents_Week_2026_All_Releases_Explained.md |
+| 354 | The Next Evolution of the OpenAI Agents SDK: Sandbox Execution and Security (OpenAI) | en | 未読 | #ai-news #openai #agent-sdk #web-signal | articles/2026-04-18_006_OpenAI_Agents_SDK_Next_Evolution_Security_Sandbox.md |
+| 355 | My Claude Code Setup After 4 Months of Daily Use: MCP, Hooks, Skills (Okhlopkov) | en | 未読 | #claude-code #mcp #hooks #skills #web-signal | articles/2026-04-18_007_Claude_Code_Setup_4months_MCP_Hooks_Skills_Okhlopkov.md |
+| 356 | Claude Code Advanced Best Practices: 11 Practical Techniques for Hooks, Subagents & Context | en | 未読 | #claude-code #hooks #subagents #best-practices #web-signal | articles/2026-04-18_008_Claude_Code_Advanced_Best_Practices_11_Techniques_SmartScope.md |
+| 357 | Stop Stuffing Your Custom Instructions: The Definitive Guide to Claude Skills & MCP (Medium) | en | 未読 | #claude-code #skills #mcp #web-signal | articles/2026-04-18_009_Stop_Stuffing_Custom_Instructions_Skills_MCP_Guide_Medium.md |
+| 358 | The Complete Guide to Building Skills for Claude (Official Anthropic PDF) | en | 未読 | #claude-code #skills #official #web-signal | articles/2026-04-18_010_Anthropic_Official_Complete_Guide_Building_Skills_PDF.md |
+| 359 | Claude Agent SDK Guide 2026: Library Mode, Managed Agents, Production Patterns | en | 未読 | #claude-ecosystem #agent-sdk #web-signal | articles/2026-04-18_011_Claude_Agent_SDK_Guide_2026_Popularaitools.md |
+| 360 | Anthropic Claude Managed Agents Public Beta: Run a Fully Managed AI Agent in 5 Minutes (Apiyi) | en | 未読 | #claude-ecosystem #managed-agents #api #web-signal | articles/2026-04-18_012_Claude_Managed_Agents_Public_Beta_REST_API_Guide_Apiyi.md |
+| 361 | Anthropic APIに追加された4つの新機能でAIエージェント開発が大きく進化 (Zenn/Shirochan) | ja | 未読 | #claude-ecosystem #api #mcp #web-signal | articles/2026-04-18_013_Anthropic_API_4_New_Features_Agent_Development_Zenn.md |
+| 362 | New LLM Releases April 2026: Every Major Model Launch This Month (Fazm) | en | 未読 | #ai-news #model-release #web-signal | articles/2026-04-18_014_New_LLM_Releases_April_2026_Complete_Timeline_Fazm.md |
+| 363 | AI Weekly: Agents, Models, and Chips — April 9–15, 2026 (DEV Community) | en | 未読 | #ai-news #weekly #model-release #web-signal | articles/2026-04-18_015_AI_Weekly_April_9_15_2026_Agents_Models_Chips_DEV.md |
+| 364 | AI Companion Apps Are Getting Regulated in April 2026: What Changed (RoboRhythms) | en | 未読 | #ai-news #regulation #web-signal | articles/2026-04-18_016_AI_Companion_Chatbot_Regulation_Wave_April_2026.md |
+| 365 | 5 Reasons AI-Powered EAs Outperform Traditional Automated Systems in 2026 (MQL5) | en | 未読 | #ai-trading #fx #ea #llm-trading #web-signal | articles/2026-04-18_017_AI_Powered_EAs_5_Reasons_Outperform_Traditional_MQL5.md |
+| 366 | ChatGPT（生成AI）の売買判断を連携してFX取引を自動化するEAの開発 (Note/Sayama) | ja | 未読 | #ai-trading #fx #chatgpt #implementation #web-signal | articles/2026-04-18_018_ChatGPT_FX_Auto_Trading_EA_Development_Note_Sayama.md |
+| 367 | Claude Code Skills 完全活用ガイド 2026 — 個人最適化からチーム展開まで (Qiita/Nogataka) | ja | 未読 | #claude-code #skills #team #web-signal | articles/2026-04-18_019_Claude_Code_Skills_Kanzen_Guide_2026_Qiita_Nogataka.md |
+| 368 | MIT Tech Review: どうなる2026年のAI、本誌が予測する5大トレンド | ja | 未読 | #ai-news #trend #regulation #web-signal | articles/2026-04-18_020_MIT_TechReview_Japan_2026_AI_5_Trends.md |
+| 369 | NVIDIA & Idaho National Laboratory Launch AI Project to Cut Nuclear Reactor Build Time in Half (@quakes99) | en | 未読 | #ai-news #nvidia #infrastructure #x-signal | articles/2026-04-18_021_X_quakes99_NVIDIA_Idaho_National_Lab_Nuclear_AI_Project.md |
+| 370 | Perplexity Personal Computer for Mac — 一人称AIコンピューティングの新形態 (@_LaPier) | en | 未読 | #ai-news #perplexity #desktop #x-signal | articles/2026-04-18_022_X_LaPier_Perplexity_Personal_Computer_Mac_Launch.md |
+| 371 | Resolve AI Labs — $40M Series A拡張、バリュエーション$1.5B（DST Global / Salesforce Ventures）(@maynkag) | en | 未読 | #ai-news #funding #agent #x-signal | articles/2026-04-18_023_X_maynkag_Resolve_AI_Labs_40M_Series_A_1_5B_Valuation.md |
+| 372 | Bloomberg報道: Anthropic、最強モデルClaude Opus 4.7を発表 — Mythosの1週間後 (@business) | en | 未読 | #ai-news #model-release #anthropic #x-signal | articles/2026-04-18_024_X_business_Bloomberg_Anthropic_Claude_Opus_47_Report.md |
+| 373 | NVIDIA「Lyra 2.0」— 一貫性のある広大な3D空間を生成するフレームワーク (@Botan_cr) | ja | 未読 | #ai-news #nvidia #3d #x-signal | articles/2026-04-18_025_X_Botan_cr_NVIDIA_Lyra_2_0_3D_Space_Generation.md |
 ## 発見パターン（記事横断の傾向）
 
 蔵書を横断して繰り返し出現するテーマ。出現回数が多いほど普遍的な知見。
@@ -456,4 +481,4 @@
 - 未読: 1
 - 構想: 1
 - 書籍: 4
-- 日次収集（2026-03-27〜）: 348件（2026-04-17更新）
+- 日次収集（2026-03-27〜）: 373件（2026-04-18更新）
