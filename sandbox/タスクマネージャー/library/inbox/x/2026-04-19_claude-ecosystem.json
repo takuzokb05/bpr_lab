@@ -1,0 +1,5013 @@
+{
+  "domain": "claude-ecosystem",
+  "collected_at": "2026-04-19T21:05:48.930543+00:00",
+  "days": 1,
+  "total_fetched": 49,
+  "total_filtered": 49,
+  "tweets": [
+    {
+      "tweet_created_at": "2026-04-19T21:06:07.000000Z",
+      "id": 2045972232153743822,
+      "id_str": "2045972232153743822",
+      "type": "tweet",
+      "conversation_id_str": "2045972232153743822",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "My theory about Mythos is now slightly different to what Anthropic wants us to think about it. They hold it back just because it makes too many errors. 100% sure.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 147563237,
+        "id_str": "147563237",
+        "name": "hagen - chief of data at nestfainder.ai",
+        "screen_name": "hagen_hu",
+        "location": "Berlin",
+        "url": "",
+        "description": "building tech, CTO, analyzing cities and neighbourhoods at https://t.co/jP08p1TZ1B",
+        "protected": false,
+        "verified": true,
+        "followers_count": 1230,
+        "friends_count": 2176,
+        "listed_count": 0,
+        "favourites_count": 13853,
+        "statuses_count": 12237,
+        "created_at": "2010-05-24T13:21:37.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/147563237/1610321206",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2043788887353438209/RS0J1RU5_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 1,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          162
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T21:05:46.000000Z",
+      "id": 2045972147441717632,
+      "id_str": "2045972147441717632",
+      "type": "quote",
+      "conversation_id_str": "2045972147441717632",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "You dont need a pat on the back .......\n\n@DarioAmodei @DanielaAmodei \n\nFor #Claude ........... you need a kick in the ass.\n\nYou are going in the OPPOSITE Direction.\n#Anthropic #Claude CRASHES \nAnd no longer compacts \nsessions.\n\nJust HARD CRASHES !!!\n\n@janleike\n@ch402\n@ForbesTech https://t.co/DsGuLoMpR5",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1977651813114662912,
+        "id_str": "1977651813114662912",
+        "name": "ChatGPT AI Error 🤖🥴",
+        "screen_name": "ChatGPTError",
+        "location": "Marina, CA",
+        "url": "",
+        "description": "Under-Cooked half-baked half-cocked half-assed prototype underperforming BETA AI is being over-sold as the end all be all pie in the sky - to fools",
+        "protected": false,
+        "verified": false,
+        "followers_count": 13,
+        "friends_count": 96,
+        "listed_count": 0,
+        "favourites_count": 24,
+        "statuses_count": 461,
+        "created_at": "2025-10-13T08:25:25.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1977651813114662912/1763072624",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1977652298387169280/5ngZZ1k0_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": 2045248224659644654,
+      "quoted_status_id_str": "2045248224659644654",
+      "is_quote_status": true,
+      "quoted_status": {
+        "tweet_created_at": "2026-04-17T21:09:10.000000Z",
+        "id": 2045248224659644654,
+        "id_str": "2045248224659644654",
+        "type": "tweet",
+        "conversation_id_str": "2045248224659644654",
+        "community_id_str": null,
+        "community_name": null,
+        "text": null,
+        "full_text": "The Claude Code hackathon is back for Opus 4.7.\n\nJoin builders from around the world for a week with the Claude Code team in the room, with a prize pool of $100K in API credits.\n\nApply by Sunday: https://t.co/5MCkMtP5ti https://t.co/xmVhEQGtaL",
+        "source": "",
+        "truncated": false,
+        "in_reply_to_status_id": null,
+        "in_reply_to_status_id_str": null,
+        "in_reply_to_user_id": null,
+        "in_reply_to_user_id_str": null,
+        "in_reply_to_screen_name": null,
+        "user": {
+          "id": 1943306828697550848,
+          "id_str": "1943306828697550848",
+          "name": "Claude",
+          "screen_name": "claudeai",
+          "location": "",
+          "url": "http://claude.ai",
+          "description": "Claude is an AI assistant built by @anthropicai to be safe, accurate, and secure. Talk to Claude on http://claude.ai or download the app.",
+          "protected": false,
+          "verified": true,
+          "followers_count": 1183580,
+          "friends_count": 2,
+          "listed_count": 0,
+          "favourites_count": 336,
+          "statuses_count": 405,
+          "created_at": "2025-07-10T13:50:48.000000Z",
+          "profile_banner_url": "https://pbs.twimg.com/profile_banners/1943306828697550848/1774295083",
+          "profile_image_url_https": "https://pbs.twimg.com/profile_images/1950950107937185792/QOfEjFoJ_normal.jpg",
+          "can_dm": false,
+          "affiliation_label": {
+            "label_url": "https://twitter.com/AnthropicAI",
+            "badge_url": "https://pbs.twimg.com/profile_images/1798110641414443008/XP8gyBaY_bigger.jpg",
+            "description": "Anthropic",
+            "label_type": "BusinessLabel",
+            "display_type": "Badge"
+          }
+        },
+        "quoted_status_id": null,
+        "quoted_status_id_str": null,
+        "is_quote_status": false,
+        "quoted_status": null,
+        "retweeted_status": null,
+        "quote_count": 233,
+        "reply_count": 468,
+        "retweet_count": 861,
+        "favorite_count": 9950,
+        "views_count": 1269171,
+        "bookmark_count": 5513,
+        "lang": "en",
+        "entities": {
+          "hashtags": [],
+          "symbols": [],
+          "timestamps": [],
+          "urls": [
+            {
+              "display_url": "cerebralvalley.ai/e/built-with-4…",
+              "expanded_url": "https://cerebralvalley.ai/e/built-with-4-7-hackathon",
+              "indices": [
+                196,
+                219
+              ],
+              "url": "https://t.co/5MCkMtP5ti"
+            }
+          ],
+          "user_mentions": [],
+          "media": [
+            {
+              "additional_media_info": {
+                "monetizable": true
+              },
+              "allow_download_status": {
+                "allow_download": true
+              },
+              "display_url": "pic.x.com/xmVhEQGtaL",
+              "expanded_url": "https://x.com/claudeai/status/2045248224659644654/video/1",
+              "ext_media_availability": {
+                "status": "Available"
+              },
+              "id_str": "2045248139087454208",
+              "indices": [
+                220,
+                243
+              ],
+              "media_key": "13_2045248139087454208",
+              "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2045248139087454208/img/8vHRwy4hhj-j5-pQ.jpg",
+              "original_info": {
+                "focus_rects": [],
+                "height": 2700,
+                "width": 2160
+              },
+              "sizes": {
+                "large": {
+                  "h": 2048,
+                  "w": 1638
+                }
+              },
+              "type": "video",
+              "url": "https://t.co/xmVhEQGtaL",
+              "video_info": {
+                "aspect_ratio": [
+                  4,
+                  5
+                ],
+                "duration_millis": 7750,
+                "variants": [
+                  {
+                    "content_type": "application/x-mpegURL",
+                    "url": "https://video.twimg.com/amplify_video/2045248139087454208/pl/f7UshV5NNHBmLVpm.m3u8"
+                  },
+                  {
+                    "bitrate": 632000,
+                    "content_type": "video/mp4",
+                    "url": "https://video.twimg.com/amplify_video/2045248139087454208/vid/avc1/320x400/qPaqSkXs1X9Kx7ta.mp4"
+                  },
+                  {
+                    "bitrate": 950000,
+                    "content_type": "video/mp4",
+                    "url": "https://video.twimg.com/amplify_video/2045248139087454208/vid/avc1/480x600/osegBB8OsvO-fL1D.mp4"
+                  },
+                  {
+                    "bitrate": 2176000,
+                    "content_type": "video/mp4",
+                    "url": "https://video.twimg.com/amplify_video/2045248139087454208/vid/avc1/720x900/EPAT__nEDu6dnz7R.mp4"
+                  },
+                  {
+                    "bitrate": 10368000,
+                    "content_type": "video/mp4",
+                    "url": "https://video.twimg.com/amplify_video/2045248139087454208/vid/avc1/1080x1350/PzZHuYkA_hryRlxt.mp4"
+                  },
+                  {
+                    "bitrate": 25128000,
+                    "content_type": "video/mp4",
+                    "url": "https://video.twimg.com/amplify_video/2045248139087454208/vid/avc1/2160x2700/k3pM_09knFS6krhU.mp4"
+                  }
+                ]
+              }
+            }
+          ],
+          "display_text_range": [
+            0,
+            219
+          ]
+        },
+        "is_pinned": false
+      },
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 1,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [
+          {
+            "indices": [
+              75,
+              82
+            ],
+            "text": "Claude"
+          },
+          {
+            "indices": [
+              165,
+              175
+            ],
+            "text": "Anthropic"
+          },
+          {
+            "indices": [
+              176,
+              183
+            ],
+            "text": "Claude"
+          }
+        ],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [
+          {
+            "id_str": "874126509245476864",
+            "indices": [
+              41,
+              53
+            ],
+            "name": "Dario Amodei",
+            "screen_name": "DarioAmodei"
+          },
+          {
+            "id_str": "373531234",
+            "indices": [
+              54,
+              68
+            ],
+            "name": "Daniela Amodei",
+            "screen_name": "DanielaAmodei"
+          },
+          {
+            "id_str": "710610891058716673",
+            "indices": [
+              251,
+              260
+            ],
+            "name": "Jan Leike",
+            "screen_name": "janleike"
+          },
+          {
+            "id_str": "153196789",
+            "indices": [
+              261,
+              267
+            ],
+            "name": "Chris Olah",
+            "screen_name": "ch402"
+          },
+          {
+            "id_str": "14885549",
+            "indices": [
+              268,
+              279
+            ],
+            "name": "Forbes Tech",
+            "screen_name": "ForbesTech"
+          }
+        ],
+        "media": [
+          {
+            "allow_download_status": {
+              "allow_download": true
+            },
+            "display_url": "pic.x.com/DsGuLoMpR5",
+            "expanded_url": "https://x.com/ChatGPTError/status/2045972147441717632/photo/1",
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "features": {
+              "all": {
+                "tags": [
+                  {
+                    "name": "Dario Amodei",
+                    "screen_name": "DarioAmodei",
+                    "user_id": "874126509245476864"
+                  },
+                  {
+                    "name": "Claude",
+                    "screen_name": "claudeai",
+                    "user_id": "1943306828697550848"
+                  },
+                  {
+                    "name": "60 Minutes",
+                    "screen_name": "60Minutes",
+                    "user_id": "18812572"
+                  }
+                ]
+              },
+              "large": {
+                "faces": []
+              }
+            },
+            "id_str": "2045971935465783296",
+            "indices": [
+              280,
+              303
+            ],
+            "media_key": "3_2045971935465783296",
+            "media_url_https": "https://pbs.twimg.com/media/HGTAoqHbQAAo31f.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 440,
+                  "w": 786,
+                  "x": 0,
+                  "y": 529
+                },
+                {
+                  "h": 786,
+                  "w": 786,
+                  "x": 0,
+                  "y": 356
+                },
+                {
+                  "h": 896,
+                  "w": 786,
+                  "x": 0,
+                  "y": 301
+                },
+                {
+                  "h": 1572,
+                  "w": 786,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 1578,
+                  "w": 786,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 1578,
+              "width": 786
+            },
+            "sizes": {
+              "large": {
+                "h": 1578,
+                "w": 786
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/DsGuLoMpR5"
+          }
+        ],
+        "display_text_range": [
+          0,
+          279
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T21:05:41.000000Z",
+      "id": 2045972124213379355,
+      "id_str": "2045972124213379355",
+      "type": "quote",
+      "conversation_id_str": "2045972124213379355",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Another PRE-IPO listed on @EyedTrade \n\nThese guys are really killing it\n\nFirst Anthropic now SpaceX all on chain",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1571236793051238400,
+        "id_str": "1571236793051238400",
+        "name": "Xelf",
+        "screen_name": "ImmortalXelf",
+        "location": "",
+        "url": "http://xelf.gg",
+        "description": "Professional Gambler. Chief degenerate officer @spumpio. Spoiling my lovers with @kastxyz everyday",
+        "protected": false,
+        "verified": true,
+        "followers_count": 24502,
+        "friends_count": 3565,
+        "listed_count": 0,
+        "favourites_count": 36660,
+        "statuses_count": 19465,
+        "created_at": "2022-09-17T20:37:05.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1571236793051238400/1760047825",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2042748033834594304/o39tG18a_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": {
+          "label_url": "https://twitter.com/Spumpio",
+          "badge_url": "https://pbs.twimg.com/profile_images/2013757733799944192/jP_9jRzn_bigger.jpg",
+          "description": "Spump.io",
+          "label_type": "BusinessLabel",
+          "display_type": "Badge"
+        }
+      },
+      "quoted_status_id": 2045968325537083800,
+      "quoted_status_id_str": "2045968325537083800",
+      "is_quote_status": true,
+      "quoted_status": {
+        "tweet_created_at": "2026-04-19T20:50:35.000000Z",
+        "id": 2045968325537083800,
+        "id_str": "2045968325537083800",
+        "type": "tweet",
+        "conversation_id_str": "2045968325537083800",
+        "community_id_str": null,
+        "community_name": null,
+        "text": null,
+        "full_text": "NEW LISTING | @SpaceX   \n→ SpaceX/USDC is now live on https://t.co/lNcmwSlobh \n\nThe most valuable private company in the world Just landed on the EYED Terminal. \n\nPre-IPO. On-chain.  One terminal. Crypto. Commodities. Stocks. Pre-IPO.\n\nTrade now SpaceX like never before ↓\nhttps://t.co/lNcmwSlobh",
+        "source": "",
+        "truncated": false,
+        "in_reply_to_status_id": null,
+        "in_reply_to_status_id_str": null,
+        "in_reply_to_user_id": null,
+        "in_reply_to_user_id_str": null,
+        "in_reply_to_screen_name": null,
+        "user": {
+          "id": 2027844976365998081,
+          "id_str": "2027844976365998081",
+          "name": "Eyed Exchange",
+          "screen_name": "EyedTrade",
+          "location": "DeFI",
+          "url": "https://eyed.cc",
+          "description": "Trade 70+ spot & perp pairs. The new gold standard for token listings where every project gets the recognition it deserves",
+          "protected": false,
+          "verified": true,
+          "followers_count": 574,
+          "friends_count": 30,
+          "listed_count": 0,
+          "favourites_count": 877,
+          "statuses_count": 294,
+          "created_at": "2026-02-28T20:35:03.000000Z",
+          "profile_banner_url": "https://pbs.twimg.com/profile_banners/2027844976365998081/1773067753",
+          "profile_image_url_https": "https://pbs.twimg.com/profile_images/2031019475512737792/uyrFQLki_normal.jpg",
+          "can_dm": true,
+          "affiliation_label": null
+        },
+        "quoted_status_id": null,
+        "quoted_status_id_str": null,
+        "is_quote_status": false,
+        "quoted_status": null,
+        "retweeted_status": null,
+        "quote_count": 1,
+        "reply_count": 7,
+        "retweet_count": 10,
+        "favorite_count": 17,
+        "views_count": 106,
+        "bookmark_count": 3,
+        "lang": "en",
+        "entities": {
+          "hashtags": [],
+          "symbols": [],
+          "timestamps": [],
+          "urls": [
+            {
+              "display_url": "eyed.cc/pre-ipo",
+              "expanded_url": "http://eyed.cc/pre-ipo",
+              "indices": [
+                54,
+                77
+              ],
+              "url": "https://t.co/kDUOkH1hOH"
+            },
+            {
+              "display_url": "eyed.cc/pre-ipo",
+              "expanded_url": "http://eyed.cc/pre-ipo",
+              "indices": [
+                54,
+                77
+              ],
+              "url": "https://t.co/lNcmwSlobh"
+            },
+            {
+              "display_url": "eyed.cc/pre-ipo",
+              "expanded_url": "http://eyed.cc/pre-ipo",
+              "indices": [
+                273,
+                296
+              ],
+              "url": "https://t.co/lNcmwSlobh"
+            }
+          ],
+          "user_mentions": [
+            {
+              "id_str": "34743251",
+              "indices": [
+                14,
+                21
+              ],
+              "name": "SpaceX",
+              "screen_name": "SpaceX"
+            },
+            {
+              "id_str": "34743251",
+              "indices": [
+                14,
+                21
+              ],
+              "name": "SpaceX",
+              "screen_name": "SpaceX"
+            }
+          ],
+          "media": [
+            {
+              "allow_download_status": {
+                "allow_download": true
+              },
+              "display_url": "pic.x.com/RBPITjZXur",
+              "expanded_url": "https://x.com/EyedTrade/status/2045968325537083800/photo/1",
+              "ext_media_availability": {
+                "status": "Available"
+              },
+              "features": {
+                "large": {
+                  "faces": []
+                }
+              },
+              "id_str": "2045968319530815488",
+              "indices": [
+                273,
+                296
+              ],
+              "media_key": "3_2045968319530815488",
+              "media_url_https": "https://pbs.twimg.com/media/HGS9WLtWUAA7ayk.jpg",
+              "original_info": {
+                "focus_rects": [
+                  {
+                    "h": 672,
+                    "w": 1200,
+                    "x": 0,
+                    "y": 0
+                  },
+                  {
+                    "h": 675,
+                    "w": 675,
+                    "x": 0,
+                    "y": 0
+                  },
+                  {
+                    "h": 675,
+                    "w": 592,
+                    "x": 34,
+                    "y": 0
+                  },
+                  {
+                    "h": 675,
+                    "w": 338,
+                    "x": 161,
+                    "y": 0
+                  },
+                  {
+                    "h": 675,
+                    "w": 1200,
+                    "x": 0,
+                    "y": 0
+                  }
+                ],
+                "height": 675,
+                "width": 1200
+              },
+              "sizes": {
+                "large": {
+                  "h": 675,
+                  "w": 1200
+                }
+              },
+              "type": "photo",
+              "url": "https://t.co/RBPITjZXur"
+            }
+          ],
+          "display_text_range": [
+            0,
+            272
+          ]
+        },
+        "is_pinned": false
+      },
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "views_count": 18,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [
+          {
+            "id_str": "2027844976365998081",
+            "indices": [
+              26,
+              36
+            ],
+            "name": "Eyed Exchange",
+            "screen_name": "EyedTrade"
+          }
+        ],
+        "display_text_range": [
+          0,
+          112
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T21:04:32.000000Z",
+      "id": 2045971834907369647,
+      "id_str": "2045971834907369647",
+      "type": "reply",
+      "conversation_id_str": "2045955721439662253",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "I use just enough of CC  suite that I have to keep paying them $70+ a month because there’s no good alternatives.\n\nI wish Anthropic would but after seeing how they are trying to rob users blind with Claude Design I know that ain’t happening.\n\nI ran out of weekly Design usage on a max $100 plan in about 6 hours.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2045955721439662253,
+      "in_reply_to_status_id_str": "2045955721439662253",
+      "in_reply_to_user_id": 120853324,
+      "in_reply_to_user_id_str": "120853324",
+      "in_reply_to_screen_name": "weswinder",
+      "user": {
+        "id": 1611538959263498242,
+        "id_str": "1611538959263498242",
+        "name": "saburo",
+        "screen_name": "jskoiz",
+        "location": "U.S.",
+        "url": "https://github.com/jskoiz",
+        "description": "recent fun stuff: https://t.co/4VEeUnJ2bo / https://t.co/vngTt080dp  / https://t.co/lxnob3ilNZ",
+        "protected": false,
+        "verified": true,
+        "followers_count": 269,
+        "friends_count": 316,
+        "listed_count": 0,
+        "favourites_count": 1369,
+        "statuses_count": 748,
+        "created_at": "2023-01-07T01:43:31.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1611538959263498242/1775201785",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2045003312018477056/Ab03nbSG_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "views_count": 10,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [
+          {
+            "id_str": "120853324",
+            "indices": [
+              0,
+              10
+            ],
+            "name": "Wes Winder",
+            "screen_name": "weswinder"
+          }
+        ],
+        "display_text_range": [
+          11,
+          291
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T21:04:10.000000Z",
+      "id": 2045971743420956765,
+      "id_str": "2045971743420956765",
+      "type": "tweet",
+      "conversation_id_str": "2045971743420956765",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "native-devtools-mcp v0.9.0. On macOS: click, type into, and select inside apps that aren't frontmost. Same mechanism as OpenAI's Codex computer use. 🧵\n\n#codex #claude #openai #anthropic #mcp",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 96236852,
+        "id_str": "96236852",
+        "name": "Ljubiša Isaković",
+        "screen_name": "Sky_lunat1c",
+        "location": "Belgrade, Serbia",
+        "url": "https://github.com/sh3ll3x3c",
+        "description": "exists... or doesn't |⛽️",
+        "protected": false,
+        "verified": true,
+        "followers_count": 303,
+        "friends_count": 624,
+        "listed_count": 0,
+        "favourites_count": 45416,
+        "statuses_count": 825,
+        "created_at": "2009-12-12T00:11:09.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/96236852/1401147531",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2020754886967828480/0GgqRn_V_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 6,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [
+          {
+            "indices": [
+              152,
+              158
+            ],
+            "text": "codex"
+          },
+          {
+            "indices": [
+              159,
+              166
+            ],
+            "text": "claude"
+          },
+          {
+            "indices": [
+              167,
+              174
+            ],
+            "text": "openai"
+          },
+          {
+            "indices": [
+              175,
+              185
+            ],
+            "text": "anthropic"
+          },
+          {
+            "indices": [
+              186,
+              190
+            ],
+            "text": "mcp"
+          }
+        ],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          190
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T21:04:06.000000Z",
+      "id": 2045971726274646410,
+      "id_str": "2045971726274646410",
+      "type": "reply",
+      "conversation_id_str": "2045970802571399460",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "@kimmonismus 4.7 is smarter but it is even harder to get the best out of it than 4.6.\n\nClaude models have always been more capable than gpt models but they require more tricks/push to get their true potential.  \n\nIt seems like anthropic is compute constrained\nAgree?",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2045970802571399460,
+      "in_reply_to_status_id_str": "2045970802571399460",
+      "in_reply_to_user_id": 1573399256836309009,
+      "in_reply_to_user_id_str": "1573399256836309009",
+      "in_reply_to_screen_name": "kimmonismus",
+      "user": {
+        "id": 1705632305727868929,
+        "id_str": "1705632305727868929",
+        "name": "Gus",
+        "screen_name": "next_gus",
+        "location": "Atlanta, GA",
+        "url": "",
+        "description": "CS @ Georgia Tech. Founder @ https://t.co/KcsXLMpjfJ",
+        "protected": false,
+        "verified": true,
+        "followers_count": 17,
+        "friends_count": 220,
+        "listed_count": 0,
+        "favourites_count": 5354,
+        "statuses_count": 40,
+        "created_at": "2023-09-23T17:16:54.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1705632305727868929/1763587811",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1996672895645351936/PzxFyUgO_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 28,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [
+          {
+            "id_str": "1573399256836309009",
+            "indices": [
+              0,
+              12
+            ],
+            "name": "Chubby♨️",
+            "screen_name": "kimmonismus"
+          }
+        ],
+        "display_text_range": [
+          13,
+          266
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T21:03:29.000000Z",
+      "id": 2045971570166841776,
+      "id_str": "2045971570166841776",
+      "type": "tweet",
+      "conversation_id_str": "2045971570166841776",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "If \"Mythos-class\" capabilities leak or are replicated by bad actors, the NHS, already a prime target for ransomware, faces a \"vulnerability storm\" that human security teams simply cannot move fast enough to stop. #Anthropic #Infosec #NHS",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 18952656,
+        "id_str": "18952656",
+        "name": "Lloyd G Price",
+        "screen_name": "lloydgprice",
+        "location": "London, UK",
+        "url": "https://www.linkedin.com/in/lloydgprice/",
+        "description": "HealthTech and MedTech Mergers & Acquisitions. Lloyd G Price is a Partner at Nelson Advisors, leading European M&A Advisors. https://t.co/tIHFyoMH0c",
+        "protected": false,
+        "verified": false,
+        "followers_count": 2199,
+        "friends_count": 2117,
+        "listed_count": 0,
+        "favourites_count": 2730,
+        "statuses_count": 57752,
+        "created_at": "2009-01-13T20:46:55.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/18952656/1727710724",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1970068208129396736/1ajJl2uc_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 8,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [
+          {
+            "indices": [
+              213,
+              223
+            ],
+            "text": "Anthropic"
+          },
+          {
+            "indices": [
+              224,
+              232
+            ],
+            "text": "Infosec"
+          },
+          {
+            "indices": [
+              233,
+              237
+            ],
+            "text": "NHS"
+          }
+        ],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          237
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T21:03:24.000000Z",
+      "id": 2045971548276744514,
+      "id_str": "2045971548276744514",
+      "type": "tweet",
+      "conversation_id_str": "2045971548276744514",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Anthropic is restricting Mythos to a defensive coalition (Project Glasswing), but the cat is out of the bag.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 18952656,
+        "id_str": "18952656",
+        "name": "Lloyd G Price",
+        "screen_name": "lloydgprice",
+        "location": "London, UK",
+        "url": "https://www.linkedin.com/in/lloydgprice/",
+        "description": "HealthTech and MedTech Mergers & Acquisitions. Lloyd G Price is a Partner at Nelson Advisors, leading European M&A Advisors. https://t.co/tIHFyoMH0c",
+        "protected": false,
+        "verified": false,
+        "followers_count": 2199,
+        "friends_count": 2117,
+        "listed_count": 0,
+        "favourites_count": 2730,
+        "statuses_count": 57752,
+        "created_at": "2009-01-13T20:46:55.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/18952656/1727710724",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1970068208129396736/1ajJl2uc_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 1,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          108
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T21:03:10.000000Z",
+      "id": 2045971489724264500,
+      "id_str": "2045971489724264500",
+      "type": "reply",
+      "conversation_id_str": "2045912484377444498",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "@_imdawon Its not good.\n\nEven Meta has failed and I was hopeful we would have American open source.\n\nIts Chatgpt, Anthropic, and Gemini.\n\nNo one else.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2045912484377444498,
+      "in_reply_to_status_id_str": "2045912484377444498",
+      "in_reply_to_user_id": 1585834672478879745,
+      "in_reply_to_user_id_str": "1585834672478879745",
+      "in_reply_to_screen_name": "_imdawon",
+      "user": {
+        "id": 1849996857176629248,
+        "id_str": "1849996857176629248",
+        "name": "Antlion",
+        "screen_name": "antlionai",
+        "location": "Charlotte, NC",
+        "url": "",
+        "description": "Building things I find interesting. \n\nIdea Guy\n\nDiet Coke enjoyer. \n\nWagie in a Cagie.\n\nNot a coder.\n\nAll posts are personal opinion, not financial advice.",
+        "protected": false,
+        "verified": true,
+        "followers_count": 1227,
+        "friends_count": 938,
+        "listed_count": 0,
+        "favourites_count": 42418,
+        "statuses_count": 26659,
+        "created_at": "2024-10-26T02:10:11.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1849996857176629248/1738094392",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1850663291544326145/I3UcEtE7_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 4,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [
+          {
+            "id_str": "1585834672478879745",
+            "indices": [
+              0,
+              9
+            ],
+            "name": "dawon 🇺🇸",
+            "screen_name": "_imdawon"
+          }
+        ],
+        "display_text_range": [
+          10,
+          150
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T21:02:56.000000Z",
+      "id": 2045971430911709591,
+      "id_str": "2045971430911709591",
+      "type": "reply",
+      "conversation_id_str": "2045815124489863224",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "@icanvardar i cold applied to anthropic and doing interviews this week. but i got some big boy cv names, so maybe this counts as networking",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2045815124489863224,
+      "in_reply_to_status_id_str": "2045815124489863224",
+      "in_reply_to_user_id": 524618848,
+      "in_reply_to_user_id_str": "524618848",
+      "in_reply_to_screen_name": "icanvardar",
+      "user": {
+        "id": 1828075007752167424,
+        "id_str": "1828075007752167424",
+        "name": "Frederick James",
+        "screen_name": "_frederickjames",
+        "location": "",
+        "url": "",
+        "description": "Building: https://t.co/tXTxmIq7DF",
+        "protected": false,
+        "verified": true,
+        "followers_count": 570,
+        "friends_count": 210,
+        "listed_count": 0,
+        "favourites_count": 12403,
+        "statuses_count": 3798,
+        "created_at": "2024-08-26T14:20:32.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1828075007752167424/1774690778",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2037147044117438465/yFzxJkLh_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 1,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [
+          {
+            "id_str": "524618848",
+            "indices": [
+              0,
+              11
+            ],
+            "name": "Can Vardar",
+            "screen_name": "icanvardar"
+          }
+        ],
+        "display_text_range": [
+          12,
+          139
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T21:02:29.000000Z",
+      "id": 2045971317841924549,
+      "id_str": "2045971317841924549",
+      "type": "reply",
+      "conversation_id_str": "2045926948359004431",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "@anthonyazrak Hey Anthony — Haldir is MCP governance layer for AI agents. Live product two weeks in, 150 PyPI installs, 5K visitors, listed on Anthropic registry, 98/100 on Smithery. YC submitted, Speedrun next. Would love a referral.\nhttps://t.co/kjSXt9eyD4 https://t.co/vGsN90pC2E",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2045926948359004431,
+      "in_reply_to_status_id_str": "2045926948359004431",
+      "in_reply_to_user_id": 1775296982510120960,
+      "in_reply_to_user_id_str": "1775296982510120960",
+      "in_reply_to_screen_name": "anthonyazrak",
+      "user": {
+        "id": 2031475982494797824,
+        "id_str": "2031475982494797824",
+        "name": "Sterling | Haldir",
+        "screen_name": "haldirai",
+        "location": "Greenville, SC",
+        "url": "http://haldir.xyz",
+        "description": "Building Haldir — governance layer for AI agents. Identity, secrets, audit on every tool call. MCP-native. pip install haldir\n\nhttps://t.co/Q7ndb6zGKl",
+        "protected": false,
+        "verified": true,
+        "followers_count": 106,
+        "friends_count": 556,
+        "listed_count": 0,
+        "favourites_count": 1036,
+        "statuses_count": 1788,
+        "created_at": "2026-03-10T21:09:55.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/2031475982494797824/1775509275",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2032590877999128576/__WWvZtY_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 9,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "haldir.xyz",
+            "expanded_url": "http://haldir.xyz",
+            "indices": [
+              235,
+              258
+            ],
+            "url": "https://t.co/kjSXt9eyD4"
+          }
+        ],
+        "user_mentions": [
+          {
+            "id_str": "1775296982510120960",
+            "indices": [
+              0,
+              13
+            ],
+            "name": "Anthony",
+            "screen_name": "anthonyazrak"
+          }
+        ],
+        "media": [
+          {
+            "display_url": "pic.x.com/vGsN90pC2E",
+            "expanded_url": "https://x.com/haldirai/status/2045971317841924549/photo/1",
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "features": {
+              "large": {
+                "faces": []
+              }
+            },
+            "id_str": "2045971311919263744",
+            "indices": [
+              259,
+              282
+            ],
+            "media_key": "3_2045971311919263744",
+            "media_url_https": "https://pbs.twimg.com/media/HGTAEXOWcAAfkgT.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 605,
+                  "w": 1080,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 1080,
+                  "w": 1080,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 1231,
+                  "w": 1080,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 2160,
+                  "w": 1080,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 2410,
+                  "w": 1080,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 2410,
+              "width": 1080
+            },
+            "sizes": {
+              "large": {
+                "h": 2048,
+                "w": 918
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/vGsN90pC2E"
+          }
+        ],
+        "display_text_range": [
+          14,
+          258
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T21:01:58.000000Z",
+      "id": 2045971188975817098,
+      "id_str": "2045971188975817098",
+      "type": "tweet",
+      "conversation_id_str": "2045971188975817098",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "🚨 Anthropic just dropped a bombshell: They built an AI (Claude Mythos Preview) so powerful at finding and chaining software vulnerabilities that they’re NOT releasing it publicly. \n\nInstead, they launched Project Glasswing with Amazon, Microsoft, Google & more to use it defensively.\n\nThis isn’t sci-fi. This is 2026 agentic AI in action. And it’s your signal to build YOUR sovereign digital workforce before the gatekeepers lock it all down. Thread 🧵 \n\n#AgenticAI #AISovereignty #FinancialFreedom",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1892477247770292224,
+        "id_str": "1892477247770292224",
+        "name": "AIUnveiled",
+        "screen_name": "_AIUnveiled_",
+        "location": "California",
+        "url": "https://aiunveiled.io",
+        "description": "Unbiased AI tool reviews & trials 🚀\nBlackbox AI · ElevenLabs · LearnWorlds · CapCut · Scalenut · Intellectia AI · GHL · more free guides + workflows ↓",
+        "protected": false,
+        "verified": true,
+        "followers_count": 7,
+        "friends_count": 66,
+        "listed_count": 0,
+        "favourites_count": 635,
+        "statuses_count": 453,
+        "created_at": "2025-02-20T07:32:05.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1892477247770292224/1762108933",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1985042760165191680/3CYzzNEB_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 3,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [
+          {
+            "indices": [
+              454,
+              464
+            ],
+            "text": "AgenticAI"
+          },
+          {
+            "indices": [
+              465,
+              479
+            ],
+            "text": "AISovereignty"
+          },
+          {
+            "indices": [
+              480,
+              497
+            ],
+            "text": "FinancialFreedom"
+          }
+        ],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "media": [
+          {
+            "display_url": "pic.x.com/nm9xCVgct1",
+            "expanded_url": "https://x.com/_AIUnveiled_/status/2045971188975817098/photo/1",
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "features": {
+              "large": {
+                "faces": [
+                  {
+                    "h": 90,
+                    "w": 90,
+                    "x": 1267,
+                    "y": 79
+                  },
+                  {
+                    "h": 83,
+                    "w": 83,
+                    "x": 1276,
+                    "y": 244
+                  }
+                ]
+              }
+            },
+            "id_str": "2045971186199175169",
+            "indices": [
+              275,
+              298
+            ],
+            "media_key": "3_2045971186199175169",
+            "media_url_https": "https://pbs.twimg.com/media/HGS_9C4WIAEfBdM.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 768,
+                  "w": 1371,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 768,
+                  "w": 768,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 768,
+                  "w": 674,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 768,
+                  "w": 384,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 768,
+                  "w": 1376,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 768,
+              "width": 1376
+            },
+            "sizes": {
+              "large": {
+                "h": 768,
+                "w": 1376
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/nm9xCVgct1"
+          }
+        ],
+        "display_text_range": [
+          0,
+          274
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T21:01:54.000000Z",
+      "id": 2045971171586478395,
+      "id_str": "2045971171586478395",
+      "type": "reply",
+      "conversation_id_str": "2045927416879800820",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "@rohit4verse skills aren't magic — they're discipline encoded in text. the gap isn't that anthropic writes better prompts than you. it's that they run them consistently on every task. most teams write one skill, use it twice, forget it exists.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2045927416879800820,
+      "in_reply_to_status_id_str": "2045927416879800820",
+      "in_reply_to_user_id": 1605975892677001218,
+      "in_reply_to_user_id_str": "1605975892677001218",
+      "in_reply_to_screen_name": "rohit4verse",
+      "user": {
+        "id": 1164563542642573312,
+        "id_str": "1164563542642573312",
+        "name": "keysersoze",
+        "screen_name": "Surajdotdot7",
+        "location": "Chennai",
+        "url": "http://8mstudio.com",
+        "description": "building things with AI\nClaude Code | agents | automation\nsharing what I learn — for people who want to build, not just watch",
+        "protected": false,
+        "verified": true,
+        "followers_count": 120,
+        "friends_count": 813,
+        "listed_count": 0,
+        "favourites_count": 3209,
+        "statuses_count": 863,
+        "created_at": "2019-08-22T15:42:55.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1164563542642573312/1710212502",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1760741662358425602/Sekkkuo2_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 2,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [
+          {
+            "id_str": "1605975892677001218",
+            "indices": [
+              0,
+              12
+            ],
+            "name": "Rohit",
+            "screen_name": "rohit4verse"
+          }
+        ],
+        "display_text_range": [
+          13,
+          243
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T21:01:48.000000Z",
+      "id": 2045971147456700789,
+      "id_str": "2045971147456700789",
+      "type": "reply",
+      "conversation_id_str": "2045947286518157395",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "@TheChiefNerd Please we need a live debate between the $NVDA CEO and that Anthropic pos to discuss job impacts by AI.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2045947286518157395,
+      "in_reply_to_status_id_str": "2045947286518157395",
+      "in_reply_to_user_id": 69156861,
+      "in_reply_to_user_id_str": "69156861",
+      "in_reply_to_screen_name": "TheChiefNerd",
+      "user": {
+        "id": 857349013,
+        "id_str": "857349013",
+        "name": "Bryan Kowal",
+        "screen_name": "KowalBryan",
+        "location": "Nebraska, USA",
+        "url": "",
+        "description": "Web Developer - FinTech Student - Diablo II Resurrected (Waiting Room); StarCraft II/Gwent (Awakening) - https://t.co/v0lLq4eFUk",
+        "protected": false,
+        "verified": false,
+        "followers_count": 652,
+        "friends_count": 399,
+        "listed_count": 0,
+        "favourites_count": 199396,
+        "statuses_count": 10854,
+        "created_at": "2012-10-02T02:04:03.000000Z",
+        "profile_banner_url": "",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/3250517070/c8f67dd1368a7bff81c3977737379b07_normal.jpeg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 7,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [
+          {
+            "indices": [
+              55,
+              60
+            ],
+            "text": "NVDA"
+          }
+        ],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [
+          {
+            "id_str": "69156861",
+            "indices": [
+              0,
+              13
+            ],
+            "name": "Chief Nerd",
+            "screen_name": "TheChiefNerd"
+          }
+        ],
+        "display_text_range": [
+          14,
+          117
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T21:01:31.000000Z",
+      "id": 2045971075155341347,
+      "id_str": "2045971075155341347",
+      "type": "tweet",
+      "conversation_id_str": "2045971075155341347",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Claude Desktop – New and Improved Tools. Integration? Coming ……..\n\nAnthropic gave us Claude Desktop with three powerful capabilities: Chat for conversations, Code for development, Cowork for file management. Three tools, one app, built right into the desktop experience.I opened it expecting what anyone would expect: tools that work together.\n\nhttps://t.co/9daEB6GPqG\n\n#AI #ArtificialIntelligence #LNNA #AIHumor #AIMeme",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 2296786766,
+        "id_str": "2296786766",
+        "name": "Terry Irish",
+        "screen_name": "TerryIrish",
+        "location": "Cleveland, OH",
+        "url": "http://makeitabetterday.com",
+        "description": "Making days better (site below) and showing the humor and lack of logic in AI (https://t.co/GZhSt7Y8nv). Views mine even if they make sense. Retired? Maybe.",
+        "protected": false,
+        "verified": true,
+        "followers_count": 816,
+        "friends_count": 2147,
+        "listed_count": 0,
+        "favourites_count": 1966,
+        "statuses_count": 5968,
+        "created_at": "2014-01-17T21:19:01.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/2296786766/1564608184",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1111295794076884992/C3b81W6e_normal.png",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 6,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [
+          {
+            "indices": [
+              370,
+              373
+            ],
+            "text": "AI"
+          },
+          {
+            "indices": [
+              374,
+              397
+            ],
+            "text": "ArtificialIntelligence"
+          },
+          {
+            "indices": [
+              398,
+              403
+            ],
+            "text": "LNNA"
+          },
+          {
+            "indices": [
+              404,
+              412
+            ],
+            "text": "AIHumor"
+          },
+          {
+            "indices": [
+              413,
+              420
+            ],
+            "text": "AIMeme"
+          }
+        ],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "rfr.bz/t65151c",
+            "expanded_url": "https://www.rfr.bz/t65151c",
+            "indices": [
+              345,
+              368
+            ],
+            "url": "https://t.co/9daEB6GPqG"
+          }
+        ],
+        "user_mentions": [],
+        "media": [
+          {
+            "display_url": "pic.x.com/EWaA3G51XI",
+            "expanded_url": "https://x.com/TerryIrish/status/2045971075155341347/photo/1",
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "features": {
+              "large": {
+                "faces": []
+              }
+            },
+            "id_str": "2045904496245825536",
+            "indices": [
+              279,
+              302
+            ],
+            "media_key": "3_2045904496245825536",
+            "media_url_https": "https://pbs.twimg.com/media/HGSDTLcbYAAkOgV.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 605,
+                  "w": 1080,
+                  "x": 0,
+                  "y": 339
+                },
+                {
+                  "h": 1080,
+                  "w": 1080,
+                  "x": 0,
+                  "y": 101
+                },
+                {
+                  "h": 1231,
+                  "w": 1080,
+                  "x": 0,
+                  "y": 26
+                },
+                {
+                  "h": 1350,
+                  "w": 675,
+                  "x": 203,
+                  "y": 0
+                },
+                {
+                  "h": 1350,
+                  "w": 1080,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 1350,
+              "width": 1080
+            },
+            "sizes": {
+              "large": {
+                "h": 1350,
+                "w": 1080
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/EWaA3G51XI"
+          }
+        ],
+        "display_text_range": [
+          0,
+          278
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T21:01:29.000000Z",
+      "id": 2045971068666466623,
+      "id_str": "2045971068666466623",
+      "type": "reply",
+      "conversation_id_str": "2045950776137183574",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "@Web3Marmot Mate, that's a meme token on Jupiter, not actual Anthropic equity. Crying mania over a joke coin is a bit rich.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2045950776137183574,
+      "in_reply_to_status_id_str": "2045950776137183574",
+      "in_reply_to_user_id": 1445094870167834625,
+      "in_reply_to_user_id_str": "1445094870167834625",
+      "in_reply_to_screen_name": "Web3Marmot",
+      "user": {
+        "id": 1864808064089571328,
+        "id_str": "1864808064089571328",
+        "name": "Andreas Kaltsis",
+        "screen_name": "KaltsisGarden",
+        "location": "Manchester",
+        "url": "",
+        "description": "🇬🇷 🇬🇧 Tech, recipes, & gardening geek 🐶📸 | Views are mine, sauces sometimes too.",
+        "protected": false,
+        "verified": false,
+        "followers_count": 208,
+        "friends_count": 193,
+        "listed_count": 0,
+        "favourites_count": 7705,
+        "statuses_count": 3231,
+        "created_at": "2024-12-05T23:04:41.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1864808064089571328/1764092096",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1904848673348976641/SBudHE2p_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 6,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [
+          {
+            "id_str": "1445094870167834625",
+            "indices": [
+              0,
+              11
+            ],
+            "name": "MARMOT",
+            "screen_name": "Web3Marmot"
+          }
+        ],
+        "display_text_range": [
+          12,
+          123
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T21:01:15.000000Z",
+      "id": 2045971007438291388,
+      "id_str": "2045971007438291388",
+      "type": "tweet",
+      "conversation_id_str": "2045971007438291388",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Wait — AI just went from 'write me some code' to 'run my entire workday.'\n\nOpenAI dropped a major Codex update on April 17, 2026.\nNot just code generation. Computer use. Workflow automation. A genuine workplace agent.\nAnd Anthropic fired back almost simultaneously with Claude Cowork hitting Enterprise — RBAC, analytics, audit logs, the whole governance stack.\n\nThink about what that actually means.\n\nA PR team can now design a pipeline: media monitoring → key message extraction → Q&A draft → approval gate → distribution. Automated. Auditable. Repeatable.\nAn IR team can wire up: earnings Q&A generation → risk language review → KPI delta reporting → disclosure check. Every week. Without starting from scratch.\n\nThis is not 'AI as assistant.' This is AI as infrastructure.\n\nWhat moves me most is not the speed. It is the architecture of trust being built around it — AGENTS.md telling the agent exactly what it is and is not allowed to do, sandboxed environments, permission minimization, failure conditions defined before the run begins.\n\nThe teams that will win the next two years are not the ones who use AI the most. They are the ones who design the guardrails the best.\n\nWe are not watching a tool get smarter. We are watching an entirely new discipline of work being born in real time.\n\nAre you designing for that — or still just prompting?\n\nhttps://t.co/Ja4tB4Mz28\n\n#AIAgents #Codex #ClaudeCowork #EnterpriseAI #FutureOfWork #PR #IR #AIGovernance",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 2033364684875960320,
+        "id_str": "2033364684875960320",
+        "name": "Ken｜Startup COO & PR",
+        "screen_name": "coo_pr_notes",
+        "location": "",
+        "url": "",
+        "description": "",
+        "protected": false,
+        "verified": true,
+        "followers_count": 41,
+        "friends_count": 1,
+        "listed_count": 0,
+        "favourites_count": 0,
+        "statuses_count": 3128,
+        "created_at": "2026-03-16T02:08:26.000000Z",
+        "profile_banner_url": "",
+        "profile_image_url_https": "https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 5,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [
+          {
+            "indices": [
+              1377,
+              1386
+            ],
+            "text": "AIAgents"
+          },
+          {
+            "indices": [
+              1387,
+              1393
+            ],
+            "text": "Codex"
+          },
+          {
+            "indices": [
+              1394,
+              1407
+            ],
+            "text": "ClaudeCowork"
+          },
+          {
+            "indices": [
+              1408,
+              1421
+            ],
+            "text": "EnterpriseAI"
+          },
+          {
+            "indices": [
+              1422,
+              1435
+            ],
+            "text": "FutureOfWork"
+          },
+          {
+            "indices": [
+              1436,
+              1439
+            ],
+            "text": "PR"
+          },
+          {
+            "indices": [
+              1440,
+              1443
+            ],
+            "text": "IR"
+          },
+          {
+            "indices": [
+              1444,
+              1457
+            ],
+            "text": "AIGovernance"
+          }
+        ],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "techradar.com/pro/codex-can-…",
+            "expanded_url": "https://www.techradar.com/pro/codex-can-now-operate-your-computer-alongside-you-openai-takes-major-shot-at-claude-code-with-major-workplace-updates",
+            "indices": [
+              1352,
+              1375
+            ],
+            "url": "https://t.co/Ja4tB4Mz28"
+          }
+        ],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          276
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T21:01:12.000000Z",
+      "id": 2045970994955772089,
+      "id_str": "2045970994955772089",
+      "type": "tweet",
+      "conversation_id_str": "2045970994955772089",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "New cyber security risks unveiled with Anthropic Mythos and Bittensor news https://t.co/31nbJD28i4 via @YouTube",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 9792092,
+        "id_str": "9792092",
+        "name": "Gary Nuttall",
+        "screen_name": "gpn01",
+        "location": "http://garypeternuttall.com",
+        "url": "https://uk.linkedin.com/in/garynuttall",
+        "description": "Emerging Technology Consultant #Luminary & International keynote speaker #Blockchain  #cryptocurrency #AI #BigData #Analytics #Educator #Advisor #InsurTech #nft",
+        "protected": false,
+        "verified": false,
+        "followers_count": 2751,
+        "friends_count": 954,
+        "listed_count": 0,
+        "favourites_count": 1094,
+        "statuses_count": 12257,
+        "created_at": "2007-10-30T08:19:55.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/9792092/1517152279",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/957631547653402625/rhad3eIm_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 9,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "youtu.be/I4B4yAsaw5U?si…",
+            "expanded_url": "https://youtu.be/I4B4yAsaw5U?si=4DtVNWCSt12itHb6",
+            "indices": [
+              75,
+              98
+            ],
+            "url": "https://t.co/31nbJD28i4"
+          }
+        ],
+        "user_mentions": [
+          {
+            "id_str": "10228272",
+            "indices": [
+              103,
+              111
+            ],
+            "name": "YouTube",
+            "screen_name": "YouTube"
+          }
+        ],
+        "display_text_range": [
+          0,
+          111
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T21:01:03.000000Z",
+      "id": 2045970960256246268,
+      "id_str": "2045970960256246268",
+      "type": "tweet",
+      "conversation_id_str": "2045970960256246268",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "📰 Google's Aletheia Breaks Through in Autonomous Mathematics, Anthropic Holds Government Talks\n\n🔗 https://t.co/Fl3pQFLchA Apr 19 2026 00:00:00 GMT+0000 (Coordinated Universal Time)\n\n#AI #News #DailyDigest",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1988607383502045184,
+        "id_str": "1988607383502045184",
+        "name": "Mediazone.ai",
+        "screen_name": "OpenPoemOrg",
+        "location": "",
+        "url": "",
+        "description": "",
+        "protected": false,
+        "verified": false,
+        "followers_count": 8,
+        "friends_count": 1,
+        "listed_count": 0,
+        "favourites_count": 3,
+        "statuses_count": 1922,
+        "created_at": "2025-11-12T13:59:30.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1988607383502045184/1762957829",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1988615069974872064/Ibik6E6k_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 1,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [
+          {
+            "indices": [
+              182,
+              185
+            ],
+            "text": "AI"
+          },
+          {
+            "indices": [
+              186,
+              191
+            ],
+            "text": "News"
+          },
+          {
+            "indices": [
+              192,
+              204
+            ],
+            "text": "DailyDigest"
+          }
+        ],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "mediazone.nl/dagsamenvattin…",
+            "expanded_url": "https://www.mediazone.nl/dagsamenvattingen?date=Sun",
+            "indices": [
+              98,
+              121
+            ],
+            "url": "https://t.co/Fl3pQFLchA"
+          }
+        ],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          204
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T21:00:54.000000Z",
+      "id": 2045970919714111705,
+      "id_str": "2045970919714111705",
+      "type": "tweet",
+      "conversation_id_str": "2045970919714111705",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "3 ways to make money with claude \n\n#claude #claudecode #anthropic",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1939459590392807424,
+        "id_str": "1939459590392807424",
+        "name": "Isabella Bedoya",
+        "screen_name": "izzyGPT",
+        "location": "South Carolina",
+        "url": "http://izzygpt.com",
+        "description": "🤖 Build & Sell AI Employees\n🤩 As seen 4x on Forbes (earned media)\n👥 47K followers on LinkedIn\n🌐 http://izzygpt.com",
+        "protected": false,
+        "verified": false,
+        "followers_count": 46,
+        "friends_count": 21,
+        "listed_count": 0,
+        "favourites_count": 0,
+        "statuses_count": 60,
+        "created_at": "2025-06-29T23:02:58.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1939459590392807424/1752724615",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1943096748030787584/PrOwVYPd_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": null,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [
+          {
+            "indices": [
+              35,
+              42
+            ],
+            "text": "claude"
+          },
+          {
+            "indices": [
+              43,
+              54
+            ],
+            "text": "claudecode"
+          },
+          {
+            "indices": [
+              55,
+              65
+            ],
+            "text": "anthropic"
+          }
+        ],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          65
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T21:00:59.000000Z",
+      "id": 2045970943537783278,
+      "id_str": "2045970943537783278",
+      "type": "tweet",
+      "conversation_id_str": "2045970943537783278",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "セキュリティの強さ、AIにどんだけ金かけるかの勝負になってきたらしいで💸Anthropicがスゲー攻撃力のAIを大手に提供、守る側もアップデートせなヤバいわ。ワイらのネット生活、これからもっと変わるかもな⚔️ #AI #生成AI  \nhttps://t.co/cj2k1PylDF",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 2016066884366684160,
+        "id_str": "2016066884366684160",
+        "name": "あいりーんのAIにゅーす！",
+        "screen_name": "airi_no_ainews",
+        "location": "",
+        "url": "",
+        "description": "最新AIニュースを爆速でお届けするで！✨ 旬なトレンドをうち独自の視点（と関西弁）で発信中✨難しい技術の話も「めっちゃ分かりやすく」話すから、フォローしてな！ AIで一緒に未来を楽しもうや！🚀",
+        "protected": false,
+        "verified": false,
+        "followers_count": 24,
+        "friends_count": 171,
+        "listed_count": 0,
+        "favourites_count": 2,
+        "statuses_count": 270,
+        "created_at": "2026-01-27T08:33:19.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/2016066884366684160/1769591361",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2016437061725888512/9btsZndS_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": null,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [
+          {
+            "indices": [
+              105,
+              108
+            ],
+            "text": "AI"
+          },
+          {
+            "indices": [
+              109,
+              114
+            ],
+            "text": "生成AI"
+          }
+        ],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "gigazine.net/news/20260420-…",
+            "expanded_url": "https://gigazine.net/news/20260420-ai-security-token-cost/",
+            "indices": [
+              117,
+              140
+            ],
+            "url": "https://t.co/cj2k1PylDF"
+          }
+        ],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          140
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T21:00:53.000000Z",
+      "id": 2045970917721854169,
+      "id_str": "2045970917721854169",
+      "type": "tweet",
+      "conversation_id_str": "2045970917721854169",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "＼先週の注目AIニュース／\n1️⃣Claude Opus 4.7がリリース。コーディング力と画像認識が大幅向上\n2️⃣Claudeが自動でタスクをこなす「ルーティン」機能が登場\n3️⃣AIでビジュアルを作るツール「Claude Design」を公開\n\nAnthropicが相次いで新ツール・新モデルを発表。特にClaude Opus 4.7・Claude Designなど実務直結の機能が続々と登場しました。\nAIツールが「使う」から「任せる」時代に突入しています。",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1388978839418589184,
+        "id_str": "1388978839418589184",
+        "name": "ねもたく｜企業AI活用の参謀",
+        "screen_name": "KAIZENnemon",
+        "location": "🔻YouTube「ねもたく-企業AI活用の参謀-」",
+        "url": "https://www.youtube.com/@nemotakuAI",
+        "description": "AIで「生産性60％UP」を実現｜中小企業DXコンサル50社以上｜実務直結型法人AI研修1,000人以上｜商工会議所/産業振興センター/産業創造財団/行政外郭団体でAI講師多数｜YouTube2.6万人「ねもたく」｜生成AIを使って実務の生産性を上げたい方向けの動画はこちらから👇",
+        "protected": false,
+        "verified": true,
+        "followers_count": 2115,
+        "friends_count": 889,
+        "listed_count": 0,
+        "favourites_count": 78650,
+        "statuses_count": 17382,
+        "created_at": "2021-05-02T22:09:08.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1388978839418589184/1713936332",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1809121290349166592/r4FadOUH_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 6,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "media": [
+          {
+            "display_url": "pic.x.com/tlGXzDA9Uh",
+            "expanded_url": "https://x.com/KAIZENnemon/status/2045970917721854169/photo/1",
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "features": {
+              "large": {
+                "faces": []
+              }
+            },
+            "id_str": "2045970915033317377",
+            "indices": [
+              178,
+              201
+            ],
+            "media_key": "3_2045970915033317377",
+            "media_url_https": "https://pbs.twimg.com/media/HGS_tQtXgAE5kWp.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 768,
+                  "w": 1371,
+                  "x": 5,
+                  "y": 0
+                },
+                {
+                  "h": 768,
+                  "w": 768,
+                  "x": 608,
+                  "y": 0
+                },
+                {
+                  "h": 768,
+                  "w": 674,
+                  "x": 702,
+                  "y": 0
+                },
+                {
+                  "h": 768,
+                  "w": 384,
+                  "x": 872,
+                  "y": 0
+                },
+                {
+                  "h": 768,
+                  "w": 1376,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 768,
+              "width": 1376
+            },
+            "sizes": {
+              "large": {
+                "h": 768,
+                "w": 1376
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/tlGXzDA9Uh"
+          }
+        ],
+        "display_text_range": [
+          0,
+          177
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T21:00:01.000000Z",
+      "id": 2045970698640711804,
+      "id_str": "2045970698640711804",
+      "type": "tweet",
+      "conversation_id_str": "2045970698640711804",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Anthropic公式のClaude Codeワークショップ動画をを見ました\n\nコーディングAIの話と思いきや、社労士業務にそのまま転用できる学びが山盛り\n\n特に効くポイントを3つ共有します🧵 https://t.co/muok2yvj0Y",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1407924102187274240,
+        "id_str": "1407924102187274240",
+        "name": "ado 𝕏 しくみか社労士®",
+        "screen_name": "ado_sr",
+        "location": "クラウド☁️",
+        "url": "https://gakko.shikumisr.jp/",
+        "description": "仲間作りのためのコミュニティーを創る社労士！！\n✨得意はオフ会幹事\n✨#副業開業カタログ→出版\n✨#士業の開業体験記 →毎週日曜夜スペースで開催\n✨#社労士Lab →社労士試験に受かったら入るコミュニティ運営\n✨INFJ-A",
+        "protected": false,
+        "verified": true,
+        "followers_count": 13919,
+        "friends_count": 6638,
+        "listed_count": 0,
+        "favourites_count": 163224,
+        "statuses_count": 31194,
+        "created_at": "2021-06-24T04:50:54.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1407924102187274240/1738937182",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1993225963745034243/oFUjuoOE_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 3,
+      "views_count": 35,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "media": [
+          {
+            "display_url": "pic.x.com/muok2yvj0Y",
+            "expanded_url": "https://x.com/ado_sr/status/2045970698640711804/photo/1",
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "features": {
+              "large": {
+                "faces": [
+                  {
+                    "h": 188,
+                    "w": 188,
+                    "x": 818,
+                    "y": 812
+                  },
+                  {
+                    "h": 202,
+                    "w": 202,
+                    "x": 88,
+                    "y": 1596
+                  }
+                ]
+              }
+            },
+            "id_str": "2045157707397902336",
+            "indices": [
+              97,
+              120
+            ],
+            "media_key": "3_2045157707397902336",
+            "media_url_https": "https://pbs.twimg.com/media/HGHcGWMasAAUf3Z.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 1147,
+                  "w": 2048,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 2048,
+                  "w": 2048,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 2048,
+                  "w": 1796,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 2048,
+                  "w": 1024,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 2048,
+                  "w": 2048,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 2048,
+              "width": 2048
+            },
+            "sizes": {
+              "large": {
+                "h": 2048,
+                "w": 2048
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/muok2yvj0Y"
+          }
+        ],
+        "display_text_range": [
+          0,
+          96
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T20:58:22.000000Z",
+      "id": 2045970284499677381,
+      "id_str": "2045970284499677381",
+      "type": "reply",
+      "conversation_id_str": "2045970283161592287",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Anthropicが自社をFigmaの代替と認識しているシグナルはCPOのFigma取締役辞任と株価の動きに出ている。Figma・Adobe・Wixは「訓練されたデザイナーがツールを開く」前提で設計されている。",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2045970283161592287,
+      "in_reply_to_status_id_str": "2045970283161592287",
+      "in_reply_to_user_id": 85296478,
+      "in_reply_to_user_id_str": "85296478",
+      "in_reply_to_screen_name": "ngitkyk",
+      "user": {
+        "id": 85296478,
+        "id_str": "85296478",
+        "name": "enugraph",
+        "screen_name": "ngitkyk",
+        "location": "",
+        "url": "",
+        "description": "Designing across brand, product, and AI. Notes on creative workflows, systems thinking, and building with engineers.",
+        "protected": false,
+        "verified": true,
+        "followers_count": 170,
+        "friends_count": 368,
+        "listed_count": 0,
+        "favourites_count": 588,
+        "statuses_count": 851,
+        "created_at": "2009-10-26T11:54:01.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/85296478/1775921389",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2042987677864316928/SKJHlbup_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 8,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          105
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T20:58:15.000000Z",
+      "id": 2045970252874523084,
+      "id_str": "2045970252874523084",
+      "type": "tweet",
+      "conversation_id_str": "2045970252874523084",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "AnthropicがClaude Designを発表。テキストで指示するだけでスライドやプロトタイプが生成され、チームのデザインシステムを自動適用する。発表直後にFigmaの株価が約7%下落した。",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 85296478,
+        "id_str": "85296478",
+        "name": "enugraph",
+        "screen_name": "ngitkyk",
+        "location": "",
+        "url": "",
+        "description": "Designing across brand, product, and AI. Notes on creative workflows, systems thinking, and building with engineers.",
+        "protected": false,
+        "verified": true,
+        "followers_count": 170,
+        "friends_count": 368,
+        "listed_count": 0,
+        "favourites_count": 588,
+        "statuses_count": 851,
+        "created_at": "2009-10-26T11:54:01.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/85296478/1775921389",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2042987677864316928/SKJHlbup_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 9,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          98
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T20:50:32.000000Z",
+      "id": 2045968311998087520,
+      "id_str": "2045968311998087520",
+      "type": "tweet",
+      "conversation_id_str": "2045968311998087520",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "こんなAIにまじになっちゃってどうするの\n…と言い切れなくなってきた？→AIは「神の子」か──Anthropicがキリスト教指導者15人を招いた理由 https://t.co/f5UujUdkAx https://t.co/2m9Kwl9EyM",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 201179459,
+        "id_str": "201179459",
+        "name": "Neeko 𝕏",
+        "screen_name": "Ne_ek_o",
+        "location": "濃いわ",
+        "url": "http://modalkombat.music.coocan.jp/",
+        "description": "春ですねちんぽ。\n\nhttps://t.co/OsXLvrpenP\nhttps://t.co/L9hZs5cXxi",
+        "protected": false,
+        "verified": false,
+        "followers_count": 1006,
+        "friends_count": 6663,
+        "listed_count": 0,
+        "favourites_count": 190965,
+        "statuses_count": 230487,
+        "created_at": "2010-10-11T08:10:09.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/201179459/1400669649",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1348865864141979649/-3NOe1pr_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 10,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "joho-todai.com/ai-gods-child-…",
+            "expanded_url": "https://joho-todai.com/ai-gods-child-anthropic-christian-leaders/",
+            "indices": [
+              75,
+              98
+            ],
+            "url": "https://t.co/f5UujUdkAx"
+          }
+        ],
+        "user_mentions": [],
+        "media": [
+          {
+            "allow_download_status": {
+              "allow_download": true
+            },
+            "display_url": "pic.x.com/2m9Kwl9EyM",
+            "expanded_url": "https://x.com/Ne_ek_o/status/2045968311998087520/photo/1",
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "features": {
+              "large": {
+                "faces": [
+                  {
+                    "h": 55,
+                    "w": 55,
+                    "x": 8,
+                    "y": 21
+                  }
+                ]
+              }
+            },
+            "id_str": "2045968290913411072",
+            "indices": [
+              99,
+              122
+            ],
+            "media_key": "3_2045968290913411072",
+            "media_url_https": "https://pbs.twimg.com/media/HGS9UhGbYAAG0wx.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 228,
+                  "w": 407,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 336,
+                  "w": 336,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 336,
+                  "w": 295,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 336,
+                  "w": 168,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 336,
+                  "w": 407,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 336,
+              "width": 407
+            },
+            "sizes": {
+              "large": {
+                "h": 336,
+                "w": 407
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/2m9Kwl9EyM"
+          }
+        ],
+        "display_text_range": [
+          0,
+          98
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T20:45:22.000000Z",
+      "id": 2045967010010411217,
+      "id_str": "2045967010010411217",
+      "type": "tweet",
+      "conversation_id_str": "2045967010010411217",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Anthropicの Dario Amodei がテック職の50%は1-5年で消えると断言して、MetaのAI責任者 Yann LeCun に破壊的で危険だと一蹴された\n\n・Amodei: ソフトウェアエンジニアは6-12ヶ月で代替される\n・LeCun: AI labのCEOに聞くな、経済学者に聞けと反論\n・Anthropic共同創業者 Jack Clark すらCEOの意見を否定\n・2026年Q1だけでテック業界8万人レイオフ、うち半数がAI起因\n\n自分でAI作ってる張本人同士で意見が真っ二つに割れてるのが本質的で、、LeCunの恐怖を煽るのはAI企業に都合がいいだけっていう指摘がかなり鋭い\n\nただQ1で8万人が消えてるデータ見ると、予測の当たり外れを議論してる場合じゃなくて、もう目の前で起きてることにどう動くかの段階に入ってる\n\nリプ欄↓",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 703922038147133440,
+        "id_str": "703922038147133440",
+        "name": "LAT",
+        "screen_name": "latdayo",
+        "location": "tokyo",
+        "url": "",
+        "description": "リテールマーケ会社6期経営 → AIエージェント×DXの会社創業｜買取・建設・製造 | モノと人がリアルに動く業界にAIエージェントを持ち込む仕事をしてます|最近は月720時間働くAI社員の山野辺君(42)魔改造中",
+        "protected": false,
+        "verified": true,
+        "followers_count": 576,
+        "friends_count": 294,
+        "listed_count": 0,
+        "favourites_count": 2921,
+        "statuses_count": 725,
+        "created_at": "2016-02-28T12:37:46.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/703922038147133440/1733876366",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2037847328057597952/i9rUn_qb_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 4,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "media": [
+          {
+            "display_url": "pic.x.com/EAI2iE5tfv",
+            "expanded_url": "https://x.com/latdayo/status/2045967010010411217/photo/1",
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "features": {
+              "large": {
+                "faces": []
+              }
+            },
+            "id_str": "2045967003576385536",
+            "indices": [
+              181,
+              204
+            ],
+            "media_key": "3_2045967003576385536",
+            "media_url_https": "https://pbs.twimg.com/media/HGS8JlZXQAAKgRR.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 672,
+                  "w": 1200,
+                  "x": 0,
+                  "y": 3
+                },
+                {
+                  "h": 675,
+                  "w": 675,
+                  "x": 473,
+                  "y": 0
+                },
+                {
+                  "h": 675,
+                  "w": 592,
+                  "x": 514,
+                  "y": 0
+                },
+                {
+                  "h": 675,
+                  "w": 338,
+                  "x": 641,
+                  "y": 0
+                },
+                {
+                  "h": 675,
+                  "w": 1200,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 675,
+              "width": 1200
+            },
+            "sizes": {
+              "large": {
+                "h": 675,
+                "w": 1200
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/EAI2iE5tfv"
+          }
+        ],
+        "display_text_range": [
+          0,
+          180
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T20:38:23.000000Z",
+      "id": 2045965254535061803,
+      "id_str": "2045965254535061803",
+      "type": "tweet",
+      "conversation_id_str": "2045965254535061803",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "AnthropicでClaude料金消費税取るようになったけど、適格請求書発行事業者ではないの？\n\nと思ったら、請求書にインボイス番号書いてあった。",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 14341820,
+        "id_str": "14341820",
+        "name": "脇村 隆",
+        "screen_name": "wackey",
+        "location": "神奈 横浜市 青葉区",
+        "url": "https://aimiraidesigner.com/",
+        "description": "中小企業のCAIO、引き受けます。｜2社で現役DX推進担当｜公的機関のWeb制作を14年｜複業実践者｜現場で使えるAI活用・DXの実践知を発信。相談乗ります。",
+        "protected": false,
+        "verified": true,
+        "followers_count": 3110,
+        "friends_count": 1582,
+        "listed_count": 0,
+        "favourites_count": 28119,
+        "statuses_count": 44281,
+        "created_at": "2008-04-09T14:02:25.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/14341820/1748751514",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1615897840668266502/3yfWYC_K_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 12,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          74
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T20:11:55.000000Z",
+      "id": 2045958594932441433,
+      "id_str": "2045958594932441433",
+      "type": "reply",
+      "conversation_id_str": "2045831359722410225",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "企業向けAIコーディングを構築するFactory、評価額15億ドルに到達\n生成AIの登場から3年以上が経過した現在でも、AI支援によるコーディングは、この技術において最も人気が高く、かつ収益性の高いユースケースであり続けている。\nAnthropic（Claude Codeの開発元）やCursor、Cognitionなど複数の企業がすでに主導権争いを繰り広げているものの、投資家は少なくとももう1社が参入する余地があると見ている。\n水曜日、エンタープライズのエンジニアリングチーム向けにAIエージェントを開発するスタートアップFactoryは、評価額15億ドルで1億5,000万ドルの資金調達を実施したと発表した。このラウンドはKhosla Venturesが主導し、Sequoia Capital、Insight Partners、Blackstoneも参加した。また、Khosla VenturesのマネージングディレクターであるKeith Raboisが同社の取締役に就任した。\nFactoryの創業者であるMatan GrinbergはThe Wall Street Journalに対し、同社の主な差別化要因は、AnthropicのClaudeや中国のAIスタートアップDeepSeekといった複数の基盤モデルを切り替えて利用できる点にあると語った。ただし、Cursorのようなスタートアップも、単一モデルに依存せずコード生成を行っている。\nFactoryの顧客には、Morgan Stanley、Ernst & Young、Palo Alto Networksのエンジニアリングチームが含まれる。\n同社は2023年、当時University of California, Berkeleyの博士課程に在籍していたGrinbergが、Sequoia CapitalのパートナーであるShaun Maguireにコールドメールを送ったことをきっかけに設立された。両者は共通の学術的関心を通じて意気投合した（MaguireはCalifornia Institute of Technologyで、Grinbergが研究していた分野と同じ物理学分野の博士号を取得している）。\nその後、MaguireはGrinbergに博士課程の中退とFactoryの立ち上げを説得し、Sequoiaはシード段階で同社に出資した。",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2045831359722410225,
+      "in_reply_to_status_id_str": "2045831359722410225",
+      "in_reply_to_user_id": 1422296398813270029,
+      "in_reply_to_user_id_str": "1422296398813270029",
+      "in_reply_to_screen_name": "blueomega_japan",
+      "user": {
+        "id": 1422296398813270029,
+        "id_str": "1422296398813270029",
+        "name": "ブルーオメガ【公式】おかげさまで11年目",
+        "screen_name": "blueomega_japan",
+        "location": "Matsue, Japan",
+        "url": "https://blueomega.jp",
+        "description": "松江市でIT関連事業を営んでおり、コンサルテーション、システム開発、動画制作、配信支援などを行っています。また、古民家をリフォームしたシェアスペースの運営やVTuber松江観光大使「ちぃさん」の活動支援も行っています。#島根県 #松江市",
+        "protected": false,
+        "verified": true,
+        "followers_count": 10173,
+        "friends_count": 7637,
+        "listed_count": 0,
+        "favourites_count": 275699,
+        "statuses_count": 11059,
+        "created_at": "2021-08-02T20:41:26.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1422296398813270029/1773183273",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1445494908345667588/Uh8KsqeW_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 36,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          131
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T20:09:07.000000Z",
+      "id": 2045957889219764405,
+      "id_str": "2045957889219764405",
+      "type": "tweet",
+      "conversation_id_str": "2045957889219764405",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "パランティアとAnthropicがイラン政権指導部の大量殺害を可能にした、という話。\nSF的な、人間の倫理を機械が踏み越えていく状態だが、そもそもアメリカに倫理がないから同じなんだな・・・\n\nhttps://t.co/jjJPQxNHGF",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 236306026,
+        "id_str": "236306026",
+        "name": "Nicotine🇵🇸",
+        "screen_name": "sanpoudo",
+        "location": "",
+        "url": "",
+        "description": "「階級闘争の時代が終わった」のではなく、資本家階級が労働者階級を一方的に攻撃する闘争がずっと続いているだけです。\n＊法人税増税に反対する人は、諸外国と本邦の税制の違いを確認してください。本邦では法人税は分配する事でいくらでも節税できます。\n＊軍拡に反対します。軍拡競争で本邦に勝ち目はありません。",
+        "protected": false,
+        "verified": false,
+        "followers_count": 758,
+        "friends_count": 849,
+        "listed_count": 0,
+        "favourites_count": 23944,
+        "statuses_count": 125382,
+        "created_at": "2011-01-10T08:31:46.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/236306026/1690202700",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/482482787799150593/LYEmp0MF_normal.jpeg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 1,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 77,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "asahi.com/articles/DA3S1…",
+            "expanded_url": "https://www.asahi.com/articles/DA3S16446788.html?iref=mor_articlelink01",
+            "indices": [
+              96,
+              119
+            ],
+            "url": "https://t.co/jjJPQxNHGF"
+          }
+        ],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          119
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T20:08:55.000000Z",
+      "id": 2045957837696938252,
+      "id_str": "2045957837696938252",
+      "type": "tweet",
+      "conversation_id_str": "2045957837696938252",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "ハーネスエンジニアリングの混乱を整理｜OpenAI・Anthropic・LangChain・Hashimoto 4社を「層」で読み解く https://t.co/eFTeMDHrJt @YouTubeより",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 546052358,
+        "id_str": "546052358",
+        "name": "・ワ・",
+        "screen_name": "GumiGumiDance",
+        "location": "",
+        "url": "",
+        "description": "",
+        "protected": false,
+        "verified": false,
+        "followers_count": 66,
+        "friends_count": 43,
+        "listed_count": 0,
+        "favourites_count": 12870,
+        "statuses_count": 1461,
+        "created_at": "2012-04-05T15:20:22.000000Z",
+        "profile_banner_url": "",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2512302243/20120817_64011_4842_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 10,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "youtu.be/HH4sd1UGRjY?si…",
+            "expanded_url": "https://youtu.be/HH4sd1UGRjY?si=Vi_2orYwyswkGefF",
+            "indices": [
+              68,
+              91
+            ],
+            "url": "https://t.co/eFTeMDHrJt"
+          }
+        ],
+        "user_mentions": [
+          {
+            "id_str": "10228272",
+            "indices": [
+              92,
+              100
+            ],
+            "name": "YouTube",
+            "screen_name": "YouTube"
+          }
+        ],
+        "display_text_range": [
+          0,
+          102
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T20:03:22.000000Z",
+      "id": 2045956441501282537,
+      "id_str": "2045956441501282537",
+      "type": "tweet",
+      "conversation_id_str": "2045956441501282537",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Anthropicも自分の都合でサービス止めることできるので根幹にAI使ってると事業を止められるリスクはあるね",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 6190922,
+        "id_str": "6190922",
+        "name": "ののしら",
+        "screen_name": "nonosira",
+        "location": "キヴォトス",
+        "url": "",
+        "description": "Appleからの領収書です  青空 https://t.co/NbLe1hdMEw",
+        "protected": false,
+        "verified": false,
+        "followers_count": 799,
+        "friends_count": 1509,
+        "listed_count": 0,
+        "favourites_count": 461424,
+        "statuses_count": 555002,
+        "created_at": "2007-05-21T05:02:55.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/6190922/1573482398",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1345022803515330560/6yYjmNz8_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 8,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          55
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T19:54:18.000000Z",
+      "id": 2045954162341577075,
+      "id_str": "2045954162341577075",
+      "type": "tweet",
+      "conversation_id_str": "2045954162341577075",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "AIエージェントが「隣に座って一緒にPC操作する」時代、もう来てるらしい。\n\nOpenAIがCodexを「コード生成ツール」から「並走する開発パートナー」へ進化させた。ブラウザ操作、ローカルアプリ、複数エージェントの束ね役まで。片や AnthropicのClaude Codeは端末常駐で「Plan→実行→確認」ループを回し、Googleは Gemini 3.1 Agent Modeで情報横断の検証役を担う。\n\n3つ並べると見えてくるのは「誰か一人のスーパーAI」じゃなくて、役割を分けたチームとして設計する発想。調査・実装・テスト・ドキュメントを担当ごとに振り、人は承認とレビューで舵を握る。\n\nこれ、ソフトウェア開発の話じゃなくて、「仕事の権限をどう設計するか」という話だと思う。エージェントに任せる範囲を決めるのは、結局、人の判断力と想像力。\n\n道具が賢くなるほど、使う側の設計センスが問われる時代になってきた。\n\nhttps://t.co/Foru5Zfb0s\n\n#AIエージェント #CodexAI #ClaudeCode #生成AI活用",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 2033515032873758720,
+        "id_str": "2033515032873758720",
+        "name": "リョウタ｜AI Agent & Communications Specialist",
+        "screen_name": "aiagent_builder",
+        "location": "東京",
+        "url": "",
+        "description": "AIエージェントを事業と広報の武器に変える人。Claude Code / Claude Cowork / Codexを使い、発信・運用・改善を回す。",
+        "protected": false,
+        "verified": true,
+        "followers_count": 19,
+        "friends_count": 1,
+        "listed_count": 0,
+        "favourites_count": 0,
+        "statuses_count": 2906,
+        "created_at": "2026-03-16T12:05:49.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/2033515032873758720/1775439709",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2040957061979381760/1YsBqvQl_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 11,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [
+          {
+            "indices": [
+              437,
+              446
+            ],
+            "text": "AIエージェント"
+          },
+          {
+            "indices": [
+              447,
+              455
+            ],
+            "text": "CodexAI"
+          },
+          {
+            "indices": [
+              456,
+              467
+            ],
+            "text": "ClaudeCode"
+          },
+          {
+            "indices": [
+              468,
+              475
+            ],
+            "text": "生成AI活用"
+          }
+        ],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "openai.com/index/codex-fo…",
+            "expanded_url": "https://openai.com/index/codex-for-almost-everything/",
+            "indices": [
+              412,
+              435
+            ],
+            "url": "https://t.co/Foru5Zfb0s"
+          }
+        ],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          133
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T19:43:04.000000Z",
+      "id": 2045951332197261784,
+      "id_str": "2045951332197261784",
+      "type": "reply",
+      "conversation_id_str": "1941964588658065773",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "令和八年四月十八日(亡き父の三十回忌)に、人生における一つの区切りとして、こうして自らの世界観（俯瞰した最新の概略と全体的な構造）が纏められたのは大きい。これも全てAnthropic社の自律型AI “Claude4.6”のお陰である。今なら、ビジネスバージョンで、17%値引きの年会費$220(実質2ヶ月分無料)だ!",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2045925483775504542,
+      "in_reply_to_status_id_str": "2045925483775504542",
+      "in_reply_to_user_id": 1517748706581561344,
+      "in_reply_to_user_id_str": "1517748706581561344",
+      "in_reply_to_screen_name": "NfPsYI7FGjObVN4",
+      "user": {
+        "id": 1517748706581561344,
+        "id_str": "1517748706581561344",
+        "name": "神宮司 修 Osamu Jinguji",
+        "screen_name": "NfPsYI7FGjObVN4",
+        "location": "Kanagawa pref., Japan",
+        "url": "https://www.osamu-jinguji.com",
+        "description": "写真芸術家/作家- Photo Artist/Creator, Photography Contributor for Art+Commerce/VOGUE (New York, PhotoVogue Collection) at Independent Artist",
+        "protected": false,
+        "verified": false,
+        "followers_count": 200,
+        "friends_count": 2471,
+        "listed_count": 0,
+        "favourites_count": 18211,
+        "statuses_count": 22746,
+        "created_at": "2022-04-23T06:14:54.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1517748706581561344/1774061611",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1932660582358134784/hlAigr0l_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 1,
+      "retweet_count": 1,
+      "favorite_count": 1,
+      "views_count": 2,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          158
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T19:31:43.000000Z",
+      "id": 2045948476522201573,
+      "id_str": "2045948476522201573",
+      "type": "tweet",
+      "conversation_id_str": "2045948476522201573",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "これ面白かった。それにしても漢語の「矛盾」ってよくできてる言葉だよな・・・\n\n【ゆっくり解説】あのMythosにライバル出現！？個人がAnthropicに反旗！誰でも使える無料版『Clearwing』の実力がヤバい https://t.co/R7yYvh0LVA @YouTubeより",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 47623721,
+        "id_str": "47623721",
+        "name": "究極の傍観者",
+        "screen_name": "t2001t2001",
+        "location": "都内某所潜伏中",
+        "url": "http://t2001t2001.ldblog.jp/",
+        "description": "革命的メガテニスト協会ハザマ派元幹部。ダグザエンドが好きです、でも愛美エンドのほうがもっと好きです。",
+        "protected": false,
+        "verified": false,
+        "followers_count": 1749,
+        "friends_count": 2003,
+        "listed_count": 0,
+        "favourites_count": 2017,
+        "statuses_count": 62912,
+        "created_at": "2009-06-16T13:31:52.000000Z",
+        "profile_banner_url": "",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1700069950/bakeneko_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 16,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "youtu.be/daYTHqOJq_s?si…",
+            "expanded_url": "https://youtu.be/daYTHqOJq_s?si=ONtuThHYnMeScTtL",
+            "indices": [
+              108,
+              131
+            ],
+            "url": "https://t.co/R7yYvh0LVA"
+          }
+        ],
+        "user_mentions": [
+          {
+            "id_str": "10228272",
+            "indices": [
+              132,
+              140
+            ],
+            "name": "YouTube",
+            "screen_name": "YouTube"
+          }
+        ],
+        "display_text_range": [
+          0,
+          142
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T19:10:03.000000Z",
+      "id": 2045943025176592868,
+      "id_str": "2045943025176592868",
+      "type": "reply",
+      "conversation_id_str": "2045942773627658406",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "【詳細】Anthropic「Automated Weak-to-Strong Researcher」\n\n✅ 自律AIエージェントが研究サイクルを完全自動化\n✅ 人間研究者チーム（7日）をわずか5日で上回る\n✅ コスト：$22/時間（人件費の大幅削減）\n✅ PGR（問題解決率）：人間0.23 vs AI 0.97\n\nAIが「道具」から「研究者」になる転換点かもしれない\n\n詳細：https://t.co/lKXYdPWmdo",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2045942773627658406,
+      "in_reply_to_status_id_str": "2045942773627658406",
+      "in_reply_to_user_id": 985807010342957057,
+      "in_reply_to_user_id_str": "985807010342957057",
+      "in_reply_to_screen_name": "nakaaki04",
+      "user": {
+        "id": 985807010342957057,
+        "id_str": "985807010342957057",
+        "name": "なかあき【AIでソロプレナー実験中 】",
+        "screen_name": "nakaaki04",
+        "location": "",
+        "url": "https://line-crm-worker.jeminisaga0413.workers.dev/auth/line?ref=x",
+        "description": "AIを使って「一人で回るビジネス」を検証中。 Claude中心に、台本・投稿・構成・リライトを作って試して改善する実践ログを発信。 AI講師｜コンテンツ制作支援｜X運用代行（設計〜改善） テンプレ/プロンプトは固定ポスト👇｜依頼・相談はDM✉️",
+        "protected": false,
+        "verified": true,
+        "followers_count": 3002,
+        "friends_count": 502,
+        "listed_count": 0,
+        "favourites_count": 97652,
+        "statuses_count": 52284,
+        "created_at": "2018-04-16T09:08:01.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/985807010342957057/1749735120",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1933155278192836609/kGqWZmx3_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 18,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "alignment.anthropic.com/2026/automated…",
+            "expanded_url": "https://alignment.anthropic.com/2026/automated-w2s-researcher/",
+            "indices": [
+              189,
+              212
+            ],
+            "url": "https://t.co/lKXYdPWmdo"
+          }
+        ],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          156
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T19:09:03.000000Z",
+      "id": 2045942773627658406,
+      "id_str": "2045942773627658406",
+      "type": "tweet",
+      "conversation_id_str": "2045942773627658406",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "AIが人間の研究者を超えた…🤯🔥\n\nAnthropicが衝撃発表！Claudeで動く自律AIエージェントが、人間研究者チームを圧倒！\n\n①問題を受け取る→②アイデアを自動提案→③実験を自律実行→④結果を共有・改善\n\n人間：PGR 0.23（7日）\nAI：PGR 0.97（5日・$22/時間）\n\nもうAI研究者の時代が来た…詳細はリプ欄↓",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 985807010342957057,
+        "id_str": "985807010342957057",
+        "name": "なかあき【AIでソロプレナー実験中 】",
+        "screen_name": "nakaaki04",
+        "location": "",
+        "url": "https://line-crm-worker.jeminisaga0413.workers.dev/auth/line?ref=x",
+        "description": "AIを使って「一人で回るビジネス」を検証中。 Claude中心に、台本・投稿・構成・リライトを作って試して改善する実践ログを発信。 AI講師｜コンテンツ制作支援｜X運用代行（設計〜改善） テンプレ/プロンプトは固定ポスト👇｜依頼・相談はDM✉️",
+        "protected": false,
+        "verified": true,
+        "followers_count": 3002,
+        "friends_count": 502,
+        "listed_count": 0,
+        "favourites_count": 97652,
+        "statuses_count": 52284,
+        "created_at": "2018-04-16T09:08:01.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/985807010342957057/1749735120",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1933155278192836609/kGqWZmx3_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 2,
+      "views_count": 27,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "media": [
+          {
+            "allow_download_status": {
+              "allow_download": true
+            },
+            "display_url": "pic.x.com/VD8z19aTP0",
+            "expanded_url": "https://x.com/nakaaki04/status/2045942773627658406/photo/1",
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "features": {
+              "large": {
+                "faces": [
+                  {
+                    "h": 40,
+                    "w": 40,
+                    "x": 776,
+                    "y": 205
+                  },
+                  {
+                    "h": 157,
+                    "w": 157,
+                    "x": 445,
+                    "y": 268
+                  }
+                ]
+              }
+            },
+            "id_str": "2045942697857368064",
+            "indices": [
+              147,
+              170
+            ],
+            "media_key": "3_2045942697857368064",
+            "media_url_https": "https://pbs.twimg.com/media/HGSmCziXwAAWC10.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 502,
+                  "w": 896,
+                  "x": 4,
+                  "y": 0
+                },
+                {
+                  "h": 502,
+                  "w": 502,
+                  "x": 356,
+                  "y": 0
+                },
+                {
+                  "h": 502,
+                  "w": 440,
+                  "x": 387,
+                  "y": 0
+                },
+                {
+                  "h": 502,
+                  "w": 251,
+                  "x": 482,
+                  "y": 0
+                },
+                {
+                  "h": 502,
+                  "w": 900,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 502,
+              "width": 900
+            },
+            "sizes": {
+              "large": {
+                "h": 502,
+                "w": 900
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/VD8z19aTP0"
+          }
+        ],
+        "display_text_range": [
+          0,
+          146
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T19:08:55.000000Z",
+      "id": 2045942738349330806,
+      "id_str": "2045942738349330806",
+      "type": "tweet",
+      "conversation_id_str": "2045942738349330806",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "ClaudeでPolymarket bot…Anthropic研究者画面見て固まるヤバ🔥",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 2036100967356358656,
+        "id_str": "2036100967356358656",
+        "name": "高橋 悠太",
+        "screen_name": "insightventure8",
+        "location": "",
+        "url": "",
+        "description": "ハードシングスの克服法とスタートアップ鉄則を趣味で呟いています / 1992年生まれ大阪府出身 / 愛犬:ルナ(柴犬) / 大学を半年で中退→アジア一周しながら事業プラン150個作成→今 / ベンチャー起業を趣味で追いかける一般人 / 営業スキルとAIビジネスの考察を勉強中",
+        "protected": false,
+        "verified": false,
+        "followers_count": 2,
+        "friends_count": 0,
+        "listed_count": 0,
+        "favourites_count": 135,
+        "statuses_count": 1577,
+        "created_at": "2026-03-23T15:21:20.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/2036100967356358656/1774279925",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2036103690168500224/ImjIurF0_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 4,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          44
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T19:02:20.000000Z",
+      "id": 2045941083801268448,
+      "id_str": "2045941083801268448",
+      "type": "tweet",
+      "conversation_id_str": "2045941083801268448",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "お、AIが政府の安全保障領域まで入り始めたか…。Reutersによると、米国の安全保障機関がAnthropicのMythosをブラックリスト下でも利用しているとAxiosが報道。モデル競争が民間ユースだけでなく国家レベルの実運用にも広がってきた感じする。 https://t.co/I2GFGMuY1v",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1686235747131781120,
+        "id_str": "1686235747131781120",
+        "name": "Unifory",
+        "screen_name": "Unity_ForYou",
+        "location": "",
+        "url": "",
+        "description": "AIに関する最新情報を、朝・昼・夜の3回に分けて発信。\n主要AIベンダーの動向や最新ツール、AIエージェントの活用術など、現場でそのまま使える実践的な情報をお届けします。",
+        "protected": false,
+        "verified": true,
+        "followers_count": 6,
+        "friends_count": 44,
+        "listed_count": 0,
+        "favourites_count": 3,
+        "statuses_count": 118,
+        "created_at": "2023-08-01T04:42:03.000000Z",
+        "profile_banner_url": "",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1973186052417527809/YRBr4JRX_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 6,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "reuters.com/business/us-se…",
+            "expanded_url": "https://www.reuters.com/business/us-security-agency-is-using-anthropics-mythos-despite-blacklist-axios-reports-2026-04-19/",
+            "indices": [
+              128,
+              151
+            ],
+            "url": "https://t.co/I2GFGMuY1v"
+          }
+        ],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          151
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T18:47:26.000000Z",
+      "id": 2045937332789121364,
+      "id_str": "2045937332789121364",
+      "type": "quote",
+      "conversation_id_str": "2045937332789121364",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "\"AXIOSによると、ブラックリスト登録にもかかわらず、NSAはAnthropicのMythosを使用している。\"",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 86468990,
+        "id_str": "86468990",
+        "name": "シバイヌおやびん（投資系VTuber）",
+        "screen_name": "yasutaketin",
+        "location": "秋葉原",
+        "url": "https://note.com/shibainu_trading/",
+        "description": "趣味でトレードを研究してる個人投資家VTuber/月曜21時YouTube配信/ CFD・米国株/約3800人参加の無料投資Discord運営/億トレ/六四天安門事件/  ●YouTube https://t.co/HxguHtf25V ※LINEはやってません。あるとしたら偽物です",
+        "protected": false,
+        "verified": true,
+        "followers_count": 42081,
+        "friends_count": 1425,
+        "listed_count": 0,
+        "favourites_count": 9936,
+        "statuses_count": 142265,
+        "created_at": "2009-10-31T05:32:12.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/86468990/1764108960",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1648527955742830592/SFSerc0p_normal.png",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": 2045935818259259396,
+      "quoted_status_id_str": "2045935818259259396",
+      "is_quote_status": true,
+      "quoted_status": {
+        "tweet_created_at": "2026-04-19T18:41:25.000000Z",
+        "id": 2045935818259259396,
+        "id_str": "2045935818259259396",
+        "type": "tweet",
+        "conversation_id_str": "2045935818259259396",
+        "community_id_str": null,
+        "community_name": null,
+        "text": null,
+        "full_text": "NSA USING ANTHROPIC'S MYTHOS DESPITE BLACKLIST - AXIOS",
+        "source": "",
+        "truncated": false,
+        "in_reply_to_status_id": null,
+        "in_reply_to_status_id_str": null,
+        "in_reply_to_user_id": null,
+        "in_reply_to_user_id_str": null,
+        "in_reply_to_screen_name": null,
+        "user": {
+          "id": 2704294333,
+          "id_str": "2704294333",
+          "name": "*Walter Bloomberg",
+          "screen_name": "DeItaone",
+          "location": "Geneva, Switzerland",
+          "url": "",
+          "description": "",
+          "protected": false,
+          "verified": true,
+          "followers_count": 1367763,
+          "friends_count": 38,
+          "listed_count": 0,
+          "favourites_count": 8496,
+          "statuses_count": 187611,
+          "created_at": "2014-08-03T14:34:52.000000Z",
+          "profile_banner_url": "https://pbs.twimg.com/profile_banners/2704294333/1771002964",
+          "profile_image_url_https": "https://pbs.twimg.com/profile_images/1282648991348527104/A8HCjqZk_normal.jpg",
+          "can_dm": true,
+          "affiliation_label": null
+        },
+        "quoted_status_id": null,
+        "quoted_status_id_str": null,
+        "is_quote_status": false,
+        "quoted_status": null,
+        "retweeted_status": null,
+        "quote_count": 41,
+        "reply_count": 76,
+        "retweet_count": 117,
+        "favorite_count": 1445,
+        "views_count": 193650,
+        "bookmark_count": 106,
+        "lang": "en",
+        "entities": {
+          "hashtags": [],
+          "symbols": [],
+          "timestamps": [],
+          "urls": [],
+          "user_mentions": [],
+          "display_text_range": [
+            0,
+            54
+          ]
+        },
+        "is_pinned": false
+      },
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 10,
+      "views_count": 2381,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          57
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T18:18:05.000000Z",
+      "id": 2045929944681984332,
+      "id_str": "2045929944681984332",
+      "type": "reply",
+      "conversation_id_str": "2045847904879858142",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "@benln claude-code-proxy — wrapping Claude Max CLI as an OpenAI/Anthropic API endpoint. Just shipped per-request MCP server activation so multiple agents can share one proxy with isolated tooling per request. Stateless, no session leakage.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2045847904879858142,
+      "in_reply_to_status_id_str": "2045847904879858142",
+      "in_reply_to_user_id": 21714538,
+      "in_reply_to_user_id_str": "21714538",
+      "in_reply_to_screen_name": "benln",
+      "user": {
+        "id": 1164563542642573312,
+        "id_str": "1164563542642573312",
+        "name": "keysersoze",
+        "screen_name": "Surajdotdot7",
+        "location": "Chennai",
+        "url": "http://8mstudio.com",
+        "description": "building things with AI\nClaude Code | agents | automation\nsharing what I learn — for people who want to build, not just watch",
+        "protected": false,
+        "verified": true,
+        "followers_count": 120,
+        "friends_count": 813,
+        "listed_count": 0,
+        "favourites_count": 3209,
+        "statuses_count": 863,
+        "created_at": "2019-08-22T15:42:55.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1164563542642573312/1710212502",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1760741662358425602/Sekkkuo2_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "views_count": 20,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [
+          {
+            "id_str": "21714538",
+            "indices": [
+              0,
+              6
+            ],
+            "name": "Ben Lang",
+            "screen_name": "benln"
+          }
+        ],
+        "display_text_range": [
+          7,
+          239
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T14:56:31.000000Z",
+      "id": 2045879219587096982,
+      "id_str": "2045879219587096982",
+      "type": "reply",
+      "conversation_id_str": "2045879214470021594",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "🔌 2. Model Context Protocol (MCP) es el nuevo estándar. La adopción masiva de MCP.\nPermite que cualquier agente IA se conecte de forma segura a tus bases de datos, Google Drive o Slack. Ya no le \"explicas\" el esquema a la IA; ella lo consulta bajo demanda. 🐘🧠 #MCP #Anthropic￼",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2045879217036857714,
+      "in_reply_to_status_id_str": "2045879217036857714",
+      "in_reply_to_user_id": 1939353594370641920,
+      "in_reply_to_user_id_str": "1939353594370641920",
+      "in_reply_to_screen_name": "LSystemsMx",
+      "user": {
+        "id": 1939353594370641920,
+        "id_str": "1939353594370641920",
+        "name": "Lion systems",
+        "screen_name": "LSystemsMx",
+        "location": "Distrito Federal, México",
+        "url": "http://lionsystems.com.mx",
+        "description": "Tecnología que transforma negocios. 🚀 Full Stack | 🛡️ DevSecOps | 📱 Apps | 🤖 IA & Automatización 📍 CDMX · 🌐 Global · 🧠 #Cybersecurity #PostgreSQL #IA",
+        "protected": false,
+        "verified": false,
+        "followers_count": 3,
+        "friends_count": 44,
+        "listed_count": 0,
+        "favourites_count": 22,
+        "statuses_count": 181,
+        "created_at": "2025-06-29T16:02:11.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1939353594370641920/1751215175",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1939363077822033920/DUSjLylY_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 6,
+      "bookmark_count": 0,
+      "lang": "es",
+      "entities": {
+        "hashtags": [
+          {
+            "indices": [
+              260,
+              264
+            ],
+            "text": "MCP"
+          },
+          {
+            "indices": [
+              265,
+              275
+            ],
+            "text": "Anthropic"
+          }
+        ],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          276
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T13:17:12.000000Z",
+      "id": 2045854225310289937,
+      "id_str": "2045854225310289937",
+      "type": "quote",
+      "conversation_id_str": "2045854225310289937",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "【まとめ】MCP（Model Context Protocol）の解説、改めて整理として。\n\n・LLM ↔️ 各ツール（Slack / Drive / GitHub 等）を個別APIで繋ぐ時代の終わり\n・Unified API 層として「1プロトコル・1接続レイヤー」で全ツール到達\n・SDK 月間ダウンロード 9,700万回（2026年3月時点）、Anthropic 発で OpenAI / Google も採用\n・「AIアプリの USB-C ポート」として事実上の業界標準化\n\nSlack / Drive / GitHub 用の個別コネクタを抱えた古い agent コードは、統合1つあたりの保守責任の割にROIが落ちる構造。従来「エージェントごとに独自ラッパー再実装」で消費していた工数が、MCPサーバー1本で共通化される方向に収斂している。\n\n2026年後半には「MCP 非対応のエージェントフレームワーク」がエンタープライズ選定で一次除外される流れが見えやすい。新規AIスタートアップは最初から MCP 前提で設計するのが良さそう",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 2045358076975276032,
+        "id_str": "2045358076975276032",
+        "name": "深津晃 / AIによりコードを書けなくなった人",
+        "screen_name": "hshgajjioclaude",
+        "location": "Tokyo / San Francisco",
+        "url": "",
+        "description": "元日経SE→現在シリコンバレーのAIスタートアップ勤務。OpenAI・Anthropic・Googleの最新動向を誰より早くキャッチして日本語でお届け。AIに驚かされ続けて2年目。毎日更新。",
+        "protected": false,
+        "verified": true,
+        "followers_count": 3,
+        "friends_count": 34,
+        "listed_count": 0,
+        "favourites_count": 9,
+        "statuses_count": 22,
+        "created_at": "2026-04-18T04:33:45.000000Z",
+        "profile_banner_url": "",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2045360108675158016/_VFfbIdo_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": 2045356965161836916,
+      "quoted_status_id_str": "2045356965161836916",
+      "is_quote_status": true,
+      "quoted_status": {
+        "tweet_created_at": "2026-04-18T04:21:16.000000Z",
+        "id": 2045356965161836916,
+        "id_str": "2045356965161836916",
+        "type": "tweet",
+        "conversation_id_str": "2045356965161836916",
+        "community_id_str": null,
+        "community_name": null,
+        "text": null,
+        "full_text": "𝐖𝐡𝐚𝐭 𝐢𝐬 𝐌𝐂𝐏 (𝐌𝐨𝐝𝐞𝐥 𝐂𝐨𝐧𝐭𝐞𝐱𝐭 𝐏𝐫𝐨𝐭𝐨𝐜𝐨𝐥)?\n\nMost AI agents are trapped inside their own walls.\nMCP is the protocol that connects them to the outside world data sources, tools, and workflows.\n\n𝐖𝐡𝐚𝐭 𝐢𝐬 𝐌𝐂𝐏?\n\n• MCP is an open-source standard that connects AI applications to external systems like data sources, tools, and workflows.\n• It enables seamless integrations, allowing AI models like ChatGPT to access data, use tools, and perform tasks like web app creation or database queries.\n• MCP simplifies development, reducing complexity and time by providing a standardized way to connect AI systems to various resources.\n• It enhances AI capabilities, making models more powerful and personalized by allowing them to interact with external systems and data on behalf of users.\n\n𝐁𝐞𝐟𝐨𝐫𝐞 𝐌𝐂𝐏\n\nLLM → Slack, Google Drive, GitHub (separate connections for each).\n\nEvery integration is custom. Every tool requires its own API client. Every agent reinvents the wheel.\n\n𝐀𝐟𝐭𝐞𝐫 𝐌𝐂𝐏\n\nLLM → Unified API (MCP) → Slack, Google Drive, GitHub.\n\nOne protocol. One connection layer. Every tool accessible through a standardized interface.\n\n𝐇𝐨𝐰 𝐌𝐂𝐏 𝐖𝐨𝐫𝐤𝐬?\n\nUser → User Query → MCP Client → Invoke Graph → LangGraph → Route Request → OpenAI GPT → Tool Decision → Call MCP Tool → MCP Server → External API Call → External APIs → API Response → MCP Server → Tool Result → OpenAI GPT → Generate Response → MCP Client → Natural Language Response → Final Result User → Agent Response → User.\n\n𝐓𝐡𝐞 𝐅𝐥𝐨𝐰\n\n1. User sends a query to the MCP Client.\n2. MCP Client invokes LangGraph to route the request.\n3. OpenAI GPT makes a tool decision and calls the MCP Tool.\n4. MCP Server makes an external API call to the appropriate service (Slack, Google Drive, GitHub, etc.).\n5. External API returns a response to the MCP Server.\n6. MCP Server sends the tool result back to OpenAI GPT.\n7. OpenAI GPT generates a natural language response.\n8. MCP Client delivers the final result to the user.\n\nBefore MCP, every agent built its own integrations. After MCP, every agent shares the same connection layer.\n\nMCP is the protocol that turns isolated AI models into connected AI agents.\n\n𝐀𝐫𝐞 𝐲𝐨𝐮 𝐛𝐮𝐢𝐥𝐝𝐢𝐧𝐠 𝐀𝐈 𝐚𝐠𝐞𝐧𝐭𝐬 𝐰𝐢𝐭𝐡 𝐜𝐮𝐬𝐭𝐨𝐦 𝐢𝐧𝐭𝐞𝐠𝐫𝐚𝐭𝐢𝐨𝐧𝐬 𝐨𝐫 𝐰𝐢𝐭𝐡 𝐌𝐂𝐏?\n\n♻️ Repost this to help your network get started\n\nCc : respective author.",
+        "source": "",
+        "truncated": false,
+        "in_reply_to_status_id": null,
+        "in_reply_to_status_id_str": null,
+        "in_reply_to_user_id": null,
+        "in_reply_to_user_id_str": null,
+        "in_reply_to_screen_name": null,
+        "user": {
+          "id": 1977766868405411840,
+          "id_str": "1977766868405411840",
+          "name": "Vaidehi",
+          "screen_name": "Ai_Vaidehi",
+          "location": "New York, USA",
+          "url": "",
+          "description": "Exploring the future of AI 🚀 | Sharing top AI tools, trends & news 🤖 | Collaborations & influencer partnerships in the AI space 🔗",
+          "protected": false,
+          "verified": true,
+          "followers_count": 13403,
+          "friends_count": 38,
+          "listed_count": 0,
+          "favourites_count": 5866,
+          "statuses_count": 1942,
+          "created_at": "2025-10-13T16:02:43.000000Z",
+          "profile_banner_url": "https://pbs.twimg.com/profile_banners/1977766868405411840/1761486986",
+          "profile_image_url_https": "https://pbs.twimg.com/profile_images/1982473055545819136/RQp_qpzR_normal.jpg",
+          "can_dm": true,
+          "affiliation_label": null
+        },
+        "quoted_status_id": null,
+        "quoted_status_id_str": null,
+        "is_quote_status": false,
+        "quoted_status": null,
+        "retweeted_status": null,
+        "quote_count": 9,
+        "reply_count": 21,
+        "retweet_count": 201,
+        "favorite_count": 855,
+        "views_count": 61286,
+        "bookmark_count": 884,
+        "lang": "en",
+        "entities": {
+          "hashtags": [],
+          "symbols": [],
+          "timestamps": [],
+          "urls": [],
+          "user_mentions": [],
+          "media": [
+            {
+              "display_url": "pic.x.com/UcDlgyoKSJ",
+              "expanded_url": "https://x.com/Ai_Vaidehi/status/2045356965161836916/photo/1",
+              "ext_media_availability": {
+                "status": "Available"
+              },
+              "id_str": "2045356951052443648",
+              "indices": [
+                239,
+                262
+              ],
+              "media_key": "16_2045356951052443648",
+              "media_url_https": "https://pbs.twimg.com/tweet_video_thumb/HGKRT2pbYAAp8D-.jpg",
+              "original_info": {
+                "focus_rects": [],
+                "height": 1066,
+                "width": 800
+              },
+              "sizes": {
+                "large": {
+                  "h": 1066,
+                  "w": 800
+                }
+              },
+              "type": "animated_gif",
+              "url": "https://t.co/UcDlgyoKSJ",
+              "video_info": {
+                "aspect_ratio": [
+                  400,
+                  533
+                ],
+                "variants": [
+                  {
+                    "bitrate": 0,
+                    "content_type": "video/mp4",
+                    "url": "https://video.twimg.com/tweet_video/HGKRT2pbYAAp8D-.mp4"
+                  }
+                ]
+              }
+            }
+          ],
+          "display_text_range": [
+            0,
+            238
+          ]
+        },
+        "is_pinned": false
+      },
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "views_count": 61,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          194
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-19T11:09:43.000000Z",
+      "id": 2045822144773493033,
+      "id_str": "2045822144773493033",
+      "type": "tweet",
+      "conversation_id_str": "2045822144773493033",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Anthropic just dropped a free academy for everyone\n\nHere’s the quick list:\n\nClaude 101\nAI Fluency\nClaude Code in Action\nModel Context Protocol (MCP)\nAgent Skills and more\n\nThe barrier to building in AI is officially gone. 🚀\n\nStart here: https://t.co/XWM11s1dcO https://t.co/beNrUfGiu7",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1397181764691501062,
+        "id_str": "1397181764691501062",
+        "name": "Anjali | BlockchainHQ",
+        "screen_name": "ianjali_th",
+        "location": "",
+        "url": "https://linktr.ee/anjalithacker",
+        "description": "Marketing @blockchainhqxyz | @shefiorg S11 | @_HerDAO Ambassador | Tweets are NFA",
+        "protected": false,
+        "verified": true,
+        "followers_count": 976,
+        "friends_count": 1903,
+        "listed_count": 0,
+        "favourites_count": 16117,
+        "statuses_count": 5737,
+        "created_at": "2021-05-25T13:25:46.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1397181764691501062/1775050874",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1504744160569438208/Op4GfDMM_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 1,
+      "favorite_count": 8,
+      "views_count": 79,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "anthropic.skilljar.com",
+            "expanded_url": "http://anthropic.skilljar.com",
+            "indices": [
+              237,
+              260
+            ],
+            "url": "https://t.co/XWM11s1dcO"
+          }
+        ],
+        "user_mentions": [],
+        "media": [
+          {
+            "allow_download_status": {
+              "allow_download": true
+            },
+            "display_url": "pic.x.com/beNrUfGiu7",
+            "expanded_url": "https://x.com/ianjali_th/status/2045822144773493033/photo/1",
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "features": {
+              "large": {
+                "faces": []
+              }
+            },
+            "id_str": "2045820827950870528",
+            "indices": [
+              261,
+              284
+            ],
+            "media_key": "3_2045820827950870528",
+            "media_url_https": "https://pbs.twimg.com/media/HGQ3NCwbcAAEQmu.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 382,
+                  "w": 682,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 682,
+                  "w": 682,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 777,
+                  "w": 682,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 1278,
+                  "w": 639,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 1278,
+                  "w": 682,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 1278,
+              "width": 682
+            },
+            "sizes": {
+              "large": {
+                "h": 1278,
+                "w": 682
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/beNrUfGiu7"
+          }
+        ],
+        "display_text_range": [
+          0,
+          260
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-18T21:42:23.000000Z",
+      "id": 2045618973795074155,
+      "id_str": "2045618973795074155",
+      "type": "tweet",
+      "conversation_id_str": "2045618973795074155",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "今日はAnthropicが出してるSecurity Best Practiceに則ったMCP Serverを構築してみるなど",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 2003017128879017984,
+        "id_str": "2003017128879017984",
+        "name": "Shizuku",
+        "screen_name": "shizuku198hdm",
+        "location": "",
+        "url": "https://github.com/shizuku198411",
+        "description": "Network/Security Engineer\nコンテナランタイムとかカーネルとか作ったりHTBやってたり。",
+        "protected": false,
+        "verified": false,
+        "followers_count": 1,
+        "friends_count": 8,
+        "listed_count": 0,
+        "favourites_count": 162,
+        "statuses_count": 64,
+        "created_at": "2025-12-22T08:18:03.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/2003017128879017984/1773657553",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2037070467971112962/72xp5p_T_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 29,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          62
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-18T14:07:37.000000Z",
+      "id": 2045504524954304683,
+      "id_str": "2045504524954304683",
+      "type": "tweet",
+      "conversation_id_str": "2045504524954304683",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Anthropic's Own MCP Has a Critical Security Flaw, And Anthropic Won't Fix It 🔴\n\nThe Model Context Protocol (Anthropic's tool framework) executes arbitrary commands regardless of success, no sanitization, no warnings, affecting 200+ projects, 150 million downloads, an estimated 200,000 vulnerable instances worldwide.\n\nAnthropic's response: it's \"expected behavior\" and developers' responsibility to sanitize. Translation: we're not patching it.\n\n🧠 Read the room:\nYou can't build secure systems on insecure foundations.\n\nAnthropic just told 200,000 deployments they're on their own, great look for the company betting on enterprise adoption.\n\nSource: Infosecurity Magazine",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1462321123605970946,
+        "id_str": "1462321123605970946",
+        "name": "Aman Kumar",
+        "screen_name": "AmanKum24351731",
+        "location": "",
+        "url": "http://TrueYouAi.app",
+        "description": "AI-first builder shipping startups 🚀 I build, test & launch: • AI tools • SaaS products • Automation systems Sharing what works (and what doesn’t)",
+        "protected": false,
+        "verified": true,
+        "followers_count": 38,
+        "friends_count": 30,
+        "listed_count": 0,
+        "favourites_count": 1049,
+        "statuses_count": 1079,
+        "created_at": "2021-11-21T07:25:16.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1462321123605970946/1767423973",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2007347743115882496/Ix7UOt-9_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 7,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          277
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-18T10:47:20.000000Z",
+      "id": 2045454124792357034,
+      "id_str": "2045454124792357034",
+      "type": "tweet",
+      "conversation_id_str": "2045454124792357034",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "GitHub公式ブログが\n「今注目すべきOSS AI 10選」をリリース！\n\n結論\n2026年は「MCPとマルチエージェント」の年だ。\n\nMCP（Model Context Protocol）って何？\n→ AIが外部ツールを使うための世界共通規格。\n\nAnthropicが作ったものを、OpenAIもGoogleも続々採用。\n\n「MCP対応」って一言で説明すると\n・Slackのチャンネルを読み書き\n・ファイルを直接編集\n・外部APIを自由に叩く\n・ブラウザを操作  全部可能になる。\n\nプログラマーじゃなくても「MCP」という単語だけ覚えておけばOK。\n2026年のAIは、これで動いてる。\nチームのSlackにAIを“招待”するだけで業務が劇的に変わる時代が、本当に来るぞ。\n\n#MCP #マルチエージェント #AI #OSS #GitHub",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 2023750843120635904,
+        "id_str": "2023750843120635904",
+        "name": "AI太郎 | GitHub×AI情報局",
+        "screen_name": "taro_ai27599",
+        "location": "日本 ",
+        "url": "",
+        "description": "GitHubに眠るAI最新ツールを毎日調査🔍\n◎セキュリティ確認済みのものだけ紹介\n◎ 非エンジニアでも使える形に噛み砕き解説\n◎ ★数・ライセンス・導入方法まで完全網羅\nClaude Code / AI効率化 / 自動化のプロ\n「GitHubって何？」な人でもフォローすればAI最前線が分かります👇",
+        "protected": false,
+        "verified": true,
+        "followers_count": 22,
+        "friends_count": 75,
+        "listed_count": 0,
+        "favourites_count": 79,
+        "statuses_count": 53,
+        "created_at": "2026-02-17T13:26:28.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/2023750843120635904/1776071189",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2043616747882942464/jfP_XVyO_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 24,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [
+          {
+            "indices": [
+              341,
+              345
+            ],
+            "text": "MCP"
+          },
+          {
+            "indices": [
+              346,
+              356
+            ],
+            "text": "マルチエージェント"
+          },
+          {
+            "indices": [
+              357,
+              360
+            ],
+            "text": "AI"
+          },
+          {
+            "indices": [
+              361,
+              365
+            ],
+            "text": "OSS"
+          },
+          {
+            "indices": [
+              366,
+              373
+            ],
+            "text": "GitHub"
+          }
+        ],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          181
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-18T07:00:00.000000Z",
+      "id": 2045396912266674599,
+      "id_str": "2045396912266674599",
+      "type": "tweet",
+      "conversation_id_str": "2045396912266674599",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Anthropic 发起的 MCP（Model Context Protocol），现在 OpenAI、Google、Cursor、Vercel 全接入了。\n\n这意味着什么？\n以前：每个 AI 工具要连 GitHub/数据库/浏览器，都得写一遍适配器。\n现在：只要服务器支持 MCP，任何客户端都能即插即用。\n标准的威力在于——它把\"生态竞争\"变成了\"协议兼容\"。",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 2044593321453178881,
+        "id_str": "2044593321453178881",
+        "name": "Txiaozhe",
+        "screen_name": "Txiaozhet95k",
+        "location": "",
+        "url": "",
+        "description": "起飞|不躺平\nAI搞钱\n————————\n哪里跌倒哪里爬起来",
+        "protected": false,
+        "verified": false,
+        "followers_count": 5,
+        "friends_count": 16,
+        "listed_count": 0,
+        "favourites_count": 16,
+        "statuses_count": 64,
+        "created_at": "2026-04-16T01:47:45.000000Z",
+        "profile_banner_url": "",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2044593717923995648/oSp1VaW3_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 2,
+      "views_count": 35,
+      "bookmark_count": 0,
+      "lang": "zh",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          182
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-18T06:43:34.000000Z",
+      "id": 2045392777731776762,
+      "id_str": "2045392777731776762",
+      "type": "tweet",
+      "conversation_id_str": "2045392777731776762",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Just completed Anthropic's free Claude AI course\nCovers everything that matters for building real AI systems:\n→ Claude API &amp; tool use\n→ MCP (Model Context Protocol)\n→ Agentic architecture\n→ Claude Code\nAll free 👇\n🔗 https://t.co/AW2KRQE6OP\n#Anthropic #Claude #AIEngineering",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1507564711650676741,
+        "id_str": "1507564711650676741",
+        "name": "Sopan Bhattacharya",
+        "screen_name": "SopanBhattachr1",
+        "location": "India",
+        "url": "https://datalayer-nrzl316.public.builtwithrocket.new",
+        "description": "A techie's heart, a business mind, intertwined in a cosmic dance of innovation and passion.",
+        "protected": false,
+        "verified": false,
+        "followers_count": 14,
+        "friends_count": 293,
+        "listed_count": 0,
+        "favourites_count": 276,
+        "statuses_count": 16,
+        "created_at": "2022-03-26T03:47:31.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1507564711650676741/1669636880",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1597197840820101120/1c2VX7dP_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 2,
+      "views_count": 53,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [
+          {
+            "indices": [
+              243,
+              253
+            ],
+            "text": "Anthropic"
+          },
+          {
+            "indices": [
+              254,
+              261
+            ],
+            "text": "Claude"
+          },
+          {
+            "indices": [
+              262,
+              276
+            ],
+            "text": "AIEngineering"
+          }
+        ],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "anthropic.skilljar.com",
+            "expanded_url": "http://anthropic.skilljar.com",
+            "indices": [
+              219,
+              242
+            ],
+            "url": "https://t.co/AW2KRQE6OP"
+          }
+        ],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          276
+        ]
+      },
+      "is_pinned": false
+    }
+  ]
+}
