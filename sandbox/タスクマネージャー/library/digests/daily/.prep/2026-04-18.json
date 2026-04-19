@@ -1,0 +1,362 @@
+{
+  "date": "2026-04-18",
+  "generated_at": "2026-04-19T23:23:45.919880Z",
+  "article_count": 25,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-04-18_001_MCP_Official_2026_Roadmap_Transport_Governance.md",
+      "title": "The 2026 MCP Roadmap: Transport Scalability, Governance, Enterprise Readiness",
+      "url": "https://blog.modelcontextprotocol.io/posts/2026-mcp-roadmap/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Model Context Protocol公式ブログが2026年のロードマップを公開。4つの優先領域：①トランスポートスケーラビリティ（Streamable HTTPでリモートMCPサーバーを標準化）、②エージェント間通信（A2Aプロトコルとの統合）、③ガバナンス成熟（Linux Foundation傘下のAAIFに寄贈済み）、④エンタープライズ対応。2026年3月時点で公開MCPサーバー1万以上、SDK月次DL 9700万を記録。Forresterは2026年中に企業APPベンダーの30%が独自MCPサーバーを立ち上げると予測。2025年12月のAAIF寄贈によりAnthropicの独占からオープン標準へ移行が加速。",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "主要統計と組織ガバナンス事実は正確。Forrester予測は独立した一次情報が未確認。"
+    },
+    {
+      "file": "2026-04-18_002_Awesome_Claude_Code_Curated_List_GitHub_hesreallyhim.md",
+      "title": "Awesome Claude Code: Curated List of Skills, Hooks, Agents, Plugins",
+      "url": "https://github.com/hesreallyhim/awesome-claude-code",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "GitHubのawesome-claude-codeリポジトリ（hesreallyhim管理）。Claude Code向けのスキル、フック、スラッシュコマンド、エージェントオーケストレーター、アプリケーション、プラグインのキュレーションリスト。2026年4月時点でコミュニティ投稿による多数のエントリを収録。公式スキル・サードパーティスキル・MCP統合・フックサンプル・CLAUDEmd テンプレートなどを網羅。Claude Code生態系の全体像を把握するためのインデックスとして機能。実用的なスターター資料として開発者の間で参照頻度が高い。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-18_003_Claude_Opus_47_Benchmarks_Features_Migration_Guide.md",
+      "title": "Claude Opus 4.7: Benchmarks, Features, and Migration Guide (April 2026)",
+      "url": "https://www.the-ai-corner.com/p/claude-opus-4-7-guide-benchmarks-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "Claude Opus 4.7（2026年4月16日リリース）の包括ガイド。主要アップデート：①アジェンティックコーディング強化（長期自動化・システムエンジニアリング・複雑なコード推論）、②ビジョン改善（最大2576px・約375万画素の画像入力）、③新エフォートレベル「xhigh」追加（highとmaxの中間）、④タスクバジェット（エージェントループのトークン推定制御）。価格はOpus 4.6と同一（入力$5/MTok・出力$25/MTok）。SWE-Bench Proや長期エージェントタスクでの改善が顕著。Bedrock/Vertex経由でも即日GA。Opus 4.6からの移行はドロップイン対応。",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "主要クレームは概ね正確。SWE-Bench表記が記事では'SWE-Bench Pro'だが正式名称は'SWE-Bench Verified'。"
+    },
+    {
+      "file": "2026-04-18_004_Claude_Opus_47_AINews_Latent_Space_One_Step_Better.md",
+      "title": "AINews: Claude Opus 4.7 — Literally One Step Better Than 4.6 in Every Dimension",
+      "url": "https://www.latent.space/p/ainews-anthropic-claude-opus-47-literally",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "Latent Space（AI研究者向け技術ニュースレター）によるClaude Opus 4.7の詳細分析。「全ての次元でOpus 4.6より1段階優れる」という評価。技術的詳細：コンテキスト長1Mトークン継続、xhighエフォートによる推論深度制御、ビジョン解像度向上。ベンチマーク比較：SWE-Bench Pro・MRCR v2・HumanEvalなど複数指標での改善を定量的に検証。エージェントコーディング用途での実用的優位性を示す事例を含む。AIコミュニティの反応として「incremental但つ着実な進化」という評価が多数。Anthropic製品ロードマップ上のMythosへの布石との考察あり。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-18_005_Cloudflare_Agents_Week_2026_All_Releases_Explained.md",
+      "title": "Cloudflare Agents Week 2026: Every Release Explained",
+      "url": "https://lushbinary.com/blog/cloudflare-agents-week-2026-everything-released/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "Cloudflare Agents Week（2026年4月13〜17日）の全リリースをまとめた解説記事。主要リリース：①Dynamic Workers（リクエスト単位でワーカーをオンデマンド起動）、②Cloudflare Sandboxes GA（コード実行用セキュアサンドボックス本番公開）、③Cloudflare Mesh（エージェント間通信インフラ）、④Code Mode・MCPトークン99%削減（blog.cloudflare.com/code-mode-mcp済み）。エージェントインフラの「フルスタック」をエッジで提供する方向性が明確化。Workers AIとの統合でLLM推論もエッジで完結。MCPサーバー機能のネイティブサポートも追加。開発者向けAPIは即日利用可能。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-18_006_OpenAI_Agents_SDK_Next_Evolution_Security_Sandbox.md",
+      "title": "The Next Evolution of the OpenAI Agents SDK: Sandbox Execution and Security",
+      "url": "https://openai.com/index/the-next-evolution-of-the-agents-sdk/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "OpenAIが2026年4月15日にAgents SDKの大型アップデートを発表。主要新機能：①ネイティブサンドボックス実行（ファイル・コマンド・コード編集を制御された環境で実行）、②モデルネイティブハーネス（Claude Managed AgentsのAnthropicに対抗する位置づけ）、③拡張セキュリティ機能（実行権限の細粒度制御）、④長期タスクのデュラブルエージェントパターン。Claude Agent SDKと直接競合する機能セット。AI開発者コミュニティにとってエージェントSDK選択肢が広がる重要リリース。マルチプロバイダー対応でClaude・Geminiモデルとも統合可能。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-18_007_Claude_Code_Setup_4months_MCP_Hooks_Skills_Okhlopkov.md",
+      "title": "My Claude Code Setup After 4 Months of Daily Use (2026): MCP, Hooks, Skills",
+      "url": "https://okhlopkov.com/claude-code-setup-mcp-hooks-skills-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "4ヶ月間毎日Claude Codeを使い続けたエンジニアによる実践的セットアップガイド。具体的な設定：使用MCPサーバーリスト（GitHub・Filesystem・Browser・Database）、カスタムフック（lint自動実行・コミット前テスト・セキュリティチェック）、スキル構成（コードレビュー・PR作成・ドキュメント生成）。CLAUDE.md設計の試行錯誤と最終形も公開。実務での学び：「MCPは接続性、スキルは方法論、フックは保証」という使い分け原則。コンテキスト管理の実際（1Mトークンでも無計画使用は非効率）。非エンジニアでも参考になるワークフロー設計思想を含む。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-18_008_Claude_Code_Advanced_Best_Practices_11_Techniques_SmartScope.md",
+      "title": "Claude Code Advanced Best Practices: 11 Practical Techniques for Hooks, Subagents & Context",
+      "url": "https://smartscope.blog/en/generative-ai/claude/claude-code-best-practices-advanced-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Claude Code上級者向け11の実践テクニック（2026年版）。主要内容：①フック×CLAUDE.mdの組み合わせ（フックが70%→100%に強制力を高める）、②サブエージェントの並列ワークフロー設計、③コンテキスト管理のベストプラクティス（重要ルールはフックで保証）、④Worktreeモードでのブランチ隔離、⑤エラーハンドリングのパターン、⑥テスト自動実行フック。CLAUDE.mdは200行超で効果が落ちる実証データを示す。「フックはCLAUDE.mdを補完するもの、CLAUDE.mdの『何を』に対してフックが『どう』を保証する」という設計原則。上級活用者向けの踏み込んだ内容。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-18_009_Stop_Stuffing_Custom_Instructions_Skills_MCP_Guide_Medium.md",
+      "title": "Stop Stuffing Your Custom Instructions: The Definitive Guide to Claude Skills & MCP",
+      "url": "https://medium.com/@kdineshkvkl/stop-stuffing-your-custom-instructions-the-definitive-guide-to-claude-skills-mcp-0edda444fcda",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "カスタムインストラクションに詰め込みすぎることへの警告と、スキル・MCPの適切な使い分けガイド。問題の本質：長いカスタム指示はClaudeが一部を無視し始める（コンテキスト競合）。解決策の体系：①繰り返しの手順→スキル化、②外部システムアクセス→MCP、③プロジェクト固有の規約→CLAUDE.md（簡潔に）、④動的なデータ→MCPリソース。スキルのトリガー精度を上げるdescription書き方の具体例。MCP vs スキルの判断フローチャートを提供。実装例：GithubスキルとGitHub MCPの違い（前者は手順、後者はAPI呼び出し）。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-18_010_Anthropic_Official_Complete_Guide_Building_Skills_PDF.md",
+      "title": "The Complete Guide to Building Skills for Claude (Official Anthropic PDF)",
+      "url": "https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Anthropic公式が配布するClaude Codeスキル構築の完全ガイドPDF。内容：スキルアーキテクチャの設計原則、SKILL.mdのYAMLフロントマターとMarkdownコンテンツの書き方、トリガー条件の設計（descriptionの重要性）、スキルのデバッグ方法、チーム展開のベストプラクティス。公式ドキュメントとの差異：より詳細な実装例・アンチパターン・ユースケース別テンプレートを含む。エンタープライズ向けスキル管理（バージョン管理・チーム共有・skills-registryの設計）に関するセクションあり。Anthropicが推奨するスキル設計の「公式答え合わせ」として最も信頼性が高い資料。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-18_011_Claude_Agent_SDK_Guide_2026_Popularaitools.md",
+      "title": "Claude Agent SDK Guide 2026: Library Mode, Managed Agents, and Production Patterns",
+      "url": "https://popularaitools.ai/blog/claude-agent-sdk-guide-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Claude Agent SDK 2026年版の実践ガイド。主要トピック：①SDKの2モード（Managed AgentsとLibraryモード）の違いと選択基準、②get_context_usage()メソッドによるコンテキスト使用量追跡、③@toolデコレーターでのtyping.Annotated対応（パラメータ説明のJSON Schema生成）、④\"auto\"パーミッションモード追加（TypeScript SDKとのパリティ）、⑤プロンプトキャッシュ無効化バグ修正（入力トークンコスト最大12倍削減）。2026年4月18日リリース分の最新変更を含む。本番環境でのデプロイパターン（SSE・Webhook・バッチ処理）と実装例を提供。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-18_012_Claude_Managed_Agents_Public_Beta_REST_API_Guide_Apiyi.md",
+      "title": "Anthropic Claude Managed Agents Public Beta: Run a Fully Managed AI Agent in 5 Minutes",
+      "url": "https://help.apiyi.com/en/anthropic-claude-managed-agents-public-beta-launch-en.html",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Claude Managed Agentsパブリックベータの詳細解説（Apiyi.comブログ）。2026年4月8日公開。技術仕様：「エージェントループ+ツール実行+サンドボックスコンテナ+状態永続性」をREST APIにバンドル。必須ヘッダー：`managed-agents-2026-04-01`（ベータアクセストークン）。エンドポイント構成：エージェント作成・タスク送信・SSEストリーム・状態取得の4系統。5分で動くサンプルコード（Python・TypeScript）を提供。制限事項：ベータ期間中の料金体系・スケールリミット・モデル選択範囲。Library ModeのSDKとの違い（Managedはサーバーサイド、SDKはクライアントサイド制御）。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-18_013_Anthropic_API_4_New_Features_Agent_Development_Zenn.md",
+      "title": "Anthropic APIに追加された4つの新機能でAIエージェント開発が大きく進化",
+      "url": "https://zenn.dev/shirochan/articles/255786292c94c0",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-ecosystem",
+      "summary": "ZennのShirochan氏によるAnthropic API新機能解説。4つの新機能：①コード実行ツール（サンドボックスでPythonをネイティブ実行）、②MCPコネクター（APIリクエストにリモートMCPサーバーURLを追加するだけで外部ツール即時利用可能）、③Files API（ファイルをアップロードして会話を跨いで参照、RAG構築コスト削減）、④拡張プロンプトキャッシュ（最大12xのトークンコスト削減）。具体的な実装コードと各機能のユースケースを示す。エージェント開発のインフラが整備されたことで複雑なパイプライン構築が容易に。日本語エンジニア向け最速解説として高評価。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-18_014_New_LLM_Releases_April_2026_Complete_Timeline_Fazm.md",
+      "title": "New LLM Releases April 2026: Every Major Model Launch This Month",
+      "url": "https://fazm.ai/blog/new-llm-releases-april-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "2026年4月のLLMリリース完全タイムライン。主要リリース：Claude Opus 4.7（4/16・Anthropic）、GPT-5 Turbo（4/7・OpenAI・ネイティブ画像音声生成）、GPT-6（4月後半・OpenAI）、Mistral Medium 3（4/9・オープンウェイト・EU AI法コンプライアンスメタデータ内蔵）、GLM-5.1（Zhipu AI・7440億パラメータMoE・MIT・SWE-Bench ProでOpus 4.6超え主張）、Gemma 4（Google・4バリアント・Apache 2.0）、LLM-jp-4（NII・日本語特化）。「4月は史上最もモデルリリースが多い月」と評価。開発者向けの選択基準（コスト・レイテンシ・特定タスク性能）別の推奨モデルを整理。",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "GLM-5.1のSWE-Bench Pro首位と比較スコアは複数ソースで確認。パラメータ数の詳細は未確認。"
+    },
+    {
+      "file": "2026-04-18_015_AI_Weekly_April_9_15_2026_Agents_Models_Chips_DEV.md",
+      "title": "AI Weekly: Agents, Models, and Chips — April 9–15, 2026",
+      "url": "https://dev.to/alexmercedcoder/ai-weekly-agents-models-and-chips-april-9-15-2026-486f",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "DEV Community掲載の2026年4月9〜15日AIウィークリーまとめ。カバー範囲：①エージェント（Anthropic Routinesリリース・OpenAI Agents SDK更新・Cloudflare Agents Week発表）、②モデル（Claude Opus 4.7プレビュー・Mistral Medium 3・GLM-5.1発表）、③チップ（NvidiaのBlackwell B300発表・Intelのガウディ4量産開始）。開発者視点の実践的コメント：「Routinesはエージェントの自律性を高める最も重要な機能」。今週の注目：Claude Code Desktop Redesignのエンタープライズ反応が予想以上にポジティブ。週次サマリーとして網羅性・速報性のバランスが良い。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-18_016_AI_Companion_Chatbot_Regulation_Wave_April_2026.md",
+      "title": "AI Companion Apps Are Getting Regulated in April 2026: What Changed",
+      "url": "https://www.roborhythms.com/ai-companion-chatbot-regulation-wave-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "2026年4月施行のAIコンパニオンアプリ規制波の詳細分析。主要規制：①ワシントン州：AIであることの事前開示義務＋危機介入時の専門家接続義務、②ニューヨーク州S-3008C：自傷行為検出プロトコル義務・非人間表示義務（既に施行）、③メイン州：AIセラピーbot全面禁止法案（知事署名待ち）、④テキサス州：Responsible AI Governance Act（2026年1月1日施行）。EU AI Act（2026年8月完全適用）との整合性問題も論点。AI製品開発者への実務的影響：コンプライアンスコスト・機能制限・地域別対応の必要性。医療・メンタルヘルス分野のAI規制の先行指標として注目。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-18_017_AI_Powered_EAs_5_Reasons_Outperform_Traditional_MQL5.md",
+      "title": "5 Reasons AI-Powered EAs Outperform Traditional Automated Systems in 2026",
+      "url": "https://www.mql5.com/en/blogs/post/768299",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "MQL5トレーダーブログによるAI搭載EAと従来型EAの比較分析（2026年3月21日掲載）。5つの優位性：①市場レジーム変化への適応（ルールベースEAは変化で失敗するが、AIエージェントは推論で自動適応）、②LLMコンファメーションレイヤー（MLシグナル→LLMで市場コンテキスト照合の2段階検証）、③センチメント分析の統合（ニュース・SNS・テクニカルの複合評価）、④リスク管理の動的調整、⑤アノマリー検出精度。GPTをH4・日足のマスターブレイン、DeepSeekを高頻度ロジック評価に使い分ける実装例。JSON Mode活用でMQL5側のパース安定性確保。実務的な実装詳細が豊富。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-18_018_ChatGPT_FX_Auto_Trading_EA_Development_Note_Sayama.md",
+      "title": "ChatGPT（生成AI）の売買判断を定期的に連携して自動的にFX取引を行うEAの開発",
+      "url": "https://note.com/sayama_ocha/n/nb22d3c2cbaa2",
+      "source": "web",
+      "lang": "ja",
+      "theme": "ai-trading",
+      "summary": "Note掲載のsayama_ocha氏による実装記事。ChatGPT APIをMT5のEAと連携してFX自動売買を実現する具体的な実装手順。アーキテクチャ：MT5 EA（MQL5）がChatGPT APIを定期呼び出し→JSON形式で売買判断を受取→自動注文執行。技術的ポイント：APIキー管理・JSON Parse・エラーハンドリング・レート制限対策。使用モデル：ChatGPT-5（GPT-4o等）。結果と考察：AIの判断精度はプロンプト設計に依存、バックテスト不可のため実運用リスクあり。日本語圏でのLLM×MT5統合の実践事例として希少。コードの一部を公開しており再現性が高い。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-18_019_Claude_Code_Skills_Kanzen_Guide_2026_Qiita_Nogataka.md",
+      "title": "Claude Code Skills 完全活用ガイド 2026 — 個人最適化からチーム展開まで",
+      "url": "https://qiita.com/nogataka/items/ad9995fb1b3db7055740",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "Qiita掲載のnogataka氏によるClaude Code Skills完全ガイド（2026年版）。前回記事（公式スキル構築ガイド解読）の続編として個人・チーム双方の活用法を詳説。個人最適化：自分の作業スタイルに合わせたスキルセット構成、よく使うワークフローのスキル化テンプレート。チーム展開：skills-registryの設計・命名規則・バージョン管理・オンボーディングへの組み込み方。スキルの「育て方」：初期版→フィードバック収集→改善サイクルの運用モデル。日本語チームでの実践事例（5人チームでのスキル共有効果）。MCP・フック・CLAUDE.mdとの役割分担を図解で整理。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-18_020_MIT_TechReview_Japan_2026_AI_5_Trends.md",
+      "title": "MIT Tech Review: どうなる2026年のAI、本誌が予測する5大トレンド",
+      "url": "https://www.technologyreview.jp/s/375307/whats-next-for-ai-in-2026/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "ai-news",
+      "summary": "MIT Technology Review日本版による2026年AI予測記事。5大トレンド：①エージェントAIの実用化加速（単発タスクから長期自律タスクへ）、②マルチモーダルモデルの標準化（テキスト・画像・音声・動画の統合）、③オープンソースモデルの追い上げ（GLM-5.1等がプロプライエタリを凌駕）、④規制の二極化（EU厳格化vs米国「軽タッチ」）、⑤AIエネルギー問題の顕在化（データセンター電力消費が社会問題化）。MIT独自の調査データと専門家コメントを組み合わせた権威ある分析。4月時点での進捗確認（予測の当否）も含む。日本語圏での一次情報として信頼性高い。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-18_021_X_quakes99_NVIDIA_Idaho_National_Lab_Nuclear_AI_Project.md",
+      "title": "NVIDIA & Idaho National Laboratory Launch AI Project to Cut Nuclear Reactor Build Time in Half",
+      "url": "https://x.com/quakes99/status/2044850713831067697",
+      "source": "x",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "@quakes99（フォロワー97,108、いいね77）によるX投稿（2026-04-18収集）。NVIDIAとアイダホ国立研究所が「Project Prometheus」を立ち上げ。AIを活用して原子炉建設期間を数十年から数年に短縮し、急増する電力需要に対応。AIエネルギーインフラ問題への具体的取り組みとして注目度高い。",
+      "body_excerpt": "Boom!💥 NVIDIA & Idaho National Laboratory Launch #AI Project to Cut #Nuclear Reactors Build Time in Half, Cut Costs. Project Prometheus aims to deploy US reactors in years instead of decades to meet surging electricity demand.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-18_022_X_LaPier_Perplexity_Personal_Computer_Mac_Launch.md",
+      "title": "Perplexity Personal Computer for Mac — 一人称AIコンピューティングの新形態",
+      "url": "https://x.com/_LaPier/status/2044846321333579780",
+      "source": "x",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "@_LaPier（フォロワー1,556、いいね53）によるX投稿（2026-04-18収集）。Perplexityが「Personal Computer for Mac」をリリース。macOS向けのAIネイティブコンピューティング体験を提供するアプリ。Claude Code Desktop Redesignと同様のトレンド（AIファーストのデスクトップ環境）を体現。PerplexityのmacOS参入が競合環境を激化。",
+      "body_excerpt": "So pumped to launch Personal Computer for Mac 🚀\n\nI've loved macOS forever. It's where software feels most personal, and the perfect place to reimagine what AI can do.\n\nThis is the future I came to @perplexity_ai to shape. A lot of heart, vision, and hard work in this one.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-18_023_X_maynkag_Resolve_AI_Labs_40M_Series_A_1_5B_Valuation.md",
+      "title": "Resolve AI Labs — $40M Series A拡張、バリュエーション$1.5B（DST Global / Salesforce Ventures）",
+      "url": "https://x.com/maynkag/status/2044793025910468702",
+      "source": "x",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "@maynkag（フォロワー618、いいね60）によるX投稿（2026-04-18収集）。Resolve AI Labsが$40M Series A拡張ラウンドを発表（累計$190M超）。バリュエーション$1.5B。DST Global・Salesforce Ventures主導。プロダクション環境のログ・メトリクス・トレース・トポロジーを扱うAI信頼性エンジニアリングプラットフォーム。AIエージェントを使ったインシデント対応自動化分野への巨額投資の一例。",
+      "body_excerpt": "Today we announced Resolve AI Labs, backed by an additional $40 million in our Series A Extension at a $1.5 billion valuation, led by DST Global and Salesforce Ventures. This brings our total funding to more than $190M.\n\nProduction environments generate the most complex data in software: logs, metrics, traces, topology, change history. All of it noisy, ephemeral, and constantly shifting. In incident response and reliability engineering, this complexity is the enemy.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-18_024_X_business_Bloomberg_Anthropic_Claude_Opus_47_Report.md",
+      "title": "Bloomberg報道: Anthropic、最強モデルClaude Opus 4.7を発表 — Mythosの1週間後",
+      "url": "https://x.com/business/status/2044789141628502195",
+      "source": "x",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "@business（Bloomberg公式・フォロワー998万、いいね187）によるX投稿（2026-04-18収集）。Claude Opus 4.7のBloomberg速報。注目点：Mythosの限定公開（Project Glasswing・約50社限定）からわずか1週間でOpus 4.7を一般公開するAnthropicの製品戦略。フロンティアモデルを段階的にリリースしつつ、広く利用可能なモデルを常に維持するという二層構造の製品ラインアップを示す。メインストリームメディアへの波及を示す重要な指標。",
+      "body_excerpt": "Anthropic is introducing an updated version of its most powerful, widely available AI model, barely a week after it limited the release of a more advanced offering called Mythos.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-18_025_X_Botan_cr_NVIDIA_Lyra_2_0_3D_Space_Generation.md",
+      "title": "NVIDIA「Lyra 2.0」— 一貫性のある広大な3D空間を生成するフレームワーク",
+      "url": "https://x.com/Botan_cr/status/2044742609927884928",
+      "source": "x",
+      "lang": "ja",
+      "theme": "ai-news",
+      "summary": "@Botan_cr（フォロワー16,679、いいね104）によるX投稿（2026-04-18収集）。NVIDIAがLyra 2.0をリリース。特徴：①過去フレーム参照と自己修正で移動しても崩れないジオメトリ維持、②奥行き生成の精度向上。ゲームエンジン・物理シミュレーション・デジタルツインへの応用可能性。AI生成3D空間技術の進展が自動取引のマーケット可視化・シミュレーション環境にも影響する可能性。",
+      "body_excerpt": "NVIDIAが本日リリースした「Lyra 2.0」は、一貫性のある広大な3D空間を生成するフレームワーク\n\n従来のAIが苦手とした奥行きの生成を克服し、過去フレームの参照と自己修正で、移動しても崩れないジオメトリを維持するそう。開発映像を見る限り精度が凄そう\n\nここから物理エンジンに移植できるんだよね",
+      "fact_checked": false,
+      "fact_check_note": ""
+    }
+  ],
+  "fact_checks": [
+    {
+      "article_file": "2026-04-18_003_Claude_Opus_47_Benchmarks_Features_Migration_Guide.md",
+      "checked_claims": [
+        "4月16日リリース ✓",
+        "価格 $5/$25/MTok ✓（ただしトークナイザー更新により実コストは最大1.35倍増の可能性あり）",
+        "xhighエフォートレベル追加 ✓（highとmaxの中間、Claude Codeのデフォルトに設定）",
+        "SWE-Bench Verified 87.6%（Opus 4.6比 +6.8pt）✓",
+        "ビジョン解像度向上 ✓"
+      ],
+      "verdict": "主要クレームは概ね正確。SWE-Bench表記が記事では'SWE-Bench Pro'だが正式名称は'SWE-Bench Verified'。",
+      "source": "https://www.anthropic.com/news/claude-opus-4-7"
+    },
+    {
+      "article_file": "2026-04-18_001_MCP_Official_2026_Roadmap_Transport_Governance.md",
+      "checked_claims": [
+        "公開MCPサーバー1万以上 ✓（実数値は1万〜1.2万）",
+        "SDK月次DL 9700万 ✓",
+        "AAIF寄贈（2025年12月）✓（Linux Foundation傘下、AnthropicほかBlock/OpenAI/Google等が参加）",
+        "Forrester 30%予測：検索結果で未確認"
+      ],
+      "verdict": "主要統計と組織ガバナンス事実は正確。Forrester予測は独立した一次情報が未確認。",
+      "source": "https://blog.modelcontextprotocol.io/posts/2026-mcp-roadmap/"
+    },
+    {
+      "article_file": "2026-04-18_014_New_LLM_Releases_April_2026_Complete_Timeline_Fazm.md",
+      "checked_claims": [
+        "GLM-5.1 SWE-Bench ProでOpus 4.6超え ✓（58.4 vs 57.3）",
+        "MITライセンス ✓",
+        "Zhipu AI（Z.ai）製 ✓",
+        "パラメータ数7440億MoE：検索結果で未確認"
+      ],
+      "verdict": "GLM-5.1のSWE-Bench Pro首位と比較スコアは複数ソースで確認。パラメータ数の詳細は未確認。",
+      "source": "https://venturebeat.com/technology/ai-joins-the-8-hour-work-day-as-glm-ships-5-1-open-source-llm-beating-opus-4"
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-04-17": 60,
+      "2026-04-16": 0,
+      "2026-04-15": 21,
+      "2026-04-14": 11,
+      "2026-04-13": 22,
+      "2026-04-12": 20,
+      "2026-04-11": 20
+    },
+    "recurring_themes": [
+      "claude",
+      "claude_code",
+      "agent",
+      "mcp",
+      "trading"
+    ]
+  }
+}
