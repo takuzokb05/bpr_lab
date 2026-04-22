@@ -88,3 +88,5 @@
 | 066 | 2026年版 FXベストAIトレーディングエージェント — MT4/MT5統合比較ガイド (GPTrader) | en | 未読 | #fx #llm-trading #mt5 #implementation #web-signal | articles/2026-04-15_016_Best_AI_Trading_Agent_Forex_MT4_MT5_Integration_2026_GPTrader.md |
 | 067 | 5 Reasons AI-Powered EAs Outperform Traditional Automated Systems in 2026 (MQL5) | en | 未読 | #fx #ea #llm-trading #comparison #web-signal | articles/2026-04-18_017_AI_Powered_EAs_5_Reasons_Outperform_Traditional_MQL5.md |
 | 068 | ChatGPT（生成AI）の売買判断を連携してFX取引を自動化するEAの開発 (Note/Sayama) | ja | 未読 | #fx #chatgpt #ea #implementation #web-signal | articles/2026-04-18_018_ChatGPT_FX_Auto_Trading_EA_Development_Note_Sayama.md |
+| 069 | MT5のEAとローカルAIモデルを接続 — 自己成長完結型トレードシステムへの実装実験（@panchan210） | ja | 未読 | #fx #ea #implementation #x-signal | articles/2026-04-22_026_X_panchan210_MT5_EA_Local_AI_Model_Integration.md |
+| 070 | Horizon — 自然言語で戦略記述→バックテスト→ブローカー接続AIアルゴ取引プラットフォーム（@sopersone） | en | 未読 | #fx #llm-trading #x-signal | articles/2026-04-22_027_X_sopersone_Horizon_AI_Algo_Trading_Platform.md |
