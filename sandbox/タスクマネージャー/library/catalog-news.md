@@ -177,3 +177,12 @@
 | 152 | Elon Musk、xAI・Cursor・Mistralの三者AIパートナーシップを模索 — Cursor買収$60B（@WOLF_Financial） | en | 未読 | #openai #funding #x-signal | articles/2026-04-22_032_X_WOLF_Financial_xAI_Cursor_Mistral_AI_Partnership.md |
 | 153 | Salesforce、27年ぶり最大刷新「Headless 360」— AIエージェントがブラウザなしで全操作（@WOLF_Financial） | en | 未読 | #agent #tools #x-signal | articles/2026-04-22_033_X_WOLF_Financial_Salesforce_Headless360_AI_Agents.md |
 | 154 | AIの現状 2026年4月 — トークン予算削減・Data Center停滞・ベンチマーク操作・OpenClaw疑惑（@wookash_podcast） | en | 未読 | #trend #x-signal | articles/2026-04-22_034_X_wookash_State_of_AI_April_2026_Budget_Benchmark_Fake.md |
+| 155 | GPT-5.5、AI Intelligence Indexで単独首位奪還 — Artificial Analysis詳細ベンチマーク（@ArtificialAnlys） | en | 未読 | #openai #model-release #x-signal | articles/2026-04-23_001_X_ArtificialAnlys_GPT55_AI_Benchmark_1.md |
+| 156 | Sundar Pichai: Googleの新規コード75%がAI生成 — 6ヶ月で50%→75%、agentic workflowで6倍速（@Pirat_Nation） | en | 未読 | #google #trend #x-signal | articles/2026-04-23_002_X_Pirat_Nation_Google_75pct_AI_Code.md |
+| 157 | Google、第8世代TPU発表 — Google Cloud Nextで公開、AI訓練特化（@Google） | en | 未読 | #google #infrastructure #x-signal | articles/2026-04-23_003_X_Google_TPU_8th_Gen_CloudNext.md |
+| 158 | Glif V2ローンチ + $17.5Mシード（a16z/USV）— creative super agent全AI統合（@fabianstelzer） | en | 未読 | #agent #tools #funding #x-signal | articles/2026-04-23_004_X_fabianstelzer_Glif_V2_Creative_Agent.md |
+| 159 | NEC × Anthropic 日本初戦略提携 — 3万エンジニアClaude展開・Mythos協議・NEC株急騰（@muratamika2021） | ja | 未読 | #anthropic #japan #agent #x-signal | articles/2026-04-23_005_X_muratamika2021_NEC_Anthropic_Partnership.md |
+| 160 | NVIDIA、GPT-5.5を「知性ある10年の証明」と歓迎（@nvidia） | en | 未読 | #nvidia #openai #x-signal | articles/2026-04-23_006_X_nvidia_GPT55_AI_Decade_Milestone.md |
+| 161 | GPT-5.5公式リリース — エージェント向け新クラス、5段階effort、$5/$30、単独首位奪還 | en | 未読 | #openai #model-release #web-signal | articles/2026-04-23_007_GPT55_OpenAI_Launch_Agent_Class.md |
+| 162 | 国内AIエージェント動向（2026/4/23号）— NEC提携・GPT-5.5・Google 75%コード生成が核心 | ja | 未読 | #japan #agent #trend #web-signal | articles/2026-04-23_009_Japan_AI_Agent_Weekly_April23_NEC_GPT55.md |
+| 163 | NEC × Anthropic グローバルパートナーシップ詳報 — Claude DX・Mythos access協議・日経報道 | ja | 未読 | #anthropic #japan #agent #web-signal | articles/2026-04-23_010_NEC_Anthropic_Global_Partnership_Japan.md |

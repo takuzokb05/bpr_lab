@@ -1078,3 +1078,46 @@ OX SecurityがMCPにRCEを可能にする設計上の欠陥（by design）を発
 - バックテスト→自己改修ループは既存Phase計画に追加すべき要素
 - **アクション:** 参考実装の進捗を継続モニタリングし、実装パターンをFX設計文書に取り込む
 
+
+---
+
+## 2026-04-23 収集分
+
+### 1. Skills-registry への反映提案
+
+#### 1-1. Claude Code Skills 2.0 isolated subagent実行への移行検討
+**出典:** articles/2026-04-23_008_Claude_Code_Skills_2_0_Subagent_Inject.md
+
+**提案内容（優先度: 中）:**
+Skills 2.0でスキルがisolated subagentとして実行可能になり、独自のcontext windowを持てる。メイン会話のコンテキストを汚染しない設計が可能。
+
+curate / init / review 等の既存スキルを Skills 2.0形式に移行すると以下のメリット：
+- 大量のinboxファイルを処理する curate スキルがメインコンテキストを消費しない
+- shellコマンドで現在のarticles/の最大連番を動的注入できる（hard-codeした数字が不要に）
+- test evals機能でスキルの品質を自動計測可能
+
+**アクション:** `~/.claude/skills/curate/` を Skills 2.0形式に移行する手順を調査。SKILL.mdフロントマターの必須フィールド変更を確認してから着手。
+
+---
+
+### 2. FX自動取引システムへの反映提案
+
+#### 2-1. TradingAgents v0.2.3 × Claude 4.x 統合可能性の検証
+**出典:** articles/2026-04-23_011_TradingAgents_v023_MultiProvider_LLM.md
+
+**提案内容（優先度: 中）:**
+TradingAgents v0.2.3がClaude 4.x（Claude 4.6含む）に対応。7エージェント（ファンダメンタルズ・センチメント・ニュース・テクニカル・リサーチャー・トレーダー・リスクマネージャー）構成をそのまま参照可能。
+
+`sandbox/FX自動取引/` との統合検討：
+- TradingAgentsのエージェント分業構造（特にSentiment + News + Technical）をFX自動取引の「シグナル生成フェーズ」に取り込む参考実装として活用
+- Claude 4.6（Sonnet）をエグゼキューター、Claude Opus 4.7をリスクマネージャー役に割り当てるAdvisorパターンとの組み合わせが有効
+- **アクション:** `sandbox/FX自動取引/docs/` にTradingAgentsアーキテクチャ参考文書を追加し設計比較を実施
+
+#### 2-2. GPT-5.5 のコスパ評価をシグナル生成LLM選定に反映
+**出典:** articles/2026-04-23_007_GPT55_OpenAI_Launch_Agent_Class.md / articles/2026-04-23_001_X_ArtificialAnlys_GPT55_AI_Benchmark_1.md
+
+**提案内容（優先度: 低〜中）:**
+GPT-5.5 mediumがClaude Opus 4.7 maxと同スコアで1/4コスト（$1,200 vs $4,800/Intelligence Index run）。FX自動取引でのLLM選定において：
+- 高頻度のシグナル生成ルーティンには GPT-5.5 medium を検討する価値あり
+- ただし幻覚率86%（Opus 4.7: 36%）はリスク管理上の重大懸念
+- **結論:** 即時切り替えは推奨しない。Opus 4.7継続使用が安全。GPT-5.5の幻覚率改善を待つ

@@ -410,6 +410,17 @@
 | 371 | Resolve AI Labs — $40M Series A拡張、バリュエーション$1.5B（DST Global / Salesforce Ventures）(@maynkag) | en | 未読 | #ai-news #funding #agent #x-signal | articles/2026-04-18_023_X_maynkag_Resolve_AI_Labs_40M_Series_A_1_5B_Valuation.md |
 | 372 | Bloomberg報道: Anthropic、最強モデルClaude Opus 4.7を発表 — Mythosの1週間後 (@business) | en | 未読 | #ai-news #model-release #anthropic #x-signal | articles/2026-04-18_024_X_business_Bloomberg_Anthropic_Claude_Opus_47_Report.md |
 | 373 | NVIDIA「Lyra 2.0」— 一貫性のある広大な3D空間を生成するフレームワーク (@Botan_cr) | ja | 未読 | #ai-news #nvidia #3d #x-signal | articles/2026-04-18_025_X_Botan_cr_NVIDIA_Lyra_2_0_3D_Space_Generation.md |
+| 374 | GPT-5.5、AI Intelligence Indexで単独首位奪還 — 3つ巴を制す（@ArtificialAnlys） | en | 未読 | #ai-news #model-release #openai #x-signal | articles/2026-04-23_001_X_ArtificialAnlys_GPT55_AI_Benchmark_1.md |
+| 375 | Sundar Pichai: Googleの新規コード75%がAI生成、6ヶ月で50%→75%へ急伸（@Pirat_Nation） | en | 未読 | #ai-news #google #trend #x-signal | articles/2026-04-23_002_X_Pirat_Nation_Google_75pct_AI_Code.md |
+| 376 | Google、第8世代TPU発表 — AI訓練特化システムをGoogle Cloud Nextで公開（@Google） | en | 未読 | #ai-news #google #infrastructure #x-signal | articles/2026-04-23_003_X_Google_TPU_8th_Gen_CloudNext.md |
+| 377 | Glif V2ローンチ — a16z/USV主導$17.5Mシード調達、creative super agent（@fabianstelzer） | en | 未読 | #ai-news #agent #tools #funding #x-signal | articles/2026-04-23_004_X_fabianstelzer_Glif_V2_Creative_Agent.md |
+| 378 | NEC × Anthropic、日本初米本社級戦略提携 — 3万エンジニアにClaude展開・Mythos協議（@muratamika2021） | ja | 未読 | #claude-ecosystem #anthropic #japan #x-signal | articles/2026-04-23_005_X_muratamika2021_NEC_Anthropic_Partnership.md |
+| 379 | NVIDIA、GPT-5.5を「知性ある10年の証明」と歓迎（@nvidia） | en | 未読 | #ai-news #nvidia #openai #x-signal | articles/2026-04-23_006_X_nvidia_GPT55_AI_Decade_Milestone.md |
+| 380 | GPT-5.5公式リリース — 「エージェント向け新クラス」5段階effortで推論深度を制御 | en | 未読 | #ai-news #model-release #openai #web-signal | articles/2026-04-23_007_GPT55_OpenAI_Launch_Agent_Class.md |
+| 381 | Claude Code Skills 2.0の変更点 — subagent実行・動的注入・テストevalが核心 | en | 未読 | #claude-code #skills #web-signal | articles/2026-04-23_008_Claude_Code_Skills_2_0_Subagent_Inject.md |
+| 382 | 国内AIエージェント動向（2026/4/23号）— NEC提携・GPT-5.5・Google 75%コード生成が週の核心 | ja | 未読 | #ai-news #japan #agent #web-signal | articles/2026-04-23_009_Japan_AI_Agent_Weekly_April23_NEC_GPT55.md |
+| 383 | NEC × Anthropic グローバルパートナーシップ — Claude DX支援・Claude Mythos access協議も | ja | 未読 | #claude-ecosystem #anthropic #japan #web-signal | articles/2026-04-23_010_NEC_Anthropic_Global_Partnership_Japan.md |
+| 384 | TradingAgents v0.2.3 — マルチプロバイダー対応・GPT-5.4/Claude 4.6/Gemini 3.1追加 | en | 未読 | #ai-trading #llm-trading #multi-agent #web-signal | articles/2026-04-23_011_TradingAgents_v023_MultiProvider_LLM.md |
 ## 発見パターン（記事横断の傾向）
 
 蔵書を横断して繰り返し出現するテーマ。出現回数が多いほど普遍的な知見。
@@ -481,4 +492,4 @@
 - 未読: 1
 - 構想: 1
 - 書籍: 4
-- 日次収集（2026-03-27〜）: 373件（2026-04-18更新）
+- 日次収集（2026-03-27〜）: 384件（2026-04-23更新）

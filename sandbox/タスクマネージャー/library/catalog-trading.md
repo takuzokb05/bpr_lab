@@ -90,3 +90,4 @@
 | 068 | ChatGPT（生成AI）の売買判断を連携してFX取引を自動化するEAの開発 (Note/Sayama) | ja | 未読 | #fx #chatgpt #ea #implementation #web-signal | articles/2026-04-18_018_ChatGPT_FX_Auto_Trading_EA_Development_Note_Sayama.md |
 | 069 | MT5のEAとローカルAIモデルを接続 — 自己成長完結型トレードシステムへの実装実験（@panchan210） | ja | 未読 | #fx #ea #implementation #x-signal | articles/2026-04-22_026_X_panchan210_MT5_EA_Local_AI_Model_Integration.md |
 | 070 | Horizon — 自然言語で戦略記述→バックテスト→ブローカー接続AIアルゴ取引プラットフォーム（@sopersone） | en | 未読 | #fx #llm-trading #x-signal | articles/2026-04-22_027_X_sopersone_Horizon_AI_Algo_Trading_Platform.md |
+| 071 | TradingAgents v0.2.3 — マルチプロバイダーLLM（GPT-5.4/Claude 4.6/Gemini 3.1）・バックテスト精度向上 | en | 未読 | #llm-trading #multi-agent #implementation #web-signal | articles/2026-04-23_011_TradingAgents_v023_MultiProvider_LLM.md |
