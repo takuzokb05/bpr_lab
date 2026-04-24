@@ -1,0 +1,186 @@
+{
+  "date": "2026-04-23",
+  "generated_at": "2026-04-24T23:30:33.996887Z",
+  "article_count": 11,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-04-23_001_X_ArtificialAnlys_GPT55_AI_Benchmark_1.md",
+      "title": "GPT-5.5、AI Intelligence Indexで単独首位奪還 — Anthropic・Googleとの3つ巴を制す",
+      "url": "https://twitter.com/ArtificialAnlys/status/2047378419282034920",
+      "source": "x",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "Artificial Analysis社がGPT-5.5のベンチマーク全評価を公開。同社のIntelligence Indexで3ポイント差で単独首位を奪還（Anthropic・Googleとの3つ巴を制覇）。5段階のreasoning effortを全検証済み。価格は$5/$30（GPT-5.4比2倍）だが40%トークン削減で実質+20%コスト。特筆すべきは「GPT-5.5 mediumがClaude Opus 4.7 maxと同スコアで1/4コスト（$1,200 vs $4,800）」という衝撃的なコスパ比。ただし幻覚率86%はOpus 4.7（36%）・Gemini 3.1 Pro（50%）より高く要注意。エージェント評価（APEX-Agents-AA）でも首位、AI業界の競争軸が「推論性能×コスト効率」に移行していることを定量的に示す重要一次データ。",
+      "body_excerpt": "GPT-5.5 takes OpenAI back to the clear number one in AI. OpenAI's new model tops the Artificial Analysis Intelligence Index by 3 points, breaking a three-way tie with Anthropic and Google\n\nOpenAI gave us pre-release access to test all five reasoning effort levels: xhigh, high, medium, low and non-reasoning.\n\n➤ OpenAI topping five headline evaluations: GPT-5.5 (xhigh) leads Terminal-Bench Hard, GDPval-AA and our newly hosted APEX-Agents-AA. The model trails only other OpenAI models in CritPt and AA-LCR, and comes second to Gemini 3.1 Pro Preview on three additional evaluations. The largest gains are on AA-Omniscience (+14 pts) and τ²-Bench Telecom (+7 pts).",
+      "fact_checked": true,
+      "fact_check_note": "確認済: Intelligence Index 60点で3点差単独首位（Opus 4.7・Gemini 3.1 Pro両方57点）、幻覚率86% vs Opus 4.7 36% vs Gemini 3.1 Pro 50%、いずれも複数メディアとArtificial Analysis公式記事で裏付け取れた。"
+    },
+    {
+      "file": "2026-04-23_002_X_Pirat_Nation_Google_75pct_AI_Code.md",
+      "title": "Sundar Pichai: Googleの新規コードの75%がAI生成、6ヶ月で50%→75%へ急伸",
+      "url": "https://twitter.com/Pirat_Nation/status/2047374947589231049",
+      "source": "x",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "Google Cloud Next 2026でSundar Pichai CEO発表。Google社内の新規コードの75%がAI生成（前回2025年秋は50%）。全行が引き続き人間エンジニアのレビュー・承認を経るが、AIエージェントが大規模コードマイグレーション等の複合タスクを自律処理するagentic workflowへシフト中。実績として「ある大規模マイグレーションプロジェクトが従来比6倍速で完了」を挙げた。社内ツール「Antigravity」ではGemini macOS版全体を数週間→数日でプロトタイプ。AIコード生成が実験段階を超え、世界最大規模のソフト開発組織で主流となった実態を示す一次データとして重要。",
+      "body_excerpt": "CEO Sundar Pichai just announced that 75% of all new code at Google is now AI-generated, up from 50% just last fall.\n\nEvery single line is still reviewed and approved by human engineers, but the company is shifting to agentic AI workflows where AI agents handle complex tasks such as large-scale code migrations one project finished six times faster than before.\n\nGoogle is also using internal tools like Antigravity to prototype entire apps, such as the Gemini macOS version, in just days instead of weeks.",
+      "fact_checked": true,
+      "fact_check_note": "確認済: Sundar PichaiがGoogle Cloud Next 2026で「新規コードの75%がAI生成、前回秋50%」と公言。Google公式ブログ・Fast Company・Nikkei Asia等複数一次ソースで裏付け。6倍速マイグレーション事例も確認。"
+    },
+    {
+      "file": "2026-04-23_003_X_Google_TPU_8th_Gen_CloudNext.md",
+      "title": "Google、第8世代TPU発表 — AI訓練特化システムをGoogle Cloud Nextで公開",
+      "url": "https://twitter.com/Google/status/2047352610684891504",
+      "source": "x",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "Google Cloud Next 2026でGoogleが第8世代TPU（Tensor Processing Unit）を発表。公式アカウントからの発表で、AI訓練に特化して設計されたシステムとして説明。詳細なスペック（処理能力・メモリ・接続帯域等）は関連ドキュメントで公開。Google CloudのAIインフラが自社設計チップで独自進化を続けていることを示す。Anthropic・OpenAI等のクラウド上でのLLM訓練コスト・速度に影響を与えうる重要インフラ更新。",
+      "body_excerpt": "At #GoogleCloudNext, we announced our eighth generation of TPUs. Now, we're breaking down everything you need to know about the system purpose-built to power today's AI",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-23_004_X_fabianstelzer_Glif_V2_Creative_Agent.md",
+      "title": "Glif V2 ローンチ — a16z/USV主導$17.5Mシード調達、「クリエイターはコック」",
+      "url": "https://twitter.com/fabianstelzer/status/2047359946702880920",
+      "source": "x",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "Glifがv2をローンチ。a16z（Andreessen Horowitz）とUSV（Union Square Ventures）主導の$17.5Mシードラウンドも同時発表。Glif V2はcreative super agentとして、広告・マーケコンテンツ・短編動画・ナレーション・音楽制作をすべて会話UIで実現。バックエンドに「virtually every available AI model」を活用するマルチモデルアーキテクチャ。「Creatives: You're not cooked. You're the chef now」のメッセージが話題。AIによるクリエイティブ制作ツールへの大型資金流入とエージェント型UXの浸透を示す事例として注目。",
+      "body_excerpt": "We're launching Glif V2 today ...and it created 5 launch videos for us!\n\nGlif is a creative super agent: just tell it what you want to make and it produces incredible outputs using virtually every available AI model.\n\nCreate ads, marketing content, films, short form content, voiceovers, music, and more. All in one conversation. Easy to start, endlessly deep.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-23_005_X_muratamika2021_NEC_Anthropic_Partnership.md",
+      "title": "NEC × Anthropic、日本初の米本社級戦略提携 — 3万エンジニアにClaude展開・Mythos access協議も",
+      "url": "https://twitter.com/muratamika2021/status/2047261498100297876",
+      "source": "x",
+      "lang": "ja",
+      "theme": "claude-ecosystem",
+      "summary": "NECが2026年4月23日、AnthropicのGlobalパートナーとして提携を締結（Anthropic米本社と日本企業の直接提携は初）。Claude・Claude Coworkを活用した金融・製造・自治体向けソリューション共同開発、DX支援パッケージ「ブルーステラ」30種改訂、サイバー防御強化、約3万エンジニアへのClaude展開を3年計画で推進。野村総研はAnthropicの日本法人との協業、NECはAnthropicの米本社との直接提携という棲み分け。Claude Mythos（現在企業限定公開）へのアクセス協議も含む可能性があり、国内企業のフロンティアモデルへのアクセスルートとして注目。NEC株は発表後急騰。日本市場でのAnthropic製品普及を加速させる象徴的な提携。",
+      "body_excerpt": "6701　ＮＥＣ\n米アンソロピックと提携　法人向けAI需要を開拓\nNECは23日、米新興アンソロピックと提携し、日本国内の法人向けの人工知能（AI）需要を開拓すると発表した。同社の生成AIツール「Claude（クロード）」などを商材の開発やシステム監視に生かし、競争力を高める。\n\nアンソロピックのクロードは米オープンAIの対話型AI「チャットGPT」の対抗馬として注目されている。9日には事務作業を自動化する「Cowork（コワーク）」の一般提供も始め、性能に対する評価が高い。",
+      "fact_checked": true,
+      "fact_check_note": "確認済: NEC × Anthropic提携は2026年4月23日に公式発表済。NECがAnthropicの初の日本拠点グローバルパートナー、3万エンジニアへのClaude展開、Claude Opus 4.7・Claude Code・BluStellarへの統合を確認（NEC公式・Anthropic公式）。Claude Mythosへのアクセス協議については公式発表では言及なし（記事の推測部分）。"
+    },
+    {
+      "file": "2026-04-23_006_X_nvidia_GPT55_AI_Decade_Milestone.md",
+      "title": "NVIDIA、GPT-5.5を「知性ある10年の証明」と歓迎 — AI競争の加速を業界が認知",
+      "url": "https://twitter.com/nvidia/status/2047378773457461376",
+      "source": "x",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "NVIDIAの公式アカウントがGPT-5.5リリースを「the decade of intelligent systems（知性ある10年）の証明」と表現して歓迎。AI加速器の最大サプライヤーであるNVIDIAがOpenAIの新モデルに公的な賛辞を贈ることで、AI業界の競争激化がインフラ需要拡大につながるという構造が可視化された。短文ながらNVIDIA・OpenAI・AI業界全体の関係性を示す一次情報として価値あり。2026年4月23日現在、AI競争はモデル性能・コスト効率・エージェント能力の3軸で進行中であることをNVIDIA自身が認識していることを示す。",
+      "body_excerpt": "We're watching AI evolve in real time. GPT-5.5 isn't just a launch - it's another proof point that the decade of intelligent systems is well underway.\n\nCongrats to the entire @OpenAI team on another impressive milestone. 🎉",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-23_007_GPT55_OpenAI_Launch_Agent_Class.md",
+      "title": "GPT-5.5 公式リリース — 「エージェント向け新クラス」5段階effortで推論深度を制御",
+      "url": "https://openai.com/index/gpt-5-5/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "OpenAIがGPT-5.5を2026年4月23日にリリース。「複雑な目標理解・ツール使用・タスク完遂のために設計されたエージェント向け新クラス」と定義。5段階のreasoning effort（xhigh/high/medium/low/non-reasoning）を提供し、コスト対性能をユーザーが制御可能。Artificial Analysis Intelligence Indexで3点差の単独首位（3つ巴の末）。価格$5/$30 per 1Mトークン（GPT-5.4比2倍）。SWE-bench VerifiedはClaude Opus 4.7の87.6%に対してGPT-5.5 xhighは更新値で追随。AA-Omniscienceで57%最高正答率（幻覚率86%は懸念点）。τ²-Benchで+7pt改善。GPT-5.5 mediumがOpus 4.7 maxと同スコア/$1,200 vs $4,800の衝撃的コスパ比が話題。Claude Code・エージェントパイプラインのLLM選定に直接影響する重要アップデート。",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "確認済: GPT-5.5公式リリース・エージェントクラスの位置付け・5段階reasoning effort・$5/$30価格はOpenAI公式ページ及び複数報道で裏付け確認。SWE-bench数値は記事内で「追随」とのみ記載で具体値要検証のまま。"
+    },
+    {
+      "file": "2026-04-23_008_Claude_Code_Skills_2_0_Subagent_Inject.md",
+      "title": "Claude Code Skills 2.0 の変更点まとめ — subagent実行・動的注入・テストevalが核心",
+      "url": "https://perevillega.com/posts/2026-04-01-claude-code-skills-2-what-changed-what-works-what-to-watch-out-for/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Claude Code Skills 2.0の技術的変更を詳述した実践レポート。主な新機能：①スキルがisolated subagentとして実行可能になり独自のcontext windowを持てる（メイン会話からの汚染を防止）、②「inject」機能でshellコマンドをスキルプロンプトに動的注入しリアルタイムデータを渡せる、③使用ツールを制限・モデルを上書き・lifecycle hookに接続・forked contextで実行可能、④skill-creatorにtest evals機能追加（Claudeがスキル出力をスコアリング）。破壊的変更としてSKILL.mdフロントマターの必須フィールドが変更。既存スキルは旧書き方でも動くが新機能が使えない「サイレント劣化」に注意。Claude Code Skills 2.0 Migration Guideは記事執筆時点で未公開。CLAUDE.mdやスキル設計を見直す際の重要参考情報。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-23_009_Japan_AI_Agent_Weekly_April23_NEC_GPT55.md",
+      "title": "国内AIエージェント動向（2026/4/23号）— NEC提携・GPT-5.5・Google 75%コード生成が週の核心",
+      "url": "https://note.com/yasuhitoo/n/nfc5476ff07be",
+      "source": "web",
+      "lang": "ja",
+      "theme": "ai-news",
+      "summary": "守本泰人氏（note）による2026年4月23日付の国内AIエージェント週次サマリー。今週の核心3トピック：①NECとAnthropicが日本初の米本社レベル戦略提携（金融・製造・自治体向けClaude展開、3万エンジニアAI化）、②GPT-5.5リリースでOpenAIが単独首位奪還（Intelligence Indexで3点差、medium effortがOpus 4.7 maxと同スコア/$1,200 vs $4,800）、③Sundar Pichai氏がGoogle Cloud NextでGoogle社内の新規コードの75%がAI生成と公表（前回50%から激増）。加えて日本国内でMCPサーバー内製化が急増（Hacobu・makeshop等の事例）。市場の競争軸が「AIを使えるか」から「安全に統制しながら成果へつなげられるか」へ移行しているという著者の分析が示唆に富む。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-04-23_010_NEC_Anthropic_Global_Partnership_Japan.md",
+      "title": "NEC × Anthropic グローバルパートナーシップ — Claude活用DX・Claude Mythos access協議も",
+      "url": "https://www.nikkei.com/article/DGXZQOUC230000T20C26A4000000/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-ecosystem",
+      "summary": "NECが2026年4月23日、AnthropicとGlobal Partnerシップを締結。Anthropic米本社と日本企業の直接提携は初の事例。主要施策：①Claude・Claude CoworkでDX支援サービス「ブルーステラ」の30種改善パッケージを刷新、②金融・製造・自治体向けの業種特化AI自動化ソリューションを共同開発、③サイバー防御（異常検知・システム監視）にAnthropicのAI技術を活用、④約3万人のエンジニアが日常的にClaudeを使う環境を3年計画で整備（開発プロセス全体をAI前提に刷新）、⑤Claude Mythos（企業限定公開）へのアクセス協議も含む可能性あり。野村総研がAnthropicの日本法人（国内事業）と協業しているのに対し、NECは米本社と提携しグローバル展開を担う棲み分け。日本市場でのClaude製品普及を加速させる構造的な変化であり、FX自動取引等の法人向けAI活用にも波及可能性がある。",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "確認済: NEC公式プレスリリース・Anthropic公式ニュース・Nikkei Asia報道で裏付け確認。Claude Mythosアクセス協議は公式発表には記載なし。"
+    },
+    {
+      "file": "2026-04-23_011_TradingAgents_v023_MultiProvider_LLM.md",
+      "title": "TradingAgents v0.2.3 — マルチプロバイダー対応・GPT-5.4/Claude 4.6/Gemini 3.1追加",
+      "url": "https://github.com/TauricResearch/TradingAgents",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "TauricResearchのTradingAgentsフレームワーク（LLMマルチエージェント金融取引）がv0.2.3にアップデート。v0.2.3新機能：多言語サポート（Multi-language Support）、GPT-5.4ファミリーモデル追加、Unified Model Catalog（プロバイダー横断モデル一覧）、バックテスト日付精度の修正、プロキシサポート。v0.2.2でGPT-5.4/Gemini 3.1/Claude 4.6 coverage追加、v0.2.0（2026年2月）でGPT-5.x・Gemini 3.x・Claude 4.x・Grok 4.xのマルチプロバイダー対応を実装。フレームワーク構成：ファンダメンタルズ・センチメント・ニュース・テクニカルの4アナリスト＋リサーチャー・トレーダー・リスクマネージャーの7エージェントが協調。Claude 4.xモデルが使用可能なため、本プロジェクトのFX自動取引システムとの統合可能性あり。研究目的利用を推奨（投資アドバイスではない）。MIT相当のオープンソースライセンス。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    }
+  ],
+  "fact_checks": [
+    {
+      "target": "GPT-5.5 ベンチマーク数値",
+      "articles": [
+        "2026-04-23_001_X_ArtificialAnlys_GPT55_AI_Benchmark_1.md",
+        "2026-04-23_007_GPT55_OpenAI_Launch_Agent_Class.md"
+      ],
+      "verdict": "confirmed",
+      "note": "Intelligence Index 60点・幻覚率86%・Opus 4.7 36%・Gemini 3.1 Pro 50%はArtificial Analysis公式と複数報道で裏付け。"
+    },
+    {
+      "target": "Google 75% AI生成コード（Sundar Pichai, Cloud Next 2026）",
+      "articles": [
+        "2026-04-23_002_X_Pirat_Nation_Google_75pct_AI_Code.md"
+      ],
+      "verdict": "confirmed",
+      "note": "Google公式ブログ・Fast Company等で「75%、前秋50%から増加」を確認。"
+    },
+    {
+      "target": "NEC × Anthropic グローバルパートナーシップ",
+      "articles": [
+        "2026-04-23_005_X_muratamika2021_NEC_Anthropic_Partnership.md",
+        "2026-04-23_010_NEC_Anthropic_Global_Partnership_Japan.md"
+      ],
+      "verdict": "mostly_confirmed",
+      "note": "提携・3万エンジニア展開・Claude Opus 4.7/Claude Code統合は公式確認。Claude Mythosアクセス協議は公式発表になく記事の推測部分。"
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-04-22": 34,
+      "2026-04-21": 0,
+      "2026-04-20": 0,
+      "2026-04-19": 0,
+      "2026-04-18": 25,
+      "2026-04-17": 60,
+      "2026-04-16": 0
+    },
+    "recurring_themes": [
+      "claude",
+      "claude_code",
+      "agent",
+      "mcp",
+      "model"
+    ]
+  }
+}
