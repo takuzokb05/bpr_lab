@@ -47,7 +47,8 @@ class TestConstantDefinitions:
     """全定数が正しい値で定義されていることを検証"""
 
     def test_risk_per_trade(self):
-        assert MAX_RISK_PER_TRADE == 0.01
+        # STAGE2(2026-04-21): バックテストDD-41%対応で0.05%に抑制
+        assert MAX_RISK_PER_TRADE == 0.0005
         assert MAX_RISK_PER_TRADE_HARD == 0.02
 
     def test_leverage(self):
@@ -62,12 +63,14 @@ class TestConstantDefinitions:
         assert DRAWDOWN_LEVELS[0.25] == "EMERGENCY"
 
     def test_loss_limits(self):
-        assert MAX_DAILY_LOSS == 0.02
-        assert MAX_WEEKLY_LOSS == 0.05
-        assert MAX_MONTHLY_LOSS == 0.10
+        # STAGE2(2026-04-21): 本来値（日次5%/週10%/月20%）
+        assert MAX_DAILY_LOSS == 0.05
+        assert MAX_WEEKLY_LOSS == 0.10
+        assert MAX_MONTHLY_LOSS == 0.20
 
     def test_consecutive_losses(self):
-        assert MAX_CONSECUTIVE_LOSSES == 5
+        # STAGE2: 本来5→10で一旦緩め
+        assert MAX_CONSECUTIVE_LOSSES == 10
 
     def test_position_limits(self):
         assert MAX_OPEN_POSITIONS == 6
@@ -84,7 +87,8 @@ class TestConstantDefinitions:
         assert MIN_RISK_REWARD == 2.0
 
     def test_timeframe(self):
-        assert MAIN_TIMEFRAME == "H1"
+        # STAGE3(2026-04-21): MTFPullback戦略のベストTFはM15
+        assert MAIN_TIMEFRAME == "M15"
 
     def test_api_settings(self):
         assert API_TIMEOUT == 30
