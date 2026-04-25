@@ -315,13 +315,19 @@ class TestMarketOrder:
         assert result["order_id"] == "12345"
         assert result["units"] == 10000
 
-        # 注文リクエストを検証
-        call_args = mt5_mock.order_send.call_args[1]["request"]
-        assert call_args["symbol"] == "USDJPY-"
-        assert call_args["type"] == mt5_mock.ORDER_TYPE_BUY
-        assert call_args["volume"] == 0.1  # 10000 / 100000
-        assert call_args["sl"] == 152.0
-        assert call_args["tp"] == 154.0
+        # market_order は1回目=約定、2回目=SL/TP設定 で order_send を2回呼ぶ
+        # 約定リクエストを検証
+        deal_request = mt5_mock.order_send.call_args_list[0][0][0]
+        assert deal_request["symbol"] == "USDJPY-"
+        assert deal_request["type"] == mt5_mock.ORDER_TYPE_BUY
+        assert deal_request["volume"] == 0.1  # 10000 / 100000
+        assert deal_request["action"] == mt5_mock.TRADE_ACTION_DEAL
+
+        # SL/TPリクエストを検証
+        sltp_request = mt5_mock.order_send.call_args_list[1][0][0]
+        assert sltp_request["action"] == mt5_mock.TRADE_ACTION_SLTP
+        assert sltp_request["sl"] == 152.0
+        assert sltp_request["tp"] == 154.0
 
     def test_sell_order(self, client, mt5_mock):
         """売り注文が正しく発注される（unitsが負）"""
@@ -333,8 +339,8 @@ class TestMarketOrder:
         assert result["status"] == "filled"
         assert result["units"] == -10000
 
-        call_args = mt5_mock.order_send.call_args[1]["request"]
-        assert call_args["type"] == mt5_mock.ORDER_TYPE_SELL
+        deal_request = mt5_mock.order_send.call_args_list[0][0][0]
+        assert deal_request["type"] == mt5_mock.ORDER_TYPE_SELL
 
     def test_tick_unavailable_raises(self, client, mt5_mock):
         """ティック取得失敗でMt5ClientErrorが送出される"""
@@ -368,7 +374,7 @@ class TestLimitOrder:
         assert result["status"] == "pending"
         assert result["price"] == 151.0
 
-        call_args = mt5_mock.order_send.call_args[1]["request"]
+        call_args = mt5_mock.order_send.call_args[0][0]
         assert call_args["type"] == mt5_mock.ORDER_TYPE_BUY_LIMIT
         assert call_args["action"] == mt5_mock.TRADE_ACTION_PENDING
 
@@ -382,7 +388,7 @@ class TestLimitOrder:
 
         result = client.limit_order("EUR_USD", -10000, 1.1000, 1.1100, 1.0900)
 
-        call_args = mt5_mock.order_send.call_args[1]["request"]
+        call_args = mt5_mock.order_send.call_args[0][0]
         assert call_args["type"] == mt5_mock.ORDER_TYPE_SELL_LIMIT
         assert call_args["symbol"] == "EURUSD-"
 
@@ -497,7 +503,7 @@ class TestClosePosition:
         assert result["close_price"] == 152.5
 
         # SELL注文で決済
-        call_args = mt5_mock.order_send.call_args[1]["request"]
+        call_args = mt5_mock.order_send.call_args[0][0]
         assert call_args["type"] == mt5_mock.ORDER_TYPE_SELL
         assert call_args["position"] == 101
 
@@ -524,7 +530,7 @@ class TestClosePosition:
 
         result = client.close_position("102")
 
-        call_args = mt5_mock.order_send.call_args[1]["request"]
+        call_args = mt5_mock.order_send.call_args[0][0]
         assert call_args["type"] == mt5_mock.ORDER_TYPE_BUY
 
     def test_position_not_found_raises(self, client, mt5_mock):
@@ -535,6 +541,83 @@ class TestClosePosition:
 
         with pytest.raises(Mt5ClientError, match="ポジションが見つかりません"):
             client.close_position("999")
+
+
+# ================================================================
+# get_closed_deal のテスト
+# ================================================================
+
+
+class TestGetClosedDeal:
+    """get_closed_dealのテスト（SL/TP自動決済時のPL復元）"""
+
+    def _make_deal(self, *, entry, profit, price, time_ts, swap=0.0, commission=0.0):
+        d = MagicMock()
+        d.entry = entry
+        d.profit = profit
+        d.price = price
+        d.time = time_ts
+        d.swap = swap
+        d.commission = commission
+        return d
+
+    def test_returns_close_info_for_sl_tp_triggered_position(self, client, mt5_mock):
+        """SL/TPで自動決済されたポジションのclose_price/realized_plが復元される"""
+        mt5_mock.DEAL_ENTRY_OUT = 1
+        mt5_mock.DEAL_ENTRY_INOUT = 2
+        # 開始deal（IN=0）と決済deal（OUT=1）
+        deal_in = self._make_deal(entry=0, profit=0.0, price=150.0, time_ts=1000)
+        deal_out = self._make_deal(
+            entry=1, profit=423.5, price=150.85, time_ts=2000,
+            swap=-1.0, commission=-2.5,
+        )
+        mt5_mock.history_deals_get.return_value = (deal_in, deal_out)
+
+        result = client.get_closed_deal("8646754")
+
+        assert result is not None
+        assert result["trade_id"] == "8646754"
+        assert result["close_price"] == 150.85
+        # profit + swap + commission = 423.5 - 1.0 - 2.5
+        assert result["realized_pl"] == pytest.approx(420.0)
+        assert result["closed_at"].timestamp() == 2000
+
+    def test_returns_none_when_history_empty(self, client, mt5_mock):
+        """履歴が空ならNoneを返す"""
+        mt5_mock.DEAL_ENTRY_OUT = 1
+        mt5_mock.DEAL_ENTRY_INOUT = 2
+        mt5_mock.history_deals_get.return_value = ()
+        mt5_mock.last_error.return_value = (0, "Success")
+
+        assert client.get_closed_deal("9999") is None
+
+    def test_returns_none_when_no_close_deal(self, client, mt5_mock):
+        """エントリーdealのみで決済dealが無い場合はNone"""
+        mt5_mock.DEAL_ENTRY_OUT = 1
+        mt5_mock.DEAL_ENTRY_INOUT = 2
+        deal_in = self._make_deal(entry=0, profit=0.0, price=150.0, time_ts=1000)
+        mt5_mock.history_deals_get.return_value = (deal_in,)
+
+        assert client.get_closed_deal("8646754") is None
+
+    def test_aggregates_partial_closes(self, client, mt5_mock):
+        """複数の部分決済dealがあるとPLを合算し、最後の価格を採用"""
+        mt5_mock.DEAL_ENTRY_OUT = 1
+        mt5_mock.DEAL_ENTRY_INOUT = 2
+        deal_in = self._make_deal(entry=0, profit=0.0, price=150.0, time_ts=1000)
+        deal_out1 = self._make_deal(entry=1, profit=100.0, price=150.5, time_ts=2000)
+        deal_out2 = self._make_deal(entry=1, profit=200.0, price=150.9, time_ts=3000)
+        mt5_mock.history_deals_get.return_value = (deal_in, deal_out1, deal_out2)
+
+        result = client.get_closed_deal("8646754")
+
+        assert result["realized_pl"] == pytest.approx(300.0)
+        assert result["close_price"] == 150.9  # 最後の決済価格
+        assert result["closed_at"].timestamp() == 3000
+
+    def test_invalid_trade_id_returns_none(self, client, mt5_mock):
+        """数値変換できないtrade_idはNone"""
+        assert client.get_closed_deal("not-a-number") is None
 
 
 # ================================================================
@@ -641,13 +724,18 @@ class TestRetryLogic:
         success_result.price = 152.73
         success_result.comment = "Done"
 
-        mt5_mock.order_send.side_effect = [requote_result, success_result]
+        # market_order は SL/TP設定で追加の order_send 呼び出しがある
+        sltp_result = MagicMock()
+        sltp_result.retcode = mt5_mock.TRADE_RETCODE_DONE
+        sltp_result.comment = "SL/TP set"
+        mt5_mock.order_send.side_effect = [requote_result, success_result, sltp_result]
 
         with patch("src.mt5_client.time.sleep"):
             result = client.market_order("USD_JPY", 10000, 152.0, 154.0)
 
         assert result["status"] == "filled"
-        assert mt5_mock.order_send.call_count == 2
+        # 約定リトライ2回 + SL/TP設定1回 = 3回
+        assert mt5_mock.order_send.call_count == 3
 
     def test_no_retry_on_invalid_request(self, client, mt5_mock):
         """リトライ不可能なエラーではリトライしない"""

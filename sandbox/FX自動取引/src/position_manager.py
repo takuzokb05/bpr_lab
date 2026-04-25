@@ -596,34 +596,98 @@ class PositionManager:
                     )
                     if target:
                         self._open_positions.remove(target)
-                        # 損益不明として履歴に追加（安全側: pl=0, pl_unknown=True）
-                        close_time = datetime.now(timezone.utc)
+
+                        # ブローカーの取引履歴から決済情報を復元（SL/TP自動決済対応）
+                        deal = None
+                        try:
+                            deal = self._broker_client.get_closed_deal(orphan_id)
+                        except Exception as e:
+                            logger.warning(
+                                "決済履歴の取得に失敗: trade_id=%s, error=%s",
+                                orphan_id, e,
+                            )
+
+                        if deal is not None:
+                            close_price = float(deal.get("close_price", 0.0))
+                            realized_pl = float(deal.get("realized_pl", 0.0))
+                            close_time = deal.get("closed_at") or datetime.now(timezone.utc)
+                            pl_unknown = False
+                        else:
+                            # 履歴から取得できなかった場合のみフォールバック
+                            close_price = 0.0
+                            realized_pl = 0.0
+                            close_time = datetime.now(timezone.utc)
+                            pl_unknown = True
+
                         self._trade_history.append({
                             "trade_id": orphan_id,
                             "instrument": target["instrument"],
                             "units": target["units"],
                             "open_price": target["open_price"],
-                            "close_price": 0.0,
-                            "pl": 0.0,
-                            "pl_unknown": True,
+                            "close_price": close_price,
+                            "pl": realized_pl,
+                            "pl_unknown": pl_unknown,
                             "opened_at": target["opened_at"],
                             "close_time": close_time,
                         })
-                        self._db_save_closed_trade(orphan_id, 0.0, 0.0, close_time)
+                        self._db_save_closed_trade(
+                            orphan_id, close_price, realized_pl, close_time
+                        )
                         logger.warning(
                             "ブローカー側で決済済みのポジションをローカルから除去: "
-                            "trade_id=%s, instrument=%s",
+                            "trade_id=%s, instrument=%s, close_price=%.5f, pl=%.2f, pl_unknown=%s",
                             orphan_id, target["instrument"],
+                            close_price, realized_pl, pl_unknown,
                         )
+
+                        # 事後分析をバックグラウンドでトリガー
+                        try:
+                            self._postmortem.trigger_analysis(
+                                trade_id=orphan_id,
+                                instrument=target["instrument"],
+                                units=target["units"],
+                                open_price=target["open_price"],
+                                close_price=close_price,
+                                pl=realized_pl,
+                                opened_at=target["opened_at"],
+                                closed_at=close_time,
+                            )
+                        except Exception as e:
+                            logger.warning(
+                                "事後分析トリガー失敗: trade_id=%s, error=%s",
+                                orphan_id, e,
+                            )
+
+            # broker_only: ブローカーにあるがローカル未把握
+            # bot再起動時のポジション復元、または手動取引で開いたもの。
+            # 取り込まないと MAX_OPEN_POSITIONS や重複チェックが機能しない。
+            if broker_only:
+                for orphan_id in broker_only:
+                    broker_pos = broker_pos_map[orphan_id]
+                    position = {
+                        "trade_id": orphan_id,
+                        "instrument": broker_pos["instrument"],
+                        "units": broker_pos["units"],
+                        "open_price": float(broker_pos.get("price_open", 0.0)),
+                        # SL/TPはブローカー側で設定済み前提、未知なら 0.0
+                        "stop_loss": float(broker_pos.get("stop_loss", 0.0) or 0.0),
+                        "take_profit": float(
+                            broker_pos.get("take_profit", 0.0) or 0.0
+                        ),
+                        "opened_at": datetime.now(timezone.utc),
+                        "unrealized_pl": float(broker_pos.get("unrealized_pl", 0.0)),
+                    }
+                    self._open_positions.append(position)
+                    # DBにも記録（既存があれば REPLACE、なければ新規 INSERT）
+                    self._db_save_open_trade(position)
+                    logger.info(
+                        "ブローカーポジションをローカルに取り込み: "
+                        "trade_id=%s, instrument=%s, units=%d",
+                        orphan_id, position["instrument"], position["units"],
+                    )
 
             # 古い取引履歴をメモリから除去（DBには残る）
             self._trim_trade_history()
-
-        if broker_only:
-            logger.warning(
-                "ブローカーのみに存在するポジション（ローカルが未把握）: %s",
-                broker_only,
-            )
 
         result = {
             "synced": len(synced_ids),
