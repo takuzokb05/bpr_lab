@@ -91,3 +91,7 @@
 | 069 | MT5のEAとローカルAIモデルを接続 — 自己成長完結型トレードシステムへの実装実験（@panchan210） | ja | 未読 | #fx #ea #implementation #x-signal | articles/2026-04-22_026_X_panchan210_MT5_EA_Local_AI_Model_Integration.md |
 | 070 | Horizon — 自然言語で戦略記述→バックテスト→ブローカー接続AIアルゴ取引プラットフォーム（@sopersone） | en | 未読 | #fx #llm-trading #x-signal | articles/2026-04-22_027_X_sopersone_Horizon_AI_Algo_Trading_Platform.md |
 | 071 | TradingAgents v0.2.3 — マルチプロバイダーLLM（GPT-5.4/Claude 4.6/Gemini 3.1）・バックテスト精度向上 | en | 未読 | #llm-trading #multi-agent #implementation #web-signal | articles/2026-04-23_011_TradingAgents_v023_MultiProvider_LLM.md |
+| 072 | TradingAgents v0.2.4 — LangGraphチェックポイント・構造化出力エージェント・DeepSeek/Docker対応 | en | 未読 | #llm-trading #multi-agent #implementation #web-signal | articles/2026-04-27_005_TradingAgents_v024_LangGraph_Checkpoint_Docker.md |
+| 073 | MT5/NT8/TV対応22戦略 + Claude/ChatGPT/Codexエージェントプロンプト集 (ZenomTrader) | en | 未読 | #fx #mt5 #llm-trading #implementation #x-signal | articles/2026-04-27_017_X_ZenomTrader_MT5_NT8_22_Strategies_Claude_Prompts.md |
+| 074 | MT5全自動取引エージェント8ヶ月 — Claude Swarm + Obsidianで700%超リターン報告 | en | 未読 | #fx #mt5 #llm-trading #multi-agent #x-signal | articles/2026-04-27_018_X_danny_builder_MT5_Automated_Agent_Claude_Swarm_700pct.md |
+| 075 | ゴールドマンサックス: 600人のトレーダーを2人に削減したAI・アルゴ取引の歴史的事実 | ja | 未読 | #llm-trading #quant #x-signal | articles/2026-04-27_023_X_Dirg_rocketdyne_Goldman_Sachs_AI_Trader_Replacement.md |

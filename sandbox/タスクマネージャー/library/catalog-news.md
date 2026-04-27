@@ -186,3 +186,11 @@
 | 161 | GPT-5.5公式リリース — エージェント向け新クラス、5段階effort、$5/$30、単独首位奪還 | en | 未読 | #openai #model-release #web-signal | articles/2026-04-23_007_GPT55_OpenAI_Launch_Agent_Class.md |
 | 162 | 国内AIエージェント動向（2026/4/23号）— NEC提携・GPT-5.5・Google 75%コード生成が核心 | ja | 未読 | #japan #agent #trend #web-signal | articles/2026-04-23_009_Japan_AI_Agent_Weekly_April23_NEC_GPT55.md |
 | 163 | NEC × Anthropic グローバルパートナーシップ詳報 — Claude DX・Mythos access協議・日経報道 | ja | 未読 | #anthropic #japan #agent #web-signal | articles/2026-04-23_010_NEC_Anthropic_Global_Partnership_Japan.md |
+| 164 | DeepSeek V4 Preview — 1.6Tパラメータ・1Mコンテキスト・SWEbench 80.6%・GPT-5.5の7分の1価格 | en | 未読 | #model-release #web-signal | articles/2026-04-27_001_DeepSeek_V4_Preview_CNBC_1T6_Params.md |
+| 165 | 米議会AIディープフェイク取締法案 — 内部告発者保護・民主党主導・選挙DF規制は継続空白 | en | 未読 | #regulation #web-signal | articles/2026-04-27_002_AI_Deepfake_Legislation_Bill_Congress_April2026.md |
+| 166 | 米国州AI法現状 2026年4月 — Colorado/NY改正・DOJ訴訟タスクフォース・連邦先取り勧告 | en | 未読 | #regulation #web-signal | articles/2026-04-27_003_State_AI_Laws_Update_Cooley_April24_2026.md |
+| 167 | テンセント・阿里「世界模型」発表 — LLMの次の技術競争・物理シミュレーション・金融応用示唆 | ja | 未読 | #trend #model-release #web-signal | articles/2026-04-27_008_Tencent_Alibaba_World_Model_AI_April2026_JA.md |
+| 168 | Claude CodeがCodex/GPT-5.5に王座陥落 — 1,512いいね・446Kフォロワーの評価比較 | en | 未読 | #model-release #openai #anthropic #x-signal | articles/2026-04-27_019_X_AlexFinn_Claude_Code_Dethroned_Codex_GPT55.md |
+| 169 | DeepSeek V4が2026年最重要AIリリース — 大規模ラボ・政府の経済モデルを根本変革 | en | 未読 | #model-release #x-signal | articles/2026-04-27_020_X_0xSero_DeepSeek_V4_Economics_Analysis.md |
+| 170 | OpenAI、2028年発売のAI専用スマートフォンを開発 — MediaTek/Qualcomm・独自OS・アプリ不要 | en | 未読 | #openai #x-signal | articles/2026-04-27_021_X_birdabo_OpenAI_Phone_Project_2028.md |
+| 171 | Meta、8,000人解雇と同時に残存社員の操作をAI学習用に記録する監視ソフト導入 | ja | 未読 | #meta #trend #x-signal | articles/2026-04-27_022_X_takeshibengo_Meta_8000_Layoffs_AI_Learning.md |
