@@ -315,8 +315,9 @@ class TradingLoop:
         self._position_manager.sync_with_broker()
 
         # 5. 価格データ取得
+        # MA200（MTFPullback）に必要なので300本取得
         data = self._broker_client.get_prices(
-            self._instrument, 100, self._granularity
+            self._instrument, 300, self._granularity
         )
 
         # 5a. 指標キャッシュの一括計算（全モジュールで共有）
@@ -427,14 +428,16 @@ class TradingLoop:
             if bias:
                 ai_eval = bias.evaluate_signal(signal.value)
                 ai_multiplier = bias.position_size_multiplier(ai_eval)
+                # ペア名を含めて解析ツールで紐付け可能に
                 logger.info(
-                    "AIフィルター: %s (direction=%s, confidence=%.2f) → 倍率%.2f",
+                    "[%s] AIフィルター: %s (direction=%s, confidence=%.2f) → 倍率%.2f",
+                    self._instrument,
                     ai_eval, bias.direction, bias.confidence, ai_multiplier,
                 )
                 if ai_eval == "REJECT":
                     logger.warning(
-                        "AIフィルター: REJECT（%s）。シグナルを見送り。",
-                        bias.reasoning,
+                        "[%s] AIフィルター: REJECT（%s）。シグナルを見送り。",
+                        self._instrument, bias.reasoning,
                     )
                     return None
                 combined_multiplier *= ai_multiplier
@@ -446,7 +449,8 @@ class TradingLoop:
             )
             if bear_verdict.severity >= 0.4:
                 logger.warning(
-                    "Bear Researcher警告: severity=%.2f, penalty=%.2f, リスク=%s",
+                    "[%s] Bear Researcher警告: severity=%.2f, penalty=%.2f, リスク=%s",
+                    self._instrument,
                     bear_verdict.severity,
                     bear_verdict.penalty_multiplier,
                     bear_verdict.risk_factors,

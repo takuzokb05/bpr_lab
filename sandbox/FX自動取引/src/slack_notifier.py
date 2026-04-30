@@ -7,7 +7,7 @@ Block Kit形式で構造化メッセージを送信。
 """
 
 import logging
-from typing import Any
+from typing import Any, Optional
 
 import requests
 
@@ -176,6 +176,76 @@ class SlackNotifier:
                     "color": color,
                     "fallback": f"取引実行: {instrument} {direction} {abs(units):,}",
                     "title": "取引実行",
+                    "fields": fields,
+                    "mrkdwn_in": ["text", "fields"],
+                }
+            ]
+        }
+        self._post(payload)
+
+    def notify_position_closed(
+        self,
+        instrument: str,
+        direction: str,
+        close_price: float,
+        pl: float,
+        hold_minutes: Optional[int] = None,
+        reason: str = "",
+        pl_unknown: bool = False,
+    ) -> None:
+        """
+        ポジション決済の通知。
+
+        Args:
+            instrument: 通貨ペア名
+            direction: 方向（BUY/SELL）
+            close_price: 決済価格
+            pl: 実現損益（JPY）
+            hold_minutes: 保有時間（分）
+            reason: 決済理由（"TP/SL", "EMERGENCY", "手動", "ブローカー側決済" 等）
+            pl_unknown: 損益が不明な場合 True（ブローカー履歴から取得できなかった場合）
+        """
+        # 損益の色分け: 利益=緑、損失=赤、不明=青
+        if pl_unknown:
+            color = COLOR_BLUE
+            pl_display = "不明（要MT5履歴確認）"
+            title_icon = ":grey_question:"
+        elif pl > 0:
+            color = COLOR_GREEN
+            pl_display = f"+{pl:,.0f} JPY"
+            title_icon = ":white_check_mark:"
+        elif pl < 0:
+            color = COLOR_RED
+            pl_display = f"{pl:,.0f} JPY"
+            title_icon = ":small_red_triangle_down:"
+        else:
+            color = COLOR_BLUE
+            pl_display = "±0 JPY"
+            title_icon = ":black_square_for_stop:"
+
+        fields = [
+            {"title": "通貨ペア", "value": instrument, "short": True},
+            {"title": "方向", "value": direction, "short": True},
+            {"title": "決済価格", "value": f"{close_price:.5f}", "short": True},
+            {"title": "損益", "value": pl_display, "short": True},
+        ]
+
+        if hold_minutes is not None:
+            if hold_minutes >= 60:
+                hold_str = f"{hold_minutes // 60}時間{hold_minutes % 60}分"
+            else:
+                hold_str = f"{hold_minutes}分"
+            fields.append({"title": "保有時間", "value": hold_str, "short": True})
+
+        if reason:
+            fields.append({"title": "決済理由", "value": reason, "short": True})
+
+        payload: dict[str, Any] = {
+            "attachments": [
+                {
+                    "color": color,
+                    "fallback": f"ポジション決済: {instrument} {direction} {pl_display}",
+                    "title": f"{title_icon} ポジション決済",
                     "fields": fields,
                     "mrkdwn_in": ["text", "fields"],
                 }
