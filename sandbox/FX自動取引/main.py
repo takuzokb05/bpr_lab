@@ -20,6 +20,7 @@ sys.path.insert(0, str(project_root))
 from src.ai_advisor import AIAdvisor
 from src.bear_researcher import BearResearcher
 from src.config import (
+    AI_ADVISOR_ENABLED,
     AI_ANALYSIS_DIR,
     BEAR_RESEARCHER_ENABLED,
     DEFAULT_INSTRUMENTS,
@@ -36,7 +37,24 @@ from src.position_manager import PositionManager
 from src.risk_manager import RiskManager
 from src.signal_coordinator import SignalCoordinator
 from src.slack_notifier import SlackNotifier
+from src.strategy.bollinger_reversal import BollingerReversal
 from src.strategy.ma_crossover import RsiMaCrossover
+from src.strategy.mtf_pullback import MTFPullback
+
+# 通貨ペアごとの戦略マップ（バックテスト実績に基づく）
+# - EUR/USD, USD/JPY M15: MTFPullback (PF 2.0)
+# - GBP/JPY M15: BollingerReversal (PF 1.08, 高頻度)
+INSTRUMENT_STRATEGY_MAP = {
+    "EUR_USD": MTFPullback,
+    "USD_JPY": MTFPullback,
+    "GBP_JPY": BollingerReversal,
+}
+
+
+def _strategy_for(instrument: str):
+    """通貨ペアに対応する戦略クラスを返す。未登録ペアはMTFPullback。"""
+    cls = INSTRUMENT_STRATEGY_MAP.get(instrument, MTFPullback)
+    return cls()
 from src.telegram_notifier import TelegramNotifier, TelegramLogHandler
 from src.trading_loop import TradingLoop
 
@@ -45,6 +63,15 @@ def setup_logging(log_dir: Path):
     """ログ設定"""
     log_dir.mkdir(parents=True, exist_ok=True)
     log_file = log_dir / "trading.log"
+
+    # Windows cp932 環境で em-dash 等がログ出力時に UnicodeEncodeError を起こすのを回避。
+    # StreamHandler が書き出す stdout/stderr を UTF-8 に切り替える。
+    for stream in (sys.stdout, sys.stderr):
+        try:
+            stream.reconfigure(encoding="utf-8", errors="replace")
+        except (AttributeError, ValueError):
+            # Python<3.7 や既にdetachedの場合は無視
+            pass
 
     logging.basicConfig(
         level=logging.INFO,
@@ -142,8 +169,13 @@ def main():
         )
 
         # AIアドバイザー（market_analysis.jsonがあれば自動読込）
-        ai_advisor = AIAdvisor(analysis_dir=AI_ANALYSIS_DIR)
-        logger.info("AIアドバイザー初期化（分析ディレクトリ: %s）", AI_ANALYSIS_DIR)
+        # LOOSE_MODE: AI_ADVISOR_ENABLED=False の間は起動しない（REJECTで見送られるのを回避）
+        if AI_ADVISOR_ENABLED:
+            ai_advisor = AIAdvisor(analysis_dir=AI_ANALYSIS_DIR)
+            logger.info("AIアドバイザー初期化（分析ディレクトリ: %s）", AI_ANALYSIS_DIR)
+        else:
+            ai_advisor = None
+            logger.info("AIアドバイザーは無効（AI_ADVISOR_ENABLED=False）")
 
         # Slack通知（取引イベントは #ai-alerts へ）
         slack = None
@@ -171,7 +203,12 @@ def main():
         loops: list[TradingLoop] = []
         for instrument in instruments:
             # 戦略は各ペアで独立インスタンス（診断情報が競合しないように）
-            strategy = RsiMaCrossover()
+            # ペアごとに最適戦略を自動選択（INSTRUMENT_STRATEGY_MAP）
+            strategy = _strategy_for(instrument)
+            logger.info(
+                "戦略割当: instrument=%s, strategy=%s",
+                instrument, type(strategy).__name__,
+            )
             loop = TradingLoop(
                 broker_client=broker,
                 position_manager=position_manager,
