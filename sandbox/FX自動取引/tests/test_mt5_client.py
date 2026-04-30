@@ -551,12 +551,14 @@ class TestClosePosition:
 class TestGetClosedDeal:
     """get_closed_dealのテスト（SL/TP自動決済時のPL復元）"""
 
-    def _make_deal(self, *, entry, profit, price, time_ts, swap=0.0, commission=0.0):
+    def _make_deal(self, *, entry, profit, price, time_ts, position_id=8646754,
+                   swap=0.0, commission=0.0):
         d = MagicMock()
         d.entry = entry
         d.profit = profit
         d.price = price
         d.time = time_ts
+        d.position_id = position_id
         d.swap = swap
         d.commission = commission
         return d
@@ -582,12 +584,43 @@ class TestGetClosedDeal:
         assert result["realized_pl"] == pytest.approx(420.0)
         assert result["closed_at"].timestamp() == 2000
 
+    def test_filters_out_other_positions(self, client, mt5_mock):
+        """history_deals_get が他ポジションのdealも返した場合、自分のだけ採用する。
+
+        MT5 Python APIの position= フィルタはバージョンによって効かないため、
+        全件取得 → position_id で手動フィルタする実装。
+        """
+        mt5_mock.DEAL_ENTRY_OUT = 1
+        mt5_mock.DEAL_ENTRY_INOUT = 2
+        # 自分のdeal
+        my_in = self._make_deal(entry=0, profit=0.0, price=150.0, time_ts=1000, position_id=8646754)
+        my_out = self._make_deal(entry=1, profit=300.0, price=150.5, time_ts=2000, position_id=8646754)
+        # 別ポジションのdeal（混入してはいけない）
+        other_in = self._make_deal(entry=0, profit=0.0, price=200.0, time_ts=3000, position_id=99999)
+        other_out = self._make_deal(entry=1, profit=-9999.0, price=180.0, time_ts=4000, position_id=99999)
+        mt5_mock.history_deals_get.return_value = (my_in, other_in, my_out, other_out)
+
+        result = client.get_closed_deal("8646754")
+
+        assert result is not None
+        assert result["close_price"] == 150.5
+        assert result["realized_pl"] == pytest.approx(300.0)
+
     def test_returns_none_when_history_empty(self, client, mt5_mock):
         """履歴が空ならNoneを返す"""
         mt5_mock.DEAL_ENTRY_OUT = 1
         mt5_mock.DEAL_ENTRY_INOUT = 2
         mt5_mock.history_deals_get.return_value = ()
         mt5_mock.last_error.return_value = (0, "Success")
+
+        assert client.get_closed_deal("9999") is None
+
+    def test_returns_none_when_position_not_in_history(self, client, mt5_mock):
+        """履歴は取れるが対象ポジションのdealが無いケース"""
+        mt5_mock.DEAL_ENTRY_OUT = 1
+        mt5_mock.DEAL_ENTRY_INOUT = 2
+        other = self._make_deal(entry=1, profit=100.0, price=150.0, time_ts=1000, position_id=11111)
+        mt5_mock.history_deals_get.return_value = (other,)
 
         assert client.get_closed_deal("9999") is None
 

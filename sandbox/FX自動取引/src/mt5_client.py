@@ -455,12 +455,23 @@ class Mt5Client(BrokerClient):
         date_to = datetime.now(timezone.utc) + timedelta(days=1)
         date_from = date_to - timedelta(days=14)
 
-        deals = mt5.history_deals_get(date_from, date_to, position=ticket)
-        if deals is None or len(deals) == 0:
+        # NOTE: mt5.history_deals_get(..., position=ticket) はバージョン依存で
+        # フィルタが効かず全件返すケースがある。安全のため取得後に position_id で
+        # 手動フィルタする。
+        all_deals = mt5.history_deals_get(date_from, date_to)
+        if not all_deals:
             error = mt5.last_error()
             logger.warning(
                 "決済履歴を取得できませんでした: ticket=%s, mt5_error=%s",
                 ticket, error,
+            )
+            return None
+
+        deals = [d for d in all_deals if d.position_id == ticket]
+        if not deals:
+            logger.warning(
+                "対象ポジションのdealが見つかりません: ticket=%s, all_deals=%d",
+                ticket, len(all_deals),
             )
             return None
 
