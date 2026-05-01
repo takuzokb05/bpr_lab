@@ -33,7 +33,7 @@
 | 13 | 非エンジニアの2つのファイル設定 | `articles/Claude Codeを使い始めた非エンジニアが、最初にやるべき「たった2つのファイル設定」.txt` | 非エンジニア, ガバナンス | settings.local.json（鍵）+ CLAUDE.md（ルール表）の二重ロック。両方必要な理由を解説 | agent-governance.md 二重ロック概念 + templates/settings-local.json テンプレート | 反映済 |
 | 14 | チームのCLAUDE.mdが勝手に育つ — Hook自動化 | `articles/チームのCLAUDE.mdが勝手に育つ - Hook機能での自動化.txt` | CLAUDE.md, スキル | SessionEnd + PreCompact Hookで会話履歴→CLAUDE.md更新提案を自動化。Self-improving CLAUDEmd | 未反映（Self-improving skillsと合わせて中期検討） | 読了 |
 
-## 日次収集（2026-03-27〜）
+- 日次収集（2026-03-27〜）: 395件（2026-04-27更新）
 
 | No. | タイトル | 言語 | 状態 | タグ | ファイル |
 |-----|---------|------|------|-----|--------|
@@ -421,6 +421,17 @@
 | 382 | 国内AIエージェント動向（2026/4/23号）— NEC提携・GPT-5.5・Google 75%コード生成が週の核心 | ja | 未読 | #ai-news #japan #agent #web-signal | articles/2026-04-23_009_Japan_AI_Agent_Weekly_April23_NEC_GPT55.md |
 | 383 | NEC × Anthropic グローバルパートナーシップ — Claude DX支援・Claude Mythos access協議も | ja | 未読 | #claude-ecosystem #anthropic #japan #web-signal | articles/2026-04-23_010_NEC_Anthropic_Global_Partnership_Japan.md |
 | 384 | TradingAgents v0.2.3 — マルチプロバイダー対応・GPT-5.4/Claude 4.6/Gemini 3.1追加 | en | 未読 | #ai-trading #llm-trading #multi-agent #web-signal | articles/2026-04-23_011_TradingAgents_v023_MultiProvider_LLM.md |
+| 385 | Anthropic Claude Code品質低下ポストモーテム — SonnetとOpusの推論退行の原因分析と修正 | en | 未読 | #claude-code #web-signal | articles/2026-04-27_004_Anthropic_Claude_Code_Quality_Postmortem_April23.md |
+| 386 | Claude Code GTM Report 2026 — 非エンジニア部門での採用急増・Skillsで32人分業務カバー事例 | en | 未読 | #claude-code #skills #非エンジニア #web-signal | articles/2026-04-27_006_Claude_Code_GTM_Report_2026_GrowthUnhinged.md |
+| 387 | Claude Code 45 Tips — ステータスライン・Gemini CLIサブエージェント・コンテナ実行 | en | 未読 | #claude-code #ワークフロー #web-signal | articles/2026-04-27_007_Claude_Code_45_Tips_GitHub_ykdojo.md |
+| 388 | agent-session-resume: Claude Code/Codexでセッション再開スキル (GitHub/hacktivist123) | en | 未読 | #claude-code #スキル #x-signal | articles/2026-04-27_009_X_coder_blvck_agent_session_resume_skill_GitHub.md |
+| 389 | Chrome MCPでWebサイトを1プロンプトで完全複製するClaude Codeスキル (OSS) | en | 未読 | #claude-code #スキル #mcp #x-signal | articles/2026-04-27_010_X_dr_cintas_Clone_Website_Skill_Chrome_MCP.md |
+| 390 | Claude Coworkスキル15本を24時間で組織展開 — .skillファイル構造・承認ガバナンス設計 | en | 未読 | #claude-code #スキル #ワークフロー #x-signal | articles/2026-04-27_011_X_JJEnglert_15_Cowork_Skills_Org_Governance.md |
+| 391 | Anthropic公式「claude-code-setup」プラグイン — プロジェクト分析→設定提案 | ja | 未読 | #claude-code #スキル #x-signal | articles/2026-04-27_012_X_claudecode_lab_claude_code_setup_Official_Plugin.md |
+| 392 | Anthropic時価総額1兆ドル突破 — OpenAI超え・90日で3倍・創業背景分析 | en | 未読 | #claude-ecosystem #anthropic #x-signal | articles/2026-04-27_013_X_TukiFromKL_Anthropic_1T_Valuation_Overtakes_OpenAI.md |
+| 393 | AnthropicがMCPを本番エージェント向け拡張 — プログレッシブ探索・RCE懸念と並行 | en | 未読 | #claude-ecosystem #mcp #アーキテクチャ #x-signal | articles/2026-04-27_014_X_ebenezerDN_MCP_Production_Scaling_RCE_Flaws.md |
+| 394 | MCPのSDK設計起因の脆弱性 — Flowise/LiteLLM/LangChainでRCE・10件以上CVE | ja | 未読 | #claude-ecosystem #mcp #ガバナンス #x-signal | articles/2026-04-27_015_X_iototsecnews_Flowise_MCP_RCE_Critical_Vulnerability.md |
+| 395 | AnthropicがMCPリモートサーバーを正式サポート — クラウドで外部ツール常時接続へ | ja | 未読 | #claude-ecosystem #mcp #アーキテクチャ #x-signal | articles/2026-04-27_016_X_asu_hagi_Anthropic_MCP_Remote_Server_Official.md |
 ## 発見パターン（記事横断の傾向）
 
 蔵書を横断して繰り返し出現するテーマ。出現回数が多いほど普遍的な知見。

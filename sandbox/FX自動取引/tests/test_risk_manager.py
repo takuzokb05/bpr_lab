@@ -36,30 +36,35 @@ def _make_trade_days_ago(pl: float, days_ago: float) -> dict:
 class TestPositionSizing:
     """ポジションサイジングのテスト"""
 
-    def test_basic_1_percent_rule(self):
-        """口座100万円・SL50pipsで1%ルールの基本計算を検証"""
+    def test_basic_risk_rule(self):
+        """口座100万円・SL50pipsでMAX_RISK_PER_TRADE(0.05%)ルールの基本計算を検証"""
+        from src.config import MAX_RISK_PER_TRADE
+
         rm = RiskManager(account_balance=1_000_000)
-        # 計算: 1,000,000 * 0.01 / (50 * 10.0) = 20.0  (USD_JPY pip_value=10)
+        # 計算: 1,000,000 * MAX_RISK_PER_TRADE / (50 * 10.0)  (USD_JPY pip_value=10)
         lot_size = rm.calculate_position_size(
             balance=1_000_000,
             stop_loss_pips=50,
             instrument="USD_JPY",
         )
-        assert lot_size == pytest.approx(20.0)
+        assert lot_size == pytest.approx(1_000_000 * MAX_RISK_PER_TRADE / (50 * 10.0))
 
     def test_different_balance_and_sl(self):
         """異なる残高・SL幅での計算を検証（EUR_USD pip_value=12.0）"""
+        from src.config import MAX_RISK_PER_TRADE
+
         rm = RiskManager(account_balance=500_000)
-        # 計算: 500,000 * 0.01 / (30 * 12.0) ≈ 13.89  (EUR_USD pip_value=12)
         lot_size = rm.calculate_position_size(
             balance=500_000,
             stop_loss_pips=30,
             instrument="EUR_USD",
         )
-        assert lot_size == pytest.approx(500_000 * 0.01 / (30 * 12.0))
+        assert lot_size == pytest.approx(500_000 * MAX_RISK_PER_TRADE / (30 * 12.0))
 
     def test_drawdown_reduce_halves_lot(self):
         """ドローダウン REDUCE レベル（10%）でポジションサイズが半減する"""
+        from src.config import MAX_RISK_PER_TRADE
+
         # peak=1,000,000, current=900,000 → 10%ドローダウン → REDUCE
         rm = RiskManager(account_balance=1_000_000)
         rm._peak_balance = 1_000_000
@@ -70,9 +75,9 @@ class TestPositionSizing:
             stop_loss_pips=50,
             instrument="USD_JPY",
         )
-        # 通常: 900,000 * 0.01 / (50 * 10) = 18.0
-        # REDUCE: 18.0 * 0.5 = 9.0
-        assert lot_size == pytest.approx(9.0)
+        # REDUCE: 通常 * 0.5
+        normal = balance * MAX_RISK_PER_TRADE / (50 * 10.0)
+        assert lot_size == pytest.approx(normal * 0.5)
 
     def test_drawdown_minimum_lot(self):
         """ドローダウン MINIMUM レベル（15%）で最小ロットに制限される"""
@@ -244,55 +249,55 @@ class TestLossLimits:
         assert reason is None
 
     def test_daily_loss_within_limit(self):
-        """日次損失が上限内（1.9%）なら許可"""
+        """日次損失が上限内（4.9%）なら許可（STAGE2: 上限5%）"""
         trades = [
-            _make_trade(-19_000, hours_ago=1),  # 1.9%
+            _make_trade(-49_000, hours_ago=1),  # 4.9%
         ]
         is_allowed, reason = self.rm.check_loss_limits(trades)
         assert is_allowed is True
 
     def test_daily_loss_at_limit(self):
-        """日次損失が上限到達（2.0%）で停止"""
+        """日次損失が上限到達（5.0%）で停止"""
         trades = [
-            _make_trade(-20_000, hours_ago=1),  # 2.0%ちょうど
+            _make_trade(-50_000, hours_ago=1),  # 5.0%ちょうど
         ]
         is_allowed, reason = self.rm.check_loss_limits(trades)
         assert is_allowed is False
         assert "日次損失上限" in reason
 
     def test_daily_loss_just_above_limit(self):
-        """日次損失が上限微超（2.1%）で停止"""
+        """日次損失が上限微超（5.1%）で停止"""
         trades = [
-            _make_trade(-21_000, hours_ago=1),  # 2.1%
+            _make_trade(-51_000, hours_ago=1),  # 5.1%
         ]
         is_allowed, reason = self.rm.check_loss_limits(trades)
         assert is_allowed is False
         assert "日次損失上限" in reason
 
     def test_weekly_loss_at_limit(self):
-        """週次損失が上限到達（5.0%）で停止"""
-        # 日次は2%未満に収まるように分散
+        """週次損失が上限到達（10.0%）で停止（STAGE2: 上限10%）"""
+        # 日次5%未満に収まるように分散（合計10万円=10%）
         trades = [
-            _make_trade(-15_000, hours_ago=30),  # 1日以上前
-            _make_trade(-15_000, hours_ago=50),
-            _make_trade(-10_000, hours_ago=72),
-            _make_trade(-10_000, hours_ago=96),
+            _make_trade(-25_000, hours_ago=30),
+            _make_trade(-25_000, hours_ago=50),
+            _make_trade(-25_000, hours_ago=72),
+            _make_trade(-25_000, hours_ago=96),
         ]
         is_allowed, reason = self.rm.check_loss_limits(trades)
         assert is_allowed is False
         assert "週次損失上限" in reason
 
     def test_monthly_loss_at_limit(self):
-        """月次損失が上限到達（10.0%）で停止"""
-        # 日次・週次の上限に引っかからないように分散
+        """月次損失が上限到達（20.0%）で停止（STAGE2: 上限20%）"""
+        # 日次5%・週次10%の上限に引っかからないように分散（合計20万円=20%）
         trades = [
-            _make_trade(-15_000, hours_ago=200),  # 約8日前
-            _make_trade(-15_000, hours_ago=250),  # 約10日前
-            _make_trade(-15_000, hours_ago=300),  # 約12日前
-            _make_trade(-15_000, hours_ago=350),  # 約14日前
-            _make_trade(-15_000, hours_ago=400),  # 約16日前
-            _make_trade(-15_000, hours_ago=450),  # 約18日前
-            _make_trade(-10_000, hours_ago=500),  # 約20日前
+            _make_trade(-30_000, hours_ago=200),
+            _make_trade(-30_000, hours_ago=250),
+            _make_trade(-30_000, hours_ago=300),
+            _make_trade(-30_000, hours_ago=350),
+            _make_trade(-30_000, hours_ago=400),
+            _make_trade(-30_000, hours_ago=450),
+            _make_trade(-20_000, hours_ago=500),
         ]
         is_allowed, reason = self.rm.check_loss_limits(trades)
         assert is_allowed is False
@@ -362,7 +367,7 @@ class TestConsecutiveLosses:
         assert is_stopped is False
 
     def test_five_consecutive_losses_stopped(self):
-        """5連敗 → カウント5、停止"""
+        """5連敗 → カウント5、上限10未満なので停止しない（STAGE2: 上限を10に緩和）"""
         trades = [
             {"pl": 500},
             {"pl": -100}, {"pl": -200}, {"pl": -300},
@@ -370,16 +375,23 @@ class TestConsecutiveLosses:
         ]
         count, is_stopped = self.rm.check_consecutive_losses(trades)
         assert count == 5
-        assert is_stopped is True
+        assert is_stopped is False
 
     def test_six_consecutive_losses_stopped(self):
-        """6連敗 → カウント6、停止"""
+        """6連敗 → 上限10未満なので停止しない"""
         trades = [
             {"pl": -10}, {"pl": -20}, {"pl": -30},
             {"pl": -40}, {"pl": -50}, {"pl": -60},
         ]
         count, is_stopped = self.rm.check_consecutive_losses(trades)
         assert count == 6
+        assert is_stopped is False
+
+    def test_ten_consecutive_losses_stopped(self):
+        """10連敗 → 上限到達で停止"""
+        trades = [{"pl": -(i + 1) * 10} for i in range(10)]
+        count, is_stopped = self.rm.check_consecutive_losses(trades)
+        assert count == 10
         assert is_stopped is True
 
     def test_loss_break_resets_count(self):
@@ -761,21 +773,24 @@ class TestDynamicPipValue:
 
     def test_calculate_position_size_uses_dynamic_pip_value(self):
         """calculate_position_sizeが動的pip_valueを使用することの確認"""
+        from src.config import MAX_RISK_PER_TRADE
+
         # USD_JPYレート = 150.0 → EUR_USD pip_value = 0.0001 * 1000 * 150 = 15.0
         mock_broker = self._make_mock_broker(150.0)
         rm = RiskManager(account_balance=1_000_000, broker_client=mock_broker)
 
-        # 計算: 1,000,000 * 0.01 / (50 * 15.0) = 10,000 / 750 ≈ 13.333...
         lot_size = rm.calculate_position_size(
             balance=1_000_000,
             stop_loss_pips=50,
             instrument="EUR_USD",
         )
-        expected = 1_000_000 * 0.01 / (50 * 15.0)
+        expected = 1_000_000 * MAX_RISK_PER_TRADE / (50 * 15.0)
         assert lot_size == pytest.approx(expected)
 
     def test_calculate_position_size_fallback_without_broker(self):
         """broker_client未設定時にcalculate_position_sizeがフォールバック値を使用"""
+        from src.config import MAX_RISK_PER_TRADE
+
         rm = RiskManager(account_balance=1_000_000)  # broker_client=None
 
         # フォールバック pip_value=12.0 で計算
@@ -784,7 +799,7 @@ class TestDynamicPipValue:
             stop_loss_pips=50,
             instrument="EUR_USD",
         )
-        expected = 1_000_000 * 0.01 / (50 * 12.0)
+        expected = 1_000_000 * MAX_RISK_PER_TRADE / (50 * 12.0)
         assert lot_size == pytest.approx(expected)
 
     def test_backward_compatibility_init_without_broker(self):
@@ -824,31 +839,25 @@ class TestEvaluateKillSwitch:
         assert result == "daily_loss"
 
     def test_evaluate_daily_loss_triggers(self):
-        """日次損失上限で "daily_loss" 返却"""
+        """日次損失上限で "daily_loss" 返却（STAGE2: 上限5%）"""
         rm = RiskManager(account_balance=1_000_000)
         rm._peak_balance = 1_000_000
-        # 日次損失2%以上（ドローダウンはSTOP未満に保つ）
+        # 日次損失5%以上（ドローダウンはSTOP未満に保つ）
         trades = [
-            _make_trade(-20_000, hours_ago=1),  # 2% → 上限到達
+            _make_trade(-50_000, hours_ago=1),  # 5% → 上限到達
         ]
         result = rm.evaluate_kill_switch(
-            current_balance=980_000,  # DD 2% → WARNINGレベル未満
+            current_balance=950_000,  # DD 5% → WARNING〜REDUCEレベル
             trade_history=trades,
         )
         assert result == "daily_loss"
 
     def test_evaluate_consecutive_losses_triggers(self):
-        """5連敗で "consecutive_losses" 返却"""
+        """10連敗で "consecutive_losses" 返却（STAGE2: 上限10）"""
         rm = RiskManager(account_balance=1_000_000)
         rm._peak_balance = 1_000_000
         # 損失合計が小さく日次上限に引っかからないように、close_timeも設定
-        trades = [
-            _make_trade(-100, hours_ago=1),
-            _make_trade(-100, hours_ago=2),
-            _make_trade(-100, hours_ago=3),
-            _make_trade(-100, hours_ago=4),
-            _make_trade(-100, hours_ago=5),
-        ]
+        trades = [_make_trade(-100, hours_ago=i + 1) for i in range(10)]
         result = rm.evaluate_kill_switch(
             current_balance=990_000,  # DD小さい
             trade_history=trades,

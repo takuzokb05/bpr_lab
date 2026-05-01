@@ -199,16 +199,16 @@ class TestConsecutiveLosses:
     """
     シナリオ4: 連続損失注入
 
-    5回連続損失をシミュレート:
-    - 連続負けカウンターが5に到達
+    MAX_CONSECUTIVE_LOSSES回連続損失をシミュレート:
+    - 連続負けカウンターが上限に到達
     - 24時間取引停止が発動
     - KillSwitchの"consecutive_losses"が連動する
     """
 
     def test_five_consecutive_losses_stops_trading(self, caplog):
-        """5連敗で24時間取引停止が発動する"""
+        """連敗上限到達で24時間取引停止が発動する（STAGE2: 上限10）"""
         rm = RiskManager(1_000_000)
-        trade_history = _make_trade_history(5, pl=-5000.0)
+        trade_history = _make_trade_history(MAX_CONSECUTIVE_LOSSES, pl=-5000.0)
 
         with caplog.at_level(logging.WARNING):
             count, is_stopped = rm.check_consecutive_losses(trade_history)
@@ -368,6 +368,8 @@ class TestPositionInconsistency:
             "units": 1000,
             "status": "filled",
         }
+        # 決済履歴は取得不可 → pl_unknown=True 経路を検証
+        broker.get_closed_deal.return_value = None
         rm = MagicMock(spec=RiskManager)
         rm.kill_switch = MagicMock(spec=KillSwitch)
         rm.kill_switch.is_trading_allowed.return_value = True

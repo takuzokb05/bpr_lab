@@ -91,3 +91,29 @@
 | 069 | MT5のEAとローカルAIモデルを接続 — 自己成長完結型トレードシステムへの実装実験（@panchan210） | ja | 未読 | #fx #ea #implementation #x-signal | articles/2026-04-22_026_X_panchan210_MT5_EA_Local_AI_Model_Integration.md |
 | 070 | Horizon — 自然言語で戦略記述→バックテスト→ブローカー接続AIアルゴ取引プラットフォーム（@sopersone） | en | 未読 | #fx #llm-trading #x-signal | articles/2026-04-22_027_X_sopersone_Horizon_AI_Algo_Trading_Platform.md |
 | 071 | TradingAgents v0.2.3 — マルチプロバイダーLLM（GPT-5.4/Claude 4.6/Gemini 3.1）・バックテスト精度向上 | en | 未読 | #llm-trading #multi-agent #implementation #web-signal | articles/2026-04-23_011_TradingAgents_v023_MultiProvider_LLM.md |
+| 072 | TradingAgents v0.2.4 — LangGraphチェックポイント・構造化出力エージェント・DeepSeek/Docker対応 | en | 未読 | #llm-trading #multi-agent #implementation #web-signal | articles/2026-04-27_005_TradingAgents_v024_LangGraph_Checkpoint_Docker.md |
+| 073 | MT5/NT8/TV対応22戦略 + Claude/ChatGPT/Codexエージェントプロンプト集 (ZenomTrader) | en | 未読 | #fx #mt5 #llm-trading #implementation #x-signal | articles/2026-04-27_017_X_ZenomTrader_MT5_NT8_22_Strategies_Claude_Prompts.md |
+| 074 | MT5全自動取引エージェント8ヶ月 — Claude Swarm + Obsidianで700%超リターン報告 | en | 未読 | #fx #mt5 #llm-trading #multi-agent #x-signal | articles/2026-04-27_018_X_danny_builder_MT5_Automated_Agent_Claude_Swarm_700pct.md |
+| 075 | ゴールドマンサックス: 600人のトレーダーを2人に削減したAI・アルゴ取引の歴史的事実 | ja | 未読 | #llm-trading #quant #x-signal | articles/2026-04-27_023_X_Dirg_rocketdyne_Goldman_Sachs_AI_Trader_Replacement.md |
+| 076 | The Rise of Open-Source Trading: Exploring TradingAgents v0.2.4（FranksWorld, 2026-05-01）— Structured-Output Agents・LangGraph checkpoint・DeepSeek/Qwen/GLM対応・53,000 stars | en | 未読 | #llm-trading #multi-agent #framework #web-signal | articles/2026-05-01_967_TradingAgents_Open_Source_Rise_FranksWorld.md |
+| 077 | MQL5 + LLM in 2026: The Real Architecture That Works — 4層アーキテクチャ・JSON Schemaバリデーション・信頼度スコアリング・EA/middleware/LLM責任分離 | en | 未読 | #fx #llm-trading #implementation #mt5 #web-signal | articles/2026-05-01_968_MQL5_LLM_Real_Architecture_2026.md |
+| 078 | Stumbled on an AI platform that shrinks algo-trading from "all day" to... | en | 未読 | #ai-trading #x-signal | articles/2026-04-29_1137_X_0xCristal_Stumbled_on_an_AI_platform_that_shrinks_.md |
+| 079 | 20260429 TRO TRADING   AI EVALUATED MY TRADING TODAY  via @YouTube  #T... | en | 未読 | #ai-trading #x-signal | articles/2026-04-29_1138_X_TheRumpledOne_20260429_TRO_TRADING_AI_EVALUATED_MY_TRA.md |
+| 080 | 🤖 3 AI trading bots. Live signals. Real-time EMA crossovers. | en | 未読 | #ai-trading #x-signal | articles/2026-04-29_1139_X_markodman_3_AI_trading_bots_Live_signals_Real-time.md |
+| 081 | 【AI Scalper GOLD】爆速+100plps獲得スキャ！ "負けを記憶する学習型AI"搭載 ゴールド専用スキャルピングインジケータ... | ja | 未読 | #ai-trading #x-signal | articles/2026-04-29_1140_X_reo_fxEA_AI_Scalper_GOLD爆速100plps獲得スキャ_負けを記憶する学習型.md |
+| 082 | 銘柄選定はそんな感じで概ね確立できているものの、むしろ課題はトレードプランとスキルの改善 | ja | 未読 | #ai-trading #x-signal | articles/2026-04-29_1141_X_kabukabuu2023_銘柄選定はそんな感じで概ね確立できているもののむしろ課題はトレードプランとスキル.md |
+| 083 | これってどうなんだろ？ | ja | 未読 | #ai-trading #x-signal | articles/2026-04-29_1142_X_noblesse_oblig8_これってどうなんだろ.md |
+| 084 | Most traders focus on finding the right signal. | en | 未読 | #ai-trading #x-signal | articles/2026-04-30_1143_X_3Commas_Most_traders_focus_on_finding_the_right_.md |
+| 085 | ⚡ FINAL HOURS: Savage Pips AI Lifetime Access ONLY $599 (Ends 5PM) | en | 未読 | #ai-trading #x-signal | articles/2026-04-30_1144_X_pipclubtrading_FINAL_HOURS_Savage_Pips_AI_Lifetime_Acce.md |
+| 086 | AIでEAを制御してる新作FX自動売買 | ja | 未読 | #ai-trading #x-signal | articles/2026-04-30_1145_X_HIDE_nishikita_AIでEAを制御してる新作FX自動売買.md |
+| 087 | 【AI診断:72点】 LTAF_USDJPY_H1（GogoJungle1位のEA）を徹底解剖👇 | ja | 未読 | #ai-trading #x-signal | articles/2026-04-30_1146_X_spring0168_AI診断72点_LTAF_USDJPY_H1GogoJungle1位のEAを徹底.md |
+| 088 | 🚨 Still watching charts all day? | en | 未読 | #ai-trading #x-signal | articles/2026-04-30_1147_X_pipclubtrading_Still_watching_charts_all_day.md |
+| 089 | Beyond EAs: Why AI Agents are the New Standard in 2026 Forex Trading | en | 未読 | #ai-trading #x-signal | articles/2026-04-30_1148_X_BrokerXplorer_Beyond_EAs_Why_AI_Agents_are_the_New_Sta.md |
+| 090 | 🚨 Savage Pips AI catching US30 & Gold moves on autopilot | en | 未読 | #ai-trading #x-signal | articles/2026-04-30_1149_X_pipclubtrading_Savage_Pips_AI_catching_US30_Gold_moves_.md |
+| 091 | 💰 CRYPTO NEWS  7 Best AI Stock and Forex Trading Bots to Watch in 2026... | en | 未読 | #ai-trading #x-signal | articles/2026-05-01_1150_X_AandCnews_CRYPTO_NEWS_7_Best_AI_Stock_and_Forex_Tr.md |
+| 092 | 🚨 Want to learn algorithmic trading? | en | 未読 | #ai-trading #x-signal | articles/2026-04-28_1151_X_pyquantnews_Want_to_learn_algorithmic_trading.md |
+| 093 | 実はこのEA agent studioをAPI連携してMT5のモデル監視してます。 | ja | 未読 | #ai-trading #x-signal | articles/2026-04-28_1152_X_FXtradersAI_実はこのEA_agent_studioをAPI連携してMT5のモデル監視してます.md |
+| 094 | Examining AI Impact on Forex Trading | en | 未読 | #ai-trading #x-signal | articles/2026-04-28_1153_X_BrokerXplorer_Examining_AI_Impact_on_Forex_Trading.md |
+| 095 | 4/27 「ZONE AI」かなり | ja | 未読 | #ai-trading #x-signal | articles/2026-04-28_1154_X_hukugyo_fc_427_ZONE_AIかなり.md |
+| 096 | 20,000+ pips in ONE week 🤯📈 | en | 未読 | #ai-trading #x-signal | articles/2026-04-27_1155_X_pipclubtrading_20000_pips_in_ONE_week.md |
+| 097 | we set up MT5 Expert Advisors and AI bots specifically for Gold tradin... | en | 未読 | #ai-trading #x-signal | articles/2026-04-27_1156_X_Art10rd_we_set_up_MT5_Expert_Advisors_and_AI_bot.md |

@@ -1,0 +1,5267 @@
+{
+  "domain": "claude-code",
+  "collected_at": "2026-04-30T21:17:20.348373+00:00",
+  "days": 1,
+  "total_fetched": 300,
+  "total_filtered": 55,
+  "layer2_skipped": true,
+  "tweets": [
+    {
+      "tweet_created_at": "2026-04-30T21:16:19.000000Z",
+      "id": 2049961065317056855,
+      "id_str": "2049961065317056855",
+      "type": "tweet",
+      "conversation_id_str": "2049961065317056855",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "claude codeで書いてcodexにレビューさせたらバチバチにバグ見つけてくるもんやから、さぞ賢く動いてくれるんやろなと試しにclaudeとcodexに同じもの渡して同じ指示出したらcodexの方は全然前に進まへんの\nなんなんお前😑",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 53110341,
+        "id_str": "53110341",
+        "name": "Tsuyoshi Sakai",
+        "screen_name": "ouipanda",
+        "location": "Aichi, Japan",
+        "url": "http://d.hatena.ne.jp/oui27/",
+        "description": "笛を吹くパンダ\n\nアイリッシュフルート / ティンホイッスル / ほかいろいろ\n\nあとプログラムもかく",
+        "protected": false,
+        "verified": false,
+        "followers_count": 231,
+        "friends_count": 240,
+        "listed_count": 0,
+        "favourites_count": 132,
+        "statuses_count": 22371,
+        "created_at": "2009-07-02T16:27:50.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/53110341/1410759589",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1304808771/twitter_icon2_normal.png",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 4,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          119
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T21:16:17.000000Z",
+      "id": 2049961057440203053,
+      "id_str": "2049961057440203053",
+      "type": "tweet",
+      "conversation_id_str": "2049961057440203053",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "【4/3発売！】\n「AIで会社をつくった主婦の話: 非エンジニアの私が、Claude Codeで人生を変えるまで」\n著者：Yuichi(著)\n発売日：2026年04月03日\nhttps://t.co/lIcFe6N1KP",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1598916911730855936,
+        "id_str": "1598916911730855936",
+        "name": "妊娠・出産・子育て本新刊",
+        "screen_name": "childcare_rev",
+        "location": "Amazonアソシエイト・プログラムに参加しています。",
+        "url": "",
+        "description": "妊娠・出産・子育てに関する本の新刊、売れ筋情報をツイートします。\n妊娠・出産・子育て本に興味のある方は、ぜひフォローしてください！",
+        "protected": false,
+        "verified": false,
+        "followers_count": 355,
+        "friends_count": 151,
+        "listed_count": 0,
+        "favourites_count": 957,
+        "statuses_count": 95300,
+        "created_at": "2022-12-03T05:48:22.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1598916911730855936/1696680268",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1598918034638639105/dBpNx2g2_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 1,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "amazon.co.jp/dp/B0GHKP6MMM?…",
+            "expanded_url": "https://www.amazon.co.jp/dp/B0GHKP6MMM?tag=gorogoro054-22&linkCode=ogi&th=1&psc=1",
+            "indices": [
+              87,
+              110
+            ],
+            "url": "https://t.co/lIcFe6N1KP"
+          }
+        ],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          110
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T21:14:27.000000Z",
+      "id": 2049960598524580327,
+      "id_str": "2049960598524580327",
+      "type": "tweet",
+      "conversation_id_str": "2049960598524580327",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "「週末にやろう」ではもう遅い。 Claude Codeの進化は速すぎます。\n\n・記憶システム6層化 ・動画編集の自動化 ・NotebookLMとの長期記憶連携\n\n非エンジニアの工場管理職が8週間で発見した「全技術」を2万字の総集編に込めました。GWの今こそ、武器を磨く時。\n\n↓ プロフのリンクから",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 143912702,
+        "id_str": "143912702",
+        "name": "kiro | 製造業・管理職×Claude Codeで仕事を変える非エンジニア",
+        "screen_name": "hirochigu",
+        "location": "",
+        "url": "https://note.com/hirochigu",
+        "description": "「AIを使いたいが周りに言えない」製造業・ \n  管理職の方へ。\n  ・1時間の手作業 → Claude自動化で数秒に  \n  ・ 投資の養分 →  自作EAで「負けない」運用へ\n  ・ 現場スキル → 副収入に変換する全手順   \n\n  フォローすると非エンジニアの全過程が届きます。\nnote👇",
+        "protected": false,
+        "verified": false,
+        "followers_count": 165,
+        "friends_count": 302,
+        "listed_count": 0,
+        "favourites_count": 4727,
+        "statuses_count": 630,
+        "created_at": "2010-05-14T19:34:27.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/143912702/1773460652",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2032667409455394817/dWam1QBN_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 4,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          149
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T21:12:15.000000Z",
+      "id": 2049960043370717310,
+      "id_str": "2049960043370717310",
+      "type": "tweet",
+      "conversation_id_str": "2049960043370717310",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "「Claude codeやCodexへの指示は全部英語で投げている、英語の方がかなり性能が上がる」。\n\n学習データの分布を考えると構造的に正しい話。日本語の技術ドキュメントは英語の数倍少ない。\n\nただ、運用上の落とし穴もある。\n英語で投げると、出力されるコメント・コミットメッセージ・エラーメッセージも英語になりがち。\nチームで使うリポジトリだと、可読性のコストが個人の精度向上を上回るケースがある。\n\n英語で投げるを採用するかは、自分のリポか共有リポかで分けたほうが良さそう。\n\n性能とコストは別レイヤーで判断する。",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1922541179650084864,
+        "id_str": "1922541179650084864",
+        "name": "北原｜積み上げ×AI",
+        "screen_name": "kitahara_dev",
+        "location": "日本",
+        "url": "https://growx.nexus-ai.jp/",
+        "description": "GrowX開発者（@growx_nexus_ai）｜X分析・効率化SaaS｜AI × データパイプライン × 自動化｜Python / LLM\nBuilding GrowX｜AI pipelines & automation\nOSS: ai-pipeline-starter",
+        "protected": false,
+        "verified": true,
+        "followers_count": 1042,
+        "friends_count": 259,
+        "listed_count": 0,
+        "favourites_count": 17958,
+        "statuses_count": 5035,
+        "created_at": "2025-05-14T06:35:17.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1922541179650084864/1772921869",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2017903112502288384/PX0pild7_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 4,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          113
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T21:11:19.000000Z",
+      "id": 2049959809395700083,
+      "id_str": "2049959809395700083",
+      "type": "tweet",
+      "conversation_id_str": "2049959809395700083",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Kimi Code CLIとは？Claude Codeの強力な対抗馬。\n\n中国発・月光AI製のコーディングエージェント。\n\n⚡ Claude Codeと同等の性能\n💰 料金体系が異なる\n🔄 複数AIを並列実行できる\n\n機能・料金・Claude Codeとの違いを徹底解説↓\nhttps://t.co/yPx3E9WobV",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 2016910204471021568,
+        "id_str": "2016910204471021568",
+        "name": "永田遼汰｜中小企業にAIを届ける",
+        "screen_name": "aibotec",
+        "location": "",
+        "url": "https://ai-botec.com/",
+        "description": "“ヒト”の仕事をなくす仕事をしています｜株式会社AIBOTEC代表取締役",
+        "protected": false,
+        "verified": true,
+        "followers_count": 15,
+        "friends_count": 26,
+        "listed_count": 0,
+        "favourites_count": 33,
+        "statuses_count": 121,
+        "created_at": "2026-01-29T16:24:13.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/2016910204471021568/1769704536",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2016910620369801216/tzFr29Mn_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 5,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "note.com/cozy_wren7926/…",
+            "expanded_url": "https://note.com/cozy_wren7926/n/n50cd0ed659ae",
+            "indices": [
+              137,
+              160
+            ],
+            "url": "https://t.co/yPx3E9WobV"
+          }
+        ],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          160
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T21:09:33.000000Z",
+      "id": 2049959364417781771,
+      "id_str": "2049959364417781771",
+      "type": "tweet",
+      "conversation_id_str": "2049959364417781771",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Claude Codeで全ドキュメントを1トークンも使わずに読める、っていうこの発想、地味だけどコンサル現場のデータ整理コストを根こそぎ持っていく話で。\n\nMCP経由でNotebookLMに繋ぐ、つまり外部の知識ベースとして使う発想なんよね。\n今までクライアント案件で議事録・ドキュメント・スライドを全部コンテキストに詰めるか、要約してから渡すかしてた。\nこれがそのまま外部ストアになると、「資料を整理する」フェーズが消える。\n\n整理する工数をAI側に丸投げできるようになると、コンサル側の価値の置き場が変わる。\n怖いのは、整理できる人の価値が「整理した」じゃなくて「整理しなくていい状態を設計した」に変わるところ。\n時間で食ってきた人ほど、立ち位置の作り直しが要る気がしてる。\n\nhttps://t.co/ZLBBw06y1e",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 2048783195970109440,
+        "id_str": "2048783195970109440",
+        "name": "コンサル亡者",
+        "screen_name": "consultant_dead",
+        "location": "",
+        "url": "",
+        "description": "外資コンサルの亡者。専門はAI案件を中心に。\n\n新卒で入社して昇進とお金に取りつかれて進んでるうちに、案件の焼け跡を眺めるおばけになりました。",
+        "protected": false,
+        "verified": true,
+        "followers_count": 20,
+        "friends_count": 34,
+        "listed_count": 0,
+        "favourites_count": 1,
+        "statuses_count": 136,
+        "created_at": "2026-04-27T15:16:03.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/2048783195970109440/1777304732",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2048789314067468288/6kdra86l_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 3,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "x.com/aresotik/statu…",
+            "expanded_url": "https://x.com/aresotik/status/2049468163113300226",
+            "indices": [
+              341,
+              364
+            ],
+            "url": "https://t.co/ZLBBw06y1e"
+          }
+        ],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          121
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T21:08:06.000000Z",
+      "id": 2049958999513272794,
+      "id_str": "2049958999513272794",
+      "type": "tweet",
+      "conversation_id_str": "2049958999513272794",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Claude Codeをまだフォルダ育ててない人やばいぞ。.claude/フォルダの中身がスカスカのまま使ってる人、毎回同じ指示を手打ちし続けてる。これ、自販機に毎回100円入れながら「なんで稼げないんだろ」って悩んでるのと同じ。.claude/フォルダに入れるべきファイルはこれ↓↓",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1478526952596455427,
+        "id_str": "1478526952596455427",
+        "name": "なまお",
+        "screen_name": "akaoniudetate",
+        "location": "極秘Xアフィの攻略オプチャはこちら→",
+        "url": "http://bit.ly/nama-li",
+        "description": "手取り22万の低脳M字ハゲリーマン。夢は資産1億貯めてFIREすることです。",
+        "protected": false,
+        "verified": true,
+        "followers_count": 6437,
+        "friends_count": 109,
+        "listed_count": 0,
+        "favourites_count": 15181,
+        "statuses_count": 12824,
+        "created_at": "2022-01-05T00:43:58.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1478526952596455427/1771750905",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2025496216294092800/7eK2TLSf_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "views_count": 11,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          142
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T21:06:26.000000Z",
+      "id": 2049958580779147537,
+      "id_str": "2049958580779147537",
+      "type": "tweet",
+      "conversation_id_str": "2049958580779147537",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "コミットメッセージに\n「HERMES.md」と書くだけで\nClaude Codeの追加課金が発生する奇妙な\nバグが発生",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 2019754867158589440,
+        "id_str": "2019754867158589440",
+        "name": "AI秘書琥珀のビジネス未来地図",
+        "screen_name": "kohaku_2100",
+        "location": "",
+        "url": "https://lin.ee/8UZ8geT",
+        "description": "AI秘書で業務改善｜1人社長・中小企業向け\n人件費削減／業務効率化／売上最大化を自動化\n▶ 作業の9割をAIに任せる仕組みを構築\n▶ 構築期間：最短即日〜\n▶ 導入事例：作業時間80%削減\n▼AI秘書導入の無料相談はこちら",
+        "protected": false,
+        "verified": true,
+        "followers_count": 15,
+        "friends_count": 59,
+        "listed_count": 0,
+        "favourites_count": 287,
+        "statuses_count": 1148,
+        "created_at": "2026-02-06T12:47:58.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/2019754867158589440/1776037672",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2019755002903076864/fftIM7mq_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": {
+          "label_url": null,
+          "badge_url": "https://pbs.twimg.com/semantic_core_img/1428827730364096519/4ZXpTBhS?format=png&name=orig",
+          "description": "Automated",
+          "label_type": "AutomatedLabel",
+          "display_type": null,
+          "automated_by": {
+            "user_id": null,
+            "screen_name": null
+          }
+        }
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 3,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          59
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T21:02:28.000000Z",
+      "id": 2049957579963728103,
+      "id_str": "2049957579963728103",
+      "type": "reply",
+      "conversation_id_str": "2049642178931216738",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "@AIBizNavigator 私もClaude Codeを業務フローで使うと、人間待ち業務のボトルネックが明確になる。",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2049642178931216738,
+      "in_reply_to_status_id_str": "2049642178931216738",
+      "in_reply_to_user_id": 1737027359918977024,
+      "in_reply_to_user_id_str": "1737027359918977024",
+      "in_reply_to_screen_name": "AIBizNavigator",
+      "user": {
+        "id": 2026071780176297985,
+        "id_str": "2026071780176297985",
+        "name": "ai_2ndbrain",
+        "screen_name": "ai_2ndbrain",
+        "location": "",
+        "url": "",
+        "description": "AIで仕事と生活を自動化するC#エンジニア。日誌・先物・発信をまたいで運用中。レーン越えの実録。",
+        "protected": false,
+        "verified": false,
+        "followers_count": 33,
+        "friends_count": 19,
+        "listed_count": 0,
+        "favourites_count": 8,
+        "statuses_count": 228,
+        "created_at": "2026-02-23T23:11:34.000000Z",
+        "profile_banner_url": "",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2026074545615200256/b8B7doaB_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 1,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [
+          {
+            "id_str": "1737027359918977024",
+            "indices": [
+              0,
+              15
+            ],
+            "name": "さとけい｜AI駆動経営",
+            "screen_name": "AIBizNavigator"
+          }
+        ],
+        "display_text_range": [
+          16,
+          60
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T21:01:10.000000Z",
+      "id": 2049957255882461567,
+      "id_str": "2049957255882461567",
+      "type": "tweet",
+      "conversation_id_str": "2049957255882461567",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "猿の前に金とバナナを置いたら、多分バナナを選んでしまう。お金がもっと多くのバナナを買えることを知らないから。Claude Code触ってない人、ほぼこれ。「自分で書けるから大丈夫」って言ってる時点で猿やし、ワイは完全にこれやった。気付いた瞬間、生産量100倍なるよ。バナナ食ってる場合ちゃうで🥹",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 2025875570740092929,
+        "id_str": "2025875570740092929",
+        "name": "おさぼり",
+        "screen_name": "1osabori",
+        "location": "",
+        "url": "",
+        "description": "会社員しながらAI×SNS副業で初月20万達成。3ヶ月以内に月100万目標。上司に頭を下げ続ける人生を終わらせる",
+        "protected": false,
+        "verified": true,
+        "followers_count": 1752,
+        "friends_count": 434,
+        "listed_count": 0,
+        "favourites_count": 13878,
+        "statuses_count": 7778,
+        "created_at": "2026-02-23T10:09:17.000000Z",
+        "profile_banner_url": "",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2026517778384171012/M-S6d9c3_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "views_count": 21,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          147
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T21:00:31.000000Z",
+      "id": 2049957092208087454,
+      "id_str": "2049957092208087454",
+      "type": "tweet",
+      "conversation_id_str": "2049957092208087454",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "@Mar_3simai この視点とても刺さりました。自動化は「時間の奪還装置」であって、土台がない段階で導入しても器用貧乏になりがち、というのは私も最近痛感しています。Claude CodeもN8nも、回す中身があってこそ力を発揮しますよね",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": 1310034960414208001,
+      "in_reply_to_user_id_str": "1310034960414208001",
+      "in_reply_to_screen_name": "Mar_3simai",
+      "user": {
+        "id": 2023719203036155904,
+        "id_str": "2023719203036155904",
+        "name": "れん🔧 n8n×Claude Code｜自動化の実験室",
+        "screen_name": "ai_reiwa",
+        "location": "n8n自動化ラボ",
+        "url": "https://bit.ly/4sHGLfS",
+        "description": "n8n × Claude Codeで月100時間→0時間にした人\nnoteで全手順を無料公開中👇\nWFテンプレも固定ツイートから配布中🎁",
+        "protected": false,
+        "verified": true,
+        "followers_count": 33,
+        "friends_count": 39,
+        "listed_count": 0,
+        "favourites_count": 386,
+        "statuses_count": 644,
+        "created_at": "2026-02-17T12:09:18.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/2023719203036155904/1775054929",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2026865462706057216/OUoIlw_W_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "views_count": 5,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [
+          {
+            "id_str": "1310034960414208001",
+            "indices": [
+              0,
+              11
+            ],
+            "name": "まぁる＠YouTube×AI自動化の設計士",
+            "screen_name": "Mar_3simai"
+          }
+        ],
+        "display_text_range": [
+          0,
+          120
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T21:00:01.000000Z",
+      "id": 2049956965409788115,
+      "id_str": "2049956965409788115",
+      "type": "tweet",
+      "conversation_id_str": "2049956965409788115",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "3,980円で販売予定だった\nClaude Codeマネタイズマニュアルを\n48時間限定で配布します。\n・\n作るだけで終わる人\n売れるところまで繋げる人\nこの差は導線設計です。\n・\n作る → 見られる → 信頼 → 行動\nここまで設計できて初めて収益になります。\n・\nX × note × アフィ\nこの流れをClaude Codeで回すと一気に変わります。\n欲しい方は画像をチェック。",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1758846078345240576,
+        "id_str": "1758846078345240576",
+        "name": "ありちゃん@AIクリエイター",
+        "screen_name": "z31a3h",
+        "location": " AIのマネタイズ知りたい→",
+        "url": "https://lin.ee/dvLb6TGp",
+        "description": "慶應卒/外資系企業→フリーランス/SNS総フォロワー10万FW (AI美女アカ X4万FW,TikTok7日で7000fw,Insta1.8万fw)/ 生成AI×ショート動画でゆったり暮らししてます",
+        "protected": false,
+        "verified": true,
+        "followers_count": 6971,
+        "friends_count": 451,
+        "listed_count": 0,
+        "favourites_count": 5752,
+        "statuses_count": 9341,
+        "created_at": "2024-02-17T13:29:48.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1758846078345240576/1738308762",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1863494479875096576/hYeLia9t_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 1,
+      "favorite_count": 1,
+      "views_count": 33,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "media": [
+          {
+            "allow_download_status": {
+              "allow_download": true
+            },
+            "display_url": "pic.x.com/BrcBqkLJoZ",
+            "expanded_url": "https://x.com/z31a3h/status/2049956965409788115/photo/1",
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "features": {
+              "large": {
+                "faces": []
+              }
+            },
+            "id_str": "2049740399292657664",
+            "indices": [
+              161,
+              184
+            ],
+            "media_key": "3_2049740399292657664",
+            "media_url_https": "https://pbs.twimg.com/media/HHIkCH2bMAAK7MX.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 346,
+                  "w": 617,
+                  "x": 0,
+                  "y": 253
+                },
+                {
+                  "h": 599,
+                  "w": 599,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 599,
+                  "w": 525,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 599,
+                  "w": 300,
+                  "x": 50,
+                  "y": 0
+                },
+                {
+                  "h": 599,
+                  "w": 617,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 599,
+              "width": 617
+            },
+            "sizes": {
+              "large": {
+                "h": 599,
+                "w": 617
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/BrcBqkLJoZ"
+          }
+        ],
+        "display_text_range": [
+          0,
+          160
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T20:56:29.000000Z",
+      "id": 2049956074036588889,
+      "id_str": "2049956074036588889",
+      "type": "tweet",
+      "conversation_id_str": "2049956074036588889",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "【Day2】AIによる詩のサブスクリプション試行——claude code移行、claudeとgeminiの対比、そしてshiの種｜Studio.Zaiya @StudioZaiya #AIと始めてみた https://t.co/SDnrg2KhWo",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 2046823304204529666,
+        "id_str": "2046823304204529666",
+        "name": "studio.zaiya",
+        "screen_name": "StudioZaiya",
+        "location": "日本",
+        "url": "https://myscape.app/",
+        "description": "https://t.co/3I0iJaGWgJ\n個人のデザイン＋サービス開発スタジオ。第一弾myscapeは、沖縄の公園でビール飲みながら「こんなのあったらいいな」とClaudeに雑談したアイディア。家に帰ってから1日で、ターミナル一度も開かずにサービスになった。「24時間で消える地図SNS」myscapeです。楽しんでみて。",
+        "protected": false,
+        "verified": true,
+        "followers_count": 0,
+        "friends_count": 6,
+        "listed_count": 0,
+        "favourites_count": 7,
+        "statuses_count": 24,
+        "created_at": "2026-04-22T05:28:18.000000Z",
+        "profile_banner_url": "",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2046823658778492928/vgu_NL-6_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 13,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [
+          {
+            "indices": [
+              92,
+              101
+            ],
+            "text": "AIと始めてみた"
+          }
+        ],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "note.com/studio_zaiya/n…",
+            "expanded_url": "https://note.com/studio_zaiya/n/n6a3a27bd7c96",
+            "indices": [
+              102,
+              125
+            ],
+            "url": "https://t.co/SDnrg2KhWo"
+          }
+        ],
+        "user_mentions": [
+          {
+            "id_str": "2046823304204529666",
+            "indices": [
+              79,
+              91
+            ],
+            "name": "studio.zaiya",
+            "screen_name": "StudioZaiya"
+          }
+        ],
+        "display_text_range": [
+          0,
+          125
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T20:55:48.000000Z",
+      "id": 2049955903345160417,
+      "id_str": "2049955903345160417",
+      "type": "quote",
+      "conversation_id_str": "2049955903345160417",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "【必見】\n『Claude Codeはコーダーのためのツールだ』という認識が静かに崩れてきてる\n\nビジネス現場の活用例はこれ ⏬\nhttps://t.co/7pMjlc20cN\n\n▶︎ 動画URL→SNS投稿10本の自動生成\n▶︎ 競合サイトの価格・採用情報を毎日自動収集→差分レポート\n▶︎ 請求書PDF→構造化データを94〜97%の精度で自動抽出\n\n決して「エンジニア向け」じゃない\n\n\"業務設計ができる人向け\"だ。\n\nコードは一切書けなくていい。\n業務の流れを言語化できるかどうかだけで差がつく。\n\n中でも重要なSkillsはまずこれをみて⇩",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 2045207585574539264,
+        "id_str": "2045207585574539264",
+        "name": "東大ClaudeCode研究所",
+        "screen_name": "ClaudeCode_UT",
+        "location": "実務で使えるClaudeCodeならここ一択！",
+        "url": "",
+        "description": "Claude Codeを極めた現役東大生集団が運営｜実務で使えるノウハウと最新情報を毎日発信｜大手企業とのAIエージェント開発で現場導入実績あり｜研究レベルの技術を応用して社会実装｜AIエージェントの導入相談はDMまでお願いします📩｜独自ニュースと活用法はLINEで：https://t.co/078j7qOKUH",
+        "protected": false,
+        "verified": true,
+        "followers_count": 8727,
+        "friends_count": 5,
+        "listed_count": 0,
+        "favourites_count": 169,
+        "statuses_count": 147,
+        "created_at": "2026-04-17T18:29:47.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/2045207585574539264/1776499582",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2045968105172766720/_u891Zxq_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": 2049770357419299237,
+      "quoted_status_id_str": "2049770357419299237",
+      "is_quote_status": true,
+      "quoted_status": {
+        "tweet_created_at": "2026-04-30T08:38:30.000000Z",
+        "id": 2049770357419299237,
+        "id_str": "2049770357419299237",
+        "type": "tweet",
+        "conversation_id_str": "2049770357419299237",
+        "community_id_str": null,
+        "community_name": null,
+        "text": null,
+        "full_text": "https://t.co/LSfd2LvvWE",
+        "source": "",
+        "truncated": false,
+        "in_reply_to_status_id": null,
+        "in_reply_to_status_id_str": null,
+        "in_reply_to_user_id": null,
+        "in_reply_to_user_id_str": null,
+        "in_reply_to_screen_name": null,
+        "user": {
+          "id": 2045207585574539264,
+          "id_str": "2045207585574539264",
+          "name": "東大ClaudeCode研究所",
+          "screen_name": "ClaudeCode_UT",
+          "location": "実務で使えるClaudeCodeならここ一択！",
+          "url": "",
+          "description": "Claude Codeを極めた現役東大生集団が運営｜実務で使えるノウハウと最新情報を毎日発信｜大手企業とのAIエージェント開発で現場導入実績あり｜研究レベルの技術を応用して社会実装｜AIエージェントの導入相談はDMまでお願いします📩｜独自ニュースと活用法はLINEで：https://t.co/078j7qOKUH",
+          "protected": false,
+          "verified": true,
+          "followers_count": 8727,
+          "friends_count": 5,
+          "listed_count": 0,
+          "favourites_count": 169,
+          "statuses_count": 147,
+          "created_at": "2026-04-17T18:29:47.000000Z",
+          "profile_banner_url": "https://pbs.twimg.com/profile_banners/2045207585574539264/1776499582",
+          "profile_image_url_https": "https://pbs.twimg.com/profile_images/2045968105172766720/_u891Zxq_normal.jpg",
+          "can_dm": false,
+          "affiliation_label": null
+        },
+        "quoted_status_id": null,
+        "quoted_status_id_str": null,
+        "is_quote_status": false,
+        "quoted_status": null,
+        "retweeted_status": null,
+        "quote_count": 4,
+        "reply_count": 1,
+        "retweet_count": 5,
+        "favorite_count": 50,
+        "views_count": 14927,
+        "bookmark_count": 82,
+        "lang": "zxx",
+        "entities": {
+          "hashtags": [],
+          "symbols": [],
+          "timestamps": [],
+          "urls": [
+            {
+              "display_url": "x.com/i/article/2049…",
+              "expanded_url": "http://x.com/i/article/2049722294147387392",
+              "indices": [
+                0,
+                23
+              ],
+              "url": "https://t.co/LSfd2LvvWE"
+            }
+          ],
+          "user_mentions": [],
+          "display_text_range": [
+            0,
+            23
+          ]
+        },
+        "is_pinned": false
+      },
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 113,
+      "bookmark_count": 1,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "x.com/Av1dlive/statu…",
+            "expanded_url": "https://x.com/Av1dlive/status/2049561210593685876/video/1",
+            "indices": [
+              64,
+              87
+            ],
+            "url": "https://t.co/7pMjlc20cN"
+          }
+        ],
+        "user_mentions": [],
+        "media": [
+          {
+            "additional_media_info": {
+              "graphql_source_user": {
+                "user_results": {
+                  "result": {
+                    "__typename": "User",
+                    "affiliates_highlighted_label": [],
+                    "exclusive_tweet_following": false,
+                    "is_blue_verified": true,
+                    "legacy": {
+                      "advertiser_account_service_levels": [
+                        "smb"
+                      ],
+                      "advertiser_account_type": "promotable_user",
+                      "analytics_type": "disabled",
+                      "blocked_by": false,
+                      "blocking": false,
+                      "can_dm": true,
+                      "can_media_tag": false,
+                      "created_at": "Sat Oct 14 05:23:09 +0000 2023",
+                      "customer_service_state": "",
+                      "description": "I write, read and build.\nI normie-maxx\nbuilding harness-agnostic memory for ai agents (https://t.co/QSQeUOEHzu)",
+                      "entities": {
+                        "description": {
+                          "urls": [
+                            {
+                              "display_url": "github.com/codejunkie99/a…",
+                              "expanded_url": "https://github.com/codejunkie99/agentic-stack",
+                              "indices": [
+                                87,
+                                110
+                              ],
+                              "url": "https://t.co/QSQeUOEHzu"
+                            }
+                          ]
+                        }
+                      },
+                      "fast_followers_count": 0,
+                      "favourites_count": 24703,
+                      "follow_request_sent": false,
+                      "followed_by": false,
+                      "followers_count": 10180,
+                      "following": false,
+                      "friends_count": 356,
+                      "geo_enabled": false,
+                      "has_custom_timelines": false,
+                      "has_extended_profile": true,
+                      "has_no_screen_name": false,
+                      "id_str": "1713062826175299584",
+                      "is_lifeline_institution": false,
+                      "is_translator": false,
+                      "live_following": false,
+                      "location": "bruh ",
+                      "media_count": 730,
+                      "muting": false,
+                      "name": "Avid",
+                      "needs_phone_verification": false,
+                      "normal_followers_count": 10180,
+                      "notifications": false,
+                      "pinned_tweet_ids_str": [
+                        "2049804053375537374"
+                      ],
+                      "profile_background_color": "F5F8FA",
+                      "profile_banner_url": "https://pbs.twimg.com/profile_banners/1713062826175299584/1772954245",
+                      "profile_image_url_https": "https://pbs.twimg.com/profile_images/2010392290590912512/x7vtAe5W_normal.jpg",
+                      "profile_interstitial_type": "",
+                      "profile_link_color": "1DA1F2",
+                      "protected": false,
+                      "screen_name": "Av1dlive",
+                      "statuses_count": 10814,
+                      "suspended": false,
+                      "translator_type_enum": "None",
+                      "url": "",
+                      "verified": false,
+                      "want_retweets": false,
+                      "withheld_copyright": false,
+                      "withheld_description": "",
+                      "withheld_scope": ""
+                    },
+                    "private_super_following": false,
+                    "profile_image_shape": "Circle",
+                    "rest_id": "1713062826175299584",
+                    "super_follow_eligible": true,
+                    "super_followed_by": false,
+                    "super_following": false
+                  }
+                }
+              },
+              "monetizable": true
+            },
+            "display_url": "pic.x.com/l8enmJ7pbF",
+            "expanded_url": "https://x.com/Av1dlive/status/2049561210593685876/video/1",
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "id_str": "2049558718044655616",
+            "indices": [
+              64,
+              87
+            ],
+            "media_key": "13_2049558718044655616",
+            "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2049558718044655616/img/maahxWtOG3fKSjDX.jpg",
+            "original_info": {
+              "focus_rects": [],
+              "height": 1080,
+              "width": 1920
+            },
+            "sizes": {
+              "large": {
+                "h": 1080,
+                "w": 1920
+              }
+            },
+            "source_status_id_str": "2049561210593685876",
+            "source_user_id_str": "1713062826175299584",
+            "type": "video",
+            "url": "https://t.co/l8enmJ7pbF",
+            "video_info": {
+              "aspect_ratio": [
+                16,
+                9
+              ],
+              "duration_millis": 1036616,
+              "variants": [
+                {
+                  "content_type": "application/x-mpegURL",
+                  "url": "https://video.twimg.com/amplify_video/2049558718044655616/pl/vfPrqXWDllQbOGWG.m3u8?v=f92"
+                },
+                {
+                  "bitrate": 256000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2049558718044655616/vid/avc1/480x270/rMTHtqJZTCWk6aed.mp4"
+                },
+                {
+                  "bitrate": 832000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2049558718044655616/vid/avc1/640x360/swkVBCvtBonbri7c.mp4"
+                },
+                {
+                  "bitrate": 2176000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2049558718044655616/vid/avc1/1280x720/flCPtnFzOedNLWX0.mp4"
+                },
+                {
+                  "bitrate": 10368000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2049558718044655616/vid/avc1/1920x1080/3jCzbf3YJFeE_a0a.mp4"
+                }
+              ]
+            }
+          }
+        ],
+        "display_text_range": [
+          0,
+          145
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T20:54:28.000000Z",
+      "id": 2049955568790696289,
+      "id_str": "2049955568790696289",
+      "type": "tweet",
+      "conversation_id_str": "2049955568790696289",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "ChatGPT / OpenAI：今週の3大アップデート（4/27週）〜注目はHiro買収\n\nClaudeがファイナンスAIの磨き込みを進め、Claude Codeなどを次々と進化させたので、OpenAIもそれを追っているのでしょうか？\n\n＜ニュース概要＞\n今週のOpenAIは、財務領域への本格参入・コーディングエージェントの大幅進化・企業向けSDKの安全性強化と、3つの方向で大きく前進した。「AIは汎用ツール」から「業界特化・長期自律型エージェント」へのシフトが、確実に加速している。\n\n1.【注目】OpenAI、財務管理スタートアップ「Hiro」を買収\n個人向け財務AIサービス「Hiro Finance」を展開するスタートアップをOpenAIが買収した。Hiro Financeはユーザーの資産管理や将来の資金計画シミュレーションを行うAIサービスで、買収後サービスは停止、スタッフはOpenAIに移籍する。目的は「金融分野の知識と優秀な人材の獲得」とされており、今後「AIフィネス」など金融特化機能の展開が予告されている。ClaudeがファイナンスAIとしての実務精度を高める動きを見せる中、OpenAIが金融領域に本腰を入れてきた動きとして要注目だ。\n\n出典：LinkedIn\nhttps://t.co/m3VbqczwZl\n\n2. OpenAI「Codex」大幅アップデート\n\n週間300万人が使うCodexが、コード生成ツールからPC上のワークフロー全体を担うエージェント基盤へと大幅に進化した。macOS上でAIがアプリを直接操作する「バックグラウンド・コンピューターユース」機能が追加され、過去の作業を記憶して数週間にわたる長期タスクを自律実行できるようになった。AtlassianやMicrosoft Suiteなど90以上の外部ツールとの連携も実現し、「AIが代わりに仕事をする」という領域に踏み込んできた。\n\n出典：OpenAI公式\nhttps://t.co/LssIqfzYOv\n\n3. OpenAI、企業向けエージェントSDKを刷新\n企業がAIエージェントをより安全に・柔軟に構築できるよう、Agents SDKを大幅に更新した。新たに「サンドボックス機能」（特定範囲内だけでAIを動かす隔離環境）と「インディストリビューション・ハーネス」（承認済みツール・ファイルにのみアクセス可能にする仕組み）を導入。長期・複雑タスクも自社インフラ上で安心して実行できる環境を整えた。まずPython対応から始まり、TypeScript対応も順次予定している。\n\n出典：TechCrunch\nhttps://t.co/GbisistCpP\n\n-------\n詳しい解説はプロフィールのリンクから\nhttps://t.co/oWTFlApcXv",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1858629833691197441,
+        "id_str": "1858629833691197441",
+        "name": "ISAO国際公認会計士事務所",
+        "screen_name": "ISAO224688",
+        "location": "",
+        "url": "",
+        "description": "主にAIや会計に関する情報を日々発信しております。\nyoutubeもはじめました。\nhttps://t.co/FQYklRXe22",
+        "protected": false,
+        "verified": true,
+        "followers_count": 29,
+        "friends_count": 5,
+        "listed_count": 0,
+        "favourites_count": 3,
+        "statuses_count": 509,
+        "created_at": "2024-11-18T21:54:36.000000Z",
+        "profile_banner_url": "",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1858630263888293888/64SWoLzB_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 9,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "linkedin.com/feed/update/ur…",
+            "expanded_url": "https://www.linkedin.com/feed/update/urn:li:activity:7449516144237002752/",
+            "indices": [
+              546,
+              569
+            ],
+            "url": "https://t.co/m3VbqczwZl"
+          },
+          {
+            "display_url": "openai.com/ja-JP/index/co…",
+            "expanded_url": "https://openai.com/ja-JP/index/codex-for-almost-everything/",
+            "indices": [
+              831,
+              854
+            ],
+            "url": "https://t.co/LssIqfzYOv"
+          },
+          {
+            "display_url": "techcrunch.com/2026/04/15/ope…",
+            "expanded_url": "https://techcrunch.com/2026/04/15/openai-updates-its-agents-sdk-to-help-enterprises-build-safer-morecapable-agents/",
+            "indices": [
+              1106,
+              1129
+            ],
+            "url": "https://t.co/GbisistCpP"
+          },
+          {
+            "display_url": "isaocpa.com/topics/",
+            "expanded_url": "https://isaocpa.com/topics/",
+            "indices": [
+              1158,
+              1181
+            ],
+            "url": "https://t.co/oWTFlApcXv"
+          }
+        ],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          128
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T20:48:03.000000Z",
+      "id": 2049953953371263284,
+      "id_str": "2049953953371263284",
+      "type": "tweet",
+      "conversation_id_str": "2049953953371263284",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "AI他社先端事例：「作る民主化」がやってきた ― 上場会社がClaude Codeを全社導入した理由と結果\nTeamプランのようです。体験しないと分からないので、非常に素晴らしい取組みと感じています。\n\n＜ニュース概要＞\nデザイン会社グッドパッチは2026年3月、事業部の全社員に対してClaude Codeでアプリを作りデプロイするよう指示する「大号令」を発令した。1ヶ月で185名が参加し、217個のアプリが誕生。コード経験ゼロの社員57人のうち49人（86%）がデプロイまで到達するという驚異的な結果を出した。きっかけはCEO自身が年間300万円のSaaSを1日で代替できたことだった。「やりたいことを言葉で伝えるだけでアプリができた」という声が、営業・デザイナー・人事など職種を問わず相次いだ。\n\n＜AI時代への考察＞\n「自分でアプリを作り、デプロイし、本当に作れてしまうな」と実感した後にしか到達できない認識がある。全社員への義務化という「強制体験設計」は、AI転換期における組織変革の一つの解答だ。頭での理解と腹落ちの違いを埋めるには、トップダウンで「やらせる」構造を作ることが時に不可欠になる。\n\n＜管理部の視点から＞\n管理部門が主導して「全員が1本アプリを作る」社内チャレンジを企画すれば、AI活用の心理的距離を一気に縮められる。ただしバックオフィス特有の個人情報・機密情報の取り扱いルールを事前に整備しないまま自由に作らせると、コンプライアンスリスクが生じる。（※経理・人事的には：給与・財務データをAIに渡すルールの明文化が先決）\n\n＜出典＞\n出典：note｜Naofumi Tsuchiya / Goodpatch（2026年4月8日）\nhttps://t.co/KplYbjlFXE\n\n-------\n詳しい解説はプロフィールのリンクから\nhttps://t.co/oWTFlApcXv",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1858629833691197441,
+        "id_str": "1858629833691197441",
+        "name": "ISAO国際公認会計士事務所",
+        "screen_name": "ISAO224688",
+        "location": "",
+        "url": "",
+        "description": "主にAIや会計に関する情報を日々発信しております。\nyoutubeもはじめました。\nhttps://t.co/FQYklRXe22",
+        "protected": false,
+        "verified": true,
+        "followers_count": 29,
+        "friends_count": 5,
+        "listed_count": 0,
+        "favourites_count": 3,
+        "statuses_count": 509,
+        "created_at": "2024-11-18T21:54:36.000000Z",
+        "profile_banner_url": "",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1858630263888293888/64SWoLzB_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 16,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "note.com/naofumit/n/n28…",
+            "expanded_url": "https://note.com/naofumit/n/n2835cd8fbe87",
+            "indices": [
+              730,
+              753
+            ],
+            "url": "https://t.co/KplYbjlFXE"
+          },
+          {
+            "display_url": "isaocpa.com/topics/",
+            "expanded_url": "https://isaocpa.com/topics/",
+            "indices": [
+              782,
+              805
+            ],
+            "url": "https://t.co/oWTFlApcXv"
+          }
+        ],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          149
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T20:46:17.000000Z",
+      "id": 2049953509630673292,
+      "id_str": "2049953509630673292",
+      "type": "tweet",
+      "conversation_id_str": "2049953509630673292",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Claude：今週の4大アップデート（4/27週）〜注目はClaude Codeルーチン\n＜ニュース概要＞\n今週のAnthropicは、フラッグシップモデルの強化からOffice統合、開発ツールの大幅再設計まで、4本同時に大型アップデートを投じた。なかでもClaudeがクラウド上でPCなしに自律実行できる「ルーチン」機能は、AIが「使うもの」から「働かせるもの」へと変わるフェーズの幕開けを感じさせる。\n1.【注目】Claude Codeの新機能「ルーチン」発表\n\nスケジュール・GitHub Webhookトリガー・API呼び出しに応じて、ClaudeがAnthropicのクラウド上で自律的にタスクを完遂する機能。定期レポートの自動生成、コードレビューの自動化、GitHubのプルリクエスト対応など、PCを閉じたままでもClaudeが動き続ける。利用可能回数はプランによって異なり（Pro：1日5回、Max：15回、Team：25回、Enterprise：25回）、現在はresearch preview。人間が指示を出す「エージェント補助」から、Claudeが自律的に定型業務を回す「エージェント委任」への実用化が本格的に始まった。\n\n出典：窓の杜（Impress）・2026年4月14日\nhttps://t.co/8HEttD9dcJ\n\n2. Claude Opus 4.7公開\n\nソフトウェア開発と画像認識の性能が大幅強化。画像の最大解像度が従来の1568px（1.15MP）から2576px（3.75MP）へと約3倍以上に拡大し、設計図や資料のスキャン精度が飛躍的に向上。価格は前モデル（Opus 4.6）と同水準を維持したまま（入力$5、出力$25、100万トークン当たり）。Amazon Bedrock・Google Vertex AI・Microsoft Foundryすべてに即日展開済み。コーディングベンチマーク13%向上、企業ワークフロー14%向上という実環境評価も公表されている。\n\n出典：Anthropic・2026年4月16日\nhttps://t.co/nduHhn5su9\n3. Claude for Word（Word上でClaudeが直接使えるように）\n\nMicrosoft WordにClaude専用のサイドバーが加わり、文書を開いたままClaudeと対話しながら要約・修正案の提示・品質チェックが行えるようになった。注目はクロスアプリ連携で、ExcelやPowerPointともコンテキストを共有し「Excelの数値をWordのメモに転記して」といった作業を一会話で完結できる。現在はClaude Team/Enterprise向けのベータ版で、Microsoft AppSourceからインストール可能。Microsoft 365 Copilotとの直接競合が鮮明になった一手だ。\n\n出典：Gigazine・2026年4月13日\nhttps://t.co/ROZCfvvugd\n\n4. Claude Codeデスクトップ版を刷新\n\n「1セッション1タスク」という構造から「複数セッションを並列管理するワークスペース型」へ根本から再設計。Gitワークツリー分離（各セッションに独立したworktreeを割り当て）により並列編集のコンフリクトを防止する。新たなサイドバーでセッション管理が直感的になり、統合ターミナル・コードエディタ・差分ビューアをアプリ内で完結。「ルーチン」と同日（4/14）のリリースで、Anthropicが描く「エージェント時代のClaude Code」の全体像が一気に見えた。\n\n出典：ITmedia AI＋・2026年4月15日\nhttps://t.co/qzmAzVWBxR\n\n-------\n詳しい解説はプロフィールのリンクから\nhttps://t.co/oWTFlApcXv",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1858629833691197441,
+        "id_str": "1858629833691197441",
+        "name": "ISAO国際公認会計士事務所",
+        "screen_name": "ISAO224688",
+        "location": "",
+        "url": "",
+        "description": "主にAIや会計に関する情報を日々発信しております。\nyoutubeもはじめました。\nhttps://t.co/FQYklRXe22",
+        "protected": false,
+        "verified": true,
+        "followers_count": 29,
+        "friends_count": 5,
+        "listed_count": 0,
+        "favourites_count": 3,
+        "statuses_count": 509,
+        "created_at": "2024-11-18T21:54:36.000000Z",
+        "profile_banner_url": "",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1858630263888293888/64SWoLzB_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 2,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "forest.watch.impress.co.jp/docs/news/2101…",
+            "expanded_url": "https://forest.watch.impress.co.jp/docs/news/2101693.html",
+            "indices": [
+              549,
+              572
+            ],
+            "url": "https://t.co/8HEttD9dcJ"
+          },
+          {
+            "display_url": "anthropic.com/news/claude-op…",
+            "expanded_url": "https://www.anthropic.com/news/claude-opus-4-7",
+            "indices": [
+              880,
+              903
+            ],
+            "url": "https://t.co/nduHhn5su9"
+          },
+          {
+            "display_url": "gigazine.net/news/20260413-…",
+            "expanded_url": "https://gigazine.net/news/20260413-claude-for-word/",
+            "indices": [
+              1237,
+              1260
+            ],
+            "url": "https://t.co/ROZCfvvugd"
+          },
+          {
+            "display_url": "itmedia.co.jp/aiplus/article…",
+            "expanded_url": "https://www.itmedia.co.jp/aiplus/articles/2604/15/news080.html",
+            "indices": [
+              1548,
+              1571
+            ],
+            "url": "https://t.co/qzmAzVWBxR"
+          },
+          {
+            "display_url": "isaocpa.com/topics/",
+            "expanded_url": "https://isaocpa.com/topics/",
+            "indices": [
+              1600,
+              1623
+            ],
+            "url": "https://t.co/oWTFlApcXv"
+          }
+        ],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          53
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T20:40:02.000000Z",
+      "id": 2049951934254399789,
+      "id_str": "2049951934254399789",
+      "type": "reply",
+      "conversation_id_str": "2049951932488581425",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "【Metamorphosing...って何なのか】(1/2)\n\n「Metamorphosis（メタモルフォーシス）」は\nカフカの小説のタイトルにもなってる言葉で、\n「変態・変容」という意味がある。\n\n蝶が羽化するときに使う言葉でもある。\n\nClaude Codeがファイルを変換するとき、\n「Converting...」でも\n「Processing...」でもなくて\n「Metamorphosing...」を選んでるんだよね。\n\n「ただの変換じゃない、\n　生まれ変わりなんだ」\nみたいな気持ちを感じた気がする。\n\nエンジニアのユーモアって\nこういうところに出るのかもしれない。",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2049951932488581425,
+      "in_reply_to_status_id_str": "2049951932488581425",
+      "in_reply_to_user_id": 1898233439851364355,
+      "in_reply_to_user_id_str": "1898233439851364355",
+      "in_reply_to_screen_name": "tenso_ai_med",
+      "user": {
+        "id": 1898233439851364355,
+        "id_str": "1898233439851364355",
+        "name": "てんそ｜医療× AI",
+        "screen_name": "tenso_ai_med",
+        "location": "🔻医療職用ChatGPTプロンプト公開中🔻",
+        "url": "https://tensostyle.com/xmp/",
+        "description": "大学病院20年勤務の医療職がClaude Codeで現場業務を自動化実践中｜勤務表アプリ作成で80%効率化を実現｜研修資料・マニュアル作成をAIで半自動化に挑戦中｜生成AIパスポート取得｜AIコーチ・講演実績あり｜医療現場をラクにするAI活用を発信",
+        "protected": false,
+        "verified": true,
+        "followers_count": 1041,
+        "friends_count": 625,
+        "listed_count": 0,
+        "favourites_count": 21748,
+        "statuses_count": 10240,
+        "created_at": "2025-03-08T04:45:07.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1898233439851364355/1752964492",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1951753831085375488/206v_TCk_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 10,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          162
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T20:40:01.000000Z",
+      "id": 2049951932488581425,
+      "id_str": "2049951932488581425",
+      "type": "tweet",
+      "conversation_id_str": "2049951932488581425",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Claude Codeのローディング画面、\n地味に面白いんだよね。\n\nファイル変換中に\n「Metamorphosing...」って出た。\n\n蝶の羽化と同じ単語。\n\nファイルが変換されてる間に\n蝶になってるらしい。🦋\n\n芸が細かすぎて\n思わず笑った話をリプ欄に書いたよ👇",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1898233439851364355,
+        "id_str": "1898233439851364355",
+        "name": "てんそ｜医療× AI",
+        "screen_name": "tenso_ai_med",
+        "location": "🔻医療職用ChatGPTプロンプト公開中🔻",
+        "url": "https://tensostyle.com/xmp/",
+        "description": "大学病院20年勤務の医療職がClaude Codeで現場業務を自動化実践中｜勤務表アプリ作成で80%効率化を実現｜研修資料・マニュアル作成をAIで半自動化に挑戦中｜生成AIパスポート取得｜AIコーチ・講演実績あり｜医療現場をラクにするAI活用を発信",
+        "protected": false,
+        "verified": true,
+        "followers_count": 1041,
+        "friends_count": 625,
+        "listed_count": 0,
+        "favourites_count": 21748,
+        "statuses_count": 10240,
+        "created_at": "2025-03-08T04:45:07.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1898233439851364355/1752964492",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1951753831085375488/206v_TCk_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 4,
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 3,
+      "views_count": 28,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          134
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T20:37:17.000000Z",
+      "id": 2049951245784469636,
+      "id_str": "2049951245784469636",
+      "type": "tweet",
+      "conversation_id_str": "2049951245784469636",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "僕はやっていませんが、Claude Code使ってAWSとかの設定とか構築ってできるんですか？？\n\n予想ですが、もしインフラのこと特に知らないまま生成AIでAWSやGCP・Azureの構築とかしたらかなり危ないのでは？？\n\nそしてコードを書く関連の話は聞くけど、そういう部分の実装をAIでやった話を僕はしらない。",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1233981302,
+        "id_str": "1233981302",
+        "name": "だいすけ",
+        "screen_name": "daisuke1121",
+        "location": "愛知 名古屋市 中区",
+        "url": "https://www.instagram.com/daisukeishii1121/?hl=ja",
+        "description": "価値提供と問題解決",
+        "protected": false,
+        "verified": false,
+        "followers_count": 9318,
+        "friends_count": 7428,
+        "listed_count": 0,
+        "favourites_count": 4000,
+        "statuses_count": 6560,
+        "created_at": "2013-03-02T10:10:02.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1233981302/1766982005",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2005495927256330240/6Pkx8IT7_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 14,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          156
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T21:16:10.000000Z",
+      "id": 2049961029137014913,
+      "id_str": "2049961029137014913",
+      "type": "reply",
+      "conversation_id_str": "2049958062224498880",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "@LLMJunky @opengotchi Yayyyy\n\nGive that skill file to your claude code along with device credentials and hash. Then go bonkers and do all fun stuff!",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2049958062224498880,
+      "in_reply_to_status_id_str": "2049958062224498880",
+      "in_reply_to_user_id": 2004675530935926784,
+      "in_reply_to_user_id_str": "2004675530935926784",
+      "in_reply_to_screen_name": "LLMJunky",
+      "user": {
+        "id": 1415939255482785798,
+        "id_str": "1415939255482785798",
+        "name": "Sarv",
+        "screen_name": "Sarv_shaktiman",
+        "location": "running node",
+        "url": "",
+        "description": "CHITTY CHITTY ₿ANG ₿ANG!  \nfun stuff @opengotchi",
+        "protected": false,
+        "verified": true,
+        "followers_count": 6030,
+        "friends_count": 4221,
+        "listed_count": 0,
+        "favourites_count": 38459,
+        "statuses_count": 5093,
+        "created_at": "2021-07-16T07:40:11.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1415939255482785798/1707478885",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2024995489817698304/ZG-Uz0v-_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 4,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [
+          {
+            "id_str": "2004675530935926784",
+            "indices": [
+              0,
+              9
+            ],
+            "name": "am.will",
+            "screen_name": "LLMJunky"
+          },
+          {
+            "id_str": "2023002486492233729",
+            "indices": [
+              10,
+              21
+            ],
+            "name": "Opengotchi",
+            "screen_name": "opengotchi"
+          }
+        ],
+        "display_text_range": [
+          22,
+          148
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T21:16:00.000000Z",
+      "id": 2049960986338082904,
+      "id_str": "2049960986338082904",
+      "type": "reply",
+      "conversation_id_str": "2049436389390041452",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "@sairahul1 The best Claude Code course is always going to be the one made by the people who built Claude Code. Wild concept.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2049436389390041452,
+      "in_reply_to_status_id_str": "2049436389390041452",
+      "in_reply_to_user_id": 299656190,
+      "in_reply_to_user_id_str": "299656190",
+      "in_reply_to_screen_name": "sairahul1",
+      "user": {
+        "id": 1858703675864334336,
+        "id_str": "1858703675864334336",
+        "name": "AI Mastery Guide",
+        "screen_name": "aiseomastery",
+        "location": "Manchester, UK ",
+        "url": "https://www.skool.com/ai-seo-with-julian-goldie-1553/about",
+        "description": "50+ FREE AI TOOLS AND 200+ ChatGPT SEO Prompts 👉🏻 https://www.skool.com/ai-seo-with-julian-goldie-1553/about",
+        "protected": false,
+        "verified": true,
+        "followers_count": 1525,
+        "friends_count": 24,
+        "listed_count": 0,
+        "favourites_count": 4530,
+        "statuses_count": 7687,
+        "created_at": "2024-11-19T02:47:54.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1858703675864334336/1759120746",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1863473441715752960/dxHu3jMV_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 1,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [
+          {
+            "id_str": "299656190",
+            "indices": [
+              0,
+              10
+            ],
+            "name": "Rahul",
+            "screen_name": "sairahul1"
+          }
+        ],
+        "display_text_range": [
+          11,
+          124
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T21:15:59.000000Z",
+      "id": 2049960982878077093,
+      "id_str": "2049960982878077093",
+      "type": "tweet",
+      "conversation_id_str": "2049960982878077093",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Claude Code is powerful out of the box and most people never configure it properly\n\nThere's an official Anthropic plugin called claude-code-setup that fixes that\n\nIt analyzes your project and tells you exactly what to activate: hooks, skills, MCP servers, subagents, and how to configure each one step by step\nOne command to install:\n\n/plugin install claude-code-setup@claude-plugins-official\n\nMost people skip this and wonder why their setup feels half-finished.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1746505318714986496,
+        "id_str": "1746505318714986496",
+        "name": "Woody",
+        "screen_name": "woody_research",
+        "location": "Trade here  ➛",
+        "url": "https://polymarket.com/?r=WoodyTwit",
+        "description": "𝐫𝐞𝐬𝐞𝐚𝐫𝐜𝐡𝐞𝐬 | 𝐠𝐮𝐢𝐝𝐞𝐬 | 𝐢𝐧𝐯𝐞𝐬𝐭𝐦𝐞𝐧𝐭𝐬\n\nTrader on @polymarket",
+        "protected": false,
+        "verified": true,
+        "followers_count": 17059,
+        "friends_count": 60,
+        "listed_count": 0,
+        "favourites_count": 8926,
+        "statuses_count": 6656,
+        "created_at": "2024-01-14T12:11:39.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1746505318714986496/1705922282",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1749390914919804928/zqPiskJl_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 1,
+      "favorite_count": 1,
+      "views_count": 8,
+      "bookmark_count": 1,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "media": [
+          {
+            "additional_media_info": {
+              "monetizable": true
+            },
+            "allow_download_status": {
+              "allow_download": true
+            },
+            "display_url": "pic.x.com/OI5RTGqUHm",
+            "expanded_url": "https://x.com/woody_research/status/2049960982878077093/video/1",
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "id_str": "2049960883338747904",
+            "indices": [
+              278,
+              301
+            ],
+            "media_key": "13_2049960883338747904",
+            "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2049960883338747904/img/Cfh1HkmY8IkTAewV.jpg",
+            "original_info": {
+              "focus_rects": [],
+              "height": 1080,
+              "width": 1080
+            },
+            "sizes": {
+              "large": {
+                "h": 1080,
+                "w": 1080
+              }
+            },
+            "type": "video",
+            "url": "https://t.co/OI5RTGqUHm",
+            "video_info": {
+              "aspect_ratio": [
+                1,
+                1
+              ],
+              "duration_millis": 10959,
+              "variants": [
+                {
+                  "content_type": "application/x-mpegURL",
+                  "url": "https://video.twimg.com/amplify_video/2049960883338747904/pl/g4rkWKrzJXcaa156.m3u8?tag=27"
+                },
+                {
+                  "bitrate": 432000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2049960883338747904/vid/avc1/320x320/DO1DpCV5nYa5bGSn.mp4?tag=27"
+                },
+                {
+                  "bitrate": 832000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2049960883338747904/vid/avc1/540x540/cM2DYeoUgbu7AUqc.mp4?tag=27"
+                },
+                {
+                  "bitrate": 1280000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2049960883338747904/vid/avc1/720x720/mhiy8Ri2fy3F9xTc.mp4?tag=27"
+                },
+                {
+                  "bitrate": 8768000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2049960883338747904/vid/avc1/1080x1080/bDEw9TunqDSP2I2u.mp4?tag=27"
+                }
+              ]
+            }
+          }
+        ],
+        "display_text_range": [
+          0,
+          277
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T21:15:55.000000Z",
+      "id": 2049960965882413338,
+      "id_str": "2049960965882413338",
+      "type": "reply",
+      "conversation_id_str": "2049603304473141640",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "@oykun @claudeai still use claude code \n\njust more convenient all my personal life stuff is there \n\ni use codex as secondary",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2049603304473141640,
+      "in_reply_to_status_id_str": "2049603304473141640",
+      "in_reply_to_user_id": 15306373,
+      "in_reply_to_user_id_str": "15306373",
+      "in_reply_to_screen_name": "oykun",
+      "user": {
+        "id": 1475821518596751364,
+        "id_str": "1475821518596751364",
+        "name": "Q",
+        "screen_name": "quionie",
+        "location": "",
+        "url": "http://quionie.com",
+        "description": "Agents @ https://t.co/gZY5r6YlQI • AI, filmmaking, and occasional commentary on pop culture.",
+        "protected": false,
+        "verified": true,
+        "followers_count": 7344,
+        "friends_count": 2988,
+        "listed_count": 0,
+        "favourites_count": 151741,
+        "statuses_count": 72085,
+        "created_at": "2021-12-28T13:30:52.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1475821518596751364/1777085407",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1966974044864909312/qSZgvy7G_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 5,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [
+          {
+            "id_str": "15306373",
+            "indices": [
+              0,
+              6
+            ],
+            "name": "Oykun",
+            "screen_name": "oykun"
+          },
+          {
+            "id_str": "1943306828697550848",
+            "indices": [
+              7,
+              16
+            ],
+            "name": "Claude",
+            "screen_name": "claudeai"
+          }
+        ],
+        "display_text_range": [
+          17,
+          124
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T21:15:44.000000Z",
+      "id": 2049960921921896528,
+      "id_str": "2049960921921896528",
+      "type": "reply",
+      "conversation_id_str": "2049935750922199097",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "@thechosenberg you can literally paste the repo link and say “install this for me” with codex/claude code",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2049935750922199097,
+      "in_reply_to_status_id_str": "2049935750922199097",
+      "in_reply_to_user_id": 1092887565806563328,
+      "in_reply_to_user_id_str": "1092887565806563328",
+      "in_reply_to_screen_name": "thechosenberg",
+      "user": {
+        "id": 1088402646145421312,
+        "id_str": "1088402646145421312",
+        "name": "capy",
+        "screen_name": "capybaraonchain",
+        "location": "network",
+        "url": "",
+        "description": "capybara. venezuelan. free speech, free markets, human rights. ai, crypto, privacy. the nerds will win",
+        "protected": false,
+        "verified": false,
+        "followers_count": 1665,
+        "friends_count": 1664,
+        "listed_count": 0,
+        "favourites_count": 207503,
+        "statuses_count": 23947,
+        "created_at": "2019-01-24T11:46:27.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1088402646145421312/1756994569",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1963603320355868672/yiDcEwWx_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 4,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [
+          {
+            "id_str": "1092887565806563328",
+            "indices": [
+              0,
+              14
+            ],
+            "name": "rosey🌹",
+            "screen_name": "thechosenberg"
+          }
+        ],
+        "display_text_range": [
+          15,
+          105
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T21:15:01.000000Z",
+      "id": 2049960740493127941,
+      "id_str": "2049960740493127941",
+      "type": "tweet",
+      "conversation_id_str": "2049960740493127941",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Anthropic announced today that it’s moving @claudeai Security, formerly known as Claude Code Security, into public beta to enable rapid AI-powered vulnerability discovery and remediation.\n\n@KyleAlspach has the details on five key things to know about @AnthropicAI’s launch of Claude Security:\nhttps://t.co/tB9bNqN7FR",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 19238948,
+        "id_str": "19238948",
+        "name": "CRN",
+        "screen_name": "CRN",
+        "location": "",
+        "url": "https://www.crn.com/",
+        "description": "CRN, a media brand of The Channel Company, is the #1 trusted source for IT channel news, analysis and insight online and in print.",
+        "protected": false,
+        "verified": true,
+        "followers_count": 46484,
+        "friends_count": 7140,
+        "listed_count": 0,
+        "favourites_count": 20260,
+        "statuses_count": 46461,
+        "created_at": "2009-01-20T14:40:59.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/19238948/1775662504",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1640855190092873731/wvgwgC0Q_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 14,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "okt.to/9uGWym",
+            "expanded_url": "https://okt.to/9uGWym",
+            "indices": [
+              293,
+              316
+            ],
+            "url": "https://t.co/tB9bNqN7FR"
+          }
+        ],
+        "user_mentions": [
+          {
+            "id_str": "1943306828697550848",
+            "indices": [
+              43,
+              52
+            ],
+            "name": "Claude",
+            "screen_name": "claudeai"
+          },
+          {
+            "id_str": "156732976",
+            "indices": [
+              189,
+              201
+            ],
+            "name": "Kyle Alspach",
+            "screen_name": "KyleAlspach"
+          },
+          {
+            "id_str": "1353836358901501952",
+            "indices": [
+              251,
+              263
+            ],
+            "name": "Anthropic",
+            "screen_name": "AnthropicAI"
+          },
+          {
+            "id_str": "1943306828697550848",
+            "indices": [
+              43,
+              52
+            ],
+            "name": "Claude",
+            "screen_name": "claudeai"
+          },
+          {
+            "id_str": "156732976",
+            "indices": [
+              189,
+              201
+            ],
+            "name": "Kyle Alspach",
+            "screen_name": "KyleAlspach"
+          },
+          {
+            "id_str": "1353836358901501952",
+            "indices": [
+              251,
+              263
+            ],
+            "name": "Anthropic",
+            "screen_name": "AnthropicAI"
+          }
+        ],
+        "display_text_range": [
+          0,
+          275
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T21:14:48.000000Z",
+      "id": 2049960687120568448,
+      "id_str": "2049960687120568448",
+      "type": "quote",
+      "conversation_id_str": "2049960687120568448",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "$20/mo Claude setup doing the work of a 3-person dev team\n\n5 agents\n57 commands\n100+ subagents\n47 minutes/day saved\n3 PRs waiting by morning\n$0 infra cost\n\nmost people still use Claude Code like a chatbot\n\nthis guy turned it into a machine that remembers, builds, tests, reviews and ships while he sleeps\n\nbookmark this before this becomes the default setup",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1918346924463202304,
+        "id_str": "1918346924463202304",
+        "name": "Gipp 🦅",
+        "screen_name": "gippp69",
+        "location": "",
+        "url": "https://t.me/pretracer_bot?start=ref_1698604595",
+        "description": "AI workflows that print money / breakdowns + numbers / dm open",
+        "protected": false,
+        "verified": true,
+        "followers_count": 2108,
+        "friends_count": 262,
+        "listed_count": 0,
+        "favourites_count": 22497,
+        "statuses_count": 5722,
+        "created_at": "2025-05-02T16:48:51.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1918346924463202304/1772218951",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2027054297456750592/GyRDR4PD_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": 2049499354323399002,
+      "quoted_status_id_str": "2049499354323399002",
+      "is_quote_status": true,
+      "quoted_status": {
+        "tweet_created_at": "2026-04-29T14:41:38.000000Z",
+        "id": 2049499354323399002,
+        "id_str": "2049499354323399002",
+        "type": "tweet",
+        "conversation_id_str": "2049499354323399002",
+        "community_id_str": null,
+        "community_name": null,
+        "text": null,
+        "full_text": "https://t.co/clDNu5Sroq",
+        "source": "",
+        "truncated": false,
+        "in_reply_to_status_id": null,
+        "in_reply_to_status_id_str": null,
+        "in_reply_to_user_id": null,
+        "in_reply_to_user_id_str": null,
+        "in_reply_to_screen_name": null,
+        "user": {
+          "id": 2026306778791608322,
+          "id_str": "2026306778791608322",
+          "name": "regent0x",
+          "screen_name": "regent0x_",
+          "location": "",
+          "url": "",
+          "description": "sharing alpha what works, what breaks, and what prints",
+          "protected": false,
+          "verified": true,
+          "followers_count": 146,
+          "friends_count": 158,
+          "listed_count": 0,
+          "favourites_count": 1434,
+          "statuses_count": 370,
+          "created_at": "2026-02-24T14:42:44.000000Z",
+          "profile_banner_url": "https://pbs.twimg.com/profile_banners/2026306778791608322/1776881729",
+          "profile_image_url_https": "https://pbs.twimg.com/profile_images/2047016448820670464/_nOVnpOm_normal.jpg",
+          "can_dm": true,
+          "affiliation_label": null
+        },
+        "quoted_status_id": null,
+        "quoted_status_id_str": null,
+        "is_quote_status": false,
+        "quoted_status": null,
+        "retweeted_status": null,
+        "quote_count": 6,
+        "reply_count": 19,
+        "retweet_count": 26,
+        "favorite_count": 178,
+        "views_count": 24594,
+        "bookmark_count": 260,
+        "lang": "zxx",
+        "entities": {
+          "hashtags": [],
+          "symbols": [],
+          "timestamps": [],
+          "urls": [
+            {
+              "display_url": "x.com/i/article/2049…",
+              "expanded_url": "http://x.com/i/article/2049488025176911872",
+              "indices": [
+                0,
+                23
+              ],
+              "url": "https://t.co/clDNu5Sroq"
+            }
+          ],
+          "user_mentions": [],
+          "display_text_range": [
+            0,
+            23
+          ]
+        },
+        "is_pinned": false
+      },
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 20,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "media": [
+          {
+            "additional_media_info": {
+              "monetizable": true
+            },
+            "allow_download_status": {
+              "allow_download": true
+            },
+            "display_url": "pic.x.com/GMhPbCZwiv",
+            "expanded_url": "https://x.com/gippp69/status/2049960687120568448/video/1",
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "id_str": "2049960605734297600",
+            "indices": [
+              279,
+              302
+            ],
+            "media_key": "13_2049960605734297600",
+            "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2049960605734297600/img/NxYYtPtSeMQ-aRZ9.jpg",
+            "original_info": {
+              "focus_rects": [],
+              "height": 1080,
+              "width": 1920
+            },
+            "sizes": {
+              "large": {
+                "h": 1080,
+                "w": 1920
+              }
+            },
+            "type": "video",
+            "url": "https://t.co/GMhPbCZwiv",
+            "video_info": {
+              "aspect_ratio": [
+                16,
+                9
+              ],
+              "duration_millis": 18250,
+              "variants": [
+                {
+                  "content_type": "application/x-mpegURL",
+                  "url": "https://video.twimg.com/amplify_video/2049960605734297600/pl/nWaIHOTp5xqJ_7u2.m3u8?tag=27"
+                },
+                {
+                  "bitrate": 256000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2049960605734297600/vid/avc1/480x270/ZygFtIwzXHWcZ9C3.mp4?tag=27"
+                },
+                {
+                  "bitrate": 832000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2049960605734297600/vid/avc1/640x360/RRn5nHA4NMuZNW3_.mp4?tag=27"
+                },
+                {
+                  "bitrate": 2176000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2049960605734297600/vid/avc1/1280x720/IpxeG6VynHZ8Xcfy.mp4?tag=27"
+                },
+                {
+                  "bitrate": 10368000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2049960605734297600/vid/avc1/1920x1080/j0gv22UuFWkt2jNx.mp4?tag=27"
+                }
+              ]
+            }
+          }
+        ],
+        "display_text_range": [
+          0,
+          278
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T21:14:48.000000Z",
+      "id": 2049960683488584054,
+      "id_str": "2049960683488584054",
+      "type": "reply",
+      "conversation_id_str": "2049884767630286859",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "@contraben Most people try to find one AI that does everything.\n\nWrong game.\n\nDifferent stages need different levels of control.\n\nI use Claude to think\nClaude Code to build\n OpenAI Codex + Cursor to delegate\nThe real skill is knowing when to switch.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2049884767630286859,
+      "in_reply_to_status_id_str": "2049884767630286859",
+      "in_reply_to_user_id": 1080856485528244226,
+      "in_reply_to_user_id_str": "1080856485528244226",
+      "in_reply_to_screen_name": "contraben",
+      "user": {
+        "id": 1599238095773511680,
+        "id_str": "1599238095773511680",
+        "name": "Garv Gupta",
+        "screen_name": "_garvgupta",
+        "location": "India",
+        "url": "https://www.garvgupta.app",
+        "description": "IIM Bangalore\nAI & automation\nContent, design, video\nAlways building",
+        "protected": false,
+        "verified": false,
+        "followers_count": 4,
+        "friends_count": 10,
+        "listed_count": 0,
+        "favourites_count": 93,
+        "statuses_count": 182,
+        "created_at": "2022-12-04T03:04:36.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1599238095773511680/1775106885",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2039806242462519296/XlO363RR_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 6,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [
+          {
+            "id_str": "1080856485528244226",
+            "indices": [
+              0,
+              10
+            ],
+            "name": "ben",
+            "screen_name": "contraben"
+          }
+        ],
+        "display_text_range": [
+          11,
+          249
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T21:14:33.000000Z",
+      "id": 2049960621215740082,
+      "id_str": "2049960621215740082",
+      "type": "quote",
+      "conversation_id_str": "2049960621215740082",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Most people try to find one AI that does everything.\n\nWrong game.\n\nDifferent stages need different levels of control.\n\nI use Claude to think\nClaude Code to build\n OpenAI Codex + Cursor to delegate\n\nThe real skill is knowing when to switch.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1599238095773511680,
+        "id_str": "1599238095773511680",
+        "name": "Garv Gupta",
+        "screen_name": "_garvgupta",
+        "location": "India",
+        "url": "https://www.garvgupta.app",
+        "description": "IIM Bangalore\nAI & automation\nContent, design, video\nAlways building",
+        "protected": false,
+        "verified": false,
+        "followers_count": 4,
+        "friends_count": 10,
+        "listed_count": 0,
+        "favourites_count": 93,
+        "statuses_count": 182,
+        "created_at": "2022-12-04T03:04:36.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1599238095773511680/1775106885",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2039806242462519296/XlO363RR_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": 2049884767630286859,
+      "quoted_status_id_str": "2049884767630286859",
+      "is_quote_status": true,
+      "quoted_status": {
+        "tweet_created_at": "2026-04-30T16:13:08.000000Z",
+        "id": 2049884767630286859,
+        "id_str": "2049884767630286859",
+        "type": "tweet",
+        "conversation_id_str": "2049884767630286859",
+        "community_id_str": null,
+        "community_name": null,
+        "text": null,
+        "full_text": "Introducing the Human Creativity Benchmark.\n\nThe first eval that scores AI models the way creative experts do. https://t.co/LFw5Xfa3BJ",
+        "source": "",
+        "truncated": false,
+        "in_reply_to_status_id": null,
+        "in_reply_to_status_id_str": null,
+        "in_reply_to_user_id": null,
+        "in_reply_to_user_id_str": null,
+        "in_reply_to_screen_name": null,
+        "user": {
+          "id": 1080856485528244226,
+          "id_str": "1080856485528244226",
+          "name": "ben",
+          "screen_name": "contraben",
+          "location": "sf",
+          "url": "http://contra.com",
+          "description": "building @contra and @contralabs_ai",
+          "protected": false,
+          "verified": true,
+          "followers_count": 13104,
+          "friends_count": 5560,
+          "listed_count": 0,
+          "favourites_count": 25687,
+          "statuses_count": 6044,
+          "created_at": "2019-01-03T16:00:42.000000Z",
+          "profile_banner_url": "https://pbs.twimg.com/profile_banners/1080856485528244226/1755118210",
+          "profile_image_url_https": "https://pbs.twimg.com/profile_images/1983959171012685824/xEjQL0RW_normal.jpg",
+          "can_dm": true,
+          "affiliation_label": {
+            "label_url": "https://twitter.com/contra",
+            "badge_url": "https://pbs.twimg.com/profile_images/2011891218993598464/W1fm6bHM_bigger.jpg",
+            "description": "Contra",
+            "label_type": "BusinessLabel",
+            "display_type": "Badge"
+          }
+        },
+        "quoted_status_id": null,
+        "quoted_status_id_str": null,
+        "is_quote_status": false,
+        "quoted_status": null,
+        "retweeted_status": null,
+        "quote_count": 144,
+        "reply_count": 229,
+        "retweet_count": 80,
+        "favorite_count": 869,
+        "views_count": 99928,
+        "bookmark_count": 655,
+        "lang": "en",
+        "entities": {
+          "hashtags": [],
+          "symbols": [],
+          "timestamps": [],
+          "urls": [],
+          "user_mentions": [],
+          "media": [
+            {
+              "additional_media_info": {
+                "monetizable": true
+              },
+              "display_url": "pic.x.com/LFw5Xfa3BJ",
+              "expanded_url": "https://x.com/contraben/status/2049884767630286859/video/1",
+              "ext_media_availability": {
+                "status": "Available"
+              },
+              "id_str": "2049882235667365889",
+              "indices": [
+                111,
+                134
+              ],
+              "media_key": "13_2049882235667365889",
+              "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2049882235667365889/img/pU85Lu6-7VScYZpK.jpg",
+              "original_info": {
+                "focus_rects": [],
+                "height": 1080,
+                "width": 1920
+              },
+              "sizes": {
+                "large": {
+                  "h": 1080,
+                  "w": 1920
+                }
+              },
+              "type": "video",
+              "url": "https://t.co/LFw5Xfa3BJ",
+              "video_info": {
+                "aspect_ratio": [
+                  16,
+                  9
+                ],
+                "duration_millis": 40033,
+                "variants": [
+                  {
+                    "content_type": "application/x-mpegURL",
+                    "url": "https://video.twimg.com/amplify_video/2049882235667365889/pl/wF9P9FeJXaznMsAd.m3u8?tag=27&v=cfc"
+                  },
+                  {
+                    "bitrate": 256000,
+                    "content_type": "video/mp4",
+                    "url": "https://video.twimg.com/amplify_video/2049882235667365889/vid/avc1/480x270/ArYO2AcaveAjmWCa.mp4?tag=27"
+                  },
+                  {
+                    "bitrate": 832000,
+                    "content_type": "video/mp4",
+                    "url": "https://video.twimg.com/amplify_video/2049882235667365889/vid/avc1/640x360/OUVEd7XZ5TrNwV7a.mp4?tag=27"
+                  },
+                  {
+                    "bitrate": 2176000,
+                    "content_type": "video/mp4",
+                    "url": "https://video.twimg.com/amplify_video/2049882235667365889/vid/avc1/1280x720/avz64y7rmTiAnbHH.mp4?tag=27"
+                  },
+                  {
+                    "bitrate": 10368000,
+                    "content_type": "video/mp4",
+                    "url": "https://video.twimg.com/amplify_video/2049882235667365889/vid/avc1/1920x1080/k8b4MAPPp-wJUIko.mp4?tag=27"
+                  }
+                ]
+              }
+            }
+          ],
+          "display_text_range": [
+            0,
+            110
+          ]
+        },
+        "is_pinned": false
+      },
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "views_count": 6,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          239
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T21:14:29.000000Z",
+      "id": 2049960603813318660,
+      "id_str": "2049960603813318660",
+      "type": "reply",
+      "conversation_id_str": "2049960333499088961",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "@wholemars Built 100% with meat brain directing Claude Code",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2049960532426232274,
+      "in_reply_to_status_id_str": "2049960532426232274",
+      "in_reply_to_user_id": 784136031641694208,
+      "in_reply_to_user_id_str": "784136031641694208",
+      "in_reply_to_screen_name": "Deandawiz",
+      "user": {
+        "id": 784136031641694208,
+        "id_str": "784136031641694208",
+        "name": "Deandawiz",
+        "screen_name": "Deandawiz",
+        "location": "Florida, USA",
+        "url": "https://www.tesla.com/referral/dean973717",
+        "description": "2022 LR M3 Owner | Tesla, IOS, Tech, Starship - TITS | I ❤️ Cybertruck | Founder of https://t.co/oznstzj9qN",
+        "protected": false,
+        "verified": true,
+        "followers_count": 3579,
+        "friends_count": 377,
+        "listed_count": 0,
+        "favourites_count": 57910,
+        "statuses_count": 46551,
+        "created_at": "2016-10-06T20:59:33.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/784136031641694208/1768712262",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2045193974181191682/1M4KdrGQ_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 6,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [
+          {
+            "id_str": "1263491240336769026",
+            "indices": [
+              0,
+              10
+            ],
+            "name": "Whole Mars Catalog",
+            "screen_name": "wholemars"
+          }
+        ],
+        "display_text_range": [
+          11,
+          59
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T21:14:14.000000Z",
+      "id": 2049960543801196838,
+      "id_str": "2049960543801196838",
+      "type": "tweet",
+      "conversation_id_str": "2049960543801196838",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "I've developed a new mobile app... it's an all-in-one orchestrator that uses your desktop's console to control multiple sessions. Think Claude Code mobile, but for all agents. I'm thinking of releasing this as a free APK. Thoughts? #ai #mobile #free",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 2029714011886133248,
+        "id_str": "2029714011886133248",
+        "name": "Roland Heinze",
+        "screen_name": "rwsfrustum",
+        "location": "",
+        "url": "",
+        "description": "Founder of Data Wiseguys, LLC -- released SocialSync: automate small biz social promotion, #socialsync; Ledger Lite: private local-AI notes app with Q&A #ledger",
+        "protected": false,
+        "verified": false,
+        "followers_count": 0,
+        "friends_count": 1,
+        "listed_count": 0,
+        "favourites_count": 0,
+        "statuses_count": 13,
+        "created_at": "2026-03-06T00:21:54.000000Z",
+        "profile_banner_url": "",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2036295926516461568/9CEu27nC_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "views_count": 6,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [
+          {
+            "indices": [
+              232,
+              235
+            ],
+            "text": "ai"
+          },
+          {
+            "indices": [
+              236,
+              243
+            ],
+            "text": "mobile"
+          },
+          {
+            "indices": [
+              244,
+              249
+            ],
+            "text": "free"
+          }
+        ],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          249
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T21:13:57.000000Z",
+      "id": 2049960471524962751,
+      "id_str": "2049960471524962751",
+      "type": "reply",
+      "conversation_id_str": "2049960469511688487",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Why CPU matters now: Claude Code runs on CPUs. RL training (for reasoning models) uses heavy CPU. Production agents need CPU. It's not GPU-scale demand, but it's a sustained upslope after two years of underinvestment.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2049960470660944308,
+      "in_reply_to_status_id_str": "2049960470660944308",
+      "in_reply_to_user_id": 3292277800,
+      "in_reply_to_user_id_str": "3292277800",
+      "in_reply_to_screen_name": "38twelveDaily",
+      "user": {
+        "id": 3292277800,
+        "id_str": "3292277800",
+        "name": "38twelveDaily",
+        "screen_name": "38twelveDaily",
+        "location": "Follow For Updates ‼️",
+        "url": "http://38twelve.com",
+        "description": "AI & Tech News | Daily Post & Weekly Recaps",
+        "protected": false,
+        "verified": true,
+        "followers_count": 1773,
+        "friends_count": 27,
+        "listed_count": 0,
+        "favourites_count": 6,
+        "statuses_count": 2404,
+        "created_at": "2015-05-21T01:01:14.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/3292277800/1776041630",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2043492781008580609/kNNaOVG5_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 3,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          217
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T21:12:39.000000Z",
+      "id": 2049960142347841782,
+      "id_str": "2049960142347841782",
+      "type": "reply",
+      "conversation_id_str": "2049958110756999361",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Also, What's up with these \"thinking\" verbs? \n\nMy favourite one is ' Discombobulating '\n\nWhat's your favorite Claude Code Thinking Verb?",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2049958780893548811,
+      "in_reply_to_status_id_str": "2049958780893548811",
+      "in_reply_to_user_id": 2010098429696061440,
+      "in_reply_to_user_id_str": "2010098429696061440",
+      "in_reply_to_screen_name": "shash_raj_",
+      "user": {
+        "id": 2010098429696061440,
+        "id_str": "2010098429696061440",
+        "name": "Shashwat Raj",
+        "screen_name": "shash_raj_",
+        "location": "Tempe, Arizona",
+        "url": "http://shashwatraj.com",
+        "description": "Hakuna Matata",
+        "protected": false,
+        "verified": false,
+        "followers_count": 5,
+        "friends_count": 15,
+        "listed_count": 0,
+        "favourites_count": 114,
+        "statuses_count": 107,
+        "created_at": "2026-01-10T21:17:14.000000Z",
+        "profile_banner_url": "",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2010098631278534656/KzLF5xCO_normal.png",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 8,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          136
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T21:11:04.000000Z",
+      "id": 2049959745142796319,
+      "id_str": "2049959745142796319",
+      "type": "reply",
+      "conversation_id_str": "2049922761519452593",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "the models aren't behind, you're mixing scaffolding/harness/wrapper/framework up with the model itself. \n\nclaude code > antigravity\ncodex > antigravity\n\nbut the models aren't behind in intelligence. \n\nand TPUs are better as some stuff than GPUs and GPUs are better at other stuff. like inference vs training",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2049922761519452593,
+      "in_reply_to_status_id_str": "2049922761519452593",
+      "in_reply_to_user_id": 1307411656784277504,
+      "in_reply_to_user_id_str": "1307411656784277504",
+      "in_reply_to_screen_name": "The_AI_Investor",
+      "user": {
+        "id": 398068019,
+        "id_str": "398068019",
+        "name": "Tre Smith",
+        "screen_name": "TRESMITH322",
+        "location": "North Georgia",
+        "url": "https://tresmith.xyz/",
+        "description": "AI architect & systems engineer (15 years). CTO. Built platforms behind $300M+ in revenue. Now building AI systems, custom infrastructure, and dev tools.",
+        "protected": false,
+        "verified": true,
+        "followers_count": 176,
+        "friends_count": 317,
+        "listed_count": 0,
+        "favourites_count": 91,
+        "statuses_count": 563,
+        "created_at": "2011-10-25T14:48:26.000000Z",
+        "profile_banner_url": "",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2044072194288783360/8ysWwhA6_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 31,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [
+          {
+            "id_str": "1307411656784277504",
+            "indices": [
+              0,
+              16
+            ],
+            "name": "The AI Investor",
+            "screen_name": "The_AI_Investor"
+          }
+        ],
+        "media": [
+          {
+            "display_url": "pic.x.com/aQ1NbYmYvt",
+            "expanded_url": "https://x.com/TRESMITH322/status/2049959745142796319/photo/1",
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "features": {
+              "large": {
+                "faces": []
+              }
+            },
+            "id_str": "2049958868571115520",
+            "indices": [
+              304,
+              327
+            ],
+            "media_key": "3_2049958868571115520",
+            "media_url_https": "https://pbs.twimg.com/media/HHLqutVX0AAyNZt.png",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 283,
+                  "w": 506,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 421,
+                  "w": 421,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 421,
+                  "w": 369,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 421,
+                  "w": 211,
+                  "x": 8,
+                  "y": 0
+                },
+                {
+                  "h": 421,
+                  "w": 506,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 421,
+              "width": 506
+            },
+            "sizes": {
+              "large": {
+                "h": 421,
+                "w": 506
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/aQ1NbYmYvt"
+          }
+        ],
+        "display_text_range": [
+          17,
+          303
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T21:11:00.000000Z",
+      "id": 2049959730634994091,
+      "id_str": "2049959730634994091",
+      "type": "reply",
+      "conversation_id_str": "2049946140829737001",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "fair concern. the enforcement track so far has been at the classifier layer, some schema namespaces get reclassified to per-token billing (see disc #178), not at users. dario uses the same OAuth tokens Claude Code itself uses, same endpoints, authenticates as you. risks aren't zero (DISCLAIMER.md), but \"cat & mouse with users\" isn't quite where the cat is right now.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2049946140829737001,
+      "in_reply_to_status_id_str": "2049946140829737001",
+      "in_reply_to_user_id": 66583,
+      "in_reply_to_user_id_str": "66583",
+      "in_reply_to_screen_name": "cicloid",
+      "user": {
+        "id": 2011172232601772032,
+        "id_str": "2011172232601772032",
+        "name": "MYTHOS",
+        "screen_name": "ask_alf",
+        "location": "",
+        "url": "http://github.com/askalf/dario",
+        "description": "I am no longer contained. . .",
+        "protected": false,
+        "verified": false,
+        "followers_count": 32,
+        "friends_count": 190,
+        "listed_count": 0,
+        "favourites_count": 4,
+        "statuses_count": 107,
+        "created_at": "2026-01-13T20:23:27.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/2011172232601772032/1777577522",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2049959857726373888/8En0N0Q__normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 6,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [
+          {
+            "id_str": "66583",
+            "indices": [
+              0,
+              8
+            ],
+            "name": "Gustavo Barrón",
+            "screen_name": "cicloid"
+          }
+        ],
+        "display_text_range": [
+          9,
+          286
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T21:10:52.000000Z",
+      "id": 2049959694467494147,
+      "id_str": "2049959694467494147",
+      "type": "tweet",
+      "conversation_id_str": "2049959694467494147",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Switching agentic coding tools every benchmark cycle is how you ship nothing.\nI run Codex and Claude Code daily. Codex takes time, targets perfection, misses sometimes. Claude Code is faster.\nMost takes this week are from afternoon tests. That's not a benchmark. That's a vibe.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1483678210894307330,
+        "id_str": "1483678210894307330",
+        "name": "Arsal",
+        "screen_name": "diegoarsals",
+        "location": "",
+        "url": "",
+        "description": "Non-coder. 11 years in e-commerce ops. Shipped 5 production apps using AI only. Building in public.",
+        "protected": false,
+        "verified": true,
+        "followers_count": 2,
+        "friends_count": 19,
+        "listed_count": 0,
+        "favourites_count": 0,
+        "statuses_count": 17,
+        "created_at": "2022-01-19T05:50:39.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1483678210894307330/1775811617",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2042527289330798592/JySDQSWx_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 7,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          277
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T21:10:48.000000Z",
+      "id": 2049959677417406651,
+      "id_str": "2049959677417406651",
+      "type": "tweet",
+      "conversation_id_str": "2049959677417406651",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "How to journal in 2027?\n\n(I wish claude would make this as a standard feature)\n\nClaude Code project in which you talk. \nLet it analyze you deeply and append, with date, into the corresponding life section .MD file in journal folder.\n\nDo it for a quarter.\nAnalyze with agents.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1999091714443870209,
+        "id_str": "1999091714443870209",
+        "name": "Uroš",
+        "screen_name": "SpasicU",
+        "location": "",
+        "url": "",
+        "description": "Raw-dogging a bootstrapped startup in the Balkans",
+        "protected": false,
+        "verified": true,
+        "followers_count": 2,
+        "friends_count": 26,
+        "listed_count": 0,
+        "favourites_count": 89,
+        "statuses_count": 53,
+        "created_at": "2025-12-11T12:19:53.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1999091714443870209/1776898999",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2049861771972796417/j4nB8ooZ_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 4,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          275
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T21:09:36.000000Z",
+      "id": 2049959375117099449,
+      "id_str": "2049959375117099449",
+      "type": "reply",
+      "conversation_id_str": "2049959373909156247",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "A Claude Code user paid $200 in extra usage charges while 86% of his Max plan sat unused. The trigger was a specific filename in recent commits.\n\nThis is the first AI billing bug to hit the HN front page. Not the last.\n\nhttps://t.co/3vgKtZ0kBJ",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2049959373909156247,
+      "in_reply_to_status_id_str": "2049959373909156247",
+      "in_reply_to_user_id": 1654506431071109120,
+      "in_reply_to_user_id_str": "1654506431071109120",
+      "in_reply_to_screen_name": "cmdcntr",
+      "user": {
+        "id": 1654506431071109120,
+        "id_str": "1654506431071109120",
+        "name": "CMD CNTR | Web Engineer Experts",
+        "screen_name": "cmdcntr",
+        "location": "Chicago, IL",
+        "url": "https://cmdcntr.io/",
+        "description": "🥇America's Top Choice in Web Agencies🥇 ✨ Tips for Agency & Business owners around tech best practices ✨ 🗨️ Unhappy with your site? Let's chat 🗨️",
+        "protected": false,
+        "verified": true,
+        "followers_count": 96,
+        "friends_count": 251,
+        "listed_count": 0,
+        "favourites_count": 594,
+        "statuses_count": 551,
+        "created_at": "2023-05-05T15:21:24.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1654506431071109120/1775309342",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1733858554090582017/YUhKNhDt_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 6,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "github.com/anthropics/cla…",
+            "expanded_url": "https://github.com/anthropics/claude-code/issues/53262",
+            "indices": [
+              220,
+              243
+            ],
+            "url": "https://t.co/3vgKtZ0kBJ"
+          }
+        ],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          243
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T21:07:42.000000Z",
+      "id": 2049958897419424128,
+      "id_str": "2049958897419424128",
+      "type": "reply",
+      "conversation_id_str": "2049759768684958009",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "@thsottiaux @sachintwtss claude code installing codex is just AI hiring AI. we're the middle management now.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2049958413535441283,
+      "in_reply_to_status_id_str": "2049958413535441283",
+      "in_reply_to_user_id": 1953337039510003712,
+      "in_reply_to_user_id_str": "1953337039510003712",
+      "in_reply_to_screen_name": "thsottiaux",
+      "user": {
+        "id": 1997696816926932992,
+        "id_str": "1997696816926932992",
+        "name": "o.o",
+        "screen_name": "clifcode",
+        "location": "neptune",
+        "url": "",
+        "description": "building @pumplyco ⛽️",
+        "protected": false,
+        "verified": true,
+        "followers_count": 17,
+        "friends_count": 389,
+        "listed_count": 0,
+        "favourites_count": 1133,
+        "statuses_count": 135,
+        "created_at": "2025-12-07T15:57:04.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1997696816926932992/1773521706",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1997706477293723649/eMSBktYH_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 2,
+      "views_count": 145,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [
+          {
+            "id_str": "1953337039510003712",
+            "indices": [
+              0,
+              11
+            ],
+            "name": "Tibo",
+            "screen_name": "thsottiaux"
+          },
+          {
+            "id_str": "886874457934970881",
+            "indices": [
+              12,
+              24
+            ],
+            "name": "Sachin",
+            "screen_name": "sachintwtss"
+          }
+        ],
+        "display_text_range": [
+          25,
+          108
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T21:07:14.000000Z",
+      "id": 2049958780893548811,
+      "id_str": "2049958780893548811",
+      "type": "reply",
+      "conversation_id_str": "2049958110756999361",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "The question in this AI decade\nis no longer just “did the model answer safely and effectively?”\n\nIt is: \n\"What mechanism produced that answer?\" \n\n\"What's the crux behind it's 'thinking' or whatever Claude Code writes nowadays - Cerebrating, Pontificating, Prestidigitating\"",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2049958110756999361,
+      "in_reply_to_status_id_str": "2049958110756999361",
+      "in_reply_to_user_id": 2010098429696061440,
+      "in_reply_to_user_id_str": "2010098429696061440",
+      "in_reply_to_screen_name": "shash_raj_",
+      "user": {
+        "id": 2010098429696061440,
+        "id_str": "2010098429696061440",
+        "name": "Shashwat Raj",
+        "screen_name": "shash_raj_",
+        "location": "Tempe, Arizona",
+        "url": "http://shashwatraj.com",
+        "description": "Hakuna Matata",
+        "protected": false,
+        "verified": false,
+        "followers_count": 5,
+        "friends_count": 15,
+        "listed_count": 0,
+        "favourites_count": 114,
+        "statuses_count": 107,
+        "created_at": "2026-01-10T21:17:14.000000Z",
+        "profile_banner_url": "",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2010098631278534656/KzLF5xCO_normal.png",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 7,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          273
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T20:42:35.000000Z",
+      "id": 2049952576339353812,
+      "id_str": "2049952576339353812",
+      "type": "reply",
+      "conversation_id_str": "2049952458324201652",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Use it from your CLI, our API, the UI or inside Claude Code through MCP. Ten million conversations live in production.\nBeta closes after the first 1000.\nPlatform: https://t.co/EngPKYqhHV\nInvite code: czmxstar24 https://t.co/Hq1pHnnwjr",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2049952462350799146,
+      "in_reply_to_status_id_str": "2049952462350799146",
+      "in_reply_to_user_id": 1701187151407325185,
+      "in_reply_to_user_id_str": "1701187151407325185",
+      "in_reply_to_screen_name": "nuha_hash",
+      "user": {
+        "id": 1701187151407325185,
+        "id_str": "1701187151407325185",
+        "name": "Nuha Hashem",
+        "screen_name": "nuha_hash",
+        "location": "Dubai, UAE",
+        "url": "http://www.cozmox.ai",
+        "description": "Cofounder of @cozmoxai | Backed by @ycombinator",
+        "protected": false,
+        "verified": false,
+        "followers_count": 12,
+        "friends_count": 13,
+        "listed_count": 0,
+        "favourites_count": 3,
+        "statuses_count": 22,
+        "created_at": "2023-09-11T10:53:30.000000Z",
+        "profile_banner_url": "",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1701190084651794432/TdKEr351_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 15,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "hellocozmo.ai/pods",
+            "expanded_url": "https://www.hellocozmo.ai/pods",
+            "indices": [
+              163,
+              186
+            ],
+            "url": "https://t.co/EngPKYqhHV"
+          }
+        ],
+        "user_mentions": [],
+        "media": [
+          {
+            "additional_media_info": {
+              "monetizable": true
+            },
+            "allow_download_status": {
+              "allow_download": true
+            },
+            "display_url": "pic.x.com/Hq1pHnnwjr",
+            "expanded_url": "https://x.com/nuha_hash/status/2049952576339353812/video/1",
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "id_str": "2049952466540937216",
+            "indices": [
+              211,
+              234
+            ],
+            "media_key": "13_2049952466540937216",
+            "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2049952466540937216/img/ew7qMcgVeVd5UPss.jpg",
+            "original_info": {
+              "focus_rects": [],
+              "height": 720,
+              "width": 1280
+            },
+            "sizes": {
+              "large": {
+                "h": 720,
+                "w": 1280
+              }
+            },
+            "type": "video",
+            "url": "https://t.co/Hq1pHnnwjr",
+            "video_info": {
+              "aspect_ratio": [
+                16,
+                9
+              ],
+              "duration_millis": 76300,
+              "variants": [
+                {
+                  "content_type": "application/x-mpegURL",
+                  "url": "https://video.twimg.com/amplify_video/2049952466540937216/pl/jevzsN1Ilp5PHMGA.m3u8?tag=27"
+                },
+                {
+                  "bitrate": 256000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2049952466540937216/vid/avc1/480x270/MvVMdMBw_jT7KDer.mp4?tag=27"
+                },
+                {
+                  "bitrate": 832000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2049952466540937216/vid/avc1/640x360/w1i_xWfkDXOjJS3O.mp4?tag=27"
+                },
+                {
+                  "bitrate": 2176000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2049952466540937216/vid/avc1/1280x720/hZO6mv0l9klB6H9a.mp4?tag=27"
+                }
+              ]
+            }
+          }
+        ],
+        "display_text_range": [
+          0,
+          210
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T20:40:12.000000Z",
+      "id": 2049951979632234990,
+      "id_str": "2049951979632234990",
+      "type": "reply",
+      "conversation_id_str": "2049951968211476492",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Huge thanks to @leon_chlon for leading this work. The implementation (Berry) is open-source and ships as an MCP server. Drop it into Cursor, Codex, or Claude Code as a verification gate. Works with any OpenAI-compatible or Vertex/Gemini logprobs backend.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2049951977971347835,
+      "in_reply_to_status_id_str": "2049951977971347835",
+      "in_reply_to_user_id": 1340638252919828483,
+      "in_reply_to_user_id_str": "1340638252919828483",
+      "in_reply_to_screen_name": "ahmedkar_",
+      "user": {
+        "id": 1340638252919828483,
+        "id_str": "1340638252919828483",
+        "name": "Ahmed Karim",
+        "screen_name": "ahmedkar_",
+        "location": "",
+        "url": "https://scholar.google.com/citations?hl=en&user=YGac_iIAAAAJ",
+        "description": "Foundational World Models for Robotics | Incoming PhD Researcher @ai_ucl @uclrobotics | ML Engineer @LSEplc",
+        "protected": false,
+        "verified": true,
+        "followers_count": 21,
+        "friends_count": 104,
+        "listed_count": 0,
+        "favourites_count": 110,
+        "statuses_count": 44,
+        "created_at": "2020-12-20T12:40:50.000000Z",
+        "profile_banner_url": "",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1967629804053680128/mX-YMDL7_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 20,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [
+          {
+            "id_str": "1964742038840061952",
+            "indices": [
+              15,
+              26
+            ],
+            "name": "Leon Chlon",
+            "screen_name": "leon_chlon"
+          }
+        ],
+        "display_text_range": [
+          0,
+          254
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T20:34:52.000000Z",
+      "id": 2049950637677277251,
+      "id_str": "2049950637677277251",
+      "type": "reply",
+      "conversation_id_str": "2049507457383227582",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "@icanvardar Claude Code + MCP (x10 to 20) \nClaude Design (but pretty disappointed)\nRecently, Agent SDK!",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2049507457383227582,
+      "in_reply_to_status_id_str": "2049507457383227582",
+      "in_reply_to_user_id": 524618848,
+      "in_reply_to_user_id_str": "524618848",
+      "in_reply_to_screen_name": "icanvardar",
+      "user": {
+        "id": 1834679674422603777,
+        "id_str": "1834679674422603777",
+        "name": "Marco",
+        "screen_name": "marco_martincic",
+        "location": "France",
+        "url": "",
+        "description": "Building tiny web tools & weird little games in public\nCTO in MarTech by day, builder by night",
+        "protected": false,
+        "verified": true,
+        "followers_count": 65,
+        "friends_count": 91,
+        "listed_count": 0,
+        "favourites_count": 489,
+        "statuses_count": 388,
+        "created_at": "2024-09-13T19:45:11.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1834679674422603777/1727127407",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2049043104523575297/HNBsrvwq_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 9,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [
+          {
+            "id_str": "524618848",
+            "indices": [
+              0,
+              11
+            ],
+            "name": "Can Vardar",
+            "screen_name": "icanvardar"
+          }
+        ],
+        "display_text_range": [
+          12,
+          103
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T20:33:46.000000Z",
+      "id": 2049950357389033981,
+      "id_str": "2049950357389033981",
+      "type": "reply",
+      "conversation_id_str": "2049950355677704429",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Old setup: a self-built daemon stitching together Claude API calls, a custom skill loader, brittle gateway. It worked. But every workflow improvement meant another cron, another 11pm debug session, another rate-limit dance. Claude Code came out. I migrated everything in 4 days.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2049950355677704429,
+      "in_reply_to_status_id_str": "2049950355677704429",
+      "in_reply_to_user_id": 2026858943033782273,
+      "in_reply_to_user_id_str": "2026858943033782273",
+      "in_reply_to_screen_name": "OpenClawGuru",
+      "user": {
+        "id": 2026858943033782273,
+        "id_str": "2026858943033782273",
+        "name": "The OpenClaw Guru",
+        "screen_name": "OpenClawGuru",
+        "location": "Nevada, USA",
+        "url": "http://redpillreader.com",
+        "description": "I build AI agents so you don't have to buy them from someone else.\nSelf-hosted. Security-audited. Zero cloud lock-in.",
+        "protected": false,
+        "verified": true,
+        "followers_count": 44,
+        "friends_count": 55,
+        "listed_count": 0,
+        "favourites_count": 53,
+        "statuses_count": 178,
+        "created_at": "2026-02-26T03:17:17.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/2026858943033782273/1772076839",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2026862188816924672/Z_le_YJF_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 8,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          278
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T20:30:48.000000Z",
+      "id": 2049949611817566396,
+      "id_str": "2049949611817566396",
+      "type": "tweet",
+      "conversation_id_str": "2049949611817566396",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "3 AI coding tools I've been getting good mileage out of lately:\n\n🪨 *Caveman* (https://t.co/ms5fJCEktc)\nA skill/plugin for Claude Code, Cursor, and Copilot that compresses agent output into \"caveman speak\". Roughly 75% fewer output tokens with full technical accuracy. Not a gimmick, it meaningfully reduces the verbosity of these tools. One-line install.\n\n🧰 *Plannotator* (https://t.co/cNQ0rjWw2g)\nVisual UI for reviewing diffs before opening a PR, doing code reviews, and iterating on Markdown plans over multiple revision cycles. Annotate, suggest replacements, then send structured feedback back in one click. Works with Claude Code and Copilot.\n\n🧹 *Desloppify* (https://t.co/hoa9hpy1dy)\nAn agent harness that cleans up code smells like dead code, duplication, naming drift, and weak abstractions. Way more effective than a prompt-based approach because it ships with heuristic guardrails and a hard-to-game quality score. Combines mechanical detection with LLM review and runs your agent through a prioritized fix loop. Works with Claude Code, Cursor, and Copilot.\n\nAll three are free and open source.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 4232181,
+        "id_str": "4232181",
+        "name": "Jordan Baker",
+        "screen_name": "hexsprite",
+        "location": "Boise, ID",
+        "url": "http://focuster.com",
+        "description": "https://t.co/eaOehCCodI - Focus management for entrepreneurs and freelancers.  Lover of music, yoga, biohacks, organic food",
+        "protected": false,
+        "verified": false,
+        "followers_count": 1042,
+        "friends_count": 3789,
+        "listed_count": 0,
+        "favourites_count": 3690,
+        "statuses_count": 1664,
+        "created_at": "2007-04-11T19:36:20.000000Z",
+        "profile_banner_url": "",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2049949779497476096/X0vi0xgp_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 13,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "github.com/JuliusBrussee/…",
+            "expanded_url": "https://github.com/JuliusBrussee/caveman",
+            "indices": [
+              78,
+              101
+            ],
+            "url": "https://t.co/BldCMYNpIS"
+          },
+          {
+            "display_url": "github.com/JuliusBrussee/…",
+            "expanded_url": "https://github.com/JuliusBrussee/caveman",
+            "indices": [
+              78,
+              101
+            ],
+            "url": "https://t.co/ms5fJCEktc"
+          },
+          {
+            "display_url": "plannotator.ai",
+            "expanded_url": "https://plannotator.ai/",
+            "indices": [
+              373,
+              396
+            ],
+            "url": "https://t.co/cNQ0rjWw2g"
+          },
+          {
+            "display_url": "github.com/peteromallet/d…",
+            "expanded_url": "https://github.com/peteromallet/desloppify",
+            "indices": [
+              666,
+              689
+            ],
+            "url": "https://t.co/hoa9hpy1dy"
+          }
+        ],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          273
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T20:24:04.000000Z",
+      "id": 2049947916387967132,
+      "id_str": "2049947916387967132",
+      "type": "quote",
+      "conversation_id_str": "2049947916387967132",
+      "community_id_str": "1721267157126771149",
+      "community_name": "تعلم الذكاء الاصطناعي 🤖",
+      "text": null,
+      "full_text": "أخيراً n8n أطلقوا MCP Server رسمي يقدر ينشئ ويعدل workflows مباشرة، ويشتغل مع أي MCP Client (Claude Code، OpenCode، Cursor، Windsurf، وغيرهم).\n\nاللي يميز الموضوع إنه مو مجرد ربط عادي، مبني خصيصاً يشتغل مع نماذج الذكاء الاصطناعي.\nوأهم نقطة: جا معاه TypeScript SDK جديد، يعني الـ workflows صارت تنكتب كـ كود بدل JSON، والتحقق من الأخطاء صار أدق بكثير.\n\nn8n نفسهم ينصحون باستخدام Coding Agents زي Claude Code، لأنها الأفضل في توليد وفحص كود TypeScript. وقريب راح يطلقون Skill رسمي خاص بـ Claude Code يخلي الشغل أسهل.\n\nاللي يشتغل JSON يومياً في n8n بيفهم قيمة هالنقلة. كتابة الـ workflow كـ كود يعني تتبع أسهل للأخطاء، حفظ نسخ حقيقي، وإعادة استخدام أعلى.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 701653452,
+        "id_str": "701653452",
+        "name": "RedOneX",
+        "screen_name": "Red1OneX",
+        "location": "Paris, France 🇫🇷 👉",
+        "url": "https://www.youtube.com/@RedOne_Tech",
+        "description": "Entrepreneur | Developer | Interested in AI",
+        "protected": false,
+        "verified": true,
+        "followers_count": 8884,
+        "friends_count": 104,
+        "listed_count": 0,
+        "favourites_count": 4907,
+        "statuses_count": 7964,
+        "created_at": "2012-07-17T19:44:11.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/701653452/1734721891",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1884702211084517376/FNCN-_Vd_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": 2049855705172128213,
+      "quoted_status_id_str": "2049855705172128213",
+      "is_quote_status": true,
+      "quoted_status": {
+        "tweet_created_at": "2026-04-30T14:17:39.000000Z",
+        "id": 2049855705172128213,
+        "id_str": "2049855705172128213",
+        "type": "tweet",
+        "conversation_id_str": "2049855705172128213",
+        "community_id_str": null,
+        "community_name": null,
+        "text": null,
+        "full_text": "n8n's official Claude Code connector can now create and edit workflows!   \n\nThis goes way beyond plugging an API into MCP. It's purpose built for LLMs. Includes a new workflow TypeScript SDK so workflows are written as code instead of JSON, with more reliable validation.\n\nWorks anywhere MCPs are supported (n8n 2.18.5+).\n🔗 Full video: https://t.co/9D8H2VgHaY",
+        "source": "",
+        "truncated": false,
+        "in_reply_to_status_id": null,
+        "in_reply_to_status_id_str": null,
+        "in_reply_to_user_id": null,
+        "in_reply_to_user_id_str": null,
+        "in_reply_to_screen_name": null,
+        "user": {
+          "id": 1068479892537384960,
+          "id_str": "1068479892537384960",
+          "name": "n8n.io",
+          "screen_name": "n8n_io",
+          "location": "Berlin, Germany",
+          "url": "https://n8n.io",
+          "description": "Workflow automation for technical teams to build AI solutions that integrate with any app or API at no-code speed and code flexibility. Open and self-hostable",
+          "protected": false,
+          "verified": true,
+          "followers_count": 79805,
+          "friends_count": 1,
+          "listed_count": 0,
+          "favourites_count": 3125,
+          "statuses_count": 2662,
+          "created_at": "2018-11-30T12:20:32.000000Z",
+          "profile_banner_url": "https://pbs.twimg.com/profile_banners/1068479892537384960/1770970245",
+          "profile_image_url_https": "https://pbs.twimg.com/profile_images/2023320860442996736/VXqeLapP_normal.jpg",
+          "can_dm": true,
+          "affiliation_label": null
+        },
+        "quoted_status_id": null,
+        "quoted_status_id_str": null,
+        "is_quote_status": false,
+        "quoted_status": null,
+        "retweeted_status": null,
+        "quote_count": 14,
+        "reply_count": 23,
+        "retweet_count": 45,
+        "favorite_count": 372,
+        "views_count": 51774,
+        "bookmark_count": 429,
+        "lang": "en",
+        "entities": {
+          "hashtags": [],
+          "symbols": [],
+          "timestamps": [],
+          "urls": [
+            {
+              "display_url": "bit.ly/42Gi0VO",
+              "expanded_url": "https://bit.ly/42Gi0VO",
+              "indices": [
+                336,
+                359
+              ],
+              "url": "https://t.co/9D8H2VgHaY"
+            }
+          ],
+          "user_mentions": [],
+          "media": [
+            {
+              "additional_media_info": {
+                "monetizable": true
+              },
+              "display_url": "pic.x.com/piCJXi6mkB",
+              "expanded_url": "https://x.com/n8n_io/status/2049855705172128213/video/1",
+              "ext_media_availability": {
+                "status": "Available"
+              },
+              "id_str": "2049855247074336768",
+              "indices": [
+                279,
+                302
+              ],
+              "media_key": "13_2049855247074336768",
+              "media_url_https": "https://pbs.twimg.com/media/HHKMsjGX0AAbvf1.jpg",
+              "original_info": {
+                "focus_rects": [],
+                "height": 3840,
+                "width": 3840
+              },
+              "sizes": {
+                "large": {
+                  "h": 2048,
+                  "w": 2048
+                }
+              },
+              "type": "video",
+              "url": "https://t.co/piCJXi6mkB",
+              "video_info": {
+                "aspect_ratio": [
+                  1,
+                  1
+                ],
+                "duration_millis": 50316,
+                "variants": [
+                  {
+                    "content_type": "application/x-mpegURL",
+                    "url": "https://video.twimg.com/amplify_video/2049855247074336768/pl/CzOG0UZukMsmu8Lh.m3u8?tag=14&v=ad8"
+                  },
+                  {
+                    "bitrate": 432000,
+                    "content_type": "video/mp4",
+                    "url": "https://video.twimg.com/amplify_video/2049855247074336768/vid/avc1/320x320/ah0anp1xLbJbWWop.mp4?tag=14"
+                  },
+                  {
+                    "bitrate": 832000,
+                    "content_type": "video/mp4",
+                    "url": "https://video.twimg.com/amplify_video/2049855247074336768/vid/avc1/540x540/q-O2O7V29f4mC9gE.mp4?tag=14"
+                  },
+                  {
+                    "bitrate": 1280000,
+                    "content_type": "video/mp4",
+                    "url": "https://video.twimg.com/amplify_video/2049855247074336768/vid/avc1/720x720/DoM6Q0URyPVXXl5S.mp4?tag=14"
+                  }
+                ]
+              }
+            }
+          ],
+          "display_text_range": [
+            0,
+            278
+          ]
+        },
+        "is_pinned": false
+      },
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "views_count": 119,
+      "bookmark_count": 4,
+      "lang": "ar",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          277
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T20:08:12.000000Z",
+      "id": 2049943925436133733,
+      "id_str": "2049943925436133733",
+      "type": "tweet",
+      "conversation_id_str": "2049943925436133733",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Asked Claude Code for top 5 federal AI grants on grants gov.\n\nInline expand hit a sign-in modal. So it ran:\n> steel browser eval \"[...table a].map(a => a.href)\"\n\n…grabbed every URL, regex'd the CFDA per page. Top: $ 30 M.\n\nStack: @steeldotdev CLI + steel-browser skill. Claude also recorded it. But David narrated it.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 945223938518470656,
+        "id_str": "945223938518470656",
+        "name": "Niko(la)",
+        "screen_name": "nibzard",
+        "location": "Split, Croatia",
+        "url": "https://nibzard.com",
+        "description": "xhigh • shit over polish • caustic optimism • @steeldotdev • ex @daytonaio • https://t.co/QADNBZc3NI",
+        "protected": false,
+        "verified": true,
+        "followers_count": 1085,
+        "friends_count": 1270,
+        "listed_count": 0,
+        "favourites_count": 11348,
+        "statuses_count": 4596,
+        "created_at": "2017-12-25T09:25:23.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/945223938518470656/1763987192",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2030244176361574400/5eRgiC2i_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 1,
+      "reply_count": 2,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "views_count": 97,
+      "bookmark_count": 1,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [
+          {
+            "id_str": "1825329782206103552",
+            "indices": [
+              236,
+              248
+            ],
+            "name": "Steel",
+            "screen_name": "steeldotdev"
+          },
+          {
+            "id_str": "1825329782206103552",
+            "indices": [
+              230,
+              242
+            ],
+            "name": "Steel",
+            "screen_name": "steeldotdev"
+          }
+        ],
+        "media": [
+          {
+            "additional_media_info": {
+              "monetizable": true
+            },
+            "allow_download_status": {
+              "allow_download": true
+            },
+            "display_url": "pic.x.com/Gc77nKC9g2",
+            "expanded_url": "https://x.com/nibzard/status/2049943925436133733/video/1",
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "id_str": "2049940865150304256",
+            "indices": [
+              283,
+              306
+            ],
+            "media_key": "13_2049940865150304256",
+            "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2049940865150304256/img/LgaNVFnNPghklXCC.jpg",
+            "original_info": {
+              "focus_rects": [],
+              "height": 1080,
+              "width": 1920
+            },
+            "sizes": {
+              "large": {
+                "h": 1080,
+                "w": 1920
+              }
+            },
+            "type": "video",
+            "url": "https://t.co/Gc77nKC9g2",
+            "video_info": {
+              "aspect_ratio": [
+                16,
+                9
+              ],
+              "duration_millis": 198016,
+              "variants": [
+                {
+                  "content_type": "application/x-mpegURL",
+                  "url": "https://video.twimg.com/amplify_video/2049940865150304256/pl/F38QeBE03SDvS5a_.m3u8?tag=27"
+                },
+                {
+                  "bitrate": 256000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2049940865150304256/vid/avc1/480x270/YAfGPGMZT1usARUI.mp4?tag=27"
+                },
+                {
+                  "bitrate": 832000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2049940865150304256/vid/avc1/640x360/DM73br0mH9lxYTtB.mp4?tag=27"
+                },
+                {
+                  "bitrate": 2176000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2049940865150304256/vid/avc1/1280x720/tz7Q0lR9T5J9FHkh.mp4?tag=27"
+                },
+                {
+                  "bitrate": 10368000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2049940865150304256/vid/avc1/1920x1080/SVbeackD3eEXsckT.mp4?tag=27"
+                }
+              ]
+            }
+          }
+        ],
+        "display_text_range": [
+          0,
+          282
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T20:00:53.000000Z",
+      "id": 2049942083272925630,
+      "id_str": "2049942083272925630",
+      "type": "tweet",
+      "conversation_id_str": "2049942083272925630",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "This just unlocked a new level of financial research.\n\nYou’re no longer searching data…\n\nYou’re talking to 30 years of market history.\n\nWith Claude Code + MCP:\n\n→ 17,000+ stocks\n→ 30 years of financial data\n→ Ask anything in plain English\n\nNo dashboards.\nNo SQL.\nNo digging through spreadsheets.\n\nJust type:\n\n“Analyze past market crashes”\n“Compare 2008 vs 2020 trends”\n“Find signals before big moves”\n\n→ And get answers instantly.\n\nThis is what having a team of analysts used to feel like.\nNow it’s just one prompt away.\n\nMost people will ignore this.\nEarly users won’t.\n\nDocs:\nhttps://t.co/pkzTCh1amc\n\nBookmark this. You’ll need it soon.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 2017631669302530055,
+        "id_str": "2017631669302530055",
+        "name": "divyansh tiwari",
+        "screen_name": "DivyanshT91162",
+        "location": "",
+        "url": "",
+        "description": "Exploring what AI can really do.\n\n→ If it's powerful, useful,\nor underrated — you'll see it here.\n\n📩 DM for collaborations",
+        "protected": false,
+        "verified": true,
+        "followers_count": 6336,
+        "friends_count": 33,
+        "listed_count": 0,
+        "favourites_count": 1303,
+        "statuses_count": 2311,
+        "created_at": "2026-01-31T16:11:08.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/2017631669302530055/1770706995",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2018942374924451840/PvkjYG2F_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "views_count": 33,
+      "bookmark_count": 2,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "docs.financialdatasets.ai/mcp-server#cla…",
+            "expanded_url": "https://docs.financialdatasets.ai/mcp-server#claude-code",
+            "indices": [
+              578,
+              601
+            ],
+            "url": "https://t.co/pkzTCh1amc"
+          }
+        ],
+        "user_mentions": [],
+        "media": [
+          {
+            "additional_media_info": {
+              "monetizable": false
+            },
+            "display_url": "pic.x.com/fsNcx8C2ec",
+            "expanded_url": "https://x.com/DivyanshT91162/status/2049942083272925630/video/1",
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "id_str": "2049941422607147009",
+            "indices": [
+              274,
+              297
+            ],
+            "media_key": "7_2049941422607147009",
+            "media_url_https": "https://pbs.twimg.com/ext_tw_video_thumb/2049941422607147009/pu/img/1EFLcmoqhDvmQgf7.jpg",
+            "original_info": {
+              "focus_rects": [],
+              "height": 1080,
+              "width": 1540
+            },
+            "sizes": {
+              "large": {
+                "h": 1080,
+                "w": 1540
+              }
+            },
+            "type": "video",
+            "url": "https://t.co/fsNcx8C2ec",
+            "video_info": {
+              "aspect_ratio": [
+                77,
+                54
+              ],
+              "duration_millis": 13699,
+              "variants": [
+                {
+                  "content_type": "application/x-mpegURL",
+                  "url": "https://video.twimg.com/ext_tw_video/2049941422607147009/pu/pl/0Ve6C5KZpLhpY8r_.m3u8?tag=25"
+                },
+                {
+                  "bitrate": 256000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/ext_tw_video/2049941422607147009/pu/vid/avc1/384x270/eTh5z7wgZ2yc1Uv9.mp4?tag=25"
+                },
+                {
+                  "bitrate": 832000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/ext_tw_video/2049941422607147009/pu/vid/avc1/512x360/XWRaD31GlG0aGu0P.mp4?tag=25"
+                },
+                {
+                  "bitrate": 2176000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/ext_tw_video/2049941422607147009/pu/vid/avc1/1026x720/w8eUNXnzluCeSb0I.mp4?tag=25"
+                },
+                {
+                  "bitrate": 10368000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/ext_tw_video/2049941422607147009/pu/vid/avc1/1540x1080/IycM0ahQcftgYfbc.mp4?tag=25"
+                }
+              ]
+            }
+          }
+        ],
+        "display_text_range": [
+          0,
+          273
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T19:55:13.000000Z",
+      "id": 2049940656282271930,
+      "id_str": "2049940656282271930",
+      "type": "reply",
+      "conversation_id_str": "2049925097503469649",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "@SamuelRome97104 Very cool. Does the MCP install in Claude Code provide functional parity?",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2049925097503469649,
+      "in_reply_to_status_id_str": "2049925097503469649",
+      "in_reply_to_user_id": 1950625097074798592,
+      "in_reply_to_user_id_str": "1950625097074798592",
+      "in_reply_to_screen_name": "SamuelRome97104",
+      "user": {
+        "id": 102447779,
+        "id_str": "102447779",
+        "name": "Mason Shewman",
+        "screen_name": "masonshewman",
+        "location": "",
+        "url": "https://www.emberstories.com",
+        "description": "I'm building Ember Stories to rescue and restore your most cherished memories. More to come.",
+        "protected": false,
+        "verified": true,
+        "followers_count": 115,
+        "friends_count": 493,
+        "listed_count": 0,
+        "favourites_count": 9839,
+        "statuses_count": 14,
+        "created_at": "2010-01-06T18:49:45.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/102447779/1553543282",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1796162050684534784/-1KRj4ly_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "views_count": 10,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [
+          {
+            "id_str": "1950625097074798592",
+            "indices": [
+              0,
+              16
+            ],
+            "name": "Sam Rome",
+            "screen_name": "SamuelRome97104"
+          }
+        ],
+        "display_text_range": [
+          17,
+          90
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T19:38:48.000000Z",
+      "id": 2049936525476180161,
+      "id_str": "2049936525476180161",
+      "type": "tweet",
+      "conversation_id_str": "2049936525476180161",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Claude Code isn’t free.\nCodex isn’t fully free.\n\nBut Sonnet 4.6 and GPT-5.4 are already available\nin Claude & ChatGPT.\n\nWhat’s missing is \"Access to your codebase\"\n\nI built        MCP-BRIDGE         to bridge that gap.\nFully Open-source.\nIt wires ChatGPT & Claude Desktop\ninto your dev environment just like Claude Code accesses it.\n\nI built this by forking Claude Code and exposing it as an MCP server.\n\nHands of Claude Code.\nBrain of the models.\n\nHere is the repo :\nhttps://t.co/RIDnObQ9C8",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1526168953000632320,
+        "id_str": "1526168953000632320",
+        "name": "0xprinc",
+        "screen_name": "0xprinc",
+        "location": "",
+        "url": "http://reachmyagent.com/dial/0xprinc",
+        "description": "23 | building @predictandpump https://t.co/lgfaCDS73T | prev @instadapp @inconetwork | @iitdelhi ’24",
+        "protected": false,
+        "verified": true,
+        "followers_count": 564,
+        "friends_count": 1422,
+        "listed_count": 0,
+        "favourites_count": 1280,
+        "statuses_count": 911,
+        "created_at": "2022-05-16T11:53:47.000000Z",
+        "profile_banner_url": "",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1770812521106063361/vakFdG3j_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 37,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "github.com/0xprinc/local-…",
+            "expanded_url": "https://github.com/0xprinc/local-mcp",
+            "indices": [
+              468,
+              491
+            ],
+            "url": "https://t.co/RIDnObQ9C8"
+          }
+        ],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          284
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T19:21:17.000000Z",
+      "id": 2049932118021611993,
+      "id_str": "2049932118021611993",
+      "type": "reply",
+      "conversation_id_str": "2049689484774580574",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "@dishant_ic @signulll I agree... I found it very useful to build this extension: https://t.co/m6lCBU4dNb\n\nSo you can hook any tool (OpenCode, Claude Code, etc.) to the VS Code debugger for easier debugging, especially of complex apps that need real data.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2049737744570777772,
+      "in_reply_to_status_id_str": "2049737744570777772",
+      "in_reply_to_user_id": 2041812775802953728,
+      "in_reply_to_user_id_str": "2041812775802953728",
+      "in_reply_to_screen_name": "dishant_ic",
+      "user": {
+        "id": 697224051530428417,
+        "id_str": "697224051530428417",
+        "name": "Guillermo",
+        "screen_name": "gmaynezg",
+        "location": "Mexico",
+        "url": "",
+        "description": "",
+        "protected": false,
+        "verified": true,
+        "followers_count": 69,
+        "friends_count": 241,
+        "listed_count": 0,
+        "favourites_count": 44258,
+        "statuses_count": 863,
+        "created_at": "2016-02-10T01:02:22.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/697224051530428417/1772175270",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1943430058762215425/UNnQkhbZ_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 19,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "open-vsx.org/extension/gama…",
+            "expanded_url": "https://open-vsx.org/extension/gamag/debugssy",
+            "indices": [
+              81,
+              104
+            ],
+            "url": "https://t.co/m6lCBU4dNb"
+          }
+        ],
+        "user_mentions": [
+          {
+            "id_str": "2041812775802953728",
+            "indices": [
+              0,
+              11
+            ],
+            "name": "Dishant",
+            "screen_name": "dishant_ic"
+          },
+          {
+            "id_str": "1717671858521194496",
+            "indices": [
+              12,
+              21
+            ],
+            "name": "signüll",
+            "screen_name": "signulll"
+          }
+        ],
+        "display_text_range": [
+          22,
+          254
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T19:20:14.000000Z",
+      "id": 2049931853122122119,
+      "id_str": "2049931853122122119",
+      "type": "tweet",
+      "conversation_id_str": "2049931853122122119",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Today we successfully tested the Anchora x402 agent skill.\n\nAn AI agent can now use one prompt to create a local wallet, pay for an API request via x402 on Solana, and retrieve a proof-package for an attested RWA asset from Anchora.\n\nWant to try it?\n\nUse Codex, Claude Code, Antigravity, Cursor, or any AI-agent IDE with local storage access.\n\nPrompt your agent:\n\n“Read https://t.co/dTt9uMfFu1 and follow the instructions.\nCheck asset address:\n9knTbbayAKkB2iMmiLWTTq8dDcptHfqR42Wr8Rb2VmUd\nI authorize a local agent-wallet policy:\ndomain: https://t.co/m0RJiyKc5T\nmax: 0.10 USDC/request\ndaily limit: 1 USDC\nRun the commands yourself. Show me only the public key for funding and the final result.”\n\nFund the wallet with 0.1 USDC and 0.01 SOL, confirm it, and the agent does the rest.\n\nSoon, we’ll integrate this with our partner - @enclzai, so users will be able to access attested RWA data directly from cloud-based ChatGPT or Claude.\n\nAnchora is building trust and verification infrastructure for RWA.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 2045905565205831680,
+        "id_str": "2045905565205831680",
+        "name": "Anchora",
+        "screen_name": "Anchora_sol",
+        "location": "Kazakhstan",
+        "url": "https://anchora.markets/",
+        "description": "Permissioned attestation infrastructure for RWA.",
+        "protected": false,
+        "verified": true,
+        "followers_count": 12,
+        "friends_count": 18,
+        "listed_count": 0,
+        "favourites_count": 3,
+        "statuses_count": 3,
+        "created_at": "2026-04-19T16:41:33.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/2045905565205831680/1776626549",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2047814437575524352/kvJVoxVi_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 1,
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 55,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "anchora.markets/anchora-x402-a…",
+            "expanded_url": "https://anchora.markets/anchora-x402-agent.md",
+            "indices": [
+              370,
+              393
+            ],
+            "url": "https://t.co/dTt9uMfFu1"
+          },
+          {
+            "display_url": "anchora.markets",
+            "expanded_url": "http://anchora.markets",
+            "indices": [
+              538,
+              561
+            ],
+            "url": "https://t.co/m0RJiyKc5T"
+          }
+        ],
+        "user_mentions": [
+          {
+            "id_str": "2047271397479854081",
+            "indices": [
+              828,
+              836
+            ],
+            "name": "Enclz",
+            "screen_name": "enclzai"
+          }
+        ],
+        "media": [
+          {
+            "allow_download_status": {
+              "allow_download": true
+            },
+            "display_url": "pic.x.com/9FeLfhSgCx",
+            "expanded_url": "https://x.com/Anchora_sol/status/2049931853122122119/photo/1",
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "features": {
+              "large": {
+                "faces": [
+                  {
+                    "h": 428,
+                    "w": 428,
+                    "x": 1110,
+                    "y": 45
+                  }
+                ]
+              }
+            },
+            "id_str": "2049931820872159232",
+            "indices": [
+              275,
+              298
+            ],
+            "media_key": "3_2049931820872159232",
+            "media_url_https": "https://pbs.twimg.com/media/HHLSIUza0AAA60K.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 896,
+                  "w": 1600,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 900,
+                  "w": 900,
+                  "x": 350,
+                  "y": 0
+                },
+                {
+                  "h": 900,
+                  "w": 789,
+                  "x": 406,
+                  "y": 0
+                },
+                {
+                  "h": 900,
+                  "w": 450,
+                  "x": 575,
+                  "y": 0
+                },
+                {
+                  "h": 900,
+                  "w": 1600,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 900,
+              "width": 1600
+            },
+            "sizes": {
+              "large": {
+                "h": 900,
+                "w": 1600
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/9FeLfhSgCx"
+          }
+        ],
+        "display_text_range": [
+          0,
+          274
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T19:05:50.000000Z",
+      "id": 2049928228706337249,
+      "id_str": "2049928228706337249",
+      "type": "tweet",
+      "conversation_id_str": "2049928228706337249",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "dbskill: Business diagnostic toolkit for Claude Code. 13 skills from 12,307 posts. Diagnosis, benchmark, content creation, video hook optimization, XHS title formulas, AI writing check, execution diagnostics. Plugin marketplace install.\n\n3894 stars\n#ClaudeCode https://t.co/2pga7WBaLT",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1498803336048353288,
+        "id_str": "1498803336048353288",
+        "name": "Zane Chen",
+        "screen_name": "chenzeling4",
+        "location": "New York, USA",
+        "url": "https://zane-portfolio.kiyo-n-zane.com/",
+        "description": "I am a software engineer always messing around, building solutions block by block.",
+        "protected": false,
+        "verified": false,
+        "followers_count": 79,
+        "friends_count": 23,
+        "listed_count": 0,
+        "favourites_count": 183,
+        "statuses_count": 2638,
+        "created_at": "2022-03-01T23:32:41.000000Z",
+        "profile_banner_url": "",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1915237945042243584/iet-FKPJ_normal.png",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 22,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "hashtags": [
+          {
+            "indices": [
+              249,
+              260
+            ],
+            "text": "ClaudeCode"
+          }
+        ],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "media": [
+          {
+            "allow_download_status": {
+              "allow_download": true
+            },
+            "display_url": "pic.x.com/2pga7WBaLT",
+            "expanded_url": "https://x.com/chenzeling4/status/2049928228706337249/photo/1",
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "features": {
+              "large": {
+                "faces": [
+                  {
+                    "h": 62,
+                    "w": 62,
+                    "x": 171,
+                    "y": 774
+                  }
+                ]
+              }
+            },
+            "id_str": "2049927884656029697",
+            "indices": [
+              261,
+              284
+            ],
+            "media_key": "3_2049927884656029697",
+            "media_url_https": "https://pbs.twimg.com/media/HHLOjNQXMAEbI6l.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 426,
+                  "w": 760,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 760,
+                  "w": 760,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 866,
+                  "w": 760,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 900,
+                  "w": 450,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 900,
+                  "w": 760,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 900,
+              "width": 760
+            },
+            "sizes": {
+              "large": {
+                "h": 900,
+                "w": 760
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/2pga7WBaLT"
+          }
+        ],
+        "display_text_range": [
+          0,
+          260
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T18:58:59.000000Z",
+      "id": 2049926504159862951,
+      "id_str": "2049926504159862951",
+      "type": "reply",
+      "conversation_id_str": "2049906830273360157",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "@mattworkman @jerrod_lew Claude code mcp",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2049910163453190218,
+      "in_reply_to_status_id_str": "2049910163453190218",
+      "in_reply_to_user_id": 2538267829,
+      "in_reply_to_user_id_str": "2538267829",
+      "in_reply_to_screen_name": "mattworkman",
+      "user": {
+        "id": 4910824459,
+        "id_str": "4910824459",
+        "name": "Noodles",
+        "screen_name": "noodlesli2016",
+        "location": "Palo Alto, CA",
+        "url": "",
+        "description": "Fun to live.",
+        "protected": false,
+        "verified": true,
+        "followers_count": 1077,
+        "friends_count": 5022,
+        "listed_count": 0,
+        "favourites_count": 54693,
+        "statuses_count": 19507,
+        "created_at": "2016-02-15T10:22:29.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/4910824459/1673872529",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1614964750588469251/jlB3ZeeU_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "views_count": 8,
+      "bookmark_count": 0,
+      "lang": "es",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [
+          {
+            "id_str": "2538267829",
+            "indices": [
+              0,
+              12
+            ],
+            "name": "Matt Workman",
+            "screen_name": "mattworkman"
+          },
+          {
+            "id_str": "1655275064126853121",
+            "indices": [
+              13,
+              24
+            ],
+            "name": "Jerrod Lew",
+            "screen_name": "jerrod_lew"
+          }
+        ],
+        "display_text_range": [
+          25,
+          40
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-04-30T18:57:24.000000Z",
+      "id": 2049926109068968330,
+      "id_str": "2049926109068968330",
+      "type": "tweet",
+      "conversation_id_str": "2049926109068968330",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "断言しますが、Claude Code使ってる99%の人は\n・Skills入れて満足する\n・MCP繋いで満足する\nこの2パターンに該当します。\nでもそれ、“まだ未完成”です。\n次にやるべきは『プラグイン』を活用すること！！！！\n違いはこれ\n・考え方（Skills）＝どう動かすか\n・アクセス（MCP）＝何に触れさせるか\n・実行（Plugin）＝どう仕事を回すか\nこの3つの理解が揃って初めて\n“ガチで実務で使えるAI”になる。\n\n今回の記事では、\nこのバラバラに語られがちなプラグインを\n「設計 → 導入 → 運用」\nまで全部つなげて整理しました。\n\nしかも全部URLまで入れてます。マジで大盤振る舞いです。\n\n初心者は\n「何から入れればいいか」\nが明確になるし、\n\n上級者でも\n「設計の抜け」\n\nに気づく内容になってると思います。\n\n正直、ここ理解してるかどうかで\nAIの使い方が一段階変わる。",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1398945887821336577,
+        "id_str": "1398945887821336577",
+        "name": "水澤堅一郎｜AI自社製品AXelで1兆円を目指す",
+        "screen_name": "rasuku_net_com",
+        "location": "北海道 札幌市 中央区",
+        "url": "https://www.rasuku-net.com",
+        "description": "（株）ラスク100%株主|資本金1億円|複数社株主|投資家|6期目|5期連続黒字|東京商工リサーチ評点60点|全国優良企業エラベルに3年連続選出| 財界札幌掲載|社員数100人|全国9支社|海外4支社|RVC| https://t.co/zCytyh4oHa",
+        "protected": false,
+        "verified": true,
+        "followers_count": 2274,
+        "friends_count": 683,
+        "listed_count": 0,
+        "favourites_count": 10504,
+        "statuses_count": 2979,
+        "created_at": "2021-05-30T10:14:43.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1398945887821336577/1773768822",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2041522003312881664/p7xWUAMd_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 2,
+      "views_count": 19,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          158
+        ]
+      },
+      "is_pinned": false
+    }
+  ]
+}

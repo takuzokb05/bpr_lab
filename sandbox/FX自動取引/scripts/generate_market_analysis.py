@@ -344,6 +344,132 @@ def fetch_market_sentiment(instrument: str = "USD_JPY", max_tweets: int = 10) ->
     return result
 
 
+def fetch_news_headlines(max_items: int = 12) -> list[dict]:
+    """
+    FX関連の主要ニュース見出しを複数RSSから取得する。
+
+    情報源（2026-04検証済、認証不要RSS）:
+    - Forexlive (FX特化、25件/取得)
+    - FXStreet (FX専門記事)
+    - Investing.com Forex/AllFX
+    - Google News RSS検索（Reuters/Bloomberg等を間接取得、100件/取得）
+    - BBC Business (マクロ補助)
+
+    Reuters直接RSS (feeds.reuters.com) は2020年頃に廃止されたため、
+    Google News RSS経由で間接的に取得する。
+
+    Returns:
+        [{"title": str, "source": str, "published": str, "link": str}, ...]
+    """
+    import email.utils as eut
+    import xml.etree.ElementTree as ET
+
+    feeds = [
+        ("Forexlive", "https://www.forexlive.com/feed"),
+        ("FXStreet", "https://www.fxstreet.com/rss/news"),
+        ("Investing Forex", "https://www.investing.com/rss/news_1.rss"),
+        ("Investing AllFX", "https://www.investing.com/rss/news_285.rss"),
+        # Google News RSS: Reuters/Bloomberg等を間接取得
+        ("GoogleNews FX",
+         "https://news.google.com/rss/search?"
+         "q=forex+OR+dollar+OR+yen+OR+euro&hl=en-US&gl=US&ceid=US:en"),
+        ("GoogleNews CB",
+         "https://news.google.com/rss/search?"
+         "q=BOJ+OR+FOMC+OR+ECB+OR+rate+decision&hl=en-US&gl=US&ceid=US:en"),
+        ("BBC Business", "http://feeds.bbci.co.uk/news/business/rss.xml"),
+    ]
+
+    items: list[dict] = []
+
+    # FX文脈の「強キーワード」（これのいずれかを含むこと）
+    strong_keywords = [
+        "fx", "forex",
+        "fomc", "fed ", "federal reserve", "boj", "ecb", "boe",
+        "rate decision", "rate cut", "rate hike", "rate rise",
+        "usd/", "eur/", "gbp/", "jpy/", "aud/", "cad/", "chf/", "nzd/",
+        "/usd", "/jpy", "/eur", "/gbp",
+        "yen", "sterling", "greenback", "euro ",
+        "central bank", "monetary policy",
+        "cpi", "ppi", "nonfarm", "gdp", "inflation",
+        "ドル", "円", "ユーロ", "ポンド", "日銀", "為替",
+    ]
+
+    # ノイズ除外（dollar を含む非FX記事を弾く）
+    noise_keywords = [
+        "dollar general", "dollar tree", "dollar store",
+        " ira", "ira ", "roth ira", "brokerage account",
+        "art sales", "real estate", "property sale",
+        "stock picks", "stocks to buy", "dividend stock",
+        "cryptocurrency price", "crypto price",
+    ]
+
+    for source, url in feeds:
+        try:
+            resp = requests.get(
+                url,
+                timeout=8,
+                headers={"User-Agent": "Mozilla/5.0 (FX-Trading-Bot)"},
+            )
+            if resp.status_code != 200:
+                logger.debug("RSS取得失敗 %s: status=%d", source, resp.status_code)
+                continue
+
+            root = ET.fromstring(resp.content)
+            # RSS 2.0: channel/item
+            entries = root.findall(".//item")
+            for entry in entries[:20]:
+                title_el = entry.find("title")
+                link_el = entry.find("link")
+                pub_el = entry.find("pubDate")
+                if title_el is None or title_el.text is None:
+                    continue
+                title = title_el.text.strip()
+                lower_title = title.lower()
+                # GoogleNewsは検索クエリ自体がFXフィルタなので強キーワード要件を省略。
+                # 他feedは強キーワードを1つ以上含むこと（FX文脈確保）。
+                if not source.startswith("GoogleNews"):
+                    if not any(kw in lower_title for kw in strong_keywords):
+                        continue
+                # ノイズワードを含んでいたら除外（全feed共通）
+                if any(nk in lower_title for nk in noise_keywords):
+                    continue
+
+                # Google News RSS はタイトル末尾に " - <媒体名>" が付く。
+                # 例: "BOJ likely to hold off raising rates - Reuters"
+                # 末尾sourceを抽出して source フィールドに反映、titleからは除去。
+                effective_source = source
+                if source.startswith("GoogleNews") and " - " in title:
+                    body, sep, tail = title.rpartition(" - ")
+                    # 媒体名は3-40文字・URL断片でない・キーワード含まない
+                    if (3 <= len(tail) <= 40
+                            and "http" not in tail
+                            and "/" not in tail):
+                        effective_source = tail.strip()
+                        title = body.strip()
+
+                # 発行時刻を絶対時間に正規化
+                pub_str = pub_el.text if pub_el is not None else ""
+                try:
+                    published = eut.parsedate_to_datetime(pub_str).isoformat()
+                except Exception:
+                    published = pub_str
+
+                items.append({
+                    "title": title[:200],
+                    "source": effective_source,
+                    "published": published,
+                    "link": link_el.text if link_el is not None else "",
+                })
+        except Exception as e:
+            logger.warning("RSS取得エラー %s: %s", source, e)
+
+    # 新しい順、上位max_items件
+    items.sort(key=lambda x: x.get("published", ""), reverse=True)
+    result = items[:max_items]
+    logger.info("ニュース見出し取得: %d件（複数RSSから集約）", len(result))
+    return result
+
+
 def fetch_economic_calendar() -> list[dict]:
     """
     本日の経済イベントを取得する。
@@ -559,7 +685,7 @@ SENTIMENT_USER_TEMPLATE = """\
 
 ## テクニカルサマリー（参考）
 - 終値: {last_close} / レジーム: {regime} / 方向感(ルール判定): {direction}
-{sentiment_section}{calendar_section}
+{news_section}{sentiment_section}{calendar_section}
 市場参加者が何を語り、どんなナラティブが支配的かを分析してください。"""
 
 
@@ -568,6 +694,7 @@ def analyze_sentiment_with_claude(
     rule_based_direction: str,
     sentiment: list[dict],
     economic_events: list[dict],
+    news: list[dict] | None = None,
 ) -> dict:
     """
     Claude APIでセンチメント+経済イベントのナラティブを解釈する。
@@ -588,6 +715,14 @@ def analyze_sentiment_with_claude(
         raise RuntimeError(
             "ANTHROPIC_API_KEYが設定されていません。.envファイルを確認してください。"
         )
+
+    # ニュース見出しセクション構築（Reuters/Investing/FXStreet等）
+    news_section = ""
+    if news:
+        lines = ["\n## 主要ニュース見出し（FX関連、24h以内）"]
+        for i, n in enumerate(news[:10], 1):
+            lines.append(f"{i}. [{n['source']}] {n['title']}")
+        news_section = "\n".join(lines) + "\n"
 
     # センチメントセクション構築
     sentiment_section = ""
@@ -610,6 +745,7 @@ def analyze_sentiment_with_claude(
         last_close=indicators["last_close"],
         regime=indicators["indicators"].get("regime", "unknown"),
         direction=rule_based_direction,
+        news_section=news_section,
         sentiment_section=sentiment_section,
         calendar_section=calendar_section,
     )
@@ -770,16 +906,22 @@ def _analyze_single_pair(instrument: str, mt5_initialized: bool = False) -> dict
     # 経済カレンダー取得（全ペア共通なので1回だけ取得したいが、現状はペアごと）
     economic_events = fetch_economic_calendar()
 
-    # Path 2: LLMセンチメント解釈（センチメント/イベントがある場合のみ）
-    has_sentiment_data = len(sentiment) > 0 or len(economic_events) > 0
-    if has_sentiment_data:
+    # 一般ニュース見出し取得（Reuters/Investing/FXStreet等のRSS）
+    news = fetch_news_headlines()
+
+    # Path 2: LLMセンチメント解釈（ニュース/センチメント/イベントがある場合のみ）
+    has_narrative_data = (
+        len(sentiment) > 0 or len(economic_events) > 0 or len(news) > 0
+    )
+    if has_narrative_data:
         logger.info(
-            "[%s] LLMセンチメント分析（ツイート%d件、イベント%d件）...",
-            instrument, len(sentiment), len(economic_events),
+            "[%s] LLM統合分析（ニュース%d件、ツイート%d件、イベント%d件）...",
+            instrument, len(news), len(sentiment), len(economic_events),
         )
         try:
             llm_result = analyze_sentiment_with_claude(
-                indicators, analysis["direction"], sentiment, economic_events
+                indicators, analysis["direction"], sentiment, economic_events,
+                news=news,
             )
             analysis["market_narrative"] = llm_result.get(
                 "market_narrative", analysis["market_narrative"]
@@ -789,16 +931,17 @@ def _analyze_single_pair(instrument: str, mt5_initialized: bool = False) -> dict
                 analysis["confidence"] = min(analysis["confidence"] + 0.1, 0.9)
             analysis["model"] = f"rule-based+{AI_MODEL_ID}"
         except Exception as e:
-            logger.warning("[%s] LLMセンチメント分析失敗（ルールベース結果を維持）: %s", instrument, e)
+            logger.warning("[%s] LLM統合分析失敗（ルールベース結果を維持）: %s", instrument, e)
     else:
-        logger.info("[%s] センチメントデータなし - ルールベースのみ", instrument)
+        logger.info("[%s] ナラティブデータなし - ルールベースのみ", instrument)
 
     # 入力ソース情報を記録
     analysis["input_sources"] = {
         "technical": True,
+        "news_items": len(news),
         "sentiment_tweets": len(sentiment),
         "economic_events": len(economic_events),
-        "llm_used": has_sentiment_data,
+        "llm_used": has_narrative_data,
     }
 
     return analysis

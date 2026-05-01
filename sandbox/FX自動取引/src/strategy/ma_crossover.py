@@ -21,6 +21,7 @@ from src.config import (
     ADX_THRESHOLD,
     ATR_MULTIPLIER,
     ATR_PERIOD,
+    MA_CROSS_LOOKBACK_BARS,
     MA_LONG_PERIOD,
     MA_SHORT_PERIOD,
     MFI_ENABLED,
@@ -181,10 +182,25 @@ class RsiMaCrossover(StrategyBase):
         ma_diff = current_ma_short - current_ma_long
         ma_position = "短期>長期" if current_ma_short > current_ma_long else "短期<長期"
         crossover = "なし"
-        if prev_ma_short <= prev_ma_long and current_ma_short > current_ma_long:
-            crossover = "上抜け(BUY候補)"
-        elif prev_ma_short >= prev_ma_long and current_ma_short < current_ma_long:
-            crossover = "下抜け(SELL候補)"
+        # LOOSE_MODE: 直近 MA_CROSS_LOOKBACK_BARS 本のうちにクロスが発生していれば検出
+        recent_cross_up = False
+        recent_cross_down = False
+        lookback = min(MA_CROSS_LOOKBACK_BARS, len(ma_short) - 1)
+        for i in range(1, lookback + 1):
+            past_short = ma_short.iloc[-i - 1]
+            past_long = ma_long.iloc[-i - 1]
+            now_short = ma_short.iloc[-i]
+            now_long = ma_long.iloc[-i]
+            if pd.isna(past_short) or pd.isna(past_long) or pd.isna(now_short) or pd.isna(now_long):
+                continue
+            if past_short <= past_long and now_short > now_long:
+                recent_cross_up = True
+            if past_short >= past_long and now_short < now_long:
+                recent_cross_down = True
+        if recent_cross_up:
+            crossover = f"直近{lookback}本内上抜け(BUY候補)"
+        elif recent_cross_down:
+            crossover = f"直近{lookback}本内下抜け(SELL候補)"
 
         mfi_log = f" MFI={current_mfi:.1f}" if mfi_available else " MFI=N/A"
         logger.debug(
@@ -223,9 +239,10 @@ class RsiMaCrossover(StrategyBase):
             )
             return Signal.HOLD
 
-        # 買いシグナル: MA短期がMA長期を上抜け かつ RSI < 買われすぎ閾値
+        # 買いシグナル: 直近 MA_CROSS_LOOKBACK_BARS 本以内の上抜け かつ RSI < 買われすぎ閾値
+        # STAGE2(2026-04-21): 厳密クロス寄りに復帰。LOOKBACK=5で直近75分以内のクロスのみ有効。
         if (
-            prev_ma_short <= prev_ma_long
+            recent_cross_up
             and current_ma_short > current_ma_long
             and current_rsi < RSI_OVERBOUGHT
         ):
@@ -253,9 +270,10 @@ class RsiMaCrossover(StrategyBase):
             )
             return Signal.BUY
 
-        # 売りシグナル: MA短期がMA長期を下抜け かつ RSI > 売られすぎ閾値
+        # 売りシグナル: 直近 MA_CROSS_LOOKBACK_BARS 本以内の下抜け かつ RSI > 売られすぎ閾値
+        # STAGE2(2026-04-21): 厳密クロス寄りに復帰
         if (
-            prev_ma_short >= prev_ma_long
+            recent_cross_down
             and current_ma_short < current_ma_long
             and current_rsi > RSI_OVERSOLD
         ):

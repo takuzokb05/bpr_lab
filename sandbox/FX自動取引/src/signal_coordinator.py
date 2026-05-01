@@ -17,7 +17,7 @@ from typing import Optional
 
 import requests
 
-from src.config import ANTHROPIC_API_KEY
+from src.config import ANTHROPIC_API_KEY, COORDINATOR_MODEL_ID
 
 logger = logging.getLogger(__name__)
 
@@ -196,7 +196,7 @@ class SignalCoordinator:
             "content-type": "application/json",
         }
         payload = {
-            "model": "claude-sonnet-4-20250514",
+            "model": COORDINATOR_MODEL_ID,
             "max_tokens": 256,
             "system": _SYSTEM_PROMPT,
             "messages": [{"role": "user", "content": user_prompt}],

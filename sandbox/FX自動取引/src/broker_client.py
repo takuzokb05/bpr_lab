@@ -143,3 +143,25 @@ class BrokerClient(ABC):
             スプレッド値（価格差）。未対応の場合は None。
         """
         return None
+
+    def get_closed_deal(self, trade_id: str) -> Optional[dict]:
+        """
+        ブローカー側で既に決済済みのポジションの決済情報を取得する。
+
+        SL/TP発動でブローカーが自動決済した場合、close_position()を経由しないため
+        ローカル側に close_price/realized_pl が残らない。ブローカーの取引履歴から
+        事後的に復元するために使用する。
+
+        デフォルト実装は None を返す（未対応ブローカー向け）。
+        MT5Client等でオーバーライドして実装する。
+
+        Args:
+            trade_id: ポジションID
+
+        Returns:
+            決済情報のdict。最低限以下を含む:
+                - "close_price": float（決済価格）
+                - "realized_pl": float（実現損益）
+            取得失敗または未対応の場合は None。
+        """
+        return None

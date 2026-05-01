@@ -9,6 +9,7 @@ FX自動取引システム — MetaTrader 5 ブローカークライアント
 import logging
 import math
 import time
+from typing import Optional
 
 import MetaTrader5 as mt5
 import pandas as pd
@@ -426,6 +427,80 @@ class Mt5Client(BrokerClient):
             "realized_pl": pos.profit,
             "close_price": result.price,
             "comment": result.comment,
+        }
+
+    def get_closed_deal(self, trade_id: str) -> Optional[dict]:
+        """既に決済済みのポジションの決済情報をMT5の取引履歴から取得する。
+
+        SL/TP発動による自動決済はclose_position()を経由しないため、
+        reconcile処理で事後的に close_price/realized_pl を復元するために使用する。
+
+        Args:
+            trade_id: ポジションID（ticket番号）
+
+        Returns:
+            決済情報のdict（close_price, realized_pl, closed_at）。
+            取得失敗時は None。
+        """
+        from datetime import datetime, timedelta, timezone
+
+        try:
+            ticket = int(trade_id)
+        except (TypeError, ValueError):
+            logger.warning("不正なtrade_id: %s", trade_id)
+            return None
+
+        # MT5の history_deals_get は時間範囲を要求する。
+        # ポジションは数日以内に決済される想定で、過去14日を範囲にする。
+        date_to = datetime.now(timezone.utc) + timedelta(days=1)
+        date_from = date_to - timedelta(days=14)
+
+        # NOTE: mt5.history_deals_get(..., position=ticket) はバージョン依存で
+        # フィルタが効かず全件返すケースがある。安全のため取得後に position_id で
+        # 手動フィルタする。
+        all_deals = mt5.history_deals_get(date_from, date_to)
+        if not all_deals:
+            error = mt5.last_error()
+            logger.warning(
+                "決済履歴を取得できませんでした: ticket=%s, mt5_error=%s",
+                ticket, error,
+            )
+            return None
+
+        deals = [d for d in all_deals if d.position_id == ticket]
+        if not deals:
+            logger.warning(
+                "対象ポジションのdealが見つかりません: ticket=%s, all_deals=%d",
+                ticket, len(all_deals),
+            )
+            return None
+
+        # entry == DEAL_ENTRY_OUT (1) または DEAL_ENTRY_INOUT (2) が決済側
+        close_deals = [
+            d for d in deals
+            if d.entry in (mt5.DEAL_ENTRY_OUT, mt5.DEAL_ENTRY_INOUT)
+        ]
+        if not close_deals:
+            logger.warning(
+                "決済方向のdealが見つかりません: ticket=%s, deals=%d",
+                ticket, len(deals),
+            )
+            return None
+
+        # 複数の部分決済がある場合は合算（profitとswap/commissionを含めて実損益）
+        realized_pl = sum(
+            d.profit + getattr(d, "swap", 0.0) + getattr(d, "commission", 0.0)
+            for d in close_deals
+        )
+        # 決済価格は最後の決済dealの価格（部分決済の最終約定）
+        last_close = max(close_deals, key=lambda d: d.time)
+        closed_at = datetime.fromtimestamp(last_close.time, tz=timezone.utc)
+
+        return {
+            "trade_id": trade_id,
+            "close_price": float(last_close.price),
+            "realized_pl": float(realized_pl),
+            "closed_at": closed_at,
         }
 
     # ================================================================

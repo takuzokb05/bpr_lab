@@ -1121,3 +1121,130 @@ GPT-5.5 mediumがClaude Opus 4.7 maxと同スコアで1/4コスト（$1,200 vs $
 - 高頻度のシグナル生成ルーティンには GPT-5.5 medium を検討する価値あり
 - ただし幻覚率86%（Opus 4.7: 36%）はリスク管理上の重大懸念
 - **結論:** 即時切り替えは推奨しない。Opus 4.7継続使用が安全。GPT-5.5の幻覚率改善を待つ
+
+---
+
+## 2026-04-27 収集分
+
+### 1. claude-code-setup公式プラグインの活用
+
+**出典:** articles/2026-04-27_012_X_claudecode_lab_claude_code_setup_Official_Plugin.md
+
+**提案内容（優先度: 高）:**
+Anthropic公式プラグイン「claude-code-setup」が利用可能。プロジェクト自動分析→Hooks/Skills/MCP/Subagents推奨→設定ガイドを提供。
+
+インストール: `/plugin install claude-code-setup@claude-plugins-official`
+
+**アクション:** このプロジェクト（bpr_lab）に適用し、推奨される設定を確認。既存のskillsやhooksに見落としがないか検証。
+
+---
+
+### 2. MCP RCE脆弱性への対応
+
+**出典:** articles/2026-04-27_015_X_iototsecnews_Flowise_MCP_RCE_Critical_Vulnerability.md / articles/2026-04-27_014_X_ebenezerDN_MCP_Production_Scaling_RCE_Flaws.md
+
+**提案内容（優先度: 高）:**
+MCPのSDK設計レベルの脆弱性でFlowise/LiteLLM/LangChainに10件以上のCVEが発行済み。OX Securityが200,000以上の脆弱なインスタンスを報告。
+
+**アクション:**
+- 現在使用しているMCPサーバー一覧を確認し、最新バージョンへのアップデート
+- ユーザー入力のサニタイゼーション実装確認
+- MCP経由のツール実行には最小権限原則を徹底（ファイルシステム・シェル実行の制限）
+
+---
+
+### 3. MCPリモートサーバー対応 → エージェントアーキテクチャへの示唆
+
+**出典:** articles/2026-04-27_016_X_asu_hagi_Anthropic_MCP_Remote_Server_Official.md
+
+**提案内容（優先度: 中）:**
+AnthropicがMCPのリモートサーバー対応を正式サポート。ローカルプロセスからクラウドサービスへのアクセスが標準化される。
+
+**アクション:** FX自動取引システムのVPS上のサービス（collect_x.py等）をMCPサーバー化して、Claude Codeから直接操作できるか検討。`sandbox/FX自動取引/` のVPS連携設計に追記。
+
+---
+
+### 4. TradingAgents v0.2.4アップデート → LangGraphチェックポイント活用
+
+**出典:** articles/2026-04-27_005_TradingAgents_v024_LangGraph_Checkpoint_Docker.md
+
+**提案内容（優先度: 中）:**
+TradingAgents v0.2.4でLangGraphチェックポイント再開機能が追加。長時間実行タスクを中断→再開可能に。また構造化出力エージェントで意思決定の一貫性が向上。
+
+**アクション:** v0.2.4へのアップデートを検討。LangGraphチェックポイント機能はFX自動取引の長期エージェント実行に応用できる可能性あり。
+
+---
+
+### 5. DeepSeek V4 → LLMコスト最適化の検討
+
+**出典:** articles/2026-04-27_001_DeepSeek_V4_Preview_CNBC_1T6_Params.md / articles/2026-04-27_020_X_0xSero_DeepSeek_V4_Economics_Analysis.md
+
+**提案内容（優先度: 低〜中）:**
+DeepSeek V4-ProがSWEbench 80.6%（Claude Opus 4.6の80.8%に匹敵）でGPT-5.5の7分の1の価格。バックテスト・シグナル生成などコスト重視のタスクでのDeepSeek活用を検討する価値あり。
+
+**注意:** プレビュー版のためAPI安定性は未検証。まず非クリティカルなタスク（記事要約・市場分析補助）で試験使用を推奨。
+
+---
+
+### 6. agent-session-resumeスキルの導入検討
+
+**出典:** articles/2026-04-27_009_X_coder_blvck_agent_session_resume_skill_GitHub.md
+
+**提案内容（優先度: 低）:**
+GitHub公開のOSSスキル「agent-session-resume」がClaude Code・Codex等複数ツールに対応。長時間タスクのセッション再開を実現。
+
+GitHub: https://github.com/hacktivist123/agent-session-resume
+
+**アクション:** スキルの実装を確認し、日次収集エージェントや長時間FX分析タスクへの適用を検討。
+
+---
+
+## 2026-05-01 収集分
+
+### 1. /ultrareview機能の活用 → コードレビューワークフローへの組み込み
+
+**出典:** articles/2026-05-01_963_Claude_Code_Ultrareview_Bug_Hunting_Fleet.md / articles/2026-05-01_972_Claude_Code_Ultrareview_Technical_Analysis.md
+
+**提案内容（優先度: 高）:**
+Claude Code v2.1.86から`/ultrareview`が利用可能になった。Logic/Security/Performance/Verification の4専門エージェントがクラウドサンドボックスで並列稼働し、再現確認済みのバグのみを報告する「検証優先アーキテクチャ」。Pro/Maxユーザーは3回無料試用あり（2026-05-05まで）。
+
+**アクション:** 
+- FX自動取引 `sandbox/FX自動取引/` の重要変更（ポジション管理・SL/TP計算ロジック）に対して`/ultrareview`を試用。
+- CLAUDE.mdのコードレビューワークフローに「クリティカルPRには`/ultrareview`を実行」を追記。
+- ただしAPI Keyのみ認証の場合は`/login`でClaude.aiアカウント認証が必要なことに注意。
+
+---
+
+### 2. MQL5+LLM 4層アーキテクチャ → FX自動取引システムの設計改善
+
+**出典:** articles/2026-05-01_968_MQL5_LLM_Real_Architecture_2026.md
+
+**提案内容（優先度: 高）:**
+MQL5 EA+LLM統合の本番稼働可能なアーキテクチャが具体化された：MQL5データパブリッシャー→Python FastAPIミドルウェア→LLM推論→実行ゲートウェイの4層構成。現在の`sandbox/FX自動取引/main.py`は単純なLLM呼び出しになっている可能性あり。
+
+**アクション:**
+- 現在の`main.py`がJSON Schemaバリデーション（コントラクト違反は全拒否）と信頼度スコアリング（0.55未満ノーエントリー）を実装しているか確認。
+- 実装していない場合、`sandbox/FX自動取引/` にFastAPIミドルウェア層（`middleware.py`）の追加を検討。
+- 30〜60取引日のステートフルコンテキストウィンドウによる意思決定ログの蓄積機能を検討。
+
+---
+
+### 3. Claude SDK SessionStore → 日次エージェントのセッション永続化
+
+**出典:** articles/2026-05-01_965_Anthropic_Claude_News_May_2026_Startup_Edition.md（およびAnthropicリリースノート）
+
+**提案内容（優先度: 中）:**
+Claude Agent SDKにPython版のSessionStore（5メソッド: append/load/list_sessions/delete/list_subkeys）が追加され、TypeScript版と同等になった。分散トレーシング（W3C trace context）も追加。
+
+**アクション:** 日次収集エージェント（collect_x.py等）の長期セッション管理にSessionStoreを検討。セッション再開で実行中断時のリカバリが改善される可能性あり。
+
+---
+
+### 4. AIコーディングツール競争の激化 → 開発環境の定期見直し
+
+**出典:** articles/2026-05-01_975_AI_Model_Releases_May_2026_LLM_Stats.md
+
+**提案内容（優先度: 低〜中）:**
+2026年5月時点でGPT-5.5（OpenAI）・Gemini 3.1 Ultra（Google）・Kimi-K2.6（Moonshot）が相次いでリリース。Claude Code以外のツール（Codex・Gemini CLI）がSKILL.md互換を維持している点に注意。
+
+**アクション:** FX自動取引のLLMプロバイダーとして、DeepSeek V4（v0.2.4対応）や Kimi-K2.6のコスト効率を定期的に評価する仕組みを検討。TradingAgents v0.2.4でのDeepSeek/Qwen対応を活用。

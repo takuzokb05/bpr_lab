@@ -1,6 +1,10 @@
 # 環境変数
 .env
 
+# Claude Code ローカル設定（コミット禁止）
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
+
 # Python
 __pycache__/
 *.py[cod]

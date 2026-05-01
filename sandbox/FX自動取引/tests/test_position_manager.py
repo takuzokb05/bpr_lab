@@ -52,6 +52,8 @@ def _make_mock_broker() -> MagicMock:
     }
     broker.get_positions.return_value = []
     broker.get_account_summary.return_value = {"balance": 1_000_000}
+    # デフォルト: 決済履歴は取得できない（pl_unknown経路をテスト可能にする）
+    broker.get_closed_deal.return_value = None
     return broker
 
 
@@ -485,7 +487,7 @@ class TestSyncWithBroker:
         assert positions[0]["unrealized_pl"] == 250.0
 
     def test_sync_local_only(self):
-        """ローカルのみのポジション検出 → 自動除去"""
+        """ローカルのみのポジション検出 → 自動除去（決済履歴未取得 → pl_unknown）"""
         broker = _make_mock_broker()
         pm = _create_position_manager(broker=broker)
         strategy = _make_mock_strategy()
@@ -496,6 +498,7 @@ class TestSyncWithBroker:
 
         # ブローカーは空（ブローカー側で決済済み）
         broker.get_positions.return_value = []
+        # デフォルトで get_closed_deal は None を返す → pl_unknown経路
 
         result = pm.sync_with_broker()
 
@@ -509,6 +512,57 @@ class TestSyncWithBroker:
         # 履歴に移動済み（pl_unknown=True）
         assert len(pm.trade_history) == 1
         assert pm.trade_history[0]["trade_id"] == "TRD-001"
+        assert pm.trade_history[0]["pl_unknown"] is True
+        assert pm.trade_history[0]["close_price"] == 0.0
+        assert pm.trade_history[0]["pl"] == 0.0
+
+    def test_sync_local_only_recovers_pl_from_history(self):
+        """SL/TP自動決済時にブローカー履歴から close_price/pl を復元"""
+        broker = _make_mock_broker()
+        pm = _create_position_manager(broker=broker)
+        strategy = _make_mock_strategy()
+        data = _make_ohlcv_data()
+
+        pm.open_position("USD_JPY", Signal.BUY, data, strategy)
+
+        broker.get_positions.return_value = []
+        closed_at = datetime(2026, 4, 23, 10, 0, 0, tzinfo=timezone.utc)
+        broker.get_closed_deal.return_value = {
+            "trade_id": "TRD-001",
+            "close_price": 150.85,
+            "realized_pl": 423.5,
+            "closed_at": closed_at,
+        }
+
+        result = pm.sync_with_broker()
+
+        assert result["local_only"] == ["TRD-001"]
+        broker.get_closed_deal.assert_called_once_with("TRD-001")
+
+        assert len(pm.trade_history) == 1
+        entry = pm.trade_history[0]
+        assert entry["trade_id"] == "TRD-001"
+        assert entry["pl_unknown"] is False
+        assert entry["close_price"] == 150.85
+        assert entry["pl"] == 423.5
+        assert entry["close_time"] == closed_at
+
+    def test_sync_local_only_falls_back_when_history_raises(self):
+        """get_closed_deal が例外を投げてもpl_unknownで保存して継続"""
+        broker = _make_mock_broker()
+        pm = _create_position_manager(broker=broker)
+        strategy = _make_mock_strategy()
+        data = _make_ohlcv_data()
+
+        pm.open_position("USD_JPY", Signal.BUY, data, strategy)
+
+        broker.get_positions.return_value = []
+        broker.get_closed_deal.side_effect = RuntimeError("MT5 API down")
+
+        result = pm.sync_with_broker()
+
+        assert result["local_only"] == ["TRD-001"]
+        assert pm.position_count == 0
         assert pm.trade_history[0]["pl_unknown"] is True
 
     def test_sync_broker_only(self):
