@@ -1248,3 +1248,55 @@ Claude Agent SDKにPython版のSessionStore（5メソッド: append/load/list_se
 2026年5月時点でGPT-5.5（OpenAI）・Gemini 3.1 Ultra（Google）・Kimi-K2.6（Moonshot）が相次いでリリース。Claude Code以外のツール（Codex・Gemini CLI）がSKILL.md互換を維持している点に注意。
 
 **アクション:** FX自動取引のLLMプロバイダーとして、DeepSeek V4（v0.2.4対応）や Kimi-K2.6のコスト効率を定期的に評価する仕組みを検討。TradingAgents v0.2.4でのDeepSeek/Qwen対応を活用。
+
+---
+
+## 2026-05-02 収集分
+
+### 1. Skillsの「レール」設計パターン → CLAUDE.md/スキル設計方針への反映
+
+**出典:** articles/2026-05-02_1195_X_TalonSturgill_Skills_as_rails__not_optional_hints___mattpocockuk.md
+
+**提案内容（優先度: 高）:**
+@mattpocockukの知見として紹介された「Skills as rails, not optional hints」概念：Skillはオプションのヒントではなく「必須実行レール」として設計すべき。descriptionに「いつ使うか」だけでなく「なぜ必須なのか」を明記することで、Claudeが適切な場面で確実に発動するようになる。
+
+**アクション:**
+- `sandbox/タスクマネージャー/` の既存スキルのdescriptionを見直し、「このタスクに該当する場合は必ず使う」という語句を追加。
+- CLAUDE.mdにスキル作成ガイドラインとして「SIGNAL/NOISEスキルの使い分け: 分類判定は必ず/curateスキルを使う」を明記。
+
+---
+
+### 2. Claude Sonnet 4.6のトレード性能データ → FX自動取引LLM選定
+
+**出典:** articles/2026-05-02_1250_LLM_Showdown_Python_Algo_Trading_Bot_2026_QuantLabs.md
+
+**提案内容（優先度: 高）:**
+QuantLabsの検証結果：Claude Sonnet 4.6でPythonアルゴ取引ボットを生成した場合、487%リターン・Sharpe比1.94を達成（主要LLM中トップ）。GPT-5.5・Gemini 3.1 Ultra・DeepSeek V4との比較でコード品質・バックテスト精度・リスク管理ロジック正確性でも上位。
+
+**アクション:**
+- `sandbox/FX自動取引/` のメインLLMをClaude Sonnet 4.6に統一するか検討。現在のモデル設定を確認。
+- TradingAgents v0.2.4のDeepSeek/Qwen対応と比較して、コスト効率vs精度のトレードオフを評価。
+
+---
+
+### 3. Agent SDK PostToolUse hookのduration_ms → パフォーマンス監視
+
+**出典:** articles/2026-05-02_1255_Claude_Agent_SDK_Python_Official_GitHub.md
+
+**提案内容（優先度: 中）:**
+Claude Agent SDK最新版でPostToolUse/PostToolUseFailure hookの入力に`duration_ms`（ツール実行時間）が追加された。これによりFX取引システムのツール実行時間を監視・ログ化できる。
+
+**アクション:**
+- `sandbox/FX自動取引/` のAgent SDK統合部分でPostToolUse hookを実装し、MT5への注文実行時間をログに記録する仕組みの追加を検討。レイテンシが200ms超の場合はアラートを発生させると実用的。
+
+---
+
+### 4. Claude Code → Codex 環境インポート機能 → マルチツール戦略
+
+**出典:** articles/2026-05-02_1241_X_tetumemo_これは朗報！Claude_CodeからCodexに環境をマルっとインポートできる機能が登場_htt.md
+
+**提案内容（優先度: 低）:**
+Claude CodeからOpenAI Codexへの環境（CLAUDE.md・スキル設定含む）をまるごとインポートできる機能が登場。「乗り換え革命」と表現される機能で、Claude CodeとCodexの相互運用が可能になった。
+
+**アクション:**
+- 現状はClaude Code一択で問題なし。ただしClaude Code/Codex間の移行コストが実質ゼロになったことで、LLMプロバイダーのコスト上昇時の移行オプションとして記録しておく。

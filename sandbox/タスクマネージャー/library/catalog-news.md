@@ -398,3 +398,24 @@
 | 373 | So you know the company that makes Claude, the AI you’ve probably used... | en | 未読 | #ai-news #x-signal #high-engagement | articles/2026-04-28_1185_X_MarioNawfal_So_you_know_the_company_that_makes_Claud.md |
 | 374 | yesterday's release of @karpathy's LLM Wiki system was a huge hit, but... | en | 未読 | #ai-news #x-signal | articles/2026-04-28_1186_X_Shpigford_yesterdays_release_of_karpathys_LLM_Wiki.md |
 | 375 | 【 GitHub Copilot は 6 月 1 日から従量課金制に】 | ja | 未読 | #ai-news #x-signal | articles/2026-04-28_1187_X_msdevjp_GitHub_Copilot_は_6_月_1_日から従量課金制に.md |
+
+| 376 | 🔥 Seedance 2.0 & GPT Image 2 officially launch on Hailuo AI  🎬 Seeda | en | 未読 | #ai-news #x-signal | articles/2026-05-02_1225_X_Hailuo_AI_Seedance_2_0___GPT_Image_2_officially_launch_on.md |
+| 377 | BREAKING: Berkshire Hathaway CEO Greg Abel announced a new redesign  | en | 未読 | #ai-news #x-signal | articles/2026-05-02_1226_X_TrungTPhan_BREAKING__Berkshire_Hathaway_CEO_Greg_Abel_announc.md |
+| 378 | 🚨 Episode 30 of The Intelligence Journal is here.  Topic: The GitHub | en | 未読 | #ai-news #x-signal | articles/2026-05-02_1227_X_OzakAGI_Episode_30_of_The_Intelligence_Journal_is_here.md |
+| 379 | ‼️\| Digital literacy expert reveals that Taylor Swift’s trademarks  | en | 未読 | #ai-news #x-signal | articles/2026-05-02_1228_X_theTSupdates_Digital_literacy_expert_reveals_that_Taylor_Sw.md |
+| 380 | $NBIS has been on an absolute tear lately and the catalysts keep sta | en | 未読 | #ai-news #x-signal | articles/2026-05-02_1229_X_TopTechStocksUS_NBIS_has_been_on_an_absolute_tear_lately_and_the.md |
+| 381 | Windows 11 revamp takes shape  • Improved System Performance • Conso | en | 未読 | #ai-news #x-signal | articles/2026-05-02_1230_X_TheGalox__Windows_11_revamp_takes_shape____Improved_System_P.md |
+| 382 | AI companies read your private chats to train their models.   It fee | en | 未読 | #ai-news #x-signal | articles/2026-05-02_1231_X_Zevweb3_AI_companies_read_your_private_chats_to_train_thei.md |
+| 383 | （画像） "インテルが最近発表した AI CPU は、前世代よりも最大4倍多い汎用 DRAM を搭載すると予想されています。 大容量 D | ja | 未読 | #ai-news #x-signal | articles/2026-05-02_1232_X_yasutaketin_（画像）__インテルが最近発表した_AI_CPU_は、前世代よりも最大4倍多い汎用_DRAM_を搭載.md |
+| 384 | 余裕で上回ったAI設備投資額  昨年12月末の時点でのハイパースケーラーの設備投資額予想は+37%👇。  Q1決算発表時点で、今年のデー | ja | 未読 | #ai-news #x-signal | articles/2026-05-02_1233_X_1989hatooku_余裕で上回ったAI設備投資額__昨年12月末の時点でのハイパースケーラーの設備投資額予想は_37.md |
+| 385 | 米オープンAIが先日、最新AIモデル「GPT-5.5」を発表した。 英国の政府機関の検証によると、GPT-5.5は「ネットワーク完全乗っ | ja | 未読 | #ai-news #x-signal | articles/2026-05-02_1234_X_mameyama_kun_米オープンAIが先日、最新AIモデル「GPT_5_5」を発表した。_英国の政府機関の検証によると、G.md |
+| 386 | Microsoft Agent 365が 一般提供されました。  これはAIチャットの新機能ではなく、 企業内のAIエージェントを 管理 | ja | 未読 | #ai-news #x-signal | articles/2026-05-02_1235_X_kawai_design_Microsoft_Agent_365が_一般提供されました。__これはAIチャットの新機能ではなく.md |
+| 387 | Atom開発陣の答え合わせ。Zed 1.0、5年と100万行で「土台ごと」書き直したエディタ  Atom開発陣が5年で書き直したRust | ja | 未読 | #ai-news #x-signal | articles/2026-05-02_1236_X_joho_no_todai_Atom開発陣の答え合わせ。Zed_1_0、5年と100万行で「土台ごと」書き直したエディタ__At.md |
+| 388 | 株を20年やってきた私が、最後にもう一度だけ言わせてほしい。 今、メモリー半導体株が総崩れになっている。きっかけは、ある企業が発表した新 | ja | 未読 | #ai-news #x-signal | articles/2026-05-02_1237_X_alfaromeo071_株を20年やってきた私が、最後にもう一度だけ言わせてほしい。_今、メモリー半導体株が総崩れになってい.md |
+| 389 | TSMCは4月23日、次世代半導体の量産を1.3ナノメートルプロセスで2029年に開始すると発表した。TSMCは、1.3ナノメートル半導 | ja | 未読 | #ai-news #x-signal | articles/2026-05-02_1238_X_yuukapin717_TSMCは4月23日、次世代半導体の量産を1_3ナノメートルプロセスで2029年に開始すると発表した.md |
+| 390 | LINEの返信をAIで自動生成する新機能、かなり優秀かもしれない https://t.co/ta5eTOdC3J | ja | 未読 | #ai-news #x-signal | articles/2026-05-02_1239_X_nenenenene06ne_LINEの返信をAIで自動生成する新機能、かなり優秀かもしれない_https___t_co_ta5e.md |
+| 391 | 米軍AI軍事スタックの再編へ 公式発表では、SpaceX、OpenAI、Google、NVIDIA、Reflection、Microso | ja | 未読 | #ai-news #x-signal | articles/2026-05-02_1240_X_t_nihonmatsu_米軍AI軍事スタックの再編へ_公式発表では、SpaceX、OpenAI、Google、NVIDIA、.md |
+| 392 | 📝これは朗報！Claude CodeからCodexに環境をマルっとインポートできる機能が登場 https://t.co/NjcswVGg | ja | 未読 | #ai-news #x-signal | articles/2026-05-02_1241_X_tetumemo_これは朗報！Claude_CodeからCodexに環境をマルっとインポートできる機能が登場_htt.md |
+| 393 | ❶ Memory Importとは何か（1/6） ひと言で言うと、Claudeの「乗り換え革命」です。  ChatGPTやGemini、 | ja | 未読 | #ai-news #x-signal | articles/2026-05-02_1242_X_Hoshino_AISales_❶_Memory_Importとは何か（1_6）_ひと言で言うと、Claudeの「乗り換え革命」です.md |
+| 394 | New AI Model Releases News - May 2026 (Startup Edition) | en | 未読 | #ai-news #web-signal | articles/2026-05-02_1253_New_AI_Model_Releases_May2026_StartupEdition.md |
+| 395 | Colorado's AI Compromise: SB 189 Pushes AI Regulation Start Date to  | en | 未読 | #ai-news #web-signal | articles/2026-05-02_1254_Colorado_AI_Law_SB189_Change_May2026.md |

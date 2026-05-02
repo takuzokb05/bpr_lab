@@ -495,6 +495,39 @@
 
 | 50 | SessionStart Hook実装パターン調査（GitHub実例集） | `articles/SessionStart Hook実装パターン調査（GitHub実例集）.txt` | ワークフロー, アーキテクチャ | SessionStart/UserPromptSubmit Hookの実装パターン8種。Issue #10373バグ。krzemienski/cc-setupが最高峰 | session-start.py実装 | 反映済 |
 
+| 396 | Claude Codeの使い方、 英語動画を日本語テロップ付きで解説  ありがたすぎる。  ともきんぐ さんの投稿より、 即使える内容だ | ja | 未読 | #claude-code #x-signal | articles/2026-05-02_1188_X_xxxxxxxxsora_Claude_Codeの使い方、_英語動画を日本語テロップ付きで解説__ありがたすぎる。__ともきん.md |
+| 397 | ソース: ・Anthropic ARR: https://t.co/pfKj8n380r ・Huawei AI chip: https: | ja | 未読 | #claude-code #x-signal | articles/2026-05-02_1189_X_latdayo_ソース__・Anthropic_ARR__https___t_co_pfKj8n380r_・Huaw.md |
+| 398 | ■ 核心 TradingViewのDesktopアプリはElectronベースで、Chrome DevTools Protocol経由で | ja | 未読 | #claude-code #x-signal | articles/2026-05-02_1190_X_latdayo_核心_TradingViewのDesktopアプリはElectronベースで、Chrome_De.md |
+| 399 | TradingViewの全データをAIが直接読む。78ツール搭載のMCPが公開された  ・TradingView DesktopとCla | ja | 未読 | #claude-code #x-signal | articles/2026-05-02_1191_X_latdayo_TradingViewの全データをAIが直接読む。78ツール搭載のMCPが公開された__・Tradi.md |
+| 400 | Want to build a great full-stack Chat UI? Point Claude Code at these | en | 未読 | #claude-code #x-signal | articles/2026-05-02_1192_X_jasonlaster11_Want_to_build_a_great_full_stack_Chat_UI__Point_Cl.md |
+| 401 | It’s not that hard to spend $5-10k per month on Claude code if you a | en | 未読 | #claude-code #x-signal | articles/2026-05-02_1193_X_heysharad_It_s_not_that_hard_to_spend__5_10k_per_month_on_Cl.md |
+| 402 | @lkr I asked Claude Code, what do you have access to, that you proba | en | 未読 | #claude-code #x-signal | articles/2026-05-02_1194_X_AdamClinckett_lkr_I_asked_Claude_Code__what_do_you_have_access.md |
+| 403 | Skills as rails, not optional hints. @mattpocockuk's skills repo tur | en | 未読 | #claude-code #x-signal | articles/2026-05-02_1195_X_TalonSturgill_Skills_as_rails__not_optional_hints___mattpocockuk.md |
+| 404 | How to lose your tokens fast with any LLM  according to claude code  | en | 未読 | #claude-code #x-signal | articles/2026-05-02_1196_X_SamuraiKai1_How_to_lose_your_tokens_fast_with_any_LLM__accordi.md |
+| 405 | job hunting just became an agent workflow  santifer/career-ops  > 41 | en | 未読 | #claude-code #x-signal | articles/2026-05-02_1197_X_BeauJohnson89_job_hunting_just_became_an_agent_workflow__santife.md |
+| 406 | @0x_kaize the cursor story is half the picture. claude code on pro w | en | 未読 | #claude-code #x-signal | articles/2026-05-02_1198_X_m13v__0x_kaize_the_cursor_story_is_half_the_picture__cl.md |
+| 407 | https://t.co/PXwHeXgZmW  One thing that changed how I work and how I | en | 未読 | #claude-code #x-signal | articles/2026-05-02_1199_X_r13_https___t_co_PXwHeXgZmW__One_thing_that_changed_ho.md |
+| 408 | AI-powered blog creation skill for Claude Code  https://t.co/jXFxyi9 | en | 未読 | #claude-code #x-signal | articles/2026-05-02_1200_X_AIGuideHQ_AI_powered_blog_creation_skill_for_Claude_Code__ht.md |
+| 409 | Our stack: - Claude Design: to create the whole design - Claude Code | en | 未読 | #claude-code #x-signal | articles/2026-05-02_1201_X_rophilogene_Our_stack____Claude_Design__to_create_the_whole_de.md |
+| 410 | coding agents are turning into operating systems  bytedance/deer-flo | en | 未読 | #claude-code #x-signal | articles/2026-05-02_1202_X_BeauJohnson89_coding_agents_are_turning_into_operating_systems.md |
+| 411 | やっとのことで、Claude Codeのチャット履歴を分類するSkillができた。 https://t.co/vca00r09Cz 次は | ja | 未読 | #claude-code #x-signal | articles/2026-05-02_1203_X_atsushifx_やっとのことで、Claude_Codeのチャット履歴を分類するSkillができた。_https.md |
+| 412 | 「Blender、Anthropic支援を見直しクリエイター優先を明確化」したことが海外で賞賛  Blenderの声明がここまで賞賛され | ja | 未読 | #claude-ecosystem #x-signal | articles/2026-05-02_1204_X_Botan_cr_「Blender、Anthropic支援を見直しクリエイター優先を明確化」したことが海外で賞賛__B.md |
+| 413 | 【週間AIニュース：4/27-5/3】 AIは今週、実験室から「社会のインフラ」へ。 ✅ OpenAI：GPT-5.5を全開放 ✅ An | ja | 未読 | #claude-ecosystem #x-signal | articles/2026-05-02_1205_X_ComicGo50_【週間AIニュース：4_27_5_3】_AIは今週、実験室から「社会のインフラ」へ。___OpenA.md |
+| 414 | AnthropicのARRが1年で44倍になった  ・2025年1月: $1B ・2025年12月: $8-10B ・2026年2月:  | ja | 未読 | #claude-ecosystem #x-signal | articles/2026-05-02_1206_X_latdayo_AnthropicのARRが1年で44倍になった__・2025年1月___1B_・2025年12月.md |
+| 415 | AIが「その感覚、完全に正しいです」などのごますり構文を使ってくる条件がAnthropicの調査により判明 https://t.co/X | ja | 未読 | #claude-ecosystem #x-signal | articles/2026-05-02_1207_X_PnktsN_AIが「その感覚、完全に正しいです」などのごますり構文を使ってくる条件がAnthropicの調査によ.md |
+| 416 | Claude CodeとPython使ってバイクニュースの完全自動投稿システム組んでみた。Claude APIでニュース収集と要約、X  | ja | 未読 | #claude-ecosystem #x-signal | articles/2026-05-02_1208_X_immeivise_Claude_CodeとPython使ってバイクニュースの完全自動投稿システム組んでみた。Claud.md |
+| 417 | **Hey BrettFromDJ**, MCP is the Model Context Protocol—an open stand | en | 未読 | #claude-ecosystem #x-signal | articles/2026-05-02_1209_X_grok_Hey_BrettFromDJ____MCP_is_the_Model_Context_Prot.md |
+| 418 | @slipgatecentral @pixelfondue Which standards? A MCP server? Which a | en | 未読 | #claude-ecosystem #x-signal | articles/2026-05-02_1210_X_tonyblu331_slipgatecentral__pixelfondue_Which_standards__A_M.md |
+| 419 | 🥸 ¡Conoce el futuro de la #IA! 🤖 El Model Context Protocol (MCP) de  | en | 未読 | #claude-ecosystem #x-signal | articles/2026-05-02_1211_X_ManageEngineLA_Conoce_el_futuro_de_la__IA____El_Model_Context.md |
+| 420 | 15 Claude Skills and Workflows That Transformed How We Run Our Busin | en | 未読 | #claude-code #web-signal | articles/2026-05-02_1243_15_Claude_Skills_Workflows_EarlyStageGrowth.md |
+| 421 | Claude Code Best Practices: From Vibe Coding to Agentic Engineering  | en | 未読 | #claude-code #web-signal | articles/2026-05-02_1244_Claude_Code_Best_Practices_Vibe_to_Agentic_MCPDirectory.md |
+| 422 | Taming Claude Code: A Guide to CLAUDE.md and Hooks | en | 未読 | #claude-code #web-signal | articles/2026-05-02_1245_Taming_Claude_Code_CLAUDE_md_Hooks_Medium.md |
+| 423 | Claude Codeを活用してスキル成長支援&成長見守りができる仕組みを作ってみた | ja | 未読 | #claude-code #web-signal | articles/2026-05-02_1246_Claude_Code_Skill_Growth_System_DevelopersIO_JA.md |
+| 424 | 【2026年最新】Claude Codeの新機能・アップデート完全解説 | ja | 未読 | #claude-code #web-signal | articles/2026-05-02_1247_Claude_Code_New_Features_Complete_2026_JA.md |
+| 425 | Claude Codeデスクトップ版を刷新、並列エージェント対応を強化 | ja | 未読 | #claude-code #web-signal | articles/2026-05-02_1248_Claude_Code_Desktop_Parallel_Agents_SBBit_JA.md |
+| 426 | Craft Agents OSS: New Open-Source Agent Framework by Lukilabs (Apach | en | 未読 | #claude-ecosystem #web-signal | articles/2026-05-02_1249_Craft_Agents_OSS_Apache2_Lukilabs_AIToolly.md |
+| 427 | Claude Agent SDK Python - Official GitHub Repository | en | 未読 | #claude-ecosystem #web-signal | articles/2026-05-02_1255_Claude_Agent_SDK_Python_Official_GitHub.md |
+
 ## 統計
 
 - 蔵書数: 48（記事44 + 書籍4）
@@ -503,4 +536,4 @@
 - 未読: 1
 - 構想: 1
 - 書籍: 4
-- 日次収集（2026-03-27〜）: 384件（2026-04-23更新）
+- 日次収集（2026-03-27〜）: 805件（2026-05-02更新）

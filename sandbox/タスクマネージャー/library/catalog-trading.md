@@ -117,3 +117,20 @@
 | 095 | 4/27 「ZONE AI」かなり | ja | 未読 | #ai-trading #x-signal | articles/2026-04-28_1154_X_hukugyo_fc_427_ZONE_AIかなり.md |
 | 096 | 20,000+ pips in ONE week 🤯📈 | en | 未読 | #ai-trading #x-signal | articles/2026-04-27_1155_X_pipclubtrading_20000_pips_in_ONE_week.md |
 | 097 | we set up MT5 Expert Advisors and AI bots specifically for Gold tradin... | en | 未読 | #ai-trading #x-signal | articles/2026-04-27_1156_X_Art10rd_we_set_up_MT5_Expert_Advisors_and_AI_bot.md |
+
+| 098 | バージョンアップしました。 購入されてる方は再ダウンロードをお願いいたします！  【AI Scalper GOLD】 負けを記憶する学習 | ja | 未読 | #ai-trading #x-signal | articles/2026-05-02_1212_X_reo_fxEA_バージョンアップしました。_購入されてる方は再ダウンロードをお願いいたします！__【AI_Scalp.md |
+| 099 | 過去データを全てDB化し、AIで初動を検知するツールを自作して、ロジック完成したのですが、商用データ利用代が月50万くらいと判明して泣く | ja | 未読 | #ai-trading #x-signal | articles/2026-05-02_1213_X_FX_SysTradeEA_過去データを全てDB化し、AIで初動を検知するツールを自作して、ロジック完成したのですが、商用データ.md |
+| 100 | @TheH0n3stTrader I use TradingView for everything taking trades, mar | en | 未読 | #ai-trading #x-signal | articles/2026-05-02_1214_X_JacobTradesX_TheH0n3stTrader_I_use_TradingView_for_everything.md |
+| 101 | インジケーターをMT4からMT5に移行できたぁぁぁ🌝ずっとAIでチャレンジしてダメだったのに、pro試してみますかでやってみたら速攻完成 | ja | 未読 | #ai-trading #x-signal | articles/2026-05-02_1215_X_tteka_kyun_インジケーターをMT4からMT5に移行できたぁぁぁ_ずっとAIでチャレンジしてダメだったのに、pro.md |
+| 102 | 外為オンラインでも良いところがあって注文の出し方が見やすく使いやすい 初心者がAIに手取り足取り教えてもらって覚えていくにはとてもいい環 | ja | 未読 | #ai-trading #x-signal | articles/2026-05-02_1216_X_ume__u_u_外為オンラインでも良いところがあって注文の出し方が見やすく使いやすい_初心者がAIに手取り足取り教え.md |
+| 103 | Forex trading demands discipline and tools. @FX_Capital3 focuses on  | en | 未読 | #ai-trading #x-signal | articles/2026-05-02_1217_X_lance_arlott_Forex_trading_demands_discipline_and_tools___FX_Ca.md |
+| 104 | 横浜のカフェで一息。僕のような普通のサラリーマンでも、AIと協力すればこんな強力なインフラが作れる。設定も1クリック起動バッチで簡単。ま | ja | 未読 | #ai-trading #x-signal | articles/2026-05-02_1218_X_ryooooochin888_横浜のカフェで一息。僕のような普通のサラリーマンでも、AIと協力すればこんな強力なインフラが作れる。.md |
+| 105 | 🚨刑事告発情報🚨 2024/8/29  管轄：高島平警察署 対象：S合同会社及び各収納代行会社 所在：東京都板橋区 罪名：特商法及び刑法 | ja | 未読 | #ai-trading #x-signal | articles/2026-05-02_1219_X_daichilawyer_刑事告発情報__2024_8_29__管轄：高島平警察署_対象：S合同会社及び各収納代行会社_所在.md |
+| 106 | @carverfomo ソース: @carverfomo 中国人開発者のAIエージェンシー運営事例。7体のAIエージェントでリード獲得→ | ja | 未読 | #ai-trading #x-signal | articles/2026-05-02_1220_X_latdayo_carverfomo_ソース___carverfomo_中国人開発者のAIエージェンシー運営事例。.md |
+| 107 | 【衝撃】 Bloomberg Terminalの無料版が オープンソースで出てきて★1.7万超え🔥  FinceptTerminal   | ja | 未読 | #ai-trading #x-signal | articles/2026-05-02_1221_X_opensourcelab9_【衝撃】_Bloomberg_Terminalの無料版が_オープンソースで出てきて_1_7万超え.md |
+| 108 | moomoo証券のAI機能では、自動売買やバックテストまで出来るそうで、試してみたい。  https://t.co/FzNoEOGgsx | ja | 未読 | #ai-trading #x-signal | articles/2026-05-02_1222_X_yasutaketin_moomoo証券のAI機能では、自動売買やバックテストまで出来るそうで、試してみたい。__https.md |
+| 109 | 先物取引や株式市場で危険なのは、間違いより「正しそうに見える思い込み」。直感とAI分析のズレを消さず、バイアス検知センサーとして記録する | ja | 未読 | #ai-trading #x-signal | articles/2026-05-02_1223_X_nob771951888_先物取引や株式市場で危険なのは、間違いより「正しそうに見える思い込み」。直感とAI分析のズレを消さず.md |
+| 110 | 長らくお待たせしているGPTトレード、AI相談型自動売買ストラテジー作成機能、β版最終テストが進行中です。初回は全ユーザーに無料でお使い | ja | 未読 | #ai-trading #x-signal | articles/2026-05-02_1224_X_hiropi_fx_長らくお待たせしているGPTトレード、AI相談型自動売買ストラテジー作成機能、β版最終テストが進行中.md |
+| 111 | LLM Showdown: Which AI Powers the Best Python Algo Trading Bot in 20 | en | 未読 | #ai-trading #web-signal | articles/2026-05-02_1250_LLM_Showdown_Python_Algo_Trading_Bot_2026_QuantLabs.md |
+| 112 | TradingAgents v0.2.4: A Multi-Agent LLM Framework That Simulates an  | en | 未読 | #ai-trading #web-signal | articles/2026-05-02_1251_TradingAgents_v024_Multi_Agent_Trading_Firm_DEV.md |
+| 113 | TradingAgents: Multi-Agents LLM Financial Trading Framework (May 202 | en | 未読 | #ai-trading #web-signal | articles/2026-05-02_1252_TradingAgents_May2026_Advanced_Multi_Agent_AIToolly.md |
