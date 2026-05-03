@@ -382,8 +382,10 @@ class TradingLoop:
         # ペア別設定（T4）: 後続のフィルターで参照
         pair_cfg = get_pair_config(self._instrument)
 
-        # 6. レジーム検出
-        regime_info = self._regime_detector.detect(data, indicators=indicators)
+        # 6. レジーム検出（監査A4: pair_config の regime_* キーで閾値オーバーライド可）
+        regime_info = self._regime_detector.detect(
+            data, indicators=indicators, pair_config=pair_cfg,
+        )
         logger.info(
             "[%s] レジーム判定: %s (確信度=%.2f, エクスポージャー=%.1f, ADX=%.1f)",
             self._instrument,
