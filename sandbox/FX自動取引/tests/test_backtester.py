@@ -356,6 +356,30 @@ class TestSlippage:
         spread_eurusd = calculate_spread("EUR_USD", 1.1, pip_spread=1.0)
         assert spread_eurusd == pytest.approx(0.0001 / 1.1, rel=1e-6)
 
+    def test_default_uses_per_pair_typical_spread(self):
+        """pip_spread 省略時はペア別実測値が使われる (P2-D 根拠)"""
+        from src.backtester import TYPICAL_SPREADS_PIPS, DEFAULT_SPREAD_PIPS
+
+        # 既知ペアは TYPICAL_SPREADS_PIPS を参照
+        spread_usdjpy = calculate_spread("USD_JPY", 150.0)
+        expected_usdjpy = (0.01 * TYPICAL_SPREADS_PIPS["USD_JPY"]) / 150.0
+        assert spread_usdjpy == pytest.approx(expected_usdjpy, rel=1e-6)
+
+        spread_gbpjpy = calculate_spread("GBP_JPY", 215.0)
+        expected_gbpjpy = (0.01 * TYPICAL_SPREADS_PIPS["GBP_JPY"]) / 215.0
+        assert spread_gbpjpy == pytest.approx(expected_gbpjpy, rel=1e-6)
+
+        # 未測定ペアは DEFAULT_SPREAD_PIPS にフォールバック
+        spread_audusd = calculate_spread("AUD_USD", 0.66)
+        expected_audusd = (0.0001 * DEFAULT_SPREAD_PIPS) / 0.66
+        assert spread_audusd == pytest.approx(expected_audusd, rel=1e-6)
+
+    def test_explicit_pip_spread_overrides_default(self):
+        """pip_spread を明示すれば TYPICAL_SPREADS_PIPS を上書き"""
+        # USD_JPY のデフォルトは 1.5 だが、明示的に 5.0 を渡す
+        spread = calculate_spread("USD_JPY", 150.0, pip_spread=5.0)
+        assert spread == pytest.approx((0.01 * 5.0) / 150.0, rel=1e-6)
+
 
 # ================================================================
 # 15. apply_fill_rate_adjustment テスト

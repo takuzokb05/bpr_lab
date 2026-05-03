@@ -204,8 +204,23 @@ def apply_fill_rate_adjustment(
     return result
 
 
+# 通貨ペア別の実測スプレッド + スリッページ合算 (pips)
+# 根拠: P2-D 本番ログ解析 (docs/gbp_jpy_slippage_analysis.md) +
+#       P1-2 yfinance 比較 (docs/live_vs_backtest_diff.md)
+#   - USD_JPY: P1-2 avg 0.94 pips → 1.5 pips（外れ値耐性込み）
+#   - EUR_USD: P1-2 avg 1.96 pips → 2.0 pips
+#   - GBP_JPY: P2-D avg 1.80 pips, P1-2 avg 3.51 pips → 2.5 pips（中庸）
+# 未測定ペアは 2.0 pips を保守的デフォルトとする（PR #7 以前の 1.0 pips は楽観的すぎた）。
+TYPICAL_SPREADS_PIPS: dict[str, float] = {
+    "USD_JPY": 1.5,
+    "EUR_USD": 2.0,
+    "GBP_JPY": 2.5,
+}
+DEFAULT_SPREAD_PIPS: float = 2.0
+
+
 def calculate_spread(
-    instrument: str, price: float, pip_spread: float = 1.0
+    instrument: str, price: float, pip_spread: float | None = None
 ) -> float:
     """
     スリッページ用のspread値（相対値）を算出する。
@@ -213,11 +228,17 @@ def calculate_spread(
     Args:
         instrument: 通貨ペア（例: "USD_JPY", "EUR_USD"）
         price: 代表価格（例: 150.0）
-        pip_spread: スプレッド幅（pip単位、デフォルト1.0）
+        pip_spread: スプレッド幅（pip単位）。省略時はペア別実測値
+                    (TYPICAL_SPREADS_PIPS) または DEFAULT_SPREAD_PIPS を使用
 
     Returns:
         Backtesting.py の spread パラメータ（相対値）
     """
+    if pip_spread is None:
+        pip_spread = TYPICAL_SPREADS_PIPS.get(
+            instrument.upper(), DEFAULT_SPREAD_PIPS,
+        )
+
     if "JPY" in instrument.upper():
         pip_value = 0.01
     else:
