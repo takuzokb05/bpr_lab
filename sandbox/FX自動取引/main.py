@@ -10,7 +10,7 @@ import logging
 import signal as signal_module
 import sys
 import threading
-from logging.handlers import RotatingFileHandler
+from logging.handlers import TimedRotatingFileHandler
 from pathlib import Path
 
 # プロジェクトルートをsys.pathに追加
@@ -73,17 +73,25 @@ def setup_logging(log_dir: Path):
             # Python<3.7 や既にdetachedの場合は無視
             pass
 
+    # サイズベース(RotatingFileHandler)はWindowsでローテ時に他プロセスのhandle競合で
+    # 新ファイルが0バイトのまま書き込み停止する事故が発生したため、日次ローテに変更。
+    # delay=True で実行直後の空ローテを抑止し、夜間トレードと衝突しない 0:00 にローテ。
+    # force=True で既存のhandlerを置換（再起動なしの再設定や、テスト時のpytest-handler混入を防ぐ）。
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
         handlers=[
-            RotatingFileHandler(
-                log_file, encoding="utf-8",
-                maxBytes=10 * 1024 * 1024,  # 10MB
-                backupCount=5,
+            TimedRotatingFileHandler(
+                log_file,
+                when="midnight",
+                interval=1,
+                backupCount=14,
+                encoding="utf-8",
+                delay=True,
             ),
             logging.StreamHandler(sys.stdout),
         ],
+        force=True,
     )
 
 

@@ -15,7 +15,7 @@
 # ─────────────────────────────────────────
 # 設定
 # ─────────────────────────────────────────
-$FxRoot          = 'C:\bpr_lab\fx_trading'
+$FxRoot          = 'C:\bpr_lab\sandbox\FX自動取引'
 $TradingLogPath  = Join-Path $FxRoot 'data\trading.log'
 $HealthLogPath   = Join-Path $FxRoot 'data\healthcheck.log'
 $EnvFilePath     = Join-Path $FxRoot '.env'
