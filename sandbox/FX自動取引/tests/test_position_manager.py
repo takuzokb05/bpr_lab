@@ -224,6 +224,46 @@ class TestOpenPosition:
         assert result2 is None
         assert pm.position_count == 1  # 1つのまま
 
+    def test_broker_has_same_pair_blocks_open(self):
+        """ローカルキャッシュは空でもブローカーに同ペアがあれば取引不可。
+
+        起動直後の sync 未実施・MT5 への伝搬遅延・複数プロセス起動など、
+        ローカル単独では取りこぼすケースの安全網（P1-2 分析で 04/21〜05/01 に
+        GBP_JPY で 21/37 件の重複が観測されたため追加）。
+        """
+        broker = _make_mock_broker()
+        # ブローカー側だけに既存ポジションがある状況を再現
+        broker.get_positions.return_value = [
+            {"trade_id": "TRD-EXISTING", "instrument": "USD_JPY", "units": 1000,
+             "price_open": 150.0, "stop_loss": 149.0, "take_profit": 152.0},
+        ]
+        pm = _create_position_manager(broker=broker)
+        strategy = _make_mock_strategy()
+        data = _make_ohlcv_data()
+
+        # ローカルキャッシュは空のまま（sync_with_broker を呼ばない）
+        assert pm.position_count == 0
+        result = pm.open_position("USD_JPY", Signal.BUY, data, strategy)
+
+        # ブローカー直接照会で同ペアが見つかり、取引スキップ
+        assert result is None
+        assert pm.position_count == 0
+        # 注文は発注されない
+        broker.market_order.assert_not_called()
+
+    def test_broker_query_failure_falls_back_to_local(self):
+        """ブローカー照会失敗時はローカル判定で続行（フェイルセーフ）"""
+        broker = _make_mock_broker()
+        broker.get_positions.side_effect = RuntimeError("network down")
+        pm = _create_position_manager(broker=broker)
+        strategy = _make_mock_strategy()
+        data = _make_ohlcv_data()
+
+        # ローカルが空 → ブローカー照会失敗でも発注継続
+        result = pm.open_position("USD_JPY", Signal.BUY, data, strategy)
+        assert result is not None
+        assert pm.position_count == 1
+
     def test_max_positions_exceeded_returns_none(self):
         """最大ポジション数超過 → None返却"""
         broker = _make_mock_broker()
