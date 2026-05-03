@@ -688,3 +688,90 @@ class TestProperties:
         # trade_historyプロパティがコピーを返すこと（内部状態の保護）
         history.append({"fake": True})
         assert len(pm.trade_history) == 1  # 内部状態は変化しない
+
+
+class TestAIDecisionPersistence:
+    """T5: ai_decision/ai_confidence/etc が DB に正しく永続化されること
+    + bot 再起動後の sync_with_broker による NULL 上書きを防ぐこと。
+    """
+
+    def test_open_with_ai_record_persists_decision(self, tmp_path):
+        """open_position に ai_record を渡すと DB に書き込まれる"""
+        import sqlite3 as _sqlite
+        db_path = tmp_path / "test_ai.db"
+        broker = _make_mock_broker()
+        rm = _make_mock_risk_manager()
+        pm = PositionManager(
+            broker_client=broker, risk_manager=rm, db_path=db_path,
+        )
+        strategy = _make_mock_strategy()
+        data = _make_ohlcv_data()
+        ai_record = {
+            "ai_decision": "CONFIRM",
+            "ai_confidence": 0.62,
+            "ai_reasons": "aligned(BUY/bullish)",
+            "ai_direction": "bullish",
+            "ai_regime": "trend",
+        }
+
+        pm.open_position("USD_JPY", Signal.BUY, data, strategy, ai_record=ai_record)
+
+        with _sqlite.connect(str(db_path)) as conn:
+            row = conn.execute(
+                "SELECT ai_decision, ai_confidence, ai_direction FROM trades WHERE trade_id=?",
+                ("TRD-001",),
+            ).fetchone()
+        assert row == ("CONFIRM", 0.62, "bullish")
+
+    def test_resync_does_not_overwrite_existing_ai_decision(self, tmp_path):
+        """既存行に ai_decision がある状態で sync_with_broker が走っても NULL で上書きしない。
+
+        bot 再起動シナリオ:
+          1. open_position("USD_JPY", ai_record={CONFIRM, ...}) → DB に CONFIRM
+          2. bot 再起動でローカル _open_positions が空になる
+          3. ブローカー側にはまだポジションがあるので sync_with_broker が
+             broker_only パスで再 INSERT (ai_record なし)
+          4. 既存の CONFIRM が NULL に上書きされてはいけない
+        """
+        import sqlite3 as _sqlite
+        db_path = tmp_path / "test_ai_resync.db"
+        broker = _make_mock_broker()
+        rm = _make_mock_risk_manager()
+        pm = PositionManager(
+            broker_client=broker, risk_manager=rm, db_path=db_path,
+        )
+        strategy = _make_mock_strategy()
+        data = _make_ohlcv_data()
+        ai_record = {
+            "ai_decision": "CONFIRM",
+            "ai_confidence": 0.55,
+            "ai_reasons": "aligned",
+            "ai_direction": "bullish",
+            "ai_regime": "trend",
+        }
+        pm.open_position("USD_JPY", Signal.BUY, data, strategy, ai_record=ai_record)
+
+        # ローカル状態をクリアして「再起動直後」を再現
+        pm._open_positions.clear()
+
+        # ブローカーに同 trade_id がまだ存在する状態で sync
+        broker.get_positions.return_value = [
+            {
+                "trade_id": "TRD-001",
+                "instrument": "USD_JPY",
+                "units": 1000,
+                "price_open": 150.0,
+                "stop_loss": 149.0,
+                "take_profit": 152.0,
+                "unrealized_pl": 0.0,
+            },
+        ]
+        pm.sync_with_broker()
+
+        with _sqlite.connect(str(db_path)) as conn:
+            row = conn.execute(
+                "SELECT ai_decision, ai_confidence FROM trades WHERE trade_id=?",
+                ("TRD-001",),
+            ).fetchone()
+        # CONFIRM が維持されていること（NULL で上書きされない）
+        assert row == ("CONFIRM", 0.55)

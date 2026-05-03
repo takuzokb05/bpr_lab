@@ -126,18 +126,37 @@ class PositionManager:
 
         T5: AIバイアス情報（ai_decision/ai_confidence/ai_reasons/ai_direction/ai_regime）
         が position dict に含まれていれば一緒に保存する。AIフィルター未適用時は NULL のまま。
+
+        bot 再起動後の sync_with_broker (broker_only パス) では position に ai_* が無いため、
+        既存行の ai_* を NULL で上書きしないよう COALESCE で保護する。
         """
         if self._db_path is None:
             return
         try:
             with sqlite3.connect(str(self._db_path)) as conn:
+                # ON CONFLICT(trade_id): 既存の ai_* は新値が NULL なら維持、
+                # それ以外のフィールドは新値で上書き。
                 conn.execute(
-                    """INSERT OR REPLACE INTO trades
+                    """INSERT INTO trades
                        (trade_id, instrument, units, open_price,
                         stop_loss, take_profit, opened_at, status,
                         ai_decision, ai_confidence, ai_reasons,
                         ai_direction, ai_regime)
-                       VALUES (?, ?, ?, ?, ?, ?, ?, 'open', ?, ?, ?, ?, ?)""",
+                       VALUES (?, ?, ?, ?, ?, ?, ?, 'open', ?, ?, ?, ?, ?)
+                       ON CONFLICT(trade_id) DO UPDATE SET
+                           instrument    = excluded.instrument,
+                           units         = excluded.units,
+                           open_price    = excluded.open_price,
+                           stop_loss     = excluded.stop_loss,
+                           take_profit   = excluded.take_profit,
+                           opened_at     = excluded.opened_at,
+                           status        = excluded.status,
+                           ai_decision   = COALESCE(excluded.ai_decision,   ai_decision),
+                           ai_confidence = COALESCE(excluded.ai_confidence, ai_confidence),
+                           ai_reasons    = COALESCE(excluded.ai_reasons,    ai_reasons),
+                           ai_direction  = COALESCE(excluded.ai_direction,  ai_direction),
+                           ai_regime     = COALESCE(excluded.ai_regime,     ai_regime)
+                    """,
                     (
                         position["trade_id"],
                         position["instrument"],
