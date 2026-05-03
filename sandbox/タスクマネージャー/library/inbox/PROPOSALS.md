@@ -1300,3 +1300,62 @@ Claude CodeからOpenAI Codexへの環境（CLAUDE.md・スキル設定含む）
 
 **アクション:**
 - 現状はClaude Code一択で問題なし。ただしClaude Code/Codex間の移行コストが実質ゼロになったことで、LLMプロバイダーのコスト上昇時の移行オプションとして記録しておく。
+
+---
+
+## 2026-05-03 収集分
+
+### 1. Claude Code スキル: /autofix-pr + Ultraplan ワークフロー化
+
+**出典:** articles/2026-05-03_1267_Claude_Code_Ultraplan_AutoPR_AyyazTech.md / articles/2026-05-03_1268_Claude_Code_AutoFix_PR_Lifecycle_Paddo.md
+
+**提案内容（優先度: 高）:**
+Claude Code の新機能 Ultraplan（クラウドプランニング）と /autofix-pr（PR自動修正）の組み合わせが「ローカルPCなしのフルクラウド開発」を実現。このワークフローをスキルとして定義すると再現性が高まる。
+
+**アクション:**
+- `.claude/skills/autofix-pr-workflow/SKILL.md` を新規作成し、/ultraplan → レビュー → /autofix-pr のフローを定義。
+- FX自動取引プロジェクトの CI/CD パイプラインに /autofix-pr を組み込む検討（GitHub Actions連携）。
+
+### 2. スキル設計: Superpowers フレームワークの設計思想を採用
+
+**出典:** articles/2026-05-03_1273_Superpowers_Agent_Skill_Framework_AIToolly_May.md
+
+**提案内容（優先度: 中）:**
+Superpowers（obra/superpowers, GitHub Stars 174K+）はコーディングエージェント向けのコンポーザブルSKILL.mdセット。真のRed/Green TDD・YAGNI・DRYを強制し、「コードを書く前に仕様を確認する」フローを実装。Claude Code・Codex・Cursor・Gemini CLI 等で動作。
+
+**アクション:**
+- 現行スキルに「仕様確認フェーズ」を追加するパターンを採用。特に複雑な機能開発スキルに「before implementing, confirm: [spec points]」を先頭に追加。
+- `obra/superpowers` の SKILL.md 構造を参考に、FX自動取引スキルのリファクタリングを検討。
+
+### 3. FX自動取引: TradingAgents v0.2.4 新機能を参照
+
+**出典:** articles/2026-05-03_1275_TradingAgents_New_May2026_AIToolly.md
+
+**提案内容（優先度: 中）:**
+TradingAgents v0.2.4 で LangGraph チェックポイント再開機能・永続的決定ログ・DeepSeek/Qwen対応が追加。多エージェント取引フレームワークの実装参考として有用。
+
+**アクション:**
+- `sandbox/FX自動取引/` のマルチエージェント設計に TradingAgents の Bull/Bear 討論パターン（楽観エージェント vs 悲観エージェント + リスク管理エージェント）を参考として検討。
+- LangGraph チェックポイント再開機能で長期トレードセッションの状態管理を改善可能。ただし TradingAgents 自体はバイアンドホールドに届かないことを念頭に置く（v0.2.4: Qwen 18.1% vs BH 19.1%）。
+
+### 4. FX自動取引: AI搭載MT5インジケーター設計パターン
+
+**出典:** articles/2026-05-03_1261_AI_SuperTrend_ML_MT5_Indicator_JA.md / articles/2026-05-03_1262_AI_Coding_MT5_Parallel_Backtest_Batch_Runner_JA.md
+
+**提案内容（優先度: 高）:**
+①AI搭載スーパートレンドインジケーター：スーパートレンド転換時にMLで過去パターンを参照し信頼度判定してシグナル出力。②MT5並列バックテスト+ランキング化バッチランナーをAIコーディングでほぼノーコードで実現した実践事例。
+
+**アクション:**
+- `sandbox/FX自動取引/` のシグナル生成ロジックに「AI確率閾値フィルター」を追加検討。テクニカルシグナル発生時に過去パターン類似度を計算し、閾値以上のみエントリー。
+- MT5並列バックテストバッチランナーを Claude Code で実装し、パラメータ最適化サイクルを高速化する。現状のバックテストフローの自動化可能性を確認。
+
+### 5. claude-ecosystem: Claude Mythos Preview のセキュリティ能力
+
+**出典:** articles/2026-05-03_1272_Claude_Mythos_Preview_Anthropic_Red.md
+
+**提案内容（優先度: 低）:**
+Claude Mythos Preview は全主要OSと主要ブラウザのゼロデイ脆弱性を自律検出。Claude Code から呼び出してコードを読み→仮説を立て→バグレポートを出力するワークフロー。ゲーテッドリサーチプレビューで防御的セキュリティ用途限定。
+
+**アクション:**
+- FX自動取引システムのセキュリティ審査に Mythos Preview へのアクセスリクエストを検討（防御的用途として申請可能）。
+- 現状のアクセス制限を踏まえ、Claude Code + Sonnet 4.6 ベースのセキュリティレビュースキルを `security-review` として整備することを優先。
