@@ -263,7 +263,7 @@ class PositionManager:
                 )
                 return None
 
-            # 3. 同一通貨ペアの重複チェック
+            # 3. 同一通貨ペアの重複チェック（ローカルキャッシュ）
             for pos in self._open_positions:
                 if pos["instrument"] == instrument:
                     logger.info(
@@ -271,6 +271,28 @@ class PositionManager:
                         "trade_id=%s",
                         instrument,
                         pos["trade_id"],
+                    )
+                    return None
+
+            # 3a. 同一通貨ペアの重複チェック（ブローカー直接照会）
+            # 起動直後の sync 未実施・MT5 への伝搬遅延・複数プロセス起動など、
+            # ローカルキャッシュ単独では取りこぼすケースに対するアトミックな安全網。
+            # P1-2 分析で 04/21〜05/01 に GBP_JPY で 21/37 件の重複が観測されたため追加。
+            try:
+                broker_positions = self._broker_client.get_positions()
+            except Exception as e:
+                # 取得失敗時は既存ローカルチェックを信頼してフォールスルー
+                logger.warning(
+                    "ブローカーポジション取得失敗（ローカル判定で続行）: %s", e,
+                )
+                broker_positions = []
+            for bpos in broker_positions:
+                if bpos.get("instrument") == instrument:
+                    logger.info(
+                        "同一通貨ペア %s のブローカーポジションが既に存在するため取引スキップ: "
+                        "trade_id=%s",
+                        instrument,
+                        bpos.get("trade_id"),
                     )
                     return None
 
