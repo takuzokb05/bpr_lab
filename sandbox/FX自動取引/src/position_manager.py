@@ -16,7 +16,13 @@ from typing import Optional
 import pandas as pd
 
 from src.broker_client import BrokerClient
-from src.config import CORRELATION_GROUPS, MAX_CORRELATION_EXPOSURE, MAX_OPEN_POSITIONS
+from src.config import (
+    CORRELATION_GROUPS,
+    MAX_CORRELATION_EXPOSURE,
+    MAX_OPEN_POSITIONS,
+    PARTIAL_CLOSE_RATIO,
+    USE_ATR_BASED_TP,
+)
 from src.risk_manager import RiskManager
 from src.strategy.base import Signal, StrategyBase
 from src.trade_postmortem import TradePostMortem
@@ -76,9 +82,9 @@ class PositionManager:
     def _init_trades_db(self) -> None:
         """trades テーブルを作成する。
 
-        T5: 既存DBに対しても AI 関連カラムを冪等に追加する（マイグレーション相当）。
-        本番DBは scripts/migrate_add_ai_columns.py を別途流すが、
-        新規環境やテストで CREATE TABLE 後に呼ばれた場合もカラムが揃うようにする。
+        T3: ATR-TP/SL 列（tp1, tp2, atr_at_open, partial_closed_*）を追加。
+        T5: AI 関連カラム（ai_decision/confidence/reasons/direction/regime）を追加。
+        既存DBへも冪等に ALTER で追加する（マイグレーション相当）。
         """
         if self._db_path is None:
             return
@@ -100,6 +106,12 @@ class PositionManager:
                     opened_at TEXT NOT NULL,
                     closed_at TEXT,
                     status TEXT NOT NULL DEFAULT 'open',
+                    tp1 REAL,
+                    tp2 REAL,
+                    atr_at_open REAL,
+                    partial_closed_at TEXT,
+                    partial_closed_units INTEGER,
+                    partial_realized_pl REAL,
                     ai_decision TEXT,
                     ai_confidence REAL,
                     ai_reasons TEXT,
@@ -108,22 +120,39 @@ class PositionManager:
                 )
                 """
             )
-            # 既に古いスキーマで作成されたDBにも AI カラムを追加する（冪等）
-            cur = conn.execute("PRAGMA table_info(trades)")
-            existing = {row[1] for row in cur.fetchall()}
-            for col, col_type in (
+            # 既存DBへの後方互換: 列が無ければ ALTER で追加（T3 + T5）
+            existing_cols = {
+                row[1] for row in conn.execute("PRAGMA table_info(trades)").fetchall()
+            }
+            for col_name, col_type in (
+                # T3: ATR-TP/SL
+                ("tp1", "REAL"),
+                ("tp2", "REAL"),
+                ("atr_at_open", "REAL"),
+                ("partial_closed_at", "TEXT"),
+                ("partial_closed_units", "INTEGER"),
+                ("partial_realized_pl", "REAL"),
+                # T5: AI バイアス
                 ("ai_decision", "TEXT"),
                 ("ai_confidence", "REAL"),
                 ("ai_reasons", "TEXT"),
                 ("ai_direction", "TEXT"),
                 ("ai_regime", "TEXT"),
             ):
-                if col not in existing:
-                    conn.execute(f"ALTER TABLE trades ADD COLUMN {col} {col_type}")
+                if col_name not in existing_cols:
+                    try:
+                        conn.execute(
+                            f"ALTER TABLE trades ADD COLUMN {col_name} {col_type}"
+                        )
+                    except sqlite3.OperationalError as e:
+                        logger.warning(
+                            "trades テーブルへの列追加に失敗: %s (%s)", col_name, e,
+                        )
 
     def _db_save_open_trade(self, position: dict) -> None:
         """オープンしたポジションをDBに保存する。
 
+        T3: tp1, tp2, atr_at_open も保存（ATRベースSL/TP方式の事後検証用）。
         T5: AIバイアス情報（ai_decision/ai_confidence/ai_reasons/ai_direction/ai_regime）
         が position dict に含まれていれば一緒に保存する。AIフィルター未適用時は NULL のまま。
         """
@@ -135,9 +164,10 @@ class PositionManager:
                     """INSERT OR REPLACE INTO trades
                        (trade_id, instrument, units, open_price,
                         stop_loss, take_profit, opened_at, status,
+                        tp1, tp2, atr_at_open,
                         ai_decision, ai_confidence, ai_reasons,
                         ai_direction, ai_regime)
-                       VALUES (?, ?, ?, ?, ?, ?, ?, 'open', ?, ?, ?, ?, ?)""",
+                       VALUES (?, ?, ?, ?, ?, ?, ?, 'open', ?, ?, ?, ?, ?, ?, ?, ?)""",
                     (
                         position["trade_id"],
                         position["instrument"],
@@ -146,6 +176,9 @@ class PositionManager:
                         position["stop_loss"],
                         position["take_profit"],
                         position["opened_at"].isoformat(),
+                        position.get("tp1"),
+                        position.get("tp2"),
+                        position.get("atr_at_open"),
                         position.get("ai_decision"),
                         position.get("ai_confidence"),
                         position.get("ai_reasons"),
@@ -155,6 +188,42 @@ class PositionManager:
                 )
         except sqlite3.Error as e:
             logger.warning("ポジションオープンのDB記録に失敗: %s", e)
+
+    def _db_save_partial_close(
+        self,
+        trade_id: str,
+        closed_units: int,
+        realized_pl: float,
+        closed_at: datetime,
+    ) -> None:
+        """部分決済イベントをDBに記録する（T3）。"""
+        if self._db_path is None:
+            return
+        try:
+            with sqlite3.connect(str(self._db_path)) as conn:
+                conn.execute(
+                    """UPDATE trades
+                       SET partial_closed_at=?,
+                           partial_closed_units=?,
+                           partial_realized_pl=COALESCE(partial_realized_pl, 0) + ?
+                       WHERE trade_id=?""",
+                    (closed_at.isoformat(), closed_units, realized_pl, trade_id),
+                )
+        except sqlite3.Error as e:
+            logger.warning("部分決済のDB記録に失敗: %s", e)
+
+    def _db_update_stop_loss(self, trade_id: str, new_sl: float) -> None:
+        """SLトレーリング後のSLをDBに反映する（T3）。"""
+        if self._db_path is None:
+            return
+        try:
+            with sqlite3.connect(str(self._db_path)) as conn:
+                conn.execute(
+                    "UPDATE trades SET stop_loss=? WHERE trade_id=?",
+                    (new_sl, trade_id),
+                )
+        except sqlite3.Error as e:
+            logger.warning("SL更新のDB記録に失敗: %s", e)
 
     def _db_save_closed_trade(
         self,
@@ -310,8 +379,66 @@ class PositionManager:
             # エントリー価格を最新の終値から取得
             entry_price = float(data["close"].iloc[-1])
 
-            # 7. SL算出（ポジションサイズ計算に必要）
-            stop_loss = strategy.calculate_stop_loss(entry_price, direction, data)
+            # 7. SL/TP算出（T3: 段階的部分利確 = ATRベースSL/TP1/TP2）
+            #    USE_ATR_BASED_TP=True 時のみ calculate_tp_levels を試行。
+            #    False または失敗時は旧来の calculate_stop_loss/take_profit にフォールバック。
+            from src.strategy.base import TpLevels  # 型チェック用
+            tp1: Optional[float] = None
+            tp2: Optional[float] = None
+            atr_at_open: Optional[float] = None
+            stop_loss = None
+            take_profit = None
+
+            if USE_ATR_BASED_TP:
+                # T4: pair_config.yaml のペア別 ATR 係数を取得（あれば）
+                pair_cfg: Optional[dict] = None
+                try:
+                    from src.pair_config import get_pair_config
+                    pair_cfg = get_pair_config(instrument)
+                except Exception as e:
+                    logger.debug(
+                        "pair_config 取得失敗、グローバル設定にフォールバック: %s", e,
+                    )
+
+                try:
+                    # 既存の strategy が pair_config kwarg を受け付けない場合に備えて
+                    # 段階的にフォールバック
+                    try:
+                        tp_levels = strategy.calculate_tp_levels(
+                            entry_price, direction, data, pair_config=pair_cfg,
+                        )
+                    except TypeError:
+                        tp_levels = strategy.calculate_tp_levels(
+                            entry_price, direction, data,
+                        )
+                except (ValueError, NotImplementedError) as e:
+                    logger.warning(
+                        "calculate_tp_levels 失敗、旧来の SL/TP にフォールバック: "
+                        "instrument=%s, error=%s", instrument, e,
+                    )
+                    tp_levels = None
+                except Exception as e:
+                    # MagicMock等で予期せぬ型が返るケースも安全側にフォールバック
+                    logger.warning(
+                        "calculate_tp_levels で予期しないエラー、フォールバック: "
+                        "instrument=%s, error=%s", instrument, e,
+                    )
+                    tp_levels = None
+
+                if isinstance(tp_levels, TpLevels):
+                    stop_loss = tp_levels.stop_loss
+                    tp1 = tp_levels.tp1
+                    tp2 = tp_levels.tp2
+                    atr_at_open = tp_levels.atr
+                    take_profit = tp2
+
+            if stop_loss is None:
+                stop_loss = strategy.calculate_stop_loss(
+                    entry_price, direction, data
+                )
+                take_profit = strategy.calculate_take_profit(
+                    entry_price, direction, stop_loss
+                )
 
             # stop_loss_pips の算出: JPYクロスと非JPYペアで除数が異なる
             is_jpy_cross = "JPY" in instrument.upper()
@@ -341,11 +468,6 @@ class PositionManager:
                     "ポジションサイズが0のため取引スキップ: instrument=%s", instrument
                 )
                 return None
-
-            # 9. TP算出
-            take_profit = strategy.calculate_take_profit(
-                entry_price, direction, stop_loss
-            )
 
             # units計算: lot_size * 1000 の整数変換
             # BUY → 正, SELL → 負
@@ -388,6 +510,12 @@ class PositionManager:
                 "take_profit": take_profit,
                 "opened_at": datetime.now(timezone.utc),
                 "unrealized_pl": 0.0,
+                # T3: 段階的部分利確のための情報（USE_ATR_BASED_TP=False 時は None）
+                "tp1": tp1,
+                "tp2": tp2,
+                "atr_at_open": atr_at_open,
+                "partial_closed": False,
+                "sl_trailed": False,
             }
             # T5: AI A/B 検証用に AIBias 記録を埋め込む（オプショナル）
             if ai_record:
@@ -515,6 +643,168 @@ class PositionManager:
         )
 
         return close_result
+
+    # ------------------------------------------------------------------
+    # 部分決済（T3: 段階的部分利確）
+    # ------------------------------------------------------------------
+
+    def partial_close(
+        self,
+        trade_id: str,
+        ratio: float = PARTIAL_CLOSE_RATIO,
+    ) -> Optional[dict]:
+        """
+        指定ポジションを部分決済する（T3: TP1 到達時の段階的利確）。
+
+        - ブローカーの partial_close_position を呼び出す
+        - 成功時はローカル position の units を残量に更新し、partial_closed=True を立てる
+        - DBの partial_closed_at / partial_closed_units / partial_realized_pl を記録
+        - 同一 trade_id への二重実行は idempotent にスキップ
+
+        Args:
+            trade_id: 対象のトレードID
+            ratio: 決済比率（0.0–1.0、デフォルトは config.PARTIAL_CLOSE_RATIO）
+
+        Returns:
+            部分決済結果dict、またはスキップ時 None
+
+        Raises:
+            PositionManagerError: ブローカー側で予期しないエラーが発生した場合
+        """
+        if not (0.0 < ratio < 1.0):
+            logger.warning(
+                "partial_close: ratio が範囲外のためスキップ "
+                "(trade_id=%s, ratio=%.3f)", trade_id, ratio,
+            )
+            return None
+
+        with self._lock:
+            target_pos = next(
+                (p for p in self._open_positions if p["trade_id"] == trade_id),
+                None,
+            )
+            if target_pos is None:
+                logger.warning(
+                    "部分決済対象のポジションが見つかりません: trade_id=%s",
+                    trade_id,
+                )
+                return None
+
+            # 二重実行防止
+            if target_pos.get("partial_closed"):
+                logger.info(
+                    "ポジション %s は既に部分決済済み。スキップ。", trade_id,
+                )
+                return None
+
+            # ブローカー側の partial_close_position を呼ぶ
+            try:
+                result = self._broker_client.partial_close_position(
+                    trade_id, ratio,
+                )
+            except Exception as e:
+                raise PositionManagerError(
+                    f"部分決済に失敗しました: trade_id={trade_id}, error={e}"
+                ) from e
+
+            if result is None:
+                logger.warning(
+                    "ブローカーが部分決済を未実行（None返却）: trade_id=%s, "
+                    "ratio=%.3f", trade_id, ratio,
+                )
+                return None
+
+            # ローカル状態を残量に更新
+            closed_units = int(result.get("closed_units", 0))
+            remaining_units = int(result.get("remaining_units", 0))
+            realized_pl = float(result.get("realized_pl", 0.0))
+            close_time = datetime.now(timezone.utc)
+
+            # 元の units 符号を維持して残量を反映
+            sign = 1 if target_pos["units"] > 0 else -1
+            target_pos["units"] = sign * abs(remaining_units)
+            target_pos["partial_closed"] = True
+            target_pos["partial_closed_at"] = close_time
+            target_pos["partial_closed_units"] = closed_units
+            target_pos["partial_realized_pl"] = realized_pl
+
+            self._db_save_partial_close(
+                trade_id, closed_units, realized_pl, close_time,
+            )
+
+            # 部分決済分も trade_history に蓄積（pl 集計対象に含める）
+            self._trade_history.append({
+                "trade_id": f"{trade_id}_partial",
+                "instrument": target_pos["instrument"],
+                "units": sign * closed_units,
+                "open_price": target_pos["open_price"],
+                "close_price": float(result.get("close_price", 0.0)),
+                "pl": realized_pl,
+                "pl_unknown": False,
+                "opened_at": target_pos["opened_at"],
+                "close_time": close_time,
+                "is_partial": True,
+            })
+
+        logger.info(
+            "部分決済完了: trade_id=%s, ratio=%.3f, closed_units=%d, "
+            "remaining_units=%d, realized_pl=%.2f",
+            trade_id, ratio, closed_units, remaining_units, realized_pl,
+        )
+        return result
+
+    def update_stop_loss(
+        self, trade_id: str, new_stop_loss: float,
+    ) -> Optional[dict]:
+        """
+        ポジションの SL を変更する（T3: TP1 到達後のトレーリング）。
+
+        Args:
+            trade_id: 対象のトレードID
+            new_stop_loss: 新しい SL 価格
+
+        Returns:
+            変更結果dict、またはスキップ/失敗時 None
+
+        Raises:
+            PositionManagerError: ブローカー側で予期しないエラーが発生した場合
+        """
+        with self._lock:
+            target_pos = next(
+                (p for p in self._open_positions if p["trade_id"] == trade_id),
+                None,
+            )
+            if target_pos is None:
+                logger.warning(
+                    "SL変更対象のポジションが見つかりません: trade_id=%s",
+                    trade_id,
+                )
+                return None
+
+            try:
+                result = self._broker_client.modify_position_sl(
+                    trade_id, new_stop_loss,
+                )
+            except Exception as e:
+                raise PositionManagerError(
+                    f"SL変更に失敗しました: trade_id={trade_id}, error={e}"
+                ) from e
+
+            if result is None:
+                logger.warning(
+                    "ブローカーがSL変更を未実行（None返却）: trade_id=%s",
+                    trade_id,
+                )
+                return None
+
+            target_pos["stop_loss"] = float(new_stop_loss)
+            target_pos["sl_trailed"] = True
+            self._db_update_stop_loss(trade_id, float(new_stop_loss))
+
+        logger.info(
+            "SL更新完了: trade_id=%s, new_sl=%.5f", trade_id, new_stop_loss,
+        )
+        return result
 
     # ------------------------------------------------------------------
     # 一括決済（キルスイッチ用）

@@ -16,12 +16,19 @@ import pandas as pd
 from src.ai_advisor import AIAdvisor
 from src.bear_researcher import BearResearcher
 from src.broker_client import BrokerClient
-from src.config import ATR_PERIOD, BEAR_RESEARCHER_ENABLED, MAIN_TIMEFRAME
+from src.config import (
+    ATR_PERIOD,
+    BEAR_RESEARCHER_ENABLED,
+    MAIN_TIMEFRAME,
+    PARTIAL_CLOSE_RATIO,
+    TRAILING_SL_TO_BREAKEVEN,
+    USE_ATR_BASED_TP,
+)
 from src.conviction_scorer import ConvictionScorer
 from src.indicator_cache import compute_indicators
 from src.notifier_group import NotifierGroup
 from src.pair_config import get_pair_config
-from src.position_manager import PositionManager
+from src.position_manager import PositionManager, PositionManagerError
 from src.regime_detector import RegimeDetector
 from src.risk_manager import RiskManager
 from src.session_filter import get_active_session_label, is_in_allowed_session
@@ -225,6 +232,10 @@ class TradingLoop:
         # ステージ2: データ取得・指標計算
         data, indicators = self._fetch_and_compute()
 
+        # ステージ2.5: 段階的部分利確の管理（T3: TP1到達 → partial_close → SLトレーリング）
+        if USE_ATR_BASED_TP:
+            self._manage_partial_take_profits(data)
+
         # ステージ3: シグナルパイプライン（レジーム→戦略→conviction→AI→Bear）
         pipeline_result = self._signal_pipeline(data, indicators)
 
@@ -357,6 +368,88 @@ class TradingLoop:
             )
 
         return data, indicators
+
+    def _manage_partial_take_profits(self, data: pd.DataFrame) -> None:
+        """
+        T3: 既存ポジションの TP1 到達を検知し、段階的部分利確を実行する。
+
+        ロジック:
+        - 現在のローソク足の high/low が、ポジションの tp1 を跨いだ場合に partial_close を実行
+        - 部分決済直後に TRAILING_SL_TO_BREAKEVEN=True なら SL を entry 付近にトレーリング
+        - 既に partial_closed なポジションはスキップ
+
+        Args:
+            data: 現在の OHLCV データ（最新バーで TP1 到達判定）
+        """
+        if data is None or len(data) == 0:
+            return
+
+        latest_high = float(data["high"].iloc[-1])
+        latest_low = float(data["low"].iloc[-1])
+
+        # ループ中のポジション操作で list が変動するためコピーで反復
+        for pos in list(self._position_manager.get_open_positions()):
+            tp1 = pos.get("tp1")
+            if tp1 is None or pos.get("partial_closed"):
+                continue
+
+            # この trading_loop が管理する instrument のみ対象
+            if pos.get("instrument") != self._instrument:
+                continue
+
+            units = pos.get("units", 0)
+            entry = float(pos.get("open_price", 0.0))
+            trade_id = pos["trade_id"]
+
+            # TP1 到達判定: BUY なら high>=tp1、SELL なら low<=tp1
+            tp1_hit = (units > 0 and latest_high >= tp1) or (
+                units < 0 and latest_low <= tp1
+            )
+            if not tp1_hit:
+                continue
+
+            logger.info(
+                "[%s] TP1 到達検出: trade_id=%s, units=%d, "
+                "tp1=%.5f, latest_high=%.5f, latest_low=%.5f",
+                self._instrument, trade_id, units,
+                tp1, latest_high, latest_low,
+            )
+
+            # 部分決済 → SLトレーリング
+            try:
+                partial_result = self._position_manager.partial_close(
+                    trade_id, ratio=PARTIAL_CLOSE_RATIO,
+                )
+            except PositionManagerError as e:
+                logger.error(
+                    "[%s] partial_close 失敗（続行）: trade_id=%s, error=%s",
+                    self._instrument, trade_id, e,
+                )
+                continue
+
+            if partial_result is None:
+                continue
+
+            if TRAILING_SL_TO_BREAKEVEN:
+                # SL を entry 価格にトレーリング（ブレイクイーブン化）
+                # BUY なら新SL は max(現SL, entry)、SELL なら min(現SL, entry)
+                current_sl = float(pos.get("stop_loss", entry))
+                if units > 0:
+                    new_sl = max(current_sl, entry)
+                else:
+                    new_sl = min(current_sl, entry)
+
+                if new_sl != current_sl:
+                    try:
+                        self._position_manager.update_stop_loss(
+                            trade_id, new_sl,
+                        )
+                    except PositionManagerError as e:
+                        logger.warning(
+                            "[%s] SLトレーリング失敗（部分決済は成功）: "
+                            "trade_id=%s, error=%s",
+                            self._instrument, trade_id, e,
+                        )
 
     def _signal_pipeline(
         self, data: pd.DataFrame, indicators: dict

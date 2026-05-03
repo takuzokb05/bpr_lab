@@ -28,10 +28,14 @@ from src.config import (
     ADX_THRESHOLD,
     ATR_MULTIPLIER,
     ATR_PERIOD,
+    ATR_SL_MULT,
+    ATR_TP1_MULT,
+    ATR_TP2_MULT,
     DB_PATH,
     MA_LONG_PERIOD,
     MA_SHORT_PERIOD,
     MIN_RISK_REWARD,
+    PARTIAL_CLOSE_RATIO,
     RSI_OVERBOUGHT,
     RSI_OVERSOLD,
     RSI_PERIOD,
@@ -164,6 +168,138 @@ class RsiMaCrossoverBT(Strategy):
             risk = sl - entry
             tp = entry - risk * self.min_risk_reward
             self.sell(sl=sl, tp=tp)
+
+
+# ------------------------------------------------------------------
+# T3: ATR ベース SL/TP1/TP2 + 段階的部分利確 戦略アダプタ
+# ------------------------------------------------------------------
+
+
+class RsiMaCrossoverAtrBT(Strategy):
+    """
+    T3: ATR ベース SL/TP1/TP2 + 段階的部分利確版（バックテスト用）。
+
+    シグナル生成は RsiMaCrossoverBT と同一。SL/TP のみ ATR 連動方式に置き換える:
+    - SL  = entry ∓ ATR × ATR_SL_MULT     (= 1.5)
+    - TP1 = entry ± ATR × ATR_TP1_MULT    (= 1.0) で PARTIAL_CLOSE_RATIO 分を決済
+    - TP2 = entry ± ATR × ATR_TP2_MULT    (= 3.0) で残り全決済
+    - TP1 到達後は SL を entry へトレーリング（ブレイクイーブン化）
+
+    Backtesting.py の制約上、Trade 単位で 1 つの sl/tp しか持てないため、
+    ペアトレード方式で TP1 用と TP2 用の 2 注文を分けて発行する。
+    """
+    ma_short = MA_SHORT_PERIOD
+    ma_long = MA_LONG_PERIOD
+    rsi_period = RSI_PERIOD
+    rsi_overbought = RSI_OVERBOUGHT
+    rsi_oversold = RSI_OVERSOLD
+    atr_period = ATR_PERIOD
+    atr_sl_mult = ATR_SL_MULT
+    atr_tp1_mult = ATR_TP1_MULT
+    atr_tp2_mult = ATR_TP2_MULT
+    partial_ratio = PARTIAL_CLOSE_RATIO
+    adx_period = ADX_PERIOD
+    adx_threshold = ADX_THRESHOLD
+
+    def init(self):
+        close = pd.Series(self.data.Close)
+        high = pd.Series(self.data.High)
+        low = pd.Series(self.data.Low)
+
+        self.ma_short_line = self.I(ta.sma, close, length=self.ma_short, name="SMA_short")
+        self.ma_long_line = self.I(ta.sma, close, length=self.ma_long, name="SMA_long")
+        self.rsi_line = self.I(ta.rsi, close, length=self.rsi_period, name="RSI")
+        self.atr_line = self.I(ta.atr, high, low, close, length=self.atr_period, name="ATR")
+
+        adx_len = self.adx_period
+        def _adx_only(h, l, c):
+            r = ta.adx(h, l, c, length=adx_len)
+            if r is not None and f"ADX_{adx_len}" in r.columns:
+                return r[f"ADX_{adx_len}"]
+            return pd.Series([np.nan] * len(c))
+        self.adx_line = self.I(_adx_only, high, low, close, name="ADX")
+
+    def next(self):
+        ma_s = self.ma_short_line[-1]
+        ma_l = self.ma_long_line[-1]
+        rsi_v = self.rsi_line[-1]
+        atr_v = self.atr_line[-1]
+        adx_v = self.adx_line[-1]
+
+        if any(np.isnan(x) for x in (ma_s, ma_l, rsi_v, atr_v, adx_v)):
+            return
+        if adx_v < self.adx_threshold:
+            return
+        if len(self.ma_short_line) < 2:
+            return
+        ma_s_prev = self.ma_short_line[-2]
+        ma_l_prev = self.ma_long_line[-2]
+        if np.isnan(ma_s_prev) or np.isnan(ma_l_prev):
+            return
+
+        entry = self.data.Close[-1]
+
+        # --- TP1 到達後の SL トレーリング（ブレイクイーブン） ---
+        for trade in list(self.trades):
+            if not hasattr(trade, "tag") or trade.tag is None:
+                continue
+            tag = trade.tag
+            # TP2 ロットのみ対象（TP1 ロットは tp で自動決済される）
+            if not isinstance(tag, dict) or tag.get("kind") != "tp2":
+                continue
+            # 既にトレーリング済みならスキップ
+            if tag.get("trailed"):
+                continue
+            tp1 = tag.get("tp1")
+            entry_price = trade.entry_price
+            # BUY なら high>=tp1、SELL なら low<=tp1 で TP1 到達と判定
+            if trade.is_long:
+                if self.data.High[-1] >= tp1:
+                    new_sl = max(trade.sl or 0, entry_price)
+                    try:
+                        trade.sl = new_sl
+                        tag["trailed"] = True
+                    except Exception:
+                        pass
+            else:
+                if self.data.Low[-1] <= tp1:
+                    new_sl = min(trade.sl or float("inf"), entry_price)
+                    try:
+                        trade.sl = new_sl
+                        tag["trailed"] = True
+                    except Exception:
+                        pass
+
+        # --- 新規エントリー判定 ---
+        cross_up = ma_s_prev <= ma_l_prev and ma_s > ma_l
+        cross_dn = ma_s_prev >= ma_l_prev and ma_s < ma_l
+
+        if cross_up and rsi_v < self.rsi_overbought:
+            sl = entry - atr_v * self.atr_sl_mult
+            tp1 = entry + atr_v * self.atr_tp1_mult
+            tp2 = entry + atr_v * self.atr_tp2_mult
+            # 部分利確を 2 注文で表現
+            size1 = self.partial_ratio
+            size2 = 1.0 - self.partial_ratio
+            try:
+                self.buy(sl=sl, tp=tp1, size=size1, tag={"kind": "tp1"})
+                self.buy(sl=sl, tp=tp2, size=size2,
+                         tag={"kind": "tp2", "tp1": tp1, "trailed": False})
+            except Exception:
+                # サイズ調整失敗時は TP2 のみで通常エントリー
+                self.buy(sl=sl, tp=tp2)
+        elif cross_dn and rsi_v > self.rsi_oversold:
+            sl = entry + atr_v * self.atr_sl_mult
+            tp1 = entry - atr_v * self.atr_tp1_mult
+            tp2 = entry - atr_v * self.atr_tp2_mult
+            size1 = self.partial_ratio
+            size2 = 1.0 - self.partial_ratio
+            try:
+                self.sell(sl=sl, tp=tp1, size=size1, tag={"kind": "tp1"})
+                self.sell(sl=sl, tp=tp2, size=size2,
+                          tag={"kind": "tp2", "tp1": tp1, "trailed": False})
+            except Exception:
+                self.sell(sl=sl, tp=tp2)
 
 
 # ------------------------------------------------------------------

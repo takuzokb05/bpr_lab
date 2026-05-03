@@ -75,8 +75,18 @@ RSI_PERIOD: int = 14                   # RSI計算期間
 RSI_OVERBOUGHT: int = 70               # RSI買われすぎ閾値
 RSI_OVERSOLD: int = 30                 # RSI売られすぎ閾値
 ATR_PERIOD: int = 14                   # ATR計算期間
-ATR_MULTIPLIER: float = 2.0            # ATR損切り乗数
-MIN_RISK_REWARD: float = 2.0           # 最小リスクリワード比
+ATR_MULTIPLIER: float = 2.0            # ATR損切り乗数（旧: USE_ATR_BASED_TP=False時のフォールバック）
+MIN_RISK_REWARD: float = 2.0           # 最小リスクリワード比（旧: USE_ATR_BASED_TP=False時のフォールバック）
+
+# T3: ATR連動SL/TP + 段階的部分利確（researcher調査優先度1）
+# 高ボラペア（GBP_JPY等）の固定pips SLが早期切られの主因と推定。
+# SL=1.5×ATR, TP1=1.0×ATRで50%利確, TP2=3.0×ATRで残り。係数は保守的なスタンダード値。
+USE_ATR_BASED_TP: bool = True          # ATRベースSL/TP方式を有効化
+ATR_SL_MULT: float = 1.5               # SL = entry ± ATR × この値
+ATR_TP1_MULT: float = 1.0              # TP1 = entry ± ATR × この値（部分利確）
+ATR_TP2_MULT: float = 3.0              # TP2 = entry ± ATR × この値（残り全決済）
+PARTIAL_CLOSE_RATIO: float = 0.5       # TP1到達時の部分決済比率（0.5 = 50%）
+TRAILING_SL_TO_BREAKEVEN: bool = True  # TP1到達後にSLをエントリー付近にトレーリング
 
 # ADXフィルター（Phase 2 F15 追加）
 # STAGE2(2026-04-21): 本来値15.0に復帰
@@ -288,6 +298,30 @@ def validate_config() -> list[ConfigValidationError]:
         errors.append(ConfigValidationError(
             "MIN_RISK_REWARD",
             f"MIN_RISK_REWARDは正の値である必要があります。現在の値: {MIN_RISK_REWARD}"
+        ))
+
+    # T3: ATRベースSL/TPの係数チェック
+    for name, value in (
+        ("ATR_SL_MULT", ATR_SL_MULT),
+        ("ATR_TP1_MULT", ATR_TP1_MULT),
+        ("ATR_TP2_MULT", ATR_TP2_MULT),
+    ):
+        if value <= 0:
+            errors.append(ConfigValidationError(
+                name, f"{name}は正の値である必要があります。現在の値: {value}"
+            ))
+
+    if ATR_TP1_MULT >= ATR_TP2_MULT:
+        errors.append(ConfigValidationError(
+            "ATR_TP1_MULT",
+            f"ATR_TP1_MULT({ATR_TP1_MULT})はATR_TP2_MULT({ATR_TP2_MULT})より小さい必要があります。"
+        ))
+
+    if not (0 < PARTIAL_CLOSE_RATIO < 1):
+        errors.append(ConfigValidationError(
+            "PARTIAL_CLOSE_RATIO",
+            f"PARTIAL_CLOSE_RATIOは0〜1の範囲内（両端を含まない）である必要があります。"
+            f"現在の値: {PARTIAL_CLOSE_RATIO}"
         ))
 
     return errors

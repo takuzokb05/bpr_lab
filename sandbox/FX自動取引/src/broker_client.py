@@ -144,6 +144,50 @@ class BrokerClient(ABC):
         """
         return None
 
+    def partial_close_position(
+        self, trade_id: str, ratio: float
+    ) -> Optional[dict]:
+        """
+        指定ポジションを部分決済する（T3: 段階的部分利確）。
+
+        現在の volume の `ratio` (0.0–1.0) 分だけを反対売買で決済する。
+        デフォルト実装は None を返す（未対応ブローカー向け）。
+        Mt5Client 等でオーバーライドして実装する。
+
+        Args:
+            trade_id: 決済対象のトレードID
+            ratio: 決済比率（0.0 〜 1.0）。0.5 なら半分を決済。
+
+        Returns:
+            決済結果のdict。最低限以下を含む:
+                - "trade_id": str
+                - "closed_units": int  （実際に決済された units の絶対値）
+                - "remaining_units": int （部分決済後に残る units の絶対値）
+                - "close_price": float
+                - "realized_pl": float
+            未対応または ratio 不正時は None。
+        """
+        return None
+
+    def modify_position_sl(
+        self, trade_id: str, new_stop_loss: float
+    ) -> Optional[dict]:
+        """
+        ポジションの SL を変更する（T3: TP1 到達後のSLトレーリング用）。
+
+        デフォルト実装は None を返す（未対応ブローカー向け）。
+        Mt5Client 等でオーバーライドして実装する。
+
+        Args:
+            trade_id: 対象のトレードID
+            new_stop_loss: 新しい SL 価格
+
+        Returns:
+            修正結果のdict（最低限 "trade_id" と "stop_loss" を含む）。
+            未対応の場合は None。
+        """
+        return None
+
     def get_closed_deal(self, trade_id: str) -> Optional[dict]:
         """
         ブローカー側で既に決済済みのポジションの決済情報を取得する。
