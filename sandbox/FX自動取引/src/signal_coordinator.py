@@ -29,6 +29,15 @@ _CLAUDE_API_TIMEOUT = 10
 COORDINATION_WINDOW_SEC: float = 5.0  # シグナル集約ウィンドウ（秒）
 CORRELATION_LLM_ENABLED: bool = True  # LLM相関判断の有効/無効
 
+# 監査B7: register_signal のデフォルト待機時間は window_sec + LLM timeout + バッファ。
+# 旧実装は 10s 固定で、ウィンドウ5s + Claude API 10s = 15s に対して timeout が早く切れ、
+# LLM評価結果を待たずに「フォールバック承認」して発注 → 数秒後に拒否判定が出ても遅い、
+# というレース状態が発生していた。
+_REGISTER_SIGNAL_TIMEOUT_BUFFER_SEC: float = 2.0
+DEFAULT_REGISTER_TIMEOUT_SEC: float = (
+    COORDINATION_WINDOW_SEC + _CLAUDE_API_TIMEOUT + _REGISTER_SIGNAL_TIMEOUT_BUFFER_SEC
+)
+
 _SYSTEM_PROMPT = """\
 あなたはFXポートフォリオマネージャーです。
 複数通貨ペアの同時シグナルを評価し、相関リスクを判断します。
@@ -86,7 +95,7 @@ class SignalCoordinator:
         instrument: str,
         signal: str,
         adx: float = 0.0,
-        timeout: float = 10.0,
+        timeout: Optional[float] = None,
     ) -> bool:
         """
         シグナルを登録し、相関評価結果を待つ。
@@ -102,6 +111,13 @@ class SignalCoordinator:
         """
         if not self._llm_enabled or not ANTHROPIC_API_KEY:
             return True  # LLM無効時は常に承認
+
+        # 監査B7: timeout 未指定なら window_sec + LLM API timeout + バッファ から自動算出
+        if timeout is None:
+            timeout = (
+                self._window_sec + _CLAUDE_API_TIMEOUT
+                + _REGISTER_SIGNAL_TIMEOUT_BUFFER_SEC
+            )
 
         pending = PendingSignal(
             instrument=instrument,
