@@ -1,0 +1,82 @@
+# ========================================================================
+# ペア別パラメータ設定（T4: 時間帯フィルター + ペア別パラメータ分離）
+# ========================================================================
+#
+# 各通貨ペアについて、以下を定義する:
+#   - allowed_sessions: 取引許可時間帯（JST、HH:MM形式、跨日OK）
+#   - rsi_oversold / rsi_overbought: RSI閾値
+#   - adx_threshold: ADXトレンド判定閾値
+#   - atr_sl_mult: ATR ストップロス倍率（T3 ATR連動と統合予定）
+#   - atr_tp1_mult: ATR 第1利確倍率（T3 ATR連動と統合予定）
+#   - atr_tp2_mult: ATR 第2利確倍率（T3 ATR連動と統合予定）
+#
+# 時間帯ルールはresearcher調査「優先度2」に基づく。
+# JST = UTC+9。ロンドン市場は通常JST 17:00-翌02:00（夏時間: 16:00-翌01:00）。
+# NY市場は通常JST 22:00-翌07:00（夏時間: 21:00-翌06:00）。
+#
+# 跨日時間帯（例: start=21:00, end=02:00）は session_filter で正しく処理される。
+# ========================================================================
+
+EUR_USD:
+  allowed_sessions:
+    - {start: "21:00", end: "02:00", label: "LDN-NY"}
+  rsi_oversold: 30
+  rsi_overbought: 70
+  adx_threshold: 25
+  atr_sl_mult: 1.5
+  atr_tp1_mult: 1.0
+  atr_tp2_mult: 3.0
+
+USD_JPY:
+  allowed_sessions:
+    - {start: "09:00", end: "11:00", label: "Tokyo-AM"}
+    - {start: "21:00", end: "02:00", label: "LDN-NY"}
+  rsi_oversold: 30
+  rsi_overbought: 70
+  adx_threshold: 20
+  atr_sl_mult: 1.5
+  atr_tp1_mult: 1.0
+  atr_tp2_mult: 3.0
+
+GBP_JPY:
+  allowed_sessions:
+    - {start: "16:00", end: "17:00", label: "Tokyo-LDN"}
+    - {start: "21:00", end: "02:00", label: "LDN-NY"}
+  rsi_oversold: 25
+  rsi_overbought: 75
+  adx_threshold: 25
+  # 高ボラなのでSL広め
+  atr_sl_mult: 2.0
+  atr_tp1_mult: 1.5
+  atr_tp2_mult: 4.0
+
+AUD_USD:
+  allowed_sessions:
+    - {start: "09:00", end: "15:00", label: "Tokyo-Sydney"}
+  rsi_oversold: 30
+  rsi_overbought: 70
+  adx_threshold: 25
+  atr_sl_mult: 1.5
+  atr_tp1_mult: 1.0
+  atr_tp2_mult: 3.0
+
+GBP_USD:
+  allowed_sessions:
+    - {start: "21:00", end: "02:00", label: "LDN-NY"}
+  rsi_oversold: 30
+  rsi_overbought: 70
+  adx_threshold: 25
+  atr_sl_mult: 1.8
+  atr_tp1_mult: 1.2
+  atr_tp2_mult: 3.5
+
+EUR_JPY:
+  allowed_sessions:
+    - {start: "16:00", end: "17:00", label: "Tokyo-LDN"}
+    - {start: "21:00", end: "02:00", label: "LDN-NY"}
+  rsi_oversold: 30
+  rsi_overbought: 70
+  adx_threshold: 25
+  atr_sl_mult: 1.8
+  atr_tp1_mult: 1.2
+  atr_tp2_mult: 3.5

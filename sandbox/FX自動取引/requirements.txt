@@ -20,6 +20,9 @@ requests>=2.28.0
 # === 環境変数管理 ===
 python-dotenv>=1.0.0
 
+# === 設定ファイル（pair_config.yaml） ===
+PyYAML>=6.0
+
 # === データベース ===
 # SQLiteはPython標準ライブラリに含まれる
 
