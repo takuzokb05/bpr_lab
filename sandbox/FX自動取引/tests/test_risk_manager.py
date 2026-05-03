@@ -50,7 +50,7 @@ class TestPositionSizing:
         assert lot_size == pytest.approx(1_000_000 * MAX_RISK_PER_TRADE / (50 * 10.0))
 
     def test_different_balance_and_sl(self):
-        """異なる残高・SL幅での計算を検証（EUR_USD pip_value=12.0）"""
+        """異なる残高・SL幅での計算を検証（EUR_USD: USD quote → pip_value=15.6）"""
         from src.config import MAX_RISK_PER_TRADE
 
         rm = RiskManager(account_balance=500_000)
@@ -59,7 +59,8 @@ class TestPositionSizing:
             stop_loss_pips=30,
             instrument="EUR_USD",
         )
-        assert lot_size == pytest.approx(500_000 * MAX_RISK_PER_TRADE / (30 * 12.0))
+        # broker_client なし → 静的フォールバック USD=156.0 で pip_value=15.6
+        assert lot_size == pytest.approx(500_000 * MAX_RISK_PER_TRADE / (30 * 15.6))
 
     def test_drawdown_reduce_halves_lot(self):
         """ドローダウン REDUCE レベル（10%）でポジションサイズが半減する"""
@@ -738,14 +739,16 @@ class TestDynamicPipValue:
         assert pip_value == pytest.approx(10.0)
 
     def test_fallback_no_broker_client_non_jpy(self):
-        """broker_client未設定時のフォールバック（非JPYペア → 固定値12.0）"""
+        """broker_client未設定時のフォールバック（EUR_USD → quote=USD の静的レート 156.0）"""
         rm = RiskManager(account_balance=1_000_000)  # broker_client=None
 
+        # EUR_USD: quote=USD → _FALLBACK_QUOTE_TO_JPY['USD']=156.0
+        # pip_value = 0.0001 * 1000 * 156.0 = 15.6
         pip_value = rm._get_pip_value("EUR_USD")
-        assert pip_value == pytest.approx(12.0)
+        assert pip_value == pytest.approx(15.6)
 
     def test_fallback_broker_api_failure(self):
-        """ブローカーAPI失敗時のフォールバック（非JPYペア → 固定値12.0）"""
+        """ブローカーAPI失敗時のフォールバック（EUR_USD → 静的レート 156.0）"""
         from unittest.mock import MagicMock
 
         mock_broker = MagicMock()
@@ -753,23 +756,53 @@ class TestDynamicPipValue:
         rm = RiskManager(account_balance=1_000_000, broker_client=mock_broker)
 
         pip_value = rm._get_pip_value("EUR_USD")
-        assert pip_value == pytest.approx(12.0)
+        assert pip_value == pytest.approx(15.6)
 
     def test_fallback_rate_zero(self):
-        """取得レート0の場合のフォールバック（異常値 → 固定値12.0）"""
+        """取得レート0の場合のフォールバック（異常値 → 静的レート 156.0）"""
         mock_broker = self._make_mock_broker(0.0)
         rm = RiskManager(account_balance=1_000_000, broker_client=mock_broker)
 
         pip_value = rm._get_pip_value("EUR_USD")
-        assert pip_value == pytest.approx(12.0)
+        assert pip_value == pytest.approx(15.6)
 
     def test_fallback_rate_negative(self):
-        """取得レートが負の場合のフォールバック（異常値 → 固定値12.0）"""
+        """取得レートが負の場合のフォールバック（異常値 → 静的レート 156.0）"""
         mock_broker = self._make_mock_broker(-100.0)
         rm = RiskManager(account_balance=1_000_000, broker_client=mock_broker)
 
         pip_value = rm._get_pip_value("EUR_USD")
-        assert pip_value == pytest.approx(12.0)
+        assert pip_value == pytest.approx(15.6)
+
+    def test_fallback_uses_cached_rate_when_available(self):
+        """直近成功した live レートが優先される（静的フォールバックより新鮮）"""
+        import pandas as pd
+        from unittest.mock import MagicMock
+
+        mock_broker = MagicMock()
+        # 1 回目は成功（USD=148）
+        mock_broker.get_prices.return_value = pd.DataFrame({"close": [148.0]})
+        rm = RiskManager(account_balance=1_000_000, broker_client=mock_broker)
+        rm._get_pip_value("EUR_USD")  # → cache に USD=148 が入る
+        assert rm._live_jpy_rate_cache["USD"] == 148.0
+
+        # 2 回目は失敗 → cache を使う
+        mock_broker.get_prices.side_effect = ConnectionError("net down")
+        pip_value = rm._get_pip_value("EUR_USD")
+        # 0.0001 * 1000 * 148.0 = 14.8 (cached value used, NOT 156.0)
+        assert pip_value == pytest.approx(14.8)
+
+    def test_fallback_unknown_quote_currency(self):
+        """登録されていない quote currency は USD 同等値 (15.6) フォールバック"""
+        from unittest.mock import MagicMock
+
+        mock_broker = MagicMock()
+        mock_broker.get_prices.side_effect = ConnectionError("net down")
+        rm = RiskManager(account_balance=1_000_000, broker_client=mock_broker)
+
+        # ZAR (南アフリカランド) は _FALLBACK_QUOTE_TO_JPY に未登録
+        pip_value = rm._get_pip_value("EUR_ZAR")
+        assert pip_value == pytest.approx(15.6)
 
     def test_calculate_position_size_uses_dynamic_pip_value(self):
         """calculate_position_sizeが動的pip_valueを使用することの確認"""
@@ -793,13 +826,13 @@ class TestDynamicPipValue:
 
         rm = RiskManager(account_balance=1_000_000)  # broker_client=None
 
-        # フォールバック pip_value=12.0 で計算
+        # EUR_USD: quote=USD → pip_value = 0.0001 * 1000 * 156.0 = 15.6
         lot_size = rm.calculate_position_size(
             balance=1_000_000,
             stop_loss_pips=50,
             instrument="EUR_USD",
         )
-        expected = 1_000_000 * MAX_RISK_PER_TRADE / (50 * 12.0)
+        expected = 1_000_000 * MAX_RISK_PER_TRADE / (50 * 15.6)
         assert lot_size == pytest.approx(expected)
 
     def test_backward_compatibility_init_without_broker(self):
