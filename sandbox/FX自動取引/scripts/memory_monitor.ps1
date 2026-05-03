@@ -15,4 +15,4 @@ if ($py) {
 } else {
     $line = "$ts py_pid=NONE os_free_mb=$freeMB os_used_pct=$usedPct term_alive=$termAlive"
 }
-Add-Content -Path 'C:\bpr_lab\fx_trading\data\memory_monitor.log' -Value $line -Encoding UTF8
+Add-Content -Path 'C:\bpr_lab\sandbox\FX自動取引\data\memory_monitor.log' -Value $line -Encoding UTF8
