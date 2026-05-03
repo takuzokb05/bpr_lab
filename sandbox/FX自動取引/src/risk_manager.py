@@ -267,6 +267,11 @@ class RiskManager:
         self._peak_balance = account_balance
         self._broker_client = broker_client
         self.kill_switch = KillSwitch(db_path=db_path)
+        # 直近成功した quote_currency → JPY レートのキャッシュ。
+        # broker 一時失敗時のフォールバック優先順位:
+        #   1. このキャッシュ（最新成功値）  2. 静的 _FALLBACK_QUOTE_TO_JPY
+        # インスタンス属性にしてプロセス間で共有しない（テスト独立性のため）。
+        self._live_jpy_rate_cache: dict[str, float] = {}
 
     @property
     def account_balance(self) -> float:
@@ -782,9 +787,58 @@ class RiskManager:
     # 6. pip値取得（通貨ペア依存）
     # ------------------------------------------------------------------
 
-    # Phase 1 フォールバック固定値
+    # フォールバック値（broker 取得失敗時のみ使用、CRITICAL ログ + できれば通知）
+    # 旧来の単一定数 12.0 は USD≈120 円時代の値で、現代相場 (USD≈156) では
+    # 23% 過小評価 → ロット過大計算リスク。決済通貨別に最近相場を反映する。
+    # 値は 2026-05 時点の参考レンジ。クォート通貨でルックアップする。
     _FALLBACK_PIP_VALUE_JPY = 10.0
-    _FALLBACK_PIP_VALUE_NON_JPY = 12.0
+    _FALLBACK_QUOTE_TO_JPY: dict[str, float] = {
+        "USD": 156.0,
+        "EUR": 170.0,
+        "GBP": 195.0,
+        "AUD": 100.0,
+        "NZD": 90.0,
+        "CHF": 175.0,
+        "CAD": 110.0,
+    }
+    # 上記辞書にもない場合の最終 fallback（USD 同等を仮定）
+    _FALLBACK_PIP_VALUE_NON_JPY_DEFAULT = 0.0001 * 1000 * 156.0  # = 15.6
+
+    def _fallback_pip_value_non_jpy(self, quote_currency: str, lot_size: int) -> float:
+        """フォールバック pip_value を計算する。CRITICAL ログを記録。
+
+        優先順位:
+          1. _live_jpy_rate_cache (直近成功した quote→JPY レート)
+          2. _FALLBACK_QUOTE_TO_JPY (静的デフォルト)
+          3. _FALLBACK_PIP_VALUE_NON_JPY_DEFAULT (最終フォールバック)
+        """
+        cached = self._live_jpy_rate_cache.get(quote_currency)
+        if cached is not None:
+            value = 0.0001 * lot_size * cached
+            logger.critical(
+                "pip_value フォールバック発動（キャッシュ使用）: "
+                "quote=%s, cached_jpy_rate=%.3f, pip_value=%.2f",
+                quote_currency, cached, value,
+            )
+            return value
+
+        rate = self._FALLBACK_QUOTE_TO_JPY.get(quote_currency)
+        if rate is not None:
+            value = 0.0001 * lot_size * rate
+            logger.critical(
+                "pip_value フォールバック発動（静的デフォルト使用）: "
+                "quote=%s, fallback_jpy_rate=%.1f, pip_value=%.2f。"
+                "broker からのレート取得不能 — 監視要。",
+                quote_currency, rate, value,
+            )
+            return value
+
+        logger.critical(
+            "pip_value 最終フォールバック発動: quote=%s が未登録、"
+            "USD 同等値 %.2f を使用。ロット計算が不正確な可能性大。",
+            quote_currency, self._FALLBACK_PIP_VALUE_NON_JPY_DEFAULT,
+        )
+        return self._FALLBACK_PIP_VALUE_NON_JPY_DEFAULT
 
     def _get_pip_value(self, instrument: str, lot_size: int = 1000) -> float:
         """
@@ -821,14 +875,6 @@ class RiskManager:
 
         # --- 非JPYペア: 決済通貨のJPYレートが必要 ---
 
-        # broker_client未設定 → フォールバック
-        if self._broker_client is None:
-            logger.debug(
-                "broker_client未設定のためフォールバック値を使用: instrument=%s, pip_value=%.1f",
-                instrument, self._FALLBACK_PIP_VALUE_NON_JPY,
-            )
-            return self._FALLBACK_PIP_VALUE_NON_JPY
-
         # 決済通貨を特定（ペア後半3文字: EUR_USD → USD）
         parts = instrument.upper().replace(" ", "").split("_")
         if len(parts) != 2 or len(parts[1]) < 3:
@@ -836,10 +882,18 @@ class RiskManager:
                 "通貨ペアフォーマットが不正: %s。フォールバック値を使用。",
                 instrument,
             )
-            return self._FALLBACK_PIP_VALUE_NON_JPY
+            return self._fallback_pip_value_non_jpy("USD", lot_size)
 
         quote_currency = parts[1][:3]
         rate_instrument = f"{quote_currency}_JPY"
+
+        # broker_client未設定 → フォールバック
+        if self._broker_client is None:
+            logger.debug(
+                "broker_client未設定のためフォールバック使用: instrument=%s, quote=%s",
+                instrument, quote_currency,
+            )
+            return self._fallback_pip_value_non_jpy(quote_currency, lot_size)
 
         try:
             # ブローカーから最新レートを取得（M1足1本）
@@ -849,10 +903,13 @@ class RiskManager:
             # 異常値チェック: レートが0以下は無効
             if jpy_rate <= 0:
                 logger.error(
-                    "取得した為替レートが異常値（0以下）: %s = %.6f。フォールバック値を使用。",
+                    "取得した為替レートが異常値（0以下）: %s = %.6f。フォールバック使用。",
                     rate_instrument, jpy_rate,
                 )
-                return self._FALLBACK_PIP_VALUE_NON_JPY
+                return self._fallback_pip_value_non_jpy(quote_currency, lot_size)
+
+            # 成功時はキャッシュ更新（次回フォールバック時に最新値を使える）
+            self._live_jpy_rate_cache[quote_currency] = jpy_rate
 
             pip_value = 0.0001 * lot_size * jpy_rate
             logger.debug(
@@ -865,9 +922,9 @@ class RiskManager:
         except Exception as e:
             # レート取得失敗 → フォールバック + WARNING（スタックトレース付き）
             logger.warning(
-                "為替レート取得失敗。フォールバック値を使用: instrument=%s, "
+                "為替レート取得失敗。フォールバック使用: instrument=%s, "
                 "rate_instrument=%s, error=%s",
                 instrument, rate_instrument, e,
                 exc_info=True,
             )
-            return self._FALLBACK_PIP_VALUE_NON_JPY
+            return self._fallback_pip_value_non_jpy(quote_currency, lot_size)
