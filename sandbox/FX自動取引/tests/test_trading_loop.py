@@ -20,6 +20,26 @@ from src.strategy.base import Signal, StrategyBase
 from src.trading_loop import TradingLoop, TradingLoopError
 
 
+# T4導入後の互換: 既存テストはセッション時間外でも実行されるため
+# is_in_allowed_session を常時 True にパッチする。
+# ペア別ADX閾値も既存テストでは0として無効化する。
+@pytest.fixture(autouse=True)
+def _bypass_t4_filters():
+    fake_pair_cfg = {
+        "allowed_sessions": [],
+        "rsi_oversold": 30,
+        "rsi_overbought": 70,
+        "adx_threshold": 0,  # 既存テストではADX閾値を無効化
+        "atr_sl_mult": 2.0,
+        "atr_tp1_mult": 1.0,
+        "atr_tp2_mult": 3.0,
+    }
+    with patch("src.trading_loop.is_in_allowed_session", return_value=True), \
+         patch("src.trading_loop.get_active_session_label", return_value="TEST"), \
+         patch("src.trading_loop.get_pair_config", return_value=fake_pair_cfg):
+        yield
+
+
 # ============================================================
 # テスト用ヘルパー
 # ============================================================
@@ -433,3 +453,105 @@ class TestLoopControl:
         # evaluate_kill_switch が正しい残高で呼ばれたこと
         call_args = rm.evaluate_kill_switch.call_args
         assert call_args.kwargs["current_balance"] == 900_000
+
+
+# ============================================================
+# 6. T4: 時間帯フィルター・ペア別パラメータ統合テスト
+# ============================================================
+
+
+class TestT4SessionAndPairFilters:
+    """T4: trading_loop 統合 — 時間帯フィルター + ペア別ADX閾値"""
+
+    def test_outside_session_skips_signal(self):
+        """時間帯外なら戦略のシグナル生成すら呼ばれずスキップ"""
+        pm = _make_mock_position_manager()
+        strategy = _make_mock_strategy(signal=Signal.BUY)
+
+        fake_pair_cfg = {
+            "allowed_sessions": [{"start": "09:00", "end": "15:00",
+                                  "label": "Tokyo"}],
+            "rsi_oversold": 30, "rsi_overbought": 70, "adx_threshold": 0,
+            "atr_sl_mult": 2.0, "atr_tp1_mult": 1.0, "atr_tp2_mult": 3.0,
+        }
+
+        with patch("src.trading_loop.is_in_allowed_session", return_value=False), \
+             patch("src.trading_loop.get_pair_config",
+                   return_value=fake_pair_cfg):
+            loop = TradingLoop(
+                broker_client=_make_mock_broker(),
+                position_manager=pm,
+                risk_manager=_make_mock_risk_manager(),
+                strategy=strategy,
+                instrument="EUR_USD",
+                check_interval_sec=60,
+            )
+            result = loop.run_once()
+
+        assert result is None
+        # 時間帯外なら戦略は呼ばれない
+        strategy.generate_signal.assert_not_called()
+        pm.open_position.assert_not_called()
+
+    def test_inside_session_proceeds(self):
+        """時間帯内なら通常通り戦略まで進む"""
+        pm = _make_mock_position_manager()
+        strategy = _make_mock_strategy(signal=Signal.BUY)
+
+        fake_pair_cfg = {
+            "allowed_sessions": [{"start": "00:00", "end": "23:59",
+                                  "label": "ALL"}],
+            "rsi_oversold": 30, "rsi_overbought": 70, "adx_threshold": 0,
+            "atr_sl_mult": 2.0, "atr_tp1_mult": 1.0, "atr_tp2_mult": 3.0,
+        }
+
+        with patch("src.trading_loop.is_in_allowed_session", return_value=True), \
+             patch("src.trading_loop.get_pair_config",
+                   return_value=fake_pair_cfg):
+            loop = TradingLoop(
+                broker_client=_make_mock_broker(),
+                position_manager=pm,
+                risk_manager=_make_mock_risk_manager(),
+                strategy=strategy,
+                instrument="EUR_USD",
+                check_interval_sec=60,
+            )
+            loop.run_once()
+
+        # 戦略が呼ばれること（時間帯内）
+        strategy.generate_signal.assert_called_once()
+        # pair_config がkwargsで渡ること
+        call_kwargs = strategy.generate_signal.call_args.kwargs
+        assert "pair_config" in call_kwargs
+        assert call_kwargs["pair_config"]["adx_threshold"] == 0
+
+    def test_pair_adx_threshold_blocks_low_adx_signal(self):
+        """ペア別 ADX 閾値が高ければ低ADXシグナルはスキップ"""
+        # フラットOHLCV → ADXは0近辺。閾値50 → スキップされる
+        pm = _make_mock_position_manager()
+        strategy = _make_mock_strategy(signal=Signal.BUY)
+
+        fake_pair_cfg = {
+            "allowed_sessions": [{"start": "00:00", "end": "23:59",
+                                  "label": "ALL"}],
+            "rsi_oversold": 30, "rsi_overbought": 70,
+            "adx_threshold": 99.0,  # 実用上絶対超えない値
+            "atr_sl_mult": 2.0, "atr_tp1_mult": 1.0, "atr_tp2_mult": 3.0,
+        }
+
+        with patch("src.trading_loop.is_in_allowed_session", return_value=True), \
+             patch("src.trading_loop.get_pair_config",
+                   return_value=fake_pair_cfg):
+            loop = TradingLoop(
+                broker_client=_make_mock_broker(),
+                position_manager=pm,
+                risk_manager=_make_mock_risk_manager(),
+                strategy=strategy,
+                instrument="EUR_USD",
+                check_interval_sec=60,
+            )
+            result = loop.run_once()
+
+        # 戦略は呼ばれるがpair ADXフィルターでブロックされ open されない
+        assert result is None
+        pm.open_position.assert_not_called()

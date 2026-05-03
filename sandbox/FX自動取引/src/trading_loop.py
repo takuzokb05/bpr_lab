@@ -20,9 +20,11 @@ from src.config import ATR_PERIOD, BEAR_RESEARCHER_ENABLED, MAIN_TIMEFRAME
 from src.conviction_scorer import ConvictionScorer
 from src.indicator_cache import compute_indicators
 from src.notifier_group import NotifierGroup
+from src.pair_config import get_pair_config
 from src.position_manager import PositionManager
 from src.regime_detector import RegimeDetector
 from src.risk_manager import RiskManager
+from src.session_filter import get_active_session_label, is_in_allowed_session
 from src.signal_coordinator import SignalCoordinator
 from src.strategy.base import Signal, StrategyBase
 
@@ -360,11 +362,26 @@ class TradingLoop:
         self, data: pd.DataFrame, indicators: dict
     ) -> Optional[tuple]:
         """
-        シグナルパイプライン: レジーム→戦略→conviction→AI→Bear。
+        シグナルパイプライン: 時間帯フィルター→レジーム→戦略→conviction→AI→Bear。
 
         Returns:
             (signal, combined_multiplier, conviction, regime_info) または None
         """
+        # 0. 時間帯フィルター（T4）: 許可セッション外ならスキップ
+        if not is_in_allowed_session(self._instrument):
+            logger.info(
+                "[%s] 時間帯フィルター: 許可セッション外のためシグナル生成をスキップ",
+                self._instrument,
+            )
+            return None
+        active_label = get_active_session_label(self._instrument)
+        logger.debug(
+            "[%s] アクティブセッション: %s", self._instrument, active_label,
+        )
+
+        # ペア別設定（T4）: 後続のフィルターで参照
+        pair_cfg = get_pair_config(self._instrument)
+
         # 6. レジーム検出
         regime_info = self._regime_detector.detect(data, indicators=indicators)
         logger.info(
@@ -385,14 +402,27 @@ class TradingLoop:
             )
             return None
 
-        # 7. シグナル生成
-        signal = self._strategy.generate_signal(data, indicators=indicators)
+        # 7. シグナル生成（pair_cfg は将来の戦略側オーバーライド用に渡す）
+        signal = self._strategy.generate_signal(
+            data, indicators=indicators, pair_config=pair_cfg,
+        )
 
         if signal not in (Signal.BUY, Signal.SELL):
             logger.debug(
                 "[%s] HOLDシグナル: iteration=%d",
                 self._instrument,
                 self._iteration_count + 1,
+            )
+            return None
+
+        # ペア別ADXフィルター（T4）: ペア別 adx_threshold を満たさなければスキップ
+        pair_adx_threshold = pair_cfg.get("adx_threshold")
+        if pair_adx_threshold is not None and regime_info.adx < pair_adx_threshold:
+            logger.info(
+                "[%s] ペア別ADXフィルター: ADX=%.1f < 閾値=%.1f → スキップ",
+                self._instrument,
+                regime_info.adx,
+                pair_adx_threshold,
             )
             return None
 
