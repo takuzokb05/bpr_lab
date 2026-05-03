@@ -18,6 +18,7 @@ from src.config import (
     ATR_PERIOD,
     MA_LONG_PERIOD,
     MA_SHORT_PERIOD,
+    MA_TREND_PERIOD,
     MFI_PERIOD,
     REGIME_BBW_SQUEEZE_RATIO,
     RSI_PERIOD,
@@ -42,6 +43,7 @@ def compute_indicators(data: pd.DataFrame) -> dict:
         "atr": None,
         "ma_short": None,
         "ma_long": None,
+        "ma_trend": None,
         "mfi": None,
         # DataFrame
         "adx_df": None,
@@ -55,6 +57,7 @@ def compute_indicators(data: pd.DataFrame) -> dict:
         "ma_long_current": None,
         "ma_short_prev": None,
         "ma_long_prev": None,
+        "ma_trend_current": None,
         "atr_ratio": None,
         "bbw_ratio": None,
     }
@@ -120,6 +123,17 @@ def compute_indicators(data: pd.DataFrame) -> dict:
                     cache["ma_long_prev"] = float(prev_val)
     except Exception as e:
         logger.warning("指標キャッシュ: MA長期計算失敗: %s", e)
+
+    # --- MAトレンド（MA200）— RsiPullback等が参照 ---
+    try:
+        ma_trend = ta.sma(data["close"], length=MA_TREND_PERIOD)
+        if ma_trend is not None:
+            cache["ma_trend"] = ma_trend
+            last_val = ma_trend.iloc[-1]
+            if not pd.isna(last_val):
+                cache["ma_trend_current"] = float(last_val)
+    except Exception as e:
+        logger.warning("指標キャッシュ: MAトレンド計算失敗: %s", e)
 
     # --- ADX ---
     try:

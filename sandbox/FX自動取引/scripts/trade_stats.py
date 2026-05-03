@@ -41,7 +41,8 @@ def reconcile_from_mt5(hours: int) -> int:
         print(f"MT5初期化失敗: {mt5.last_error()}")
         return 0
 
-    to_date = datetime.now()
+    # MT5 history_deals_get は サーバUTC基準 を期待するため必ず aware UTC を渡す
+    to_date = datetime.now(timezone.utc)
     from_date = to_date - timedelta(hours=hours)
     deals = mt5.history_deals_get(from_date, to_date) or []
 

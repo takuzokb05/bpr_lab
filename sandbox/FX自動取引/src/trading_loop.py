@@ -320,7 +320,7 @@ class TradingLoop:
         self._position_manager.sync_with_broker()
 
         # 5. 価格データ取得
-        # MA200（MTFPullback）に必要なので300本取得
+        # MA200（RsiPullback）に必要なので300本取得
         data = self._broker_client.get_prices(
             self._instrument, 300, self._granularity
         )
@@ -402,7 +402,9 @@ class TradingLoop:
             )
             return None
 
-        # 7. シグナル生成（pair_cfg は将来の戦略側オーバーライド用に渡す）
+        # 7. シグナル生成
+        # pair_cfg を戦略に渡し、戦略側で rsi_oversold/rsi_overbought をオーバーライドさせる。
+        # （RsiPullback / BollingerReversal が pair_config kwarg をサポート）
         signal = self._strategy.generate_signal(
             data, indicators=indicators, pair_config=pair_cfg,
         )

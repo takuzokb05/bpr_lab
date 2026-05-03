@@ -4,7 +4,7 @@ try:
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 except Exception:
     pass
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 import MetaTrader5 as mt5
 
@@ -20,7 +20,8 @@ for p in positions:
           f"type={p.type} profit={p.profit}")
 
 # 過去24時間の約定履歴（読み取り専用API）
-to_date = datetime.now()
+# MT5 history_deals_get は サーバUTC基準 を期待するため必ず aware UTC を渡す
+to_date = datetime.now(timezone.utc)
 from_date = to_date - timedelta(hours=24)
 deals = mt5.history_deals_get(from_date, to_date) or []
 print(f"\n--- 過去24h deals: {len(deals)}件 ---")

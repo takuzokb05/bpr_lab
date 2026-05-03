@@ -68,6 +68,9 @@ class PositionManager:
         self._postmortem = TradePostMortem(db_path=db_path)
         if db_path is not None:
             self._init_trades_db()
+            # bot再起動後でも月次/週次の損失上限が有効に機能するよう、
+            # DBから直近30日の決済履歴をメモリに復元する
+            self._load_trade_history_from_db()
 
     # ------------------------------------------------------------------
     # SQLite 永続化
@@ -709,6 +712,16 @@ class PositionManager:
             if broker_only:
                 for orphan_id in broker_only:
                     broker_pos = broker_pos_map[orphan_id]
+                    # ブローカー側の約定時刻を優先採用。取れなければ「同期した今」にフォールバック。
+                    # フォールバックすると statistics の保有期間や日次集計が嘘になるため警告ログを出す。
+                    broker_time_open = broker_pos.get("time_open")
+                    if broker_time_open is None:
+                        broker_time_open = datetime.now(timezone.utc)
+                        logger.warning(
+                            "ブローカー取り込み: time_open不明のため『同期した今』を使用 "
+                            "(統計の保有期間が不正確になる可能性): trade_id=%s",
+                            orphan_id,
+                        )
                     position = {
                         "trade_id": orphan_id,
                         "instrument": broker_pos["instrument"],
@@ -719,7 +732,7 @@ class PositionManager:
                         "take_profit": float(
                             broker_pos.get("take_profit", 0.0) or 0.0
                         ),
-                        "opened_at": datetime.now(timezone.utc),
+                        "opened_at": broker_time_open,
                         "unrealized_pl": float(broker_pos.get("unrealized_pl", 0.0)),
                     }
                     self._open_positions.append(position)
@@ -785,3 +798,57 @@ class PositionManager:
             t for t in self._trade_history
             if t.get("close_time", t.get("opened_at")) > cutoff
         ]
+
+    def _load_trade_history_from_db(self) -> None:
+        """bot起動時にDBから直近30日のクローズ済トレードを _trade_history に復元する。
+
+        起動直後の月次/週次損失上限チェックがメモリの空状態で誤通過しないようにする。
+        """
+        if self._db_path is None:
+            return
+        cutoff = datetime.now(timezone.utc) - timedelta(days=30)
+        cutoff_iso = cutoff.isoformat()
+        try:
+            with sqlite3.connect(str(self._db_path)) as conn:
+                rows = conn.execute(
+                    """
+                    SELECT trade_id, instrument, units, open_price,
+                           close_price, pl, opened_at, closed_at
+                    FROM trades
+                    WHERE status = 'closed'
+                      AND closed_at IS NOT NULL
+                      AND closed_at >= ?
+                    ORDER BY closed_at ASC
+                    """,
+                    (cutoff_iso,),
+                ).fetchall()
+        except sqlite3.Error as e:
+            logger.warning("trade_history のDB復元に失敗: %s", e)
+            return
+
+        loaded = 0
+        for trade_id, instrument, units, open_price, close_price, pl, opened_at, closed_at in rows:
+            try:
+                opened_dt = datetime.fromisoformat(opened_at) if opened_at else None
+                closed_dt = datetime.fromisoformat(closed_at) if closed_at else None
+            except ValueError as e:
+                logger.warning("trade_history 復元中に時刻パース失敗 trade_id=%s: %s", trade_id, e)
+                continue
+            self._trade_history.append({
+                "trade_id": trade_id,
+                "instrument": instrument,
+                "units": units,
+                "open_price": open_price,
+                "close_price": close_price if close_price is not None else 0.0,
+                "pl": pl if pl is not None else 0.0,
+                "pl_unknown": pl is None,
+                "opened_at": opened_dt,
+                "close_time": closed_dt,
+            })
+            loaded += 1
+
+        if loaded > 0:
+            logger.info(
+                "trade_history をDBから復元: %d件 (cutoff=%s)",
+                loaded, cutoff_iso,
+            )

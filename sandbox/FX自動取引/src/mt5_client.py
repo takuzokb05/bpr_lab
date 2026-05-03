@@ -9,6 +9,7 @@ FX自動取引システム — MetaTrader 5 ブローカークライアント
 import logging
 import math
 import time
+from datetime import datetime, timezone
 from typing import Optional
 
 import MetaTrader5 as mt5
@@ -327,6 +328,32 @@ class Mt5Client(BrokerClient):
         }
 
     # ================================================================
+    # 市場情報
+    # ================================================================
+
+    def get_spread(self, instrument: str) -> Optional[float]:
+        """現在のbid-askスプレッドを取得する。
+
+        キルスイッチのスプレッド監視に使われる。tickが取れない/負の値の場合は
+        None を返し、呼び出し側は前回値を継続使用する。
+
+        Args:
+            instrument: 通貨ペア（例: "USD_JPY"）
+
+        Returns:
+            スプレッド（ask - bid、価格差）。取得不能の場合は None。
+        """
+        symbol = to_mt5_symbol(instrument)
+        tick = mt5.symbol_info_tick(symbol)
+        if tick is None:
+            return None
+        spread = float(tick.ask) - float(tick.bid)
+        if spread < 0:
+            # 異常tick（bid > ask）は破棄
+            return None
+        return spread
+
+    # ================================================================
     # ポジション管理
     # ================================================================
 
@@ -353,12 +380,23 @@ class Mt5Client(BrokerClient):
             if pos.type == 1:  # SELL
                 units = -units
 
+            # MT5 の pos.time は約定時刻（サーバUTC秒）。aware UTC datetime に変換。
+            time_open = None
+            try:
+                time_open = datetime.fromtimestamp(int(pos.time), tz=timezone.utc)
+            except (TypeError, ValueError, OSError):
+                # MT5 mock や異常値の場合は None のままにして、呼び出し側がフォールバック
+                time_open = None
+
             result.append({
                 "trade_id": str(pos.ticket),
                 "instrument": from_mt5_symbol(pos.symbol),
                 "units": units,
                 "unrealized_pl": pos.profit,
                 "price_open": pos.price_open,
+                "stop_loss": float(pos.sl) if pos.sl else 0.0,
+                "take_profit": float(pos.tp) if pos.tp else 0.0,
+                "time_open": time_open,
             })
 
         return result

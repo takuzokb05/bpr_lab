@@ -487,7 +487,8 @@ def fetch_economic_calendar() -> list[dict]:
         logger.info("SOCIALDATA_API_KEY未設定のため経済カレンダー取得スキップ")
         return []
 
-    today = datetime.now().strftime("%Y-%m-%d")
+    # VPSロケール非依存にする（UTCで日付確定）
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     queries = [
         f'("経済指標" OR "重要指標") (FOMC OR 雇用統計 OR CPI OR GDP OR 日銀 OR BOJ OR FRB) min_faves:5 -is:retweet within_time:1d',
         f'(FOMC OR "nonfarm" OR CPI OR "rate decision") forex "today" min_faves:10 lang:en -is:retweet within_time:1d',

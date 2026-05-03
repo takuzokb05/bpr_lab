@@ -589,6 +589,54 @@ class TestSyncWithBroker:
         assert result["local_only"] == []
         assert result["broker_only"] == ["TRD-999"]
 
+    def test_sync_broker_only_uses_time_open_from_broker(self):
+        """A6: brokerが提供する time_open が opened_at に使われる"""
+        broker = _make_mock_broker()
+        pm = _create_position_manager(broker=broker)
+
+        # 3日前の約定時刻をbrokerが返す想定
+        from datetime import timedelta
+        broker_open_time = datetime.now(timezone.utc) - timedelta(days=3)
+        broker.get_positions.return_value = [
+            {
+                "trade_id": "TRD-901",
+                "instrument": "EUR_USD",
+                "units": 5000,
+                "unrealized_pl": -100.0,
+                "price_open": 1.10,
+                "time_open": broker_open_time,
+            }
+        ]
+
+        pm.sync_with_broker()
+
+        synced_pos = pm.get_open_positions()[0]
+        # 「同期した今」ではなく broker の time_open がそのまま記録される
+        assert synced_pos["opened_at"] == broker_open_time
+
+    def test_sync_broker_only_falls_back_when_no_time_open(self):
+        """A6: time_openが無いブローカーには「同期した今」をフォールバック"""
+        broker = _make_mock_broker()
+        pm = _create_position_manager(broker=broker)
+
+        before = datetime.now(timezone.utc)
+        broker.get_positions.return_value = [
+            {
+                "trade_id": "TRD-902",
+                "instrument": "EUR_USD",
+                "units": 5000,
+                "unrealized_pl": 0.0,
+                "price_open": 1.10,
+                # time_open キーなし
+            }
+        ]
+
+        pm.sync_with_broker()
+        after = datetime.now(timezone.utc)
+
+        synced_pos = pm.get_open_positions()[0]
+        assert before <= synced_pos["opened_at"] <= after
+
 
 # ============================================================
 # 5. プロパティテスト
@@ -648,3 +696,61 @@ class TestProperties:
         # trade_historyプロパティがコピーを返すこと（内部状態の保護）
         history.append({"fake": True})
         assert len(pm.trade_history) == 1  # 内部状態は変化しない
+
+
+class TestLoadTradeHistoryFromDB:
+    """bot起動時に DB から _trade_history を復元するテスト（A5）"""
+
+    def test_loads_recent_closed_trades(self, tmp_path):
+        """直近30日のclosed取引がメモリに復元される"""
+        import sqlite3
+        db_path = tmp_path / "fx_trading.db"
+        # 古いPM作成→クローズドtradeをDBに直接INSERT
+        broker = _make_mock_broker()
+        risk = _make_mock_risk_manager()
+        pm_init = PositionManager(
+            broker_client=broker, risk_manager=risk, db_path=db_path
+        )
+        del pm_init  # _init_trades_db でテーブル作成のみ
+
+        now = datetime.now(timezone.utc)
+        recent_iso = now.isoformat()
+        old_iso = (now - __import__("datetime").timedelta(days=45)).isoformat()
+        with sqlite3.connect(str(db_path)) as conn:
+            conn.execute(
+                "INSERT INTO trades (trade_id, instrument, units, open_price, "
+                "close_price, stop_loss, take_profit, pl, opened_at, closed_at, status) "
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'closed')",
+                ("T-recent", "USD_JPY", 1000, 150.0, 150.5, 149.0, 152.0, 500.0, recent_iso, recent_iso),
+            )
+            conn.execute(
+                "INSERT INTO trades (trade_id, instrument, units, open_price, "
+                "close_price, stop_loss, take_profit, pl, opened_at, closed_at, status) "
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'closed')",
+                ("T-old", "USD_JPY", 1000, 150.0, 149.5, 149.0, 152.0, -500.0, old_iso, old_iso),
+            )
+            conn.execute(
+                "INSERT INTO trades (trade_id, instrument, units, open_price, "
+                "stop_loss, take_profit, opened_at, status) "
+                "VALUES (?, ?, ?, ?, ?, ?, ?, 'open')",
+                ("T-open", "EUR_USD", 1000, 1.10, 1.09, 1.12, recent_iso),
+            )
+
+        # 新規PMが起動時に直近30日のclosedだけ復元すること
+        pm = PositionManager(
+            broker_client=_make_mock_broker(),
+            risk_manager=_make_mock_risk_manager(),
+            db_path=db_path,
+        )
+        history = pm.trade_history
+        assert len(history) == 1
+        assert history[0]["trade_id"] == "T-recent"
+        assert history[0]["pl"] == 500.0
+
+    def test_no_db_path_skips_load(self):
+        """db_path 未指定時は何もしない"""
+        pm = PositionManager(
+            broker_client=_make_mock_broker(),
+            risk_manager=_make_mock_risk_manager(),
+        )
+        assert pm.trade_history == []

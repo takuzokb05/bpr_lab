@@ -87,7 +87,7 @@ class TestConstantDefinitions:
         assert MIN_RISK_REWARD == 2.0
 
     def test_timeframe(self):
-        # STAGE3(2026-04-21): MTFPullback戦略のベストTFはM15
+        # STAGE3(2026-04-21): RsiPullback戦略（旧名 MTFPullback）のベストTFはM15
         assert MAIN_TIMEFRAME == "M15"
 
     def test_api_settings(self):

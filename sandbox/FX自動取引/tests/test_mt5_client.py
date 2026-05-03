@@ -353,6 +353,43 @@ class TestMarketOrder:
 
 
 # ================================================================
+# get_spread のテスト
+# ================================================================
+
+
+class TestGetSpread:
+    """get_spread のテスト"""
+
+    def test_returns_ask_minus_bid(self, client, mt5_mock):
+        """tickのask - bidを返す"""
+        mock_tick = MagicMock()
+        mock_tick.bid = 152.700
+        mock_tick.ask = 152.708
+        mt5_mock.symbol_info_tick.return_value = mock_tick
+
+        spread = client.get_spread("USD_JPY")
+
+        assert spread == pytest.approx(0.008, abs=1e-9)
+        # シンボル変換が効いていることを確認
+        mt5_mock.symbol_info_tick.assert_called_with("USDJPY-")
+
+    def test_returns_none_when_tick_unavailable(self, client, mt5_mock):
+        """tickが取れない場合は None"""
+        mt5_mock.symbol_info_tick.return_value = None
+
+        assert client.get_spread("USD_JPY") is None
+
+    def test_returns_none_when_negative_spread(self, client, mt5_mock):
+        """異常tick(bid > ask)の場合は None"""
+        mock_tick = MagicMock()
+        mock_tick.bid = 152.710
+        mock_tick.ask = 152.700
+        mt5_mock.symbol_info_tick.return_value = mock_tick
+
+        assert client.get_spread("USD_JPY") is None
+
+
+# ================================================================
 # limit_order のテスト
 # ================================================================
 

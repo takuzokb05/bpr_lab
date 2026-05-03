@@ -39,21 +39,21 @@ from src.signal_coordinator import SignalCoordinator
 from src.slack_notifier import SlackNotifier
 from src.strategy.bollinger_reversal import BollingerReversal
 from src.strategy.ma_crossover import RsiMaCrossover
-from src.strategy.mtf_pullback import MTFPullback
+from src.strategy.rsi_pullback import RsiPullback
 
 # 通貨ペアごとの戦略マップ（バックテスト実績に基づく）
-# - EUR/USD, USD/JPY M15: MTFPullback (PF 2.0)
+# - EUR/USD, USD/JPY M15: RsiPullback (PF 2.0、旧名 MTFPullback)
 # - GBP/JPY M15: BollingerReversal (PF 1.08, 高頻度)
 INSTRUMENT_STRATEGY_MAP = {
-    "EUR_USD": MTFPullback,
-    "USD_JPY": MTFPullback,
+    "EUR_USD": RsiPullback,
+    "USD_JPY": RsiPullback,
     "GBP_JPY": BollingerReversal,
 }
 
 
 def _strategy_for(instrument: str):
-    """通貨ペアに対応する戦略クラスを返す。未登録ペアはMTFPullback。"""
-    cls = INSTRUMENT_STRATEGY_MAP.get(instrument, MTFPullback)
+    """通貨ペアに対応する戦略クラスを返す。未登録ペアはRsiPullback。"""
+    cls = INSTRUMENT_STRATEGY_MAP.get(instrument, RsiPullback)
     return cls()
 from src.telegram_notifier import TelegramNotifier, TelegramLogHandler
 from src.trading_loop import TradingLoop

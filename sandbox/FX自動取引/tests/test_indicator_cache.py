@@ -59,25 +59,27 @@ class TestComputeIndicators:
         result = compute_indicators(data)
 
         expected_keys = {
-            "rsi", "atr", "ma_short", "ma_long", "mfi",
+            "rsi", "atr", "ma_short", "ma_long", "ma_trend", "mfi",
             "adx_df", "bbands",
             "current_rsi", "current_adx", "current_atr", "current_mfi",
             "ma_short_current", "ma_long_current",
             "ma_short_prev", "ma_long_prev",
+            "ma_trend_current",
             "atr_ratio", "bbw_ratio",
         }
         assert set(result.keys()) == expected_keys
 
     def test_all_values_not_none_with_sufficient_data(self) -> None:
-        """十分なデータがあれば全指標がNoneでないこと"""
-        data = _make_ohlcv(100)
+        """十分なデータがあれば全指標がNoneでないこと（MA200は要 >=200本）"""
+        data = _make_ohlcv(220)  # MA_TREND_PERIOD=200のため余裕を持って220本
         result = compute_indicators(data)
 
-        for key in ["rsi", "atr", "ma_short", "ma_long", "mfi",
+        for key in ["rsi", "atr", "ma_short", "ma_long", "ma_trend", "mfi",
                      "adx_df", "bbands",
                      "current_rsi", "current_adx", "current_atr", "current_mfi",
                      "ma_short_current", "ma_long_current",
                      "ma_short_prev", "ma_long_prev",
+                     "ma_trend_current",
                      "atr_ratio", "bbw_ratio"]:
             assert result[key] is not None, f"{key} がNoneです"
 

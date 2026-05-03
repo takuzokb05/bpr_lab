@@ -69,6 +69,7 @@ CORRELATION_GROUPS: dict[str, list[str]] = {
 
 MA_SHORT_PERIOD: int = 20              # 短期MA期間
 MA_LONG_PERIOD: int = 50               # 長期MA期間
+MA_TREND_PERIOD: int = 200             # 長期トレンド判定MA期間（RsiPullback等で使用）
 # LOOSE_MODE(2026-04-21): 1バー厳密クロスではなく直近N本以内クロスを許容してシグナル頻度UP
 MA_CROSS_LOOKBACK_BARS: int = 5        # クロス探索範囲（M15なら直近75分）
 RSI_PERIOD: int = 14                   # RSI計算期間
@@ -119,11 +120,11 @@ AI_ADVISOR_ENABLED: bool = True
 # タイムフレーム
 # ============================================================
 
-# STAGE3(2026-04-21): MTFPullback戦略のベストTFはM15（PF 2.05/1.97）
+# STAGE3(2026-04-21): RsiPullback戦略（旧名 MTFPullback）のベストTFはM15（PF 2.05/1.97）
 MAIN_TIMEFRAME: str = "M15"            # メインタイムフレーム
 
 # STAGE3(2026-04-21):
-# - EUR/USD, USD/JPY: MTFPullback (PF 2.0, 押し目/戻り狙い、低頻度)
+# - EUR/USD, USD/JPY: RsiPullback (PF 2.0, 押し目/戻り狙い、低頻度。旧名 MTFPullback)
 # - GBP/JPY: BollingerReversal (PF 1.08, 逆張り、高頻度)
 # 併走で観察機会を増やしつつポートフォリオ分散
 DEFAULT_INSTRUMENTS: list[str] = [
