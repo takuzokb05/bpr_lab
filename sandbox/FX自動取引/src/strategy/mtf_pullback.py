@@ -53,8 +53,18 @@ class MTFPullback(StrategyBase):
         return self._diagnostics
 
     def generate_signal(self, data: pd.DataFrame, **kwargs) -> Signal:
-        """長期トレンド方向への押し目/戻りを検出する。"""
+        """長期トレンド方向への押し目/戻りを検出する。
+
+        kwargs:
+            indicators: 共有指標キャッシュ
+            pair_config: ペア別設定 dict（rsi_oversold/rsi_overbought をオーバーライド可）
+        """
         indicators = kwargs.get("indicators")
+        # ペア別オーバーライド: pair_config.yaml の値が trading_loop 経由で渡される。
+        # 配線が漏れていた既知バグ (system_logic_audit.md C4) の修正。
+        pair_config = kwargs.get("pair_config") or {}
+        rsi_oversold = pair_config.get("rsi_oversold", MTF_RSI_OVERSOLD)
+        rsi_overbought = pair_config.get("rsi_overbought", MTF_RSI_OVERBOUGHT)
 
         if len(data) < MTF_TREND_MA + 5:
             logger.warning(
@@ -94,35 +104,35 @@ class MTFPullback(StrategyBase):
             "ma200": float(ma200),
             "trend": "up" if close > ma200 else "down",
             "rsi": float(rsi),
-            "rsi_oversold": MTF_RSI_OVERSOLD,
-            "rsi_overbought": MTF_RSI_OVERBOUGHT,
+            "rsi_oversold": rsi_oversold,
+            "rsi_overbought": rsi_overbought,
         }
 
         # 上昇トレンド中の押し目買い
-        if close > ma200 and rsi < MTF_RSI_OVERSOLD:
+        if close > ma200 and rsi < rsi_oversold:
             diag["hold_reason"] = None
             self._diagnostics = diag
             logger.info(
                 "押し目買いシグナル: close=%.5f > MA200=%.5f, RSI=%.2f<%d",
-                close, ma200, rsi, MTF_RSI_OVERSOLD,
+                close, ma200, rsi, rsi_oversold,
             )
             return Signal.BUY
 
         # 下降トレンド中の戻り売り
-        if close < ma200 and rsi > MTF_RSI_OVERBOUGHT:
+        if close < ma200 and rsi > rsi_overbought:
             diag["hold_reason"] = None
             self._diagnostics = diag
             logger.info(
                 "戻り売りシグナル: close=%.5f < MA200=%.5f, RSI=%.2f>%d",
-                close, ma200, rsi, MTF_RSI_OVERBOUGHT,
+                close, ma200, rsi, rsi_overbought,
             )
             return Signal.SELL
 
         # エントリー条件外
         if close > ma200:
-            diag["hold_reason"] = f"上昇トレンドだがRSI={rsi:.1f}が押し目水準(<{MTF_RSI_OVERSOLD})未満"
+            diag["hold_reason"] = f"上昇トレンドだがRSI={rsi:.1f}が押し目水準(<{rsi_oversold})未満"
         else:
-            diag["hold_reason"] = f"下降トレンドだがRSI={rsi:.1f}が戻り水準(>{MTF_RSI_OVERBOUGHT})到達せず"
+            diag["hold_reason"] = f"下降トレンドだがRSI={rsi:.1f}が戻り水準(>{rsi_overbought})到達せず"
         self._diagnostics = diag
         logger.debug("→ HOLD: %s", diag["hold_reason"])
         return Signal.HOLD
