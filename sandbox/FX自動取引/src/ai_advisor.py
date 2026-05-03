@@ -26,7 +26,11 @@ MAX_ANALYSIS_AGE_HOURS = 24
 
 
 class AIBias:
-    """AI分析に基づくトレードバイアス"""
+    """AI分析に基づくトレードバイアス
+
+    T5: A/B 検証のため `decision` / `reasons` を最後の評価結果として保持する。
+    `evaluate_signal()` は副作用としてこれらを更新する。
+    """
 
     def __init__(
         self,
@@ -43,10 +47,15 @@ class AIBias:
         self.key_levels = key_levels
         self.reasoning = reasoning
         self.timestamp = timestamp
+        # T5: A/B 集計用 — 最後に評価したシグナルでの判定結果を保持
+        self.decision: Optional[str] = None
+        self.reasons: Optional[str] = None
 
     def evaluate_signal(self, signal_direction: str) -> str:
         """
-        既存戦略のシグナルをAIバイアスで評価する
+        既存戦略のシグナルをAIバイアスで評価する。
+
+        副作用: self.decision / self.reasons を更新する（A/B 集計の永続化用）。
 
         Args:
             signal_direction: "BUY" or "SELL"
@@ -54,13 +63,20 @@ class AIBias:
         Returns:
             "CONFIRM" / "CONTRADICT" / "NEUTRAL" / "REJECT"
         """
+        decision, reasons = self._classify(signal_direction)
+        self.decision = decision
+        self.reasons = reasons
+        return decision
+
+    def _classify(self, signal_direction: str) -> tuple[str, str]:
+        """シグナル判定ロジック本体。(decision, reasons) を返す。"""
         # 信頼度が低い場合はNEUTRAL
         if self.confidence < 0.3:
-            return "NEUTRAL"
+            return "NEUTRAL", f"low_confidence({self.confidence:.2f})"
 
         # 市場環境が不明な場合はNEUTRAL
         if self.regime == "unknown":
-            return "NEUTRAL"
+            return "NEUTRAL", "regime_unknown"
 
         # ボラティリティが異常に高い場合はREJECT
         if self.regime == "volatile" and self.confidence > 0.7:
@@ -68,7 +84,7 @@ class AIBias:
                 "AI: 高ボラティリティ環境を検出（confidence=%.2f）。シグナルを拒否",
                 self.confidence,
             )
-            return "REJECT"
+            return "REJECT", f"volatile_high_conf({self.confidence:.2f})"
 
         # 方向の一致チェック
         signal_is_buy = signal_direction == "BUY"
@@ -76,15 +92,34 @@ class AIBias:
         ai_is_bearish = self.direction == "bearish"
 
         if self.direction == "neutral":
-            return "NEUTRAL"
+            return "NEUTRAL", "ai_direction_neutral"
 
         if (signal_is_buy and ai_is_bullish) or (not signal_is_buy and ai_is_bearish):
-            return "CONFIRM"
+            return (
+                "CONFIRM",
+                f"aligned({signal_direction}/{self.direction})",
+            )
 
         if (signal_is_buy and ai_is_bearish) or (not signal_is_buy and ai_is_bullish):
-            return "CONTRADICT"
+            return (
+                "CONTRADICT",
+                f"opposite({signal_direction}/{self.direction})",
+            )
 
-        return "NEUTRAL"
+        return "NEUTRAL", "fallthrough"
+
+    def to_record(self) -> dict:
+        """trades テーブルに永続化するための dict 表現を返す。
+
+        evaluate_signal() を一度も呼んでいない場合 decision/reasons は None になる。
+        """
+        return {
+            "ai_decision": self.decision,
+            "ai_confidence": float(self.confidence),
+            "ai_reasons": self.reasons,
+            "ai_direction": self.direction,
+            "ai_regime": self.regime,
+        }
 
     def position_size_multiplier(self, evaluation: str) -> float:
         """

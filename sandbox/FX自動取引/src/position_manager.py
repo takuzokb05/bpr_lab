@@ -74,7 +74,12 @@ class PositionManager:
     # ------------------------------------------------------------------
 
     def _init_trades_db(self) -> None:
-        """trades テーブルを作成する。"""
+        """trades テーブルを作成する。
+
+        T5: 既存DBに対しても AI 関連カラムを冪等に追加する（マイグレーション相当）。
+        本番DBは scripts/migrate_add_ai_columns.py を別途流すが、
+        新規環境やテストで CREATE TABLE 後に呼ばれた場合もカラムが揃うようにする。
+        """
         if self._db_path is None:
             return
         if str(self._db_path) != ":memory:":
@@ -94,13 +99,34 @@ class PositionManager:
                     pl REAL,
                     opened_at TEXT NOT NULL,
                     closed_at TEXT,
-                    status TEXT NOT NULL DEFAULT 'open'
+                    status TEXT NOT NULL DEFAULT 'open',
+                    ai_decision TEXT,
+                    ai_confidence REAL,
+                    ai_reasons TEXT,
+                    ai_direction TEXT,
+                    ai_regime TEXT
                 )
                 """
             )
+            # 既に古いスキーマで作成されたDBにも AI カラムを追加する（冪等）
+            cur = conn.execute("PRAGMA table_info(trades)")
+            existing = {row[1] for row in cur.fetchall()}
+            for col, col_type in (
+                ("ai_decision", "TEXT"),
+                ("ai_confidence", "REAL"),
+                ("ai_reasons", "TEXT"),
+                ("ai_direction", "TEXT"),
+                ("ai_regime", "TEXT"),
+            ):
+                if col not in existing:
+                    conn.execute(f"ALTER TABLE trades ADD COLUMN {col} {col_type}")
 
     def _db_save_open_trade(self, position: dict) -> None:
-        """オープンしたポジションをDBに保存する。"""
+        """オープンしたポジションをDBに保存する。
+
+        T5: AIバイアス情報（ai_decision/ai_confidence/ai_reasons/ai_direction/ai_regime）
+        が position dict に含まれていれば一緒に保存する。AIフィルター未適用時は NULL のまま。
+        """
         if self._db_path is None:
             return
         try:
@@ -108,8 +134,10 @@ class PositionManager:
                 conn.execute(
                     """INSERT OR REPLACE INTO trades
                        (trade_id, instrument, units, open_price,
-                        stop_loss, take_profit, opened_at, status)
-                       VALUES (?, ?, ?, ?, ?, ?, ?, 'open')""",
+                        stop_loss, take_profit, opened_at, status,
+                        ai_decision, ai_confidence, ai_reasons,
+                        ai_direction, ai_regime)
+                       VALUES (?, ?, ?, ?, ?, ?, ?, 'open', ?, ?, ?, ?, ?)""",
                     (
                         position["trade_id"],
                         position["instrument"],
@@ -118,6 +146,11 @@ class PositionManager:
                         position["stop_loss"],
                         position["take_profit"],
                         position["opened_at"].isoformat(),
+                        position.get("ai_decision"),
+                        position.get("ai_confidence"),
+                        position.get("ai_reasons"),
+                        position.get("ai_direction"),
+                        position.get("ai_regime"),
                     ),
                 )
         except sqlite3.Error as e:
@@ -194,6 +227,7 @@ class PositionManager:
         data: pd.DataFrame,
         strategy: StrategyBase,
         indicators: Optional[dict] = None,
+        ai_record: Optional[dict] = None,
     ) -> Optional[dict]:
         """
         シグナルに基づいてポジションを開く。
@@ -355,6 +389,17 @@ class PositionManager:
                 "opened_at": datetime.now(timezone.utc),
                 "unrealized_pl": 0.0,
             }
+            # T5: AI A/B 検証用に AIBias 記録を埋め込む（オプショナル）
+            if ai_record:
+                for key in (
+                    "ai_decision",
+                    "ai_confidence",
+                    "ai_reasons",
+                    "ai_direction",
+                    "ai_regime",
+                ):
+                    if key in ai_record:
+                        position[key] = ai_record[key]
             self._open_positions.append(position)
             self._db_save_open_trade(position)
 

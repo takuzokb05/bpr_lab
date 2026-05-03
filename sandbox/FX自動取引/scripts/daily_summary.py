@@ -94,6 +94,120 @@ class TradeStats:
 # ============================================================
 
 
+def fetch_ai_ab_trades(
+    db_path: Path, start_jst: datetime, end_jst: datetime
+) -> list[dict[str, Any]]:
+    """指定期間内に決済された AI 判定付き trades を取得する（T5: A/B 用）。
+
+    ai_decision IS NOT NULL でフィルタするため、AI フィルター適用前のデータは除外される。
+    """
+    if not db_path.exists():
+        return []
+    conn = sqlite3.connect(str(db_path))
+    try:
+        conn.row_factory = sqlite3.Row
+        start_utc = start_jst.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S")
+        end_utc = end_jst.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S")
+        # 旧スキーマのDBでは ai_decision カラムが無いため、無ければ空配列を返す
+        try:
+            cur = conn.execute(
+                """SELECT trade_id, instrument, pl, ai_decision, ai_confidence,
+                          ai_direction, ai_regime, closed_at
+                   FROM trades
+                   WHERE status = 'closed' AND closed_at IS NOT NULL
+                     AND closed_at >= ? AND closed_at < ?
+                     AND ai_decision IS NOT NULL AND pl IS NOT NULL
+                   ORDER BY closed_at ASC""",
+                (start_utc, end_utc),
+            )
+            return [dict(row) for row in cur.fetchall()]
+        except sqlite3.OperationalError as e:
+            logger.info("AI A/B 取得スキップ（カラム未追加の可能性）: %s", e)
+            return []
+    finally:
+        conn.close()
+
+
+def build_ai_ab_text(
+    trades: list[dict[str, Any]], period_label: str
+) -> str | None:
+    """AI A/B 簡易サマリ（フィルター利用ありの取引について decision 別勝率）を返す。
+
+    None を返した場合はセクション自体を非表示にする。
+    """
+    if not trades:
+        return None
+
+    by_decision: dict[str, dict[str, float]] = {}
+    total_count = 0
+    total_pl = 0.0
+    total_wins = 0
+    total_losses = 0
+
+    for t in trades:
+        pl = t.get("pl")
+        if pl is None:
+            continue
+        pl = float(pl)
+        decision = (t.get("ai_decision") or "UNKNOWN").upper()
+        bucket = by_decision.setdefault(
+            decision, {"count": 0, "wins": 0, "losses": 0, "pl": 0.0}
+        )
+        bucket["count"] += 1
+        bucket["pl"] += pl
+        if pl > 0:
+            bucket["wins"] += 1
+            total_wins += 1
+        elif pl < 0:
+            bucket["losses"] += 1
+            total_losses += 1
+        total_count += 1
+        total_pl += pl
+
+    if total_count == 0:
+        return None
+
+    decided = total_wins + total_losses
+    overall_wr = (total_wins / decided * 100.0) if decided > 0 else 0.0
+    sign = "+" if total_pl >= 0 else ""
+    lines = [
+        f"*AI A/B サマリ*（{period_label} / AI判定付き取引のみ）",
+        f"• 全体: {total_count}回 (勝{total_wins}/負{total_losses}) "
+        f"勝率 {overall_wr:.1f}% / 累計 {sign}{total_pl:,.0f} JPY",
+    ]
+
+    # NEUTRAL 除外比較
+    excl_wins = sum(
+        b["wins"] for d, b in by_decision.items() if d != "NEUTRAL"
+    )
+    excl_losses = sum(
+        b["losses"] for d, b in by_decision.items() if d != "NEUTRAL"
+    )
+    excl_decided = excl_wins + excl_losses
+    if excl_decided > 0 and excl_decided != decided:
+        excl_wr = excl_wins / excl_decided * 100.0
+        diff = excl_wr - overall_wr
+        lines.append(
+            f"• NEUTRAL除外: {excl_decided}回 勝率 {excl_wr:.1f}% "
+            f"({diff:+.1f}pt)"
+        )
+
+    # decision 別
+    lines.append("• decision 別:")
+    for decision in sorted(by_decision.keys()):
+        b = by_decision[decision]
+        d_decided = b["wins"] + b["losses"]
+        wr = (b["wins"] / d_decided * 100.0) if d_decided > 0 else 0.0
+        s = "+" if b["pl"] >= 0 else ""
+        lines.append(
+            f"    - {decision}: {int(b['count'])}回 "
+            f"(勝{int(b['wins'])}/負{int(b['losses'])}) "
+            f"勝率 {wr:.1f}% / {s}{b['pl']:,.0f} JPY"
+        )
+
+    return "\n".join(lines)
+
+
 def fetch_closed_trades(
     db_path: Path, start_jst: datetime, end_jst: datetime
 ) -> list[dict[str, Any]]:
@@ -351,6 +465,7 @@ def post_to_slack(
     account: dict[str, Any] | None,
     prev_balance: float | None,
     open_count_db: int,
+    ai_ab_text: str | None = None,
     timeout: int = 10,
 ) -> bool:
     """集計結果をSlackに送信する。
@@ -377,6 +492,16 @@ def post_to_slack(
             {
                 "color": pick_color(weekly_stats),
                 "text": build_stats_text(weekly_stats),
+                "mrkdwn_in": ["text"],
+            }
+        )
+
+    # AI A/B サマリ（直近30日）
+    if ai_ab_text:
+        attachments.append(
+            {
+                "color": COLOR_BLUE,
+                "text": ai_ab_text,
                 "mrkdwn_in": ["text"],
             }
         )
@@ -448,6 +573,13 @@ def compute_week_range(now_jst: datetime) -> tuple[datetime, datetime]:
     """JSTの過去7日（前日を含む）の範囲を返す。"""
     today_0 = now_jst.replace(hour=0, minute=0, second=0, microsecond=0)
     start = today_0 - timedelta(days=7)
+    return start, today_0
+
+
+def compute_month_range(now_jst: datetime) -> tuple[datetime, datetime]:
+    """JSTの過去30日（前日を含む）の範囲を返す（T5: AI A/B 用）。"""
+    today_0 = now_jst.replace(hour=0, minute=0, second=0, microsecond=0)
+    start = today_0 - timedelta(days=30)
     return start, today_0
 
 
@@ -524,6 +656,15 @@ def main() -> int:
             weekly_stats.total_pl,
         )
 
+    # AI A/B サマリ（直近30日）
+    m_start, m_end = compute_month_range(now_jst)
+    ai_ab_trades = fetch_ai_ab_trades(args.db, m_start, m_end)
+    ai_ab_text = build_ai_ab_text(ai_ab_trades, "直近30日")
+    if ai_ab_text:
+        logger.info("AI A/B 集計対象: %d 件", len(ai_ab_trades))
+    else:
+        logger.info("AI A/B: 対象データなし（カラム未追加 or 0件）")
+
     # 口座情報取得
     account = fetch_account_info()
     open_count_db = count_open_trades(args.db)
@@ -540,6 +681,10 @@ def main() -> int:
     if weekly_stats is not None:
         logger.info("---- 週次サマリ ----")
         for line in build_stats_text(weekly_stats).splitlines():
+            logger.info(line)
+    if ai_ab_text:
+        logger.info("---- AI A/B サマリ（直近30日）----")
+        for line in ai_ab_text.splitlines():
             logger.info(line)
     logger.info("---- 口座状況 ----")
     for line in build_account_text(account, prev_balance, open_count_db).splitlines():
@@ -566,6 +711,7 @@ def main() -> int:
         account=account,
         prev_balance=prev_balance,
         open_count_db=open_count_db,
+        ai_ab_text=ai_ab_text,
     )
 
     logger.info("=== 日次取引サマリ 完了 ===")
