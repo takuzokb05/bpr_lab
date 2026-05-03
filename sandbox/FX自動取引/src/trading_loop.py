@@ -229,10 +229,13 @@ class TradingLoop:
         # ステージ4: 取引実行
         order_result = None
         if pipeline_result is not None:
-            signal, combined_multiplier, conviction, regime_info = pipeline_result
+            signal, combined_multiplier, conviction, regime_info, ai_record = (
+                pipeline_result
+            )
             order_result = self._execute_trade(
                 signal, combined_multiplier, conviction, regime_info, data,
                 indicators=indicators,
+                ai_record=ai_record,
             )
 
         self._iteration_count += 1
@@ -423,6 +426,7 @@ class TradingLoop:
 
         # AIフィルター適用
         ai_eval = "N/A"
+        ai_record: Optional[dict] = None
         if self._ai_advisor:
             bias = self._ai_advisor.get_bias(self._instrument)
             if bias:
@@ -434,6 +438,8 @@ class TradingLoop:
                     self._instrument,
                     ai_eval, bias.direction, bias.confidence, ai_multiplier,
                 )
+                # T5: A/B 集計のため AI 判定をポジションに永続化する記録を作る
+                ai_record = bias.to_record()
                 if ai_eval == "REJECT":
                     logger.warning(
                         "[%s] AIフィルター: REJECT（%s）。シグナルを見送り。",
@@ -457,12 +463,13 @@ class TradingLoop:
                 )
                 combined_multiplier *= bear_verdict.penalty_multiplier
 
-        return signal, combined_multiplier, conviction, regime_info
+        return signal, combined_multiplier, conviction, regime_info, ai_record
 
     def _execute_trade(
         self, signal: Signal, combined_multiplier: float,
         conviction, regime_info, data: pd.DataFrame,
         indicators: Optional[dict] = None,
+        ai_record: Optional[dict] = None,
     ) -> Optional[dict]:
         """
         取引実行: 通知 + ポジションオープン。
@@ -507,6 +514,7 @@ class TradingLoop:
             data=data,
             strategy=self._strategy,
             indicators=indicators,
+            ai_record=ai_record,
         )
 
     # ------------------------------------------------------------------
