@@ -177,6 +177,13 @@ class ConvictionScorer:
             should_trade=should_trade,
         )
 
+    # 監査P0-#2: 「横ばい」判定の相対閾値（価格スケール非依存）。
+    # 旧 1e-8 は USDJPY=156 で相対 6e-9 % 未満を要求しており、float精度的に
+    # 実現不可能 → 「横ばい(=1点)」が永遠に出ず、is_buy 分岐が二択化していた。
+    # 1バーあたり相対 0.001% 未満を「横ばい」とみなす（USDJPY=156 で slope<0.00156、
+    # EURUSD=1.10 で slope<1.1e-5 相当）。
+    _FLAT_SLOPE_REL = 1e-5
+
     def _score_trend(self, data: pd.DataFrame, is_buy: bool, indicators: dict | None = None) -> int:
         """トレンド一致スコア: シグナル方向とMA長期の傾きが一致するか"""
         # キャッシュからMA長期を取得（あればpandas_ta計算をスキップ）
@@ -194,19 +201,20 @@ class ConvictionScorer:
             return 0
 
         slope = current - prev
+        flat_threshold = abs(current) * self._FLAT_SLOPE_REL
 
         # 買いならMAが上向き、売りならMAが下向きで一致
         if is_buy:
-            if slope > 0:
+            if slope > flat_threshold:
                 return 2  # 一致
-            elif abs(slope) < 1e-8:
+            elif abs(slope) <= flat_threshold:
                 return 1  # 横ばい
             else:
                 return 0  # 逆行
         else:
-            if slope < 0:
+            if slope < -flat_threshold:
                 return 2  # 一致
-            elif abs(slope) < 1e-8:
+            elif abs(slope) <= flat_threshold:
                 return 1  # 横ばい
             else:
                 return 0  # 逆行
@@ -238,11 +246,16 @@ class ConvictionScorer:
 
     def _score_rsi(self, data: pd.DataFrame, is_buy: bool, indicators: dict | None = None) -> int:
         """
-        RSI位置スコア:
-        - 買い: RSI 40-60 → 2, 30-70 → 1, それ以外 → 0
-        - 売り: RSI 40-60 → 2, 30-70 → 1, それ以外 → 0
-          ※売りの場合、RSIが高い（70超）のは売りに好都合だが、
-            合流度としては「まだ下落余地がある40-60」が理想的
+        RSI位置スコア（監査P0-#1: BUY/SELL を非対称化）
+
+        本番戦略 (MTFPullback / BollingerReversal) は平均回帰系で、
+        BUY を RSI<35（売られすぎ）、SELL を RSI>65（買われすぎ）で発火させる。
+        旧実装は BUY/SELL 同じ「40-60=2点, 30-70=1点」で `is_buy` 分岐が
+        意味を持たず、戦略の発火直後 RSI=33 は常に 1点しか取れなかった。
+
+        修正後: 戦略エントリー方向に対する「平均回帰の早期段階か」を評価する:
+        - BUY: RSI 25-50（売られすぎ〜中立）= 2点。20-60 = 1点。
+        - SELL: RSI 50-75（中立〜買われすぎ）= 2点。40-80 = 1点。
         """
         # キャッシュからcurrent_rsiを取得（あればpandas_ta計算をスキップ）
         if indicators is not None and indicators.get("current_rsi") is not None:
@@ -257,18 +270,18 @@ class ConvictionScorer:
             return 0
 
         if is_buy:
-            # 買い: RSIが中立〜やや売られすぎが理想
-            if 40 <= current_rsi <= 60:
+            # 買い: 売られすぎ〜中立帯にあれば「平均回帰の初動」として評価
+            if 25 <= current_rsi <= 50:
                 return 2
-            elif 30 <= current_rsi <= 70:
+            elif 20 <= current_rsi <= 60:
                 return 1
             else:
                 return 0
         else:
-            # 売り: RSIが中立〜やや買われすぎが理想
-            if 40 <= current_rsi <= 60:
+            # 売り: 買われすぎ〜中立帯にあれば「平均回帰の初動」として評価
+            if 50 <= current_rsi <= 75:
                 return 2
-            elif 30 <= current_rsi <= 70:
+            elif 40 <= current_rsi <= 80:
                 return 1
             else:
                 return 0
