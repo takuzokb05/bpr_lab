@@ -12,8 +12,15 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Optional
 
+import pandas as pd
+import pandas_ta as ta
+
 from src.broker_client import BrokerClient
 from src.config import (
+    ATR_PERIOD,
+    ATR_SL_MULT,
+    ATR_TP1_MULT,
+    ATR_TP2_MULT,
     DRAWDOWN_LEVELS,
     KILL_API_DISCONNECT_SEC,
     KILL_ATR_MULTIPLIER,
@@ -28,6 +35,86 @@ from src.config import (
 )
 
 logger = logging.getLogger(__name__)
+
+
+def calculate_atr_based_levels(
+    entry_price: float,
+    direction: str,
+    data: pd.DataFrame,
+    atr_value: Optional[float] = None,
+    sl_mult: Optional[float] = None,
+    tp1_mult: Optional[float] = None,
+    tp2_mult: Optional[float] = None,
+):
+    """
+    ATR ベースで SL / TP1 / TP2 を一括算出する（T3: 段階的部分利確）。
+
+    SL  = entry ∓ ATR × sl_mult   （未指定なら ATR_SL_MULT）
+    TP1 = entry ± ATR × tp1_mult  （未指定なら ATR_TP1_MULT、PARTIAL_CLOSE_RATIO 分を決済）
+    TP2 = entry ± ATR × tp2_mult  （未指定なら ATR_TP2_MULT、残り全決済）
+
+    sl_mult/tp1_mult/tp2_mult は T4 pair_config.yaml のペア別オーバーライドを
+    受け付けるためのもの。None ならグローバル設定にフォールバックする。
+
+    Args:
+        entry_price: エントリー価格
+        direction: "BUY" または "SELL"
+        data: OHLCV DataFrame（atr_value=None 時に ATR を計算する）
+        atr_value: 既に計算済みの ATR 値（指定時は data からの計算をスキップ）
+        sl_mult: SL の ATR 倍率（None なら ATR_SL_MULT）
+        tp1_mult: TP1 の ATR 倍率（None なら ATR_TP1_MULT）
+        tp2_mult: TP2 の ATR 倍率（None なら ATR_TP2_MULT）
+
+    Returns:
+        TpLevels（SL, TP1, TP2, ATR）
+
+    Raises:
+        ValueError: ATR 計算不能 / direction 不正 / ATR が0以下の場合
+    """
+    from src.strategy.base import TpLevels  # 循環import回避
+
+    if direction not in ("BUY", "SELL"):
+        raise ValueError(
+            f"directionは 'BUY' または 'SELL' である必要があります: '{direction}'"
+        )
+
+    if atr_value is None:
+        atr_series = ta.atr(
+            data["high"], data["low"], data["close"], length=ATR_PERIOD
+        )
+        if atr_series is None or pd.isna(atr_series.iloc[-1]):
+            raise ValueError(
+                f"ATR計算不能: データ不足のため ATR ベースの SL/TP を算出できません "
+                f"(entry_price={entry_price})"
+            )
+        atr_value = float(atr_series.iloc[-1])
+
+    if atr_value <= 0:
+        raise ValueError(
+            f"ATRが0以下のため SL/TP を算出できません: atr={atr_value}"
+        )
+
+    # ペア別オーバーライドを優先、未指定はグローバルにフォールバック
+    sl_m = sl_mult if sl_mult is not None else ATR_SL_MULT
+    tp1_m = tp1_mult if tp1_mult is not None else ATR_TP1_MULT
+    tp2_m = tp2_mult if tp2_mult is not None else ATR_TP2_MULT
+
+    if direction == "BUY":
+        sl = entry_price - atr_value * sl_m
+        tp1 = entry_price + atr_value * tp1_m
+        tp2 = entry_price + atr_value * tp2_m
+    else:  # SELL
+        sl = entry_price + atr_value * sl_m
+        tp1 = entry_price - atr_value * tp1_m
+        tp2 = entry_price - atr_value * tp2_m
+
+    logger.info(
+        "ATRベース SL/TP 算出: direction=%s, entry=%.5f, ATR=%.5f, "
+        "SL=%.5f (×%.1f), TP1=%.5f (×%.1f), TP2=%.5f (×%.1f)",
+        direction, entry_price, atr_value,
+        sl, sl_m, tp1, tp1_m, tp2, tp2_m,
+    )
+    return TpLevels(stop_loss=sl, tp1=tp1, tp2=tp2, atr=atr_value)
 
 
 class KillSwitch:

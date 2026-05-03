@@ -429,6 +429,140 @@ class Mt5Client(BrokerClient):
             "comment": result.comment,
         }
 
+    def partial_close_position(
+        self, trade_id: str, ratio: float
+    ) -> Optional[dict]:
+        """指定ポジションを部分決済する（T3）。
+
+        現在の volume の `ratio` 分を反対売買で決済する。
+        volume_step に整列するため実際の決済比率は若干ずれる場合がある。
+
+        Args:
+            trade_id: ticket番号
+            ratio: 決済比率（0.0–1.0）。範囲外なら None を返す。
+
+        Returns:
+            決済結果のdict、または None（不正な ratio・整列で 0 ロットになった等）
+
+        Raises:
+            Mt5ClientError: ポジション未検出 / ティック取得失敗 / 決済エラー
+        """
+        if not (0.0 < ratio < 1.0):
+            logger.warning(
+                "partial_close_position: ratio が範囲外のためスキップ "
+                "(trade_id=%s, ratio=%.3f)", trade_id, ratio,
+            )
+            return None
+
+        ticket = int(trade_id)
+        positions = mt5.positions_get(ticket=ticket)
+        if not positions:
+            raise Mt5ClientError(
+                f"ポジションが見つかりません: trade_id={trade_id}"
+            )
+        pos = positions[0]
+        symbol = pos.symbol
+
+        # 部分決済 volume を volume_step に整列
+        partial_volume = pos.volume * ratio
+        adjusted_volume = self._adjust_volume(symbol, partial_volume)
+        if adjusted_volume <= 0 or adjusted_volume >= pos.volume:
+            logger.warning(
+                "partial_close_position: 整列後の volume が無効のためスキップ "
+                "(symbol=%s, original=%.4f, partial=%.4f, adjusted=%.4f)",
+                symbol, pos.volume, partial_volume, adjusted_volume,
+            )
+            return None
+
+        tick = mt5.symbol_info_tick(symbol)
+        if tick is None:
+            raise Mt5ClientError(f"ティック情報を取得できません: {symbol}")
+
+        if pos.type == 0:  # BUY → SELL で部分決済
+            close_type = mt5.ORDER_TYPE_SELL
+            price = tick.bid
+        else:  # SELL → BUY で部分決済
+            close_type = mt5.ORDER_TYPE_BUY
+            price = tick.ask
+
+        request = {
+            "action": mt5.TRADE_ACTION_DEAL,
+            "symbol": symbol,
+            "volume": adjusted_volume,
+            "type": close_type,
+            "price": price,
+            "position": ticket,
+            "type_filling": mt5.ORDER_FILLING_FOK,
+            "type_time": mt5.ORDER_TIME_GTC,
+        }
+        request = self._find_valid_filling(request)
+
+        result = mt5.order_send(request)
+        if result.retcode != mt5.TRADE_RETCODE_DONE:
+            raise Mt5ClientError(
+                f"MT5部分決済エラー: retcode={result.retcode}, "
+                f"comment={result.comment}"
+            )
+
+        closed_units = int(adjusted_volume * LOT_SIZE)
+        remaining_units = int((pos.volume - adjusted_volume) * LOT_SIZE)
+
+        # 部分決済時の実現損益はMT5から直接取得困難なため、概算値を返す
+        # 正確な値は決済履歴 (history_deals_get) で別途取得可能
+        return {
+            "trade_id": trade_id,
+            "closed_units": closed_units,
+            "remaining_units": remaining_units,
+            "close_price": float(result.price),
+            "realized_pl": float(pos.profit) * ratio,  # 概算
+            "comment": result.comment,
+        }
+
+    def modify_position_sl(
+        self, trade_id: str, new_stop_loss: float
+    ) -> Optional[dict]:
+        """ポジションのSLを変更する（T3: TP1到達後のトレーリング用）。
+
+        TP は現在値を維持する。TRADE_ACTION_SLTP を使用。
+
+        Args:
+            trade_id: ticket番号
+            new_stop_loss: 新しいSL価格
+
+        Returns:
+            変更結果のdict。失敗時は例外送出。
+
+        Raises:
+            Mt5ClientError: ポジション未検出または変更エラー
+        """
+        ticket = int(trade_id)
+        positions = mt5.positions_get(ticket=ticket)
+        if not positions:
+            raise Mt5ClientError(
+                f"ポジションが見つかりません: trade_id={trade_id}"
+            )
+        pos = positions[0]
+
+        request = {
+            "action": mt5.TRADE_ACTION_SLTP,
+            "symbol": pos.symbol,
+            "position": ticket,
+            "sl": float(new_stop_loss),
+            "tp": float(pos.tp),  # 現在のTPを維持
+        }
+        result = mt5.order_send(request)
+        if result.retcode != mt5.TRADE_RETCODE_DONE:
+            raise Mt5ClientError(
+                f"SL変更エラー: retcode={result.retcode}, "
+                f"comment={result.comment}"
+            )
+
+        return {
+            "trade_id": trade_id,
+            "stop_loss": float(new_stop_loss),
+            "comment": result.comment,
+        }
+
     def get_closed_deal(self, trade_id: str) -> Optional[dict]:
         """既に決済済みのポジションの決済情報をMT5の取引履歴から取得する。
 
