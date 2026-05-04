@@ -137,3 +137,7 @@
 | 114 | AI搭載スーパートレンドインジケーター：機械学習+MT5で全スタイル・全銘柄対応 | ja | 未読 | #ai-trading #x-signal | articles/2026-05-03_1261_AI_SuperTrend_ML_MT5_Indicator_JA.md |
 | 115 | AIコーディングでMQL5 MT5並列バックテスト＋結果自動回収＋ランキング化をほぼノーコードで実現 | ja | 未読 | #ai-trading #x-signal | articles/2026-05-03_1262_AI_Coding_MT5_Parallel_Backtest_Batch_Runner_JA.md |
 | 116 | TradingAgents: Multi-Agent LLM Financial Trading Framework (May 2026) | en | 未読 | #ai-trading #web-signal | articles/2026-05-03_1275_TradingAgents_New_May2026_AIToolly.md |
+| 117 | Claude CodeでMT5 EA作成: バックテストPF 0.73→1.83に改善 | ja | 未読 | #fx #implementation #x-signal | articles/2026-05-04_1309_Claude_Code_MT5_EA_PF073_to_183_ai_ojisan55.md |
+| 118 | FX EA AI組み込み: Python→ONNX変換→EAの技術スタック | ja | 未読 | #fx #implementation #x-signal | articles/2026-05-04_1310_AI_Trading_ONNX_EA_Python_Implementation_SakuraBurst.md |
+| 119 | FX自動売買ツール: レジーム別バックテスト切替+AIエントリー判定UI | ja | 未読 | #fx #implementation #x-signal | articles/2026-05-04_1311_FX_AutoTrade_Regime_Backtest_AI_Entry_dark_lovely_UI.md |
+| 120 | TraderMind: MT4/MT5に接続し個人戦略で自動売買するAIプラットフォーム | en | 未読 | #fx #tools #x-signal | articles/2026-05-04_1312_TraderMind_AI_Trading_Platform_MT4_MT5_Personal_Strategy.md |

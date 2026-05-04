@@ -552,4 +552,48 @@
 - 未読: 1
 - 構想: 1
 - 書籍: 4
-- 日次収集（2026-03-27〜）: 833件（2026-05-03更新）
+- 日次収集（2026-03-27〜）: 877件（2026-05-04更新）
+| 443 | Claude Codeセキュリティ運用5項目(Cursor脆弱性後) | ja | 未読 | #claude-code #x-signal | articles/2026-05-04_1284_Claude_Code_Security_5Items_Cursor_Vuln_Qiitapoi.md |
+| 444 | 2026年AIコーディングTier表: SS=Claude Code+Max+並列/Devin等 | ja | 未読 | #claude-code #x-signal | articles/2026-05-04_1285_Claude_Code_AITool_Tier_SS_S_2026_Hanimaru.md |
+| 445 | .claude/フォルダ育て4ステップ→「よろしく」一言で動く | ja | 未読 | #claude-code #x-signal | articles/2026-05-04_1286_Claude_Code_claude_folder_4steps_Akaoniudetate.md |
+| 446 | Amazon社内でClaude Code + Codex採用: 従業員要望が実現 | en | 未読 | #claude-code #x-signal | articles/2026-05-04_1287_Amazon_Employees_Claude_Code_Codex_Enterprise.md |
+| 447 | Claude Code作成者「Anthropicに書いたコードはもうない」全部AIが書いた | en | 未読 | #claude-code #x-signal | articles/2026-05-04_1288_Anthropic_No_Written_Code_Anywhere_Creator_Quote.md |
+| 448 | Upskill: OSS CLI + 10k+スキルレジストリでエージェントを強化 | en | 未読 | #claude-code #x-signal | articles/2026-05-04_1289_Upskill_OSS_CLI_Agent_Skills_10k_Registry.md |
+| 449 | AI Usage Widget: Claude Code/Codex/Gemini使用量ローカルCLI追跡 | en | 未読 | #claude-code #x-signal | articles/2026-05-04_1290_AI_Usage_Widget_Claude_Codex_Gemini_Local_CLI_Tracker.md |
+| 450 | Holochain agent skill for Claude Code: GitHub公開 | en | 未読 | #claude-code #x-signal | articles/2026-05-04_1291_Holochain_Agent_Skill_Claude_Code_GitHub_Soushi888.md |
+| 451 | Granola MCP + Claude Code: AIが一日の記録を自動要約 | en | 未読 | #claude-code #x-signal | articles/2026-05-04_1292_Granola_MCP_Claude_Code_Integration_Daily_Summary.md |
+| 452 | Claude Code 400時間の知見: 稼ぐのは「地味なツール」 | en | 未読 | #claude-code #x-signal | articles/2026-05-04_1293_Claude_Code_400hours_Boring_Tools_Make_Money_Atenov.md |
+| 453 | xAI GrokにMCPコネクター追加: GitHub/Notion/Linear + リモートMCP | ja | 未読 | #claude-ecosystem #mcp #x-signal | articles/2026-05-04_1294_xAI_Grok_MCP_Connectors_GitHub_Notion_Linear_Remote_MCP.md |
+| 454 | EC外注費 月50万→3万円削減: Claude Code + MCP活用事例 | ja | 未読 | #claude-code #x-signal | articles/2026-05-04_1295_EC_Outsource_Cost_500k_to_30k_Claude_Code_MCP_ROI.md |
+| 455 | SKILL.md 3レベル構造: 30min設定で30minタスクが3分に短縮 | en | 未読 | #claude-code #x-signal | articles/2026-05-04_1296_SKILL_md_3Levels_Specialized_Agent_30min_RetroChainer.md |
+| 456 | Notion + Claude Code MCP + CLAUDE.md: タスク整理ワークフロー | en | 未読 | #claude-code #x-signal | articles/2026-05-04_1297_Notion_Claude_Code_MCP_CLAUDE_md_Blum_OG_Workflow.md |
+| 457 | Claude Codeステータスライン再実装: 5h/7d制限カウントダウン+Stopフック音 | en | 未読 | #claude-code #x-signal | articles/2026-05-04_1298_Claude_Code_Statusline_Rebuild_RateLimit_Countdown_did0f.md |
+| 458 | Rampカードデータ: 新規企業顧客獲得でAnthropicがOpenAIの3倍速 | en | 未読 | #claude-ecosystem #x-signal | articles/2026-05-04_1299_Ramp_Data_Anthropic_3x_OpenAI_New_Enterprise_Customers.md |
+| 459 | Anthropic $1.5B JV: Blackstone/Goldman/HF/Apollo等とPE企業AI導入合弁 | en | 未読 | #claude-ecosystem #funding #x-signal | articles/2026-05-04_1300_Anthropic_1_5B_JV_Blackstone_Goldman_HF_Apollo_Enterprise_AI.md |
+| 460 | エージェントが何時間もループする時代にメッセージ数課金が破綻する | en | 未読 | #claude-ecosystem #x-signal | articles/2026-05-04_1301_Anthropic_Compute_Pricing_Agent_Loop_Hours_Damoosmann.md |
+| 461 | AnthropicとFIS、銀行向け金融犯罪摘発AIエージェントを共同開発 | en | 未読 | #claude-ecosystem #x-signal | articles/2026-05-04_1302_Anthropic_FIS_AI_Agent_Financial_Crime_Banks.md |
+| 462 | Claude APIキーレス認証: AWS IAM/GCP/GitHub Actions/k8s/Entra/Okta対応 | ja | 未読 | #claude-ecosystem #x-signal | articles/2026-05-04_1303_Claude_API_Keyless_Auth_AWS_IAM_GCP_GitHub_Actions_K8s.md |
+| 463 | トランプ政権フロンティアAI公開前審査大統領令を検討: AISI型事前ゲートへ転換 | ja | 未読 | #claude-ecosystem #regulation #x-signal | articles/2026-05-04_1304_WhiteHouse_AI_PreRelease_Review_Trump_AISI_Type.md |
+| 464 | Anthropic「Jupiter-v1-p」新モデルテスト中, 5月6日リリース示唆 | ja | 未読 | #claude-ecosystem #model-release #x-signal | articles/2026-05-04_1305_Anthropic_Jupiter_v1p_New_Model_May6_TestingCatalog.md |
+| 465 | Jack Clark予測: AI自律R&D 2027末30%・2028末60%以上の確率 | ja | 未読 | #claude-ecosystem #x-signal | articles/2026-05-04_1306_JackClark_AI_RnD_Automation_30pct_2027_60pct_2028.md |
+| 466 | Anthropic Agentic Stack: ADK + MCP + Vertex AI Agent Engine の3層構成 | en | 未読 | #claude-ecosystem #mcp #x-signal | articles/2026-05-04_1307_Anthropic_Agentic_Stack_ADK_MCP_Vertex_AI_Agent_Engine.md |
+| 467 | MCP: 2026年3月に9700万インストール突破、全主要AIプロバイダが対応 | ja | 未読 | #claude-ecosystem #mcp #x-signal | articles/2026-05-04_1308_MCP_97M_Installs_March2026_All_Major_AI_Providers.md |
+| 468 | Claude Code Q1 2026 Complete Guide: Remote Control/Auto Mode/Routines/Opus4.7まとめ | en | 未読 | #claude-code #web-signal | articles/2026-05-04_1321_Claude_Code_Q1_2026_Complete_Guide_Aimaker_Substack.md |
+| 469 | Claude Platform Release Notes 公式: Opus4.7/Haiku3廃止/Message Batches300K出力 | en | 未読 | #claude-ecosystem #web-signal | articles/2026-05-04_1322_Claude_Platform_Release_Notes_Official_May2026.md |
+| 470 | Claude Code GitHub公式リリース: ネイティブCLIバイナリ/MCP高速化/サンドボックス強化 | en | 未読 | #claude-code #web-signal | articles/2026-05-04_1323_Claude_Code_GitHub_Official_Releases_May2026.md |
+| 471 | 32 Claude Code Tips: 基礎から上級まで網羅（AgenticCoding Substack） | en | 未読 | #claude-code #web-signal | articles/2026-05-04_1324_32_Claude_Code_Tips_Basics_to_Advanced_AgenticCoding.md |
+| 472 | Claude Code Power User Tips 公式: 上級者向けHelpCenter記事 | en | 未読 | #claude-code #web-signal | articles/2026-05-04_1325_Claude_Code_Power_User_Tips_Official_HelpCenter.md |
+| 473 | 5 Claude Code Workflow Patterns: Sequential/Split-Merge/Headless/Agent等の設計指針 | en | 未読 | #claude-code #web-signal | articles/2026-05-04_1326_5_Claude_Code_Workflow_Patterns_Sequential_Parallel_MindStudio.md |
+| 474 | anthropics/skills 公式GitHub: スキルテンプレート・ベストプラクティス・コントリビューション | en | 未読 | #claude-code #web-signal | articles/2026-05-04_1327_Anthropic_Official_Skills_GitHub_Repo_Public.md |
+| 475 | 10 Must-Have Claude Skills 2026: Capability Uplift vs Encoded Preferenceの使い分け | en | 未読 | #claude-code #web-signal | articles/2026-05-04_1328_10_Must_Have_Claude_Skills_2026_Unicodeveloper.md |
+| 476 | Use Skills 公式HelpCenter: Personal/Projectの保存場所・自動トリガー・skills.claude.com | en | 未読 | #claude-code #web-signal | articles/2026-05-04_1329_Use_Skills_Claude_Code_Official_HelpCenter.md |
+| 477 | Claude Code MCP Servers完全ガイド: 接続・設定・使い方（Builder.io） | en | 未読 | #claude-code #mcp #web-signal | articles/2026-05-04_1330_Claude_Code_MCP_Servers_Connect_Configure_BuilderIO.md |
+| 478 | claude-code-mcp (steipete): Claude Code自体をMCPサーバーとして公開するOSS | en | 未読 | #claude-code #mcp #web-signal | articles/2026-05-04_1331_Claude_Code_as_MCP_Server_steipete_GitHub.md |
+| 479 | claude-context (Zilliz): コードベース検索MCPサーバーfor Claude Code | en | 未読 | #claude-code #mcp #web-signal | articles/2026-05-04_1332_claude_context_Codebase_Search_MCP_Zilliz_GitHub.md |
+| 480 | Claude Code + Figma MCP Server公式設定ガイド（Figma Help Center） | en | 未読 | #claude-code #mcp #web-signal | articles/2026-05-04_1333_Claude_Code_Figma_MCP_Server_Setup_Official_Figma.md |
+| 481 | Claude Agent SDK MCP接続公式ドキュメント: Python/TS例・マルチMCP接続 | en | 未読 | #claude-ecosystem #mcp #web-signal | articles/2026-05-04_1334_MCP_Tools_Claude_Agent_SDK_Official_Anthropic_Docs.md |
+| 482 | 39+ Claude Code Hooksカタログ（aitmpl）: 自動化トリガー・スクリプト一覧 | en | 未読 | #claude-code #web-signal | articles/2026-05-04_1335_39plus_Claude_Code_Hooks_Templates_Catalog_AItmpl.md |
+| 483 | Claude Code Hooks GitButler統合: AI駆動Gitワークフロー・自動コミット分割 | en | 未読 | #claude-code #web-signal | articles/2026-05-04_1336_Claude_Code_Hooks_GitButler_AI_Git_Workflow_Docs.md |
+| 484 | CLAUDE.mdの書き方ベストプラクティス: 機能するファイル構造（Turbodocx） | en | 未読 | #claude-code #web-signal | articles/2026-05-04_1337_How_to_Write_CLAUDE_md_Best_Practices_Turbodocx.md |
+| 485 | Claude Code研究者向けセットアップガイド（PaulGP Substack） | en | 未読 | #claude-code #web-signal | articles/2026-05-04_1338_Claude_Code_Setup_Guide_Researcher_PaulGP_Substack.md |
+| 486 | Claude Code公式クイックスタート2026: インストール/認証/CLAUDE.md/MCP最短ガイド | en | 未読 | #claude-code #web-signal | articles/2026-05-04_1339_Claude_Code_Quickstart_Official_Docs_2026.md |

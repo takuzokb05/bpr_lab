@@ -429,3 +429,11 @@
 | 403 | Cloudflare Builds High-Performance Infrastructure for Running LLMs | en | 未読 | #ai-news #web-signal | articles/2026-05-03_1281_Cloudflare_LLM_Infrastructure_InfoQ.md |
 | 404 | AI規制・政策最新動向2026年5月：政策策定の信頼性、企業ガバナンス、開発原則の転換 | ja | 未読 | #ai-news #web-signal | articles/2026-05-03_1282_AI_Policy_Regulation_May2026_a-aich.md |
 | 405 | OpenAI shakes up partnership with Microsoft, capping revenue share payments | en | 未読 | #ai-news #web-signal | articles/2026-05-03_1283_CNBC_OpenAI_Microsoft_Revenue_Cap.md |
+| 406 | ホワイトハウス、フロンティアAI公開前審査を検討: Trump政権がlaissez-faire方針を転換 | en | 未読 | #regulation #x-signal | articles/2026-05-04_1313_WhiteHouse_Frontier_AI_Oversight_Before_Release_Major_Policy_Shift.md |
+| 407 | Oracle、フロンティアAIが原因でセキュリティパッチを四半期→毎月に変更（2026年5月〜） | en | 未読 | #tools #x-signal | articles/2026-05-04_1314_Oracle_Monthly_Security_Patches_Frontier_AI_Vulnerabilities_May2026.md |
+| 408 | AI Coverage保険リリース: AIがミスをした際の企業向け保険サービス | en | 未読 | #tools #x-signal | articles/2026-05-04_1315_AI_Coverage_Insurance_Launch_AI_Mistakes_nico_laqua.md |
+| 409 | Google「Gemini Enterprise Agent Platform」: ローコードAgent Studio + マルチモデルModel Garden | ja | 未読 | #google #agent #framework #x-signal | articles/2026-05-04_1316_Google_Gemini_Enterprise_Agent_Platform_LowCode_MultiModel.md |
+| 410 | NAG手法: LLM事前学習データ選択をニューロン単位で判定（arXiv 2604.15706） | ja | 未読 | #model-release #x-signal | articles/2026-05-04_1317_NAG_LLM_Pretraining_Data_Selection_Neuron_Level_arXiv.md |
+| 411 | 自民党AI委員会「AIエージェント最前線と日本の勝ち筋」: 5層構造と求人倍率データ | ja | 未読 | #regulation #japan #x-signal | articles/2026-05-04_1318_LDP_AI_Committee_5Layer_GenAI_Japan_Winning_Strategy.md |
+| 412 | Meta公式4月まとめ: Muse Spark（Meta Superintelligence Labs製LLM）+AWS提携 | en | 未読 | #meta #model-release #x-signal | articles/2026-05-04_1319_Meta_Muse_Spark_AWS_Partnership_April2026_Official.md |
+| 413 | Blender LabがMCPサーバーをリリース: Anthropic関与が判明 | en | 未読 | #tools #mcp #x-signal | articles/2026-05-04_1320_Blender_MCP_Server_Released_Anthropic_Connection.md |
