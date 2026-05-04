@@ -321,6 +321,27 @@ class TestLossLimits:
         is_allowed, reason = self.rm.check_loss_limits(trades)
         assert is_allowed is True
 
+    def test_daily_uses_calendar_utc_day_boundary_audit_b8(self):
+        """監査B8: 日次集計はカレンダーUTC日境界（KillSwitchと整合）"""
+        # 前日のUTC 23:59 に締めた -5%損失は今日の日次にカウントされない
+        now = datetime.now(timezone.utc)
+        if now.hour == 0 and now.minute < 5:
+            # 0:00 UTC 直後はテストが境界で不安定なのでスキップ
+            return
+        today_midnight = datetime(
+            now.year, now.month, now.day, tzinfo=timezone.utc,
+        )
+        yesterday_2359 = today_midnight - timedelta(minutes=1)
+
+        trades = [
+            {"pl": -50_000, "close_time": yesterday_2359},  # 前日損失5%
+        ]
+        is_allowed, reason = self.rm.check_loss_limits(trades)
+        # 週次10%上限・月次20%上限には引っかからない（5%のみ）
+        assert is_allowed is True, (
+            f"前日損失は今日の日次に含めるべきでない: reason={reason}"
+        )
+
 
 # ============================================================
 # 4. 連続負けカウンター
@@ -996,7 +1017,7 @@ class TestKillSwitchAutoDeactivate:
         assert ks.should_auto_deactivate(current_time=far_future) is False
 
     def test_volatility_deactivate_after_cooldown(self):
-        """volatility → クールダウン（5分）経過後にTrue"""
+        """volatility → クールダウン経過後にTrue"""
         from src.config import KILL_COOLDOWN_MINUTES
 
         ks = KillSwitch()
@@ -1004,13 +1025,24 @@ class TestKillSwitchAutoDeactivate:
         activated_time = datetime(2025, 6, 15, 10, 0, 0, tzinfo=timezone.utc)
         ks._activated_at = activated_time
 
-        # クールダウン前 → False
-        before_cooldown = datetime(2025, 6, 15, 10, 4, 0, tzinfo=timezone.utc)
+        # クールダウン直前 → False
+        before_cooldown = activated_time + timedelta(
+            minutes=KILL_COOLDOWN_MINUTES - 1,
+        )
         assert ks.should_auto_deactivate(current_time=before_cooldown) is False
 
         # クールダウン後 → True
         after_cooldown = activated_time + timedelta(minutes=KILL_COOLDOWN_MINUTES)
         assert ks.should_auto_deactivate(current_time=after_cooldown) is True
+
+    def test_kill_cooldown_minutes_audit_a6(self):
+        """監査A6: KILL_COOLDOWN_MINUTES が 5分 → 30分に拡張されているか"""
+        from src.config import KILL_COOLDOWN_MINUTES
+        # 5分は短すぎてフラッシュクラッシュ二次波・キャッシュ値再キル即解除リスクあり
+        assert KILL_COOLDOWN_MINUTES >= 15, (
+            f"KILL_COOLDOWN_MINUTES={KILL_COOLDOWN_MINUTES} は短すぎる。"
+            "監査A6推奨: 15-30分"
+        )
 
     def test_not_active_returns_false(self):
         """未発動時は False"""

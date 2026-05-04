@@ -600,8 +600,13 @@ class RiskManager:
         """check_loss_limits の内部実装。"""
         now = datetime.now(timezone.utc)
 
-        # 各期間の開始時刻を計算
-        day_start = now - timedelta(days=1)
+        # 監査B8: 日次は KillSwitch.should_auto_deactivate と同じカレンダーUTC日境界を使う
+        # （ローリング24h だと境界が曖昧で「日次キル発動 → 翌0:00で解除 → check_loss_limits は
+        # まだ23時間枠で再ブロック」という不整合が起きるため）
+        day_start = datetime(
+            now.year, now.month, now.day, tzinfo=timezone.utc,
+        )
+        # 週次・月次は性質的にローリング（運用要件として直近の累積損失を見る）
         week_start = now - timedelta(weeks=1)
         month_start = now - timedelta(days=30)
 
