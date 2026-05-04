@@ -5,10 +5,19 @@
 # 各通貨ペアについて、以下を定義する:
 #   - allowed_sessions: 取引許可時間帯（JST、HH:MM形式、跨日OK）
 #   - rsi_oversold / rsi_overbought: RSI閾値
-#   - adx_threshold: ADXトレンド判定閾値
+#   - adx_threshold: ADXトレンド判定閾値（戦略のシグナル発生時のフィルター用）
 #   - atr_sl_mult: ATR ストップロス倍率（T3 ATR連動と統合予定）
 #   - atr_tp1_mult: ATR 第1利確倍率（T3 ATR連動と統合予定）
 #   - atr_tp2_mult: ATR 第2利確倍率（T3 ATR連動と統合予定）
+#
+# 監査A4対応: RegimeDetector 用の閾値も pair_config で上書き可能（任意）。
+# 未指定時は src/config.py のグローバル値（REGIME_*）が使われる。
+#   - regime_adx_trending: RegimeDetectorのトレンド判定閾値（デフォルト 20）
+#   - regime_adx_ranging: RegimeDetectorのレンジ判定閾値（デフォルト 15）
+#   - regime_atr_volatile_ratio: ATRボラティリティ閾値（デフォルト 2.0）
+#   - regime_bbw_squeeze_ratio: BBWスクイーズ閾値（デフォルト 0.5）
+# 注: adx_threshold（戦略フィルター用）と regime_adx_trending（レジーム分類用）は
+# 役割が異なる。前者はシグナル発生条件、後者は exposure_multiplier 計算用。
 #
 # 時間帯ルールはresearcher調査「優先度2」に基づく。
 # JST = UTC+9。ロンドン市場は通常JST 17:00-翌02:00（夏時間: 16:00-翌01:00）。

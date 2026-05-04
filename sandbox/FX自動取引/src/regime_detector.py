@@ -82,17 +82,36 @@ class RegimeDetector:
         self._bb_length = bb_length
         self._bb_std = bb_std
 
-    def detect(self, data: pd.DataFrame, indicators: dict | None = None) -> RegimeInfo:
+    def detect(
+        self,
+        data: pd.DataFrame,
+        indicators: dict | None = None,
+        pair_config: dict | None = None,
+    ) -> RegimeInfo:
         """
         OHLCVデータからレジームを判定する。
 
         Args:
             data: OHLCV形式のDataFrame（high, low, close列が必須）
             indicators: IndicatorCache辞書（キャッシュがあればpandas_ta計算をスキップ）
+            pair_config: ペア別設定。次のキーで閾値をオーバーライド可能:
+                - regime_adx_trending: ADXトレンド判定閾値（未指定時 REGIME_ADX_TRENDING）
+                - regime_adx_ranging: ADXレンジ判定閾値（未指定時 REGIME_ADX_RANGING）
+                - regime_atr_volatile_ratio: ATRボラティリティ閾値（未指定時 REGIME_ATR_VOLATILE_RATIO）
+                - regime_bbw_squeeze_ratio: BBWスクイーズ閾値（未指定時 REGIME_BBW_SQUEEZE_RATIO）
 
         Returns:
             RegimeInfo: 判定結果
         """
+        # 監査A4: pair_config が与えられたらペア別閾値を優先、なければ全ペア共通の
+        # config.py グローバル値を使う。これによりペア別 ADX 基準を尊重しつつ
+        # 後方互換性を保つ。
+        cfg = pair_config or {}
+        adx_trending = cfg.get("regime_adx_trending", REGIME_ADX_TRENDING)
+        adx_ranging = cfg.get("regime_adx_ranging", REGIME_ADX_RANGING)
+        atr_volatile_ratio = cfg.get("regime_atr_volatile_ratio", REGIME_ATR_VOLATILE_RATIO)
+        bbw_squeeze_ratio = cfg.get("regime_bbw_squeeze_ratio", REGIME_BBW_SQUEEZE_RATIO)
+
         # 必要な最小データ数（各指標の計算に十分な行数）
         min_rows = max(self._adx_period, self._atr_period, self._bb_length) * 2
         if len(data) < min_rows:
@@ -138,8 +157,8 @@ class RegimeDetector:
         # --- レジーム判定（優先度順） ---
 
         # 1. ボラティリティ判定（最優先）
-        if atr_ratio > REGIME_ATR_VOLATILE_RATIO:
-            confidence = min(1.0, (atr_ratio - REGIME_ATR_VOLATILE_RATIO) / 1.0 + 0.7)
+        if atr_ratio > atr_volatile_ratio:
+            confidence = min(1.0, (atr_ratio - atr_volatile_ratio) / 1.0 + 0.7)
             return RegimeInfo(
                 regime=RegimeType.VOLATILE,
                 confidence=confidence,
@@ -149,13 +168,13 @@ class RegimeDetector:
                 exposure_multiplier=0.0,
                 reasoning=(
                     f"異常ボラティリティ検出: ATR比率={atr_ratio:.2f}"
-                    f"（閾値{REGIME_ATR_VOLATILE_RATIO}超）。取引停止推奨。"
+                    f"（閾値{atr_volatile_ratio}超）。取引停止推奨。"
                 ),
             )
 
         # 2. ADX による明確なトレンド判定
-        if adx_value >= REGIME_ADX_TRENDING:
-            confidence = min(1.0, (adx_value - REGIME_ADX_TRENDING) / 15.0 + 0.7)
+        if adx_value >= adx_trending:
+            confidence = min(1.0, (adx_value - adx_trending) / 15.0 + 0.7)
             multiplier = 1.2 if confidence > 0.7 else 1.0
             return RegimeInfo(
                 regime=RegimeType.TRENDING,
@@ -166,14 +185,14 @@ class RegimeDetector:
                 exposure_multiplier=multiplier,
                 reasoning=(
                     f"トレンド相場: ADX={adx_value:.1f}"
-                    f"（閾値{REGIME_ADX_TRENDING}以上）。"
+                    f"（閾値{adx_trending}以上）。"
                     f"エクスポージャー倍率{multiplier}。"
                 ),
             )
 
         # 3. ADX による明確なレンジ判定
-        if adx_value < REGIME_ADX_RANGING:
-            confidence = min(1.0, (REGIME_ADX_RANGING - adx_value) / 10.0 + 0.7)
+        if adx_value < adx_ranging:
+            confidence = min(1.0, (adx_ranging - adx_value) / 10.0 + 0.7)
             return RegimeInfo(
                 regime=RegimeType.RANGING,
                 confidence=confidence,
@@ -183,15 +202,15 @@ class RegimeDetector:
                 exposure_multiplier=0.3,
                 reasoning=(
                     f"レンジ相場: ADX={adx_value:.1f}"
-                    f"（閾値{REGIME_ADX_RANGING}未満）。"
+                    f"（閾値{adx_ranging}未満）。"
                     "ダマシ回避のためエクスポージャー30%に縮小。"
                 ),
             )
 
-        # 4. グレーゾーン（RANGING <= ADX < TRENDING）→ BBW で補助判定
-        if bbw_ratio < REGIME_BBW_SQUEEZE_RATIO:
+        # 4. グレーゾーン（adx_ranging <= ADX < adx_trending）→ BBW で補助判定
+        if bbw_ratio < bbw_squeeze_ratio:
             # スクイーズ状態 → レンジ寄りと判断
-            confidence = 0.5 + (REGIME_BBW_SQUEEZE_RATIO - bbw_ratio) * 0.3
+            confidence = 0.5 + (bbw_squeeze_ratio - bbw_ratio) * 0.3
             confidence = min(1.0, max(0.3, confidence))
             return RegimeInfo(
                 regime=RegimeType.RANGING,
@@ -202,15 +221,15 @@ class RegimeDetector:
                 exposure_multiplier=0.3,
                 reasoning=(
                     f"グレーゾーン→レンジ判定: ADX={adx_value:.1f}"
-                    f"（{REGIME_ADX_RANGING}〜{REGIME_ADX_TRENDING}）、"
-                    f"BBW比率={bbw_ratio:.2f}（スクイーズ閾値{REGIME_BBW_SQUEEZE_RATIO}未満）。"
+                    f"（{adx_ranging}〜{adx_trending}）、"
+                    f"BBW比率={bbw_ratio:.2f}（スクイーズ閾値{bbw_squeeze_ratio}未満）。"
                     "ダマシ回避のためエクスポージャー30%に縮小。"
                 ),
             )
 
         # グレーゾーン + BBWスクイーズなし → 弱トレンド
-        adx_range = REGIME_ADX_TRENDING - REGIME_ADX_RANGING
-        adx_position = (adx_value - REGIME_ADX_RANGING) / adx_range if adx_range > 0 else 0.5
+        adx_range = adx_trending - adx_ranging
+        adx_position = (adx_value - adx_ranging) / adx_range if adx_range > 0 else 0.5
         confidence = 0.3 + adx_position * 0.3
         return RegimeInfo(
             regime=RegimeType.TRENDING,
@@ -221,7 +240,7 @@ class RegimeDetector:
             exposure_multiplier=1.0,
             reasoning=(
                 f"グレーゾーン→弱トレンド判定: ADX={adx_value:.1f}"
-                f"（{REGIME_ADX_RANGING}〜{REGIME_ADX_TRENDING}）、"
+                f"（{adx_ranging}〜{adx_trending}）、"
                 f"BBW比率={bbw_ratio:.2f}（スクイーズなし）。"
                 "確信度低のためエクスポージャー等倍。"
             ),
