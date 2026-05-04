@@ -16,7 +16,12 @@ import pandas as pd
 from src.ai_advisor import AIAdvisor
 from src.bear_researcher import BearResearcher
 from src.broker_client import BrokerClient
-from src.config import ATR_PERIOD, BEAR_RESEARCHER_ENABLED, MAIN_TIMEFRAME
+from src.config import (
+    ATR_PERIOD,
+    BEAR_RESEARCHER_ENABLED,
+    BEAR_SEVERITY_THRESHOLD,
+    MAIN_TIMEFRAME,
+)
 from src.conviction_scorer import ConvictionScorer
 from src.indicator_cache import compute_indicators
 from src.notifier_group import NotifierGroup
@@ -485,7 +490,7 @@ class TradingLoop:
             bear_verdict = self._bear_researcher.verify(
                 data, signal, regime_info, indicators=indicators,
             )
-            if bear_verdict.severity >= 0.4:
+            if bear_verdict.severity >= BEAR_SEVERITY_THRESHOLD:
                 logger.warning(
                     "[%s] Bear Researcher警告: severity=%.2f, penalty=%.2f, リスク=%s",
                     self._instrument,
