@@ -16,7 +16,12 @@ import pandas as pd
 from src.ai_advisor import AIAdvisor
 from src.bear_researcher import BearResearcher
 from src.broker_client import BrokerClient
-from src.config import ATR_PERIOD, BEAR_RESEARCHER_ENABLED, MAIN_TIMEFRAME
+from src.config import (
+    ATR_PERIOD,
+    BEAR_RESEARCHER_ENABLED,
+    MAIN_TIMEFRAME,
+    SPREAD_EMA_ALPHA,
+)
 from src.conviction_scorer import ConvictionScorer
 from src.indicator_cache import compute_indicators
 from src.notifier_group import NotifierGroup
@@ -346,10 +351,9 @@ class TradingLoop:
                 if self._normal_spread is None:
                     self._normal_spread = current_spread
                 else:
-                    alpha = 0.1
                     self._normal_spread = (
-                        (1 - alpha) * self._normal_spread
-                        + alpha * current_spread
+                        (1 - SPREAD_EMA_ALPHA) * self._normal_spread
+                        + SPREAD_EMA_ALPHA * current_spread
                     )
         except Exception as e:
             logger.debug(
