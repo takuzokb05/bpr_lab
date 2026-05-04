@@ -18,8 +18,25 @@ from src.risk_manager import KillSwitch, RiskManager
 # ============================================================
 
 def _make_trade(pl: float, hours_ago: float = 0.0) -> dict:
-    """テスト用の取引履歴エントリを作成する。"""
+    """テスト用の取引履歴エントリを作成する。
+
+    注意: 監査B8 (PR #20) 以降、日次集計は「カレンダーUTC日 0:00〜現在」。
+    hours_ago=1 でも実行時刻が 0:00-1:00 UTC なら前日扱いになる。
+    日次に「今日」入れたいテストは _make_trade_today_utc を使うこと。
+    """
     close_time = datetime.now(timezone.utc) - timedelta(hours=hours_ago)
+    return {"pl": pl, "close_time": close_time}
+
+
+def _make_trade_today_utc(pl: float) -> dict:
+    """確実に「今日 UTC」の取引を作る（カレンダー日境界テスト用）。
+
+    現在時刻 - 1分 と「今日 UTC 12:00」のうち過去側を選ぶ。
+    実行時刻が 0:01 でも今日に収まる。
+    """
+    now = datetime.now(timezone.utc)
+    today_noon = now.replace(hour=12, minute=0, second=0, microsecond=0)
+    close_time = min(today_noon, now - timedelta(minutes=1))
     return {"pl": pl, "close_time": close_time}
 
 
@@ -252,7 +269,7 @@ class TestLossLimits:
     def test_daily_loss_within_limit(self):
         """日次損失が上限内（4.9%）なら許可（STAGE2: 上限5%）"""
         trades = [
-            _make_trade(-49_000, hours_ago=1),  # 4.9%
+            _make_trade_today_utc(-49_000),  # 4.9%
         ]
         is_allowed, reason = self.rm.check_loss_limits(trades)
         assert is_allowed is True
@@ -260,7 +277,7 @@ class TestLossLimits:
     def test_daily_loss_at_limit(self):
         """日次損失が上限到達（5.0%）で停止"""
         trades = [
-            _make_trade(-50_000, hours_ago=1),  # 5.0%ちょうど
+            _make_trade_today_utc(-50_000),  # 5.0%ちょうど
         ]
         is_allowed, reason = self.rm.check_loss_limits(trades)
         assert is_allowed is False
@@ -269,7 +286,7 @@ class TestLossLimits:
     def test_daily_loss_just_above_limit(self):
         """日次損失が上限微超（5.1%）で停止"""
         trades = [
-            _make_trade(-51_000, hours_ago=1),  # 5.1%
+            _make_trade_today_utc(-51_000),  # 5.1%
         ]
         is_allowed, reason = self.rm.check_loss_limits(trades)
         assert is_allowed is False
@@ -898,7 +915,7 @@ class TestEvaluateKillSwitch:
         rm._peak_balance = 1_000_000
         # 日次損失5%以上（ドローダウンはSTOP未満に保つ）
         trades = [
-            _make_trade(-50_000, hours_ago=1),  # 5% → 上限到達
+            _make_trade_today_utc(-50_000),  # 5% → 上限到達
         ]
         result = rm.evaluate_kill_switch(
             current_balance=950_000,  # DD 5% → WARNING〜REDUCEレベル

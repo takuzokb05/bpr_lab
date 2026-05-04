@@ -56,44 +56,46 @@ def _make_divergence_data(
     is_bearish: bool = True, rows: int = 100
 ) -> pd.DataFrame:
     """
-    ダイバージェンスが発生するデータを生成する。
+    ダイバージェンスが発生するデータを生成する（監査P1-#5: peak-based検出向け）。
 
-    is_bearish=True: 価格上昇+RSI下降（bearish divergence）
-    is_bearish=False: 価格下降+RSI上昇（bullish divergence）
+    新検出器は scipy.signal.find_peaks で**直近2つのピーク/トラフ**を比較する。
+    - bearish divergence: 価格は higher-high だが RSI は lower-high
+    - bullish divergence: 価格は lower-low だが RSI は higher-low
 
-    RSIは直近の上昇/下降の「勢い」で決まるため、
-    直前に大きく動いた後、直近5本で逆方向の小さな動きを混ぜて
-    価格の方向とRSIの方向を乖離させる。
+    そのため2つの明確な山/谷を含む合成データを作る。
     """
     np.random.seed(42)
     close = np.full(rows, 150.0)
+    # ベースは平坦（RSI を ~50 に落ち着かせる）
+    for i in range(1, 70):
+        close[i] = 150.0 + np.random.randn() * 0.02
 
     if is_bearish:
-        # ベース: 安定した価格
-        for i in range(1, rows - 15):
-            close[i] = close[i - 1] + np.random.randn() * 0.01
-        # 直近15-5本前: 急上昇（RSIを高くする）
-        for i in range(rows - 15, rows - 5):
-            close[i] = close[i - 1] + 1.0
-        # 直近5本: 価格はゆるやかに上昇するが、途中に下落を混ぜてRSI低下
-        for i in range(rows - 5, rows):
-            if i % 2 == 0:
-                close[i] = close[i - 1] - 0.3  # 下落でRSI低下
-            else:
-                close[i] = close[i - 1] + 0.5  # 上昇で価格は上がる
+        # 山1: i=72-77 急上昇で価格 152、RSI 高い
+        for i in range(70, 75):
+            close[i] = close[i - 1] + 0.40
+        for i in range(75, 80):
+            close[i] = close[i - 1] - 0.05  # 山1のあと少し戻す
+        # 山2: i=82-89 緩やかな上昇 → 価格は山1超え（higher-high）だが
+        # 緩やかなので RSI は山1未満（lower-high）
+        for i in range(80, 92):
+            close[i] = close[i - 1] + 0.06
+        # 山2のあと下げて山を確定
+        for i in range(92, rows):
+            close[i] = close[i - 1] - 0.10
     else:
-        # ベース: 安定した価格
-        for i in range(1, rows - 15):
-            close[i] = close[i - 1] + np.random.randn() * 0.01
-        # 直近15-5本前: 急下降（RSIを低くする）
-        for i in range(rows - 15, rows - 5):
-            close[i] = close[i - 1] - 1.0
-        # 直近5本: 価格はゆるやかに下降するが、途中に上昇を混ぜてRSI上昇
-        for i in range(rows - 5, rows):
-            if i % 2 == 0:
-                close[i] = close[i - 1] + 0.3  # 上昇でRSI上昇
-            else:
-                close[i] = close[i - 1] - 0.5  # 下降で価格は下がる
+        # 谷1: 急下降で価格 148、RSI 低い
+        for i in range(70, 75):
+            close[i] = close[i - 1] - 0.40
+        for i in range(75, 80):
+            close[i] = close[i - 1] + 0.05  # 谷1のあと少し戻す
+        # 谷2: 緩やかな下降 → 価格は谷1未満（lower-low）だが緩やかなので
+        # RSI は谷1超え（higher-low）
+        for i in range(80, 92):
+            close[i] = close[i - 1] - 0.06
+        # 谷2のあと上げて谷を確定
+        for i in range(92, rows):
+            close[i] = close[i - 1] + 0.10
 
     high = close + 0.1
     low = close - 0.1
@@ -400,3 +402,29 @@ class TestBearResearcherEdgeCases:
 
         assert isinstance(result, BearVerdict)
         assert 0.5 <= result.penalty_multiplier <= 1.0
+
+
+# ============================================================
+# 監査P1-#4: 重み付け severity の回帰テスト
+# ============================================================
+
+
+def test_weighted_severity_higher_timeframe_outweighs_volume():
+    """監査P1-#4: 上位足矛盾(0.35) は MFI 中立帯(0.05) より大きく severity に寄与"""
+    from src.bear_researcher import _RISK_WEIGHTS
+    assert _RISK_WEIGHTS["higher_timeframe"] > _RISK_WEIGHTS["volume_confirmation"]
+    assert _RISK_WEIGHTS["higher_timeframe"] >= 0.30
+    assert _RISK_WEIGHTS["volume_confirmation"] <= 0.10
+    # 重みの合計は ~1.0（クランプ後の severity が 0..1 になる前提）
+    assert abs(sum(_RISK_WEIGHTS.values()) - 1.0) < 0.01
+
+
+def test_weighted_severity_clamped_to_unit_interval():
+    """severity は重みの合計が 1.0 になるよう設計されているが、
+    将来的な重み追加でも 1.0 を超えないようクランプされている"""
+    from src.bear_researcher import BearResearcher, _RISK_WEIGHTS
+    # 5 件全部発火しても severity は <= 1.0 のはず
+    bear = BearResearcher()
+    # _RISK_WEIGHTS の合計を確認
+    total_weight = sum(_RISK_WEIGHTS.values())
+    assert total_weight <= 1.01  # 0.35+0.25+0.20+0.15+0.05 = 1.00

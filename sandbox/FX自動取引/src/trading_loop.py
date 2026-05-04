@@ -21,6 +21,7 @@ from src.config import (
     BEAR_RESEARCHER_ENABLED,
     BEAR_SEVERITY_THRESHOLD,
     MAIN_TIMEFRAME,
+    SPREAD_EMA_ALPHA,
 )
 from src.conviction_scorer import ConvictionScorer
 from src.indicator_cache import compute_indicators
@@ -351,10 +352,9 @@ class TradingLoop:
                 if self._normal_spread is None:
                     self._normal_spread = current_spread
                 else:
-                    alpha = 0.1
                     self._normal_spread = (
-                        (1 - alpha) * self._normal_spread
-                        + alpha * current_spread
+                        (1 - SPREAD_EMA_ALPHA) * self._normal_spread
+                        + SPREAD_EMA_ALPHA * current_spread
                     )
         except Exception as e:
             logger.debug(

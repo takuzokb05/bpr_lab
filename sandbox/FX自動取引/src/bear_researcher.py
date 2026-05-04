@@ -42,8 +42,24 @@ class BearVerdict:
     reasoning: str = ""                  # 判定理由（日本語）
 
 
-# チェック項目の総数
-_NUM_CHECKS = 5
+# 監査P1-#4: チェック項目の重み付け（合計 1.0）
+# 旧実装は等価カウント (severity = len(risks) / 5) で「上位足矛盾(重大)」と
+# 「MFI 中立帯(軽微)」が同じ 0.2 寄与だった。ここでは「シグナル方向と直接
+# 矛盾する根拠ほど重く」をルールに重み付けする。
+#
+# 設計根拠:
+# - higher_timeframe (上位足矛盾): MA200 がシグナル方向と逆 → 最強の反対論拠 → 0.35
+# - divergence (ダイバージェンス): 価格と RSI 乖離 → 反転の典型サイン → 0.25
+# - support_resistance (サポレジ接近): 上値/下値余地少ない → 直接の利食い障害 → 0.20
+# - bb_squeeze (BB スクイーズ): ブレイク方向不確実 → 軽い → 0.15
+# - volume_confirmation (MFI 中立帯): 単に "支持薄" であって直接矛盾ではない → 0.05
+_RISK_WEIGHTS: dict[str, float] = {
+    "higher_timeframe": 0.35,
+    "divergence": 0.25,
+    "support_resistance": 0.20,
+    "bb_squeeze": 0.15,
+    "volume_confirmation": 0.05,
+}
 
 
 class BearResearcher:
@@ -103,30 +119,39 @@ class BearResearcher:
 
         is_buy = signal == Signal.BUY
         risk_factors: list[str] = []
+        # 監査P1-#4: 発火したチェック ID を保持して重み付け severity を算出
+        fired_checks: list[str] = []
 
         # --- 5つのチェック実行（指標キャッシュを各チェックに渡す） ---
         divergence = self._check_divergence(data, is_buy, indicators=indicators)
         if divergence:
             risk_factors.append(divergence)
+            fired_checks.append("divergence")
 
         sr_risk = self._check_support_resistance(data, is_buy, indicators=indicators)
         if sr_risk:
             risk_factors.append(sr_risk)
+            fired_checks.append("support_resistance")
 
         htf_risk = self._check_higher_timeframe(data, is_buy, indicators=indicators)
         if htf_risk:
             risk_factors.append(htf_risk)
+            fired_checks.append("higher_timeframe")
 
         vol_risk = self._check_volume_confirmation(data, is_buy, indicators=indicators)
         if vol_risk:
             risk_factors.append(vol_risk)
+            fired_checks.append("volume_confirmation")
 
         bb_risk = self._check_bb_squeeze(data, indicators=indicators)
         if bb_risk:
             risk_factors.append(bb_risk)
+            fired_checks.append("bb_squeeze")
 
-        # --- severity / penalty 計算 ---
-        severity = len(risk_factors) / _NUM_CHECKS
+        # --- severity / penalty 計算（監査P1-#4: 重み付け化） ---
+        severity = sum(_RISK_WEIGHTS.get(name, 0.0) for name in fired_checks)
+        # 0..1 にクランプ（重み合計が 1.0 設計だが将来的な追加に対する保険）
+        severity = min(1.0, max(0.0, severity))
         penalty_multiplier = max(BEAR_MAX_PENALTY, 1.0 - severity * 0.5)
 
         # 判定理由の組み立て
@@ -141,10 +166,11 @@ class BearResearcher:
             reasoning = f"{direction_str}シグナルに対する反対論拠なし。conviction維持。"
 
         logger.info(
-            "Bear Researcher: %sシグナル → リスク%d/%d件 severity=%.1f penalty=%.2f",
+            "Bear Researcher: %sシグナル → リスク%d/%d件 fired=%s severity=%.2f penalty=%.2f",
             signal.value,
             len(risk_factors),
-            _NUM_CHECKS,
+            len(_RISK_WEIGHTS),
+            ",".join(fired_checks) if fired_checks else "-",
             severity,
             penalty_multiplier,
         )
@@ -160,41 +186,77 @@ class BearResearcher:
     # チェック項目の実装
     # ================================================================
 
-    def _check_divergence(self, data: pd.DataFrame, is_buy: bool, indicators: dict | None = None) -> Optional[str]:
+    def _check_divergence(
+        self, data: pd.DataFrame, is_buy: bool, indicators: dict | None = None,
+    ) -> Optional[str]:
         """
-        ダイバージェンス検出: 価格とRSIの方向が乖離しているか。
+        ダイバージェンス検出（監査P1-#5: ピーク/トラフ検出ベースに刷新）
 
-        直近N本の最初と最後で価格・RSIの方向を比較する。
+        旧実装: 直近 N 本の **最初と最後だけ**で方向比較 → 短期ノイズで誤検出多発
+        新実装: scipy.signal.find_peaks で直近 ~3×lookback 本のピーク/トラフを
+        検出し、**直近2つのピーク（SELL想定）or トラフ（BUY想定）**を比較。
+
+        - BUYシグナル想定の bearish divergence:
+          直近の高値 > 前回の高値 だが、対応する RSI 高値 < 前回の RSI 高値
+          → 価格は上昇継続するも勢いが減衰 = 反転の典型サイン
+        - SELLシグナル想定の bullish divergence:
+          直近の安値 < 前回の安値 だが、対応する RSI 安値 > 前回の RSI 安値
         """
+        from scipy.signal import find_peaks  # local import: scipy は既に依存
+
         lookback = BEAR_DIVERGENCE_LOOKBACK
-        # キャッシュからRSI系列を取得（あればpandas_ta計算をスキップ）
+        window = max(lookback * 3, 30)  # ピーク2つ取れる程度の窓
+
         if indicators is not None and indicators.get("rsi") is not None:
             rsi = indicators["rsi"]
         else:
             rsi = ta.rsi(data["close"], length=RSI_PERIOD)
-        if rsi is None or len(rsi) < lookback:
+        if rsi is None or len(rsi) < window:
             return None
 
-        # 直近lookback本の価格とRSIを取得
-        recent_close = data["close"].iloc[-lookback:]
-        recent_rsi = rsi.iloc[-lookback:]
+        recent_close = data["close"].iloc[-window:].to_numpy()
+        recent_rsi = rsi.iloc[-window:].to_numpy()
 
-        # NaN含む場合はスキップ
-        if recent_rsi.isna().any():
+        # NaN を含む位置は除外（ピーク検出が破綻する）
+        valid_mask = ~(pd.isna(recent_close) | pd.isna(recent_rsi))
+        if valid_mask.sum() < 10:
             return None
 
-        price_change = float(recent_close.iloc[-1] - recent_close.iloc[0])
-        rsi_change = float(recent_rsi.iloc[-1] - recent_rsi.iloc[0])
-
+        # ピーク/トラフの最低距離 = lookback 本（同じピークを二重検出しない）
         if is_buy:
-            # BUYシグナル: 価格上昇 + RSI下降 → bearish divergence
-            if price_change > 0 and rsi_change < 0:
-                return "ベアリッシュ・ダイバージェンス（価格↑+RSI↓）"
+            # BUY 想定 → bearish divergence (価格高値↑, RSI高値↓)
+            peaks_p, _ = find_peaks(recent_close, distance=lookback)
+            peaks_r, _ = find_peaks(recent_rsi, distance=lookback)
+            if len(peaks_p) < 2 or len(peaks_r) < 2:
+                return None
+            p_last, p_prev = peaks_p[-1], peaks_p[-2]
+            r_last, r_prev = peaks_r[-1], peaks_r[-2]
+            if (
+                recent_close[p_last] > recent_close[p_prev]
+                and recent_rsi[r_last] < recent_rsi[r_prev]
+            ):
+                return (
+                    f"ベアリッシュ・ダイバージェンス（価格高値"
+                    f"{recent_close[p_prev]:.5f}→{recent_close[p_last]:.5f}↑、"
+                    f"RSI高値{recent_rsi[r_prev]:.1f}→{recent_rsi[r_last]:.1f}↓）"
+                )
         else:
-            # SELLシグナル: 価格下降 + RSI上昇 → bullish divergence
-            if price_change < 0 and rsi_change > 0:
-                return "ブリッシュ・ダイバージェンス（価格↓+RSI↑）"
-
+            # SELL 想定 → bullish divergence (価格安値↓, RSI安値↑)
+            troughs_p, _ = find_peaks(-recent_close, distance=lookback)
+            troughs_r, _ = find_peaks(-recent_rsi, distance=lookback)
+            if len(troughs_p) < 2 or len(troughs_r) < 2:
+                return None
+            p_last, p_prev = troughs_p[-1], troughs_p[-2]
+            r_last, r_prev = troughs_r[-1], troughs_r[-2]
+            if (
+                recent_close[p_last] < recent_close[p_prev]
+                and recent_rsi[r_last] > recent_rsi[r_prev]
+            ):
+                return (
+                    f"ブリッシュ・ダイバージェンス（価格安値"
+                    f"{recent_close[p_prev]:.5f}→{recent_close[p_last]:.5f}↓、"
+                    f"RSI安値{recent_rsi[r_prev]:.1f}→{recent_rsi[r_last]:.1f}↑）"
+                )
         return None
 
     def _check_support_resistance(
