@@ -259,8 +259,49 @@ class TradePostMortem:
     # Claude API
     # ------------------------------------------------------------------
 
+    # 事後分析プロンプトは日本語の長文 JSON（5フィールド + 4ネスト）を要求する。
+    # 旧 max_tokens=512 では UTF-8 日本語で確実に切れる（実測: 5/4 09:13 に
+    # 「Unterminated string starting at: line 12 column 24 (char 664)」発生）。
+    # 1024 で多くは収まるが、安全マージンを取って初回 1536、truncated 検出時に
+    # _MAX_TOKENS_RETRY (3072) で 1 度だけリトライする。
+    _MAX_TOKENS_INITIAL = 1536
+    _MAX_TOKENS_RETRY = 3072
+
     def _call_claude(self, user_prompt: str) -> Optional[dict]:
-        """Claude APIで事後分析を実行する。"""
+        """Claude APIで事後分析を実行する。
+
+        truncation (stop_reason=max_tokens) を検出したら 1 度だけ大きい
+        max_tokens でリトライする。それでも parse 不可なら None を返す。
+        """
+        for attempt, max_tokens in enumerate(
+            (self._MAX_TOKENS_INITIAL, self._MAX_TOKENS_RETRY), start=1,
+        ):
+            result = self._call_claude_once(user_prompt, max_tokens)
+            if result is None:
+                return None  # API エラーや timeout — リトライしない
+            parsed, was_truncated = result
+            if parsed is not None:
+                return parsed
+            if not was_truncated or attempt == 2:
+                # truncation 以外の parse 失敗 or 既にリトライ済み → 諦める
+                return None
+            logger.info(
+                "事後分析: max_tokens=%d で truncated。max_tokens=%d でリトライ",
+                max_tokens, self._MAX_TOKENS_RETRY,
+            )
+        return None
+
+    def _call_claude_once(
+        self, user_prompt: str, max_tokens: int,
+    ) -> Optional[tuple[Optional[dict], bool]]:
+        """1 回 Claude API を呼ぶ。
+
+        Returns:
+            None: API エラー（接続失敗/timeout/HTTP 5xx 等、リトライ不可）
+            (parsed_dict, False): parse 成功
+            (None, True): truncation で parse 失敗（リトライ候補）
+            (None, False): truncation 以外の parse 失敗（リトライ不可）
+        """
         headers = {
             "x-api-key": ANTHROPIC_API_KEY,
             "anthropic-version": "2023-06-01",
@@ -268,7 +309,7 @@ class TradePostMortem:
         }
         payload = {
             "model": POSTMORTEM_MODEL_ID,
-            "max_tokens": 512,
+            "max_tokens": max_tokens,
             "system": _SYSTEM_PROMPT,
             "messages": [{"role": "user", "content": user_prompt}],
         }
@@ -281,22 +322,35 @@ class TradePostMortem:
                 timeout=_CLAUDE_API_TIMEOUT,
             )
             resp.raise_for_status()
-
-            content = resp.json().get("content", [{}])[0].get("text", "")
-            json_str = content.strip()
-            if json_str.startswith("```"):
-                lines = json_str.split("\n")
-                json_str = "\n".join(
-                    line for line in lines if not line.strip().startswith("```")
-                )
-            return json.loads(json_str)
-
+            body = resp.json()
         except requests.exceptions.Timeout:
             logger.warning("事後分析API タイムアウト")
             return None
-        except (requests.exceptions.RequestException, json.JSONDecodeError) as e:
+        except requests.exceptions.RequestException as e:
             logger.warning("事後分析APIエラー: %s", e)
             return None
+
+        stop_reason = body.get("stop_reason")
+        content = body.get("content", [{}])[0].get("text", "")
+        json_str = content.strip()
+        # ```json ... ``` フェンスを剥がす
+        if json_str.startswith("```"):
+            lines = json_str.split("\n")
+            json_str = "\n".join(
+                line for line in lines if not line.strip().startswith("```")
+            )
+
+        try:
+            return (json.loads(json_str), False)
+        except json.JSONDecodeError as e:
+            was_truncated = stop_reason == "max_tokens"
+            # 診断用: 失敗位置周辺を抜粋（256 文字以内、機密ではない）
+            excerpt = json_str[:512] + (" ...[truncated]" if len(json_str) > 512 else "")
+            logger.warning(
+                "事後分析JSON parse 失敗 (stop_reason=%s, max_tokens=%d): %s | excerpt=%r",
+                stop_reason, max_tokens, e, excerpt,
+            )
+            return (None, was_truncated)
 
     # ------------------------------------------------------------------
     # DB操作
