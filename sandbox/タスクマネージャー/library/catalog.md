@@ -528,6 +528,22 @@
 | 426 | Craft Agents OSS: New Open-Source Agent Framework by Lukilabs (Apach | en | 未読 | #claude-ecosystem #web-signal | articles/2026-05-02_1249_Craft_Agents_OSS_Apache2_Lukilabs_AIToolly.md |
 | 427 | Claude Agent SDK Python - Official GitHub Repository | en | 未読 | #claude-ecosystem #web-signal | articles/2026-05-02_1255_Claude_Agent_SDK_Python_Official_GitHub.md |
 
+| 428 | Boris Cherny氏がLenny's Podcastで告白：Claude Code 430時間・600万トークン・$1340の実態 | ja | 未読 | #claude-code #x-signal | articles/2026-05-03_1256_Boris_Cherny_Lennys_Podcast_Claude_Code_430h_JA.md |
+| 429 | Claude Code News May 2026 (STARTUP EDITION) | en | 未読 | #claude-code #web-signal | articles/2026-05-03_1265_Claude_Code_News_May2026_MeanCEO.md |
+| 430 | Claude Code Ultraplan Complete Guide: Cloud Planning Cost & Workflow  | en | 未読 | #claude-code #web-signal | articles/2026-05-03_1266_Claude_Code_Ultraplan_Complete_Guide_ShareUhack.md |
+| 431 | Claude Code /ultraplan — Plans in the Cloud, Opens Pull Requests Auto | en | 未読 | #claude-code #web-signal | articles/2026-05-03_1267_Claude_Code_Ultraplan_AutoPR_AyyazTech.md |
+| 432 | Claude Code Auto-Fix: The PR That Fixes Itself | en | 未読 | #claude-code #web-signal | articles/2026-05-03_1268_Claude_Code_AutoFix_PR_Lifecycle_Paddo.md |
+| 433 | Every Claude Code Update From April 17-22, 2026: What Actually Matter | en | 未読 | #claude-code #web-signal | articles/2026-05-03_1269_Claude_Code_April_1722_Updates_CLSkills.md |
+| 434 | Claude Code Subagents: The Complete Guide to AI Agent Delegation | en | 未読 | #claude-code #web-signal | articles/2026-05-03_1270_Claude_Code_Subagents_Complete_Guide_Sathish.md |
+| 435 | Claude Code: Hooks, Subagents, and Skills — Complete Guide 2026 | en | 未読 | #claude-code #web-signal | articles/2026-05-03_1271_Claude_Code_Hooks_Subagents_Skills_Complete_Ofox.md |
+| 436 | Claude Code品質低下、Anthropicが公式調査：3つの要因を特定（ITmedia報道） | ja | 未読 | #claude-ecosystem #x-signal | articles/2026-05-03_1257_Claude_Code_Quality_Drop_Anthropic_3Factors_JA.md |
+| 437 | OpenRouterが「-latestモデルエイリアス」発表：claude-opus-latestで常に最新版に自動ルーティング | ja | 未読 | #claude-ecosystem #x-signal | articles/2026-05-03_1258_OpenRouter_Latest_Model_Alias_Anthropic_AutoRouting_JA.md |
+| 438 | Anthropic、評価額9000億ドル（130兆円）で資金調達検討：年間売上高300億ドル・Google出資400億ドル | ja | 未読 | #claude-ecosystem #x-signal | articles/2026-05-03_1259_Anthropic_900B_Valuation_Funding_300B_Revenue_JA.md |
+| 439 | Anthropic、英国推論専用チップ設計スタートアップFractileと買収協議（Telegraph報道） | ja | 未読 | #claude-ecosystem #x-signal | articles/2026-05-03_1260_Anthropic_Fractile_Acquisition_London_Chip_Startup_JA.md |
+| 440 | Claude Mythos Preview — Anthropic Red Team Blog | en | 未読 | #claude-ecosystem #web-signal | articles/2026-05-03_1272_Claude_Mythos_Preview_Anthropic_Red.md |
+| 441 | Superpowers: AI Agent Skill Framework & Methodology Guide (May 2026)  | en | 未読 | #claude-ecosystem #web-signal | articles/2026-05-03_1273_Superpowers_Agent_Skill_Framework_AIToolly_May.md |
+| 442 | Claude's New Constitution — Anthropic | en | 未読 | #claude-ecosystem #web-signal | articles/2026-05-03_1274_Claude_New_Constitution_Anthropic.md |
+
 ## 統計
 
 - 蔵書数: 48（記事44 + 書籍4）
@@ -536,4 +552,4 @@
 - 未読: 1
 - 構想: 1
 - 書籍: 4
-- 日次収集（2026-03-27〜）: 805件（2026-05-02更新）
+- 日次収集（2026-03-27〜）: 833件（2026-05-03更新）

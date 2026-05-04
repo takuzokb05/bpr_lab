@@ -18,8 +18,25 @@ from src.risk_manager import KillSwitch, RiskManager
 # ============================================================
 
 def _make_trade(pl: float, hours_ago: float = 0.0) -> dict:
-    """テスト用の取引履歴エントリを作成する。"""
+    """テスト用の取引履歴エントリを作成する。
+
+    注意: 監査B8 (PR #20) 以降、日次集計は「カレンダーUTC日 0:00〜現在」。
+    hours_ago=1 でも実行時刻が 0:00-1:00 UTC なら前日扱いになる。
+    日次に「今日」入れたいテストは _make_trade_today_utc を使うこと。
+    """
     close_time = datetime.now(timezone.utc) - timedelta(hours=hours_ago)
+    return {"pl": pl, "close_time": close_time}
+
+
+def _make_trade_today_utc(pl: float) -> dict:
+    """確実に「今日 UTC」の取引を作る（カレンダー日境界テスト用）。
+
+    現在時刻 - 1分 と「今日 UTC 12:00」のうち過去側を選ぶ。
+    実行時刻が 0:01 でも今日に収まる。
+    """
+    now = datetime.now(timezone.utc)
+    today_noon = now.replace(hour=12, minute=0, second=0, microsecond=0)
+    close_time = min(today_noon, now - timedelta(minutes=1))
     return {"pl": pl, "close_time": close_time}
 
 
@@ -252,7 +269,7 @@ class TestLossLimits:
     def test_daily_loss_within_limit(self):
         """日次損失が上限内（4.9%）なら許可（STAGE2: 上限5%）"""
         trades = [
-            _make_trade(-49_000, hours_ago=1),  # 4.9%
+            _make_trade_today_utc(-49_000),  # 4.9%
         ]
         is_allowed, reason = self.rm.check_loss_limits(trades)
         assert is_allowed is True
@@ -260,7 +277,7 @@ class TestLossLimits:
     def test_daily_loss_at_limit(self):
         """日次損失が上限到達（5.0%）で停止"""
         trades = [
-            _make_trade(-50_000, hours_ago=1),  # 5.0%ちょうど
+            _make_trade_today_utc(-50_000),  # 5.0%ちょうど
         ]
         is_allowed, reason = self.rm.check_loss_limits(trades)
         assert is_allowed is False
@@ -269,7 +286,7 @@ class TestLossLimits:
     def test_daily_loss_just_above_limit(self):
         """日次損失が上限微超（5.1%）で停止"""
         trades = [
-            _make_trade(-51_000, hours_ago=1),  # 5.1%
+            _make_trade_today_utc(-51_000),  # 5.1%
         ]
         is_allowed, reason = self.rm.check_loss_limits(trades)
         assert is_allowed is False
@@ -320,6 +337,27 @@ class TestLossLimits:
         ]
         is_allowed, reason = self.rm.check_loss_limits(trades)
         assert is_allowed is True
+
+    def test_daily_uses_calendar_utc_day_boundary_audit_b8(self):
+        """監査B8: 日次集計はカレンダーUTC日境界（KillSwitchと整合）"""
+        # 前日のUTC 23:59 に締めた -5%損失は今日の日次にカウントされない
+        now = datetime.now(timezone.utc)
+        if now.hour == 0 and now.minute < 5:
+            # 0:00 UTC 直後はテストが境界で不安定なのでスキップ
+            return
+        today_midnight = datetime(
+            now.year, now.month, now.day, tzinfo=timezone.utc,
+        )
+        yesterday_2359 = today_midnight - timedelta(minutes=1)
+
+        trades = [
+            {"pl": -50_000, "close_time": yesterday_2359},  # 前日損失5%
+        ]
+        is_allowed, reason = self.rm.check_loss_limits(trades)
+        # 週次10%上限・月次20%上限には引っかからない（5%のみ）
+        assert is_allowed is True, (
+            f"前日損失は今日の日次に含めるべきでない: reason={reason}"
+        )
 
 
 # ============================================================
@@ -877,7 +915,7 @@ class TestEvaluateKillSwitch:
         rm._peak_balance = 1_000_000
         # 日次損失5%以上（ドローダウンはSTOP未満に保つ）
         trades = [
-            _make_trade(-50_000, hours_ago=1),  # 5% → 上限到達
+            _make_trade_today_utc(-50_000),  # 5% → 上限到達
         ]
         result = rm.evaluate_kill_switch(
             current_balance=950_000,  # DD 5% → WARNING〜REDUCEレベル
@@ -996,7 +1034,7 @@ class TestKillSwitchAutoDeactivate:
         assert ks.should_auto_deactivate(current_time=far_future) is False
 
     def test_volatility_deactivate_after_cooldown(self):
-        """volatility → クールダウン（5分）経過後にTrue"""
+        """volatility → クールダウン経過後にTrue"""
         from src.config import KILL_COOLDOWN_MINUTES
 
         ks = KillSwitch()
@@ -1004,13 +1042,24 @@ class TestKillSwitchAutoDeactivate:
         activated_time = datetime(2025, 6, 15, 10, 0, 0, tzinfo=timezone.utc)
         ks._activated_at = activated_time
 
-        # クールダウン前 → False
-        before_cooldown = datetime(2025, 6, 15, 10, 4, 0, tzinfo=timezone.utc)
+        # クールダウン直前 → False
+        before_cooldown = activated_time + timedelta(
+            minutes=KILL_COOLDOWN_MINUTES - 1,
+        )
         assert ks.should_auto_deactivate(current_time=before_cooldown) is False
 
         # クールダウン後 → True
         after_cooldown = activated_time + timedelta(minutes=KILL_COOLDOWN_MINUTES)
         assert ks.should_auto_deactivate(current_time=after_cooldown) is True
+
+    def test_kill_cooldown_minutes_audit_a6(self):
+        """監査A6: KILL_COOLDOWN_MINUTES が 5分 → 30分に拡張されているか"""
+        from src.config import KILL_COOLDOWN_MINUTES
+        # 5分は短すぎてフラッシュクラッシュ二次波・キャッシュ値再キル即解除リスクあり
+        assert KILL_COOLDOWN_MINUTES >= 15, (
+            f"KILL_COOLDOWN_MINUTES={KILL_COOLDOWN_MINUTES} は短すぎる。"
+            "監査A6推奨: 15-30分"
+        )
 
     def test_not_active_returns_false(self):
         """未発動時は False"""

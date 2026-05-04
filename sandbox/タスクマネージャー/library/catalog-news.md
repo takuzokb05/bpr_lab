@@ -419,3 +419,13 @@
 | 393 | ❶ Memory Importとは何か（1/6） ひと言で言うと、Claudeの「乗り換え革命」です。  ChatGPTやGemini、 | ja | 未読 | #ai-news #x-signal | articles/2026-05-02_1242_X_Hoshino_AISales_❶_Memory_Importとは何か（1_6）_ひと言で言うと、Claudeの「乗り換え革命」です.md |
 | 394 | New AI Model Releases News - May 2026 (Startup Edition) | en | 未読 | #ai-news #web-signal | articles/2026-05-02_1253_New_AI_Model_Releases_May2026_StartupEdition.md |
 | 395 | Colorado's AI Compromise: SB 189 Pushes AI Regulation Start Date to  | en | 未読 | #ai-news #web-signal | articles/2026-05-02_1254_Colorado_AI_Law_SB189_Change_May2026.md |
+| 396 | NTTが国内データセンター電力容量を2033年度までに3倍以上に拡大発表：浸漬冷却で電力40%削減 | ja | 未読 | #ai-news #x-signal | articles/2026-05-03_1263_NTT_Datacenter_3x_Power_2033_Immersion_Cooling_JA.md |
+| 397 | iOS 27: Apple Aims for AI-Optimized Stable Release (Mark Gurman) | en | 未読 | #ai-news #x-signal | articles/2026-05-03_1264_Apple_iOS27_AI_Optimized_Stable_Priority_Gurman_EN.md |
+| 398 | Sakana AI Introduces KAME: Tandem Speech-to-Speech with Real-Time LLM | en | 未読 | #ai-news #web-signal | articles/2026-05-03_1276_Sakana_AI_KAME_Speech_Model_Marktechpost.md |
+| 399 | AI News May 2026 (STARTUP EDITION) | en | 未読 | #ai-news #web-signal | articles/2026-05-03_1277_AI_News_May2026_MeanCEO.md |
+| 400 | Large Language Models News May 2026 (STARTUP EDITION) | en | 未読 | #ai-news #web-signal | articles/2026-05-03_1278_LLM_News_May2026_MeanCEO.md |
+| 401 | 【2026年5月第1週】今週のAIニュース：Microsoft-OpenAI契約再構築と米中AI地政学の本格化 | ja | 未読 | #ai-news #web-signal | articles/2026-05-03_1279_AINews_Week1May_Japan_ShindanshiBlog.md |
+| 402 | Microsoft and OpenAI Restructure Partnership to End AGI Exclusivity | en | 未読 | #ai-news #web-signal | articles/2026-05-03_1280_Microsoft_OpenAI_Partnership_Restructure_n1n.md |
+| 403 | Cloudflare Builds High-Performance Infrastructure for Running LLMs | en | 未読 | #ai-news #web-signal | articles/2026-05-03_1281_Cloudflare_LLM_Infrastructure_InfoQ.md |
+| 404 | AI規制・政策最新動向2026年5月：政策策定の信頼性、企業ガバナンス、開発原則の転換 | ja | 未読 | #ai-news #web-signal | articles/2026-05-03_1282_AI_Policy_Regulation_May2026_a-aich.md |
+| 405 | OpenAI shakes up partnership with Microsoft, capping revenue share payments | en | 未読 | #ai-news #web-signal | articles/2026-05-03_1283_CNBC_OpenAI_Microsoft_Revenue_Cap.md |

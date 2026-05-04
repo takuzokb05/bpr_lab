@@ -44,6 +44,17 @@ class BollingerReversal(StrategyBase):
         return self._diagnostics
 
     def generate_signal(self, data: pd.DataFrame, **kwargs) -> Signal:
+        """ボリンジャー逆張りシグナル。
+
+        kwargs:
+            indicators: 共有指標キャッシュ（参照のみ、現在は再計算）
+            pair_config: ペア別設定 dict（rsi_oversold/rsi_overbought をオーバーライド可）
+        """
+        # ペア別オーバーライド (system_logic_audit.md C4 配線漏れ修正)
+        pair_config = kwargs.get("pair_config") or {}
+        rsi_oversold = pair_config.get("rsi_oversold", BB_RSI_OVERSOLD)
+        rsi_overbought = pair_config.get("rsi_overbought", BB_RSI_OVERBOUGHT)
+
         if len(data) < BB_LENGTH + 5:
             logger.warning(
                 "データ不足（%d行 < %d行）。HOLD。",
@@ -79,25 +90,27 @@ class BollingerReversal(StrategyBase):
             "bb_upper": float(bb_u),
             "bb_lower": float(bb_l),
             "rsi": float(rsi),
+            "rsi_oversold": rsi_oversold,
+            "rsi_overbought": rsi_overbought,
         }
 
         # 上バンドタッチ + RSI過熱 → 逆張りSELL
-        if close >= bb_u and rsi >= BB_RSI_OVERBOUGHT:
+        if close >= bb_u and rsi >= rsi_overbought:
             diag["hold_reason"] = None
             self._diagnostics = diag
             logger.info(
                 "BB逆張り売りシグナル: close=%.5f >= BBU=%.5f, RSI=%.2f>=%d",
-                close, bb_u, rsi, BB_RSI_OVERBOUGHT,
+                close, bb_u, rsi, rsi_overbought,
             )
             return Signal.SELL
 
         # 下バンドタッチ + RSI過売 → 逆張りBUY
-        if close <= bb_l and rsi <= BB_RSI_OVERSOLD:
+        if close <= bb_l and rsi <= rsi_oversold:
             diag["hold_reason"] = None
             self._diagnostics = diag
             logger.info(
                 "BB逆張り買いシグナル: close=%.5f <= BBL=%.5f, RSI=%.2f<=%d",
-                close, bb_l, rsi, BB_RSI_OVERSOLD,
+                close, bb_l, rsi, rsi_oversold,
             )
             return Signal.BUY
 

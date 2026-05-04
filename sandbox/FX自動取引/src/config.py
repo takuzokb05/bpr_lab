@@ -146,7 +146,9 @@ API_MAX_RETRIES: int = 3               # 最大リトライ回数
 KILL_ATR_MULTIPLIER: float = 3.0       # ATR通常の3倍でボラティリティキル
 KILL_SPREAD_MULTIPLIER: float = 5.0    # スプレッド通常の5倍でスプレッドキル
 KILL_API_DISCONNECT_SEC: int = 30      # API切断30秒で全ポジション決済
-KILL_COOLDOWN_MINUTES: int = 5         # volatility/spreadキルの最低クールダウン時間（分）
+KILL_COOLDOWN_MINUTES: int = 30        # volatility/spreadキルの最低クールダウン時間（分）。
+                                       # 監査A6: フラッシュクラッシュ二次波到来までの安全マージン
+                                       # （5分は短すぎてキャッシュ値で再キル即解除のリスクあり）
 
 # 監査P1-#11: 通常スプレッドのEMA平滑化係数。
 # alpha=0.1 で時定数 ~10 イテレーション（60秒間隔なら ~10 分）。

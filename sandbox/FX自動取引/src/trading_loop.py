@@ -19,6 +19,7 @@ from src.broker_client import BrokerClient
 from src.config import (
     ATR_PERIOD,
     BEAR_RESEARCHER_ENABLED,
+    BEAR_SEVERITY_THRESHOLD,
     MAIN_TIMEFRAME,
     SPREAD_EMA_ALPHA,
 )
@@ -386,8 +387,10 @@ class TradingLoop:
         # ペア別設定（T4）: 後続のフィルターで参照
         pair_cfg = get_pair_config(self._instrument)
 
-        # 6. レジーム検出
-        regime_info = self._regime_detector.detect(data, indicators=indicators)
+        # 6. レジーム検出（監査A4: pair_config の regime_* キーで閾値オーバーライド可）
+        regime_info = self._regime_detector.detect(
+            data, indicators=indicators, pair_config=pair_cfg,
+        )
         logger.info(
             "[%s] レジーム判定: %s (確信度=%.2f, エクスポージャー=%.1f, ADX=%.1f)",
             self._instrument,
@@ -487,7 +490,7 @@ class TradingLoop:
             bear_verdict = self._bear_researcher.verify(
                 data, signal, regime_info, indicators=indicators,
             )
-            if bear_verdict.severity >= 0.4:
+            if bear_verdict.severity >= BEAR_SEVERITY_THRESHOLD:
                 logger.warning(
                     "[%s] Bear Researcher警告: severity=%.2f, penalty=%.2f, リスク=%s",
                     self._instrument,

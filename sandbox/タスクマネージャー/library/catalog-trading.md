@@ -134,3 +134,6 @@
 | 111 | LLM Showdown: Which AI Powers the Best Python Algo Trading Bot in 20 | en | 未読 | #ai-trading #web-signal | articles/2026-05-02_1250_LLM_Showdown_Python_Algo_Trading_Bot_2026_QuantLabs.md |
 | 112 | TradingAgents v0.2.4: A Multi-Agent LLM Framework That Simulates an  | en | 未読 | #ai-trading #web-signal | articles/2026-05-02_1251_TradingAgents_v024_Multi_Agent_Trading_Firm_DEV.md |
 | 113 | TradingAgents: Multi-Agents LLM Financial Trading Framework (May 202 | en | 未読 | #ai-trading #web-signal | articles/2026-05-02_1252_TradingAgents_May2026_Advanced_Multi_Agent_AIToolly.md |
+| 114 | AI搭載スーパートレンドインジケーター：機械学習+MT5で全スタイル・全銘柄対応 | ja | 未読 | #ai-trading #x-signal | articles/2026-05-03_1261_AI_SuperTrend_ML_MT5_Indicator_JA.md |
+| 115 | AIコーディングでMQL5 MT5並列バックテスト＋結果自動回収＋ランキング化をほぼノーコードで実現 | ja | 未読 | #ai-trading #x-signal | articles/2026-05-03_1262_AI_Coding_MT5_Parallel_Backtest_Batch_Runner_JA.md |
+| 116 | TradingAgents: Multi-Agent LLM Financial Trading Framework (May 2026) | en | 未読 | #ai-trading #web-signal | articles/2026-05-03_1275_TradingAgents_New_May2026_AIToolly.md |
