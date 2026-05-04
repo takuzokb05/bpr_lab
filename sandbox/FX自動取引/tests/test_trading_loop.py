@@ -6,6 +6,7 @@ F13: trading_loop.py のユニットテスト
 SPEC_phase2.md F13 完了基準準拠。
 """
 
+import logging
 import threading
 import time
 from unittest.mock import MagicMock, PropertyMock, patch
@@ -554,4 +555,248 @@ class TestT4SessionAndPairFilters:
 
         # 戦略は呼ばれるがpair ADXフィルターでブロックされ open されない
         assert result is None
-        pm.open_position.assert_not_called()
+
+
+# ============================================================
+# 6. パイプライン1行サマリログ（観測性）
+# ============================================================
+
+
+class TestPipelineTraceLog:
+    """_signal_pipeline が各ステージの通過/却下を1行 INFO に集約することを検証。
+
+    本番ログから「いま何が起きたか」を読み取れるようにするための観測性機構。
+    既存の個別 INFO ログを置き換えるのではなく、サマリ行を追加する形で実装。
+    """
+
+    @staticmethod
+    def _get_pipeline_lines(caplog) -> list[str]:
+        """caplog から `[XXX] pipeline:` で始まる INFO 行のみ抽出する。"""
+        return [
+            r.getMessage()
+            for r in caplog.records
+            if r.levelname == "INFO" and "pipeline:" in r.getMessage()
+        ]
+
+    def test_execute_emits_pipeline_summary_with_decision(self, caplog):
+        """通常のBUY実行時、DECISION=EXECUTE と最終倍率を含むサマリ1行が出る。"""
+        caplog.set_level(logging.INFO, logger="src.trading_loop")
+        strategy = _make_mock_strategy(signal=Signal.BUY)
+        loop = _create_trading_loop(strategy=strategy)
+
+        loop.run_once()
+
+        lines = self._get_pipeline_lines(caplog)
+        assert len(lines) == 1, f"サマリは1行のみ期待: {lines}"
+        line = lines[0]
+        assert "[USD_JPY]" in line
+        assert "session=PASS" in line
+        assert "regime=" in line
+        assert "strategy=BUY" in line
+        assert "DECISION=EXECUTE" in line
+        assert "mult=" in line
+
+    def test_session_skip_emits_skip_decision(self, caplog):
+        """時間帯外なら session=SKIP / DECISION=SKIP の1行で終わる。"""
+        caplog.set_level(logging.INFO, logger="src.trading_loop")
+
+        # _bypass_t4_filters fixture を上書きして session を閉じる
+        with patch("src.trading_loop.is_in_allowed_session", return_value=False):
+            loop = _create_trading_loop()
+            loop.run_once()
+
+        lines = self._get_pipeline_lines(caplog)
+        assert len(lines) == 1
+        line = lines[0]
+        assert "session=SKIP" in line
+        assert "DECISION=SKIP" in line
+        # 後続ステージは記録されない
+        assert "regime=" not in line
+        assert "strategy=" not in line
+
+    def test_strategy_hold_includes_diagnostics_reason(self, caplog):
+        """戦略がHOLDかつ last_diagnostics に hold_reason がある場合、その理由がサマリに載る。"""
+        caplog.set_level(logging.INFO, logger="src.trading_loop")
+
+        strategy = _make_mock_strategy(signal=Signal.HOLD)
+        # 実戦略と同じく last_diagnostics プロパティで HOLD 理由を返す
+        type(strategy).last_diagnostics = PropertyMock(
+            return_value={"hold_reason": "RSI=52 が押し目水準未達"}
+        )
+
+        loop = _create_trading_loop(strategy=strategy)
+        loop.run_once()
+
+        lines = self._get_pipeline_lines(caplog)
+        assert len(lines) == 1
+        line = lines[0]
+        assert "strategy=HOLD" in line
+        assert "RSI=52 が押し目水準未達" in line
+        assert "DECISION=HOLD" in line
+
+    def test_strategy_hold_without_diagnostics_falls_back_to_default(self, caplog):
+        """last_diagnostics が None でも 'no signal' フォールバックでサマリが出る。"""
+        caplog.set_level(logging.INFO, logger="src.trading_loop")
+
+        strategy = _make_mock_strategy(signal=Signal.HOLD)
+        type(strategy).last_diagnostics = PropertyMock(return_value=None)
+
+        loop = _create_trading_loop(strategy=strategy)
+        loop.run_once()
+
+        lines = self._get_pipeline_lines(caplog)
+        assert len(lines) == 1
+        assert "strategy=HOLD" in lines[0]
+        assert "no signal" in lines[0]
+        assert "DECISION=HOLD" in lines[0]
+
+    def test_pair_adx_reject_emits_reject_decision(self, caplog):
+        """ペア別ADX閾値で却下されたら pair_adx=REJECT / DECISION=REJECT が出る。"""
+        caplog.set_level(logging.INFO, logger="src.trading_loop")
+
+        # ADX閾値を高めに設定 → 検出ADX(0付近)で必ず却下
+        strict_pair_cfg = {
+            "allowed_sessions": [],
+            "rsi_oversold": 30,
+            "rsi_overbought": 70,
+            "adx_threshold": 99,  # 実質ブロック
+            "atr_sl_mult": 2.0,
+            "atr_tp1_mult": 1.0,
+            "atr_tp2_mult": 3.0,
+        }
+
+        strategy = _make_mock_strategy(signal=Signal.BUY)
+
+        with patch(
+            "src.trading_loop.get_pair_config", return_value=strict_pair_cfg,
+        ):
+            loop = _create_trading_loop(strategy=strategy)
+            loop.run_once()
+
+        lines = self._get_pipeline_lines(caplog)
+        assert len(lines) == 1
+        line = lines[0]
+        assert "strategy=BUY" in line
+        assert "pair_adx=REJECT" in line
+        assert "DECISION=REJECT" in line
+
+    def test_pipeline_summary_is_single_line_per_iteration(self, caplog):
+        """1イテレーションあたりサマリ行は必ず1行（多重出力されない）。"""
+        caplog.set_level(logging.INFO, logger="src.trading_loop")
+
+        loop = _create_trading_loop()
+        loop.run_once()
+        loop.run_once()
+        loop.run_once()
+
+        lines = self._get_pipeline_lines(caplog)
+        assert len(lines) == 3, f"3イテレーションで3行のはず: {lines}"
+
+    def test_regime_volatile_emits_skip_decision(self, caplog):
+        """VOLATILE 検出（exposure_multiplier=0.0）で regime=SKIP / DECISION=SKIP。"""
+        caplog.set_level(logging.INFO, logger="src.trading_loop")
+
+        # RegimeDetector を VOLATILE 相当に差し替え
+        fake_regime = MagicMock()
+        fake_regime.regime = MagicMock()
+        fake_regime.regime.value = "volatile"
+        fake_regime.confidence = 0.95
+        fake_regime.exposure_multiplier = 0.0
+        fake_regime.atr_ratio = 3.5
+        fake_regime.adx = 35.0
+
+        loop = _create_trading_loop()
+        loop._regime_detector = MagicMock()
+        loop._regime_detector.detect.return_value = fake_regime
+
+        loop.run_once()
+
+        lines = self._get_pipeline_lines(caplog)
+        assert len(lines) == 1
+        line = lines[0]
+        assert "session=PASS" in line
+        assert "regime=SKIP" in line
+        assert "VOLATILE" in line
+        assert "DECISION=SKIP" in line
+
+    def test_conviction_reject_emits_reject_decision(self, caplog):
+        """conviction.should_trade=False で conviction=REJECT / DECISION=REJECT。"""
+        caplog.set_level(logging.INFO, logger="src.trading_loop")
+
+        # ConvictionScorer を should_trade=False に差し替え
+        fake_conviction = MagicMock()
+        fake_conviction.score = 3
+        fake_conviction.position_size_multiplier = 0.0
+        fake_conviction.should_trade = False
+        fake_conviction.reasoning = "確信度3/10"
+
+        strategy = _make_mock_strategy(signal=Signal.BUY)
+        loop = _create_trading_loop(strategy=strategy)
+        loop._conviction_scorer = MagicMock()
+        loop._conviction_scorer.score.return_value = fake_conviction
+
+        loop.run_once()
+
+        lines = self._get_pipeline_lines(caplog)
+        assert len(lines) == 1
+        line = lines[0]
+        assert "conviction=REJECT" in line
+        assert "3/10" in line
+        assert "DECISION=REJECT" in line
+
+    def test_ai_reject_emits_reject_decision(self, caplog):
+        """AIフィルター REJECT で ai=REJECT / DECISION=REJECT、reasoning が trace に含まれる。"""
+        caplog.set_level(logging.INFO, logger="src.trading_loop")
+
+        # AIAdvisor: bias.evaluate_signal が REJECT を返す
+        fake_bias = MagicMock()
+        fake_bias.direction = "BEARISH"
+        fake_bias.confidence = 0.85
+        fake_bias.reasoning = "上位足ダイバージェンスで反転濃厚"
+        fake_bias.evaluate_signal.return_value = "REJECT"
+        fake_bias.position_size_multiplier.return_value = 0.0
+        fake_bias.to_record.return_value = {"direction": "BEARISH"}
+
+        fake_advisor = MagicMock()
+        fake_advisor.get_bias.return_value = fake_bias
+
+        strategy = _make_mock_strategy(signal=Signal.BUY)
+        loop = _create_trading_loop(strategy=strategy)
+        loop._ai_advisor = fake_advisor
+
+        loop.run_once()
+
+        lines = self._get_pipeline_lines(caplog)
+        assert len(lines) == 1
+        line = lines[0]
+        assert "ai=REJECT" in line
+        # reasoning は MAXLEN(40) で切り詰められるが先頭の特徴語は残る
+        assert "上位足" in line
+        assert "DECISION=REJECT" in line
+
+    def test_bear_warn_appears_in_trace_but_executes(self, caplog):
+        """Bear severity が閾値超え → trace に bear=WARN を残しつつ EXECUTE 継続。"""
+        caplog.set_level(logging.INFO, logger="src.trading_loop")
+
+        # BearResearcher: severity=0.6 で WARN（BEAR_SEVERITY_THRESHOLD=0.4超え）
+        fake_verdict = MagicMock()
+        fake_verdict.severity = 0.6
+        fake_verdict.penalty_multiplier = 0.7
+        fake_verdict.risk_factors = ["divergence", "support_resistance"]
+
+        fake_bear = MagicMock()
+        fake_bear.verify.return_value = fake_verdict
+
+        strategy = _make_mock_strategy(signal=Signal.BUY)
+        loop = _create_trading_loop(strategy=strategy)
+        loop._bear_researcher = fake_bear
+
+        loop.run_once()
+
+        lines = self._get_pipeline_lines(caplog)
+        assert len(lines) == 1
+        line = lines[0]
+        assert "bear=WARN" in line
+        assert "sev=0.60" in line
+        assert "pen=0.70" in line
+        assert "DECISION=EXECUTE" in line

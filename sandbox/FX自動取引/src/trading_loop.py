@@ -21,14 +21,15 @@ from src.config import (
     BEAR_RESEARCHER_ENABLED,
     BEAR_SEVERITY_THRESHOLD,
     MAIN_TIMEFRAME,
+    PIPELINE_TRACE_DETAIL_MAXLEN,
     SPREAD_EMA_ALPHA,
 )
-from src.conviction_scorer import ConvictionScorer
+from src.conviction_scorer import ConvictionResult, ConvictionScorer
 from src.indicator_cache import compute_indicators
 from src.notifier_group import NotifierGroup
 from src.pair_config import get_pair_config
 from src.position_manager import PositionManager
-from src.regime_detector import RegimeDetector
+from src.regime_detector import RegimeDetector, RegimeInfo
 from src.risk_manager import RiskManager
 from src.session_filter import get_active_session_label, is_in_allowed_session
 from src.signal_coordinator import SignalCoordinator
@@ -365,21 +366,33 @@ class TradingLoop:
 
     def _signal_pipeline(
         self, data: pd.DataFrame, indicators: dict
-    ) -> Optional[tuple]:
+    ) -> Optional[
+        tuple[Signal, float, ConvictionResult, RegimeInfo, Optional[dict]]
+    ]:
         """
         シグナルパイプライン: 時間帯フィルター→レジーム→戦略→conviction→AI→Bear。
 
+        各ステージの通過/却下を pipeline_trace に蓄積し、return 直前に
+        _log_pipeline_trace で1行 INFO ログにまとめて出力する（観測性向上）。
+        既存の個別ステージログは DEBUG に格下げ済みで、本番デフォルトは
+        サマリ1行のみ。深掘り時は logging を DEBUG に切り替える。
+
         Returns:
-            (signal, combined_multiplier, conviction, regime_info) または None
+            (signal, combined_multiplier, conviction, regime_info, ai_record) または None
         """
+        trace: list[tuple[str, str, str]] = []
+
         # 0. 時間帯フィルター（T4）: 許可セッション外ならスキップ
         if not is_in_allowed_session(self._instrument):
+            trace.append(("session", "SKIP", "許可外"))
             logger.info(
                 "[%s] 時間帯フィルター: 許可セッション外のためシグナル生成をスキップ",
                 self._instrument,
             )
+            self._log_pipeline_trace(trace, decision="SKIP")
             return None
         active_label = get_active_session_label(self._instrument)
+        trace.append(("session", "PASS", active_label or "-"))
         logger.debug(
             "[%s] アクティブセッション: %s", self._instrument, active_label,
         )
@@ -391,7 +404,12 @@ class TradingLoop:
         regime_info = self._regime_detector.detect(
             data, indicators=indicators, pair_config=pair_cfg,
         )
-        logger.info(
+        regime_label = (
+            f"{regime_info.regime.value}("
+            f"conf={regime_info.confidence:.2f},ADX={regime_info.adx:.1f})"
+        )
+        # 詳細ログは DEBUG に格下げ（pipeline サマリで全体把握できるため）
+        logger.debug(
             "[%s] レジーム判定: %s (確信度=%.2f, エクスポージャー=%.1f, ADX=%.1f)",
             self._instrument,
             regime_info.regime.value,
@@ -402,42 +420,59 @@ class TradingLoop:
 
         # VOLATILEなら取引停止
         if regime_info.exposure_multiplier == 0.0:
+            trace.append(("regime", "SKIP", f"VOLATILE atr_ratio={regime_info.atr_ratio:.2f}"))
             logger.warning(
                 "[%s] 高ボラティリティ検出（ATR比率=%.2f）。新規取引を停止。",
                 self._instrument,
                 regime_info.atr_ratio,
             )
+            self._log_pipeline_trace(trace, decision="SKIP")
             return None
+        trace.append(("regime", "PASS", regime_label))
 
         # 7. シグナル生成（pair_cfg は将来の戦略側オーバーライド用に渡す）
         signal = self._strategy.generate_signal(
             data, indicators=indicators, pair_config=pair_cfg,
         )
+        strategy_name = type(self._strategy).__name__
 
         if signal not in (Signal.BUY, Signal.SELL):
+            # 戦略側の last_diagnostics から HOLD 理由を取得（あれば）
+            diag = getattr(self._strategy, "last_diagnostics", None) or {}
+            hold_reason = diag.get("hold_reason") or "no signal"
+            trace.append(("strategy", "HOLD", f"{strategy_name}: {hold_reason}"))
             logger.debug(
                 "[%s] HOLDシグナル: iteration=%d",
                 self._instrument,
                 self._iteration_count + 1,
             )
+            self._log_pipeline_trace(trace, decision="HOLD")
             return None
+        trace.append(("strategy", signal.value, strategy_name))
 
         # ペア別ADXフィルター（T4）: ペア別 adx_threshold を満たさなければスキップ
         pair_adx_threshold = pair_cfg.get("adx_threshold")
         if pair_adx_threshold is not None and regime_info.adx < pair_adx_threshold:
+            trace.append((
+                "pair_adx",
+                "REJECT",
+                f"ADX={regime_info.adx:.1f}<{pair_adx_threshold}",
+            ))
             logger.info(
                 "[%s] ペア別ADXフィルター: ADX=%.1f < 閾値=%.1f → スキップ",
                 self._instrument,
                 regime_info.adx,
                 pair_adx_threshold,
             )
+            self._log_pipeline_trace(trace, decision="REJECT")
             return None
 
         # 8. conviction score 評価
         conviction = self._conviction_scorer.score(
             data, signal, regime_info, indicators=indicators,
         )
-        logger.info(
+        # 詳細ログは DEBUG（reasoning は長文のためサマリでは MAXLEN 切り詰め済み）
+        logger.debug(
             "[%s] conviction score: %d/10 (倍率=%.1f, 取引=%s) — %s",
             self._instrument,
             conviction.score,
@@ -447,13 +482,24 @@ class TradingLoop:
         )
 
         if not conviction.should_trade:
-            logger.info(
+            trace.append((
+                "conviction",
+                "REJECT",
+                f"{conviction.score}/10<閾値",
+            ))
+            logger.debug(
                 "[%s] conviction不足（%d < 閾値）。シグナル %s を見送り。",
                 self._instrument,
                 conviction.score,
                 signal.value,
             )
+            self._log_pipeline_trace(trace, decision="REJECT")
             return None
+        trace.append((
+            "conviction",
+            "PASS",
+            f"{conviction.score}/10 mult={conviction.position_size_multiplier:.1f}",
+        ))
 
         # エクスポージャー倍率 = レジーム倍率 × conviction倍率
         combined_multiplier = (
@@ -469,8 +515,8 @@ class TradingLoop:
             if bias:
                 ai_eval = bias.evaluate_signal(signal.value)
                 ai_multiplier = bias.position_size_multiplier(ai_eval)
-                # ペア名を含めて解析ツールで紐付け可能に
-                logger.info(
+                # 詳細ログは DEBUG。REJECT のときだけ WARNING で目立たせる
+                logger.debug(
                     "[%s] AIフィルター: %s (direction=%s, confidence=%.2f) → 倍率%.2f",
                     self._instrument,
                     ai_eval, bias.direction, bias.confidence, ai_multiplier,
@@ -478,12 +524,18 @@ class TradingLoop:
                 # T5: A/B 集計のため AI 判定をポジションに永続化する記録を作る
                 ai_record = bias.to_record()
                 if ai_eval == "REJECT":
+                    trace.append(("ai", "REJECT", bias.reasoning))
                     logger.warning(
                         "[%s] AIフィルター: REJECT（%s）。シグナルを見送り。",
                         self._instrument, bias.reasoning,
                     )
+                    self._log_pipeline_trace(trace, decision="REJECT")
                     return None
+                trace.append(("ai", ai_eval, f"mult={ai_multiplier:.2f}"))
                 combined_multiplier *= ai_multiplier
+            else:
+                trace.append(("ai", "SKIP", "no bias"))
+        # AIアドバイザー未設定時は ai ステージを trace に積まない（ノイズ低減）
 
         # Bear Researcher: 逆張り検証
         if self._bear_researcher:
@@ -491,6 +543,11 @@ class TradingLoop:
                 data, signal, regime_info, indicators=indicators,
             )
             if bear_verdict.severity >= BEAR_SEVERITY_THRESHOLD:
+                trace.append((
+                    "bear",
+                    "WARN",
+                    f"sev={bear_verdict.severity:.2f} pen={bear_verdict.penalty_multiplier:.2f}",
+                ))
                 logger.warning(
                     "[%s] Bear Researcher警告: severity=%.2f, penalty=%.2f, リスク=%s",
                     self._instrument,
@@ -499,8 +556,64 @@ class TradingLoop:
                     bear_verdict.risk_factors,
                 )
                 combined_multiplier *= bear_verdict.penalty_multiplier
+            else:
+                trace.append(("bear", "PASS", f"sev={bear_verdict.severity:.2f}"))
 
+        self._log_pipeline_trace(
+            trace, decision="EXECUTE", final_mult=combined_multiplier,
+        )
         return signal, combined_multiplier, conviction, regime_info, ai_record
+
+    # ------------------------------------------------------------------
+    # パイプライン trace ログ
+    # ------------------------------------------------------------------
+
+    def _log_pipeline_trace(
+        self,
+        trace: list[tuple[str, str, str]],
+        decision: str,
+        final_mult: Optional[float] = None,
+    ) -> None:
+        """シグナルパイプラインの全ステージを1行 INFO に集約して出力する。
+
+        例:
+            [USD_JPY] pipeline: session=PASS(Tokyo) → regime=PASS(ranging(...)) →
+            strategy=HOLD(BollingerReversal: BB/RSI条件未達 ...) | DECISION=HOLD
+
+        各 detail は config.PIPELINE_TRACE_DETAIL_MAXLEN で切り詰める。
+
+        Args:
+            trace: (stage_name, status, detail) のリスト。
+            decision: SKIP / HOLD / REJECT / EXECUTE
+            final_mult: EXECUTE 時のみ最終ポジション倍率を末尾に付与する。
+        """
+        parts = []
+        for name, status, detail in trace:
+            if detail:
+                truncated = self._truncate_detail(detail)
+                parts.append(f"{name}={status}({truncated})")
+            else:
+                parts.append(f"{name}={status}")
+        summary = " → ".join(parts) if parts else "(empty)"
+
+        if final_mult is not None:
+            logger.info(
+                "[%s] pipeline: %s | DECISION=%s mult=%.2f",
+                self._instrument, summary, decision, final_mult,
+            )
+        else:
+            logger.info(
+                "[%s] pipeline: %s | DECISION=%s",
+                self._instrument, summary, decision,
+            )
+
+    @staticmethod
+    def _truncate_detail(detail: str) -> str:
+        """detail 文字列を MAXLEN で切り詰める。超過時は末尾に '…' を付ける。"""
+        max_len = PIPELINE_TRACE_DETAIL_MAXLEN
+        if len(detail) <= max_len:
+            return detail
+        return detail[: max_len - 1] + "…"
 
     def _execute_trade(
         self, signal: Signal, combined_multiplier: float,
