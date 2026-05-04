@@ -1,6 +1,6 @@
 # FX自動取引 — 残タスク一覧
 
-最終更新: 2026-05-03（PR #15〜#18 追加時点）
+最終更新: 2026-05-03（PR #15〜#21 追加時点）
 
 ## 完了済み（本日）
 
@@ -14,6 +14,9 @@
 - ✅ PR #16: 非JPY pip_value フォールバックを動的化（CRITICAL ロット過大計算リスク修正）
 - ✅ PR #17: MT5 履歴 export + Phase 3 (M15 5y) 検証ランナー
 - ✅ PR #18: P2 監査+設計ドキュメント（system_logic_audit / market_analysis_audit / usdjpy_strategy_refresh_plan）
+- 🟡 PR #19 (open): MTFPullback/BollingerReversal の pair_config 配線漏れ修正 (CRITICAL)
+- 🟡 PR #20 (open): 監査A6+B7+B8 — KILL_COOLDOWN拡張・SignalCoordinator timeout・日次UTC日境界
+- 🟡 PR #21 (open): 監査A4 — RegimeDetector閾値を pair_config で上書き可能化
 
 ## 残タスク（優先度順）
 
@@ -52,6 +55,23 @@
   - confidence 値の分布調査
 - **レポート**: `docs/market_analysis_audit.md`
 - **完了基準**: 更新頻度が想定どおりであることを確認、または問題を特定して修正 PR
+
+### 🟡 P1.5: 監査残項目（PR #20/21 マージ後の検証 + データ依存）
+
+監査ドキュメント `docs/system_logic_audit.md` のうち、**コード修正済**:
+- A2 (pip_value 12.0 fallback) → PR #16
+- A4 (RegimeDetector 二重定義) → PR #21
+- A6 (KILL_COOLDOWN 5分) → PR #20
+- B7 (SignalCoordinator timeout) → PR #20
+- B8 (check_loss_limits 24hローリング) → PR #20
+- C4 (戦略 pair_config 配線漏れ) → PR #19
+
+**残（プロダクションデータ待ち）**:
+- A1 (ConvictionScorer 閾値): >=8 が 1ヶ月以上発火していない可能性。本番DBの conviction_score 分布確認が必要
+- A3 (Bear Researcher always-fires): severity分布と penalty_multiplier 適用率を log 集計
+- A5 (AIAdvisor CONTRADICT 0.2倍): PR #14 デプロイ後の ai_decision DB から CONTRADICT trades の PL を集計
+
+これらは PR #14 + PR #19 の VPS デプロイ後 1〜2 週間のデータ蓄積を待ってから定量評価。
 
 ### 🟡 P2: 1 ヶ月以内（戦略レベルの判断）
 
