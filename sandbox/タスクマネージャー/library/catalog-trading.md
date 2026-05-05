@@ -141,3 +141,17 @@
 | 118 | FX EA AI組み込み: Python→ONNX変換→EAの技術スタック | ja | 未読 | #fx #implementation #x-signal | articles/2026-05-04_1310_AI_Trading_ONNX_EA_Python_Implementation_SakuraBurst.md |
 | 119 | FX自動売買ツール: レジーム別バックテスト切替+AIエントリー判定UI | ja | 未読 | #fx #implementation #x-signal | articles/2026-05-04_1311_FX_AutoTrade_Regime_Backtest_AI_Entry_dark_lovely_UI.md |
 | 120 | TraderMind: MT4/MT5に接続し個人戦略で自動売買するAIプラットフォーム | en | 未読 | #fx #tools #x-signal | articles/2026-05-04_1312_TraderMind_AI_Trading_Platform_MT4_MT5_Personal_Strategy.md |
+| 121 | TradingAgents: Python/LangGraph製マルチエージェントLLM取引フレームワーク（v0.2.4） | en | 未読 | #llm-trading #multi-agent #research #web-signal | articles/2026-05-05_1345_TradingAgents_OpenSource_MultiAgent_LLM_Python_AlgoInsights.md |
+| 122 | User ran the ManicTrade AI trading benchmark using the Antigravity too... | en | 未読 | #ai-trading #x-signal | articles/2026-05-05_1364_X_d3rekson_User_ran_the_ManicTrade_AI_trading_benchmark_using.md |
+| 123 | Comment notes that splitting trading tasks into specialized AI agents ... | en | 未読 | #ai-trading #x-signal | articles/2026-05-05_1365_X_aduwaye77_Comment_notes_that_splitting_trading_tasks_into_sp.md |
+| 124 | User shares an MT5 Expert Advisor called 'EA Diablo' for free distribu... | en | 未読 | #ai-trading #x-signal #fx | articles/2026-05-05_1366_X_dtradedolla_User_shares_an_MT5_Expert_Advisor_called_EA_Diabl.md |
+| 125 | Autosniper FX AI is a fully automated copy trading system compatible w... | en | 未読 | #ai-trading #x-signal #fx | articles/2026-05-05_1367_X_pipclubtrading_Autosniper_FX_AI_is_a_fully_automated_copy_trading.md |
+| 126 | AriseAlpha has launched a free AI-powered Forex trading bot aimed at c... | en | 未読 | #ai-trading #x-signal #fx | articles/2026-05-05_1368_X_blockchain_wire_AriseAlpha_has_launched_a_free_AI-powered_Forex_tr.md |
+| 127 | Content covers using AI with Forex trading on MT4 platform, addressing... | en | 未読 | #ai-trading #x-signal #fx | articles/2026-05-05_1369_X_TheRumpledOne_Content_covers_using_AI_with_Forex_trading_on_MT4.md |
+| 128 | AriseAlpha launched a free AI Forex trading bot in 2026 in response to... | en | 未読 | #ai-trading #x-signal #fx | articles/2026-05-05_1370_X_FinTech_Series_AriseAlpha_launched_a_free_AI_Forex_trading_bot_in.md |
+| 129 | MT5 version of 'lucky-style' AI EA (Expert Advisor) focused on ultra-f... | ja | 未読 | #ai-trading #x-signal #fx | articles/2026-05-05_1371_X_fx_fx93448259_MT5_version_of_lucky-style_AI_EA_Expert_Advisor.md |
+| 130 | Outlines a workflow using ChatGPT with Codex ($3K/month) to develop FX... | ja | 未読 | #ai-trading #x-signal #fx | articles/2026-05-05_1372_X_ceo_tommy1_Outlines_a_workflow_using_ChatGPT_with_Codex_3K.md |
+| 131 | Describes how even programming beginners can use AI to find tradeable ... | ja | 未読 | #ai-trading #x-signal | articles/2026-05-05_1373_X_chishiki_lab_Describes_how_even_programming_beginners_can_use_A.md |
+| 132 | Weekly auto-trading (FX automated) result shows +7.0% return for the w... | ja | 未読 | #ai-trading #x-signal #fx | articles/2026-05-05_1374_X_spring0168_Weekly_auto-trading_FX_automated_result_shows_7.md |
+| 133 | MoneyFlare launched an AI-powered cryptocurrency auto-trading app that... | ja | 未読 | #ai-trading #x-signal | articles/2026-05-05_1375_X_bitbank_markets_MoneyFlare_launched_an_AI-powered_cryptocurrency_a.md |
+| 134 | Points to research examining legal responsibilities when algorithms an... | ja | 未読 | #ai-trading #x-signal | articles/2026-05-05_1376_X_a_t_mosphere_Points_to_research_examining_legal_responsibilitie.md |

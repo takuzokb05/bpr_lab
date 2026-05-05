@@ -437,3 +437,22 @@
 | 411 | 自民党AI委員会「AIエージェント最前線と日本の勝ち筋」: 5層構造と求人倍率データ | ja | 未読 | #regulation #japan #x-signal | articles/2026-05-04_1318_LDP_AI_Committee_5Layer_GenAI_Japan_Winning_Strategy.md |
 | 412 | Meta公式4月まとめ: Muse Spark（Meta Superintelligence Labs製LLM）+AWS提携 | en | 未読 | #meta #model-release #x-signal | articles/2026-05-04_1319_Meta_Muse_Spark_AWS_Partnership_April2026_Official.md |
 | 413 | Blender LabがMCPサーバーをリリース: Anthropic関与が判明 | en | 未読 | #tools #mcp #x-signal | articles/2026-05-04_1320_Blender_MCP_Server_Released_Anthropic_Connection.md |
+| 414 | State of AI May 2026: 中国4ラボが12日でコーディングモデルリリース・推論モデルトレンド分析 | en | 未読 | #model-release #web-signal | articles/2026-05-05_1346_State_of_AI_May_2026_AirStreet_Press.md |
+| 415 | コロラド州AI法改正: 説明責任要件削除・施行2027年1月に延期（5/4速報） | en | 未読 | #regulation #web-signal | articles/2026-05-05_1347_Colorado_AI_Law_Changes_Explainability_CPR.md |
+| 416 | EU AI Act高リスク義務コンプライアンス期限延期: 2026年8月→2027年12月（約16ヶ月猶予） | en | 未読 | #regulation #web-signal | articles/2026-05-05_1348_EU_AI_Act_High_Risk_Deferral_DLAPiper.md |
+| 417 | 米ホワイトハウス国家AIポリシーフレームワーク分析: 連邦統一規制・州法プリエンプション | en | 未読 | #regulation #web-signal | articles/2026-05-05_1349_White_House_National_AI_Policy_Framework_ConsumerFinance.md |
+| 418 | Planet launched SuperRes, an AI super-resolution tech that upscales Pl... | en | 未読 | #ai-news #x-signal | articles/2026-05-05_1377_X_Will4Planet_Planet_launched_SuperRes_an_AI_super-resolution_t.md |
+| 419 | Google is internally testing an AI agent called Remy described as a 24... | en | 未読 | #ai-news #x-signal #google | articles/2026-05-05_1378_X_wallstengine_Google_is_internally_testing_an_AI_agent_called_Re.md |
+| 420 | NVIDIA and ServiceNow jointly launched Project Arc, an autonomous AI a... | en | 未読 | #ai-news #x-signal | articles/2026-05-05_1379_X_antibearthesis_NVIDIA_and_ServiceNow_jointly_launched_Project_Arc.md |
+| 421 | Cognition introduced Devin for Security, a set of AI workflows targeti... | en | 未読 | #ai-news #x-signal | articles/2026-05-05_1380_X_cognition_Cognition_introduced_Devin_for_Security_a_set_of.md |
+| 422 | Anthropic launched 10 financial services AI agent templates and integr... | en | 未読 | #ai-news #x-signal #anthropic | articles/2026-05-05_1381_X_WOLF_Financial_Anthropic_launched_10_financial_services_AI_agent.md |
+| 423 | Seven major tech companies (Coinbase 700, Block ~4000, Klarna 700 equi... | en | 未読 | #ai-news #x-signal | articles/2026-05-05_1382_X_gregisenberg_Seven_major_tech_companies_Coinbase_700_Block_4.md |
+| 424 | At Think 2026, IBM announced an enterprise AI operating model as a sof... | en | 未読 | #ai-news #x-signal #enterprise | articles/2026-05-05_1383_X_JayminSOfficial_At_Think_2026_IBM_announced_an_enterprise_AI_oper.md |
+| 425 | Anthropic, OpenAI, Google, Microsoft, and xAI have all signed new pre-... | en | 未読 | #ai-news #x-signal #regulation | articles/2026-05-05_1384_X_AndrewCurran__Anthropic_OpenAI_Google_Microsoft_and_xAI_have.md |
+| 426 | Micron announced the 6600 ION 245TB SSD targeting AI infrastructure: 8... | ja | 未読 | #ai-news #x-signal | articles/2026-05-05_1385_X_Index_shu_Micron_announced_the_6600_ION_245TB_SSD_targeting.md |
+| 427 | IREN (NASDAQ: IREN) announced the acquisition of Mirantis for approxim... | ja | 未読 | #ai-news #x-signal | articles/2026-05-05_1386_X_takede3_IREN_NASDAQ_IREN_announced_the_acquisition_of_M.md |
+| 428 | Meta's AI Glasses are launching in Japan with prescription lens-compat... | ja | 未読 | #ai-news #x-signal | articles/2026-05-05_1387_X_Kiwamu_Watanabe_Metas_AI_Glasses_are_launching_in_Japan_with_pres.md |
+| 429 | Anthropic released keyless authentication for the Claude API, allowing... | ja | 未読 | #ai-news #x-signal #anthropic | articles/2026-05-05_1388_X_masahirochaen_Anthropic_released_keyless_authentication_for_the.md |
+| 430 | Anthropic made Claude Cowork generally available on April 9, 2026 as a... | ja | 未読 | #ai-news #x-signal #anthropic | articles/2026-05-05_1389_X_nikkeibpITpro_Anthropic_made_Claude_Cowork_generally_available_o.md |
+| 431 | Google Workspace Intelligence integrates Gemini as a context-aware lay... | ja | 未読 | #ai-news #x-signal #google | articles/2026-05-05_1390_X_kawai_design_Google_Workspace_Intelligence_integrates_Gemini_as.md |
+| 432 | Palantir reported a triple earnings beat: revenue $1.6B (est. $1.5B), ... | ja | 未読 | #ai-news #x-signal | articles/2026-05-05_1391_X_okaneno_kyokan_Palantir_reported_a_triple_earnings_beat_revenue.md |

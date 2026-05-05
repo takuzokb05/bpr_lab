@@ -1426,3 +1426,62 @@ Anthropicが「Agentic Stack」として ADK（オープンソース開発ツー
 **アクション:**
 - FX自動取引のマルチエージェント化を検討する際、Claude Agent SDK + MCP + Vertex AI Agent Engineの構成を採用することで本番グレードの耐障害性・スケーラビリティを確保できる可能性を調査。
 - `sandbox/FX自動取引/docs/04_技術設計と実装方針.md` にAgentic Stackアーキテクチャを中長期選択肢として追記。
+
+---
+
+## 2026-05-05 収集分
+
+### 1. Claude Code Routines: 日次収集フローの自動化への活用
+
+**出典:** articles/2026-05-05_1340_Claude_Code_Routines_Desktop_Redesign_Uravation_ja.md
+
+**提案内容（優先度: 高）:**
+Claude Code Routinesはプロンプト・リポジトリ・コネクターを1パッケージにまとめてクラウドで自動実行する機能。スケジュール・GitHubイベント・APIの3種類のトリガーで起動できる。本リポジトリの日次収集エージェント（現在はManual実行）をRoutinesで毎朝自動実行するように設定することで完全自動化が実現できる。
+
+**アクション:**
+- `library/docs/` にRoutines設定ドキュメントを作成し、日次収集フローをスケジュールトリガーでRoutines化する設計を検討。
+- 現在のcronジョブ（collect_x.py on VPS）+ Claude Routinesの組み合わせで、X収集→キュレーション→コミットまで全自動化が可能。
+
+### 2. Claude Agent SDK v0.2.111 + プロンプトキャッシュ最適化
+
+**出典:** articles/2026-05-05_1343_Claude_Agent_SDK_Production_Patterns_DigitalApplied.md
+
+**提案内容（優先度: 高）:**
+Claude Agent SDK v0.2.111以降でOpus 4.7対応。直近のバグフィックスでSDK query()呼び出しにおけるプロンプトキャッシュ無効化問題が修正され、入力トークンコストを最大12x削減できるようになった。現在のサブエージェント起動パターンがこの修正を活用できているか確認が必要。
+
+**アクション:**
+- `sandbox/FX自動取引/requirements.txt` の `anthropic` バージョンをSDK v0.2.111以降に更新。
+- 日次収集エージェントのサブエージェント起動でプロンプトキャッシュが有効になっているか検証。コストが下がれば4ドメイン並列分類の実行コストが大幅削減。
+
+### 3. FX自動取引: ChatGPT/Codex+AI EAワークフローの事例反映
+
+**出典:** articles/2026-05-05_1372_X_ceo_tommy1_Outlines_a_workflow_using_ChatGPT_with_Codex.md（49k followers, 319 likes）
+
+**提案内容（優先度: 中・高）:**
+ChatGPT + Codex（月額$3K）を使ったFXインジケーター・自動売買EA・Backtestの開発ワークフローが実践者により報告されている。成功率の高い市場を選定し大量バックテストを実施して強力なツールを開発するアプローチ。個人レベルでも実現可能性がある。
+
+**アクション:**
+- `sandbox/FX自動取引/STATUS.md` に「AIコード生成によるEA開発」のアプローチ追記。
+- Claude Code + MT5 EA生成のワークフローを設計し、`sandbox/FX自動取引/` 以下にプロトタイプを作成する計画を立てる。
+
+### 4. Superset: Claude Code + Codex + Gemini CLIの並列実行ツール
+
+**出典:** articles/2026-05-05_1398_X_BeauJohnson89_Superset_supersetsh_10356_stars_is_a_Mac_app.md
+
+**提案内容（優先度: 中）:**
+Superset（superset-sh/superset、GitHub 10,356 stars）はMacアプリでClaude Code・Codex・Gemini CLIを並列実行し、それぞれ独立したgit worktreeで動かせるツール。大規模リファクタリングや複数機能の同時開発に有効。
+
+**アクション:**
+- 開発環境にSupersetを導入し、Claude Code + Codex の出力品質を比較しながら並列開発を試験的に実施。
+- 特にFX自動取引のEA開発フェーズで複数の戦略バリエーションを並列生成する際に活用可能。
+
+### 5. Anthropic金融AIエージェントテンプレート10個: FX自動取引への示唆
+
+**出典:** articles/2026-05-05_1354_X_latdayo_Claude_Opus_47_achieved_6437_on_the_Vals_AI_Fi.md / articles/2026-05-05_1355_X_latdayo_Anthropic_released_10_financial_AI_agent_templ.md
+
+**提案内容（優先度: 中）:**
+AnthropicがKYCスクリーニング・ピッチブック作成・月末締め・バリュエーションレビュー等の金融ワークフロー向けAIエージェントテンプレートを10個リリース。Claude Opus 4.7はVals AI Finance Agent Benchmarkで64.37%（業界首位）を達成。FX自動取引のリスク管理エージェント設計にClaude Opusの金融推論能力を活用できる。
+
+**アクション:**
+- Anthropic公式の金融エージェントテンプレートを参照し、`sandbox/FX自動取引/` のマルチエージェント設計に取り込む検討を開始。
+- リスクマネージャーエージェントの役割定義を公式テンプレートのKYC/リスク評価パターンを参考に強化。
