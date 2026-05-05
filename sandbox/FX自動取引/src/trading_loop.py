@@ -385,7 +385,8 @@ class TradingLoop:
         # 0. 時間帯フィルター（T4）: 許可セッション外ならスキップ
         if not is_in_allowed_session(self._instrument):
             trace.append(("session", "SKIP", "許可外"))
-            logger.info(
+            # 詳細ログは DEBUG（pipeline サマリで session=SKIP として記録される）
+            logger.debug(
                 "[%s] 時間帯フィルター: 許可セッション外のためシグナル生成をスキップ",
                 self._instrument,
             )
