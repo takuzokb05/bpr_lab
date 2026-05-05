@@ -73,7 +73,19 @@ GBP_JPY:
   atr_tp1_mult: 1.5
   atr_tp2_mult: 4.0
 
-AUD_USD:
+# ========================================================================
+# 以下3ペアは現在「停止中」(2026-05-01〜)
+# 撤退理由: バックフィル後 4/21〜4/30 統計で全敗
+#   - GBP_USD: 3件中0勝、-987 JPY
+#   - AUD_USD: 2件中0勝、-965 JPY
+#   - EUR_JPY: 2件中0勝、-385 JPY
+# 稼働ペアは src/config.py:DEFAULT_INSTRUMENTS = ["EUR_USD", "USD_JPY", "GBP_JPY"] のみ。
+# 本ファイルに定義を残しているのは、将来再開時のパラメータ参考値として保持するため。
+# 再開判断: 戦略改善PRで個別ペアのバックテストPF>1.5を確認後。
+# 参照: memory/project_fx_pending_items.md（整合性確認ログ 2026-05-05）
+# ========================================================================
+
+AUD_USD:  # 停止中（DEFAULT_INSTRUMENTS 外）
   allowed_sessions:
     - {start: "09:00", end: "15:00", label: "Tokyo-Sydney"}
   rsi_oversold: 30
@@ -83,7 +95,7 @@ AUD_USD:
   atr_tp1_mult: 1.0
   atr_tp2_mult: 3.0
 
-GBP_USD:
+GBP_USD:  # 停止中（DEFAULT_INSTRUMENTS 外）
   allowed_sessions:
     - {start: "21:00", end: "02:00", label: "LDN-NY"}
   rsi_oversold: 30
@@ -93,7 +105,7 @@ GBP_USD:
   atr_tp1_mult: 1.2
   atr_tp2_mult: 3.5
 
-EUR_JPY:
+EUR_JPY:  # 停止中（DEFAULT_INSTRUMENTS 外）
   allowed_sessions:
     - {start: "16:00", end: "17:00", label: "Tokyo-LDN"}
     - {start: "21:00", end: "02:00", label: "LDN-NY"}
