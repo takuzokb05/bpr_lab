@@ -614,6 +614,36 @@ class TestPipelineTraceLog:
         assert "regime=" not in line
         assert "strategy=" not in line
 
+    def test_session_skip_does_not_emit_legacy_info(self, caplog):
+        """session SKIP 時、旧『時間帯フィルター: 許可セッション外』INFO ログは
+        出ない（pipeline サマリと重複するため DEBUG に格下げ済み）。
+        """
+        caplog.set_level(logging.DEBUG, logger="src.trading_loop")
+
+        with patch("src.trading_loop.is_in_allowed_session", return_value=False):
+            loop = _create_trading_loop()
+            loop.run_once()
+
+        # INFO レベル以上の旧メッセージは存在しないこと
+        info_records = [
+            r for r in caplog.records
+            if r.levelname == "INFO"
+            and "時間帯フィルター" in r.getMessage()
+        ]
+        assert info_records == [], (
+            f"旧『時間帯フィルター』INFO が残存: {[r.getMessage() for r in info_records]}"
+        )
+
+        # ただし DEBUG レベルでは引き続き記録されている（深掘り用）
+        debug_records = [
+            r for r in caplog.records
+            if r.levelname == "DEBUG"
+            and "時間帯フィルター" in r.getMessage()
+        ]
+        assert len(debug_records) == 1, (
+            "DEBUG レベルの詳細ログは残っているべき"
+        )
+
     def test_strategy_hold_includes_diagnostics_reason(self, caplog):
         """戦略がHOLDかつ last_diagnostics に hold_reason がある場合、その理由がサマリに載る。"""
         caplog.set_level(logging.INFO, logger="src.trading_loop")
