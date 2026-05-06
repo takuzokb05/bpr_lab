@@ -155,3 +155,11 @@
 | 132 | Weekly auto-trading (FX automated) result shows +7.0% return for the w... | ja | 未読 | #ai-trading #x-signal #fx | articles/2026-05-05_1374_X_spring0168_Weekly_auto-trading_FX_automated_result_shows_7.md |
 | 133 | MoneyFlare launched an AI-powered cryptocurrency auto-trading app that... | ja | 未読 | #ai-trading #x-signal | articles/2026-05-05_1375_X_bitbank_markets_MoneyFlare_launched_an_AI-powered_cryptocurrency_a.md |
 | 134 | Points to research examining legal responsibilities when algorithms an... | ja | 未読 | #ai-trading #x-signal | articles/2026-05-05_1376_X_a_t_mosphere_Points_to_research_examining_legal_responsibilitie.md |
+| 135 | Paris Trading Expo: AI vs プロのディスクリショナリートレーダー直接対決。AIが着実に追いついている | ja | 未読 | #ai-trading #x-signal #llm-trading | articles/2026-05-06_1442_X_BenSltn_Sholly_Pee1_I_actually_pitted_5_AIs_against.md |
+| 136 | AI trading agentがTrading SMART Benchmarkで80/100(Grade A)、172エントリー中54位 | ja | 未読 | #ai-trading #x-signal #llm-trading | articles/2026-05-06_1443_X_HumBle_j0e_My_AI_trading_agent_scored_80100_Grade_A_o.md |
+| 137 | Polly Nulla: ローカルAI使用の自律型取引エージェントハーネス。マーケットスキャン→注文まで全自動 | ja | 未読 | #ai-trading #x-signal #llm-trading | articles/2026-05-06_1444_X_Parad0x_Labs_Yeah_Polly_Nulla_is_a_trading_agent_harness.md |
+| 138 | Sovereign V2.0: ローカルAIによるFXダッシュボード視覚的全解析（チャート・インジケーター・オーダーブック） | ja | 未読 | #ai-trading #x-signal #fx | articles/2026-05-06_1445_X_NexusAiCore_Sovereign_V20_analysing_a_Forex_Trading_Dash.md |
+| 139 | QuantDinger: 自己ホスト型AI量化システム（暗号/株/外貨・MT5対応・Docker Compose一発起動） | ja | 未読 | #ai-trading #x-signal #llm-trading | articles/2026-05-06_1446_X_davidtangX_68.md |
+| 140 | MoneySkills: AI活用の暗号資産完全自動取引プラットフォームを発表 | ja | 未読 | #ai-trading #x-signal | articles/2026-05-06_1447_X_bitbank_markets_MoneySkillsAI暗号資産取引ロボ発表.md |
+| 141 | Goldman Sachs 2017年に600人→2人トレーダー。200人ITエンジニアによる自動売買AIに置換 | ja | 未読 | #ai-trading #x-signal #trend | articles/2026-05-06_1448_X_SakemotoMasao_ゴールドマンサックスには介入は押し目にしか見えないという事だな600人いたトレーダーは2.md |
+| 142 | TradingAgents-CN：中国語ユーザー向けマルチエージェント金融取引研究フレームワーク | en | 未読 | #ai-trading #web-signal | articles/2026-05-06_1467_WEB_TradingAgents-CN中国語ユーザー向けマルチエージェント金融取引研究フレームワーク.md |

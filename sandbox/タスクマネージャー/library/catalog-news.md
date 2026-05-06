@@ -456,3 +456,17 @@
 | 430 | Anthropic made Claude Cowork generally available on April 9, 2026 as a... | ja | 未読 | #ai-news #x-signal #anthropic | articles/2026-05-05_1389_X_nikkeibpITpro_Anthropic_made_Claude_Cowork_generally_available_o.md |
 | 431 | Google Workspace Intelligence integrates Gemini as a context-aware lay... | ja | 未読 | #ai-news #x-signal #google | articles/2026-05-05_1390_X_kawai_design_Google_Workspace_Intelligence_integrates_Gemini_as.md |
 | 432 | Palantir reported a triple earnings beat: revenue $1.6B (est. $1.5B), ... | ja | 未読 | #ai-news #x-signal | articles/2026-05-05_1391_X_okaneno_kyokan_Palantir_reported_a_triple_earnings_beat_revenue.md |
+| 433 | Solana+Google CloudがステーブルコインでAIエージェント向けAPI決済システムをローンチ | ja | 未読 | #ai-news #x-signal | articles/2026-05-06_1449_X_ycombinator_Companies_spend_millions_on_events_because_re.md |
+| 434 | xAI・Google・Microsoftが新AIモデルを公開前に米政府へ。国家安全保障リスクの予備確認を協調実施 | ja | 未読 | #ai-news #x-signal #regulation | articles/2026-05-06_1450_X_teslaownersSV_xAI_Google_and_Microsoft_are_giving_the_US.md |
+| 435 | SpaceXAI+Anthropic: Colossus 1（220,000+ GPU）アクセス契約。軌道上コンピュート示唆 | ja | 未読 | #ai-news #x-signal #anthropic | articles/2026-05-06_1451_X_StockSavvyShay_SpaceXAI_announced_a_deal_giving_Anthropic_ac.md |
+| 436 | Panthalassa: 元Apple/SpaceX/NASA/Tesla技術者の浮体式データセンター（波力・衛星・2027年） | ja | 未読 | #ai-news #x-signal | articles/2026-05-06_1452_X_DocumentingAGI_Panthalassa_says_its_floating_data_centers_b.md |
+| 437 | ElevenLabs（音声AI）が$500M ARRを突破。Sequoia AI Ascentインタビュー | ja | 未読 | #ai-news #x-signal | articles/2026-05-06_1453_X_andrew__reed_Yesterday_ElevenLabs_announced_theyd_crosse.md |
+| 438 | Reid Hoffman: AIレイオフ発表は会社を強く見せるため。2020-2023年採用過剰という別要因 | ja | 未読 | #ai-news #x-signal | articles/2026-05-06_1454_X_reidhoffman_Just_a_reminder_that_were_likely_to_see_more.md |
+| 439 | 【速報】Elon MuskがxAIを解散し「SpaceXAI」を設立。SpaceXのAI部門として統合と発表 | ja | 未読 | #ai-news #x-signal | articles/2026-05-06_1455_X_SOU_BTC_速報イーロンマスク氏xAIを解散しSpaceXAIを設立すると発表.md |
+| 440 | Nvidia+Corning: AI向け光ファイバー製造長期提携。光接続10倍・米3工場・3,000人雇用。Corning +17% | ja | 未読 | #ai-news #x-signal #nvidia | articles/2026-05-06_1456_X_momoblog0214_NvidiaとCorningが光ファイバーで大型提携.md |
+| 441 | Anthropicの金融機能発表傾向→「GPTs are GPTs」論文でAI影響上位の職種から機能追加を予測 | ja | 未読 | #ai-news #x-signal #anthropic | articles/2026-05-06_1457_X_ImAI_Eruel_今日もAnthropicがClaudeの金融系機能を発表したわけですが今のところ主流のA.md |
+| 442 | 住友商事S高：AI電力需要でエネルギーソリューション好調。純利益6300億円・増配・自社株買い | ja | 未読 | #ai-news #x-signal #japan | articles/2026-05-06_1458_X_mameyama_kun_住友商事8053がS高.md |
+| 443 | OpenAI、GPT-5.5 Instantをリリース：ChatGPTの新デフォルトモデルへ | en | 未読 | #ai-news #web-signal | articles/2026-05-06_1462_WEB_OpenAIGPT-55_InstantをリリースChatGPTの新デフォルトモデルへ.md |
+| 444 | 米国州AI法アップデート（2026年5月4日時点） | en | 未読 | #ai-news #web-signal | articles/2026-05-06_1466_WEB_米国州AI法アップデート2026年5月4日時点.md |
+| 445 | Microsoft Agent 365 5月2026アップデート：エンタープライズセキュリティとレジストリ連携 | en | 未読 | #ai-news #web-signal | articles/2026-05-06_1476_WEB_Microsoft_Agent_365_5月2026アップデートエンタープライズセキュリティとレジス.md |
+| 446 | AIエージェントプラットフォーム 2026年5月アップデート：OpenAI・Anthropic・Google最新動向 | en | 未読 | #ai-news #web-signal | articles/2026-05-06_1477_WEB_AIエージェントプラットフォーム_2026年5月アップデートOpenAIAnthropicGoogl.md |

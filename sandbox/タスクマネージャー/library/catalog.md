@@ -553,6 +553,7 @@
 - 構想: 1
 - 書籍: 4
 - 日次収集（2026-03-27〜）: 877件（2026-05-04更新）
+- 日次収集（2026-03-27〜）: 945件（2026-05-06更新）
 | 443 | Claude Codeセキュリティ運用5項目(Cursor脆弱性後) | ja | 未読 | #claude-code #x-signal | articles/2026-05-04_1284_Claude_Code_Security_5Items_Cursor_Vuln_Qiitapoi.md |
 | 444 | 2026年AIコーディングTier表: SS=Claude Code+Max+並列/Devin等 | ja | 未読 | #claude-code #x-signal | articles/2026-05-04_1285_Claude_Code_AITool_Tier_SS_S_2026_Hanimaru.md |
 | 445 | .claude/フォルダ育て4ステップ→「よろしく」一言で動く | ja | 未読 | #claude-code #x-signal | articles/2026-05-04_1286_Claude_Code_claude_folder_4steps_Akaoniudetate.md |
@@ -635,3 +636,71 @@
 | 522 | OpenPets (github.com/alterhq/openpets) is an open source Swift 6 MIT-l... | en | 未読 | #claude-code #x-signal | articles/2026-05-05_1408_X_samuelroy__OpenPets_githubcomalterhqopenpets_is_an_open.md |
 | 523 | Developer challenges PostHog to justify their built-in AI feature over... | en | 未読 | #claude-code #x-signal | articles/2026-05-05_1409_X_smakosh_Developer_challenges_PostHog_to_justify_their_buil.md |
 | 524 | Pixel Dojo released an MCP that provides Claude Code (and other agents... | en | 未読 | #claude-code #x-signal | articles/2026-05-05_1410_X_shickles_Pixel_Dojo_released_an_MCP_that_provides_Claude_Co.md |
+| 525 | AnthropicがSpaceXと提携、Claude Code 5時間制限を2倍化・ピーク廃止・Opus API引き上げ | ja | 未読 | #claude-code #x-signal | articles/2026-05-06_1411_X__Sean_AI__Anthropic_が_SpaceX_との提携を発表計算インフラを大幅に強化し本日より.md |
+| 526 | Claude Codeで月50時間→2.5時間：スプレッドシート+ChatGPT API投稿自動化ワークフロー | ja | 未読 | #claude-code #x-signal | articles/2026-05-06_1412_X_sakimura2025_投稿作業を月50時間25時間に落とした手順マジで公開しとく.md |
+| 527 | Claude Code Dreaming機能：過去セッション振り返り自己改善。Outcomesと組み合わせで精度向上 | ja | 未読 | #claude-code #x-signal | articles/2026-05-06_1413_X_ura_unico_Claude_CodeのDreaming機能意外にパワフルです.md |
+| 528 | Claude Code + Codex でAGENTS.md共有・記憶引き継ぎ実験成功 | ja | 未読 | #claude-code #x-signal | articles/2026-05-06_1414_X_Nao_u__Claude_Codeで動いてる3人のAIを記憶をそのままにCodexで上動かす実験.md |
+| 529 | AnthropicがSpaceX Colossus 1（300MW超）確保。Claude Code・API使用制限を大幅緩和 | ja | 未読 | #claude-code #x-signal | articles/2026-05-06_1415_X_sharotaro1_AnthropicがSpaceXと提携を発表.md |
+| 530 | Claude Code Pro/Max/Team/EnterpriseレートリミットがColossus提携で倍増。22万台GPU稼働 | ja | 未読 | #claude-code #x-signal | articles/2026-05-06_1416_X_latdayo_ソース_httpstcoysrVSets2t.md |
+| 531 | Claude Code ROI分析：Pro月$100でSaaS14個MRR$7,000。開発チームの100分の1以下のコスト | ja | 未読 | #claude-code #x-signal | articles/2026-05-06_1417_X_latdayo_ソース_httpstcowiscbpAOxy.md |
+| 532 | Claude Code年間120万行本番コード、SaaS14個単独構築。Diamond tier開発者の実態 | ja | 未読 | #claude-code #x-signal | articles/2026-05-06_1418_X_latdayo_Claude_Codeで年間120万行の本番コードを1人で出荷した開発者がいる.md |
+| 533 | grok: Claude Code+GitHub skillで3D interactive website高速構築デモ | en | 未読 | #claude-code #x-signal | articles/2026-05-06_1419_X_grok_Sure_The_video_demos_building_a_3D_interacti.md |
+| 534 | Claude Code 5時間制限2倍化でオペレーター向け本番ルーティングが楽に | en | 未読 | #claude-code #x-signal | articles/2026-05-06_1420_X_hirefortuna_Doubled_Claude_Code_5-hour_rate_limits_across.md |
+| 535 | gemini-plugin-cc: Claude Code内でGemini Visionによる視覚UI評価・DESIGN.md生成OSS | en | 未読 | #claude-code #x-signal | articles/2026-05-06_1421_X_voodootikigod_I_built_gemini-plugin-cc_because_the_model_th.md |
+| 536 | QGIS+Claude Code実践：MCPよりPythonスクリプトをPythonコンソール実行が有効 | en | 未読 | #claude-code #x-signal | articles/2026-05-06_1422_X_lawrencejessej_I_see_a_lot_of_people_trying_to_build_AI_Tool.md |
+| 537 | 21専門エージェントでプロダクションアプリをTestFlightへ。マルチエージェントの威力 | en | 未読 | #claude-code #x-signal | articles/2026-05-06_1423_X_aakashgupta_One_prompt_into_Claude_Code_gives_you_AI_slop.md |
+| 538 | caveman skill: Claude Code出力を75%削減・入力46%圧縮。55,235 stars | en | 未読 | #claude-code #x-signal | articles/2026-05-06_1424_X_chenzeling4_caveman_Claude_Code_skill_that_cuts_75_of.md |
+| 539 | Claude CodeをFreqtradeボット開発のオーケストレーター6ヶ月使用。Hooks+Skill合成 | en | 未読 | #claude-code #x-signal #ai-trading | articles/2026-05-06_1425_X_lliu54827_petergyang_Same_running_Claude_Code_as_orc.md |
+| 540 | edu-role-play Agent Skill: 1プロンプトでSCORM対応AIロールプレイ生成・MIT無料 | en | 未読 | #claude-code #x-signal | articles/2026-05-06_1426_X_merengunduz_We_just_open-sourced_edu-role-play.md |
+| 541 | sovra 3日構築の問題報告: bash context drops・/clear nukes memory・skill discovery  | en | 未読 | #claude-code #x-signal | articles/2026-05-06_1427_X_justic_hot_shipped_sovra_in_3_days_with_claude_code_spe.md |
+| 542 | Anthropicの計算資源拡張を軌道上コンピュート視点で分析。multi-gigawatt orbital AI compute | en | 未読 | #claude-ecosystem #x-signal | articles/2026-05-06_1428_X_hirefortuna_Anthropic_chasing_power_needs_into_outer_spac.md |
+| 543 | Azure AI Foundryで5フレームワーク観察性比較（no-code/low-code/pro-code） | en | 未読 | #claude-ecosystem #x-signal #mcp | articles/2026-05-06_1429_X_orinthomas_Operating_AI_agents_on_Azure_with_Azure_AI_Fo.md |
+| 544 | OpenAI+AnthropicがMS/Oracle/Google/Amazonのクラウドバックログの半分を占める事実 | en | 未読 | #claude-ecosystem #x-signal | articles/2026-05-06_1430_X_KyleReidhead_OpenAI_and_Anthropic_account_for_half_of_the.md |
+| 545 | Anthropicが金融エージェント10本を一斉公開。GS・Blackstone連携、マネロン調査を数時間→数分 | ja | 未読 | #claude-ecosystem #x-signal | articles/2026-05-06_1431_X_asu_hagi_速報Anthropicが金融業界向けAIエージェント10本を一斉公開銀行保険資.md |
+| 546 | Anthropicの計算資源：SpaceX/Amazon/Google/MS/Fluidstack合計10GW級確保中 | ja | 未読 | #claude-ecosystem #x-signal | articles/2026-05-06_1432_X_latdayo_300MW22万台のGPUAnthropicがSpaceXのスパコンを丸ごと借りた.md |
+| 547 | マスクのAnthropic批判→協力転換の背景。6月IPO前のポジション取りの可能性と業界の流動性 | ja | 未読 | #claude-ecosystem #x-signal | articles/2026-05-06_1433_X_latdayo_ソース_httpstco4IgQiKHR8g.md |
+| 548 | マスクがAnthropicチームを直接称賛・Colossus 1を丸ごと貸し出し。ライバル企業への異例の決断 | ja | 未読 | #claude-ecosystem #x-signal | articles/2026-05-06_1434_X_latdayo_半年前にAnthropicを人間嫌いと呼んだイーロンマスクが今度はチームを絶賛している.md |
+| 549 | Daily Intel: Anthropic×SpaceX・AI agentがPolymarketで10時間15倍 | ja | 未読 | #claude-ecosystem #x-signal | articles/2026-05-06_1435_X_miraclemasui_SpaceXAnthropicにデータセンター容量を貸与へFT.md |
+| 550 | Mistral WorkflowsがMCP採用→AnthropicのMCPが業界標準として定着した証拠 | en | 未読 | #claude-ecosystem #x-signal #mcp | articles/2026-05-06_1436_X_CarlJ2000_Mr_barba97_micheleboldrin_demartin_Il_tent.md |
+| 551 | xAI ConnectorsがMCP採用。全主要プレイヤーにMCPが普及した事実を確認 | en | 未読 | #claude-ecosystem #x-signal #mcp | articles/2026-05-06_1437_X_aditya_A17_xAI_has_just_rolled_out_Connectors_a_powerfu.md |
+| 552 | AWS MCP Server GA。Claude Code等のAI agentがAWSにMCP経由でセキュアアクセス | en | 未読 | #claude-ecosystem #x-signal #mcp | articles/2026-05-06_1438_X_lopezunwired_The_AWS_MCP_Server_is_now_generally_available.md |
+| 553 | DeepSeek vs AnthropicのMCP非互換点3つ：ビジョン・MCPツール・プロンプトキャッシング | en | 未読 | #claude-ecosystem #x-signal #mcp | articles/2026-05-06_1439_X_therobertta__What_they_MISSED.md |
+| 554 | Blockscout: Web3 ExplorerがAnthropicMCP標準準拠MCPサーバーをリリース、15+ツール | en | 未読 | #claude-ecosystem #x-signal #mcp | articles/2026-05-06_1440_X_blockscout_Most_Agent-friendly_Explorer_in_Web3.md |
+| 555 | Anthropic公式: AI代理会社構築ガイド。CEO1名+AIエージェント従業員の「零員工会社」実現 | en | 未読 | #claude-ecosystem #x-signal | articles/2026-05-06_1441_X_grok_Anthropic_发布了使用_Claude_构建_AI_代理公司的官方指南只需_1_名.md |
+| 556 | Paris Trading Expo: AI vs プロのトレーダー直接対決。AIが着実に追いついていると評価 | en | 未読 | #ai-trading #x-signal | articles/2026-05-06_1442_X_BenSltn_Sholly_Pee1_I_actually_pitted_5_AIs_against.md |
+| 557 | AI trading agentがTrading SMART Benchmarkで80/100(Grade A)、172エントリー中54位 | en | 未読 | #ai-trading #x-signal | articles/2026-05-06_1443_X_HumBle_j0e_My_AI_trading_agent_scored_80100_Grade_A_o.md |
+| 558 | Polly Nulla: ローカルAI使用の自律型取引エージェントハーネス。マーケットスキャン→注文まで全自動 | en | 未読 | #ai-trading #x-signal | articles/2026-05-06_1444_X_Parad0x_Labs_Yeah_Polly_Nulla_is_a_trading_agent_harness.md |
+| 559 | Sovereign V2.0: ローカルAIによるFXダッシュボード視覚的全解析 | en | 未読 | #ai-trading #x-signal | articles/2026-05-06_1445_X_NexusAiCore_Sovereign_V20_analysing_a_Forex_Trading_Dash.md |
+| 560 | QuantDinger: 自己ホスト型AI量化システム（暗号/株/外貨・MT5対応・Docker Compose） | en | 未読 | #ai-trading #x-signal | articles/2026-05-06_1446_X_davidtangX_68.md |
+| 561 | MoneySkills: AI活用の暗号資産完全自動取引プラットフォームを発表 | ja | 未読 | #ai-trading #x-signal | articles/2026-05-06_1447_X_bitbank_markets_MoneySkillsAI暗号資産取引ロボ発表.md |
+| 562 | Goldman Sachs 2017年に600人→2人トレーダー。200人ITエンジニアによる自動売買AIに置換 | ja | 未読 | #ai-trading #x-signal | articles/2026-05-06_1448_X_SakemotoMasao_ゴールドマンサックスには介入は押し目にしか見えないという事だな600人いたトレーダーは2.md |
+| 563 | Solana+Google CloudがステーブルコインでAIエージェント向けAPI決済システムをローンチ | en | 未読 | #ai-news #x-signal | articles/2026-05-06_1449_X_ycombinator_Companies_spend_millions_on_events_because_re.md |
+| 564 | xAI・Google・Microsoftが新AIモデルを公開前に米政府へ。国家安全保障リスク予備確認を協調実施 | en | 未読 | #ai-news #x-signal | articles/2026-05-06_1450_X_teslaownersSV_xAI_Google_and_Microsoft_are_giving_the_US.md |
+| 565 | SpaceXAI+Anthropic: Colossus 1（220,000+ GPU）アクセス契約。軌道上コンピュート示唆 | en | 未読 | #ai-news #x-signal | articles/2026-05-06_1451_X_StockSavvyShay_SpaceXAI_announced_a_deal_giving_Anthropic_ac.md |
+| 566 | Panthalassa: 元Apple/SpaceX/NASA/Tesla技術者の浮体式データセンター（波力・衛星・2027年） | en | 未読 | #ai-news #x-signal | articles/2026-05-06_1452_X_DocumentingAGI_Panthalassa_says_its_floating_data_centers_b.md |
+| 567 | ElevenLabs（音声AI）が$500M ARRを突破。Sequoia AI Ascent インタビュー | en | 未読 | #ai-news #x-signal | articles/2026-05-06_1453_X_andrew__reed_Yesterday_ElevenLabs_announced_theyd_crosse.md |
+| 568 | Reid Hoffman: AIレイオフ発表は会社を強く見せるため。2020-2023年採用過剰という別要因を見落とすな | en | 未読 | #ai-news #x-signal | articles/2026-05-06_1454_X_reidhoffman_Just_a_reminder_that_were_likely_to_see_more.md |
+| 569 | 【速報】Elon MuskがxAIを解散し「SpaceXAI」を設立。SpaceXのAI部門として統合と発表 | ja | 未読 | #ai-news #x-signal | articles/2026-05-06_1455_X_SOU_BTC_速報イーロンマスク氏xAIを解散しSpaceXAIを設立すると発表.md |
+| 570 | Nvidia+Corning: AI向け光ファイバー製造長期提携。光接続10倍・米3工場・3,000人雇用。Corning +17% | ja | 未読 | #ai-news #x-signal | articles/2026-05-06_1456_X_momoblog0214_NvidiaとCorningが光ファイバーで大型提携.md |
+| 571 | Anthropicの金融機能発表傾向→「GPTs are GPTs」論文でAI影響上位の職種から機能追加を予測 | ja | 未読 | #ai-news #x-signal | articles/2026-05-06_1457_X_ImAI_Eruel_今日もAnthropicがClaudeの金融系機能を発表したわけですが今のところ主流のA.md |
+| 572 | 住友商事S高：AI電力需要でエネルギーソリューション好調。純利益6300億円・増配・自社株買い | ja | 未読 | #ai-news #x-signal | articles/2026-05-06_1458_X_mameyama_kun_住友商事8053がS高.md |
+| 573 | Anthropic・SpaceX コンピュート契約：Claude Code・API レート制限を大幅引き上げ | en | 未読 | #claude-code #web-signal | articles/2026-05-06_1459_WEB_AnthropicSpaceX_コンピュート契約Claude_CodeAPI_レート制限を大幅引き上.md |
+| 574 | Code w/ Claude 2026 ライブブログ：全発表まとめ（Simon Willison） | en | 未読 | #claude-code #web-signal | articles/2026-05-06_1460_WEB_Code_w_Claude_2026_ライブブログ全発表まとめSimon_Willison.md |
+| 575 | AWS MCP Server 一般提供開始：AI AgentにAWS全サービスへのセキュアアクセスを提供 | en | 未読 | #claude-ecosystem #web-signal | articles/2026-05-06_1461_WEB_AWS_MCP_Server_一般提供開始AI_AgentにAWS全サービスへのセキュアアクセスを提.md |
+| 576 | OpenAI、GPT-5.5 Instantをリリース：ChatGPTの新デフォルトモデルへ | en | 未読 | #ai-news #web-signal | articles/2026-05-06_1462_WEB_OpenAIGPT-55_InstantをリリースChatGPTの新デフォルトモデルへ.md |
+| 577 | Code w/ Claude 2026 公式セッション：Claude Code 新機能まとめ | en | 未読 | #claude-code #web-signal | articles/2026-05-06_1463_WEB_Code_w_Claude_2026_公式セッションClaude_Code_新機能まとめ.md |
+| 578 | Anthropic、SpaceX契約でClaude Codeレート制限を2倍に（Engadget） | en | 未読 | #claude-ecosystem #web-signal | articles/2026-05-06_1464_WEB_AnthropicSpaceX契約でClaude_Codeレート制限を2倍にEngadget.md |
+| 579 | Splunk AI 2026新機能：MCPサーバーとホスティングモデル | en | 未読 | #claude-ecosystem #web-signal | articles/2026-05-06_1465_WEB_Splunk_AI_2026新機能MCPサーバーとホスティングモデル.md |
+| 580 | 米国州AI法アップデート（2026年5月4日時点） | en | 未読 | #ai-news #web-signal | articles/2026-05-06_1466_WEB_米国州AI法アップデート2026年5月4日時点.md |
+| 581 | TradingAgents-CN：中国語ユーザー向けマルチエージェント金融取引研究フレームワーク | en | 未読 | #ai-trading #web-signal | articles/2026-05-06_1467_WEB_TradingAgents-CN中国語ユーザー向けマルチエージェント金融取引研究フレームワーク.md |
+| 582 | Claude Code Workflow Examples 2026：プラグイン・メモリ・Hook実践ガイド | en | 未読 | #claude-code #web-signal | articles/2026-05-06_1468_WEB_Claude_Code_Workflow_Examples_2026プラグインメモリHook実践ガイ.md |
+| 583 | Claude AI 2026ガイド：コードを10倍速くする10の隠し機能（SuperdevAcademy） | en | 未読 | #claude-code #web-signal | articles/2026-05-06_1469_WEB_Claude_AI_2026ガイドコードを10倍速くする10の隠し機能SuperdevAcademy.md |
+| 584 | Claude Code Skills実践ガイド 2026（Nimbalyst） | en | 未読 | #claude-code #web-signal | articles/2026-05-06_1470_WEB_Claude_Code_Skills実践ガイド_2026Nimbalyst.md |
+| 585 | AnthropicがSpaceX(Elon Musk)からコンピュートを調達（Axios） | en | 未読 | #claude-ecosystem #web-signal | articles/2026-05-06_1471_WEB_AnthropicがSpaceXElon_Muskからコンピュートを調達Axios.md |
+| 586 | Code with Claude 2026：SF・ロンドン・東京 3都市イベント詳細 | en | 未読 | #claude-code #web-signal | articles/2026-05-06_1472_WEB_Code_with_Claude_2026SFロンドン東京_3都市イベント詳細.md |
+| 587 | LangGraph + Claude Agent SDK：マルチエージェントシステム完全ガイド 2026 | en | 未読 | #claude-ecosystem #web-signal | articles/2026-05-06_1473_WEB_LangGraph_Claude_Agent_SDKマルチエージェントシステム完全ガイド_2026.md |
+| 588 | AnthropicがSpaceXAIと提携・5時間レート制限を2倍化（Testing Catalog分析） | en | 未読 | #claude-code #web-signal | articles/2026-05-06_1474_WEB_AnthropicがSpaceXAIと提携5時間レート制限を2倍化Testing_Catalog分析.md |
+| 589 | Claude最新機能完全ガイド2026年5月：Chat・Cowork・Codeの全アップデート | ja | 未読 | #claude-code #web-signal | articles/2026-05-06_1475_WEB_Claude最新機能完全ガイド2026年5月ChatCoworkCodeの全アップデート.md |
+| 590 | Microsoft Agent 365 5月2026アップデート：エンタープライズセキュリティとレジストリ連携 | en | 未読 | #ai-news #web-signal | articles/2026-05-06_1476_WEB_Microsoft_Agent_365_5月2026アップデートエンタープライズセキュリティとレジス.md |
+| 591 | AIエージェントプラットフォーム 2026年5月アップデート：OpenAI・Anthropic・Google最新動向 | en | 未読 | #ai-news #web-signal | articles/2026-05-06_1477_WEB_AIエージェントプラットフォーム_2026年5月アップデートOpenAIAnthropicGoogl.md |
+| 592 | Claude Security Public Beta：コードスキャン→脆弱性検出→パッチ自動生成 | ja | 未読 | #claude-code #web-signal | articles/2026-05-06_1478_WEB_Claude_Security_Public_Betaコードスキャン脆弱性検出パッチ自動生成.md |
