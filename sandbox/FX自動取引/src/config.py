@@ -126,8 +126,14 @@ MAIN_TIMEFRAME: str = "M15"            # メインタイムフレーム
 # - EUR/USD, USD/JPY: MTFPullback (PF 2.0, 押し目/戻り狙い、低頻度)
 # - GBP/JPY: BollingerReversal (PF 1.08, 逆張り、高頻度)
 # 併走で観察機会を増やしつつポートフォリオ分散
+#
+# 2026-05-07: GBP_JPY 撤退（Phase 1C-1 Gate FAILED）
+#   - バックテストPF 0.80 (4ヶ月M15, 2026-01〜04期)
+#   - 本番実績 38件中13勝、累計 -2,004 JPY
+#   - C案v2 でも PF 0.69 に悪化、改善見込み低
+#   - 詳細: docs/audit/2026-05-07_phase1c_gate_failed.md
 DEFAULT_INSTRUMENTS: list[str] = [
-    "EUR_USD", "USD_JPY", "GBP_JPY",
+    "EUR_USD", "USD_JPY",
 ]
 
 

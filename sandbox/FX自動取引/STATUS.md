@@ -17,7 +17,7 @@
 |---|---|
 | **本番VPS** | ConoHa Windows Server (160.251.221.43) |
 | **Pythonプロセス** | PID 6108、起動 2026-05-05 12:52 JST、RAM 17MB |
-| **稼働ペア** | EUR_USD / USD_JPY / GBP_JPY |
+| **稼働ペア** | EUR_USD / USD_JPY （GBP_JPY は 2026-05-07 撤退） |
 | **timeframe** | M15、60秒間隔ループ |
 | **ブローカー** | 外為ファイネスト MT5 デモ口座 |
 
