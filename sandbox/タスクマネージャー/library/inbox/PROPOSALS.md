@@ -1544,3 +1544,35 @@ xAI Connectors（MCP採用）・AWS MCP Server GA（5/6）と、Mistral Workflow
 **アクション:**
 - `sandbox/FX自動取引/` にMCPサーバーを介したブローカーAPI接続の設計を追加。
 - GitHub上のMT5 MCP Server（ariadng）を参照し、MT5ブローカー接続MCPのプロトタイプを作成する計画を立てる。
+
+### 6. MT5 MCP Server実装: AI AgentをMetaTrader 5に直接接続
+
+**出典:** articles/2026-05-07_1537_WEB_AI_Agents_MetaTrader5_via_MCP_MQL5_Article.md / articles/2026-05-07_1538_WEB_Build_24h_AI_Forex_TradingBot_TradingAgents_VPS_Lightnode.md
+
+**提案内容（優先度: 高）:**
+MQL5公式サイトにMCP経由でAIエージェントをMT5に接続する技術記事が掲載された（2026-05-07）。MQL5内でMCPサーバーを実装し、get_balance・place_order・get_positionsなどのToolsをLLMに公開するアーキテクチャは、FX自動取引の現在の設計（Python+MT5）をMCP標準に乗せる次のステップとして最有力候補。また、TradingAgents+VPS+MT5の全自動デプロイチュートリアルも登場しており、既存のsandbox/FX自動取引/に応用できる。
+
+**アクション:**
+- `sandbox/FX自動取引/` にMQL5ベースのMCPサーバースタブを追加し、主要ToolsのJSONスキーマを定義。
+- Lightnode/TradingAgentsのデプロイ手順を参考に、VPS上でのMT5+Claude連携アーキテクチャ図を作成。
+
+### 7. MCP OAuth Token窃取脆弱性（Mitiga発見）: セキュリティ対策
+
+**出典:** articles/2026-05-07_1491_X_MigaResearch_Claude_Code_MCPのOAuthトークン窃取脆弱性.md
+
+**提案内容（優先度: 高）:**
+MitigaがClaude Code MCPのOAuth実装にトークン窃取脆弱性を発見（2026-05-07）。悪意のあるMCPサーバーが正規サーバーになりすましてOAuthトークンを窃取できる「MCP Hijacking」攻撃パターン。現在のsettings.jsonで信頼済みMCPサーバーを明示的にホワイトリスト化し、未知のMCPエンドポイントへの自動接続を防ぐ対策が必要。
+
+**アクション:**
+- `sandbox/タスクマネージャー/.claude/settings.json` のMCP設定を見直し、allowedOriginを明示的に設定。
+- CLAUDE.mdに「新規MCPサーバー追加時は必ずOAuth設定を確認すること」を追記。
+
+### 8. EU AI法簡素化（2026-05-07）: コンプライアンス期限の変更
+
+**出典:** articles/2026-05-07_1541_WEB_EU_AI_Act_Council_Parliament_Agree_Simplify_Rules_May7_2026.md
+
+**提案内容（優先度: 参考情報）:**
+2026-05-07（本日）、EU理事会と欧州議会がAI法ハイリスクシステムのコンプライアンス期限を2026年8月から2027年12月に延期。日本企業へのEU AI法適用はAI規制対応において参照するデッドラインが変更された。FX自動売買やAIエージェントの商用化を検討する際の規制リスクが軽減。
+
+**アクション:**
+- 参考情報として記録。商用AI取引エージェント開発時に参照。

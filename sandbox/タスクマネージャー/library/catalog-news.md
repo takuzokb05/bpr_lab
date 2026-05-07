@@ -470,3 +470,16 @@
 | 444 | 米国州AI法アップデート（2026年5月4日時点） | en | 未読 | #ai-news #web-signal | articles/2026-05-06_1466_WEB_米国州AI法アップデート2026年5月4日時点.md |
 | 445 | Microsoft Agent 365 5月2026アップデート：エンタープライズセキュリティとレジストリ連携 | en | 未読 | #ai-news #web-signal | articles/2026-05-06_1476_WEB_Microsoft_Agent_365_5月2026アップデートエンタープライズセキュリティとレジス.md |
 | 446 | AIエージェントプラットフォーム 2026年5月アップデート：OpenAI・Anthropic・Google最新動向 | en | 未読 | #ai-news #web-signal | articles/2026-05-06_1477_WEB_AIエージェントプラットフォーム_2026年5月アップデートOpenAIAnthropicGoogl.md |
+| 447 | @nvidia  and @IREN_Ltd  Announce Strateg… | en | 未読 | #ai-news #x-signal | articles/2026-05-07_1525_X_FransBakker9812_nvidia_and_IREN_Ltd_Announce_Strate.md |
+| 448 | NEW: When OpenAI and Broadcom announced … | en | 未読 | #ai-news #x-signal | articles/2026-05-07_1526_X_anissagardizy8_NEW_When_OpenAI_and_Broadcom_announ.md |
+| 449 | Anthropic announced that it signed an ag… | en | 未読 | #ai-news #x-signal | articles/2026-05-07_1527_X_Beth_Kindig_Anthropic_announced_that_it_signed_.md |
+| 450 | 【⚡️速報】OpenAI、新音声モデル「GPT-Realtime-2」を発表。G… | ja | 未読 | #ai-news #x-signal | articles/2026-05-07_1528_X_masahirochaen_速報OpenAI新音声モデルGPT-Realtime-2を発表GPT-.md |
+| 451 | データドッグ $DDOG 🐶 | ja | 未読 | #ai-news #x-signal | articles/2026-05-07_1529_X_momoblog0214_データドッグ_DDOG.md |
+| 452 | MUFGがグーグルと提携、AIエージェント開発　「経済圏」接点に https:/… | ja | 未読 | #ai-news #x-signal | articles/2026-05-07_1530_X_asahi_MUFGがグーグルと提携AIエージェント開発_経済圏接点に_https.md |
+| 453 | Arm は、過去最高の第 4 四半期業績で 2026 年度を締めくくりました。ま… | ja | 未読 | #ai-news #x-signal | articles/2026-05-07_1531_X_Arm_JPN_Arm_は過去最高の第_4_四半期業績で_2026_年度を締めくくりま.md |
+| 454 | Samsungがスマートグラスと新型Galaxy Budsを"公式"予告 | ja | 未読 | #ai-news #x-signal | articles/2026-05-07_1532_X_kotauchisunsun_Samsungがスマートグラスと新型Galaxy_Budsを公式予告.md |
+| 455 | EU Council and Parliament Agree to Simpl… | en | 未読 | #ai-news #web-signal | articles/2026-05-07_1541_WEB_EU_AI_Act_Council_Parliament_Agree_Simplify_Rules_May7_2026.md |
+| 456 | AI News May 3-4 2026: Models, Papers & C… | en | 未読 | #ai-news #web-signal | articles/2026-05-07_1542_WEB_AI_News_May3_4_2026_Models_Papers_OpenSource_devflokers.md |
+| 457 | Microsoft Agent Governance Toolkit: OSS … | en | 未読 | #ai-news #web-signal | articles/2026-05-07_1543_WEB_Microsoft_Agent_Governance_Toolkit_OSS_Runtime_Security_AI_A.md |
+| 458 | US Companies Face EU AI Act's Possible A… | en | 未読 | #ai-news #web-signal | articles/2026-05-07_1544_WEB_US_Companies_EU_AI_Act_August_2026_Compliance_Deadline_HKLaw.md |
+| 459 | AI業界の現状完全ガイド2026 世界2.5兆ドル×LLM三強+中国×5トレンド | ja | 未読 | #ai-news #web-signal | articles/2026-05-07_1545_WEB_AI業界の現状完全ガイド2026_世界25兆ドル市場LLM三強分析_renue.md |

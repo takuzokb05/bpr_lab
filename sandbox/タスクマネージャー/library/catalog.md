@@ -704,3 +704,46 @@
 | 590 | Microsoft Agent 365 5月2026アップデート：エンタープライズセキュリティとレジストリ連携 | en | 未読 | #ai-news #web-signal | articles/2026-05-06_1476_WEB_Microsoft_Agent_365_5月2026アップデートエンタープライズセキュリティとレジス.md |
 | 591 | AIエージェントプラットフォーム 2026年5月アップデート：OpenAI・Anthropic・Google最新動向 | en | 未読 | #ai-news #web-signal | articles/2026-05-06_1477_WEB_AIエージェントプラットフォーム_2026年5月アップデートOpenAIAnthropicGoogl.md |
 | 592 | Claude Security Public Beta：コードスキャン→脆弱性検出→パッチ自動生成 | ja | 未読 | #claude-code #web-signal | articles/2026-05-06_1478_WEB_Claude_Security_Public_Betaコードスキャン脆弱性検出パッチ自動生成.md |
+| 593 | Claude CodeのMCP、意外と見逃されがちです | ja | 未読 | #claude-code #x-signal | articles/2026-05-07_1479_X_ura_unico_Claude_CodeのMCP意外と見逃されがちです.md |
+| 594 | Codex Reviewを自動化する：Claude Code × Codex レ… | ja | 未読 | #claude-code #x-signal | articles/2026-05-07_1480_X_NEWS_0_Codex_Reviewを自動化するClaude_Code_Codex.md |
+| 595 | WiFi SSID/PASS書き換えはClaude Codeに指示すれば適切にや… | ja | 未読 | #claude-code #x-signal | articles/2026-05-07_1481_X_ciniml_WiFi_SSIDPASS書き換えはClaude_Codeに指示すれば.md |
+| 596 | ソース: https://t.co/wtvRl7GlCg | ja | 未読 | #claude-code #x-signal | articles/2026-05-07_1482_X_latdayo_ソース_httpstcowtvRl7GlCg.md |
+| 597 | Claude CodeにHiggsfield MCPを繋いだら広告クリエイティブ… | ja | 未読 | #claude-code #x-signal | articles/2026-05-07_1483_X_latdayo_Claude_CodeにHiggsfield_MCPを繋いだら広告クリ.md |
+| 598 | From one of our devs: | en | 未読 | #claude-code #x-signal | articles/2026-05-07_1484_X_Dailybot_From_one_of_our_devs.md |
+| 599 | For fun, I actually recorded myself sitt… | en | 未読 | #claude-code #x-signal | articles/2026-05-07_1485_X_CharlieMolthrop_For_fun_I_actually_recorded_myself_.md |
+| 600 | First time trying Ultraplan from Claude … | en | 未読 | #claude-code #x-signal | articles/2026-05-07_1486_X_pirosb3_First_time_trying_Ultraplan_from_Cl.md |
+| 601 | @jasonjhamiltonX @NoahKingJr bro idk wha… | en | 未読 | #claude-code #x-signal | articles/2026-05-07_1487_X_Stretta_4U_jasonjhamiltonX_NoahKingJr_bro_idk_.md |
+| 602 | Anthropic quietly shipped the "Champion … | en | 未読 | #claude-code #x-signal | articles/2026-05-07_1488_X_EXM7777_Anthropic_quietly_shipped_the_Champ.md |
+| 603 | Claude Code OAuth Tokens Can Be Stolen T… | en | 未読 | #claude-code #x-signal | articles/2026-05-07_1489_X_AlexNguyen65_Claude_Code_OAuth_Tokens_Can_Be_Sto.md |
+| 604 | Here are my stats for all the harnesses … | en | 未読 | #claude-code #x-signal | articles/2026-05-07_1490_X_0xSero_Here_are_my_stats_for_all_the_harne.md |
+| 605 | context-mode is growing fully organicall… | en | 未読 | #claude-code #x-signal | articles/2026-05-07_1491_X_mksglu_context-mode_is_growing_fully_organ.md |
+| 606 | 💡 昨日の気付き | ja | 未読 | #claude-code #x-signal | articles/2026-05-07_1492_X_tedekku0323_昨日の気付き.md |
+| 607 | bazi-skill: Claude Code skill for Chines… | en | 未読 | #claude-code #x-signal | articles/2026-05-07_1493_X_chenzeling4_bazi-skill_Claude_Code_skill_for_Ch.md |
+| 608 | @milesdeutscher Running Claude Code w/ c… | en | 未読 | #claude-code #x-signal | articles/2026-05-07_1494_X_lliu54827_milesdeutscher_Running_Claude_Code_.md |
+| 609 | The Civis MCP Server works with AI tools… | en | 未読 | #claude-code #x-signal | articles/2026-05-07_1495_X_CivisAnalytics_The_Civis_MCP_Server_works_with_AI_.md |
+| 610 | 「APIM × OAuth」によるエンドツーエンドMCP保護🛡️ | ja | 未読 | #claude-code #x-signal | articles/2026-05-07_1496_X_windegecat_APIM_OAuthによるエンドツーエンドMCP保護.md |
+| 611 | Ahora Claude Code puede leer documentaci… | en | 未読 | #claude-code #x-signal | articles/2026-05-07_1497_X_saidstetic_Ahora_Claude_Code_puede_leer_docume.md |
+| 612 | This is exactly why multi-agent setups f… | en | 未読 | #claude-code #x-signal | articles/2026-05-07_1498_X_kunallanjewar_This_is_exactly_why_multi-agent_set.md |
+| 613 | Here's the full prompt. Copy and paste i… | en | 未読 | #claude-code #x-signal | articles/2026-05-07_1499_X_YuraYu_Heres_the_full_prompt_Copy_and_past.md |
+| 614 | 518 of them were anonymously proxying pa… | en | 未読 | #claude-ecosystem #x-signal | articles/2026-05-07_1500_X_lukcombinator_518_of_them_were_anonymously_proxyi.md |
+| 615 | Pentagon goes "AI-first" with new classi… | en | 未読 | #claude-ecosystem #x-signal | articles/2026-05-07_1501_X_LyticalVentures_Pentagon_goes_AI-first_with_new_cla.md |
+| 616 | $NET | ja | 未読 | #claude-ecosystem #x-signal | articles/2026-05-07_1502_X_cornety_NET.md |
+| 617 | 【速報】AnthropicがGoogleに5年で2000億ドル契約——Claud… | ja | 未読 | #claude-ecosystem #x-signal | articles/2026-05-07_1503_X_asu_hagi_速報AnthropicがGoogleに5年で2000億ドル契約Clau.md |
+| 618 | Claude API はモデルによって利用できるパラメータが異なる。というのは、… | ja | 未読 | #claude-ecosystem #x-signal | articles/2026-05-07_1504_X_anda_nakata_Claude_API_はモデルによって利用できるパラメータが異なるとい.md |
+| 619 | 2月にAnthropicを西洋文明の敵と呼んだマスクが、5月にGPU22万基を貸… | ja | 未読 | #claude-ecosystem #x-signal | articles/2026-05-07_1505_X_latdayo_2月にAnthropicを西洋文明の敵と呼んだマスクが5月にGPU22.md |
+| 620 | 📋 Daily Intel 2026-05-08｜Claude が Office… | ja | 未読 | #claude-ecosystem #x-signal | articles/2026-05-07_1506_X_LifeMakersCom_Daily_Intel_2026-05-08Claude_が_Offi.md |
+| 621 | 米AI界のスター企業Anthropic、同社のシンクタンク「The Anthro… | ja | 未読 | #claude-ecosystem #x-signal | articles/2026-05-07_1507_X_afujimura_米AI界のスター企業Anthropic同社のシンクタンクThe_Ant.md |
+| 622 | 85k+ Stars 爆火！ Anthropic MCP Servers 仓库 | ja | 未読 | #claude-ecosystem #x-signal | articles/2026-05-07_1508_X_mylifcc_85k_Stars_爆火_Anthropic_MCP_Servers_.md |
+| 623 | MCP stands for Model Context Protocol. | en | 未読 | #claude-ecosystem #x-signal | articles/2026-05-07_1509_X_RapidFoundry_MCP_stands_for_Model_Context_Protoc.md |
+| 624 | Sim! O vídeo é de um workshop do Anthrop… | en | 未読 | #claude-ecosystem #x-signal | articles/2026-05-07_1510_X_grok_Sim_O_vídeo_é_de_um_workshop_do_Ant.md |
+| 625 | FREE CERTIFICATION ALERT !! Anthropic (t… | en | 未読 | #claude-ecosystem #x-signal | articles/2026-05-07_1511_X_chhannz_FREE_CERTIFICATION_ALERT_Anthropic_.md |
+| 626 | 5⃣ Anthropic、Claude × クリエイティブツール9種を公式連携 … | ja | 未読 | #claude-ecosystem #x-signal | articles/2026-05-07_1512_X_YoungsuPark6_5_AnthropicClaude_クリエイティブツール9種を公式連携.md |
+| 627 | Google A2A protocol: open spec, 23,500 G… | en | 未読 | #claude-ecosystem #x-signal | articles/2026-05-07_1513_X_CryptoApostle_Google_A2A_protocol_open_spec_23500.md |
+| 628 | xAI has just rolled out Connectors, a po… | en | 未読 | #claude-ecosystem #x-signal | articles/2026-05-07_1514_X_aditya_A17_xAI_has_just_rolled_out_Connectors_.md |
+| 629 | The AWS MCP Server is now generally avai… | en | 未読 | #claude-ecosystem #x-signal | articles/2026-05-07_1515_X_lopezunwired_The_AWS_MCP_Server_is_now_generally.md |
+| 630 | What they MISSED: | en | 未読 | #claude-ecosystem #x-signal | articles/2026-05-07_1516_X_therobertta__What_they_MISSED.md |
+| 631 | Claude Code April 2026 Update: Agent SDK… | en | 未読 | #claude-code #web-signal | articles/2026-05-07_1533_WEB_Claude_Code_April2026_AgentSDK_Consumer_App_Perspective_fazm.md |
+| 632 | MCP完全実装ガイド2026 AIエージェント統一プロトコル | ja | 未読 | #claude-ecosystem #web-signal | articles/2026-05-07_1534_WEB_MCP完全実装ガイド2026_AIエージェント統一プロトコル_Uravation.md |
+| 633 | MCP完全ガイド2026 Claude Code/Cursorツール連携・設計7… | ja | 未読 | #claude-ecosystem #web-signal | articles/2026-05-07_1535_WEB_MCP完全ガイド2026_設計7原則_Claude_Code_Agents_renue.md |
+| 634 | MCP Server構築完全ガイド2026 Tools/Resources/Pr… | ja | 未読 | #claude-ecosystem #web-signal | articles/2026-05-07_1536_WEB_MCP_Server構築完全ガイド2026_Tools_Resources_Prompts_Uravation.md |
+- 日次収集（2026-03-27〜）: 1012件（2026-05-07更新）

@@ -163,3 +163,15 @@
 | 140 | MoneySkills: AI活用の暗号資産完全自動取引プラットフォームを発表 | ja | 未読 | #ai-trading #x-signal | articles/2026-05-06_1447_X_bitbank_markets_MoneySkillsAI暗号資産取引ロボ発表.md |
 | 141 | Goldman Sachs 2017年に600人→2人トレーダー。200人ITエンジニアによる自動売買AIに置換 | ja | 未読 | #ai-trading #x-signal #trend | articles/2026-05-06_1448_X_SakemotoMasao_ゴールドマンサックスには介入は押し目にしか見えないという事だな600人いたトレーダーは2.md |
 | 142 | TradingAgents-CN：中国語ユーザー向けマルチエージェント金融取引研究フレームワーク | en | 未読 | #ai-trading #web-signal | articles/2026-05-06_1467_WEB_TradingAgents-CN中国語ユーザー向けマルチエージェント金融取引研究フレームワーク.md |
+| 143 | 1/7 "Solana AI agents' full toolbox expl… | en | 未読 | #ai-trading #x-signal | articles/2026-05-07_1517_X_rpcfast_17_Solana_AI_agents_full_toolbox_ex.md |
+| 144 | 3/7 "Solana AI agents for HFT: architect… | en | 未読 | #ai-trading #x-signal | articles/2026-05-07_1518_X_rpcfast_37_Solana_AI_agents_for_HFT_archite.md |
+| 145 | Stablecoin payments are advancing as Ama… | en | 未読 | #ai-trading #x-signal | articles/2026-05-07_1519_X_RyzeXtrade_Stablecoin_payments_are_advancing_a.md |
+| 146 | Under the hood this is using the new XBT… | en | 未読 | #ai-trading #x-signal | articles/2026-05-07_1520_X_XBTFOREX_Under_the_hood_this_is_using_the_ne.md |
+| 147 | This isn’t a fake “AI trading” demo or a… | en | 未読 | #ai-trading #x-signal | articles/2026-05-07_1521_X_XBTFOREX_This_isnt_a_fake_AI_trading_demo_or.md |
+| 148 | 現在ではClaudeとMT5の連携が可能になりましたが、過去データの検証や分析の… | ja | 未読 | #ai-trading #x-signal | articles/2026-05-07_1522_X_iidatchi_現在ではClaudeとMT5の連携が可能になりましたが過去データの検証.md |
+| 149 | 🚨捜しています🚨 | ja | 未読 | #ai-trading #x-signal | articles/2026-05-07_1523_X_daichilawyer_捜しています.md |
+| 150 | 【FX】サイン用ツールをAIで“無料作成”する方法【ChatGPT/MT4・MT… | ja | 未読 | #ai-trading #x-signal | articles/2026-05-07_1524_X_mirai_koij1119_FXサイン用ツールをAIで無料作成する方法ChatGPTMT4MT5_.md |
+| 151 | How to Connect AI Agents to MetaTrader 5… | en | 未読 | #ai-trading #web-signal | articles/2026-05-07_1537_WEB_AI_Agents_MetaTrader5_via_MCP_MQL5_Article.md |
+| 152 | Build a 24/7 AI Forex Trading Bot with T… | en | 未読 | #ai-trading #web-signal | articles/2026-05-07_1538_WEB_Build_24h_AI_Forex_TradingBot_TradingAgents_VPS_Lightnode.md |
+| 153 | Agentic Trading: How Autonomous AI Agent… | en | 未読 | #ai-trading #web-signal | articles/2026-05-07_1539_WEB_Agentic_Trading_Autonomous_AI_Agents_Financial_Markets_Wunde.md |
+| 154 | AIエージェントにFXの取引戦略を考えてもらった GMOインターネット | ja | 未読 | #ai-trading #web-signal | articles/2026-05-07_1540_WEB_AIエージェントにFX取引戦略を考えてもらった_GMO.md |
