@@ -1,0 +1,356 @@
+{
+  "USD_JPY": {
+    "pair": "USD_JPY",
+    "n_bars_total": 49680,
+    "is_period": [
+      "2024-05-07 07:30:00+00:00",
+      "2025-11-04 10:30:00+00:00"
+    ],
+    "oos_period": [
+      "2025-11-04 10:45:00+00:00",
+      "2026-05-06 19:30:00+00:00"
+    ],
+    "is_results": {
+      "18": {
+        "n_triggers": 26848,
+        "median_abs_return_high": 0.0016928059457396957,
+        "median_abs_return_low": 0.0015701316476427031,
+        "trendiness_ratio": 1.0781299442509602,
+        "persistence_rate": 0.49985101311084623
+      },
+      "20": {
+        "n_triggers": 23474,
+        "median_abs_return_high": 0.0016940127304631387,
+        "median_abs_return_low": 0.0015914552031107692,
+        "trendiness_ratio": 1.0644426102298723,
+        "persistence_rate": 0.499446195791088
+      },
+      "22": {
+        "n_triggers": 20317,
+        "median_abs_return_high": 0.0016938185140072822,
+        "median_abs_return_low": 0.001615004614298895,
+        "trendiness_ratio": 1.048801036858091,
+        "persistence_rate": 0.49943397155091795
+      },
+      "25": {
+        "n_triggers": 15893,
+        "median_abs_return_high": 0.0017012929826667965,
+        "median_abs_return_low": 0.0016259842777809933,
+        "trendiness_ratio": 1.0463157644971686,
+        "persistence_rate": 0.49996853960863274
+      },
+      "28": {
+        "n_triggers": 12131,
+        "median_abs_return_high": 0.001730938044781847,
+        "median_abs_return_low": 0.001622519295253943,
+        "trendiness_ratio": 1.0668212389492324,
+        "persistence_rate": 0.5114170307476713
+      },
+      "30": {
+        "n_triggers": 10055,
+        "median_abs_return_high": 0.001744063878966136,
+        "median_abs_return_low": 0.001627990765822868,
+        "trendiness_ratio": 1.0712983854577325,
+        "persistence_rate": 0.5146693187468921
+      },
+      "35": {
+        "n_triggers": 6180,
+        "median_abs_return_high": 0.0017580632088515396,
+        "median_abs_return_low": 0.0016383260783006661,
+        "trendiness_ratio": 1.073085042188347,
+        "persistence_rate": 0.5176375404530744
+      }
+    },
+    "oos_results": {
+      "18": {
+        "n_triggers": 8632,
+        "median_abs_return_high": 0.0012565626583006882,
+        "median_abs_return_low": 0.0011670817904802467,
+        "trendiness_ratio": 1.0766706057367417,
+        "persistence_rate": 0.4922381835032437
+      },
+      "20": {
+        "n_triggers": 7374,
+        "median_abs_return_high": 0.0012593530265793754,
+        "median_abs_return_low": 0.0011763736780781402,
+        "trendiness_ratio": 1.0705382567185624,
+        "persistence_rate": 0.48942229454841335
+      },
+      "22": {
+        "n_triggers": 6187,
+        "median_abs_return_high": 0.0012855735158804399,
+        "median_abs_return_low": 0.0011772232885476487,
+        "trendiness_ratio": 1.092038807239758,
+        "persistence_rate": 0.49070631970260226
+      },
+      "25": {
+        "n_triggers": 4666,
+        "median_abs_return_high": 0.0013253015470367693,
+        "median_abs_return_low": 0.001180102747821432,
+        "trendiness_ratio": 1.1230391162832103,
+        "persistence_rate": 0.4989284183454779
+      },
+      "28": {
+        "n_triggers": 3465,
+        "median_abs_return_high": 0.0013317549570878548,
+        "median_abs_return_low": 0.0011979277731087323,
+        "trendiness_ratio": 1.1117155699895234,
+        "persistence_rate": 0.5088023088023088
+      },
+      "30": {
+        "n_triggers": 2793,
+        "median_abs_return_high": 0.0013371249929376816,
+        "median_abs_return_low": 0.0012028091413495198,
+        "trendiness_ratio": 1.111668465902631,
+        "persistence_rate": 0.5109201575366988
+      },
+      "35": {
+        "n_triggers": 1628,
+        "median_abs_return_high": 0.0013468036891220933,
+        "median_abs_return_low": 0.0012153941603901836,
+        "trendiness_ratio": 1.1081209150204594,
+        "persistence_rate": 0.5098280098280098
+      }
+    },
+    "spearman_tr": -0.3214285714285715,
+    "spearman_dpr": 0.9285714285714288,
+    "best_is_threshold_tr": 18,
+    "best_is_threshold_dpr": 35
+  },
+  "EUR_USD": {
+    "pair": "EUR_USD",
+    "n_bars_total": 49678,
+    "is_period": [
+      "2024-05-07 07:45:00+00:00",
+      "2025-11-04 10:30:00+00:00"
+    ],
+    "oos_period": [
+      "2025-11-04 10:45:00+00:00",
+      "2026-05-06 19:30:00+00:00"
+    ],
+    "is_results": {
+      "18": {
+        "n_triggers": 26085,
+        "median_abs_return_high": 0.0011185682326621308,
+        "median_abs_return_low": 0.0010671774524559816,
+        "trendiness_ratio": 1.048155796477783,
+        "persistence_rate": 0.4750622963388921
+      },
+      "20": {
+        "n_triggers": 22611,
+        "median_abs_return_high": 0.0011119964276021192,
+        "median_abs_return_low": 0.0010890609874154027,
+        "trendiness_ratio": 1.0210598308558896,
+        "persistence_rate": 0.47229224713634954
+      },
+      "22": {
+        "n_triggers": 19353,
+        "median_abs_return_high": 0.001108452876897154,
+        "median_abs_return_low": 0.0010962299223106471,
+        "trendiness_ratio": 1.011149991746935,
+        "persistence_rate": 0.4669043559138118
+      },
+      "25": {
+        "n_triggers": 15034,
+        "median_abs_return_high": 0.001104047774914132,
+        "median_abs_return_low": 0.0011025555087160299,
+        "trendiness_ratio": 1.0013534612872597,
+        "persistence_rate": 0.46720766263136887
+      },
+      "28": {
+        "n_triggers": 11388,
+        "median_abs_return_high": 0.0010765724704907185,
+        "median_abs_return_low": 0.0011148837457244842,
+        "trendiness_ratio": 0.9656365290276342,
+        "persistence_rate": 0.4680365296803653
+      },
+      "30": {
+        "n_triggers": 9392,
+        "median_abs_return_high": 0.0010567128591255374,
+        "median_abs_return_low": 0.0011199553918109053,
+        "trendiness_ratio": 0.9435312038784793,
+        "persistence_rate": 0.46560902896081774
+      },
+      "35": {
+        "n_triggers": 5535,
+        "median_abs_return_high": 0.0010519337016572838,
+        "median_abs_return_low": 0.0011116623486393008,
+        "trendiness_ratio": 0.9462708734759919,
+        "persistence_rate": 0.46504065040650405
+      }
+    },
+    "oos_results": {
+      "18": {
+        "n_triggers": 8692,
+        "median_abs_return_high": 0.0009737022663727454,
+        "median_abs_return_low": 0.0009267789454079941,
+        "trendiness_ratio": 1.0506305426954798,
+        "persistence_rate": 0.47549470777726643
+      },
+      "20": {
+        "n_triggers": 7478,
+        "median_abs_return_high": 0.0009879226093328845,
+        "median_abs_return_low": 0.0009185559919377875,
+        "trendiness_ratio": 1.0755170267288345,
+        "persistence_rate": 0.46910938753677456
+      },
+      "22": {
+        "n_triggers": 6332,
+        "median_abs_return_high": 0.0010027679605013385,
+        "median_abs_return_low": 0.0009168638081902649,
+        "trendiness_ratio": 1.093693470659109,
+        "persistence_rate": 0.4625710675931775
+      },
+      "25": {
+        "n_triggers": 4829,
+        "median_abs_return_high": 0.0009873584364292168,
+        "median_abs_return_low": 0.0009449381959341646,
+        "trendiness_ratio": 1.044892079373631,
+        "persistence_rate": 0.45578794781528265
+      },
+      "28": {
+        "n_triggers": 3557,
+        "median_abs_return_high": 0.0009746255386089707,
+        "median_abs_return_low": 0.0009537726521005183,
+        "trendiness_ratio": 1.0218635819160127,
+        "persistence_rate": 0.4509418048917627
+      },
+      "30": {
+        "n_triggers": 2932,
+        "median_abs_return_high": 0.0009827065804288522,
+        "median_abs_return_low": 0.0009560857804017919,
+        "trendiness_ratio": 1.0278435267763035,
+        "persistence_rate": 0.4519099590723056
+      },
+      "35": {
+        "n_triggers": 1784,
+        "median_abs_return_high": 0.000999610322045802,
+        "median_abs_return_low": 0.0009551011561673468,
+        "trendiness_ratio": 1.046601520258925,
+        "persistence_rate": 0.4680493273542601
+      }
+    },
+    "spearman_tr": 0.6785714285714287,
+    "spearman_dpr": 0.39285714285714296,
+    "best_is_threshold_tr": 18,
+    "best_is_threshold_dpr": 18
+  },
+  "GBP_JPY": {
+    "pair": "GBP_JPY",
+    "n_bars_total": 49675,
+    "is_period": [
+      "2024-05-07 07:45:00+00:00",
+      "2025-11-04 10:45:00+00:00"
+    ],
+    "oos_period": [
+      "2025-11-04 11:00:00+00:00",
+      "2026-05-06 19:30:00+00:00"
+    ],
+    "is_results": {
+      "18": {
+        "n_triggers": 26179,
+        "median_abs_return_high": 0.0015537017197346094,
+        "median_abs_return_low": 0.0014380342522723254,
+        "trendiness_ratio": 1.0804344314327081,
+        "persistence_rate": 0.4801176515527713
+      },
+      "20": {
+        "n_triggers": 22624,
+        "median_abs_return_high": 0.0015512006997836921,
+        "median_abs_return_low": 0.0014724172604587112,
+        "trendiness_ratio": 1.0535061911053916,
+        "persistence_rate": 0.4787835926449788
+      },
+      "22": {
+        "n_triggers": 19251,
+        "median_abs_return_high": 0.001559184242774534,
+        "median_abs_return_low": 0.001478042738334497,
+        "trendiness_ratio": 1.0548979419441347,
+        "persistence_rate": 0.4767544543140616
+      },
+      "25": {
+        "n_triggers": 14771,
+        "median_abs_return_high": 0.0015551122351203878,
+        "median_abs_return_low": 0.0014963390539650444,
+        "trendiness_ratio": 1.0392779838229875,
+        "persistence_rate": 0.4761356712477151
+      },
+      "28": {
+        "n_triggers": 11232,
+        "median_abs_return_high": 0.0015644726486353355,
+        "median_abs_return_low": 0.0015017475697519538,
+        "trendiness_ratio": 1.0417680575263004,
+        "persistence_rate": 0.47507122507122507
+      },
+      "30": {
+        "n_triggers": 9299,
+        "median_abs_return_high": 0.0015724156299138825,
+        "median_abs_return_low": 0.0015041363750313932,
+        "trendiness_ratio": 1.04539432462104,
+        "persistence_rate": 0.479836541563609
+      },
+      "35": {
+        "n_triggers": 5646,
+        "median_abs_return_high": 0.0015984904829203553,
+        "median_abs_return_low": 0.0015054882818411417,
+        "trendiness_ratio": 1.061775440035625,
+        "persistence_rate": 0.48423662770102727
+      }
+    },
+    "oos_results": {
+      "18": {
+        "n_triggers": 8309,
+        "median_abs_return_high": 0.0011955211694724608,
+        "median_abs_return_low": 0.0011464300750528532,
+        "trendiness_ratio": 1.042820836165995,
+        "persistence_rate": 0.4674449392225298
+      },
+      "20": {
+        "n_triggers": 7161,
+        "median_abs_return_high": 0.001196424801182328,
+        "median_abs_return_low": 0.0011552002712670382,
+        "trendiness_ratio": 1.0356860459096622,
+        "persistence_rate": 0.4732579248708281
+      },
+      "22": {
+        "n_triggers": 6177,
+        "median_abs_return_high": 0.0011894142134998501,
+        "median_abs_return_low": 0.0011660643949132346,
+        "trendiness_ratio": 1.020024467506662,
+        "persistence_rate": 0.46835033187631536
+      },
+      "25": {
+        "n_triggers": 4765,
+        "median_abs_return_high": 0.0011734748305882027,
+        "median_abs_return_low": 0.001180128780423614,
+        "trendiness_ratio": 0.9943616748055047,
+        "persistence_rate": 0.4648478488982162
+      },
+      "28": {
+        "n_triggers": 3683,
+        "median_abs_return_high": 0.0011647000420055742,
+        "median_abs_return_low": 0.00118237155306741,
+        "trendiness_ratio": 0.9850541811362166,
+        "persistence_rate": 0.4575074667390714
+      },
+      "30": {
+        "n_triggers": 3060,
+        "median_abs_return_high": 0.0011733077013906723,
+        "median_abs_return_low": 0.0011789930068601177,
+        "trendiness_ratio": 0.9951778293540634,
+        "persistence_rate": 0.46797385620915033
+      },
+      "35": {
+        "n_triggers": 1814,
+        "median_abs_return_high": 0.0011545202652255412,
+        "median_abs_return_low": 0.0011819632409431115,
+        "trendiness_ratio": 0.9767818703941479,
+        "persistence_rate": 0.47519294377067256
+      }
+    },
+    "spearman_tr": 0.39285714285714296,
+    "spearman_dpr": 0.6785714285714287,
+    "best_is_threshold_tr": 18,
+    "best_is_threshold_dpr": 35
+  }
+}

@@ -5,21 +5,37 @@
 
 | メタ | 値 |
 |---|---|
-| **最終更新** | 2026-05-05 13:51 JST |
-| **次回更新予定** | 2026-05-12（7日後）または重要変更時 |
+| **最終更新** | 2026-05-08 (Step C P0-2 完了反映) |
+| **次回更新予定** | 2026-05-15（7日後）または重要変更時 |
 | **更新方法** | `python scripts/update_status.py [--with-vps]` / 手動編集（緊急時） |
 
 ---
 
-## 🟢 いま稼働中の構成
+## 🌐 プロジェクトの2レイヤー構造
+
+本プロジェクトは現在 **2つのレイヤー** が並行している。混同しない。
+
+| レイヤー | 状態 | 何をしているか |
+|---|---|---|
+| **🪦 亡き者の世界（応急処置）** | VPS 稼働中 / PR #30 OPEN | 既存戦略 (MTFPullback) の運用を維持しつつ撤退判断（GBP_JPY 撤退） |
+| **🌱 ゼロベース再構築の世界** | SPEC v2 § 2-1 検証中 | STORY/PREMISE/OPERATING_MODEL v2.1 → SPEC v2 数値降ろし。**再構築完了まで本番投入禁止** |
+
+**判断指針** (`docs/vision/PREMISE.md` から):
+- 「既存運用の判断 (USD_JPY 処遇 / GBP_JPY 撤退PR 等) を運用モデルで決めようとしない」 = **亡き者の世界の問題は応急処置で対応、再構築モデルが答える問題ではない**
+- 既存戦略・パラメータ・数値は **亡き者** として扱う。**コードベース骨格と教訓だけ** 継承
+
+---
+
+## 🟢 いま稼働中の構成（🪦 亡き者の世界）
 
 | 項目 | 値 |
 |---|---|
 | **本番VPS** | ConoHa Windows Server (160.251.221.43) |
 | **Pythonプロセス** | PID 6108、起動 2026-05-05 12:52 JST、RAM 17MB |
-| **稼働ペア** | EUR_USD / USD_JPY （GBP_JPY は 2026-05-07 撤退） |
+| **稼働ペア** | EUR_USD / USD_JPY （GBP_JPY は 2026-05-07 撤退、PR #30 OPEN・VPS反映待ち） |
 | **timeframe** | M15、60秒間隔ループ |
 | **ブローカー** | 外為ファイネスト MT5 デモ口座 |
+| **PR #30** | `fix(strategy): GBP_JPY 撤退` / マージ後 VPS pull + 再起動が必要 |
 
 ---
 
@@ -51,10 +67,36 @@
 
 完全な履歴: `git log --oneline --since="7 days ago"`
 
-## ⚠️ 観察中の課題（高優先度のみ）
+## 🌱 ゼロベース再構築の世界 (SPEC v2 進捗)
+
+| 項目 | 状態 |
+|---|---|
+| **STORY.md** (北極星: 庭師×生命体) | ✅ 完了 |
+| **PREMISE.md** (亡き者と継承) | ✅ 完了 |
+| **OPERATING_MODEL.md v2.1** (15スキーム / 数字なし) | ✅ 完了 |
+| **SPEC v2 § 2-1 季節判定 - 仮説台帳** (HYPOTHESES_2-1.md) | ✅ Step A 完了 |
+| **SPEC v2 § 2-1 - 文献調査** (researcher × 4並列) | ✅ Step B 完了 |
+| **SPEC v2 § 2-1 - Permutation Test** (12閾値中 11/12 p<0.05) | ✅ Step C P0-2 完了 |
+| **SPEC v2 § 2-1 - Bonferroni/Romano-Wolf 補正** (N=606) | ⬜ Step C P0-3 |
+| **SPEC v2 § 2-1 - PF 置換 + BCa CI** | ⬜ Step C P0-4 |
+| **SPEC v2 § 2-1 - rolling WFA × 5+ fold / HMM 状態数 / 直交性** | ⬜ Step C P1 |
+| **SPEC v2 § 2-2〜5-2 (他14スキーム)** | ⬜ 未着手 |
+| **本番投入** | 🔴 禁止 (Step C 完了まで) |
+
+**現時点の重要発見**:
+- EUR_USD D1 YZ_vol > 0.00537 が permutation で **棄却推奨** (p=0.089) — 既に Spearman_TR=-0.667 の予兆あり
+- σ_TR=0.15 一律仮定の deflation 試算は誤誘導 (実測で M15 の σ は 0.022) — `feedback_assumption_vs_measurement.md` 教訓化
+- H7 (三層生存=採用根拠) は文献調査では ★☆☆ (壊滅) → 実測で **★★☆** に格上げ
+
+詳細: `memory/project_fx_spec_v2_verification.md` / `docs/vision/HYPOTHESES_2-1.md` / `docs/vision/research/`
+
+---
+
+## ⚠️ 観察中の課題（🪦 亡き者の世界、高優先度のみ）
 
 | 課題 | ステータス | 次のアクション | 詳細 |
 |---|---|---|---|
+| **PR #30 GBP_JPY 撤退** | OPEN, CI Vercel関連で2失敗 (FX無関係) | マージ → VPS pull + 再起動 | `gh pr view 30` |
 | USD_JPY パフォーマンス | 観察中 (7件中1勝) | 1〜2週間後に再評価 | `memory/project_fx_pending_items.md` |
 | trading_loop.py 重複INFO格下げ (L462/L529/L640) | follow-up 登録済 | 別PRで一括対応 | `memory/project_fx_pending_items.md` § 認識済みfollow-up |
 | EUR/GBP の HOLD パターン | LDN-NY セッション (JST 21:00-02:00) で観察必要 | 該当時刻のログ追加調査 | `memory/project_fx_signal_status_2026_05_05.md` |
