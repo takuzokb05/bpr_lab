@@ -78,17 +78,23 @@
 | **SPEC v2 § 2-1 - 文献調査** (researcher × 4並列) | ✅ Step B 完了 |
 | **SPEC v2 § 2-1 - Permutation Test** (12閾値中 11/12 p<0.05) | ✅ Step C P0-2 完了 |
 | **SPEC v2 § 2-1 - 多重補正** (Bonferroni N=606 / Romano-Wolf 12) | ✅ Step C P0-3 完了 (AAA 5 / AA 2 / A 3 / 🔴 2) |
-| **SPEC v2 § 2-1 - PF 置換 + BCa CI** | ⬜ Step C P0-4 |
-| **SPEC v2 § 2-1 - rolling WFA × 5+ fold / HMM 状態数 / 直交性 / D1 層再検討** | ⬜ Step C P1 |
+| **SPEC v2 § 2-1 - rolling WFA Mode A** (閾値固定) | ✅ Step C P1-1 完了 (Mode A 5/5 が 9個) |
+| **SPEC v2 § 2-1 - rolling WFA Mode B** (閾値再選定) | ✅ Step C P1-1b 完了 (重大発見: 11/12 が Mode A 値と不一致) |
+| **SPEC v2 § 2-1 - 指標–リターン単峰性 / グリッド拡張 / CHOP <25 再検証** | ⬜ Step C 新 P0 (P1-1b 発見受け) |
+| **SPEC v2 § 2-1 - PF 置換 + BCa CI / HMM / 直交性** | ⬜ 上記完了まで保留 |
 | **SPEC v2 § 2-2〜5-2 (他14スキーム)** | ⬜ 未着手 |
 | **本番投入** | 🔴 禁止 (Step C 完了まで) |
 
-**現時点の重要発見**:
-- **H1 (中期層) が最強**: 3ペアすべて両補正で p_rw=0 (n_perm=20000 で1回も超えなかった)
-- **D1 (長期層) が脆弱**: Bonferroni N=606 で 3ペア全滅。H3 (三層構造) 仮説 ★★☆ → ★☆☆ に降格
-- **EUR_USD CHOP は採用棄却確定**: M15 / D1 とも両補正で棄却
-- **物語破棄オプション条項**: 発火準備状態 (★☆☆ が H3, H5, H6 で 3件)。D1 層の存在意義を Step C P1 で再検討、生き返らなければ運用モデル修正検討
-- σ_TR=0.15 一律仮定の deflation 試算は誤誘導 (実測で M15 の σ は 0.022) — `feedback_assumption_vs_measurement.md` 教訓化
+**現時点の重要発見 (P1-1b 完了時点で大幅更新)**:
+- **🚨 物語破棄オプション条項 発火条件成立** — ★☆☆ が 5件 (H2, H3, H6, H7, H8)。HYPOTHESES_2-1.md は再起草対象
+- **Mode B (閾値再選定) で 11/12 が Mode A 値と不一致** — Mode A の閾値はほぼ全て最適ではない
+- **真に頑健 (CV<0.1) なのは 2 件のみ**: EUR_USD/GBP_JPY M15 CHOP <25 (ただし Mode A の <30 ではない)
+- **M15 YZ_vol が 10/90%ile に二極化** — 指標–リターン関係が単峰でない可能性、H2 (直交分解) の前提揺らぐ
+- **H1 YZ_vol 3ペアがグリッド上限選定** — SPEC 値の +50% が良い、グリッド再設計必要
+- **GBP_JPY D1 YZ_vol が Mode A 5/5 → Mode B n_pass=0/5 で完全崩壊** — 典型的なカーブフィット
+- **確定する判定**: EUR_USD D1 YZ_vol 棄却 / GBP_JPY D1 YZ_vol 棄却 (Mode B 完全崩壊)
+- **教訓**: ねじれを都合よく片付けない、追加検証で本質を解明する → `feedback_anomaly_is_signal_not_conclusion.md`
+- σ_TR 仮定値の試算は誤誘導 → `feedback_assumption_vs_measurement.md`
 
 詳細: `memory/project_fx_spec_v2_verification.md` / `docs/vision/HYPOTHESES_2-1.md` / `docs/vision/research/`
 
