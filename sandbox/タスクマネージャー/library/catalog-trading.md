@@ -177,3 +177,10 @@
 | 154 | AIエージェントにFXの取引戦略を考えてもらった GMOインターネット | ja | 未読 | #ai-trading #web-signal | articles/2026-05-07_1540_WEB_AIエージェントにFX取引戦略を考えてもらった_GMO.md |
 | 155 | FX初心者がAI3ツールで学習速度3倍：ChatGPT+TradingView+… | ja | 未読 | #ai-trading #x-signal | articles/2026-05-08_1557_X_Dragonntsk_AI_FX_beginners_ChatGPT_TradingView.md |
 | 156 | MT5 + OpenClaw AIエージェント統合の設計問題：「何を見せるか」 | en | 未読 | #ai-trading #x-signal | articles/2026-05-08_1558_X_ycptech_MT5_OpenClaw_AI_agent_permissions.md |
+| 157 | QuantDinger: OSS AI Multi-Agent定量取引フレームワーク… | en | 未読 | #llm-trading #multi-agent #x-signal | articles/2026-05-09_1623_X_gaoren7716_QuantDinger__OSS_AI_Multi-Agent定量取引フレームワーク_(GitHub_⭐4k).md |
+| 158 | Vibe-Trading: HKU 29エージェントAI取引ワークスペース (Git… | en | 未読 | #llm-trading #multi-agent #x-signal | articles/2026-05-09_1624_X_gaoren7716_Vibe-Trading__HKU_29エージェントAI取引ワークスペース_(GitHub_⭐6.2k).md |
+| 159 | FX: LLM + LightGBM並列AI自動取引システムの実装 | ja | 未読 | #fx #llm-trading #implementation #x-signal | articles/2026-05-09_1625_X_yusato102_FX__LLM_+_LightGBM並列AI自動取引システムの実装.md |
+| 160 | MT5 + Codex AI ローカル設定ガイド (Windows環境) | ja | 未読 | #fx #implementation #x-signal | articles/2026-05-09_1626_X_Taru_J8_MT5_+_Codex_AI_ローカル設定ガイド_(Windows環境).md |
+| 161 | Claude Code+MCP+OpenRouterによるAI取引自動化パイプライン | ja | 未読 | #llm-trading #implementation #x-signal | articles/2026-05-09_1627_X_LaboNft_Claude_Code+MCP+OpenRouterによるAI取引自動化パイプライン.md |
+| 162 | TeraWulf AI収益: Q1 QoQ +117%で$2100万達成 | en | 未読 | #quant #x-signal | articles/2026-05-09_1628_X_center_forex_TeraWulf_AI収益__Q1_QoQ_+117%で$2100万・電力収益も好調.md |
+| 163 | AriseAlpha: 無料AI Forexトレーディングボット公開 (2026年5… | en | 未読 | #fx #implementation #web-signal | articles/2026-05-09_1661_WEB_AriseAlpha_Introduces_Free_AI_Trading_Bot_for_Smarter_Automa.md |
