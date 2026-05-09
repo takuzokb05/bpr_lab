@@ -498,3 +498,43 @@ AI Native JPの実験報告から現実的な課題が整理されている：
 - マルチモーダル活用：チャート画像をClaude Visionに渡したテクニカル分析の精度検証
 
 ---
+---
+
+## 2026-05-09 収集分
+
+### 1. FX自動取引システムへの反映提案
+
+#### 1-1. OSS マルチエージェント取引フレームワーク参照実装
+**出典:** articles/2026-05-09_1623_X_gaoren7716_QuantDinger (GitHub ⭐4k) / articles/2026-05-09_1624_X_gaoren7716_Vibe-Trading (GitHub ⭐6.2k)
+
+**提案内容:**
+QuantDinger（4k stars）とVibe-Trading（HKU・29エージェント・6.2k stars）は、今週X上でバズった OSS マルチエージェント定量取引フレームワーク。sandbox/FX自動取引/ のリファレンスとして調査対象に追加する。特に Vibe-Trading の29エージェント構成（ファンダメンタルズ・テクニカル・センチメント・リスク等）は TradingAgents と競合するアーキテクチャ比較として有益。
+
+#### 1-2. Claude Code+MCP+OpenRouter取引自動化パイプライン
+**出典:** articles/2026-05-09_1627_X_LaboNft_Claude_Code+MCP+OpenRouterによるAI取引自動化パイプライン
+
+**提案内容:**
+Claude Code × MCP × OpenRouter を組み合わせたAI取引自動化パイプラインの実装事例。sandbox/FX自動取引/ の主制御エージェントとして Claude Code を使いつつ、OpenRouter 経由でコスト最適化する設計パターンとして参照する。
+
+### 2. Claude Code設定への反映提案
+
+#### 2-1. レート制限2倍化（SpaceX提携）の活用
+**出典:** articles/2026-05-09_1617_X_latdayo_Anthropic×SpaceX / articles/2026-05-09_1650_WEB_Mythos_Anthropic_SpaceX
+
+**提案内容:**
+AnthropicがSpaceXの22万GPU・300MWを借り受け、Claude Codeのレート制限を2倍に拡大。Pro/Max/Teamプランで長期セッションやバックグラウンドエージェントを以前より多く走らせることが可能になった。CLAUDE.mdの「コスト管理」セクションに制限2倍の旨を記載し、並列サブエージェント数の推奨値を見直す。
+
+#### 2-2. PDF-MCP サーバーの導入検討
+**出典:** articles/2026-05-09_1646_WEB_GitHub_jztan_pdf-mcp
+
+**提案内容:**
+大規模PDFをコンテキスト制限に引っかからず読み込めるMCPサーバー（chunked reading・ハイブリッド検索・OCR・テーブル・画像抽出対応）。研究論文・規制文書・取引マニュアルPDFをClaude Codeから直接参照するワークフローに有用。settings.jsonのMCP設定に追加候補。
+
+### 3. スキル・エコシステムへの反映提案
+
+#### 3-1. Microsoft Waza フレームワークの参照
+**出典:** articles/2026-05-09_1631_X_L_go_mrk_Microsoft_Waza / articles/2026-05-09_1669_WEB_The_Future_of_Agentic_AI_Inside_Microsoft_Agent_Framework
+
+**提案内容:**
+MicrosoftがリリースしたWazaフレームワークはAIエージェントのSkillsを「作成→テスト→評価」する工程を体系化。Claude CodeのSkills設計・評価方法論と比較し、skills-registryの品質評価基準に取り入れられる要素がある。具体的には：Skillの入力/出力スキーマ検証・ゴールデンテストセット・品質スコアリングの仕組み。
+
