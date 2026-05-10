@@ -1,0 +1,15 @@
+# Anthropicの発表（
+
+- URL: https://x.com/Johny_canary/status/2053553293415358666
+- ソース: x
+- 言語: ja
+- テーマ: claude-ecosystem
+- 取得日: 2026-05-10
+- いいね: 2 / RT: 0 / リプライ: 0
+- 投稿者: @Johny_canary / フォロワー 182
+
+## 投稿内容
+Anthropicの発表（https://t.co/qmmvs2YvEF）まで見ると、AI投資はGPU発注から電力枠と稼働時期の先取り競争へ寄っている。日経平均の牽引役を見るなら、受電容量・冷却・建設遅延・半導体装置の受注残に数字が出る順番を追いたい。
+
+## 要約
+Anthropicの発表（AI投資はGPU発注から電力枠と稼働時期の先取り競争へ。
