@@ -365,7 +365,8 @@ def run_loop(dry_run: bool = False, single_iter: bool = False):
     poc_db.insert_loop_health(POC_DB_PATH, "stop", f"iter_count={iter_count}")
     slack_notify(f"🔴 PoC 停止 (iter={iter_count})")
     logger.info(f"ループ停止 (iter_count={iter_count})")
-    client.disconnect()
+    # Mt5Client は明示的 disconnect 不要 (Python プロセス終了時に自動解放)
+    # MT5 ライブラリの mt5.shutdown() を呼びたい場合はここに追加
 
 
 def main():
