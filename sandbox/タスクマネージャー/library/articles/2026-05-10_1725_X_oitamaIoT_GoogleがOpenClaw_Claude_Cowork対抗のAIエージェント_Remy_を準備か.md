@@ -9,7 +9,7 @@
 - 投稿者: @oitamaIoT / フォロワー 363
 
 ## 投稿内容
-GoogleがOpenClaw、Claude Cowork対抗のAIエージェント「Remy」を準備か
+GoogleがOpenClaw、Claude Cowork対抗のAIエージェント「Remy」を準備か OpenClawやAnthropicのClaude Cowork対抗のA2Aエージェント｜ビジネス+IT #sbbit @bitsbbitより
 
 ## 要約
-GoogleがOpenClawとAnthropicのClaude Cowork対抗のA2AエージェントRemyを準備中との報道。
+GoogleがOpenClaw・Claude Cowork対抗のAIエージェント「Remy」を準備中との報道。

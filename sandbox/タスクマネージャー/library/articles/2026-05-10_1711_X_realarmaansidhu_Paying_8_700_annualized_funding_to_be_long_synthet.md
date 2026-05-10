@@ -1,4 +1,4 @@
-# Paying 8,700% annualized funding to be long synthetic Ant...
+# Paying 8,700% annualized funding to be long synthetic Ant... (2)
 
 - URL: https://x.com/realarmaansidhu/status/2053582797915263032
 - ソース: x
@@ -11,9 +11,7 @@
 ## 投稿内容
 Paying 8,700% annualized funding to be long synthetic Anthropic at $1 trillion is the most expensive way anyone has ever expressed a thesis.
 
-OKX launched pre-IPO perpetual futures on Anthropic, OpenAI, and SpaceX last month. The contract has effectively zero shorts. When everyone wants the same side of the trade, the funding rate paid by longs to shorts goes vertical until somebody balks.
-
-8,700% is what "nobody balks" looks like.
+OKX launched pre-IPO perpetual futures on Anthropic, OpenAI, and SpaceX last month. The contract has effectively zero shorts.
 
 ## 要約
-Paying 8,700% annualized funding to be long synthetic Anthropic at $1 trillion is the most expensive way anyone has ever expressed a thesis.
+Paying 8,700% annualized funding to be long synthetic Anthropic at $1 trillion. Duplicate post.

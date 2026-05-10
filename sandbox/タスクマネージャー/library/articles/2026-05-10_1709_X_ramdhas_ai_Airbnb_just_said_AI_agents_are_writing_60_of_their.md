@@ -42,4 +42,4 @@ Now Airbnb says agents are handling most new coding"
 #AI #AIAgents #SoftwareEngineering #GenAI #Anthropic #Spotify #Airbnb #FutureOfWork
 
 ## 要約
-Airbnb just said AI agents are writing 60% of their new code
+Airbnb just said AI agents are writing 60% of their new code. Developers becoming operators of AI systems.

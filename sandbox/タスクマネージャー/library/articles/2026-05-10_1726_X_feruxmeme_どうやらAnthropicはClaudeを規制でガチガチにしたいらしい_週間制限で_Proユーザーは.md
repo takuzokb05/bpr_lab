@@ -1,4 +1,4 @@
-# どうやらAnthropicはClaudeを規制でガチガチにしたいらしい 週間制限で、Proユーザーは1週間の半分ぐ...
+# どうやらAnthropicはClaudeを規制でガチガチにしたいらしい
 
 - URL: https://x.com/feruxmeme/status/2053561011421196633
 - ソース: x
@@ -9,7 +9,11 @@
 - 投稿者: @feruxmeme / フォロワー 855
 
 ## 投稿内容
-どうやらAnthropicはClaudeを規制でガチガチにしたいらしい。週間制限でProユーザーは1週間の半分ぐらいしか使えないため、Claudeへの関心がなくなった。
+どうやらAnthropicはClaudeを規制でガチガチにしたいらしい
+
+週間制限で、Proユーザーは1週間の半分ぐらいしか使えないから、最近はClaudeへの関心がなくなった
+
+そろそろAnthropicは卒業でも良いな
 
 ## 要約
-AnthropicがClaude Proの週間使用制限を実施。Proユーザーが1週間の半分程度しか使えない制限に不満の声。
+AnthropicのClaude利用制限（週間制限）への不満。Proユーザーでも1週間の半分しか使えないという声。

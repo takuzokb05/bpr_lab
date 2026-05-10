@@ -9,7 +9,7 @@
 - 投稿者: @elonchieftwit / フォロワー 371
 
 ## 投稿内容
-EM @elonmusk xAI's Anthropic deal shows AI alliances are getting harder to read - Startup Fortune: xAI's Anthropic deal shows AI alliances are getting harder to read  Startup Fortune https://t.co/SXAIyckxhY #ElonMusk #XAI https://t.co/psHRBh0r5A
+xAI's Anthropic deal shows AI alliances are getting harder to read - Startup Fortune #ElonMusk #XAI
 
 ## 要約
-EM @elonmusk xAI's Anthropic deal shows AI alliances are getting harder to read - Startup Fortune #ElonMusk #XAI
+xAIとAnthropicのディールでAIアライアンスの読み解きが難しくなっている。

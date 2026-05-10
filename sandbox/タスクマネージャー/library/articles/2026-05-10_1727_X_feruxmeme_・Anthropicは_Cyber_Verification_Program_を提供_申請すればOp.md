@@ -1,4 +1,4 @@
-# ・Anthropicは"Cyber Verification Program"を提供 申請すればOpus 4.7の...
+# Anthropicは"Cyber Verification Program"を提供
 
 - URL: https://x.com/feruxmeme/status/2053558482847293937
 - ソース: x
@@ -9,7 +9,13 @@
 - 投稿者: @feruxmeme / フォロワー 855
 
 ## 投稿内容
-Anthropicは"Cyber Verification Program"を提供。申請すればOpus 4.7のサイバーセキュリティ関連のブロック(セーフガード)を緩和する制度。
+Anthropicは"Cyber Verification Program"を提供
+
+申請すればOpus 4.7のサイバーセキュリティ関連のブロック(セーフガード)を緩和する制度
+
+※匿名プラン(Zero Data Retention)を利用している団体は不可
+
+規制とコントロールばっかりですな
 
 ## 要約
-AnthropicのCyber Verification Program：申請すればOpus 4.7のサイバーセキュリティ規制を緩和できる制度。匿名プランの団体は不可。
+Anthropicの"Cyber Verification Program"紹介。申請すればOpus 4.7のサイバーセキュリティ関連セーフガードを緩和できる制度。

@@ -9,7 +9,7 @@
 - 投稿者: @StatisticUrban / フォロワー 56,306
 
 ## 投稿内容
-A magnificent composer. He had no idea that, 118 years after his death, an AI company called Anthropic and a bunch of gay people would conspire to make his name one of the funniest in human history. https://t.co/C13CZaF4cB
+A magnificent composer. He had no idea that, 118 years after his death, an AI company called Anthropic and a bunch of gay people would conspire to make his name one of the funniest in human history.
 
 ## 要約
 A magnificent composer. He had no idea that, 118 years after his death, an AI company called Anthropic and a bunch of gay people would conspire to make his name one of the funniest in human history.

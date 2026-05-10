@@ -15,5 +15,11 @@ OKX launched pre-IPO perpetual futures on Anthropic, OpenAI, and SpaceX last mon
 
 8,700% is what "nobody balks" looks like.
 
+Forge Global, Hiive, and Jupiter Prestocks all show Anthropic trading near $1T in private secondary markets. The Series G in February closed at $380B. That's a 2.6x move in three months.
+
+The thesis isn't crazy. The vehicle is.
+
+Pick the right cost of capital.
+
 ## 要約
-Paying 8,700% annualized funding to be long synthetic Anthropic at $1 trillion is the most expensive way anyone has ever expressed a thesis.
+Paying 8,700% annualized funding to be long synthetic Anthropic at $1 trillion. OKX pre-IPO perps analysis.

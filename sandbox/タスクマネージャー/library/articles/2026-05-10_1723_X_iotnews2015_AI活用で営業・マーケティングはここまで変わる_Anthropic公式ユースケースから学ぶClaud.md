@@ -1,4 +1,4 @@
-# AI活用で営業・マーケティングはここまで変わる_Anthropic公式ユースケースから学ぶClaude活用法
+# AI活用で営業・マーケティングはここまで変わる、Anthropic公式ユースケースから学ぶClaude活用法
 
 - URL: https://x.com/iotnews2015/status/2053580903478341850
 - ソース: x
@@ -10,6 +10,7 @@
 
 ## 投稿内容
 AI活用で営業・マーケティングはここまで変わる、Anthropic公式ユースケースから学ぶClaude活用法
+#IoTNEWS #DX
 
 ## 要約
-AI活用で営業・マーケティングはここまで変わる。Anthropic公式ユースケースから学ぶClaude活用法の記事リンク。
+AI活用で営業・マーケティングはここまで変わる、Anthropic公式ユースケースから学ぶClaude活用法 #IoTNEWS #DX

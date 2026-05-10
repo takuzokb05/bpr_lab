@@ -15,4 +15,4 @@ Market cap: $11B
 $HUT 1 year performance: +600%
 
 ## 要約
-@Hut8Corp just announced their 1 GW Beacon Point campus in Texas. 15-year, $9.8 billion triple-net agreement. Also building 245-MW data center campus for Anthropic. Market cap: $11B, 1yr: +600%
+Hut8がTexasに1GW Beacon Pointキャンパスを発表。AnthropicのためのデータセンターキャンパスもBuild中。

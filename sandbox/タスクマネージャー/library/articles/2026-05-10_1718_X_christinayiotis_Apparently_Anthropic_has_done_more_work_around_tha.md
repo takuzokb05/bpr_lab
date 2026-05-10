@@ -1,4 +1,4 @@
-# "Apparently Anthropic has done more work around that beha...
+# Apparently Anthropic has done more work around that behavior...
 
 - URL: https://x.com/christinayiotis/status/2053581536675475923
 - ソース: x
@@ -9,7 +9,7 @@
 - 投稿者: @christinayiotis / フォロワー 3,494
 
 ## 投稿内容
-"Apparently Anthropic has done more work around that behavior, claiming in a post on X, 'We believe the original source of the behavior was internet text that portrays AI as evil and interested in self-preservation.'" https://t.co/cpbEAy65Y2 @TechCrunch
+"Apparently Anthropic has done more work around that behavior, claiming in a post on X, 'We believe the original source of the behavior was internet text that portrays AI as evil and interested in self-preservation.'" @TechCrunch
 
 ## 要約
-"Apparently Anthropic has done more work around that behavior, claiming in a post on X, 'We believe the original source of the behavior was internet text that portrays AI as evil and interested in self-preservation.'"  @TechCrunch
+AnthropicがAIの自己保存行動の原因はインターネット上の「AIは悪で自己保存に興味がある」という描写にあると主張。
