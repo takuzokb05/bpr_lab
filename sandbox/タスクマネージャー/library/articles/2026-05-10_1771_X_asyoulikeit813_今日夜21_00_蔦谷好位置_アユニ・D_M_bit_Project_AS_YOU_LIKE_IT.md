@@ -15,27 +15,11 @@
 
 今週は、#SIRUP さんが登場！🎙️
 
-SIRUPさんの"好き"や、
-5月13日にリリースされる新曲「Not AI」についても伺います！
-@IamSIRUP
-
-放送はこちらから↓
-📻https://t.co/9UY9me9U2l
-
-#like813 @KoichiTsutaya @AYUNiD_BiSH https://t.co/WCFl2bRBzt
+SIRUPさんの好きや、5月13日にリリースされる新曲「Not AI」についても伺います！
 
 ## 要約
 今日夜21:00〜📡
 #蔦谷好位置 × #アユニ・D
 🎧M bit Project AS YOU LIKE IT🎧
 
-今週は、#SIRUP さんが登場！🎙️
-
-SIRUPさんの"好き"や、
-5月13日にリリースされる新曲「Not AI」についても伺います！
-@IamSIRUP
-
-放送はこちらから↓
-📻
-
-#like813 @KoichiTsutaya @AYUNiD_BiSH
+今週は、#SIRUP さんが登場！
