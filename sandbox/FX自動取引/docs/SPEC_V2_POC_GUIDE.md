@@ -33,18 +33,26 @@
 
 ## 起動手順 (VPS 上)
 
-### 1. ローカルから push 済みの前提で VPS 反映
+### 環境メモ (VPS 確定)
+
+- リポジトリ: `C:\bpr_lab_spec_v2` (worktree、亡き者の `C:\bpr_lab` と物理分離)
+- 作業ディレクトリ: `C:\bpr_lab_spec_v2\sandbox\FX自動取引`
+- Python: **`py -3.13`** で起動 (3.11 は numpy 不在、3.13 に numpy/pandas/pandas_ta/MetaTrader5 揃い)
+- ブランチ: `feature/spec-v2-rebuild`
+
+### 1. VPS 反映 (push 済みの前提)
 
 ```powershell
 ssh vps
-cd C:\path\to\bpr_lab\sandbox\FX自動取引
+cd C:\bpr_lab_spec_v2
 git pull
+cd sandbox\FX自動取引
 ```
 
-### 2. DB 初期化
+### 2. DB 初期化 (idempotent、初回のみ必要)
 
 ```powershell
-python -m src.spec_v2.db
+py -3.13 -m src.spec_v2.db
 ```
 
 期待出力: `DB initialized at: ...\data\fx_spec_v2.db`
@@ -52,12 +60,21 @@ python -m src.spec_v2.db
 ### 3. ドライラン (動作確認、発注なし)
 
 ```powershell
-# 1 イテレーションだけ
-python -m src.spec_v2.poc_loop --dry-run --single-iter
+# 1 イテレーションだけ (動作確認)
+py -3.13 -m src.spec_v2.poc_loop --dry-run --single-iter
 
 # 30 分程度しっかり走らせる (Ctrl+C で停止)
-python -m src.spec_v2.poc_loop --dry-run
+py -3.13 -m src.spec_v2.poc_loop --dry-run
 ```
+
+#### 動作確認実績 (2026-05-10 17:55 JST)
+
+```
+[iter 1] regime=calm | M15 YZ=0.00025 thr=0.00031 above=False | H1 YZ=0.00050 thr=0.00175 above=False
+```
+
+- DB 初期化 / MT5 接続 / M15 5014 bars + H1 200 bars 取得 / 季節判定 / DB 書き込み すべて OK
+- 1 イテレーションあたり ~1.4 秒
 
 確認ポイント:
 - `[iter N] regime=...` がログに出ること
@@ -68,7 +85,7 @@ python -m src.spec_v2.poc_loop --dry-run
 ### 4. 本格起動 (デモ発注あり)
 
 ```powershell
-python -m src.spec_v2.poc_loop
+py -3.13 -m src.spec_v2.poc_loop
 ```
 
 - volatile 判定 + ブレイクアウトで 0.01 lot エントリー
@@ -80,8 +97,9 @@ python -m src.spec_v2.poc_loop
 別タスクとして登録 (亡き者プロセス main.py とは別):
 
 ```powershell
-$action = New-ScheduledTaskAction -Execute "python" -Argument "-m src.spec_v2.poc_loop" `
-  -WorkingDirectory "C:\path\to\bpr_lab\sandbox\FX自動取引"
+$pyExe = "C:\Users\Administrator\AppData\Local\Programs\Python\Python313\python.exe"
+$action = New-ScheduledTaskAction -Execute $pyExe -Argument "-m src.spec_v2.poc_loop" `
+  -WorkingDirectory "C:\bpr_lab_spec_v2\sandbox\FX自動取引"
 $trigger = New-ScheduledTaskTrigger -AtStartup
 Register-ScheduledTask -TaskName "SPECv2_PoC" -Action $action -Trigger $trigger
 ```
