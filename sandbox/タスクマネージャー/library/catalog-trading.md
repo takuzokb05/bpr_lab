@@ -36,7 +36,7 @@
 | 014 | The TRADE predictions series 2026: Artificial intelligence | en | 読了 | #quant #regulation #ml | articles/2026-03-27_033_TRADE_Predictions_AI_2026.md |
 | 015 | From ~$20k to $400k in a Year: My LLM Options Trading Experiment | en | 読了 | #llm-trading #research | articles/2026-03-27_085_LLM_Options_Trading_20k_to_400k.md |
 | 016 | StockBench: Can LLM Agents Trade Stocks Profitably In Real-world Markets? (ArXiv) | en | 読了 | #llm-trading #research | articles/2026-03-27_086_StockBench_LLM_Agents_Real_Markets_ArXiv.md |
-| 017 | AI in Trading: A Practitioners' View (FMSB Spotlight Review, Feb 2026) | en | 読了 | #risk #regulation | articles/2026-03-27_087_FMSB_AI_in_Trading_Spotlight_Feb2026.md |
+| 017 | AI in Trading: A Practitioners’ View (FMSB Spotlight Review, Feb 2026) | en | 読了 | #risk #regulation | articles/2026-03-27_087_FMSB_AI_in_Trading_Spotlight_Feb2026.md |
 | 018 | U.S. Treasury Releases Financial Services AI Risk Management Framework | en | 読了 | #risk #regulation | articles/2026-03-27_088_US_Treasury_AI_Risk_Management_Framework.md |
 | 019 | ESMA Supervisory Briefing on Algorithmic Trading under MiFID II (Feb 2026) | en | 読了 | #regulation | articles/2026-03-27_089_ESMA_MiFID2_Algo_Trading_Feb2026.md |
 | 020 | TradingAgents: Multi-Agents LLM Financial Trading Framework (ArXiv Paper) | en | 読了 | #llm-trading #multi-agent #research | articles/2026-03-27_090_TradingAgents_ArXiv_Paper.md |
@@ -64,7 +64,7 @@
 | 042 | 【2026年最新】FX自動売買でAIのおすすめ比較！初心者向けに徹底解説 | ja | 未読 | #fx #web-signal | articles/2026-03-29_197_fx_ai_trading_japan_2026.md |
 | 043 | パイロット運用から収益化へ：金融サービス業界ではAI投資とオープンソースの活用が倍増していることが調査で明らかに | ja | 未読 | #ml #web-signal | articles/2026-03-29_211_nvidia_ai_financial_services_2026.md |
 | 044 | トレーディングボットからエージェントへ：LLMベース投資システム設計論 | en | 未読 | #llm-trading #implementation #web-signal | articles/2026-03-30_226_trading_bot_to_agent_llm_investment_system.md |
-| 045 | AI対応FX自動売買完全ガイド：MT4/MT5 EA × LLM連携の実情と比較 | ja | 未読 | #fx #llm-trading #web-signal | articles/2026-03-30_229_fx_ai_ea_mt4_mt5_llm_hybrid_guide_2026.md |
+| 045 | AI対忽FX自動売買完全ガイド：MT4/MT5 EA × LLM連携の実情と比較 | ja | 未読 | #fx #llm-trading #web-signal | articles/2026-03-30_229_fx_ai_ea_mt4_mt5_llm_hybrid_guide_2026.md |
 | 046 | MT5 × LLM統合：低レイテンシWebhookアーキテクチャによるAI取引システム | en | 未読 | #llm-trading #implementation #fx #web-signal | articles/2026-03-30_237_mt5_llm_integration_webhook_trading_2026.md |
 | 047 | I Created an AI Trading Agent and Monitored Its Performance for 3 Months | en | 未読 | #llm-trading #multi-agent #quant #web-signal | articles/2026-04-01_248_ai_trading_agent_3months_experiment_quantitative.md |
 | 048 | Building an AI Trading Bot with Claude Code: 14 Sessions, 961 Tool Calls (n1n.ai) | en | 未読 | #llm-trading #implementation #multi-agent #web-signal | articles/2026-04-07_195_Claude_Code_Trading_Bot_961_Calls_Case_Study.md |
@@ -82,8 +82,8 @@
 | 060 | Comparing LLM-Based Trading Bots: AI Agents, Techniques, and Results (FlowHunt) | en | 未読 | #llm-trading #comparison #web-signal | articles/2026-04-12_015_Comparing_LLM_Trading_Bots_Comprehensive_FlowHunt.md |
 | 061 | Build an AI Quant Trading Bot: Backtest, Risk Rules, Live Execution 2026 (Markaicode) | en | 未読 | #quant #implementation #llm-trading #web-signal | articles/2026-04-12_016_Build_AI_Quant_Trading_Bot_Backtest_Risk_Markaicode.md |
 | 062 | AI-Based Hyperautomation Framework for Algorithmic Trading (Academic Paper, 2026) | en | 未読 | #research #ml #quant #web-signal | articles/2026-04-12_017_AI_Hyperautomation_Algorithmic_Trading_Academic.md |
-| 063 | 【2026年最新】AI対応FX自動売買ツール徹底比較｜MT4/MT5活用法（shadowdia） | ja | 未読 | #fx #ea #llm-trading #web-signal | articles/2026-04-13_018_FX_AI_EA_Autotrade_Guide_Shadowdia.md |
-| 064 | FXトレードAIマイメイト、レンジ相場最適化「リピートAI」を新実装 (CoinPost) | ja | 未読 | #fx #llm-trading #implementation #web-signal | articles/2026-04-14_009_FX_MyMate_RepeatAI_Range_Strategy_New_Feature.md |
+| 063 | 【2026年最新】AI対忽FX自動売買ツール徹底比較｜MT4/MT5活用法（shadowdia） | ja | 未読 | #fx #ea #llm-trading #web-signal | articles/2026-04-13_018_FX_AI_EA_Autotrade_Guide_Shadowdia.md |
+| 064 | FXトレードAIマイメイト、レンジ相場最適化「リピーAI」を新実装 (CoinPost) | ja | 未読 | #fx #llm-trading #implementation #web-signal | articles/2026-04-14_009_FX_MyMate_RepeatAI_Range_Strategy_New_Feature.md |
 | 065 | From Trading Bot to Trading Agent: How to Build an AI-based Investment System (Medium) | en | 未読 | #llm-trading #implementation #multi-agent #web-signal | articles/2026-04-14_010_From_Trading_Bot_to_Trading_Agent_LLM_Investment_System.md |
 | 066 | 2026年版 FXベストAIトレーディングエージェント — MT4/MT5統合比較ガイド (GPTrader) | en | 未読 | #fx #llm-trading #mt5 #implementation #web-signal | articles/2026-04-15_016_Best_AI_Trading_Agent_Forex_MT4_MT5_Integration_2026_GPTrader.md |
 | 067 | 5 Reasons AI-Powered EAs Outperform Traditional Automated Systems in 2026 (MQL5) | en | 未読 | #fx #ea #llm-trading #comparison #web-signal | articles/2026-04-18_017_AI_Powered_EAs_5_Reasons_Outperform_Traditional_MQL5.md |
@@ -91,11 +91,11 @@
 | 069 | MT5のEAとローカルAIモデルを接続 — 自己成長完結型トレードシステムへの実装実験（@panchan210） | ja | 未読 | #fx #ea #implementation #x-signal | articles/2026-04-22_026_X_panchan210_MT5_EA_Local_AI_Model_Integration.md |
 | 070 | Horizon — 自然言語で戦略記述→バックテスト→ブローカー接続AIアルゴ取引プラットフォーム（@sopersone） | en | 未読 | #fx #llm-trading #x-signal | articles/2026-04-22_027_X_sopersone_Horizon_AI_Algo_Trading_Platform.md |
 | 071 | TradingAgents v0.2.3 — マルチプロバイダーLLM（GPT-5.4/Claude 4.6/Gemini 3.1）・バックテスト精度向上 | en | 未読 | #llm-trading #multi-agent #implementation #web-signal | articles/2026-04-23_011_TradingAgents_v023_MultiProvider_LLM.md |
-| 072 | TradingAgents v0.2.4 — LangGraphチェックポイント・構造化出力エージェント・DeepSeek/Docker対応 | en | 未読 | #llm-trading #multi-agent #implementation #web-signal | articles/2026-04-27_005_TradingAgents_v024_LangGraph_Checkpoint_Docker.md |
-| 073 | MT5/NT8/TV対応22戦略 + Claude/ChatGPT/Codexエージェントプロンプト集 (ZenomTrader) | en | 未読 | #fx #mt5 #llm-trading #implementation #x-signal | articles/2026-04-27_017_X_ZenomTrader_MT5_NT8_22_Strategies_Claude_Prompts.md |
+| 072 | TradingAgents v0.2.4 — LangGraphチェックポイント・構造化出力エージェント・DeepSeek/Docker対忽 | en | 未読 | #llm-trading #multi-agent #implementation #web-signal | articles/2026-04-27_005_TradingAgents_v024_LangGraph_Checkpoint_Docker.md |
+| 073 | MT5/NT8/TV対兩22戦略 + Claude/ChatGPT/Codexエージェントプロンプト集 (ZenomTrader) | en | 未読 | #fx #mt5 #llm-trading #implementation #x-signal | articles/2026-04-27_017_X_ZenomTrader_MT5_NT8_22_Strategies_Claude_Prompts.md |
 | 074 | MT5全自動取引エージェント8ヶ月 — Claude Swarm + Obsidianで700%超リターン報告 | en | 未読 | #fx #mt5 #llm-trading #multi-agent #x-signal | articles/2026-04-27_018_X_danny_builder_MT5_Automated_Agent_Claude_Swarm_700pct.md |
-| 075 | ゴールドマンサックス: 600人のトレーダーを2人に削減したAI・アルゴ取引の歴史的事実 | ja | 未読 | #llm-trading #quant #x-signal | articles/2026-04-27_023_X_Dirg_rocketdyne_Goldman_Sachs_AI_Trader_Replacement.md |
-| 076 | The Rise of Open-Source Trading: Exploring TradingAgents v0.2.4（FranksWorld, 2026-05-01）— Structured-Output Agents・LangGraph checkpoint・DeepSeek/Qwen/GLM対応・53,000 stars | en | 未読 | #llm-trading #multi-agent #framework #web-signal | articles/2026-05-01_967_TradingAgents_Open_Source_Rise_FranksWorld.md |
+| 075 | ゴールドマンサックス: 600人のトレーダーを人に削減したAI・アルゴ取引の歴史的事実 | ja | 未読 | #llm-trading #quant #x-signal | articles/2026-04-27_023_X_Dirg_rocketdyne_Goldman_Sachs_AI_Trader_Replacement.md |
+| 076 | The Rise of Open-Source Trading: Exploring TradingAgents v0.2.4（FranksWorld, 2026-05-01）— Structured-Output Agents・LangGraph checkpoint・DeepSeek/Qwen/GLM対忽　53,000 stars | en | 未読 | #llm-trading #multi-agent #framework #web-signal | articles/2026-05-01_967_TradingAgents_Open_Source_Rise_FranksWorld.md |
 | 077 | MQL5 + LLM in 2026: The Real Architecture That Works — 4層アーキテクチャ・JSON Schemaバリデーション・信頼度スコアリング・EA/middleware/LLM責任分離 | en | 未読 | #fx #llm-trading #implementation #mt5 #web-signal | articles/2026-05-01_968_MQL5_LLM_Real_Architecture_2026.md |
 | 078 | Stumbled on an AI platform that shrinks algo-trading from "all day" to... | en | 未読 | #ai-trading #x-signal | articles/2026-04-29_1137_X_0xCristal_Stumbled_on_an_AI_platform_that_shrinks_.md |
 | 079 | 20260429 TRO TRADING   AI EVALUATED MY TRADING TODAY  via @YouTube  #T... | en | 未読 | #ai-trading #x-signal | articles/2026-04-29_1138_X_TheRumpledOne_20260429_TRO_TRADING_AI_EVALUATED_MY_TRA.md |
@@ -126,15 +126,15 @@
 | 103 | Forex trading demands discipline and tools. @FX_Capital3 focuses on  | en | 未読 | #ai-trading #x-signal | articles/2026-05-02_1217_X_lance_arlott_Forex_trading_demands_discipline_and_tools___FX_Ca.md |
 | 104 | 横浜のカフェで一息。僕のような普通のサラリーマンでも、AIと協力すればこんな強力なインフラが作れる。設定も1クリック起動バッチで簡単。ま | ja | 未読 | #ai-trading #x-signal | articles/2026-05-02_1218_X_ryooooochin888_横浜のカフェで一息。僕のような普通のサラリーマンでも、AIと協力すればこんな強力なインフラが作れる。.md |
 | 105 | 🚨刑事告発情報🚨 2024/8/29  管轄：高島平警察署 対象：S合同会社及び各収納代行会社 所在：東京都板橋区 罪名：特商法及び刑法 | ja | 未読 | #ai-trading #x-signal | articles/2026-05-02_1219_X_daichilawyer_刑事告発情報__2024_8_29__管轄：高島平警察署_対象：S合同会社及び各収納代行会社_所在.md |
-| 106 | @carverfomo ソース: @carverfomo 中国人開発者のAIエージェンシー運営事例。7体のAIエージェントでリード獲得→ | ja | 未読 | #ai-trading #x-signal | articles/2026-05-02_1220_X_latdayo_carverfomo_ソース___carverfomo_中国人開発者のAIエージェンシー運営事例。.md |
-| 107 | 【衝撃】 Bloomberg Terminalの無料版が オープンソースで出てきて★1.7万超え🔥  FinceptTerminal   | ja | 未読 | #ai-trading #x-signal | articles/2026-05-02_1221_X_opensourcelab9_【衝撃】_Bloomberg_Terminalの無料版が_オープンソースで出てきて_1_7万超え.md |
+| 106 | @carverfomo ソース: @carverfomo 中国人開発者のAIエージェンシー運営事例。0体のAIエージェントでリード獲得→ | ja | 未読 | #ai-trading #x-signal | articles/2026-05-02_1220_X_latdayo_carverfomo_ソース___carverfomo_中国人開発者のAIエージェンシー運営事例。.md |
+| 107 | 【衝撃】 Bloomberg Terminalの無料版が オープンソースで出てきて∆1.7万超え🔥  FinceptTerminal   | ja | 未読 | #ai-trading #x-signal | articles/2026-05-02_1221_X_opensourcelab9_【衝撃】_Bloomberg_Terminalの無料版が_オープンソースで出てきて_1_7万超え.md |
 | 108 | moomoo証券のAI機能では、自動売買やバックテストまで出来るそうで、試してみたい。  https://t.co/FzNoEOGgsx | ja | 未読 | #ai-trading #x-signal | articles/2026-05-02_1222_X_yasutaketin_moomoo証券のAI機能では、自動売買やバックテストまで出来るそうで、試してみたい。__https.md |
 | 109 | 先物取引や株式市場で危険なのは、間違いより「正しそうに見える思い込み」。直感とAI分析のズレを消さず、バイアス検知センサーとして記録する | ja | 未読 | #ai-trading #x-signal | articles/2026-05-02_1223_X_nob771951888_先物取引や株式市場で危険なのは、間違いより「正しそうに見える思い込み」。直感とAI分析のズレを消さず.md |
-| 110 | 長らくお待たせしているGPTトレード、AI相談型自動売買ストラテジー作成機能、β版最終テストが進行中です。初回は全ユーザーに無料でお使い | ja | 未読 | #ai-trading #x-signal | articles/2026-05-02_1224_X_hiropi_fx_長らくお待たせしているGPTトレード、AI相談型自動売買ストラテジー作成機能、β版最終テストが進行中.md |
+| 110 | 長らお待たせしているGPTトレード、AI相談型自動売買ストラテジー作成機能、β版最終テストが進行中です。初回は全ユーザーに無料でお使い | ja | 未読 | #ai-trading #x-signal | articles/2026-05-02_1224_X_hiropi_fx_長らお待たせしているGPTトレード、AI相談型自動売買ストラテジー作成機能、β版最終テストが進行中.md |
 | 111 | LLM Showdown: Which AI Powers the Best Python Algo Trading Bot in 20 | en | 未読 | #ai-trading #web-signal | articles/2026-05-02_1250_LLM_Showdown_Python_Algo_Trading_Bot_2026_QuantLabs.md |
 | 112 | TradingAgents v0.2.4: A Multi-Agent LLM Framework That Simulates an  | en | 未読 | #ai-trading #web-signal | articles/2026-05-02_1251_TradingAgents_v024_Multi_Agent_Trading_Firm_DEV.md |
 | 113 | TradingAgents: Multi-Agents LLM Financial Trading Framework (May 202 | en | 未読 | #ai-trading #web-signal | articles/2026-05-02_1252_TradingAgents_May2026_Advanced_Multi_Agent_AIToolly.md |
-| 114 | AI搭載スーパートレンドインジケーター：機械学習+MT5で全スタイル・全銘柄対応 | ja | 未読 | #ai-trading #x-signal | articles/2026-05-03_1261_AI_SuperTrend_ML_MT5_Indicator_JA.md |
+| 114 | AI搭載スーパートレンドインジケーター：機械学習+MT5で全スタイル・全銘柄対忽 | ja | 未読 | #ai-trading #x-signal | articles/2026-05-03_1261_AI_SuperTrend_ML_MT5_Indicator_JA.md |
 | 115 | AIコーディングでMQL5 MT5並列バックテスト＋結果自動回収＋ランキング化をほぼノーコードで実現 | ja | 未読 | #ai-trading #x-signal | articles/2026-05-03_1262_AI_Coding_MT5_Parallel_Backtest_Batch_Runner_JA.md |
 | 116 | TradingAgents: Multi-Agent LLM Financial Trading Framework (May 2026) | en | 未読 | #ai-trading #web-signal | articles/2026-05-03_1275_TradingAgents_New_May2026_AIToolly.md |
 | 117 | Claude CodeでMT5 EA作成: バックテストPF 0.73→1.83に改善 | ja | 未読 | #fx #implementation #x-signal | articles/2026-05-04_1309_Claude_Code_MT5_EA_PF073_to_183_ai_ojisan55.md |
@@ -156,10 +156,10 @@
 | 133 | MoneyFlare launched an AI-powered cryptocurrency auto-trading app that... | ja | 未読 | #ai-trading #x-signal | articles/2026-05-05_1375_X_bitbank_markets_MoneyFlare_launched_an_AI-powered_cryptocurrency_a.md |
 | 134 | Points to research examining legal responsibilities when algorithms an... | ja | 未読 | #ai-trading #x-signal | articles/2026-05-05_1376_X_a_t_mosphere_Points_to_research_examining_legal_responsibilitie.md |
 | 135 | Paris Trading Expo: AI vs プロのディスクリショナリートレーダー直接対決。AIが着実に追いついている | ja | 未読 | #ai-trading #x-signal #llm-trading | articles/2026-05-06_1442_X_BenSltn_Sholly_Pee1_I_actually_pitted_5_AIs_against.md |
-| 136 | AI trading agentがTrading SMART Benchmarkで80/100(Grade A)、172エントリー中54位 | ja | 未読 | #ai-trading #x-signal #llm-trading | articles/2026-05-06_1443_X_HumBle_j0e_My_AI_trading_agent_scored_80100_Grade_A_o.md |
+| 136 | AI trading agentがTrading SMART Benchmarkで 80/100(Grade A)、172エントリー中54位 | ja | 未読 | #ai-trading #x-signal #llm-trading | articles/2026-05-06_1443_X_HumBle_j0e_My_AI_trading_agent_scored_80100_Grade_A_o.md |
 | 137 | Polly Nulla: ローカルAI使用の自律型取引エージェントハーネス。マーケットスキャン→注文まで全自動 | ja | 未読 | #ai-trading #x-signal #llm-trading | articles/2026-05-06_1444_X_Parad0x_Labs_Yeah_Polly_Nulla_is_a_trading_agent_harness.md |
 | 138 | Sovereign V2.0: ローカルAIによるFXダッシュボード視覚的全解析（チャート・インジケーター・オーダーブック） | ja | 未読 | #ai-trading #x-signal #fx | articles/2026-05-06_1445_X_NexusAiCore_Sovereign_V20_analysing_a_Forex_Trading_Dash.md |
-| 139 | QuantDinger: 自己ホスト型AI量化システム（暗号/株/外貨・MT5対応・Docker Compose一発起動） | ja | 未読 | #ai-trading #x-signal #llm-trading | articles/2026-05-06_1446_X_davidtangX_68.md |
+| 139 | QuantDinger: 自己ホスト型AI量化システム（暗号/株/外貨・MT5対忽・Docker Compose一発起動） | ja | 未読 | #ai-trading #x-signal #llm-trading | articles/2026-05-06_1446_X_davidtangX_68.md |
 | 140 | MoneySkills: AI活用の暗号資産完全自動取引プラットフォームを発表 | ja | 未読 | #ai-trading #x-signal | articles/2026-05-06_1447_X_bitbank_markets_MoneySkillsAI暗号資産取引ロボ発表.md |
 | 141 | Goldman Sachs 2017年に600人→2人トレーダー。200人ITエンジニアによる自動売買AIに置換 | ja | 未読 | #ai-trading #x-signal #trend | articles/2026-05-06_1448_X_SakemotoMasao_ゴールドマンサックスには介入は押し目にしか見えないという事だな600人いたトレーダーは2.md |
 | 142 | TradingAgents-CN：中国語ユーザー向けマルチエージェント金融取引研究フレームワーク | en | 未読 | #ai-trading #web-signal | articles/2026-05-06_1467_WEB_TradingAgents-CN中国語ユーザー向けマルチエージェント金融取引研究フレームワーク.md |
@@ -169,7 +169,7 @@
 | 146 | Under the hood this is using the new XBT… | en | 未読 | #ai-trading #x-signal | articles/2026-05-07_1520_X_XBTFOREX_Under_the_hood_this_is_using_the_ne.md |
 | 147 | This isn't a fake "AI trading" demo or a… | en | 未読 | #ai-trading #x-signal | articles/2026-05-07_1521_X_XBTFOREX_This_isnt_a_fake_AI_trading_demo_or.md |
 | 148 | 現在ではClaudeとMT5の連携が可能になりましたが、過去データの検証や分析の… | ja | 未読 | #ai-trading #x-signal | articles/2026-05-07_1522_X_iidatchi_現在ではClaudeとMT5の連携が可能になりましたが過去データの検証.md |
-| 149 | 🚨捜しています🚨 | ja | 未読 | #ai-trading #x-signal | articles/2026-05-07_1523_X_daichilawyer_捜しています.md |
+| 149 | 🚨捗しています🚨 | ja | 未読 | #ai-trading #x-signal | articles/2026-05-07_1523_X_daichilawyer_捗しています.md |
 | 150 | 【FX】サイン用ツールをAIで"無料作成"する方法【ChatGPT/MT4・MT… | ja | 未読 | #ai-trading #x-signal | articles/2026-05-07_1524_X_mirai_koij1119_FXサイン用ツールをAIで無料作成する方法ChatGPTMT4MT5_.md |
 | 151 | How to Connect AI Agents to MetaTrader 5… | en | 未読 | #ai-trading #web-signal | articles/2026-05-07_1537_WEB_AI_Agents_MetaTrader5_via_MCP_MQL5_Article.md |
 | 152 | Build a 24/7 AI Forex Trading Bot with T… | en | 未読 | #ai-trading #web-signal | articles/2026-05-07_1538_WEB_Build_24h_AI_Forex_TradingBot_TradingAgents_VPS_Lightnode.md |
@@ -177,10 +177,25 @@
 | 154 | AIエージェントにFXの取引戦略を考えてもらった GMOインターネット | ja | 未読 | #ai-trading #web-signal | articles/2026-05-07_1540_WEB_AIエージェントにFX取引戦略を考えてもらった_GMO.md |
 | 155 | FX初心者がAI3ツールで学習速度3倍：ChatGPT+TradingView+… | ja | 未読 | #ai-trading #x-signal | articles/2026-05-08_1557_X_Dragonntsk_AI_FX_beginners_ChatGPT_TradingView.md |
 | 156 | MT5 + OpenClaw AIエージェント統合の設計問題：「何を見せるか」 | en | 未読 | #ai-trading #x-signal | articles/2026-05-08_1558_X_ycptech_MT5_OpenClaw_AI_agent_permissions.md |
-| 157 | QuantDinger: OSS AI Multi-Agent定量取引フレームワーク… | en | 未読 | #llm-trading #multi-agent #x-signal | articles/2026-05-09_1623_X_gaoren7716_QuantDinger__OSS_AI_Multi-Agent定量取引フレームワーク_(GitHub_⭐4k).md |
+| 157 | QuantDinger: OSS AI Multi-Agent定量取引フレームワーク… | en | 未読 | #llm-trading #multi-agent #x-signal | articles/2026-05-09_1623_X_gaoren7716_QuantDinger__OSS_AI_Multi-Agent定量取引フレームワーク_(GitHub_⭐5k).md |
 | 158 | Vibe-Trading: HKU 29エージェントAI取引ワークスペース (Git… | en | 未読 | #llm-trading #multi-agent #x-signal | articles/2026-05-09_1624_X_gaoren7716_Vibe-Trading__HKU_29エージェントAI取引ワークスペース_(GitHub_⭐6.2k).md |
 | 159 | FX: LLM + LightGBM並列AI自動取引システムの実装 | ja | 未読 | #fx #llm-trading #implementation #x-signal | articles/2026-05-09_1625_X_yusato102_FX__LLM_+_LightGBM並列AI自動取引システムの実装.md |
 | 160 | MT5 + Codex AI ローカル設定ガイド (Windows環境) | ja | 未読 | #fx #implementation #x-signal | articles/2026-05-09_1626_X_Taru_J8_MT5_+_Codex_AI_ローカル設定ガイド_(Windows環境).md |
 | 161 | Claude Code+MCP+OpenRouterによるAI取引自動化パイプライン | ja | 未読 | #llm-trading #implementation #x-signal | articles/2026-05-09_1627_X_LaboNft_Claude_Code+MCP+OpenRouterによるAI取引自動化パイプライン.md |
 | 162 | TeraWulf AI収益: Q1 QoQ +117%で$2100万達成 | en | 未読 | #quant #x-signal | articles/2026-05-09_1628_X_center_forex_TeraWulf_AI収益__Q1_QoQ_+117%で$2100万・電力収益も好調.md |
 | 163 | AriseAlpha: 無料AI Forexトレーディングボット公開 (2026年5… | en | 未読 | #fx #implementation #web-signal | articles/2026-05-09_1661_WEB_AriseAlpha_Introduces_Free_AI_Trading_Bot_for_Smarter_Automa.md |
+
+| 164 | TradingAgents: Multi-Agent LLM Financial Trad… | en | 未読 | #llm-trading #multi-agent #web-signal | articles/2026-05-10_1678_WEB_TradingAgents_Multi_Agent_LLM_Framework_AIToolly_May2026.md |
+| 165 | @Cantal_Capital Yes. CEO buying three times w… | en | 未読 | #x-signal | articles/2026-05-10_1733_X_TheStockUp_Cantal_Capital_Yes_CEO_buying_three_times_with_his.md |
+| 166 | Rocket Lab ($RKLB) is up 19.3%, or $15.20 to … | en | 未読 | #x-signal | articles/2026-05-10_1734_X_cammknows_Rocket_Lab_RKLB_is_up_19_3_or_15_20_to_93_78_RKL.md |
+| 167 | 5 Cheap Stocks Under $10 That Could Explode 🚀… | en | 未読 | #x-signal | articles/2026-05-10_1735_X_fair_value_calc_5_Cheap_Stocks_Under_10_That_Could_Explode_Next_AM.md |
+| 168 | 🚨 768% Growth and traders are starting to rea… | en | 未読 | #x-signal | articles/2026-05-10_1736_X_pipclubtrading_768_Growth_and_traders_are_starting_to_realize_why.md |
+| 169 | 最近はAIエージェント(Codex)に普段の開発作業をかなり任せています | ja | 未読 | #implementation #x-signal | articles/2026-05-10_1737_X_TokyoSystems_最近はAIエージェント_Codex_に普段の開発作業をかなり任せています.md |
+| 170 | 📈 Daily trade reports, AI insights &amp; live… | en | 未読 | #x-signal | articles/2026-05-10_1738_X_tradefusionai_Daily_trade_reports_AI_insights_amp_live_performan.md |
+| 171 | ゴールド（#XAUUSD）の日足です | ja | 未読 | #x-signal | articles/2026-05-10_1739_X_halelu_com_ゴールド_XAUUSD_の日足です.md |
+| 172 | 578 pages. 3 professional forex trading manua… | en | 未読 | #fx #x-signal | articles/2026-05-10_1740_X_barronqasemII_578_pages_3_professional_forex_trading_manuals_AI_.md |
+| 173 | MT5版【lucky式】天地爆速アイに嫅しいリアルな声が届きました！｜プロトレーダーｌｕｃｋｙ… | ja | 未読 | #fx #x-signal | articles/2026-05-10_1741_X_fx_fx93448259_MT5版_lucky式_天地爆速AIに嫅しいリアルな声が届きました_プロトレーダーｌｕｃｋｙ.md |
+| 174 | 昨日初めてcodexを使ってみました | ja | 未読 | #implementation #x-signal | articles/2026-05-10_1742_X_Taru_J8_昨日初めてcodexを使ってみました.md |
+| 175 | 29歳の元営業マンがAIエージェント6体で月4,600万円叩き出してる オクラホマの普通の… | ja | 未読 | #x-signal | articles/2026-05-10_1743_X_latdayo_29歳の元営業マンがAIエージェント6体で月4_600万円叩き出してる_オクラホマの普通の営業だった.md |
+| 176 | #ＣＧ 界では３０年以上前から、宮崎駿のようなイラストをアルゴリズムで描くことを夢見てきた… | ja | 未読 | #x-signal | articles/2026-05-10_1744_X_luxidea_ＣＧ_界では３０年以上前から_宮崎駿のようなイラストをアルゴリズムで描くことを夢見てきたのに_いずぁ0.md |
+| 177 | 今程度のハードウェアであっても、ASIと十二分に呼べる程度のAIは作れると思うんだよね | ja | 未読 | #x-signal | articles/2026-05-10_1745_X_koki_export_今程度のハードウェアであっても_ASIと十二分に呼べる程度のAIは作れると思うんだよね.md |
