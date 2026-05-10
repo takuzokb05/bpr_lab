@@ -5,7 +5,7 @@
 
 | メタ | 値 |
 |---|---|
-| **最終更新** | 2026-05-08 (Step C P0-2 完了反映) |
+| **最終更新** | 2026-05-10 (Step C 新 P0 v2 検証完了反映) |
 | **次回更新予定** | 2026-05-15（7日後）または重要変更時 |
 | **更新方法** | `python scripts/update_status.py [--with-vps]` / 手動編集（緊急時） |
 
@@ -80,23 +80,29 @@
 | **SPEC v2 § 2-1 - 多重補正** (Bonferroni N=606 / Romano-Wolf 12) | ✅ Step C P0-3 完了 (AAA 5 / AA 2 / A 3 / 🔴 2) |
 | **SPEC v2 § 2-1 - rolling WFA Mode A** (閾値固定) | ✅ Step C P1-1 完了 (Mode A 5/5 が 9個) |
 | **SPEC v2 § 2-1 - rolling WFA Mode B** (閾値再選定) | ✅ Step C P1-1b 完了 (重大発見: 11/12 が Mode A 値と不一致) |
-| **SPEC v2 § 2-1 - 指標–リターン単峰性 / グリッド拡張 / CHOP <25 再検証** | ⬜ Step C 新 P0 (P1-1b 発見受け) |
+| **SPEC v2 § 2-1 - 新 P0 Q1 (単峰性) v1+v2** | ✅ 完了 (50分位+bootstrap CI+dip+Spearman で 11/12 弱U字成分支持) |
+| **SPEC v2 § 2-1 - 新 P0 Q2 (H1 グリッド拡張) v1+v2** | ✅ 完了 (TR bootstrap CI / low感度) — 隣接倍率 CI 重なり多数 |
+| **SPEC v2 § 2-1 - Q1↔Q2 介入実験** (Mode B v2: low 群固定方式) | ✅ 完了 (M15 YZ_vol で CV 0.5-0.84→0.06-0.26、真因部分立証) |
+| **SPEC v2 § 2-1 - 実用性検証 WFA** (固定閾値 ×{1.0,1.5,2.0,2.5}) | ✅ 完了 (EUR_USD ×2.0 は usable 1/5 で崩壊確認) |
+| **SPEC v2 § 2-1 - Q3 (CHOP <25 多重補正)** | ⬜ 残課題 (次回優先順 1) |
+| **SPEC v2 § 2-1 - HYPOTHESES_2-1.md 再起草判断** | ⬜ 庭師判断待ち |
 | **SPEC v2 § 2-1 - PF 置換 + BCa CI / HMM / 直交性** | ⬜ 上記完了まで保留 |
 | **SPEC v2 § 2-2〜5-2 (他14スキーム)** | ⬜ 未着手 |
 | **本番投入** | 🔴 禁止 (Step C 完了まで) |
 
-**現時点の重要発見 (P1-1b 完了時点で大幅更新)**:
-- **🚨 物語破棄オプション条項 発火条件成立** — ★☆☆ が 5件 (H2, H3, H6, H7, H8)。HYPOTHESES_2-1.md は再起草対象
-- **Mode B (閾値再選定) で 11/12 が Mode A 値と不一致** — Mode A の閾値はほぼ全て最適ではない
-- **真に頑健 (CV<0.1) なのは 2 件のみ**: EUR_USD/GBP_JPY M15 CHOP <25 (ただし Mode A の <30 ではない)
-- **M15 YZ_vol が 10/90%ile に二極化** — 指標–リターン関係が単峰でない可能性、H2 (直交分解) の前提揺らぐ
-- **H1 YZ_vol 3ペアがグリッド上限選定** — SPEC 値の +50% が良い、グリッド再設計必要
-- **GBP_JPY D1 YZ_vol が Mode A 5/5 → Mode B n_pass=0/5 で完全崩壊** — 典型的なカーブフィット
-- **確定する判定**: EUR_USD D1 YZ_vol 棄却 / GBP_JPY D1 YZ_vol 棄却 (Mode B 完全崩壊)
-- **教訓**: ねじれを都合よく片付けない、追加検証で本質を解明する → `feedback_anomaly_is_signal_not_conclusion.md`
+**現時点の重要発見 (新 P0 v2 検証完了で大幅更新)**:
+- **🚨 物語破棄オプション条項 発火条件 依然成立** — ★☆☆ が 5件 (H2, H3, H6, H7, H8)。ただし v2 検証で「破棄」より「個別仮説更新」が筋
+- **指標–リターン関係は単峰でなく「単調 + 弱U字」の複合形状** — Q1 v2 で 11/12 が二次係数 a の 95%CI 完全正
+- **M15 YZ_vol の Mode B 二極化の主因 = TR 評価式 low 群感度 (M15 のみ立証)** — 介入実験で CV 0.84→0.06 等の劇的改善
+- **EUR_USD H1 YZ_vol ×2.0 は実用 WFA で完全崩壊** (usable 1/5) — Q2 v1 の「採用候補」表現は撤回
+- **真に実用可能な閾値**: USD_JPY ×1.0, EUR_USD ×1.0, GBP_JPY ×1.0-1.5 (×2.0 は条件付き)
+- **H4 (ペア別閾値) は強化** — EUR_USD と他 2 ペアの実用閾値帯が決定的に異なる
+- **D1 層は形状判別困難** — Q1 v2 で D1 全件 a の CI ゼロ跨ぎ
 - σ_TR 仮定値の試算は誤誘導 → `feedback_assumption_vs_measurement.md`
+- ねじれを都合よく片付けない → `feedback_anomaly_is_signal_not_conclusion.md`
+- 介入実験なしの真因主張は仮説止まり (新教訓) / 採用候補は実用 WFA を経てから (新教訓)
 
-詳細: `memory/project_fx_spec_v2_verification.md` / `docs/vision/HYPOTHESES_2-1.md` / `docs/vision/research/`
+詳細: `docs/vision/research/STEP_C_NEW_P0_VERIFIED_SUMMARY.md` (v2 統合) / `memory/project_fx_spec_v2_verification.md` / `docs/vision/HYPOTHESES_2-1.md`
 
 ---
 

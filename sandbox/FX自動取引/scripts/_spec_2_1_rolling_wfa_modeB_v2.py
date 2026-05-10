@@ -1,44 +1,38 @@
-"""SPEC v2 - 2-1: Mode B 閾値再選定 WFA (Step C P1-1b)
+"""SPEC v2 - 2-1: Mode B 閾値再選定 WFA v2 — Q1↔Q2 論理断絶を塞ぐ介入実験
 
-各 fold IS で最良閾値を再選定し、fold 間ドリフトを測定。
-P1-1 Mode A (閾値固定) で生じた複数のねじれの本質に接近する。
+## 背景
+P1-1b (Mode B v1) で 12 中 11 の閾値が Mode A 値と不一致 → 物語破棄条項発火。
+Q1 v1 で「TR 評価式 (旧式) の low 群サイズ感度が真因」と仮説立てたが、
+これは介入実験で検証していなかった (analyst レビューが指摘した論理断絶)。
 
-## 検証する具体的な問い
-- A クラス 3閾値 (Bonferroni 棄却 / WFA 5/5) — fold 間で同じ閾値が選ばれるか?
-- EUR_USD M15 CHOP (P0-3🔴 / WFA 5/5) — 最良閾値が <30 で安定すれば「偶然連続説」を一部排除
-- EUR_USD H1 fold 3 クラッシュ — fold 3 IS で別の最良閾値が出るか? = 閾値不適合説の検証
-- D1 USD/GBP (Bonferroni 棄却 / WFA 5/5) — fold 間ドリフトの大小
+## 介入の内容
+旧 TR (Mode B v1):
+    high = (ind > threshold), low = (ind <= threshold)
+    TR_old = median(|ret|_high) / median(|ret|_low)
+    → threshold で low 群サイズと内容が変動 → サンプル感度問題が発生
 
-## fold 設計
-P1-1 Mode A と同じ anchored expanding 5-fold:
-- fold k: IS [0, k/6], OOS [k/6, (k+1)/6], k=1..5
+新 TR (Mode B v2 = Q2 で採用した方式):
+    high = (ind > threshold)
+    low  = 全分布の 25-50%ile 帯 (threshold によらず固定)
+    TR_new = median(|ret|_high) / median(|ret|_low_fixed)
 
-## 各 fold での閾値再選定
-1. IS 区間で指標 (YZ_vol または CHOP) を計算
-2. 候補グリッド全体で IS_TR を計測
-3. n_high >= MIN_SAMPLE_IS の制約下で **IS_TR 最大の閾値**を「fold k の最良閾値」とする
-4. その最良閾値を OOS 区間で評価 → OOS_TR
+注意: threshold が 25%ile 以下になると high ⊃ low となり TR が 1 に近づく
+(これは threshold を低く取ることへの自然なペナルティ — 二極化抑制効果)。
 
-## 候補グリッド
-- YZ_vol (percentile-based): {10, 20, 30, 40, 50, 60, 70, 80, 90}
-- YZ_vol (abs-based, H1): SPEC値 を中心に対数等間隔の 9点 (例: 0.0010 ~ 0.0030)
-- CHOP (abs-based): {25, 28, 30, 33, 35, 38, 40, 45, 50}
-
-## 集計指標
-各閾値スペックについて:
-- 各 fold の最良閾値 (絶対値 or percentile)
-- 各 fold の IS_TR / OOS_TR / n_high
-- 閾値 CV = std / mean — **fold 間ドリフトの指標**
-- 全 fold で同じ閾値が選ばれた率
-- Mode A 固定値からの乖離 (再選定閾値 vs 固定閾値)
-
-## ドリフト判定
-- 閾値 CV < 0.1 → **強い頑健性** (Mode A と Mode B でほぼ一致、ねじれは別要因)
-- 0.1 ≤ CV < 0.3 → 中程度ドリフト
-- CV >= 0.3 → **カーブフィット疑い** (時期依存で「最良」が変動)
+## 検定する論理
+- Mode B v1 で観察した「閾値が 10%ile / 90%ile に二極化」現象が
+  Mode B v2 (low 群固定) で **解消** するか?
+  - 解消する → TR 評価式の low 群感度が真因確定 (Q1 仮説支持)
+  - 解消しない → 別の真因がある (例: Q1 v2 で示唆された U字成分による低ボラ側の真信号)
+- Mode A 値との一致率が改善するか?
+- 閾値 CV (時期間ドリフト) が小さくなるか?
 
 ## 出力
-- data/spec_2_1_rolling_wfa_modeB.json
+- data/spec_2_1_rolling_wfa_modeB_v2.json
+- 標準出力: v1 vs v2 の対照表
+
+## 使用例
+  python scripts/_spec_2_1_rolling_wfa_modeB_v2.py
 """
 from __future__ import annotations
 
@@ -61,26 +55,23 @@ import pandas_ta as ta
 ROOT = Path(__file__).resolve().parent.parent
 
 logging.basicConfig(level=logging.WARNING)
-log = logging.getLogger("spec_2_1_rolling_wfa_modeB")
+log = logging.getLogger("spec_2_1_rolling_wfa_modeB_v2")
 log.setLevel(logging.INFO)
 
 
 # ============================================================
-# 設定
+# 設定 (Mode B v1 と同じ)
 # ============================================================
 LOOKAHEAD = {"M15": 24, "H1": 6, "D1": 5}
 N_FOLDS = 5
 MIN_SAMPLE_IS = 50
-MIN_SAMPLE_OOS = 30  # OOS は IS より緩く
+MIN_SAMPLE_OOS = 30
 
-# 候補グリッド
 YZ_PCT_GRID = [10, 20, 30, 40, 50, 60, 70, 80, 90]
 CHOP_ABS_GRID = [25, 28, 30, 33, 35, 38, 40, 45, 50]
-# H1 YZ_vol abs グリッドは SPEC 値ごとに対数等間隔で再構築 (run 内で生成)
 
+LOW_PCT_RANGE = (25, 50)  # 介入: low 群を固定
 
-# 採用済み閾値スペック (P0-3 と同じ + Mode A 採用値)
-# (pair, tf, indicator, length/window, comparison, mode_a_threshold_value, threshold_kind, years, p0_3_class)
 ADOPTED_SPECS = [
     ("USD_JPY", "M15", "YZ_vol", 14, "gt", 30, "pct", 2, "AA"),
     ("EUR_USD", "M15", "YZ_vol", 14, "gt", 80, "pct", 2, "AAA"),
@@ -98,7 +89,7 @@ ADOPTED_SPECS = [
 
 
 # ============================================================
-# 指標計算 (P1-1 と同じ)
+# 指標計算
 # ============================================================
 def calc_yang_zhang(df: pd.DataFrame, window: int) -> pd.Series:
     o, h, l, c = df["open"], df["high"], df["low"], df["close"]
@@ -132,30 +123,7 @@ def add_returns(df: pd.DataFrame, lookahead: int) -> pd.DataFrame:
     return out
 
 
-def compute_tr(df: pd.DataFrame, threshold: float, comparison: str) -> dict:
-    """df は ind, future_return 列を含む (NaN 除外済み前提)"""
-    if comparison == "gt":
-        mask_high = df["ind"] > threshold
-    else:
-        mask_high = df["ind"] < threshold
-
-    n_high = int(mask_high.sum())
-    n_low = int((~mask_high).sum())
-    if n_high == 0 or n_low == 0:
-        return {"n_high": n_high, "tr": None}
-
-    median_high = float(np.median(np.abs(df.loc[mask_high, "future_return"].values)))
-    median_low = float(np.median(np.abs(df.loc[~mask_high, "future_return"].values)))
-    if median_low <= 0:
-        return {"n_high": n_high, "tr": None}
-    return {"n_high": n_high, "tr": median_high / median_low}
-
-
 def make_abs_grid(center: float, n_points: int = 9, span_factor: float = 0.5) -> list[float]:
-    """中心値の周りに対数等間隔のグリッドを生成。
-    span_factor=0.5 なら center * 0.5 〜 center * 1.5 の範囲 (実質的には対数で均等)。
-    n_points は奇数推奨 (中心値が含まれる)。
-    """
     log_center = np.log(center)
     half_span = np.log(1 + span_factor)
     log_grid = np.linspace(log_center - half_span, log_center + half_span, n_points)
@@ -163,9 +131,48 @@ def make_abs_grid(center: float, n_points: int = 9, span_factor: float = 0.5) ->
 
 
 # ============================================================
-# Mode B WFA
+# 介入: TR 評価式を low 群固定方式に変更
 # ============================================================
-def run_modeB_wfa(
+def compute_tr_fixed_low(
+    df: pd.DataFrame,  # ind, abs_return 列を含む (NaN 除外済み前提)
+    threshold: float,
+    comparison: str,
+    low_pct_range: tuple[float, float],
+) -> dict:
+    """high: comparison & threshold の関係 / low: 固定 percentile 帯 (25-50%ile)"""
+    if comparison == "gt":
+        mask_high = df["ind"] > threshold
+    else:  # lt
+        mask_high = df["ind"] < threshold
+
+    low_lo, low_hi = low_pct_range
+    low_v_lo = float(np.percentile(df["ind"].values, low_lo))
+    low_v_hi = float(np.percentile(df["ind"].values, low_hi))
+    mask_low = (df["ind"] >= low_v_lo) & (df["ind"] <= low_v_hi)
+
+    n_high = int(mask_high.sum())
+    n_low = int(mask_low.sum())
+    if n_high == 0 or n_low == 0:
+        return {"n_high": n_high, "n_low": n_low, "tr": None,
+                "low_range": [low_v_lo, low_v_hi]}
+
+    median_high = float(np.median(np.abs(df.loc[mask_high, "abs_return"].values)))
+    median_low = float(np.median(np.abs(df.loc[mask_low, "abs_return"].values)))
+    if median_low <= 0:
+        return {"n_high": n_high, "n_low": n_low, "tr": None,
+                "low_range": [low_v_lo, low_v_hi]}
+    return {
+        "n_high": n_high, "n_low": n_low,
+        "median_high": median_high, "median_low": median_low,
+        "tr": median_high / median_low,
+        "low_range": [low_v_lo, low_v_hi],
+    }
+
+
+# ============================================================
+# Mode B v2 WFA
+# ============================================================
+def run_modeB_v2_wfa(
     pair: str, tf: str, indicator_name: str, param: int,
     comparison: str, mode_a_threshold: float, threshold_kind: str, years: int,
 ) -> dict:
@@ -183,15 +190,16 @@ def run_modeB_wfa(
 
     df_ret = add_returns(df, LOOKAHEAD[tf])
     aligned = pd.concat([df_ret[["future_return"]], indicator.rename("ind")], axis=1).dropna()
+    aligned = aligned.copy()
+    aligned["abs_return"] = aligned["future_return"].abs()
 
     n = len(aligned)
     fold_size = n // (N_FOLDS + 1)
 
-    # 候補グリッド準備
     if indicator_name == "YZ_vol":
         if threshold_kind == "pct":
             grid_specs = [(p, "pct") for p in YZ_PCT_GRID]
-        else:  # abs (H1)
+        else:
             grid_specs = [(v, "abs") for v in make_abs_grid(mode_a_threshold, 9, 0.5)]
     elif indicator_name == "CHOP":
         grid_specs = [(v, "abs") for v in CHOP_ABS_GRID]
@@ -207,7 +215,6 @@ def run_modeB_wfa(
             fold_results.append({"fold": k, "error": "empty"})
             continue
 
-        # 各候補で IS_TR を計測 → 最良閾値を選定
         best = None
         all_eval = []
         for grid_val, grid_kind in grid_specs:
@@ -216,11 +223,12 @@ def run_modeB_wfa(
             else:
                 threshold = float(grid_val)
 
-            is_eval = compute_tr(is_df, threshold, comparison)
+            is_eval = compute_tr_fixed_low(is_df, threshold, comparison, LOW_PCT_RANGE)
             all_eval.append({
                 "grid_value": grid_val, "grid_kind": grid_kind,
                 "threshold": threshold,
-                "is_n_high": is_eval["n_high"], "is_tr": is_eval["tr"],
+                "is_n_high": is_eval["n_high"], "is_n_low": is_eval["n_low"],
+                "is_tr": is_eval["tr"],
             })
 
             if is_eval["tr"] is None or is_eval["n_high"] < MIN_SAMPLE_IS:
@@ -229,15 +237,15 @@ def run_modeB_wfa(
                 best = {
                     "grid_value": grid_val, "grid_kind": grid_kind,
                     "threshold": threshold,
-                    "is_n_high": is_eval["n_high"], "is_tr": is_eval["tr"],
+                    "is_n_high": is_eval["n_high"], "is_n_low": is_eval["n_low"],
+                    "is_tr": is_eval["tr"],
                 }
 
         if best is None:
             fold_results.append({"fold": k, "error": "no IS candidate meets criteria"})
             continue
 
-        # 最良閾値で OOS を評価
-        oos_eval = compute_tr(oos_df, best["threshold"], comparison)
+        oos_eval = compute_tr_fixed_low(oos_df, best["threshold"], comparison, LOW_PCT_RANGE)
         fold_results.append({
             "fold": k,
             "is_period": [str(is_df.index.min()), str(is_df.index.max())],
@@ -246,13 +254,14 @@ def run_modeB_wfa(
             "best_grid_kind": best["grid_kind"],
             "best_threshold": best["threshold"],
             "is_n_high": best["is_n_high"],
+            "is_n_low": best["is_n_low"],
             "is_tr": best["is_tr"],
             "oos_n_high": oos_eval["n_high"],
+            "oos_n_low": oos_eval["n_low"],
             "oos_tr": oos_eval["tr"],
             "all_eval": all_eval,
         })
 
-    # 集計: fold 間ドリフト
     valid_folds = [f for f in fold_results if "error" not in f]
     if not valid_folds:
         return {"error": "no valid folds"}
@@ -268,7 +277,6 @@ def run_modeB_wfa(
 
     n_pass_oos = sum(1 for tr in oos_trs if tr > 1.0)
 
-    # ドリフト判定
     if threshold_cv is not None:
         if threshold_cv < 0.1:
             drift_judgment = "🟢 強い頑健性 (CV<0.1)"
@@ -279,7 +287,6 @@ def run_modeB_wfa(
     else:
         drift_judgment = "計算不能"
 
-    # Mode A 固定値との乖離 — H1 abs グリッドでは float 精度誤差を考慮し近似一致で判定
     def _approx_match(gv: float, ref: float) -> bool:
         if ref == 0:
             return gv == 0
@@ -287,6 +294,22 @@ def run_modeB_wfa(
 
     mode_a_in_modeB = sum(1 for gv in grid_values if _approx_match(gv, mode_a_threshold))
     mode_a_match_rate = mode_a_in_modeB / len(valid_folds)
+
+    # 二極化指標: 選択された percentile (or abs を percentile 換算) の標準偏差 / 中央性
+    if threshold_kind == "pct":
+        # percentile グリッドなので grid_values が直接 percentile
+        pcts = grid_values
+    else:
+        # abs グリッドの場合、それぞれの threshold が分布上の何 percentile か算出
+        pcts = []
+        for f in valid_folds:
+            pct_in_dist = float((aligned["ind"] <= f["best_threshold"]).mean() * 100)
+            pcts.append(pct_in_dist)
+
+    bipolarization_score = 0.0
+    if len(pcts) > 0:
+        # 二極化: |選択 - 50| の平均 (端寄りなら高い)
+        bipolarization_score = float(np.mean([abs(p - 50) for p in pcts]))
 
     return {
         "pair": pair, "tf": tf, "indicator": indicator_name,
@@ -296,6 +319,7 @@ def run_modeB_wfa(
         "fold_results": fold_results,
         "best_grid_values_per_fold": grid_values,
         "thresholds_per_fold": thresholds,
+        "selected_percentiles": pcts,
         "threshold_mean": threshold_mean,
         "threshold_std": threshold_std,
         "threshold_cv": threshold_cv,
@@ -307,6 +331,7 @@ def run_modeB_wfa(
         "n_total_folds": len(valid_folds),
         "drift_judgment": drift_judgment,
         "mode_a_match_rate": mode_a_match_rate,
+        "bipolarization_score": bipolarization_score,
     }
 
 
@@ -318,68 +343,84 @@ def main():
     args = parser.parse_args()
 
     print(f"\n{'=' * 130}")
-    print(f"SPEC v2 - 2-1 Mode B 閾値再選定 WFA (Step C P1-1b)")
-    print(f"  N_FOLDS = {N_FOLDS} (anchored expanding)")
-    print(f"  MIN_SAMPLE_IS = {MIN_SAMPLE_IS}")
-    print(f"  YZ_PCT_GRID = {YZ_PCT_GRID}")
-    print(f"  CHOP_ABS_GRID = {CHOP_ABS_GRID}")
-    print(f"  H1 YZ_vol abs グリッド: SPEC値の対数等間隔 9点 (±50%)")
+    print(f"SPEC v2 - 2-1 Mode B v2 介入実験 (low 群固定方式 25-50%ile)")
+    print(f"  N_FOLDS = {N_FOLDS}, MIN_SAMPLE_IS = {MIN_SAMPLE_IS}")
+    print(f"  LOW_PCT_RANGE = {LOW_PCT_RANGE} (旧 v1 は threshold 連動)")
     print(f"  対象: 採用済み {len(ADOPTED_SPECS)} 閾値")
     print(f"{'=' * 130}")
+
+    # v1 結果読み込み (比較用)
+    v1_path = ROOT / "data" / "spec_2_1_rolling_wfa_modeB.json"
+    v1_data = {}
+    if v1_path.exists():
+        v1_results = json.loads(v1_path.read_text(encoding="utf-8"))
+        for r in v1_results:
+            key = (r["pair"], r["tf"], r["indicator"])
+            v1_data[key] = r
 
     results = []
     for spec in ADOPTED_SPECS:
         pair, tf, ind_name, param, comp, mode_a_thr, thr_kind, years, p0_3_class = spec
-        print(f"\n--- {pair} / {tf} / {ind_name}({param}) {comp} (Mode A: {mode_a_thr}{thr_kind}, P0-3 {p0_3_class}) ---")
-        r = run_modeB_wfa(pair, tf, ind_name, param, comp, mode_a_thr, thr_kind, years)
+        print(f"\n--- {pair} / {tf} / {ind_name}({param}) {comp} (Mode A: {mode_a_thr}{thr_kind}) ---")
+        r = run_modeB_v2_wfa(pair, tf, ind_name, param, comp, mode_a_thr, thr_kind, years)
         if "error" in r:
             print(f"  ERROR: {r['error']}")
             continue
         r["p0_3_class"] = p0_3_class
         results.append(r)
 
-        # fold ごとの最良閾値を表示
-        print(f"  {'fold':<5} {'best_grid':>10} {'threshold':>12} {'IS_n':>6} {'IS_TR':>7} {'OOS_n':>7} {'OOS_TR':>7}")
-        for f in r["fold_results"]:
-            if "error" in f:
-                print(f"  {f['fold']:<5}  ERROR: {f['error']}")
-                continue
-            grid_disp = f"{f['best_grid_value']}{f['best_grid_kind']}"
-            thr_s = f"{f['best_threshold']:.5f}"
-            is_tr_s = f"{f['is_tr']:.3f}" if f["is_tr"] is not None else "  -"
-            oos_tr_s = f"{f['oos_tr']:.3f}" if f["oos_tr"] is not None else "  -"
-            mark = " ✓" if (f["oos_tr"] is not None and f["oos_tr"] > 1.0) else " ✗"
-            print(f"  {f['fold']:<5} {grid_disp:>10} {thr_s:>12} {f['is_n_high']:>6} "
-                  f"{is_tr_s:>7} {f['oos_n_high']:>7} {oos_tr_s:>7}{mark}")
+        # v1 との比較表示
+        v1 = v1_data.get((pair, tf, ind_name), {})
 
-        # 集計
+        print(f"  v2 best_grid_values: {r['best_grid_values_per_fold']}")
+        if v1:
+            print(f"  v1 best_grid_values: {v1.get('best_grid_values_per_fold', [])}")
+
         cv_s = f"{r['threshold_cv']:.3f}" if r['threshold_cv'] is not None else "-"
+        v1_cv = v1.get('threshold_cv')
+        v1_cv_s = f"{v1_cv:.3f}" if v1_cv is not None else "-"
+
         oos_mean_s = f"{r['oos_tr_mean']:.3f}" if r['oos_tr_mean'] is not None else "-"
-        print(f"  集計: 閾値 mean={r['threshold_mean']:.5f}, std={r['threshold_std']:.5f}, CV={cv_s}")
-        print(f"        OOS_TR mean={oos_mean_s}, n_pass={r['n_pass_oos']}/{r['n_total_folds']}")
-        print(f"        Mode A 値との一致率: {r['mode_a_match_rate']*100:.0f}% ({sum(1 for gv in r['best_grid_values_per_fold'] if gv == r['mode_a_threshold'])}/{r['n_total_folds']})")
-        print(f"        ドリフト判定: {r['drift_judgment']}")
+        v1_oos = v1.get('oos_tr_mean')
+        v1_oos_s = f"{v1_oos:.3f}" if v1_oos is not None else "-"
 
-    # ============================================================
-    # サマリ
-    # ============================================================
-    print(f"\n{'=' * 130}")
-    print(f"Mode B WFA サマリ (P0-3 クラス × 閾値ドリフト × OOS 通過率)")
-    print(f"{'=' * 130}")
-    print(f"{'Pair':<8} {'TF':<5} {'指標':<8} {'Mode A':<10} {'P0-3':<6} "
-          f"{'閾値CV':>7} {'IS_TR平均':>9} {'OOS_TR平均':>11} {'n_pass':>8} {'Mode一致':>9} {'ドリフト':<25}")
-    print("-" * 130)
+        print(f"  CV (v2/v1):           {cv_s} / {v1_cv_s}")
+        print(f"  OOS_TR mean (v2/v1):  {oos_mean_s} / {v1_oos_s}")
+        print(f"  n_pass (v2/v1):       {r['n_pass_oos']}/{r['n_total_folds']} / "
+              f"{v1.get('n_pass_oos', '?')}/{v1.get('n_total_folds', '?')}")
+        print(f"  Mode A 一致率 (v2/v1): {r['mode_a_match_rate']*100:.0f}% / "
+              f"{v1.get('mode_a_match_rate', 0)*100:.0f}%")
+        print(f"  二極化指標 (v2):     {r['bipolarization_score']:.1f} (0=完全中央 / 50=完全端)")
+        print(f"  ドリフト判定 (v2):   {r['drift_judgment']}")
+
+    # サマリ: v1 vs v2 対照
+    print(f"\n{'=' * 140}")
+    print(f"Mode B v1 vs v2 対照 (介入実験)")
+    print(f"{'=' * 140}")
+    print(f"{'Pair':<8} {'TF':<5} {'指標':<8} "
+          f"{'v1 CV':>7} {'v2 CV':>7} "
+          f"{'v1 一致':>7} {'v2 一致':>7} "
+          f"{'v1 npass':>9} {'v2 npass':>9} "
+          f"{'v2 二極化':>9}")
+    print("-" * 140)
     for r in results:
-        mode_a_disp = f"{r['mode_a_threshold']}{r['mode_a_threshold_kind']}"
-        cv_s = f"{r['threshold_cv']:.3f}" if r['threshold_cv'] is not None else "-"
-        is_tr_s = f"{r['is_tr_mean']:.3f}"
-        oos_tr_s = f"{r['oos_tr_mean']:.3f}" if r['oos_tr_mean'] is not None else "-"
-        match_s = f"{r['mode_a_match_rate']*100:.0f}%"
-        print(f"{r['pair']:<8} {r['tf']:<5} {r['indicator']:<8} {mode_a_disp:<10} {r['p0_3_class']:<6} "
-              f"{cv_s:>7} {is_tr_s:>9} {oos_tr_s:>11} {r['n_pass_oos']}/{r['n_total_folds']:<6} "
-              f"{match_s:>9} {r['drift_judgment']:<25}")
+        v1 = v1_data.get((r["pair"], r["tf"], r["indicator"]), {})
+        v1_cv = v1.get('threshold_cv')
+        v1_cv_s = f"{v1_cv:.3f}" if v1_cv is not None else "-"
+        v2_cv_s = f"{r['threshold_cv']:.3f}" if r['threshold_cv'] is not None else "-"
+        v1_match = f"{v1.get('mode_a_match_rate', 0)*100:.0f}%"
+        v2_match = f"{r['mode_a_match_rate']*100:.0f}%"
+        v1_npass = f"{v1.get('n_pass_oos', '?')}/{v1.get('n_total_folds', '?')}"
+        v2_npass = f"{r['n_pass_oos']}/{r['n_total_folds']}"
+        bipolar = f"{r['bipolarization_score']:.1f}"
 
-    out_json = ROOT / "data" / "spec_2_1_rolling_wfa_modeB.json"
+        print(f"{r['pair']:<8} {r['tf']:<5} {r['indicator']:<8} "
+              f"{v1_cv_s:>7} {v2_cv_s:>7} "
+              f"{v1_match:>7} {v2_match:>7} "
+              f"{v1_npass:>9} {v2_npass:>9} "
+              f"{bipolar:>9}")
+
+    out_json = ROOT / "data" / "spec_2_1_rolling_wfa_modeB_v2.json"
     out_json.write_text(json.dumps(results, indent=2, default=str), encoding="utf-8")
     print(f"\n[saved] {out_json}")
 

@@ -220,29 +220,84 @@
 
 **HYPOTHESES_2-1.md は再起草対象**。SPEC_v2.md § 2-1 の数値もすべて再検証必要 (Mode B グリッド拡張・単峰性検証込み)。
 
-#### Step C 残作業の優先度組み換え (P1-1b 後)
+#### Step C 残作業の優先度組み換え (P1-1b 後) — ✅ 全項目完了 (2026-05-10)
 
-新優先 P0:
-- **指標–リターン単峰性検証**: M15 YZ_vol の値域別 future_return 中央値曲線
-- **H1 YZ_vol グリッド拡張**: SPEC × {1.5, 2.0, 2.5, 3.0, 4.0} で再検証
-- **CHOP <25 の P0-3 同等再検証**: 多重補正下で採用可能か
+新優先 P0 (実施済):
+- ✅ **指標–リターン単峰性検証 v2** (Q1 v2): 50 分位 + bootstrap CI + dip test + Spearman → 11/12 で弱U字成分支持、「単純単峰」否定
+- ✅ **H1 YZ_vol グリッド拡張 v2** (Q2 v2): SPEC × 2.0 がピーク (USD/EUR), GBP は ×3.0、ただし TR 95%CI 重なり多数で統計的差不明確
+- ✅ **CHOP <25 の P0-3 同等再検証** (P1-A): 15-family Romano-Wolf で **GBP_JPY のみ p=0.0068 で生存**、USD/EUR は棄却
+- ✅ **介入実験 (Mode B v2)**: low 群固定方式で M15 YZ_vol の二極化解消 → 真因仮説部分立証
+- ✅ **実用性検証** (固定閾値 WFA): EUR_USD ×2.0 は usable 1/5 で完全崩壊確認
+- ✅ **真因補強 (P1-B)**: グリッド設計 + サンプル数 + 自己相関の 3 候補分離 → 「複合構造 4 要素」で確定
+- ✅ **順位ベース代替指標 (P1-C)**: Spearman ρ + block bootstrap が TR より検出力高い (11/12 vs 9/12)
 
-中断 (上記完了まで保留):
-- P1-2 (HMM 状態数), P1-3 (YZ_vol × CHOP 直交性), P0-4 (PF 置換)
+中断項目の処遇:
+- ⬜ P1-2 (HMM 状態数): § 2-2 (HMM レジーム検出) で扱う、§ 2-1 では不要
+- ⬜ P1-3 (YZ_vol × CHOP 直交性): CHOP は P1-A で実質無効と判明、優先度低下
+- ⬜ P0-4 (PF 置換): H9 (順位ベース主指標) 採用で TR 自体の役割が補助に降格、必要性低下
 
 完了/不要:
-- P1-1c (EUR_USD H1 fold 3): Mode B でデータ問題が確定 (fold 2/3 で OOS_n=0)
-- P1-1d (層間相関・補完性): H3 ★☆☆ のまま、救済可能性低い
+- P1-1c (EUR_USD H1 fold 3): Mode B でデータ問題確定
+- P1-1d (層間相関・補完性): H3 反証寄り (★) で D1 削除推奨
 
 詳細リンク:
-- `docs/vision/HYPOTHESES_2-1.md` — 仮説台帳
-- `docs/vision/research/STEP_B_SUMMARY.md` — Step B 総括
-- `docs/vision/research/{A_frame,B_indicators,C_pair_heterogeneity,D_validation}.md` — 各群の文献調査結果
-- `docs/vision/research/STEP_C_P0_trial_inventory.md` — P0-1 試行数棚卸し
-- `docs/vision/research/STEP_C_P0_2_random_baseline_result.md` — **P0-2 Permutation Test 結果**
-- `data/spec_2_1_random_baseline.json` — Permutation Test 数値出力
+- `docs/vision/HYPOTHESES_2-1.md` v1.1 — 仮説台帳 (個別仮説更新済)
+- `docs/vision/research/STEP_C_NEW_P0_VERIFIED_SUMMARY.md` — v2 検証総括
+- `data/spec_2_1_*.json` — 全検証データ
+
+#### ★ Step C 新 P0 v2 完了 — § 2-1 確定値 (2026-05-10)
+
+**確定方針** (HYPOTHESES_2-1.md v1.1 / STEP_C_NEW_P0_VERIFIED_SUMMARY.md より):
+
+1. **単一通貨運用: GBP_JPY** (H4 ★★★★★)
+   - EUR_USD: 完全除外 (実用 WFA で ×2.0 usable 1/5、Q1 v2 で異質性、P1-A で M15 CHOP <25/<30 棄却、D1 棄却)
+   - USD_JPY: 補助候補 (流動性最高、ただし fold 1 IS_n_high=0 のシビア弱点 + 亡き者の世界で運用中)
+   - GBP_JPY: 主候補 (実用 WFA で usable 5/5 + n_pass 5/5、TR 高、介入実験で最大 CV 改善)
+
+2. **層構造: 二層 (M15 + H1)、D1 削除** (H3 反証寄り、H7 反証寄り)
+   - D1 YZ_vol は P1-A 15-family で 3 ペアとも棄却
+   - Q1 v2 で D1 全件「形状判別困難」(a CI ゼロ跨ぎ)
+   - P1-C block bootstrap で D1 CI 幅 0.146 (M15/H1 の 3 倍) = 自己相関で本質的に不安定
+
+3. **評価指標: Spearman ρ + block bootstrap CI を主、TR は補助** (H9 新規 ★★★)
+   - P1-C で順位ベースが TR より検出力高い (11/12 vs 9/12)
+   - TR は low 群感度を持ち SPEC v2 § 2-1 評価には不適
+
+4. **採用閾値 (GBP_JPY 単一通貨前提)**:
+
+| 層 | 指標 | 旧 SPEC | 新 SPEC (v2 確定) | 根拠 | 検証ステータス |
+|---|---|---|---|---|---|
+| M15 主層 | YZ_vol w=14 > 30%ile | > 0.00039 | **維持** (> 30%ile) | P0-3 AAA + Q1 v2 単調増加支持 + Spearman ρ +0.214 (block bootstrap CI [+0.18, +0.25]) + 介入実験 CV 0.51→0.06 | 検証済 |
+| M15 補完層 | CHOP <25 (length=14) | (なし) | **採用候補** (Spearman ρ 弱) | P1-A 15-family で生存 (p_rw=0.0068)、ただし Spearman ρ -0.06 で効果サイズ小 → **保留 (実装後に PoC で効果検証)** | 採用候補 |
+| H1 主層 | YZ_vol w=20 (abs) | > 0.00175 | **維持** (実用最強) または ×1.5 (= 0.00263) を慎重採用 | 実用 WFA で ×1.0 usable 5/5 + n_pass 5/5、×1.5 で OOS_TR=2.56 (CV 0.34) — 統計+実用のトレードオフ | 検証済 |
+| ~~D1 層~~ | ~~YZ_vol w=20~~ | ~~> 55%ile~~ | **削除** | P1-A 15-family で全 3 ペア棄却、Q1 v2 形状判別困難、自己相関で本質的に不安定 | 棄却 |
+
+5. **本番投入条件**:
+   - 🟢 **GBP_JPY M15 YZ_vol > 30%ile** + **H1 YZ_vol > 0.00175** の二層一致判定で「volatile レジーム」判定
+   - 🟡 補完: CHOP <25 はオプショナル (実装後 PoC で効果検証)
+   - 🔴 ペーパートレード必須: 最低 1-3 か月、本番投入は別判断
+
+#### Step C 完了宣言 (2026-05-10)
+
+✅ Step C P0-1 (試行数棚卸し)
+✅ Step C P0-2 (Permutation test)
+✅ Step C P0-3 (多重補正 12-family)
+✅ Step C P1-1 (Mode A WFA)
+✅ Step C P1-1b (Mode B WFA — 二極化発見)
+✅ Step C 新 P0 Q1 v1+v2 (単峰性検証)
+✅ Step C 新 P0 Q2 v1+v2 (H1 グリッド拡張)
+✅ Step C 新 P0 Q3 (CHOP <25 多重補正、P1-A)
+✅ Step C 新 P0 介入実験 (Mode B v2)
+✅ Step C 新 P0 実用性検証 (固定閾値 WFA)
+✅ Step C 新 P0 真因補強 (P1-B)
+✅ Step C 新 P0 順位ベース代替指標 (P1-C)
+✅ Step C 新 P0 統合確定 (本セクション)
+
+**§ 2-1 季節判定 数値仕様: 確定 (2026-05-10)**。次フェーズ: § 2-2 (HMM レジーム検出) または PoC 実装 (GBP_JPY ペーパートレード)。
 
 ---
+
+> ⚠️ **v2 検証での更新 (2026-05-10)**: 以下のテーブルは v1 の検証履歴を保持するための年輪。**最新の確定値は前述の「★ Step C 新 P0 v2 完了 — § 2-1 確定値」セクションを参照**。EUR_USD は除外推奨、D1 層は削除推奨、評価指標は Spearman ρ + block bootstrap CI を主に変更。
 
 | 項目 | 値 | 根拠 | 検証日付 | 再検証期限 |
 |---|---|---|---|---|
