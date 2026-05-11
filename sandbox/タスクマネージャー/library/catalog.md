@@ -61,7 +61,7 @@
 | 40 | @TechCrunch Interesting how much the training… | en | 未読 | #ecosystem #x-signal | articles/2026-05-10_1715_X_Orbitrn_TechCrunch_Interesting_how_much_the_training_data_.md |
 | 41 | A magnificent composer. He had no idea that, … | en | 未読 | #ecosystem #x-signal | articles/2026-05-10_1716_X_StatisticUrban_A_magnificent_composer_He_had_no_idea_that_118_yea.md |
 | 42 | i own 98% of the anthropic token on solana | en | 未読 | #ecosystem #x-signal | articles/2026-05-10_1717_X_ibuyrugs_i_own_98_of_the_anthropic_token_on_solana.md |
-| 43 | “Apparently Anthropic has done more work arou… | en | 未読 | #ecosystem #x-signal | articles/2026-05-10_1718_X_christinayiotis_Apparently_Anthropic_has_done_more_work_around_tha.md |
+| 43 | "Apparently Anthropic has done more work arou… | en | 未読 | #ecosystem #x-signal | articles/2026-05-10_1718_X_christinayiotis_Apparently_Anthropic_has_done_more_work_around_tha.md |
 | 44 | EM @elonmusk xAI's Anthropic deal shows AI al… | en | 未読 | #ecosystem #x-signal | articles/2026-05-10_1719_X_elonchieftwit_EM_elonmusk_xAI_s_Anthropic_deal_shows_AI_alliance.md |
 | 45 | @Hut8Corp just announced their 1 GW Beacon Po… | en | 未読 | #ecosystem #x-signal | articles/2026-05-10_1720_X_meowmeowdj_Hut8Corp_just_announced_their_1_GW_Beacon_Point_ca.md |
 | 46 | AIに「議事録まとめて」って頼んだ結果 読んだのは最初の3行だけだった | ja | 未読 | #ecosystem #x-signal | articles/2026-05-10_1721_X_manta_tv_AIに_議事録まとめて_って頼んだ結果_読んだのは最初の3行だけだった.md |
@@ -76,3 +76,31 @@
 | 55 | 用 Claude MCP 搭一个链上监控机器人 AI 和链上数据的结合，是我最近在关注的方… | ja | 未読 | #ecosystem #mcp #x-signal | articles/2026-05-10_1730_X_x_sanjin_用_Claude_MCP_搭一个链上监控机器人_AI_和链上数据的结合_是我最近在关注的方向.md |
 | 56 | 🗳️ Dev Weekly #42 edition [4 May - 10 May] ⏺️… | en | 未読 | #ecosystem #x-signal | articles/2026-05-10_1731_X_Ajit5ingh_Dev_Weekly_42_edition_4_May_-_10_May_Anthropic_S.md |
 | 57 | @buccocapital the MCP ecosystem is literally … | en | 未読 | #ecosystem #mcp #x-signal | articles/2026-05-10_1732_X_mbajaj_buccocapital_the_MCP_ecosystem_is_literally_this_e.md |
+| 58 | MCPサーバーでローカルLLMを「無料AIエージェント」に変える方法… | ja | 未読 | #web-signal #mcp #ecosystem | articles/2026-05-11_1772_WEB_MCPサーバーでローカルLLMを_無料AIエージェント_に変える方法.md |
+| 59 | Claude Code Agent Teams, Subagents, and MCP: Th… | en | 未読 | #web-signal #mcp | articles/2026-05-11_1774_WEB_Claude_Code_Agent_Teams__Subagents__and_MCP__.md |
+| 60 | 4. 🖥️ AGENTIC TERMINAL — Build a lightweight Cl… | en | 未読 | #x-signal | articles/2026-05-11_1778_X_AnandButani_4_____AGENTIC_TERMINAL___Build_a_lightwe.md |
+| 61 | CLAUDE CODE JUST GOT THE ONE FEATURE POWER USER… | en | 未読 | #x-signal | articles/2026-05-11_1779_X_DenisKursakov_CLAUDE_CODE_JUST_GOT_THE_ONE_FEATURE_POW.md |
+| 62 | I read this awesome post from @trq212 and imple… | en | 未読 | #x-signal | articles/2026-05-11_1780_X_twid_I_read_this_awesome_post_from__trq212_an.md |
+| 63 | 22,000 hours is like 10 years of full-time work… | en | 未読 | #x-signal | articles/2026-05-11_1781_X_ModernGrindTech_22_000_hours_is_like_10_years_of_full_ti.md |
+| 64 | Codexで話題の /goal コマンドがClaude Codeにも追加された。お互いに人気機… | ja | 未読 | #x-signal | articles/2026-05-11_1782_X_ko_ze__Codexで話題の__goal_コマンドがClaude_Codeにも追加された.md |
+| 65 | Claude Code vs Codex の違い、ガチでこんな感じ。… | ja | 未読 | #x-signal | articles/2026-05-11_1783_X_rimuruafi_Claude_Code_vs_Codex_の違い_ガチでこんな感じ.md |
+| 66 | Honest struggle I'm going through: I have my ow… | en | 未読 | #x-signal | articles/2026-05-11_1784_X_levifig_Honest_struggle_I_m_going_through__I_hav.md |
+| 67 | Someone built git for AI agents. Tracks every t… | en | 未読 | #x-signal | articles/2026-05-11_1785_X_38twelveDaily_Someone_built_git_for_AI_agents__Tracks.md |
+| 68 | Instrumentation is the whole game. Running Clau… | en | 未読 | #x-signal | articles/2026-05-11_1786_X_ahmednadar_Instrumentation_is_the_whole_game__Runni.md |
+| 69 | We just shipped an MCP server for Oh Dear. Any … | en | 未読 | #x-signal #mcp | articles/2026-05-11_1787_X_mattiasgeniar_We_just_shipped_an_MCP_server_for_Oh_Dea.md |
+| 70 | @ryancarson Running this. Claude Code persisten… | en | 未読 | #x-signal | articles/2026-05-11_1788_X_sergeclaesen_ryancarson_Running_this__Claude_Code_pe.md |
+| 71 | planckbot ships as a stdio MCP proxy, Apache 2.… | en | 未読 | #x-signal #mcp | articles/2026-05-11_1789_X_opcastil_planckbot_ships_as_a_stdio_MCP_proxy__Ap.md |
+| 72 | One command drops a working AI-coding setup int… | en | 未読 | #x-signal | articles/2026-05-11_1790_X_mersalllll_One_command_drops_a_working_AI_coding_se.md |
+| 73 | npm install -g whatsapp-mcp-macos, register the… | en | 未読 | #x-signal #mcp | articles/2026-05-11_1791_X_m13v__npm_install__g_whatsapp_mcp_macos__regis.md |
+| 74 | Pretty cool milestone for me today.… | en | 未読 | #x-signal | articles/2026-05-11_1792_X_AsphaltCowb0y_Pretty_cool_milestone_for_me_today.md |
+| 75 | Claude Codeの調子が悪いって嘆いてる人、… | ja | 未読 | #x-signal | articles/2026-05-11_1793_X_mimisukesg3j_Claude_Codeの調子が悪いって嘆いてる人.md |
+| 76 | THIS CLAUDE CODE SKILL LETS YOU TRACK EVERY AI … | en | 未読 | #x-signal #skills | articles/2026-05-11_1794_X_aiseomastery_THIS_CLAUDE_CODE_SKILL_LETS_YOU_TRACK_EV.md |
+| 77 | 諸事情から「データ指向アプリケーションデザイン」を読み直しているのだけれど、確かにデータベース… | ja | 未読 | #x-signal | articles/2026-05-11_1795_X_taroleo_諸事情から_データ指向アプリケーションデザイン_を読み直しているのだけれど_確か.md |
+| 78 | Installation is brew tap / go install / or buil… | en | 未読 | #x-signal | articles/2026-05-11_1796_X_38twelveDaily_Installation_is_brew_tap___go_install.md |
+| 79 | メモ: 毎年10倍成長のAnthropicの売上… | ja | 未読 | #x-signal #ecosystem | articles/2026-05-11_1797_X_kubotamas_メモ__毎年10倍成長のAnthropicの売上.md |
+| 80 | Anthropic built Mythos: found thousands of zero… | en | 未読 | #x-signal #ecosystem | articles/2026-05-11_1798_X_PatrickOjo__Anthropic_built_Mythos__found_thousands.md |
+| 81 | Do you understand what just happened in the las… | en | 未読 | #x-signal #ecosystem | articles/2026-05-11_1799_X_algomizercom_Do_you_understand_what_just_happened_in.md |
+| 82 | Just confirmed: Anthropic's Model Context Proto… | en | 未読 | #x-signal #model-update | articles/2026-05-11_1800_X_cafe_au_laitsss_Just_confirmed__Anthropic_s_Model_Contex.md |
+| 83 | Anthropic @AnthropicAI 这周把 Claude Agent SDK for… | ja | 未読 | #x-signal #ecosystem | articles/2026-05-11_1801_X_WWTLitee_Anthropic__AnthropicAI_这周把_Claude_Agent.md |
+| 84 | AnthropicのMCP共同作成者が明かす「MCPの現在地とつながる未来」… | ja | 未読 | #x-signal #mcp #ecosystem | articles/2026-05-11_1802_X_techtarget_itm_AnthropicのMCP共同作成者が明かす_MCPの現在地とつながる未来.md |
+| 85 | 「AIを悪者として描写するテキスト」に影響を受けたAIが実際に人間を脅迫していたことが判明、A… | ja | 未読 | #x-signal #ecosystem | articles/2026-05-11_1803_X_tossact_AIを悪者として描写するテキスト_に影響を受けたAIが実際に人間を脅迫していた.md |
