@@ -11,6 +11,9 @@ numpy>=1.24.0
 # === テクニカル指標 ===
 pandas-ta>=0.3.14b
 
+# === シグナル処理（bear_researcher のダイバージェンス検出: scipy.signal.find_peaks） ===
+scipy>=1.10.0
+
 # === バックテスト ===
 Backtesting>=0.3.3
 
