@@ -36,7 +36,7 @@
 | 014 | The TRADE predictions series 2026: Artificial intelligence | en | 読了 | #quant #regulation #ml | articles/2026-03-27_033_TRADE_Predictions_AI_2026.md |
 | 015 | From ~$20k to $400k in a Year: My LLM Options Trading Experiment | en | 読了 | #llm-trading #research | articles/2026-03-27_085_LLM_Options_Trading_20k_to_400k.md |
 | 016 | StockBench: Can LLM Agents Trade Stocks Profitably In Real-world Markets? (ArXiv) | en | 読了 | #llm-trading #research | articles/2026-03-27_086_StockBench_LLM_Agents_Real_Markets_ArXiv.md |
-| 017 | AI in Trading: A Practitioners’ View (FMSB Spotlight Review, Feb 2026) | en | 読了 | #risk #regulation | articles/2026-03-27_087_FMSB_AI_in_Trading_Spotlight_Feb2026.md |
+| 017 | AI in Trading: A Practitioners' View (FMSB Spotlight Review, Feb 2026) | en | 読了 | #risk #regulation | articles/2026-03-27_087_FMSB_AI_in_Trading_Spotlight_Feb2026.md |
 | 018 | U.S. Treasury Releases Financial Services AI Risk Management Framework | en | 読了 | #risk #regulation | articles/2026-03-27_088_US_Treasury_AI_Risk_Management_Framework.md |
 | 019 | ESMA Supervisory Briefing on Algorithmic Trading under MiFID II (Feb 2026) | en | 読了 | #regulation | articles/2026-03-27_089_ESMA_MiFID2_Algo_Trading_Feb2026.md |
 | 020 | TradingAgents: Multi-Agents LLM Financial Trading Framework (ArXiv Paper) | en | 読了 | #llm-trading #multi-agent #research | articles/2026-03-27_090_TradingAgents_ArXiv_Paper.md |
@@ -199,3 +199,10 @@
 | 175 | 29歳の元営業マンがAIエージェント6体で月4,600万円叩き出してる オクラホマの普通の… | ja | 未読 | #x-signal | articles/2026-05-10_1743_X_latdayo_29歳の元営業マンがAIエージェント6体で月4_600万円叩き出してる_オクラホマの普通の営業だった.md |
 | 176 | #ＣＧ 界では３０年以上前から、宮崎駿のようなイラストをアルゴリズムで描くことを夢見てきた… | ja | 未読 | #x-signal | articles/2026-05-10_1744_X_luxidea_ＣＧ_界では３０年以上前から_宮崎駿のようなイラストをアルゴリズムで描くことを夢見てきたのに_いずぁ0.md |
 | 177 | 今程度のハードウェアであっても、ASIと十二分に呼べる程度のAIは作れると思うんだよね | ja | 未読 | #x-signal | articles/2026-05-10_1745_X_koki_export_今程度のハードウェアであっても_ASIと十二分に呼べる程度のAIは作れると思うんだよね.md |
+| 178 | TraderClaw：OpenClawベースの完全自律AIトレーディングエージェント… | en | 未読 | #x-signal #llm-trading | articles/2026-05-12_1845_X_MCGlive_TraderClaw_OpenClawベースの完全自律AIトレーディングエージェ.md |
+| 179 | 2026年フリーAI取引ボット比較：株・FX・仮想通貨の主要プラットフォーム一覧… | en | 未読 | #x-signal #comparison | articles/2026-05-12_1846_X_andresvilarino_2026年フリーAI取引ボット比較_株_FX_仮想通貨の主要プラットフォーム一覧.md |
+| 180 | コーディング経験ゼロでcodexを使いMT5リアルタイム接続ダッシュボードを全ローカ… | en | 未読 | #x-signal #fx #implementation | articles/2026-05-12_1847_X_MasterJeet_コーディング経験ゼロでcodexを使いMT5リアルタイム接続ダッシュボードを全ロ.md |
+| 181 | 2026年5月バイナリー＋FX自動売買middle実績：勝率8割手法で20勝3敗… | ja | 未読 | #x-signal #fx | articles/2026-05-12_1848_X_aileDmerel_2026年5月バイナリー_FX自動売買middle実績_勝率8割手法で20勝3敗.md |
+| 182 | MT5向けゴールドスキャルピングAIEA「LASTDANCE AI」がゴジャンで公開… | ja | 未読 | #x-signal #fx | articles/2026-05-12_1849_X_kagahiro_MT5向けゴールドスキャルピングAIEA_LASTDANCE_AI_がゴジャンで.md |
+| 183 | ハイブリッドAI駆動取引システム：テクニカル×ML×センチメントの体制適応型戦略… | en | 未読 | #web-signal #ml #quant #research | articles/2026-05-12_1867_WEB_ハイブリッドAI駆動取引システム_テクニカル_ML_センチメントの体制適応型戦略.md |
+| 184 | Claude AIで取引ボットを構築・バックテスト・自動化する実践ガイド2026… | en | 未読 | #web-signal #llm-trading #implementation | articles/2026-05-12_1868_WEB_Claude_AIで取引ボットを構築_バックテスト_自動化する実践ガイド2026.md |
