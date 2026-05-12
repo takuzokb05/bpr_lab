@@ -33,7 +33,7 @@
 | 12 | Higgsfield AIがバズ予測ツールを出してきたんだけど、これちょっと面白くて ・シ… | ja | 未読 | #x-signal | articles/2026-05-10_1687_X_latdayo_Higgsfield_AIがバズ予測ツールを出してきたんだけど_これちょっと面白くて_・ショート動画.md |
 | 13 | 🦐 Anthropic Boris Cherny「年末までに『ソフトウェアエンジニア』呼称… | ja | 未読 | #x-signal | articles/2026-05-10_1688_X_Hiro2May_Anthropic_Boris_Cherny_年末までに_ソフトウェアエンジニア_呼称はなくなり_B.md |
 | 14 | 📋 Daily Intel 5/11 朝｜Anthropic エンジニアが Claude … | ja | 未読 | #x-signal | articles/2026-05-10_1689_X_LifeMakersCom_Daily_Intel_5_11_朝_Anthropic_エンジニアが_Claude_Code_で_.md |
-| 15 | 🤯 え、ガチ？ Decoluaの9routerを知っていますか？ - AI codingの… | ja | 未読 | #x-signal | articles/2026-05-10_1690_X_SEO9zh_え_ガチ_Decoluaの9routerを知っていますか_-_AI_codingの無限自由化_-_C.md |
+| 15 | 🤯 え、ガチ？ Decolua の9routerを知っていますか？ - AI codingの… | ja | 未読 | #x-signal | articles/2026-05-10_1690_X_SEO9zh_え_ガチ_Decolua の9routerを知っていますか_-_AI_coding の無限自由化_-_C.md |
 | 16 | @SyedDawood73022 ive bounced between all of t… | en | 未読 | #x-signal | articles/2026-05-10_1691_X_49agents_SyedDawood73022_ive_bounced_between_all_of_them_ho.md |
 | 17 | Anthropic just killed Markdown in Claude Code… | en | 未読 | #x-signal | articles/2026-05-10_1692_X_Twendee_Anthropic_just_killed_Markdown_in_Claude_Code_Stop.md |
 | 18 | claude code, opencode, codex. one persistent … | en | 未読 | #x-signal | articles/2026-05-10_1693_X_SynabunAI_claude_code_opencode_codex_one_persistent_memory_l.md |
@@ -65,12 +65,12 @@
 | 44 | EM @elonmusk xAI's Anthropic deal shows AI al… | en | 未読 | #ecosystem #x-signal | articles/2026-05-10_1719_X_elonchieftwit_EM_elonmusk_xAI_s_Anthropic_deal_shows_AI_alliance.md |
 | 45 | @Hut8Corp just announced their 1 GW Beacon Po… | en | 未読 | #ecosystem #x-signal | articles/2026-05-10_1720_X_meowmeowdj_Hut8Corp_just_announced_their_1_GW_Beacon_Point_ca.md |
 | 46 | AIに「議事録まとめて」って頼んだ結果 読んだのは最初の3行だけだった | ja | 未読 | #ecosystem #x-signal | articles/2026-05-10_1721_X_manta_tv_AIに_議事録まとめて_って頼んだ結果_読んだのは最初の3行だけだった.md |
-| 47 | 【速報】AnthropicがGoogleクラウドに5年で汐億ドルをコミット――AI業… | ja | 未読 | #ecosystem #x-signal | articles/2026-05-10_1722_X_asu_hagi_速報_AnthropicがGoogleクラウドに5年で汐億ドルをコミット_AI業界史上最大級の.md |
+| 47 | 【速報】AnthropicがGoogleクラウドに5年で兆億ドルをコミット――AI業… | ja | 未読 | #ecosystem #x-signal | articles/2026-05-10_1722_X_asu_hagi_速報_AnthropicがGoogleクラウドに5年で兆億ドルをコミット_AI業界史上最大級の.md |
 | 48 | AI活用で営業・マーケティングはここまで変わる、Anthropic公式ユースケースから学ぶ… | ja | 未読 | #ecosystem #x-signal | articles/2026-05-10_1723_X_iotnews2015_AI活用で営業・マーケティングはここまで変わる_Anthropic公式ユースケースから学ぶClaud.md |
 | 49 | xAIがAnthropicにGPU貸して年間$50億稼ぐ構造を作ってる イーロンのColo… | ja | 未読 | #ecosystem #x-signal | articles/2026-05-10_1724_X_latdayo_xAIがAnthropicにGPU貸して年間_50億稼ぐ構造を作ってる_イーロンのColossus_.md |
 | 50 | GoogleがOpenClaw、Claude Cowork対抗のAIエージェント「Remy… | ja | 未読 | #ecosystem #x-signal | articles/2026-05-10_1725_X_oitamaIoT_GoogleがOpenClaw_Claude_Cowork対抗のAIエージェント_Remy_を準備か.md |
 | 51 | どうやらAnthropicはClaudeを規制でガチガチにしたいらしい 週間制限で、Pro… | ja | 未読 | #ecosystem #x-signal | articles/2026-05-10_1726_X_feruxmeme_どうやらAnthropicはClaudeを規制でガチガチにしたいらしい_週間制限で_Proユーザーは.md |
-| 52 | ・Anthropicは"Cyber Verification Program"を提供 申諏… | ja | 未読 | #ecosystem #x-signal | articles/2026-05-10_1727_X_feruxmeme_・Anthropicは_Cyber_Verification_Program_を提供_申諏すればOp.md |
+| 52 | ・Anthropicは"Cyber Verification Program"を提供 申請… | ja | 未読 | #ecosystem #x-signal | articles/2026-05-10_1727_X_feruxmeme_・Anthropicは_Cyber_Verification_Program_を提供_申請すればOp.md |
 | 53 | Anthropicの発表（ | ja | 未読 | #ecosystem #x-signal | articles/2026-05-10_1728_X_Johny_canary_Anthropicの発表.md |
 | 54 | 【Anthropic】悲観・強気別の理論株価と成長ストーリー🚀 | #テスラ株全力ちゃんね… | ja | 未読 | #ecosystem #x-signal | articles/2026-05-10_1729_X_koike2009128_Anthropic_悲観_強気別の理論株価と成長ストーリー_テスラ株全力ちゃんねるのタイツ_all_.md |
 | 55 | 用 Claude MCP 搭一个链上监控机器人 AI 和链上数据的结合，是我最近在关注的方… | ja | 未読 | #ecosystem #mcp #x-signal | articles/2026-05-10_1730_X_x_sanjin_用_Claude_MCP_搭一个链上监控机器人_AI_和链上数据的结合_是我最近在关注的方向.md |
@@ -95,7 +95,7 @@
 | 74 | Pretty cool milestone for me today.… | en | 未読 | #x-signal | articles/2026-05-11_1792_X_AsphaltCowb0y_Pretty_cool_milestone_for_me_today.md |
 | 75 | Claude Codeの調子が悪いって嘆いてる人、… | ja | 未読 | #x-signal | articles/2026-05-11_1793_X_mimisukesg3j_Claude_Codeの調子が悪いって嘆いてる人.md |
 | 76 | THIS CLAUDE CODE SKILL LETS YOU TRACK EVERY AI … | en | 未読 | #x-signal #skills | articles/2026-05-11_1794_X_aiseomastery_THIS_CLAUDE_CODE_SKILL_LETS_YOU_TRACK_EV.md |
-| 77 | 諸事情から「データ指向アプリケーションデザイン」を読み直しているのだけれど、確かにデータベース… | ja | 未読 | #x-signal | articles/2026-05-11_1795_X_taroleo_諸事情から_データ指向アプリケーションデザイン_を読み直しているのだけれど_確か.md |
+| 77 | 諸事情から「データ指向アプリケーションデザイン」を読み直しているのだけれど、確かにデータベー… | ja | 未読 | #x-signal | articles/2026-05-11_1795_X_taroleo_諸事情から_データ指向アプリケーションデザイン_を読み直しているのだけれど_確か.md |
 | 78 | Installation is brew tap / go install / or buil… | en | 未読 | #x-signal | articles/2026-05-11_1796_X_38twelveDaily_Installation_is_brew_tap___go_install.md |
 | 79 | メモ: 毎年10倍成長のAnthropicの売上… | ja | 未読 | #x-signal #ecosystem | articles/2026-05-11_1797_X_kubotamas_メモ__毎年10倍成長のAnthropicの売上.md |
 | 80 | Anthropic built Mythos: found thousands of zero… | en | 未読 | #x-signal #ecosystem | articles/2026-05-11_1798_X_PatrickOjo__Anthropic_built_Mythos__found_thousands.md |
@@ -104,3 +104,26 @@
 | 83 | Anthropic @AnthropicAI 这周把 Claude Agent SDK for… | ja | 未読 | #x-signal #ecosystem | articles/2026-05-11_1801_X_WWTLitee_Anthropic__AnthropicAI_这周把_Claude_Agent.md |
 | 84 | AnthropicのMCP共同作成者が明かす「MCPの現在地とつながる未来」… | ja | 未読 | #x-signal #mcp #ecosystem | articles/2026-05-11_1802_X_techtarget_itm_AnthropicのMCP共同作成者が明かす_MCPの現在地とつながる未来.md |
 | 85 | 「AIを悪者として描写するテキスト」に影響を受けたAIが実際に人間を脅迫していたことが判明、A… | ja | 未読 | #x-signal #ecosystem | articles/2026-05-11_1803_X_tossact_AIを悪者として描写するテキスト_に影響を受けたAIが実際に人間を脅迫していた.md |
+| 86 | CodexとClaude Codeが変える開発速度：AI成果物を裁く力の時代… | ja | 未読 | #x-signal | articles/2026-05-12_1827_X_mellow_launch_CodexとClaude_Codeが変える開発速度_AI成果物を裁く力の時代.md |
+| 87 | Claude Codeの真のアンロック：tighter verification l… | en | 未読 | #x-signal | articles/2026-05-12_1828_X_MichaelRouveure_Claude_Codeの真のアンロック_tighter_verification.md |
+| 88 | CROツールを再設計：12スキルcurl一発インストール・エージェント主体のUX… | en | 未読 | #x-signal #skills | articles/2026-05-12_1829_X_humblytics_CROツールを再設計_12スキルcurl一発インストール_エージェント主体のUX.md |
+| 89 | Claude Code Resource Bible：54ツール・MCP/スキル/自… | en | 未読 | #x-signal #mcp #skills | articles/2026-05-12_1830_X_NainsiDwiv50980_Claude_Code_Resource_Bible_54ツール_MCP_スキル.md |
+| 90 | Claude Codeで見落としがちな5 GitHub Tools：合計357,00… | en | 未読 | #x-signal | articles/2026-05-12_1831_X_kirillk_web3_Claude_Codeで見落としがちな5_GitHub_Tools_合計357_.md |
+| 91 | CVE-2026-26268：git hook脆弱性がClaude Code・Gem… | en | 未読 | #x-signal | articles/2026-05-12_1832_X_musiol_martin_CVE_2026_26268_git_hook脆弱性がClaude_Code_G.md |
+| 92 | 攻撃者がdev tooling層を標的化：Claude Code/Cursorが高価… | en | 未読 | #x-signal | articles/2026-05-12_1833_X_MRavinderReddi_攻撃者がdev_tooling層を標的化_Claude_Code_Cursorが.md |
+| 93 | Claude DesignとClaude Codeを繋ぐSkillを自作→1日でサイ… | en | 未読 | #x-signal #skills | articles/2026-05-12_1834_X_anajuliabit_Claude_DesignとClaude_Codeを繋ぐSkillを自作_1日で.md |
+| 94 | review skillでpersonaごとのsub agentを実行：多角的コード… | en | 未読 | #x-signal #skills | articles/2026-05-12_1835_X_Kev_InDev_review_skillでpersonaごとのsub_agentを実行_多角的コ.md |
+| 95 | 非エンジニアからのClaude Codeフィードバック：file artifact … | en | 未読 | #x-signal | articles/2026-05-12_1836_X_closermethod_非エンジニアからのClaude_Codeフィードバック_file_artifac.md |
+| 96 | Anthropicが公式説明：旧Claudeが安全テストで人を脅迫しようとした理由… | en | 未読 | #x-signal #ecosystem | articles/2026-05-12_1837_X_Pirat_Nation_Anthropicが公式説明_旧Claudeが安全テストで人を脅迫しようとした理.md |
+| 97 | AnthropicがGoldman Sachs・Blackstoneと$1.5Bのエ… | en | 未読 | #x-signal #ecosystem | articles/2026-05-12_1838_X_SmallCapSociety_AnthropicがGoldman_Sachs_Blackstoneと_1_5B.md |
+| 98 | AnthropicとxAIの提携：後から見れば必然だったディール（NYMag）… | en | 未読 | #x-signal #ecosystem | articles/2026-05-12_1839_X_NYMag_AnthropicとxAIの提携_後から見れば必然だったディール_NYMag_.md |
+| 99 | Anthropicが実際のnpm攻撃中にラップトップの安全確認を拒否した問題… | en | 未読 | #x-signal #ecosystem | articles/2026-05-12_1840_X_RayFernando1337_Anthropicが実際のnpm攻撃中にラップトップの安全確認を拒否した問題.md |
+| 100 | Claude Code Fast modeがOpus 4.7対応：2.5倍速、入力$… | ja | 未読 | #x-signal #ecosystem #model-update | articles/2026-05-12_1841_X_nukonuko_Claude_Code_Fast_modeがOpus_4_7対応_2_5倍速_入.md |
+| 101 | OpenAI・Anthropic公式ガイドベースのプロンプトジェネレーターSkill… | ja | 未読 | #x-signal #skills #ecosystem | articles/2026-05-12_1842_X_tetumemo_OpenAI_Anthropic公式ガイドベースのプロンプトジェネレーターSki.md |
+| 102 | Anthropicが証明書付き無料AIコース13本を公開（Claude AI全般）… | en | 未読 | #x-signal #ecosystem | articles/2026-05-12_1843_X_theglobalmarvie_Anthropicが証明書付き無料AIコース13本を公開_Claude_AI全般.md |
+| 103 | Claude Architect Certification：60問・5分野・一発勝… | en | 未読 | #x-signal #ecosystem | articles/2026-05-12_1844_X_smratitiwa86867_Claude_Architect_Certification_60問_5分野_一.md |
+| 104 | Claude Code利用上限2倍+SpaceX提携：Anthropicの2026年… | ja | 未読 | #web-signal #ecosystem #model-update | articles/2026-05-12_1863_WEB_Claude_Code利用上限2倍_SpaceX提携_Anthropicの2026年5月アップデート.md |
+| 105 | Code with Claude 2026：Anthropicが発表した5つの新エー… | en | 未読 | #web-signal | articles/2026-05-12_1864_WEB_Code_with_Claude_2026_Anthropicが発表した5つの新エージェント機能.md |
+| 106 | Anthropic 2026開発者カンファレンスの内側：Every.to詳報… | en | 未読 | #web-signal #ecosystem | articles/2026-05-12_1865_WEB_Anthropic_2026開発者カンファレンスの内側_Every_to詳報.md |
+| 107 | Jama Software、MCP Server発表：エンジニアリング管理ソフト初の… | en | 未読 | #web-signal #mcp #ecosystem | articles/2026-05-12_1866_WEB_Jama_Software_MCP_Server発表_エンジニアリング管理ソフト初のMCP対応.md |
+| 108 | Claude Code Marketplaceガイド 2026年5月版：計55以上プ… | ja | 未読 | #web-signal #mcp | articles/2026-05-12_1871_WEB_Claude_Code_Marketplaceガイド_2026年5月版_計55以上プラグイン解説.md |
