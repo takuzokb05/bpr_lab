@@ -12,3 +12,6 @@ library/books/ocr/
 # Pythonキャッシュ
 __pycache__/
 *.pyc
+
+# X収集生アーカイブ（大容量JSON）
+library/inbox/x/archive/*.json
