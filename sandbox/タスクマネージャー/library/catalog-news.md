@@ -16,7 +16,7 @@
 | No. | タイトル | 言語 | 状態 | タグ | ファイル |
 |-----|---------|------|------|-----|--------|
 | 1 | 無料で使えるAI「ローカルLLM」の進化がすごいよって話 - Gizmodo Japan | ja | 未読 | #open-source #llm-news #web-signal | articles/2026-05-10_1681_WEB_Local_LLM_Evolution_2026_Gemma4_Qwen35_Gizmodo_JA.md |
-| 2 | 【2026年義務化】AI規制ガイドラインv1.2｜罰則回避の5ステップ | Uravati… | ja | 未読 | #regulation #web-signal | articles/2026-05-10_1682_WEB_Japan_AI_Regulation_Guideline_v12_2026_Uravation.md |
+| 2 | 、2026年義務化】AI規制ガイドラインv1.2｜罰則回避の5ステップ | Uravati… | ja | 未読 | #regulation #web-signal | articles/2026-05-10_1682_WEB_Japan_AI_Regulation_Guideline_v12_2026_Uravation.md |
 | 3 | $NVDA just told us space is the next AI trade… | en | 未読 | #x-signal | articles/2026-05-10_1746_X_sunxliao_NVDA_just_told_us_space_is_the_next_AI_trade_IMO_a.md |
 | 4 | Finally, it's happening. After the NTE AI dra… | en | 未読 | #x-signal | articles/2026-05-10_1747_X_iKaito_1_Finally_it_s_happening_After_the_NTE_AI_drama_big_.md |
 | 5 | WorldRouter is here. 300+ AI models. One rout… | en | 未読 | #llm-news #x-signal | articles/2026-05-10_1748_X_crystalfoxeth_WorldRouter_is_here_300_AI_models_One_router_Settl.md |
@@ -35,11 +35,26 @@
 | 18 | WE DEMAND A STATEMENT ‼️ ⚠️don't you see how … | en | 未読 | #x-signal | articles/2026-05-10_1761_X_tatsunbun_WE_DEMAND_A_STATEMENT_don_t_you_see_how_many_playe.md |
 | 19 | Pretty interesting seeing how many different … | en | 未読 | #x-signal | articles/2026-05-10_1762_X_0xWINNYx_Pretty_interesting_seeing_how_many_different_verti.md |
 | 20 | sitting between me and Bend2's launch is whet… | en | 未読 | #x-signal | articles/2026-05-10_1763_X_VictorTaelin_sitting_between_me_and_Bend2_s_launch_is_whether_I.md |
-| 21 | キオクシア営業利益、27年3月期市場予想「トヨタ超え」　15日決算発表  キオクシアホール… | ja | 未読 | #x-signal | articles/2026-05-10_1764_X_kanpo_blog_キオクシア営業利益_27年3月期市場予想_トヨタ超え_15日決算発表_キオクシアホールディングスが1.md |
+| 21 | キオクシア営業利益、２７年３月期市場予想「トヨタ超え」　1５日決算発表  キオクシアホール… | ja | 未読 | #x-signal | articles/2026-05-10_1764_X_kanpo_blog_キオクシア営業利益_27年3月期市場予想_トヨタ超え_15日決算発表_キオクシアホールディングスが1.md |
 | 22 | AIキャラクターのボイスクローンに使えるコーパスとして、AICAコーパスをリリースいたしま… | ja | 未読 | #x-signal | articles/2026-05-10_1765_X_ReineHonoka_AIキャラクターのボイスクローンに使えるコーパスとして_AICAコーパスをリリースいたしました_これ.md |
 | 23 | Anthropicが「Teaching Claude Why」という研究を発表していて、こ… | ja | 未読 | #llm-news #x-signal | articles/2026-05-10_1766_X_shin_sasaki19_Anthropicが_Teaching_Claude_Why_という研究を発表していて_これがAIプ.md |
-| 24 | ◆キオクシア、15日決算発表🇯🇵 AIデータセンター向けNAND需要の好調が継続するかを確… | ja | 未読 | #x-signal | articles/2026-05-10_1767_X_Ryo_Ponta01_キオクシア_15日決算発表_AIデータセンター向けNAND需要の好調が継続するかを確認したい.md |
+| 24 | ◆キオクシア、15日決算発表🆯🇵 AIデータセンター向けNAND需要の好調が継続するかを確… | ja | 未読 | #x-signal | articles/2026-05-10_1767_X_Ryo_Ponta01_キオクシア_15日決算発表_AIデータセンター向けNAND需要の好調が継続するかを確認したい.md |
 | 25 | FIG（4392）がS高 | ja | 未読 | #x-signal | articles/2026-05-10_1768_X_mameyama_kun_FIG_4392_がS高.md |
-| 26 | 計9色展開にてリリースか ケースの中身がリーク ブルー、ライトブルー、レッド、オレンジ、ピ… | ja | 未読 | #x-signal | articles/2026-05-10_1769_X_yasuakifujii_計9色展開にてリリースか_ケースの中身がリーク_ブルー_ライトブルー_レッド_オレンジ_ピンク_ホワ.md |
+| 26 | 訜9色展開にてリリースか ケースの中身がリーク ブルー、ライトブルー、レッド、オレンジ、ピ… | ja | 未読 | #x-signal | articles/2026-05-10_1769_X_yasuakifujii_蠐8色展開にてリリースか_ケースの中身がリーク_ブルー_ライトブルー_レッド_オレンジ_ピンク_ホワ.md |
 | 27 | 次の決算発表スケジュールです | ja | 未読 | #x-signal | articles/2026-05-10_1770_X_koziii_次の決算発表スケジュールです.md |
-| 28 | 今日夜21:00〜📡 #蔦谷好位置 × #アユニ・D 🎧M bit Project AS … | ja | 未読 | #x-signal | articles/2026-05-10_1771_X_asyoulikeit813_今日夜21_00_蔦谷好位置_アユニ・D_M_bit_Project_AS_YOU_LIKE_IT.md |
+| 28 | 今日夜21:00～📡 #薔谷好位置 × #アユニ・Ｄ 🎧M bit Project AS … | ja | 未読 | #x-signal | articles/2026-05-10_1771_X_asyoulikeit813_今日夜21_00_薔谷好位置_アユニ・D_M_bit_Project_AS_YOU_LIKE_IT.md |
+| 29 | AIキャラクター永続使用権をリリースフォームに忍ばせるTV局：権利問題の最前線… | en | 未読 | #x-signal #regulation | articles/2026-05-12_1850_X_NewWorldHominin_AIキャラクター永続使用権をリリースフォームに忍ばせるTV局_権利問題の最前線.md |
+| 30 | GoogleがGemini Intelligenceを発表：AndroidをAIイン… | en | 未読 | #x-signal #llm-news | articles/2026-05-12_1851_X_mark_k_GoogleがGemini_Intelligenceを発表_AndroidをAI.md |
+| 31 | GoogleがChromebookを「Googlebook」に刷新：Gemini深統… | en | 未読 | #x-signal #llm-news | articles/2026-05-12_1852_X_ShishirShelke1_GoogleがChromebookを_Googlebook_に刷新_Gemini.md |
+| 32 | Google×SpaceX：AI需要急増でデータセンターを軌道上へ打ち上げる交… | en | 未読 | #x-signal #ai-agent | articles/2026-05-12_1853_X_MarioNawfal_Google_SpaceX_AI需要急増でデータセンターを軌道上へ打ち上げる交渉.md |
+| 33 | Agency.aiローンチ：AIがあなたにプロンプトする能動的AIエージェントの新U… | en | 未読 | #x-signal #ai-agent | articles/2026-05-12_1854_X_mamagnus00_Agency_aiローンチ_AIがあなたにプロンプトする能動的AIエージェントの.md |
+| 34 | holaOS Beta 0.1ローンチ：OSSエージェントコンピューターの初製品版が… | en | 未読 | #x-signal #ai-agent #open-source | articles/2026-05-12_1855_X_JeliPenguin_holaOS_Beta_0_1ローンチ_OSSエージェントコンピューターの初製品.md |
+| 35 | BREAKING：GoogleとSpaceXがAI需要でデータセンターを軌道上に打ち… | en | 未読 | #x-signal | articles/2026-05-12_1856_X_KobeissiLetter_BREAKING_GoogleとSpaceXがAI需要でデータセンターを軌道上に.md |
+| 36 | Isomorphic Labs（AlphaFold系医療AI）が$2.1Bの資金調達… | en | 未読 | #x-signal #llm-news | articles/2026-05-12_1857_X_IsomorphicLabs_Isomorphic_Labs_AlphaFold系医療AI_が_2_1Bの資金.md |
+| 37 | Google GTIG：史上初・AI開発ゼロデイ脆弱性の実世界悪用を確認、大規模悪用… | en | 未読 | #x-signal | articles/2026-05-12_1858_X_IntCyberDigest_Google_GTIG_史上初_AI開発ゼロデイ脆弱性の実世界悪用を確認_大規模.md |
+| 38 | npmサプライチェーン攻撃：TanStack・Mistral AI・UiPath・O… | en | 未読 | #x-signal | articles/2026-05-12_1859_X_notjazii_npmサプライチェーン攻撃_TanStack_Mistral_AI_UiPath.md |
+| 39 | 韓国AI税収配当案でKOSPIが一時5.1%急落→政府説明で下げ幅縮小… | ja | 未読 | #x-signal #regulation | articles/2026-05-12_1860_X_momoblog0214_韓国AI税収配当案でKOSPIが一時5_1_急落_政府説明で下げ幅縮小.md |
+| 40 | marketing-skills：LP→A/Bテスト→SEO→CRO→メール自動化を… | ja | 未読 | #x-signal #ai-agent | articles/2026-05-12_1861_X_L_go_mrk_marketing_skills_LP_A_Bテスト_SEO_CRO_メール自動.md |
+| 41 | EU AI Act：欧州委員会 AIの透明性に関するドラフトガイドライン 10の要点… | en | 未読 | #web-signal #regulation | articles/2026-05-12_1862_WEB_EU_AI_Act__欧州委員会_AIの透明性に関するドラフトガイドライン_10の要点.md |
+| 42 | 生成AI関連ニュース ベスト5（2026年5月１日～８日）… | ja | 未読 | #web-signal | articles/2026-05-12_1869_WEB_生成AI関連ニュース_ベスト5_2026年5月１日_８日_.md |
+| 43 | 日本の生成AIニュースまとめ 2026年5月第2週… | ja | 未読 | #web-signal | articles/2026-05-12_1870_WEB_日本の生成AIニュースまとめ_2026年5月第2週.md |
