@@ -58,3 +58,22 @@
 | 41 | EU AI Act：欧州委員会 AIの透明性に関するドラフトガイドライン 10の要点… | en | 未読 | #web-signal #regulation | articles/2026-05-12_1862_WEB_EU_AI_Act__欧州委員会_AIの透明性に関するドラフトガイドライン_10の要点.md |
 | 42 | 生成AI関連ニュース ベスト5（2026年5月１日～８日）… | ja | 未読 | #web-signal | articles/2026-05-12_1869_WEB_生成AI関連ニュース_ベスト5_2026年5月１日_８日_.md |
 | 43 | 日本の生成AIニュースまとめ 2026年5月第2週… | ja | 未読 | #web-signal | articles/2026-05-12_1870_WEB_日本の生成AIニュースまとめ_2026年5月第2週.md |
+
+| 44 | 🇩🇪🇺🇦 Fedorov: Today, together with Boris Pistorius… | en | 未読 | #x-signal | articles/2026-05-14_2155_X_Maks_NAFO_FELLA_Fedorov_Today_together_with_Boris_Pistoriu.md |
+| 45 | 【🔥1週間の重要AIニュース】 先週はAnthropicとOpenAIが非常に活発だった1週間でした… | ja | 未読 | #x-signal #llm-news #ai-agent | articles/2026-05-14_2156_X_masahirochaen_1週間の重要AIニュース_先週はAnthropicとOpenAIが非常に活発だった1週間で.md |
+| 46 | $NBIS announced a partnership with LangChain to in… | en | 未読 | #x-signal #llm-news #ai-agent | articles/2026-05-14_2157_X_mvcinvesting_NBIS_announced_a_partnership_with_LangChain_t.md |
+| 47 | Interesting timing from $NBIS right before earning… | en | 未読 | #x-signal | articles/2026-05-14_2158_X_yianisz_Interesting_timing_from_NBIS_right_before_ea.md |
+| 48 | Google announced Gemini Intelligence, a new suite … | en | 未読 | #x-signal #llm-news | articles/2026-05-14_2159_X_pixel_updates_Google_announced_Gemini_Intelligence_a_new_s.md |
+| 49 | Googlebook laptops will run Android and prominentl… | en | 未読 | #x-signal #llm-news | articles/2026-05-14_2160_X_business_Googlebook_laptops_will_run_Android_and_promi.md |
+| 50 | $GOOGL is reportedly in talks with SpaceX for a ro… | en | 未読 | #x-signal | articles/2026-05-14_2161_X_PolymarketMoney_GOOGL_is_reportedly_in_talks_with_SpaceX_for_.md |
+| 51 | $GOOGL IS LOOKING AT SPACEX TO LAUNCH AI DATA CENT… | en | 未読 | #x-signal | articles/2026-05-14_2162_X_wallstengine_GOOGL_IS_LOOKING_AT_SPACEX_TO_LAUNCH_AI_DATA_.md |
+| 52 | Grok Build has finally arrived from @xai 🔥🔥 The be… | en | 未読 | #x-signal #llm-news #ai-agent | articles/2026-05-14_2163_X_mark_k_Grok_Build_has_finally_arrived_from_xai_The.md |
+| 53 | Klarna fired 700 customer service people, replaced… | en | 未読 | #x-signal | articles/2026-05-14_2164_X_mistressdivy_Klarna_fired_700_customer_service_people_rep.md |
+| 54 | A new era for AI development begins with the offic… | en | 未読 | #x-signal #llm-news #ai-agent | articles/2026-05-14_2165_X_KylieHopkinsX_A_new_era_for_AI_development_begins_with_the_.md |
+| 55 | Bessent Says US, China To Launch AI Safety Talks A… | en | 未読 | #x-signal | articles/2026-05-14_2166_X_zerohedge_Bessent_Says_US_China_To_Launch_AI_Safety_Ta.md |
+| 56 | Keyword of $POET's Electrical-Optical "Interposer"… | en | 未読 | #x-signal | articles/2026-05-14_2167_X_PhotonCap_Keyword_of_POET_s_Electrical_Optical_Interpo.md |
+| 57 | 税理士・社労士・行政書士の仕事、半分消える宣告。 Anthropicが「Claude for Sma… | ja | 未読 | #x-signal | articles/2026-05-14_2168_X_MakeAI_CEO_税理士・社労士・行政書士の仕事_半分消える宣告_Anthropicが_Claude_for.md |
+| 58 | 【Gemini新機能】GeminiでWordやExcelファイルを直接生成可能に！ 生成AIを使うた… | ja | 未読 | #x-signal #llm-news | articles/2026-05-14_2169_X_pop_ikeda_Gemini新機能_GeminiでWordやExcelファイルを直接生成可能に_生成AIを.md |
+| 59 | Google and SpaceX are in talks to put data centers… | en | 未読 | #x-signal #llm-news | articles/2026-05-14_2170_X_MarsUniversityX_Google_and_SpaceX_are_in_talks_to_put_data_ce.md |
+| 60 | Claude Codeに新機能 「/goal」が追加されました。 AI開発で一番つらいのは、コードを… | ja | 未読 | #x-signal | articles/2026-05-14_2171_X_kawai_design_Claude_Codeに新機能_goal_が追加されました_AI開発で一番つらいのは_コー.md |
+| 61 | トランプ政権、国家AI政策フレームワーク発表：7本柱の立法勧告（Morrison Foerster解… | en | 未読 | #web-signal #regulation | articles/2026-05-14_2180_WEB_White_House_国家AI政策フレームワーク_2026年3月_MoFo解説.md |

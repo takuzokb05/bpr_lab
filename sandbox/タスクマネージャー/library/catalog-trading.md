@@ -206,3 +206,7 @@
 | 182 | MT5向けゴールドスキャルピングAIEA「LASTDANCE AI」がゴジャンで公開… | ja | 未読 | #x-signal #fx | articles/2026-05-12_1849_X_kagahiro_MT5向けゴールドスキャルピングAIEA_LASTDANCE_AI_がゴジャンで.md |
 | 183 | ハイブリッドAI駆動取引システム：テクニカル×ML×センチメントの体制適応型戦略… | en | 未読 | #web-signal #ml #quant #research | articles/2026-05-12_1867_WEB_ハイブリッドAI駆動取引システム_テクニカル_ML_センチメントの体制適応型戦略.md |
 | 184 | Claude AIで取引ボットを構築・バックテスト・自動化する実践ガイド2026… | en | 未読 | #web-signal #llm-trading #implementation | articles/2026-05-12_1868_WEB_Claude_AIで取引ボットを構築_バックテスト_自動化する実践ガイド2026.md |
+
+| 185 | 🏁 SMC AI 決済 [GBPUSD M15] CLOSE +33.3pip 損益 +2,618円… | ja | 未読 | #x-signal #fx | articles/2026-05-14_2154_X_fxmethodology_SMC_AI_決済_GBPUSD_M15_CLOSE_33_3pip_損益_2_.md |
+| 186 | Alpaca APIでAIトレーディングエージェントを構築する2026年チュートリアル | en | 未読 | #web-signal #llm-trading | articles/2026-05-14_2178_WEB_Alpaca_API_AIトレーディングエージェント構築チュートリアル_2026.md |
+| 187 | moomoo証券「Moomoo API Skill」：チャットだけで米国株自動売買を実現（業界初） | ja | 未読 | #web-signal #skills #llm-trading | articles/2026-05-14_2179_WEB_moomoo_APIスキル_チャットのみで米国株自動売買_日本初_PRTimes.md |
