@@ -77,3 +77,17 @@
 | 59 | Google and SpaceX are in talks to put data centers… | en | 未読 | #x-signal #llm-news | articles/2026-05-14_2170_X_MarsUniversityX_Google_and_SpaceX_are_in_talks_to_put_data_ce.md |
 | 60 | Claude Codeに新機能 「/goal」が追加されました。 AI開発で一番つらいのは、コードを… | ja | 未読 | #x-signal | articles/2026-05-14_2171_X_kawai_design_Claude_Codeに新機能_goal_が追加されました_AI開発で一番つらいのは_コー.md |
 | 61 | トランプ政権、国家AI政策フレームワーク発表：7本柱の立法勧告（Morrison Foerster解… | en | 未読 | #web-signal #regulation | articles/2026-05-14_2180_WEB_White_House_国家AI政策フレームワーク_2026年3月_MoFo解説.md |
+| 62 | “Help me save money” is one of the core benefits people hope to get out of AI. W… | en | 未読 | #x-signal #ai-news | articles/2026-05-15_2212_PlaidがAIで家計節約支援_save_moneyが核心AI活用ユースケースに.md |
+| 63 | 5 metrics that decide whether your AI system holds up after launch.  Most teams … | en | 未読 | #x-signal #ai-news | articles/2026-05-15_2213_AIシステムが本番後に持ちこたえるか判断する5つのメトリクス.md |
+| 64 | Very excited to work with @OpenAI to launch Finances in ChatGPT!   AI is transfo… | en | 未読 | #x-signal #ai-news | articles/2026-05-15_2214_OpenAI___Plaid連携でChatGPTにFinances機能追加_AI家計管理が本番へ.md |
+| 65 | The $2T telecom industry was built for humans. @AgentPhoneHQ is rebuilding it fo… | en | 未読 | #x-signal #ai-news | articles/2026-05-15_2215_YC__AgentPhone_HQがAIエージェント専用電話番号API__2Tテレコム市場を再構築.md |
+| 66 | "India, UAE advance AI and supply chain cooperation with supercomputing pact, la… | en | 未読 | #x-signal #ai-news | articles/2026-05-15_2216_インド_UAE_AI_サプライチェーン協力_スーパーコンピュータ協定とMaitri貿易回廊.md |
+| 67 | Vibe coders are getting sued.  People are launching apps with real users but ski… | en | 未読 | #x-signal #ai-news | articles/2026-05-15_2217_Vibe_Coderが訴訟される時代_本番リリースで法的_セキュリティリスクを無視したAIコード.md |
+| 68 | Very excited to launch a project I've been helping out with the last couple mont… | en | 未読 | #x-signal #ai-news | articles/2026-05-15_2218_Center_for_Shared_AI_Prosperity設立_AI繁栄の恩恵を広く共有する組織.md |
+| 69 | キオクシアHDの第1四半期営業利益予想は29倍、AIブームで約1兆3000億円へ。AI「推論」の波に乗るNAND専業のキオクシア、時価総額で国内企業4位。  ・… | ja | 未読 | #x-signal #ai-news | articles/2026-05-15_2219_キオクシアHD_1Q営業利益予想29倍_AI需要でNAND供給不足_売上5.1倍.md |
+| 70 | 【海外で話題】 ブラウザを「AI Agent が人間のように操作する」拡張機能がリリースされ、海外でバズり散らかしています。Codex でも動かせる仕様でリリー… | ja | 未読 | #x-signal #ai-news | articles/2026-05-15_2220_Kimi_Web_Bridge__ブラウザをAIエージェントが人間のように操作する拡張機能.md |
+| 71 | GA4使ってる方、いいニュースです。  Googleが昨日、ChatGPTやGemini経由のアクセスを自動で計測する新機能を追加しました。  ・「AI Ass… | ja | 未読 | #x-signal #ai-news | articles/2026-05-15_2221_GA4にAI_Assistantチャネル自動追加_ChatGPT_Gemini_Claude_Perplexityを自動.md |
+| 72 | 【東芝の純利益7倍、26年3月期に1.9兆円　キオクシア株の高騰で】  東芝が15日発表した2026年3月期の連結決算は、純利益が前の期比約7倍の1兆9673億… | ja | 未読 | #x-signal #ai-news | articles/2026-05-15_2222_東芝純利益7倍1.9兆円_キオクシア株高騰とAI需要でデータセンター機器好調.md |
+| 73 | 2026年5月の新AIモデルリリース総括（WhatLLM.org）。 OpenAI: GPT-5.5リリース、最強のエージェント能力を持ち ChatGPTの新デ… | en | 未読 | #web-signal #ai-news | articles/2026-05-15_2232_New_AI_Models_May_2026__Frontier_Architecture_Takes_the_Stag.md |
+| 74 | IT部門向けの2026年AI重要トレンドを10選でまとめたITmedia TechTarget記事。 MIT Technology Reviewが5月12日公表… | ja | 未読 | #web-signal #ai-news | articles/2026-05-15_2233_LLMの次は何が来る_中国AI浸透_情シス必読AIトレンド10選_2026年5月.md |
+| 75 | 2026年4月3日にMicrosoftが正式リリースしたAgent Framework 1.0の完全解説（Uravation）。 MAFはAzure上でAIエー… | ja | 未読 | #web-signal #ai-news | articles/2026-05-15_2234_Microsoft_Agent_Framework_1.0正式リリース_2026年4月_エンタープライズAIエージェント.md |

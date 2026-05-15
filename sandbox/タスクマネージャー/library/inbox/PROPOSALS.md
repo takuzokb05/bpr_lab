@@ -656,3 +656,72 @@ Claude Codeのスキルトリガー判定はname + descriptionのみで行われ
 moomoo証券が「自然言語→コード生成→バックテスト→注文執行」のパイプラインをClaude Codeスキルで実現。FX自動取引プロジェクトでも同様のアーキテクチャが応用可能：
 - MT5 Python APIとClaude Codeスキルを組み合わせ、自然言語でEA（Expert Advisor）を生成・バックテストするスキルを作成する
 - `sandbox/FX自動取引/main.py` をベースに、スキル化のための SKILL.md を設計する
+
+---
+
+## 2026-05-15 収集分
+
+### 1. FX自動取引プロジェクトへの反映提案
+
+#### 1-1. Claude Agent SDK 課金変更対応（緊急: 6月15日期限）
+**出典:** articles/2026-05-15_2222_Anthropic_Agent_SDK_課金分離... / articles/2026-05-15_2223_AgentSDK_June15...
+
+**提案内容:**
+2026年6月15日から Agent SDK・claude -p コマンドの課金が分離される。
+FX自動取引で claude -p や Agent SDK を使っているスクリプトがあれば、今月中にクレジット消費量を試算し、上限設定を追加すること。
+
+対応アクション:
+- `claude mcp list` で依存を確認
+- 月間トークン消費量を計測（Pro枠: $20/月）
+- クレジット枯渇時のフォールバック処理を実装
+
+#### 1-2. FreqtradeとClaude Code連携パターンの採用検討
+**出典:** articles/2026-05-15_2185_FreqtradeとClaude_Code...
+
+**提案内容:**
+@lliu54827の事例: PineScriptで書いた指標をClaude Codeに会話で投げるだけでFreqtrade向け検証が数分で完結。
+FX自動取引プロジェクトのバックテスト検証ワークフローにClaude Code統合を検討すべき。
+
+具体的実装例:
+```
+Claude Code → Freqtrade設定生成 → バックテスト実行 → 結果評価 → 改善提案
+```
+
+### 2. Claude Code スキル設計への反映提案
+
+#### 2-1. Codex adversarial-review + Claude Code 相互レビューパターン
+**出典:** articles/2026-05-15_2188_codex_adversarial-review...
+
+**提案内容:**
+`/codex:adversarial-review`スキルとClaude Codeを組み合わせた相互レビューアーキテクチャが実用化されている。
+curate スキルや他の複雑なスキルに品質チェック用の adversarial-review ステップを追加することを検討。
+
+パターン:
+1. Claude Codeで実装
+2. Codex（adversarial-review）でレビュー
+3. Claude Codeで再修正
+注意: 800Kトークン上限でのコンテキスト管理が必要。
+
+#### 2-2. ツール非依存スキル設計（Claude Code/Codex共用）
+**出典:** articles/2026-05-15_2197_STEP_to_STL変換スキル... / articles/2026-05-15_2194_Claude_Code_CLI_vs_Codex_CLI...
+
+**提案内容:**
+Claude CodeとCodexはスキル名・ショートカット・built-inに差異があるが、SKILL.mdのコアロジックは両者で共用できる。
+既存スキルを「エージェント非依存」設計にリファクタリングし、どちらのCLIからも呼び出せるようにすることで保守性が向上する。
+
+### 3. CLAUDE.md への反映提案
+
+#### 3-1. /goal コマンドの活用をCLAUDE.mdに記載
+**出典:** articles/2026-05-15_2190_Claude_Code_macOS__goal__loop...
+
+**提案内容:**
+Claude Code macOSで /goal と /loop コマンドが利用可能になった。
+CLAUDE.mdに「長期タスクは /goal で完了条件を設定してから開始する」というワークフロー指針を追加することで、途中中断リスクを減らせる。
+
+#### 3-2. Agent Viewを使ったマルチセッション管理の標準化
+**出典:** articles/2026-05-15_2186_Claude_Code_Agent_View... / articles/2026-05-15_2001_...
+
+**提案内容:**
+Agent View（全セッション一覧UI）が利用可能になり、並列エージェント管理が実用的になった。
+大規模タスクを複数のサブタスクに分割してAgent Viewで管理する運用パターンをCLAUDE.mdに記載することを検討。
+

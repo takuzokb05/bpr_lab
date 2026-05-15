@@ -225,3 +225,40 @@
 | 203 | MCPの本番運用課題とロードマップ2026：水平スケーリングとステートレス化が焦点 | en | 未読 | #web-signal #mcp #ecosystem | articles/2026-05-14_2177_WEB_MCP_本番運用の課題とロードマップ_TheNewStack_2026.md |
 | 204 | Claude Code活用事例集：国内・海外62社の実装記録（claude-code-cases.v… | ja | 未読 | #web-signal | articles/2026-05-14_2181_WEB_Claude_Code_活用事例62社_国内外実装記録_Vercel.md |
 | 205 | Claude Code活用事例15選｜コピペで即使える実践テクニック集（株式会社仁頼） | ja | 未読 | #web-signal | articles/2026-05-14_2182_WEB_Claude_Code_活用事例15選_コピペ即使える_仁頼.md |
+| 206 | Claude CodeやCursorと何が違うのかって話なんだけど、ポイントは16エージェントが並列で動くHeavyアーキテクチャと200万トークンのコンテキス… | ja | 未読 | #x-signal #claude-code | articles/2026-05-15_2183_Grok_Build_vs_Claude_Code比較_16エージェント200万Token_99_月.md |
+| 207 | [tech] Claude Codeを"使いこなす"ための個人ルール設定 - 実際にやって効果が高かった設定 https://t.co/XYFQg9uBHw… | ja | 未読 | #x-signal #claude-code | articles/2026-05-15_2184_Claude_Code個人ルール設定実践_効果が高かった設定まとめ.md |
+| 208 | @ClaudeCode_love Freqtradeで複数戦略回してる身として、これは革命。Pineで書いてた指標、Claude Codeに会話で投げて検証が数… | ja | 未読 | #x-signal #claude-code | articles/2026-05-15_2185_FreqtradeとClaude_CodeでPineScript指標を数分で検証_FX実践.md |
+| 209 | 朝活〜🤖  複数のエージェントを 1 画面で管理するClaude Codeの新機能「Agent View」を試してみた を参照👀  公式がどんどん便利な新機能を… | ja | 未読 | #x-signal #claude-code | articles/2026-05-15_2186_Claude_Code_Agent_View新機能レビュー_複数エージェントを1画面管理.md |
+| 210 | さすがAWSさん！ ---  手を動かして学ぶ Claude Code 入門ワークショップを公開しました〜！｜Yamary  /  Ryosuke Yamaza… | ja | 未読 | #x-signal #claude-code | articles/2026-05-15_2187_AWSが公開したClaude_Code入門ワークショップ_Zennで無料公開.md |
+| 211 | I ran /codex:adversarial-review, and Claude Code would keep making some mistakes… | en | 未読 | #x-signal #claude-code | articles/2026-05-15_2188_codex_adversarial-review___Claude_Code相互レビュー_800Kトークン限界.md |
+| 212 | Hermes hit 50K GitHub stars in 2 months. now it talks to Claude Code   This oper… | en | 未読 | #x-signal #claude-code | articles/2026-05-15_2189_Hermes_GitHub_50K_stars_2ヶ月達成_Claude_Code連携で月_14K.md |
+| 213 | I'm probably behind here but on Claude Code for macOS you can specify /goal and … | en | 未読 | #x-signal #claude-code | articles/2026-05-15_2190_Claude_Code_macOS__goal__loop_コマンド追加_limits_50_増加情報.md |
+| 214 | Saw the Clawdmeter project today and got inspired to build a Wear OS telemetry d… | en | 未読 | #x-signal #claude-code | articles/2026-05-15_2191_Galaxy_Watch_Wear_OS_Claude_Code使用量ダッシュボード自作.md |
+| 215 | …hitting MCP disconnects (agentic browser use for Claude Code in VS Code) during… | en | 未読 | #x-signal #claude-code | articles/2026-05-15_2192_Claude_Code_VS_Code_MCPディスコネクト問題_Agentic_Browser_Use.md |
+| 216 | @ghumare64 Let Claude Code just call Codex with a skill  These skills:  https://… | en | 未読 | #x-signal #claude-code | articles/2026-05-15_2193_Claude_CodeからCodexをSkill経由で呼び出す統合パターン.md |
+| 217 | There are a lot of small differences between the Claude Code and Codex CLIs:  - … | en | 未読 | #x-signal #claude-code | articles/2026-05-15_2194_Claude_Code_CLI_vs_Codex_CLI_詳細比較_Skills差分_Built-in_Feature.md |
+| 218 | モデル・コンテキスト・プロトコル（MCP）対応も大きな特徴。Claude CodeやCursorといった外部ツールからUnityを直接操作可能になります。AI … | ja | 未読 | #x-signal #claude-code | articles/2026-05-15_2195_Unity_MCP対応_Claude_CodeからUnityを直接操作_AI_Gateway外部モデル統合.md |
+| 219 | @petecodes I have created a Claude Code skill that takes any Webflow site and tu… | en | 未読 | #x-signal #claude-code | articles/2026-05-15_2196_Claude_Code_Skill__WebflowサイトをAstroに変換するスキル実装例.md |
+| 220 | @DevBredda I want to avoid crazy bloat in the repo, but I have an agent skill yo… | en | 未読 | #x-signal #claude-code | articles/2026-05-15_2197_STEP_to_STL変換スキル_Codex_Claude_Code共用_リポジトリ公開.md |
+| 221 | xAI Unveils Grok Build: An Agentic AI Coding Tool to Take on OpenAI, Google &amp… | en | 未読 | #x-signal #ecosystem | articles/2026-05-15_2198_xAI_Grok_Build発表_OpenAI_Google_Anthropicに挑む自律コーディングAI.md |
+| 222 | Anthropic executive Cat Wu says future AI systems will proactively anticipate wh… | en | 未読 | #x-signal #ecosystem | articles/2026-05-15_2199_Anthropic_Cat_Wu_ビジョン__AIが事前にユーザーニーズを予測してワークフロー自動設定.md |
+| 223 | 【AnthropicとSpaceX、電撃提携】 220,000基のNVIDIA GPUが、今月中にClaudeの頭脳に加わります。… | ja | 未読 | #x-signal #ecosystem | articles/2026-05-15_2200_AnthropicとSpaceX電撃提携_220_000基のNVIDIA_GPUをColossus1でリース.md |
+| 224 | grok imageは完全にオワコンになった模様 ・Colossus 1をAnthropicにリースしClaudeの大幅緩和をした為、grokの使用可能領域が大… | ja | 未読 | #x-signal #ecosystem | articles/2026-05-15_2201_AnthropicのColossus1使用でGrok_Image大幅制限縮小_修正見込みなし.md |
+| 225 | Anthropicが評価額9000億ドルでの巨額増資を計画中。一方、OpenAIは年間売上高250億ドルを超え、IPO検討も示唆。AI業界は空前の資金投入と収益… | ja | 未読 | #x-signal #ecosystem | articles/2026-05-15_2202_Anthropic評価額9000億ドル巨額増資計画_OpenAI年間売上250億ドル超.md |
+| 226 | Anthropicとゲイツ財団が2億ドル規模の提携を発表 。AI「Claude」を活用し、低中所得国での医療、教育、農業支援など公共利益の拡大を目指す。ワクチン… | ja | 未読 | #x-signal #ecosystem | articles/2026-05-15_2203_AnthropicとゲイツNPO_2億ドル提携_AI活用で低中所得国の医療_教育_農業支援.md |
+| 227 | ※なお、先ほどのポストの件（npmワーム「Shai-Hulud」が悪用したClaudeのマジックストリングの件）に関連する過去の共有はこちら。ただし5月現在はこ… | ja | 未読 | #x-signal #ecosystem | articles/2026-05-15_2204_npmワームShai-HuludがClaude_APIマジックストリングを悪用_Anthropic修正済み.md |
+| 228 | 【AI最新動向】Anthropicが中小企業向けプラグイン「Claude for Small Business」を発表。QuickBooksやHubSpot、C… | ja | 未読 | #x-signal #ecosystem | articles/2026-05-15_2205_Anthropic_Claude_for_Small_Business発表_QuickBooks_HubSpot_Can.md |
+| 229 | Anthropicが評価額9000億ドルでの巨額増資を計画中。一方、OpenAIは年間売上高250億ドルを超え、IPO検討も示唆。AI業界は空前の資金投入と収益… | ja | 未読 | #x-signal #ecosystem | articles/2026-05-15_2206_Anthropic評価額9000億ドル巨額増資計画_OpenAI年間売上250億ドル超.md |
+| 230 | Anthropicとゲイツ財団が2億ドル規模の提携を発表 。AI「Claude」を活用し、低中所得国での医療、教育、農業支援など公共利益の拡大を目指す。ワクチン… | ja | 未読 | #x-signal #ecosystem | articles/2026-05-15_2207_AnthropicとゲイツNPO_2億ドル提携_AI活用で低中所得国の医療_教育_農業支援.md |
+| 231 | One cool thing about how 🐨 Kody is just an MCP server is that I can use my Cloud… | en | 未読 | #x-signal #ecosystem | articles/2026-05-15_2208_Kody_MCP_ServerでAnthropicのCloud_subscriptionをAgent_SDK課金外で利用.md |
+| 232 | Osaurus is an open-source LLM harness for Mac that runs models locally or in the… | en | 未読 | #x-signal #ecosystem | articles/2026-05-15_2209_Osaurus_OSSのLLMハーネス_Mac_OpenAI_Anthropic_ローカルモデル切替20_プラグイン.md |
+| 233 | MCP is quietly becoming the HTTP of AI tool access.  Anthropic built it, Cursor … | en | 未読 | #x-signal #ecosystem | articles/2026-05-15_2210_MCPはAIツールアクセスのHTTPになりつつある_DeepBook_MCP統合1行設定.md |
+| 234 | Anthropic just shipped a Claude for Small Business plugin that uses the QuickBoo… | en | 未読 | #x-signal #ecosystem | articles/2026-05-15_2211_Claude_for_Small_Business_QuickBooks_Online_MCP連携で自社会計を実際に運用.md |
+| 235 | Geeky Gadgetsによる公式解説。Claude Code最新アップデートで追加された3機能を詳説。 Agent Viewは全セッション（実行中・ブロック… | en | 未読 | #web-signal #claude-code | articles/2026-05-15_2223_Claude_Code__Agent_View__Goal_Command__Background_Sessions_U.md |
+| 236 | 6ヶ月間Claude Codeを調整し続けた著者による実践設定ガイド（Medium / Data Science Collective）。 CLAUDE.md設… | en | 未読 | #web-signal #claude-code | articles/2026-05-15_2224_I_Spent_6_Months_Tuning_Claude_Code_-_The_Exact_Setup_That_F.md |
+| 237 | 非エンジニアのデザイナー視点でClaude Code操作を体系化した実践記事（note / 大原かほ）。 UIデザインワークフロー向けの/plan・/todo・… | ja | 未読 | #web-signal #claude-code | articles/2026-05-15_2225_デザイナーがClaude_Codeを使い倒す18のショートカット_コマンド_2026年5月版.md |
+| 238 | MCPの全機能をチートシート形式で網羅したリファレンス（Webfuse）。 Transport層：Streamable HTTPが2026年の推奨方式、stdi… | en | 未読 | #web-signal #ecosystem | articles/2026-05-15_2226_MCP_Cheat_Sheet_2026_-_Model_Context_Protocol_Quick_Referenc.md |
+| 239 | 2026年6月15日からのClaude Agent SDK課金変更を詳報（The New Stack）。 これまではPro/Maxのインタラクティブ枠からAge… | en | 未読 | #web-signal #ecosystem | articles/2026-05-15_2227_Anthropic_Splits_Billing__Agent_SDK_Gets_Separate_Credit_Poo.md |
+| 240 | 6月15日変更に向けたAgent SDK移行プレイブック（ThePlanetTools.ai）。 変更点を4つに分類：①課金分離 ②モデル廃止（Sonnet 4… | en | 未読 | #web-signal #ecosystem | articles/2026-05-15_2228_Claude_Agent_SDK_Changes_June_15_2026__Billing_Migration_Pla.md |
+| 241 | 国内外のMCP導入実践事例を横断的にまとめた記事（ProofX）。 国内事例：Hacobuが Go静的解析ツールをMCPサーバー化し、コードレビューAI支援に活… | ja | 未読 | #web-signal #ecosystem | articles/2026-05-15_2229_MCP導入で広がる可能性_国内外の実践事例_システム連携と業務効率化.md |
+| 242 | makeshop by GMOが2026年3月17日にMCPサーバー対応とSkills機能を同時リリース（公式プレスリリース）。 MCPサーバーにより、AIエー… | ja | 未読 | #web-signal #ecosystem | articles/2026-05-15_2230_makeshop_ECにMCPサーバー対応とSkillsを同時提供_AIエージェント連携で販売分析自動化.md |

@@ -210,3 +210,4 @@
 | 185 | 🏁 SMC AI 決済 [GBPUSD M15] CLOSE +33.3pip 損益 +2,618円… | ja | 未読 | #x-signal #fx | articles/2026-05-14_2154_X_fxmethodology_SMC_AI_決済_GBPUSD_M15_CLOSE_33_3pip_損益_2_.md |
 | 186 | Alpaca APIでAIトレーディングエージェントを構築する2026年チュートリアル | en | 未読 | #web-signal #llm-trading | articles/2026-05-14_2178_WEB_Alpaca_API_AIトレーディングエージェント構築チュートリアル_2026.md |
 | 187 | moomoo証券「Moomoo API Skill」：チャットだけで米国株自動売買を実現（業界初） | ja | 未読 | #web-signal #skills #llm-trading | articles/2026-05-14_2179_WEB_moomoo_APIスキル_チャットのみで米国株自動売買_日本初_PRTimes.md |
+| 188 | エージェント型AIトレードの概念から実装まで解説（WunderTrading）。 定義：Agentic Tradingとは、マルチターン推論を行い自律的に売買判… | en | 未読 | #web-signal #llm-trading | articles/2026-05-15_2231_Agentic_Trading_Explained__Autonomous_AI_Agents_Transforming.md |
