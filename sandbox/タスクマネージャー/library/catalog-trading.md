@@ -211,3 +211,16 @@
 | 186 | Alpaca APIでAIトレーディングエージェントを構築する2026年チュートリアル | en | 未読 | #web-signal #llm-trading | articles/2026-05-14_2178_WEB_Alpaca_API_AIトレーディングエージェント構築チュートリアル_2026.md |
 | 187 | moomoo証券「Moomoo API Skill」：チャットだけで米国株自動売買を実現（業界初） | ja | 未読 | #web-signal #skills #llm-trading | articles/2026-05-14_2179_WEB_moomoo_APIスキル_チャットのみで米国株自動売買_日本初_PRTimes.md |
 | 188 | エージェント型AIトレードの概念から実装まで解説（WunderTrading）。 定義：Agentic Tradingとは、マルチターン推論を行い自律的に売買判… | en | 未読 | #web-signal #llm-trading | articles/2026-05-15_2231_Agentic_Trading_Explained__Autonomous_AI_Agents_Transforming.md |
+| 189 | SolanaでAIエージェントがUSDCマイクロ決済で自律取引・スキル実行 | en | 未読 | #x-signal #ai-trading | articles/2026-05-16_2291_X_fanning_shaw_SolanaでAIエージェントがUSDCマイクロ決済で自律取引・スキル実行.md |
+| 190 | DonutAIチャット型アgentic暗号通貨ブラウザ、2200万ドル調達済み | en | 未読 | #x-signal #ai-trading | articles/2026-05-16_2292_X_Vasyl_Hunia_8_DonutAIチャット型アgentic暗号通貨ブラウザ2200万ドル調達済み.md |
+| 191 | 完全準同型暗号でMEV耐性・秘密バランスのプライベートDeFi取引実装 | en | 未読 | #x-signal #ai-trading | articles/2026-05-16_2293_X_chibyke23456_完全準同型暗号でMEV耐性・秘密バランスのプライベートDeFi取引実装.md |
+| 192 | Minara正規AIトレーディングプラットフォームとしてドキュメント評価 | en | 未読 | #x-signal #ai-trading | articles/2026-05-16_2294_X_frgrx00_Minara正規AIトレーディングプラットフォームとしてドキュメント評価.md |
+| 193 | MT5用AI Scalper GOLD負けを記憶する学習型AI搭載スキャルピングインジケーター | ja | 未読 | #x-signal #ai-trading | articles/2026-05-16_2295_X_rin_fxeasignal_MT5用AI_Scalper_GOLD負けを記憶する学習型AI搭載スキャルピングインジケーター.md |
+| 194 | WWA概念をTradingViewインジケーターMT5 EAに自動化した実装事例 | en | 未読 | #x-signal #ai-trading | articles/2026-05-16_2296_X_muhgaily_WWA概念をTradingViewインジケーターMT5_EAに自動化した実装事例.md |
+| 195 | PythonAI解析の複数通貨ペアポートフォリオEA（3種構成）システム | ja | 未読 | #x-signal #ai-trading | articles/2026-05-16_2297_X_ikokunosenshi_PythonAI解析の複数通貨ペアポートフォリオEA3種構成システム.md |
+| 196 | MT5でBaby AI Hedge戦略、複数資本規模（10万〜500万）のログイン情報付き公開 | en | 未読 | #x-signal #ai-trading | articles/2026-05-16_2298_X_ForeXTrading_XF_MT5でBaby_AI_Hedge戦略複数資本規模10万500万のログイン情報付き公開.md |
+| 197 | AIへの1行指示でMT5 EAコード生成、ノーコードでバックテスト成功 | ja | 未読 | #x-signal #ai-trading | articles/2026-05-16_2299_X_aiedgefx_7_AIへの1行指示でMT5_EAコード生成ノーコードでバックテスト成功.md |
+| 198 | SageMaster FX自己口座内でAIが運用、第三者預託不要の自動取引構造 | ja | 未読 | #x-signal #ai-trading | articles/2026-05-16_2300_X_no_s_teamayu_SageMaster_FX自己口座内でAIが運用第三者預託不要の自動取引構造.md |
+| 199 | MT4MT5バックテスト結果を時間帯別にAI解析するGPTツール（無料） | ja | 未読 | #x-signal #ai-trading | articles/2026-05-16_2301_X_chappi155_MT4MT5バックテスト結果を時間帯別にAI解析するGPTツール無料.md |
+| 200 | AI Scalper GOLD負けを記憶する学習型AI搭載MT5スキャルピングEA | ja | 未読 | #x-signal #ai-trading | articles/2026-05-16_2302_X_reo_fxEA_AI_Scalper_GOLD負けを記憶する学習型AI搭載MT5スキャルピングEA.md |
+| 201 | AI自動売買EA数ヶ月でPF1未満、6万円製品の誇大広告批判 | ja | 未読 | #x-signal #ai-trading | articles/2026-05-16_2303_X_mionniiiii_AI自動売買EA数ヶ月でPF1未満6万円製品の誇大広告批判.md |

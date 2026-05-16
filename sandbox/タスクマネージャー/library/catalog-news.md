@@ -91,3 +91,15 @@
 | 73 | 2026年5月の新AIモデルリリース総括（WhatLLM.org）。 OpenAI: GPT-5.5リリース、最強のエージェント能力を持ち ChatGPTの新デ… | en | 未読 | #web-signal #ai-news | articles/2026-05-15_2232_New_AI_Models_May_2026__Frontier_Architecture_Takes_the_Stag.md |
 | 74 | IT部門向けの2026年AI重要トレンドを10選でまとめたITmedia TechTarget記事。 MIT Technology Reviewが5月12日公表… | ja | 未読 | #web-signal #ai-news | articles/2026-05-15_2233_LLMの次は何が来る_中国AI浸透_情シス必読AIトレンド10選_2026年5月.md |
 | 75 | 2026年4月3日にMicrosoftが正式リリースしたAgent Framework 1.0の完全解説（Uravation）。 MAFはAzure上でAIエー… | ja | 未読 | #web-signal #ai-news | articles/2026-05-15_2234_Microsoft_Agent_Framework_1.0正式リリース_2026年4月_エンタープライズAIエージェント.md |
+| 76 | EU AI Act Update: 期限延長・AI生成インティメイトコンテンツ規制（8/2施行）… | en | 未読 | #web-signal #ai-regulation | articles/2026-05-16_2247_AI_Act_Update_EU_Resolves_to_Change_Rules_and_Extend_D |
+| 77 | AI Governance 2026: 米・EU・シンガポール・日本・韓国規制全体像比較… | en | 未読 | #web-signal #ai-regulation | articles/2026-05-16_2248_AI_Governance_and_Regulation_2026_Complete_Guide_to_Gl |
+| 78 | Claude Platform Updates May 2026: Opus 4.7 Default・Routines・… | en | 未読 | #web-signal #claude-update | articles/2026-05-16_2249_Claude_Platform_Updates_May_2026_Opus_47_Default_New_A |
+| 79 | AIエージェント登場で定額使い放題の時代が終わりそう（Gizmodo Japan）… | ja | 未読 | #web-signal #ai-news | articles/2026-05-16_2250_AIエージェントの登場によって定額使い放題の時代が終わりそう.md |
+| 80 | OpenGradientがx402インフラで100万件超のLLM推論を処理 | en | 未読 | #x-signal #ai-news | articles/2026-05-16_2304_X_OpenGradient_OpenGradientがx402インフラで100万件超のLLM推論を処理.md |
+| 81 | YC支援のElyra飲食店向けAI予約システムで空席減少を実現 | en | 未読 | #x-signal #ai-news | articles/2026-05-16_2305_X_ycombinator_YC支援のElyra飲食店向けAI予約システムで空席減少を実現.md |
+| 82 | SliceがAI搭載デジタル支店をグワハティで開設、インド展開を発表 | en | 未読 | #x-signal #ai-news | articles/2026-05-16_2306_X_himantabiswa_SliceがAI搭載デジタル支店をグワハティで開設インド展開を発表.md |
+| 83 | AnthropicのAIモデルがApple M5チップのメモリ防御を突破するハック発見 | en | 未読 | #x-signal #ai-news | articles/2026-05-16_2307_X_VaibhavSisinty_AnthropicのAIモデルがApple_M5チップのメモリ防御を突破するハック発見.md |
+| 84 | Microsoft、2030年までに日本で100万人AI人材育成と16兆円DC投資を発表 | ja | 未読 | #x-signal #ai-news | articles/2026-05-16_2308_X_nikkeibpITpro_Microsoft2030年までに日本で100万人AI人材育成と16兆円DC投資を発表.md |
+| 85 | Anthropic、PC自動化AIエージェント「Claude Cowork」の一般提供を開始 | ja | 未読 | #x-signal #ai-news | articles/2026-05-16_2309_X_nikkeibpITpro_AnthropicPC自動化AIエージェントClaude_Coworkの一般提供を開始.md |
+| 86 | arxiv論文HeavySkillが並列推論と熟慮の2段階でLLM推論精度を向上 | ja | 未読 | #x-signal #ai-news | articles/2026-05-16_2310_X_itarutomy_arxiv論文HeavySkillが並列推論と熟慮の2段階でLLM推論精度を向上.md |
+| 87 | JX金属AIサーバー・半導体パッケージ向け素材需要で営業利益1750億円555 | ja | 未読 | #x-signal #ai-news | articles/2026-05-16_2311_X_kei_toshi___JX金属AIサーバー・半導体パッケージ向け素材需要で営業利益1750億円555.md |
