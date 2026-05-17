@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-05-12</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-05-12 | 61件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-05-12</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>AIコーディングツールがdev toolingの中核となったことで、攻撃者もそこを狙い始めている——CVE-2026-26268（git hook脆弱性）、npmサプライチェーン攻撃（TanStack・Mistral AI等）、AI開発ゼロデイの史上初実世界悪用が同日に重なった。一方でAnthropicのエコシステム拡大は加速しており、Claude Code Fast modeのOpus 4.7対応（一次ソース確認済み）は実運用への直結アップデート。FX自動売買の文脈では、Claude AIを使った取引ボット構築実践ガイドと学術論文レベルのハイブリッドシステム論文が揃い、MT5統合事例も登場した。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>開発速度とベリフィケーションループの進化</h3>
+
+<p>Claude Codeを巡る議論の焦点は「どう使えば本当に自走させられるか」に移行している。Michael RouveureはCI＋テストを常時稼働させることで「bigger prompts より tighter verification loops」が鍵だと指摘——失敗状態を安価・決定論的・高速にすることで、Claude Codeが合格まで繰り返し反復できる環境を整える発想だ。Codexとの比較においても「実装→テスト→修正→再実行のループを高速化する力よりも、AI成果物を裁く力が重要になった」という視点が注目を集めている。[^1][^2]</p>
+
+<p>review skillでセキュリティ・パフォーマンス・可読性のpersonaごとにサブエージェントを並列実行させる多角的コードレビュー自動化手法も公開された。Claude DesignとClaude Codeを繋ぐSkillを自作して1日でサイトリデザインを完了した事例では「AnthropicがClaude DesignとClaude Codeを別々にリリースしたが連携しない」という核心的問題提起がなされており、ヘビーユーザーが自らギャップを埋める実態を示している。[^3][^4]</p>
+
+<h3>Code with Claude 2026の実装が進む</h3>
+
+<p>SpaceX（Colossus 1：300MW以上、NVIDIA GPU 22万台以上）との計算インフラ提携を背景に、5月6日にClaude Codeの5時間レート制限が2倍化・ピーク制限が撤廃された。「Code with Claude 2026」カンファレンスで発表された5機能（①Dreaming：自己進化、②Outcomes：QA自動化、③Multi-Agent Orchestration、④Claude Finance：金融10種エージェント、⑤Add-ins：55以上プラグイン）の全容がMindStudio解説とEvery.to詳報で明らかになっている。Managed Agents runtimeの3新API（`/v1/agents`・`/v1/sessions`・`/v1/environments`）も実装参照に有用。Claude Code Marketplaceガイド（日本語）も55以上のプラグインを3カテゴリで整理している。[^5][^6][^7][^8]</p>
+
+<h3>Fast mode Opus 4.7対応（一次ソース確認済み）</h3>
+
+<p>Claude Code Fast modeがOpus 4.7で利用可能に。2.5倍速（出力トークン/秒、初回応答遅延TTFTは変化なし）、価格は入力$30・出力$150 per MTok。`/fast`コマンドまたは`CLAUDE_CODE_ENABLE_OPUS_4_7_FAST_MODE=1`で有効化。v2.1.139以降が必要。5月14日にOpus 4.7がFast modeのデフォルトになる予定。Cursor/Windsurf等からClaude API経由での利用はウェイトリスト登録が必要。[^9]</p>
+
+<h3>AIコーディングツールのセキュリティリスク</h3>
+
+<p>CVE-2026-26268はCursor IDEのgit hook脆弱性として確認済み（Cursor v2.5で修正済み）。元の報告ではClaude Code・Gemini CLI・GitHub Copilotでも「同様のパターン」が存在すると類推されているが、Claude Code等への適用は著者の推論であり独立したCVEとしては未確認（一次ソース確認済み・部分確認）。別の専門家も「dev tooling層への単一侵害で数千台からコードベースが流出する」と警告している。npmサプライチェーン攻撃でTanStack・Mistral AI・UiPath・OpenSearchが被害確認されたことも重なり、日常的なAIコーディングツール利用におけるセキュリティ姿勢の見直しが必要なタイミングだ。[^10][^11][^12]</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>Anthropicの戦略的大型提携</h3>
+
+<p>AnthropicはGoldman Sachs・Blackstone・Hellman &amp; Friedman（3社合弁）で$1.5Bのエンタープライズ向けAI企業を設立した（一次ソース確認済み：CNBC・Blackstone公式・Anthropic公式。General Atlantic・Apollo・GIC・Sequoiaも参加）。xAIとの提携についてNYMagが詳報しており「AmodeiはMuskをAltmanより低脅威と見て手を組んだ——Anthropicの現在の優位性は薄く、Altmanへの対抗として中期的選択をした」という分析が注目される。AI業界の地政学が急速に再編されている。[^13][^14]</p>
+
+<h3>Google I/Oウィーク：Gemini Intelligence・Googlebook・軌道上データセンター</h3>
+
+<p>GoogleがAndroid OS全体にGeminiを深く統合した「Gemini Intelligence」を発表。Apple Intelligenceが目指すべき姿に近いとの評価。Chromebookブランドを「Googlebook」に刷新し、Magic Pointer機能（画面上の要素をホバーするだけでGemini操作が起動）も追加。Dell・HP・Lenovo等も参加でWindows PC市場への本格挑戦となる。さらにWSJはGoogleがSpaceXと軌道上データセンター打ち上げを交渉中と報道——Project Suncatcher（81衛星×1kmアレイ、2027年初頭試作機打ち上げ予定）は1.84Mフォロワーアカウントが6000超のいいねで拡散した。AI計算需要が地上インフラの限界を超えつつあることを象徴している。[^15][^16][^17]</p>
+
+<h3>セキュリティ・規制・市場動向</h3>
+
+<p>Google GTIG（脅威インテリジェンスグループ）がAIで開発されたゼロデイ脆弱性の史上初の実世界悪用を確認。大規模悪用イベントを阻止した。EU AI Actでは欧州委員会が透明性要件ドラフトガイドラインを発表（主要コンプライアンス期限：2026年8月2日、合成コンテンツ開示実装期限：2026年12月2日）。韓国ではAI税収配当案のSNS投稿でKOSPIが一時5.1%急落し政府補足説明で回復——AIへの政策言及が株式市場を直撃した先例として記憶すべき出来事だ。[^18][^19][^20]</p>
+
+<p>日本国内ではデジタル庁が「ガバメントAI・源内」を開発し東南アジア等への輸出方針を発表、国内SaaSのMCP対応本格化も進んでいる。Isomorphic Labs（AlphaFold系医療AI）が$2.1Bの資金調達を完了。Agency.aiは「Instead of prompting AI, AI prompts you」コンセプトでローンチし、AIがユーザーのツールを監視して作業を発見・承認を求める能動的UXを提唱している。[^21][^22]</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #ea580c; padding-left: 12px;">AIトレーディング</h2>
+
+<p>FX自動売買運用者に直結する情報が複数届いた。QuantLabsNetの2026年版実践ガイドでは、Claude AIを用いたPythonベースの取引ボット構築・バックテスト手順を解説。GPT-5.x・Gemini 3.x・Claude 4.x・Grok 4.xのボット生成品質比較も含む実践的内容となっている。[^23]</p>
+
+<p>学術論文（ComSIA 2026、Springer LNNS掲載予定）では、テクニカル指標＋平均回帰＋FinBERT（センチメント分析）＋XGBoost（MLシグナル）＋市場レジームフィルタリングを統合したハイブリッドフレームワークを提案。24ヶ月バックテストで初期投資100万ドルが235万ドル（+135.49%）を記録している。MT5向けゴールドスキャルピングAI EA「LASTDANCE AI」がGoGoJungle（ゴジャン）で公開。コーディング経験ゼロのユーザーがAIツール（Codex）のみでMT5リアルタイム接続ダッシュボードをローカル構築した事例も登場しており、参入障壁の低下を実感させる内容だ。[^24][^25][^26]</p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>過去7日の記事数推移：5/5(71)→5/6(68)→5/7(67)→5/8(65)→5/9(62)→5/10(102)→5/11(55)→<strong>5/12(61)</strong>。5/10の急増（Code with Claude 2026カンファレンス発表の余波）から落ち着いたが、61件と平常水準に回帰している。継続テーマはclaude・claude_code・agent・mcp・tradingで変化なし。</p>
+
+<p>本日の差分は「セキュリティ」が急浮上したこと。CVE・npm攻撃・AI開発ゼロデイの3点が同日に重なり、dev tooling層のリスクが可視化された。「小さく試して実績で引っ張る」アプローチでツールを採用する立場からすれば、採用前のセキュリティ評価フェーズを明確に設ける必要性が改めて浮き彫りになった。今後もセキュリティリスクはclaude_codeトレンドに追随して継続注視すべきサブテーマとなりそうだ。</p>
+
+<p>---</p>
+
+<p>[^1]: https://x.com/MichaelRouveure/status/2054305909363613847</p>
+<p>[^2]: https://x.com/mellow_launch/status/2054302965117374555</p>
+<p>[^3]: https://x.com/Kev_InDev/status/2054284763133858063</p>
+<p>[^4]: https://x.com/anajuliabit/status/2054288744677818517</p>
+<p>[^5]: https://shiftb.dev/articles/anthropic-spacex-claude-code-limits-2026</p>
+<p>[^6]: https://www.mindstudio.ai/blog/code-with-claude-2026-new-agent-features</p>
+<p>[^7]: https://every.to/chain-of-thought/inside-anthropic-s-2026-developer-conference</p>
+<p>[^8]: https://uravation.com/media/anthropic-marketplace-plugin-complete-guide-2026/</p>
+<p>[^9]: https://x.com/nukonuko/status/2054292353759002729</p>
+<p>[^10]: https://x.com/musiol_martin/status/2054299322825777499</p>
+<p>[^11]: https://x.com/MRavinderReddi/status/2054293515018850690</p>
+<p>[^12]: https://x.com/notjazii/status/2054233821311275519</p>
+<p>[^13]: https://x.com/SmallCapSociety/status/2054306079136247987</p>
+<p>[^14]: https://x.com/NYMag/status/2054305857542975540</p>
+<p>[^15]: https://x.com/mark_k/status/2054275997332312294</p>
+<p>[^16]: https://x.com/ShishirShelke1/status/2054257018408751229</p>
+<p>[^17]: https://x.com/KobeissiLetter/status/2054231559050269169</p>
+<p>[^18]: https://x.com/IntCyberDigest/status/2054218330177781801</p>
+<p>[^19]: https://www.insideglobaltech.com/2026/05/12/10-takeaways-european-commission-draft-guidelines-on-ai-transparency-under-the-eu-ai-act/</p>
+<p>[^20]: https://x.com/momoblog0214/status/2026-05-12</p>
+<p>[^21]: https://x.com/IsomorphicLabs/status/2054225193887797681</p>
+<p>[^22]: https://x.com/mamagnus00/status/2054237928235377039</p>
+<p>[^23]: https://www.quantlabsnet.com/post/ai-trading-bots-build-backtest-automate-with-claude-ai-in-2026</p>
+<p>[^24]: https://arxiv.org/html/2601.19504v1</p>
+<p>[^25]: https://x.com/kagahiro/status/2054044894910673375</p>
+<p>[^26]: https://x.com/MasterJeet/status/2054135976965144700</p>
+
+</body>
+</html>

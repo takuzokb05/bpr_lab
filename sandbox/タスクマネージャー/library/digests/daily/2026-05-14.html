@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-05-14</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-05-14 | 118件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-05-14</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>Anthropicが一日で複数の大型発表を行い、記事数118件（過去7日平均約69件の約1.7倍）を記録した激動の一日。</p>
+<p>Claude Code週次利用制限50%増（一次ソース確認済み）、6月15日からの課金体系刷新、MicrosoftのClaude Code離脱（一次ソース確認済み）、Grok Buildの参入、Anthropic×Goldman Sachs×Blackstoneの15億ドル合弁設立（一次ソース確認済み）が同時進行した。</p>
+<p>Claude Codeを日常業務に組み込むヘビーユーザーにとって、課金ルールの変更とライバルCLIの台頭が最重要ポイント。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>利用制限50%増とその背景（一次ソース確認済み）</h3>
+
+<p>Anthropicが2026年5月13日に公式発表した週次利用制限の50%増加が、日本のClaude Codeユーザーの間で大きく話題になった。7月13日18時PDT終了の期間限定措置で、5月6日に実施された5時間制限の2倍（100%増）と同時適用される。背景はSpaceXのColossusコンピュートとの提携と、OpenAI Codexへの競合対応。「溜まってたタスクが一気に解消できそう」との声が多い一方、「利用制限が上がった裏に何かある」と懸念する声も。</p>
+
+<h3>課金体系の刷新：6月15日から別枠化</h3>
+
+<p>6月15日からClaude Agent SDK・`claude -p`・Claude Code GitHub Actions・OpenClaw等サードパーティエージェントの利用が、インタラクティブ利用枠とは別の専用月額クレジットから引かれる仕組みに変更される。クレジット額はPro $20/月、Max 5x $100、Max 20x $200。超過時はAPIレートで従量課金または停止。「power userがClaude Codeとclaude -pを同一サブスクで使えるのが魅力だったのに」という批判と、「個人がGitHub Actionsを少し回す程度ならOAuthで足りる」という冷静な分析が並立している。The Register、TechnoEdge等が批判的に報道。</p>
+
+<h3>MicrosoftがClaude Code撤退（一次ソース確認済み）</h3>
+
+<p>MicrosoftのExperiences &amp; Devices部門（Windows/M365/Teams/Surface担当）が2026年6月30日までに社内Claude Codeライセンスを廃止し、GitHub Copilot CLIへ移行することがTechRadar・Windows Centralなどで確認された。社内開発者はClaude Codeを好んでいたが財務・戦略上の理由による決定。Claude自体はCopilot CLI経由で引き続き利用可能で、AnthropicとMicrosoftの関係が完全に切れるわけではない。この報道を受けてClaude Codeを80〜100席規模でキャンセルする企業も出た。</p>
+
+<h3>Grok Build参入でCLI戦争が本格化</h3>
+
+<p>xAIがGrok BuildのベータをSuperGrok Heavy（月300ドル）加入者に向けて公開した。8エージェントの並列処理、plan mode（diff形式で確認）、sub-agentループをネイティブ実装。「Claude Codeはそのためにhooksが必要」という比較も出ており、機能面での差別化が焦点。Grok 4.3のコーディング精度は未知数だが「AIコーディングCLI戦争が本格的に始まった」という評価は共通している。</p>
+
+<h3>エコシステムの広がり：MCP・スキル・活用事例</h3>
+
+<p>MCP（Model Context Protocol）の月間SDKダウンロード数が9,700万件に到達し、SAP・Google・各社が相次いで対応。Googleは公式スキルパッケージ13個をオープンソース化し、`npx skills add google/skills`一発でClaude Code・Cursor・Copilotに導入可能になった。moomoo証券が「Moomoo API Skill」を発表、Claude Codeのスキル機能を使って自然言語だけで米国株の自動売買を設計・実行できる業界初のサービスを開始した。国内・海外62社のClaude Code実装事例サイト（claude-code-cases.vercel.app）も公開され、Stripe（1,370名展開・Scala→Java 1万行移行を4日に短縮）などの詳細事例が参照できる。</p>
+
+<p>SKILL.mdの実践ガイド（ar-aca.tech）とawesome-claude-code-toolkit（135エージェント・40万+スキル・176プラグイン）が同日公開されており、ヘビーユーザー向けの実装リソースが一気に充実した。Claude Code内の`.claude`フォルダをプロジェクトの「OS」として活用するアプローチも注目を集めている。</p>
+
+<p><strong>参考URL:</strong></p>
+<ul>
+<li>週次制限50%増公式: https://anthropic.com/news/higher-limits-spacex</li>
+<li>Agent SDK課金分離詳細: https://devtoolpicks.com/blog/anthropic-splits-claude-subscriptions-agent-sdk-credit-june-2026</li>
+<li>Microsoft Claude Code離脱（The Register報道）: https://www.theregister.com/ai-ml/2026/05/14/anthropic-tosses-agents-into-the-api-billing-pool/5240748</li>
+<li>SKILL.mdガイド: https://ar-aca.tech/posts/claude-code-skills-guide/</li>
+<li>62社活用事例: https://claude-code-cases.vercel.app/</li>
+</ul>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>Anthropicの企業価値急騰と大型資本連携</h3>
+
+<p>Anthropicが約9,000億ドル評価での300億ドル調達を協議中と報じられた。OpenAIの3月調達時の評価額（8,540億ドル）を超える規模。法人市場ではRampの支出データによりAnthropicがOpenAIを上回り、2025年5月以降でシェアを4倍に拡大したとの報告も出た。5月3〜4日に発表されたGoldman Sachs・Blackstone・Hellman &amp; Friedman等との合弁会社（総額約15億ドル）は一次ソース確認済み。中規模企業へのClaude実装を支援するエンジニアリングサービス会社で、コンサルティングレイヤーが本命の競争軸になりつつある構図がはっきりした。</p>
+
+<h3>Anthropic×Gates Foundation：公共インフラへの展開</h3>
+
+<p>AnthropicとBill &amp; Melinda Gates Foundationが2億ドル規模でClaudeを医療・教育・農業・経済支援へ展開すると発表した。低中所得国のワクチン研究、K-12教育の個別対応、小規模農家の生産性向上などが対象。「便利なチャットAIから人類の公共インフラへ」という段階変化を象徴するニュースとして注目が集まった。</p>
+
+<h3>AIインフラ競争：軌道上データセンター</h3>
+
+<p>GoogleがSpaceXとの軌道上データセンター交渉を進めていると報じられた。Google自身のProject Suncatcher（2027年初頭に試験衛星を打ち上げ予定）に加え、AnthropicはすでにSpaceX Colossusとのコンピュート提携を締結済み。AI計算資源の宇宙展開が現実の競争軸になってきた。</p>
+
+<h3>Grok Build・GPT-5.6・Gemini Intelligence</h3>
+
+<p>CLI AIコーディングの競争はClaude Code、OpenAI Codex（2ヶ月無料キャンペーン開始）、Grok Buildが三巴の様相に。OpenAIはGPT-5.6の内部テストを開始し来月中のリリースを目指す。GoogleはGemini IntelligenceをAndroid向けに発表し、GooglebookノートPCでのGemini搭載も確定、Dell・HP・Lenovoが今後数ヶ月以内に発売予定。</p>
+
+<h3>規制・地政学</h3>
+
+<p>米財務長官ベッセントが、トランプ・習近平会談後に米中AI安全協議を開始すると表明。AnthropicはClaude Mythos Previewへの中国政府のアクセス要求を拒否。EU向けにはOpenAIがサイバーセキュリティAIへのアクセスを提供する一方、AnthropicはEUとの合意に至っていない。トランプ政権の国家AI政策フレームワーク（7本柱）では州AI法の連邦法による先占が盛り込まれ、AIエージェント商用展開の規制環境が整備されつつある。</p>
+
+<p>Klarna事例が話題を呼んだ：700名のカスタマーサービスをAIに置き換えたが顧客満足度が急落し、CEOが「やり過ぎた」と認め人間の採用を再開した。AI代替の実証事例として、公務員職場でのAI導入議論にも関連する。</p>
+
+<p><strong>参考URL:</strong></p>
+<ul>
+<li>Anthropic×Goldman合弁（一次ソース確認済み）: https://x.com/TraderPower/status/2054305668627120385</li>
+<li>Anthropic×Gates Foundation: https://x.com/Cointelegraph/status/2055030935544881260</li>
+<li>Google×SpaceX軌道データセンター: https://x.com/PolymarketMoney/status/2054232123029229870</li>
+<li>Grok Build公式: https://x.com/mark_k/status/2054995822480110007</li>
+</ul>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #ea580c; padding-left: 12px;">AIトレーディング</h2>
+
+<p>SMC AI（GBPUSD M15）が+33.3pip、+2,618円を記録。保有時間1時間21分で、5トレード累計+4,032円（累計+104%）。FX自動売買システムが安定的に稼働している様子が伺える。</p>
+
+<p>moomoo証券の「Moomoo API Skill」はClaude Codeのスキル機能を使い、自然言語（チャット）だけで米国株の自動売買システムを設計・実行できる業界初のサービス。従来はPythonスキルが必要だったシストレを、プロンプトだけで実現した事例として、FX自動売買への応用可能性が高い「自然言語→ブローカーAPI実行」パイプラインの国内実装事例になっている。AlpacaAPIとLLMを組み合わせたトレーディングエージェント構築チュートリアル（tradewink.com）も同日公開された。</p>
+
+<p><strong>参考URL:</strong></p>
+<ul>
+<li>moomoo API Skill: https://prtimes.jp/main/html/rd/p/000000155.000110773.html</li>
+<li>AlpacaAPIチュートリアル: https://www.tradewink.com/learn/build-ai-agent-alpaca-tutorial</li>
+</ul>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>過去7日の記事数推移：5/7(67)→5/8(65)→5/9(62)→5/10(102)→5/11(55)→5/12(61)→5/13(70)→<strong>5/14(118)</strong>。</p>
+
+<p>今日は直近最高値（5/10の102件）を大きく更新した。Anthropicの複数同時発表（課金変更・制限増・Microsoft離脱・Gates財団提携・Mythos報道）が重なり、claude・claude_code・mcp・agent・tradingのすべての恒常テーマで同時に記事が急増した。</p>
+
+<p>特筆すべき変化として、「Claude Codeへの信頼揺らぎ」が初めて大きなテーマとして浮上した。Microsoft離脱、課金ルール変更、Grok Build参入が重なり「Anthropicのポールチェンジが頻繁すぎる」という開発者の不満が可視化された。一方でMCP標準化の進行（97Mダウンロード）やB2B市場でのAnthropicの優勢は継続トレンドとして定着しつつある。</p>
+
+<p>公務員・AI活用の文脈では、「Claude for Legal」のオープンソース化（弁護士向け高額リーガルテックの代替）や「Claude for Small Business」（税理士・社労士業務の代替可能性）など、専門職領域への展開が加速しており、組織内AI導入の政策立案に関わる視点で追跡価値が高い。</p>
+
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-05-13</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-05-13 | 70件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-05-13</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>AnthropicがClaude for Legal・Claude for Small Businessを正式リリース（一次ソース確認済み）、</p>
+<p>Claude Code Routinesによるクラウド自動実行・Agent Viewによる並列管理が整い、</p>
+<p>開発基盤としてのClaude Codeが本格化した一日。同時に6/15からの`claude -p`従量課金移行が</p>
+<p>ヘビーユーザーに直撃する課金変更も発表され、コスト設計の見直しが急務となっている。</p>
+<p>Stainless買収交渉（$300M＋）も浮上し、SDK品質強化の戦略的意図が透けて見える。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>6/15課金変更：`-p`・Agent SDKがAPI従量課金へ</h3>
+
+<p>Claude CodeのインタラクティブなCLI利用とCoworkはサブスクのまま影響なし。しかし<strong>6月15日</strong>から</p>
+<p>`claude -p`（非インタラクティブ）・Claude Agent SDK・Claude Code GitHub Actions・</p>
+<p>サードパーティAgent SDKアプリが従量課金（API料金）に移行する。$200/月のMax Planユーザーも</p>
+<p>programmatic usageには専用料金が発生するため、CI/CDや自動化スクリプトを組んでいる場合は</p>
+<p>コスト構造の再計算が必要だ[^1][^2]。</p>
+
+<p>なお`--prefill`という隠しオプションが`-p`の代替として機能すると報告されており、</p>
+<p>@orca_buildプロジェクトでの数ヶ月の本番実績もある[^3]。公式ドキュメント外の情報のため</p>
+<p>動作検証は必須だが、移行の緩衝策として覚えておきたい。</p>
+
+<p>[^1]: https://x.com/MIDORI_ruby7/status/2054665226872873169</p>
+<p>[^2]: https://x.com/valen0214_info/status/2054668937745596853</p>
+<p>[^3]: https://x.com/JinjingLiang/status/2054668672229323086</p>
+
+<h3>Claude Code Routines：PCレス・クラウド自動実行</h3>
+
+<p>Claude Code Routinesが発表された。Anthropicのクラウドがプロンプトを処理するため、</p>
+<p>ローカルPCの起動不要。トリガーは「定時実行」「APIコール」「GitHubイベント連動」の3種類で、</p>
+<p>マルチエージェント並列オーケストレーションもRoutines内で動作する。Claude Code on the Webから設定でき、</p>
+<p>毎晩のデータ集計→レポート生成→Slack通知という全自動パイプラインの構築が可能になる[^4][^5]。</p>
+
+<p>[^4]: https://x.com/harikingkings/status/2054665596944466242</p>
+<p>[^5]: https://www.mindstudio.ai/blog/claude-code-routines-24-7-agents</p>
+
+<h3>サブエージェントパターンが本格普及フェーズへ</h3>
+
+<p>複数のユーザーが同日に独立してサブエージェント活用を報告した。「スキーマ担当」と「UI担当」を</p>
+<p>互いの作業を知らせずに並列実行することでシップ速度が向上するという設計原則、</p>
+<p>大規模モノリスで認知負荷を半減させた4ヶ月実践レポート（Cursorから移行）、</p>
+<p>そして「従来3日の新機能実装を1日で完了」させたチームオーケストレーションガイドなど、</p>
+<p>サブエージェントが単なる実験から本番手法へと昇格しつつある[^6][^7][^8]。</p>
+
+<p>なお公式ドキュメントの薄さが普及の壁との指摘も複数あり、コミュニティ事例への依存度は高い[^9]。</p>
+
+<p>[^6]: https://x.com/YourGuyForAi/status/2054655145653248454</p>
+<p>[^7]: https://x.com/bettercallsalva/status/2054663811139801208</p>
+<p>[^8]: https://designbeep.com/2026/05/02/claude-code-agent-teams-how-to-orchestrate-ai-subagents-for-real-development-work/</p>
+<p>[^9]: https://x.com/vitobotta/status/2054660911462265295</p>
+
+<h3>MCPコスト・セキュリティの実測値</h3>
+
+<p>MCPサーバーは接続しているだけで1サーバーあたり2,000〜5,000トークンのスキーマベースラインを消費する。</p>
+<p>単発スクリプトにはcurl/jqをインラインで書き、MCPはステートフルアクセスが本当に必要なワークフローに</p>
+<p>限定するのが費用対効果の高い使い方だ[^10]。</p>
+
+<p>セキュリティ面ではMCPのOAuthがクライアント↔MCPサーバー間のみを保護するスコープの狭さが指摘されており、</p>
+<p>Googleトークンをリレーすると「confused deputy」攻撃と権限昇格リスクが生まれる[^11]。</p>
+
+<p>[^10]: https://x.com/bettercallsalva/status/2054663204173725848</p>
+<p>[^11]: https://x.com/torresmateo/status/2054658596323860943</p>
+
+<h3>その他注目ツール・プラグイン</h3>
+
+<p><strong>Chrome DevTools公式MCPサーバー</strong>（GitHub ★3.8万）がClaude Code対応。AIエージェントがDOM操作・ネットワーク監視・コンソール確認を自動化できる[^12]。<strong>トークン削減スキル</strong>（19k→10k、47%減）がOSS公開[^13]。<strong>OpenAI Codex</strong>がClaude Codeプラグインとして動作可能（`/plugin install codex@openai-codex`）[^14]。Solanaインフラ<strong>Helius</strong>もClaude Code公式プラグインを公開[^15]。</p>
+
+<p>[^12]: https://x.com/opensourcelab9/status/2054646874204967380</p>
+<p>[^13]: https://x.com/TheTeaToast/status/2054645744574018043</p>
+<p>[^14]: https://x.com/manishamishra24/status/2054668564754518467</p>
+<p>[^15]: https://x.com/Helius/status/2054668063195423157</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>Anthropicの製品拡張ラッシュ（一次ソース確認済み）</h3>
+
+<p><strong>Claude for Legal</strong>（一次ソース確認済み）が正式リリース。MCPコネクター20個・法律専門プラグイン12分野。</p>
+<p>Westlaw（Thomson Reuters）・DocuSign・LexisNexis・Harvey・Legoraを統合し、</p>
+<p>FreshfieldsとQuinn Emanuelで本番稼働を確認[^16]。発表ウェビナー参加2万人超はAnthropic史上最大規模。</p>
+
+<p><strong>Claude for Small Business</strong>もAnthropicとPayPalの提携で発表。QuickBooks・PayPal・HubSpot・Canva等と</p>
+<p>接続し、給与計算・請求催促・月次締めを「人間承認型」で自動化。チャットAIから実務AIへの明確なシフト[^17]。</p>
+
+<p>[^16]: https://x.com/tossact/status/2054665878034411619</p>
+<p>[^17]: https://x.com/akichan_jpn/status/2054662186795200605</p>
+
+<h3>AnthropicのStainless買収交渉（一次ソース確認済み・交渉中）</h3>
+
+<p>OpenAI・Google・MistralのSDKを自動生成するStainlessをAnthropicが最低$300Mで買収交渉中</p>
+<p>（The Informationほか複数メディア報道、未成立）。垂直統合でClaude SDKを最優先改善する体制を</p>
+<p>構築する狙いで、Claude APIを使う開発者への恩恵は長期的に大きい[^18]。</p>
+
+<p>[^18]: https://x.com/WesRoth/status/2054668003405422838</p>
+
+<h3>Anthropicがアライメント評価ツールPetri 3.0を非営利団体に移管（一次ソース確認済み）</h3>
+
+<p>Petri 3.0が非営利団体Meridian Labsに移管された（2026-05-07/08確認済み）。Claude Sonnet 4.5以降の</p>
+<p>全モデルで使用され、英国AI Security Instituteも主要評価ツールとして採用。特定ラボから独立した</p>
+<p>中立的AI安全性評価基盤の構築という意義は大きい[^19]。</p>
+
+<p>[^19]: https://x.com/EntrepreneursAI/status/2054668091720646908</p>
+
+<h3>AIビジネス・市場動向</h3>
+
+<p><strong>ソフトバンクG</strong>がFY2026決算でNAV47.7兆円（過去最高）を発表。OpenAI投資は2026年10月時点で</p>
+<p>総646億ドルへ拡大予定。<strong>Nebius Group</strong>（NASDAQ: NBIS）はQ1売上高+684% Y/YでNVIDIAから</p>
+<p>20億ドル出資を受けた[^20]。<strong>東京エネシス</strong>はAIデータセンター電力需要で営業利益前期比78%増。</p>
+
+<p><strong>Google</strong>はAndroid向けAIエージェント「Gemini Intelligence」を発表。<strong>FANUC</strong>はGoogle CloudのGemini Roboticsと協業強化し産業ロボットへの自然言語制御を展開[^21]。<strong>Samsung</strong>はAppleより先にAIスマートグラスを7月リリース予定[^22]。</p>
+
+<p>[^20]: https://x.com/momoblog0214/status/2054533939667321205</p>
+<p>[^21]: https://x.com/heiga_zen/status/2054558417604522378</p>
+<p>[^22]: https://x.com/MacRumors/status/2054650678828769658</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #ea580c; padding-left: 12px;">AIトレーディング</h2>
+
+<p><strong>ChartPilot</strong>がリリース。TradingView・MT5のチャートスクリーンショットをアップロードすると</p>
+<p>マーケット構造・S/R・パターン・ノートレード条件の7項目を構造化出力する。シグナル配信ではなく</p>
+<p>「理解支援」に特化した設計が特徴[^23]。</p>
+
+<p><strong>HKUDS AI-Trader</strong>はClaude Code・Codex・Cursorなど主要AIエージェントを統合できる100%全自動の</p>
+<p>オープンソース取引プラットフォーム（Binance・Coinbase・Interactive Brokers対応）。</p>
+<p>arXiv論文ベースのベンチマーク設計で研究・実運用の両方を想定している[^24]。</p>
+
+<p><strong>TradingAgents v0.2.4</strong>はファンダメンタル・センチメント・テクニカルの各アナリストと</p>
+<p>Bull/Bear研究者・リスク管理・トレーダーが役割分担するマルチLLMフレームワーク。</p>
+<p>Claude 4.6を含む10以上のプロバイダーに対応[^25]。</p>
+
+<p>[^23]: https://x.com/sabahkemalll/status/2054639017615106219</p>
+<p>[^24]: https://aitoolly.com/ai-news/article/2026-05-10-ai-trader-hkuds-unveils-100-fully-automated-agent-native-trading-system</p>
+<p>[^25]: https://aitoolly.com/ai-news/article/2026-05-03-tauricresearch-launches-tradingagents-an-advanced-multi-agent-llm-framework-for-financial-trading</p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>過去7日の記事数推移：5/6(68)→5/7(67)→5/8(65)→5/9(62)→<strong>5/10(102)</strong>→5/11(55)→5/12(61)→<strong>5/13(70)</strong>。</p>
+
+<p>5/10の102件スパイクは複数の大型発表が集中したタイミングで、その後落ち着いていた流れが</p>
+<p>本日70件へ再上昇した。Claude for Legal・Claude for Small Business・Routines・Agent Viewと</p>
+<p>Anthropicの発表ラッシュが再点火した形だ。</p>
+
+<p><strong>claude_code・agent・mcp・trading</strong>の4テーマが7日間一貫して最頻出。特にサブエージェントパターンは</p>
+<p>先週から継続して複数の実践者が独立報告しており、実戦普及フェーズへの移行が顕著。MCPエコシステムは</p>
+<p>コスト最適化（サーバーあたり2-5kトークン）とセキュリティ（confused deputy）の論点が先週より</p>
+<p>具体的になってきており、導入初期から運用最適化フェーズへのシフトを示している。</p>
+
+</body>
+</html>

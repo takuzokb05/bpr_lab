@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-05-05</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-05-05 | 71件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-05-05</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>Anthropicが金融サービス向けAIエージェントテンプレート10本をリリースし、Claude Opus 4.7が業界ベンチマーク首位を獲得。Claude CodeのGitHubコミット占有率が1ヶ月で倍増して4%に達し、21エージェントチームが72分でアプリをApp Store提出まで完成させる事例も登場した。規制面ではフロンティアAI主要5社が米政府の事前審査に合意し、コロラド州AI法からExplainability要件が削除される方向で改正が進んでいる（一次ソース確認済み）。MCPエコシステムは企業・OSS・Web3へと急拡大中。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>デスクトップ刷新とRoutinesの本格展開</h3>
+
+<p>Anthropicが2026年4月14日にClaude Codeデスクトップ版を大幅刷新し、並列エージェントによるマルチタスク対応を導入した（<strong>一次ソース確認済み</strong>）。同時発表のRoutinesは、プロンプト・リポジトリ・コネクターを1パッケージにまとめてクラウドで自動実行できる仕組みで、スケジュール・GitHubイベント・APIの3トリガーをサポートする。デスクトップ上で複数タスクを並列処理するエージェント型ワークフローが実質的に解禁された形だ。</p>
+
+<p>Claude Code自体の使い方も急速に進化している。21エージェントチームが4並列スプリントを走らせ、アイデアからApp Store提出まで72分で完了した事例が話題に。UCLのリバースエンジニアリング調査ではコードベースの1.6%しかLLMモデルでなく、98.4%がエージェントループ（ハーネス）であると判明した。創設者のBoris Chernyは2026年に自分では一行もコードを書いておらず、Claude Codeのコードベースは最終的に約100行に収束すると予測している。GitHubの全公開コミットの4%がすでにClaude Code由来で、これは1ヶ月で倍増した数値だ。AmazonはClaude CodeとOpenAI Codexを全エンジニアに社内展開済み。</p>
+
+<p>Claude Codeヘビーユーザーとして注目のアップデート：`/claude-api`スキルが標準搭載され、モデル移行・プロンプトキャッシュ・Managed Agentsの操作をツール内で完結できるようになった。また、PixelDojoがMCPで130以上のメディアモデルをワンコマンド（`npx @pixeldojo/mcp init`）で接続可能にし、MonidはOpenRouter的なエージェントツールマーケットプレイスとして単一スキルで数百ツールへのアクセスを提供している。</p>
+
+<h3>Anthropic エコシステムの拡大</h3>
+
+<p>Claude Agent SDKが本番運用パターンの標準的なリファレンスとして確立されつつある。LangGraphに次ぐAnthropicネイティブの最速成長フレームワークと評価されており、`query()`呼び出しのプロンプトキャッシュ無効化バグが修正され入力トークンコストが最大12x削減された。</p>
+
+<p>MCPエコシステムはJama Software（エンジニアリング管理）、Blockscout（Web3エクスプローラー、100チェーン対応・15以上のAIネイティブツール）、Blender Labs（3D/クリエイティブツール）と多様なドメインへ拡大している。MCPは発表から12ヶ月以内にMicrosoft Windows統合・Google Gemini採用・ChatGPT統合・Linux Foundation傘下入りを達成し、デファクトスタンダードとなった。</p>
+
+<p>Anthropicは金融サービス向けに10本のAIエージェントテンプレートをリリース（ピッチブック作成・KYCスクリーニング・月末決算・バリュエーションレビューなどMicrosoft 365直接統合対応）。Claude Opus 4.7がVals AI Finance Agent Benchmarkで64.37%で業界トップ。Anthropic自体も9,000億ドル評価（Bloomberg 4/29）での資金調達交渉中と報じられ、年間売上は300億ドルに到達している。さらにGoogle Cloudへの200億ドルコミットメントが発表され、AWS TrainiumよりGTP TPUを主要学習基盤として優先する姿勢が鮮明になった。</p>
+
+<p>公務員業務との関連では、Claude Coworkが4月9日に一般提供開始。PC上の事務作業を自動化するAIエージェントとして、従来のSaaSの役割を侵食し始めている点が注目される。医療職がコード未経験からClaude Codeで勤務表作成アプリを自作し、確認作業を1時間→5分に短縮した事例も報告されている。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>規制の動向：緩和と締め付けが並行</h3>
+
+<p>コロラド州AI法（SB24-205）の改正案ではExplainability要件の削除と対象範囲の再定義が審議中（<strong>一次ソース確認済み</strong>）。EU AI Actも高リスク義務のコンプライアンスデッドラインを2026年8月から2027年12月へ約16ヶ月延期する方向で調整中だ。一方でAnthropicを含むフロンティアAI主要5社（Google・Microsoft・xAI・OpenAI）が米商務省CAISI主導の事前審査に合意し、モデル公開前の安全性評価が義務化される見通し。Trumpホワイトハウスの国家AIポリシーフレームワーク（3月20日発表）は連邦統一規制によって州法のパッチワークを抑制する方向を打ち出している。</p>
+
+<h3>中国モデルと業界構造の変化</h3>
+
+<p>Air Street Pressの分析（<strong>一次ソース確認済み</strong>）によれば、中国4ラボが短期間でオープンウェイト・コーディングモデルをリリース。Kimi K2.6（1兆パラメータ・長コンテキスト・エージェント指向）、DeepSeek V4、GLM-5.1、MiniMax M2.7が相次いで登場し、推論モデルとマルチモーダル能力がフロンティアモデルのデファクト標準になりつつある。</p>
+
+<p>IBM Think 2026では基盤モデルではなくエージェント・データ・自動化をつなぐ「AIオペレーティングモデル」を発表し、40%生産性向上事例を報告。NVIDIA＋ServiceNowがProject Arc（コード生成・実行できる自律AIエージェント）を共同発表。Cognitionは「Devin for Security」でセキュリティ負債削減・リリース前チェック・インシデント対応を自動化する製品を投入した。主要7社（Coinbase・Block・Klarna・Amazon・Meta・Salesforce・Shopify）がAI生産性向上を理由に合計推定882人/日ペースで人員削減を進めている。Palantirは売上1.6B（前年比+104%）のトリプルビート決算を発表。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #ea580c; padding-left: 12px;">AIトレーディング</h2>
+
+<p>LangGraph上に構築されたオープンソースのTradingAgents（TauricResearch）が注目を集めている。ファンダメンタル・センチメント・テクニカルアナリストなど7つの専門エージェントが協調動作し、v0.2.4（2026年4月）では構造化出力エージェント・LangGraphチェックポイントリジューム・DeepSeek/Qwen対応などが追加された。ただし研究結果では単純buy-and-holdを上回れないケースも示されており、実験的フレームワークとして位置づけられる点は自動売買運用者として留意が必要だ。</p>
+
+<p>FX自動売買への直接的な情報として、「Last Out」ストラテジーのEURUSD/GBPUSD週次結果が+7.0%（4月27日〜5月1日）と報告されている。ChatGPT Codex（月額3,000円）でFXインジケーターやEA開発・バックテストを行うワークフローを解説するコンテンツも増加中で、AI×EAの組み合わせがプログラミング初心者にも普及している様子がうかがえる。AIを使った投資判断における法的責任についての研究も蓄積されてきており、コンプライアンス面での調査が今後必要になる局面も想定される。</p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>過去7日の収集記事数：4/28（52）→4/29（55）→4/30（56）→5/1（60）→5/2（68）→5/3（28）→5/4（56）→5/5（71）。5/3の急減は収集システム起因の可能性があるが、全体として増加基調が続いている。</p>
+
+<p>継続テーマ（claude・claude_code・agent・mcp・model）は変わっていないが、本日の特徴はAnthropicの「金融×AI」への本格進出と、MCPのエンタープライズ・OSS・クリエイティブツールへの拡散が同時進行した点だ。Claude Codeの実運用事例（GitHubシェア・企業展開・非エンジニアによる活用）の報告が急増しており、ユーザー層が「早期採用者」から「実務導入」フェーズに移行していることを示している。規制面ではExplainability要件の後退とCAISI事前審査義務化という相反する方向性が同時進行中で、AI活用の自由度は広がりつつも政府監視の目も強まるという複雑な構図が続く。</p>
+
+</body>
+</html>
