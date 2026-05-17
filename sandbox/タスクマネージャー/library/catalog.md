@@ -314,3 +314,44 @@
 | 292 | 8 Claude Skills  48 MCPツールのOSSインフラ公開 | en | 未読 | #x-signal #ecosystem | articles/2026-05-16_2288_X_thepulsare_8_Claude_Skills_48_MCPツールのOSSインフラ公開.md |
 | 293 | MCPがHTTP相当の標準化、Cursor・Claude desktopが採用 | en | 未読 | #x-signal #ecosystem | articles/2026-05-16_2289_X_funkii_MCPがHTTP相当の標準化Cursor・Claude_desktopが採用.md |
 | 294 | QuickBooks MCP serverをClaude Code・Codexで運用可能 | en | 未読 | #x-signal #ecosystem | articles/2026-05-16_2290_X_darrenbounds_QuickBooks_MCP_serverをClaude_Code・Codexで運用可能.md |
+| 295 | Claude Code What's New - Official May 2026 Relea… | en | 未読 | #model-update #web-signal | articles/2026-05-17_2312_WEB_Claude_Code_WhatsNew_Official_May2026.md |
+| 296 | 【2026年最新】Claude Code v2.1.101完全ガイド｜30+機能を5週間で解説 | ja | 未読 | #model-update #web-signal | articles/2026-05-17_2313_WEB_Claude_Code_v2101_30_Features_5weeks_Uravation_JA.md |
+| 297 | デザイナーがClaude Codeを使い倒すための18のショートカット＆コマンド | ja | 未読 | #web-signal | articles/2026-05-17_2314_WEB_Claude_Code_18_Shortcuts_Designer_Note_Ohara.md |
+| 298 | 【2026年版】Claude Codeのアップデート・最新情報まとめ【毎週更新】 | ja | 未読 | #model-update #web-signal | articles/2026-05-17_2315_WEB_Claude_Code_Updates_2026_Weekly_AISouken.md |
+| 299 | Claude Code Best Practices: 12 Patterns Agentic … | en | 未読 | #web-signal | articles/2026-05-17_2316_WEB_Claude_Code_12_Patterns_Agentic_Engineers_LevelUp.md |
+| 300 | Complete Guide to MCP (Model Context Protocol) i… | en | 未読 | #mcp #web-signal | articles/2026-05-17_2317_WEB_MCP_Complete_Guide_2026_Architecture_DEVcommunity.md |
+| 301 | Claude活用おすすめMCPサーバー15選｜GitHub・Slack・Drive・Exaなど2… | ja | 未読 | #mcp #web-signal | articles/2026-05-17_2318_WEB_Claude_MCP_15_Servers_Recommendation_2026_Jinrai.md |
+| 302 | Claude Code MCPおすすめサーバー15選【2026年5月版】 | ja | 未読 | #mcp #web-signal | articles/2026-05-17_2319_WEB_Claude_Code_MCP_15_Servers_May2026_AICareerJapan.md |
+| 303 | 大規模なリファクタリングをClaude Codeに任せるとき どこまで自分で確認すればいいか迷い… | ja | 未読 | #x-signal | articles/2026-05-17_2327_X_ura_unico_大規模なリファクタリングをClaude_Codeに任せるとき_どこまで自分で確認すればいいか迷いますよね_海外の開発者.md |
+| 304 | わーい。 AI用の他slotへの入力経路、内容の確認経路を追加して、スキルで使えるようにしたら、… | ja | 未読 | #x-signal | articles/2026-05-17_2328_X_harunamix_わーい。_AI用の他slotへの入力経路、内容の確認経路を追加して、スキルで使えるようにしたら、_slot3のclaud.md |
+| 305 | AI研修がある企業は、増えてきていると思います。 ナイルは、Claude CodeなどのAIを「… | ja | 未読 | #x-signal | articles/2026-05-17_2329_X_optisyenbeyy_AI研修がある企業は、増えてきていると思います。_ナイルは、Claude_CodeなどのAIを「知る」ではなく、「仕事で.md |
+| 306 | Claude Code を大規模コードベースで使うベストプラクティス - izanami htt… | ja | 未読 | #x-signal | articles/2026-05-17_2330_X_NEWS_0_Claude_Code_を大規模コードベースで使うベストプラクティス___izanami_https___t_co_2Z.md |
+| 307 | Claude Codeに日本語で頼んだら部内専用の勤務表作成アプリが3時間で動いた。フロントはH… | ja | 未読 | #x-signal | articles/2026-05-17_2331_X_tenso_ai_med_Claude_Codeに日本語で頼んだら部内専用の勤務表作成アプリが3時間で動いた。フロントはHTML_CSS・バックエ.md |
+| 308 | just shipped: Meridian — a Claude Code harness f… | en | 未読 | #x-signal | articles/2026-05-17_2332_X_TimotheosPaul_just_shipped__Meridian___a_Claude_Code_harness_for_a_working.md |
+| 309 | while every AI coding tool is eating gigabytes o… | en | 未読 | #x-signal | articles/2026-05-17_2333_X_mrluiscalderon_while_every_AI_coding_tool_is_eating_gigabytes_of_RAM__zeros.md |
+| 310 | @shmidtqq the 'one afternoon of setup' part ring… | en | 未読 | #x-signal | articles/2026-05-17_2334_X_m13v___shmidtqq_the__one_afternoon_of_setup__part_rings_hollow_aft.md |
+| 311 | built an ios app to build ios app from phone!   … | en | 未読 | #x-signal | articles/2026-05-17_2335_X_chetanankola_built_an_ios_app_to_build_ios_app_from_phone__try_https___.md |
+| 312 | CLAUDE CODE CAN NOW TEST YOUR ENTIRE IOS APP ON … | en | 未読 | #x-signal | articles/2026-05-17_2336_X_RoundtableSpace_CLAUDE_CODE_CAN_NOW_TEST_YOUR_ENTIRE_IOS_APP_ON_ITS_OWN__EVE.md |
+| 313 | That @karpathy CLAUDE.md guidance going around i… | en | 未読 | #x-signal | articles/2026-05-17_2337_X_elrolio_That__karpathy_CLAUDE_md_guidance_going_around_is_a_good_sta.md |
+| 314 | what makes this a "Meridian harness" and not jus… | en | 未読 | #x-signal | articles/2026-05-17_2338_X_TimotheosPaul_what_makes_this_a__Meridian_harness__and_not_just_a_python_p.md |
+| 315 | @ChrisHa93378389 @FidelCacheFlow 1. Open up clau… | ja | 未読 | #x-signal | articles/2026-05-17_2339_X_rumi_kaz__ChrisHa93378389__FidelCacheFlow_1__Open_up_claude___search.md |
+| 316 | Hot take: AI coding assistants have mastered the… | en | 未読 | #x-signal | articles/2026-05-17_2340_X__KanyeDev_Hot_take__AI_coding_assistants_have_mastered_the_function__T.md |
+| 317 | Hell yeah this plugin is exactly what Claude Cod… | ja | 未読 | #x-signal | articles/2026-05-17_2341_X_dzikyDonnyMaps_Hell_yeah_this_plugin_is_exactly_what_Claude_Code_needed___.md |
+| 318 | co-review: a Claude Code skill that pairs your s… | en | 未読 | #x-signal | articles/2026-05-17_2342_X_Trigger_oi_co_review__a_Claude_Code_skill_that_pairs_your_session_with.md |
+| 319 | Este plugin cambia por completo lo que creías sa… | en | 未読 | #x-signal | articles/2026-05-17_2343_X_SantiTorAI_Este_plugin_cambia_por_completo_lo_que_creías_saber_sobre_Cl.md |
+| 320 | MCP SERVERS ARE THE MOST POWERFUL FEATURE IN CLA… | en | 未読 | #x-signal | articles/2026-05-17_2344_X_cyrilXBT_MCP_SERVERS_ARE_THE_MOST_POWERFUL_FEATURE_IN_CLAUDE_CODE_AND.md |
+| 321 | Final step - adding the MCP server into your Cla… | en | 未読 | #x-signal | articles/2026-05-17_2345_X_DeFiTracer_Final_step___adding_the_MCP_server_into_your_Claude_Code_con.md |
+| 322 | CLAUDE CODE IS CONFUSING UNTIL YOU INSTALL THIS … | en | 未読 | #x-signal | articles/2026-05-17_2346_X_eng_khairallah1_CLAUDE_CODE_IS_CONFUSING_UNTIL_YOU_INSTALL_THIS_OFFICIAL_ANT.md |
+| 323 | @tszzl i have the app but i primarily drive code… | en | 未読 | #x-signal | articles/2026-05-17_2347_X_tenobrus__tszzl_i_have_the_app_but_i_primarily_drive_codex_via_claude.md |
+| 324 | Turned Hermes into an MCP so it could plug into … | en | 未読 | #x-signal | articles/2026-05-17_2348_X_AzulAether_Turned_Hermes_into_an_MCP_so_it_could_plug_into_Claude_code_.md |
+| 325 | A NON-DESIGNER CAN NOW SHIP UI THAT LOOKS LIKE I… | en | 未読 | #x-signal | articles/2026-05-17_2349_X_lagerskoy_A_NON_DESIGNER_CAN_NOW_SHIP_UI_THAT_LOOKS_LIKE_IT_WAS_BUILT.md |
+| 326 | Analysis: 34 leading AI startups are generating … | ja | 未読 | #ecosystem #x-signal | articles/2026-05-17_2350_X_techsnif_Analysis__34_leading_AI_startups_are_generating___80B_in_ann.md |
+| 327 | Anthropic recruited SpaceX's 220,000-GPU Colossu… | en | 未読 | #ecosystem #x-signal | articles/2026-05-17_2351_X_thenewstack_Anthropic_recruited_SpaceX_s_220_000_GPU_Colossus_1_to_fix_w.md |
+| 328 | Notion is quietly becoming more than a workspace… | en | 未読 | #ecosystem #x-signal | articles/2026-05-17_2352_X_EntrepreneursAI_Notion_is_quietly_becoming_more_than_a_workspace__It_launch.md |
+| 329 | @HackingLZ Absolutely. If you haven’t seen it bo… | ja | 未読 | #ecosystem #x-signal | articles/2026-05-17_2353_X_timboloman__HackingLZ_Absolutely__If_you_haven_t_seen_it_both_OpenAI_an.md |
+| 330 | ＼先週の注目AIニュース／ Anthropicが中小企業向け「Claude for Small … | ja | 未読 | #ecosystem #x-signal | articles/2026-05-17_2354_X_KAIZENnemon__先週の注目AIニュース__Anthropicが中小企業向け「Claude_for_Small_Business」を公開.md |
+| 331 | ふぁっきんAnthropic！  モデルのコンテキスト選択を消してやがった！  これが、ごりっと… | ja | 未読 | #ecosystem #x-signal | articles/2026-05-17_2355_X_2ndHitsuji_ふぁっきんAnthropic__モデルのコンテキスト選択を消してやがった__これが、ごりっと使用量が増えた理由だ_.md |
+| 332 | AnthropicとOpenAIが「FDE」に進出した理由　ー「APIサブスク利益」の限界｜Ta… | ja | 未読 | #ecosystem #x-signal | articles/2026-05-17_2356_X_ryokan_youtuber_AnthropicとOpenAIが「FDE」に進出した理由_ー「APIサブスク利益」の限界_Takashi_Nakaya.md |
+| 333 | 本件、xAIが持っている2つのデータセンタ(Colossus 1と2)のうち、最近、Coloss… | ja | 未読 | #ecosystem #x-signal | articles/2026-05-17_2357_X_yoshi48840ura_本件、xAIが持っている2つのデータセンタ_Colossus_1と2_のうち、最近、Colossus_1を丸ごとAnth.md |
+| 334 | 米国防総省がOpenAIなどAI調達拡大、Anthropic排除もMythos利用へ調整(ビジネ… | ja | 未読 | #ecosystem #x-signal | articles/2026-05-17_2358_X_monjiro2014_米国防総省がOpenAIなどAI調達拡大、Anthropic排除もMythos利用へ調整_ビジネス_IT___Yahoo.md |
+| 335 | 4月にビジネス利用シェアでAnthropicがOpenAIを逆転した可能性が高いという調査。グラ… | ja | 未読 | #ecosystem #x-signal | articles/2026-05-17_2359_X_ka2aki86_4月にビジネス利用シェアでAnthropicがOpenAIを逆転した可能性が高いという調査。グラフ見てるとAIエージェン.md |

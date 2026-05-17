@@ -103,3 +103,15 @@
 | 85 | Anthropic、PC自動化AIエージェント「Claude Cowork」の一般提供を開始 | ja | 未読 | #x-signal #ai-news | articles/2026-05-16_2309_X_nikkeibpITpro_AnthropicPC自動化AIエージェントClaude_Coworkの一般提供を開始.md |
 | 86 | arxiv論文HeavySkillが並列推論と熟慮の2段階でLLM推論精度を向上 | ja | 未読 | #x-signal #ai-news | articles/2026-05-16_2310_X_itarutomy_arxiv論文HeavySkillが並列推論と熟慮の2段階でLLM推論精度を向上.md |
 | 87 | JX金属AIサーバー・半導体パッケージ向け素材需要で営業利益1750億円555 | ja | 未読 | #x-signal #ai-news | articles/2026-05-16_2311_X_kei_toshi___JX金属AIサーバー・半導体パッケージ向け素材需要で営業利益1750億円555.md |
+| 88 | Cloudflare Builds High-Performance Infrastructur… | en | 未読 | #llm-news #web-signal | articles/2026-05-17_2324_WEB_Cloudflare_LLM_Infrastructure_High_Performance_InfoQ.md |
+| 89 | EU Council and Parliament Agree to Simplify and … | en | 未読 | #regulation #web-signal | articles/2026-05-17_2325_WEB_EU_AI_Act_Council_Parliament_Simplify_May2026.md |
+| 90 | New AI Models May 2026: Frontier Took a Breath, … | en | 未読 | #llm-news #web-signal | articles/2026-05-17_2326_WEB_New_AI_Models_May_2026_Frontier_Architecture_WhatLLM.md |
+| 91 | As Early Access favorite Witchfire nears a 1.0 l… | en | 未読 | #x-signal #ai-news | articles/2026-05-17_2371_X_gameinformer_As_Early_Access_favorite_Witchfire_nears_a_1_0_launch_this_y.md |
+| 92 | UPDATE: Tesla is rolling out FSD (Supervised) v1… | en | 未読 | #x-signal #ai-news | articles/2026-05-17_2372_X_teslaownersSV_UPDATE__Tesla_is_rolling_out_FSD__Supervised__v14_3_3_with_t.md |
+| 93 | Protocol 23 Activates — Pi Network Transforms in… | en | 未読 | #x-signal #ai-news | articles/2026-05-17_2373_X_Pi_CoinMagazine_Protocol_23_Activates___Pi_Network_Transforms_into_a_Program.md |
+| 94 | I’ve been waiting for this launch from @Interlac… | en | 未読 | #x-signal #ai-news | articles/2026-05-17_2374_X_WhalePiz_I_ve_been_waiting_for_this_launch_from__InterlaceMoney__The.md |
+| 95 | Codiff 0.1 is out  * Fast Local Code Reviews * O… | en | 未読 | #x-signal #ai-news | articles/2026-05-17_2375_X_cnakazawa_Codiff_0_1_is_out___Fast_Local_Code_Reviews___Optional_LLM.md |
+| 96 | 🌟AIインフラ銘柄は数年強気がつづく見込み  JPMの2026年中間見通しレポートが発表‼️ 👉… | ja | 未読 | #x-signal #ai-news | articles/2026-05-17_2376_X_beauty_oe__AIインフラ銘柄は数年強気がつづく見込み_JPMの2026年中間見通しレポートが発表____物理的ボトルネック企業は.md |
+| 97 | 【電力インフラ逼迫へのソリューションかも！】  AIデータセンターでは、特にアメリカで電力インフ… | ja | 未読 | #x-signal #ai-news | articles/2026-05-17_2377_X_semicon_eng1_【電力インフラ逼迫へのソリューションかも_】_AIデータセンターでは、特にアメリカで電力インフラの逼迫がボトルネックと.md |
+| 98 | ウシオ電機（6925）がS高。  ・産業用ランプで世界首位。半導体向け光学装置などを展開。 ・2… | ja | 未読 | #x-signal #ai-news | articles/2026-05-17_2378_X_mameyama_kun_ウシオ電機_6925_がS高。_・産業用ランプで世界首位。半導体向け光学装置などを展開。_・2027年3月期の業績予想.md |
+| 99 | FUJI（6134）が上場来高値。  ・電子部品組立などの自動装着装置で世界トップ。 ・通期の業… | ja | 未読 | #x-signal #ai-news | articles/2026-05-17_2379_X_mameyama_kun_FUJI_6134_が上場来高値。_・電子部品組立などの自動装着装置で世界トップ。_・通期の業績予想を発表。営業利益4.md |

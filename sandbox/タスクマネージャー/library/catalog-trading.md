@@ -224,3 +224,18 @@
 | 199 | MT4MT5バックテスト結果を時間帯別にAI解析するGPTツール（無料） | ja | 未読 | #x-signal #ai-trading | articles/2026-05-16_2301_X_chappi155_MT4MT5バックテスト結果を時間帯別にAI解析するGPTツール無料.md |
 | 200 | AI Scalper GOLD負けを記憶する学習型AI搭載MT5スキャルピングEA | ja | 未読 | #x-signal #ai-trading | articles/2026-05-16_2302_X_reo_fxEA_AI_Scalper_GOLD負けを記憶する学習型AI搭載MT5スキャルピングEA.md |
 | 201 | AI自動売買EA数ヶ月でPF1未満、6万円製品の誇大広告批判 | ja | 未読 | #x-signal #ai-trading | articles/2026-05-16_2303_X_mionniiiii_AI自動売買EA数ヶ月でPF1未満6万円製品の誇大広告批判.md |
+| 202 | Build a 24/7 AI Forex Trading Bot with TradingAg… | en | 未読 | #llm-trading #fx #implementation #web-signal | articles/2026-05-17_2320_WEB_TradingAgents_MT5_VPS_Forex_Deployment_LightNode.md |
+| 203 | TradingAgents: An Open-Source Multi-Agent LLM Tr… | en | 未読 | #llm-trading #multi-agent #web-signal | articles/2026-05-17_2321_WEB_TradingAgents_Python_OpenSource_AlgoInsights_Medium.md |
+| 204 | Which AI Powers the Best Python Algo Trading Bot… | en | 未読 | #llm-trading #comparison #web-signal | articles/2026-05-17_2322_WEB_LLM_Trading_Bot_Python_Comparison_QuantLabs.md |
+| 205 | ChatGPT（生成AI）の売買判断を連携して自動的にFX取引を行うEAの開発 | ja | 未読 | #fx #implementation #web-signal | articles/2026-05-17_2323_WEB_ChatGPT_FX_EA_Integration_Japan_Sayama.md |
+| 206 | ServiceNow is down 45% on the thesis that AI kil… | ja | 未読 | #x-signal #ai-trading | articles/2026-05-17_2360_X_hardwiredai_ServiceNow_is_down_45__on_the_thesis_that_AI_kills_enterpris.md |
+| 207 | most traders are still manually testing ideas li… | en | 未読 | #x-signal #ai-trading | articles/2026-05-17_2361_X_L1vsun_most_traders_are_still_manually_testing_ideas_like_it_s_2018.md |
+| 208 | AIと一緒にMT5のEAを作ってます。 まずTP,SL、緊急全決済EAを作って、それにロジック決… | ja | 未読 | #x-signal #ai-trading | articles/2026-05-17_2362_X_fugyaou_AIと一緒にMT5のEAを作ってます。_まずTP_SL、緊急全決済EAを作って、それにロジック決済機能を加えて、ポジ取り.md |
+| 209 | If you’re still crying about MT5 on macOS while … | ja | 未読 | #x-signal #ai-trading | articles/2026-05-17_2363_X_fundproptraders_If_you_re_still_crying_about_MT5_on_macOS_while_the_entire_i.md |
+| 210 | 【速報】今週の週間EA稼働表を画像2枚にしました、PythonとAIで確認したので、後日変わる可… | ja | 未読 | #x-signal #ai-trading | articles/2026-05-17_2364_X_spring0168_【速報】今週の週間EA稼働表を画像2枚にしました、PythonとAIで確認したので、後日変わる可能性があります__ラスト.md |
+| 211 | 🚨捜しています🚨 『株式会社アイテック』の『AI CONNECT』という商材で稼げた方おられまし… | ja | 未読 | #x-signal #ai-trading | articles/2026-05-17_2365_X_daichilawyer__捜しています__『株式会社アイテック』の『AI_CONNECT』という商材で稼げた方おられましたら、教えてください_.md |
+| 212 | 🚨捜しています🚨 『株式会社DOMAIN』の『AIアシスタント』という商材で稼げた方おられました… | ja | 未読 | #x-signal #ai-trading | articles/2026-05-17_2366_X_daichilawyer__捜しています__『株式会社DOMAIN』の『AIアシスタント』という商材で稼げた方おられましたら、教えてください__2.md |
+| 213 | 🚨捜しています🚨 『合同会社アール』の『SPワークス』という商材で稼げた方おられましたら、教えて… | ja | 未読 | #x-signal #ai-trading | articles/2026-05-17_2367_X_daichilawyer__捜しています__『合同会社アール』の『SPワークス』という商材で稼げた方おられましたら、教えてください__2025_2.md |
+| 214 | 🚨捜しています🚨 『合同会社文』の『ディテール』という商材で稼げた方おられましたら、教えてくださ… | ja | 未読 | #x-signal #ai-trading | articles/2026-05-17_2368_X_daichilawyer__捜しています__『合同会社文』の『ディテール』という商材で稼げた方おられましたら、教えてください__2024_12_3.md |
+| 215 | 🚨捜しています🚨 『株式会社イコール』の『イコールシステム』という商材で稼げた方おられましたら、… | ja | 未読 | #x-signal #ai-trading | articles/2026-05-17_2369_X_daichilawyer__捜しています__『株式会社イコール』の『イコールシステム』という商材で稼げた方おられましたら、教えてください__202.md |
+| 216 | AIが世に広まってから相場の難易度ってめっちゃ上がった気がする 今ゴールドの自動売買とか勝ってる… | ja | 未読 | #x-signal #ai-trading | articles/2026-05-17_2370_X____ty24c_AIが世に広まってから相場の難易度ってめっちゃ上がった気がする_今ゴールドの自動売買とか勝ってる人いるんかな_って思うし.md |
