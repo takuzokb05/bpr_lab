@@ -239,3 +239,14 @@
 | 214 | 🚨捜しています🚨 『合同会社文』の『ディテール』という商材で稼げた方おられましたら、教えてくださ… | ja | 未読 | #x-signal #ai-trading | articles/2026-05-17_2368_X_daichilawyer__捜しています__『合同会社文』の『ディテール』という商材で稼げた方おられましたら、教えてください__2024_12_3.md |
 | 215 | 🚨捜しています🚨 『株式会社イコール』の『イコールシステム』という商材で稼げた方おられましたら、… | ja | 未読 | #x-signal #ai-trading | articles/2026-05-17_2369_X_daichilawyer__捜しています__『株式会社イコール』の『イコールシステム』という商材で稼げた方おられましたら、教えてください__202.md |
 | 216 | AIが世に広まってから相場の難易度ってめっちゃ上がった気がする 今ゴールドの自動売買とか勝ってる… | ja | 未読 | #x-signal #ai-trading | articles/2026-05-17_2370_X____ty24c_AIが世に広まってから相場の難易度ってめっちゃ上がった気がする_今ゴールドの自動売買とか勝ってる人いるんかな_って思うし.md |
+
+| 218 | AIトレードボット実取引記録の重要性を警告 | en | 未読 | #x-signal #llm-trading | articles/2026-05-18_2425_X_seanmatteson_AIトレードボット実取引記録の重要性を警告.md |
+| 219 | SMC AI自動売買USDJPY M15実績-9.3pip/20trades | ja | 未読 | #x-signal #quant #ml | articles/2026-05-18_2426_X_fxmethodology_SMC_AI自動売買USDJPY_M15実績_9_3pip_20trades.md |
+| 220 | SMC AI FVGリテスト戦略ML p=0.54 EV=+1.41 | ja | 未読 | #x-signal #quant #ml | articles/2026-05-18_2427_X_fxmethodology_SMC_AI_FVGリテスト戦略ML_p_0_54_EV_1_41.md |
+| 221 | SMC AI FVGリテスト戦略ML p=0.54 EV=+1.42 | ja | 未読 | #x-signal #quant #ml | articles/2026-05-18_2428_X_fxmethodology_SMC_AI_FVGリテスト戦略ML_p_0_54_EV_1_42.md |
+| 222 | SMC AI EURUSD M15 TP達成・累計損益追跡 | ja | 未読 | #x-signal #quant #ml | articles/2026-05-18_2429_X_fxmethodology_SMC_AI_EURUSD_M15_TP達成_累計損益追跡.md |
+| 223 | SMC AI Liquidity Sweep戦略 p=0.52 EV=+0.16 | ja | 未読 | #x-signal #quant #ml | articles/2026-05-18_2430_X_fxmethodology_SMC_AI_Liquidity_Sweep戦略_p_0_52_EV_0_16.md |
+| 224 | TradingAgents Explained: UCLA + MIT's Multi-A… | en | 未読 | #web-signal #llm-trading #multi-agent #research | articles/2026-05-18_2454_web_TradingAgents_Explained__UCLA___MIT_s_Multi-A.md |
+| 225 | TradingAgents: How a 60K-Star Framework Is Bu… | en | 未読 | #web-signal #llm-trading #multi-agent #research | articles/2026-05-18_2455_web_TradingAgents__How_a_60K-Star_Framework_Is_Bu.md |
+| 226 | I Built an AI Trading Bot and Let It Trade fo… | en | 未読 | #web-signal #llm-trading | articles/2026-05-18_2456_web_I_Built_an_AI_Trading_Bot_and_Let_It_Trade_fo.md |
+| 227 | AIエージェントにFXの取引戦略を考えてもらった | ja | 未読 | #web-signal #fx #llm-trading | articles/2026-05-18_2457_web_AIエージェントにFXの取引戦略を考えてもらった.md |

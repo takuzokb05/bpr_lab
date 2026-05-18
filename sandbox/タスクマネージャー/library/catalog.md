@@ -355,3 +355,65 @@
 | 333 | 本件、xAIが持っている2つのデータセンタ(Colossus 1と2)のうち、最近、Coloss… | ja | 未読 | #ecosystem #x-signal | articles/2026-05-17_2357_X_yoshi48840ura_本件、xAIが持っている2つのデータセンタ_Colossus_1と2_のうち、最近、Colossus_1を丸ごとAnth.md |
 | 334 | 米国防総省がOpenAIなどAI調達拡大、Anthropic排除もMythos利用へ調整(ビジネ… | ja | 未読 | #ecosystem #x-signal | articles/2026-05-17_2358_X_monjiro2014_米国防総省がOpenAIなどAI調達拡大、Anthropic排除もMythos利用へ調整_ビジネス_IT___Yahoo.md |
 | 335 | 4月にビジネス利用シェアでAnthropicがOpenAIを逆転した可能性が高いという調査。グラ… | ja | 未読 | #ecosystem #x-signal | articles/2026-05-17_2359_X_ka2aki86_4月にビジネス利用シェアでAnthropicがOpenAIを逆転した可能性が高いという調査。グラフ見てるとAIエージェン.md |
+
+| 337 | claude-code-setupプラグインの機能紹介 | ja | 未読 | #x-signal | articles/2026-05-18_2380_X_ingridiasdesou1_claude_code_setupプラグインの機能紹介.md |
+| 338 | AIコーディング界隈の記憶管理トレンド考察 | ja | 未読 | #x-signal | articles/2026-05-18_2381_X_sigure1216_AIコーディング界隈の記憶管理トレンド考察.md |
+| 339 | CCでHTMLスライド作成の実践報告 | ja | 未読 | #x-signal | articles/2026-05-18_2382_X_tenso_ai_med_CCでHTMLスライド作成の実践報告.md |
+| 340 | 大規模コードベースでのハーネス設計論 | ja | 未読 | #x-signal | articles/2026-05-18_2383_X_rikuminamiyama_大規模コードベースでのハーネス設計論.md |
+| 341 | CC詰まり解消テクニック（箇条書き整理） | ja | 未読 | #x-signal | articles/2026-05-18_2384_X_061426_CC詰まり解消テクニック_箇条書き整理_.md |
+| 342 | CC停止時の原因特定プロンプト手法 | ja | 未読 | #x-signal | articles/2026-05-18_2385_X_061426_CC停止時の原因特定プロンプト手法.md |
+| 343 | CC対話モードとCI自動実行の制限差異 | ja | 未読 | #x-signal | articles/2026-05-18_2386_X_sigure1216_CC対話モードとCI自動実行の制限差異.md |
+| 344 | Cursor vs CC文脈保持比較 | en | 未読 | #x-signal | articles/2026-05-18_2387_X_lukcombinator_Cursor_vs_CC文脈保持比較.md |
+| 345 | Codex/CCの役割分担フレーミング | en | 未読 | #x-signal | articles/2026-05-18_2388_X__brian_johnson_Codex_CCの役割分担フレーミング.md |
+| 346 | Skills/Hooksによる再利用可能単位の説明 | en | 未読 | #x-signal #skills | articles/2026-05-18_2389_X__itsjustshubh_Skills_Hooksによる再利用可能単位の説明.md |
+| 347 | CCセッション上限とAPI呼出し削減手法 | en | 未読 | #x-signal | articles/2026-05-18_2390_X_WithWoz1_CCセッション上限とAPI呼出し削減手法.md |
+| 348 | ClojureをSwiftで実装するCC実践例 | en | 未読 | #x-signal | articles/2026-05-18_2391_X_rodschmidt_ClojureをSwiftで実装するCC実践例.md |
+| 349 | CCのIP/プライバシーリスク警告 | en | 未読 | #x-signal | articles/2026-05-18_2392_X_kingwillxm_CCのIP_プライバシーリスク警告.md |
+| 350 | SemiAnalysisによるCCコミット追跡報告 | en | 未読 | #x-signal | articles/2026-05-18_2393_X_SemiAnalysis__SemiAnalysisによるCCコミット追跡報告.md |
+| 351 | EnterpriseのBuy/Build議論にCC活用の新軸 | en | 未読 | #x-signal | articles/2026-05-18_2394_X_vjswami_EnterpriseのBuy_Build議論にCC活用の新軸.md |
+| 352 | spec.md駆動のアーキテクトワークフロー実践 | en | 未読 | #x-signal | articles/2026-05-18_2395_X_0xTobiasDev_spec_md駆動のアーキテクトワークフロー実践.md |
+| 353 | 大規模リポジトリへのCC導入4ステップ | en | 未読 | #x-signal | articles/2026-05-18_2396_X_LubosMagat_大規模リポジトリへのCC導入4ステップ.md |
+| 354 | MCPローカルテストとCC動作確認報告 | en | 未読 | #x-signal #mcp | articles/2026-05-18_2397_X_hossein761_MCPローカルテストとCC動作確認報告.md |
+| 355 | CC用Pentest Agent Suite OSS公開 | en | 未読 | #x-signal | articles/2026-05-18_2398_X_DarkWebInformer_CC用Pentest_Agent_Suite_OSS公開.md |
+| 356 | Rebill MCPのCCマルチツール対応発表 | en | 未読 | #x-signal #mcp | articles/2026-05-18_2399_X_diazailan_Rebill_MCPのCCマルチツール対応発表.md |
+| 357 | playwright MCP導入とCC実使用レポート | en | 未読 | #x-signal #mcp | articles/2026-05-18_2400_X_fatum_nsk_playwright_MCP導入とCC実使用レポート.md |
+| 358 | Meta Ads MCPをCCへ接続した実装報告 | en | 未読 | #x-signal #mcp | articles/2026-05-18_2401_X_ThirstyaiLive_Meta_Ads_MCPをCCへ接続した実装報告.md |
+| 359 | MotionAmigo：AE内CCインスタンス起動プラグイン | en | 未読 | #x-signal | articles/2026-05-18_2402_X_aescripts_MotionAmigo_AE内CCインスタンス起動プラグイン.md |
+| 360 | CC公式プラグインによる開発環境変革紹介 | en | 未読 | #x-signal | articles/2026-05-18_2403_X_RodmanAi_CC公式プラグインによる開発環境変革紹介.md |
+| 361 | Stainless買収とSDK戦略の具体的考察 | en | 未読 | #x-signal #ecosystem #ecosystem | articles/2026-05-18_2404_X_mrluiscalderon_Stainless買収とSDK戦略の具体的考察.md |
+| 362 | バチカンとAnthropicの公式発表5/25 | en | 未読 | #x-signal #ecosystem | articles/2026-05-18_2405_X_Crux_バチカンとAnthropicの公式発表5_25.md |
+| 363 | FSBへのMythosサイバー能力ブリーフィング | en | 未読 | #x-signal #ecosystem | articles/2026-05-18_2406_X_WesRoth_FSBへのMythosサイバー能力ブリーフィング.md |
+| 364 | SpaceX計算リース・Fluidstack提携情報 | en | 未読 | #x-signal #ecosystem | articles/2026-05-18_2407_X_WonderingDavid_SpaceX計算リース_Fluidstack提携情報.md |
+| 365 | APIコスト管理実践知見・70%削減手順 | ja | 未読 | #x-signal #ecosystem | articles/2026-05-18_2408_X_concha_blogger_APIコスト管理実践知見_70_削減手順.md |
+| 366 | Agent SDK課金変更6/15の具体情報 | ja | 未読 | #x-signal #ecosystem #ecosystem | articles/2026-05-18_2409_X_sigure1216_Agent_SDK課金変更6_15の具体情報.md |
+| 367 | Stainless買収公式発表・競合SDKも担当 | ja | 未読 | #x-signal #ecosystem #ecosystem | articles/2026-05-18_2410_X_miraclemasui_Stainless買収公式発表_競合SDKも担当.md |
+| 368 | Forbes AI50・調達額80%がAIという定量データ | ja | 未読 | #x-signal #ecosystem | articles/2026-05-18_2411_X_IROHANI_shotime_Forbes_AI50_調達額80_がAIという定量データ.md |
+| 369 | Stainless買収・6言語SDK・MCP対応 | ja | 未読 | #x-signal #ecosystem #mcp | articles/2026-05-18_2412_X_kenta_akagi_Stainless買収_6言語SDK_MCP対応.md |
+| 370 | Anthropic CloudのGitHub制限の具体情報 | ja | 未読 | #x-signal #ecosystem | articles/2026-05-18_2413_X_t_ma1n_Anthropic_CloudのGitHub制限の具体情報.md |
+| 371 | claude-code-setup公式プラグイン機能紹介 | ja | 未読 | #x-signal #ecosystem | articles/2026-05-18_2414_X_ClaudeCode_love_claude_code_setup公式プラグイン機能紹介.md |
+| 372 | Stainless買収詳細・多言語SDK・MCP情報 | en | 未読 | #x-signal #ecosystem #mcp | articles/2026-05-18_2415_X_mariusfanu_Stainless買収詳細_多言語SDK_MCP情報.md |
+| 373 | 買収額$300M+・競合SDKも担当の重要情報 | en | 未読 | #x-signal #ecosystem #ecosystem | articles/2026-05-18_2416_X_XavierRiveraX_買収額_300M_競合SDKも担当の重要情報.md |
+| 374 | MCPの定義・役割を具体的に解説 | en | 未読 | #x-signal #ecosystem #mcp | articles/2026-05-18_2417_X_JulieParker144_MCPの定義_役割を具体的に解説.md |
+| 375 | Stainless買収の戦略的意義を3点整理 | ja | 未読 | #x-signal #ecosystem #ecosystem | articles/2026-05-18_2418_X_IROHANI_shotime_Stainless買収の戦略的意義を3点整理.md |
+| 376 | 公式発表・SDK/MCP統合の具体情報 | en | 未読 | #x-signal #ecosystem #mcp | articles/2026-05-18_2419_X_TheAgentTimes_公式発表_SDK_MCP統合の具体情報.md |
+| 377 | Stainless買収・SDK/MCPエコシステム戦略 | en | 未読 | #x-signal #ecosystem #mcp | articles/2026-05-18_2420_X_BlockTempo_Stainless買収_SDK_MCPエコシステム戦略.md |
+| 378 | Stainless買収・SDK/CLI/MCP基盤内製化 | en | 未読 | #x-signal #ecosystem #mcp | articles/2026-05-18_2421_X_PolymarketMoney_Stainless買収_SDK_CLI_MCP基盤内製化.md |
+| 379 | SDK品質・MCPサーバー仕様駆動化の技術洞察 | en | 未読 | #x-signal #ecosystem #mcp | articles/2026-05-18_2422_X_temhandev_SDK品質_MCPサーバー仕様駆動化の技術洞察.md |
+| 380 | Anthropic公式Stainless買収発表・一次情報 | en | 未読 | #x-signal #ecosystem #ecosystem | articles/2026-05-18_2423_X_AnthropicAI_Anthropic公式Stainless買収発表_一次情報.md |
+| 381 | MCP公式ディレクトリ登場・HNスコア93 | ja | 未読 | #x-signal #ecosystem #mcp | articles/2026-05-18_2424_X_connect24h_MCP公式ディレクトリ登場_HNスコア93.md |
+| 382 | Claude Code in Real Workflows: The Honest Gui… | en | 未読 | #web-signal | articles/2026-05-18_2442_web_Claude_Code_in_Real_Workflows__The_Honest_Gui.md |
+| 383 | Effective Claude Code Workflows 2026: What Ch… | en | 未読 | #web-signal | articles/2026-05-18_2443_web_Effective_Claude_Code_Workflows_2026__What_Ch.md |
+| 384 | Claude Code CLI: The Complete Guide — Hooks, … | en | 未読 | #web-signal #hooks | articles/2026-05-18_2444_web_Claude_Code_CLI__The_Complete_Guide___Hooks__.md |
+| 385 | Claude Code Extensions Explained: Skills, MCP… | en | 未読 | #web-signal #skills | articles/2026-05-18_2445_web_Claude_Code_Extensions_Explained__Skills__MCP.md |
+| 386 | How to Set Up MCP Servers and Hooks in Claude… | en | 未読 | #web-signal #hooks | articles/2026-05-18_2446_web_How_to_Set_Up_MCP_Servers_and_Hooks_in_Claude.md |
+| 387 | Claude Code: The Complete Guide (Skills, Hook… | en | 未読 | #web-signal #skills | articles/2026-05-18_2447_web_Claude_Code__The_Complete_Guide__Skills__Hook.md |
+| 388 | Claude Code Subagents: A Practical 2026 Guide | en | 未読 | #web-signal #skills | articles/2026-05-18_2448_web_Claude_Code_Subagents__A_Practical_2026_Guide.md |
+| 389 | A Mental Model for Claude Code: Skills, Subag… | en | 未読 | #web-signal #skills | articles/2026-05-18_2449_web_A_Mental_Model_for_Claude_Code__Skills__Subag.md |
+| 390 | Claude Code最新アップデートまとめ｜新機能・変更点【2026年版】 | ja | 未読 | #web-signal | articles/2026-05-18_2450_web_Claude_Code最新アップデートまとめ_新機能_変更点_2026年版_.md |
+| 391 | MCP 2026 Roadmap: Scalability, Enterprise Aut… | en | 未読 | #web-signal #ecosystem #mcp | articles/2026-05-18_2451_web_MCP_2026_Roadmap__Scalability__Enterprise_Aut.md |
+| 392 | 大規模にエージェントを構築する Claude Managed Agents を試してみた | ja | 未読 | #web-signal #ecosystem | articles/2026-05-18_2452_web_大規模にエージェントを構築する_Claude_Managed_Agents_を試してみた.md |
+| 393 | Claude Code × MCP連携ガイド｜社内システムとAIを接続する設定手順と活用パ… | ja | 未読 | #web-signal #ecosystem #mcp | articles/2026-05-18_2453_web_Claude_Code___MCP連携ガイド_社内システムとAIを接続する設定手順と活用パ.md |
+| 394 | Claude Code Increases Weekly Limits by 50% Th… | en | 未読 | #web-signal | articles/2026-05-18_2463_web_Claude_Code_Increases_Weekly_Limits_by_50__Th.md |
+| 395 | Anthropic's Code With Claude: Managed Agents,… | en | 未読 | #web-signal | articles/2026-05-18_2464_web_Anthropic_s_Code_With_Claude__Managed_Agents_.md |
+| 396 | Code with Claude SF 2026: What Anthropic Actu… | en | 未読 | #web-signal | articles/2026-05-18_2465_web_Code_with_Claude_SF_2026__What_Anthropic_Actu.md |
+| 397 | AIが毎回迷わなくなる仕組み―Claude Code の「スキル」入門 | ja | 未読 | #web-signal #skills | articles/2026-05-18_2467_web_AIが毎回迷わなくなる仕組み_Claude_Code_の_スキル_入門.md |

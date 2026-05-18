@@ -115,3 +115,23 @@
 | 97 | 【電力インフラ逼迫へのソリューションかも！】  AIデータセンターでは、特にアメリカで電力インフ… | ja | 未読 | #x-signal #ai-news | articles/2026-05-17_2377_X_semicon_eng1_【電力インフラ逼迫へのソリューションかも_】_AIデータセンターでは、特にアメリカで電力インフラの逼迫がボトルネックと.md |
 | 98 | ウシオ電機（6925）がS高。  ・産業用ランプで世界首位。半導体向け光学装置などを展開。 ・2… | ja | 未読 | #x-signal #ai-news | articles/2026-05-17_2378_X_mameyama_kun_ウシオ電機_6925_がS高。_・産業用ランプで世界首位。半導体向け光学装置などを展開。_・2027年3月期の業績予想.md |
 | 99 | FUJI（6134）が上場来高値。  ・電子部品組立などの自動装着装置で世界トップ。 ・通期の業… | ja | 未読 | #x-signal #ai-news | articles/2026-05-17_2379_X_mameyama_kun_FUJI_6134_が上場来高値。_・電子部品組立などの自動装着装置で世界トップ。_・通期の業績予想を発表。営業利益4.md |
+
+| 101 | Jensen HuangがNvidia AI PC計画を示唆 | en | 未読 | #x-signal #llm-news | articles/2026-05-18_2431_X_firstadopter_Jensen_HuangがNvidia_AI_PC計画を示唆.md |
+| 102 | XPENG量産ロボタクシー生産開始の公式発表 | en | 未読 | #x-signal #llm-news | articles/2026-05-18_2432_X_niccruzpatane_XPENG量産ロボタクシー生産開始の公式発表.md |
+| 103 | ShopifyがUCPを開発者向けに公開 | en | 未読 | #x-signal #llm-news | articles/2026-05-18_2433_X_harleyf_ShopifyがUCPを開発者向けに公開.md |
+| 104 | カトリック教会がAI倫理の回勅を発表予定 | en | 未読 | #x-signal #llm-news | articles/2026-05-18_2434_X_officialrnintel_カトリック教会がAI倫理の回勅を発表予定.md |
+| 105 | HIVE社が320MWのAIデータセンター建設発表 | ja | 未読 | #x-signal #llm-news | articles/2026-05-18_2435_X_takede3_HIVE社が320MWのAIデータセンター建設発表.md |
+| 106 | AIメカテック決算・売上2.3倍・経常利益186倍 | ja | 未読 | #x-signal #llm-news | articles/2026-05-18_2436_X_mameyama_kun_AIメカテック決算_売上2_3倍_経常利益186倍.md |
+| 107 | 日本政府AIサイバーセキュリティ対策パッケージ | ja | 未読 | #x-signal #regulation | articles/2026-05-18_2437_X_hmatsu63_日本政府AIサイバーセキュリティ対策パッケージ.md |
+| 108 | 岡本硝子AIデータセンター転換・2029年売上目標 | ja | 未読 | #x-signal #llm-news | articles/2026-05-18_2438_X_mameyama_kun_岡本硝子AIデータセンター転換_2029年売上目標.md |
+| 109 | NextEra-Dominion合併のAIデータセンター電力影響 | ja | 未読 | #x-signal #llm-news | articles/2026-05-18_2439_X_momoblog0214_NextEra_Dominion合併のAIデータセンター電力影響.md |
+| 110 | CMU研究：脳データでAI精度向上の定量成果 | ja | 未読 | #x-signal #llm-news | articles/2026-05-18_2440_X_compassinai_CMU研究_脳データでAI精度向上の定量成果.md |
+| 111 | LegalOnがM&AでAIプロダクト多角化を発表 | ja | 未読 | #x-signal #llm-news | articles/2026-05-18_2441_X_g7z5e_LegalOnがM_AでAIプロダクト多角化を発表.md |
+| 112 | White House Considers AI Vetting, Sparks Tech… | en | 未読 | #web-signal #llm-news | articles/2026-05-18_2458_web_White_House_Considers_AI_Vetting__Sparks_Tech.md |
+| 113 | EU AI Omnibus Deal: What Changes for the AI A… | en | 未読 | #web-signal #llm-news | articles/2026-05-18_2459_web_EU_AI_Omnibus_Deal__What_Changes_for_the_AI_A.md |
+| 114 | The AI Regulation Knife Fight | en | 未読 | #web-signal #regulation | articles/2026-05-18_2460_web_The_AI_Regulation_Knife_Fight.md |
+| 115 | Trump Administration Embraces AI Oversight Po… | en | 未読 | #web-signal #llm-news | articles/2026-05-18_2461_web_Trump_Administration_Embraces_AI_Oversight_Po.md |
+| 116 | AI Legislative Update: May 8, 2026 — Transpar… | en | 未読 | #web-signal #regulation | articles/2026-05-18_2462_web_AI_Legislative_Update__May_8__2026___Transpar.md |
+| 117 | State of LLM Benchmarks 2026: Rankings, Trend… | en | 未読 | #web-signal #llm-news | articles/2026-05-18_2466_web_State_of_LLM_Benchmarks_2026__Rankings__Trend.md |
+| 118 | 日本の生成AIニュースまとめ（2026年5月第1週） | ja | 未読 | #web-signal #llm-news | articles/2026-05-18_2468_web_日本の生成AIニュースまとめ_2026年5月第1週_.md |
+| 119 | 生成AIエージェント基盤「つなぎAI」の販売開始について | ja | 未読 | #web-signal #llm-news | articles/2026-05-18_2469_web_生成AIエージェント基盤_つなぎAI_の販売開始について.md |
