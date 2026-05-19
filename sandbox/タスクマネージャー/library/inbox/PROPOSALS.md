@@ -949,3 +949,57 @@ SMC（スマートマネーコンセプト）AIアカウントがFVGリテスト
 - 特に「サイバーセキュリティ用途への制限」が規制された場合のフォールバックモデル（他プロバイダー・オープンソース）の準備
 - Anthropic自身が規制形成プロセスに関与しているため、同社公式ブログの定期確認を推奨
 
+
+---
+
+## 2026-05-19 収集分
+
+### 1. Claude Code Routinesの日次収集自動化への活用
+
+**出典:** articles/2026-05-19_2581_web_Claude_Code_Routines_Official_Docs.md / articles/2026-05-19_2582_web_Claude_Code_Routines_Schedule_Webhook_GitHub.md
+
+**提案内容:**
+Claude Code Routines（2026年4月14日リサーチプレビュー）がスケジュール・Webhookトリガーのクラウドエージェントを提供。現在VPS cronで動かしているcollect_x.pyのうち「SIGNALキュレーション」部分をRoutinesに移行することを検討：
+- スケジュールトリガーで毎朝6時にキュレーション実行
+- GitHub eventトリガーでPRコメント対応を自動化
+- 全有料プラン対応で追加コスト不要（Agent SDK課金移行後は要確認）
+
+**優先度:** 中（6月15日以降の課金変更確認後に再評価）
+
+### 2. Anthropic June 15 課金変更への対応
+
+**出典:** articles/2026-05-19_2504_X_seclink_Stainless買収_MCP実装ツールチェーン制御.md / catalog-ecosystem参照
+
+**提案内容:**
+2026年6月15日より、Claude Agent SDK・`claude -p`・Claude Code GitHub Actionsが別課金プール（Pro: $20/月、Max 5x: $100/月）に移行。bpr_lab環境での対応：
+1. 現在の`claude -p`使用箇所を棚卸しし、月間トークン消費量を推定
+2. Max 5xプラン（$100クレジット）で足りるか確認
+3. 6月8日前後にAnthropicからの「クレームメール」を確認してクレジットを受け取る
+
+**優先度:** 高（期限: 2026年6月15日）
+
+### 3. xhigh Effort の明示的制御
+
+**出典:** articles/2026-05-19_2583_web_Claude_Opus_47_Whats_New_xhigh_Effort.md
+
+**提案内容:**
+Claude Code v2.1.117からxhigh effortが全プランのデフォルトに。コスト最適化のためCLAUDE.mdに推論コストに関する注釈を追加：
+- 単純なファイル読み込み・検索タスクには `--effort low` を指定
+- 複雑なリファクタリング・多段階タスクはxhigh（デフォルト）のまま
+- `/effort` スライダーを使ったインタラクティブ調整方法をCLAUDE.mdに記載
+
+**優先度:** 低
+
+### 4. FX自動取引：TradingAgentsフレームワーク試用
+
+**出典:** articles/2026-05-19_2585_web_TradingAgents_Best_AI_Financial_Trading_Review.md / articles/2026-05-19_2540_X_0xJoell_MossAI_AI_Execution_Separation_Architecture.md
+
+**提案内容:**
+TradingAgents v0.2.4（LangGraph基盤、マルチプロバイダー対応）がClaude 4.xに対応済み。sandbox/FX自動取引/への統合候補として評価：
+- 7役割エージェント（ファンダメンタルズ・センチメント・テクニカル等）の協調判断
+- 1決定あたり11 LLMコール＋20ツールコール（コスト試算が先決）
+- MossAIの「AI推論層 + 決定論的執行エンジン分離」アーキテクチャも参考になる
+- まずバックテストのみで評価し、実取引は慎重に段階導入
+
+**優先度:** 中
+

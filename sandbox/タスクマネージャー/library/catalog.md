@@ -416,4 +416,34 @@
 | 394 | Claude Code Increases Weekly Limits by 50% Th… | en | 未読 | #web-signal | articles/2026-05-18_2463_web_Claude_Code_Increases_Weekly_Limits_by_50__Th.md |
 | 395 | Anthropic's Code With Claude: Managed Agents,… | en | 未読 | #web-signal | articles/2026-05-18_2464_web_Anthropic_s_Code_With_Claude__Managed_Agents_.md |
 | 396 | Code with Claude SF 2026: What Anthropic Actu… | en | 未読 | #web-signal | articles/2026-05-18_2465_web_Code_with_Claude_SF_2026__What_Anthropic_Actu.md |
-| 397 | AIが毎回迷わなくなる仕組み―Claude Code の「スキル」入門 | ja | 未読 | #web-signal #skills | articles/2026-05-18_2467_web_AIが毎回迷わなくなる仕組み_Claude_Code_の_スキル_入門.md |
+| 397 | AIが毎回迷わなくなる仕組み―Claude Code の「スキル」入門 | ja | 未読 | #web-signal #skills | articles/2026-05-18_2467_web_AIが毎回迷わなくなる仕組み_Claude_Code_の_スキル_入門.md || 398 | Claude Code Planモード：新機能追加で触らないファイルを先に洗い出す | ja | 未読 | #x-signal | articles/2026-05-19_2470_X_ura_unico_Planモード触らないファイル洗い出し術.md |
+| 399 | ForgeAILab/forge：Claude Code対応のRust製エージェント… | en | 未読 | #x-signal | articles/2026-05-19_2471_X_BeauJohnson89_ForgeAILab_forge_agent_workflow_engine.md |
+| 400 | Claude CodeスキルのHTML出力をインタラクティブビューとして活用するワー… | en | 未読 | #x-signal #skills | articles/2026-05-19_2472_X_Dobrenkz_HTML_interactive_view_claude_code_skill.md |
+| 401 | Claude Code + Higgsfield MCPによるモーションデザイン自動… | ar | 未読 | #x-signal #mcp | articles/2026-05-19_2473_X_SamiBizConsult_Higgsfield_MCP_motion_design_pipeline.md |
+| 402 | Claude Code for VS CodeがAntigravity IDEマーケ… | ja | 未読 | #x-signal | articles/2026-05-19_2474_X_centergaeshi_ClaudeCode_VSCode_Antigravity_extension.md |
+| 403 | Claude CodeのSkills・Hooks・MCPを6ヶ月Freqtradeス… | en | 未読 | #x-signal #skills | articles/2026-05-19_2475_X_lliu54827_skills_hooks_MCP_Freqtrade_6months.md |
+| 404 | Venice MCP Server公式リリース：31ツール対応・全モダリティカバー | en | 未読 | #x-signal #mcp | articles/2026-05-19_2476_X_sabrinaesaquino_Venice_MCP_Server_31tools_launch.md |
+| 405 | Claude CodeでGASスクリプトを生成し118個のツールに移植したワークフロ… | ja | 未読 | #x-signal | articles/2026-05-19_2477_X_AI_EC_Hacker_ClaudeCode_GAS_118tools_workflow.md |
+| 406 | Claude Code plan-firstワークフローで不要なDBテーブル・キャッ… | en | 未読 | #x-signal | articles/2026-05-19_2478_X_dmshirochenko_plan_first_workflow_DB_cache_pruning.md |
+| 407 | CLAUDE.md・Skills・Hooks・MCP・Sub-agents・Agen… | en | 未読 | #x-signal #skills | articles/2026-05-19_2479_X_AleiahLock_CLAUDE_md_Skills_Hooks_MCP_6hours.md |
+| 408 | Context7：MCPでリアルタイムドキュメント注入、55k starsのエージェ… | en | 未読 | #x-signal #mcp | articles/2026-05-19_2480_X_agentxagi_Context7_MCP_realtime_doc_injection.md |
+| 409 | 構造化JSON返却CLI + ローカルMCPサーバー + Claude Code向け… | en | 未読 | #x-signal #mcp | articles/2026-05-19_2481_X_PhoenixTrade_CLI_MCP_server_skills_structured_JSON.md |
+| 410 | Claude CodeのMCPで複数Supabaseプロジェクトを切り替える方法の問… | es | 未読 | #x-signal #mcp | articles/2026-05-19_2482_X_nicoproducto_Supabase_multi_project_MCP_problem.md |
+| 411 | AnthropicがStainlessを買収 — SDK・MCPサーバー基盤を内製化 | en | 未読 | #x-signal #mcp #ecosystem | articles/2026-05-19_2500_X_WesRoth_AnthropicがStainless買収_SDK_MCP基盤内製化.md |
+| 412 | Anthropic、Stainless買収でAPI基盤をコアインフラへ内製化 | en | 未読 | #x-signal #mcp #ecosystem | articles/2026-05-19_2501_X_tokens_AnthropicStainless買収MCPサーバープラットフォーム.md |
+| 413 | Anthropic、Stainless買収でエージェント接続性を拡張 | en | 未読 | #x-signal #ecosystem | articles/2026-05-19_2502_X_pulse2news_AnthropicStainless買収エージェント接続拡張.md |
+| 414 | AnthropicによるStainless約3億ドル買収と競合他社SDKへの影響 | en | 未読 | #x-signal #ecosystem | articles/2026-05-19_2503_X_ViktorakaDeme_Stainless買収300M_競合他社への影響.md |
+| 415 | AnthropicがMCPプロトコルと主流実装ツールチェーンを同時掌握 | zh | 未読 | #x-signal #mcp #ecosystem | articles/2026-05-19_2504_X_seclink_Stainless買収_MCP実装ツールチェーン制御.md |
+| 416 | MCPトンネルでエンタープライズのアジェンティックAI障壁を解消 | es | 未読 | #x-signal #mcp | articles/2026-05-19_2505_X_teKa088_MCPトンネル_エンタープライズ向けセキュアエージェント.md |
+| 417 | CAISがAnthropicと統合、MCPサーバーでClaude内から金融データに直… | en | 未読 | #x-signal #mcp | articles/2026-05-19_2506_X_CAISgroup_CAIS_MCPサーバー統合_Claudeで金融データアクセス.md |
+| 418 | Anthropic、CNBC Disruptor 50で初の1位 — 売上ランレート… | ja | 未読 | #x-signal #ecosystem | articles/2026-05-19_2507_X_daitoawar_AnthropicCNBCDisruptor50首位_売上300億ドル超.md |
+| 419 | 日立製作所、Anthropicと戦略的協業 — 世界最大級のClaudeユーザーに | ja | 未読 | #x-signal #ecosystem | articles/2026-05-19_2508_X_Kuri_U19_日立製作所Anthropic戦略的協業世界最大級Claudeユーザー.md |
+| 420 | Claude Mythos がApple macOSの脆弱性を短期間で発見 — AI… | ja | 未読 | #x-signal #ecosystem | articles/2026-05-19_2509_X_viva_shocho_ClaudeMythos_サイバーセキュリティ_macOS脆弱性発見.md |
+| 421 | Claude Managed Agentsに自前サンドボックス(public bet… | ja | 未読 | #x-signal #mcp #ecosystem | articles/2026-05-19_2510_X_LifeMakersCom_ClaudeManagedAgents_自前サンドボックス_MCPトンネル発表.md |
+| 422 | Claude Certified Architect 6週間ロードマップ — API… | ja | 未読 | #x-signal #ecosystem | articles/2026-05-19_2511_X_ingridiasdesou1_ClaudeCertifiedArchitect_6週間ロードマップ.md |
+| 423 | ShadcnSpace MCPサーバー — ローカルAIがUIコンポーネントデータを… | en | 未読 | #x-signal #mcp | articles/2026-05-19_2512_X_iSanjayJoshi_ShadcnSpace_MCPサーバー_UIコンポーネント参照.md |
+| 424 | Claude Code Best Practices: 18 Patterns Fr… | en | 未読 | #web-signal #best-practices | articles/2026-05-19_2580_web_Claude_Code_Best_Practices_18_Patterns_Production.md |
+| 425 | Claude Code Routines公式ドキュメント: スケジュール・Webho… | en | 未読 | #web-signal #routines | articles/2026-05-19_2581_web_Claude_Code_Routines_Official_Docs.md |
+| 426 | Claude Code Routines: スケジュール・Webhook・GitHu… | en | 未読 | #web-signal #routines | articles/2026-05-19_2582_web_Claude_Code_Routines_Schedule_Webhook_GitHub.md |
+| 427 | Claude Opus 4.7 新機能: xhigh Effortレベルとビジョン強… | en | 未読 | #web-signal #ecosystem #models | articles/2026-05-19_2583_web_Claude_Opus_47_Whats_New_xhigh_Effort.md |
+| 428 | Claude Sonnet 4.5: リアルワールドエージェント・コーディング最強モ… | en | 未読 | #web-signal #ecosystem #models | articles/2026-05-19_2584_web_Claude_Sonnet_45_Best_World_Agents_Coding.md |

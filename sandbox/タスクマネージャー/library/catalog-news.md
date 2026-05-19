@@ -135,3 +135,20 @@
 | 117 | State of LLM Benchmarks 2026: Rankings, Trend… | en | 未読 | #web-signal #llm-news | articles/2026-05-18_2466_web_State_of_LLM_Benchmarks_2026__Rankings__Trend.md |
 | 118 | 日本の生成AIニュースまとめ（2026年5月第1週） | ja | 未読 | #web-signal #llm-news | articles/2026-05-18_2468_web_日本の生成AIニュースまとめ_2026年5月第1週_.md |
 | 119 | 生成AIエージェント基盤「つなぎAI」の販売開始について | ja | 未読 | #web-signal #llm-news | articles/2026-05-18_2469_web_生成AIエージェント基盤_つなぎAI_の販売開始について.md |
+| 120 | Gemini 3.5 Flash、Box AI Complex Work Evalで最大22pp向上 | en | 読了 | #x-signal #llm-news | articles/2026-05-19_2570_X_levie_Gemini35Flash_Box_AI_12pp_benchmark.md |
+| 121 | Google Search 25年ぶりの大型刷新：Gemini 3.5 FlashとAIエージェント統合 | en | 読了 | #x-signal #llm-news | articles/2026-05-19_2571_X_ShishirShelke1_Google_Search_25year_upgrade_Gemini35Flash.md |
+| 122 | METR評価：AIエージェントは最小限の「不正展開」手段・動機・機会を保有 | en | 読了 | #x-signal #ai-agent | articles/2026-05-19_2572_X_METR_Evals_AI_rogue_deployment_risk_assessment.md |
+| 123 | 24時間のAI重要動向：Andrej Karpathy Anthropic参加・Gemini 3.5・買収発表 | en | 読了 | #x-signal #llm-news #ai-agent | articles/2026-05-19_2573_X_sa_vatsa_24hr_AI_news_Andrej_Anthropic_Gemini35.md |
+| 124 | YC支援：Memory StoreがチームとAIエージェントに共有ナレッジベースを提供 | en | 読了 | #x-signal #ai-agent | articles/2026-05-19_2574_X_ycombinator_Memory_Store_shared_company_brain_agents.md |
+| 125 | Google I/O：Android HaloでAIエージェントの作業をリアルタイム表示 | en | 読了 | #x-signal #ai-agent | articles/2026-05-19_2575_X_ShishirShelke1_Android_Halo_AI_agent_UI.md |
+| 126 | Google AI Mode in Searchが月間10億ユーザー突破、クエリは毎四半期倍増 | en | 読了 | #x-signal #llm-news | articles/2026-05-19_2576_X_NewsFromGoogle_AI_Mode_1billion_users_queries_doubling.md |
+| 127 | Google I/O：Gemini Spark発表 — 専用VM・MCP対応の24時間AIエージェント | en | 読了 | #x-signal #ai-agent #llm-news | articles/2026-05-19_2577_X_testingcatalog_Gemini_Spark_24_7_agent_dedicated_VM_MCP.md |
+| 128 | 日経：Google「Spark」で30億人の生活自動化、個人向けAIエージェント本格展開 | ja | 読了 | #x-signal #ai-agent | articles/2026-05-19_2578_X_SOU_BTC_Google_Spark_3billion_users_personal_agent.md |
+| 129 | Google Japan公式：Gemini 3.5 Flash日本語提供開始、Gemini 3.1 Pro超えのコーディング力 | ja | 読了 | #x-signal #llm-news | articles/2026-05-19_2579_X_googlejapan_Gemini35Flash_official_ja_launch.md |
+| 130 | Google I/O 2026 発表内容の全体まとめ：Gemini 3.5・Spark・Antigravity等 | ja | 読了 | #x-signal #llm-news #ai-agent | articles/2026-05-19_2580_X_usutaku_channel_Google_IO_2026_full_summary.md |
+| 131 | Google Antigravity 2.0発表：CLI・SDK・音声対応、非同期エージェント管理追加 | ja | 読了 | #x-signal #ai-agent | articles/2026-05-19_2581_X_ctgptlb_Antigravity_2_0_CLI_SDK_async_agents.md |
+| 132 | Google I/O 2026：Gemini Omniが物理世界シミュレーションとAny-to-Anyを実現 | ja | 読了 | #x-signal #llm-news | articles/2026-05-19_2582_X_fladdict_Gemini_Omni_physical_simulation_any_to_any.md |
+| 133 | 自民党がAI・ブロックチェーン活用の次世代金融インフラ政策提案を正式承認 | ja | 読了 | #x-signal #regulation | articles/2026-05-19_2583_X_PaPaPa80755851_LDP_Japan_AI_blockchain_financial_policy.md |
+| 134 | Evercore 1Q26 AIチャネルチェック：スケールアウト需要強、相互接続は光学化へ移行 | ja | 読了 | #x-signal #llm-news | articles/2026-05-19_2584_X_paurooteri_Evercore_Q1_2026_AI_channel_check_NVLink_optical.md |
+| 135 | 米中首脳がAI政府間対話の実施で合意（NHKニュース） | ja | 読了 | #x-signal #regulation | articles/2026-05-19_2585_X_nhk_news_US_China_AI_government_dialogue_agreement.md |
+| 147 | 米国のAI規制: 1200本のAI法案と連邦・州の綱引き | en | 未読 | #web-signal #regulation #llm-news | articles/2026-05-19_2586_web_US_1200_AI_Bills_State_Federal_Regulation.md |

@@ -250,3 +250,5 @@
 | 225 | TradingAgents: How a 60K-Star Framework Is Bu… | en | 未読 | #web-signal #llm-trading #multi-agent #research | articles/2026-05-18_2455_web_TradingAgents__How_a_60K-Star_Framework_Is_Bu.md |
 | 226 | I Built an AI Trading Bot and Let It Trade fo… | en | 未読 | #web-signal #llm-trading | articles/2026-05-18_2456_web_I_Built_an_AI_Trading_Bot_and_Let_It_Trade_fo.md |
 | 227 | AIエージェントにFXの取引戦略を考えてもらった | ja | 未読 | #web-signal #fx #llm-trading | articles/2026-05-18_2457_web_AIエージェントにFXの取引戦略を考えてもらった.md |
+| 228 | MossAI: AI最適化レイヤーと決定論的執行エンジンの分離アーキテクチャ | en | 読了 | #llm-trading #risk #x-signal | articles/2026-05-19_2540_X_0xJoell_MossAI_AI_Execution_Separation_Architecture.md |
+| 229 | SMC AI FX自動売買リアルタイムログ: EURUSD/USDJPY M15 手法検証（2026-05-19） | ja | 読了 | #fx #quant #ml #x-signal | articles/2026-05-19_2541_X_fxmethodology_SMC_AI_FX_Live_Log_05_19.md || 230 | TradingAgents: 金融取引に最適なAIエージェントの詳細レビュー | en | 未読 | #web-signal #llm-trading #multi-agent | articles/2026-05-19_2585_web_TradingAgents_Best_AI_Financial_Trading_Review.md |
