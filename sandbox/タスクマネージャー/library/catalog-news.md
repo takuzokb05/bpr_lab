@@ -152,3 +152,26 @@
 | 134 | Evercore 1Q26 AIチャネルチェック：スケールアウト需要強、相互接続は光学化へ移行 | ja | 読了 | #x-signal #llm-news | articles/2026-05-19_2584_X_paurooteri_Evercore_Q1_2026_AI_channel_check_NVLink_optical.md |
 | 135 | 米中首脳がAI政府間対話の実施で合意（NHKニュース） | ja | 読了 | #x-signal #regulation | articles/2026-05-19_2585_X_nhk_news_US_China_AI_government_dialogue_agreement.md |
 | 147 | 米国のAI規制: 1200本のAI法案と連邦・州の綱引き | en | 未読 | #web-signal #regulation #llm-news | articles/2026-05-19_2586_web_US_1200_AI_Bills_State_Federal_Regulation.md |
+| 148 | Today the FBI and DOJ announced the arre… | en | 未読 | #x-signal | articles/2026-05-20_2630_X_FBICyberDiv_Today_the_FBI_and_DOJ_announced_the_arrests_of_Cor.md |
+| 149 | Google $GOOGL just announced a new $15 b… | en | 未読 | #x-signal | articles/2026-05-20_2631_X_StockMKTNewz_Google_GOOGL_just_announced_a_new_15_billion_inv.md |
+| 150 | WordPress 7.0 “Armstrong” is here. 🎷  Th… | en | 未読 | #x-signal | articles/2026-05-20_2632_X_WordPress_WordPress_7_0_Armstrong_is_here_This_major_r.md |
+| 151 | Our Google AI subscriptions offer higher… | en | 未読 | #x-signal | articles/2026-05-20_2633_X_Google_Our_Google_AI_subscriptions_offer_higher_limits_in.md |
+| 152 | THE WHITE HOUSE BRIEFED ANTHROPIC, OPENA… | en | 未読 | #x-signal | articles/2026-05-20_2634_X_FirstSquawk_THE_WHITE_HOUSE_BRIEFED_ANTHROPIC_OPENAI_AND_OTH.md |
+| 153 | Pops (@pops_fyi) lets anyone create and … | en | 未読 | #x-signal | articles/2026-05-20_2635_X_ycombinator_Pops_pops_fyi_lets_anyone_create_and_play_AI_ga.md |
+| 154 | At I/O, we announced a big new export pa… | en | 未読 | #x-signal | articles/2026-05-20_2636_X_stitchbygoogle_At_I_O_we_announced_a_big_new_export_partner_Bol.md |
+| 155 | Emerging attack surfaces, including prom… | en | 未読 | #x-signal #ai-agent | articles/2026-05-20_2637_X_MsftSecIntel_Emerging_attack_surfaces_including_prompt_injecti.md |
+| 156 | Today, we launch https://t.co/8BKwa4VmRQ… | en | 未読 | #x-signal #ai-agent | articles/2026-05-20_2638_X_quxiaoyin_Today_we_launch_https_t_co_8BKwa4VmRQ_tycoonai.md |
+| 157 | 🔥 LATEST: NYSE parent ICE plans to launc… | en | 未読 | #x-signal | articles/2026-05-20_2639_X_Cointelegraph_LATEST_NYSE_parent_ICE_plans_to_launch_computin.md |
+| 158 | 速報🚨 エヌビディ第1四半期はEPS 1.87ドル、売上高816億ドルと市場予想… | ja | 未読 | #x-signal | articles/2026-05-20_2640_X_jasmine17361736_速報_エヌビディ第1四半期はEPS_1_87ドル_売上高816億ドルと市場予想を上回る好決算.md |
+| 159 | LLMのような大規模訓練でもスケールするように改善され、schedule-fre… | ja | 未読 | #x-signal #llm-news | articles/2026-05-20_2641_X_hamanasu_nagisa_LLMのような大規模訓練でもスケールするように改善され_schedule_freeなだけでなくlea.md |
+| 160 | グーグル 新AIモデル「Gemini Omni」発表　AIエージェント「Gemi… | ja | 未読 | #x-signal #llm-news #ai-agent | articles/2026-05-20_2642_X_tbsnewsdig_グーグル_新AIモデル_Gemini_Omni_発表_AIエージェント_Gemini_Spark_は.md |
+| 161 | 新しい記事を書きました💐 AIエージェントにフロントエンドのコードを書かせると、… | ja | 未読 | #x-signal #ai-agent | articles/2026-05-20_2643_X_tonkotsuboy_com_新しい記事を書きました_AIエージェントにフロントエンドのコードを書かせると_一昔前の書き方になり.md |
+| 162 | アリババ、新型AI半導体「真武M890」を発表　性能3倍に - 日本経済新聞  … | ja | 未読 | #x-signal | articles/2026-05-20_2644_X_4ki4_アリババ_新型AI半導体_真武M890_を発表_性能3倍に_日本経済新聞_https_t.md |
+| 163 | Google、個人向けAIエージェント「Gemini Spark」発表。Gmai… | ja | 未読 | #x-signal #ai-agent | articles/2026-05-20_2645_X_sm_hn_Google_個人向けAIエージェント_Gemini_Spark_発表_Gmail等を横断し自動でタ.md |
+| 164 | 個人的には、こういう話題がもっと取り上げられてほしいと思っています。  ​Goo… | ja | 未読 | #x-signal | articles/2026-05-20_2646_X_emoiralios_個人的には_こういう話題がもっと取り上げられてほしいと思っています_Google_が_画像や動.md |
+| 165 | ここまでのところのGoogle I/Oまとめ。  全体像として、Google I… | ja | 未読 | #x-signal | articles/2026-05-20_2647_X_taromatsumura_ここまでのところのGoogle_I_Oまとめ_全体像として_Google_I_O_26は_Gem.md |
+| 166 | Alibaba、Zhenwu AIチップと新LLM Qwen3.7-Max発表（… | en | 未読 | #web-signal #llm-news | articles/2026-05-20_2648_web_001_Alibaba_Zhenwu_AI_Chip_New_LLM_CNBC.md |
+| 167 | AI Legislative Update May 15, 2026 — Tra… | en | 未読 | #web-signal #regulation | articles/2026-05-20_2649_web_002_AI_Legislative_Update_May15_2026_TransparencyCoalition.md |
+| 168 | AI Model Release Timeline 2025–2026: Eve… | en | 未読 | #web-signal #llm-news | articles/2026-05-20_2653_web_006_AI_Model_Release_Timeline_2025_2026_AIFlashReport.md |
+| 169 | Recent AI Regulatory Developments in the… | en | 未読 | #web-signal #regulation | articles/2026-05-20_2654_web_007_Recent_AI_Regulatory_Developments_US_WSGR.md |
+| 170 | Where does federal AI spending stand in … | en | 未読 | #web-signal #regulation | articles/2026-05-20_2655_web_008_Federal_AI_Spending_2026_Brookings.md |

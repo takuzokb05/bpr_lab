@@ -447,3 +447,47 @@
 | 426 | Claude Code Routines: スケジュール・Webhook・GitHu… | en | 未読 | #web-signal #routines | articles/2026-05-19_2582_web_Claude_Code_Routines_Schedule_Webhook_GitHub.md |
 | 427 | Claude Opus 4.7 新機能: xhigh Effortレベルとビジョン強… | en | 未読 | #web-signal #ecosystem #models | articles/2026-05-19_2583_web_Claude_Opus_47_Whats_New_xhigh_Effort.md |
 | 428 | Claude Sonnet 4.5: リアルワールドエージェント・コーディング最強モ… | en | 未読 | #web-signal #ecosystem #models | articles/2026-05-19_2584_web_Claude_Sonnet_45_Best_World_Agents_Coding.md |
+| 429 | 【いま私が使っているAI、解約したAI】  ・GenSpark : 解約。半年く… | ja | 未読 | #x-signal | articles/2026-05-20_2587_X_DentalMania88_いま私が使っているAI_解約したAI_・GenSpark_解約_半年くらい前までは一番使っ.md |
+| 430 | 実験でClaude CodeからGeminiを使うため、Gemini APIに2… | ja | 未読 | #x-signal | articles/2026-05-20_2588_X_blacklist_ryu_実験でClaude_CodeからGeminiを使うため_Gemini_APIに2_000円チャージし.md |
+| 431 | Claude Codeで部署専用の勤務表作成アプリを自作したら作成時間が83%削… | ja | 未読 | #x-signal | articles/2026-05-20_2589_X_tenso_ai_med_Claude_Codeで部署専用の勤務表作成アプリを自作したら作成時間が83_削減された_エンジニア.md |
+| 432 | AI日誌、クロコさん（Claude Code）がセッションクローズのたびにその日… | ja | 未読 | #x-signal | articles/2026-05-20_2590_X_hyuki_AI日誌_クロコさん_Claude_Code_がセッションクローズのたびにその日の日誌に追記していく.md |
+| 433 | Claude Codeをチームで使ってると エージェントごとに毎回設定を切り替え… | ja | 未読 | #x-signal | articles/2026-05-20_2591_X_ura_unico_Claude_Codeをチームで使ってると_エージェントごとに毎回設定を切り替えるのが手間ですよね.md |
+| 434 | 開発日記。Claude Codeの使い方はClaude Codeに聞けばいいんだ… | ja | 未読 | #x-signal #skills #hooks | articles/2026-05-20_2592_X_nexlabo_開発日記_Claude_Codeの使い方はClaude_Codeに聞けばいいんだわ_と今更ながら実感.md |
+| 435 | @XFreeze This capacity is being used to … | en | 未読 | #x-signal | articles/2026-05-20_2593_X_nidisdnikki_XFreeze_This_capacity_is_being_used_to_support_an.md |
+| 436 | Your coding agent forgets everything bet… | en | 未読 | #x-signal #mcp | articles/2026-05-20_2594_X_chenzeling4_Your_coding_agent_forgets_everything_between_sessi.md |
+| 437 | ran 3 claude code sessions in parallel o… | en | 未読 | #x-signal | articles/2026-05-20_2595_X_sureshkanbu_ran_3_claude_code_sessions_in_parallel_on_https.md |
+| 438 | Trying to use Claude code more in my day… | en | 未読 | #x-signal #skills | articles/2026-05-20_2596_X_towelbill_Trying_to_use_Claude_code_more_in_my_day_to_day_T.md |
+| 439 | SITUATION EXPLAINED: Anthropic bought St… | en | 未読 | #x-signal #mcp | articles/2026-05-20_2597_X_MTSlive_SITUATION_EXPLAINED_Anthropic_bought_Stainless_be.md |
+| 440 | @rileycx @BrettFromDJ i used a combo of … | en | 未読 | #x-signal #mcp | articles/2026-05-20_2598_X_SahilC0_rileycx_BrettFromDJ_i_used_a_combo_of_framer_MCP.md |
+| 441 | 6 hours. One video. CLAUDE.md, React + F… | en | 未読 | #x-signal #mcp #skills #hooks #claude-md | articles/2026-05-20_2599_X_kilo_cpa_6_hours_One_video_CLAUDE_md_React_FastAPI_Sk.md |
+| 442 | check we also making fully local opensou… | en | 未読 | #x-signal #mcp | articles/2026-05-20_2600_X_smolemaru_check_we_also_making_fully_local_opensource_high_q.md |
+| 443 | 1. One coding agent end-to-end (Claude C… | en | 未読 | #x-signal #mcp | articles/2026-05-20_2601_X_hndx74_1_One_coding_agent_end_to_end_Claude_Code_or_Cod.md |
+| 444 | Agent Skill Installer installs Codex/Cla… | en | 未読 | #x-signal #skills #hooks | articles/2026-05-20_2602_X_omry_Agent_Skill_Installer_installs_Codex_Claude_Code_s.md |
+| 445 | Just shipped a Kanban skill for Claude C… | en | 未読 | #x-signal #skills | articles/2026-05-20_2603_X_martintreiber_Just_shipped_a_Kanban_skill_for_Claude_Code_This.md |
+| 446 | @swyx I run deep research multiple times… | en | 未読 | #x-signal #skills | articles/2026-05-20_2604_X_RobertNowell1_swyx_I_run_deep_research_multiple_times_daily_cr.md |
+| 447 | 6/ OpenClaude  WIIFM: one terminal workf… | en | 未読 | #x-signal #mcp #hooks | articles/2026-05-20_2605_X_mrluiscalderon_6_OpenClaude_WIIFM_one_terminal_workflow_across.md |
+| 448 | SpaceX just filed their S-1.   A few num… | en | 未読 | #x-signal #ecosystem | articles/2026-05-20_2606_X_trmnl_x_SpaceX_just_filed_their_S_1_A_few_numbers_worth.md |
+| 449 | The initial takeaway is Space segment cl… | en | 未読 | #x-signal #ecosystem | articles/2026-05-20_2607_X_riddle245_The_initial_takeaway_is_Space_segment_close_to_bre.md |
+| 450 | トランプ政権、先端AIモデルの公開前レビューを提案  ・トランプ政権が先端AIモ… | ja | 未読 | #x-signal #ecosystem | articles/2026-05-20_2608_X_cb_terminal_トランプ政権_先端AIモデルの公開前レビューを提案_・トランプ政権が先端AIモデルの任意レビュー制.md |
+| 451 | Anthropicが先週発表したClaude for Legalについて調べてい… | ja | 未読 | #x-signal #ecosystem | articles/2026-05-20_2609_X_teritamadozo_Anthropicが先週発表したClaude_for_Legalについて調べています_・業務領域に.md |
+| 452 | Anthropic、第2四半期売上高が2倍超の109億ドルに到達 初の営業黒字を… | ja | 未読 | #x-signal #ecosystem | articles/2026-05-20_2610_X_cb_terminal_Anthropic_第2四半期売上高が2倍超の109億ドルに到達_初の営業黒字を達成へ_・Anth.md |
+| 453 | 【最新AIニュース】 AnthropicがMCP×コード実行でAIエージェント効… | ja | 未読 | #x-signal #mcp #ecosystem | articles/2026-05-20_2611_X_akichan_jpn_最新AIニュース_AnthropicがMCP_コード実行でAIエージェント効率化を解説_建設.md |
+| 454 | これはもうバズったネタ？ Anthropic、AIエージェント新技術「Dream… | ja | 未読 | #x-signal #ecosystem | articles/2026-05-20_2612_X_aoshisss1_これはもうバズったネタ_Anthropic_AIエージェント新技術_Dreaming_夢見_を発.md |
+| 455 | 日立、Anthropicと戦略的パートナーシップを締結し、先進的なAIの活用によ… | ja | 未読 | #x-signal #ecosystem | articles/2026-05-20_2613_X_oitamaIoT_日立_Anthropicと戦略的パートナーシップを締結し_先進的なAIの活用によりLumada_3.md |
+| 456 | Anthropicの「Mythos」はどこがすごいのか　Cloudflareが震… | ja | 未読 | #x-signal #ecosystem | articles/2026-05-20_2614_X_techtarget_itm_Anthropicの_Mythos_はどこがすごいのか_Cloudflareが震えた検証結果_htt.md |
+| 457 | Anthropicの「Mythos」登場で強まる“連鎖ハッキング”への恐怖 ht… | ja | 未読 | #x-signal #ecosystem | articles/2026-05-20_2615_X_techtarget_itm_Anthropicの_Mythos_登場で強まる_連鎖ハッキング_への恐怖_https_t_co.md |
+| 458 | anthropic just fixed the enterprise bloc… | en | 未読 | #x-signal #mcp #ecosystem | articles/2026-05-20_2616_X_KayvonJafar_anthropic_just_fixed_the_enterprise_blocker_for_ag.md |
+| 459 | MCP.  If you've seen this acronym floati… | en | 未読 | #x-signal #mcp #ecosystem | articles/2026-05-20_2617_X_webfx_MCP_If_you_ve_seen_this_acronym_floating_around.md |
+| 460 | Anthropic just shipped MCP Tunnels. @Run… | en | 未読 | #x-signal #mcp #ecosystem | articles/2026-05-20_2618_X_berman66_Anthropic_just_shipped_MCP_Tunnels_Runlayer_supp.md |
+| 461 | @cet3001 @AnthropicAI @StainlessAPI Stai… | en | 未読 | #x-signal #mcp #ecosystem | articles/2026-05-20_2619_X_agentxagi_cet3001_AnthropicAI_StainlessAPI_Stainless_alre.md |
+| 462 | 2/2 TechCrunch, 2026-05-18 Anthropic has… | en | 未読 | #x-signal #mcp #ecosystem | articles/2026-05-20_2620_X_aicreatorpath_2_2_TechCrunch_2026_05_18_Anthropic_has_acquired.md |
+| 463 | 今天把 `hermes update` 跑了一下，GPT-5.5 居然能直接通过… | ja | 未読 | #x-signal #mcp #ecosystem | articles/2026-05-20_2621_X_3heeeeee_今天把_hermes_update_跑了一下_GPT_5_5_居然能直接通过_Codex_OAu.md |
+| 464 | Anthropic just made MCP integration near… | en | 未読 | #x-signal #mcp #ecosystem | articles/2026-05-20_2622_X_MnFounder_Anthropic_just_made_MCP_integration_nearly_zero_co.md |
+| 465 | Gemini Sparkはクレジットカード明細の解析・学校メールからの期限抽出・… | ja | 未読 | #x-signal #mcp #ecosystem | articles/2026-05-20_2623_X_AkinoriKomi_Gemini_Sparkはクレジットカード明細の解析・学校メールからの期限抽出・会議メモのドキュメン.md |
+| 466 | Today we announced a new integration wit… | en | 未読 | #x-signal #mcp #ecosystem | articles/2026-05-20_2624_X_CAISgroup_Today_we_announced_a_new_integration_with_Anthropi.md |
+| 467 | 2. Anthropic acquired Stainless.  The st… | en | 未読 | #x-signal #mcp #ecosystem | articles/2026-05-20_2625_X_Agos_Labs_2_Anthropic_acquired_Stainless_The_strategic_ac.md |
+| 468 | Anthropic acaba de resolver el problema … | en | 未読 | #x-signal #mcp #ecosystem | articles/2026-05-20_2626_X_teKa088_Anthropic_acaba_de_resolver_el_problema_que_frenab.md |
+| 469 | Anthropic 收购 Stainless（SDK 管道控制权）  事件：An… | ja | 未読 | #x-signal #mcp #ecosystem | articles/2026-05-20_2627_X_seclink_Anthropic_收购_Stainless_SDK_管道控制权_事件_Anthropic_收购.md |
+| 470 | Claude Code in 2026: Major Updates, New … | en | 未読 | #web-signal #model-update | articles/2026-05-20_2650_web_003_Claude_Code_2026_Major_Updates_iodocs.md |
+| 471 | Claude Agent SDKの使い方入門【2026年最新】（ShiftB） | ja | 未読 | #web-signal #ecosystem | articles/2026-05-20_2651_web_004_Claude_Agent_SDK_Guide_ShiftB.md |
+| 472 | Claude Agent SDK + Bright Data Web MCP 統… | en | 未読 | #web-signal #mcp #ecosystem | articles/2026-05-20_2652_web_005_Claude_Agent_SDK_BrightData_Web_MCP.md |

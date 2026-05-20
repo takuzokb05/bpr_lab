@@ -1003,3 +1003,63 @@ TradingAgents v0.2.4（LangGraph基盤、マルチプロバイダー対応）が
 
 **優先度:** 中
 
+---
+
+## 2026-05-20 収集分
+
+### 1. スキル設計への反映提案
+
+#### 1-1. Agentmemory MCPサーバーの導入検討（セッション間コンテキスト維持）
+**出典:** articles/2026-05-20_2594_X_chenzeling4_Your_coding_agent_forgets_everything_between_sessi.md
+
+**提案内容:**
+Agentmemory（MCP対応永続メモリOSS、14.9K stars）はClaude Codeセッション間でコンテキストを保持する。FX自動取引プロジェクトの長期開発セッションで「前回の意思決定・失敗理由・設計根拠」を次セッションに引き継ぐメモリ基盤として導入を検討する。
+- `.claude/settings.json` のmcpServersに `agentmemory` を追加
+- FX取引システムのバックテスト結果・失敗パターンをAgentmemoryに蓄積し、次回セッションで参照できる設計
+
+**優先度:** 中
+
+#### 1-2. Agent Skill Installerによるスキル管理の標準化
+**出典:** articles/2026-05-20_2602_X_omry_Agent_Skill_Installer_installs_Codex_Claude_Code_s.md
+
+**提案内容:**
+Agent Skill InstallerがGitHub/PyPI/ローカルからClaude Code・Codexのスキルを一元インストールできるようになった。skills-registryの管理をこのツールに統一し、`pip install [skill-package]`でスキルを追加・更新するフローを標準化することを検討。
+
+**優先度:** 低
+
+---
+
+### 2. Claude Code設定への反映提案
+
+#### 2-1. worktree構造の整理（IDE横断検索の最適化）
+**出典:** articles/2026-05-20_2596_X_towelbill_Trying_to_use_Claude_code_more_in_my_day_to_day_T.md
+
+**提案内容:**
+Claude Code worktreeを垂直（入れ子）ではなく水平（兄弟ディレクトリ）構造に整理することでIDE全文検索やgrepが各worktreeを独立したプロジェクトとして扱えるようになる。現在のbpr_labリポジトリのsandbox/FX自動取引/を別worktreeとして切り出す場合の参考設計として記録。
+
+**優先度:** 低
+
+---
+
+### 3. FX自動取引システムへの反映提案
+
+#### 3-1. XAU MT5 EAバックテスト実績の参照ベンチマーク追加
+**出典:** articles/2026-05-20_2646_X_XAU15min_MT5_EA_Backtest_Result.md（ai-trading SIGNAL）
+
+**提案内容:**
+XAU/USD 15分足EAのバックテスト結果と、AIを使ったインジケーターのMT5移植事例が確認された。sandbox/FX自動取引/docs/BENCHMARK.mdにXAU時間足戦略の外部実績データとして追加する。
+
+**優先度:** 低
+
+---
+
+### 4. AI規制対応
+
+#### 4-1. 米国・EU AI規制の最終確認（2026-05-20時点）
+**出典:** articles/2026-05-20_2649_web_AI_Legislative_Update_May15_2026_TransparencyCoalition.md / articles/2026-05-20_2654_web_Recent_AI_Regulatory_Developments_US_WSGR.md
+
+**提案内容:**
+米国AI規制の最新状況：連邦統一フレームワーク（White House 3月20日提案）vs 1,200本の州法（Cooley調査）の綱引きが継続。California AB 2013・SB 942（AI生成開示義務）は1月1日既施行。Connecticut SB5が両院通過し最も包括的な州法として注目。EU規制（8月2日・12月2日期限）と合わせて監視継続。
+
+**優先度:** 低（欧州展開計画がない場合は不要）
+
