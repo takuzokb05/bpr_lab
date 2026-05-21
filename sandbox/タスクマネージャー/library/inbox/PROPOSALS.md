@@ -1063,3 +1063,73 @@ XAU/USD 15分足EAのバックテスト結果と、AIを使ったインジケー
 
 **優先度:** 低（欧州展開計画がない場合は不要）
 
+---
+
+## 2026-05-21 収集分
+
+### 1. Hooks設計への反映提案
+
+#### 1-1. Stop hookでlinter/type-check→エージェント自動修正ループの実装
+**出典:** articles/2026-05-21_2666_X_bettercallsalva_Stopフック_linter_type-check_pro_tip.md
+
+**提案内容:**
+Claude CodeのStopフックでlinterまたはtype-checkを実行し、エラーを次のターンでエージェントにフィードバックするパターンが「安価な勝ちパターン」として実証された。
+現在のCLAUDE.mdまたはsettings.jsonのHooks設定に追加候補：
+```json
+{
+  "hooks": {
+    "Stop": [{
+      "type": "command",
+      "command": "npm run type-check 2>&1 || python -m mypy . 2>&1"
+    }]
+  }
+}
+```
+エージェントがエラーを受け取って自動修正するため、余分なプロンプトコストなしにコード品質を維持できる。FX自動取引スクリプトのtype strictnessを維持する安全網として有用。
+
+**優先度:** 高（すぐに実装可能な即効性あり）
+
+---
+
+### 2. Claude Codeエコシステムへの反映提案
+
+#### 2-1. Claude Plugins公式ディレクトリの活用
+**出典:** articles/2026-05-21_2681_X_wefoundcc_Claude_Plugins公式ディレクトリ_Skills_Agents_Hooks.md
+
+**提案内容:**
+AnthropicがClaude Plugins公式ディレクトリをリリース。Skills・Agents・Hooks・Slash commands・MCPサーバー設定が一元管理・発見可能に。
+- `/plugin search [keyword]` でカテゴリ検索できる可能性がある
+- 現在のskills-registryと重複するプラグインを確認し、公式配布版があれば置き換えを検討
+- `security-auditor`・`test-runner`・`ralph-loop`等のプラグインが含まれている可能性
+
+**優先度:** 中（ディレクトリ内容を確認して有用なものを評価）
+
+#### 2-2. Antigravity 2.0（Google版Claude Code）の競合動向把握
+**出典:** articles/2026-05-21_2657_X_Hoshino_Sokichi_Antigravity_2_0_Google版Claude_Code.md
+
+**提案内容:**
+Google I/O 2026でAntigravity 2.0が発表。Claude Codeの直接競合として：
+- デフォルトモデル: Gemini 3.5 Flash（Claude Opus 4.7比速度4倍）
+- 複数AI並列実行・Firebase連携・スケジュール実行が標準搭載
+- デスクトップアプリ+CLI対応
+
+現行のClaude Code中心ワークフローを維持しつつ、特定タスク（高速ドラフト生成・Firebase連携）でAntigravity 2.0を試験補完する価値があるか評価する。CLAUDE.mdの「使用するAIツールの選択基準」セクションに追記候補。
+
+**優先度:** 低（現時点では情報収集のみ）
+
+---
+
+### 3. FX自動取引システムへの反映提案
+
+#### 3-1. TradingAgents + MT5 完全セットアップガイドの実装参照
+**出典:** articles/2026-05-21_2700_web_008_Quant_AI_Agents_MT5_完全セットアップ_ユーザーガイド_2026年5月.md
+
+**提案内容:**
+MQL5.comにMT5向けQuantAI Agents（マルチモデル議論スタック）のセットアップガイドが掲載。
+- OpenAI・Anthropic（Claude）・Google・DeepSeek・xAIをマルチモデル議論に統合
+- 中央処理サーバー + データ同期ゲートウェイ構成
+- MT5 EAとして動作、FX・株式CFD両対応
+
+sandbox/FX自動取引/でのマルチモデル議論スタックの試験実装参考として調査する。
+**優先度:** 中
+

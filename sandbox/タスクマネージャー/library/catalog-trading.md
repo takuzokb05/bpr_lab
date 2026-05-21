@@ -254,3 +254,7 @@
 | 229 | SMC AI FX自動売買リアルタイムログ: EURUSD/USDJPY M15 手法検証（2026-05-19） | ja | 読了 | #fx #quant #ml #x-signal | articles/2026-05-19_2541_X_fxmethodology_SMC_AI_FX_Live_Log_05_19.md || 230 | TradingAgents: 金融取引に最適なAIエージェントの詳細レビュー | en | 未読 | #web-signal #llm-trading #multi-agent | articles/2026-05-19_2585_web_TradingAgents_Best_AI_Financial_Trading_Review.md |
 | 231 | @YoshiYoshi41451 んと、既にMT5用のEAになっておりますが・・… | ja | 未読 | #x-signal #quant | articles/2026-05-20_2628_X_XAU15min_M_YoshiYoshi41451_んと_既にMT5用のEAになっておりますが・・バックテストの結果で.md |
 | 232 | 🚨刑事告発情報🚨 2024/8/29  管轄：高島平警察署 対象：S合同会社及び… | ja | 未読 | #x-signal #fx | articles/2026-05-20_2629_X_daichilawyer_刑事告発情報_2024_8_29_管轄_高島平警察署_対象_S合同会社及び各収納代行会社_所在.md |
+| 231 | Multi-Exchange AI Agent取引プラットフォーム構築日記 Day14（Tools … | en | 未読 | #llm-trading #implementation #x-signal | articles/2026-05-21_2679_X_RicoChenNinja_Multi_Exchange_AI_Agent取引プラットフォーム構築日記_Day14_T.md |
+| 232 | Obside：テキスト指示だけでAIトレーディングエージェントをデプロイできる新サービス（fav18… | en | 未読 | #llm-trading #x-signal | articles/2026-05-21_2680_X_theflowp__Obside_テキスト指示だけでAIトレーディングエージェントをデプロイできる新サービス_.md |
+| 233 | TradingAgentsでマルチエージェントAI取引システムを構築する（2026） | en | 未読 | #llm-trading #multi-agent | articles/2026-05-21_2699_web_007_TradingAgentsでマルチエージェントAI取引システムを構築する_2026.md |
+| 234 | Quant AI Agents MT5 — 完全セットアップ＆ユーザーガイド（2026年5月） | en | 未読 | #llm-trading #fx #implementation | articles/2026-05-21_2700_web_008_Quant_AI_Agents_MT5_完全セットアップ_ユーザーガイド_2026年5月.md |

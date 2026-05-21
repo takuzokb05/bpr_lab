@@ -175,3 +175,15 @@
 | 168 | AI Model Release Timeline 2025–2026: Eve… | en | 未読 | #web-signal #llm-news | articles/2026-05-20_2653_web_006_AI_Model_Release_Timeline_2025_2026_AIFlashReport.md |
 | 169 | Recent AI Regulatory Developments in the… | en | 未読 | #web-signal #regulation | articles/2026-05-20_2654_web_007_Recent_AI_Regulatory_Developments_US_WSGR.md |
 | 170 | Where does federal AI spending stand in … | en | 未読 | #web-signal #regulation | articles/2026-05-20_2655_web_008_Federal_AI_Spending_2026_Brookings.md |
+| 159 | Spotify + UMGが許諾AIカバー・リミックス解禁：AI著作権分野の歴史的合意（fav637… | en | 未読 | #regulation #llm-news #x-signal | articles/2026-05-21_2681_X_theTSupdates_Spotify_UMGが許諾AIカバー・リミックス解禁_AI著作権分野の歴史的合意_fav.md |
+| 160 | Gemini 3.5 Flashはコーディングベンチマークではなくエージェントベンチマークで評価すべ… | en | 未読 | #llm-news #ai-agent #x-signal | articles/2026-05-21_2682_X_KullAxel_Gemini_3_5_Flashはコーディングベンチマークではなくエージェントベンチマーク.md |
+| 161 | Mozilla Project Nova発表：FirefoxをAI機能・プライバシー強化で刷新 | en | 未読 | #llm-news #x-signal | articles/2026-05-21_2683_X_linuxiac_Mozilla_Project_Nova発表_FirefoxをAI機能・プライバシー強化で.md |
+| 162 | Bloom Energy × Nebius $26億ドル提携：AIデータセンター向け最大250MWの… | ja | 未読 | #llm-news #x-signal | articles/2026-05-21_2684_X_mimiru_usstock_Bloom_Energy_Nebius_26億ドル提携_AIデータセンター向け最大250M.md |
+| 163 | GoogleのLiz Reid単独インタビュー：Google I/O検索発表の深堀り・AI SEOの… | ja | 未読 | #llm-news #x-signal | articles/2026-05-21_2685_X_tsuj_GoogleのLiz_Reid単独インタビュー_Google_I_O検索発表の深堀り・AI.md |
+| 164 | Google AI StudioがAndroidネイティブアプリとして登場（iOS版も予定） | ja | 未読 | #llm-news #x-signal | articles/2026-05-21_2686_X_tetumemo_Google_AI_StudioがAndroidネイティブアプリとして登場_iOS版も予定.md |
+| 165 | 川崎重工 × NVIDIA：フィジカルAIで医療・モビリティー協業、株価PTS10%超上昇 | ja | 未読 | #ai-agent #llm-news #x-signal | articles/2026-05-21_2687_X_mameyama_kun_川崎重工_NVIDIA_フィジカルAIで医療・モビリティー協業_株価PTS10_超上昇.md |
+| 166 | エヌビディアQ1決算：市場予想大幅超過・自社株買い＋配当引き上げ同時発表（AIバブル再燃） | ja | 未読 | #llm-news #x-signal | articles/2026-05-21_2688_X_X9810241212_エヌビディアQ1決算_市場予想大幅超過・自社株買い_配当引き上げ同時発表_AIバブル再燃.md |
+| 167 | Google I/O 2026ハイライト：Gemini OmniからAIが「代行する」時代へ（公式） | ja | 未読 | #llm-news #ai-agent #x-signal | articles/2026-05-21_2689_X_googlejapan_Google_I_O_2026ハイライト_Gemini_OmniからAIが_代行する_時代.md |
+| 168 | Gemini 3.5 Flash：旧Pro超えの性能でClaude Opus 4.7比速度4倍（Go… | ja | 未読 | #llm-news #x-signal | articles/2026-05-21_2690_X_Hoshino_Sokichi_Gemini_3_5_Flash_旧Pro超えの性能でClaude_Opus_4_7比速度.md |
+| 169 | AMD、台湾AIインフラに100億ドル以上を投資発表・先進パッケージング能力拡張 | ja | 未読 | #llm-news #x-signal | articles/2026-05-21_2691_X_paurooteri_AMD_台湾AIインフラに100億ドル以上を投資発表・先進パッケージング能力拡張.md |
+| 170 | 総務省がClaude Mythos等高性能AI悪用対策を通信業界・放送・自治体に要請 | ja | 未読 | #regulation #x-signal | articles/2026-05-21_2692_X_yoshimasa_ouen_総務省がClaude_Mythos等高性能AI悪用対策を通信業界・放送・自治体に要請.md |

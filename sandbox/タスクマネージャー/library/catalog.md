@@ -491,3 +491,33 @@
 | 470 | Claude Code in 2026: Major Updates, New … | en | 未読 | #web-signal #model-update | articles/2026-05-20_2650_web_003_Claude_Code_2026_Major_Updates_iodocs.md |
 | 471 | Claude Agent SDKの使い方入門【2026年最新】（ShiftB） | ja | 未読 | #web-signal #ecosystem | articles/2026-05-20_2651_web_004_Claude_Agent_SDK_Guide_ShiftB.md |
 | 472 | Claude Agent SDK + Bright Data Web MCP 統… | en | 未読 | #web-signal #mcp #ecosystem | articles/2026-05-20_2652_web_005_Claude_Agent_SDK_BrightData_Web_MCP.md |
+| 471 | Antigravity 2.0 — Google版Claude Code発表（Google I/O … | ja | 未読 | #claude-code #x-signal | articles/2026-05-21_2656_X_Hoshino_Sokichi_Antigravity_2_0_Google版Claude_Code発表_Google_I.md |
+| 472 | .claude/rules/でチームの判断基準を共有する実践知見 | ja | 未読 | #claude-md #x-signal | articles/2026-05-21_2657_X_ura_unico_claude_rules_でチームの判断基準を共有する実践知見.md |
+| 473 | /goalコマンド実践：テスト→デバッグを目標達成まで自動ループ | ja | 未読 | #claude-code #x-signal | articles/2026-05-21_2658_X_dobbythelaughm_goalコマンド実践_テスト_デバッグを目標達成まで自動ループ.md |
+| 474 | Explore→Plan→Implement サブエージェントワークフロー実践 | ja | 未読 | #claude-code #x-signal | articles/2026-05-21_2659_X_ura_unico_Explore_Plan_Implement_サブエージェントワークフロー実践.md |
+| 475 | Claude Code利用統計トラッカーの自作（日次/週次/月次/全期間+グローバルリーダーボード） | en | 未読 | #claude-code #x-signal | articles/2026-05-21_2660_X_RealHoldenGR_Claude_Code利用統計トラッカーの自作_日次_週次_月次_全期間_グローバルリーダ.md |
+| 476 | Claude Codeの実コスト：トークン料金だけでは計れない見えないコスト | en | 未読 | #claude-code #x-signal | articles/2026-05-21_2661_X_Distroux_Claude_Codeの実コスト_トークン料金だけでは計れない見えないコスト.md |
+| 477 | Claude Code Hooks vs Settings の違い：イベントベースvsデフォルト設定 | en | 未読 | #hooks #x-signal | articles/2026-05-21_2662_X_dan_mwita8_Claude_Code_Hooks_vs_Settings_の違い_イベントベースvsデフ.md |
+| 478 | Scout MCP + Claude CodeでSQL418クエリのN+1問題を3分以内で特定 | en | 未読 | #mcp #claude-code #x-signal | articles/2026-05-21_2663_X_ScoutAPM_Scout_MCP_Claude_CodeでSQL418クエリのN_1問題を3分以内で特定.md |
+| 479 | skill brainstorming→writing-plans→7 specs分割ワークフロー（… | es | 未読 | #skills #claude-code #x-signal | articles/2026-05-21_2664_X_renwo_app_skill_brainstorming_writing_plans_7_specs分割ワー.md |
+| 480 | /goalモードでMCPツールのファジングを自動化する実践 | en | 未読 | #mcp #claude-code #x-signal | articles/2026-05-21_2665_X_dmfenton_goalモードでMCPツールのファジングを自動化する実践.md |
+| 481 | Stopフック + linter/type-check でエラーを自動フィードバックするClaude… | en | 未読 | #hooks #claude-code #x-signal | articles/2026-05-21_2666_X_bettercallsalva_Stopフック_linter_type_check_でエラーを自動フィードバックするCla.md |
+| 482 | watchmen subagentsでClaude Code/Codex/OpenCode/Grok… | en | 未読 | #claude-code #x-signal | articles/2026-05-21_2667_X_aktasbatuhann_watchmen_subagentsでClaude_Code_Codex_OpenCode.md |
+| 483 | Val Town MCP連携プロtip：ターミナルから認証して「val townの関数を使って」と指… | en | 未読 | #mcp #claude-code #x-signal | articles/2026-05-21_2668_X_CharlieMolthrop_Val_Town_MCP連携プロtip_ターミナルから認証して_val_townの関数を使.md |
+| 484 | AnthropicがPRDなしで出荷する方法：Slackメッセージ→Production refフロ… | en | 未読 | #ecosystem #x-signal | articles/2026-05-21_2669_X_therobertta__AnthropicがPRDなしで出荷する方法_Slackメッセージ_Production_.md |
+| 485 | Claude急増：AnthropicがAI最速成長プラットフォームに | en | 未読 | #ecosystem #x-signal | articles/2026-05-21_2670_X_Androidheadline_Claude急増_AnthropicがAI最速成長プラットフォームに.md |
+| 486 | Pentagon、AnthropicとのFeud後に新AIベンダー探索中 — Google有力候補 | en | 未読 | #ecosystem #regulation #x-signal | articles/2026-05-21_2671_X_CaseyVSilver_Pentagon_AnthropicとのFeud後に新AIベンダー探索中_Google有力.md |
+| 487 | Claude Mythos PreviewがSymfonyコードを監査：19件の脆弱性、偽陽性0件 | ja | 未読 | #ecosystem #x-signal | articles/2026-05-21_2672_X_techfeedapp_Claude_Mythos_PreviewがSymfonyコードを監査_19件の脆弱性_偽.md |
+| 488 | 日立がAnthropicと戦略的パートナーシップ：Lumada 3.0と社会インフラ向けAI強化 | ja | 未読 | #ecosystem #x-signal | articles/2026-05-21_2673_X_securityLab_jp_日立がAnthropicと戦略的パートナーシップ_Lumada_3_0と社会インフラ向けA.md |
+| 489 | Anthropic、AIエージェントの「記憶」整理機能「Dreaming」を開発者向けカンファレンス… | ja | 未読 | #ecosystem #x-signal | articles/2026-05-21_2674_X_wired_jp_Anthropic_AIエージェントの_記憶_整理機能_Dreaming_を開発者向けカン.md |
+| 490 | AnthropicがStainlessを買収：APIスペックからMCPサーバーを自動生成する垂直統合 | ja | 未読 | #mcp #ecosystem #x-signal | articles/2026-05-21_2675_X_saasmeshi_AnthropicがStainlessを買収_APIスペックからMCPサーバーを自動生成す.md |
+| 491 | Sygnum（スイス規制銀行）がClaude + MCPサーバーでライブAIエージェントブロックチェ… | en | 未読 | #mcp #ecosystem #x-signal | articles/2026-05-21_2676_X_Basemail_ai_Sygnum_スイス規制銀行_がClaude_MCPサーバーでライブAIエージェントブロッ.md |
+| 492 | Claude Plugins公式ディレクトリ：Skills/Agents/Hooks/Slash c… | zh | 未読 | #mcp #skills #ecosystem #x-signal | articles/2026-05-21_2677_X_wefoundcc_Claude_Plugins公式ディレクトリ_Skills_Agents_Hooks_Sl.md |
+| 493 | Anthropicが13門の無料AIコースを突然公開（Claude 101、API、MCP、Clau… | zh | 未読 | #ecosystem #x-signal | articles/2026-05-21_2678_X_ai_laotie_Anthropicが13門の無料AIコースを突然公開_Claude_101_API_MCP.md |
+| 494 | Claude Code Extensions: MCP, Skills, Agents & Hook… | en | 未読 | #mcp #skills #hooks #claude-md | articles/2026-05-21_2693_web_001_Claude_Code_Extensions_MCP_Skills_Agents_Hook.md |
+| 495 | Claude Skillsチュートリアル：初めてのSkillを作る（2026） | en | 未読 | #skills | articles/2026-05-21_2694_web_002_Claude_Skillsチュートリアル_初めてのSkillを作る_2026.md |
+| 496 | CLAUDE.mdベストプラクティス完全ガイド2026 — 80行・200行・500語の閾値 | en | 未読 | #claude-md | articles/2026-05-21_2695_web_003_CLAUDE_mdベストプラクティス完全ガイド2026_80行_200行_500語の閾値.md |
+| 497 | CLAUDE.md実例集とベストプラクティス 2026 | Morph | en | 未読 | #claude-md | articles/2026-05-21_2696_web_004_CLAUDE_md実例集とベストプラクティス_2026_Morph.md |
+| 498 | Anthropic 6/15課金変更：Agent SDKが別クレジットプールへ移行 | en | 未読 | #ecosystem | articles/2026-05-21_2697_web_005_Anthropic_6_15課金変更_Agent_SDKが別クレジットプールへ移行.md |
+| 499 | Claude Agent SDK入門：10行でエージェントを作る新時代 | SmartScope | en | 未読 | #ecosystem | articles/2026-05-21_2698_web_006_Claude_Agent_SDK入門_10行でエージェントを作る新時代_SmartScop.md |
+| 500 | 【2026最新】Claude Code実務導入完全ガイド｜導入ステップと成功事例 | ja | 未読 | #claude-code | articles/2026-05-21_2701_web_009_2026最新_Claude_Code実務導入完全ガイド_導入ステップと成功事例.md |
