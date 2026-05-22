@@ -187,3 +187,17 @@
 | 168 | Gemini 3.5 Flash：旧Pro超えの性能でClaude Opus 4.7比速度4倍（Go… | ja | 未読 | #llm-news #x-signal | articles/2026-05-21_2690_X_Hoshino_Sokichi_Gemini_3_5_Flash_旧Pro超えの性能でClaude_Opus_4_7比速度.md |
 | 169 | AMD、台湾AIインフラに100億ドル以上を投資発表・先進パッケージング能力拡張 | ja | 未読 | #llm-news #x-signal | articles/2026-05-21_2691_X_paurooteri_AMD_台湾AIインフラに100億ドル以上を投資発表・先進パッケージング能力拡張.md |
 | 170 | 総務省がClaude Mythos等高性能AI悪用対策を通信業界・放送・自治体に要請 | ja | 未読 | #regulation #x-signal | articles/2026-05-21_2692_X_yoshimasa_ouen_総務省がClaude_Mythos等高性能AI悪用対策を通信業界・放送・自治体に要請.md |
+
+| 171 | May 2026 AI Governance Just Became Data Governance… | en | 未読 | #regulation #web-signal | articles/2026-05-22_2711_web_010_AI_Governance_May2026_Data_Governance_Cybersecurity.md |
+| 172 | EU AI Act Takes Full Effect August 2026: Official… | en | 未読 | #regulation #web-signal | articles/2026-05-22_2712_web_011_EU_AI_Act_Full_Effect_August2026_Official.md |
+| 173 | 2026年最新 国産生成AI（LLM）の全貌を徹底解説… | ja | 未読 | #llm-news #web-signal | articles/2026-05-22_2713_web_012_国産生成AI_LLM全貌_2026年最新_フィデックス.md |
+| 174 | 🧬New agentic AI-for-science benchmark: SMDD-B… | en | 未読 | #llm-news #x-signal | articles/2026-05-22_2770_X_niloofar_mire_New_agentic_AI-for-science_benchmark_SMDD-Bench.md |
+| 175 | Google just announced they are redesigning se… | en | 未読 | #llm-news #x-signal | articles/2026-05-22_2771_X_DuckDuckGo_Google_just_announced_they_are_redesigning_search.md |
+| 176 | SITUATION UPDATE: Politico has obtained a dra… | en | 未読 | #llm-news #x-signal | articles/2026-05-22_2772_X_MTSlive_SITUATION_UPDATE_Politico_has_obtained_a_draft_of.md |
+| 177 | Allowance (@useallowance) lets AI agents safe… | en | 未読 | #llm-news #x-signal | articles/2026-05-22_2773_X_ycombinator_Allowance_useallowance_lets_AI_agents_safely_ma.md |
+| 178 | 【5月22日 夜のニュースまとめ】 ・Antigravityの週次クォータも3倍に緩和 ・… | ja | 未読 | #llm-news #x-signal | articles/2026-05-22_2774_X_MLBear2_5月22日_夜のニュースまとめ_Antigravityの週次クォータも3倍に緩和_Codex.md |
+| 179 | ん？これって、しれっと、だいぶ重要な指標を追加しようとしていませんか…？  Google… | ja | 未読 | #llm-news #x-signal | articles/2026-05-22_2775_X_Roberto_VALUES_んこれってしれっとだいぶ重要な指標を追加しようとしていませんか_Google_Marke.md |
+| 180 | フィジカルAIでエヌビディアと協業　米に開発拠点―川崎重工 https://t.co/wf… | ja | 未読 | #llm-news #x-signal | articles/2026-05-22_2776_X_jijicom_フィジカルAIでエヌビディアと協業_米に開発拠点川崎重工_httpstcowfnL2xf.md |
+| 181 | 自律的に脆弱性を探し出し、人間のトップハッカーより3〜5倍速く攻撃できるとされるAI「クロ… | ja | 未読 | #llm-news #x-signal | articles/2026-05-22_2777_X_TAIRAMASAAKI_自律的に脆弱性を探し出し人間のトップハッカーより35倍速く攻撃できるとされるAIクロードミュ.md |
+| 182 | AIエージェントによる社会シミュレーションのハッカソンの結果発表！月面、関係性、戦争、制度… | ja | 未読 | #llm-news #x-signal | articles/2026-05-22_2778_X_ka2aki86_AIエージェントによる社会シミュレーションのハッカソンの結果発表月面関係性戦争制度までAIエ.md |
+| 183 | APIコール一発でGoogleがホストするLinux環境付きのAIエージェントを起動、Ma… | ja | 未読 | #llm-news #x-signal | articles/2026-05-22_2779_X_publickey_APIコール一発でGoogleがホストするLinux環境付きのAIエージェントを起動Markdow.md |

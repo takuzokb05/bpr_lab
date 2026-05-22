@@ -258,3 +258,16 @@
 | 232 | Obside：テキスト指示だけでAIトレーディングエージェントをデプロイできる新サービス（fav18… | en | 未読 | #llm-trading #x-signal | articles/2026-05-21_2680_X_theflowp__Obside_テキスト指示だけでAIトレーディングエージェントをデプロイできる新サービス_.md |
 | 233 | TradingAgentsでマルチエージェントAI取引システムを構築する（2026） | en | 未読 | #llm-trading #multi-agent | articles/2026-05-21_2699_web_007_TradingAgentsでマルチエージェントAI取引システムを構築する_2026.md |
 | 234 | Quant AI Agents MT5 — 完全セットアップ＆ユーザーガイド（2026年5月） | en | 未読 | #llm-trading #fx #implementation | articles/2026-05-21_2700_web_008_Quant_AI_Agents_MT5_完全セットアップ_ユーザーガイド_2026年5月.md |
+
+| 235 | Vibe-Trading: Your Personal LLM Trading Agent (HKUDS/… | en | 未読 | #web-signal #llm-trading #research | articles/2026-05-22_2708_web_007_Vibe_Trading_Personal_LLM_Trading_Agent_HKUDS.md |
+| 236 | TradingAgents May 2026: Multi-Agent LLM Framework… | en | 未読 | #web-signal #llm-trading #multi-agent | articles/2026-05-22_2709_web_008_TradingAgents_May2026_MultiAgent_LLM_Trading_AIToolly.md |
+| 237 | AI-Powered MT5 Plugin: The Future of Trading (EAERA)… | en | 未読 | #web-signal #fx #implementation | articles/2026-05-22_2710_web_009_AI_Powered_MT5_Plugin_Future_Trading_EAERA.md |
+| 238 | 1/4 The setup was simple: I want to connect a… | en | 未読 | #x-signal #llm-trading | articles/2026-05-22_2761_X_brbk85_14_The_setup_was_simple_I_want_to_connect_an_AI.md |
+| 239 | I asked Sorin a practical AI trading risk que… | en | 未読 | #x-signal #llm-trading | articles/2026-05-22_2762_X_brbk85_I_asked_Sorin_a_practical_AI_trading_risk_question.md |
+| 240 | บอททำงานถูกขนาดไหนก็คือถูกเลยแหละตาม logic แต… | th | 未読 | #x-signal #llm-trading | articles/2026-05-22_2763_X_bemasty1_บอททำงานถกขนาดไหนกคอถกเลยแหละตาม_logic_แต_2_ไ.md |
+| 241 | 🚨刑事告発情報🚨 2024/8/29  管轄：高島平警察署 対象：S合同会社及び各収納代行… | ja | 未読 | #x-signal #llm-trading | articles/2026-05-22_2764_X_daichilawyer_刑事告発情報_2024829_管轄高島平警察署_対象S合同会社及び各収納代行会社_所在.md |
+| 242 | 【AI Scalper GOLD】爆速+100plps獲得スキャ！ "負けを記憶する学習型… | ja | 未読 | #x-signal #fx #implementation | articles/2026-05-22_2765_X_reo_fxEA_AI_Scalper_GOLD爆速100plps獲得スキャ_負けを記憶する学習型AI搭載.md |
+| 243 | ATRが0になったとき、MT5に「Invalid stops」を返されました。  SL/T… | ja | 未読 | #x-signal #fx #implementation | articles/2026-05-22_2766_X_bottsukuttemita_ATRが0になったときMT5にInvalid_stopsを返されました_SLTPをATR.md |
+| 244 | エリィトな貴金属自動売買AI『凸儲け』 では、5分ごとくらいに、  Chromeで 「Tr… | ja | 未読 | #x-signal #llm-trading | articles/2026-05-22_2767_X_totutohoku_エリィトな貴金属自動売買AI凸儲け_では5分ごとくらいに_Chromeで_Trading.md |
+| 245 | Codexの魅力な部分は、Chromeとの連携がすごくできるようになった部分。  複数タブ… | ja | 未読 | #x-signal #llm-trading | articles/2026-05-22_2768_X_totutohoku_Codexの魅力な部分はChromeとの連携がすごくできるようになった部分_複数タブのChro.md |
+| 246 | MQL5マーケットってとこ、EA（自動売買プログラム）が12,000個以上あるらしい。無料… | ja | 未読 | #x-signal #fx #implementation | articles/2026-05-22_2769_X_AIhappystudy_MQL5マーケットってとこEA自動売買プログラムが12000個以上あるらしい無料のもけっこ.md |
