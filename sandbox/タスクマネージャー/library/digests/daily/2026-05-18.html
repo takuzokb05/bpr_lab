@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-05-18</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-05-18 | 90件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-05-18</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>AnthropicがSDK生成企業Stainlessを$300M+で買収し、Claude SDKとMCPサーバー基盤の垂直統合を宣言した。Claude Code公式プラグインによる初期設定自動化・週間制限50%増（〜7/13）など現場への恩恵も続く一方、Agent SDK課金体系が6月15日から大幅変更される（一次ソース確認済み）。AIとサイバー安全保障の交差点ではMythosモデルが米国規制政策の転換を引き起こしつつあり、国際的な規制競争の構造変化が鮮明になった週だ。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>Stainless買収：SDK/MCP基盤の垂直統合</h3>
+
+<p>最大のニュースはAnthropicによるStainless買収（$300M+推計）。Stainlessは初期Claude APIから全6言語のSDK（Python/TypeScript/Go/Java/Kotlin等）を自動生成してきたチームで、驚くべきことにOpenAI・Google Gemini・Mistralなど競合AIのSDKも同社が担当していた。</p>
+<p>Anthropic公式（@AnthropicAI）が発表した意義は大きく、競合他社が主要なSDK生成ベンダーを失ったという業界再編でもある。技術的な長期価値は「MCPサーバー仕様駆動化（OpenAPI spec→MCPサーバー自動生成）」の一次化で、今後は規格ドリフトのない高品質なMCPサーバーが増える見通しだ。「エージェントが接続できる範囲を広げる布石」という評価が多く、フロンティアの競争がモデル性能からインフラ接続性に移ったことを象徴する買収といえる。</p>
+
+<h3>Agent SDK課金変更 6/15（一次ソース確認済み）</h3>
+
+<p>2026年6月15日から、Agent SDK・claude -p・CC GitHub Actionsが通常利用枠から切り離され、別クレジットプールへ移行する。Pro $20 / Max5x $100 / Max20x $200が月額上限で、実質12〜150倍超の値上げとの分析もある（TheRegister/VentureBeat）。「AIエージェントはサブスク内で無限に回せる」という前提を今すぐ更新する必要がある。FX自動取引などでCIのAgent SDK・GitHub Actionsを活用している場合、6/15前にコスト試算と設計見直しが必須だ。</p>
+
+<h3>公式プラグインと操作術の成熟</h3>
+
+<p>`claude-code-setup`公式プラグインがプロジェクトをスキャンしてhooks・skills・MCP・subagentsの最適設定を自動推薦する機能を静かにリリース。Code with Claude SF 2026の発表（Agent View・新claudes agentsフラグ群・Mobile Push通知・Routines）が実装段階に入ったことと合わせ、初期設定のコストが大きく下がりつつある。</p>
+
+<p>実践的操作術もXで蓄積が進む。「詰まったら箇条書きで整理させる」「なぜ止まったか聞く」という二段デバッグ手法は即日使える知見だ。大規模コードベース（100万行超）での成功要件として「モデル性能よりハーネス設計（CLAUDE.md・hooks・skills・subagents）」「専任agent manager」という組織視点の整理も共有された。</p>
+
+<p>Cursorとの比較では「長期プロジェクトの文脈保持はCC優位、インライン編集はCursor」という使い分けが定着。APIコール削減（161ターン→52ターン）の具体手法、対話モードとCI実行モードの制限差異も実務で押さえておくべき情報だ。なお、会社コードをAPI送信する際のIPプライバシーリスクへの警告も出ており、機密性の高いコードベースでは利用規約・データ保持ポリシーの確認を推奨する。</p>
+
+<h3>MCPエコシステム拡大</h3>
+
+<p>MCPの公式ディレクトリ（Hello Page）がHacker Newsスコア93を獲得し、乱立していたMCPサーバーに秩序が生まれる第一歩となった。MCP 2026ロードマップでは月間9700万SDKダウンロード・81,000 GitHub starsに達しており、2026年の優先項目はステートレス運用・OAuth 2.1認証標準化・エンタープライズ向け監査ログ/SSO統合の3点。playwright MCP・Meta Ads MCP（29ツール）・Rebill MCP・Adobe After Effects内でのCC起動（MotionAmigo）など、接続先の急拡大も続いている。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>Mythos起点の米国AI規制転換</h3>
+
+<p>AnthropicのMythosモデルが金融安定理事会（FSB、G20傘下）にサイバー脆弱性悪用能力をブリーフィング（一次ソース確認済み）。これを受けてトランプ政権が先進AIモデルへの審査義務化を検討し、従来の「プロイノベーション・軽規制」路線から大きな政策転換が起きつつある（The Hill・Fortune）。EUではAI Act改正（Omnibus）で逆に規制緩和方向に進んでいるため、日米欧の規制競争構造が複雑化している。米国内ではコネチカット州・アイオワ州が州レベルでAI規制を先行成立させており、連邦法の空白をパッチワークが埋める構造が固まりつつある。</p>
+
+<p>5月25日には教皇レオ14世とAnthropicのChristopher Olah共同創業者が回勅「Magnifica Humanitas（AI時代における人間の尊厳）」を共同発表予定（一次ソース確認済み）。「パートナーシップ」ではなく「共同発表イベント」が正確な位置づけだが、宗教界とAI研究の対話として歴史的な節目となる。</p>
+
+<h3>日本政府「Project YATA-Shield」</h3>
+
+<p>関係省庁会議がAIサイバーセキュリティ対策パッケージ「Project YATA-Shield」（八咫の鏡の命名）を発表。重要インフラ事業者・ベンダーへの対策徹底を打ち出した公式政策情報として、公務員・インフラ関係者には押さえておく一次情報だ。</p>
+
+<h3>AI投資・インフラ加速</h3>
+
+<p>AIメカテック（6227）が売上高2.3倍・経常利益186倍という驚異的決算（AI半導体向けウエハーハンドリング特需）。HIVE社がカナダ320MW AIデータセンター建設を発表、NextEra-Dominion合併でAI電力供給の集約が進み、岡本硝子がAIデータセンター素材メーカーへの転換計画を公表と、インフラ層の投資が加速している。Forbes AI50では調達額の80%がAI集中という定量データも確認。NvidiaのJensen HuangはAI PC計画を「very soon」と予告しており、エッジ推論市場の展開が近づいている。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #ea580c; padding-left: 12px;">AIトレーディング</h2>
+
+<p>SMC AI（USDJPY M15）が稼働5日・20トレードで累計-6,018円（勝率94%）という検証初期フェーズのデータが蓄積中。FVGリテスト戦略のシグナルはML確率p=0.54・EV=+1.41〜1.42と安定した数値を示しており、Liquidity Sweep戦略（p=0.52・EV=+0.16）より期待値が高い。EURUSD M15では+8.7pipのTP達成実績もある。現時点の累計はマイナスだが、「期待値がある戦略かどうか」を確認する手法検証フェーズとして整理できる段階だ。</p>
+
+<p>学術的裏付けとして、TradingAgents（UCLA・MIT共同研究、GitHub 60K+ stars）が多エージェント構造でシャープレシオと最大ドローダウンの優位性を実証している。LLMに戦略を立案させてバックテストで検証するワークフローは実用段階だが、「LLMは戦略提案はできてもリスク管理は別途ハードコードが必要」「実取引記録のないボットはマーケティング」という警告は継続して出ている。GMOの実験ではパラメータ最適化は従来手法が優位という結論も出ており、LLMはロジック設計に特化させ数値最適化は別系統というアーキテクチャが現実解に近い。</p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>過去7日の記事数推移：5/11（55件）→5/12（61件）→5/13（70件）→5/14（118件・spike）→5/15（52件）→5/16（77件）→5/17（68件）→5/18（90件）。5/14のSpikeはCode with Claude SFのリアルタイム情報流入と見られ、その後は消化・実装フェーズに移行している。5/18は件数が再度増加しており、Stainless買収という新たなニュースが起点になった。継続テーマのclaude・claude_code・mcp・agent・llmに変化はないが、「誰がMCPインフラを握るか」という新軸が加わり、エコシステム基盤の内製化競争が次の焦点になりつつある。</p>
+
+</body>
+</html>

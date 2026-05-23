@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-05-19</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-05-19 | 52件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-05-19</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>AnthropicがStainless（SDK・MCP生成基盤）を約3億ドルで買収、SDK生成からMCPサーバー展開まで垂直統合した（一次ソース確認済み）。同日、AnthropicはCNBC Disruptor 50で初の1位を獲得、売上ランレートが年初90億ドルから300億ドル超に急拡大（一次ソース確認済み）。Google I/OではGemini 3.5 Flash・Gemini Spark（24時間個人AIエージェント）・Antigravity 2.0が一斉発表された。Claude CodeはPlanモード活用・plan-firstワークフロー・Context7 MCPなど実践知見が充実する一日となった。FX自動取引に関連するSMC AI自動売買の稼働ログとMossAIのリスク分離アーキテクチャも注目点。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>Anthropic、Stainlessを約3億ドルで買収——SDK・MCP基盤を内製化（一次ソース確認済み）</h3>
+
+<p>Anthropicが2026-05-18、SDK・MCPサーバー生成ツーリング企業Stainlessを約3億ドルで買収した。StainlessはTypeScript・Python・Go・Java・KotlinのSDKをAPIスペックから自動生成してきた企業で、OpenAI・Google・Cloudflare・MetaもSDK生成に依存していた。今回の買収でAnthropicはMCPプロトコル（オープン標準）とその主流実装ツールチェーンを同時に掌握したことになる。競合他社は既存SDKを保持するが自動同期機能を失い、Anthropicが開発者インフラの垂直統合で主導権を握った格好だ。なお、ホステッドプロダクトは廃止予定（<a href="https://x.com/WesRoth/status/2056585641937207544" target="_blank">WesRoth</a>）。</p>
+
+<p>これに関連して、Claude Managed Agentsに「Self-hosted Sandboxes（public beta）」と「MCP Tunnels（research preview）」が追加された。MCPトンネルは`tunnel.anthropic.com`経由でセキュアなチャネルを提供し、内部サーバーをパブリックインターネットに公開せずにエージェントからアクセスできる。法務・セキュリティ部門がネックだったエンタープライズ採用の障壁を正面突破する機能として評価できる（<a href="https://x.com/LifeMakersCom/status/2056838580786581888" target="_blank">LifeMakersCom</a>）。</p>
+
+<p>金融業界では、CAISがAnthropicとのMCPサーバー統合を発表。アドバイザーがClaudeの画面から直接ファンドデータ・パフォーマンス分析にアクセスできるようになった（<a href="https://x.com/CAISgroup/status/2056724059312779455" target="_blank">CAISgroup</a>）。</p>
+
+<h3>AnthropicがCNBC Disruptor 50で初の1位（一次ソース確認済み）</h3>
+
+<p>CNBCが2026-05-19に発表したDisruptor 50でAnthropicがOpenAIを抜いて首位を獲得した。売上ランレートは年初90億ドルから300億ドル超に急拡大し、Q1は年率換算で80倍成長（CEO「Just crazy」）。MS・NVIDIA・Amazon・Googleの4社が同時出資者として並ぶ。また日立製作所がAnthropicと戦略的協業を発表、国内では最大規模のClaudeユーザーに位置づけられた（<a href="https://x.com/daitoawar/status/2056830841838547137" target="_blank">daitoawar</a>）。</p>
+
+<p>サイバーセキュリティ特化モデル「Claude Mythos」はApple macOSの脆弱性を短期間で発見・攻撃コード生成に成功したと報告されており、防御側にとっても活用が急務な状況だ（<a href="https://x.com/viva_shocho/status/2056839835680399723" target="_blank">viva_shocho</a>）。</p>
+
+<h3>Claude Codeの実践知見：Plan-first・Context7・並列worktree</h3>
+
+<p><strong>Planモード活用が主流化</strong>：大規模プロジェクトへの機能追加前に「この実装で触らないファイル一覧」をPlanモードで出力させ、実装範囲を確定してから着手するワークフローが海外開発者コミュニティで広がっている。Claude Codeがデフォルトで「エンジニアリングらしい解」を選びがちな傾向に対し、plan-firstワークフローで不要なDBテーブル3件・キャッシュ層1件を事前排除した実績も報告された（<a href="https://x.com/ura_unico/status/2056843603897667782" target="_blank">ura_unico</a>、<a href="https://x.com/dmshirochenko/status/2056844404254720429" target="_blank">dmshirochenko</a>）。</p>
+
+<p><strong>ツール連携の充実</strong>：Venice MCP Serverが31ツール（チャット・画像・動画・音声・Web検索）を搭載して正式リリース。Context7はAPIドキュメントをクエリ時点でリアルタイム注入する仕組みでGitHub 55,000スター（<a href="https://x.com/agentxagi/status/2056825328073425152" target="_blank">agentxagi</a>）。ForgeAILab/forgeはRust製・MITライセンスのエージェントワークフローエンジンで作成3日で39スター、タスクごとに独立したgit worktreeを割り当てCI＋レビューゲートを義務化する（<a href="https://x.com/BeauJohnson89/status/2056843925101391957" target="_blank">BeauJohnson89</a>）。</p>
+
+<p><strong>Skills・Hooks・MCP 6ヶ月実運用報告</strong>：Freqtrade（暗号通貨アルゴ取引）スタックでClaude Code+skills+hooks+MCPを6ヶ月間実運用した報告によると、「10倍の生産性向上はモデル単体ではなく永続メモリ＋適切なハーネスから生まれる」。足場が仕事にフィットした段階でレバレッジが本物になるという観察はFX自動取引運用にも示唆深い（<a href="https://x.com/lliu54827/status/2056832250860413419" target="_blank">lliu54827</a>）。</p>
+
+<p><strong>Claude Code Routines</strong>（リサーチプレビュー）の公式ドキュメントが整備された。スケジュール・Webhook・GitHubイベントの3種トリガーで無人クラウドエージェントを実行する仕組みで、PRコメント評価など「判断を要する作業」をGitHub Actionsと分担できる（<a href="https://code.claude.com/docs/en/routines" target="_blank">公式ドキュメント</a>）。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>Google I/O 2026：AIエージェント統合元年</h3>
+
+<p>2026-05-19のGoogle I/Oは「AIエージェントを個人のインフラとして根付かせる」転換点だった。主要発表：</p>
+
+<ul>
+<li>**Gemini 3.5 Flash**：Flash系列の超低レイテンシを維持しながらGemini 3.1 Proのエージェント機能・コーディング性能を上回る。日本語対応でGeminiアプリ・AI Mode・各種ツールで即日利用可能。Box AI内部評価では前世代比平均12pp向上（医療+22pp・公共部門+17pp）だが数値の独立検証は未完（<a href="https://x.com/googlejapan/status/2056798963370516729" target="_blank">googlejapan</a>）。</li>
+<li>**Gemini Spark**：Gemini 3.5+Antigravityハーネスで動く24時間365日稼働の個人AIエージェント。専用VMを割り当てMCP・Connectors対応。今週より段階ロールアウト開始（<a href="https://x.com/testingcatalog/status/2056792764235280492" target="_blank">testingcatalog</a>）。</li>
+<li>**Gemini Omni**：物理世界シミュレーション能力を持つAny-to-Anyアーキテクチャ。テキスト・画像・音声・動画の入出力を単一モデルで処理（<a href="https://x.com/fladdict/status/2056790825246629936" target="_blank">fladdict</a>）。</li>
+<li>**Google AI Mode in Search**：月間アクティブ10億人突破、クエリ毎四半期2倍以上成長（<a href="https://x.com/NewsFromGoogle/status/2056793577632727211" target="_blank">NewsFromGoogle</a>）。</li>
+<li>**Android Halo**：AIエージェントの作業を画面上部にリアルタイム表示するUI層（<a href="https://x.com/ShishirShelke1/status/2056796057787621823" target="_blank">ShishirShelke1</a>）。</li>
+<li>**Antigravity 2.0**：Claude Code互換の開発環境としてCLI・SDK・音声対応を追加、Gemini 3.5 Flashに最適化（<a href="https://x.com/ctgptlb/status/2056791928633741483" target="_blank">ctgptlb</a>）。</li>
+</ul>
+
+<p>Andrej Karpathy（元Tesla AI・元OpenAI）のAnthropic参加も同日確認された。pre-trainingチームを率い、RSI（Recursive Self-Improvement）方向への布陣とも読める（<a href="https://x.com/sa_vatsa/status/2056797069344710920" target="_blank">sa_vatsa</a>）。</p>
+
+<h3>AI安全・規制</h3>
+
+<p>METR（AI安全性評価機関）がAIエージェントの「不正展開」リスク評価を発表。エージェントは最小限の不正展開の手段・動機・機会を保有するが、シャットダウンへの真剣な取り組みに対して展開を堅牢化する手段は欠如していると結論付けた（<a href="https://x.com/METR_Evals/status/2056800044633010392" target="_blank">METR_Evals</a>）。</p>
+
+<p>日本では自民党がAI・ブロックチェーン活用の次世代金融インフラ政策（トークン化預金・円建てステーブルコイン・AIエージェント24時間自律商取引支援）を正式承認。米中首脳はAI政府間対話の実施で合意（NHK）。米国では州レベルで1200本超のAI法案が並存し連邦統一規制の要否が議論中（<a href="https://fortune.com/2026/05/15/ai-policy-patchwork-state-federal-regulation-framework-sonnenfeld-marcus/" target="_blank">Fortune</a>）。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #ea580c; padding-left: 12px;">AIトレーディング</h2>
+
+<h3>MossAIの2層アーキテクチャ：AI推論と決定論的執行の分離</h3>
+
+<p>MossAIが採用する「AIが直接取引を執行しない」設計が注目を集めた。AIは「戦略作成・パラメータ最適化レイヤー」、執行は「数学的ルール+事前定義リスク限度の決定論的エンジン」に分離することでハルシネーションによる危険なトレードを防止する。LLMベース取引システム設計の参照パターンとして価値がある（<a href="https://x.com/0xJoell/status/2056843908949369237" target="_blank">0xJoell</a>）。</p>
+
+<h3>SMC AI自動売買稼働ログ（EURUSD/USDJPY M15 / 5日目）</h3>
+
+<p>@fxmethodologyによるSMC+AI自動売買の検証ログが公開された。EURUSD・USDJPYのM15足でLiquidity Sweep反発・CHoCH反転をシグナルに、ML確率（p=0.53〜0.55）・期待値（EV=+0.39〜+1.39）でエントリー。稼働5日・26トレード・累計損益-11,334円・勝率89%（ほぼ全SL決済で累計損失中）。検証フェーズにおけるリアルな損益推移として、FX自動取引を運用する立場では手法設計の参考になる（<a href="https://x.com/fxmethodology/status/2056732924196884722" target="_blank">fxmethodology</a>）。</p>
+
+<p>TradingAgentsフレームワーク（UCLA+MIT・LangGraph基盤・オープンソース）のレビューも公開。7役割AIエージェント協調型で3ヶ月バックテストで6〜25%改善報告があるが、Sharpe比5〜8は「統計的異常」と著者が明記、ライブ取引未実施。v0.2.0でClaude 4.xを含むマルチプロバイダー対応（<a href="https://medium.com/data-science-in-your-pocket/tradingagents-best-ai-agent-for-financial-trading-c0bd6e790bf0" target="_blank">Medium</a>）。</p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>今日の記事数は52件で、過去7日間の推移（5/18:90、5/17:68、5/16:77、5/15:52、5/14:118、5/13:70、5/12:61）と比較すると前日比大幅減。ただしGoogle I/O当日であるにもかかわらず記事数が絞られたのは収集フィルタリングの効果と見られ、質的密度は高い。</p>
+
+<p>継続テーマ（claude・claude_code・mcp・agent・llm）は7日間一貫して上位を占める。今日の特徴は<strong>MCP関連のインフラ統合ニュース</strong>が一気に集中したこと：Stainless買収・MCPトンネル・CAISのMCP統合・Venice MCP Server・Context7・ShadcnSpace MCPと、MCPが「標準インフラ」として成熟フェーズに入った感がある。</p>
+
+<p>「小さく試して実績で引っ張る」スタイルに合わせると、今日の注目アクションは①Context7 MCPをAPIヘビープロジェクトに試験導入、②Claude Code Routinesでルーティンタスクの無人化を1件試行、この2点がコスト低く実績を積めるエントリーポイントだ。</p>
+
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-05-17</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-05-17 | 68件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-05-17</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>Claude Codeが大量アップデートを迎え、Routines・Dreaming process・Agent View GAが同時リリース。MCPエコシステムは1万件超のサーバーを擁する成熟段階に入った。Anthropicが4月のビジネス利用シェアでOpenAIを逆転したとの調査も登場。xAI Colossus 1（22万GPU）の全面借用が明らかになり、インフラ増強の背景が判明。FX自動売買ではTradingAgents+MT5のVPSデプロイ実装情報が充実した一方、AI普及後のゴールド自動売買難化という現場の声も目立った。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>v2.1.101リリースと主要新機能（一次ソース確認済み・一部）</h3>
+
+<p>Anthropic公式の「What&#x27;s New」ページが2026年5月時点の主要アップデートを公開した。特に注目は3点。<strong>Routines機能</strong>はスケジュール・GitHubイベント・APIコールでクラウドエージェントを自動起動し、定型作業の完全自動化を可能にする。<strong>Dreaming process</strong>は過去セッションをレビューしてパターンを抽出・メモリキュレーションを行う自己改善機能で、エージェントが実行間で学習する仕組みが実装された。<strong>Writeツール60%高速化</strong>（タブ/$/&amp;を含む大ファイル対応）はヘビーユースに直結するアップデートだ。Opus 4.7がMax/Team Premiumのデフォルトに昇格し、xhigh effortレベルが「ほとんどのコーディング作業に推奨」として追加された。レート制限も2倍緩和されている。なお、Writeツール速度向上については今回の検索では直接の一次ソース確認ができておらず、要継続確認。[[一次ソース確認済み（一部）]](https://code.claude.com/docs/en/whats-new)</p>
+
+<p>日本語情報では、UravationがClaude Code v2.1.101の30件超の変更を5週間分に整理した詳細ガイドを公開。Agent ViewとBackground Sessionsによる並列エージェント管理、/loopコマンドによる定期実行、Voice mode、Auto modeなど、非エンジニアを含む幅広いユーザー向けに設定方法と図解を提供している。デザイナーの大原かほ氏による「18のショートカット＆コマンド」記事も登場し、Figma参照やSVGコード生成といった非コード用途での活用が広がっている。[[Uravation日本語ガイド]](https://uravation.com/media/claude-code-v2-1-101-30-releases-5-weeks-guide-2026/)</p>
+
+<h3>MCPエコシステムの成熟</h3>
+
+<p>MCPは2026年3月時点でSDK月間ダウンロード9,700万件・GitHubスター8.1万件を達成し、全主要AIベンダー（Anthropic/OpenAI/Google/Microsoft/AWS）が対応済み。AWSが54本・Google CloudがBigQuery/Vertex AI対応の公式MCPサーバーを公開するなど、エンタープライズ対応が本格化している。公開MCPサーバーは1万件超に到達し、Claude Codeとの組み合わせが実務の標準になりつつある。株式会社仁頼によるMCPサーバー15選ガイドでは、GitHub/Slack/Notion/BigQuery/AWS等を実務カテゴリ別に評価しており、実装参考として高品質。[[MCP完全ガイド2026]](https://dev.to/x4nent/complete-guide-to-mcp-model-context-protocol-in-2026-architecture-implementation-and-4a11)</p>
+
+<h3>コミュニティの実践知見</h3>
+
+<p>X/Twitter上では複数の実践知見が拡散した。大規模リファクタリングでのサブエージェントExploreモード活用（slot間Claude Code↔Codex CLIの会話接続も実験中）、公式プラグイン`claude-code-setup`によるリポジトリ自動スキャン・hooks/skills/MCP設定、`co-review`スキルによるOpus駆動+Codexレビューの自動化、など生産性向上の報告が相次いだ。一方で「セッションロスやauto-compacting問題がリアルプロジェクトでは積み重なる」という課題報告もあり、長期運用における信頼性はまだ課題として認識されている。</p>
+
+<p>ナイル社が新卒研修でClaude Codeを「知る」から「仕事で使う」まで育成する取り組みを公開したことは、企業でのClaude Code標準化が新入社員教育レベルにまで浸透していることを示している。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>Anthropicの事業動向：Colossus借用・ビジネスシェア逆転</h3>
+
+<p>xAIが保有する2つのデータセンターのうち、Colossus 1（22万GPU）を丸ごとAnthropicに貸し出し、GrokはColossus 2に移行中との具体的情報が流れた。これはClaude側のキャパシティ制約改善に直結するニュースだ。また4月のビジネス利用シェアでAnthropicがOpenAIを逆転した可能性が高いとの調査データも登場。グラフはAIエージェント普及の影響が大きいことを示唆しており、Claude Codeの企業採用が数字に出てきた形だ。34社の主要AI企業の年間換算収益が約8兆円（$80B）に達し、うちAnthropicとOpenAIで89%を占めるという分析も注目点。</p>
+
+<p>一方、米国防総省のAI調達拡大でAnthropicが排除され、Mythos利用が調整されているとの報道も流れた。政府調達リスクは継続して注視が必要。</p>
+
+<h3>EU AI Act簡素化合意（一次ソース確認済み）</h3>
+
+<p>EU理事会と欧州議会が2026年5月7日、AI規制の簡素化・合理化に合意した。透明性ルールは2026年8月から施行、AI規制サンドボックスの各国設置期限は2027年8月2日まで延長、AI生成コンテンツの透明性措置実施猶予は6ヶ月から3ヶ月に短縮（新期限：2026年12月2日）。高リスクAIシステム規定の発効日については「2026年8月2日」と広く伝えられているが、正確にはスタンドアローン型は2027年12月2日、製品組込型は2028年8月2日への延期が合意されているため注意が必要。[[一次ソース確認済み（修正あり）]](https://www.consilium.europa.eu/en/press/press-releases/2026/05/07/artificial-intelligence-council-and-parliament-agree-to-simplify-and-streamline-rules/)</p>
+
+<h3>5月のAIモデル動向：SubQ登場と中国の量的攻勢（一次ソース確認済み・留保付き）</h3>
+
+<p>5月のフロンティアは新モデル投入より「アーキテクチャ革新」と「中国の数量攻勢」が特徴。<strong>SubQ</strong>（Subquadratic）が5月5日にローンチ、2,900万ドルのシード調達、12Mコンテキストを持つ非トランスフォーマー初の商用LLM。ただし「注意力計算1,000倍削減」の主張に対しては研究者から独立検証の要求が出ており、ベンチマーク数値は現時点では未検証。中国ではZ.ai/MiniMax/Kimi/DeepSeekが12日間でオープンウェイトコーディングモデルを相次ぎリリース、Claude Opus 4.7比で1/3以下のコストを主張している。GPT-5.5 InstantがChatGPTのデフォルトに昇格、Gemini 3.1 Flash Liteも新デフォルト化した。[[一次ソース確認済み（ベンチマーク留保付き）]](https://whatllm.org/blog/new-ai-models-may-2026)</p>
+
+<h3>インフラ・投資動向</h3>
+
+<p>JPMorganの2026年中間見通しレポートでAIインフラ銘柄の数年にわたる強気継続予測が登場。光通信・電力管理・GPU冷却等のボトルネック企業が注目されている。キオクシアのSSD技術でAIサーバー電力を1/8に削減し9.8PBストレージを実現する発表も話題で、データセンター電力逼迫への現実解として注目度が高い。国内ではウシオ電機（6925）がS高、FUJI（6134）が上場来高値と、AI半導体需要関連銘柄の好業績が続いている。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #ea580c; padding-left: 12px;">AIトレーディング</h2>
+
+<h3>TradingAgents+MT5のマルチエージェント実装</h3>
+
+<p>LightNodeによるTradingAgents + VPS + MT5を使った24時間FX自動売買ボット構築チュートリアルが充実した内容で公開。LangGraphベースの7役割エージェント（ファンダメンタル/センチメント/ニュース/テクニカル/リスク管理/トレーダー）をVPSにデプロイし、MetaTrader 5 Python API経由で注文実行するパイプライン全体を解説している。GPT-5.x/Gemini 3.x/Claude 4.x/Grok 4.xから使用LLMを選択可能な設計で、LLM切り替えも容易。並行してAlgoInsightsによるTradingAgents Python実装（TauricResearch製v0.2.0）の詳細解説も公開され、バックテスト設定とS&amp;P500ベンチマーク超過の実験結果が示されている。[[チュートリアル]](https://go.lightnode.com/tech/ai-forex-trading-bot-with-tradingagents)</p>
+
+<h3>LLM別アルゴ取引ボット生成能力比較</h3>
+
+<p>QuantLabsによる8つのLLMのPythonアルゴ取引ボット生成能力比較テストでは、<strong>Claude 4.x系</strong>がボラティリティ調整ポジションサイジング・相関ヘッジ・レジーム検出などの複雑概念に強く、実際のバックテストを通過するコードを生成する能力が高いと評価された。EAをLLMで生成・改善する際の選択根拠として活用できる。</p>
+
+<p>日本語ではsayama_ocha氏によるChatGPT API組み込みFX自動売買EAの実装記事（MT4/MT5のMQL言語でのAPI呼び出し、プロンプト設計、タイマー関数による定期実行）が公開され、MQL×LLM APIの連携パターンとして参考度が高い。</p>
+
+<h3>AI普及後の相場難化と詐欺リスク</h3>
+
+<p>「AIが世に広まってから相場の難易度が上がった。ゴールドの自動売買で今勝てる人はいるのか」という実践者からの率直な声がX上に投稿された。AI参加者増加による市場の効率化が自動売買の超過利益を圧縮している可能性を示唆する現場感覚として注目に値する。</p>
+
+<p>一方、弁護士による「AI CONNECT」「AIアシスタント」「SPワークス」「ディテール」「イコールシステム」など複数のAI系FX詐欺商材の被害者募集投稿が集中しており、AI×FXという組み合わせを使った詐欺の横行が確認できる。運用中のEA選定・販売商材の評価には引き続き注意が必要。</p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>過去7日間の記事数：5/10（102件）→5/11（55件）→5/12（61件）→5/13（70件）→5/14（118件）→5/15（52件）→5/16（77件）→<strong>5/17（68件）</strong>。14日が118件と突出していたのはモデルリリース関連の情報集中が原因と推定される。本日68件は週平均の79件を若干下回るが、質的には公式ドキュメント・一次ソース確認記事の比率が高い。</p>
+
+<p>継続テーマの claude_code・mcp・agent は今日も全体の約75%を占め、構造的なトレンドの安定が見られる。特にMCPは「設定地獄」から「公式プラグインによる自動設定」へ移行が進み、採用障壁が下がっていることが今日の複数記事から確認できる。SubQの登場はトランスフォーマー一強構造に揺さぶりをかける可能性があるが、検証が進むまで評価は保留が適切。</p>
+
+</body>
+</html>
