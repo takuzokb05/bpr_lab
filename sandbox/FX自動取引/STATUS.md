@@ -29,7 +29,7 @@ PREMISE.md 「過去は捨てた。教訓だけ持って、ゼロから組み立
 | 項目 | 値 |
 |---|---|
 | **本番VPS** | ConoHa Windows Server (160.251.221.43) |
-| **Pythonプロセス** | PID 6392、起動 2026-05-23 10:09:07 JST、RAM 100MB |
+| **Pythonプロセス** | PID 2880、起動 2026-05-23 19:20:09 JST (自動復旧で立ち上がった現役) |
 | **稼働ペア** | GBP_JPY 単一 (SPEC v2 § 2-1 H4 ★★★★★ 確定) |
 | **戦略** | SeasonalDetector (M15 YZ_vol > 30%ile + H1 YZ_vol > 0.00175 二層判定) |
 | **lot** | 0.01 固定 / 最大保持 4時間 / 1ポジション制限 |
@@ -37,15 +37,17 @@ PREMISE.md 「過去は捨てた。教訓だけ持って、ゼロから組み立
 | **ブローカー** | 外為ファイネスト MT5 デモ口座 (22005467) |
 | **リポジトリ** | `C:\bpr_lab_spec_v2` (worktree、亡き者と物理分離) |
 | **DB / ログ** | `data/fx_spec_v2.db` / `data/spec_v2_poc.log` |
-| **タスク設定** | `SPECv2_PoC` ExecutionTimeLimit=`PT0S` (無制限、2026-05-23 修正) / RestartCount=3 / RestartInterval=1分 |
+| **タスク設定** | `SPECv2_PoC`: ExecutionTimeLimit=`PT0S` / Trigger=AtStartup + Once-at-18:40 with RepetitionInterval=PT5M / 死活監視済 (kill→3分21秒で自動復旧、2026-05-23 19:16-19:20 実証) |
 
 ### 🚨 PoC 稼働履歴（重要 — 1-2週間観察は 5/23 起点でやり直し）
 - **2026-05-12 23:37:51** 初回起動（PID 4036）
 - **2026-05-13 〜 2026-05-15** 正常稼働（iter 4304 まで、エントリー0件、regime=transitional 中心）
 - **2026-05-15 23:37:35** ExecutionTimeLimit=PT72H に到達して強制終了 (267014 = SCHED_S_TASK_TERMINATED)
 - **2026-05-15 〜 2026-05-23** 8日間放置（成功終了扱いで RestartCount 不発火 + 単発トリガーで再起動なし）
-- **2026-05-23 10:09:07** ユーザー指摘で復旧 + ExecutionTimeLimit を PT0S (無制限) に変更
-- 真因と再発防止: → `memory/feedback_task_scheduler_execution_time_limit.md`
+- **2026-05-23 10:09** ユーザー指摘で復旧 + ExecutionTimeLimit を PT0S (無制限) に変更
+- **2026-05-23 18:40** トリガーに Once + RepetitionInterval=PT5M を追加（5分ごとに死活チェック）
+- **2026-05-23 19:16-19:20** kill→3分21秒で自動復旧を実証、死活監視機構の動作確認完了
+- 真因と再発防止 + RestartCount の限界: → `memory/feedback_task_scheduler_execution_time_limit.md`
 
 ---
 
