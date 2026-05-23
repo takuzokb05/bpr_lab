@@ -5,37 +5,47 @@
 
 | メタ | 値 |
 |---|---|
-| **最終更新** | 2026-05-10 (Step C 新 P0 v2 検証完了反映) |
-| **次回更新予定** | 2026-05-15（7日後）または重要変更時 |
+| **最終更新** | 2026-05-23 (PoC 11日停止からの復旧 + ExecutionTimeLimit=PT72H 罠の修正) |
+| **次回更新予定** | 2026-05-30（7日後）または重要変更時 |
 | **更新方法** | `python scripts/update_status.py [--with-vps]` / 手動編集（緊急時） |
 
 ---
 
-## 🌐 プロジェクトの2レイヤー構造
+## 🌐 プロジェクトの状態 (亡き者整理完了 2026-05-13)
 
-本プロジェクトは現在 **2つのレイヤー** が並行している。混同しない。
+**🪦 亡き者の世界は全停止**。SPEC v2 PoC (再構築の世界) のみ稼働。
+PREMISE.md 「過去は捨てた。教訓だけ持って、ゼロから組み立てる」に従い、亡き者の延命を打ち切り。
 
-| レイヤー | 状態 | 何をしているか |
-|---|---|---|
-| **🪦 亡き者の世界（応急処置）** | VPS 稼働中 / PR #30 OPEN | 既存戦略 (MTFPullback) の運用を維持しつつ撤退判断（GBP_JPY 撤退） |
-| **🌱 ゼロベース再構築の世界** | SPEC v2 § 2-1 検証中 | STORY/PREMISE/OPERATING_MODEL v2.1 → SPEC v2 数値降ろし。**再構築完了まで本番投入禁止** |
-
-**判断指針** (`docs/vision/PREMISE.md` から):
-- 「既存運用の判断 (USD_JPY 処遇 / GBP_JPY 撤退PR 等) を運用モデルで決めようとしない」 = **亡き者の世界の問題は応急処置で対応、再構築モデルが答える問題ではない**
-- 既存戦略・パラメータ・数値は **亡き者** として扱う。**コードベース骨格と教訓だけ** 継承
+| 状態 | 内容 |
+|---|---|
+| 🪦 亡き者の世界 | **全停止 (2026-05-13)**。FX_AutoTrading / FX_Healthcheck / FX_DailySummary / FX_MarketAnalysis / FX_MemoryMonitor の5タスク全 `Disabled`、PID 7028 (MTFPullback main.py) 停止 |
+| 🌱 再構築の世界 | SPEC v2 PoC (GBP_JPY 単一通貨) 稼働中。SPECv2_PoC タスク Running |
+| PR #30 | **クローズ (2026-05-13)**。亡き者の世界の論件は運用モデルで答える対象外 (PREMISE.md) |
 
 ---
 
-## 🟢 いま稼働中の構成（🪦 亡き者の世界）
+## 🟢 いま稼働中の構成（🌱 再構築の世界）
 
 | 項目 | 値 |
 |---|---|
 | **本番VPS** | ConoHa Windows Server (160.251.221.43) |
-| **Pythonプロセス** | PID 6108、起動 2026-05-05 12:52 JST、RAM 17MB |
-| **稼働ペア** | EUR_USD / USD_JPY （GBP_JPY は 2026-05-07 撤退、PR #30 OPEN・VPS反映待ち） |
-| **timeframe** | M15、60秒間隔ループ |
-| **ブローカー** | 外為ファイネスト MT5 デモ口座 |
-| **PR #30** | `fix(strategy): GBP_JPY 撤退` / マージ後 VPS pull + 再起動が必要 |
+| **Pythonプロセス** | PID 6392、起動 2026-05-23 10:09:07 JST、RAM 100MB |
+| **稼働ペア** | GBP_JPY 単一 (SPEC v2 § 2-1 H4 ★★★★★ 確定) |
+| **戦略** | SeasonalDetector (M15 YZ_vol > 30%ile + H1 YZ_vol > 0.00175 二層判定) |
+| **lot** | 0.01 固定 / 最大保持 4時間 / 1ポジション制限 |
+| **timeframe** | M15+H1 二層、60秒間隔ループ |
+| **ブローカー** | 外為ファイネスト MT5 デモ口座 (22005467) |
+| **リポジトリ** | `C:\bpr_lab_spec_v2` (worktree、亡き者と物理分離) |
+| **DB / ログ** | `data/fx_spec_v2.db` / `data/spec_v2_poc.log` |
+| **タスク設定** | `SPECv2_PoC` ExecutionTimeLimit=`PT0S` (無制限、2026-05-23 修正) / RestartCount=3 / RestartInterval=1分 |
+
+### 🚨 PoC 稼働履歴（重要 — 1-2週間観察は 5/23 起点でやり直し）
+- **2026-05-12 23:37:51** 初回起動（PID 4036）
+- **2026-05-13 〜 2026-05-15** 正常稼働（iter 4304 まで、エントリー0件、regime=transitional 中心）
+- **2026-05-15 23:37:35** ExecutionTimeLimit=PT72H に到達して強制終了 (267014 = SCHED_S_TASK_TERMINATED)
+- **2026-05-15 〜 2026-05-23** 8日間放置（成功終了扱いで RestartCount 不発火 + 単発トリガーで再起動なし）
+- **2026-05-23 10:09:07** ユーザー指摘で復旧 + ExecutionTimeLimit を PT0S (無制限) に変更
+- 真因と再発防止: → `memory/feedback_task_scheduler_execution_time_limit.md`
 
 ---
 
@@ -106,16 +116,17 @@
 
 ---
 
-## ⚠️ 観察中の課題（🪦 亡き者の世界、高優先度のみ）
+## ⚠️ 観察中の課題（🌱 再構築の世界のみ）
 
 | 課題 | ステータス | 次のアクション | 詳細 |
 |---|---|---|---|
-| **PR #30 GBP_JPY 撤退** | OPEN, CI Vercel関連で2失敗 (FX無関係) | マージ → VPS pull + 再起動 | `gh pr view 30` |
-| USD_JPY パフォーマンス | 観察中 (7件中1勝) | 1〜2週間後に再評価 | `memory/project_fx_pending_items.md` |
-| trading_loop.py 重複INFO格下げ (L462/L529/L640) | follow-up 登録済 | 別PRで一括対応 | `memory/project_fx_pending_items.md` § 認識済みfollow-up |
-| EUR/GBP の HOLD パターン | LDN-NY セッション (JST 21:00-02:00) で観察必要 | 該当時刻のログ追加調査 | `memory/project_fx_signal_status_2026_05_05.md` |
-| postmortem 出力率の定常運用率 | サンプル 2/2 = 100% だが少 | 2週間後に再計測 | 同上 |
+| SPEC v2 PoC GBP_JPY 観察 | **5/23 復旧後の再起算**。実稼働は 5/12-5/15 の3日間 + 5/23 から | 1-2週間 regime/PnL 推移確認、エントリー件数監視 | `docs/SPEC_V2_POC_GUIDE.md` § 観察対象 |
+| PoC死活監視の仕組み | 未着手（11日放置の再発防止としてユーザー気付き任せから脱却） | watchdog タスク or Slack 死活通知 を別タスクで | `memory/feedback_task_scheduler_execution_time_limit.md` |
+| SPEC v2 § 2-2 (HMM) 未着手 | PoC 観察と並行で着手可 | OPERATING_MODEL.md v2.1 § 2-2 起点に Step A→B→C 再開 | `docs/vision/research/STEP_C_COMPLETION_2026-05-10.md` § Phase 4 分岐 |
 | 退避ブランチ `vps-backup-20260505-pre-trace-deploy` 削除 | 2026-05-12 以降 | 1週間経過後 | `memory/feedback_vps_git_hygiene.md` |
+| PR #35 (SPEC v2 一式 main へ) | OPEN | PoC 観察期間中に Bear/コードレビュー → main マージ | `gh pr view 35` |
+
+**🪦 亡き者の世界の課題**: すべて停止により無効化。USD_JPY パフォーマンス / trading_loop.py 重複INFO格下げ / EUR/GBP HOLD パターン / postmortem 出力率 等は亡き者の論件のため対応不要。
 
 ---
 
