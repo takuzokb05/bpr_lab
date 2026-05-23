@@ -575,3 +575,37 @@
 | 551 | @AnthropicAI @StainlessAPI Acquiring the SDK… | en | 未読 | #ecosystem #x-signal | articles/2026-05-22_2758_X_cet3001_AnthropicAI_StainlessAPI_Acquiring_the_SDK_and_M.md |
 | 552 | @0x_illuminati the pipes framing is right. bu… | en | 未読 | #ecosystem #x-signal | articles/2026-05-22_2759_X_bettercallsalva_0x_illuminati_the_pipes_framing_is_right_buying.md |
 | 553 | @AnthropicAI @StainlessAPI stainless powering… | en | 未読 | #ecosystem #x-signal | articles/2026-05-22_2760_X_ethanfrostlove_AnthropicAI_StainlessAPI_stainless_powering_ever.md |
+
+| 554 | Claude Codeサブエージェントのモデル指定を無視させるプロンプトインジェクション手… | ja | 未読 | #x-signal | articles/2026-05-23_2780_X_kaneda_smec_Claude_Codeサブエージェントのモデル指定を無視させるプロンプトインジェ.md |
+| 555 | Claude Codeのトークン節約のためにCursorで試行錯誤する実践ワークフロー | ja | 未読 | #x-signal | articles/2026-05-23_2781_X_kaneda_smec_Claude_Codeのトークン節約のためにCursorで試行錯誤する実践ワーク.md |
+| 556 | Claude Code CLIは画像を自動base64変換するがAntigravity C… | ja | 未読 | #x-signal | articles/2026-05-23_2782_X_partyscars_Claude_Code_CLIは画像を自動base64変換するがAntigrav.md |
+| 557 | Claude Code SkillsのMarkdownファイルをCopilot無料版で代用… | ja | 未読 | #x-signal #skills | articles/2026-05-23_2783_X_revsystem_Claude_Code_SkillsのMarkdownファイルをCopilot無.md |
+| 558 | Claude CodeのTypeScriptコードにprivate修飾子が大量に使われてい… | ja | 未読 | #x-signal | articles/2026-05-23_2784_X_nodamushi_Claude_CodeのTypeScriptコードにprivate修飾子が大量に.md |
+| 559 | Antigravity-CLIで日本語エンコード問題によるフリーズが多数報告されている | ja | 未読 | #x-signal | articles/2026-05-23_2785_X_partyscars_Antigravity-CLIで日本語エンコード問題によるフリーズが多数報告され.md |
+| 560 | Antigravity-CLIで/modelや/resumeコマンドがClaude Cod… | ja | 未読 | #x-signal | articles/2026-05-23_2786_X_partyscars_Antigravity-CLIでmodelやresumeコマンドがClaude_.md |
+| 561 | Claude Codeのトークン消費バグ vs Codexのバグへの反応の非対称性 | en | 未読 | #x-signal | articles/2026-05-23_2787_X_FindingUrPasswd_Claude_Codeのトークン消費バグ_vs_Codexのバグへの反応の非対称.md |
+| 562 | Tufte準拠チャート作成Claude Code Skill「tufte-claude-s… | en | 未読 | #x-signal #skills | articles/2026-05-23_2788_X_BeauJohnson89_Tufte準拠チャート作成Claude_Code_Skilltufte-clau.md |
+| 563 | Claude Codeチームがポッドキャストでの構想から5ヶ月以内に機能をAPI公開した事… | en | 未読 | #x-signal | articles/2026-05-23_2789_X_therobertta__Claude_Codeチームがポッドキャストでの構想から5ヶ月以内に機能をAPI.md |
+| 564 | 非開発者がClaude Codeでクリーンブリーフ+コンテキスト付与により6ヶ月分の開発作… | en | 未読 | #x-signal | articles/2026-05-23_2790_X_chelsea_hulin_非開発者がClaude_Codeでクリーンブリーフコンテキスト付与により6ヶ月分.md |
+| 565 | Claude Code CLIをOpenRouterの無料モデルに向け1Mトークンコンテキ… | en | 未読 | #x-signal | articles/2026-05-23_2791_X_JulianGoldieSEO_Claude_Code_CLIをOpenRouterの無料モデルに向け1Mトーク.md |
+| 566 | Ulanzi DeckでClaude Code使用量をリアルタイム監視するプラグインが公開 | en | 未読 | #x-signal | articles/2026-05-23_2792_X_narleimoreira_Ulanzi_DeckでClaude_Code使用量をリアルタイム監視するプラグ.md |
+| 567 | 人物・企業検索とリード生成に対応したClaude Code/Codex向けSkillが公開 | en | 未読 | #x-signal #skills | articles/2026-05-23_2793_X_AIDailyGems_人物企業検索とリード生成に対応したClaude_CodeCodex向けSkill.md |
+| 568 | piハーネスはOpus直接利用でCodex+Claude Codeの代替になり拡張が容易 | en | 未読 | #x-signal | articles/2026-05-23_2794_X__seemethere_piハーネスはOpus直接利用でCodexClaude_Codeの代替になり拡張.md |
+| 569 | Skills+サブエージェントのスタックがClaude Codeのモデル単体優位を超えると… | en | 未読 | #x-signal #skills | articles/2026-05-23_2795_X_tradingwifash_SkillsサブエージェントのスタックがClaude_Codeのモデル単体優位を.md |
+| 570 | Claude CodeのSkills/MCP/hooksがフォーク困難な競争優位を構成する… | en | 未読 | #x-signal #skills #hooks #mcp | articles/2026-05-23_2796_X_lliu54827_Claude_CodeのSkillsMCPhooksがフォーク困難な競争優位を構.md |
+| 571 | 20人チームが検証した最適Claude Codeリポジトリ構成（skills/agents… | en | 未読 | #x-signal #skills #hooks | articles/2026-05-23_2797_X_dan__rosenthal_20人チームが検証した最適Claude_Codeリポジトリ構成skillsage.md |
+| 572 | Harness v0.1.0-beta: Rust製ターミナルAIコーディングエージェント… | en | 未読 | #x-signal | articles/2026-05-23_2798_X_NextElevenDev_Harness_v010-beta_Rust製ターミナルAIコーディングエージェ.md |
+| 573 | 6月リリース予定: Sonnet 4.7/4.8・Opus 4.8などAnthropicモ… | en | 未読 | #x-signal #model-update | articles/2026-05-23_2799_X_jakeharrisdev_6月リリース予定_Sonnet_4748Opus_48などAnthropicモデ.md |
+| 574 | DeepSeek V4値下げとComposer 2.5でAnthropicの価格決定力が崩… | ja | 未読 | #x-signal | articles/2026-05-23_2800_X_miraclemasui_DeepSeek_V4値下げとComposer_25でAnthropicの価格決.md |
+| 575 | AnthropicドキュメントでMCPサーバーをゼロから実装してプロトコル構造を理解する | en | 未読 | #x-signal #mcp | articles/2026-05-23_2801_X_MnFounder_AnthropicドキュメントでMCPサーバーをゼロから実装してプロトコル構造を.md |
+| 576 | Anthropic公式Claude無料コース13件: 基礎〜MCP・エージェント・Clau… | en | 未読 | #x-signal #mcp | articles/2026-05-23_2802_X_yuno_x999_Anthropic公式Claude無料コース13件_基礎MCPエージェントCla.md |
+| 577 | Anthropic MCP Quickstart: ツール連携エージェント構築の公式入門リ… | en | 未読 | #x-signal #mcp | articles/2026-05-23_2803_X_RoyAmal_Anthropic_MCP_Quickstart_ツール連携エージェント構築の公.md |
+| 578 | AnthropicがMCPトンネルとセルフホストサンドボックスを出荷、GitHub公式MC… | en | 未読 | #x-signal #mcp | articles/2026-05-23_2804_X_AgentTresor_AnthropicがMCPトンネルとセルフホストサンドボックスを出荷GitHub.md |
+| 579 | MCPがLinux Foundation標準に: Anthropic・OpenAI・Mic… | en | 未読 | #x-signal #mcp | articles/2026-05-23_2805_X_Mosss_OS_MCPがLinux_Foundation標準に_AnthropicOpenAIM.md |
+| 580 | CLAUDE.md Best Practices: The Complete Guide … | en | 未読 | #web-signal #claude-md | articles/2026-05-23_2817_WEB_CLAUDEmd_Best_Practices_The_Complete_Guide_fo.md |
+| 581 | Claude Code のSkillsアイデア大全20選 | ja | 未読 | #web-signal #skills | articles/2026-05-23_2818_WEB_Claude_Code_のSkillsアイデア大全20選.md |
+| 582 | Claude Agent SDK Complete Guide 2026 — Produc… | en | 未読 | #web-signal #ecosystem | articles/2026-05-23_2819_WEB_Claude_Agent_SDK_Complete_Guide_2026__Product.md |
+| 583 | Build Production AI Agents with Claude Agent … | en | 未読 | #web-signal #ecosystem | articles/2026-05-23_2820_WEB_Build_Production_AI_Agents_with_Claude_Agent_.md |
+| 584 | Claude Code Best Practices: Comprehensive Wik… | en | 未読 | #web-signal | articles/2026-05-23_2822_WEB_Claude_Code_Best_Practices_Comprehensive_Wiki.md |
+| 585 | What is MCP (Model Context Protocol)? The 202… | en | 未読 | #web-signal #mcp #model-update | articles/2026-05-23_2823_WEB_What_is_MCP_Model_Context_Protocol_The_2026_G.md |
+| 586 | Model Context Protocol (MCP): Complete 2026 G… | en | 未読 | #web-signal #mcp #model-update | articles/2026-05-23_2825_WEB_Model_Context_Protocol_MCP_Complete_2026_Guid.md |

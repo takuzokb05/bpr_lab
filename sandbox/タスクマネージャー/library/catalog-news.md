@@ -201,3 +201,12 @@
 | 181 | 自律的に脆弱性を探し出し、人間のトップハッカーより3〜5倍速く攻撃できるとされるAI「クロ… | ja | 未読 | #llm-news #x-signal | articles/2026-05-22_2777_X_TAIRAMASAAKI_自律的に脆弱性を探し出し人間のトップハッカーより35倍速く攻撃できるとされるAIクロードミュ.md |
 | 182 | AIエージェントによる社会シミュレーションのハッカソンの結果発表！月面、関係性、戦争、制度… | ja | 未読 | #llm-news #x-signal | articles/2026-05-22_2778_X_ka2aki86_AIエージェントによる社会シミュレーションのハッカソンの結果発表月面関係性戦争制度までAIエ.md |
 | 183 | APIコール一発でGoogleがホストするLinux環境付きのAIエージェントを起動、Ma… | ja | 未読 | #llm-news #x-signal | articles/2026-05-22_2779_X_publickey_APIコール一発でGoogleがホストするLinux環境付きのAIエージェントを起動Markdow.md |
+
+| 184 | xAIがGrokをフルスタックAI基盤へ拡張——エージェント・音声・コネクタ等を一挙リリー… | en | 未読 | #x-signal | articles/2026-05-23_2809_X_XFreeze_xAIがGrokをフルスタックAI基盤へ拡張エージェント音声コネクタ等を一挙リリ.md |
+| 185 | LLM新事前学習パラダイム「NITP」来週リリース——次トークン予測を超える表現学習 | en | 未読 | #x-signal #llm-news | articles/2026-05-23_2810_X_aHpaBean_LLM新事前学習パラダイムNITP来週リリース次トークン予測を超える表現学習.md |
+| 186 | NVIDIAが2026年ゲーム向けGPU出荷停止、中国製低価格GPUが台頭へ | en | 未読 | #x-signal #llm-news | articles/2026-05-23_2811_X_kimmonismus_NVIDIAが2026年ゲーム向けGPU出荷停止中国製低価格GPUが台頭へ.md |
+| 187 | Roundhill、GPU-as-a-Service特化ETF「$NCLD」をSECに申請 | en | 未読 | #x-signal #llm-news | articles/2026-05-23_2812_X_TheETFTracker_RoundhillGPU-as-a-Service特化ETFNCLDをSECに申.md |
+| 188 | DHH、Omarchy Linux次期版の大半をGPT-5.5で執筆——3万行超をAI生成 | en | 未読 | #x-signal | articles/2026-05-23_2813_X_LundukeJournal_DHHOmarchy_Linux次期版の大半をGPT-55で執筆3万行超をAI生.md |
+| 189 | 無検閲LLM「MiniMax M2.7 Ultra Uncensored」リリース——45… | ja | 未読 | #x-signal #llm-news | articles/2026-05-23_2814_X_ai_hakase__無検閲LLMMiniMax_M27_Ultra_Uncensoredリリース45.md |
+| 190 | Microsoft、2030年までに日本で100万人AI人材育成・1.6兆円投資を正式発表 | ja | 未読 | #x-signal | articles/2026-05-23_2815_X_nikkeibpITpro_Microsoft2030年までに日本で100万人AI人材育成16兆円投資を正式.md |
+| 191 | Google、AI Mode検索結果への広告挿入を正式発表——AI生成説明付き製品広告も計… | ja | 未読 | #x-signal | articles/2026-05-23_2816_X_penpenguin2023_GoogleAI_Mode検索結果への広告挿入を正式発表AI生成説明付き製品広告.md |

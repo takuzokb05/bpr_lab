@@ -1222,3 +1222,91 @@ sandbox/FX自動取引/のリファレンス実装として、まずVibe-Trading
 
 **優先度:** 中（欧州展開予定がある場合）
 
+
+---
+
+## 2026-05-23 収集分
+
+### 1. Claude Code設定・CLAUDE.mdへの反映提案
+
+#### 1-1. 20人チーム検証の最適リポジトリ構成への統一
+**出典:** articles/2026-05-23_2780_X（20人チームが検証した最適Claude Codeリポジトリ構成）
+
+**提案内容:**
+20人チームが実証した最適ディレクトリ構成 `skills/ agents/ commands/ hooks/ rules/` を現在のbpr_labリポジトリのClaude Code関連ファイル構造に適用する。
+- `.claude/skills/` : 既存スキル（整理済み）
+- `.claude/agents/` : サブエージェント定義（新設候補）
+- `.claude/commands/` : カスタムスラッシュコマンド（新設候補）
+- `.claude/hooks/` : フック設定（settings.jsonから分離検討）
+- `.claude/rules/` : 条件付きCLAUDE.mdルール（globパターン）
+
+**優先度:** 中
+
+#### 1-2. サブエージェントのモデル指定オーバーライドへのHook保護
+**出典:** articles/2026-05-23_2780_X_*_プロンプトインジェクション（プロンプト攻撃手法）
+
+**提案内容:**
+Claude Codeサブエージェントのモデル指定を悪意ある入力で無視させるプロンプトインジェクション手法が確認された。PreToolUseフックでAgentツール呼び出し時のパラメータを検証し、意図しないモデル指定の変更をブロックするフックを追加する。
+```json
+{
+  "hooks": {
+    "PreToolUse": [{
+      "matcher": "Agent",
+      "hooks": [{"type": "command", "command": "scripts/validate-agent-params.sh"}]
+    }]
+  }
+}
+```
+
+**優先度:** 中
+
+---
+
+### 2. Claude Ecosystemへの反映提案
+
+#### 2-1. OpenRouterを使ったClaude Code CLIのコスト削減
+**出典:** articles/2026-05-23_*_OpenRouter_1Mトークンコンテキストでコスト削減
+
+**提案内容:**
+Claude Code CLIをOpenRouterの無料モデルに向けることで、1Mトークンコンテキストを維持しつつAPIコストをゼロにする設定が公開された。開発作業（FX自動取引のコーディング補助）のコスト最適化として試験導入を検討。
+- 本番品質の最終レビューはClaude Opus 4.7（正規）
+- 初期ドラフト・探索段階はOpenRouter無料モデル
+
+**優先度:** 低（品質リスク評価後に判断）
+
+#### 2-2. MCP Linux Foundation標準化を受けたMCP投資の確信強化
+**出典:** articles/2026-05-23_*_MCPがLinux Foundation標準（Anthropic・OpenAI・Microsoft・Google全社採用）
+
+**提案内容:**
+MCPがLinux Foundation標準になりAnthropicを含む主要4社全社が対応したことで、MCPへの長期投資が一層正当化される。現在のFX自動取引システムおよびスキル・HooksのMCP化設計を加速する根拠として活用する。特に「OpenAPI spec → MCPサーバー自動生成（Stainless買収）」との組み合わせで、MT5 REST APIのMCP化コストが将来ゼロになる見通し。
+
+**優先度:** 中（設計方針の確信補強）
+
+---
+
+### 3. FX自動取引システムへの反映提案
+
+#### 3-1. マルチエージェントBull/Bear/Riskスタックの採用根拠の強化
+**出典:** articles/2026-05-23_2821_WEB（AI Agents vs LLMs Crypto Analysis Market 2026 KuCoin）
+
+**提案内容:**
+BlackRock・Columbia大 2026年4月研究が「Bull/Bear/Risk Supervisorの3層マルチエージェント構造が単体LLMを一貫して上回る」と確認。TradingAgentsの7エージェント協調採用の根拠としてsandbox/FX自動取引/docs/ARCHITECTURE.mdに引用する。
+- Bull agent（テクニカルトレンド担当）
+- Bear agent（マクロリスク担当）
+- Risk Supervisor（最終ポジションサイズ決定）
+の最小3エージェント構成での先行実装を推奨。
+
+**優先度:** 高（既存TradingAgents導入計画に直結）
+
+#### 3-2. ChatGPT-5 FX実験の負の結果から実装方針を再確認
+**出典:** articles/2026-05-23_2824_WEB（ChatGPT-5にFXで稼いでもらおうとした結果）
+
+**提案内容:**
+GPT-5をFX完全自律に使った実験がマイナス収益に終わった一次情報。確認できた知見：
+- LLMの完全自律判断→マイナス収益（実証）
+- 「シグナル生成→人間判断→執行」分離アーキテクチャへの移行が正しい
+この結果はFX自動取引プロジェクトの「LLM=センチメントフィルター（補助）」方針を再確認するデータとして `docs/EVALUATION.md` に記録する。
+
+**優先度:** 高（実装方針の負の事例として記録必須）
+
+---
