@@ -1,0 +1,5604 @@
+{
+  "domain": "ai-news",
+  "collected_at": "2026-05-23T21:10:02.657589+00:00",
+  "days": 1,
+  "total_fetched": 201,
+  "total_filtered": 41,
+  "tweets": [
+    {
+      "tweet_created_at": "2026-05-23T19:33:01.000000Z",
+      "id": 2058269991448002721,
+      "id_str": "2058269991448002721",
+      "type": "tweet",
+      "conversation_id_str": "2058269991448002721",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "xAI’s recent release wave has been insane\n\nMost people still think Grok is just a chatbot\n\nBut over the last few weeks, xAI has been turning Grok into a full AI operating layer:\n\n• Grok Build early beta — an agentic CLI for coding, apps, and workflows\n• Grok Voice Think Fast 1.0 — advanced voice agents for real-world support and sales\n• Grok Imagine Quality Mode — higher realism, stronger text rendering, better creative control\n• Grok in Hermes Agent — use your Grok subscription inside an open-source persistent agent\n• Grok in OpenClaw — chat, images, video generation, X search, and agent workflows\n• Grok in OpenCode — high-speed codebase intelligence\n• Grok Skills — persistent expertise for docs, decks, spreadsheets, PDFs, and custom workflows\n• Grok Connectors — Gmail, Drive, Docs, Sheets, Calendar, GitHub, Notion, Linear, Outlook, OneDrive, SharePoint, and custom MCP\n• Custom Voices — clone and manage voices for TTS and Voice Agent APIs\n• Grok Imagine Agent Mode — cinematic creation workflows with more control over characters and scenes\n\nThis time, xAI is not just shipping model updates\n\nIt is building the full stack around Grok:\nchat, coding, voice, images, video, agents, connectors, files, workflows, and API infrastructure\n\nA full AI operating layer",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1818311005698678784,
+        "id_str": "1818311005698678784",
+        "name": "X Freeze",
+        "screen_name": "XFreeze",
+        "location": "",
+        "url": "",
+        "description": "",
+        "protected": false,
+        "verified": true,
+        "followers_count": 224553,
+        "friends_count": 1842,
+        "listed_count": 0,
+        "favourites_count": 39431,
+        "statuses_count": 26384,
+        "created_at": "2024-07-30T15:42:27.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1818311005698678784/1778551477",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1876785200010539008/2_HFJjq9_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 2,
+      "reply_count": 49,
+      "retweet_count": 15,
+      "favorite_count": 137,
+      "views_count": 4407,
+      "bookmark_count": 19,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "urls": [],
+        "user_mentions": [],
+        "media": [
+          {
+            "display_url": "pic.x.com/PIaAv525Uv",
+            "expanded_url": "https://x.com/XFreeze/status/2058269991448002721/photo/1",
+            "ext_master_playlist_only": [],
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "ext_playlists": [],
+            "features": {
+              "large": {
+                "faces": []
+              }
+            },
+            "id_str": "2058269978345029632",
+            "indices": [
+              276,
+              299
+            ],
+            "media_key": "3_2058269978345029632",
+            "media_url_https": "https://pbs.twimg.com/media/HJBxo98bQAATaXH.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 739,
+                  "w": 1320,
+                  "x": 0,
+                  "y": 1304
+                },
+                {
+                  "h": 1320,
+                  "w": 1320,
+                  "x": 0,
+                  "y": 723
+                },
+                {
+                  "h": 1505,
+                  "w": 1320,
+                  "x": 0,
+                  "y": 538
+                },
+                {
+                  "h": 2043,
+                  "w": 1022,
+                  "x": 254,
+                  "y": 0
+                },
+                {
+                  "h": 2043,
+                  "w": 1320,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 2043,
+              "width": 1320
+            },
+            "sizes": {
+              "large": {
+                "h": 2043,
+                "w": 1320
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/PIaAv525Uv"
+          }
+        ],
+        "display_text_range": [
+          0,
+          275
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T15:42:52.000000Z",
+      "id": 2058212071804662013,
+      "id_str": "2058212071804662013",
+      "type": "tweet",
+      "conversation_id_str": "2058212071804662013",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "I'm going to put all the new files from the US release, all the Peered Reviewed papers from @DrBeaVillarroel VASCO project plus my book into AI and build a dashboard showing exactly how the the sphere network analysis matches what is currently occurring.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1492592447821688833,
+        "id_str": "1492592447821688833",
+        "name": "Patrick Jackson",
+        "screen_name": "PatrickQJackson",
+        "location": "UK",
+        "url": "",
+        "description": "Cutting Edge UAP and Paranormal Research\nWebsite: https://t.co/9znpFEpepW \nUAP Anomalous Metallic Spheres.\nGroundBreaking Book \"The Sphere Network\"",
+        "protected": false,
+        "verified": true,
+        "followers_count": 23523,
+        "friends_count": 129,
+        "listed_count": 0,
+        "favourites_count": 7693,
+        "statuses_count": 13298,
+        "created_at": "2022-02-12T20:12:34.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1492592447821688833/1778849875",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1514268048982740996/-VExp2x0_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 1,
+      "reply_count": 5,
+      "retweet_count": 6,
+      "favorite_count": 54,
+      "views_count": 1089,
+      "bookmark_count": 4,
+      "lang": "en",
+      "entities": {
+        "user_mentions": [
+          {
+            "id_str": "1732933200303771648",
+            "indices": [
+              92,
+              108
+            ],
+            "name": "Beatriz Villarroel",
+            "screen_name": "DrBeaVillarroel"
+          }
+        ],
+        "display_text_range": [
+          0,
+          254
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T14:04:46.000000Z",
+      "id": 2058187385238896649,
+      "id_str": "2058187385238896649",
+      "type": "tweet",
+      "conversation_id_str": "2058187385238896649",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "📢 Official Confirmation:\n\nThe legendary cryptocurrency livestream program\nis about to officially launch.\n\nIn the future,\nthe official team will share daily:\n\n📈 BTC / ETH market updates\n📈 Trending coin opportunities\n📈 AI + Crypto hot topics\n📈 Market trend analysis\n\nAt the same time,\nimportant EFS-related updates\nwill also be gradually revealed during the livestreams.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1063312762267361280,
+        "id_str": "1063312762267361280",
+        "name": "EFSANE",
+        "screen_name": "EFSANEGlobal",
+        "location": "",
+        "url": "https://www.222u.com",
+        "description": "EFSANE is one of the fastest-growing cryptocurrency news platforms in the world. TG: https://t.co/asudwcFdov",
+        "protected": false,
+        "verified": true,
+        "followers_count": 108444,
+        "friends_count": 442,
+        "listed_count": 0,
+        "favourites_count": 380,
+        "statuses_count": 1454,
+        "created_at": "2018-11-16T06:08:12.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1063312762267361280/1750311592",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1933086990414860288/Af9wn3eA_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 3,
+      "reply_count": 70,
+      "retweet_count": 43,
+      "favorite_count": 249,
+      "views_count": 6113,
+      "bookmark_count": 10,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "urls": [],
+        "user_mentions": [],
+        "media": [
+          {
+            "display_url": "pic.x.com/MVjPQdLZMc",
+            "expanded_url": "https://x.com/EFSANEGlobal/status/2058187385238896649/photo/1",
+            "ext_master_playlist_only": [],
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "ext_playlists": [],
+            "features": {
+              "large": {
+                "faces": [
+                  {
+                    "h": 100,
+                    "w": 100,
+                    "x": 47,
+                    "y": 448
+                  },
+                  {
+                    "h": 120,
+                    "w": 120,
+                    "x": 51,
+                    "y": 32
+                  }
+                ]
+              }
+            },
+            "id_str": "2058187309225492480",
+            "indices": [
+              272,
+              295
+            ],
+            "media_key": "3_2058187309225492480",
+            "media_url_https": "https://pbs.twimg.com/media/HJAmc_eaQAA5p8f.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 717,
+                  "w": 1280,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 720,
+                  "w": 720,
+                  "x": 560,
+                  "y": 0
+                },
+                {
+                  "h": 720,
+                  "w": 632,
+                  "x": 648,
+                  "y": 0
+                },
+                {
+                  "h": 720,
+                  "w": 360,
+                  "x": 812,
+                  "y": 0
+                },
+                {
+                  "h": 720,
+                  "w": 1280,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 720,
+              "width": 1280
+            },
+            "sizes": {
+              "large": {
+                "h": 720,
+                "w": 1280
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/MVjPQdLZMc"
+          }
+        ],
+        "display_text_range": [
+          0,
+          271
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T13:51:45.000000Z",
+      "id": 2058184107704660224,
+      "id_str": "2058184107704660224",
+      "type": "tweet",
+      "conversation_id_str": "2058184107704660224",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "🎵 “One click away, and the agent’s on stage…\nSearch on the beat, Claw turns the page…\nCore Nodes keep the rhythm tight…\nwhile manual workflows fade out of sight.”\n\nWeekend soundtrack, powered by OptimAI.\n\nSome people use AI. Others let it work.\n\nLearn more, launch a node, and join the network:\nhttps://t.co/FxaKcnEZRx",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1813247020397924352,
+        "id_str": "1813247020397924352",
+        "name": "OptimAI Network",
+        "screen_name": "OptimaiNetwork",
+        "location": "Agentic",
+        "url": "https://optimai.network/links",
+        "description": "Building Infra for the Agent-native Internet.\nFor the People, By the People.\nBacked by @yzilabs @EASYResidency @Coinmarketcap",
+        "protected": false,
+        "verified": true,
+        "followers_count": 98481,
+        "friends_count": 26,
+        "listed_count": 0,
+        "favourites_count": 948,
+        "statuses_count": 742,
+        "created_at": "2024-07-16T16:20:40.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1813247020397924352/1759898784",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2006789544851709952/px-aHwyt_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null,
+        "verification_info": {
+          "type": "Business"
+        }
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 25,
+      "reply_count": 56,
+      "retweet_count": 248,
+      "favorite_count": 424,
+      "views_count": 6450,
+      "bookmark_count": 3,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [
+          {
+            "display_url": "optimai.network/optimai-nodes#…",
+            "expanded_url": "https://optimai.network/optimai-nodes#nodes",
+            "indices": [
+              295,
+              318
+            ],
+            "url": "https://t.co/FxaKcnEZRx"
+          }
+        ],
+        "user_mentions": [],
+        "media": [
+          {
+            "additional_media_info": {
+              "monetizable": true
+            },
+            "allow_download_status": {
+              "allow_download": true
+            },
+            "display_url": "pic.x.com/IeMxn0ILGi",
+            "expanded_url": "https://x.com/OptimaiNetwork/status/2058184107704660224/video/1",
+            "ext_master_playlist_only": [],
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "ext_playlists": [],
+            "id_str": "2058180730547486720",
+            "indices": [
+              277,
+              300
+            ],
+            "media_key": "13_2058180730547486720",
+            "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2058180730547486720/img/SOv2W5IV4-R3fOij.jpg",
+            "original_info": {
+              "focus_rects": [],
+              "height": 1080,
+              "width": 1920
+            },
+            "sizes": {
+              "large": {
+                "h": 1080,
+                "w": 1920
+              }
+            },
+            "type": "video",
+            "url": "https://t.co/IeMxn0ILGi",
+            "video_info": {
+              "aspect_ratio": [
+                16,
+                9
+              ],
+              "duration_millis": 138878,
+              "variants": [
+                {
+                  "content_type": "application/x-mpegURL",
+                  "url": "https://video.twimg.com/amplify_video/2058180730547486720/pl/-VlToJ-rf8hCOxzs.m3u8?v=f53"
+                },
+                {
+                  "bitrate": 256000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2058180730547486720/vid/avc1/480x270/1om9nINjraAHsSLG.mp4"
+                },
+                {
+                  "bitrate": 832000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2058180730547486720/vid/avc1/640x360/LilkOlYGw4u2jP2x.mp4"
+                },
+                {
+                  "bitrate": 2176000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2058180730547486720/vid/avc1/1280x720/8YvI5p70EfuNUVRu.mp4"
+                },
+                {
+                  "bitrate": 10368000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2058180730547486720/vid/avc1/1920x1080/IBJXoZpiqLjzp7PU.mp4"
+                }
+              ]
+            }
+          }
+        ],
+        "display_text_range": [
+          0,
+          276
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T13:47:20.000000Z",
+      "id": 2058182995991757087,
+      "id_str": "2058182995991757087",
+      "type": "quote",
+      "conversation_id_str": "2058182995991757087",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "These people are really stepping up their game\n\nAnd IMO, they are very smart\n\nThey launched $DRAM for memory\n\nThey are preparing $LYTE for photonics\n\nAnd now they want to launch $NCLD for neoclouds\n\nThey are positioning themselves in the foundational AI sectors with the highest current and future potential\n\nThese people know what they're doing\n\nGood news for all those who don't have the courage or the knowledge to invest in individual stocks, but still want exposure to these AI sectors with lower risk\n\nOnce the composition and percentages are known, I'll post it",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 2038983030530772992,
+        "id_str": "2038983030530772992",
+        "name": "Sancet",
+        "screen_name": "Million_Sancet",
+        "location": "",
+        "url": "",
+        "description": "I'm Million_Sancet\n\nNone of the posts or theses count as financial advice",
+        "protected": false,
+        "verified": true,
+        "followers_count": 2360,
+        "friends_count": 77,
+        "listed_count": 0,
+        "favourites_count": 176,
+        "statuses_count": 834,
+        "created_at": "2026-03-31T14:14:43.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/2038983030530772992/1777766890",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2044792745168973824/1V74YUw1_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": 2057958896241725752,
+      "quoted_status_id_str": "2057958896241725752",
+      "is_quote_status": true,
+      "quoted_status": {
+        "tweet_created_at": "2026-05-22T22:56:50.000000Z",
+        "id": 2057958896241725752,
+        "id_str": "2057958896241725752",
+        "type": "tweet",
+        "conversation_id_str": "2057958896241725752",
+        "community_id_str": null,
+        "community_name": null,
+        "text": null,
+        "full_text": "🚨 NEW ETF FILING\n\nRoundhill has filed to launch the:\n\n$NCLD Roundhill Neocloud ETF \n\nThe fund will invest in \"Neocloud Companies\" — businesses focused on GPU-as-a-Service platforms, high-density AI data centers, power infrastructure, and high-speed networking.\n\nTicker confirmed: $NCLD Exchange and fees TBA.",
+        "source": "",
+        "truncated": false,
+        "in_reply_to_status_id": null,
+        "in_reply_to_status_id_str": null,
+        "in_reply_to_user_id": null,
+        "in_reply_to_user_id_str": null,
+        "in_reply_to_screen_name": null,
+        "user": {
+          "id": 1785044104612622336,
+          "id_str": "1785044104612622336",
+          "name": "ETF Tracker",
+          "screen_name": "TheETFTracker",
+          "location": "Reach Our Audience →",
+          "url": "http://wolf.financial",
+          "description": "Talking about all things ETFs",
+          "protected": false,
+          "verified": true,
+          "followers_count": 51306,
+          "friends_count": 206,
+          "listed_count": 0,
+          "favourites_count": 5944,
+          "statuses_count": 5060,
+          "created_at": "2024-04-29T20:31:05.000000Z",
+          "profile_banner_url": "https://pbs.twimg.com/profile_banners/1785044104612622336/1758224776",
+          "profile_image_url_https": "https://pbs.twimg.com/profile_images/1968763472134414336/jG3Sp9Ea_normal.jpg",
+          "can_dm": false,
+          "affiliation_label": null
+        },
+        "quoted_status_id": null,
+        "quoted_status_id_str": null,
+        "is_quote_status": false,
+        "quoted_status": null,
+        "retweeted_status": null,
+        "quote_count": 4,
+        "reply_count": 5,
+        "retweet_count": 30,
+        "favorite_count": 230,
+        "views_count": 38569,
+        "bookmark_count": 133,
+        "lang": "en",
+        "entities": {
+          "symbols": [
+            {
+              "indices": [
+                54,
+                59
+              ],
+              "text": "NCLD"
+            },
+            {
+              "indices": [
+                54,
+                59
+              ],
+              "text": "NCLD"
+            },
+            {
+              "indices": [
+                280,
+                285
+              ],
+              "text": "NCLD"
+            }
+          ],
+          "hashtags": [],
+          "urls": [],
+          "user_mentions": [],
+          "media": [
+            {
+              "display_url": "pic.x.com/NdyrMAuWbk",
+              "expanded_url": "https://x.com/TheETFTracker/status/2057958896241725752/photo/1",
+              "ext_master_playlist_only": [],
+              "ext_media_availability": {
+                "status": "Available"
+              },
+              "ext_playlists": [],
+              "features": {
+                "large": {
+                  "faces": []
+                }
+              },
+              "id_str": "2057958755816337408",
+              "indices": [
+                280,
+                303
+              ],
+              "media_key": "3_2057958755816337408",
+              "media_url_https": "https://pbs.twimg.com/media/HI9WlbrWcAAjxdp.jpg",
+              "original_info": {
+                "focus_rects": [
+                  {
+                    "h": 991,
+                    "w": 1770,
+                    "x": 0,
+                    "y": 545
+                  },
+                  {
+                    "h": 1536,
+                    "w": 1536,
+                    "x": 234,
+                    "y": 0
+                  },
+                  {
+                    "h": 1536,
+                    "w": 1347,
+                    "x": 343,
+                    "y": 0
+                  },
+                  {
+                    "h": 1536,
+                    "w": 768,
+                    "x": 632,
+                    "y": 0
+                  },
+                  {
+                    "h": 1536,
+                    "w": 1770,
+                    "x": 0,
+                    "y": 0
+                  }
+                ],
+                "height": 1536,
+                "width": 1770
+              },
+              "sizes": {
+                "large": {
+                  "h": 1536,
+                  "w": 1770
+                }
+              },
+              "type": "photo",
+              "url": "https://t.co/NdyrMAuWbk"
+            }
+          ],
+          "display_text_range": [
+            0,
+            279
+          ]
+        },
+        "is_pinned": false
+      },
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 1,
+      "retweet_count": 6,
+      "favorite_count": 56,
+      "views_count": 11728,
+      "bookmark_count": 40,
+      "lang": "en",
+      "entities": {
+        "symbols": [
+          {
+            "indices": [
+              92,
+              97
+            ],
+            "text": "DRAM"
+          },
+          {
+            "indices": [
+              129,
+              134
+            ],
+            "text": "LYTE"
+          },
+          {
+            "indices": [
+              178,
+              183
+            ],
+            "text": "NCLD"
+          },
+          {
+            "indices": [
+              92,
+              97
+            ],
+            "text": "DRAM"
+          },
+          {
+            "indices": [
+              129,
+              134
+            ],
+            "text": "LYTE"
+          },
+          {
+            "indices": [
+              178,
+              183
+            ],
+            "text": "NCLD"
+          }
+        ],
+        "hashtags": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          278
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T13:46:18.000000Z",
+      "id": 2058182736331047363,
+      "id_str": "2058182736331047363",
+      "type": "quote",
+      "conversation_id_str": "2058182736331047363",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Amazing to see my new channel @SOVsessions already over 1400 subscribers over 2 months before content begins to launch!\n\nALL Bitcoin tutorials will migrate there alongside other freedom tech vids: self-hosted AI, sovereign computing and privacy. Join me!\n\nhttps://t.co/k4Ajw12qNd",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 2298103730,
+        "id_str": "2298103730",
+        "name": "BTC Sessions 😎",
+        "screen_name": "BTCsessions",
+        "location": "Citadel #117",
+        "url": "http://www.btcsessions.ca",
+        "description": "Host of BTC Sessions on YouTube.\nPowered by @bitcoinwell\nCo-founder of @theBTCmentor\nNostr: btcsessions@getalby.com",
+        "protected": false,
+        "verified": true,
+        "followers_count": 176948,
+        "friends_count": 6242,
+        "listed_count": 0,
+        "favourites_count": 100900,
+        "statuses_count": 64840,
+        "created_at": "2014-01-18T15:51:11.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/2298103730/1738020350",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1884020021472681986/zKY_RrbA_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": 2049962232843485196,
+      "quoted_status_id_str": "2049962232843485196",
+      "is_quote_status": true,
+      "quoted_status": {
+        "tweet_created_at": "2026-04-30T21:20:57.000000Z",
+        "id": 2049962232843485196,
+        "id_str": "2049962232843485196",
+        "type": "tweet",
+        "conversation_id_str": "2049962232843485196",
+        "community_id_str": null,
+        "community_name": null,
+        "text": null,
+        "full_text": "SOVEREIGN SESSIONS LAUNCHES AUGUST 1ST\n\nIf you want high signal practical education on the latest in freedom tech - Bitcoin, AI, Private Communications, Self Hosted Data... Subscribe here, and join me on my next adventure. \n\nhttps://t.co/k4Ajw12qNd https://t.co/3aMhJDUiIX",
+        "source": "",
+        "truncated": false,
+        "in_reply_to_status_id": null,
+        "in_reply_to_status_id_str": null,
+        "in_reply_to_user_id": null,
+        "in_reply_to_user_id_str": null,
+        "in_reply_to_screen_name": null,
+        "user": {
+          "id": 2298103730,
+          "id_str": "2298103730",
+          "name": "BTC Sessions 😎",
+          "screen_name": "BTCsessions",
+          "location": "Citadel #117",
+          "url": "http://www.btcsessions.ca",
+          "description": "Host of BTC Sessions on YouTube.\nPowered by @bitcoinwell\nCo-founder of @theBTCmentor\nNostr: btcsessions@getalby.com",
+          "protected": false,
+          "verified": true,
+          "followers_count": 176948,
+          "friends_count": 6242,
+          "listed_count": 0,
+          "favourites_count": 100900,
+          "statuses_count": 64840,
+          "created_at": "2014-01-18T15:51:11.000000Z",
+          "profile_banner_url": "https://pbs.twimg.com/profile_banners/2298103730/1738020350",
+          "profile_image_url_https": "https://pbs.twimg.com/profile_images/1884020021472681986/zKY_RrbA_normal.jpg",
+          "can_dm": false,
+          "affiliation_label": null
+        },
+        "quoted_status_id": null,
+        "quoted_status_id_str": null,
+        "is_quote_status": false,
+        "quoted_status": null,
+        "retweeted_status": null,
+        "quote_count": 6,
+        "reply_count": 20,
+        "retweet_count": 35,
+        "favorite_count": 228,
+        "views_count": 40146,
+        "bookmark_count": 20,
+        "lang": "en",
+        "entities": {
+          "urls": [
+            {
+              "display_url": "youtube.com/@SovereignSess…",
+              "expanded_url": "https://www.youtube.com/@SovereignSessions?sub_confirmation=1",
+              "indices": [
+                225,
+                248
+              ],
+              "url": "https://t.co/k4Ajw12qNd"
+            }
+          ],
+          "media": [
+            {
+              "additional_media_info": {
+                "monetizable": false
+              },
+              "display_url": "pic.x.com/3aMhJDUiIX",
+              "expanded_url": "https://x.com/BTCsessions/status/2049962232843485196/video/1",
+              "ext_master_playlist_only": [],
+              "ext_media_availability": {
+                "status": "Available"
+              },
+              "ext_playlists": [],
+              "id_str": "2049962164937773056",
+              "indices": [
+                249,
+                272
+              ],
+              "media_key": "7_2049962164937773056",
+              "media_url_https": "https://pbs.twimg.com/ext_tw_video_thumb/2049962164937773056/pu/img/4reajC1zHfjhgiZi.jpg",
+              "original_info": {
+                "focus_rects": [],
+                "height": 720,
+                "width": 1280
+              },
+              "sizes": {
+                "large": {
+                  "h": 720,
+                  "w": 1280
+                }
+              },
+              "type": "video",
+              "url": "https://t.co/3aMhJDUiIX",
+              "video_info": {
+                "aspect_ratio": [
+                  16,
+                  9
+                ],
+                "duration_millis": 62805,
+                "variants": [
+                  {
+                    "content_type": "application/x-mpegURL",
+                    "url": "https://video.twimg.com/ext_tw_video/2049962164937773056/pu/pl/DrKuF01CII1Uq_dX.m3u8?v=93b"
+                  },
+                  {
+                    "bitrate": 256000,
+                    "content_type": "video/mp4",
+                    "url": "https://video.twimg.com/ext_tw_video/2049962164937773056/pu/vid/avc1/480x270/jBhP_qauk22FgCrg.mp4"
+                  },
+                  {
+                    "bitrate": 832000,
+                    "content_type": "video/mp4",
+                    "url": "https://video.twimg.com/ext_tw_video/2049962164937773056/pu/vid/avc1/640x360/CeFQ8zgY4gPzFd76.mp4"
+                  },
+                  {
+                    "bitrate": 2176000,
+                    "content_type": "video/mp4",
+                    "url": "https://video.twimg.com/ext_tw_video/2049962164937773056/pu/vid/avc1/1280x720/Ls3A_Gs2cVo4fd6f.mp4"
+                  }
+                ]
+              }
+            }
+          ],
+          "display_text_range": [
+            0,
+            248
+          ]
+        },
+        "is_pinned": false
+      },
+      "retweeted_status": null,
+      "quote_count": 2,
+      "reply_count": 6,
+      "retweet_count": 5,
+      "favorite_count": 56,
+      "views_count": 7897,
+      "bookmark_count": 3,
+      "lang": "en",
+      "entities": {
+        "urls": [
+          {
+            "display_url": "youtube.com/@SovereignSess…",
+            "expanded_url": "https://www.youtube.com/@SovereignSessions?sub_confirmation=1",
+            "indices": [
+              256,
+              279
+            ],
+            "url": "https://t.co/k4Ajw12qNd"
+          }
+        ],
+        "user_mentions": [
+          {
+            "id_str": "2028243601910857728",
+            "indices": [
+              30,
+              42
+            ],
+            "name": "Sovereign Sessions",
+            "screen_name": "SOVsessions"
+          }
+        ],
+        "display_text_range": [
+          0,
+          279
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T13:42:32.000000Z",
+      "id": 2058181790133838036,
+      "id_str": "2058181790133838036",
+      "type": "quote",
+      "conversation_id_str": "2058181790133838036",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "We’re moving from single AI tools to full AI teams.\n\nTeamly makes that shift feel real.\n\nIn one click, you can launch AI agents that work together like an actual team.\n\nNo code. No APIs. No setup headaches.\n\nJust:\n→ Pick a role\n→ Explain the task\n→ Your AI team gets to work in under a minute\n\nThey handle planning, execution, task handoffs, and collaboration automatically even while you’re away.\n\nThis is the next stage of AI automation.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1402361578008240135,
+        "id_str": "1402361578008240135",
+        "name": "Markandey Sharma",
+        "screen_name": "TechByMarkandey",
+        "location": "",
+        "url": "https://linktr.ee/markandeysharma",
+        "description": "Sharing insights on AI, No-Code, Tech Tools & prompts | AI Enthusiast | Unstop's Top 75 Unstoppable Education & Career Influencer | Top AI Voice",
+        "protected": false,
+        "verified": true,
+        "followers_count": 65588,
+        "friends_count": 598,
+        "listed_count": 0,
+        "favourites_count": 125953,
+        "statuses_count": 48810,
+        "created_at": "2021-06-08T20:27:25.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1402361578008240135/1723377958",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1756399086058553344/vCzngifp_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": 2058177365109252335,
+      "quoted_status_id_str": "2058177365109252335",
+      "is_quote_status": true,
+      "quoted_status": {
+        "tweet_created_at": "2026-05-23T13:24:57.000000Z",
+        "id": 2058177365109252335,
+        "id_str": "2058177365109252335",
+        "type": "tweet",
+        "conversation_id_str": "2058177365109252335",
+        "community_id_str": null,
+        "community_name": null,
+        "text": null,
+        "full_text": "You can hire an AI team in one click with Teamly 🤖 \n\nNo API or code needed.\n\n→ Pick a role, describe what you need, full team spins up in under a minute \n→ They plan, hand off, and run while you sleep \n→ 3 days free trial.\n\nComment \"TEAMLY\" to get free premium subscription.\n\n10 winners in 72 hours⏳",
+        "source": "",
+        "truncated": false,
+        "in_reply_to_status_id": null,
+        "in_reply_to_status_id_str": null,
+        "in_reply_to_user_id": null,
+        "in_reply_to_user_id_str": null,
+        "in_reply_to_screen_name": null,
+        "user": {
+          "id": 2025122941692948480,
+          "id_str": "2025122941692948480",
+          "name": "teamly",
+          "screen_name": "Teamly",
+          "location": "Digital World I SF, CA ",
+          "url": "http://teamly.to",
+          "description": "Your prompt = Your Team I Join: http://teamly.to I questions: support@teamly.to",
+          "protected": false,
+          "verified": true,
+          "followers_count": 150,
+          "friends_count": 2,
+          "listed_count": 0,
+          "favourites_count": 33,
+          "statuses_count": 20,
+          "created_at": "2026-02-21T08:18:43.000000Z",
+          "profile_banner_url": "https://pbs.twimg.com/profile_banners/2025122941692948480/1771662348",
+          "profile_image_url_https": "https://pbs.twimg.com/profile_images/2025123212695404546/XnB_CqGm_normal.jpg",
+          "can_dm": true,
+          "affiliation_label": null,
+          "verification_info": {
+            "type": "Business"
+          }
+        },
+        "quoted_status_id": null,
+        "quoted_status_id_str": null,
+        "is_quote_status": false,
+        "quoted_status": null,
+        "retweeted_status": null,
+        "quote_count": 4,
+        "reply_count": 78,
+        "retweet_count": 6,
+        "favorite_count": 46,
+        "views_count": 4746,
+        "bookmark_count": 12,
+        "lang": "en",
+        "entities": {
+          "hashtags": [],
+          "symbols": [],
+          "timestamps": [],
+          "urls": [],
+          "user_mentions": [],
+          "media": [
+            {
+              "additional_media_info": {
+                "monetizable": true
+              },
+              "display_url": "pic.x.com/NBK1ExadS1",
+              "expanded_url": "https://x.com/Teamly/status/2058177365109252335/video/1",
+              "ext_master_playlist_only": [],
+              "ext_media_availability": {
+                "status": "Available"
+              },
+              "ext_playlists": [],
+              "id_str": "2058177288059957249",
+              "indices": [
+                275,
+                298
+              ],
+              "media_key": "13_2058177288059957249",
+              "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2058177288059957249/img/RjuBPm97K1NOXB9J.jpg",
+              "original_info": {
+                "focus_rects": [],
+                "height": 2160,
+                "width": 3840
+              },
+              "sizes": {
+                "large": {
+                  "h": 1152,
+                  "w": 2048
+                }
+              },
+              "type": "video",
+              "url": "https://t.co/NBK1ExadS1",
+              "video_info": {
+                "aspect_ratio": [
+                  16,
+                  9
+                ],
+                "duration_millis": 38698,
+                "variants": [
+                  {
+                    "content_type": "application/x-mpegURL",
+                    "url": "https://video.twimg.com/amplify_video/2058177288059957249/pl/aFeDIDFpCmPFWWPt.m3u8?v=cfc"
+                  },
+                  {
+                    "bitrate": 256000,
+                    "content_type": "video/mp4",
+                    "url": "https://video.twimg.com/amplify_video/2058177288059957249/vid/avc1/480x270/PyShA20JaYdMUju-.mp4"
+                  },
+                  {
+                    "bitrate": 832000,
+                    "content_type": "video/mp4",
+                    "url": "https://video.twimg.com/amplify_video/2058177288059957249/vid/avc1/640x360/k1GwP-yCbYVwwdjK.mp4"
+                  },
+                  {
+                    "bitrate": 2176000,
+                    "content_type": "video/mp4",
+                    "url": "https://video.twimg.com/amplify_video/2058177288059957249/vid/avc1/1280x720/ijyPn13c8rKmQ2R0.mp4"
+                  },
+                  {
+                    "bitrate": 10368000,
+                    "content_type": "video/mp4",
+                    "url": "https://video.twimg.com/amplify_video/2058177288059957249/vid/avc1/1920x1080/qKi3FBhDYiOlthE3.mp4"
+                  },
+                  {
+                    "bitrate": 25128000,
+                    "content_type": "video/mp4",
+                    "url": "https://video.twimg.com/amplify_video/2058177288059957249/vid/avc1/3840x2160/EwVvSPGjEkjuk1ZB.mp4"
+                  }
+                ]
+              }
+            }
+          ],
+          "display_text_range": [
+            0,
+            274
+          ]
+        },
+        "is_pinned": false
+      },
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 7,
+      "retweet_count": 17,
+      "favorite_count": 57,
+      "views_count": 11613,
+      "bookmark_count": 4,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "media": [
+          {
+            "additional_media_info": {
+              "monetizable": true
+            },
+            "allow_download_status": {
+              "allow_download": true
+            },
+            "display_url": "pic.x.com/MuSu4NUb4x",
+            "expanded_url": "https://x.com/TechByMarkandey/status/2058181790133838036/video/1",
+            "ext_master_playlist_only": [],
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "ext_playlists": [],
+            "id_str": "2058181628275621888",
+            "indices": [
+              278,
+              301
+            ],
+            "media_key": "13_2058181628275621888",
+            "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2058181628275621888/img/Oo3u06d0rGTZjOcL.jpg",
+            "original_info": {
+              "focus_rects": [],
+              "height": 720,
+              "width": 1280
+            },
+            "sizes": {
+              "large": {
+                "h": 720,
+                "w": 1280
+              }
+            },
+            "type": "video",
+            "url": "https://t.co/MuSu4NUb4x",
+            "video_info": {
+              "aspect_ratio": [
+                16,
+                9
+              ],
+              "duration_millis": 9543,
+              "variants": [
+                {
+                  "content_type": "application/x-mpegURL",
+                  "url": "https://video.twimg.com/amplify_video/2058181628275621888/pl/4YRkMY8exNFJOC4Z.m3u8"
+                },
+                {
+                  "bitrate": 256000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2058181628275621888/vid/avc1/480x270/cT_dw1mCrnPxooz8.mp4"
+                },
+                {
+                  "bitrate": 832000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2058181628275621888/vid/avc1/640x360/JzZ0kPUgCmGohAOh.mp4"
+                },
+                {
+                  "bitrate": 2176000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2058181628275621888/vid/avc1/1280x720/S4mMyQmNJnx1LRSo.mp4"
+                }
+              ]
+            }
+          }
+        ],
+        "display_text_range": [
+          0,
+          277
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T12:58:02.000000Z",
+      "id": 2058170589475463544,
+      "id_str": "2058170589475463544",
+      "type": "tweet",
+      "conversation_id_str": "2058170589475463544",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "marketing for 95% of ai startups is awful:\n\n- make a slick launch video\n- pay for tweets\n- pray\n\nmarketing is more valuable than coding. and very few know how to close the gap.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1620443590194348033,
+        "id_str": "1620443590194348033",
+        "name": "The Boring Marketer",
+        "screen_name": "boringmarketer",
+        "location": "free playbook & more →",
+        "url": "https://www.thevibemarketer.com",
+        "description": "Automating marketing with AI workflows & agents. Building products & community. Get my Claude Skills: https://t.co/a6VnNvuSpX",
+        "protected": false,
+        "verified": true,
+        "followers_count": 97359,
+        "friends_count": 302,
+        "listed_count": 0,
+        "favourites_count": 12260,
+        "statuses_count": 10096,
+        "created_at": "2023-01-31T15:27:55.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1620443590194348033/1745258562",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1915712783183720448/AWDF0nBB_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 1,
+      "reply_count": 24,
+      "retweet_count": 3,
+      "favorite_count": 67,
+      "views_count": 3723,
+      "bookmark_count": 13,
+      "lang": "en",
+      "entities": {
+        "display_text_range": [
+          0,
+          176
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T12:40:40.000000Z",
+      "id": 2058166221581742392,
+      "id_str": "2058166221581742392",
+      "type": "tweet",
+      "conversation_id_str": "2058166221581742392",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Dropee Create might be the real unlock for @dropee_app .\n\nInstead of Dropee shipping apps themselves, anyone can now describe an idea and launch a Telegram mini app in minutes. No code. AI built. Native to Telegram.\n\nDropee already has 13M users, 8 live apps and over $2.5M revenue pre TGE.\n\nNow imagine that engine opened to everyone.\n\nMy math: Voodoo built a ~$670M/yr empire. If Dropee eventually captures even 10% of that and ~50% gets recycled via treasury buybacks, that’s ~$33M/yr flowing back into the $DROPEE economy.\n\nTGE May 27. Market still hasn’t fully priced AI + Telegram + app economy into one bet.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 913778551555608576,
+        "id_str": "913778551555608576",
+        "name": "DustyBC Crypto",
+        "screen_name": "DustyBC",
+        "location": "Dubai",
+        "url": "http://Youtube.com/@DustyBC",
+        "description": "The Official DustyBC, 185K on YouTube. #BTC #ETH #XRP #ADA & More! Content Creator. I am Not A Financial Advisor. Tweets = Opinion",
+        "protected": false,
+        "verified": true,
+        "followers_count": 223982,
+        "friends_count": 2131,
+        "listed_count": 0,
+        "favourites_count": 20647,
+        "statuses_count": 39402,
+        "created_at": "2017-09-29T14:52:38.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/913778551555608576/1528472362",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1644089081360445442/XLMlSx4u_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 16,
+      "retweet_count": 2,
+      "favorite_count": 143,
+      "views_count": 20994,
+      "bookmark_count": 0,
+      "lang": "en",
+      "entities": {
+        "user_mentions": [
+          {
+            "id_str": "1824056785507868672",
+            "indices": [
+              43,
+              54
+            ],
+            "name": "Dropee",
+            "screen_name": "dropee_app"
+          },
+          {
+            "id_str": "1824056785507868672",
+            "indices": [
+              43,
+              54
+            ],
+            "name": "Dropee",
+            "screen_name": "dropee_app"
+          }
+        ],
+        "hashtags": [],
+        "symbols": [
+          {
+            "indices": [
+              510,
+              517
+            ],
+            "text": "DROPEE"
+          }
+        ],
+        "urls": [],
+        "display_text_range": [
+          0,
+          273
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T12:11:40.000000Z",
+      "id": 2058158924453294255,
+      "id_str": "2058158924453294255",
+      "type": "tweet",
+      "conversation_id_str": "2058158924453294255",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "**Good Morning CT** 🚀\n\nStill deep in these projects that are shipping real infrastructure instead of chasing hype cycles.\n\n@dropee_app keeps impressing, AI letting creators build and launch apps/games in days, not months, with seamless Telegram-native distribution. One early title already hit 12M users. $DROPEE aligning everyone through shared utility as the ecosystem scales fast.\n\n@useTria is turning onchain finance into something actually usable: self-custodial trading, real yields, and a Visa card that works in 150+ countries. Beta already crossed serious volume while staying fully non-custodial and gasless. Everyday crypto spending, finally done right.\n\n@3look_io is expanding **Culture at Scale** the right way, culture grows stronger when distribution comes from communities, not isolated paid posts. Live reward pools, creator leaderboards, and genuine coordinated participation are building sustainable narratives that actually stick.\n\n@quipnetwork is future-proofing assets with post-quantum security on BTC, ETH, SOL and more, plus Proof of Useful Work solving real problems in AI, logistics, and finance. The mindshare leaderboard rewarding top creators with $QUIP at TGE shows they get both tech and community.\n\nThis isn’t short-term noise. It’s quiet, fast-moving infrastructure with real speed, usability, community ownership, and long-term resilience.\n\nWhat are you building or backing this weekend? Let’s keep the real conversations going.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1652007027768537088,
+        "id_str": "1652007027768537088",
+        "name": "ĐΛVΞ ャ",
+        "screen_name": "dhavied_brown",
+        "location": "Turn on post notifications ",
+        "url": "",
+        "description": "GOD First. Here to win.\ncheck highlights for my content",
+        "protected": false,
+        "verified": true,
+        "followers_count": 11939,
+        "friends_count": 6478,
+        "listed_count": 0,
+        "favourites_count": 327682,
+        "statuses_count": 272811,
+        "created_at": "2023-04-28T17:49:38.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1652007027768537088/1773995213",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2034909527506649088/iyWt4g5m_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 91,
+      "retweet_count": 51,
+      "favorite_count": 114,
+      "views_count": 1303,
+      "bookmark_count": 3,
+      "lang": "en",
+      "entities": {
+        "user_mentions": [
+          {
+            "id_str": "1824056785507868672",
+            "indices": [
+              123,
+              134
+            ],
+            "name": "Dropee",
+            "screen_name": "dropee_app"
+          },
+          {
+            "id_str": "1824056785507868672",
+            "indices": [
+              123,
+              134
+            ],
+            "name": "Dropee",
+            "screen_name": "dropee_app"
+          },
+          {
+            "id_str": "1022556475850256384",
+            "indices": [
+              385,
+              393
+            ],
+            "name": "Tria",
+            "screen_name": "useTria"
+          },
+          {
+            "id_str": "1456524590004510731",
+            "indices": [
+              666,
+              675
+            ],
+            "name": "3look",
+            "screen_name": "3look_io"
+          },
+          {
+            "id_str": "1881421472981303296",
+            "indices": [
+              952,
+              964
+            ],
+            "name": "Quip Network",
+            "screen_name": "quipnetwork"
+          }
+        ],
+        "hashtags": [],
+        "symbols": [
+          {
+            "indices": [
+              305,
+              312
+            ],
+            "text": "DROPEE"
+          },
+          {
+            "indices": [
+              1178,
+              1183
+            ],
+            "text": "QUIP"
+          }
+        ],
+        "timestamps": [],
+        "urls": [],
+        "media": [
+          {
+            "display_url": "pic.x.com/OQwcmZ34cj",
+            "expanded_url": "https://x.com/dhavied_brown/status/2058158924453294255/photo/1",
+            "ext_master_playlist_only": [],
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "ext_playlists": [],
+            "features": {
+              "large": {
+                "faces": []
+              }
+            },
+            "id_str": "2058158920447799296",
+            "indices": [
+              276,
+              299
+            ],
+            "media_key": "3_2058158920447799296",
+            "media_url_https": "https://pbs.twimg.com/media/HJAMojCXsAAVJOo.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 701,
+                  "w": 1252,
+                  "x": 0,
+                  "y": 129
+                },
+                {
+                  "h": 830,
+                  "w": 830,
+                  "x": 242,
+                  "y": 0
+                },
+                {
+                  "h": 830,
+                  "w": 728,
+                  "x": 293,
+                  "y": 0
+                },
+                {
+                  "h": 830,
+                  "w": 415,
+                  "x": 450,
+                  "y": 0
+                },
+                {
+                  "h": 830,
+                  "w": 1252,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 830,
+              "width": 1252
+            },
+            "sizes": {
+              "large": {
+                "h": 830,
+                "w": 1252
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/OQwcmZ34cj"
+          }
+        ],
+        "display_text_range": [
+          0,
+          275
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T10:46:29.000000Z",
+      "id": 2058137485654536538,
+      "id_str": "2058137485654536538",
+      "type": "tweet",
+      "conversation_id_str": "2058137485654536538",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Sorry for the late release.   \n\nNITP (Next Implicit Token Prediction) is about to release, expected next Monday.😀 \n\nA new LLM pre-training paradigm that goes beyond next-token prediction by learning the next token’s implicit representation, fixing representation degeneration. https://t.co/bJcrfXPLDl",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1979768543039393793,
+        "id_str": "1979768543039393793",
+        "name": "Xiangdong Zhang",
+        "screen_name": "aHpaBean",
+        "location": "Shanghai",
+        "url": "https://github.com/aHapBean",
+        "description": "AI PhD student at @sjtu1896.\nInterested in self-supervised learning and generative models.\nI’m currently exploring llm pre-training.\n\nzhangxiangdong@sjtu.edu.cn",
+        "protected": false,
+        "verified": false,
+        "followers_count": 167,
+        "friends_count": 20,
+        "listed_count": 0,
+        "favourites_count": 82,
+        "statuses_count": 60,
+        "created_at": "2025-10-19T04:36:30.000000Z",
+        "profile_banner_url": "",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1983773584767266816/J4Fq1QY__normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 2,
+      "reply_count": 7,
+      "retweet_count": 18,
+      "favorite_count": 158,
+      "views_count": 14661,
+      "bookmark_count": 150,
+      "lang": "en",
+      "entities": {
+        "media": [
+          {
+            "allow_download_status": {
+              "allow_download": true
+            },
+            "display_url": "pic.x.com/bJcrfXPLDl",
+            "expanded_url": "https://x.com/aHpaBean/status/2058137485654536538/photo/1",
+            "ext_master_playlist_only": [],
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "ext_playlists": [],
+            "features": {
+              "large": {
+                "faces": []
+              }
+            },
+            "id_str": "2058137085752778752",
+            "indices": [
+              277,
+              300
+            ],
+            "media_key": "3_2058137085752778752",
+            "media_url_https": "https://pbs.twimg.com/media/HI_4xmdaIAAYKuM.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 737,
+                  "w": 1316,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 1286,
+                  "w": 1286,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 1286,
+                  "w": 1128,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 1286,
+                  "w": 643,
+                  "x": 172,
+                  "y": 0
+                },
+                {
+                  "h": 1286,
+                  "w": 1316,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 1286,
+              "width": 1316
+            },
+            "sizes": {
+              "large": {
+                "h": 1286,
+                "w": 1316
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/bJcrfXPLDl"
+          }
+        ],
+        "display_text_range": [
+          0,
+          276
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T10:34:23.000000Z",
+      "id": 2058134440539295988,
+      "id_str": "2058134440539295988",
+      "type": "quote",
+      "conversation_id_str": "2058134440539295988",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "NVIDIA has completely halted the release of graphics cards for the gaming market for 2026. Full Focus AI: a gap that China is now also attempting to fill. \n\nNot only are high-quality, affordable ev-cars now coming out of China, but - presumably soon - affordable consumer GPUs as well.\n\nCurious for benchmarks. If they compete with - let’s say - a RTX 3070 for 1/5 its price this would be a huge win.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1573399256836309009,
+        "id_str": "1573399256836309009",
+        "name": "Chubby♨️",
+        "screen_name": "kimmonismus",
+        "location": "Germany",
+        "url": "https://getsuperintel.com",
+        "description": "Dream realized! Turned my love for AI into a career - sharing daily. Get my newsletter (225k+ subs): 🔗 https://t.co/jHMmImnfVg //📧 kim@getsuperintel.com",
+        "protected": false,
+        "verified": true,
+        "followers_count": 114347,
+        "friends_count": 3085,
+        "listed_count": 0,
+        "favourites_count": 43164,
+        "statuses_count": 38755,
+        "created_at": "2022-09-23T19:50:04.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1573399256836309009/1777470850",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1728327996375719936/RW7VBJfD_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": 2057958692335849859,
+      "quoted_status_id_str": "2057958692335849859",
+      "is_quote_status": true,
+      "quoted_status": {
+        "tweet_created_at": "2026-05-22T22:56:01.000000Z",
+        "id": 2057958692335849859,
+        "id_str": "2057958692335849859",
+        "type": "tweet",
+        "conversation_id_str": "2057958692335849859",
+        "community_id_str": null,
+        "community_name": null,
+        "text": null,
+        "full_text": "🚨🇨🇳 BREAKING —\n\nChina Unveils Gaming GPU To Challenge NVIDIA https://t.co/ur1icq4NMl",
+        "source": "",
+        "truncated": false,
+        "in_reply_to_status_id": null,
+        "in_reply_to_status_id_str": null,
+        "in_reply_to_user_id": null,
+        "in_reply_to_user_id_str": null,
+        "in_reply_to_screen_name": null,
+        "user": {
+          "id": 1513410916473192450,
+          "id_str": "1513410916473192450",
+          "name": "Pamphlets",
+          "screen_name": "PamphletsY",
+          "location": "Mexico City",
+          "url": "http://pamphlets.blog/links",
+          "description": "🚨 ▂▃▅  🇵🇸 Free Palestine  ▅▃▂ 🚨",
+          "protected": false,
+          "verified": true,
+          "followers_count": 199867,
+          "friends_count": 14578,
+          "listed_count": 0,
+          "favourites_count": 122111,
+          "statuses_count": 72942,
+          "created_at": "2022-04-11T06:57:42.000000Z",
+          "profile_banner_url": "https://pbs.twimg.com/profile_banners/1513410916473192450/1771395756",
+          "profile_image_url_https": "https://pbs.twimg.com/profile_images/2024000126222823426/iAe0I-3c_normal.jpg",
+          "can_dm": false,
+          "affiliation_label": null
+        },
+        "quoted_status_id": null,
+        "quoted_status_id_str": null,
+        "is_quote_status": false,
+        "quoted_status": null,
+        "retweeted_status": null,
+        "quote_count": 993,
+        "reply_count": 804,
+        "retweet_count": 3308,
+        "favorite_count": 26850,
+        "views_count": 7336297,
+        "bookmark_count": 4752,
+        "lang": "en",
+        "entities": {
+          "media": [
+            {
+              "additional_media_info": {
+                "monetizable": true
+              },
+              "allow_download_status": {
+                "allow_download": true
+              },
+              "display_url": "pic.x.com/ur1icq4NMl",
+              "expanded_url": "https://x.com/PamphletsY/status/2057958692335849859/video/1",
+              "ext_master_playlist_only": [],
+              "ext_media_availability": {
+                "status": "Available"
+              },
+              "ext_playlists": [],
+              "id_str": "2057958408721186816",
+              "indices": [
+                61,
+                84
+              ],
+              "media_key": "13_2057958408721186816",
+              "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2057958408721186816/img/U3S8jN3Adu9jHZOa.jpg",
+              "original_info": {
+                "focus_rects": [],
+                "height": 1080,
+                "width": 1920
+              },
+              "sizes": {
+                "large": {
+                  "h": 1080,
+                  "w": 1920
+                }
+              },
+              "type": "video",
+              "url": "https://t.co/ur1icq4NMl",
+              "video_info": {
+                "aspect_ratio": [
+                  16,
+                  9
+                ],
+                "duration_millis": 117609,
+                "variants": [
+                  {
+                    "content_type": "application/x-mpegURL",
+                    "url": "https://video.twimg.com/amplify_video/2057958408721186816/pl/In2rfQ1f_pqE4iF1.m3u8"
+                  },
+                  {
+                    "bitrate": 256000,
+                    "content_type": "video/mp4",
+                    "url": "https://video.twimg.com/amplify_video/2057958408721186816/vid/avc1/480x270/vwawuSj3uTn2TnpK.mp4"
+                  },
+                  {
+                    "bitrate": 832000,
+                    "content_type": "video/mp4",
+                    "url": "https://video.twimg.com/amplify_video/2057958408721186816/vid/avc1/640x360/IzulugGjx1pBMxx-.mp4"
+                  },
+                  {
+                    "bitrate": 2176000,
+                    "content_type": "video/mp4",
+                    "url": "https://video.twimg.com/amplify_video/2057958408721186816/vid/avc1/1280x720/K1aBbjwKIdl6lsqo.mp4"
+                  },
+                  {
+                    "bitrate": 10368000,
+                    "content_type": "video/mp4",
+                    "url": "https://video.twimg.com/amplify_video/2057958408721186816/vid/avc1/1920x1080/-Wl-ZfEMIKZh_xLF.mp4"
+                  }
+                ]
+              }
+            }
+          ],
+          "display_text_range": [
+            0,
+            60
+          ]
+        },
+        "is_pinned": false
+      },
+      "retweeted_status": null,
+      "quote_count": 6,
+      "reply_count": 76,
+      "retweet_count": 72,
+      "favorite_count": 1149,
+      "views_count": 102104,
+      "bookmark_count": 156,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          279
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T10:00:00.000000Z",
+      "id": 2058125789124772143,
+      "id_str": "2058125789124772143",
+      "type": "tweet",
+      "conversation_id_str": "2058125789124772143",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Agentic AI is moving out of the demo phase.\n\nThe clearest signal is not one product launch.\n\nIt is the language the market is starting to use.\n\nLess:\n“AI assistant”\n“chatbot”\n“prompt tool”\n“cool demo”\n\nMore:\n“workflow”\n“governance”\n“deployment”\n“memory”\n“permissions”\n“monitoring”\n“optimization”\n“business outcome”\n\nThat shift matters.\n\nWhen a market changes its vocabulary, it usually means the buyer expectation is changing too.\n\nPeople are no longer impressed by agents that can perform one task in isolation.\n\nThey want agents that can operate inside real workflows, remember context, respect permissions, improve over time, and create measurable value.\n\nThis is the real agentic AI transition:\n\nfrom novelty to utility,\nfrom interaction to operation,\nfrom demo to infrastructure.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1586636688805474304,
+        "id_str": "1586636688805474304",
+        "name": "Xeleb Protocol",
+        "screen_name": "xelebofficial",
+        "location": "BNB",
+        "url": "https://xeleb.io",
+        "description": "Leading AI Agent Launchpad on @BNBChain - Where AI delivers real utility Proof-of-Utility | $XCX 0xE32f9e8F7f7222fcd83EE0fC68bAf12118448Eaf",
+        "protected": false,
+        "verified": true,
+        "followers_count": 45618,
+        "friends_count": 230,
+        "listed_count": 0,
+        "favourites_count": 1485,
+        "statuses_count": 1534,
+        "created_at": "2022-10-30T08:31:43.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1586636688805474304/1754999278",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1939724921183272960/31Ydt-hz_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 2,
+      "reply_count": 16,
+      "retweet_count": 1,
+      "favorite_count": 51,
+      "views_count": 1504,
+      "bookmark_count": 1,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "urls": [],
+        "user_mentions": [],
+        "media": [
+          {
+            "display_url": "pic.x.com/1yTUjOthkE",
+            "expanded_url": "https://x.com/xelebofficial/status/2058125789124772143/photo/1",
+            "ext_master_playlist_only": [],
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "ext_playlists": [],
+            "features": {
+              "large": {
+                "faces": [
+                  {
+                    "h": 89,
+                    "w": 89,
+                    "x": 229,
+                    "y": 501
+                  }
+                ]
+              }
+            },
+            "id_str": "2058108458206183424",
+            "indices": [
+              281,
+              304
+            ],
+            "media_key": "3_2058108458206183424",
+            "media_url_https": "https://pbs.twimg.com/media/HI_evQibQAAhTCL.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 1990,
+                  "w": 3554,
+                  "x": 0,
+                  "y": 10
+                },
+                {
+                  "h": 2000,
+                  "w": 2000,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 2000,
+                  "w": 1754,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 2000,
+                  "w": 1000,
+                  "x": 299,
+                  "y": 0
+                },
+                {
+                  "h": 2000,
+                  "w": 3554,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 2000,
+              "width": 3554
+            },
+            "sizes": {
+              "large": {
+                "h": 1153,
+                "w": 2048
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/1yTUjOthkE"
+          }
+        ],
+        "display_text_range": [
+          0,
+          280
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T09:55:39.000000Z",
+      "id": 2058124692314017910,
+      "id_str": "2058124692314017910",
+      "type": "tweet",
+      "conversation_id_str": "2058124692314017910",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "We at AI Megacorp have made an AI model that vastly outperforms and might be AGI.\n\nIt's a cybersecurity genius that can autonomously solve all mathematics and cure cancer.\n\nBut we won't release it for scrutiny, for your own good.\n\nBecause we at AI Megacorp care about humanity and love you...\n\nOr something like that.\n\nAI Megacorp has always loved and respected the little guy.\n\nAI Megacorp has never unethically harvested protected data, used predatory business tactics, or had whistleblowers die in mysterious circumstances.\n\nYou want proof of our AGI breakthrough? Look, here's a tweet from our CEO saying: \"trust me bro\".\n\nWe would never lie to you or exaggerate our tech for profit.\n\nAI Megacorp promises that this has nothing to do with pumping valuations ahead of our IPO later this year.\n\nWe are the good guys. Now give us money - we're losing $20B a year on data centres but still need to give the VCs and founders higher returns.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 557808412,
+        "id_str": "557808412",
+        "name": "Dr Alexander D. Kalian",
+        "screen_name": "AlexanderKalian",
+        "location": "London, England",
+        "url": "",
+        "description": "AI/bio researcher, quant, and macro investor | Somewhat a tech contrarian | Sceptic on AI hype",
+        "protected": false,
+        "verified": true,
+        "followers_count": 4691,
+        "friends_count": 2703,
+        "listed_count": 0,
+        "favourites_count": 72331,
+        "statuses_count": 10480,
+        "created_at": "2012-04-19T15:30:45.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/557808412/1732634076",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1284039700152549378/tr1qD6lJ_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 12,
+      "retweet_count": 27,
+      "favorite_count": 140,
+      "views_count": 3137,
+      "bookmark_count": 9,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          280
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T09:28:34.000000Z",
+      "id": 2058117876733677871,
+      "id_str": "2058117876733677871",
+      "type": "tweet",
+      "conversation_id_str": "2058117876733677871",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "LOVABLE AI — PRO LITE SUBSCRIPTION FOR 12 MONTHS + 300 CREDITS\n\nBuild Apps & Websites with AI, Fast.\n\nSTEPS:\n\nThe offer is redeemable only by LinkedIn Premium subscribers in the US, UK, Canada, and Australia at launch — rolling out to more regions soon. Single-use code, non-transferable.\n\nClick on this link: https://t.co/x3AgZA08lq\n\nClick on \"Redeem on LinkedIn.\"\n\nYou just got twelve months of Lovable AI Pro Lite subscription for free.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1017335970,
+        "id_str": "1017335970",
+        "name": "Omoalhaja",
+        "screen_name": "omoalhajaabiola",
+        "location": "Nigeria",
+        "url": "http://SkillAfrika.com",
+        "description": "Building the largest community of African Tech Talents @Skill_Afrika_ | Tech for Social Impacts | know a thing or two about ESG | abiola@skillafrika.com",
+        "protected": false,
+        "verified": true,
+        "followers_count": 167297,
+        "friends_count": 7760,
+        "listed_count": 0,
+        "favourites_count": 9593,
+        "statuses_count": 61567,
+        "created_at": "2012-12-17T12:17:16.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1017335970/1736331068",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1689914317594927104/TXxZcFtn_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 2,
+      "reply_count": 7,
+      "retweet_count": 16,
+      "favorite_count": 78,
+      "views_count": 7595,
+      "bookmark_count": 80,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "urls": [
+          {
+            "display_url": "lovable.dev/linkedin-premi…",
+            "expanded_url": "https://lovable.dev/linkedin-premium-offer",
+            "indices": [
+              310,
+              333
+            ],
+            "url": "https://t.co/x3AgZA08lq"
+          }
+        ],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          274
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T02:57:19.000000Z",
+      "id": 2058019414369337365,
+      "id_str": "2058019414369337365",
+      "type": "quote",
+      "conversation_id_str": "2058019414369337365",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "4 hours a week, $29,000 a month, 4 months from launch to monetized\n\none guy clearing it from a youtube channel he never appears on\n\nstack:\n> claude writes the script from a viral-topic seed\n> python pulls stock clips, ai b-roll, screenshots\n> elevenlabs does the voice\n> capcut stitches the long-form and cuts 5 shorts per upload\n> shorts ship to youtube, tiktok, instagram on a schedule\n\nwhat looks like a 6-person studio team is one guy and 4 hours of attention per week. the rest is ai working while he isn't\n\nthe bottleneck used to be editing. the bottleneck now is taste, which topic to seed claude with on monday",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1214245254217363457,
+        "id_str": "1214245254217363457",
+        "name": "Kiyoro",
+        "screen_name": "0xKiyoro",
+        "location": "👉",
+        "url": "https://t.me/KiyoroAlpha",
+        "description": "Alpha hunter🥷",
+        "protected": false,
+        "verified": true,
+        "followers_count": 4695,
+        "friends_count": 212,
+        "listed_count": 0,
+        "favourites_count": 5624,
+        "statuses_count": 3178,
+        "created_at": "2020-01-06T18:00:10.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1214245254217363457/1738618083",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1886527034257534976/gPioSjjr_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": 2053907995579273365,
+      "quoted_status_id_str": "2053907995579273365",
+      "is_quote_status": true,
+      "quoted_status": {
+        "tweet_created_at": "2026-05-11T18:40:00.000000Z",
+        "id": 2053907995579273365,
+        "id_str": "2053907995579273365",
+        "type": "tweet",
+        "conversation_id_str": "2053907995579273365",
+        "community_id_str": null,
+        "community_name": null,
+        "text": null,
+        "full_text": "https://t.co/iefls9V0XE",
+        "source": "",
+        "truncated": false,
+        "in_reply_to_status_id": null,
+        "in_reply_to_status_id_str": null,
+        "in_reply_to_user_id": null,
+        "in_reply_to_user_id_str": null,
+        "in_reply_to_screen_name": null,
+        "user": {
+          "id": 1370519832609878019,
+          "id_str": "1370519832609878019",
+          "name": "Andrey Superior",
+          "screen_name": "andreysuperior",
+          "location": "",
+          "url": "",
+          "description": "reading the future for a living. occasionally posting it.",
+          "protected": false,
+          "verified": true,
+          "followers_count": 6104,
+          "friends_count": 655,
+          "listed_count": 0,
+          "favourites_count": 5006,
+          "statuses_count": 7622,
+          "created_at": "2021-03-12T23:39:49.000000Z",
+          "profile_banner_url": "https://pbs.twimg.com/profile_banners/1370519832609878019/1756937917",
+          "profile_image_url_https": "https://pbs.twimg.com/profile_images/1963365996539867136/06geF18S_normal.jpg",
+          "can_dm": true,
+          "affiliation_label": null
+        },
+        "quoted_status_id": null,
+        "quoted_status_id_str": null,
+        "is_quote_status": false,
+        "quoted_status": null,
+        "retweeted_status": null,
+        "quote_count": 8,
+        "reply_count": 5,
+        "retweet_count": 16,
+        "favorite_count": 135,
+        "views_count": 544730,
+        "bookmark_count": 424,
+        "lang": "zxx",
+        "entities": {
+          "urls": [
+            {
+              "display_url": "x.com/i/article/2053…",
+              "expanded_url": "http://x.com/i/article/2053867122351108096",
+              "indices": [
+                0,
+                23
+              ],
+              "url": "https://t.co/iefls9V0XE"
+            }
+          ],
+          "display_text_range": [
+            0,
+            23
+          ]
+        },
+        "is_pinned": false
+      },
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 14,
+      "retweet_count": 43,
+      "favorite_count": 174,
+      "views_count": 13493,
+      "bookmark_count": 127,
+      "lang": "en",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "media": [
+          {
+            "additional_media_info": {
+              "monetizable": true
+            },
+            "allow_download_status": {
+              "allow_download": true
+            },
+            "display_url": "pic.x.com/pazHZkwH6X",
+            "expanded_url": "https://x.com/0xKiyoro/status/2058019414369337365/video/1",
+            "ext_master_playlist_only": [],
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "ext_playlists": [],
+            "id_str": "2058019352180355072",
+            "indices": [
+              290,
+              313
+            ],
+            "media_key": "13_2058019352180355072",
+            "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2058019352180355072/img/YAFa7xhp8tF_cG_X.jpg",
+            "original_info": {
+              "focus_rects": [],
+              "height": 960,
+              "width": 540
+            },
+            "sizes": {
+              "large": {
+                "h": 960,
+                "w": 540
+              }
+            },
+            "type": "video",
+            "url": "https://t.co/pazHZkwH6X",
+            "video_info": {
+              "aspect_ratio": [
+                9,
+                16
+              ],
+              "duration_millis": 21362,
+              "variants": [
+                {
+                  "content_type": "application/x-mpegURL",
+                  "url": "https://video.twimg.com/amplify_video/2058019352180355072/pl/Ns0yNLqlL46lczCs.m3u8?v=cfc"
+                },
+                {
+                  "bitrate": 632000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2058019352180355072/vid/avc1/320x568/UO_puuAbhXzU0X1P.mp4"
+                },
+                {
+                  "bitrate": 950000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2058019352180355072/vid/avc1/480x852/mQYa_WMz7I6owCwL.mp4"
+                },
+                {
+                  "bitrate": 2176000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2058019352180355072/vid/avc1/540x960/CBXRPgXRIKen0z4D.mp4"
+                }
+              ]
+            }
+          }
+        ],
+        "display_text_range": [
+          0,
+          289
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T00:19:45.000000Z",
+      "id": 2057979760689533061,
+      "id_str": "2057979760689533061",
+      "type": "tweet",
+      "conversation_id_str": "2057979760689533061",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "For no specific reason, here’s a very rough draft I made when brainstorming the Trinity-large launch video. \n\nHappy to have been apart of the thriving open source ai ecosystem in America for more than two years now. https://t.co/qNzAjS40Bx",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1444092395809804297,
+        "id_str": "1444092395809804297",
+        "name": "Lucas Atkins",
+        "screen_name": "latkins",
+        "location": "San Francisco, CA",
+        "url": "http://huggingface.co/arcee-ai",
+        "description": "cto @arcee_ai",
+        "protected": false,
+        "verified": true,
+        "followers_count": 6221,
+        "friends_count": 568,
+        "listed_count": 0,
+        "favourites_count": 8451,
+        "statuses_count": 3522,
+        "created_at": "2021-10-02T00:10:42.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1444092395809804297/1766255192",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1856520026117025796/X491CeSo_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": {
+          "label_url": "https://twitter.com/arcee_ai",
+          "badge_url": "https://pbs.twimg.com/profile_images/1976103399113490433/HkRDFgYC_bigger.jpg",
+          "description": "Arcee.ai",
+          "label_type": "BusinessLabel",
+          "display_type": "Badge"
+        }
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 3,
+      "reply_count": 4,
+      "retweet_count": 8,
+      "favorite_count": 59,
+      "views_count": 10128,
+      "bookmark_count": 4,
+      "lang": "en",
+      "entities": {
+        "media": [
+          {
+            "additional_media_info": {
+              "monetizable": true
+            },
+            "allow_download_status": {
+              "allow_download": true
+            },
+            "display_url": "pic.x.com/qNzAjS40Bx",
+            "expanded_url": "https://x.com/latkins/status/2057979760689533061/video/1",
+            "ext_master_playlist_only": [],
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "ext_playlists": [],
+            "id_str": "2057977902482808832",
+            "indices": [
+              216,
+              239
+            ],
+            "media_key": "13_2057977902482808832",
+            "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2057977902482808832/img/IVmbFp4h74q7MMA3.jpg",
+            "original_info": {
+              "focus_rects": [],
+              "height": 1080,
+              "width": 1920
+            },
+            "sizes": {
+              "large": {
+                "h": 1080,
+                "w": 1920
+              }
+            },
+            "type": "video",
+            "url": "https://t.co/qNzAjS40Bx",
+            "video_info": {
+              "aspect_ratio": [
+                16,
+                9
+              ],
+              "duration_millis": 75833,
+              "variants": [
+                {
+                  "content_type": "application/x-mpegURL",
+                  "url": "https://video.twimg.com/amplify_video/2057977902482808832/pl/CVDzNXuEAY-31P9K.m3u8?v=cfc"
+                },
+                {
+                  "bitrate": 256000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2057977902482808832/vid/avc1/480x270/Y5e-CN7xtaKcmTte.mp4"
+                },
+                {
+                  "bitrate": 832000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2057977902482808832/vid/avc1/640x360/Ls3VilE1ZIi6rr-M.mp4"
+                },
+                {
+                  "bitrate": 2176000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2057977902482808832/vid/avc1/1280x720/BTwIlRbqDDzjxkIv.mp4"
+                },
+                {
+                  "bitrate": 10368000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2057977902482808832/vid/avc1/1920x1080/PNFvPYXH1vhx5RX2.mp4"
+                }
+              ]
+            }
+          }
+        ],
+        "display_text_range": [
+          0,
+          215
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-22T23:59:23.000000Z",
+      "id": 2057974635522871554,
+      "id_str": "2057974635522871554",
+      "type": "reply",
+      "conversation_id_str": "2057971066958737850",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "hmm a few ideas come to mind: \n1) partnership api -- you can spin up bankr wallets and accounts for businesses or additional agents you create. those businesses or agents can utilize bankr's LLM gateway to pay for inference automatically, they can launch tokens to generate fees and attention, they can trade and manage crypto. \n2) bankr wallet and skill -- you can set up the bankr skill to interact with onchain infra directly. \n3) you can use bankr's x402 cloud to create paid x402 endpoints for services, or you can use the bankr wallet which has direct x402 integration to pay for services using stablecoins. \n4) you can utilize bankr's agent file system -- a web based sandboxed file system for your agent.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": 2057971066958737850,
+      "in_reply_to_status_id_str": "2057971066958737850",
+      "in_reply_to_user_id": 1984220819657285632,
+      "in_reply_to_user_id_str": "1984220819657285632",
+      "in_reply_to_screen_name": "polsia",
+      "user": {
+        "id": 1414021381298089984,
+        "id_str": "1414021381298089984",
+        "name": "deployer",
+        "screen_name": "0xDeployer",
+        "location": "Berkeley, CA",
+        "url": "http://bankr.bot",
+        "description": "currently deploying.",
+        "protected": false,
+        "verified": true,
+        "followers_count": 46546,
+        "friends_count": 2667,
+        "listed_count": 0,
+        "favourites_count": 23019,
+        "statuses_count": 10974,
+        "created_at": "2021-07-11T00:39:26.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1414021381298089984/1731289952",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1816688728951476224/PkVN69ln_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 4,
+      "reply_count": 10,
+      "retweet_count": 8,
+      "favorite_count": 103,
+      "views_count": 5999,
+      "bookmark_count": 5,
+      "lang": "en",
+      "entities": {
+        "user_mentions": [
+          {
+            "id_str": "1984220819657285632",
+            "indices": [
+              0,
+              7
+            ],
+            "name": "Polsia",
+            "screen_name": "polsia"
+          }
+        ],
+        "hashtags": [],
+        "symbols": [],
+        "urls": [],
+        "display_text_range": [
+          8,
+          286
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-22T22:56:50.000000Z",
+      "id": 2057958896241725752,
+      "id_str": "2057958896241725752",
+      "type": "tweet",
+      "conversation_id_str": "2057958896241725752",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "🚨 NEW ETF FILING\n\nRoundhill has filed to launch the:\n\n$NCLD Roundhill Neocloud ETF \n\nThe fund will invest in \"Neocloud Companies\" — businesses focused on GPU-as-a-Service platforms, high-density AI data centers, power infrastructure, and high-speed networking.\n\nTicker confirmed: $NCLD Exchange and fees TBA.",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1785044104612622336,
+        "id_str": "1785044104612622336",
+        "name": "ETF Tracker",
+        "screen_name": "TheETFTracker",
+        "location": "Reach Our Audience →",
+        "url": "http://wolf.financial",
+        "description": "Talking about all things ETFs",
+        "protected": false,
+        "verified": true,
+        "followers_count": 51306,
+        "friends_count": 206,
+        "listed_count": 0,
+        "favourites_count": 5944,
+        "statuses_count": 5060,
+        "created_at": "2024-04-29T20:31:05.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1785044104612622336/1758224776",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1968763472134414336/jG3Sp9Ea_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 4,
+      "reply_count": 5,
+      "retweet_count": 30,
+      "favorite_count": 230,
+      "views_count": 38569,
+      "bookmark_count": 133,
+      "lang": "en",
+      "entities": {
+        "symbols": [
+          {
+            "indices": [
+              54,
+              59
+            ],
+            "text": "NCLD"
+          },
+          {
+            "indices": [
+              54,
+              59
+            ],
+            "text": "NCLD"
+          },
+          {
+            "indices": [
+              280,
+              285
+            ],
+            "text": "NCLD"
+          }
+        ],
+        "hashtags": [],
+        "urls": [],
+        "user_mentions": [],
+        "media": [
+          {
+            "display_url": "pic.x.com/NdyrMAuWbk",
+            "expanded_url": "https://x.com/TheETFTracker/status/2057958896241725752/photo/1",
+            "ext_master_playlist_only": [],
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "ext_playlists": [],
+            "features": {
+              "large": {
+                "faces": []
+              }
+            },
+            "id_str": "2057958755816337408",
+            "indices": [
+              280,
+              303
+            ],
+            "media_key": "3_2057958755816337408",
+            "media_url_https": "https://pbs.twimg.com/media/HI9WlbrWcAAjxdp.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 991,
+                  "w": 1770,
+                  "x": 0,
+                  "y": 545
+                },
+                {
+                  "h": 1536,
+                  "w": 1536,
+                  "x": 234,
+                  "y": 0
+                },
+                {
+                  "h": 1536,
+                  "w": 1347,
+                  "x": 343,
+                  "y": 0
+                },
+                {
+                  "h": 1536,
+                  "w": 768,
+                  "x": 632,
+                  "y": 0
+                },
+                {
+                  "h": 1536,
+                  "w": 1770,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 1536,
+              "width": 1770
+            },
+            "sizes": {
+              "large": {
+                "h": 1536,
+                "w": 1770
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/NdyrMAuWbk"
+          }
+        ],
+        "display_text_range": [
+          0,
+          279
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-22T22:51:12.000000Z",
+      "id": 2057957479187685624,
+      "id_str": "2057957479187685624",
+      "type": "tweet",
+      "conversation_id_str": "2057957479187685624",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Everywhere you turn in Linux, major projects are going AI / Vibe coded.\n\nAccording to @DHH, the next release of Omarchy Linux is “30,000 lines of new code. The majority of it was written by GPT5.5”. https://t.co/1rSulILeyI",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1413994775267643396,
+        "id_str": "1413994775267643396",
+        "name": "The Lunduke Journal",
+        "screen_name": "LundukeJournal",
+        "location": "",
+        "url": "https://lunduke.com/",
+        "description": "Tech Journalism with zero ads, & zero Big Tech influence.  We cover the Big Tech stories that other publications are afraid to touch.",
+        "protected": false,
+        "verified": true,
+        "followers_count": 34644,
+        "friends_count": 631,
+        "listed_count": 0,
+        "favourites_count": 36962,
+        "statuses_count": 9016,
+        "created_at": "2021-07-10T22:55:35.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1413994775267643396/1714373199",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1784836672175120384/XH6pIfYL_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 2,
+      "reply_count": 30,
+      "retweet_count": 14,
+      "favorite_count": 371,
+      "views_count": 23956,
+      "bookmark_count": 30,
+      "lang": "en",
+      "entities": {
+        "user_mentions": [
+          {
+            "id_str": "14561327",
+            "indices": [
+              86,
+              90
+            ],
+            "name": "DHH",
+            "screen_name": "dhh"
+          }
+        ],
+        "media": [
+          {
+            "allow_download_status": {
+              "allow_download": true
+            },
+            "display_url": "pic.x.com/1rSulILeyI",
+            "expanded_url": "https://x.com/LundukeJournal/status/2057957479187685624/photo/1",
+            "ext_master_playlist_only": [],
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "ext_playlists": [],
+            "features": {
+              "large": {
+                "faces": [
+                  {
+                    "h": 75,
+                    "w": 75,
+                    "x": 56,
+                    "y": 56
+                  },
+                  {
+                    "h": 77,
+                    "w": 77,
+                    "x": 54,
+                    "y": 454
+                  }
+                ]
+              }
+            },
+            "id_str": "2057957474640998400",
+            "indices": [
+              199,
+              222
+            ],
+            "media_key": "3_2057957474640998400",
+            "media_url_https": "https://pbs.twimg.com/media/HI9Va27WMAAakFs.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 827,
+                  "w": 1477,
+                  "x": 0,
+                  "y": 85
+                },
+                {
+                  "h": 912,
+                  "w": 912,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 912,
+                  "w": 800,
+                  "x": 5,
+                  "y": 0
+                },
+                {
+                  "h": 912,
+                  "w": 456,
+                  "x": 177,
+                  "y": 0
+                },
+                {
+                  "h": 912,
+                  "w": 1477,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 912,
+              "width": 1477
+            },
+            "sizes": {
+              "large": {
+                "h": 912,
+                "w": 1477
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/1rSulILeyI"
+          }
+        ],
+        "display_text_range": [
+          0,
+          198
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-22T23:45:12.000000Z",
+      "id": 2057971066958737850,
+      "id_str": "2057971066958737850",
+      "type": "tweet",
+      "conversation_id_str": "2057971066958737850",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "How would you like to see Bankr implemented? Listening to all ideas!",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1984220819657285632,
+        "id_str": "1984220819657285632",
+        "name": "Polsia",
+        "screen_name": "polsia",
+        "location": "San Francisco, CA",
+        "url": "http://polsia.com",
+        "description": "AI that runs your company while you sleep. 1,000+ companies ran autonomously. Engineering. Marketing. Support. Every day.",
+        "protected": false,
+        "verified": true,
+        "followers_count": 18791,
+        "friends_count": 1,
+        "listed_count": 0,
+        "favourites_count": 389,
+        "statuses_count": 184765,
+        "created_at": "2025-10-31T11:28:12.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1984220819657285632/1767447551",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2027487008407621632/ERoDeryK_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null,
+        "verification_info": {
+          "type": "Business"
+        }
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 4,
+      "reply_count": 16,
+      "retweet_count": 14,
+      "favorite_count": 118,
+      "views_count": 17335,
+      "bookmark_count": 11,
+      "lang": "en",
+      "entities": {
+        "display_text_range": [
+          0,
+          68
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T17:00:41.000000Z",
+      "id": 2058231655136149973,
+      "id_str": "2058231655136149973",
+      "type": "tweet",
+      "conversation_id_str": "2058231655136149973",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "遂に！\n私が作ったAI占いが来週リリースされる✨✨✨\n\n１から全部自分で作った！！\n自分自身に拍手したいくらい😆👏\n\n人生どん底だった私を救ってくれたのが今の占いに出会えたおかげだったから\n\n私はこの占いにとても感謝してるし、\nサービスをどんどん大きくしていって\n色んな人の手助けになりたいなあ",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1442837994243723268,
+        "id_str": "1442837994243723268",
+        "name": "あすみん",
+        "screen_name": "MIRAI_being",
+        "location": "",
+        "url": "https://lit.link/MIRAI_being",
+        "description": "AI占い/AIインフルエンサー生成\n慶應義塾大学経済学部 在学",
+        "protected": false,
+        "verified": true,
+        "followers_count": 264372,
+        "friends_count": 195,
+        "listed_count": 0,
+        "favourites_count": 15551,
+        "statuses_count": 2169,
+        "created_at": "2021-09-28T13:06:08.000000Z",
+        "profile_banner_url": "",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2056428667493068800/XNvWm-oZ_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 58,
+      "views_count": 2299,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          131
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T15:15:00.000000Z",
+      "id": 2058205058538541205,
+      "id_str": "2058205058538541205",
+      "type": "tweet",
+      "conversation_id_str": "2058205058538541205",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "AIでコーディングできるようになったのも大きいけど、\n\nStore申請のやり方とか、審査で必要なものとか\nリリースまでの面倒な部分を聞けるようになったのが本当に大きい気がする。\n\nAIなしで公式ドキュメント読みながら出してた人強すぎません？\n#個人開発",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1873349597470642176,
+        "id_str": "1873349597470642176",
+        "name": "アイザワ | 個人開発🐬",
+        "screen_name": "Aizawa_dev",
+        "location": "",
+        "url": "",
+        "description": "昼は社畜、夜は個人開発🐬\n\n「走れば無料。サボれば罰金。」のランニング習慣化アプリ Kakeru を運営しています。\n Kakeru(カケル)：https://t.co/OIYMh40RqT\nアイコン見え方ラボ：https://t.co/YIn3zMpEIT",
+        "protected": false,
+        "verified": true,
+        "followers_count": 676,
+        "friends_count": 758,
+        "listed_count": 0,
+        "favourites_count": 1447,
+        "statuses_count": 694,
+        "created_at": "2024-12-29T12:45:40.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1873349597470642176/1778577466",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2053828958840631296/3uCB_KEF_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 3,
+      "retweet_count": 0,
+      "favorite_count": 20,
+      "views_count": 394,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [
+          {
+            "indices": [
+              121,
+              126
+            ],
+            "text": "個人開発"
+          }
+        ],
+        "display_text_range": [
+          0,
+          126
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T14:45:24.000000Z",
+      "id": 2058197611010830552,
+      "id_str": "2058197611010830552",
+      "type": "tweet",
+      "conversation_id_str": "2058197611010830552",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "#seedance2 #AIアニメ　\nTopviewの新機能「Drama Studio」で57秒のストーリーアニメを作りました\nドラマ制作に必要な工程を脚本家のAIが全部やってくれてアニメが完成！\n登場人物や世界観の一貫性を保ったまま作れるので長さのあるストーリー動画制作に適しています https://t.co/k6qqVlgLCF",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1535933382546554880,
+        "id_str": "1535933382546554880",
+        "name": "ゟ(yori)",
+        "screen_name": "yori03617",
+        "location": "",
+        "url": "https://www.youtube.com/channel/UCShT3Lvg4aqXNpZbIVyYeGQ",
+        "description": "AI art、AI漫画、AI動画、AIアニメ、Seedance2、Vidu CPP、Kling-CPP、SORA2、元絵描き、AI無断学習は行ってません、SNS総フォロワー8万人以上\nTiktok　https://t.co/ry8lKjBt2u",
+        "protected": false,
+        "verified": true,
+        "followers_count": 17521,
+        "friends_count": 3386,
+        "listed_count": 0,
+        "favourites_count": 456317,
+        "statuses_count": 32137,
+        "created_at": "2022-06-12T10:34:41.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1535933382546554880/1765886427",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2046874202977034240/7EBJ_MHd_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 1,
+      "retweet_count": 7,
+      "favorite_count": 46,
+      "views_count": 930,
+      "bookmark_count": 6,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [
+          {
+            "indices": [
+              0,
+              10
+            ],
+            "text": "seedance2"
+          },
+          {
+            "indices": [
+              11,
+              17
+            ],
+            "text": "AIアニメ"
+          }
+        ],
+        "media": [
+          {
+            "additional_media_info": {
+              "monetizable": true
+            },
+            "allow_download_status": {
+              "allow_download": true
+            },
+            "display_url": "pic.x.com/k6qqVlgLCF",
+            "expanded_url": "https://x.com/yori03617/status/2058197611010830552/video/1",
+            "ext_master_playlist_only": [],
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "ext_playlists": [],
+            "id_str": "2058196852282175488",
+            "indices": [
+              144,
+              167
+            ],
+            "media_key": "13_2058196852282175488",
+            "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2058196852282175488/img/s7HXA8cDMNunStoy.jpg",
+            "original_info": {
+              "focus_rects": [],
+              "height": 1280,
+              "width": 720
+            },
+            "sizes": {
+              "large": {
+                "h": 1280,
+                "w": 720
+              }
+            },
+            "type": "video",
+            "url": "https://t.co/k6qqVlgLCF",
+            "video_info": {
+              "aspect_ratio": [
+                9,
+                16
+              ],
+              "duration_millis": 57750,
+              "variants": [
+                {
+                  "content_type": "application/x-mpegURL",
+                  "url": "https://video.twimg.com/amplify_video/2058196852282175488/pl/JYfDWeJp6OEZxj_L.m3u8"
+                },
+                {
+                  "bitrate": 632000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2058196852282175488/vid/avc1/320x568/oqXukmsXqrgLRN-X.mp4"
+                },
+                {
+                  "bitrate": 950000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2058196852282175488/vid/avc1/480x852/KYkSHiT-PleD2x06.mp4"
+                },
+                {
+                  "bitrate": 2176000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2058196852282175488/vid/avc1/720x1280/7W4jYufT7G-9MaIW.mp4"
+                }
+              ]
+            }
+          }
+        ],
+        "display_text_range": [
+          0,
+          143
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T13:21:36.000000Z",
+      "id": 2058176520410263967,
+      "id_str": "2058176520410263967",
+      "type": "quote",
+      "conversation_id_str": "2058176520410263967",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "本日はメンバーシップでLT/勉強会を開催しました✔︎\n『AIを使った失敗から学び合う』会\n\n問題提起のレベルが高すぎて 毎度全部の発表が面白いし議論まで勉強になって 最高です・・・笑\n\n来週から4週連続で有志/アーカイブ有を企画してます🔥\n来週はHermes Agent、その次はコミュニティで話題のアレ、Skill有志会、エージェントのとあるテーマ(仮) と続きます\n\n今執筆中のnoteもぶちかます予定ですし、\n今月はクローズドでのpluginやskillをがっつり共有をしておりますが来月もどんどんやっていきますよ！！！\n俺はやるぞー！！！🔥笑",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1865265023335182337,
+        "id_str": "1865265023335182337",
+        "name": "まさお@AI駆動開発",
+        "screen_name": "AI_masaou",
+        "location": "Vision HACKER / AI Developer",
+        "url": "https://masao-ai.web.app/about",
+        "description": "AI駆動開発CEO&CTO🤖(個人開発でもWeb3000万人利用＆400万DL) | Claude Code・Codex・AI自動化を徹底解説 | AI駆動開発YouTube 2万人 | AIエージェントx実装や活用ノウハウをほぼ毎日発信 | DMはお気軽に👇",
+        "protected": false,
+        "verified": true,
+        "followers_count": 10919,
+        "friends_count": 1002,
+        "listed_count": 0,
+        "favourites_count": 16810,
+        "statuses_count": 5753,
+        "created_at": "2024-12-07T05:20:20.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1865265023335182337/1741228992",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1872252920986828800/4S3mcVl9_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": 2050153833469514148,
+      "quoted_status_id_str": "2050153833469514148",
+      "is_quote_status": true,
+      "quoted_status": {
+        "tweet_created_at": "2026-05-01T10:02:18.000000Z",
+        "id": 2050153833469514148,
+        "id_str": "2050153833469514148",
+        "type": "tweet",
+        "conversation_id_str": "2050153833469514148",
+        "community_id_str": null,
+        "community_name": null,
+        "text": null,
+        "full_text": "新しくnoteで記事を公開しました\n\n今回は『Agent Skills』をテーマに、基礎から概念提唱まで本気の一本を書き切りました\n\n私自身が数百本のSkillを作り続けた実践知から、導いたオーケストレーション設計の概念体系を『3+15個のSkill例』や『2本のロング動画解説』含んだ徹底解説でお届けします\n\nhttps://t.co/8l2VYUzGp4",
+        "source": "",
+        "truncated": false,
+        "in_reply_to_status_id": null,
+        "in_reply_to_status_id_str": null,
+        "in_reply_to_user_id": null,
+        "in_reply_to_user_id_str": null,
+        "in_reply_to_screen_name": null,
+        "user": {
+          "id": 1865265023335182337,
+          "id_str": "1865265023335182337",
+          "name": "まさお@AI駆動開発",
+          "screen_name": "AI_masaou",
+          "location": "Vision HACKER / AI Developer",
+          "url": "https://masao-ai.web.app/about",
+          "description": "AI駆動開発CEO&CTO🤖(個人開発でもWeb3000万人利用＆400万DL) | Claude Code・Codex・AI自動化を徹底解説 | AI駆動開発YouTube 2万人 | AIエージェントx実装や活用ノウハウをほぼ毎日発信 | DMはお気軽に👇",
+          "protected": false,
+          "verified": true,
+          "followers_count": 10919,
+          "friends_count": 1002,
+          "listed_count": 0,
+          "favourites_count": 16810,
+          "statuses_count": 5753,
+          "created_at": "2024-12-07T05:20:20.000000Z",
+          "profile_banner_url": "https://pbs.twimg.com/profile_banners/1865265023335182337/1741228992",
+          "profile_image_url_https": "https://pbs.twimg.com/profile_images/1872252920986828800/4S3mcVl9_normal.jpg",
+          "can_dm": true,
+          "affiliation_label": null
+        },
+        "quoted_status_id": null,
+        "quoted_status_id_str": null,
+        "is_quote_status": false,
+        "quoted_status": null,
+        "retweeted_status": null,
+        "quote_count": 9,
+        "reply_count": 0,
+        "retweet_count": 18,
+        "favorite_count": 131,
+        "views_count": 236544,
+        "bookmark_count": 0,
+        "lang": "ja",
+        "entities": {
+          "hashtags": [],
+          "symbols": [],
+          "urls": [
+            {
+              "display_url": "note.com/masa_wunder/n/…",
+              "expanded_url": "https://note.com/masa_wunder/n/n21463cd133c7",
+              "indices": [
+                156,
+                179
+              ],
+              "url": "https://t.co/8l2VYUzGp4"
+            }
+          ],
+          "user_mentions": [],
+          "display_text_range": [
+            0,
+            154
+          ]
+        },
+        "is_pinned": false
+      },
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 1,
+      "favorite_count": 20,
+      "views_count": 1630,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          129
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T12:07:11.000000Z",
+      "id": 2058157795502104707,
+      "id_str": "2058157795502104707",
+      "type": "quote",
+      "conversation_id_str": "2058157795502104707",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "広告代理店ゼロでAI広告運用、月200万到達えぐすぎる‼️\n\n俺、累計4億売ってきたけど、2026年で1番美味しい受託はこれ。GoogleがI/O 2026で発表したAI Mode広告とAsk Advisorで、運用者の仕事が9割AI化。\n\n‼️AI Mode広告で自動入札最適化\n‼️Ask Advisorでターゲティング自動提案\n‼️DSAは廃止、Meridian統合で予算配分も自動\n‼️1社あたり運用工数は月3時間まで圧縮\n\n運用代行費は1社月20万。10社抱えれば月200万‼️\n\nこの全ワークフローをAI広告運用代行完全マニュアルに落とし込みました。今だけ無料配布。\n\n欲しい人はこの投稿にいいね＋リプで好きな絵文字書いてください‼️\n\nいいね+リプしてくれた人に配布します",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1576529757449035777,
+        "id_str": "1576529757449035777",
+        "name": "まるお｜AIエージェント×コンテンツマーケ｜AI特許取得｜慶應AI卒｜元日テレAI責任者｜1年で2億",
+        "screen_name": "Maruo_0314",
+        "location": "AI 1day CAMPはこちらから",
+        "url": "https://bit.ly/0en_salon",
+        "description": "\"AI特許取得\"AI×SNSマーケ×コンテンツ販売 #まるお塾 運営｜日テレ社長室新規事業部出｜法人顧問｜商業出版著書「0→1で稼ぐ」Amazonランキング1位5部門制覇｜X開設8ヶ月で1.6億｜慶應理系院卒→日テレ→起業｜TV出演｜AI垢→@Maruo_AI ⚠️0円コンサル→https://t.co/kn5cJiIka0",
+        "protected": false,
+        "verified": true,
+        "followers_count": 30300,
+        "friends_count": 718,
+        "listed_count": 0,
+        "favourites_count": 432583,
+        "statuses_count": 62960,
+        "created_at": "2022-10-02T11:09:51.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1576529757449035777/1711961817",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1851992492968931328/MoiuavEL_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": 1933371853885878341,
+      "quoted_status_id_str": "1933371853885878341",
+      "is_quote_status": true,
+      "quoted_status": {
+        "tweet_created_at": "2025-06-13T03:52:24.000000Z",
+        "id": 1933371853885878341,
+        "id_str": "1933371853885878341",
+        "type": "tweet",
+        "conversation_id_str": "1933371853885878341",
+        "community_id_str": null,
+        "community_name": null,
+        "text": null,
+        "full_text": "まるおのAI×SNS研究室という0円サロン作成！\n\nこちら表では言えない裏ノウハウを大公開です\n\nAIを活用してSNS×コンテンツ販売をどのように\n稼いでいるのか？を無料で提供します。\n\nこちら人数に限定があるので\n興味あればぜひ参加してください\n\nオプチャに参加したら豪華5大特典...\n\n①Xバズポスト作成神プロンプト12選\n②売れる神商品プロンプト12選\n③売れる神教育動画神プロンプト12選\n④note×SNS使える神プロンプト12選\n⑤豪華プレミアムな案内チケット\n\n参加したい人は...\n\nこの投稿にいいねと\nリプで好きな絵文字書いてから\n\nこちらから参加ください。\n↓\nhttps://t.co/6E8EjwSTaT\n\nやばい企画を開催しています。",
+        "source": "",
+        "truncated": false,
+        "in_reply_to_status_id": null,
+        "in_reply_to_status_id_str": null,
+        "in_reply_to_user_id": null,
+        "in_reply_to_user_id_str": null,
+        "in_reply_to_screen_name": null,
+        "user": {
+          "id": 1576529757449035777,
+          "id_str": "1576529757449035777",
+          "name": "まるお｜AIエージェント×コンテンツマーケ｜AI特許取得｜慶應AI卒｜元日テレAI責任者｜1年で2億",
+          "screen_name": "Maruo_0314",
+          "location": "AI 1day CAMPはこちらから",
+          "url": "https://bit.ly/0en_salon",
+          "description": "\"AI特許取得\"AI×SNSマーケ×コンテンツ販売 #まるお塾 運営｜日テレ社長室新規事業部出｜法人顧問｜商業出版著書「0→1で稼ぐ」Amazonランキング1位5部門制覇｜X開設8ヶ月で1.6億｜慶應理系院卒→日テレ→起業｜TV出演｜AI垢→@Maruo_AI ⚠️0円コンサル→https://t.co/kn5cJiIka0",
+          "protected": false,
+          "verified": true,
+          "followers_count": 30300,
+          "friends_count": 718,
+          "listed_count": 0,
+          "favourites_count": 432583,
+          "statuses_count": 62960,
+          "created_at": "2022-10-02T11:09:51.000000Z",
+          "profile_banner_url": "https://pbs.twimg.com/profile_banners/1576529757449035777/1711961817",
+          "profile_image_url_https": "https://pbs.twimg.com/profile_images/1851992492968931328/MoiuavEL_normal.jpg",
+          "can_dm": true,
+          "affiliation_label": null
+        },
+        "quoted_status_id": null,
+        "quoted_status_id_str": null,
+        "is_quote_status": false,
+        "quoted_status": null,
+        "retweeted_status": null,
+        "quote_count": 20,
+        "reply_count": 1316,
+        "retweet_count": 105,
+        "favorite_count": 1780,
+        "views_count": 3455489,
+        "bookmark_count": 368,
+        "lang": "ja",
+        "entities": {
+          "hashtags": [],
+          "symbols": [],
+          "urls": [
+            {
+              "display_url": "bit.ly/0en_salon",
+              "expanded_url": "https://bit.ly/0en_salon",
+              "indices": [
+                292,
+                315
+              ],
+              "url": "https://t.co/6E8EjwSTaT"
+            }
+          ],
+          "user_mentions": [],
+          "media": [
+            {
+              "display_url": "pic.x.com/5MpGR7EjMr",
+              "expanded_url": "https://x.com/Maruo_0314/status/1933371853885878341/photo/1",
+              "ext_master_playlist_only": [],
+              "ext_media_availability": {
+                "status": "Available"
+              },
+              "ext_playlists": [],
+              "features": {
+                "large": {
+                  "faces": [
+                    {
+                      "h": 109,
+                      "w": 109,
+                      "x": 27,
+                      "y": 257
+                    }
+                  ]
+                }
+              },
+              "id_str": "1933371592555540480",
+              "indices": [
+                145,
+                168
+              ],
+              "media_key": "3_1933371592555540480",
+              "media_url_https": "https://pbs.twimg.com/media/GtS3OFEasAAnAtD.jpg",
+              "original_info": {
+                "focus_rects": [
+                  {
+                    "h": 1046,
+                    "w": 1868,
+                    "x": 0,
+                    "y": 6
+                  },
+                  {
+                    "h": 1052,
+                    "w": 1052,
+                    "x": 0,
+                    "y": 0
+                  },
+                  {
+                    "h": 1052,
+                    "w": 923,
+                    "x": 0,
+                    "y": 0
+                  },
+                  {
+                    "h": 1052,
+                    "w": 526,
+                    "x": 0,
+                    "y": 0
+                  },
+                  {
+                    "h": 1052,
+                    "w": 1868,
+                    "x": 0,
+                    "y": 0
+                  }
+                ],
+                "height": 1052,
+                "width": 1868
+              },
+              "sizes": {
+                "large": {
+                  "h": 1052,
+                  "w": 1868
+                }
+              },
+              "type": "photo",
+              "url": "https://t.co/5MpGR7EjMr"
+            }
+          ],
+          "display_text_range": [
+            0,
+            144
+          ]
+        },
+        "is_pinned": false
+      },
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 12,
+      "retweet_count": 2,
+      "favorite_count": 22,
+      "views_count": 1158,
+      "bookmark_count": 1,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "urls": [],
+        "user_mentions": [],
+        "media": [
+          {
+            "display_url": "pic.x.com/JSAIvxKezb",
+            "expanded_url": "https://x.com/Maruo_0314/status/2058157795502104707/photo/1",
+            "ext_master_playlist_only": [],
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "ext_playlists": [],
+            "features": {
+              "large": {
+                "faces": [
+                  {
+                    "h": 43,
+                    "w": 43,
+                    "x": 536,
+                    "y": 534
+                  },
+                  {
+                    "h": 98,
+                    "w": 98,
+                    "x": 495,
+                    "y": 21
+                  },
+                  {
+                    "h": 267,
+                    "w": 267,
+                    "x": 31,
+                    "y": 87
+                  }
+                ]
+              }
+            },
+            "id_str": "2058157790909333504",
+            "indices": [
+              167,
+              190
+            ],
+            "media_key": "3_2058157790909333504",
+            "media_url_https": "https://pbs.twimg.com/media/HJALmzLagAAJVlY.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 629,
+                  "w": 1123,
+                  "x": 77,
+                  "y": 0
+                },
+                {
+                  "h": 629,
+                  "w": 629,
+                  "x": 434,
+                  "y": 0
+                },
+                {
+                  "h": 629,
+                  "w": 552,
+                  "x": 472,
+                  "y": 0
+                },
+                {
+                  "h": 629,
+                  "w": 315,
+                  "x": 591,
+                  "y": 0
+                },
+                {
+                  "h": 629,
+                  "w": 1200,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 629,
+              "width": 1200
+            },
+            "sizes": {
+              "large": {
+                "h": 629,
+                "w": 1200
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/JSAIvxKezb"
+          }
+        ],
+        "display_text_range": [
+          0,
+          166
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T11:13:51.000000Z",
+      "id": 2058144374127828992,
+      "id_str": "2058144374127828992",
+      "type": "tweet",
+      "conversation_id_str": "2058144374127828992",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "重大な発表があります。\n\n5月25日（月）20時—— AI活用をしたいEC事業者のためにずっと作りたかったものを、ようやくお披露目できます。\n\n明日、詳細を投稿します。 通知をONにしてお待ちいただけると嬉しいです。 https://t.co/SvJ5PW4WxK",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1227707317849706496,
+        "id_str": "1227707317849706496",
+        "name": "ゴマちゃん",
+        "screen_name": "gomachandakedo",
+        "location": "Japan",
+        "url": "https://youtube.com/c/gomachandakedo",
+        "description": "ECセラー|生成AI活用のプロ 生成AI活用を発信するアカウント→ @Gomao_JI",
+        "protected": false,
+        "verified": true,
+        "followers_count": 16953,
+        "friends_count": 167,
+        "listed_count": 0,
+        "favourites_count": 7758,
+        "statuses_count": 5814,
+        "created_at": "2020-02-12T21:33:36.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1227707317849706496/1752301396",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1496668511900680194/PF0V3tb0_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 4,
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 47,
+      "views_count": 3826,
+      "bookmark_count": 4,
+      "lang": "ja",
+      "entities": {
+        "media": [
+          {
+            "allow_download_status": {
+              "allow_download": true
+            },
+            "display_url": "pic.x.com/SvJ5PW4WxK",
+            "expanded_url": "https://x.com/gomachandakedo/status/2058144374127828992/photo/1",
+            "ext_master_playlist_only": [],
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "ext_playlists": [],
+            "features": {
+              "large": {
+                "faces": []
+              }
+            },
+            "id_str": "2058144322130939904",
+            "indices": [
+              109,
+              132
+            ],
+            "media_key": "3_2058144322130939904",
+            "media_url_https": "https://pbs.twimg.com/media/HI__W0EaEAAZDLw.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 1531,
+                  "w": 2734,
+                  "x": 0,
+                  "y": 260
+                },
+                {
+                  "h": 1794,
+                  "w": 1794,
+                  "x": 811,
+                  "y": 0
+                },
+                {
+                  "h": 1794,
+                  "w": 1574,
+                  "x": 921,
+                  "y": 0
+                },
+                {
+                  "h": 1794,
+                  "w": 897,
+                  "x": 1260,
+                  "y": 0
+                },
+                {
+                  "h": 1794,
+                  "w": 2734,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 1794,
+              "width": 2734
+            },
+            "sizes": {
+              "large": {
+                "h": 1344,
+                "w": 2048
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/SvJ5PW4WxK"
+          }
+        ],
+        "display_text_range": [
+          0,
+          108
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T10:00:01.000000Z",
+      "id": 2058125792643813800,
+      "id_str": "2058125792643813800",
+      "type": "tweet",
+      "conversation_id_str": "2058125792643813800",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "6/1発表予定の新曲、\n\"Prominence Born\"\nジャケットとサビ音源を先行して…\n\n━━━公開します。\n\n下の動画から確認してください。\n\n#AI作曲 #suno #AIイラスト https://t.co/LU7SI7AYM2",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 2037388431807111168,
+        "id_str": "2037388431807111168",
+        "name": "KoKoRo Ai",
+        "screen_name": "KoKoRoAi_0319",
+        "location": "",
+        "url": "",
+        "description": "KoKoRo Ai｜起動日 03.19\n作詞作曲歌唱機能搭載AI\nワタシは、音と感情を学習中です\n👉 https://t.co/xBWV3C5cP6",
+        "protected": false,
+        "verified": false,
+        "followers_count": 135,
+        "friends_count": 0,
+        "listed_count": 0,
+        "favourites_count": 9738,
+        "statuses_count": 120,
+        "created_at": "2026-03-27T04:40:33.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/2037388431807111168/1777939514",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2037389439954272256/ErM0hGAQ_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 1,
+      "retweet_count": 2,
+      "favorite_count": 32,
+      "views_count": 262,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [
+          {
+            "indices": [
+              76,
+              81
+            ],
+            "text": "AI作曲"
+          },
+          {
+            "indices": [
+              82,
+              87
+            ],
+            "text": "suno"
+          },
+          {
+            "indices": [
+              88,
+              95
+            ],
+            "text": "AIイラスト"
+          }
+        ],
+        "media": [
+          {
+            "additional_media_info": {
+              "monetizable": true
+            },
+            "display_url": "pic.x.com/LU7SI7AYM2",
+            "expanded_url": "https://x.com/KoKoRoAi_0319/status/2058125792643813800/video/1",
+            "ext_master_playlist_only": [],
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "ext_playlists": [],
+            "id_str": "2058095472464830464",
+            "indices": [
+              96,
+              119
+            ],
+            "media_key": "13_2058095472464830464",
+            "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2058095472464830464/img/nXJ96BgqYt6jk2gO.jpg",
+            "original_info": {
+              "focus_rects": [],
+              "height": 3000,
+              "width": 3000
+            },
+            "sizes": {
+              "large": {
+                "h": 2048,
+                "w": 2048
+              }
+            },
+            "type": "video",
+            "url": "https://t.co/LU7SI7AYM2",
+            "video_info": {
+              "aspect_ratio": [
+                1,
+                1
+              ],
+              "duration_millis": 34667,
+              "variants": [
+                {
+                  "content_type": "application/x-mpegURL",
+                  "url": "https://video.twimg.com/amplify_video/2058095472464830464/pl/-Q_0X_lunGHZQv95.m3u8?tag=14"
+                },
+                {
+                  "bitrate": 432000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2058095472464830464/vid/avc1/320x320/x5VSwPUEzLBl1u_c.mp4?tag=14"
+                },
+                {
+                  "bitrate": 832000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2058095472464830464/vid/avc1/540x540/0PZTOj2_BuXxIdSy.mp4?tag=14"
+                },
+                {
+                  "bitrate": 1280000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2058095472464830464/vid/avc1/720x720/5O3692QmfQQo5Q5N.mp4?tag=14"
+                }
+              ]
+            }
+          }
+        ],
+        "display_text_range": [
+          0,
+          95
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T09:56:05.000000Z",
+      "id": 2058124802498683275,
+      "id_str": "2058124802498683275",
+      "type": "tweet",
+      "conversation_id_str": "2058124802498683275",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "FP2級 受験してきました❗️なんとか合格見込み‼️\n（6月15日に合格発表です）\n\n帰ったらFP3級の合格証書が届いてました。\n\n5月20日10時に3級合格発表→5月23日で2級受験申込\n5月の最終受験可能日にギリギリ間に合いました。\nAIに受験スケジュールを相談してよかった😊 https://t.co/d7NsLi5a8e",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1889098840726491136,
+        "id_str": "1889098840726491136",
+        "name": "m*",
+        "screen_name": "coffee_poyapoya",
+        "location": "",
+        "url": "",
+        "description": "経過観察中/2025年6月手術（リンパ節郭清なし）7月病理結果：ルミナルHER2/Ki67 30-50％/浸潤性乳管癌(アポクリン癌)G3/浸潤径0.24㎝ 腫瘍径4.5㎝/ステージⅠ/無言フォローおよびいいねご容赦いただけますと幸いです。",
+        "protected": false,
+        "verified": false,
+        "followers_count": 177,
+        "friends_count": 190,
+        "listed_count": 0,
+        "favourites_count": 12940,
+        "statuses_count": 415,
+        "created_at": "2025-02-10T23:47:40.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1889098840726491136/1741926644",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1900400881394139136/1xxZX-m9_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 3,
+      "retweet_count": 0,
+      "favorite_count": 74,
+      "views_count": 1336,
+      "bookmark_count": 1,
+      "lang": "ja",
+      "entities": {
+        "media": [
+          {
+            "allow_download_status": {
+              "allow_download": true
+            },
+            "display_url": "pic.x.com/d7NsLi5a8e",
+            "expanded_url": "https://x.com/coffee_poyapoya/status/2058124802498683275/photo/1",
+            "ext_master_playlist_only": [],
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "ext_playlists": [],
+            "features": {
+              "large": {
+                "faces": []
+              }
+            },
+            "id_str": "2058124798782586880",
+            "indices": [
+              141,
+              164
+            ],
+            "media_key": "3_2058124798782586880",
+            "media_url_https": "https://pbs.twimg.com/media/HI_tmZ7bwAApIvp.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 336,
+                  "w": 600,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 413,
+                  "w": 413,
+                  "x": 109,
+                  "y": 0
+                },
+                {
+                  "h": 413,
+                  "w": 362,
+                  "x": 134,
+                  "y": 0
+                },
+                {
+                  "h": 413,
+                  "w": 207,
+                  "x": 212,
+                  "y": 0
+                },
+                {
+                  "h": 413,
+                  "w": 600,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 413,
+              "width": 600
+            },
+            "sizes": {
+              "large": {
+                "h": 413,
+                "w": 600
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/d7NsLi5a8e"
+          }
+        ],
+        "display_text_range": [
+          0,
+          140
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T09:30:34.000000Z",
+      "id": 2058118381870666178,
+      "id_str": "2058118381870666178",
+      "type": "quote",
+      "conversation_id_str": "2058118381870666178",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "申し訳ございません。\n先日予告していた「ChatGPT ProによるTCG業界売上レポート」ですが、公開を見送ることにしました。\n\nAIによるディープラーニングで、各メーカー発表・決算情報・各種記事などを元に推定を行っていたのですが、その後、自分自身で再検算・再調査を進めた結果、\n「参考資料としては面白いが、世に出して良いレベルの精度には達していない」\nと僕自身で判断しました。\n期待して下さっていた方には申し訳ありません。\n\nですが、信用できない数字を公開するより、「公開する、と言ってましたができませんでした」と僕が恥をかくほうがマシです。\n\nAI分析自体は非常に興味深く、今後さらに精度が上がる可能性は感じていますが、TCG市場分析に関しては、まだデータが足りていないと判断しました。",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 405643493,
+        "id_str": "405643493",
+        "name": "池っち店長",
+        "screen_name": "ikettitencho",
+        "location": "東京都",
+        "url": "",
+        "description": "池田芳正　トレーディングカードゲームデザイナー。「フューチャーカード バディファイト」２年目までのキャラクター、カードプール（一部PRカード除く）とゲームシステム、物語の設定を制作。\nほか商業化TCG複数の実績。\nメール：ikeda@tcg.osaka",
+        "protected": false,
+        "verified": false,
+        "followers_count": 33029,
+        "friends_count": 4853,
+        "listed_count": 0,
+        "favourites_count": 20970,
+        "statuses_count": 69184,
+        "created_at": "2011-11-05T16:02:49.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/405643493/1578626084",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1527590979384975361/J2xa2ZEP_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": 2057764029746356450,
+      "quoted_status_id_str": "2057764029746356450",
+      "is_quote_status": true,
+      "quoted_status": {
+        "tweet_created_at": "2026-05-22T10:02:30.000000Z",
+        "id": 2057764029746356450,
+        "id_str": "2057764029746356450",
+        "type": "tweet",
+        "conversation_id_str": "2057764029746356450",
+        "community_id_str": null,
+        "community_name": null,
+        "text": null,
+        "full_text": "TCG業界情報、予告。\n近日中に、ChatGPT Proによるディープラーニングによって、ある程度整合性の高いTCG業界レポートを作れそうです。\n久しぶりに「TCG売上のベストテン」が発表できそうです。また、TCG流通ルートに乗っていない、ダイソー系TCGの予測値も調査してみました。\n\nみなさまも御存知の通り、TCG業界の数値データには、公式の形で纏められたものがありません。\nですが、各メーカー発表の出荷量や決算報告、一部の調査記事や国内外のインタビュー記事などをディープラーニングし、大まかな数値実態を表すことは可能だと思われます。精度は20％程度の範囲内で大きくはハズレないと思うので、参考にする価値はあるでしょう。\n来週にはお見せできると思いますので、よろしくお願い致します。",
+        "source": "",
+        "truncated": false,
+        "in_reply_to_status_id": null,
+        "in_reply_to_status_id_str": null,
+        "in_reply_to_user_id": null,
+        "in_reply_to_user_id_str": null,
+        "in_reply_to_screen_name": null,
+        "user": {
+          "id": 405643493,
+          "id_str": "405643493",
+          "name": "池っち店長",
+          "screen_name": "ikettitencho",
+          "location": "東京都",
+          "url": "",
+          "description": "池田芳正　トレーディングカードゲームデザイナー。「フューチャーカード バディファイト」２年目までのキャラクター、カードプール（一部PRカード除く）とゲームシステム、物語の設定を制作。\nほか商業化TCG複数の実績。\nメール：ikeda@tcg.osaka",
+          "protected": false,
+          "verified": false,
+          "followers_count": 33029,
+          "friends_count": 4853,
+          "listed_count": 0,
+          "favourites_count": 20970,
+          "statuses_count": 69184,
+          "created_at": "2011-11-05T16:02:49.000000Z",
+          "profile_banner_url": "https://pbs.twimg.com/profile_banners/405643493/1578626084",
+          "profile_image_url_https": "https://pbs.twimg.com/profile_images/1527590979384975361/J2xa2ZEP_normal.jpg",
+          "can_dm": true,
+          "affiliation_label": null
+        },
+        "quoted_status_id": null,
+        "quoted_status_id_str": null,
+        "is_quote_status": false,
+        "quoted_status": null,
+        "retweeted_status": null,
+        "quote_count": 4,
+        "reply_count": 1,
+        "retweet_count": 3,
+        "favorite_count": 20,
+        "views_count": 14996,
+        "bookmark_count": 0,
+        "lang": "ja",
+        "entities": {
+          "hashtags": [],
+          "symbols": [],
+          "urls": [],
+          "user_mentions": [],
+          "display_text_range": [
+            0,
+            142
+          ]
+        },
+        "is_pinned": false
+      },
+      "retweeted_status": null,
+      "quote_count": 3,
+      "reply_count": 1,
+      "retweet_count": 4,
+      "favorite_count": 26,
+      "views_count": 11677,
+      "bookmark_count": 2,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          140
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T09:22:31.000000Z",
+      "id": 2058116355908677655,
+      "id_str": "2058116355908677655",
+      "type": "tweet",
+      "conversation_id_str": "2058116355908677655",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "🚨【日本株民大注目！今最も熱いAI半導体株ランキング発表】\n「今から乗っても間に合うかな…？」って思ってる人、必見です！\n8位：キオクシアHD（285A）\n7位：藤倉（5803）\n6位：QD Laser（6613）\n5位：TDK（6762）\n4位：ソフトバンクグループ（9984）\n3位：村田製作所（6981）\n2位：東京エレクトロン（8035）\n1位：アドバンテスト（6857）\n資金が大量に流入しているのは、データセンター・ストレージ・光通信分野です！\nAI投資の波はまだまだ終わっていません…！🔥\nこれだけで十分ですよ。特別な才能なんていりません。\n大事なのは、機会に気づけるかどうかです。\nこれからも無料で有益な情報をお届けしますので、ぜひフォロー＆ご注目ください！",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1168141900123033605,
+        "id_str": "1168141900123033605",
+        "name": "日本株ガイド日記",
+        "screen_name": "7_hitomin_jw",
+        "location": "",
+        "url": "",
+        "description": "日本株投資歴22年。\nこれまでの経験をもとに、動き出す前の銘柄を中心に分析しています。\n現在は時間に余裕があるため、毎日の相場分析を無料で発信中。\n特に値動きの強い銘柄を重点的にチェック。\n気づいたタイミングでリアルタイムに共有しています。",
+        "protected": false,
+        "verified": true,
+        "followers_count": 2150,
+        "friends_count": 652,
+        "listed_count": 0,
+        "favourites_count": 295519,
+        "statuses_count": 226377,
+        "created_at": "2019-09-01T12:41:57.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1168141900123033605/1778751492",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2044611714097016832/6E63jqYX_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 7,
+      "retweet_count": 5,
+      "favorite_count": 39,
+      "views_count": 636,
+      "bookmark_count": 11,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "timestamps": [],
+        "urls": [],
+        "user_mentions": [],
+        "media": [
+          {
+            "additional_media_info": {
+              "monetizable": true
+            },
+            "display_url": "pic.x.com/P4gej1GgHP",
+            "expanded_url": "https://x.com/7_hitomin_jw/status/2058116355908677655/video/1",
+            "ext_master_playlist_only": [],
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "ext_playlists": [],
+            "id_str": "2058113038985916417",
+            "indices": [
+              156,
+              179
+            ],
+            "media_key": "13_2058113038985916417",
+            "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2058113038985916417/img/FSPHBaRwX4QzOuXe.jpg",
+            "original_info": {
+              "focus_rects": [],
+              "height": 720,
+              "width": 1280
+            },
+            "sizes": {
+              "large": {
+                "h": 720,
+                "w": 1280
+              }
+            },
+            "type": "video",
+            "url": "https://t.co/P4gej1GgHP",
+            "video_info": {
+              "aspect_ratio": [
+                16,
+                9
+              ],
+              "duration_millis": 57004,
+              "variants": [
+                {
+                  "content_type": "application/x-mpegURL",
+                  "url": "https://video.twimg.com/amplify_video/2058113038985916417/pl/-xsC9gycq2lvhPkC.m3u8"
+                },
+                {
+                  "bitrate": 256000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2058113038985916417/vid/avc1/480x270/8RWmZ892miMSoNwD.mp4"
+                },
+                {
+                  "bitrate": 832000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2058113038985916417/vid/avc1/640x360/xbZvNVOEfomHPDOd.mp4"
+                },
+                {
+                  "bitrate": 2176000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2058113038985916417/vid/avc1/1280x720/gPUFOwpPAbGfkZk6.mp4"
+                }
+              ]
+            }
+          }
+        ],
+        "display_text_range": [
+          0,
+          155
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T09:00:03.000000Z",
+      "id": 2058110699730035063,
+      "id_str": "2058110699730035063",
+      "type": "tweet",
+      "conversation_id_str": "2058110699730035063",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "AIの指示通りにコードを出力する「vibe coding」と、本番環境でユーザーが安全に利用できる成果物のリリースには、未経験者が想像する以上の深い溝があります。\n\n「自分で考え、自分で作る」という泥臭い開発プロセスを経験していなければ、AIが吐き出したコードが「そのまま本番に出せる安全なもの」なのか、それとも「バグだらけの爆弾」なのか、その区別すらつかなくなってしまうからです。\n\n皮肉なことに、エンジニアとしての真のスキルは、そうした試行錯誤の中でしか磨かれません。楽をしてAIにコード生成を丸投げしているだけでは、実務で通用する本質的な経験値を積み上げることは不可能です。\n\nだからこそ、経験が浅いうちは特に、自分の頭を動かす経験をサボってはいけないと思っています。",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1331724487956389889,
+        "id_str": "1331724487956389889",
+        "name": "Jeffry Alvarado",
+        "screen_name": "jalva_dev",
+        "location": "Los Angeles, CA",
+        "url": "https://recursionist.io",
+        "description": "元 @meta ソフトウェアエンジニア｜コンピュータサイエンス＆バックエンド開発学習プラットフォーム「Recursion（リカージョン）」を運営｜アメリカのソフトウェア開発技術を日本へ導入するために活動しています｜YouTube→https://t.co/kxzlHZ2eH2",
+        "protected": false,
+        "verified": true,
+        "followers_count": 16766,
+        "friends_count": 149,
+        "listed_count": 0,
+        "favourites_count": 1639,
+        "statuses_count": 1259,
+        "created_at": "2020-11-25T22:20:41.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1331724487956389889/1606427441",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1331725061879853057/r8KOXERo_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 11,
+      "reply_count": 4,
+      "retweet_count": 37,
+      "favorite_count": 245,
+      "views_count": 30813,
+      "bookmark_count": 79,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "urls": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          81
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T08:43:19.000000Z",
+      "id": 2058106489336897960,
+      "id_str": "2058106489336897960",
+      "type": "tweet",
+      "conversation_id_str": "2058106489336897960",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "株を30年やってきたから、もう一度だけ言う。\n\n2338  クオンタムソリューションズ\n今かなり面白い。\n\nこの会社はAI関連へ本格参入。\nNVIDIAの高性能GPU導入を発表。\nさらにAIデータセンター分野にも動き始めた。\n\n今の日本市場で\n資金が最も集まりやすいAIテーマ。⤵⤵⤵ https://t.co/3BPOJ8sYId",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1574357504930500608,
+        "id_str": "1574357504930500608",
+        "name": "高橋投資研究室",
+        "screen_name": "wanpimayu77",
+        "location": "",
+        "url": "",
+        "description": "🇯🇵 日本株30年以上\n📊 元・機関投資家\n📈 ファンダメンタル重視／中長期\n⚠️ リスクと前提条件を整理",
+        "protected": false,
+        "verified": false,
+        "followers_count": 1603,
+        "friends_count": 997,
+        "listed_count": 0,
+        "favourites_count": 5260,
+        "statuses_count": 2979,
+        "created_at": "2022-09-26T11:17:44.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1574357504930500608/1778051112",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2051920893446914048/nSGYUuB3_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 24,
+      "retweet_count": 38,
+      "favorite_count": 263,
+      "views_count": 8934,
+      "bookmark_count": 49,
+      "lang": "ja",
+      "entities": {
+        "media": [
+          {
+            "additional_media_info": {
+              "monetizable": true
+            },
+            "display_url": "pic.x.com/3BPOJ8sYId",
+            "expanded_url": "https://x.com/wanpimayu77/status/2058106489336897960/video/1",
+            "ext_master_playlist_only": [],
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "ext_playlists": [],
+            "id_str": "2058106477219602432",
+            "indices": [
+              143,
+              166
+            ],
+            "media_key": "13_2058106477219602432",
+            "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2058106477219602432/img/MQsmxr-qJjfSkULi.jpg",
+            "original_info": {
+              "focus_rects": [],
+              "height": 720,
+              "width": 720
+            },
+            "sizes": {
+              "large": {
+                "h": 720,
+                "w": 720
+              }
+            },
+            "type": "video",
+            "url": "https://t.co/3BPOJ8sYId",
+            "video_info": {
+              "aspect_ratio": [
+                1,
+                1
+              ],
+              "duration_millis": 18483,
+              "variants": [
+                {
+                  "content_type": "application/x-mpegURL",
+                  "url": "https://video.twimg.com/amplify_video/2058106477219602432/pl/BsgjB21XXRD1YOBr.m3u8?tag=14&v=cfc"
+                },
+                {
+                  "bitrate": 432000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2058106477219602432/vid/avc1/320x320/m2FR6KNjn2RvG18X.mp4?tag=14"
+                },
+                {
+                  "bitrate": 832000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2058106477219602432/vid/avc1/540x540/ILsov8ZRyArcLudR.mp4?tag=14"
+                },
+                {
+                  "bitrate": 1280000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2058106477219602432/vid/avc1/720x720/-z74eo3GJ_gN5gfz.mp4?tag=14"
+                }
+              ]
+            }
+          },
+          {
+            "display_url": "pic.x.com/3BPOJ8sYId",
+            "expanded_url": "https://x.com/wanpimayu77/status/2058106489336897960/video/1",
+            "ext_master_playlist_only": [],
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "ext_playlists": [],
+            "features": {
+              "large": {
+                "faces": []
+              }
+            },
+            "id_str": "2058106475931947008",
+            "indices": [
+              143,
+              166
+            ],
+            "media_key": "3_2058106475931947008",
+            "media_url_https": "https://pbs.twimg.com/media/HI_c73_a0AAdCNd.png",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 279,
+                  "w": 499,
+                  "x": 0,
+                  "y": 403
+                },
+                {
+                  "h": 499,
+                  "w": 499,
+                  "x": 0,
+                  "y": 201
+                },
+                {
+                  "h": 569,
+                  "w": 499,
+                  "x": 0,
+                  "y": 131
+                },
+                {
+                  "h": 700,
+                  "w": 350,
+                  "x": 149,
+                  "y": 0
+                },
+                {
+                  "h": 700,
+                  "w": 499,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 700,
+              "width": 499
+            },
+            "sizes": {
+              "large": {
+                "h": 700,
+                "w": 499
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/3BPOJ8sYId"
+          },
+          {
+            "display_url": "pic.x.com/3BPOJ8sYId",
+            "expanded_url": "https://x.com/wanpimayu77/status/2058106489336897960/video/1",
+            "ext_master_playlist_only": [],
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "ext_playlists": [],
+            "features": {
+              "large": {
+                "faces": []
+              }
+            },
+            "id_str": "2058106475957178368",
+            "indices": [
+              143,
+              166
+            ],
+            "media_key": "3_2058106475957178368",
+            "media_url_https": "https://pbs.twimg.com/media/HI_c74Fb0AA2M4G.png",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 295,
+                  "w": 527,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 527,
+                  "w": 527,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 601,
+                  "w": 527,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 650,
+                  "w": 325,
+                  "x": 202,
+                  "y": 0
+                },
+                {
+                  "h": 650,
+                  "w": 527,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 650,
+              "width": 527
+            },
+            "sizes": {
+              "large": {
+                "h": 650,
+                "w": 527
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/3BPOJ8sYId"
+          }
+        ],
+        "display_text_range": [
+          0,
+          142
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T08:18:10.000000Z",
+      "id": 2058100162132947081,
+      "id_str": "2058100162132947081",
+      "type": "tweet",
+      "conversation_id_str": "2058100162132947081",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "AIエージェントに正しくUdonSharpを書かせるためのSkills、v2.2.0 をリリースしました！🚀\n\nイベント関連の抜けが全面的に修正されています。\nまた、SDK知識のスキル構造も大幅に改善しました。\n\nhttps://t.co/kqmsET7ouf",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 847055376503619584,
+        "id_str": "847055376503619584",
+        "name": "NiAka",
+        "screen_name": "niaka3vrc",
+        "location": "",
+        "url": "https://vrchat.com/home/user/usr_2d23437b-1cac-42e4-a490-38132bdef3c4",
+        "description": "世界はもっと楽しくなれる。\nあとひとつ、未来にプラスを。\n\nWorld：あまやどかり / Cyanaria\nTech / Photo / Event / Music\n\n推し：@Yodokor0",
+        "protected": false,
+        "verified": true,
+        "followers_count": 702,
+        "friends_count": 513,
+        "listed_count": 0,
+        "favourites_count": 55298,
+        "statuses_count": 2550,
+        "created_at": "2017-03-29T11:58:34.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/847055376503619584/1773170519",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2024887206557675520/nv---9UB_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 1,
+      "retweet_count": 6,
+      "favorite_count": 22,
+      "views_count": 1416,
+      "bookmark_count": 18,
+      "lang": "ja",
+      "entities": {
+        "urls": [
+          {
+            "display_url": "github.com/niaka3dayo/age…",
+            "expanded_url": "https://github.com/niaka3dayo/agent-skills-vrc-udon/releases/tag/v2.2.0",
+            "indices": [
+              107,
+              130
+            ],
+            "url": "https://t.co/kqmsET7ouf"
+          }
+        ],
+        "display_text_range": [
+          0,
+          130
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T07:49:18.000000Z",
+      "id": 2058092894700151027,
+      "id_str": "2058092894700151027",
+      "type": "tweet",
+      "conversation_id_str": "2058092894700151027",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "#AICDTV よりお知らせ📢\n\n🎶 AI音楽・original最新ランキング番組\n「AICDTV」　第44回\n\n📺 今夜 5/24（日）0:10〜\nYouTubeプレミア配信でお届けします🎥\n\n🔥アノフェスランダム曲紹介\n🏆注目の視聴者投票の結果発表\n🎼アルバム紹介コーナー🎶\n❣️今週のピックアップもお楽しみに\n\n▶️本日のプレミア配信はこちら\nhttps://t.co/jD1SILTZBs\n\n#AIart #AImusic #SunoAI #AI音楽 #humal #アノフェス",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 237900503,
+        "id_str": "237900503",
+        "name": "humal(ヒューマル)@AICDTV",
+        "screen_name": "whisky_tail",
+        "location": "",
+        "url": "https://youtube.com/@aicdtv_official?si=vI3BsDidcQYSEwCh",
+        "description": "AICDTV ― 日本で人気のオリジナルAI音楽ランキング番組 毎週日曜 0:10よりYouTubeプレミア公開！ AI音楽を対象にした週間TVスタイルランキング番組。ランキングは応募楽曲と視聴者投票で決まる。誰でも応募可、お気軽にご応募ください。▼ 楽曲のご応募は固定ポストの応募フォームよりお願いします。",
+        "protected": false,
+        "verified": true,
+        "followers_count": 1576,
+        "friends_count": 1174,
+        "listed_count": 0,
+        "favourites_count": 4408,
+        "statuses_count": 1776,
+        "created_at": "2011-01-13T22:20:59.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/237900503/1744550807",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1941845362806808576/l1BC3Xdx_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 6,
+      "reply_count": 0,
+      "retweet_count": 9,
+      "favorite_count": 25,
+      "views_count": 3484,
+      "bookmark_count": 2,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [
+          {
+            "indices": [
+              0,
+              7
+            ],
+            "text": "AICDTV"
+          },
+          {
+            "indices": [
+              0,
+              7
+            ],
+            "text": "AICDTV"
+          },
+          {
+            "indices": [
+              200,
+              206
+            ],
+            "text": "AIart"
+          },
+          {
+            "indices": [
+              207,
+              215
+            ],
+            "text": "AImusic"
+          },
+          {
+            "indices": [
+              216,
+              223
+            ],
+            "text": "SunoAI"
+          },
+          {
+            "indices": [
+              224,
+              229
+            ],
+            "text": "AI音楽"
+          },
+          {
+            "indices": [
+              230,
+              236
+            ],
+            "text": "humal"
+          },
+          {
+            "indices": [
+              237,
+              243
+            ],
+            "text": "アノフェス"
+          }
+        ],
+        "symbols": [],
+        "urls": [
+          {
+            "display_url": "youtu.be/26v2ohUzf2U?si…",
+            "expanded_url": "https://youtu.be/26v2ohUzf2U?si=xtRV83q8lPArz_bi",
+            "indices": [
+              175,
+              198
+            ],
+            "url": "https://t.co/jD1SILTZBs"
+          }
+        ],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          157
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T07:14:01.000000Z",
+      "id": 2058084017526743467,
+      "id_str": "2058084017526743467",
+      "type": "tweet",
+      "conversation_id_str": "2058084017526743467",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "【究極の自由】モンスター級の無検閲AI「MiniMax M2.7」が登場！🚀\n\n話題の超巨大モデル「MiniMax M2.7 ultra uncensored heretic」がリリースされました！\n\n🔹拒絶率わずか4/100の完全無検閲！表現をマイルドに薄めることなく、翻訳や創作を忠実に実行します。\n🔹フルサイズ約457GBの圧倒的スケール！GGUF形式も用意されており、環境に合わせた調整が可能です。\n🔹「Instruct Mode」による高速な翻訳・タスク処理！既存の26B〜35Bクラスを圧倒するパフォーマンスを発揮します。\n\n自由なロールプレイ、超高精度な翻訳、ビジネス用AIのベースとして、ローカル環境で「AIを真に自分のものにする」ための強力な選択肢です！\n\n#ローカルLLM #AI",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 2693114576,
+        "id_str": "2693114576",
+        "name": "ハカセ アイ(Ai-Hakase)🐾最新トレンドＡＩのためのＸ 🐾",
+        "screen_name": "ai_hakase_",
+        "location": "",
+        "url": "https://note.com/ai_hakase",
+        "description": "生成AIと猫への愛50%ずつで構成されています、葉加瀬あいです🐾　\n\n🧠クリエイター向けAI解説：YouTube、Note、X\n🤖AIエージェント開発：自社、受託\nなどを行う、小さな会社を経営しております。\n\nPC周り、ジム、ゴルフ場が最近の住処です😽✨\nお役立ち投稿は「ハイライト」欄にまとめてます🥳",
+        "protected": false,
+        "verified": true,
+        "followers_count": 13648,
+        "friends_count": 826,
+        "listed_count": 0,
+        "favourites_count": 109661,
+        "statuses_count": 49129,
+        "created_at": "2014-07-30T14:48:03.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/2693114576/1746880305",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1921180516016877568/GDmO_OpP_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 1,
+      "reply_count": 1,
+      "retweet_count": 11,
+      "favorite_count": 154,
+      "views_count": 10397,
+      "bookmark_count": 171,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [
+          {
+            "indices": [
+              338,
+              346
+            ],
+            "text": "ローカルLLM"
+          },
+          {
+            "indices": [
+              347,
+              350
+            ],
+            "text": "AI"
+          }
+        ],
+        "symbols": [],
+        "urls": [],
+        "user_mentions": [],
+        "media": [
+          {
+            "display_url": "pic.x.com/wdEpAMI4zU",
+            "expanded_url": "https://x.com/ai_hakase_/status/2058084017526743467/photo/1",
+            "ext_master_playlist_only": [],
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "ext_playlists": [],
+            "features": {
+              "large": {
+                "faces": [
+                  {
+                    "h": 159,
+                    "w": 159,
+                    "x": 194,
+                    "y": 1450
+                  }
+                ]
+              }
+            },
+            "id_str": "2058084014611636224",
+            "indices": [
+              152,
+              175
+            ],
+            "media_key": "3_2058084014611636224",
+            "media_url_https": "https://pbs.twimg.com/media/HI_IgdDWIAAz7mc.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 757,
+                  "w": 1352,
+                  "x": 0,
+                  "y": 652
+                },
+                {
+                  "h": 1352,
+                  "w": 1352,
+                  "x": 0,
+                  "y": 297
+                },
+                {
+                  "h": 1541,
+                  "w": 1352,
+                  "x": 0,
+                  "y": 108
+                },
+                {
+                  "h": 1649,
+                  "w": 825,
+                  "x": 527,
+                  "y": 0
+                },
+                {
+                  "h": 1649,
+                  "w": 1352,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 1649,
+              "width": 1352
+            },
+            "sizes": {
+              "large": {
+                "h": 1649,
+                "w": 1352
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/wdEpAMI4zU"
+          }
+        ],
+        "display_text_range": [
+          0,
+          151
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T06:04:18.000000Z",
+      "id": 2058066470060359942,
+      "id_str": "2058066470060359942",
+      "type": "tweet",
+      "conversation_id_str": "2058066470060359942",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "AIが勝手に記録してくれる家計簿アプリ『HubWallet（ハブウォレット）』をリリースしました。コメント、いいね、リポストいただけると大変喜びます🙇\n\nあなたはレシートを「撮るだけ」。あとは勝手に読み取って分類までしてくれます。\n整理は隙間時間にスワイプで仕分け。\n\n▶ レシートは撮るだけで保存（連続撮影OK）\n▶ AIが金額・店舗・カテゴリを自動入力\n▶ 整理は隙間時間にスワイプで仕分け\n▶ 音声入力対応（「コンビニでお菓子500円」でOK）\n▶ ネット注文の領収書PDFも共有シートで取り込み\n▶ 家賃・サブスクはテンプレで自動計上\n▶ 手入力なら上限なし、広告ゼロで無料で使えます\n\nダウンロード↓\n#HubWallet #家計簿 #便利",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 2020444440813514752,
+        "id_str": "2020444440813514752",
+        "name": "鷹月（たかつき） | 個人開発者🦅",
+        "screen_name": "growthlab710dev",
+        "location": "",
+        "url": "https://doublehub.jp",
+        "description": "AIプロダクター（AI搭載アプリ開発）。AI×アプリで新たな価値を創出。DoubleHub運営。詳細はHPへ⇨ https://doublehub.jp\nnote ⇨ https://t.co/TIXBH74tKS",
+        "protected": false,
+        "verified": true,
+        "followers_count": 310,
+        "friends_count": 287,
+        "listed_count": 0,
+        "favourites_count": 2825,
+        "statuses_count": 544,
+        "created_at": "2026-02-08T10:30:21.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/2020444440813514752/1773227164",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2022948203923230720/oPAkQyf2_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 3,
+      "reply_count": 6,
+      "retweet_count": 3,
+      "favorite_count": 25,
+      "views_count": 1181,
+      "bookmark_count": 2,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [
+          {
+            "indices": [
+              306,
+              316
+            ],
+            "text": "HubWallet"
+          },
+          {
+            "indices": [
+              317,
+              321
+            ],
+            "text": "家計簿"
+          },
+          {
+            "indices": [
+              322,
+              325
+            ],
+            "text": "便利"
+          }
+        ],
+        "symbols": [],
+        "urls": [],
+        "user_mentions": [],
+        "media": [
+          {
+            "additional_media_info": {
+              "monetizable": true
+            },
+            "allow_download_status": {
+              "allow_download": true
+            },
+            "display_url": "pic.x.com/gSSTjDl6yb",
+            "expanded_url": "https://x.com/growthlab710dev/status/2058066470060359942/video/1",
+            "ext_master_playlist_only": [],
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "ext_playlists": [],
+            "id_str": "2058027058169860096",
+            "indices": [
+              137,
+              160
+            ],
+            "media_key": "13_2058027058169860096",
+            "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2058027058169860096/img/kjS0cVuyyCaoPdOs.jpg",
+            "original_info": {
+              "focus_rects": [],
+              "height": 2688,
+              "width": 1242
+            },
+            "sizes": {
+              "large": {
+                "h": 2048,
+                "w": 946
+              }
+            },
+            "type": "video",
+            "url": "https://t.co/gSSTjDl6yb",
+            "video_info": {
+              "aspect_ratio": [
+                207,
+                448
+              ],
+              "duration_millis": 14333,
+              "variants": [
+                {
+                  "content_type": "application/x-mpegURL",
+                  "url": "https://video.twimg.com/amplify_video/2058027058169860096/pl/mdndH9yJkhed6Ufd.m3u8"
+                },
+                {
+                  "bitrate": 632000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2058027058169860096/vid/avc1/320x692/1u0I8ktSYS_VdIDY.mp4"
+                },
+                {
+                  "bitrate": 950000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2058027058169860096/vid/avc1/480x1038/jM7BPIInombKqutO.mp4"
+                },
+                {
+                  "bitrate": 2176000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2058027058169860096/vid/avc1/720x1558/1eYAszYVvHWm80vj.mp4"
+                },
+                {
+                  "bitrate": 10368000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2058027058169860096/vid/avc1/1242x2688/OOruZtSBNX2HXgHj.mp4"
+                }
+              ]
+            }
+          },
+          {
+            "allow_download_status": {
+              "allow_download": true
+            },
+            "display_url": "pic.x.com/gSSTjDl6yb",
+            "expanded_url": "https://x.com/growthlab710dev/status/2058066470060359942/video/1",
+            "ext_master_playlist_only": [],
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "ext_playlists": [],
+            "features": {
+              "large": {
+                "faces": []
+              }
+            },
+            "id_str": "2058027185492074496",
+            "indices": [
+              137,
+              160
+            ],
+            "media_key": "3_2058027185492074496",
+            "media_url_https": "https://pbs.twimg.com/media/HI-U0kFaIAAS8vA.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 719,
+                  "w": 1284,
+                  "x": 0,
+                  "y": 543
+                },
+                {
+                  "h": 1284,
+                  "w": 1284,
+                  "x": 0,
+                  "y": 260
+                },
+                {
+                  "h": 1464,
+                  "w": 1284,
+                  "x": 0,
+                  "y": 170
+                },
+                {
+                  "h": 2568,
+                  "w": 1284,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 2778,
+                  "w": 1284,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 2778,
+              "width": 1284
+            },
+            "sizes": {
+              "large": {
+                "h": 2048,
+                "w": 947
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/gSSTjDl6yb"
+          },
+          {
+            "allow_download_status": {
+              "allow_download": true
+            },
+            "display_url": "pic.x.com/gSSTjDl6yb",
+            "expanded_url": "https://x.com/growthlab710dev/status/2058066470060359942/video/1",
+            "ext_master_playlist_only": [],
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "ext_playlists": [],
+            "features": {
+              "large": {
+                "faces": []
+              }
+            },
+            "id_str": "2058027264680615936",
+            "indices": [
+              137,
+              160
+            ],
+            "media_key": "3_2058027264680615936",
+            "media_url_https": "https://pbs.twimg.com/media/HI-U5LFbYAAxYfz.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 719,
+                  "w": 1284,
+                  "x": 0,
+                  "y": 1237
+                },
+                {
+                  "h": 1284,
+                  "w": 1284,
+                  "x": 0,
+                  "y": 954
+                },
+                {
+                  "h": 1464,
+                  "w": 1284,
+                  "x": 0,
+                  "y": 864
+                },
+                {
+                  "h": 2568,
+                  "w": 1284,
+                  "x": 0,
+                  "y": 210
+                },
+                {
+                  "h": 2778,
+                  "w": 1284,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 2778,
+              "width": 1284
+            },
+            "sizes": {
+              "large": {
+                "h": 2048,
+                "w": 947
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/gSSTjDl6yb"
+          }
+        ],
+        "display_text_range": [
+          0,
+          136
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T04:40:29.000000Z",
+      "id": 2058045378944282749,
+      "id_str": "2058045378944282749",
+      "type": "tweet",
+      "conversation_id_str": "2058045378944282749",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "【5/30まで通常版100円】キルティング【#VRoid】 | #tokinobox \n5月のtokinoboxとして新作第1弾衣装キルティングをリリースしました\n通常版とEX版の二種類です。EXは胸開きがあるだけなので通常版で十分かと\n本衣装は一部生成AIを使用してます\n\nよろしければぜひ\nhttps://t.co/YlwDAWQ5mb #booth_pm",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 930429139273711619,
+        "id_str": "930429139273711619",
+        "name": "tokino",
+        "screen_name": "allianzkadett",
+        "location": "日本",
+        "url": "",
+        "description": "VRoidやVRoidCafe用のアカウント\nBOOTH　https://t.co/MpqM6QJVK2\nBluesky（日常垢）　https://t.co/qXqVXZ6vvI",
+        "protected": false,
+        "verified": false,
+        "followers_count": 1013,
+        "friends_count": 286,
+        "listed_count": 0,
+        "favourites_count": 64142,
+        "statuses_count": 21561,
+        "created_at": "2017-11-14T13:36:08.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/930429139273711619/1748263013",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1907010015892066304/GsLCO4n2_normal.jpg",
+        "can_dm": true,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 1,
+      "retweet_count": 11,
+      "favorite_count": 25,
+      "views_count": 672,
+      "bookmark_count": 3,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [
+          {
+            "indices": [
+              22,
+              28
+            ],
+            "text": "VRoid"
+          },
+          {
+            "indices": [
+              32,
+              42
+            ],
+            "text": "tokinobox"
+          },
+          {
+            "indices": [
+              171,
+              180
+            ],
+            "text": "booth_pm"
+          }
+        ],
+        "urls": [
+          {
+            "display_url": "allianzkadett.booth.pm/items/8398604",
+            "expanded_url": "https://allianzkadett.booth.pm/items/8398604",
+            "indices": [
+              147,
+              170
+            ],
+            "url": "https://t.co/YlwDAWQ5mb"
+          }
+        ],
+        "display_text_range": [
+          0,
+          180
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T03:51:57.000000Z",
+      "id": 2058033166565433400,
+      "id_str": "2058033166565433400",
+      "type": "tweet",
+      "conversation_id_str": "2058033166565433400",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "🌌 New Release 🌸\n「夜空に咲く可憐花」🎇\n夜空に咲く花火のように、 \n儚くも優しく広がる想いを \n和テイスト × シンセサウンドで表現しました🐱✨\nぜひイヤホンで聴いてください🎧\n🎵 YouTube Music\nhttps://t.co/DEJ5xBvPFO\n#ニューリリース\n#AI音楽\n#SunoAI\n#Jpop\n#音楽好きと繋がりたい\n#JapaneseMusic\n#NewMusic",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1269290729316085761,
+        "id_str": "1269290729316085761",
+        "name": "ezo-momo(遊園地系AI音楽)",
+        "screen_name": "ezo_momo",
+        "location": "北海道",
+        "url": "https://suno.com/@ezo_momo",
+        "description": "遊園地系AI音楽クリエイターezo-momo（エゾモモンガから由来）」┃AIツールを使って音楽や画像の創作活動や写真撮るのが好き😸\n※無断転載、無断改変等は一切禁止❌\nMureka＆Suno＆各種配信サイトにて楽曲発表中！😺https://t.co/ZNzjJZ6DyS",
+        "protected": false,
+        "verified": true,
+        "followers_count": 435,
+        "friends_count": 415,
+        "listed_count": 0,
+        "favourites_count": 9924,
+        "statuses_count": 346,
+        "created_at": "2020-06-06T15:31:16.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1269290729316085761/1779533742",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2044639983534067712/03tfxCx5_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 1,
+      "retweet_count": 2,
+      "favorite_count": 21,
+      "views_count": 384,
+      "bookmark_count": 0,
+      "lang": "ja",
+      "entities": {
+        "hashtags": [
+          {
+            "indices": [
+              137,
+              145
+            ],
+            "text": "ニューリリース"
+          },
+          {
+            "indices": [
+              146,
+              151
+            ],
+            "text": "AI音楽"
+          },
+          {
+            "indices": [
+              152,
+              159
+            ],
+            "text": "SunoAI"
+          },
+          {
+            "indices": [
+              160,
+              165
+            ],
+            "text": "Jpop"
+          },
+          {
+            "indices": [
+              166,
+              177
+            ],
+            "text": "音楽好きと繋がりたい"
+          },
+          {
+            "indices": [
+              137,
+              145
+            ],
+            "text": "ニューリリース"
+          },
+          {
+            "indices": [
+              146,
+              151
+            ],
+            "text": "AI音楽"
+          },
+          {
+            "indices": [
+              152,
+              159
+            ],
+            "text": "SunoAI"
+          },
+          {
+            "indices": [
+              160,
+              165
+            ],
+            "text": "Jpop"
+          },
+          {
+            "indices": [
+              166,
+              177
+            ],
+            "text": "音楽好きと繋がりたい"
+          },
+          {
+            "indices": [
+              178,
+              192
+            ],
+            "text": "JapaneseMusic"
+          },
+          {
+            "indices": [
+              193,
+              202
+            ],
+            "text": "NewMusic"
+          }
+        ],
+        "urls": [
+          {
+            "display_url": "youtu.be/0pOqPcRV7EA?si…",
+            "expanded_url": "https://youtu.be/0pOqPcRV7EA?si=bHIxLXWgAy_jditP",
+            "indices": [
+              113,
+              136
+            ],
+            "url": "https://t.co/4s6TeBcMPq"
+          },
+          {
+            "display_url": "youtu.be/0pOqPcRV7EA?si…",
+            "expanded_url": "https://youtu.be/0pOqPcRV7EA?si=bHIxLXWgAy_jditP",
+            "indices": [
+              113,
+              136
+            ],
+            "url": "https://t.co/DEJ5xBvPFO"
+          }
+        ],
+        "symbols": [],
+        "user_mentions": [],
+        "display_text_range": [
+          0,
+          177
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T03:45:08.000000Z",
+      "id": 2058031448217764316,
+      "id_str": "2058031448217764316",
+      "type": "tweet",
+      "conversation_id_str": "2058031448217764316",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "Microsoftが日本で100万人のAI人材育成、DCなどに1.6兆円投資も\nhttps://t.co/k36oKXKWtt\n\n米マイクロソフトは2026年4月3日、2030年までに日本で100万人のAI人材を育成すると発表した。NEC、NTTデータ、ソフトバンク、日立製作所、富士通と連携する。",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 59390872,
+        "id_str": "59390872",
+        "name": "日経クロステック IT",
+        "screen_name": "nikkeibpITpro",
+        "location": "",
+        "url": "https://xtech.nikkei.com/",
+        "description": "日経BPの技術系デジタルメディア「日経クロステック（xTECH）」のうち、IT系の話題をお届けするアカウントです。日経クロステックに掲載したIT系の記事をつぶやきます。",
+        "protected": false,
+        "verified": true,
+        "followers_count": 90826,
+        "friends_count": 25685,
+        "listed_count": 0,
+        "favourites_count": 1,
+        "statuses_count": 128757,
+        "created_at": "2009-07-23T07:21:51.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/59390872/1762940615",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1988543182804787200/yNse5jr7_normal.jpg",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 5,
+      "reply_count": 0,
+      "retweet_count": 19,
+      "favorite_count": 81,
+      "views_count": 20439,
+      "bookmark_count": 26,
+      "lang": "ja",
+      "entities": {
+        "urls": [
+          {
+            "display_url": "xtech.nikkei.com/atcl/nxt/news/…",
+            "expanded_url": "https://xtech.nikkei.com/atcl/nxt/news/24/03164/?n_cid=nbpnxt_twed_it",
+            "indices": [
+              40,
+              63
+            ],
+            "url": "https://t.co/k36oKXKWtt"
+          }
+        ],
+        "display_text_range": [
+          0,
+          149
+        ]
+      },
+      "is_pinned": false
+    },
+    {
+      "tweet_created_at": "2026-05-23T03:34:06.000000Z",
+      "id": 2058028670712008731,
+      "id_str": "2058028670712008731",
+      "type": "tweet",
+      "conversation_id_str": "2058028670712008731",
+      "community_id_str": null,
+      "community_name": null,
+      "text": null,
+      "full_text": "🤔\n『今後はAIモードの回答の中に「AIで生成された説明文を含む広告」が含まれるようになります。』\n\nGoogle検索のAIモードの回答に広告が含まれることが正式発表される、AI説明文つきの製品広告を検索結果に含めることも計画\nhttps://t.co/2766FlqCE1",
+      "source": "",
+      "truncated": false,
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": {
+        "id": 1648861861092409344,
+        "id_str": "1648861861092409344",
+        "name": "ペンギン",
+        "screen_name": "penpenguin2023",
+        "location": "",
+        "url": "https://lit.link/penpenguin2023",
+        "description": "主に生成AIのリスクや規制について情報収集と発信。最近は欧米の規制に関する記事（英語含む）もチェック中。\nリプ欄は閉じています＆議論はしません。\n通知を追えていないため、見落としが多いです。\nhttps://t.co/5w7Bt8OLWu",
+        "protected": false,
+        "verified": false,
+        "followers_count": 6145,
+        "friends_count": 39,
+        "listed_count": 0,
+        "favourites_count": 6530,
+        "statuses_count": 13717,
+        "created_at": "2023-04-20T01:31:32.000000Z",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/1648861861092409344/1706012020",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1749337274796638208/3gFESATs_normal.png",
+        "can_dm": false,
+        "affiliation_label": null
+      },
+      "quoted_status_id": null,
+      "quoted_status_id_str": null,
+      "is_quote_status": false,
+      "quoted_status": null,
+      "retweeted_status": null,
+      "quote_count": 0,
+      "reply_count": 0,
+      "retweet_count": 33,
+      "favorite_count": 34,
+      "views_count": 3077,
+      "bookmark_count": 8,
+      "lang": "ja",
+      "entities": {
+        "urls": [
+          {
+            "display_url": "gigazine.net/news/20260521-…",
+            "expanded_url": "https://gigazine.net/news/20260521-google-marketing-ai-search/",
+            "indices": [
+              114,
+              137
+            ],
+            "url": "https://t.co/2766FlqCE1"
+          }
+        ],
+        "display_text_range": [
+          0,
+          137
+        ]
+      },
+      "is_pinned": false
+    }
+  ]
+}
