@@ -210,3 +210,11 @@
 | 189 | 無検閲LLM「MiniMax M2.7 Ultra Uncensored」リリース——45… | ja | 未読 | #x-signal #llm-news | articles/2026-05-23_2814_X_ai_hakase__無検閲LLMMiniMax_M27_Ultra_Uncensoredリリース45.md |
 | 190 | Microsoft、2030年までに日本で100万人AI人材育成・1.6兆円投資を正式発表 | ja | 未読 | #x-signal | articles/2026-05-23_2815_X_nikkeibpITpro_Microsoft2030年までに日本で100万人AI人材育成16兆円投資を正式.md |
 | 191 | Google、AI Mode検索結果への広告挿入を正式発表——AI生成説明付き製品広告も計… | ja | 未読 | #x-signal | articles/2026-05-23_2816_X_penpenguin2023_GoogleAI_Mode検索結果への広告挿入を正式発表AI生成説明付き製品広告.md |
+| 192 | Colorado Legislature Revises AI Act: From Risk… | en | 未読 | #web-signal #regulation | articles/2026-05-24_2836_WEB_Colorado_AI_Act_Revised_Disclosure_Model_NatlawReview.md |
+| 193 | Battle for AI Governance: White House vs States | en | 未読 | #web-signal #regulation | articles/2026-05-24_2837_WEB_AI_Governance_WhiteHouse_vs_States_Centralize_Vorys.md |
+| 194 | ローマ教皇ルカ14世のAI回勅：バベルの塔の警告——unchecked AIへの警鐘 | en | 未読 | #x-signal | articles/2026-05-24_2859_X_ChristopherHale_ローマ教皇ルカ14世のAI回勅_バベルの塔の警告_unchecked_AIがもた.md |
+| 195 | Mythosリリースが近い——AI速度のバグ発見 vs 人間速度のパッチ適用の非対称 | en | 未読 | #x-signal #llm-news | articles/2026-05-24_2860_X_minchoi_Mythosリリースが近い_しかし本当の問題はAI速度のバグ発見_vs_人間速度.md |
+| 196 | Apple が generativeai.com サブドメインを準備——WWDC26で生成AI発表示唆 | en | 未読 | #x-signal #llm-news | articles/2026-05-24_2861_X_applefiles_Appleが_generativeai.com_サブドメインを準備_WWDC26.md |
+| 197 | 2026年AIモデルリリース時期予測：GPT-5.6・Claude 4.8・Gemini 3.5 Pro | ja | 未読 | #x-signal #llm-news | articles/2026-05-24_2862_X_itnavi2022_2026年AIモデルリリース時期予測まとめ_GPT-5.6_Claude_4.8.md |
+| 198 | Google I/O 2026「Gemini Omni」発表——マルチモーダル動画生成AI | ja | 未読 | #x-signal #llm-news | articles/2026-05-24_2863_X_shota7180_Google_I_O_2026Gemini_Omni発表_テキスト_画像_音声_.md |
+| 199 | GPT-5.6 × AIエージェント：6月リリース説——タスク委譲能力強化が焦点 | ja | 未読 | #x-signal #llm-news #ai-agent | articles/2026-05-24_2864_X_so_ainsight_GPT-5.6_x_AIエージェント_6月リリース説_チャット強化よりAIに作業.md |

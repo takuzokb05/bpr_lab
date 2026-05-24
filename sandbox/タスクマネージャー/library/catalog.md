@@ -609,3 +609,29 @@
 | 584 | Claude Code Best Practices: Comprehensive Wik… | en | 未読 | #web-signal | articles/2026-05-23_2822_WEB_Claude_Code_Best_Practices_Comprehensive_Wiki.md |
 | 585 | What is MCP (Model Context Protocol)? The 202… | en | 未読 | #web-signal #mcp #model-update | articles/2026-05-23_2823_WEB_What_is_MCP_Model_Context_Protocol_The_2026_G.md |
 | 586 | Model Context Protocol (MCP): Complete 2026 G… | en | 未読 | #web-signal #mcp #model-update | articles/2026-05-23_2825_WEB_Model_Context_Protocol_MCP_Complete_2026_Guid.md |
+| 587 | Best Claude Code Skills in 2026: 20 Slash Comm… | en | 未読 | #web-signal #skills | articles/2026-05-24_2826_WEB_Best_Claude_Code_Skills_2026_20_Slash_Toolradar.md |
+| 588 | Claude Code Routines: 5 Production Workflows +… | en | 未読 | #web-signal #routines #mcp | articles/2026-05-24_2827_WEB_Claude_Code_Routines_5_Production_Workflows_MCP_Arcade.md |
+| 589 | Claude Code MCP Servers & Plugins: The Complet… | en | 未読 | #web-signal #mcp | articles/2026-05-24_2828_WEB_Claude_Code_MCP_Plugins_Complete_Guide_2026_Clarista.md |
+| 590 | Writing the Best CLAUDE.md: A Complete Guide f… | en | 未読 | #web-signal #claude-md | articles/2026-05-24_2829_WEB_Writing_Best_CLAUDE_md_Complete_Guide_DataCamp.md |
+| 591 | Agent Teams with Claude Code and Claude Agent … | en | 未読 | #web-signal #ecosystem | articles/2026-05-24_2830_WEB_Agent_Teams_Claude_Code_Agent_SDK_Medium_Kargar.md |
+| 592 | MCP 2026 Roadmap: Stateless Core, Extensions,… | en | 未読 | #web-signal #mcp #ecosystem | articles/2026-05-24_2831_WEB_MCP_Roadmap_2026_Production_Stateless_TheNewStack.md |
+| 593 | Claude MCP Setup Guide: Connect Any Tool in 10… | en | 未読 | #web-signal #mcp | articles/2026-05-24_2832_WEB_Claude_MCP_Setup_Guide_10min_2026_BuildFastWithAI.md |
+| 594 | Claude Code v2.1.x 機能・設定リファレンス完全版 2026 | ja | 未読 | #web-signal | articles/2026-05-24_2833_WEB_Claude_Code_Features_Settings_Reference_2026_Hidekazu.md |
+| 595 | Claude Code Auto Memory：MEMORY.mdを整備するだけでチームコン… | ja | 未読 | #x-signal | articles/2026-05-24_2838_X_ura_unico_Claude_Code_Auto_Memory_MEMORY.mdを整備するだけ.md |
+| 596 | Claude Code Desktop版 0-Prompt RCE（Pwn2Ownで発見）が… | ja | 未読 | #x-signal | articles/2026-05-24_2839_X_satoki00_Claude_Code_Desktop版_0-Prompt_RCE_Pwn2Ow.md |
+| 597 | Microsoft、Claude Codeライセンスを2026年6月末に大幅縮小——E+D… | ja | 未読 | #x-signal #ecosystem | articles/2026-05-24_2840_X_IROHANI_shotime_MicrosoftClaude_Codeライセンスを2026年6月末に大幅縮小_.md |
+| 598 | Backdoor OSS：Claude Code経由で任意モデルを使えるlocalhostプ… | en | 未読 | #x-signal | articles/2026-05-24_2841_X_AJs_AI_Backdoor_OSS_Claude_Code経由で任意モデルを使えるloca.md |
+| 599 | Cursor or Claude Code？5-question check to pick… | en | 未読 | #x-signal | articles/2026-05-24_2842_X_chelsea_hulin_Cursor_or_Claude_Code5-question_check_to.md |
+| 600 | Claude Codeチュートリアルはコマンドを教えるが、チームはリポジトリルールで… | en | 未読 | #x-signal | articles/2026-05-24_2843_X_Distroux_Claude_Codeチュートリアルはコマンドを教えるがチームはリポジトリルール.md |
+| 601 | Claude Code Desktop App vs VS Code Extension：… | en | 未読 | #x-signal | articles/2026-05-24_2844_X_Simbuilder_Claude_Code_Desktop_App_vs_VS_Code_Exten.md |
+| 602 | Microsoft Claude Code ban報道は誤情報——E+D限定のロールバック | en | 未読 | #x-signal | articles/2026-05-24_2845_X_FinRiff_Microsoft_Claude_Code_ban報道は誤情報_E+D限定のロー.md |
+| 603 | AnthropicのGPUショートで毎日effortがmediumに強制リセット（levelsio） | en | 未読 | #x-signal | articles/2026-05-24_2846_X_levelsio_AnthropicのGPUショートで毎日effortがmediumに強制リセット.md |
+| 604 | Claudeがセッション中に「休め」と言う謎の挙動——原因不明（2,823いいね） | en | 未読 | #x-signal | articles/2026-05-24_2847_X_jain_harshit_Claudeがセッション中に休めと言う謎の挙動_Anthropicも原因を把握で.md |
+| 605 | wazzapi MCP server：Claude Code/CursorからWhatsAp… | en | 未読 | #x-signal #mcp | articles/2026-05-24_2848_X_marchelfah_wazzapi_MCP_server_Claude_Code_CursorからW.md |
+| 606 | Claude Codeのツール呼び出しスコープ拡張リスク——本番権限設計で管理せよ | en | 未読 | #x-signal #hooks | articles/2026-05-24_2849_X_thomasdevos69_Claude_Codeのツール呼び出しスコープ拡張リスク_本番権限と同じ設計原則.md |
+| 607 | Claude Managed Agents：セルフホストサンドボックス・MCPトンネル対応 | en | 未読 | #x-signal #mcp #ecosystem | articles/2026-05-24_2850_X_JulianGoldieSEO_Claude_Managed_Agents_セルフホストサンドボックス_MCPト.md |
+| 608 | Andrej KarpathyがAnthropicに参加——Member of Technical Staff | en | 未読 | #x-signal #ecosystem | articles/2026-05-24_2851_X_sethrose_Andrej_KarpathyがAnthropicに参加_Member_of_T.md |
+| 609 | Anthropicがマルチエージェントオーケストレーションを出荷——Netflix稼働中 | en | 未読 | #x-signal #ecosystem | articles/2026-05-24_2852_X_closermethod_Anthropicがマルチエージェントオーケストレーションを出荷_Netflix.md |
+| 610 | AnthropicによるStainless買収：API・SDK・MCPという「AIエージェン… | ja | 未読 | #x-signal #mcp #ecosystem | articles/2026-05-24_2853_X_templeslope_dev_AnthropicによるStainless買収_API_SDK_MCPというAI.md |
+| 611 | Anthropic公式無料コース（13件・30分）：記憶付きAIエージェント構築から | ja | 未読 | #x-signal #ecosystem | articles/2026-05-24_2854_X_axelrod_jpn_Anthropic公式無料コース_13件_30分_記憶付きAIエージェント構築.md |
+| 612 | AnthropicのMCPに重大セキュリティ欠陥——AIサーバー20万台にリスク | en | 未読 | #x-signal #mcp | articles/2026-05-24_2855_X_cafe_au_laitsss_AnthropicのMCPに重大セキュリティ欠陥_AIサーバー20万台にリスクパ.md |

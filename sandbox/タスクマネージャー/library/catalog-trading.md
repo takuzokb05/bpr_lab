@@ -277,3 +277,8 @@
 | 249 | ROBOPRO AI自動売買21ヶ月運用実績：利益率20%超達成 | ja | 未読 | #x-signal #fx #llm-trading | articles/2026-05-23_2808_X_kawase_koyaji_ROBOPRO_AI自動売買21ヶ月運用実績利益率20超達成.md |
 | 250 | AI Agents vs. LLMs: Which Tools Dominate Cryp… | en | 未読 | #web-signal #llm-trading | articles/2026-05-23_2821_WEB_AI_Agents_vs_LLMs_Which_Tools_Dominate_Crypto.md |
 | 251 | ChatGPT-5にFXで稼いでもらおうとした結果 | ja | 未読 | #web-signal #fx | articles/2026-05-23_2824_WEB_ChatGPT-5にFXで稼いでもらおうとした結果.md |
+| 252 | MT5×Python×Gemini 生成AIに相場を「思考」させる自動売買完全ガイド | ja | 未読 | #web-signal #fx #llm-trading #implementation | articles/2026-05-24_2834_WEB_MT5_Python_Gemini_FX_AutoTrade_Complete_Guide_Note.md |
+| 253 | TradingAgents v0.2.4: Open-Source Multi-Agent LLM Trading | en | 未読 | #web-signal #llm-trading #multi-agent | articles/2026-05-24_2835_WEB_TradingAgents_v024_MultiAgent_LLM_Python_Medium.md |
+| 254 | Python×AI×人間でFX EA稼働カレンダーを作成——週次スケジュール管理 | ja | 未読 | #x-signal #fx #implementation | articles/2026-05-24_2856_X_spring0168_PythonxAIx人間でFX_EA稼働カレンダーを作成_週次スケジュール管理の.md |
+| 255 | MT5/NT8に接続しGitHub招待を受け付け・会話から記憶を更新するAIエージェント | ar | 未読 | #x-signal #fx #llm-trading | articles/2026-05-24_2857_X_o0a98_MT5_NT8に接続しGitHub招待を受け付け_会話から記憶を更新するAIエー.md |
+| 256 | MT5 Python：ブローカーサーバータイム差異による時間ウィンドウ取り逃しをposition_idで解決 | ja | 未読 | #x-signal #fx #implementation | articles/2026-05-24_2858_X_bottsukuttemita_MT5_Python_ブローカーサーバータイム差異による時間ウィンドウ取り逃しを.md |
