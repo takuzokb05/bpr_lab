@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Weekly Digest - 2026-05-24</title>
+<style>
+:root {
+  --bg: #fafafa;
+  --text: #1a1a1a;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --card-bg: #ffffff;
+  --code-bg: #f3f4f6;
+  --blue: #2563eb;
+  --blue-light: #dbeafe;
+  --green: #059669;
+  --green-light: #d1fae5;
+  --orange: #ea580c;
+  --orange-light: #fed7aa;
+  --purple: #7c3aed;
+  --purple-light: #ede9fe;
+  --accent: #dc2626;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f0f0f;
+    --text: #e5e5e5;
+    --muted: #9ca3af;
+    --border: #2d2d2d;
+    --card-bg: #1a1a1a;
+    --code-bg: #252525;
+    --blue-light: #1e3a5f;
+    --green-light: #14332a;
+    --orange-light: #3d2512;
+    --purple-light: #2a1f42;
+  }
+  a { color: #60a5fa; }
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', -apple-system, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.8;
+  font-size: 16px;
+}
+
+.container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+header {
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.3rem;
+}
+
+.header-meta {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.header-meta span {
+  margin-right: 1.2rem;
+}
+
+h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 2.5rem 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 1.5rem 0 0.5rem;
+}
+
+h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 1.2rem 0 0.4rem;
+}
+
+p {
+  margin: 0.6rem 0;
+}
+
+ul, ol {
+  margin: 0.5rem 0 0.5rem 1.5rem;
+}
+
+li {
+  margin: 0.4rem 0;
+}
+
+a {
+  color: var(--blue);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+strong {
+  font-weight: 600;
+}
+
+code {
+  background: var(--code-bg);
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+  font-size: 0.9em;
+  font-family: 'SF Mono', 'Consolas', monospace;
+}
+
+.summary-box {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.domain-section {
+  border-left: 4px solid var(--blue);
+  padding-left: 1rem;
+  margin: 2rem 0 1rem;
+}
+
+.domain-section.ecosystem {
+  border-left-color: var(--green);
+}
+
+.domain-section.trading {
+  border-left-color: var(--orange);
+}
+
+.domain-section.news {
+  border-left-color: var(--purple);
+}
+
+.domain-label {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.15em 0.6em;
+  border-radius: 3px;
+  margin-bottom: 0.5rem;
+}
+
+.domain-label.cc {
+  background: var(--blue-light);
+  color: var(--blue);
+}
+
+.domain-label.eco {
+  background: var(--green-light);
+  color: var(--green);
+}
+
+.domain-label.trade {
+  background: var(--orange-light);
+  color: var(--orange);
+}
+
+.domain-label.nw {
+  background: var(--purple-light);
+  color: var(--purple);
+}
+
+.action-list {
+  list-style: none;
+  margin-left: 0;
+  counter-reset: action;
+}
+
+.action-list li {
+  counter-increment: action;
+  padding: 0.8rem 1rem;
+  margin: 0.6rem 0;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  position: relative;
+  padding-left: 2.5rem;
+}
+
+.action-list li::before {
+  content: counter(action);
+  position: absolute;
+  left: 0.8rem;
+  top: 0.85rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.priority-high {
+  border-left: 3px solid var(--accent);
+}
+
+.priority-mid {
+  border-left: 3px solid var(--orange);
+}
+
+.priority-low {
+  border-left: 3px solid var(--green);
+}
+
+.timeline {
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  width: 2px;
+  background: var(--border);
+}
+
+.timeline-item {
+  position: relative;
+  margin: 1rem 0;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -1.75rem;
+  top: 0.7rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--muted);
+  border: 2px solid var(--bg);
+}
+
+.timeline-item.highlight::before {
+  background: var(--blue);
+}
+
+.timeline-date {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.stats-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+}
+
+.stat-card {
+  flex: 1;
+  min-width: 120px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.8rem 1rem;
+  text-align: center;
+}
+
+.stat-card .num {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.stat-card .label {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.watch-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+  list-style: none;
+  padding: 0;
+}
+
+.watch-list li {
+  background: var(--code-bg);
+  padding: 0.3rem 0.7rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.separator {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2.5rem 0;
+}
+
+.cross-link {
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-style: italic;
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>AI Weekly Digest</h1>
+  <div class="header-meta">
+    <span>2026-05-18 ~ 2026-05-24</span>
+    <span>426件の記事を統合</span>
+    <span>日次ダイジェスト4日分 + 記事直接分析3日分</span>
+  </div>
+</header>
+
+<!-- ============================================ -->
+<!-- 1. 今週のサマリー -->
+<!-- ============================================ -->
+
+<h2>今週のサマリー</h2>
+
+<div class="summary-box">
+<p>Anthropicが<strong>Stainless買収（$300M+）</strong>によるSDK・MCP基盤の垂直統合を完了し、Q2で<strong>初の営業黒字</strong>（売上高109億ドル超）を記録した。Google I/O 2026ではGemini 3.5 Flash・<strong>Antigravity 2.0（Google版Claude Code）</strong>が発表され、CLIコーディングエージェント市場の競争が四つ巴に激化。Claude Codeの実践知見は「個人の使い方」から「チーム設計・コスト最適化・セキュリティ」へと成熟が進み、CLAUDE.mdの<strong>80行/200行/500語の遵守率閾値</strong>やplan-firstワークフローなど定量的な運用指針が確立した週だった。<strong>6/15の課金変更まで残り22日</strong>——Agent SDK・<code>claude -p</code>利用者は移行準備が最終フェーズに入る。FX自動取引ではAgentic Tradingフレームワークの実装事例が増加し、非エンジニアの勤務表作成83%削減など「AI＝開発者専用」の壁が崩壊しつつある。</p>
+</div>
+
+<div class="stats-row">
+  <div class="stat-card">
+    <div class="num">426</div>
+    <div class="label">週間記事数</div>
+  </div>
+  <div class="stat-card">
+    <div class="num">168</div>
+    <div class="label">Claude Code関連</div>
+  </div>
+  <div class="stat-card">
+    <div class="num">98</div>
+    <div class="label">Ecosystem/MCP</div>
+  </div>
+  <div class="stat-card">
+    <div class="num">62</div>
+    <div class="label">Trading/FX</div>
+  </div>
+  <div class="stat-card">
+    <div class="num">98</div>
+    <div class="label">News/業界動向</div>
+  </div>
+</div>
+
+<hr class="separator">
+
+<!-- ============================================ -->
+<!-- 2. 継続トレンド総括 -->
+<!-- ============================================ -->
+
+<h2>今週ずっと話題だったもの</h2>
+
+<h3>Stainless買収 → Anthropic黒字化 → エコシステム囲い込みの一週間</h3>
+
+<div class="timeline">
+
+<div class="timeline-item highlight">
+  <div class="timeline-date">5/18（日）— 90件</div>
+  <p><strong>Stainless買収の衝撃波</strong>。AnthropicがSDK自動生成企業Stainless（$300M+）を買収し、Python/TypeScript/Go/Java/Kotlin全6言語のSDKとMCPサーバー基盤を垂直統合した。衝撃的なのはStainlessがOpenAI・Google・Mistral等の競合SDKも担当していた点で、業界再編の規模が大きい。同日、Agent SDK課金変更（6/15施行）の詳細が確定し、claude-code-setup公式プラグインのサイレントリリース、週次制限50%増（〜7/13）も判明。セキュリティ面ではClaude Code用Pentest Agent Suite（OSS）も公開された。</p>
+</div>
+
+<div class="timeline-item highlight">
+  <div class="timeline-date">5/19（月）— 52件</div>
+  <p><strong>CNBC Disruptor 50でAnthropic首位</strong>。売上ランレートが年初90億ドルから300億ドル超へ急拡大し、OpenAIを抜いて1位を獲得。同日Google I/O 2026が開幕し、Gemini 3.5 Flash（Claude Opus 4.7比4倍速）とAntigravity 2.0（Google版Claude Code）が発表。Claude Code側ではPlanモード活用術（「触らないファイルを先に洗い出す」）、plan-firstワークフローで不要なDBテーブル3件排除、Venice MCP Server 31ツールリリースなど実践知見の日。FX自動取引ではClaude CodeとFreqtradeの6ヶ月運用実績レポートが共有された。</p>
+</div>
+
+<div class="timeline-item highlight">
+  <div class="timeline-date">5/20（火）— 69件</div>
+  <p><strong>Anthropic初の営業黒字</strong>。Q2売上高109億ドル超、営業利益約5.59億ドル（一次ソース確認済み）。NVIDIA決算も予想超え（売上高816億ドル）。Claude Codeは非エンジニアによる業務活用が加速し、医療職の勤務表作成83%削減が注目を集めた。「複数AIツールを渡り歩いた後にClaude Codeに集約」というユーザー報告が複数出現し「定着」フェーズの兆候が見えた。agentmemory（永続メモリOSS、14.9K stars）やAnthropicの「Dreaming（夢見）」技術もこの日に浮上。</p>
+</div>
+
+<div class="timeline-item">
+  <div class="timeline-date">5/21（水）— 46件</div>
+  <p><strong>Google I/O後半戦 + 国内規制動向</strong>。Gemini 3.5 Flash・Gemini Sparkの詳細が出揃い、「AIが代行する時代」というGoogleのビジョンが鮮明に。Antigravity 2.0の日本語エンコード問題によるフリーズも早速報告された。Claude Codeでは<code>/goal</code>コマンドの実戦レポート（MCPファジング自動化）、CLAUDE.mdの80行/200行/500語閾値データ、Claude Plugins公式ディレクトリ（35+15本）がリリース。総務省がClaude Mythosを名指しした悪用対策会合を開催し、国内規制が具体化した。</p>
+</div>
+
+<div class="timeline-item highlight">
+  <div class="timeline-date">5/22（木）— 78件（週最大）</div>
+  <p><strong>Routinesの実装詳細とエコシステム急拡大</strong>。Claude Code RoutinesがInfoQ・claudefa.stで詳細解説され、No-Code自動化ツールの代替として位置づけられた。WIF（Workload Identity Federation）認証でAPIキー不要化も発表。Vibe-Trading（HKUDS）やAI-Powered MT5 Plugin等のトレーディング実装、Trump政権のAI行政命令ドラフト流出（Politico報道）、Y Combinator発のAllowance（AIエージェント向け決済）など横断的ニュースが密集。Antigravityの週次クォータも3倍に緩和された。</p>
+</div>
+
+<div class="timeline-item">
+  <div class="timeline-date">5/23（金）— 46件</div>
+  <p><strong>MCPのLinux Foundation標準化</strong>。MCPがLinux Foundation標準に正式採択され、Anthropic・OpenAI・Microsoft・Googleが共同運営体制に移行するという重要なマイルストーン。スキル競争優位論（Skills/MCP/hooksの「フォーク困難な防御壁」）や20人チーム検証による最適リポジトリ構成も共有。次世代モデル情報（6月リリース予定のSonnet 4.7/4.8、Opus 4.8）がリーク。LLM新学習パラダイム「NITP」の予告、Microsoft日本100万人AI人材育成計画も。</p>
+</div>
+
+<div class="timeline-item">
+  <div class="timeline-date">5/24（土）</div>
+  <p>記事収集なし。週次ダイジェスト生成日。</p>
+</div>
+
+</div>
+
+<hr class="separator">
+
+<!-- ============================================ -->
+<!-- 3. ドメイン別重要トピック -->
+<!-- ============================================ -->
+
+<h2>今週の重要トピック</h2>
+
+<!-- Claude Code -->
+<div class="domain-section">
+<span class="domain-label cc">Claude Code</span>
+
+<h3>Stainless買収とSDK/MCP垂直統合</h3>
+
+<p>今週最大の構造的イベント。AnthropicがStainless（$300M+）を買収したことで、Claude SDKの品質管理とMCPサーバー自動生成の両方が内製化された。Stainlessは競合他社（OpenAI、Google、Cloudflare、Meta）のSDK生成も担当しており、<strong>買収は単なる技術獲得ではなく、競合のサプライチェーンを断つ戦略的手筋</strong>だった。ホステッドプロダクトは廃止予定で、競合他社はSDK自動同期機能を失うことになる。</p>
+
+<p>技術的な長期インパクトは「OpenAPI spec → MCPサーバー自動生成」の内製化で、今後は品質が保証されたMCPサーバーが加速度的に増える。Agent SDKに新たに追加されたSelf-hosted Sandboxes（public beta）とMCP Tunnels（research preview）も、Stainless買収と同じ方向を向いている——<strong>エージェントが安全に到達できる範囲を最大化する</strong>というインフラ戦略だ。</p>
+
+<h3>CLAUDE.md設計の科学——80行/200行/500語の閾値</h3>
+
+<p>今週、Claude Codeの運用知見は「経験則」から「定量的指針」に進化した。最も重要な発見は<strong>CLAUDE.mdの遵守率に関する閾値データ</strong>だ。80行を超えるとルールが無視され始め、200行を超えると大ブロックが丸ごとスキップされ、500語を超えると遵守率が崩壊する。対策として、ルールには「why（理由）」を記載することで曖昧なケースでの判断精度が向上する。</p>
+
+<p>三者の役割分担も明確化された。<strong>CLAUDE.md</strong>はadvisoryなコンテキスト（指針）、<strong>Hooks</strong>はhard rule（必ず実行される決定論的処理）、<strong>Skills</strong>はreusableなmulti-step job（再利用可能な手順書）。これにより「何をどこに書くべきか」が初めて体系的に整理された。CLAUDE.mdベストプラクティスの記事だけで週間10件以上が公開されており、コミュニティの関心度の高さが伺える。</p>
+
+<h3>/goalコマンドとRoutines——自律エージェントの実用段階</h3>
+
+<p><code>/goal</code>コマンドの実戦投入レポートが今週複数出た。テスト→デバッグを目標達成まで自動ループする機能で、MCPツールのファジング自動化にも活用されている。Routinesは「毎晩のデータ集計→レポート生成」のようなスケジュール駆動の自動実行を可能にし、PCを閉じてもクラウドで処理が継続する。InfoQとclaudefa.stがRoutinesの詳細解説を公開し、No-Code自動化ツールの代替として明確に位置づけた。</p>
+
+<p>Stopフック＋linter/type-checkパターンも注目に値する。フックで型チェックやlint失敗をエージェントにパイプバックするだけで、半壊した編集をコミット前に自動修正できる。<code>.claude/rules/</code>ディレクトリによるチーム判断基準の共有、Explore→Plan→Implementのサブエージェント分業パターンも「個人ツール」から「チーム開発基盤」への転換を示している。</p>
+
+<h3>CLI戦争は四つ巴に——Antigravity 2.0参入</h3>
+
+<p>Google I/O 2026でAntigravity 2.0（Google版Claude Code）が発表され、Claude Code / Codex / Grok Build / Antigravityの四つ巴になった。Antigravityは即座に週次クォータ3倍緩和で対抗したが、日本語エンコードでフリーズする問題や<code>/model</code>コマンドの互換性など初期段階の荒削りさも目立つ。一方でClaude Codeの競争優位は「Skills/MCP/hooksのフォーク困難な防御壁」にあるという分析が説得力を持ち、20人チーム検証による最適リポジトリ構成も「Claude Code＝深い統合を前提とした開発基盤」という位置づけを裏付けた。</p>
+
+<p class="cross-link">接続: Antigravityの参入はGemini 3.5 Flashの4倍速性能と合わせてGoogle陣営の攻勢を示すが、FX自動取引のようなCLAUDE.md/hooks/skillsに深く依存したワークフローでは移行コストが高い。</p>
+
+</div>
+
+<!-- Ecosystem/MCP -->
+<div class="domain-section ecosystem">
+<span class="domain-label eco">Ecosystem / MCP</span>
+
+<h3>MCPがLinux Foundation標準に——オープンガバナンスへの転換</h3>
+
+<p>今週のMCP最大ニュースは<strong>Linux Foundation標準への正式採択</strong>。Anthropic・OpenAI・Microsoft・Googleが共同運営体制に移行し、MCPは単一企業の所有物ではなくなった。これは「Anthropicが支配するプロトコルに依存して大丈夫か？」という企業のリスク懸念を根本的に解消する動きで、エンタープライズ採用の加速が見込まれる。先週のSDKダウンロード9,700万件/月に続き、今週はGitHubスター81,000超も突破した。</p>
+
+<h3>MCPトンネルとSelf-hosted Sandboxes</h3>
+
+<p>Anthropicが発表したMCPトンネル（<code>tunnel.anthropic.com</code>経由）は、ファイアウォール内部のMCPサーバーにパブリックインターネットを経由せず安全に接続できる仕組みだ。これまでエンタープライズ環境では法務・セキュリティ部門が「内部サーバーをインターネットに晒すリスク」を理由にMCP導入をブロックしていたが、この障壁が技術的に解消された。Self-hosted Sandboxesと合わせて、「エージェントを安全に動かすインフラ」が整ったことになる。</p>
+
+<h3>エコシステム拡大: プラグイン公式ディレクトリ + 永続メモリ</h3>
+
+<p>Claude Plugins公式ディレクトリがリリースされ、<code>/plugin install</code>で35本の公式プラグインと15本の外部プラグインを一括管理できるようになった。Skills/Agents/Hooks/Slash commands/MCPの全レイヤーを統合する動きだ。</p>
+
+<p>コミュニティ発のagentmemory（14.9K stars、OSS）は特筆に値する。知識グラフ・confidence scoring・ハイブリッド検索を備えた永続メモリで、Claude Code・Cursor・Gemini CLIなど任意のMCPクライアントに対応する。Anthropicが発表した「Dreaming（夢見）」技術——AIエージェントがセッション間で過去の挙動を振り返りパターンを発見する仕組み——と合わせて、「セッション間の記憶喪失」問題に複数の解法が同時に浮上した週だった。</p>
+
+<p class="cross-link">接続: 永続メモリはFX自動取引のバックテスト結果蓄積に直結する。過去の取引判断とその結果をセッション間で保持できれば、戦略の継続的改善サイクルが組める。</p>
+
+</div>
+
+<!-- Trading -->
+<div class="domain-section trading">
+<span class="domain-label trade">Trading / FX</span>
+
+<h3>Agentic Tradingフレームワークの成熟</h3>
+
+<p>先週体系化されたAgentic Trading（4層アーキテクチャ）が、今週は実装フェーズに入った。注目すべき動きを整理する。</p>
+
+<ul>
+<li><strong>Vibe-Trading（HKUDS）</strong>: Claude Code・Codex・Cursorを統合できるOSSトレーディングプラットフォームがGitHubで公開。自然言語→取引戦略→バックテスト→実行の一気通貫を目指す</li>
+<li><strong>TradingAgents v0.2.4</strong>: マルチエージェントLLMフレームワークが最新アップデート。ファンダメンタル・センチメント・テクニカルの専門エージェント群＋リスク管理レイヤーの構成</li>
+<li><strong>AI-Powered MT5 Plugin（EAERA）</strong>: MT5にAI判断レイヤーを追加するプラグイン。既存のEAインフラにAIを後付けするアプローチ</li>
+<li><strong>Quant AI Agents MT5</strong>: 完全セットアップガイドが公開され、導入ハードルが下がった</li>
+<li><strong>Freqtrade + Claude Code</strong>: 6ヶ月間のSkills/Hooks/MCP運用実績レポートが共有され、PineScript指標のバックテスト検証が数分で完結するパターンが確認された</li>
+</ul>
+
+<h3>AIエージェントとHFT——レイテンシ競争の新局面</h3>
+
+<p>SaharaAIが「AIエージェントとHFT: Flash Boysから見るレイテンシ競争の現在」という分析を公開した。AIトレーディングエージェントの参入により、従来のHFTとは異なる次元のレイテンシ競争——<strong>判断のスピードではなく、判断の質と適応速度</strong>——が始まりつつある。AIエージェントが決済に直接アクセスする際のリスク管理（「ライブマーケットでAIエージェントが注文を出す場合のcircuit breaker」）の議論も具体化した。</p>
+
+<h3>AI自動売買の実績データ</h3>
+
+<p>GOLD AI自動売買の2026年度実績（単利+299万・複利+434万円）、ROBOPRO AI自動売買21ヶ月運用実績（利益率20%超）など、<strong>正の実績レポート</strong>が増えた。ただし、GMOリクルートが公開した「AIエージェントにFXの取引戦略を考えてもらった」記事では、戦略立案と実運用の間にある巨大なギャップが冷静に分析されている。先週の「AI生成EAの1ヶ月連続マイナス」と合わせると、<strong>「AIが考えた戦略をそのまま回す」と「AIを活用して人間が戦略を設計する」は依然として別物</strong>というメッセージは変わっていない。</p>
+
+<p class="cross-link">接続: 6/15のAgent SDK課金変更後、FXバックテストにclaude -pを使っている場合は従量課金になる。Freqtrade + Claude Code運用者は特に影響が大きい。</p>
+
+</div>
+
+<!-- News -->
+<div class="domain-section news">
+<span class="domain-label nw">News / 業界動向</span>
+
+<h3>Anthropicの企業フェーズが「黒字化」に到達</h3>
+
+<p>AnthropicのQ2売上高109億ドル超・営業利益約5.59億ドル（一次ソース確認済み）は、同社として初の営業黒字達成を意味する。CNBC Disruptor 50で首位を獲得し、売上ランレートは年初90億ドルから300億ドル超に急拡大。MS・NVIDIA・Amazon・Googleの4社が同時出資者として並ぶ構図は、AI業界の投資集中を如実に示している。日立製作所がLumada 3.0強化パートナーシップを発表し、国内最大規模のClaudeユーザーとして位置づけられた。</p>
+
+<h3>Google I/O 2026——「答える」から「代行する」時代</h3>
+
+<p>Gemini 3.5 Flash（旧Pro超え、Claude Opus 4.7比4倍速）、Gemini Omni（マルチモーダル統合）、Gemini Spark（24時間個人AIエージェント）、Antigravity 2.0（Google版Claude Code）が一斉発表された。Googleのメッセージは明確で、<strong>AIは「質問に答える存在」ではなく「ユーザーの代わりに行動する存在」</strong>になる。Google Stitch→Boltエクスポート連携でフロントエンドの自動生成も可能に。ただしGemini 2.0系は6/1でEOLのため、既存利用者は早急な移行が必要。</p>
+
+<h3>NVIDIA決算と半導体地政学</h3>
+
+<p>NVIDIA Q1決算は売上高816億ドルで市場予想を大幅超過。データセンター売上752億ドルがAIインフラ需要の底堅さを示した。一方で「2026年ゲーム向けGPU出荷停止」の報道や、アリババ「真武M890」（性能3倍）の発表、中国製低価格GPUの台頭など、半導体の地政学的構造が変わりつつある。AMD台湾AIインフラ100億ドル投資、川崎重工×NVIDIAのフィジカルAI協業（株価PTS10%超上昇）も重要な動き。Roundhill GPU-as-a-Service特化ETF「$NCLD」のSEC申請は、GPU計算力が金融商品化する萌芽として注目に値する。</p>
+
+<h3>規制と政策——日米で具体化</h3>
+
+<p>総務省がClaude Mythosを名指しで高性能AI悪用対策を通信業界・放送・自治体に要請。公務員として追跡必須の動きだ。米国ではTrump政権のAI行政命令ドラフトがPoliticoに流出し、規制方針が明確化しつつある。EU AI Omnibus Deal（AI法修正パッケージ）の内容も報じられ、日米欧の三極で規制フレームワークの具体化が進んでいる。Microsoft日本は2030年までに100万人AI人材育成・1.6兆円投資を正式発表し、Google AI Mode検索への広告挿入も正式発表された。</p>
+
+</div>
+
+<hr class="separator">
+
+<!-- ============================================ -->
+<!-- 4. ドメイン横断分析 -->
+<!-- ============================================ -->
+
+<h2>ドメイン横断分析</h2>
+
+<h3>メタトレンド1: 垂直統合——「モデル性能」から「インフラ掌握」へ</h3>
+
+<p>Stainless買収（SDK/MCP基盤の内製化）、MCPトンネル（ファイアウォール貫通）、Self-hosted Sandboxes（エージェント実行環境）、Claude Plugins公式ディレクトリ（配布基盤）。今週のAnthropicの動きを並べると、競争の焦点が「モデルの賢さ」から<strong>「エージェントが安全に到達できる範囲をどこまで広げられるか」</strong>に移ったことがわかる。GoogleのAntigravity 2.0 + Gemini Spark、xAIのGrok Build拡張も同じ方向を向いている。FX自動取引の文脈では、「MCP経由でMT5ブローカーAPIに安全に接続する」パターンが垂直統合の恩恵を直接受ける。</p>
+
+<h3>メタトレンド2: 「非エンジニアのAI活用」が実績ベースで定着</h3>
+
+<p>勤務表作成83%削減（医療職）、118個のGASツール移植、Claude Codeで6ヶ月分の開発作業を代替した非開発者——今週のデータは「非エンジニアがAIコーディングツールを使う」が仮説ではなく実績になったことを示す。Claude for Legal・Claude for Small Business（先週発表）が業種別に使い方のテンプレートを提供し、非エンジニアでも到達可能な導線が整備されつつある。公務員のBPR文脈では、これは<strong>「庁内DXの推進主体がIT部門からユーザー部門に移る」</strong>可能性を示唆しており、DXリーダーとしてこの流れをどう支援するかが問われる。</p>
+
+<h3>メタトレンド3: コスト構造の透明化——「定額」の終焉が本格化</h3>
+
+<p>6/15のAgent SDK課金分離（残り22日）、CLAUDE.mdの遵守率閾値データ（無駄なトークン消費の回避）、rtkによるコンテキスト圧縮（40%コスト削減）、OpenRouter経由の無料モデル利用。今週のClaude Code記事の約15%がコスト関連だった。Grok Buildの通常$300/月、Claude Codeのトークン消費バグ vs Codexのバグへの反応の非対称性など、<strong>「AIコーディングツールのTCO（総所有コスト）」が初めて主要な議論テーマになった</strong>。先週の「定額使い放題の終わり」がさらに具体化した。</p>
+
+<h3>メタトレンド4: セキュリティと規制のリアルタイム進行</h3>
+
+<p>総務省のClaude Mythos名指し対策、Trump政権AI行政命令ドラフト流出、EU AI Omnibus Deal、Microsoft Security IntelligenceのAIシステム攻撃警告、Claude Codeのプロンプトインジェクション手法の公開、Antigravity-CLIの日本語エンコードバグ。今週は<strong>「AIツールの能力向上」と「それに伴うリスクの顕在化」が完全に同期した</strong>。セキュリティは先週の「隠れた最重要テーマ」から「表のテーマ」に浮上した。</p>
+
+<hr class="separator">
+
+<!-- ============================================ -->
+<!-- 5. アクション提案 -->
+<!-- ============================================ -->
+
+<h2>アクション提案</h2>
+
+<ol class="action-list">
+
+<li class="priority-high">
+<strong>6/15課金変更まで残り22日——コスト試算を完了させる</strong><br>
+<code>claude -p</code>・Agent SDK・GitHub Actionsの利用頻度を計測し、月額コストを試算する。Max 5x（$100/月）で収まるか、APIレート従量課金時の金額を算出する。FX自動売買のバックテストでclaude -pを使っている場合は代替手段（ローカルモデル、Freqtrade単体実行）も検討する。旧モデルID（claude-sonnet-4、claude-opus-4）は6/15で引退するため、コード内のモデル指定をsonnet-4.6/opus-4.7に更新する。<br>
+<span style="color: var(--muted); font-size: 0.85rem;">根拠: 5/18に詳細確定、5/21に課金変更ガイド記事が複数公開（codersera.com他）。6/15まで3週間を切った。</span>
+</li>
+
+<li class="priority-high">
+<strong>CLAUDE.mdを80行以内にリファクタリングし、hooks/skillsと役割分担する</strong><br>
+80行超でルール無視が始まるという閾値データに基づき、現在のCLAUDE.mdを監査する。advisoryなコンテキスト（「なぜそうするか」の指針）だけを残し、決定論的な強制（lint実行、テスト必須等）はhooksに移動、再利用可能な手順はskillsに分離する。各ルールに「why」を1行追記し、曖昧ケースの判断精度を上げる。<br>
+<span style="color: var(--muted); font-size: 0.85rem;">根拠: 5/21にCLAUDE.md閾値データ公開（amitray.com、morphllm.com）。従量課金時代にはトークン削減にも直結する。</span>
+</li>
+
+<li class="priority-mid">
+<strong>agentmemory（永続メモリOSS）をFX自動売買ワークフローに試験導入する</strong><br>
+セッション間でバックテスト結果・取引ログ・戦略修正履歴を保持し、継続的な戦略改善サイクルを構築する。agentmemory（14.9K stars）はMCPクライアント対応で、Claude Codeとの統合が直接可能。Anthropicの「Dreaming」機能が正式リリースされた場合の代替・補完の検討も含める。<br>
+<span style="color: var(--muted); font-size: 0.85rem;">根拠: 5/20にagentmemory注目（GitHub 14.9K stars）、5/20にAnthropic Dreaming発表。セッション間の文脈喪失はFX運用の最大の非効率。</span>
+</li>
+
+<li class="priority-mid">
+<strong>Claude Code Routinesで週次FXパフォーマンスレポートの自動生成を構築する</strong><br>
+RoutinesのGitHubイベント・スケジュールトリガーを活用し、「毎週末にMT5取引ログを集計→パフォーマンスレポートHTML生成→リポジトリにコミット」のパイプラインを構築する。<code>/goal</code>コマンドで「レポートが正しく生成されるまで自動修正」を目標に設定し、自律ループの精度を検証する。<br>
+<span style="color: var(--muted); font-size: 0.85rem;">根拠: 5/22にRoutines詳細解説（InfoQ、claudefa.st）。7/13までの50%制限増を活かして試行する好機。</span>
+</li>
+
+<li class="priority-low">
+<strong>総務省AI悪用対策会合の議事録を追跡し、自治体向けAI導入指針への影響を評価する</strong><br>
+Claude Mythosが名指しされた5/21の会合は、公務員のAI活用に直接影響する規制動向だ。議事録が公開され次第、横浜市のDX推進施策・AI利活用方針との整合性を確認する。EU AI法の主要コンプライアンス期限（8/2）、Trump政権AI行政命令の動向と合わせて、三極の規制フレームワークを整理しておく。<br>
+<span style="color: var(--muted); font-size: 0.85rem;">根拠: 5/21に総務省会合報道。横浜市DX推進担当として、所管課への情報提供の材料になる。</span>
+</li>
+
+</ol>
+
+<hr class="separator">
+
+<!-- ============================================ -->
+<!-- 6. 来週の注目ポイント -->
+<!-- ============================================ -->
+
+<h2>来週の注目ポイント</h2>
+
+<h4>6/1 Gemini 2.0系EOL——移行の波</h4>
+<p>Gemini 2.0系が6月1日で終了する。Gemini APIを使っているプロジェクト（Claude CodeからGemini呼び出し含む）は移行が必須。Gemini 3.5 Flash / Omniへの切り替え事例が出始めるだろう。</p>
+
+<h4>6月リリース予定: Sonnet 4.7/4.8、Opus 4.8</h4>
+<p>5/23にリークされた次世代モデル情報。正式発表があれば、Claude Codeのデフォルトモデル切り替えと性能差の検証が焦点になる。Agent SDK課金変更（6/15）との同時期リリースは、アップグレードとコスト管理の両立を要求する。</p>
+
+<h4>MCPのLinux Foundation標準化の影響波及</h4>
+<p>OpenAI・Microsoft・Googleが共同運営に参画したことで、各社からのMCPツール・プラグインリリースが加速する可能性が高い。特にMicrosoft系（Azure DevOps、GitHub Copilot）とのMCP統合動向に注目。</p>
+
+<h4>NITP（次トークン予測を超える表現学習）のリリース</h4>
+<p>5/23に予告されたLLM新事前学習パラダイム。従来のnext-token predictionを超えるアプローチで、来週の正式リリースで技術コミュニティの評価が始まる。</p>
+
+<h4>ウォッチすべきキーワード</h4>
+<ul class="watch-list">
+  <li>Agent SDK billing migration</li>
+  <li>Gemini 2.0 EOL (6/1)</li>
+  <li>Sonnet 4.7 / Opus 4.8</li>
+  <li>MCP Linux Foundation</li>
+  <li>NITP paradigm</li>
+  <li>Routines production</li>
+  <li>Antigravity 2.0 stability</li>
+  <li>Claude Mythos 総務省</li>
+  <li>GPU-as-a-Service ETF</li>
+  <li>Stainless post-acquisition</li>
+</ul>
+
+<hr class="separator">
+
+<footer style="color: var(--muted); font-size: 0.8rem; text-align: center; padding-top: 1rem;">
+  Generated from 426 articles (2026-05-18 ~ 2026-05-24) and 4 daily digests.<br>
+  Source: library/articles/ + library/digests/daily/
+</footer>
+
+</div>
+</body>
+</html>
