@@ -218,3 +218,15 @@
 | 197 | 2026年AIモデルリリース時期予測：GPT-5.6・Claude 4.8・Gemini 3.5 Pro | ja | 未読 | #x-signal #llm-news | articles/2026-05-24_2862_X_itnavi2022_2026年AIモデルリリース時期予測まとめ_GPT-5.6_Claude_4.8.md |
 | 198 | Google I/O 2026「Gemini Omni」発表——マルチモーダル動画生成AI | ja | 未読 | #x-signal #llm-news | articles/2026-05-24_2863_X_shota7180_Google_I_O_2026Gemini_Omni発表_テキスト_画像_音声_.md |
 | 199 | GPT-5.6 × AIエージェント：6月リリース説——タスク委譲能力強化が焦点 | ja | 未読 | #x-signal #llm-news #ai-agent | articles/2026-05-24_2864_X_so_ainsight_GPT-5.6_x_AIエージェント_6月リリース説_チャット強化よりAIに作業.md |
+| 200 | US AI Regulations 2026: Federal Preemption vs… | en | 未読 | #web-signal #llm-news | articles/2026-05-25_2871_WEB_US_AI_Regulations_2026_Federal_Preemption_vs_State_Laws_Com.md |
+| 201 | We just launched the ability to build native … | en | 未読 | #x-signal #llm-news | articles/2026-05-25_2912_X_OfficialLoganK_We_just_launched_the_ability_to_build_na.md |
+| 202 | the pope and anthropic's co-founder just stoo… | en | 未読 | #x-signal #llm-news | articles/2026-05-25_2913_X_itsolelehmann_the_pope_and_anthropic_s_co_founder_just.md |
+| 203 | Talking To The Pope: Anthropic's Latest Inter… | en | 未読 | #x-signal #llm-news | articles/2026-05-25_2914_X_BrianRoemmele_Talking_To_The_Pope_Anthropic_s_Latest.md |
+| 204 | ローマ教皇レオ14世は25日、就任後初となる重要文書、回勅を発表し、AIがもたらす課題に関… | ja | 未読 | #x-signal #llm-news | articles/2026-05-25_2915_X_bioshok3_ローマ教皇レオ14世は25日_就任後初となる重要文書_回勅を発表し_AIがもたら.md |
+| 205 | プレスリリースにも書かれている通り、QLoRA を発明した Tim Dettmers氏 と… | ja | 未読 | #x-signal #llm-news | articles/2026-05-25_2916_X_yuma_1_or_プレスリリースにも書かれている通り_QLoRA_を発明した_Tim_Dettme.md |
+| 206 | 安川電機（6506）が上場来高値。 ・中期経営計画を発表。フィジカルAI分野に本格参入する… | ja | 未読 | #x-signal #llm-news | articles/2026-05-25_2917_X_mameyama_kun_安川電機_6506_が上場来高値_・中期経営計画を発表_フィジカルAI分野に.md |
+| 207 | Huaweiのこの発表、かなり脅威。 要するに、CMOS 2.0 の発想で全体最適し、EU… | ja | 未読 | #x-signal #llm-news | articles/2026-05-25_2918_X_InoueFumihiro_Huaweiのこの発表_かなり脅威_要するに_CMOS_2_0_の発想で全体最.md |
+| 208 | 【矛盾】Googleが先週(5/15)「llms.txtはAI検索に不要」と公式発表したば… | ja | 未読 | #x-signal #llm-news | articles/2026-05-25_2919_X_OkaTakuma1_矛盾_Googleが先週_5_15_llms_txtはAI検索に不要_と公式.md |
+| 209 | Google、科学研究向けAIツール群「Gemini for Science」発表 仮説生… | ja | 未読 | #x-signal #llm-news | articles/2026-05-25_2920_X_kurorabukyouzyu_Google_科学研究向けAIツール群_Gemini_for_Science_発.md |
+| 210 | 教皇レオ14世が初の回勅を発表。テーマは 「AI」。 初の回勅はその教皇が「自身の在位で何… | ja | 未読 | #x-signal #llm-news | articles/2026-05-25_2921_X_ParrotMystery_教皇レオ14世が初の回勅を発表_テーマは_AI_初の回勅はその教皇が_自.md |
+| 211 | ローマ教皇が回勅という公開書簡を発表。その中でAIをかなり突っ込んで批判する。教皇が言うに… | ja | 未読 | #x-signal #llm-news | articles/2026-05-25_2922_X_umiyuki_ai_ローマ教皇が回勅という公開書簡を発表_その中でAIをかなり突っ込んで批判する_教.md |

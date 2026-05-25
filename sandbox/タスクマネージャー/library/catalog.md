@@ -635,3 +635,43 @@
 | 610 | AnthropicによるStainless買収：API・SDK・MCPという「AIエージェン… | ja | 未読 | #x-signal #mcp #ecosystem | articles/2026-05-24_2853_X_templeslope_dev_AnthropicによるStainless買収_API_SDK_MCPというAI.md |
 | 611 | Anthropic公式無料コース（13件・30分）：記憶付きAIエージェント構築から | ja | 未読 | #x-signal #ecosystem | articles/2026-05-24_2854_X_axelrod_jpn_Anthropic公式無料コース_13件_30分_記憶付きAIエージェント構築.md |
 | 612 | AnthropicのMCPに重大セキュリティ欠陥——AIサーバー20万台にリスク | en | 未読 | #x-signal #mcp | articles/2026-05-24_2855_X_cafe_au_laitsss_AnthropicのMCPに重大セキュリティ欠陥_AIサーバー20万台にリスクパ.md |
+| 613 | Claude Code v2.1.139: Agent View & /goal Comm… | en | 未読 | #web-signal | articles/2026-05-25_2865_WEB_Claude_Code_v2_1_139_Agent_View_goal_Command.md |
+| 614 | Claude Code /goal Command: Set Completion Con… | en | 未読 | #web-signal | articles/2026-05-25_2866_WEB_Claude_Code_goal_Command_Set_Completion_Conditions_for_Lon.md |
+| 615 | Claude Code Billing Change June 15, 2026: Age… | en | 未読 | #web-signal #ecosystem | articles/2026-05-25_2867_WEB_Claude_Code_Billing_Change_June_15_2026_Agent_SDK_Credit_P.md |
+| 616 | Zed Editor: What Anthropic's New Claude Billi… | en | 未読 | #web-signal #ecosystem | articles/2026-05-25_2868_WEB_Zed_Editor_What_Anthropic_s_New_Claude_Billing_Means_for_Ze.md |
+| 617 | What AI Agents Actually Cost: Anthropic's Bil… | en | 未読 | #web-signal #ecosystem | articles/2026-05-25_2869_WEB_What_AI_Agents_Actually_Cost_Anthropic_s_Billing_Split_Reve.md |
+| 618 | Anthropic Engineering: Building Agents with t… | en | 未読 | #web-signal #ecosystem | articles/2026-05-25_2870_WEB_Anthropic_Engineering_Building_Agents_with_the_Claude_Agent.md |
+| 619 | How To Setup Claude Flow To Run Agent Swarms!… | en | 未読 | #x-signal | articles/2026-05-25_2872_X_DevLeaderCa_How_To_Setup_Claude_Flow_To_Run_Agent_Sw.md |
+| 620 | The Truth About Claude Code: Yes — installing… | en | 未読 | #x-signal | articles/2026-05-25_2873_X_DAssetBuzz_The_Truth_About_Claude_Code_Yes_insta.md |
+| 621 | Agreed. I still like Claude for UI and Claude… | en | 未読 | #x-signal | articles/2026-05-25_2874_X_ivan_bezdomny_Agreed_I_still_like_Claude_for_UI_and_C.md |
+| 622 | Claude can't magically copy any UI with one c… | en | 未読 | #x-signal | articles/2026-05-25_2875_X_DAssetBuzz_Claude_can_t_magically_copy_any_UI_with.md |
+| 623 | Half of all Claude Code subscriptions could b… | en | 未読 | #x-signal | articles/2026-05-25_2876_X_initjean_Half_of_all_Claude_Code_subscriptions_co.md |
+| 624 | Claude Code feels completely different once y… | en | 未読 | #x-signal | articles/2026-05-25_2877_X_Radha_AI_Claude_Code_feels_completely_different_o.md |
+| 625 | I bet we're ~6mo from a vibe shift back to Op… | en | 未読 | #x-signal | articles/2026-05-25_2878_X_ian_dot_so_I_bet_we_re_6mo_from_a_vibe_shift_back.md |
+| 626 | Claude can now copy any UI on the internet. J… | en | 未読 | #x-signal | articles/2026-05-25_2879_X_HowToAI__Claude_can_now_copy_any_UI_on_the_intern.md |
+| 627 | Playing with a GitHub labels-based approach t… | en | 未読 | #x-signal | articles/2026-05-25_2880_X_mattpocockuk_Playing_with_a_GitHub_labels_based_appro.md |
+| 628 | @Petzein Not interact with it, these are AFK … | en | 未読 | #x-signal | articles/2026-05-25_2881_X_mattpocockuk_Petzein_Not_interact_with_it_these_are.md |
+| 629 | Claude Code Camp is still underway, I finally… | en | 未読 | #x-signal | articles/2026-05-25_2882_X_andrewbrown_Claude_Code_Camp_is_still_underway_I_fi.md |
+| 630 | AIxEC 自動商品登録完了 — Webカメラ・マイク・配信機材（新規90件 / 更新0件… | ja | 未読 | #x-signal | articles/2026-05-25_2883_X_xb_bittensor_AIxEC_自動商品登録完了_Webカメラ・マイク・配信機材_新規90件.md |
+| 631 | Secure your AI agents with hol-guard, an AI a… | en | 未読 | #x-signal | articles/2026-05-25_2884_X_chandangbhagat_Secure_your_AI_agents_with_hol_guard_an.md |
+| 632 | voice agents break in ways your dashboard won… | en | 未読 | #x-signal | articles/2026-05-25_2885_X_kabra_sidhant_voice_agents_break_in_ways_your_dashboar.md |
+| 633 | FREE AI Courses & Certifications You Should N… | en | 未読 | #x-signal | articles/2026-05-25_2886_X_VivekIntel_FREE_AI_Courses_Certifications_You_Sho.md |
+| 634 | 【Day2】AIマーケ構築 完全攻略プログラム アウトプット 《オリジナルAIシステム完全… | ja | 未読 | #x-signal | articles/2026-05-25_2887_X_yuma_aistep_Day2_AIマーケ構築_完全攻略プログラム_アウトプット_オリジナルAI.md |
+| 635 | wazzapi mcp server is live. my ai agents send… | en | 未読 | #x-signal | articles/2026-05-25_2888_X_marchelfah_wazzapi_mcp_server_is_live_my_ai_agents.md |
+| 636 | Just shipped a feature using Claude Code + Co… | en | 未読 | #x-signal | articles/2026-05-25_2889_X_Martin34302_Just_shipped_a_feature_using_Claude_Code.md |
+| 637 | Built a Xiaohongshu automation tool with Clau… | en | 未読 | #x-signal | articles/2026-05-25_2890_X_Martin34302_Built_a_Xiaohongshu_automation_tool_with.md |
+| 638 | O Hook Hulk bloqueando o Claude Code de fazer… | pt | 未読 | #x-signal | articles/2026-05-25_2891_X_tarcnux_O_Hook_Hulk_bloqueando_o_Claude_Code_de.md |
+| 639 | if it capped before you touched it, that's th… | en | 未読 | #x-signal #ecosystem | articles/2026-05-25_2892_X_m13v__if_it_capped_before_you_touched_it_that.md |
+| 640 | Morality in Intelligence! Pope Leo XIV publis… | en | 未読 | #x-signal #ecosystem | articles/2026-05-25_2893_X_harjitrathore_Morality_in_Intelligence_Pope_Leo_XIV.md |
+| 641 | (RNS) — Pope Leo XIV's new encyclical on AI i… | en | 未読 | #x-signal #ecosystem | articles/2026-05-25_2894_X_RNS_RNS_Pope_Leo_XIV_s_new_encyclical_on.md |
+| 642 | 【サイバーセキュリティ動向分析】 2026年現在のトレンドセキュリティニュース（サイバーセ… | ja | 未読 | #x-signal #ecosystem | articles/2026-05-25_2895_X_kenebeii_サイバーセキュリティ動向分析_2026年現在のトレンドセキュリティニュース.md |
+| 643 | 🧑🏻‍🦱AIキラのソフトウェアニュース 🟡NOW：ビル・アックマン氏がマイクロソフト株を大… | ja | 未読 | #x-signal #ecosystem | articles/2026-05-25_2896_X_kirakirastock1_AIキラのソフトウェアニュース_NOW_ビル・アックマン氏がマイクロ.md |
+| 644 | @mjkn3x ひかー（開発や業務自動化などができるGrokのアプリだに。OpenAIが出… | ja | 未読 | #x-signal #ecosystem | articles/2026-05-25_2897_X_hikachu_FF14_mjkn3x_ひかー_開発や業務自動化などができるGrokのアプリだに_Ope.md |
+| 645 | AnthropicのChris Olahがバチカンで講演した。 教皇レオ14世がAIと人間… | ja | 未読 | #x-signal #ecosystem | articles/2026-05-25_2898_X_taka_start_up_AnthropicのChris_Olahがバチカンで講演した_教皇レオ14世.md |
+| 646 | 法王レオ14世がAI回勅「Magnifica humanitas」を発表。Anthropi… | ja | 未読 | #x-signal #ecosystem | articles/2026-05-25_2899_X_kenta_akagi_法王レオ14世がAI回勅_Magnifica_humanitas_を発表_Ant.md |
+| 647 | Anthropic co-founder Chris Olah was invited t… | en | 未読 | #x-signal #ecosystem | articles/2026-05-25_2900_X_AnthropicAI_Anthropic_co_founder_Chris_Olah_was_invi.md |
+| 648 | When Anthropic, OpenAI, and Microsoft agree o… | en | 未読 | #x-signal #ecosystem | articles/2026-05-25_2901_X_doronkatz_When_Anthropic_OpenAI_and_Microsoft_ag.md |
+| 649 | the biggest ship: anthropic acquired stainles… | en | 未読 | #x-signal #ecosystem | articles/2026-05-25_2902_X_MichaelRouveure_the_biggest_ship_anthropic_acquired_sta.md |
+| 650 | Build stack 👇 → LangGraph https://t.co/RTL34X… | en | 未読 | #x-signal #ecosystem | articles/2026-05-25_2903_X_RoyAmal_Build_stack_LangGraph_https_t_co.md |
+| 651 | Build stack 👇 → Repo https://t.co/4vd4qL9WY6 … | en | 未読 | #x-signal #ecosystem | articles/2026-05-25_2904_X_RoyAmal_Build_stack_Repo_https_t_co_4vd4q.md |
+| 652 | OpenOSINT: AI OSINT agent using Anthropic too… | en | 未読 | #x-signal #ecosystem | articles/2026-05-25_2905_X_hasamba_OpenOSINT_AI_OSINT_agent_using_Anthropi.md |
