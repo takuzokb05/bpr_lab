@@ -5,8 +5,8 @@
 
 | メタ | 値 |
 |---|---|
-| **最終更新** | 2026-05-23 (PoC 11日停止からの復旧 + ExecutionTimeLimit=PT72H 罠の修正) |
-| **次回更新予定** | 2026-05-30（7日後）または重要変更時 |
+| **最終更新** | 2026-05-25 (PoC 死活/日次サマリ Slack 通知の実装 + worktree パス記載修正) |
+| **次回更新予定** | 2026-06-01（7日後）または重要変更時 |
 | **更新方法** | `python scripts/update_status.py [--with-vps]` / 手動編集（緊急時） |
 
 ---
@@ -35,7 +35,7 @@ PREMISE.md 「過去は捨てた。教訓だけ持って、ゼロから組み立
 | **lot** | 0.01 固定 / 最大保持 4時間 / 1ポジション制限 |
 | **timeframe** | M15+H1 二層、60秒間隔ループ |
 | **ブローカー** | 外為ファイネスト MT5 デモ口座 (22005467) |
-| **リポジトリ** | `C:\bpr_lab_spec_v2` (worktree、亡き者と物理分離) |
+| **リポジトリ** | `C:\bpr_lab_spec_v2\sandbox\FX自動取引` (worktree、亡き者と物理分離) |
 | **DB / ログ** | `data/fx_spec_v2.db` / `data/spec_v2_poc.log` |
 | **タスク設定** | `SPECv2_PoC`: ExecutionTimeLimit=`PT0S` / Trigger=AtStartup + Once-at-18:40 with RepetitionInterval=PT5M / 死活監視済 (kill→3分21秒で自動復旧、2026-05-23 19:16-19:20 実証) |
 
@@ -123,7 +123,7 @@ PREMISE.md 「過去は捨てた。教訓だけ持って、ゼロから組み立
 | 課題 | ステータス | 次のアクション | 詳細 |
 |---|---|---|---|
 | SPEC v2 PoC GBP_JPY 観察 | **5/23 復旧後の再起算**。実稼働は 5/12-5/15 の3日間 + 5/23 から | 1-2週間 regime/PnL 推移確認、エントリー件数監視 | `docs/SPEC_V2_POC_GUIDE.md` § 観察対象 |
-| PoC死活監視の仕組み | 未着手（11日放置の再発防止としてユーザー気付き任せから脱却） | watchdog タスク or Slack 死活通知 を別タスクで | `memory/feedback_task_scheduler_execution_time_limit.md` |
+| PoC死活監視の仕組み | ✅ 完了 (2026-05-25)。`SPECv2_AliveCheck` (1h ごと、警告時のみ Slack) + `SPECv2_DailySummary` (JST 07:00 Slack) を VPS 登録。setup_logging() に `force=True` + 各イテレーション flush を追加 | Slack で alive/警告/日次サマリを観察 | `scripts/poc_alive_slack.py` / `scripts/poc_daily_summary_slack.py` |
 | SPEC v2 § 2-2 (HMM) 未着手 | PoC 観察と並行で着手可 | OPERATING_MODEL.md v2.1 § 2-2 起点に Step A→B→C 再開 | `docs/vision/research/STEP_C_COMPLETION_2026-05-10.md` § Phase 4 分岐 |
 | 退避ブランチ `vps-backup-20260505-pre-trace-deploy` 削除 | 2026-05-12 以降 | 1週間経過後 | `memory/feedback_vps_git_hygiene.md` |
 | PR #35 (SPEC v2 一式 main へ) | OPEN | PoC 観察期間中に Bear/コードレビュー → main マージ | `gh pr view 35` |

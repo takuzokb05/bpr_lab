@@ -69,15 +69,31 @@ PIP_SIZE = 0.01                     # GBP_JPY: 1 pip = 0.01
 # ログ設定
 # ============================================================
 def setup_logging():
+    """ロガーをセットアップ。
+
+    タスクスケジューラ経由起動でも確実に FileHandler が機能するよう以下を保証:
+    - force=True: 既に basicConfig 済でも上書き (依存ライブラリの早期初期化対策)
+    - delay=False: FileHandler を即時 open (lazy open による I/O 失敗の隠蔽防止)
+    - 明示的に root に追加してハンドラ重複も防ぐ
+    """
     POC_LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+    file_handler = logging.FileHandler(POC_LOG_PATH, encoding="utf-8", delay=False)
+    stream_handler = logging.StreamHandler(sys.stdout)
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
-        handlers=[
-            logging.FileHandler(POC_LOG_PATH, encoding="utf-8"),
-            logging.StreamHandler(sys.stdout),
-        ],
+        handlers=[file_handler, stream_handler],
+        force=True,  # 既存ハンドラを破棄して確実に File+Stream を再設定
     )
+
+
+def _flush_logs() -> None:
+    """全ハンドラを flush (タスクスケジューラ環境での buffer 滞留対策)"""
+    for h in logging.getLogger().handlers:
+        try:
+            h.flush()
+        except Exception:
+            pass
 
 
 logger = logging.getLogger("spec_v2_poc")
@@ -352,6 +368,10 @@ def run_loop(dry_run: bool = False, single_iter: bool = False):
             logger.error(f"ループエラー: {e}\n{tb}")
             poc_db.insert_loop_health(POC_DB_PATH, "error", str(e))
             slack_notify(f"❌ ループエラー: {e}")
+
+        # 各イテレーション末尾でログを必ず flush
+        # (タスクスケジューラ環境で buffer が滞留して `tail -f` でリアルタイム性が落ちる対策)
+        _flush_logs()
 
         if single_iter:
             break
