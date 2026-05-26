@@ -1447,3 +1447,113 @@ MT5向けAI EAの実績報告（週次+453,398円等）がX上で増加してい
 
 **優先度:** 低（参考情報として記録）
 
+
+---
+
+## 2026-05-26 収集分
+
+### 1. Claude Code設定・CLAUDE.mdへの反映提案
+
+#### 1-1. Agent SDK課金変更（6月15日）最終対応確認と緩和策実装
+**出典:** articles/2026-05-26_2923_〜2925（MagnaCapax Gist・thoughts.jock.pl・vaught.ai）
+
+**提案内容:**
+本日の収集で課金変更の詳細分析が3件確認された。6月15日まであと20日を切った。対応の最終確認：
+- Pro $20・Max 5x $100・Max 20x $200（ロールオーバーなし）、軽量ワークロード実効12倍・重量175倍のコスト増
+- **緩和策4選**（thoughts.jock.pl推奨）: ①APIキー直接利用への切り替え, ②Haiku 4.5へのダウングレード, ③バッチ処理化, ④予算上限設定
+- claude -p 呼び出し箇所をすべて棚卸しし、インタラクティブ利用との境界を再確認
+- Anthropicのクレーム申請メール（6月8日前後予想）を見逃さないこと
+
+**優先度:** 高（残り20日・期限厳守）
+
+---
+
+### 2. スキル設計への反映提案
+
+#### 2-1. /react-doctor スキルの評価・導入（いいね2,106件）
+**出典:** articles/2026-05-26_2954_X_react-doctor（claude-code SIGNAL）
+
+**提案内容:**
+`/react-doctor`オープンソーススキルが2,106いいねを記録。`npx` 一発でインストールでき、不正なReactコードを自動修正する専用エージェントスキル。skills-registryに追加候補として評価する。同様のパターン（ドメイン特化自動修正スキル）をFX自動取引プロジェクトにも応用できる（例: `/mql5-doctor`でMQL5の不正コードを自動検出・修正）。
+
+**優先度:** 中（試験導入として評価）
+
+#### 2-2. 70+ Skills実践知見からSKILL.md品質向上
+**出典:** articles/2026-05-26_2926_70_Plus_Claude_Skills_Best_ArtificialCorner.md（web-signal）
+
+**提案内容:**
+70本以上のスキルを実際に構築・テストした記事から、実用スキルの共通パターンが判明：
+- `## Gotchas` セクション必須（既提案の再確認）
+- supporting files（templates・examples・helper scripts）を積極活用
+- トリガー条件を「動詞＋ユースケース」形式で200文字以内に記述
+既存スキルのSKILL.mdを見直し、上記3点が実装されているか確認する。
+
+**優先度:** 中
+
+---
+
+### 3. Claude Ecosystemへの反映提案
+
+#### 3-1. Google Cloud 50以上のマネージドMCPサーバーの活用検討
+**出典:** articles/2026-05-26_2929_Google_Cloud_50_Managed_MCP_Servers_GA_JA.md（web-signal）
+
+**提案内容:**
+Google Cloud Next '26でBigQuery・Spanner・Cloud SQL・Vertex AI・Google Maps等50以上のMCPサーバーがGAになった。FX自動取引プロジェクトへの応用候補：
+- BigQuery MCP: FXの大量履歴データ分析・バックテストデータ管理
+- Vertex AI MCP: Gemini 3.1によるセンチメント分析をClaudeの補完として活用
+- Google Maps MCP: 地政学リスク・経済指標の地理的可視化（参考情報として）
+`.claude/settings.json` のmcpServersにGoogle Cloud MCPの追加を評価する。
+
+**優先度:** 中
+
+#### 3-2. Anthropic Stainless買収による MCP自動生成の近未来準備
+**出典:** articles/2026-05-26_2933〜（claude-ecosystem SIGNAL: Stainless買収）
+
+**提案内容:**
+AnthropicがStainlessを約$300Mで買収（Stainlessは全AnthropicのSDKとMCPサーバーを自動生成してきた会社）。OpenAPI spec → MCPサーバーのパイプラインがClaudeツールチェーンにネイティブ統合される見込み。対応準備：
+- FX自動取引のMT5 REST APIのOpenAPI spec（`docs/api-spec.yaml`）を整備しておく
+- 将来の自動生成に備えて既存MCPサーバー実装を「OpenAPI互換」な設計に維持
+
+**優先度:** 低（設計方針として意識）
+
+#### 3-3. Claude Mythos（セキュリティ特化モデル）の動向把握
+**出典:** articles/2026-05-26_2938〜2941（claude-ecosystem SIGNAL: Claude Mythos）
+
+**提案内容:**
+AnthropicがClaudeのセキュリティ特化派生モデル「Claude Mythos」を開発中（6〜8月リリース予定）。Cloudflare・Firefox・wolfSSLで10,000件以上の脆弱性を発見（90.6%真陽性率）。FX自動取引コードベースのセキュリティ審査に将来活用できる可能性がある。リリース後にsandbox/FX自動取引/への適用評価を実施。
+
+**優先度:** 低（リリース後に再評価）
+
+#### 3-4. MCP Server Registry v2.0（2,500サーバー）の棚卸し
+**出典:** articles/2026-05-26_2980_X_MCP_Server_Registry_v2（claude-ecosystem SIGNAL）
+
+**提案内容:**
+MCP Server Registry v2.0に2,500以上の検証済みサーバーが登録され、自動セキュリティスキャン・互換性バッジが追加された。新規追加されたKubernetes・PostgreSQL・Figma MCPを確認し、.claude/settings.jsonのmcpServers設定を更新する価値がある。特にPostgreSQL MCPはFXデータベース連携に直接有用。
+
+**優先度:** 中
+
+---
+
+### 4. FX自動取引システムへの反映提案
+
+#### 4-1. EA Agent Studio（MT5バックテスト×AI評価）の評価
+**出典:** articles/2026-05-26_2986_X_FXtradersAI_EA_Agent_Studio（ai-trading SIGNAL）
+
+**提案内容:**
+MT5上でバックテストをサーバー実行し、AIがEAのパフォーマンスを詳細分析するEA Agent Studioが今週末公開予定。MT5×AI統合の具体的実装例として早期評価する価値がある。sandbox/FX自動取引/のバックテスト→AI評価パイプラインの参考実装として採用可能性を調査する。
+
+**優先度:** 中（公開後すぐに評価）
+
+#### 4-2. TradingAgents詳細解説からの実装参考（LangGraph + マルチプロバイダー）
+**出典:** articles/2026-05-26_2931_TradingAgents_MultiAgent_LLM_Framework_IntellectyxAI.md（web-signal）
+
+**提案内容:**
+IntellectyxAIによるTradingAgentsの技術詳細解説から実装指針を確認：
+- LangGraph ベース（フレキシブルなDAGワークフロー）
+- Bull/Bear研究者エージェントの動的議論が意思決定品質を上げる（論文実証済み）
+- Anthropic（Claude）はプロバイダーの1つとして対応済み
+- FX・株式・暗号資産の各市場での実験結果あり
+sandbox/FX自動取引/ でのTradingAgents導入時、ClaudeをメインLLMとして設定する具体的な設定方法を確認する。
+
+**優先度:** 高（既存TradingAgents導入計画に直結）
+

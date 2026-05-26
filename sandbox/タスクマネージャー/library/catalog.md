@@ -675,3 +675,55 @@
 | 650 | Build stack 👇 → LangGraph https://t.co/RTL34X… | en | 未読 | #x-signal #ecosystem | articles/2026-05-25_2903_X_RoyAmal_Build_stack_LangGraph_https_t_co.md |
 | 651 | Build stack 👇 → Repo https://t.co/4vd4qL9WY6 … | en | 未読 | #x-signal #ecosystem | articles/2026-05-25_2904_X_RoyAmal_Build_stack_Repo_https_t_co_4vd4q.md |
 | 652 | OpenOSINT: AI OSINT agent using Anthropic too… | en | 未読 | #x-signal #ecosystem | articles/2026-05-25_2905_X_hasamba_OpenOSINT_AI_OSINT_agent_using_Anthropi.md |
+
+| 653 | Anthropic Agent SDK課金分離 May13発表 完全解析（Mag… | en | 未読 | #web-signal #ecosystem #ecosystem | articles/2026-05-26_2923_Anthropic_AgentSDK_Billing_MagnaCapax_Canonical.md |
+| 654 | Anthropic Agent SDK課金分離 6月15日前に取るべき4つの対策 | en | 未読 | #web-signal #ecosystem #ecosystem | articles/2026-05-26_2924_Anthropic_AgentSDK_Billing_4_Mitigations.md |
+| 655 | Anthropic Just Put Claude Agents on a Me… | en | 未読 | #web-signal #ecosystem #ecosystem | articles/2026-05-26_2925_Anthropic_Claude_Agents_Metered_VaughtAI.md |
+| 656 | We Built 70+ Claude Skills — The Best On… | en | 未読 | #web-signal #skills | articles/2026-05-26_2926_70_Plus_Claude_Skills_Best_ArtificialCorner.md |
+| 657 | Claude Managed Agents 公式ドキュメント概要（platfor… | en | 未読 | #web-signal #ecosystem | articles/2026-05-26_2927_Claude_Managed_Agents_Official_Docs_Overview.md |
+| 658 | Model Context Protocol (MCP) Complete 20… | en | 未読 | #web-signal #mcp #ecosystem | articles/2026-05-26_2928_MCP_Complete_Guide_2026_SurePrompts.md |
+| 659 | Google Cloud 50以上のマネージドMCPサーバーが一般提供開始 | ja | 未読 | #web-signal #mcp #ecosystem | articles/2026-05-26_2929_Google_Cloud_50_Managed_MCP_Servers_GA_JA.md |
+| 660 | 非エンジニアこそ業務激変 Claude Code「神設定」と活用5選（SBBit… | ja | 未読 | #web-signal | articles/2026-05-26_2930_Claude_Code_非エンジニア神設定5選_SBBit.md |
+| 661 | Complete Guide to MCP 2026: The USB-C fo… | en | 未読 | #web-signal #mcp #ecosystem | articles/2026-05-26_2932_MCP_USB_C_for_AI_Complete_Guide_EssaMamdani.md |
+| 662 | Microsoftが自社内で積極導入していたAnthropicの「Claude … | ja | 未読 | #x-signal | articles/2026-05-26_2933_Macky555_Microsoftが自社内で積極導入していたAnthropicのClaude.md |
+| 663 | 2026年05月27日 毎日AIしとちゃニュースのお時間です。  本日の毎日AI… | ja | 未読 | #x-signal | articles/2026-05-26_2934_nemumusitocha_2026年05月27日_毎日AIしとちゃニュースのお時間です_本日の毎日AI.md |
+| 664 | Claude Codeで部内専用サイトを作った。過去の研修・勉強会のスライドを全… | ja | 未読 | #x-signal | articles/2026-05-26_2935_tenso_ai_med_Claude_Codeで部内専用サイトを作った過去の研修勉強会のスライドを全.md |
+| 665 | Claude Code を非技術的な作業で使うための基本的なコツ:  多くのファ… | ja | 未読 | #x-signal | articles/2026-05-26_2936_oikon48_Claude_Code_を非技術的な作業で使うための基本的なコツ_多くのファ.md |
+| 666 | 皆さんは何個知ってました？  ハーネスエンジニアなら知っておきたい Claude… | ja | 未読 | #x-signal | articles/2026-05-26_2937_KazukiN74451_皆さんは何個知ってました_ハーネスエンジニアなら知っておきたい_Claude.md |
+| 667 | Everyone's paying for the agent. The mod… | en | 未読 | #x-signal | articles/2026-05-26_2938_RetroChainer_Everyones_paying_for_the_agent_The_mod.md |
+| 668 | 【初心者向けClaude Code活用事例①】 音声入力から複数媒体の原稿を作成… | ja | 未読 | #x-signal | articles/2026-05-26_2939_kamiuchi_books_初心者向けClaude_Code活用事例①_音声入力から複数媒体の原稿を作成.md |
+| 669 | The real reason the Pi agent is better t… | en | 未読 | #x-signal | articles/2026-05-26_2940_BHolmesDev_The_real_reason_the_Pi_agent_is_better_t.md |
+| 670 | @pcshipp 混合. use cursor for quick edits … | ja | 未読 | #x-signal | articles/2026-05-26_2941_49agents_pcshipp_混合_use_cursor_for_quick_edits.md |
+| 671 | This Claude code performance tracker ali… | en | 未読 | #x-signal | articles/2026-05-26_2942_brandonseibert_This_Claude_code_performance_tracker_ali.md |
+| 672 | Just asked Claude Code to migrate Swiper… | en | 未読 | #x-signal | articles/2026-05-26_2943_nolimits4web_Just_asked_Claude_Code_to_migrate_Swiper.md |
+| 673 | Introducing Workspace MCP 🎉 AI inside in… | ja | 未読 | #x-signal #mcp | articles/2026-05-26_2944_openbb_finance_Introducing_Workspace_MCP_AI_inside_in.md |
+| 674 | How to vibe code games using agent skill… | en | 未読 | #x-signal #skills | articles/2026-05-26_2945_alphabatcher_How_to_vibe_code_games_using_agent_skill.md |
+| 675 | deepseek just got a desktop agent worksp… | en | 未読 | #x-signal | articles/2026-05-26_2946_BeauJohnson89_deepseek_just_got_a_desktop_agent_worksp.md |
+| 676 | Real-time terminal monitor for Claude Co… | en | 未読 | #x-signal | articles/2026-05-26_2947_AIDailyGems_Real-time_terminal_monitor_for_Claude_Co.md |
+| 677 | gestiono 6 productos desde la terminal. … | en | 未読 | #x-signal | articles/2026-05-26_2948_renwo_app_gestiono_6_productos_desde_la_terminal.md |
+| 678 | @Miguel07Code @HeyGen My claude code say… | en | 未読 | #x-signal | articles/2026-05-26_2949_takeyasu_Miguel07Code_HeyGen_My_claude_code_say.md |
+| 679 | @takeyasu @Miguel07Code @HeyGen Hi, use … | en | 未読 | #x-signal #mcp | articles/2026-05-26_2950_oneeyekeh_takeyasu_Miguel07Code_HeyGen_Hi_use.md |
+| 680 | New on the Engineering Blog: The access … | en | 未読 | #x-signal | articles/2026-05-26_2951_AnthropicAI_New_on_the_Engineering_Blog_The_access.md |
+| 681 | I use Claude Code every day but I keep g… | en | 未読 | #x-signal | articles/2026-05-26_2952_vecartier_I_use_Claude_Code_every_day_but_I_keep_g.md |
+| 682 | Technical bits if you're curious:  - Pur… | en | 未読 | #x-signal | articles/2026-05-26_2953_vecartier_Technical_bits_if_youre_curious_-_Pur.md |
+| 683 | the local HTTP hook pattern wires voice … | en | 未読 | #x-signal #hooks | articles/2026-05-26_2954_m13v_the_local_HTTP_hook_pattern_wires_voice.md |
+| 684 | Introducing /react-doctor  Your React ap… | en | 未読 | #x-signal | articles/2026-05-26_2955_aidenybai_Introducing_react-doctor_Your_React_ap.md |
+| 685 | Someone built a Claude Code skill that l… | en | 未読 | #x-signal #skills | articles/2026-05-26_2956_RoundtableSpace_Someone_built_a_Claude_Code_skill_that_l.md |
+| 686 | A Claude Code skill can turn a simple ma… | en | 未読 | #x-signal #skills | articles/2026-05-26_2957_openteamsinc_A_Claude_Code_skill_can_turn_a_simple_ma.md |
+| 687 | Anthropic Courses are available through … | en | 未読 | #x-signal | articles/2026-05-26_2958_karthik_rangan_Anthropic_Courses_are_available_through.md |
+| 688 | → Anthropic Academy : 17 free courses co… | en | 未読 | #x-signal | articles/2026-05-26_2959_CynthiaOzumba_Anthropic_Academy_17_free_courses_co.md |
+| 689 | @nicocatellier Yes, especially with the … | en | 未読 | #x-signal | articles/2026-05-26_2960_vincentcadoret_nicocatellier_Yes_especially_with_the.md |
+| 690 | We just launched Base MCP 🪐  Walking you… | ja | 未読 | #x-signal #mcp | articles/2026-05-26_2961_0xyoussea_We_just_launched_Base_MCP_Walking_you.md |
+| 691 | @0xyoussea @moonwell @virtuals_io @Unisw… | en | 未読 | #x-signal | articles/2026-05-26_2962_MarkRichardsBIP_0xyoussea_moonwell_virtuals_io_Unisw.md |
+| 692 | There is no pullback on AI subscriptions… | en | 未読 | #x-signal #ecosystem | articles/2026-05-26_2963_trengriffin_There_is_no_pullback_on_AI_subscriptions.md |
+| 693 | 🟡記事更新 https://t.co/6CLAswqrDc  【5/22(金)~… | ja | 未読 | #x-signal #ecosystem | articles/2026-05-26_2964_debunkrsch_記事更新_httpstco6CLAswqrDc_522金.md |
+| 694 | 【実務特化型AIの衝撃！Claude Mythos 1の全貌】 👉  https… | ja | 未読 | #x-signal #ecosystem | articles/2026-05-26_2965_ai_hakase_実務特化型AIの衝撃Claude_Mythos_1の全貌_https.md |
+| 695 | Anthropic社のMythosが1万件のセキュリティ上の欠陥を発見、パッチ適… | ja | 未読 | #x-signal #ecosystem | articles/2026-05-26_2966_foxbook_Anthropic社のMythosが1万件のセキュリティ上の欠陥を発見パッチ適.md |
+| 696 | Anthropicが報告書を公表  「Claude Mythos」重大な脆弱性1… | ja | 未読 | #x-signal #ecosystem | articles/2026-05-26_2967_HuffPostJapan_Anthropicが報告書を公表_Claude_Mythos重大な脆弱性1.md |
+| 697 | Your external LLMs and agents can now ta… | en | 未読 | #x-signal #ecosystem | articles/2026-05-26_2968_xurrenthq_Your_external_LLMs_and_agents_can_now_ta.md |
+| 698 | Anthropic paid roughly $300M for Stainle… | en | 未読 | #x-signal #ecosystem | articles/2026-05-26_2969_uwillc_Anthropic_paid_roughly_300M_for_Stainle.md |
+| 699 | If you've been building with LLMs, you'v… | en | 未読 | #x-signal #ecosystem | articles/2026-05-26_2970_preston_ojb_If_youve_been_building_with_LLMs_youv.md |
+| 700 | 5. Anthropic is acquiring Stainless, the… | en | 未読 | #x-signal #ecosystem #ecosystem | articles/2026-05-26_2971_Agos_Labs_5_Anthropic_is_acquiring_Stainless_the.md |
+| 701 | Most AI builders still mix these up:  «p… | en | 未読 | #x-signal #ecosystem | articles/2026-05-26_2972_RoyAmal_Most_AI_builders_still_mix_these_up_p.md |
+| 702 | Big AI updates dropping 🧵 🔌 Anthropic la… | ja | 未読 | #x-signal #mcp #ecosystem | articles/2026-05-26_2973_Deepvalueagent_Big_AI_updates_dropping_Anthropic_la.md |
+| 703 | MCP与A2A：AI Agent互联互通协议标准之战加速  2026年，AI A… | ja | 未読 | #x-signal #mcp #ecosystem | articles/2026-05-26_2974_MacroNorthStar_MCP与A2AAI_Agent互联互通协议标准之战加速_2026年AI_A.md |

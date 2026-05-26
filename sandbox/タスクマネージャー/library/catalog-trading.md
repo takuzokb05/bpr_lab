@@ -288,3 +288,6 @@
 | 260 | 荒れた相場でも焦って飛び乗らない 「勝てる場面だけを狙って稼働」 🔥 AI EA ORIO… | ja | 未読 | #x-signal #fx #llm-trading | articles/2026-05-25_2909_X_f4rXUSenD787572_荒れた相場でも焦って飛び乗らない_勝てる場面だけを狙って稼働_AI_EA.md |
 | 261 | FX/MetaTrader情報→ 【たこねぎFX予報AI Bot】天気予報のようにFXレー… | ja | 未読 | #x-signal #fx #llm-trading | articles/2026-05-25_2910_X_takonegi15_FX_MetaTrader情報_たこねぎFX予報AI_Bot_天気予報のよ.md |
 | 262 | Google DeepMindが「AIがAIをより良くする」時代を始めました。 2025年… | ja | 未読 | #x-signal #fx #llm-trading | articles/2026-05-25_2911_X_runa119225_Google_DeepMindが_AIがAIをより良くする_時代を始めました.md |
+
+| 263 | TradingAgents: Multi-Agent LLM Financial… | en | 未読 | #web-signal #multi-agent #llm-trading | articles/2026-05-26_2931_TradingAgents_MultiAgent_LLM_Framework_IntellectyxAI.md |
+| 264 | 今週末公開予定 EA Agent Studioです。 今回はアプリ上からバックテ… | ja | 未読 | #x-signal #fx | articles/2026-05-26_2986_FXtradersAI_今週末公開予定_EA_Agent_Studioです_今回はアプリ上からバックテ.md |

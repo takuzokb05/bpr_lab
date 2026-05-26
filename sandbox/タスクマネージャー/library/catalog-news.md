@@ -230,3 +230,15 @@
 | 209 | Google、科学研究向けAIツール群「Gemini for Science」発表 仮説生… | ja | 未読 | #x-signal #llm-news | articles/2026-05-25_2920_X_kurorabukyouzyu_Google_科学研究向けAIツール群_Gemini_for_Science_発.md |
 | 210 | 教皇レオ14世が初の回勅を発表。テーマは 「AI」。 初の回勅はその教皇が「自身の在位で何… | ja | 未読 | #x-signal #llm-news | articles/2026-05-25_2921_X_ParrotMystery_教皇レオ14世が初の回勅を発表_テーマは_AI_初の回勅はその教皇が_自.md |
 | 211 | ローマ教皇が回勅という公開書簡を発表。その中でAIをかなり突っ込んで批判する。教皇が言うに… | ja | 未読 | #x-signal #llm-news | articles/2026-05-25_2922_X_umiyuki_ai_ローマ教皇が回勅という公開書簡を発表_その中でAIをかなり突っ込んで批判する_教.md |
+
+| 212 | Presenting AI Compute, Liquid Cooling, O… | en | 未読 | #x-signal | articles/2026-05-26_2975_StormDirac_Presenting_AI_Compute_Liquid_Cooling_O.md |
+| 213 | Big Tech just voluntarily handed UK spee… | en | 未読 | #x-signal #regulation | articles/2026-05-26_2976_ReclaimTheNetHQ_Big_Tech_just_voluntarily_handed_UK_spee.md |
+| 214 | Another major step forward for $WULF.  T… | en | 未読 | #x-signal | articles/2026-05-26_2977_PaulBPrager_Another_major_step_forward_for_WULF_T.md |
+| 215 | AI高画質画像ビューアー RAIV を正式リリースした｜なる @nalltama… | ja | 未読 | #x-signal | articles/2026-05-26_2978_nalltama_AI高画質画像ビューアー_RAIV_を正式リリースしたなる_nalltama.md |
+| 216 | AIに殺しても良い対象（人物）を選ばせる。 レオ教皇はまさに、そのアンモラルさを… | ja | 未読 | #x-signal #regulation | articles/2026-05-26_2979_FayeOceanblue_AIに殺しても良い対象人物を選ばせる_レオ教皇はまさにそのアンモラルさを.md |
+| 217 | ブログ書きました： Docker専用のAIエージェント「Gordon」が正式リリ… | ja | 未読 | #x-signal #ai-agent | articles/2026-05-26_2980_publickey_ブログ書きました_Docker専用のAIエージェントGordonが正式リリ.md |
+| 218 | 沖電気工業（6703）が急反発。  ・空孔コア光ファイバーを用いた次世代光回線の… | ja | 未読 | #x-signal | articles/2026-05-26_2981_mameyama_kun_沖電気工業6703が急反発_空孔コア光ファイバーを用いた次世代光回線の.md |
+| 219 | レオ14世は『マニフィカ・フマニタス』においてAIを批判したのだという趣旨の報道… | ja | 未読 | #x-signal | articles/2026-05-26_2982_201yos1_レオ14世はマニフィカフマニタスにおいてAIを批判したのだという趣旨の報道.md |
+| 220 | ローマ教皇がＡＩ時代の「教義上の指針」発表、兵器への利用に警鐘…「不平等や支配な… | ja | 未読 | #x-signal #regulation | articles/2026-05-26_2983_Yomiuri_Online_ローマ教皇がＡＩ時代の教義上の指針発表兵器への利用に警鐘不平等や支配な.md |
+| 221 | 世界中の10代に人気のメタバース「Roblox」が、ゲーム開発のあり方そのものを… | ja | 未読 | #x-signal #ai-agent | articles/2026-05-26_2984_miky_e_世界中の10代に人気のメタバースRobloxがゲーム開発のあり方そのものを.md |
+| 222 | 【フィジカルAI実装の先進地へ】  5/25(月)、井上貴博内閣総理大臣補佐官を… | ja | 未読 | #x-signal | articles/2026-05-26_2985_city_kitakyushu_フィジカルAI実装の先進地へ_525月井上貴博内閣総理大臣補佐官を.md |
