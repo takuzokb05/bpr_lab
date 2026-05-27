@@ -498,6 +498,147 @@ def trade_count(db_path: Path, pair: str) -> int:
     return int(row["n"] or 0)
 
 
+def monthly_pf_window(
+    db_path: Path,
+    pair: str,
+    months_back: int = 3,
+    window_days: int = 30,
+) -> list[dict]:
+    """過去 N ヶ月分の月別 PF (ローリング 30 日) を新しい順で返す。
+
+    Ultra H-② 是正 (2026-05-28): 撤退条件 #0 (lift) 用。
+    各月 (UTC) について、その月末から window_days 遡った期間の確定 trades の
+    PF と件数を計算する。
+
+    Returns:
+        [
+            {"month": "YYYY-MM", "pf": float | None, "n": int,
+             "wins_pips": float, "losses_pips": float},
+            ...
+        ]
+        新しい月から順に最大 months_back 件返す。
+        n < 5 (RETREAT_LIFT_MIN_TRADES 未満) は pf=None としてマーク。
+    """
+    out: list[dict] = []
+    if not db_path.exists():
+        return out
+    now = datetime.now(timezone.utc)
+    with get_conn(db_path) as conn:
+        for i in range(months_back):
+            # i=0 は当月の末日、i=1 は前月の末日、…
+            # 簡易: 現在から (i * 30) 日遡った点を「月の評価時点」とし、
+            # その時点から更に window_days 遡ったウィンドウで PF を取る。
+            anchor = now - _timedelta_days(i * 30)
+            window_end = anchor
+            window_start = anchor - _timedelta_days(window_days)
+            cur = conn.execute(
+                """
+                SELECT c.pnl_pips
+                FROM trade_closures c
+                JOIN trades t ON t.id = c.trade_id
+                WHERE t.pair = ?
+                  AND c.exit_at_utc >= ?
+                  AND c.exit_at_utc <  ?
+                  AND c.pnl_pips IS NOT NULL
+                """,
+                (pair,
+                 window_start.isoformat(timespec="seconds"),
+                 window_end.isoformat(timespec="seconds")),
+            )
+            pnls = [float(row["pnl_pips"]) for row in cur.fetchall()]
+            n = len(pnls)
+            wins = sum(p for p in pnls if p > 0)
+            losses = -sum(p for p in pnls if p < 0)
+            if n < 5:
+                pf: Optional[float] = None
+            elif losses <= 0:
+                pf = float("inf") if wins > 0 else 0.0
+            else:
+                pf = wins / losses
+            out.append({
+                "month": anchor.strftime("%Y-%m"),
+                "pf": pf,
+                "n": n,
+                "wins_pips": wins,
+                "losses_pips": losses,
+            })
+    return out
+
+
+def _timedelta_days(days: int):
+    """timedelta(days=days) を返す簡易ヘルパ (datetime.py 経由)。"""
+    from datetime import timedelta
+    return timedelta(days=days)
+
+
+def signal_base_pf_window(
+    db_path: Path,
+    pair: str,
+    months_back: int = 3,
+    window_days: int = 30,
+) -> list[dict]:
+    """過去 N ヶ月分の base PF (LLM 非適用シナリオの近似) を返す。
+
+    Ultra H-② 是正 (2026-05-28): 撤退条件 #0 (lift) の base 計算用。
+
+    現状の DB には「LLM に却下されたシグナルが取れていたら得られたであろう PnL」
+    (= 抑制シグナル仮想 PnL) が記録されていない (SPEC §8.4 で口約束済、
+    未実装、レビュー J 節で再指摘)。
+    そのため base PF は「現状は信号源不足で計算不能」を表す
+    `pf=None` を返す月が多くなる。
+
+    将来的に suppressed-PnL 計算スクリプト (`_spec_v3_suppressed_pnl.py`) が
+    導入されたらここで `llm_judgments` を全件 (accepted=0 含む) 走査し、
+    エントリ価格と 24h 後挙動から仮想 PnL を計算する。
+
+    Returns:
+        monthly_pf_window と同じスキーマ。pf は現時点ほぼ None。
+        ペア別の base 表現を月別に並べる。
+    """
+    out: list[dict] = []
+    if not db_path.exists():
+        return out
+    now = datetime.now(timezone.utc)
+    with get_conn(db_path) as conn:
+        for i in range(months_back):
+            anchor = now - _timedelta_days(i * 30)
+            window_end = anchor
+            window_start = anchor - _timedelta_days(window_days)
+            # 現時点では accepted=1 (実発注された判定) のみ確定 PnL を持つので、
+            # base = (accepted=1 の確定 PnL) ∪ (accepted=0 の仮想 PnL=None)
+            # から「accepted=0 の数が多い場合は計算不能 (None)」とする。
+            cur = conn.execute(
+                """
+                SELECT
+                    SUM(CASE WHEN accepted=1 THEN 1 ELSE 0 END) AS n_accept,
+                    SUM(CASE WHEN accepted=0 THEN 1 ELSE 0 END) AS n_reject
+                FROM llm_judgments
+                WHERE pair=?
+                  AND judged_at_utc >= ?
+                  AND judged_at_utc <  ?
+                """,
+                (pair,
+                 window_start.isoformat(timespec="seconds"),
+                 window_end.isoformat(timespec="seconds")),
+            )
+            row = cur.fetchone()
+            n_accept = int(row["n_accept"] or 0)
+            n_reject = int(row["n_reject"] or 0)
+            n_total = n_accept + n_reject
+            # 抑制シグナル仮想 PnL が未実装の段階では base PF は計算不能。
+            # 月単位の signal 数が分かるので「シグナル発生はあった」ことだけ記録。
+            out.append({
+                "month": anchor.strftime("%Y-%m"),
+                "pf": None,
+                "n": n_total,
+                "n_accept": n_accept,
+                "n_reject": n_reject,
+                "wins_pips": 0.0,
+                "losses_pips": 0.0,
+            })
+    return out
+
+
 def recent_pf(db_path: Path, pair: str, n_trades: int = 100) -> Optional[float]:
     """直近 n_trades の Profit Factor。trade<5 なら None (撤退条件 #1 と区別)"""
     if not db_path.exists():

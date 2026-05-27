@@ -51,6 +51,17 @@ RETREAT_PF_WINDOW = 100              # 直近 100 trades
 RETREAT_CUMULATIVE_PNL_JPY = -3_000.0
 RETREAT_LLM_COST_MONTHLY_USD = 5_000.0 / 150.0  # 5,000円 ÷ 150円/USD ≒ $33
 
+# 撤退条件 #0 (Ultra H-② 是正、2026-05-28): lift = PF(LLM_after) - PF(base) が
+# 3 ヶ月連続で +0.30 未満なら当該ペア停止。SPEC v3 § 4.5 の M2 提案を実装層に配線。
+# - lift_window_days: 月 1 評価とするローリング 30 日のウィンドウ
+# - lift_threshold: SPEC §4.5 の "+0.30"
+# - lift_consecutive_months: 3 ヶ月連続 (= 3 回連続未達)
+# - lift_min_trades: 月単位の PF を計算するために必要な最小 trade 数 (n<5 なら未確定扱い)
+RETREAT_LIFT_THRESHOLD = 0.30
+RETREAT_LIFT_WINDOW_DAYS = 30
+RETREAT_LIFT_CONSECUTIVE_MONTHS = 3
+RETREAT_LIFT_MIN_TRADES = 5
+
 # キルスイッチ閾値
 KILLSWITCH_LLM_CONSECUTIVE_FAILURES = 5
 KILLSWITCH_SPREAD_MULTIPLIER = 3.0
@@ -277,13 +288,116 @@ class RetreatStatus:
     message: str
 
 
-def check_retreat_per_pair(db_path: Path, pair: str) -> RetreatStatus:
-    """ペア別撤退条件 1-3 をチェック。
+def compute_lift_per_pair(
+    db_path: Path,
+    pair: str,
+    months_back: int = RETREAT_LIFT_CONSECUTIVE_MONTHS,
+    window_days: int = RETREAT_LIFT_WINDOW_DAYS,
+) -> dict:
+    """撤退条件 #0 用: 過去 N ヶ月分の lift (= pf_filter - pf_base) を計算。
 
+    Ultra H-② 是正 (2026-05-28): SPEC v3 § 4.5 撤退条件 #0 「lift vs base
+    < +0.30 が 3 ヶ月連続」を実装層に配線。
+
+    計算式:
+        lift_month_i = pf_filter_month_i - pf_base_month_i
+
+    - pf_filter_month_i: 当該月 (ローリング 30 日) の確定 trades の PF
+      (= LLM 採用後の実 PnL ベース PF)
+    - pf_base_month_i: 当該月の signal_v2 単独運用想定の PF
+      (= 抑制シグナル仮想 PnL + 採用シグナル実 PnL の合算)
+
+    現状制約: 抑制シグナル仮想 PnL 計算 (SPEC §8.4) は未実装のため、
+    pf_base が None となる月が大半。lift 撤退は Phase 2'B 評価 (60-90 日後)
+    までに suppressed-PnL パイプラインが導入された後に有効化する設計。
+    Phase 2'A 30 日では 3 ヶ月連続条件が物理的に成立しないため発火しない。
+
+    Returns:
+        {
+            "pair": pair,
+            "months": [
+                {"month", "pf_filter", "pf_base", "lift", "n_filter",
+                 "n_signal", "below_threshold": bool | None},
+                ...
+            ],
+            "consecutive_below": int,        # 末尾から連続して未達月数
+            "all_evaluable": bool,           # 全月で pf_base が計算可能だったか
+        }
+    """
+    filter_months = v3_db.monthly_pf_window(
+        db_path, pair, months_back=months_back, window_days=window_days,
+    )
+    base_months = v3_db.signal_base_pf_window(
+        db_path, pair, months_back=months_back, window_days=window_days,
+    )
+    base_by_month = {m["month"]: m for m in base_months}
+
+    months_out: list[dict] = []
+    all_evaluable = True
+    for fm in filter_months:
+        bm = base_by_month.get(fm["month"], {})
+        pf_filter = fm.get("pf")
+        pf_base = bm.get("pf")
+        if pf_filter is None or pf_base is None:
+            lift: Optional[float] = None
+            below: Optional[bool] = None
+            all_evaluable = False
+        else:
+            lift = float(pf_filter) - float(pf_base)
+            below = lift < RETREAT_LIFT_THRESHOLD
+        months_out.append({
+            "month": fm["month"],
+            "pf_filter": pf_filter,
+            "pf_base": pf_base,
+            "lift": lift,
+            "n_filter": fm.get("n", 0),
+            "n_signal": bm.get("n", 0),
+            "below_threshold": below,
+        })
+
+    # 直近 (= 最新月) から連続して below_threshold=True の月数を数える
+    # below=None (未確定) は連続を切る
+    consecutive = 0
+    for m in months_out:
+        if m["below_threshold"] is True:
+            consecutive += 1
+        else:
+            break
+
+    return {
+        "pair": pair,
+        "months": months_out,
+        "consecutive_below": consecutive,
+        "all_evaluable": all_evaluable,
+    }
+
+
+def check_retreat_per_pair(db_path: Path, pair: str) -> RetreatStatus:
+    """ペア別撤退条件 0-3 をチェック。
+
+    0. lift vs base < +0.30 が 3 ヶ月連続 → 撤退 (Ultra H-② 是正、2026-05-28)
     1. 90 日経過したのに trades < 5 → 撤退
     2. 直近 100 trades の PF < 1.0 (n>=5) → 撤退
     3. 累計 PnL < -3,000 JPY → 撤退
     """
+    # 0. lift 撤退 (SPEC §4.5 #0)
+    lift_info = compute_lift_per_pair(db_path, pair)
+    if (lift_info["all_evaluable"]
+            and lift_info["consecutive_below"] >= RETREAT_LIFT_CONSECUTIVE_MONTHS):
+        last_lifts = ", ".join(
+            f"{m['month']}={m['lift']:.2f}"
+            for m in lift_info["months"]
+            if m["lift"] is not None
+        )
+        return RetreatStatus(
+            pair=pair, triggered=True,
+            code="retreat_0_lift_below_threshold",
+            message=(
+                f"{pair} lift vs base < +{RETREAT_LIFT_THRESHOLD:.2f} が "
+                f"{RETREAT_LIFT_CONSECUTIVE_MONTHS} ヶ月連続 ({last_lifts})"
+            ),
+        )
+
     # 1. シグナル少なすぎ
     days = v3_db.days_since_first_trade(db_path, pair)
     n_trades = v3_db.trade_count(db_path, pair)
