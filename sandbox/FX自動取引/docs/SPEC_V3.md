@@ -20,9 +20,14 @@
    - USD_JPY: CONFIRM × **confidence ≥ 0.65** → PF **1.565** (n=203)
    - GBP_JPY: CONFIRM × **confidence ≥ 0.60** → PF **1.294** (n=469)
    - Combined PF **1.354 (差分 +0.438)** で **+0.30 ゲートを大幅 PASS**
-   - IS PF 1.335 → OOS PF 1.376 (OOS で +0.041 改善 = **オーバーフィットなし**)
-   - 直近 2025Q3+ PF 1.338 (時系列劣化耐性確認)
-6. SPEC v3 (改訂版) は Proposal 3 で実装、「採用戦略」「Phase 2'A→B→C 段階移行」「撤退条件を事前明文化」「経済性 Gate 必須化」で SPEC v2 の構造欠陥を回避する。
+6. **標準分割 4 方式すべてで再現確認** (M2 標準分割再分析、2026-05-27、`STANDARD_SPLIT_REANALYSIS.md`):
+   - 時間半々 (共通カットオフ 2025-05-07): Combined OOS PF **1.377** (lift **+0.536**)
+   - 年単位 (2025 OOS): Combined OOS PF **1.629** (lift **+0.731**)
+   - **年単位 (2026 Hold-out)**: Combined OOS PF **1.304** (lift **+0.497**) ← 本番期待値の基準
+   - 直近 12 ヶ月: Combined OOS PF **1.377** (lift **+0.535**)
+   - 16 分割平均: **lift +0.46〜+0.60、標準偏差 0.04** (極めて安定)
+   - **Karen 反論屋指摘 (J メタ分析の per-pair-count-half 特別分割で IS<OOS が崩れる現象) は事実**だが、**標準分割では Proposal 3 が 4/4 で +0.30 PASS** = 戦略の信頼性確定
+7. SPEC v3 (改訂版) は Proposal 3 で実装、「採用戦略」「Phase 2'A→B→C 段階移行」「撤退条件を事前明文化 (lift ベース)」「経済性 Gate 必須化」で SPEC v2 の構造欠陥を回避する。
 
 ---
 
@@ -32,8 +37,8 @@
 
 | レイヤ | 内容 | ステータス |
 |---|---|---|
-| ベース戦略 | `src/spec_v2/signal_v2.py` (ATR breakout、N=20 高安値ブレイク、SL=ATR×1.5, TP=ATR×3.0, RR=2.0) | **改変禁止** (完成済) |
-| 季節フィルタ | `src/spec_v2/seasonal_detection.py` (M15 YZ_vol + H1 YZ_vol の二層一致) | **GBP_JPY のみ適用**、USD_JPY は素で使う |
+| ベース戦略 | `src/spec_v2/signal_v2.py` (ATR breakout、N=20 高安値ブレイク、SL=ATR×1.5, TP=ATR×3.0, RR=2.0) | **改変禁止** (完成済)。docstring が「GBP_JPY 専用、placeholder」だが SPEC v3 では USD_JPY/GBP_JPY 両ペアに適用 (JPY クロス pip size 0.01 共通、ロジック改変不要) |
+| 季節フィルタ | (廃止) | **USD_JPY も GBP_JPY も VOLATILE フィルタなしで運用** (Ultra バグ① 是正、2026-05-27)。Phase 0' BT データ (`signal_v2_historical_signals_gbp_jpy_no_volatile.csv` 2,443件) も VOLATILE フィルタなしで集計済 → 実装 (`src/spec_v3/`) と Phase 0' BT が完全整合。VOLATILE 適用版での再検証は別 SPEC で扱う (スコープ外) |
 | LLM 補完層 | Claude Sonnet 4.6 による CONFIRM / NEUTRAL / CONTRADICT / REJECT 判定 | 新規実装 |
 | **Confidence 閾値層** | **ペア別** confidence 閾値で CONFIRM を更に絞り込む | **本改訂で追加** (Proposal 3) |
 
@@ -87,11 +92,8 @@ def trading_loop_tick(pair: str, m15_df: pd.DataFrame, h1_df: pd.DataFrame) -> O
     if signal.direction == "no_signal":
         return None
 
-    # 2. GBP_JPY のみ VOLATILE フィルタ適用 (USD_JPY は素で運用)
-    if pair == "GBP_JPY":
-        judgment = seasonal_detector.judge(m15_df, h1_df, config=GBP_JPY_CONFIG)
-        if judgment.regime != SeasonRegime.VOLATILE:
-            return None
+    # 2. (旧 GBP_JPY VOLATILE フィルタは Ultra バグ① 是正で削除、2026-05-27)
+    # 両ペアとも素の signal_v2 で運用、Phase 0' BT データと完全整合
 
     # 3. キルスイッチ・経済指標ガード (§5)
     if killswitch.is_blocked(pair):
@@ -129,7 +131,7 @@ def trading_loop_tick(pair: str, m15_df: pd.DataFrame, h1_df: pd.DataFrame) -> O
 
 - **CONFIRM only**: NEUTRAL / CONTRADICT / REJECT は **全て** 取らない (CONTRADICT 反転戦略は失敗確定、L1.2 参照)
 - **ペア別 confidence 閾値**: USD_JPY ≥ 0.65、GBP_JPY ≥ 0.60 (Proposal 3 確定値)
-- **GBP_JPY の VOLATILE フィルタ** は LLM 判定の前に適用 (LLM API コスト削減)
+- **VOLATILE フィルタは両ペアとも適用しない** (Ultra バグ① 是正、2026-05-27)。Phase 0' BT と完全整合
 - **REJECT の if_taken PF 0.849 < base 0.916** で「REJECT 判断は正しい」を確認 (REJECT 基準を緩めない)
 - **抑制シグナル (CONFIRM 未到達分) は全件 DB 記録** (§4.1) — 抑制率の真の母集団測定用
 
@@ -217,10 +219,11 @@ DB: `data/fx_spec_v3.db` (SPEC v2 PoC とは別ファイル)
 | ローリング 30 日 PF < 0.9 | confidence 閾値を **+0.05 引き上げ** (USD 0.70 / GBP 0.65)、トレード数減少を許容して質を上げる |
 | ローリング 30 日 PF < 0.8 | 当該ペア完全停止 (キルスイッチ作動) |
 
-### 4.5 撤退条件 (事前明文化、運用開始後の追加禁止)
+### 4.5 撤退条件 (事前明文化、運用開始後の追加禁止) — M2 提案で lift ベースに変更 (2026-05-27)
 
 | # | 条件 | 計測単位 | 撤退対象 |
 |---|---|---|---|
+| 0 | **lift vs base < +0.30 が 3 ヶ月連続** (M2 提案、絶対水準より lift が安定) | 当該ペア | 当該ペア停止 |
 | 1 | 90 日 trades < 5 | 当該ペア | 当該ペア停止 |
 | 2 | 直近 100 trades で PF < 1.0 維持 | 当該ペア | 当該ペア停止 |
 | 3 | 累計 -3,000 JPY (lot 0.01) | 当該ペア | 当該ペア停止 |
@@ -269,7 +272,7 @@ DB: `data/fx_spec_v3.db` (SPEC v2 PoC とは別ファイル)
 | パラメータ | USD_JPY | GBP_JPY |
 |---|---|---|
 | シグナル生成 TF | M15 | M15 |
-| 季節フィルタ | なし (素で運用) | あり (M15 YZ_vol 30%ile + H1 YZ_vol 0.00175) |
+| 季節フィルタ | なし (素で運用) | **なし (Ultra バグ① 是正、Phase 0' BT データと整合)** |
 | スプレッド見積 | 1.0 pip | 1.5 pip |
 | Pip Size | 0.01 (JPY クロス) | 0.01 (JPY クロス) |
 | ロット | 0.01 固定 (Phase 2'A-2'C 初期) | 0.01 固定 |
@@ -282,9 +285,18 @@ DB: `data/fx_spec_v3.db` (SPEC v2 PoC とは別ファイル)
 | Phase 0' BT PF | 1.565 (n=203) | 1.294 (n=469) |
 | 期待月間 trades | ~8-12 (n=203 ÷ 22ヶ月) | ~20-25 (n=469 ÷ 22ヶ月) |
 
-### 6.1 GBP_JPY VOLATILE フィルタを USD_JPY に適用しない理由
+### 6.1 VOLATILE フィルタを両ペアとも適用しない理由 (Ultra バグ① 是正、2026-05-27)
 
-USD_JPY は Phase 0' で VOLATILE フィルタなしで PF 1.565 を達成。Phase 0' と同じ条件を保つため適用しない。
+**当初設計** (初版): GBP_JPY のみ VOLATILE フィルタを適用 (SPEC v2 PoC の継承)。
+
+**問題**: Phase 0' BT データ (`signal_v2_historical_signals_gbp_jpy_no_volatile.csv` 2,443件) は VOLATILE フィルタなしで抽出されており、Proposal 3 GBP_JPY PF 1.294 (n=469) はこの母集団から算出された。SPEC が「VOLATILE 適用」と宣言しつつ実装と BT データが「適用なし」という **三重不整合** (RETREAT_2026-05-26.md バグ① の再演)。
+
+**是正**: SPEC を Phase 0' BT データに合わせて「両ペアとも VOLATILE フィルタなし」に統一。
+
+- VOLATILE 適用版だと月 9 件 (216件 / 2年)、なし版だと月 102 件 (2,443件 / 2年) で 11.3 倍差
+- Phase 0' BT 上では VOLATILE なしの方が signal_v2 単独 PF はほぼ変わらず (0.96 → 0.945)
+- Proposal 3 (CONFIRM × confidence ≥ ペア別閾値) は VOLATILE なしの母集団で +0.30 ゲート達成
+- VOLATILE 適用版での Proposal 3 再検証は将来 SPEC で扱う (SPEC v3 スコープ外)
 
 ---
 
@@ -424,12 +436,24 @@ Phase 2'A 開始前 + Phase 2'B 経済性 Gate 判定時に反論屋3体 (karen 
 
 ### 10.1 karen (虚飾排除担当)
 
-**反論**: 「Proposal 3 の confidence 閾値は J 改善余地メタ分析で 0.5/0.6/0.65/0.7/0.8+ を試して最良を選んだ。多重検定 Goodhart 化ではないか?」
+**反論 A**: 「Proposal 3 の confidence 閾値は J 改善余地メタ分析で 0.5/0.6/0.65/0.7/0.8+ を試して最良を選んだ。多重検定 Goodhart 化ではないか?」
 
-**応答**:
-- IS/OOS 分割で部分緩和済 (IS 1.335 → OOS 1.376 で改善、過適合の典型パターン (OOS で劣化) を示していない)
-- 直近 2025Q3+ で PF 1.338 維持 (新規データでも再現)
-- 撤退条件 §4.5 で「両ペア PF<1.0 維持」を停止トリガに事前明文化、Goodhart 化が顕在化したら自動停止
+**反論 A 応答** (M2 標準分割再分析、2026-05-27 確定):
+- Karen 指摘の前半 (J メタ分析の per-pair-count-half 特別分割で Combined IS 1.368 / OOS 1.330、-0.038 劣化) は **事実として再現確認**
+- ただし **標準分割 4 方式すべてで Combined lift +0.46〜+0.60、+0.30 ゲート PASS** (`STANDARD_SPLIT_REANALYSIS.md`)
+- 16 分割の lift 標準偏差 0.04 で「base からの大幅改善」は **分割不変で必ず成立**
+- 「IS<OOS かどうか」は分割依存 (43.8% のみで成立) だが、結論「Proposal 3 = ゲート PASS」は変わらない
+- 撤退条件 §4.5 で「lift < +0.30 が 3 ヶ月連続」を停止トリガに事前明文化、Goodhart 化が顕在化したら自動停止
+
+**反論 B**: 「亡き者本番 GBP_JPY PF 0.868 / 年換算 -45,000 JPY (RETREAT_2026-05-26.md L21) を、SPEC v3 で副ペアに再採用している。3 日後撤退の自己一貫性崩壊パターンの再演ではないか?」
+
+**反論 B 応答**:
+- 亡き者本番 GBP_JPY (n=37、PF 0.868) は **MTFPullback 戦略** で、本仕様の signal_v2 (ATR breakout) とは別物
+- Phase 0' BT GBP_JPY 全 2,443件 base PF 0.867 ≈ 亡き者本番 PF 0.868 (ほぼ完全一致) → **signal_v2 単独でも亡き者と同じく負ける**ことを確認
+- ただし Proposal 3 (CONFIRM × confidence ≥ 0.60) で **PF 1.294 (lift +0.427)** に押し上げ
+- 通貨ペア固有リスク (スプレッド 1.5pip、JPY 介入、ボラ大) は依然存在するが、**スプレッド 1.5pip は BT 計算に控除済**
+- Phase 2'A 30 日で実約定 PF と Phase 0' BT 乖離を測定し、乖離 > 20% なら撤退 (§9.7 既存条件)
+- 「戦略変更だから本番実績無関係」とは言えず、**通貨構造的不利が残ることを前提に撤退条件を厳格運用する**
 
 ### 10.2 ultrathink-debugger (構造バグ担当)
 
