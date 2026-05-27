@@ -43,6 +43,7 @@ import argparse
 import io
 import logging
 import os
+import random
 import signal as sig_module
 import sys
 import time
@@ -138,6 +139,50 @@ def _flush_logs() -> None:
 
 
 logger = logging.getLogger("spec_v3_demo")
+
+
+# ============================================================
+# pipeline 1 行サマリログ (Ultra H-③ 是正、2026-05-28)
+# SPEC v2 PR #26 で確立した "pipeline:" ログを SPEC v3 にも継承。
+# `Select-String "pipeline:" data/spec_v3_demo.log` で各ステージの通過/却下が
+# 時系列で grep 可能になる。memory `project_fx_pipeline_trace.md` 参照。
+# ============================================================
+
+
+def _emit_pipeline_log(
+    pair: str,
+    stage: str,
+    *,
+    reason: Optional[str] = None,
+    signal_direction: Optional[str] = None,
+    llm_label: Optional[str] = None,
+    llm_confidence: Optional[float] = None,
+    accepted: Optional[bool] = None,
+    extra: Optional[dict] = None,
+) -> None:
+    """各ステージ通過 / 却下を 1 行 INFO ログとして出力する。
+
+    出力例:
+        pipeline: pair=USD_JPY stage=order_placed sig=long label=CONFIRM conf=0.72 accepted=True reason=accepted
+    """
+    parts: list[str] = [f"pair={pair}", f"stage={stage}"]
+    if signal_direction is not None:
+        parts.append(f"sig={signal_direction}")
+    if llm_label is not None:
+        parts.append(f"label={llm_label}")
+    if llm_confidence is not None:
+        try:
+            parts.append(f"conf={float(llm_confidence):.2f}")
+        except (TypeError, ValueError):
+            parts.append(f"conf={llm_confidence}")
+    if accepted is not None:
+        parts.append(f"accepted={accepted}")
+    if reason is not None:
+        parts.append(f"reason={reason}")
+    if extra:
+        for k, v in extra.items():
+            parts.append(f"{k}={v}")
+    logger.info("pipeline: " + " ".join(parts))
 
 
 # ============================================================
@@ -262,7 +307,19 @@ def _close_and_record(client, trade, reason: str, holding_minutes: int,
     lots = float(trade["lots"])
     try:
         result = client.close_position(str(ticket))
-        exit_price = float(result.get("price", 0)) or entry
+        # Mt5Client.close_position は "close_price" を返す (market_order は "price")。
+        # Ultra H-① 是正 (2026-05-28): キー誤読で exit_price=entry → PnL=0 になり
+        # 24h 時間損切りの Phase 2'A PF 計測が歪む致命バグだった。
+        # `close_price` を最優先、後方互換として "price" もフォールバック、最終的に entry。
+        raw_price = result.get("close_price")
+        if raw_price is None:
+            raw_price = result.get("price")
+        try:
+            exit_price = float(raw_price) if raw_price is not None else 0.0
+        except (TypeError, ValueError):
+            exit_price = 0.0
+        if exit_price <= 0:
+            exit_price = entry
     except Exception as e:  # noqa: BLE001
         logger.error("close_position 失敗 ticket=%d: %s", ticket, e)
         exit_price = entry
@@ -281,6 +338,120 @@ def _close_and_record(client, trade, reason: str, holding_minutes: int,
     )
     if notifier:
         notifier.trade_closed(pair, direction, pips, pnl_jpy, reason, holding_minutes)
+
+
+def _sync_closed_positions_to_db(close_result: dict, reason: str) -> None:
+    """close_all_positions の結果を DB の trades.status に反映する。
+
+    Ultra H-⑤ 是正 (2026-05-28): SPEC v3 撤退条件 #5 発火時に
+    `client.close_all_positions()` を呼ぶが、それだけでは DB の
+    `trades.status='open'` 行が残置されたままになり、次回起動時の
+    集計や `manage_open_trades` が `_record_closure_from_history`
+    経由で現在価格を使った近似 PnL を計算してしまう。
+
+    本関数は close_result["closed"] (= Mt5Client.close_position の戻り値リスト) を
+    iterate し、各 ticket に対応する DB trade を確定 (trade_closures 行を INSERT
+    かつ trades.status='closed' に UPDATE) する。
+    close_result["failed"] (= 決済失敗した trade_id リスト) は status='close_failed'
+    として記録するため、運用後の集計で「閉じられなかったポジション」を識別できる。
+
+    Args:
+        close_result: Mt5Client.close_all_positions() の戻り値
+            ({"closed": [{"trade_id", "realized_pl", "close_price", ...}, ...],
+              "failed": [trade_id_str, ...], "total": int})
+        reason: 決済理由 (例: "retreat_close_retreat_5_all_pairs")
+    """
+    closed_list = close_result.get("closed") or []
+    failed_list = close_result.get("failed") or []
+
+    # 成功した決済: trade_closures に INSERT + trades.status='closed' へ
+    for cd in closed_list:
+        try:
+            ticket = int(cd.get("trade_id") or 0)
+        except (TypeError, ValueError):
+            continue
+        if ticket <= 0:
+            continue
+        try:
+            trade_row = _find_db_trade_by_ticket(ticket)
+            if trade_row is None:
+                logger.warning(
+                    "sync_closed: ticket=%d に対応する DB trade が見つからない", ticket,
+                )
+                continue
+            # 既に closed なら skip
+            if trade_row["status"] == "closed":
+                continue
+            entry = float(trade_row["entry_price"])
+            lots = float(trade_row["lots"])
+            direction = trade_row["direction"]
+            pair = trade_row["pair"]
+            # close_price を最優先、フォールバックで realized_pl から逆算は省略
+            raw_price = cd.get("close_price")
+            if raw_price is None:
+                raw_price = cd.get("price")
+            try:
+                exit_price = float(raw_price) if raw_price is not None else 0.0
+            except (TypeError, ValueError):
+                exit_price = 0.0
+            if exit_price <= 0:
+                exit_price = entry
+            pips, pnl_jpy = _calc_pnl(pair, direction, entry, exit_price, lots)
+            entry_dt = _parse_iso_utc(trade_row["entry_at_utc"])
+            holding_min = int(
+                (datetime.now(timezone.utc) - entry_dt).total_seconds() / 60
+            )
+            v3_db.insert_trade_closure(
+                DB_PATH, trade_id=int(trade_row["id"]),
+                exit_at_utc=v3_db.utc_now_iso(),
+                exit_price=exit_price, exit_reason=reason,
+                pnl_pips=pips, pnl_jpy=pnl_jpy,
+                holding_minutes=holding_min,
+            )
+            logger.info(
+                "sync_closed: trade_id=%d ticket=%d pair=%s exit=%.5f pnl=%+.0f",
+                int(trade_row["id"]), ticket, pair, exit_price, pnl_jpy,
+            )
+        except Exception as e:  # noqa: BLE001
+            logger.error("sync_closed 個別エラー ticket=%d: %s", ticket, e)
+
+    # 失敗した決済: trades.status='close_failed' に更新するだけ (近似 PnL 入れない)
+    for fid in failed_list:
+        try:
+            ticket = int(fid)
+        except (TypeError, ValueError):
+            continue
+        if ticket <= 0:
+            continue
+        try:
+            _mark_trade_status_failed(ticket, reason)
+        except Exception as e:  # noqa: BLE001
+            logger.error("close_failed status 更新エラー ticket=%d: %s", ticket, e)
+
+
+def _find_db_trade_by_ticket(ticket: int):
+    """trades テーブルから mt5_ticket でマッチする行を返す (1 行 or None)。"""
+    if not DB_PATH.exists():
+        return None
+    with v3_db.get_conn(DB_PATH) as conn:
+        cur = conn.execute(
+            "SELECT * FROM trades WHERE mt5_ticket=? ORDER BY id DESC LIMIT 1",
+            (ticket,),
+        )
+        return cur.fetchone()
+
+
+def _mark_trade_status_failed(ticket: int, reason: str) -> None:
+    """trades.status='close_failed' に更新 (PnL 記録なし)。"""
+    if not DB_PATH.exists():
+        return
+    with v3_db.get_conn(DB_PATH) as conn:
+        conn.execute(
+            "UPDATE trades SET status='close_failed' "
+            "WHERE mt5_ticket=? AND status='open'",
+            (ticket,),
+        )
+    logger.warning("close_failed status マーク: ticket=%d reason=%s", ticket, reason)
 
 
 def _record_closure_from_history(client, trade, reason: str) -> None:
@@ -333,10 +504,13 @@ def process_pair(
         logger.error("M15 取得失敗 %s: %s", pair, e)
         summary["stage"] = "fetch_fail"
         summary["error"] = str(e)
+        _emit_pipeline_log(pair, "fetch_fail", reason=str(e))
         return summary
     if len(m15_df) < 50:
         logger.warning("M15 データ不足 %s n=%d", pair, len(m15_df))
         summary["stage"] = "insufficient_data"
+        _emit_pipeline_log(pair, "insufficient_data",
+                           reason=f"n={len(m15_df)}")
         return summary
 
     # 2. signal_v2 シグナル生成
@@ -344,6 +518,7 @@ def process_pair(
     summary["signal_direction"] = sig.direction
     if sig.direction == "no_signal":
         summary["stage"] = "no_signal"
+        _emit_pipeline_log(pair, "no_signal", signal_direction=sig.direction)
         return summary
 
     # 3a. スプレッド異常キルスイッチ (Ultra/Karen バグ② 是正、2026-05-27)
@@ -387,6 +562,12 @@ def process_pair(
                 pass
             summary["stage"] = "spread_anomaly_blocked"
             summary["spread_pips"] = current_spread
+            _emit_pipeline_log(
+                pair, "spread_anomaly_blocked",
+                signal_direction=sig.direction,
+                reason=f"spread={current_spread:.2f}>=baseline*3",
+                extra={"baseline": f"{baseline or 0:.2f}"},
+            )
             return summary
 
     # 3. キルスイッチチェック (LLM 呼び出し前)
@@ -408,6 +589,8 @@ def process_pair(
         )
         summary["stage"] = "killswitch_blocked"
         summary["reason"] = reason
+        _emit_pipeline_log(pair, "killswitch_blocked",
+                           signal_direction=sig.direction, reason=reason)
         return summary
 
     # 4. 既存ポジション (1 ペア 1 件、全体 2 件)
@@ -415,11 +598,17 @@ def process_pair(
     if open_pair:
         logger.debug("pair=%s 既存 open あり、新規スキップ", pair)
         summary["stage"] = "position_already_open"
+        _emit_pipeline_log(pair, "position_already_open",
+                           signal_direction=sig.direction,
+                           reason="pair has open")
         return summary
     open_total = v3_db.get_open_trades(DB_PATH)
     if len(open_total) >= MAX_TOTAL_POSITIONS:
         logger.debug("全体 open=%d 件、新規スキップ", len(open_total))
         summary["stage"] = "max_total_positions"
+        _emit_pipeline_log(pair, "max_total_positions",
+                           signal_direction=sig.direction,
+                           reason=f"open_total={len(open_total)}>={MAX_TOTAL_POSITIONS}")
         return summary
 
     # 5. LLM 判定
@@ -439,6 +628,8 @@ def process_pair(
             api_cost_usd=None, api_error=None, context=None,
         )
         summary["stage"] = "dry_run"
+        _emit_pipeline_log(pair, "dry_run", signal_direction=sig.direction,
+                           reason="filter_obj=None")
         return summary
 
     from src.spec_v3.llm_filter import build_context, calc_atr
@@ -516,12 +707,28 @@ def process_pair(
             threshold, decision_reason,
         )
         summary["stage"] = "rejected"
+        _emit_pipeline_log(
+            pair, "rejected",
+            signal_direction=sig.direction,
+            llm_label=decision.label,
+            llm_confidence=decision.confidence,
+            accepted=False,
+            reason=decision_reason,
+        )
         return summary
 
     # 8. 発注 (dry_run なら skip)
     if dry_run:
         logger.info("dry_run なので発注スキップ pair=%s", pair)
         summary["stage"] = "accepted_dry_run"
+        _emit_pipeline_log(
+            pair, "accepted_dry_run",
+            signal_direction=sig.direction,
+            llm_label=decision.label,
+            llm_confidence=decision.confidence,
+            accepted=True,
+            reason="dry_run",
+        )
         return summary
 
     units = lot_units if sig.direction == "long" else -lot_units
@@ -536,6 +743,14 @@ def process_pair(
         notifier.raw(f":x: 発注失敗 {pair}: {e}")
         summary["stage"] = "order_failed"
         summary["error"] = str(e)
+        _emit_pipeline_log(
+            pair, "order_failed",
+            signal_direction=sig.direction,
+            llm_label=decision.label,
+            llm_confidence=decision.confidence,
+            accepted=True,
+            reason=f"market_order_exc:{e}",
+        )
         return summary
 
     ticket = int(result.get("order_id") or 0) or None
@@ -568,6 +783,16 @@ def process_pair(
     summary["stage"] = "entered"
     summary["trade_id"] = trade_id
     summary["ticket"] = ticket
+    _emit_pipeline_log(
+        pair, "order_placed",
+        signal_direction=sig.direction,
+        llm_label=decision.label,
+        llm_confidence=decision.confidence,
+        accepted=True,
+        reason=decision_reason,
+        extra={"ticket": ticket or 0, "trade_id": trade_id,
+               "entry": f"{fill_price:.5f}"},
+    )
     return summary
 
 
@@ -696,6 +921,30 @@ def _signal_handler(sig, frame):
     _stop_requested = True
 
 
+def _ordered_pairs_for_iteration(
+    enabled_pairs: tuple[str, ...],
+    iter_count: int,
+    shuffle_pairs: bool,
+) -> list[str]:
+    """ペア評価順を返す (Ultra H-④ 是正、2026-05-28)。
+
+    - shuffle_pairs=True (本番デフォルト): イテレーションごとにランダムシャッフル
+      固定順 (USD_JPY → GBP_JPY) で max_total_positions=2 を埋めて
+      GBP_JPY が枯渇するリスクを抑える
+    - shuffle_pairs=False: 元の順序を維持 (テスト・再現性確保用)
+
+    iter_count を seed に使う Random インスタンス経由でシャッフルし、
+    iteration ごとに決定論的に異なる順序を出す。
+    """
+    pairs = list(enabled_pairs)
+    if not shuffle_pairs or len(pairs) <= 1:
+        return pairs
+    # 毎ループで異なる順序にするが、iter_count を seed にして決定論性を保つ
+    rng = random.Random(iter_count)
+    rng.shuffle(pairs)
+    return pairs
+
+
 def run_loop(
     *,
     dry_run: bool = False,
@@ -707,6 +956,7 @@ def run_loop(
     mt5_client=None,
     llm_filter=None,
     notifier=None,
+    shuffle_pairs: bool = True,
 ) -> None:
     """メインループ。`mt5_client` / `llm_filter` / `notifier` をテストで mock 可。"""
     setup_logging()
@@ -789,6 +1039,18 @@ def run_loop(
                                     len(close_result.get("failed", [])),
                                     close_result.get("total", 0),
                                 )
+                                # DB status を MT5 実態と同期 (Ultra H-⑤ 是正、2026-05-28)
+                                # close_all_positions だけでは trades.status='open' が残り、
+                                # 次回起動時に manage_open_trades が現在価格で
+                                # 近似 PnL を計算してしまう
+                                try:
+                                    _sync_closed_positions_to_db(
+                                        close_result, reason=f"retreat_close_{action}",
+                                    )
+                                except Exception as sync_err:  # noqa: BLE001
+                                    logger.error(
+                                        "撤退クローズ後の DB 同期失敗: %s", sync_err,
+                                    )
                                 v3_db.insert_loop_health(
                                     DB_PATH, "retreat_close",
                                     f"action={action} closed={len(close_result.get('closed', []))} "
@@ -824,8 +1086,11 @@ def run_loop(
                 except Exception as e:  # noqa: BLE001
                     logger.error("manage_open_trades 失敗: %s", e)
 
-                # 各ペアごとに評価
-                for pair in enabled_pairs:
+                # 各ペアごとに評価 (Ultra H-④ 是正: ペア評価順をランダム化)
+                iter_pairs = _ordered_pairs_for_iteration(
+                    enabled_pairs, iter_count, shuffle_pairs,
+                )
+                for pair in iter_pairs:
                     try:
                         process_pair(
                             mt5_client, pair,
@@ -886,6 +1151,9 @@ def main() -> int:
                         help="ループ間隔 (秒)")
     parser.add_argument("--principal-jpy", type=float, default=DEFAULT_PRINCIPAL_JPY,
                         help="元本 (JPY) - 損失上限の計算に使う")
+    parser.add_argument("--no-shuffle-pairs", action="store_true",
+                        help="ペア評価順をシャッフルせず ENABLED_PAIRS 順固定 "
+                             "(テスト/再現性確認用)")
     args = parser.parse_args()
 
     # CLI として実行された時のみ stdout を UTF-8 にラップ (pytest 環境を壊さない)
@@ -897,6 +1165,7 @@ def main() -> int:
         lot_units=args.lot_units,
         principal_jpy=args.principal_jpy,
         interval_sec=args.interval,
+        shuffle_pairs=not args.no_shuffle_pairs,
     )
     return 0
 

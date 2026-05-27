@@ -760,5 +760,366 @@ def test_atr_in_llm_prompt(tmp_db, breakout_m15_df, monkeypatch):
     assert row["atr"] > 0
 
 
+# ============================================================
+# 11. Ultra H-① close_position 戻り値キー不一致 是正
+# ============================================================
+
+
+def test_close_position_returns_close_price_key():
+    """Mt5Client.close_position の戻り値スキーマが "close_price" キーを含むこと。
+
+    Ultra H-① 是正 (2026-05-28) の前提条件確認: mt5_client.py L425-430 が
+    {"trade_id", "realized_pl", "close_price", "comment"} を返す契約を保証する。
+    将来この戻り値スキーマが変わったらこのテストが失敗して気づける。
+    """
+    import inspect
+    from src import mt5_client as mt5c
+    src_code = inspect.getsource(mt5c.Mt5Client.close_position)
+    assert '"close_price"' in src_code, (
+        "Mt5Client.close_position の戻り dict に 'close_price' キーがない。"
+        " demo_loop._close_and_record の H-① 修正と契約が壊れている。"
+    )
+
+
+def test_pnl_calculation_uses_close_price_not_price(tmp_db, monkeypatch):
+    """_close_and_record が close_price を読み、entry_price ≠ exit_price で
+    PnL が 0 にならないことを検証する。"""
+    from src.spec_v3 import demo_loop
+
+    monkeypatch.setattr(demo_loop, "DB_PATH", tmp_db)
+
+    # 時間損切り対象の open trade を仕込む (25 時間前にエントリ)
+    entry_at = (
+        datetime.now(timezone.utc) - timedelta(hours=25)
+    ).isoformat(timespec="seconds")
+    ticket = 7654321
+    tid = v3_db.insert_trade(
+        tmp_db, mt5_ticket=ticket, entry_at_utc=entry_at,
+        pair="USD_JPY", direction="long", lots=0.01,
+        entry_price=150.000, sl_price=149.50, tp_price=151.00,
+        sl_pips=50, tp_pips=100,
+        judgment_id=None, signal_reason="test",
+        llm_label="CONFIRM", llm_confidence=0.7,
+    )
+
+    # MT5 mock: get_positions は依然 ticket を返し、24h 時間損切りを発火させる
+    mt5_mock = MagicMock()
+    mt5_mock.get_positions.return_value = [
+        {"trade_id": ticket, "pair": "USD_JPY",
+         "direction": "long", "entry_price": 150.0, "volume": 0.01},
+    ]
+    # close_position は close_price のみ返す (実装の契約と一致)
+    mt5_mock.close_position.return_value = {
+        "trade_id": str(ticket),
+        "realized_pl": 1000.0,
+        "close_price": 150.250,    # +25 pips
+        "comment": "ok",
+    }
+
+    ks = KillSwitchState()
+    demo_loop.manage_open_trades(mt5_mock, ks)
+
+    # close_position が呼ばれたこと
+    mt5_mock.close_position.assert_called_once_with(str(ticket))
+    # trade_closures に exit_price=150.250、pnl_pips=+25 が記録されていること
+    with v3_db.get_conn(tmp_db) as conn:
+        row = conn.execute(
+            "SELECT exit_price, pnl_pips FROM trade_closures WHERE trade_id=?",
+            (tid,),
+        ).fetchone()
+    assert row is not None, "trade_closures に行が記録されていない"
+    assert row["exit_price"] == pytest.approx(150.250, abs=0.0001), (
+        f"exit_price が close_price から取れていない: {row['exit_price']}"
+    )
+    # 0.250 / 0.01 (pip_size) = 25 pips
+    assert row["pnl_pips"] == pytest.approx(25.0, abs=0.01), (
+        f"pips 計算がおかしい: {row['pnl_pips']} (期待値 25)"
+    )
+    # PnL=0 になっていないこと (H-① の致命バグ)
+    assert row["pnl_pips"] != 0, "H-① 修正前の症状 (PnL=0) が再演している"
+
+
+# ============================================================
+# 12. Ultra H-② 撤退条件 #0 (lift ベース) 配線
+# ============================================================
+
+
+def test_lift_calculation_returns_none_when_base_unknown(tmp_db):
+    """base PF が未計算 (抑制 PnL 未実装) の場合 lift=None で計算不能扱い。"""
+    from src.spec_v3.risk_manager import compute_lift_per_pair
+
+    info = compute_lift_per_pair(tmp_db, "USD_JPY")
+    assert info["pair"] == "USD_JPY"
+    # データがほぼ無い状態では all_evaluable=False、consecutive_below=0
+    assert info["all_evaluable"] is False
+    assert info["consecutive_below"] == 0
+
+
+def test_retreat_condition_0_does_not_fire_without_3_consecutive_months(tmp_db):
+    """3 ヶ月未満では撤退条件 #0 は発火しない (Phase 2'A 30 日想定)。"""
+    from src.spec_v3.risk_manager import check_retreat_per_pair
+
+    # 数件 trade を入れて recent_pf を計算可能にしておく (#2/#3 が先に発火しないよう全勝)
+    for _ in range(6):
+        _insert_closed_trade(tmp_db, "USD_JPY", pnl_pips=50.0, pnl_jpy=500.0)
+
+    status = check_retreat_per_pair(tmp_db, "USD_JPY")
+    # base が None なので lift は計算不能、condition #0 は触発しない
+    assert status.code != "retreat_0_lift_below_threshold"
+
+
+def test_retreat_condition_0_triggers_after_3months_below(tmp_db, monkeypatch):
+    """3 ヶ月連続 lift < +0.30 で撤退条件 #0 発火 (compute_lift_per_pair モック)。"""
+    from src.spec_v3 import risk_manager as rm
+
+    # compute_lift_per_pair を直接モックして「3 ヶ月連続未達 + all_evaluable」を再現
+    def fake_lift(db_path, pair, **kwargs):
+        return {
+            "pair": pair,
+            "months": [
+                {"month": "2026-05", "pf_filter": 1.10, "pf_base": 1.00,
+                 "lift": 0.10, "n_filter": 10, "n_signal": 30,
+                 "below_threshold": True},
+                {"month": "2026-04", "pf_filter": 1.05, "pf_base": 0.95,
+                 "lift": 0.10, "n_filter": 10, "n_signal": 30,
+                 "below_threshold": True},
+                {"month": "2026-03", "pf_filter": 1.15, "pf_base": 1.00,
+                 "lift": 0.15, "n_filter": 10, "n_signal": 30,
+                 "below_threshold": True},
+            ],
+            "consecutive_below": 3,
+            "all_evaluable": True,
+        }
+
+    monkeypatch.setattr(rm, "compute_lift_per_pair", fake_lift)
+
+    # PF<1.0 などの他条件が先に発火しないように 1 件だけ勝ち trade を仕込む
+    _insert_closed_trade(tmp_db, "USD_JPY", pnl_pips=10.0, pnl_jpy=100.0)
+
+    status = rm.check_retreat_per_pair(tmp_db, "USD_JPY")
+    assert status.triggered is True
+    assert status.code == "retreat_0_lift_below_threshold"
+    assert "lift" in status.message
+
+
+# ============================================================
+# 13. Ultra H-③ pipeline 1 行サマリログ
+# ============================================================
+
+
+def test_pipeline_log_at_each_stage(tmp_db, breakout_m15_df, monkeypatch, caplog):
+    """process_pair の各ステージで `pipeline:` 1 行ログが出ること。"""
+    from src.spec_v3 import demo_loop
+
+    monkeypatch.setattr(demo_loop, "DB_PATH", tmp_db)
+
+    mt5_mock = MagicMock()
+    mt5_mock.get_prices.return_value = breakout_m15_df
+    mt5_mock.get_positions.return_value = []
+    mt5_mock.get_spread.return_value = None
+
+    ks = KillSwitchState()
+    notifier = MagicMock()
+
+    caplog.set_level("INFO", logger="spec_v3_demo")
+
+    summary = demo_loop.process_pair(
+        mt5_mock, "USD_JPY",
+        filter_obj=None, notifier=notifier, kill_switch=ks,
+        dry_run=True, lot_units=1000,
+    )
+
+    # 1 行は必ず "pipeline:" で始まること (stage 何であれ)
+    pipeline_logs = [
+        r.getMessage() for r in caplog.records
+        if r.getMessage().startswith("pipeline:")
+    ]
+    assert len(pipeline_logs) >= 1, (
+        "pipeline: ログが 1 件も出ていない (memory project_fx_pipeline_trace.md 未継承)"
+    )
+    # pair=USD_JPY が必ず含まれること
+    assert any("pair=USD_JPY" in m for m in pipeline_logs)
+    # stage=... が必ず含まれること
+    assert any("stage=" in m for m in pipeline_logs)
+
+
+def test_pipeline_log_killswitch_stage(tmp_db, breakout_m15_df, monkeypatch, caplog):
+    """killswitch_blocked 時にも pipeline ログが出ること。"""
+    from src.spec_v3 import demo_loop
+
+    monkeypatch.setattr(demo_loop, "DB_PATH", tmp_db)
+
+    mt5_mock = MagicMock()
+    mt5_mock.get_prices.return_value = breakout_m15_df
+    mt5_mock.get_positions.return_value = []
+    mt5_mock.get_spread.return_value = None
+
+    ks = KillSwitchState()
+    ks.global_block_reason = "test_block"
+
+    notifier = MagicMock()
+    caplog.set_level("INFO", logger="spec_v3_demo")
+
+    summary = demo_loop.process_pair(
+        mt5_mock, "USD_JPY",
+        filter_obj=None, notifier=notifier, kill_switch=ks,
+        dry_run=True, lot_units=1000,
+    )
+
+    pipeline_logs = [
+        r.getMessage() for r in caplog.records
+        if r.getMessage().startswith("pipeline:")
+    ]
+    if summary["stage"] == "killswitch_blocked":
+        assert any("stage=killswitch_blocked" in m for m in pipeline_logs)
+        assert any("reason=" in m for m in pipeline_logs)
+
+
+# ============================================================
+# 14. Ultra H-④ ENABLED_PAIRS 評価順ローテーション
+# ============================================================
+
+
+def test_pair_evaluation_order_rotates():
+    """_ordered_pairs_for_iteration: shuffle_pairs=True で iter ごとに順序が変わる。"""
+    from src.spec_v3.demo_loop import _ordered_pairs_for_iteration
+
+    pairs = ("USD_JPY", "GBP_JPY")
+
+    # 固定: shuffle_pairs=False なら常に元の順
+    assert _ordered_pairs_for_iteration(pairs, 1, False) == ["USD_JPY", "GBP_JPY"]
+    assert _ordered_pairs_for_iteration(pairs, 100, False) == ["USD_JPY", "GBP_JPY"]
+
+    # ランダム: 多数の iter にわたって両方の順序が出ること
+    observed = set()
+    for i in range(50):
+        observed.add(tuple(_ordered_pairs_for_iteration(pairs, i, True)))
+    assert ("USD_JPY", "GBP_JPY") in observed
+    assert ("GBP_JPY", "USD_JPY") in observed, (
+        "shuffle_pairs=True で GBP_JPY が先頭になるイテレーションが存在しない"
+    )
+
+
+def test_pair_evaluation_order_deterministic_per_iter():
+    """同じ iter_count なら必ず同じ順序を返す (再現性確保)。"""
+    from src.spec_v3.demo_loop import _ordered_pairs_for_iteration
+
+    pairs = ("USD_JPY", "GBP_JPY")
+    result_a = _ordered_pairs_for_iteration(pairs, 7, True)
+    result_b = _ordered_pairs_for_iteration(pairs, 7, True)
+    assert result_a == result_b
+
+
+def test_run_loop_shuffle_pairs_argument(tmp_db, monkeypatch):
+    """run_loop に shuffle_pairs=False を渡すと固定順 (USD_JPY → GBP_JPY) で評価される。"""
+    from src.spec_v3 import demo_loop
+
+    monkeypatch.setattr(demo_loop, "DB_PATH", tmp_db)
+
+    # process_pair の呼ばれ順を追跡
+    called_pairs: list[str] = []
+
+    def fake_process_pair(client, pair, **kwargs):
+        called_pairs.append(pair)
+        return {"pair": pair, "stage": "no_signal"}
+
+    monkeypatch.setattr(demo_loop, "process_pair", fake_process_pair)
+
+    mt5_mock = MagicMock()
+    mt5_mock.get_prices.return_value = pd.DataFrame()
+    mt5_mock.get_positions.return_value = []
+    notifier = MagicMock()
+
+    demo_loop.run_loop(
+        dry_run=True, single_iter=True,
+        enabled_pairs=("USD_JPY", "GBP_JPY"),
+        mt5_client=mt5_mock, llm_filter=None, notifier=notifier,
+        shuffle_pairs=False,
+    )
+
+    assert called_pairs == ["USD_JPY", "GBP_JPY"]
+
+
+# ============================================================
+# 15. Ultra H-⑤ close_all_positions 後の DB status 同期
+# ============================================================
+
+
+def test_close_all_positions_updates_db_status(tmp_db, monkeypatch):
+    """撤退発火時に close_all_positions の closed/failed が DB 反映されること。"""
+    from src.spec_v3 import demo_loop
+
+    monkeypatch.setattr(demo_loop, "DB_PATH", tmp_db)
+
+    # 撤退条件 #5 を発火させる: 両ペアで PF<1.0
+    for pair in ENABLED_PAIRS:
+        for _ in range(6):
+            _insert_closed_trade(tmp_db, pair, pnl_pips=-50.0, pnl_jpy=-500.0)
+
+    # 加えて open trade を 2 件 (USD_JPY ticket=111, GBP_JPY ticket=222) 仕込む
+    entry_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    tid_usd = v3_db.insert_trade(
+        tmp_db, mt5_ticket=111, entry_at_utc=entry_at,
+        pair="USD_JPY", direction="long", lots=0.01,
+        entry_price=150.000, sl_price=149.5, tp_price=151.0,
+        sl_pips=50, tp_pips=100,
+        judgment_id=None, signal_reason="t",
+        llm_label="CONFIRM", llm_confidence=0.7,
+    )
+    tid_gbp = v3_db.insert_trade(
+        tmp_db, mt5_ticket=222, entry_at_utc=entry_at,
+        pair="GBP_JPY", direction="short", lots=0.01,
+        entry_price=200.000, sl_price=200.5, tp_price=199.0,
+        sl_pips=50, tp_pips=100,
+        judgment_id=None, signal_reason="t",
+        llm_label="CONFIRM", llm_confidence=0.7,
+    )
+
+    # MT5 mock: close_all_positions は ticket=111 を成功、ticket=222 を失敗で返す
+    mt5_mock = MagicMock()
+    mt5_mock.get_prices.return_value = pd.DataFrame()
+    mt5_mock.get_positions.return_value = []
+    mt5_mock.close_all_positions.return_value = {
+        "closed": [
+            {"trade_id": "111", "realized_pl": 100.0,
+             "close_price": 150.25, "comment": "ok"},
+        ],
+        "failed": ["222"],
+        "total": 2,
+    }
+
+    notifier = MagicMock()
+    demo_loop.run_loop(
+        dry_run=True, single_iter=True,
+        enabled_pairs=ENABLED_PAIRS,
+        mt5_client=mt5_mock, llm_filter=None, notifier=notifier,
+        principal_jpy=1_000_000.0,
+    )
+
+    # USD_JPY (ticket=111): trade_closures に行が入り status='closed' になる
+    with v3_db.get_conn(tmp_db) as conn:
+        row_usd = conn.execute(
+            "SELECT status FROM trades WHERE id=?", (tid_usd,),
+        ).fetchone()
+        closures_usd = conn.execute(
+            "SELECT exit_price, pnl_pips FROM trade_closures WHERE trade_id=?",
+            (tid_usd,),
+        ).fetchall()
+    assert row_usd["status"] == "closed", (
+        "撤退クローズ後に USD_JPY の trades.status が 'open' のまま残っている (H-⑤ 未修正)"
+    )
+    assert len(closures_usd) == 1
+    assert closures_usd[0]["exit_price"] == pytest.approx(150.25, abs=0.0001)
+
+    # GBP_JPY (ticket=222): 決済失敗 → status='close_failed'
+    with v3_db.get_conn(tmp_db) as conn:
+        row_gbp = conn.execute(
+            "SELECT status FROM trades WHERE id=?", (tid_gbp,),
+        ).fetchone()
+    assert row_gbp["status"] == "close_failed", (
+        f"close_failed status マークがされていない (status={row_gbp['status']})"
+    )
+
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])
