@@ -536,6 +536,96 @@ class Mt5Client(BrokerClient):
         }
 
     # ================================================================
+    # スプレッド取得 (SPEC v3 § 5.2 キルスイッチ #3 用)
+    # ================================================================
+
+    def get_spread(self, instrument: str) -> Optional[float]:
+        """現在の bid-ask スプレッドを pips 単位で取得する。
+
+        SPEC v3 のスプレッド異常キルスイッチ (3 倍超で発注ブロック) に使用。
+        BrokerClient.get_spread のオーバーライド。
+
+        Args:
+            instrument: BrokerClient 形式の通貨ペア (例: "USD_JPY")
+
+        Returns:
+            現在スプレッド (pips)。取得失敗時は None (キルスイッチは
+            None を「ベースライン未確立」として誤発火しない設計)。
+        """
+        try:
+            symbol = to_mt5_symbol(instrument)
+            tick = mt5.symbol_info_tick(symbol)
+            if tick is None or tick.ask <= 0 or tick.bid <= 0:
+                return None
+            spread_price = float(tick.ask) - float(tick.bid)
+            # pip サイズ: JPY クロスは 0.01、それ以外は 0.0001
+            pip_size = 0.01 if instrument.endswith("_JPY") else 0.0001
+            return spread_price / pip_size
+        except Exception as e:  # noqa: BLE001
+            logger.warning("get_spread 失敗 %s: %s", instrument, e)
+            return None
+
+    # ================================================================
+    # 全ポジション一括決済 (SPEC v3 撤退条件 #5 用)
+    # ================================================================
+
+    def close_all_positions(self, reason: str = "") -> dict:
+        """全ポジションを一括決済する (SPEC v3 撤退条件 #5 / 緊急停止用)。
+
+        個別の決済エラーが発生しても残りのポジション決済を継続する。
+        Ultra/Karen バグ③ 是正 (2026-05-27): SPEC v3 撤退条件 #5 発火後に
+        MT5 のオープンポジションが残置される問題への対処。
+
+        Args:
+            reason: 一括決済の理由 (ログ出力用)
+
+        Returns:
+            {
+                "closed": list[dict],     # 決済成功した結果リスト
+                "failed": list[str],      # 決済失敗した trade_id リスト
+                "total": int,             # 決済対象の総数
+            }
+        """
+        if reason:
+            logger.warning("MT5 全ポジション一括決済を開始: reason=%s", reason)
+        else:
+            logger.warning("MT5 全ポジション一括決済を開始")
+
+        try:
+            positions = self.get_positions()
+        except Mt5ClientError as e:
+            logger.error("close_all_positions: ポジション取得失敗: %s", e)
+            return {"closed": [], "failed": [], "total": 0}
+
+        closed: list[dict] = []
+        failed: list[str] = []
+
+        for pos in positions:
+            trade_id = pos["trade_id"]
+            try:
+                result = self.close_position(trade_id)
+                closed.append(result)
+            except Mt5ClientError as e:
+                # 一括決済では個別エラーでも継続する (安全性のため全て試みる)
+                logger.error(
+                    "一括決済中にエラー発生 (続行): trade_id=%s, error=%s",
+                    trade_id, e,
+                )
+                failed.append(trade_id)
+            except Exception as e:  # noqa: BLE001
+                logger.error(
+                    "一括決済中に予期せぬエラー (続行): trade_id=%s, error=%s",
+                    trade_id, e,
+                )
+                failed.append(trade_id)
+
+        logger.info(
+            "MT5 全ポジション一括決済完了: 成功=%d, 失敗=%d, 合計=%d",
+            len(closed), len(failed), len(positions),
+        )
+        return {"closed": closed, "failed": failed, "total": len(positions)}
+
+    # ================================================================
     # 内部ヘルパー
     # ================================================================
 
