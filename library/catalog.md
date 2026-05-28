@@ -1,6 +1,6 @@
 # Library Catalog
 
-最終更新: 2026-05-27
+最終更新: 2026-05-28
 
 ## 凡例
 - 状態: 未読 / 既読 / 要精読
@@ -40,12 +40,37 @@
 
 ---
 
-## ドメイン別統計
+---
 
-| ドメイン | 件数 |
-|---|---|
-| claude-code | 7件 |
-| claude-ecosystem | 5件 |
-| ai-trading | 3件 |
-| ai-news | 4件 |
-| **合計** | **19件** |
+## 2026-05-28 収集分（13件収集 → 13件SIGNAL）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 020 | [2026-05-28_020](articles/2026-05-28_020_Claude-Opus-4-8-release-1M-context-Dynamic-Workflows.md) | Claude Opus 4.8リリース: 1Mコンテキスト・SWE-bench Pro 69.2%・Dynamic Workflows同時公開 | claude-ecosystem | 未読 | #web-signal #urgent |
+| 021 | [2026-05-28_021](articles/2026-05-28_021_Claude-Code-Dynamic-Workflows-1000-parallel-subagents.md) | Claude Code Dynamic Workflows（研究プレビュー）: 最大1,000並列サブエージェント | claude-code | 未読 | #web-signal |
+| 022 | [2026-05-28_022](articles/2026-05-28_022_Claude-Code-Security-Guidance-Plugin-30-40pct-PR-reduction.md) | Claude Code セキュリティプラグイン: 25脆弱性クラス3段階検出・PRセキュリティ問題30-40%削減 | claude-code | 未読 | #web-signal |
+| 023 | [2026-05-28_023](articles/2026-05-28_023_Claude-Code-Routines-schedule-API-GitHub-triggers.md) | Claude Code Routines: スケジュール・API・GitHubトリガーによるクラウド自動化 | claude-code | 未読 | #web-signal |
+| 024 | [2026-05-28_024](articles/2026-05-28_024_AWS-MCP-Server-GA-IAM-CloudTrail.md) | AWS MCP Server GA: IAM制御・CloudTrail監査付きAWSサービスMCP統合 | claude-ecosystem | 未読 | #web-signal |
+| 025 | [2026-05-28_025](articles/2026-05-28_025_Illinois-SB315-first-US-AI-frontier-model-audit-law.md) | イリノイ州SB 315可決: 米国初・フロンティアモデル年次第三者監査義務化法 | ai-news | 未読 | #web-signal #urgent |
+| 026 | [2026-05-28_026](articles/2026-05-28_026_Agentic-Trading-LLM-financial-markets-2026.md) | エージェント型AI取引2026: LLMエージェントが金融市場を変革するメカニズムと現状 | ai-trading | 未読 | #web-signal |
+| 027 | [2026-05-28_027](articles/2026-05-28_027_CLAUDE-md-complete-guide-memory-loading-compression.md) | CLAUDE.md完全ガイド: 4層メモリ・ロードタイミング・クロスツール圧縮の全解説 | claude-code | 未読 | #web-signal |
+| 028 | [2026-05-28_028](articles/2026-05-28_028_Local-LLM-2026-Qwen35-Gemma4-competitive-shift.md) | ローカルLLM 2026急進化: Qwen3.5・Gemma 4がノートPCで動作・市場シェアChatGPT64.5%に低下 | ai-news | 未読 | #web-signal |
+| 029 | [2026-05-28_029](articles/2026-05-28_029_Claude-Code-v2-1-152-code-review-fix-resume.md) | Claude Code v2.1.152詳解: /code-review --fix自動適用・バックグラウンドセッション/resume | claude-code | 未読 | #web-signal |
+| 030 | [2026-05-28_030](articles/2026-05-28_030_TradingAgents-60K-stars-trending-v024-enterprise.md) | TradingAgents 58,973 Star GitHub急上昇: v0.2.4エンタープライズ機能・年間24.9%リターン | ai-trading | 未読 | #web-signal |
+| 031 | [2026-05-28_031](articles/2026-05-28_031_LLM-trading-bot-comparison-Claude-Sonnet-best-2026.md) | LLM対決: アルゴ取引Pythonボット生成でClaude Sonnet 4.6が最高品質・デバッグ8h削減 | ai-trading | 未読 | #web-signal |
+| 032 | [2026-05-28_032](articles/2026-05-28_032_Claude-Code-tips-day-one-marmelab-plan-mode.md) | Claude Code実戦Tips: 初日から知っておきたかった教訓（プランモード・コンテキスト・検証） | claude-code | 未読 | #web-signal |
+
+### NOISEとして除外
+なし（X投稿データなし・drop.mdにURLなし）
+
+---
+
+## ドメイン別統計（累計）
+
+| ドメイン | 2026-05-27 | 2026-05-28 | 累計 |
+|---|---|---|---|
+| claude-code | 7件 | 6件 | 13件 |
+| claude-ecosystem | 5件 | 2件 | 7件 |
+| ai-trading | 3件 | 3件 | 6件 |
+| ai-news | 4件 | 2件 | 6件 |
+| **合計** | **19件** | **13件** | **32件** |
