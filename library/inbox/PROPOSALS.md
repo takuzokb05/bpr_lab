@@ -106,3 +106,42 @@
 1. Max/Team/EnterpriseプランまたはAPI経由でDynamic Workflowsを有効化
 2. FXバックテストの並列実行プロンプト設計（通貨ペア×時間軸のマトリックス）
 3. 結果を統合・比較するオーケストレーターエージェントのCLAUDE.md設計
+
+---
+
+## 2026-05-29 提案
+
+### P-010: Skills設計最適化 — SKILL.md肥大化防止（決定論的処理のスクリプト化）
+
+**根拠記事**: 036 (Claude Code Skills設計パターン・playpark.co.jp)
+**詳細**: SKILL.mdが312行→42行（87%削減）・月次エラー80%削減を実証した設計パターン。「決定論的処理（日付計算・ファイル確認・JSON生成）はBashスクリプトへ分離し、SKILL.mdにはAI判断が必要なものだけ記述する」原則で実現。bpr_labの日次収集エージェントSkillにも同原則を適用できる。
+
+**提案アクション**:
+1. `.claude/skills/`配下の既存Skillsを監査し、スクリプト化可能な決定論的処理を特定
+2. `get_next_date.sh`・`detect_mode.sh`・`orchestrate.sh`パターンを参考に分離実装
+3. SKILL.md本体を200行以内（理想は100行以内）に削減
+
+---
+
+### P-011: カスタムMCPサーバー開発 — bpr_lab独自データのClaude接続
+
+**根拠記事**: 041 (エブリー社食トレンド分析MCPサーバー自作事例)
+**詳細**: FastMCP + データソース（Databricks/Pandas等）でカスタムMCPサーバーを構築し、Claude APIから自然言語でbpr_lab独自データを問い合わせる事例。FXバックテスト結果・MT5取引ログ・戦略パラメータをMCP経由でClaudeに接続すれば、「過去1ヶ月のSR戦略のSharp比を教えて」のような自然言語クエリが可能になる。
+
+**提案アクション**:
+1. FastMCP（`pip install fastmcp`）でsandbox/FX自動取引/のバックテスト結果をMCP化
+2. ツール設計: `get_backtest_results(strategy, period)`・`get_trade_log(date_range)`・`compare_strategies()`
+3. OpenTelemetryで利用状況・エラー率の継続追跡を設定
+
+---
+
+### P-012: 緊急追加 — Claude Sonnet 4 / Opus 4（20250514版）のモデルリタイア対応
+
+**根拠記事**: 040 (Claude Agent SDK deep dive - 課金・モデルリタイア情報)
+**緊急度**: 高（2026-06-15まで残り17日）
+**詳細**: P-006（課金変更）に加え、`claude-sonnet-4-20250514`と`claude-opus-4-20250514`が2026年6月15日でAPIからリタイア（ハードデプリケーション）。現在どこかでこれらのモデルIDをハードコードしていれば、その日に呼び出しが失敗する。
+
+**提案アクション**:
+1. sandbox/FX自動取引/・library/配下のコードで古いモデルIDを検索: `grep -r "sonnet-4-20250514\|opus-4-20250514" .`
+2. 発見した場合は`claude-sonnet-4-6`または`claude-opus-4-7`に変更（Opus 4.8も可）
+3. P-006のコスト試算も合わせて実施

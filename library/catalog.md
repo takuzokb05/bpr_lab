@@ -1,6 +1,6 @@
 # Library Catalog
 
-最終更新: 2026-05-28
+最終更新: 2026-05-29
 
 ## 凡例
 - 状態: 未読 / 既読 / 要精読
@@ -65,12 +65,40 @@
 
 ---
 
+---
+
+## 2026-05-29 収集分（16件収集 → 16件SIGNAL）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 033 | [2026-05-29_033](articles/2026-05-29_033_Claude-Code-full-stack-MCP-Skills-Subagents-Hooks-explained.md) | Claude Codeフルスタック: MCP・Skills・Subagents・Hooksの5層アーキテクチャ解説 | claude-code | 未読 | #web-signal |
+| 034 | [2026-05-29_034](articles/2026-05-29_034_Claude-Code-definitive-setup-guide-CLAUDE-md-MCP-Skills-Hooks.md) | Claude Code決定版セットアップ: CLAUDE.md・MCPサーバー・Skills・Hooks完全手順 | claude-code | 未読 | #web-signal |
+| 035 | [2026-05-29_035](articles/2026-05-29_035_Effective-Claude-Code-Workflows-2026-Dynamic-Workflows-1M-context.md) | Effective Claude Code Workflows 2026: Dynamic Workflows・1Mコンテキストで変わった実践 | claude-code | 未読 | #web-signal |
+| 036 | [2026-05-29_036](articles/2026-05-29_036_Claude-Code-Skills-design-patterns-SKILL-md-87pct-reduction.md) | Claude Code Skills設計パターン: SKILL.md肥大化87%削減・月次エラー80%減の実証 | claude-code | 未読 | #web-signal |
+| 037 | [2026-05-29_037](articles/2026-05-29_037_CLAUDE-md-what-really-belongs-good-bad-examples-zenn.md) | CLAUDE.mdに本当に書くべきこと: 良い例・悪い例で徹底解説（Zenn保存版） | claude-code | 未読 | #web-signal |
+| 038 | [2026-05-29_038](articles/2026-05-29_038_Claude-Code-MCP-servers-browser-test-automation-mynavi-2026.md) | Claude Codeに目と手足を与えるMCPサーバー: ブラウザ操作〜テスト自動化（マイナビ） | claude-code | 未読 | #web-signal |
+| 039 | [2026-05-29_039](articles/2026-05-29_039_Claude-Code-9-hidden-features-Voice-Remote-loop-Dynamic.md) | Claude Code 知られざる9機能: Voice Mode・Remote Control・Dynamic Workflows・/loop | claude-code | 未読 | #web-signal |
+| 040 | [2026-05-29_040](articles/2026-05-29_040_Claude-Agent-SDK-deep-dive-hooks-18events-MCP-billing-June15.md) | Claude Agent SDK深掘り: 18フックイベント・MCP統合・6月15日課金変更・モデルリタイア | claude-ecosystem | 未読 | #web-signal #urgent |
+| 041 | [2026-05-29_041](articles/2026-05-29_041_custom-MCP-food-trend-FastMCP-Databricks-every-tech.md) | 食トレンド分析MCPサーバー自作事例: FastMCP+Databricks Apps+Unity Catalog（エブリー） | claude-ecosystem | 未読 | #web-signal |
+| 042 | [2026-05-29_042](articles/2026-05-29_042_LLM-trading-bots-comparison-FinMem-FreqAI-AI-Hedge-Fund-techniques.md) | LLMベーストレーディングボット比較: FinMem・FreqAI・AI-Hedge-Fund・5手法の実証 | ai-trading | 未読 | #web-signal |
+| 043 | [2026-05-29_043](articles/2026-05-29_043_Multi-Agent-AI-Trading-TradingAgents-51K-stars-28pct-outperform.md) | TradingAgentsマルチエージェントAI取引: 51K Stars・ベースライン比+6.57〜28.43% | ai-trading | 未読 | #web-signal |
+| 044 | [2026-05-29_044](articles/2026-05-29_044_AI-Trading-Agent-MT5-PropFirm-no-coding-LLM-executor.md) | MT5×LLMでプロップファームに挑む: コーディング不要・EA=ターミナルエグゼキューター設計 | ai-trading | 未読 | #web-signal |
+| 045 | [2026-05-29_045](articles/2026-05-29_045_ChatGPT-FX-EA-MT5-Japan-practical-implementation.md) | ChatGPT売買判断定期連携FX自動取引EA: MT5+JSON+15分足ポーリング実践（国内事例） | ai-trading | 未読 | #web-signal |
+| 046 | [2026-05-29_046](articles/2026-05-29_046_White-House-National-AI-Policy-Framework-7pillars-state-preemption.md) | 米国ホワイトハウス国家AI政策フレームワーク: 7柱・州法先占・規制サンドボックス（2026年3月） | ai-news | 未読 | #web-signal |
+| 047 | [2026-05-29_047](articles/2026-05-29_047_LLM-releases-April-2026-GPT55-Opus47-Gemma4-SubQ-comprehensive.md) | 2026年4月LLM史上最多リリース: GPT-5.5 88.7%・Opus 4.7・Gemma4・SubQ非トランスフォーマー | ai-news | 未読 | #web-signal |
+| 048 | [2026-05-29_048](articles/2026-05-29_048_Fujitsu-self-evolving-multi-AI-agent-Takane-28pt-CMU-partnership.md) | 富士通 自己進化マルチAIエージェント技術: Takane精度28pt向上・CMU共同研究 | ai-news | 未読 | #web-signal |
+
+### NOISEとして除外
+なし（X投稿データなし・drop.mdにURLなし・全16件SIGNAL判定）
+
+---
+
 ## ドメイン別統計（累計）
 
-| ドメイン | 2026-05-27 | 2026-05-28 | 累計 |
-|---|---|---|---|
-| claude-code | 7件 | 6件 | 13件 |
-| claude-ecosystem | 5件 | 2件 | 7件 |
-| ai-trading | 3件 | 3件 | 6件 |
-| ai-news | 4件 | 2件 | 6件 |
-| **合計** | **19件** | **13件** | **32件** |
+| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 累計 |
+|---|---|---|---|---|
+| claude-code | 7件 | 6件 | 7件 | 20件 |
+| claude-ecosystem | 5件 | 2件 | 2件 | 9件 |
+| ai-trading | 3件 | 3件 | 4件 | 10件 |
+| ai-news | 4件 | 2件 | 3件 | 9件 |
+| **合計** | **19件** | **13件** | **16件** | **48件** |
