@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-05-22</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-05-22 | 78件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-05-22</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>AnthropicがProject Glasswingで1ヶ月に10,000件超の重大脆弱性を発見し、Claude MythosをあえてリリースしないというAI安全性の新局面が注目を集めた。並行して評価額9,000億ドル超の300億ドル資金調達が来週クローズ予定と報じられ、Anthropicは非公開企業として世界最高値を更新する見込みだ。Claude Codeの週次利用制限50%増（7月13日まで）・WIF認証・Routinesの組み合わせが実ユーザーの業務自動化を加速している。EU AI Actの2026年8月全面施行が迫るなか、米国ではトランプ政権がフロンティアモデルの任意審査制度草案を作成した。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>Routinesが本格普及、制限緩和も追い風</h3>
+
+<p>Claude Code Routinesが2026年4月14日のリサーチプレビュー公開以来、実運用フェーズに移行しつつある（<strong>一次ソース確認済み</strong>）。プロンプト・リポジトリ・コネクターを1パッケージにまとめてAnthropicのクラウドで自動実行できるこの機能は、スケジュール（hourly/nightly/weekly）・HTTP API・GitHub webhookの3種トリガーに対応し、バグトリアージやPR自動生成のユースケースで注目されている。実行制限はPro:5回/日、Max:15回/日、Team/Enterprise:25回/日。5月14日には全有料プランの週次利用制限が50%増加（7月13日まで）され、Maxユーザーの大規模活用のハードルが下がった。</p>
+
+<p>セキュリティ面では5月4日発表のWIF（Workload Identity Federation）サポートが大きい。AWS IAM・Google Cloud・GitHub Actions等の既存IdPを使って短命トークンで認証できるため、CIパイプラインへの静的APIキー埋め込みが不要になった。Routines × WIF × 利用制限緩和の三点セットで、エンタープライズ導入の主な障壁が同時に解消された形だ。</p>
+<p><a href="https://www.infoq.com/news/2026/05/anthropic-routines-claude/" target="_blank">InfoQ</a> / <a href="https://xenospectrum.com/claude-api-workload-identity-federation/" target="_blank">XenoSpectrum</a></p>
+
+<h3>実ユーザーが示す多様な自動化事例</h3>
+
+<p>コミュニティでは具体的な活用例が相次いだ。医療現場ではClaude CodeのSkills機能で月次検査数集計を自動化し、毎回同じ形式で出力されるようになったとの報告がある。研究者は1ヶ月分の語彙定義混同の修正を依頼したところ、Claude Codeが1時間以上かけて全チェックを継続する事例を報告した。フィンテック企業Contoはインハウスのメモリを利用したMCP・評価フレームワーク・重要ワークフローを規制環境下のアナリストチームに本番展開し、従来は数時間かかっていたトランザクションレビューを完全監査証跡付きのエージェントワークフローに置き換えた。</p>
+
+<p>非エンジニアが6ヶ月でFreqtrade戦略とX自動化パイプラインをClaude Codeで構築した事例は、「コーディング経験なしでもアイデア実現が可能」という具体的な実証として広く共有された。一方、CodeGraphというOSSツール（14k+スター）がClaude Codeのコードベース探索を最適化し、トークン約59%・ツール呼び出し約70%・実行時間約49%・コスト約35%を削減するという実測値を公表している。</p>
+
+<p>Claude Codeを司令塔にサブエージェントを並列実行する「役割分担で体感速度が変わる」パターンも定着してきた。Nautilus研究プロジェクトでは単一プロンプトから「手法の再現→ベンチマーク評価→ファインチューン→デプロイ」を実行し、15の（手法、ベンチマーク）ペアを±2%以内の誤差で再現した。また、`~/.claude/projects/`以下のディレクトリ単位で記憶がロードされる仕様を実体験から発見した報告もあり、フォルダ構成変更時の注意点として共有されている。</p>
+
+<h3>Anthropic：資金調達・Project Glasswing・Stainless買収</h3>
+
+<p>Bloomberg報道によると、AnthropicはSequoia・Dragoneer・Altimeter・Greenoaks各20億ドルで最大300億ドルの資金調達を来週クローズ予定。評価額9,000億ドル超でOpenAIを上回り世界最高値の非公開企業となる見込みだ。ARRは来月末に500億ドル超と投資家に説明されており、初の黒字化も視野に入る。</p>
+
+<p>技術面では<strong>Project Glasswing</strong>（Claude Mythos）の1ヶ月成果が公式アカウントから発表された。Apple・Google・Microsoft・AWS・Cloudflareと連携し10,000件超のhigh/criticalレベルの脆弱性を発見。Cloudflareで2,000件（うち400件がhigh/critical）、Firefox 150で271件（148比10倍）、27年間潜伏していたOpenBSDバグも含まれる。モデルが自発的に動作するエクスプロイトチェーンを生成するため、Anthropic自身が「いかなる企業も誤用を止める十分な安全策を持たない」と公言してリリースを停止した判断は、日本でも平将明・前デジタル大臣がサイバー安全保障の文脈でメディアインタビューで言及した。</p>
+
+<p>戦略的にはStainless API買収も注目される。AnthropicのAPIを初日から支えてきたSDK・MCPサーバー自動生成ツールをインハウス化することで、OpenAPIスペックからMCPサーバーを自動生成できる体制が整う。MCPサーバー開発でチームが詰まる主因（スペックからサーバー生成の80%工程）の解消に直結すると評価されている。また、Karpathy氏がAnthropicに加入しClaudeでClaudeを作るミッションに従事、KPMG全社27.6万人へのClaude導入、Claude for Small Business（QuickBooks・Canva・Google Workspace連携）始動など、エコシステムの拡大が続いた。</p>
+
+<p>解釈可能性研究の公的認知という意味では、AnthropicのChris Olahが教皇レオ14世の初回回勅「Magnifica Humanitas」（AI時代における人間保護）発表式典に同席したことも象徴的な出来事として記録された。</p>
+<p><a href="https://x.com/AnthropicAI/status/2057909102542549503" target="_blank">Anthropic公式</a></p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>EU AI Act 2026年8月全面施行（一次ソース確認済み）</h3>
+
+<p>欧州委員会公式サイトによると、EU AI Actは2026年8月2日に全面施行される。罰則は最大3,500万ユーロまたは世界売上7%（Article 99）。汎用AIモデル（Claude・GPT等）はシステムカード提出と著作権コンプライアンスが義務化される。Cybersecurity Insidersはこれを「AIガバナンスがデータガバナンスと事実上同義になる転換点」と表現し、企業への実務影響としてAIシステムのログ保持・エージェントID管理・HITL文書化が必要になると指摘した。</p>
+
+<p>一方、米国ではPoliticoがトランプ政権の大統領令草案を報道。フロンティアモデルをリリース最大90日前に連邦機関へ自主的に提出できる任意審査制度で、強制ではなく任意参加の設計となっている。規制アプローチの日米欧の差が明確になった形だ。</p>
+<p><a href="https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai" target="_blank">EU委員会公式</a></p>
+
+<h3>Google・マネージドエージェントAPIと検索再設計</h3>
+
+<p>GoogleがAPIコール一発でホストされたLinux環境付きAIエージェントを起動できる「Managed Agent API」を正式発表した。Markdownでカスタム指示を与えられる設計で、Anthropicの「Routines」と同じく「インフラ管理なしのエージェント実行」という方向性を示している。同時期にGoogleはAI中心への検索再設計を発表。DuckDuckGoが即座に「従来型検索結果の取得方法」を案内する対抗策を公表した。検索エンジン市場の構造変化が加速している。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #ea580c; padding-left: 12px;">AIトレーディング</h2>
+
+<h3>LLMトレーディングフレームワークの実績データ</h3>
+
+<p>TradingAgentsの最新レビューによると、v0.2.0でGPT-5.x・Gemini 3.x・Claude 4.x・Grok 4.xのマルチLLMサポートが追加された（<strong>一次ソース確認済み</strong>）。AAPL株での累積リターン26.62%（vs buy-and-hold -5.23%、2024年6〜11月）はarXiv論文・公式サイトで確認されており、GitHub Stars 51,300+・Forks 9,300+と研究コミュニティの関心を集めている。並行して香港大学データサイエンス研究所がVibe-Tradingを公開。感情分析・テクニカル分析・ニュース分析エージェントが並列動作する構成でGPT-4o・Claude・Geminiをバックエンドとしてサポートする。</p>
+
+<p>FX自動取引の実装面では、MT5でATRが0になった際に「Invalid stops」エラーが発生するMQL5の実践的バグ修正情報が共有された。SL/TPをATR×倍率で計算している場合の解決策は`max(ATR計算値, 固定pips)`で下限を保証する方式で、「ゼロ除算より発見しにくいゼロ乗算バグ」として整理されている。MT5 EAのタイムゾーンずれによる意図しないクローズ問題も別途報告されており、バックテスト期間の重要性が改めて指摘された。</p>
+
+<p>なお、「AIで絶対に稼げる」と謳うFX自動売買副業サービスが電話勧誘で消費者金融から借金させる手口で刑事告発（東京・高島平警察署）されており、AI自動売買を謳う詐欺への注意喚起として記録しておく。</p>
+<p><a href="https://aitoolly.com/ai-news/article/2026-05-05-tradingagents-a-comprehensive-look-at-the-new-multi-agent-llm-financial-trading-framework" target="_blank">AIToolly</a></p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>本日の収集記事数は78件。過去7日の推移（5/15:52→5/16:77→5/17:68→5/18:90→5/19:52→5/20:69→5/21:46）と比較すると、前日の46件から大幅増加し週平均（65件）を上回った。</p>
+
+<p>繰り返し登場するテーマは `claude` `claude_code` `mcp` `agent` `llm` の5つで変わらない。ただし本日の特徴として、<strong>Project Glasswing/Claude Mythosのサイバーセキュリティ文脈</strong>が前日まで見られなかったトピックとして急浮上した点が目立つ。Anthropicが自社モデルのリスクを自ら開示してリリース停止した判断は、AI安全性の具体的な実例として政治家・メディア・コミュニティで幅広く引用されており、今後数日のディスカッションの軸になる可能性が高い。</p>
+
+<p>MCPエコシステムは「AWS MCP Server GA（5/6）→Anthropic MCPトンネル→Stainless買収」という連続的なインフラ強化が続いており、エージェントの競合優位が「ツール」から「パーミッション管理・メモリ・実行基盤」へ移行しているとの見方が定着しつつある。</p>
+
+<p>---</p>
+<p>*収集: 2026-05-22 / 生成: 2026-05-23*</p>
+
+</body>
+</html>

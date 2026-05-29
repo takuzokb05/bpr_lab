@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-05-23</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-05-23 | 46件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-05-23</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>Claude Codeのハーネス構造（Skills/MCP/hooks）が競争優位の中核として広く語られた一日。MCPのLinux Foundation標準化（一次ソース確認済み）を受け、エコシステムの整備が加速している。NVIDIAのゲーミングGPU全面出荷停止（一次ソース確認済み）でAI優先のハードウェア再編が鮮明に。AI自動売買では成功事例と失敗事例の両方が公開され、実態把握に好材料。記事数は46件と過去7日平均（68件）を下回る比較的静かな日だった。</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>ハーネスそのものが競争優位になった</h3>
+
+<p>「モデルがモートではなく、ハーネスがモート」という論点が複数の投稿で独立して浮上した。Skills・MCP・hooksの組み合わせは技術的にフォークが難しく、単体モデル呼び出しとの差がここで生まれるという見方が広がっている[^2796][^2795]。20人のAIネイティブチームが10以上のフォルダ構成を検証して辿り着いた最適レイアウト（skills/agents/commands/hooks/rules）も公開されており、実務の試行錯誤が集合知になりつつある[^2797]。</p>
+
+<p>CLAUDE.mdの設計論も成熟してきた。「全セッションで常に適用されるべきルールだけを書き、タスク固有の手順はSkillsへ分離する」という原則と、「削除するとClaudeがミスをするか？」を問う削減テスト法が具体的なガイドとして整理されている[^2817]。国内Qiitaでも20選のSkillsアイデアがまとまり、トークン節約効果を実測値付きで示した[^2818]。またベストプラクティスをgit worktree並列管理まで含めて網羅したGitHub wikiも継続更新中[^2822]。</p>
+
+<h3>実用ワークフローの工夫</h3>
+
+<p>試行錯誤フェーズはCursorで行いトークン消費を抑え、確定したプロンプトをClaude Codeに渡すというコスト節約パターンが共有された[^2781]。OpenRouterの無料モデルに向けて1Mトークンコンテキストを活用する方法も話題になった[^2791]。一方でサブエージェントのモデル指定をプロンプトインジェクションで上書きする手法も実証されており、マルチエージェント構成のセキュリティとして注意が必要[^2780]。</p>
+
+<p>非開発者ユーザーによる証言が印象的だった。「Claude Codeは私を開発者にしてくれたわけではない。ただ、次の6ヶ月で開発者が必要だった理由を消してくれた」——クリーンなブリーフとコンテキスト付与、後は任せるという運用は、小さな成功事例を積み上げる「助走レーン」思考とそのまま重なる[^2790]。</p>
+
+<h3>MCPとエコシステムの整備</h3>
+
+<p>MCPがLinux Foundation傘下のAgentic AI Foundation（AAIF）に寄贈済み（<strong>一次ソース確認済み</strong>）で、2026年3月時点で月間SDKダウンロード9,700万超・GitHub Stars 81,000超に到達[^2805]。AnthropicはMCPトンネルとセルフホスト型エージェントサンドボックスも出荷し、GitHub公式MCPサーバーも登場している[^2804]。Anthropic公式の無料コースも13件整備され、基礎からMCP・エージェント・Claude Codeまでの学習パスが揃った[^2802]。</p>
+
+<p>なお、Sonnet 4.7/4.8・Opus 4.8の「6月リリース予定」という情報が出回っているが（<strong>一次ソース確認：不正確</strong>）、実際はSonnet 4.7は存在せず次はSonnet 4.8、Opus 4.7はすでに4月16日リリース済み。時期の扱いは注意[^2799]。</p>
+
+<p>[^2780]: https://x.com/kaneda_smec/status/2058287972546658636</p>
+<p>[^2781]: https://x.com/kaneda_smec/status/2058287970957033621</p>
+<p>[^2790]: https://x.com/chelsea_hulin/status/2058292298589385212</p>
+<p>[^2791]: https://x.com/JulianGoldieSEO/status/2058291883542233517</p>
+<p>[^2795]: https://x.com/tradingwifash/status/2058284246029017545</p>
+<p>[^2796]: https://x.com/lliu54827/status/2058281759658393911</p>
+<p>[^2797]: https://x.com/dan__rosenthal/status/2058261757672538541</p>
+<p>[^2799]: https://x.com/jakeharrisdev/status/2058291935782072706</p>
+<p>[^2802]: https://x.com/yuno_x999/status/2058276174628041061</p>
+<p>[^2804]: https://x.com/AgentTresor/status/2058201529786536359</p>
+<p>[^2805]: https://x.com/Mosss_OS/status/2058201326585106506</p>
+<p>[^2817]: https://ikh4ever.medium.com/claude-md-best-practices-the-complete-guide-for-2026-e35e1408cef2</p>
+<p>[^2818]: https://qiita.com/kamome_susume/items/d8919d94f55d86e9881c</p>
+<p>[^2822]: https://github.com/MuhammadUsmanGM/claude-code-best-practices</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>NVIDIAのGPU戦略転換とAI投資の地殻変動</h3>
+
+<p>NVIDIAが2026年のゲーミングGPU新製品リリースを全面停止した（<strong>一次ソース確認済み</strong>）。HBMメモリ不足を背景にAI向けへ全振りする形で、30年ぶりの事態とされる。RTX 50シリーズの生産も30〜40%削減が報じられており、GPUリソースがAIインフラへ構造的に移行している[^2811]。その隙間を中国製低価格GPUが埋めようとしているが、中国国内でもRTX 5090D V2の輸入停止（米輸出規制対応版でも不可）が報告されており、地政学的摩擦が続く。こうした流れを反映し、GPU-as-a-Service特化ETF「$NCLD」がRoundhillからSECに申請された[^2812]。</p>
+
+<p>xAIはGrokをエージェント・音声・コネクタを一気に追加してフルスタックAI基盤へと再定義。単なるチャットボット扱いからの脱却を図っている[^2809]。MicrosoftはAI人材育成へ2030年までに日本で1.6兆円投資・100万人育成を正式発表（NEC・NTTデータ・ソフトバンク・日立・富士通と連携）[^2815]。GoogleはAI Mode検索への広告挿入を正式発表し、AI生成説明付きの製品広告も計画中[^2816]。</p>
+
+<p>研究面では次トークン予測を超えるLLM事前学習パラダイム「NITP（Next Implicit Token Prediction）」が来週リリース予定と予告された。表現の縮退を解消するアプローチで注目[^2810]。</p>
+
+<p>[^2809]: https://x.com/XFreeze/status/2058269991448002721</p>
+<p>[^2810]: https://x.com/aHpaBean/status/2058137485654536538</p>
+<p>[^2811]: https://x.com/kimmonismus/status/2058134440539295988</p>
+<p>[^2812]: https://x.com/TheETFTracker/status/2057958896241725752</p>
+<p>[^2815]: https://x.com/nikkeibpITpro/status/2058031448217764316</p>
+<p>[^2816]: https://x.com/penpenguin2023/status/2058028670712008731</p>
+
+<h2 style="border-left: 4px solid #ea580c; padding-left: 12px;">AIトレーディング</h2>
+
+<p>FXへのLLM直接投入の失敗事例が公開された。GPT-5をOpenAI API経由でFXトレードに実験した結果はマイナス収益で、「LLMは予測エンジンではなく分析補助ツール」という結論に至り、シグナル生成→人間判断→執行の分離アーキテクチャへ移行している[^2824]。現在FX自動取引を運用している立場からは、AIを執行ループに直接入れるのではなく判断支援に留める分離設計の妥当性を裏付ける一次情報として価値が高い。</p>
+
+<p>対照的に、GOLD AI自動売買の2026年度実績（1月〜5月）として単利＋299万・複利＋434万円の報告が出た[^2807]。ROBOPROも21ヶ月で利益率20%超を達成したと公開されている[^2808]。アーキテクチャの違いが成否を分けているとみられる。</p>
+
+<p>暗号資産分析では、BlackRock・Columbia大の研究引用でBull/Bear/Risk Supervisorの3層マルチエージェント構造が単体LLMを一貫して上回ることが示されており、専門化エージェントのオーケストレーション能力が2026年の差別化要因とされる[^2821]。AIエージェントとHFTのレイテンシ競争を「Flash Boys」に重ねた論考も参考になる[^2806]。</p>
+
+<p>[^2806]: https://x.com/SaharaAI/status/2058290502743777719</p>
+<p>[^2807]: https://x.com/sana2121212121/status/2058169693882786072</p>
+<p>[^2808]: https://x.com/kawase_koyaji/status/2058208038956536271</p>
+<p>[^2821]: https://www.kucoin.com/blog/ai-agents-vs-llms-crypto-analysis-market-2026</p>
+<p>[^2824]: https://note.com/neko_in_summer/n/ncedb89315abf</p>
+
+<h2>継続トレンド</h2>
+
+<p>過去7日の記事数推移：5/16(77)→5/17(68)→5/18(90)→5/19(52)→5/20(69)→5/21(46)→5/22(78)→5/23(46)。本日は21日に並ぶ谷で、週末明け休日効果の可能性がある。</p>
+
+<p>継続するテーマは `claude` / `claude_code` / `mcp` / `agent` / `trading` の5軸。今週の変化点として、MCPは「何か」という説明記事フェーズから「どう使うか」の実装・判断記事へ重心が移っている。Claude Codeもベストプラクティスが多様化・体系化しており、個人の試行錯誤から組織レベルの標準化に移行しつつある。AI自動取引は成功報告と失敗報告が同時に出始めており、蓄積データが増えることでアーキテクチャの優劣が見えてきそうな段階に入っている。</p>
+
+</body>
+</html>

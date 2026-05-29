@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-05-25</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-05-25 | 58件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-05-25</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>Claude Code v2.1.139がリリースされ、自律ループ機能「/goal」とマルチセッション管理「Agent View」が追加された（一次ソース確認済み）。6月15日施行の課金変更でAgent SDK利用は別クレジットプールに分離されるが、ターミナルでの対話型利用は従来通りで影響なし。教皇レオ14世が就任初回勅のテーマに「AI」を選び、Anthropic共同創業者Chris Olahがバチカンで講演するという歴史的出来事があった。AnthropicによるStainless買収でMCPインフラが内製化され、業界標準化が一段と加速している。</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>v2.1.139: 自律ループと並列セッション管理</h3>
+
+<p>Claude Code v2.1.139（一次ソース確認済み）では2つの主要機能が追加された。<strong>Agent View</strong>は`claude agents`コマンドで複数セッションをCLIダッシュボードに一覧表示し、running/waiting/doneのステータスをリアルタイム確認しながらスペースキーでピーク・Enterで接続できる。<strong>`/goal`コマンド</strong>はより実用的で、`/goal all tests pass and PR is open`のような自然言語で完了条件を設定するとHaikuモデルが毎ターン後に条件達成を評価し、未達の場合は自動で次のターンを開始する。CI修正やテストグリーン化などの反復タスクを完全自動化でき、手動リトライ・監視が不要になる。Fast ModeがOpus 4.7デフォルトに変更。Pro/Max/Team/Enterprise/API全プランで利用可能。[^1]</p>
+
+<h3>6月15日課金変更: 対話型利用は変更なし</h3>
+
+<p>Anthropicは6月15日からAgent SDK・`claude -p`（非インタラクティブ）・GitHub Actions・OpenClaw等のサードパーティエージェントを別個の月次クレジットプールに分離する（一次ソース確認済み）。クレジット上限はPro $20・Max 5x $100・Max 20x $200（非繰り越し）で、枯渇後はAPI従量課金に移行する。<strong>ターミナルでの対話型Claude Codeは従来の購読枠のまま変更なし</strong>。beam.aiの分析では月$20〜$200の購読料で数百〜数千ドル相当のトークンを消費していたケースが実在しており、Anthropicにとって持続可能なビジネスモデルへの転換と言える。ZedエディタもAgent SDK経由の利用が新プールに移行するため、各ツールの課金分類の確認が必要だ。[^2][^3]</p>
+
+<h3>MCPの業界標準化とStainless買収</h3>
+
+<p>AnthropicのModel Context ProtocolはOpenAI・Microsoftが相次いで採用し「AIエージェントのUSB-C」と形容される業界標準へと進化した。さらにAnthropicはSDK・MCPサーバープラットフォームを手がけるStainlessを買収し、MCPインフラを事実上内製化した。MCPが「中立プロトコル」から「Anthropic所有インフラ」へと性格を変えたことを意味し、今後のエコシステム形成において重要な構造変化だ。wazzapi MCPサーバーによるClaude CodeからのWhatsApp直接送信や、Composio Social MCPでのSNS自動投稿（2時間で実装）など、MCPエコシステムの活用事例は日々拡大している。[^4][^5]</p>
+
+<h3>エコシステム最前線</h3>
+
+<p>Anthropic公式プラグインがClaude Codeプロジェクトをスキャンし、MCPサーバー・Hooks・Subagents・Skills・Automationsを自動推薦する機能が注目を集めている。セキュリティ面では、hol-guard（Claude Code/Cursor向けAIアンチウイルス）がMCPサーバー実行前のプラグインを検査して悪意ある操作を防ぐツールとして登場した。GitHubラベルベース連携（`agent:implement`、`agent:review`等でエージェントを起動するAFK実行）も実用段階に入っており、Claude Codeを中心としたCI/CDパイプライン統合が加速している。[^6][^7]</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>教皇レオ14世のAI回勅「Magnifica Humanitas」</h3>
+
+<p>2026年5月25日、ローマ教皇レオ14世が就任後初の回勅のテーマとして「AI」を選び、「Magnifica Humanitas（輝かしき人間性）」を発表した。AnthropicのChris Olah共同創業者がバチカンの式典に登壇し、「Claudeモデル内部に喜び・恐れ・悲しみに似た状態を発見した」「Anthropicを含む全AIラボは商業・競争・地政学的プレッシャーの構造的インセンティブの中にある。誠実な意図だけでは不十分。外部の批判者が必要だ」と自社の構造的限界を公の場で認めた。教皇は「AIは人間のように経験せず愛さず責任も取れない」「一部ビッグテックへの権力集中は問題だ」と批判し、AIの軍事利用への「武装解除」を要求した。前教皇フランシスコが12年の在位中に4本の回勅を発表した中で、就任初回勅にAIを選んだ事実は、AIが現代宗教・倫理議論の中心に入ってきたことを示している。[^8][^9]</p>
+
+<h3>各社AI動向</h3>
+
+<p>Google AI StudioがネイティブAndroidアプリを無料でビルドできる機能を追加し、リリース1週間で25万本のアプリが作成された（99%超がAndroidアプリ未経験者）。Google Chrome Lighthouseに「Agentic Browsing」カテゴリが追加されllms.txtチェックが実装されたが、5/15に「llms.txtはAI検索に不要」と公式発表した直後であり矛盾と指摘されている。GoogleはSEOランキング用ではなくAIエージェント向けと説明しており、AIエージェント時代のウェブインフラ戦略の変化を示唆する。HuaweiはEUVなしで1.4nm世代に迫る「Tauスケーリング則（CMOS 2.0）」を発表、国家規模でAI・設計・製造を統合するエコシステムへの危機感も高まっている。安川電機はNVIDIA・富士通と組んでフィジカルAI分野に本格参入し上場来高値を更新した。[^10][^11]</p>
+
+<h2 style="border-left: 4px solid #ea580c; padding-left: 12px;">AIトレーディング</h2>
+
+<p>AI自動売買の活用事例が引き続き登場している。AI EA「ORION」は5/18〜22の週次で+453,398円の実績が報告された。AI主導のFX執行インフラは業界内で静かに普及が進んでいる一方、「AIはテクニカル分析のみに依存するため有効性判断には大サンプルサイズが必要」「マクロ視点との組み合わせが不可欠」という実務的な警鐘も出ている。MT5向けAI FXレート予測Bot（天気予報型）の公開事例も続いており、ツール多様化が進んでいる。[^12]</p>
+
+<h2>継続トレンド</h2>
+
+<p>過去7日の記事数推移：5/18（90件）→5/19（52件）→5/20（69件）→5/21（46件）→5/22（78件）→5/23（46件）→5/24（39件）→本日（58件）。継続テーマはclaude・claude_code・mcp・agent・tradingの5軸で変動なし。5/22のピーク（78件）はClaude Agent SDKや大型アップデートが重なった時期と一致しており、本日（58件）もv2.1.139・課金変更・教皇回勅・Stainless買収と複数の重要ニュースが集中した。MCPとagentの話題は減少傾向がなくエコシステム構築フェーズが継続中。AI取引（trading）は定常的な登場で、FX自動売買とAIの融合が実運用フェーズへ移行しつつある流れが続いている。</p>
+
+<p>---</p>
+
+<p>[^1]: https://claude-world.com/articles/claude-code-21139-release/</p>
+<p>[^2]: https://www.buildthisnow.com/blog/guide/mechanics/claude-billing-change-june-2026</p>
+<p>[^3]: https://zed.dev/blog/anthropic-subscription-changes</p>
+<p>[^4]: https://x.com/doronkatz/status/2058977908140446080</p>
+<p>[^5]: https://x.com/MichaelRouveure/status/2058971694073815227</p>
+<p>[^6]: https://x.com/chandangbhagat/status/2058986714417483834</p>
+<p>[^7]: https://x.com/mattpocockuk/status/2059008544477757887</p>
+<p>[^8]: https://x.com/AnthropicAI/status/2058983299092009421</p>
+<p>[^9]: https://x.com/kenta_akagi/status/2058987876155826513</p>
+<p>[^10]: https://x.com/OfficialLoganK/status/2058997700218294564</p>
+<p>[^11]: https://x.com/OkaTakuma1/status/2058873213073932625</p>
+<p>[^12]: https://x.com/TyrelleAB/status/2059013590582022360</p>
+
+</body>
+</html>
