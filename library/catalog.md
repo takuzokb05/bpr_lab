@@ -1,6 +1,6 @@
 # Library Catalog
 
-最終更新: 2026-05-29
+最終更新: 2026-05-30
 
 ## 凡例
 - 状態: 未読 / 既読 / 要精読
@@ -93,12 +93,36 @@
 
 ---
 
+---
+
+## 2026-05-30 収集分（12件収集 → 12件SIGNAL）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 049 | [2026-05-30_049](articles/2026-05-30_049_Claude-Code-Agent-View-CLI-dashboard-multi-session.md) | Claude Code Agent View: 複数エージェントセッションを一元管理するCLIダッシュボード | claude-code | 未読 | #web-signal |
+| 050 | [2026-05-30_050](articles/2026-05-30_050_Claude-Code-Auto-Mode-autonomous-coding-2stage-ML-safety.md) | Claude Code Auto Mode: 2段階ML分類器で自律コーディング・人間承認ゲートを排除 | claude-code | 未読 | #web-signal |
+| 051 | [2026-05-30_051](articles/2026-05-30_051_Anthropic-acquires-Stainless-300M-SDK-MCP-generation-platform.md) | Anthropic、Stainlessを$300M超で買収: SDK・MCPサーバー生成基盤を内製化 | claude-ecosystem | 未読 | #web-signal #urgent |
+| 052 | [2026-05-30_052](articles/2026-05-30_052_Claude-Managed-Agents-Cloudflare-V8-sandbox-private-MCP.md) | Claude Managed Agents on Cloudflare: V8 isolatesサンドボックス・プライベートMCP統合 | claude-ecosystem | 未読 | #web-signal |
+| 053 | [2026-05-30_053](articles/2026-05-30_053_MCP-2026-07-28-spec-RC-stateless-Tasks-extension-OAuth.md) | MCP 2026-07-28仕様RC: ステートレス化・Tasks拡張・OAuth強化・廃止ポリシー確立 | claude-ecosystem | 未読 | #web-signal #urgent |
+| 054 | [2026-05-30_054](articles/2026-05-30_054_EU-AI-Act-Omnibus-16month-delay-new-prohibitions-2026.md) | EU AI法改正: 高リスクAI期限16ヶ月延長・CSAM禁止追加・罰金拡大（2026年5月） | ai-news | 未読 | #web-signal |
+| 055 | [2026-05-30_055](articles/2026-05-30_055_State-of-AI-May-2026-cyber-threshold-China-agents-market.md) | State of AI May 2026: サイバー閾値超え・中国急進・エージェント市場での失敗実験 | ai-news | 未読 | #web-signal |
+| 056 | [2026-05-30_056](articles/2026-05-30_056_MQL5-LLM-real-architecture-4layers-confidence-threshold-trading.md) | MQL5 + LLM 2026年実用アーキテクチャ: 4層マイクロサービス・信頼度0.75超で勝率61.7% | ai-trading | 未読 | #web-signal |
+| 057 | [2026-05-30_057](articles/2026-05-30_057_MetaTrader-MCP-server-32tools-AI-natural-language-MT5.md) | MetaTrader MCPサーバー: 32ツールで自然言語からMT5を操作するオープンソースブリッジ | ai-trading | 未読 | #web-signal |
+| 058 | [2026-05-30_058](articles/2026-05-30_058_GMO-AI-agent-FX-backtesting-Antigravity-Sharpe047.md) | GMO AIエージェントによるFX取引戦略自動検証: Antigravity + 15年バックテスト・シャープ0.47 | ai-trading | 未読 | #web-signal |
+| 059 | [2026-05-30_059](articles/2026-05-30_059_Claude-Managed-Agents-vs-Agent-SDK-comparison-decision-2026.md) | Claude Managed Agents vs Agent SDK: 本番選択基準と詳細比較 2026年版 | claude-ecosystem | 未読 | #web-signal |
+| 060 | [2026-05-30_060](articles/2026-05-30_060_CLAUDE-md-progressive-disclosure-200instruction-limit-zenn.md) | 効果的なCLAUDE.mdの書き方: 段階的開示・命令予算200個の上限・削除基準 | claude-code | 未読 | #web-signal |
+
+### NOISEとして除外
+なし（X投稿データなし・drop.mdにURLなし・全12件SIGNAL判定）
+
+---
+
 ## ドメイン別統計（累計）
 
-| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 累計 |
-|---|---|---|---|---|
-| claude-code | 7件 | 6件 | 7件 | 20件 |
-| claude-ecosystem | 5件 | 2件 | 2件 | 9件 |
-| ai-trading | 3件 | 3件 | 4件 | 10件 |
-| ai-news | 4件 | 2件 | 3件 | 9件 |
-| **合計** | **19件** | **13件** | **16件** | **48件** |
+| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 累計 |
+|---|---|---|---|---|---|
+| claude-code | 7件 | 6件 | 7件 | 3件 | 23件 |
+| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 13件 |
+| ai-trading | 3件 | 3件 | 4件 | 3件 | 13件 |
+| ai-news | 4件 | 2件 | 3件 | 2件 | 11件 |
+| **合計** | **19件** | **13件** | **16件** | **12件** | **60件** |
