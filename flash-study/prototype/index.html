@@ -273,6 +273,17 @@ async function reconstruct(text){
 """${text}"""`;
   return await callLLM(prompt,{maxTokens:8192});
 }
+// 本文から学習カテゴリ名を1つ提案（provider非依存・callLLM経由）。
+async function categorize(text){
+  const prompt =
+`次の本文に最も合う「学習カテゴリ名」を1つだけ、短い日本語（10字以内）で出力してください。
+説明・記号・引用符・句読点は付けず、カテゴリ名だけ。例: 行政法 / 簿記2級 / 通知文。
+本文:
+"""${String(text||'').slice(0,1500)}"""`;
+  let out=(await callLLM(prompt,{maxTokens:30})).trim();
+  out=out.replace(/[「」『』"'`。、，．,.\n\r]/g,'').split(/\s/)[0]||'';
+  return out.slice(0,16);
+}
 
 // ====== built-in sample decks (no API needed) ======
 let decks = [
@@ -403,14 +414,30 @@ function settingsView(){
       <input class="inp" type="password" placeholder="Phase 3で有効化（現在は無効）" disabled>
       <div class="p" id="provmodel" style="margin-top:8px;">既定モデル: claude-opus-4-8</div>
     </div>
+    <div class="box2">
+      <div class="h">デッキ整理</div>
+      <div class="p">「未分類」のデッキをまとめてAIで分類します（callLLM経由）。</div>
+      <button class="btn sm" id="recat" style="margin-top:10px;">未分類をAIで分類</button>
+    </div>
   </div>`;
   document.getElementById('bk').onclick=library;
+  document.getElementById('recat').onclick=recategorizeAll;
   const dsp=document.getElementById('dsp');
   dsp.oninput=()=>{settings.defaultSpeed=+dsp.value;document.getElementById('spv').textContent=spLabel(settings.defaultSpeed);};
   document.getElementById('prov').onclick=e=>{const b=e.target.closest('button');if(!b)return;
     document.querySelectorAll('#prov button').forEach(x=>x.classList.toggle('on',x===b));
     const m={anthropic:'claude-opus-4-8',openai:'gpt-5.5',google:'gemini-3.1-pro-preview'}[b.dataset.p];
     document.getElementById('provmodel').textContent='既定モデル: '+m;};
+}
+// 「未分類」デッキをまとめてAI分類。
+async function recategorizeAll(){
+  const targets=decks.filter(d=>!d.category||!d.category.trim()||d.category==='未分類');
+  if(!targets.length){alert('未分類のデッキはありません');return;}
+  loading(`未分類 ${targets.length} 件をAIで分類中…`);
+  for(const d of targets){
+    try{const c=await categorize(d.source||d.flashText);if(c)d.category=c;}catch(_){}
+  }
+  library();
 }
 
 // ====== CREATE (paste -> AI) ======
@@ -454,9 +481,12 @@ async function make(){
     if(aiMode) flashText=await reconstruct(src);
     let quiz=[],status="unset";
     if(gen){quiz=await genQuiz(src);status="ready";}
+    let category=cat;
+    if(!category){ try{category=await categorize(src);}catch(_){} }   // 未入力ならAI提案、失敗時は未分類
+    category=category||"未分類";
     const cleanTitle=src.replace(/\s+/g,' ').trim();
     const d={id:uid(),icon:"新",title:cleanTitle.slice(0,12)+(cleanTitle.length>12?"…":""),desc:"作成したデッキ",
-      category:cat||"未分類",flashMode:aiMode?"ai":"original",flashText,quiz,quizStatus:status,source:src,
+      category,flashMode:aiMode?"ai":"original",flashText,quiz,quizStatus:status,source:src,
       createdAt:new Date().toISOString()};
     decks.unshift(d);cur=d;deckDetail();
   }catch(e){
