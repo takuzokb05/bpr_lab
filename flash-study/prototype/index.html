@@ -300,6 +300,8 @@ let decks = [
 
 // ====== state ======
 let cur=null, speed=4, chunks=[], sentStarts=[0], idx=0, playing=false, timer=null;
+// セッション内設定（アーティファクトはlocalStorage不可のためメモリ保持。PWAで永続化予定）。
+let settings={ defaultSpeed:4 };
 let quizI=0, score=0, answered=false;
 const screen=document.getElementById('screen');
 const filein=document.getElementById('filein');
@@ -360,14 +362,55 @@ function library(){
     <div class="sub">教材を貼ればAIが4択を自動生成。カテゴリで分けて溜められます。最後のまとめ問題が定着の本命です。</div>
     <div class="rowbtns">
       <button class="btn sm" id="new">＋ 教材から新規</button>
-      <button class="btn sm ghost" id="imp" style="margin-top:0;">⤓ デッキ読込</button>
+      <button class="btn sm ghost" id="imp" style="margin-top:0;">⤓ 読込</button>
+      <button class="btn sm ghost" id="settings" style="margin-top:0;flex:0 0 auto;">⚙</button>
     </div>
     <div id="cards">${body}</div>
   </div>`;
   document.getElementById('new').onclick=createView;
   document.getElementById('imp').onclick=()=>filein.click();
+  document.getElementById('settings').onclick=settingsView;
   document.getElementById('cards').onclick=e=>{const b=e.target.closest('.card');if(!b)return;
     cur=decks.find(d=>d.id===b.dataset.id);deckDetail();};
+}
+
+// ====== SETTINGS ======
+function settingsView(){
+  stop();
+  screen.innerHTML=`
+  <div class="screen">
+    <button class="back" id="bk">‹ ライブラリ</button>
+    <div class="dtitle">設定</div>
+    <div class="meta">この端末/セッション内のみ。アーティファクト制約のため保存はされません（PWA化で永続化）。</div>
+    <div class="box2">
+      <div class="h">表示スピードの既定</div>
+      <div class="speedwrap" style="margin-top:8px;">
+        <div class="speedrow"><span>既定スピード</span><span id="spv">${spLabel(settings.defaultSpeed)}</span></div>
+        <input type="range" id="dsp" min="1" max="10" value="${settings.defaultSpeed}">
+        <div class="ticks"><span>ゆっくり</span><span>速い</span></div>
+      </div>
+    </div>
+    <div class="box2">
+      <div class="h">AIプロバイダ（BYOK）</div>
+      <div class="p">Phase 3で有効化。キーは端末内のみ・サーバ送信なし。<b>いまは枠のみで、キーは保存しません。</b></div>
+      <div class="label">プロバイダ</div>
+      <div class="seg" id="prov">
+        <button data-p="anthropic" class="on">Anthropic</button>
+        <button data-p="openai">OpenAI</button>
+        <button data-p="google">Google</button>
+      </div>
+      <div class="label">APIキー</div>
+      <input class="inp" type="password" placeholder="Phase 3で有効化（現在は無効）" disabled>
+      <div class="p" id="provmodel" style="margin-top:8px;">既定モデル: claude-opus-4-8</div>
+    </div>
+  </div>`;
+  document.getElementById('bk').onclick=library;
+  const dsp=document.getElementById('dsp');
+  dsp.oninput=()=>{settings.defaultSpeed=+dsp.value;document.getElementById('spv').textContent=spLabel(settings.defaultSpeed);};
+  document.getElementById('prov').onclick=e=>{const b=e.target.closest('button');if(!b)return;
+    document.querySelectorAll('#prov button').forEach(x=>x.classList.toggle('on',x===b));
+    const m={anthropic:'claude-opus-4-8',openai:'gpt-5.5',google:'gemini-3.1-pro-preview'}[b.dataset.p];
+    document.getElementById('provmodel').textContent='既定モデル: '+m;};
 }
 
 // ====== CREATE (paste -> AI) ======
@@ -428,6 +471,7 @@ function loading(msg){screen.innerHTML=`<div class="screen"><div class="loading"
 // ====== DECK DETAIL ======
 function deckDetail(){
   stop();const d=cur;
+  speed=settings.defaultSpeed;   // 既定スピードを反映（スライダーで個別調整可）
   const qbox = d.quizStatus==='ready'
     ? `<div class="box2"><div class="h">まとめ問題：${d.quiz.length}問 ✓</div><div class="p">学習後に4択で出題されます。</div></div>`
     : `<div class="box2"><div class="h">まとめ問題：未セット</div><div class="p">フラッシュだけでも学習できます。下のいずれかで追加可能。</div>
@@ -460,7 +504,7 @@ function deckDetail(){
     document.getElementById('qpaste').onclick=showPaste;
   }
 }
-function spLabel(){return['','とても遅い','遅い','ややゆっくり','標準','標準＋','やや速い','速い','かなり速い','とても速い','最速'][speed];}
+function spLabel(n){n=(n==null?speed:n);return['','とても遅い','遅い','ややゆっくり','標準','標準＋','やや速い','速い','かなり速い','とても速い','最速'][n];}
 function showPaste(){
   document.getElementById('paste').innerHTML=`
     <div class="box2"><div class="h">問題JSONを貼り付け</div>
