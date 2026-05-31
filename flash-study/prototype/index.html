@@ -152,24 +152,43 @@
 
 <script>
 // ====== API (Claude in artifact, keyless) ======
-const MODEL = "claude-sonnet-4-20250514";
-async function callClaude(prompt,opts={}){
-  const maxTokens=opts.maxTokens||8192;   // 1000は今のモデルには不必要に低い。既定を大きく、呼び出し側で上書き可。
+// 能力優先で令和8年(2026)6月時点の最上位を既定に。クイズ品質が本アプリ最大のリスクのため節約より能力。
+// 候補(能力順): claude-opus-4-8 > claude-sonnet-4-6 > claude-haiku-4-5
+// ※アーティファクトのキーレス代理がOpusを弾く場合はMODEL_FALLBACKに自動降格する。
+const MODEL = "claude-opus-4-8";
+const MODEL_FALLBACK = "claude-sonnet-4-6";
+// 1モデルで1回だけ叩く。モデル未対応は専用エラー(code:"model")で投げ、上位でフォールバックさせる。
+async function callOnce(model,prompt,maxTokens){
   let res;
   try{
     res = await fetch("https://api.anthropic.com/v1/messages",{
       method:"POST",headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({model:MODEL,max_tokens:maxTokens,messages:[{role:"user",content:prompt}]})
+      body:JSON.stringify({model,max_tokens:maxTokens,messages:[{role:"user",content:prompt}]})
     });
   }catch(e){ throw new Error("通信に失敗: "+e.message); }
   const txt = await res.text();
-  if(!res.ok) throw new Error("API "+res.status+" / "+txt.slice(0,140));
+  if(!res.ok){
+    const e=new Error("API "+res.status+" / "+txt.slice(0,140));
+    // モデル名が弾かれた系（404/400 + model言及）はフォールバック対象
+    if((res.status===404||res.status===400)&&/model/i.test(txt)) e.code="model";
+    throw e;
+  }
   let data;
   try{ data = JSON.parse(txt); }catch(e){ throw new Error("応答がJSONではない / "+txt.slice(0,140)); }
   if(data && data.error) throw new Error("APIエラー: "+((data.error.message)||JSON.stringify(data.error)).slice(0,140));
   const out=(data.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("").trim();
   if(!out) throw new Error("空応答 / "+txt.slice(0,140));
   return out;
+}
+async function callClaude(prompt,opts={}){
+  const maxTokens=opts.maxTokens||8192;   // 1000は今のモデルには不必要に低い。既定を大きく、呼び出し側で上書き可。
+  try{
+    return await callOnce(MODEL,prompt,maxTokens);                 // 能力優先: まず最上位
+  }catch(e){
+    if(e&&e.code==="model"&&MODEL_FALLBACK&&MODEL_FALLBACK!==MODEL)
+      return await callOnce(MODEL_FALLBACK,prompt,maxTokens);      // 代理が最上位を弾いた時だけ降格
+    throw e;
+  }
 }
 function stripFences(t){return t.replace(/^```(?:json)?/i,"").replace(/```$/,"").trim();}
 // クイズ配列を背骨スキーマに正規化（AI生成/JSON貼付/ファイル取込の全経路で共用）。
