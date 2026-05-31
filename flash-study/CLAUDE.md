@@ -9,8 +9,10 @@ Everything flows through a single shape. Do not create a second source of truth.
 ```json
 { "id":"", "title":"", "source":"", "flashMode":"original|ai",
   "flashText":"", "quiz":[{"q":"","o":["","","",""],"a":0,"e":""}],
-  "quizStatus":"ready|unset", "category":"" }
+  "quizStatus":"ready|unset", "category":"", "createdAt":"ISO8601" }
 ```
+- This is the canonical, exported shape. `category` (manual/AI grouping) and `createdAt` are BOTH part of it.
+- `icon`/`desc` are UI-only derivations (icon from category, desc cosmetic) — never persisted to the exported JSON. Strip them on export.
 - AI auto-generation, work-mode JSON paste-import, and save/reuse all produce or consume this shape.
 - In-browser session: keep in memory + file export/import. PWA: persist the same shape in IndexedDB.
 

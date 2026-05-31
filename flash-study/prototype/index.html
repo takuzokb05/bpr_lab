@@ -115,7 +115,9 @@
   .flash .focus{color:var(--accent);}
   .countdown{font-family:var(--serif);font-size:90px;color:var(--accent);animation:pop .9s ease;}
   @keyframes pop{from{opacity:0;transform:scale(.5);}to{opacity:1;transform:scale(1);}}
-  .rctrl{display:flex;gap:12px;margin-top:18px;}
+  .seekwrap{margin-top:14px;}
+  .seekwrap .pos{color:var(--muted);font-size:12px;text-align:center;margin-top:7px;}
+  .rctrl{display:flex;gap:12px;margin-top:14px;}
   .rctrl button{flex:1;border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:13px;
     padding:15px;font-size:15px;font-weight:700;font-family:var(--sans);cursor:pointer;}
   .rctrl button.main{background:var(--accent);color:#1a1006;border-color:var(--accent);}
@@ -151,12 +153,13 @@
 <script>
 // ====== API (Claude in artifact, keyless) ======
 const MODEL = "claude-sonnet-4-20250514";
-async function callClaude(prompt){
+async function callClaude(prompt,opts={}){
+  const maxTokens=opts.maxTokens||8192;   // 1000は今のモデルには不必要に低い。既定を大きく、呼び出し側で上書き可。
   let res;
   try{
     res = await fetch("https://api.anthropic.com/v1/messages",{
       method:"POST",headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({model:MODEL,max_tokens:1000,messages:[{role:"user",content:prompt}]})
+      body:JSON.stringify({model:MODEL,max_tokens:maxTokens,messages:[{role:"user",content:prompt}]})
     });
   }catch(e){ throw new Error("通信に失敗: "+e.message); }
   const txt = await res.text();
@@ -186,6 +189,31 @@ function normalizeQuiz(arr){
   }
   return out;
 }
+// デッキを背骨スキーマに正規化（メモリ内はicon/desc等の表示用フィールドを保持してよい）。
+function normalizeDeck(raw){
+  const d=(raw&&typeof raw==='object'&&!Array.isArray(raw))?raw:{};
+  const quiz=normalizeQuiz(d.quiz);
+  return Object.assign({},d,{
+    id:d.id||uid(),
+    title:String(d.title||''),
+    source:String(d.source||''),
+    flashMode:d.flashMode==='ai'?'ai':'original',
+    flashText:String(d.flashText||''),
+    quiz, quizStatus:quiz.length?'ready':'unset',
+    category:String(d.category||''),
+    createdAt:d.createdAt||new Date().toISOString()
+  });
+}
+// 書き出し用：正準9フィールドだけを emit（icon/desc等の派生値は混入させない）。
+function toDeckJSON(d){
+  const quiz=normalizeQuiz(d.quiz);
+  return {
+    id:d.id||uid(), title:String(d.title||''), source:String(d.source||''),
+    flashMode:d.flashMode==='ai'?'ai':'original', flashText:String(d.flashText||''),
+    quiz, quizStatus:quiz.length?'ready':'unset',
+    category:String(d.category||''), createdAt:d.createdAt||new Date().toISOString()
+  };
+}
 // 出力が途中で切れても、完成した {...} だけを救出する堅牢パーサ
 function parseQuizLoose(raw){
   raw=stripFences(raw);
@@ -203,12 +231,13 @@ function parseQuizLoose(raw){
 async function genQuiz(text){
   const prompt =
 `あなたは資格試験の問題作成者です。次の本文だけを根拠に4択問題を作ってください。
-・問題数は本文量に応じて2〜4問。・選択肢は必ず4つ・正解1つ。・解説は40字以内で簡潔に。
+・問題数は本文量に応じて適切に（目安: 本文200〜300字あたり1問、重要論点を網羅）。
+・選択肢は必ず4つ・正解1つ。・解説は40字以内で簡潔に。
 出力はJSON配列のみ。前後の説明やマークダウンは禁止。
 形式: [{"q":"問題文","o":["1","2","3","4"],"a":正解番号(0始まり),"e":"短い解説"}]
 本文:
 """${text}"""`;
-  const arr = parseQuizLoose(await callClaude(prompt));   // ※本番(Claude Code)では max_tokens を上げ、問題数キャップを外す
+  const arr = parseQuizLoose(await callClaude(prompt,{maxTokens:8192}));
   if(!arr.length) throw new Error("問題を取り出せませんでした");
   return arr;
 }
@@ -219,7 +248,7 @@ async function reconstruct(text){
 ・出力は再構成後の本文テキストのみ（説明・前置き不要）。
 本文:
 """${text}"""`;
-  return await callClaude(prompt);
+  return await callClaude(prompt,{maxTokens:8192});
 }
 
 // ====== built-in sample decks (no API needed) ======
@@ -244,21 +273,23 @@ let decks = [
      {q:"行政手続法の目的に含まれるのは？",o:["公正の確保と透明性の向上","税収の確保","効率化のみ","国民の監視"],a:0,e:"手続を共通ルール化し公正さと透明性を高める。"},
      {q:"不利益処分をするとき原則必要なのは？",o:["理由の提示","住民投票","議会の議決","首長の許可"],a:0,e:"相手が納得・反論できるよう原則理由を示す。"}
    ]}
-];
+].map(normalizeDeck);
 
 // ====== state ======
-let cur=null, speed=4, chunks=[], idx=0, playing=false, timer=null;
+let cur=null, speed=4, chunks=[], sentStarts=[0], idx=0, playing=false, timer=null;
 let quizI=0, score=0, answered=false;
 const screen=document.getElementById('screen');
 const filein=document.getElementById('filein');
 
 // ====== chunker ======
-function chunkText(text){
+// 文節チャンク＋文の開始インデックスを返す（長文での文単位ナビゲーション用）。
+function buildChunks(text){
   const minLen=3, maxLen=8;
   const breakAfter=new Set(['、','は','が','を','に','へ','と','で','も','の','や','か','て','り']);
-  const raw=[];
-  const sents=text.match(/[^。！？\n]+[。！？]?/g)||[text];
-  for(let s of sents){ s=s.trim(); if(!s)continue; let i=0;
+  const sents=String(text||'').match(/[^。！？\n]+[。！？]?/g)||[];
+  const raw=[], rawSentStart=[];
+  for(let s of sents){ s=s.trim(); if(!s)continue;
+    rawSentStart.push(raw.length); let i=0;
     while(i<s.length){
       let end=Math.min(i+maxLen,s.length), cut=end;
       for(let j=end;j>=i+minLen;j--){ if(breakAfter.has(s[j-1])){cut=j;break;} }
@@ -266,15 +297,19 @@ function chunkText(text){
       raw.push(s.slice(i,cut)); i=cut;
     }
   }
-  // 後処理: 実質1文字以下の断片（「が、」「。」等）は前の語にくっつける
-  const out=[];
-  for(const c of raw){
-    const core=c.replace(/[、。！？\s]/g,'');
-    if(out.length && core.length<=1) out[out.length-1]+=c;
-    else out.push(c);
+  // 後処理: 実質1文字以下の断片（「が、」「。」等）は前の語にくっつける。
+  // 結合で添字がずれるので map で旧→新インデックスを追跡し、文開始位置を補正する。
+  const out=[], map=[];
+  for(let k=0;k<raw.length;k++){
+    const c=raw[k], core=c.replace(/[、。！？\s]/g,'');
+    if(out.length && core.length<=1){ out[out.length-1]+=c; map[k]=out.length-1; }
+    else { map[k]=out.length; out.push(c); }
   }
-  return out;
+  const sentStarts=[...new Set(rawSentStart.map(i=>map[i]??0))];
+  return { chunks:out, sentStarts: sentStarts.length?sentStarts:[0] };
 }
+// 互換ラッパ（チャンク文字列だけ欲しい場合）
+function chunkText(text){ return buildChunks(text).chunks; }
 function delayFor(c){let base=660-(speed-1)*56,d=base+c.length*30;
   if(/[。！？]$/.test(c))d+=280;else if(/、$/.test(c))d+=130;return d;}
 function renderFlash(c){const m=Math.min(c.length-1,Math.floor(c.length*0.35));let h="";
@@ -285,8 +320,8 @@ function esc(s){return(s||"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":
 // ====== LIBRARY ======
 function cardHtml(d){return `
   <button class="card" data-id="${d.id}" style="margin-bottom:10px;">
-    <span class="ic">${d.icon||"新"}</span>
-    <span class="cmid"><span class="ct">${esc(d.title)}</span><span class="cd">${esc(d.desc||"")}${d.flashMode==='ai'?' · AI再構成':''}</span></span>
+    <span class="ic">${esc(d.icon||(d.category?d.category[0]:"新"))}</span>
+    <span class="cmid"><span class="ct">${esc(d.title)||"(無題)"}</span><span class="cd">${esc(d.desc||d.category||"")}${d.flashMode==='ai'?' · AI再構成':''}</span></span>
     <span class="pill ${d.quizStatus==='ready'?'rdy':'uns'}">${d.quizStatus==='ready'?d.quiz.length+'問':'問題なし'}</span>
   </button>`;}
 function library(){
@@ -355,7 +390,8 @@ async function make(){
     if(gen){quiz=await genQuiz(src);status="ready";}
     const cleanTitle=src.replace(/\s+/g,' ').trim();
     const d={id:uid(),icon:"新",title:cleanTitle.slice(0,12)+(cleanTitle.length>12?"…":""),desc:"作成したデッキ",
-      category:cat||"未分類",flashMode:aiMode?"ai":"original",flashText,quiz,quizStatus:status,source:src};
+      category:cat||"未分類",flashMode:aiMode?"ai":"original",flashText,quiz,quizStatus:status,source:src,
+      createdAt:new Date().toISOString()};
     decks.unshift(d);cur=d;deckDetail();
   }catch(e){
     createView();
@@ -419,47 +455,85 @@ function showPaste(){
 
 // ====== export / import ======
 function exportDeck(d){
-  const blob=new Blob([JSON.stringify(d,null,2)],{type:"application/json"});
+  const blob=new Blob([JSON.stringify(toDeckJSON(d),null,2)],{type:"application/json"});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);
   a.download=(d.title||"deck").replace(/[\\/:*?"<>|\s…]/g,"_").slice(0,24)+".json";
   document.body.appendChild(a);a.click();a.remove();
 }
 filein.onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();
-  r.onload=()=>{try{const d=JSON.parse(r.result);
-    if(!d||typeof d!=='object'||Array.isArray(d))throw new Error("デッキ形式ではありません");
-    if(!d.flashText)throw new Error("flashTextがありません");
-    d.id=uid();d.quiz=normalizeQuiz(d.quiz);d.quizStatus=d.quiz.length?"ready":"unset";
+  r.onload=()=>{try{const raw=JSON.parse(r.result);
+    if(!raw||typeof raw!=='object'||Array.isArray(raw))throw new Error("デッキ形式ではありません");
+    if(!raw.flashText)throw new Error("flashTextがありません");
+    const d=normalizeDeck(raw);d.id=uid();
     decks.unshift(d);library();}
     catch(err){alert("読み込めませんでした: "+err.message);}};
   r.readAsText(f);filein.value="";};
 
 // ====== READER ======
 function startReading(){
-  chunks=chunkText(cur.flashText);idx=0;playing=true;
+  const built=buildChunks(cur.flashText);
+  chunks=built.chunks;sentStarts=built.sentStarts;idx=0;playing=true;
+  const maxSeek=Math.max(0,chunks.length-1);
   screen.innerHTML=`
   <div class="screen reader">
     <div class="rtop"><span>${esc(cur.title)}</span><button class="xbtn" id="x">✕</button></div>
     <div class="progress"><i id="bar"></i></div>
     <div class="stage"><div class="guide t"></div><div id="flash" class="flash"></div><div class="guide b"></div></div>
-    <div class="rctrl"><button id="restart">↺ 最初から</button><button id="pp" class="main">一時停止</button></div>
-    <div class="hint">タップで一時停止／再開</div>
+    <div class="seekwrap">
+      <input type="range" id="seek" min="0" max="${maxSeek}" value="0">
+      <div class="pos" id="pos"></div>
+    </div>
+    <div class="rctrl">
+      <button id="rew" title="前の文へ">◀◀ 巻戻</button>
+      <button id="pp" class="main">一時停止</button>
+      <button id="fwd" title="次の文へ">送り ▶▶</button>
+    </div>
+    <button class="btn ghost" id="restart" style="margin-top:10px;">↺ 最初から</button>
+    <div class="hint">画面タップで一時停止／再開・◀◀▶▶で文単位移動・バーでシーク</div>
   </div>`;
-  document.getElementById('x').onclick=()=>deckDetail();
-  document.getElementById('restart').onclick=()=>{clearTimeout(timer);idx=0;playing=true;document.getElementById('pp').textContent='一時停止';tick();};
+  document.getElementById('x').onclick=()=>{stop();deckDetail();};
   document.getElementById('pp').onclick=togglePlay;
+  document.getElementById('rew').onclick=()=>navSentence(-1);
+  document.getElementById('fwd').onclick=()=>navSentence(1);
+  document.getElementById('restart').onclick=restartReading;
+  document.getElementById('seek').oninput=ev=>seekTo(+ev.target.value);
   document.querySelector('.stage').onclick=togglePlay;
   countdown(3);
 }
-function countdown(n){const f=document.getElementById('flash');if(!f)return;
-  if(n===0){f.className='flash';tick();return;}
-  f.className='countdown';f.textContent=n;timer=setTimeout(()=>{f.className='flash';countdown(n-1);},800);}
-function tick(){if(!playing)return;const f=document.getElementById('flash'),bar=document.getElementById('bar');if(!f)return;
-  if(idx>=chunks.length){playing=false;timer=setTimeout(afterFlash,450);return;}
-  const c=chunks[idx];f.innerHTML=renderFlash(c);
+function setPP(){const pp=document.getElementById('pp');if(pp)pp.textContent=playing?'一時停止':'再開';}
+function sentenceOf(i){let s=0;for(let k=0;k<sentStarts.length;k++){if(sentStarts[k]<=i)s=k;else break;}return s;}
+// 現在位置を描画するだけ（idxは進めない）。再生/一時停止/シーク/ナビで共用。
+function paint(){
+  const f=document.getElementById('flash'),bar=document.getElementById('bar'),
+        sk=document.getElementById('seek'),pos=document.getElementById('pos');
+  if(!f)return;
+  f.className='flash';f.innerHTML=renderFlash(chunks[idx]||'');
   f.style.animation='none';f.offsetHeight;f.style.animation='fade .12s ease';
-  bar.style.width=((idx+1)/chunks.length*100)+'%';const d=delayFor(c);idx++;timer=setTimeout(tick,d);}
-function togglePlay(){playing=!playing;const pp=document.getElementById('pp');
-  if(playing){pp.textContent='一時停止';tick();}else{pp.textContent='再開';clearTimeout(timer);}}
+  const n=chunks.length;
+  if(bar)bar.style.width=(n?((idx+1)/n*100):0)+'%';
+  if(sk&&document.activeElement!==sk)sk.value=idx;
+  if(pos)pos.textContent=n?`語 ${Math.min(idx+1,n)}/${n} ・ 文 ${sentenceOf(idx)+1}/${sentStarts.length}`:'本文なし';
+}
+function countdown(n){const f=document.getElementById('flash');if(!f)return;
+  if(n===0){paint();timer=setTimeout(tick,delayFor(chunks[idx]||''));idx++;return;}
+  f.className='countdown';f.textContent=n;timer=setTimeout(()=>{countdown(n-1);},800);}
+function tick(){if(!playing)return;const f=document.getElementById('flash');if(!f)return;
+  if(idx>=chunks.length){playing=false;setPP();timer=setTimeout(afterFlash,450);return;}
+  paint();const d=delayFor(chunks[idx]);idx++;timer=setTimeout(tick,d);}
+function togglePlay(){if(!chunks.length)return;playing=!playing;setPP();
+  if(playing)tick();else clearTimeout(timer);}
+// 文単位の巻き戻し/送り。常に一時停止して現在地を表示する。
+function navSentence(dir){
+  clearTimeout(timer);playing=false;setPP();
+  const s=sentenceOf(idx);
+  let target;
+  if(dir>0){ target = (sentStarts[s+1]!==undefined)?sentStarts[s+1]:chunks.length-1; }
+  else { target = (idx>sentStarts[s])?sentStarts[s]:sentStarts[Math.max(0,s-1)]; }
+  idx=Math.max(0,Math.min(chunks.length-1,target));paint();
+}
+function seekTo(i){clearTimeout(timer);playing=false;setPP();
+  idx=Math.max(0,Math.min(chunks.length-1,i|0));paint();}
+function restartReading(){clearTimeout(timer);idx=0;playing=true;setPP();tick();}
 function afterFlash(){
   if(cur.quizStatus==='ready'){startQuiz();}
   else{screen.innerHTML=`<div class="screen result">
