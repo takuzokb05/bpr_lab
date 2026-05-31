@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>flash-study — Phase 1 試作</title>
+<!--
+  flash-study Phase 1 プロトタイプ（単一HTML / AI呼び出し無し）
+  - データの背骨: 1デッキ = 1 JSON  { id,title,source,flashMode,flashText,quiz[],quizStatus,category }
+  - 機能: フラッシュ読み(RSVP) / 4択クイズ / デッキJSON export-import / 手動カテゴリ
+  - 保存: メモリ + localStorage(利便のため)。Phase3でIndexedDBに置換予定。
+  - Phase1ではLLMは一切呼ばない（callLLMはPhase3で導入）。
+-->
+<style>
+  :root{
+    --bg:#0f1220; --panel:#181c2e; --panel2:#212640; --txt:#e8ebf5; --muted:#9aa3c0;
+    --accent:#6c8cff; --accent2:#46d39a; --danger:#ff6b6b; --line:#2c3252;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
+    background:var(--bg);color:var(--txt);line-height:1.6}
+  header{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  header h1{font-size:18px;margin:0}
+  header .tag{font-size:11px;color:var(--muted);border:1px solid var(--line);padding:2px 8px;border-radius:999px}
+  nav{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+  nav button{background:var(--panel);color:var(--muted);border:1px solid var(--line);
+    padding:8px 14px;border-radius:8px;cursor:pointer;font-size:13px}
+  nav button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+  main{max-width:880px;margin:0 auto;padding:24px 20px 80px}
+  .view{display:none}
+  .view.active{display:block}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:14px}
+  h2{font-size:16px;margin:0 0 12px}
+  label{display:block;font-size:12px;color:var(--muted);margin:10px 0 4px}
+  input[type=text],textarea,select{width:100%;background:var(--panel2);color:var(--txt);
+    border:1px solid var(--line);border-radius:8px;padding:10px;font-size:14px;font-family:inherit}
+  textarea{resize:vertical;min-height:90px}
+  .row{display:flex;gap:10px;flex-wrap:wrap}
+  .row>*{flex:1;min-width:160px}
+  button.btn{background:var(--accent);color:#fff;border:none;padding:10px 16px;border-radius:8px;
+    cursor:pointer;font-size:14px}
+  button.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--txt)}
+  button.btn.green{background:var(--accent2)}
+  button.btn.danger{background:transparent;border:1px solid var(--danger);color:var(--danger)}
+  button.btn:disabled{opacity:.4;cursor:not-allowed}
+  .muted{color:var(--muted);font-size:13px}
+  .deck-item{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid var(--line);
+    border-radius:10px;margin-bottom:8px;background:var(--panel2)}
+  .deck-item .meta{flex:1;min-width:0}
+  .deck-item .title{font-weight:600}
+  .deck-item .sub{font-size:12px;color:var(--muted)}
+  .pill{font-size:11px;border:1px solid var(--line);border-radius:999px;padding:1px 8px;color:var(--muted)}
+  .pill.ready{color:var(--accent2);border-color:var(--accent2)}
+  .pill.unset{color:var(--muted)}
+  /* Flash */
+  #flashStage{min-height:200px;display:flex;align-items:center;justify-content:center;text-align:center;
+    background:var(--panel2);border-radius:14px;padding:30px;font-size:34px;font-weight:600;letter-spacing:.02em}
+  .flash-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px}
+  .progress{height:6px;background:var(--panel2);border-radius:999px;overflow:hidden;margin-top:12px}
+  .progress>div{height:100%;background:var(--accent);width:0}
+  /* Quiz */
+  .choice{display:block;width:100%;text-align:left;background:var(--panel2);border:1px solid var(--line);
+    color:var(--txt);padding:12px 14px;border-radius:10px;margin:8px 0;cursor:pointer;font-size:14px}
+  .choice:hover{border-color:var(--accent)}
+  .choice.correct{border-color:var(--accent2);background:rgba(70,211,154,.12)}
+  .choice.wrong{border-color:var(--danger);background:rgba(255,107,107,.12)}
+  .choice.disabled{cursor:default;pointer-events:none}
+  .explain{margin-top:10px;padding:12px;border-left:3px solid var(--accent);background:var(--panel2);
+    border-radius:0 8px 8px 0;font-size:13px}
+  .quiz-item-editor{border:1px solid var(--line);border-radius:10px;padding:12px;margin:10px 0;background:var(--panel2)}
+  .choice-row{display:flex;align-items:center;gap:8px;margin:6px 0}
+  .choice-row input[type=radio]{width:auto;flex:none}
+  .choice-row input[type=text]{flex:1}
+  .hidden{display:none}
+  .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--panel2);
+    border:1px solid var(--line);padding:10px 18px;border-radius:10px;opacity:0;transition:.3s;pointer-events:none}
+  .toast.show{opacity:1}
+  code{background:var(--panel2);padding:1px 5px;border-radius:4px;font-size:12px}
+</style>
+</head>
+<body>
+<header>
+  <h1>⚡ flash-study</h1>
+  <span class="tag">Phase 1 試作 / AI無し</span>
+  <nav>
+    <button data-view="library" class="active">ライブラリ</button>
+    <button data-view="edit">編集</button>
+    <button data-view="flash">フラッシュ</button>
+    <button data-view="quiz">クイズ</button>
+  </nav>
+</header>
+
+<main>
+  <!-- ===== ライブラリ ===== -->
+  <section id="library" class="view active">
+    <div class="card">
+      <h2>デッキライブラリ</h2>
+      <p class="muted">1デッキ = 1 JSON。ここで作成・読込・書出ができます。保存はこのブラウザ内（localStorage）。</p>
+      <div class="row">
+        <button class="btn" id="newDeckBtn">＋ 新規デッキ</button>
+        <button class="btn ghost" id="importBtn">JSON をインポート</button>
+        <button class="btn ghost" id="loadSampleBtn">サンプルを読込</button>
+        <input type="file" id="importFile" accept="application/json,.json" class="hidden" />
+      </div>
+    </div>
+    <div class="card">
+      <h2>保存済みデッキ</h2>
+      <div id="deckList"></div>
+    </div>
+  </section>
+
+  <!-- ===== 編集 ===== -->
+  <section id="edit" class="view">
+    <div class="card">
+      <h2>デッキ編集</h2>
+      <div class="row">
+        <div>
+          <label>タイトル</label>
+          <input type="text" id="fTitle" placeholder="例）基本情報技術者 - ネットワーク" />
+        </div>
+        <div>
+          <label>カテゴリ（手動）</label>
+          <input type="text" id="fCategory" list="catList" placeholder="例）ネットワーク" />
+          <datalist id="catList"></datalist>
+        </div>
+      </div>
+      <label>元素材 source（クイズ採点の根拠）</label>
+      <textarea id="fSource" placeholder="学習素材の本文を貼り付け"></textarea>
+      <div class="row" style="align-items:flex-end">
+        <div>
+          <label>フラッシュモード flashMode</label>
+          <select id="fFlashMode">
+            <option value="original">original（素材そのまま）</option>
+            <option value="ai">ai（再構成済みテキストを使う）</option>
+          </select>
+        </div>
+        <div style="flex:none">
+          <button class="btn ghost" id="copySourceBtn">source を flashText へコピー</button>
+        </div>
+      </div>
+      <label>フラッシュ用テキスト flashText</label>
+      <textarea id="fFlashText" placeholder="フラッシュ表示する本文。改行・句読点・空白で区切られます"></textarea>
+    </div>
+
+    <div class="card">
+      <h2>クイズ（4択）</h2>
+      <p class="muted">各問：設問・選択肢4・正解1・解説。<code>quizStatus</code> は問題が1つ以上あれば自動で <code>ready</code> になります。</p>
+      <div id="quizEditor"></div>
+      <button class="btn ghost" id="addQuizBtn">＋ 問題を追加</button>
+    </div>
+
+    <div class="card">
+      <div class="row">
+        <button class="btn green" id="saveDeckBtn">保存</button>
+        <button class="btn ghost" id="exportDeckBtn">この JSON を書き出す</button>
+        <button class="btn danger" id="deleteDeckBtn">削除</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== フラッシュ ===== -->
+  <section id="flash" class="view">
+    <div class="card">
+      <h2 id="flashTitle">フラッシュ読み</h2>
+      <div id="flashStage">—</div>
+      <div class="progress"><div id="flashProgress"></div></div>
+      <div class="flash-controls">
+        <button class="btn" id="flashPlay">▶ 再生</button>
+        <button class="btn ghost" id="flashPrev">◀ 前</button>
+        <button class="btn ghost" id="flashNext">次 ▶</button>
+        <button class="btn ghost" id="flashReset">⟲ 最初へ</button>
+        <span class="muted" id="flashPos">0 / 0</span>
+      </div>
+      <div class="flash-controls">
+        <label style="margin:0">速度</label>
+        <input type="range" id="flashSpeed" min="120" max="1200" step="20" value="350" style="flex:1;min-width:160px" />
+        <span class="muted" id="flashSpeedLabel">350 ms/語</span>
+      </div>
+      <p class="muted" id="flashEmpty">ライブラリでデッキを選ぶとここに表示されます。</p>
+    </div>
+  </section>
+
+  <!-- ===== クイズ ===== -->
+  <section id="quiz" class="view">
+    <div class="card">
+      <h2 id="quizTitle">クイズ</h2>
+      <div id="quizArea"></div>
+      <p class="muted" id="quizEmpty">クイズのあるデッキを選んでください。</p>
+    </div>
+  </section>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+
+/* ===================== データ層: 1デッキ = 1 JSON ===================== */
+const STORE_KEY = "flashStudy.decks.v1";
+
+/** 背骨スキーマの空デッキを生成 */
+function emptyDeck(){
+  return {
+    id: "deck_" + Date.now().toString(36) + Math.random().toString(36).slice(2,6),
+    title: "", source: "", flashMode: "original",
+    flashText: "", quiz: [], quizStatus: "unset", category: ""
+  };
+}
+
+/** 任意オブジェクトを背骨スキーマに正規化（インポートの堅牢化） */
+function normalizeDeck(raw){
+  const d = emptyDeck();
+  if(!raw || typeof raw !== "object") return d;
+  if(typeof raw.id === "string" && raw.id) d.id = raw.id;
+  d.title = String(raw.title || "");
+  d.source = String(raw.source || "");
+  d.flashMode = (raw.flashMode === "ai") ? "ai" : "original";
+  d.flashText = String(raw.flashText || "");
+  d.category = String(raw.category || "");
+  d.quiz = Array.isArray(raw.quiz) ? raw.quiz.map(normalizeQuizItem).filter(Boolean) : [];
+  d.quizStatus = d.quiz.length > 0 ? "ready" : "unset";
+  return d;
+}
+function normalizeQuizItem(q){
+  if(!q || typeof q !== "object") return null;
+  const o = Array.isArray(q.o) ? q.o.slice(0,4).map(x=>String(x ?? "")) : ["","","",""];
+  while(o.length < 4) o.push("");
+  let a = Number.isInteger(q.a) ? q.a : 0;
+  if(a < 0 || a > 3) a = 0;
+  return { q: String(q.q || ""), o, a, e: String(q.e || "") };
+}
+
+let decks = loadDecks();
+let currentId = decks[0] ? decks[0].id : null;
+
+function loadDecks(){
+  try{
+    const raw = JSON.parse(localStorage.getItem(STORE_KEY) || "[]");
+    return Array.isArray(raw) ? raw.map(normalizeDeck) : [];
+  }catch{ return []; }
+}
+function persist(){ localStorage.setItem(STORE_KEY, JSON.stringify(decks)); }
+function currentDeck(){ return decks.find(d => d.id === currentId) || null; }
+
+/* ===================== 日本語対応 フラッシュチャンカー ===================== */
+/**
+ * flashText をフレーズ単位に分割。
+ * - まず改行・空白・句読点（、。！？!?,. ・…）で区切る
+ * - 句読点は直前チャンクに付ける
+ * - 助詞・記号だけ等の極小フラグメント（1文字）は前のチャンクへ吸収（孤立防止）
+ */
+function chunkText(text){
+  if(!text) return [];
+  const rawTokens = [];
+  let buf = "";
+  const breakers = "、。，．,.!?！？・…\n\t　 ";
+  for(const ch of text){
+    if(breakers.includes(ch)){
+      if("、。，．,.!?！？・…".includes(ch)) buf += ch; // 句読点は直前に付与
+      if(buf.trim()) rawTokens.push(buf.trim());
+      buf = "";
+    } else {
+      buf += ch;
+    }
+  }
+  if(buf.trim()) rawTokens.push(buf.trim());
+
+  // 極小フラグメント（1文字）を前のチャンクへ吸収
+  const out = [];
+  for(const tok of rawTokens){
+    if(out.length && tok.length <= 1){
+      out[out.length-1] += tok;
+    } else {
+      out.push(tok);
+    }
+  }
+  return out;
+}
+
+/* ===================== ビュー切替 ===================== */
+const views = {};
+document.querySelectorAll(".view").forEach(v => views[v.id] = v);
+document.querySelectorAll("nav button").forEach(btn=>{
+  btn.addEventListener("click", ()=> showView(btn.dataset.view));
+});
+function showView(name){
+  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active", b.dataset.view===name));
+  Object.values(views).forEach(v=>v.classList.remove("active"));
+  views[name].classList.add("active");
+  if(name==="flash") setupFlash();
+  if(name==="quiz") setupQuiz();
+  if(name==="edit") loadEditor();
+  if(name==="library") renderLibrary();
+}
+
+/* ===================== トースト ===================== */
+let toastTimer;
+function toast(msg){
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove("show"), 1800);
+}
+
+/* ===================== ライブラリ ===================== */
+function renderLibrary(){
+  const list = document.getElementById("deckList");
+  if(decks.length === 0){
+    list.innerHTML = '<p class="muted">まだデッキがありません。「サンプルを読込」か「新規デッキ」から。</p>';
+    return;
+  }
+  list.innerHTML = "";
+  decks.forEach(d=>{
+    const el = document.createElement("div");
+    el.className = "deck-item";
+    const ready = d.quizStatus === "ready";
+    el.innerHTML = `
+      <div class="meta">
+        <div class="title">${escapeHtml(d.title || "(無題)")}</div>
+        <div class="sub">
+          ${d.category ? escapeHtml(d.category)+" ・ " : ""}
+          ${d.quiz.length}問 ・
+          <span class="pill ${ready?'ready':'unset'}">${ready?'quiz ready':'quiz unset'}</span>
+        </div>
+      </div>`;
+    const open = mkBtn("開く", "btn ghost", ()=>{ currentId=d.id; showView("edit"); });
+    const flash = mkBtn("⚡", "btn ghost", ()=>{ currentId=d.id; showView("flash"); });
+    const quiz = mkBtn("✓", "btn ghost", ()=>{ currentId=d.id; showView("quiz"); });
+    [open, flash, quiz].forEach(b=>{ b.style.flex="none"; el.appendChild(b); });
+    list.appendChild(el);
+  });
+}
+function mkBtn(label, cls, fn){
+  const b = document.createElement("button"); b.className=cls; b.textContent=label;
+  b.addEventListener("click", fn); return b;
+}
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+}
+
+document.getElementById("newDeckBtn").addEventListener("click", ()=>{
+  const d = emptyDeck(); decks.push(d); currentId = d.id; persist(); showView("edit");
+});
+document.getElementById("importBtn").addEventListener("click", ()=>document.getElementById("importFile").click());
+document.getElementById("importFile").addEventListener("change", async (e)=>{
+  const file = e.target.files[0]; if(!file) return;
+  try{
+    const text = await file.text();
+    const parsed = JSON.parse(text);
+    const arr = Array.isArray(parsed) ? parsed : [parsed];
+    let n = 0;
+    arr.forEach(raw=>{ decks.push(normalizeDeck(raw)); n++; });
+    persist(); currentId = decks[decks.length-1].id;
+    toast(`${n}件のデッキをインポートしました`); renderLibrary();
+  }catch(err){
+    toast("JSON の読み込みに失敗しました");
+  }
+  e.target.value = "";
+});
+document.getElementById("loadSampleBtn").addEventListener("click", ()=>{
+  decks.push(normalizeDeck(SAMPLE_DECK)); currentId = decks[decks.length-1].id;
+  persist(); toast("サンプルデッキを追加しました"); renderLibrary();
+});
+
+/* ===================== 編集 ===================== */
+function loadEditor(){
+  const d = currentDeck();
+  if(!d){ // 開くデッキが無ければ新規を1つ
+    const nd = emptyDeck(); decks.push(nd); currentId = nd.id; persist();
+  }
+  const deck = currentDeck();
+  document.getElementById("fTitle").value = deck.title;
+  document.getElementById("fCategory").value = deck.category;
+  document.getElementById("fSource").value = deck.source;
+  document.getElementById("fFlashMode").value = deck.flashMode;
+  document.getElementById("fFlashText").value = deck.flashText;
+  refreshCatList();
+  renderQuizEditor(deck);
+}
+function refreshCatList(){
+  const set = [...new Set(decks.map(d=>d.category).filter(Boolean))];
+  document.getElementById("catList").innerHTML = set.map(c=>`<option value="${escapeHtml(c)}">`).join("");
+}
+function renderQuizEditor(deck){
+  const wrap = document.getElementById("quizEditor");
+  wrap.innerHTML = "";
+  deck.quiz.forEach((q, i)=>{
+    const box = document.createElement("div");
+    box.className = "quiz-item-editor";
+    box.innerHTML = `<label>設問 ${i+1}</label>`;
+    const qInput = inputEl(q.q, "設問文");
+    qInput.addEventListener("input", ()=>q.q = qInput.value);
+    box.appendChild(qInput);
+    box.appendChild(Object.assign(document.createElement("label"),{textContent:"選択肢（ラジオで正解を指定）"}));
+    q.o.forEach((opt, oi)=>{
+      const row = document.createElement("div"); row.className="choice-row";
+      const radio = document.createElement("input"); radio.type="radio"; radio.name="ans_"+i;
+      radio.checked = q.a===oi; radio.addEventListener("change", ()=>{ if(radio.checked) q.a=oi; });
+      const txt = inputEl(opt, "選択肢 "+(oi+1));
+      txt.addEventListener("input", ()=>q.o[oi]=txt.value);
+      row.appendChild(radio); row.appendChild(txt); box.appendChild(row);
+    });
+    const eLabel = document.createElement("label"); eLabel.textContent="解説"; box.appendChild(eLabel);
+    const eInput = inputEl(q.e, "なぜその答えか（source 準拠で）");
+    eInput.addEventListener("input", ()=>q.e=eInput.value);
+    box.appendChild(eInput);
+    const del = mkBtn("この問題を削除", "btn danger", ()=>{
+      deck.quiz.splice(i,1); renderQuizEditor(deck);
+    });
+    del.style.marginTop="8px"; box.appendChild(del);
+    wrap.appendChild(box);
+  });
+}
+function inputEl(val, ph){
+  const el = document.createElement("input"); el.type="text"; el.value=val||""; el.placeholder=ph||"";
+  return el;
+}
+document.getElementById("addQuizBtn").addEventListener("click", ()=>{
+  const d = currentDeck(); d.quiz.push({ q:"", o:["","","",""], a:0, e:"" }); renderQuizEditor(d);
+});
+document.getElementById("copySourceBtn").addEventListener("click", ()=>{
+  document.getElementById("fFlashText").value = document.getElementById("fSource").value;
+});
+document.getElementById("saveDeckBtn").addEventListener("click", ()=>{
+  const d = currentDeck();
+  d.title = document.getElementById("fTitle").value.trim();
+  d.category = document.getElementById("fCategory").value.trim();
+  d.source = document.getElementById("fSource").value;
+  d.flashMode = document.getElementById("fFlashMode").value;
+  d.flashText = document.getElementById("fFlashText").value;
+  d.quizStatus = d.quiz.length > 0 ? "ready" : "unset";
+  persist(); refreshCatList();
+  toast("保存しました");
+});
+document.getElementById("exportDeckBtn").addEventListener("click", ()=>{
+  const d = currentDeck(); if(!d) return;
+  const blob = new Blob([JSON.stringify(d, null, 2)], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = (d.title || d.id).replace(/[^\w\-一-龯ぁ-んァ-ン]/g,"_") + ".json";
+  a.click(); URL.revokeObjectURL(url);
+});
+document.getElementById("deleteDeckBtn").addEventListener("click", ()=>{
+  const d = currentDeck(); if(!d) return;
+  if(!confirm(`「${d.title||"(無題)"}」を削除しますか？`)) return;
+  decks = decks.filter(x=>x.id!==d.id); currentId = decks[0] ? decks[0].id : null;
+  persist(); toast("削除しました"); showView("library");
+});
+
+/* ===================== フラッシュ（RSVP） ===================== */
+let flashChunks = [], flashIdx = 0, flashTimer = null, flashSpeed = 350;
+function setupFlash(){
+  const d = currentDeck();
+  const empty = document.getElementById("flashEmpty");
+  const title = document.getElementById("flashTitle");
+  if(!d || !d.flashText.trim()){
+    flashChunks = []; renderFlash();
+    title.textContent = "フラッシュ読み";
+    empty.classList.remove("hidden");
+    return;
+  }
+  empty.classList.add("hidden");
+  title.textContent = "⚡ " + (d.title || "(無題)");
+  flashChunks = chunkText(d.flashText);
+  flashIdx = 0; stopFlash(); renderFlash();
+}
+function renderFlash(){
+  const stage = document.getElementById("flashStage");
+  const pos = document.getElementById("flashPos");
+  const prog = document.getElementById("flashProgress");
+  if(flashChunks.length === 0){ stage.textContent = "—"; pos.textContent="0 / 0"; prog.style.width="0"; return; }
+  stage.textContent = flashChunks[flashIdx] || "—";
+  pos.textContent = `${flashIdx+1} / ${flashChunks.length}`;
+  prog.style.width = ((flashIdx+1)/flashChunks.length*100) + "%";
+}
+function stepFlash(delta){
+  if(flashChunks.length===0) return;
+  flashIdx = Math.max(0, Math.min(flashChunks.length-1, flashIdx+delta));
+  renderFlash();
+}
+function playFlash(){
+  if(flashChunks.length===0) return;
+  const btn = document.getElementById("flashPlay");
+  if(flashTimer){ stopFlash(); return; }
+  btn.textContent = "⏸ 一時停止";
+  flashTimer = setInterval(()=>{
+    if(flashIdx >= flashChunks.length-1){ stopFlash(); return; }
+    flashIdx++; renderFlash();
+  }, flashSpeed);
+}
+function stopFlash(){
+  if(flashTimer){ clearInterval(flashTimer); flashTimer=null; }
+  document.getElementById("flashPlay").textContent = "▶ 再生";
+}
+document.getElementById("flashPlay").addEventListener("click", playFlash);
+document.getElementById("flashPrev").addEventListener("click", ()=>{ stopFlash(); stepFlash(-1); });
+document.getElementById("flashNext").addEventListener("click", ()=>{ stopFlash(); stepFlash(1); });
+document.getElementById("flashReset").addEventListener("click", ()=>{ stopFlash(); flashIdx=0; renderFlash(); });
+document.getElementById("flashSpeed").addEventListener("input", (e)=>{
+  flashSpeed = Number(e.target.value);
+  document.getElementById("flashSpeedLabel").textContent = flashSpeed + " ms/語";
+  if(flashTimer){ stopFlash(); playFlash(); }
+});
+
+/* ===================== クイズ ===================== */
+function setupQuiz(){
+  const d = currentDeck();
+  const area = document.getElementById("quizArea");
+  const empty = document.getElementById("quizEmpty");
+  const title = document.getElementById("quizTitle");
+  area.innerHTML = "";
+  if(!d || d.quiz.length === 0){
+    empty.classList.remove("hidden");
+    title.textContent = "クイズ";
+    return;
+  }
+  empty.classList.add("hidden");
+  title.textContent = "✓ " + (d.title || "(無題)");
+  let answered = 0, correct = 0;
+  const total = d.quiz.length;
+  const scoreEl = document.createElement("p");
+  scoreEl.className = "muted";
+  const updateScore = ()=> scoreEl.textContent = `正解 ${correct} / 回答 ${answered}（全${total}問）`;
+  updateScore();
+  area.appendChild(scoreEl);
+
+  d.quiz.forEach((item, qi)=>{
+    const card = document.createElement("div");
+    card.className = "card";
+    card.style.background = "var(--panel2)";
+    const q = document.createElement("div");
+    q.innerHTML = `<strong>Q${qi+1}.</strong> ${escapeHtml(item.q || "(設問なし)")}`;
+    card.appendChild(q);
+    let locked = false;
+    const btns = [];
+    item.o.forEach((opt, oi)=>{
+      const b = document.createElement("button");
+      b.className = "choice";
+      b.textContent = `${"ABCD"[oi]}. ${opt}`;
+      b.addEventListener("click", ()=>{
+        if(locked) return; locked = true; answered++;
+        btns.forEach((x,xi)=>{
+          x.classList.add("disabled");
+          if(xi===item.a) x.classList.add("correct");
+        });
+        if(oi===item.a){ correct++; }
+        else { b.classList.add("wrong"); }
+        updateScore();
+        const ex = document.createElement("div");
+        ex.className = "explain";
+        ex.innerHTML = `<strong>${oi===item.a?"正解":"不正解"}</strong> ・ 答え: ${"ABCD"[item.a]}<br>${escapeHtml(item.e || "(解説なし)")}`;
+        card.appendChild(ex);
+      });
+      btns.push(b); card.appendChild(b);
+    });
+    area.appendChild(card);
+  });
+}
+
+/* ===================== サンプルデッキ（背骨スキーマ） ===================== */
+const SAMPLE_DECK = {
+  id: "deck_sample_osi",
+  title: "基本情報 - OSI参照モデル（サンプル）",
+  source: "OSI参照モデルは、コンピュータの通信機能を7つの階層に分けて整理した国際標準のモデルである。"
+        + "下位から第1層の物理層、第2層のデータリンク層、第3層のネットワーク層、第4層のトランスポート層、"
+        + "第5層のセッション層、第6層のプレゼンテーション層、第7層のアプリケーション層となる。"
+        + "ネットワーク層はIPアドレスを用いた経路選択（ルーティング）を担当し、"
+        + "トランスポート層はTCPやUDPによりエンドツーエンドの通信制御と信頼性を担う。"
+        + "データリンク層はMACアドレスを用いて同一ネットワーク内のノード間でフレームを転送する。",
+  flashMode: "original",
+  flashText: "OSI参照モデルは、通信機能を7つの階層に分けた国際標準のモデルである。"
+           + "第3層のネットワーク層は、IPアドレスを用いた経路選択（ルーティング）を担当する。"
+           + "第4層のトランスポート層は、TCPやUDPによりエンドツーエンドの信頼性を担う。"
+           + "第2層のデータリンク層は、MACアドレスを用いて同一ネットワーク内でフレームを転送する。",
+  quiz: [
+    { q: "OSI参照モデルで、IPアドレスを用いた経路選択（ルーティング）を担当する層はどれか。",
+      o: ["データリンク層", "ネットワーク層", "トランスポート層", "セッション層"],
+      a: 1,
+      e: "source より、ネットワーク層（第3層）がIPアドレスによる経路選択を担当する。" },
+    { q: "TCPやUDPによりエンドツーエンドの通信制御と信頼性を担う層はどれか。",
+      o: ["アプリケーション層", "プレゼンテーション層", "トランスポート層", "物理層"],
+      a: 2,
+      e: "source より、トランスポート層（第4層）がTCP/UDPで信頼性を担う。" },
+    { q: "MACアドレスを用いて同一ネットワーク内のノード間でフレームを転送する層はどれか。",
+      o: ["データリンク層", "ネットワーク層", "セッション層", "アプリケーション層"],
+      a: 0,
+      e: "source より、データリンク層（第2層）がMACアドレスでフレームを転送する。" }
+  ],
+  quizStatus: "ready",
+  category: "ネットワーク"
+};
+
+/* ===================== 初期化 ===================== */
+renderLibrary();
+</script>
+</body>
+</html>
