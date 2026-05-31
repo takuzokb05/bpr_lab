@@ -100,9 +100,10 @@ system_prompt: |
   - 検証: `tests/run_tests.py`（API不要・全 pass）、疎通は `demo.py`
 - [ ] **Phase 4**: UI（→ `UIUX_REVIEW_2026-05.md` で方向決定）
   - 見た目=報道番組系の静かな上質さ／絵文字ほぼ全廃＋アイコン体系／**Streamlitから Next.js+SSE へ移行検討**
-  - `api/`(FastAPI) で `council.run()` を SSE 配信 → v2の「途中経過が見えない」を構造的に解消
-  - `web/`(Next.js+Tailwind) で3レーンIA・モノグラムアバター・ストリーミング表示
-  - ペルソナに `accent` 色を追加し絵文字 `avatar` 依存をUIから外す／ボイス刷新（厨二語の置換）
+  - [x] `api/`(FastAPI) で `council.run()` を SSE 配信（`/health` `/personas` `/sessions`）→ v2の「途中経過が見えない」を構造的に解消。service.py はFW非依存でテスト済み
+  - [x] ペルソナに `accent` 色＋`monogram` を追加（絵文字 `avatar` 依存をUIから外す下ごしらえ）
+  - [ ] `web/`(Next.js+Tailwind) で3レーンIA・モノグラムアバター・ストリーミング表示
+  - [ ] ボイス刷新（厨二語の置換）をUI文言に反映
 - [ ] **Phase 5**: 経営者・哲学者ペルソナを YAML で追加（jobs / socrates を雛形として実装済み。今後拡充）
 - [ ] **Phase 6**: 永続化（SQLite）を「あれば便利」レベルで戻す（v2のDB資産を流用可）
 - [ ] **Phase 7（残課題）**: 収束検知による早期停止、ストリーミング出力、コスト計上

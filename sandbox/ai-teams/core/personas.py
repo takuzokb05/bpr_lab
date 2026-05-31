@@ -28,6 +28,19 @@ _VALID_CATEGORIES = {
     "philosophers",
 }
 
+# カテゴリ別のアクセント色（UIUX_REVIEW_2026-05.md の彩度低めパレット）。
+# persona.accent が未指定のときのフォールバックに使う。絵文字アバターの代わりに
+# 「モノグラム + カテゴリ色」でペルソナを識別する。
+CATEGORY_ACCENT = {
+    "thinking": "#5B7C8A",
+    "founders": "#8A6D3B",
+    "philosophers": "#6E5B8A",
+    "facilitation": "#4A4A4A",
+    "chair": "#3B6E5B",
+    "scribe": "#6B675F",
+}
+_DEFAULT_ACCENT = "#5B7C8A"
+
 
 @dataclass
 class Persona:
@@ -45,6 +58,9 @@ class Persona:
     tags: list[str] = field(default_factory=list)
     # 発言ローテーションに入れるか。書記など記録専任は False。
     speaks: bool = True
+    # UI 用のアクセント色（#RRGGBB）。未指定ならカテゴリ色を使う。絵文字に依らず
+    # 「モノグラム + この色」でペルソナを識別する（UIUX_REVIEW 参照）。
+    accent: str | None = None
 
     def __post_init__(self) -> None:
         if not self.id:
@@ -56,6 +72,24 @@ class Persona:
                 f"persona '{self.id}' の category '{self.category}' が不正です "
                 f"(有効: {sorted(_VALID_CATEGORIES)})"
             )
+
+    @property
+    def accent_color(self) -> str:
+        """UI 用アクセント色。persona.accent > カテゴリ色 > 既定。"""
+        return self.accent or CATEGORY_ACCENT.get(self.category, _DEFAULT_ACCENT)
+
+    @property
+    def monogram(self) -> str:
+        """絵文字の代わりにアバターへ表示する1〜2文字の頭文字。
+
+        ラテン語の複数語名はイニシャル2文字（"Steve Jobs"→"SJ"）、
+        それ以外は括弧書きを除いた先頭1文字（"論理担当"→"論"）。
+        """
+        words = self.display_name.replace("　", " ").split()
+        if len(words) >= 2 and words[0][:1].isascii() and words[1][:1].isascii():
+            return (words[0][0] + words[1][0]).upper()
+        base = self.display_name.split("（")[0].split("(")[0].strip()
+        return base[:1] or "?"
 
 
 def persona_from_dict(data: dict[str, Any]) -> Persona:
@@ -70,6 +104,7 @@ def persona_from_dict(data: dict[str, Any]) -> Persona:
         "temperature",
         "tags",
         "speaks",
+        "accent",
     }
     unknown = set(data) - known
     if unknown:
@@ -84,6 +119,7 @@ def persona_from_dict(data: dict[str, Any]) -> Persona:
         temperature=data.get("temperature"),
         tags=list(data.get("tags", [])),
         speaks=bool(data.get("speaks", True)),
+        accent=data.get("accent"),
     )
 
 

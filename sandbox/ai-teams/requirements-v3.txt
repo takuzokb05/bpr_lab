@@ -1,5 +1,8 @@
 # AI Teams v3 (core エンジン) の依存。旧 requirements.txt は v2 用。
 anthropic>=0.40
 pyyaml>=6.0
+# API (FastAPI + SSE):
+fastapi>=0.110
+uvicorn[standard]>=0.29
 # UI を作るとき:
-# streamlit>=1.40
+# (web/ は別途 Next.js。Python 依存ではない)

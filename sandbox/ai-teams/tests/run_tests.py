@@ -11,6 +11,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from core import Council, MockLLMClient, Persona, Turn, build_context  # noqa: E402
+from api import service  # noqa: E402
 
 _failures: list[str] = []
 
@@ -136,10 +137,62 @@ def test_model_override():
 
 
 # ---------------------------------------------------------------------------
+def test_persona_public():
+    """API 公開表現は system_prompt を出さず、accent/monogram を含む。"""
+    print("[test] persona_public serialization")
+    p = Persona(
+        id="logic", display_name="論理担当", system_prompt="秘密のプロンプト",
+        category="thinking",
+    )
+    pub = service.persona_public(p)
+    check("system_prompt" not in pub, "system_prompt は公開されない")
+    check(pub["accent"] == "#5B7C8A", f"thinking のカテゴリ色が入る: {pub['accent']}")
+    check(pub["monogram"] == "論", f"モノグラムは先頭1文字: {pub['monogram']}")
+    jobs = Persona(id="j", display_name="Steve Jobs", system_prompt="x", category="founders")
+    check(service.persona_public(jobs)["monogram"] == "SJ", "ラテン2語名はイニシャル2文字")
+
+
+def test_sse_stream():
+    """SSE: start → turn* → done の順で、ワイヤ形式・JSON が正しいか。"""
+    print("[test] SSE stream (途中経過の逐次配信)")
+    import json
+
+    council = service.build_council(
+        ["moderator", "logic", "idea", "empathy", "chair"],
+        rounds_per_phase=1,
+        mock=True,
+    )
+    events = list(service.stream_council(council, "議題Z"))
+
+    # ワイヤ形式
+    check(all(e.startswith("event: ") for e in events), "各イベントが 'event: ' で始まる")
+    check(all(e.endswith("\n\n") for e in events), "各イベントが空行で終わる（SSE区切り）")
+
+    kinds = [e.split("\n", 1)[0].removeprefix("event: ") for e in events]
+    check(kinds[0] == "start", "最初は start")
+    check(kinds[-1] == "done", "最後は done")
+    check("error" not in kinds, "error イベントは出ない")
+
+    turns = [e for e, k in zip(events, kinds) if k == "turn"]
+    # 司会1 + パネリスト3 + 議長1 = 5（1フェーズ×1ラウンド）。デフォルト3フェーズなので
+    # ここではフェーズ既定のまま: opening1 + (3人×3フェーズ) + synthesis1 = 11
+    check(len(turns) == 11, f"turn 数が想定どおり: {len(turns)}")
+
+    # data 行の JSON 検証（最初の turn）
+    data_line = [ln for ln in turns[0].splitlines() if ln.startswith("data: ")][0]
+    payload = json.loads(data_line.removeprefix("data: "))
+    for key in ("speaker_id", "speaker_name", "content", "phase", "round"):
+        check(key in payload, f"turn payload に {key} が含まれる")
+    check(payload["speaker_id"] == "moderator", "先頭 turn は司会")
+
+
+# ---------------------------------------------------------------------------
 if __name__ == "__main__":
     test_context_isolation()
     test_no_silence_and_round_robin()
     test_model_override()
+    test_persona_public()
+    test_sse_stream()
     print()
     if _failures:
         print(f"❌ {len(_failures)} 件 FAIL")
