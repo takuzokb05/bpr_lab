@@ -47,8 +47,8 @@ flash-study/
 
 ## フェーズ
 
-- **Phase 1（試作・本コミット）** フラッシュUI / 4択クイズ / デッキJSON入出力 / 手動カテゴリ
-- **Phase 2** PDF取込(pdf.js) / ワークモードJSON貼付 / 設定画面 / AI自動分類
-- **Phase 3** PWA化 / `callLLM` 経由の3プロバイダBYOK / IndexedDBデッキライブラリ
+- **Phase 1（試作）** フラッシュUI / 4択クイズ / デッキJSON入出力 / 手動カテゴリ
+- **Phase 2（試作に実装済み）** PDF取込(pdf.js) / デッキJSON貼付取込 / 設定画面 / AI自動分類 ＋ 長文リーダー（停止・巻戻し/送り・最初から・シーク・現在地表示）
+- **Phase 3** PWA化 / `callLLM` 経由の3プロバイダBYOK（OpenAI `gpt-5.5` / Google `gemini-3.1-pro-preview`）/ IndexedDBデッキライブラリ / 設定の永続化
 
 詳細は `docs/flash-study-spec.md` と `CLAUDE.md` を参照。

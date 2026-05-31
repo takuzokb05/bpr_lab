@@ -31,8 +31,8 @@ Flash reading is the entry point; the quiz (active recall) is the real retention
 
 ## Phases
 - Phase 1 (done, prototype): flash UI, 4-choice quiz flow, deck JSON export/import, manual categories. (Prototype is a single HTML file: `prototype/index.html`.)
-- Phase 2: PDF intake (pdf.js), work-mode JSON paste import, settings screen, AI auto-categorize.
-- Phase 3: PWA build, 3-provider BYOK via callLLM, IndexedDB deck library.
+- Phase 2 (done, in prototype): PDF intake (pdf.js), work-mode deck JSON paste import, settings screen, AI auto-categorize. Reader gains pause/rewind/forward(sentence)/restart/seek. Model defaults to claude-opus-4-8.
+- Phase 3: PWA build, 3-provider BYOK via callLLM (OpenAI gpt-5.5 / Google gemini-3.1-pro-preview), IndexedDB deck library, real settings persistence.
 
 ## How to work here
 - Plan before non-trivial edits (use the `architect` agent / plan mode).
