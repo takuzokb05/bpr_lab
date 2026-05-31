@@ -151,7 +151,10 @@
 <input type="file" id="filein" accept="application/json,.json" style="display:none">
 
 <script>
-// ====== API (Claude in artifact, keyless) ======
+// ====== LLM access ======
+// 全モデル呼び出しは provider 非依存の callLLM(prompt,opts) に集約する（CLAUDE.md / spec §8 準拠）。
+// Phase 1 はアーティファクトのキーレス代理で Anthropic のみ。Phase 3 で callLLM 内に
+// OpenAI(gpt-5.5) / Google(gemini-3.1-pro-preview) の分岐と BYOK を足す。
 // 能力優先で令和8年(2026)6月時点の最上位を既定に。クイズ品質が本アプリ最大のリスクのため節約より能力。
 // 候補(能力順): claude-opus-4-8 > claude-sonnet-4-6 > claude-haiku-4-5
 // ※アーティファクトのキーレス代理がOpusを弾く場合はMODEL_FALLBACKに自動降格する。
@@ -180,7 +183,8 @@ async function callOnce(model,prompt,maxTokens){
   if(!out) throw new Error("空応答 / "+txt.slice(0,140));
   return out;
 }
-async function callClaude(prompt,opts={}){
+// provider 非依存の単一窓口。genQuiz/reconstruct/categorize はこれだけを呼ぶ。
+async function callLLM(prompt,opts={}){
   const maxTokens=opts.maxTokens||8192;   // 1000は今のモデルには不必要に低い。既定を大きく、呼び出し側で上書き可。
   try{
     return await callOnce(MODEL,prompt,maxTokens);                 // 能力優先: まず最上位
@@ -256,7 +260,7 @@ async function genQuiz(text){
 形式: [{"q":"問題文","o":["1","2","3","4"],"a":正解番号(0始まり),"e":"短い解説"}]
 本文:
 """${text}"""`;
-  const arr = parseQuizLoose(await callClaude(prompt,{maxTokens:8192}));
+  const arr = parseQuizLoose(await callLLM(prompt,{maxTokens:8192}));
   if(!arr.length) throw new Error("問題を取り出せませんでした");
   return arr;
 }
@@ -267,7 +271,7 @@ async function reconstruct(text){
 ・出力は再構成後の本文テキストのみ（説明・前置き不要）。
 本文:
 """${text}"""`;
-  return await callClaude(prompt,{maxTokens:8192});
+  return await callLLM(prompt,{maxTokens:8192});
 }
 
 // ====== built-in sample decks (no API needed) ======
