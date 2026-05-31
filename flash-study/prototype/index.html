@@ -379,7 +379,7 @@ function library(){
     <div id="cards">${body}</div>
   </div>`;
   document.getElementById('new').onclick=createView;
-  document.getElementById('imp').onclick=()=>filein.click();
+  document.getElementById('imp').onclick=importMenu;
   document.getElementById('settings').onclick=settingsView;
   document.getElementById('cards').onclick=e=>{const b=e.target.closest('.card');if(!b)return;
     cur=decks.find(d=>d.id===b.dataset.id);deckDetail();};
@@ -551,6 +551,43 @@ function showPaste(){
 }
 
 // ====== export / import ======
+// 読込メニュー：ファイル選択 と デッキJSON貼り付け（職場モード）。
+function importMenu(){
+  stop();
+  screen.innerHTML=`
+  <div class="screen">
+    <button class="back" id="bk">‹ ライブラリ</button>
+    <div class="dtitle">デッキを読み込む</div>
+    <div class="meta">ファイル、またはJSON貼り付けから。職場モードはCopilot等が吐いたデッキJSONをそのまま貼れます。</div>
+    <div class="box2">
+      <div class="h">ファイルから</div>
+      <div class="p">書き出したデッキJSON(.json)を選択。</div>
+      <button class="btn sm" id="fromfile" style="margin-top:10px;">ファイルを選択</button>
+    </div>
+    <div class="box2">
+      <div class="h">JSONを貼り付け</div>
+      <div class="p">デッキ1件のオブジェクト、または複数件の配列。多少崩れていても正準化して取り込みます（flashText必須）。</div>
+      <textarea id="pj" style="min-height:140px;margin-top:10px;" placeholder='{"title":"…","flashText":"…","quiz":[…]} もしくは [ {…}, {…} ]'></textarea>
+      <div id="perr"></div>
+      <button class="btn sm" id="pjok" style="margin-top:10px;">貼り付けから取り込む</button>
+    </div>
+  </div>`;
+  document.getElementById('bk').onclick=library;
+  document.getElementById('fromfile').onclick=()=>filein.click();
+  document.getElementById('pjok').onclick=()=>{
+    const ta=document.getElementById('pj').value.trim();
+    const perr=document.getElementById('perr');
+    if(!ta){perr.innerHTML=`<div class="banner">JSONが空です。</div>`;return;}
+    let parsed;
+    try{parsed=JSON.parse(stripFences(ta));}
+    catch(e){perr.innerHTML=`<div class="banner">JSONとして読めません（${esc(e.message)}）。</div>`;return;}
+    const arr=Array.isArray(parsed)?parsed:[parsed];
+    const valid=arr.filter(x=>x&&typeof x==='object'&&!Array.isArray(x)&&x.flashText);
+    if(!valid.length){perr.innerHTML=`<div class="banner">取り込めるデッキがありません（flashTextが必要）。</div>`;return;}
+    valid.forEach(raw=>{const d=normalizeDeck(raw);d.id=uid();decks.unshift(d);});
+    library();
+  };
+}
 function exportDeck(d){
   const blob=new Blob([JSON.stringify(toDeckJSON(d),null,2)],{type:"application/json"});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);
