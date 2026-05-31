@@ -1,597 +1,489 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>flash-study — Phase 1 試作</title>
-<!--
-  flash-study Phase 1 プロトタイプ（単一HTML / AI呼び出し無し）
-  - データの背骨: 1デッキ = 1 JSON  { id,title,source,flashMode,flashText,quiz[],quizStatus,category }
-  - 機能: フラッシュ読み(RSVP) / 4択クイズ / デッキJSON export-import / 手動カテゴリ
-  - 保存: メモリ + localStorage(利便のため)。Phase3でIndexedDBに置換予定。
-  - Phase1ではLLMは一切呼ばない（callLLMはPhase3で導入）。
--->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>フラッシュ学習 — Phase 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0f1220; --panel:#181c2e; --panel2:#212640; --txt:#e8ebf5; --muted:#9aa3c0;
-    --accent:#6c8cff; --accent2:#46d39a; --danger:#ff6b6b; --line:#2c3252;
+    --bg:#171310;--bg2:#1f1a15;--surface:#241e18;--line:#3a3128;
+    --text:#f1e9dd;--muted:#a2978a;--accent:#e0823f;--accent-soft:#e0823f22;
+    --good:#6fb98f;--bad:#d9686a;
+    --serif:'Shippori Mincho',"Hiragino Mincho ProN","Yu Mincho",serif;
+    --sans:'Zen Kaku Gothic New',"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
   }
-  *{box-sizing:border-box}
-  body{margin:0;font-family:system-ui,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
-    background:var(--bg);color:var(--txt);line-height:1.6}
-  header{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-  header h1{font-size:18px;margin:0}
-  header .tag{font-size:11px;color:var(--muted);border:1px solid var(--line);padding:2px 8px;border-radius:999px}
-  nav{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
-  nav button{background:var(--panel);color:var(--muted);border:1px solid var(--line);
-    padding:8px 14px;border-radius:8px;cursor:pointer;font-size:13px}
-  nav button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-  main{max-width:880px;margin:0 auto;padding:24px 20px 80px}
-  .view{display:none}
-  .view.active{display:block}
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:14px}
-  h2{font-size:16px;margin:0 0 12px}
-  label{display:block;font-size:12px;color:var(--muted);margin:10px 0 4px}
-  input[type=text],textarea,select{width:100%;background:var(--panel2);color:var(--txt);
-    border:1px solid var(--line);border-radius:8px;padding:10px;font-size:14px;font-family:inherit}
-  textarea{resize:vertical;min-height:90px}
-  .row{display:flex;gap:10px;flex-wrap:wrap}
-  .row>*{flex:1;min-width:160px}
-  button.btn{background:var(--accent);color:#fff;border:none;padding:10px 16px;border-radius:8px;
-    cursor:pointer;font-size:14px}
-  button.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--txt)}
-  button.btn.green{background:var(--accent2)}
-  button.btn.danger{background:transparent;border:1px solid var(--danger);color:var(--danger)}
-  button.btn:disabled{opacity:.4;cursor:not-allowed}
-  .muted{color:var(--muted);font-size:13px}
-  .deck-item{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid var(--line);
-    border-radius:10px;margin-bottom:8px;background:var(--panel2)}
-  .deck-item .meta{flex:1;min-width:0}
-  .deck-item .title{font-weight:600}
-  .deck-item .sub{font-size:12px;color:var(--muted)}
-  .pill{font-size:11px;border:1px solid var(--line);border-radius:999px;padding:1px 8px;color:var(--muted)}
-  .pill.ready{color:var(--accent2);border-color:var(--accent2)}
-  .pill.unset{color:var(--muted)}
-  /* Flash */
-  #flashStage{min-height:200px;display:flex;align-items:center;justify-content:center;text-align:center;
-    background:var(--panel2);border-radius:14px;padding:30px;font-size:34px;font-weight:600;letter-spacing:.02em}
-  .flash-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px}
-  .progress{height:6px;background:var(--panel2);border-radius:999px;overflow:hidden;margin-top:12px}
-  .progress>div{height:100%;background:var(--accent);width:0}
-  /* Quiz */
-  .choice{display:block;width:100%;text-align:left;background:var(--panel2);border:1px solid var(--line);
-    color:var(--txt);padding:12px 14px;border-radius:10px;margin:8px 0;cursor:pointer;font-size:14px}
-  .choice:hover{border-color:var(--accent)}
-  .choice.correct{border-color:var(--accent2);background:rgba(70,211,154,.12)}
-  .choice.wrong{border-color:var(--danger);background:rgba(255,107,107,.12)}
-  .choice.disabled{cursor:default;pointer-events:none}
-  .explain{margin-top:10px;padding:12px;border-left:3px solid var(--accent);background:var(--panel2);
-    border-radius:0 8px 8px 0;font-size:13px}
-  .quiz-item-editor{border:1px solid var(--line);border-radius:10px;padding:12px;margin:10px 0;background:var(--panel2)}
-  .choice-row{display:flex;align-items:center;gap:8px;margin:6px 0}
-  .choice-row input[type=radio]{width:auto;flex:none}
-  .choice-row input[type=text]{flex:1}
-  .hidden{display:none}
-  .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--panel2);
-    border:1px solid var(--line);padding:10px 18px;border-radius:10px;opacity:0;transition:.3s;pointer-events:none}
-  .toast.show{opacity:1}
-  code{background:var(--panel2);padding:1px 5px;border-radius:4px;font-size:12px}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;height:100%;}
+  body{background:radial-gradient(120% 80% at 50% -10%, #2a221b 0%, var(--bg) 55%),var(--bg);
+    color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;overscroll-behavior:none;}
+  #app{max-width:560px;margin:0 auto;min-height:100dvh;display:flex;flex-direction:column;padding:22px 20px 28px;}
+  .top{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+  .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent);}
+  .top h1{font-size:15px;font-weight:700;letter-spacing:.04em;margin:0;color:var(--muted);}
+  .screen{flex:1;display:flex;flex-direction:column;animation:fade .4s ease both;}
+  @keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+  .lead{font-family:var(--serif);font-weight:700;font-size:clamp(24px,6.5vw,32px);line-height:1.3;margin:16px 0 4px;}
+  .lead em{color:var(--accent);font-style:normal;}
+  .sub{color:var(--muted);font-size:13.5px;line-height:1.7;margin-bottom:18px;}
+  .label{font-size:12px;letter-spacing:.08em;color:var(--muted);margin:16px 0 9px;text-transform:uppercase;}
+
+  .cards{display:flex;flex-direction:column;gap:10px;}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:15px 17px;
+    text-align:left;cursor:pointer;color:var(--text);font-family:var(--sans);transition:.18s;display:flex;align-items:center;gap:13px;}
+  .card:active{transform:scale(.985);}
+  .card.sel{border-color:var(--accent);background:linear-gradient(var(--accent-soft),transparent);}
+  .card .ic{font-family:var(--serif);font-size:20px;color:var(--accent);width:30px;text-align:center;flex:none;}
+  .card .ct{font-weight:700;font-size:15.5px;}
+  .card .cd{color:var(--muted);font-size:12px;margin-top:3px;}
+  .card .chev{margin-left:auto;color:var(--muted);font-size:18px;}
+  .pill{font-size:11px;padding:2px 8px;border-radius:20px;border:1px solid var(--line);color:var(--muted);margin-left:auto;}
+  .pill.rdy{color:var(--good);border-color:#3c5546;}
+  .pill.uns{color:var(--accent);border-color:#5c4530;}
+  .grouphd{font-size:12px;letter-spacing:.06em;color:var(--muted);margin:20px 0 10px;display:flex;align-items:center;gap:8px;}
+  .grouphd b{font-weight:700;color:var(--text);}
+  .grouphd .cnt{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:1px 8px;font-size:11px;}
+  .inp{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:12px;color:var(--text);font-family:var(--sans);font-size:14.5px;padding:13px 15px;}
+  .inp:focus{outline:none;border-color:var(--accent);}
+
+  .rowbtns{display:flex;gap:10px;margin-top:14px;}
+  .rowbtns .btn{margin-top:0;}
+  .btn{margin-top:auto;border:none;border-radius:14px;padding:16px;font-size:15.5px;font-weight:700;
+    font-family:var(--sans);background:var(--accent);color:#1a1006;cursor:pointer;width:100%;transition:.15s;
+    box-shadow:0 6px 20px rgba(224,130,63,.28);}
+  .btn:active{transform:translateY(1px);}
+  .btn:disabled{opacity:.45;box-shadow:none;cursor:default;}
+  .btn.ghost{background:transparent;color:var(--muted);border:1px solid var(--line);box-shadow:none;margin-top:12px;}
+  .btn.sm{padding:13px;font-size:14px;}
+
+  textarea{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:14px;color:var(--text);
+    font-family:var(--sans);font-size:14.5px;line-height:1.7;padding:14px;resize:vertical;min-height:130px;}
+  textarea:focus{outline:none;border-color:var(--accent);}
+
+  .seg{display:flex;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px;gap:4px;}
+  .seg button{flex:1;border:none;background:none;color:var(--muted);font-family:var(--sans);font-weight:700;
+    font-size:13.5px;padding:11px;border-radius:9px;cursor:pointer;transition:.15s;}
+  .seg button.on{background:var(--accent);color:#1a1006;}
+  .chk{display:flex;align-items:center;gap:11px;background:var(--surface);border:1px solid var(--line);
+    border-radius:12px;padding:14px 16px;cursor:pointer;}
+  .chk .box{width:22px;height:22px;border-radius:7px;border:2px solid var(--line);flex:none;display:flex;
+    align-items:center;justify-content:center;color:#1a1006;font-weight:900;font-size:14px;}
+  .chk.on .box{background:var(--accent);border-color:var(--accent);}
+  .chk .t{font-size:14px;font-weight:700;}
+  .chk .d{font-size:11.5px;color:var(--muted);margin-top:2px;}
+
+  .back{background:none;border:none;color:var(--muted);font-size:14px;cursor:pointer;padding:6px 0;display:flex;align-items:center;gap:6px;}
+  .dtitle{font-family:var(--serif);font-weight:800;font-size:26px;line-height:1.3;margin:10px 0 4px;}
+  .meta{color:var(--muted);font-size:13px;margin-bottom:18px;}
+  .box2{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px;}
+  .box2 .h{font-weight:700;font-size:14px;margin-bottom:4px;}
+  .box2 .p{color:var(--muted);font-size:12.5px;line-height:1.6;}
+
+  .banner{background:rgba(217,104,106,.12);border:1px solid #6b3b3c;color:#f0c9c9;border-radius:12px;
+    padding:13px 15px;font-size:13px;line-height:1.6;margin-bottom:12px;}
+  .loading{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;}
+  .spin{width:42px;height:42px;border:3px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:sp 1s linear infinite;}
+  @keyframes sp{to{transform:rotate(360deg);}}
+  .loading .lt{font-weight:700;}.loading .ld{color:var(--muted);font-size:13px;}
+
+  /* speed */
+  .speedwrap{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:15px 17px;margin-top:10px;}
+  .speedrow{display:flex;justify-content:space-between;align-items:baseline;}
+  .speedrow span:first-child{font-weight:700;}
+  .speedrow span:last-child{color:var(--accent);font-family:var(--serif);font-weight:700;}
+  input[type=range]{width:100%;margin-top:13px;-webkit-appearance:none;height:4px;border-radius:4px;background:var(--line);}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:var(--accent);box-shadow:0 2px 10px rgba(0,0,0,.4);}
+  input[type=range]::-moz-range-thumb{width:24px;height:24px;border:none;border-radius:50%;background:var(--accent);}
+  .ticks{display:flex;justify-content:space-between;color:var(--muted);font-size:11px;margin-top:6px;}
+
+  /* reader */
+  .reader{flex:1;display:flex;flex-direction:column;}
+  .rtop{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:13px;}
+  .xbtn{background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;padding:4px 8px;}
+  .progress{height:3px;background:var(--line);border-radius:3px;margin-top:12px;overflow:hidden;}
+  .progress > i{display:block;height:100%;width:0;background:var(--accent);transition:width .12s linear;}
+  .stage{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;}
+  .guide{position:absolute;left:50%;transform:translateX(-50%);width:1px;background:var(--accent);opacity:.25;}
+  .guide.t{top:calc(50% - 78px);height:18px;}.guide.b{top:calc(50% + 60px);height:18px;}
+  .flash{font-family:var(--serif);font-weight:800;font-size:clamp(34px,11vw,56px);line-height:1.2;text-align:center;min-height:1.4em;}
+  .flash .focus{color:var(--accent);}
+  .countdown{font-family:var(--serif);font-size:90px;color:var(--accent);animation:pop .9s ease;}
+  @keyframes pop{from{opacity:0;transform:scale(.5);}to{opacity:1;transform:scale(1);}}
+  .rctrl{display:flex;gap:12px;margin-top:18px;}
+  .rctrl button{flex:1;border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:13px;
+    padding:15px;font-size:15px;font-weight:700;font-family:var(--sans);cursor:pointer;}
+  .rctrl button.main{background:var(--accent);color:#1a1006;border-color:var(--accent);}
+  .hint{text-align:center;color:var(--muted);font-size:12.5px;margin-top:14px;}
+
+  /* quiz */
+  .qhead{font-family:var(--serif);font-weight:700;font-size:22px;margin:6px 0 2px;}
+  .qcount{color:var(--muted);font-size:13px;margin-bottom:20px;}
+  .question{font-size:18px;font-weight:700;line-height:1.6;margin-bottom:20px;}
+  .opt{display:block;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    padding:15px 17px;margin-bottom:10px;color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.5;cursor:pointer;transition:.15s;}
+  .opt:active{transform:scale(.99);}
+  .opt.correct{border-color:var(--good);background:rgba(111,185,143,.12);}
+  .opt.wrong{border-color:var(--bad);background:rgba(217,104,106,.12);}
+  .opt.dim{opacity:.5;}
+  .feed{margin-top:6px;padding:14px 16px;border-radius:12px;font-size:14px;line-height:1.7;background:var(--bg2);border:1px solid var(--line);color:var(--muted);}
+  .feed b{color:var(--text);}
+
+  .result{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;}
+  .score{font-family:var(--serif);font-size:64px;font-weight:800;color:var(--accent);line-height:1;}
+  .score small{font-size:26px;color:var(--muted);}
+  .rmsg{font-size:17px;font-weight:700;margin:18px 0 6px;}
+  .rsub{color:var(--muted);font-size:14px;line-height:1.7;max-width:300px;}
 </style>
 </head>
 <body>
-<header>
-  <h1>⚡ flash-study</h1>
-  <span class="tag">Phase 1 試作 / AI無し</span>
-  <nav>
-    <button data-view="library" class="active">ライブラリ</button>
-    <button data-view="edit">編集</button>
-    <button data-view="flash">フラッシュ</button>
-    <button data-view="quiz">クイズ</button>
-  </nav>
-</header>
-
-<main>
-  <!-- ===== ライブラリ ===== -->
-  <section id="library" class="view active">
-    <div class="card">
-      <h2>デッキライブラリ</h2>
-      <p class="muted">1デッキ = 1 JSON。ここで作成・読込・書出ができます。保存はこのブラウザ内（localStorage）。</p>
-      <div class="row">
-        <button class="btn" id="newDeckBtn">＋ 新規デッキ</button>
-        <button class="btn ghost" id="importBtn">JSON をインポート</button>
-        <button class="btn ghost" id="loadSampleBtn">サンプルを読込</button>
-        <input type="file" id="importFile" accept="application/json,.json" class="hidden" />
-      </div>
-    </div>
-    <div class="card">
-      <h2>保存済みデッキ</h2>
-      <div id="deckList"></div>
-    </div>
-  </section>
-
-  <!-- ===== 編集 ===== -->
-  <section id="edit" class="view">
-    <div class="card">
-      <h2>デッキ編集</h2>
-      <div class="row">
-        <div>
-          <label>タイトル</label>
-          <input type="text" id="fTitle" placeholder="例）基本情報技術者 - ネットワーク" />
-        </div>
-        <div>
-          <label>カテゴリ（手動）</label>
-          <input type="text" id="fCategory" list="catList" placeholder="例）ネットワーク" />
-          <datalist id="catList"></datalist>
-        </div>
-      </div>
-      <label>元素材 source（クイズ採点の根拠）</label>
-      <textarea id="fSource" placeholder="学習素材の本文を貼り付け"></textarea>
-      <div class="row" style="align-items:flex-end">
-        <div>
-          <label>フラッシュモード flashMode</label>
-          <select id="fFlashMode">
-            <option value="original">original（素材そのまま）</option>
-            <option value="ai">ai（再構成済みテキストを使う）</option>
-          </select>
-        </div>
-        <div style="flex:none">
-          <button class="btn ghost" id="copySourceBtn">source を flashText へコピー</button>
-        </div>
-      </div>
-      <label>フラッシュ用テキスト flashText</label>
-      <textarea id="fFlashText" placeholder="フラッシュ表示する本文。改行・句読点・空白で区切られます"></textarea>
-    </div>
-
-    <div class="card">
-      <h2>クイズ（4択）</h2>
-      <p class="muted">各問：設問・選択肢4・正解1・解説。<code>quizStatus</code> は問題が1つ以上あれば自動で <code>ready</code> になります。</p>
-      <div id="quizEditor"></div>
-      <button class="btn ghost" id="addQuizBtn">＋ 問題を追加</button>
-    </div>
-
-    <div class="card">
-      <div class="row">
-        <button class="btn green" id="saveDeckBtn">保存</button>
-        <button class="btn ghost" id="exportDeckBtn">この JSON を書き出す</button>
-        <button class="btn danger" id="deleteDeckBtn">削除</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== フラッシュ ===== -->
-  <section id="flash" class="view">
-    <div class="card">
-      <h2 id="flashTitle">フラッシュ読み</h2>
-      <div id="flashStage">—</div>
-      <div class="progress"><div id="flashProgress"></div></div>
-      <div class="flash-controls">
-        <button class="btn" id="flashPlay">▶ 再生</button>
-        <button class="btn ghost" id="flashPrev">◀ 前</button>
-        <button class="btn ghost" id="flashNext">次 ▶</button>
-        <button class="btn ghost" id="flashReset">⟲ 最初へ</button>
-        <span class="muted" id="flashPos">0 / 0</span>
-      </div>
-      <div class="flash-controls">
-        <label style="margin:0">速度</label>
-        <input type="range" id="flashSpeed" min="120" max="1200" step="20" value="350" style="flex:1;min-width:160px" />
-        <span class="muted" id="flashSpeedLabel">350 ms/語</span>
-      </div>
-      <p class="muted" id="flashEmpty">ライブラリでデッキを選ぶとここに表示されます。</p>
-    </div>
-  </section>
-
-  <!-- ===== クイズ ===== -->
-  <section id="quiz" class="view">
-    <div class="card">
-      <h2 id="quizTitle">クイズ</h2>
-      <div id="quizArea"></div>
-      <p class="muted" id="quizEmpty">クイズのあるデッキを選んでください。</p>
-    </div>
-  </section>
-</main>
-
-<div class="toast" id="toast"></div>
+<div id="app">
+  <div class="top"><span class="dot"></span><h1>FLASH STUDY · Phase 1</h1></div>
+  <div id="screen"></div>
+</div>
+<input type="file" id="filein" accept="application/json,.json" style="display:none">
 
 <script>
-"use strict";
-
-/* ===================== データ層: 1デッキ = 1 JSON ===================== */
-const STORE_KEY = "flashStudy.decks.v1";
-
-/** 背骨スキーマの空デッキを生成 */
-function emptyDeck(){
-  return {
-    id: "deck_" + Date.now().toString(36) + Math.random().toString(36).slice(2,6),
-    title: "", source: "", flashMode: "original",
-    flashText: "", quiz: [], quizStatus: "unset", category: ""
-  };
-}
-
-/** 任意オブジェクトを背骨スキーマに正規化（インポートの堅牢化） */
-function normalizeDeck(raw){
-  const d = emptyDeck();
-  if(!raw || typeof raw !== "object") return d;
-  if(typeof raw.id === "string" && raw.id) d.id = raw.id;
-  d.title = String(raw.title || "");
-  d.source = String(raw.source || "");
-  d.flashMode = (raw.flashMode === "ai") ? "ai" : "original";
-  d.flashText = String(raw.flashText || "");
-  d.category = String(raw.category || "");
-  d.quiz = Array.isArray(raw.quiz) ? raw.quiz.map(normalizeQuizItem).filter(Boolean) : [];
-  d.quizStatus = d.quiz.length > 0 ? "ready" : "unset";
-  return d;
-}
-function normalizeQuizItem(q){
-  if(!q || typeof q !== "object") return null;
-  const o = Array.isArray(q.o) ? q.o.slice(0,4).map(x=>String(x ?? "")) : ["","","",""];
-  while(o.length < 4) o.push("");
-  let a = Number.isInteger(q.a) ? q.a : 0;
-  if(a < 0 || a > 3) a = 0;
-  return { q: String(q.q || ""), o, a, e: String(q.e || "") };
-}
-
-let decks = loadDecks();
-let currentId = decks[0] ? decks[0].id : null;
-
-function loadDecks(){
+// ====== API (Claude in artifact, keyless) ======
+const MODEL = "claude-sonnet-4-20250514";
+async function callClaude(prompt){
+  let res;
   try{
-    const raw = JSON.parse(localStorage.getItem(STORE_KEY) || "[]");
-    return Array.isArray(raw) ? raw.map(normalizeDeck) : [];
-  }catch{ return []; }
+    res = await fetch("https://api.anthropic.com/v1/messages",{
+      method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({model:MODEL,max_tokens:1000,messages:[{role:"user",content:prompt}]})
+    });
+  }catch(e){ throw new Error("通信に失敗: "+e.message); }
+  const txt = await res.text();
+  if(!res.ok) throw new Error("API "+res.status+" / "+txt.slice(0,140));
+  let data;
+  try{ data = JSON.parse(txt); }catch(e){ throw new Error("応答がJSONではない / "+txt.slice(0,140)); }
+  if(data && data.error) throw new Error("APIエラー: "+((data.error.message)||JSON.stringify(data.error)).slice(0,140));
+  const out=(data.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("").trim();
+  if(!out) throw new Error("空応答 / "+txt.slice(0,140));
+  return out;
 }
-function persist(){ localStorage.setItem(STORE_KEY, JSON.stringify(decks)); }
-function currentDeck(){ return decks.find(d => d.id === currentId) || null; }
-
-/* ===================== 日本語対応 フラッシュチャンカー ===================== */
-/**
- * flashText をフレーズ単位に分割。
- * - まず改行・空白・句読点（、。！？!?,. ・…）で区切る
- * - 句読点は直前チャンクに付ける
- * - 助詞・記号だけ等の極小フラグメント（1文字）は前のチャンクへ吸収（孤立防止）
- */
-function chunkText(text){
-  if(!text) return [];
-  const rawTokens = [];
-  let buf = "";
-  const breakers = "、。，．,.!?！？・…\n\t　 ";
-  for(const ch of text){
-    if(breakers.includes(ch)){
-      if("、。，．,.!?！？・…".includes(ch)) buf += ch; // 句読点は直前に付与
-      if(buf.trim()) rawTokens.push(buf.trim());
-      buf = "";
-    } else {
-      buf += ch;
-    }
-  }
-  if(buf.trim()) rawTokens.push(buf.trim());
-
-  // 極小フラグメント（1文字）を前のチャンクへ吸収
-  const out = [];
-  for(const tok of rawTokens){
-    if(out.length && tok.length <= 1){
-      out[out.length-1] += tok;
-    } else {
-      out.push(tok);
-    }
-  }
+function stripFences(t){return t.replace(/^```(?:json)?/i,"").replace(/```$/,"").trim();}
+// 出力が途中で切れても、完成した {...} だけを救出する堅牢パーサ
+function parseQuizLoose(raw){
+  raw=stripFences(raw);
+  const objs=[];let depth=0,start=-1,inStr=false,esc2=false;
+  for(let k=0;k<raw.length;k++){const ch=raw[k];
+    if(inStr){if(esc2)esc2=false;else if(ch==='\\')esc2=true;else if(ch==='"')inStr=false;continue;}
+    if(ch==='"'){inStr=true;continue;}
+    if(ch==='{'){if(depth===0)start=k;depth++;}
+    else if(ch==='}'){depth--;if(depth===0&&start>=0){objs.push(raw.slice(start,k+1));start=-1;}}}
+  const out=[];
+  for(const o of objs){try{const x=JSON.parse(o);
+    if(x&&x.q&&Array.isArray(x.o)&&x.o.length>=2)
+      out.push({q:String(x.q),o:x.o.map(String),a:Number(x.a)||0,e:String(x.e||"")});
+  }catch(_){}}
   return out;
 }
 
-/* ===================== ビュー切替 ===================== */
-const views = {};
-document.querySelectorAll(".view").forEach(v => views[v.id] = v);
-document.querySelectorAll("nav button").forEach(btn=>{
-  btn.addEventListener("click", ()=> showView(btn.dataset.view));
-});
-function showView(name){
-  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active", b.dataset.view===name));
-  Object.values(views).forEach(v=>v.classList.remove("active"));
-  views[name].classList.add("active");
-  if(name==="flash") setupFlash();
-  if(name==="quiz") setupQuiz();
-  if(name==="edit") loadEditor();
-  if(name==="library") renderLibrary();
+async function genQuiz(text){
+  const prompt =
+`あなたは資格試験の問題作成者です。次の本文だけを根拠に4択問題を作ってください。
+・問題数は本文量に応じて2〜4問。・選択肢は必ず4つ・正解1つ。・解説は40字以内で簡潔に。
+出力はJSON配列のみ。前後の説明やマークダウンは禁止。
+形式: [{"q":"問題文","o":["1","2","3","4"],"a":正解番号(0始まり),"e":"短い解説"}]
+本文:
+"""${text}"""`;
+  const arr = parseQuizLoose(await callClaude(prompt));   // ※本番(Claude Code)では max_tokens を上げ、問題数キャップを外す
+  if(!arr.length) throw new Error("問題を取り出せませんでした");
+  return arr;
+}
+async function reconstruct(text){
+  const prompt =
+`次の本文を、フラッシュ（速読）学習用に要点を保ったまま再構成してください。
+・1文を短く、平易に。重要語は残す。・箇条書きや見出しは使わず、自然な文章で。
+・出力は再構成後の本文テキストのみ（説明・前置き不要）。
+本文:
+"""${text}"""`;
+  return await callClaude(prompt);
 }
 
-/* ===================== トースト ===================== */
-let toastTimer;
-function toast(msg){
-  const t = document.getElementById("toast");
-  t.textContent = msg; t.classList.add("show");
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(()=>t.classList.remove("show"), 1800);
-}
+// ====== built-in sample decks (no API needed) ======
+let decks = [
+  {id:"s1",icon:"自",title:"地方自治のしくみ",desc:"サンプル",category:"サンプル",flashMode:"original",quizStatus:"ready",
+   flashText:"地方公共団体には、都道府県と市町村からなる普通地方公共団体と、特別区などの特別地方公共団体がある。住民は、首長と議会の議員を、それぞれ直接選挙で選ぶ。これを二元代表制という。住民には選挙権のほか、条例の制定や改廃を求める直接請求の権利も認められている。",
+   quiz:[
+     {q:"住民が首長と議員をそれぞれ直接選挙で選ぶしくみは？",o:["議院内閣制","二元代表制","間接民主制","直接民主制"],a:1,e:"国は議院内閣制、地方は両方を住民が直接選ぶ二元代表制。"},
+     {q:"普通地方公共団体に当てはまるのは？",o:["特別区","市町村","財産区","地方公社"],a:1,e:"普通＝都道府県と市町村。特別区や財産区は特別地方公共団体。"},
+     {q:"条例の制定・改廃を住民が求める権利は？",o:["直接請求","行政指導","不服申立て","住民訴訟"],a:0,e:"署名を集めて行う直接請求の一つ。"}
+   ]},
+  {id:"s2",icon:"税",title:"固定資産税の基礎",desc:"サンプル",category:"サンプル",flashMode:"original",quizStatus:"ready",
+   flashText:"固定資産税は、土地・家屋・償却資産を課税対象とする市町村税である。課税の基準となる賦課期日は一月一日で、その時点の所有者に課税される。標準税率は百分の一・四である。事業用の機械や設備などの償却資産については、所有者が市町村に申告する申告制がとられている。",
+   quiz:[
+     {q:"固定資産税の賦課期日はいつ？",o:["毎年4月1日","毎年1月1日","取得した日","登記した日"],a:1,e:"1月1日時点の所有者にその年度分が課税。"},
+     {q:"固定資産税の標準税率は？",o:["1.4%","2.0%","0.3%","1.0%"],a:0,e:"標準税率は1.4%。"},
+     {q:"償却資産の課税で取られているしくみは？",o:["申告制","賦課課税のみ","非課税","申告不要"],a:0,e:"土地・家屋と違い償却資産は所有者の申告制。"}
+   ]},
+  {id:"s3",icon:"行",title:"行政手続のきほん",desc:"サンプル",category:"サンプル",flashMode:"original",quizStatus:"ready",
+   flashText:"行政手続法は、行政運営における公正の確保と透明性の向上を目的とする。申請に対する処分、不利益処分、行政指導、届出などについて共通のルールを定めている。とくに不利益処分をするときは、相手方に対して原則としてその理由を示さなければならない。",
+   quiz:[
+     {q:"行政手続法の目的に含まれるのは？",o:["公正の確保と透明性の向上","税収の確保","効率化のみ","国民の監視"],a:0,e:"手続を共通ルール化し公正さと透明性を高める。"},
+     {q:"不利益処分をするとき原則必要なのは？",o:["理由の提示","住民投票","議会の議決","首長の許可"],a:0,e:"相手が納得・反論できるよう原則理由を示す。"}
+   ]}
+];
 
-/* ===================== ライブラリ ===================== */
-function renderLibrary(){
-  const list = document.getElementById("deckList");
-  if(decks.length === 0){
-    list.innerHTML = '<p class="muted">まだデッキがありません。「サンプルを読込」か「新規デッキ」から。</p>';
-    return;
+// ====== state ======
+let cur=null, speed=4, chunks=[], idx=0, playing=false, timer=null;
+let quizI=0, score=0, answered=false;
+const screen=document.getElementById('screen');
+const filein=document.getElementById('filein');
+
+// ====== chunker ======
+function chunkText(text){
+  const minLen=3, maxLen=8;
+  const breakAfter=new Set(['、','は','が','を','に','へ','と','で','も','の','や','か','て','り']);
+  const raw=[];
+  const sents=text.match(/[^。！？\n]+[。！？]?/g)||[text];
+  for(let s of sents){ s=s.trim(); if(!s)continue; let i=0;
+    while(i<s.length){
+      let end=Math.min(i+maxLen,s.length), cut=end;
+      for(let j=end;j>=i+minLen;j--){ if(breakAfter.has(s[j-1])){cut=j;break;} }
+      if(s.length-cut>0 && s.length-cut<minLen) cut=s.length;  // 末尾の極小断片を作らない
+      raw.push(s.slice(i,cut)); i=cut;
+    }
   }
-  list.innerHTML = "";
-  decks.forEach(d=>{
-    const el = document.createElement("div");
-    el.className = "deck-item";
-    const ready = d.quizStatus === "ready";
-    el.innerHTML = `
-      <div class="meta">
-        <div class="title">${escapeHtml(d.title || "(無題)")}</div>
-        <div class="sub">
-          ${d.category ? escapeHtml(d.category)+" ・ " : ""}
-          ${d.quiz.length}問 ・
-          <span class="pill ${ready?'ready':'unset'}">${ready?'quiz ready':'quiz unset'}</span>
-        </div>
-      </div>`;
-    const open = mkBtn("開く", "btn ghost", ()=>{ currentId=d.id; showView("edit"); });
-    const flash = mkBtn("⚡", "btn ghost", ()=>{ currentId=d.id; showView("flash"); });
-    const quiz = mkBtn("✓", "btn ghost", ()=>{ currentId=d.id; showView("quiz"); });
-    [open, flash, quiz].forEach(b=>{ b.style.flex="none"; el.appendChild(b); });
-    list.appendChild(el);
-  });
+  // 後処理: 実質1文字以下の断片（「が、」「。」等）は前の語にくっつける
+  const out=[];
+  for(const c of raw){
+    const core=c.replace(/[、。！？\s]/g,'');
+    if(out.length && core.length<=1) out[out.length-1]+=c;
+    else out.push(c);
+  }
+  return out;
 }
-function mkBtn(label, cls, fn){
-  const b = document.createElement("button"); b.className=cls; b.textContent=label;
-  b.addEventListener("click", fn); return b;
-}
-function escapeHtml(s){
-  return String(s).replace(/[&<>"']/g, c=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+function delayFor(c){let base=660-(speed-1)*56,d=base+c.length*30;
+  if(/[。！？]$/.test(c))d+=280;else if(/、$/.test(c))d+=130;return d;}
+function renderFlash(c){const m=Math.floor((c.length-1)/2);let h="";
+  for(let i=0;i<c.length;i++)h+= i===m?`<span class="focus">${c[i]}</span>`:c[i];return h;}
+function uid(){return"d"+Date.now().toString(36)+Math.random().toString(36).slice(2,5);}
+function esc(s){return(s||"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));}
+
+// ====== LIBRARY ======
+function cardHtml(d){return `
+  <button class="card" data-id="${d.id}" style="margin-bottom:10px;">
+    <span class="ic">${d.icon||"新"}</span>
+    <span><span class="ct">${esc(d.title)}</span><span class="cd">${esc(d.desc||"")}${d.flashMode==='ai'?' · AI再構成':''}</span></span>
+    <span class="pill ${d.quizStatus==='ready'?'rdy':'uns'}">${d.quizStatus==='ready'?d.quiz.length+'問':'問題なし'}</span>
+  </button>`;}
+function library(){
+  stop();
+  const groups={};
+  decks.forEach(d=>{const k=(d.category&&d.category.trim())||"未分類";(groups[k]=groups[k]||[]).push(d);});
+  const body=Object.keys(groups).map(k=>
+    `<div class="grouphd"><b>${esc(k)}</b><span class="cnt">${groups[k].length}</span></div>`
+    + groups[k].map(cardHtml).join('')).join('');
+  screen.innerHTML=`
+  <div class="screen">
+    <div class="lead">デッキを選んで<br><em>パッと読む。</em></div>
+    <div class="sub">教材を貼ればAIが4択を自動生成。カテゴリで分けて溜められます。最後のまとめ問題が定着の本命です。</div>
+    <div class="rowbtns">
+      <button class="btn sm" id="new">＋ 教材から新規</button>
+      <button class="btn sm ghost" id="imp" style="margin-top:0;">⤓ デッキ読込</button>
+    </div>
+    <div id="cards">${body}</div>
+  </div>`;
+  document.getElementById('new').onclick=createView;
+  document.getElementById('imp').onclick=()=>filein.click();
+  document.getElementById('cards').onclick=e=>{const b=e.target.closest('.card');if(!b)return;
+    cur=decks.find(d=>d.id===b.dataset.id);deckDetail();};
 }
 
-document.getElementById("newDeckBtn").addEventListener("click", ()=>{
-  const d = emptyDeck(); decks.push(d); currentId = d.id; persist(); showView("edit");
-});
-document.getElementById("importBtn").addEventListener("click", ()=>document.getElementById("importFile").click());
-document.getElementById("importFile").addEventListener("change", async (e)=>{
-  const file = e.target.files[0]; if(!file) return;
+// ====== CREATE (paste -> AI) ======
+let cMode="original", cGen=true;
+function createView(){
+  cMode="original";cGen=true;
+  screen.innerHTML=`
+  <div class="screen">
+    <button class="back" id="bk">‹ ライブラリ</button>
+    <div class="dtitle">教材から作成</div>
+    <div class="meta">本文を貼り付け → AIが本文整形とクイズを用意</div>
+    <div id="err"></div>
+    <textarea id="src" placeholder="参考書やノートの本文をここに貼り付け…"></textarea>
+    <div class="label">カテゴリ（任意）</div>
+    <input id="cat" class="inp" placeholder="例: 行政書士 / 簿記2級 / 通知文">
+    <div class="label">フラッシュ本文の扱い</div>
+    <div class="seg" id="seg">
+      <button data-m="original" class="on">原文のまま</button>
+      <button data-m="ai">AIで再構成</button>
+    </div>
+    <div class="label">まとめ問題</div>
+    <div class="chk on" id="chk"><span class="box">✓</span><span><span class="t">4択をAIで自動生成</span><span class="d">オフなら問題なしで作成（あとで生成/貼付可）</span></span></div>
+    <button class="btn" id="make">作成する</button>
+  </div>`;
+  document.getElementById('bk').onclick=library;
+  document.getElementById('seg').onclick=e=>{const b=e.target.closest('button');if(!b)return;cMode=b.dataset.m;
+    document.querySelectorAll('#seg button').forEach(x=>x.classList.toggle('on',x.dataset.m===cMode));};
+  document.getElementById('chk').onclick=()=>{cGen=!cGen;document.getElementById('chk').classList.toggle('on',cGen);
+    document.getElementById('chk').querySelector('.box').textContent=cGen?'✓':'';};
+  document.getElementById('make').onclick=make;
+}
+async function make(){
+  const src=document.getElementById('src').value.trim();
+  const cat=document.getElementById('cat').value.trim();
+  const err=document.getElementById('err');
+  if(src.length<10){err.innerHTML=`<div class="banner">本文が短すぎます。もう少し貼り付けてください。</div>`;return;}
+  const aiMode=cMode==="ai", gen=cGen;
+  loading(aiMode&&gen?"本文を整形し、問題を作成中…":aiMode?"本文を整形中…":gen?"4択を作成中…":"準備中…");
   try{
-    const text = await file.text();
-    const parsed = JSON.parse(text);
-    const arr = Array.isArray(parsed) ? parsed : [parsed];
-    let n = 0;
-    arr.forEach(raw=>{ decks.push(normalizeDeck(raw)); n++; });
-    persist(); currentId = decks[decks.length-1].id;
-    toast(`${n}件のデッキをインポートしました`); renderLibrary();
-  }catch(err){
-    toast("JSON の読み込みに失敗しました");
+    let flashText=src;
+    if(aiMode) flashText=await reconstruct(src);
+    let quiz=[],status="unset";
+    if(gen){quiz=await genQuiz(src);status="ready";}
+    const d={id:uid(),icon:"新",title:src.slice(0,12)+(src.length>12?"…":""),desc:"作成したデッキ",
+      category:cat||"未分類",flashMode:aiMode?"ai":"original",flashText,quiz,quizStatus:status,source:src};
+    decks.unshift(d);cur=d;deckDetail();
+  }catch(e){
+    createView();
+    document.getElementById('src').value=src;
+    document.getElementById('cat').value=cat;
+    document.getElementById('err').innerHTML=`<div class="banner">生成に失敗しました（${esc(e.message)}）。本文を短くするか、もう一度お試しください。長文は要約してから貼ると安定します。</div>`;
   }
-  e.target.value = "";
-});
-document.getElementById("loadSampleBtn").addEventListener("click", ()=>{
-  decks.push(normalizeDeck(SAMPLE_DECK)); currentId = decks[decks.length-1].id;
-  persist(); toast("サンプルデッキを追加しました"); renderLibrary();
-});
+}
+function loading(msg){screen.innerHTML=`<div class="screen"><div class="loading"><div class="spin"></div><div><div class="lt">${esc(msg)}</div><div class="ld">AIが処理しています</div></div></div></div>`;}
 
-/* ===================== 編集 ===================== */
-function loadEditor(){
-  const d = currentDeck();
-  if(!d){ // 開くデッキが無ければ新規を1つ
-    const nd = emptyDeck(); decks.push(nd); currentId = nd.id; persist();
+// ====== DECK DETAIL ======
+function deckDetail(){
+  stop();const d=cur;
+  const qbox = d.quizStatus==='ready'
+    ? `<div class="box2"><div class="h">まとめ問題：${d.quiz.length}問 ✓</div><div class="p">学習後に4択で出題されます。</div></div>`
+    : `<div class="box2"><div class="h">まとめ問題：未セット</div><div class="p">フラッシュだけでも学習できます。下のいずれかで追加可能。</div>
+        <div class="rowbtns"><button class="btn sm" id="qgen" style="margin-top:0;">AIで生成</button>
+        <button class="btn sm ghost" id="qpaste" style="margin-top:0;">JSON貼付</button></div></div>`;
+  screen.innerHTML=`
+  <div class="screen">
+    <button class="back" id="bk">‹ ライブラリ</button>
+    <div class="dtitle">${esc(d.title)}</div>
+    <div class="meta">${d.flashMode==='ai'?'AI再構成':'原文'} · 約${d.flashText.length}字</div>
+    <div id="qzone">${qbox}</div>
+    <div id="paste"></div>
+    <div class="speedwrap">
+      <div class="speedrow"><span>表示スピード</span><span id="spv">${spLabel()}</span></div>
+      <input type="range" id="sp" min="1" max="10" value="${speed}">
+      <div class="ticks"><span>ゆっくり</span><span>速い</span></div>
+    </div>
+    <button class="btn" id="go">学習をはじめる</button>
+    <button class="btn ghost" id="exp">⤴ このデッキを書き出す（JSON）</button>
+  </div>`;
+  document.getElementById('bk').onclick=library;
+  const sp=document.getElementById('sp');
+  sp.oninput=()=>{speed=+sp.value;document.getElementById('spv').textContent=spLabel();};
+  document.getElementById('go').onclick=startReading;
+  document.getElementById('exp').onclick=()=>exportDeck(d);
+  if(d.quizStatus!=='ready'){
+    document.getElementById('qgen').onclick=async()=>{loading("4択を作成中…");
+      try{cur.quiz=await genQuiz(cur.source||cur.flashText);cur.quizStatus="ready";deckDetail();}
+      catch(e){deckDetail();document.getElementById('qzone').insertAdjacentHTML('beforebegin',`<div class="banner">生成失敗（${esc(e.message)}）。</div>`);}};
+    document.getElementById('qpaste').onclick=showPaste;
   }
-  const deck = currentDeck();
-  document.getElementById("fTitle").value = deck.title;
-  document.getElementById("fCategory").value = deck.category;
-  document.getElementById("fSource").value = deck.source;
-  document.getElementById("fFlashMode").value = deck.flashMode;
-  document.getElementById("fFlashText").value = deck.flashText;
-  refreshCatList();
-  renderQuizEditor(deck);
 }
-function refreshCatList(){
-  const set = [...new Set(decks.map(d=>d.category).filter(Boolean))];
-  document.getElementById("catList").innerHTML = set.map(c=>`<option value="${escapeHtml(c)}">`).join("");
+function spLabel(){return['','とても遅い','遅い','ややゆっくり','標準','標準＋','やや速い','速い','かなり速い','とても速い','最速'][speed];}
+function showPaste(){
+  document.getElementById('paste').innerHTML=`
+    <div class="box2"><div class="h">問題JSONを貼り付け</div>
+    <div class="p">職場のCopilot等で作った配列を貼って取り込み。形式: [{"q","o":[4],"a","e"}]</div>
+    <textarea id="pj" style="min-height:110px;margin-top:10px;"></textarea>
+    <button class="btn sm" id="pjok">取り込む</button></div>`;
+  document.getElementById('pjok').onclick=()=>{
+    try{const arr=JSON.parse(stripFences(document.getElementById('pj').value.trim()));
+      if(!Array.isArray(arr)||!arr.length)throw new Error("配列が空");
+      cur.quiz=arr.map(x=>({q:String(x.q),o:x.o.map(String),a:Number(x.a),e:String(x.e||"")}));
+      cur.quizStatus="ready";deckDetail();
+    }catch(e){alert("読み込めませんでした: "+e.message);}
+  };
 }
-function renderQuizEditor(deck){
-  const wrap = document.getElementById("quizEditor");
-  wrap.innerHTML = "";
-  deck.quiz.forEach((q, i)=>{
-    const box = document.createElement("div");
-    box.className = "quiz-item-editor";
-    box.innerHTML = `<label>設問 ${i+1}</label>`;
-    const qInput = inputEl(q.q, "設問文");
-    qInput.addEventListener("input", ()=>q.q = qInput.value);
-    box.appendChild(qInput);
-    box.appendChild(Object.assign(document.createElement("label"),{textContent:"選択肢（ラジオで正解を指定）"}));
-    q.o.forEach((opt, oi)=>{
-      const row = document.createElement("div"); row.className="choice-row";
-      const radio = document.createElement("input"); radio.type="radio"; radio.name="ans_"+i;
-      radio.checked = q.a===oi; radio.addEventListener("change", ()=>{ if(radio.checked) q.a=oi; });
-      const txt = inputEl(opt, "選択肢 "+(oi+1));
-      txt.addEventListener("input", ()=>q.o[oi]=txt.value);
-      row.appendChild(radio); row.appendChild(txt); box.appendChild(row);
-    });
-    const eLabel = document.createElement("label"); eLabel.textContent="解説"; box.appendChild(eLabel);
-    const eInput = inputEl(q.e, "なぜその答えか（source 準拠で）");
-    eInput.addEventListener("input", ()=>q.e=eInput.value);
-    box.appendChild(eInput);
-    const del = mkBtn("この問題を削除", "btn danger", ()=>{
-      deck.quiz.splice(i,1); renderQuizEditor(deck);
-    });
-    del.style.marginTop="8px"; box.appendChild(del);
-    wrap.appendChild(box);
-  });
-}
-function inputEl(val, ph){
-  const el = document.createElement("input"); el.type="text"; el.value=val||""; el.placeholder=ph||"";
-  return el;
-}
-document.getElementById("addQuizBtn").addEventListener("click", ()=>{
-  const d = currentDeck(); d.quiz.push({ q:"", o:["","","",""], a:0, e:"" }); renderQuizEditor(d);
-});
-document.getElementById("copySourceBtn").addEventListener("click", ()=>{
-  document.getElementById("fFlashText").value = document.getElementById("fSource").value;
-});
-document.getElementById("saveDeckBtn").addEventListener("click", ()=>{
-  const d = currentDeck();
-  d.title = document.getElementById("fTitle").value.trim();
-  d.category = document.getElementById("fCategory").value.trim();
-  d.source = document.getElementById("fSource").value;
-  d.flashMode = document.getElementById("fFlashMode").value;
-  d.flashText = document.getElementById("fFlashText").value;
-  d.quizStatus = d.quiz.length > 0 ? "ready" : "unset";
-  persist(); refreshCatList();
-  toast("保存しました");
-});
-document.getElementById("exportDeckBtn").addEventListener("click", ()=>{
-  const d = currentDeck(); if(!d) return;
-  const blob = new Blob([JSON.stringify(d, null, 2)], {type:"application/json"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url; a.download = (d.title || d.id).replace(/[^\w\-一-龯ぁ-んァ-ン]/g,"_") + ".json";
-  a.click(); URL.revokeObjectURL(url);
-});
-document.getElementById("deleteDeckBtn").addEventListener("click", ()=>{
-  const d = currentDeck(); if(!d) return;
-  if(!confirm(`「${d.title||"(無題)"}」を削除しますか？`)) return;
-  decks = decks.filter(x=>x.id!==d.id); currentId = decks[0] ? decks[0].id : null;
-  persist(); toast("削除しました"); showView("library");
-});
 
-/* ===================== フラッシュ（RSVP） ===================== */
-let flashChunks = [], flashIdx = 0, flashTimer = null, flashSpeed = 350;
-function setupFlash(){
-  const d = currentDeck();
-  const empty = document.getElementById("flashEmpty");
-  const title = document.getElementById("flashTitle");
-  if(!d || !d.flashText.trim()){
-    flashChunks = []; renderFlash();
-    title.textContent = "フラッシュ読み";
-    empty.classList.remove("hidden");
-    return;
+// ====== export / import ======
+function exportDeck(d){
+  const blob=new Blob([JSON.stringify(d,null,2)],{type:"application/json"});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download=(d.title||"deck").replace(/[\\/:*?"<>|\s…]/g,"_").slice(0,24)+".json";
+  document.body.appendChild(a);a.click();a.remove();
+}
+filein.onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();
+  r.onload=()=>{try{const d=JSON.parse(r.result);d.id=uid();if(!d.quizStatus)d.quizStatus=(d.quiz&&d.quiz.length)?"ready":"unset";
+    if(!d.flashText)throw new Error("flashTextがありません");decks.unshift(d);library();}
+    catch(err){alert("読み込めませんでした: "+err.message);}};
+  r.readAsText(f);filein.value="";};
+
+// ====== READER ======
+function startReading(){
+  chunks=chunkText(cur.flashText);idx=0;playing=true;
+  screen.innerHTML=`
+  <div class="screen reader">
+    <div class="rtop"><span>${esc(cur.title)}</span><button class="xbtn" id="x">✕</button></div>
+    <div class="progress"><i id="bar"></i></div>
+    <div class="stage"><div class="guide t"></div><div id="flash" class="flash"></div><div class="guide b"></div></div>
+    <div class="rctrl"><button id="restart">↺ 最初から</button><button id="pp" class="main">一時停止</button></div>
+    <div class="hint">タップで一時停止／再開</div>
+  </div>`;
+  document.getElementById('x').onclick=()=>deckDetail();
+  document.getElementById('restart').onclick=()=>{idx=0;playing=true;document.getElementById('pp').textContent='一時停止';tick();};
+  document.getElementById('pp').onclick=togglePlay;
+  document.querySelector('.stage').onclick=togglePlay;
+  countdown(3);
+}
+function countdown(n){const f=document.getElementById('flash');if(!f)return;
+  if(n===0){f.className='flash';tick();return;}
+  f.className='countdown';f.textContent=n;timer=setTimeout(()=>{f.className='flash';countdown(n-1);},800);}
+function tick(){if(!playing)return;const f=document.getElementById('flash'),bar=document.getElementById('bar');if(!f)return;
+  if(idx>=chunks.length){playing=false;setTimeout(afterFlash,450);return;}
+  const c=chunks[idx];f.innerHTML=renderFlash(c);
+  f.style.animation='none';f.offsetHeight;f.style.animation='fade .12s ease';
+  bar.style.width=((idx+1)/chunks.length*100)+'%';const d=delayFor(c);idx++;timer=setTimeout(tick,d);}
+function togglePlay(){playing=!playing;const pp=document.getElementById('pp');
+  if(playing){pp.textContent='一時停止';tick();}else{pp.textContent='再開';clearTimeout(timer);}}
+function afterFlash(){
+  if(cur.quizStatus==='ready'){startQuiz();}
+  else{screen.innerHTML=`<div class="screen result">
+    <div class="score" style="font-size:40px;">読了 ✓</div>
+    <div class="rmsg">フラッシュ完了</div>
+    <div class="rsub">このデッキはまだ問題が未セットです。問題を追加すると定着確認ができます。</div>
+    <button class="btn" id="g" style="margin-top:28px;max-width:300px;">AIで問題を生成</button>
+    <button class="btn ghost" id="b" style="max-width:300px;">デッキに戻る</button></div>`;
+    document.getElementById('b').onclick=deckDetail;
+    document.getElementById('g').onclick=async()=>{loading("4択を作成中…");
+      try{cur.quiz=await genQuiz(cur.source||cur.flashText);cur.quizStatus="ready";startQuiz();}
+      catch(e){deckDetail();}};
   }
-  empty.classList.add("hidden");
-  title.textContent = "⚡ " + (d.title || "(無題)");
-  flashChunks = chunkText(d.flashText);
-  flashIdx = 0; stopFlash(); renderFlash();
-}
-function renderFlash(){
-  const stage = document.getElementById("flashStage");
-  const pos = document.getElementById("flashPos");
-  const prog = document.getElementById("flashProgress");
-  if(flashChunks.length === 0){ stage.textContent = "—"; pos.textContent="0 / 0"; prog.style.width="0"; return; }
-  stage.textContent = flashChunks[flashIdx] || "—";
-  pos.textContent = `${flashIdx+1} / ${flashChunks.length}`;
-  prog.style.width = ((flashIdx+1)/flashChunks.length*100) + "%";
-}
-function stepFlash(delta){
-  if(flashChunks.length===0) return;
-  flashIdx = Math.max(0, Math.min(flashChunks.length-1, flashIdx+delta));
-  renderFlash();
-}
-function playFlash(){
-  if(flashChunks.length===0) return;
-  const btn = document.getElementById("flashPlay");
-  if(flashTimer){ stopFlash(); return; }
-  btn.textContent = "⏸ 一時停止";
-  flashTimer = setInterval(()=>{
-    if(flashIdx >= flashChunks.length-1){ stopFlash(); return; }
-    flashIdx++; renderFlash();
-  }, flashSpeed);
-}
-function stopFlash(){
-  if(flashTimer){ clearInterval(flashTimer); flashTimer=null; }
-  document.getElementById("flashPlay").textContent = "▶ 再生";
-}
-document.getElementById("flashPlay").addEventListener("click", playFlash);
-document.getElementById("flashPrev").addEventListener("click", ()=>{ stopFlash(); stepFlash(-1); });
-document.getElementById("flashNext").addEventListener("click", ()=>{ stopFlash(); stepFlash(1); });
-document.getElementById("flashReset").addEventListener("click", ()=>{ stopFlash(); flashIdx=0; renderFlash(); });
-document.getElementById("flashSpeed").addEventListener("input", (e)=>{
-  flashSpeed = Number(e.target.value);
-  document.getElementById("flashSpeedLabel").textContent = flashSpeed + " ms/語";
-  if(flashTimer){ stopFlash(); playFlash(); }
-});
-
-/* ===================== クイズ ===================== */
-function setupQuiz(){
-  const d = currentDeck();
-  const area = document.getElementById("quizArea");
-  const empty = document.getElementById("quizEmpty");
-  const title = document.getElementById("quizTitle");
-  area.innerHTML = "";
-  if(!d || d.quiz.length === 0){
-    empty.classList.remove("hidden");
-    title.textContent = "クイズ";
-    return;
-  }
-  empty.classList.add("hidden");
-  title.textContent = "✓ " + (d.title || "(無題)");
-  let answered = 0, correct = 0;
-  const total = d.quiz.length;
-  const scoreEl = document.createElement("p");
-  scoreEl.className = "muted";
-  const updateScore = ()=> scoreEl.textContent = `正解 ${correct} / 回答 ${answered}（全${total}問）`;
-  updateScore();
-  area.appendChild(scoreEl);
-
-  d.quiz.forEach((item, qi)=>{
-    const card = document.createElement("div");
-    card.className = "card";
-    card.style.background = "var(--panel2)";
-    const q = document.createElement("div");
-    q.innerHTML = `<strong>Q${qi+1}.</strong> ${escapeHtml(item.q || "(設問なし)")}`;
-    card.appendChild(q);
-    let locked = false;
-    const btns = [];
-    item.o.forEach((opt, oi)=>{
-      const b = document.createElement("button");
-      b.className = "choice";
-      b.textContent = `${"ABCD"[oi]}. ${opt}`;
-      b.addEventListener("click", ()=>{
-        if(locked) return; locked = true; answered++;
-        btns.forEach((x,xi)=>{
-          x.classList.add("disabled");
-          if(xi===item.a) x.classList.add("correct");
-        });
-        if(oi===item.a){ correct++; }
-        else { b.classList.add("wrong"); }
-        updateScore();
-        const ex = document.createElement("div");
-        ex.className = "explain";
-        ex.innerHTML = `<strong>${oi===item.a?"正解":"不正解"}</strong> ・ 答え: ${"ABCD"[item.a]}<br>${escapeHtml(item.e || "(解説なし)")}`;
-        card.appendChild(ex);
-      });
-      btns.push(b); card.appendChild(b);
-    });
-    area.appendChild(card);
-  });
 }
 
-/* ===================== サンプルデッキ（背骨スキーマ） ===================== */
-const SAMPLE_DECK = {
-  id: "deck_sample_osi",
-  title: "基本情報 - OSI参照モデル（サンプル）",
-  source: "OSI参照モデルは、コンピュータの通信機能を7つの階層に分けて整理した国際標準のモデルである。"
-        + "下位から第1層の物理層、第2層のデータリンク層、第3層のネットワーク層、第4層のトランスポート層、"
-        + "第5層のセッション層、第6層のプレゼンテーション層、第7層のアプリケーション層となる。"
-        + "ネットワーク層はIPアドレスを用いた経路選択（ルーティング）を担当し、"
-        + "トランスポート層はTCPやUDPによりエンドツーエンドの通信制御と信頼性を担う。"
-        + "データリンク層はMACアドレスを用いて同一ネットワーク内のノード間でフレームを転送する。",
-  flashMode: "original",
-  flashText: "OSI参照モデルは、通信機能を7つの階層に分けた国際標準のモデルである。"
-           + "第3層のネットワーク層は、IPアドレスを用いた経路選択（ルーティング）を担当する。"
-           + "第4層のトランスポート層は、TCPやUDPによりエンドツーエンドの信頼性を担う。"
-           + "第2層のデータリンク層は、MACアドレスを用いて同一ネットワーク内でフレームを転送する。",
-  quiz: [
-    { q: "OSI参照モデルで、IPアドレスを用いた経路選択（ルーティング）を担当する層はどれか。",
-      o: ["データリンク層", "ネットワーク層", "トランスポート層", "セッション層"],
-      a: 1,
-      e: "source より、ネットワーク層（第3層）がIPアドレスによる経路選択を担当する。" },
-    { q: "TCPやUDPによりエンドツーエンドの通信制御と信頼性を担う層はどれか。",
-      o: ["アプリケーション層", "プレゼンテーション層", "トランスポート層", "物理層"],
-      a: 2,
-      e: "source より、トランスポート層（第4層）がTCP/UDPで信頼性を担う。" },
-    { q: "MACアドレスを用いて同一ネットワーク内のノード間でフレームを転送する層はどれか。",
-      o: ["データリンク層", "ネットワーク層", "セッション層", "アプリケーション層"],
-      a: 0,
-      e: "source より、データリンク層（第2層）がMACアドレスでフレームを転送する。" }
-  ],
-  quizStatus: "ready",
-  category: "ネットワーク"
-};
+// ====== QUIZ ======
+function startQuiz(){quizI=0;score=0;renderQuiz();}
+function renderQuiz(){answered=false;const q=cur.quiz[quizI];
+  screen.innerHTML=`<div class="screen">
+    <div class="qhead">まとめ問題</div>
+    <div class="qcount">${esc(cur.title)} ・ ${quizI+1} / ${cur.quiz.length}問</div>
+    <div class="question">${esc(q.q)}</div>
+    <div id="opts">${q.o.map((o,i)=>`<button class="opt" data-i="${i}">${esc(o)}</button>`).join('')}</div>
+    <div id="feedslot"></div></div>`;
+  document.getElementById('opts').onclick=e=>{const b=e.target.closest('.opt');if(!b||answered)return;answered=true;
+    const pick=+b.dataset.i,q=cur.quiz[quizI];
+    document.querySelectorAll('.opt').forEach((el,i)=>{if(i===q.a)el.classList.add('correct');else if(i===pick)el.classList.add('wrong');else el.classList.add('dim');});
+    if(pick===q.a)score++;const last=quizI===cur.quiz.length-1;
+    document.getElementById('feedslot').innerHTML=`<div class="feed"><b>${pick===q.a?'正解！':'おしい'}</b> ${esc(q.e)}</div>
+      <button class="btn" id="next">${last?'結果を見る':'次の問題'}</button>`;
+    document.getElementById('next').onclick=()=>{if(last)result();else{quizI++;renderQuiz();}};};
+}
+function result(){const total=cur.quiz.length,pct=score/total;
+  const msg=pct===1?'完璧。定着しています。':pct>=.5?'いい感じ。あと一歩。':'ここを重点復習に。';
+  const sub=pct===1?'フラッシュで入れて、問題で出す。このループが効いています。':'間違えた論点だけもう一度フラッシュすると効率的です。';
+  screen.innerHTML=`<div class="screen result"><div class="score">${score}<small> / ${total}</small></div>
+    <div class="rmsg">${msg}</div><div class="rsub">${sub}</div>
+    <button class="btn" id="again" style="margin-top:30px;max-width:300px;">もう一度学習</button>
+    <button class="btn ghost" id="back" style="max-width:300px;">ライブラリへ</button></div>`;
+  document.getElementById('again').onclick=startReading;
+  document.getElementById('back').onclick=library;
+}
 
-/* ===================== 初期化 ===================== */
-renderLibrary();
+function stop(){playing=false;clearTimeout(timer);}
+library();
 </script>
 </body>
 </html>

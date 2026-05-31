@@ -14,7 +14,7 @@ flash-study/
   docs/
     flash-study-spec.md  仕様書（CLAUDE.md から参照）
   prototype/
-    index.html           Phase 1 試作（単一HTML / AI無し / ブラウザで開くだけ）
+    index.html           Phase 1 試作（単一HTML / Claude artifact APIでクイズ生成）
   .claude/
     settings.json        エージェントチーム有効化 + commit前フック
     agents/              architect / implementer / quiz-evaluator / reviewer / debugger
@@ -23,20 +23,27 @@ flash-study/
 
 ## 試作を動かす
 
-`prototype/index.html` をブラウザで直接開くだけ（ビルド不要・通信なし）。
+`prototype/index.html` をブラウザで直接開くだけ（ビルド不要）。サンプルデッキを内蔵。
 
-1. 「サンプルを読込」でデッキを追加
-2. 「フラッシュ」タブで RSVP 再生（速度調整可）
-3. 「クイズ」タブで 4択に回答
-4. 「編集」でデッキ作成・問題追加、「ライブラリ」から JSON の入出力
+1. ライブラリから内蔵サンプル（地方自治 / 固定資産税 / 行政手続）を選ぶ
+2. デッキ詳細で速度を調整して「学習をはじめる」→ 3カウント後に RSVP 再生
+3. 読了後にそのまま 4択の「まとめ問題」→ 結果画面
+4. 「＋ 教材から新規」で本文を貼り付け、原文/AI再構成の切替＋クイズ自動生成（Claude artifact API）
+5. デッキの書き出し / 読み込み（JSON ファイル）、職場用に JSON 貼り付け取込も可
 
-データの背骨は **1デッキ = 1 JSON**：
+> Phase 1 はアーティファクト前提のため保存はファイル書出/読込で代替（localStorage は使わない）。
+> AI 呼び出しは Claude 内 API のキーレス代理呼び出し。BYOK 3社対応は Phase 3。
+
+データの背骨は **1デッキ = 1 JSON**（仕様書 §1）：
 
 ```json
 { "id":"", "title":"", "source":"", "flashMode":"original|ai",
   "flashText":"", "quiz":[{"q":"","o":["","","",""],"a":0,"e":""}],
-  "quizStatus":"ready|unset", "category":"" }
+  "quizStatus":"ready|unset", "createdAt":"ISO8601" }
 ```
+
+> 注：`CLAUDE.md` の背骨は末尾が `category`、仕様書 v0.1 は `createdAt`。
+> 現物の HTML は `category`（手動カテゴリ＝カテゴリ別グループ表示）を使用。Phase 2 で正式に統一する。
 
 ## フェーズ
 
