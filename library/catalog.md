@@ -1,6 +1,6 @@
 # Library Catalog
 
-最終更新: 2026-05-30
+最終更新: 2026-05-31
 
 ## 凡例
 - 状態: 未読 / 既読 / 要精読
@@ -117,12 +117,34 @@
 
 ---
 
+## 2026-05-31 収集分（12件収集 → 12件SIGNAL）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 061 | [2026-05-31_061](articles/2026-05-31_061_Claude-Code-weekly-update-May30-week-Dynamic-Workflows-AgentView.md) | Claude Code 週次アップデート 2026/05/30週: Dynamic Workflows・Agent View・fast modeデフォルト化 | claude-code | 未読 | #web-signal |
+| 062 | [2026-05-31_062](articles/2026-05-31_062_Claude-Code-hooks-27events-complete-reference-2026.md) | Claude Code Hooks完全リファレンス2026: 27イベント・5ハンドラー型・終了コード体系 | claude-code | 未読 | #web-signal |
+| 063 | [2026-05-31_063](articles/2026-05-31_063_Claude-Code-hooks-6-production-CICD-patterns-pixelmojo.md) | Claude Code Hooks 6つの本番CI/CDパターン: セキュリティゲート・ファイル保護・自動フォーマット | claude-code | 未読 | #web-signal |
+| 064 | [2026-05-31_064](articles/2026-05-31_064_Claude-Code-routines-schedule-claude-branch-push-fix.md) | Claude Code Routines /schedule: claude/ブランチプッシュ問題と修正方法 | claude-code | 未読 | #web-signal |
+| 065 | [2026-05-31_065](articles/2026-05-31_065_Claude-Code-skills-top15-install-data-agensi.md) | Claude Code Skills ベスト15（インストール数付き）: code-reviewer 116件トップ | claude-code | 未読 | #web-signal |
+| 066 | [2026-05-31_066](articles/2026-05-31_066_CLAUDE-md-design-patterns-project-scale-small-large.md) | CLAUDE.md設計パターン集: プロジェクト規模別ベストプラクティスと実例 | claude-code | 未読 | #web-signal |
+| 067 | [2026-05-31_067](articles/2026-05-31_067_Claude-Agent-SDK-June15-billing-migration-credit-pool.md) | Claude Agent SDK 2026-06-15課金変更移行プレイブック: 新クレジットプール・対象範囲・移行手順 | claude-ecosystem | 未読 | #web-signal #urgent |
+| 068 | [2026-05-31_068](articles/2026-05-31_068_MCP-DevOps-18-servers-OAuth2-hosted-endpoint-2026.md) | DevOps MCPサーバーベスト18（2026）: AWS・K8s・Terraform — OAuth 2.1移行の実態 | claude-ecosystem | 未読 | #web-signal |
+| 069 | [2026-05-31_069](articles/2026-05-31_069_Agentic-Trading-LLM-financial-markets-arxiv-2605-19337.md) | Agentic Trading論文（arxiv:2605.19337）: LLMエージェントが金融市場を変える — 89%AI・11%本番稼働 | ai-trading | 未読 | #web-signal |
+| 070 | [2026-05-31_070](articles/2026-05-31_070_TrustTrade-selective-consensus-LLM-trading-uncertainty.md) | TrustTrade論文（arxiv:2603.22567）: 選択的コンセンサスでLLMトレーディングエージェントの不確実性を削減 | ai-trading | 未読 | #web-signal |
+| 071 | [2026-05-31_071](articles/2026-05-31_071_AI-regulation-2026-CNN-Perplexity-EU-AI-Act-White-House.md) | AI規制2026三つの戦線: CNN対Perplexity訴訟・EU AI Act改正・White House連邦統一化 | ai-news | 未読 | #web-signal |
+| 072 | [2026-05-31_072](articles/2026-05-31_072_AI-news-digest-May31-2026-Anthropic-900B-Karpathy.md) | AIニュースダイジェスト2026-05-31: Anthropic評価額$9,000億・Karpathy入社・OpenAI IPO準備 | ai-news | 未読 | #web-signal |
+
+### NOISEとして除外
+なし（X投稿データなし・drop.mdにURLなし・全12件SIGNAL判定）
+
+---
+
 ## ドメイン別統計（累計）
 
-| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 累計 |
-|---|---|---|---|---|---|
-| claude-code | 7件 | 6件 | 7件 | 3件 | 23件 |
-| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 13件 |
-| ai-trading | 3件 | 3件 | 4件 | 3件 | 13件 |
-| ai-news | 4件 | 2件 | 3件 | 2件 | 11件 |
-| **合計** | **19件** | **13件** | **16件** | **12件** | **60件** |
+| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 累計 |
+|---|---|---|---|---|---|---|
+| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 29件 |
+| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 15件 |
+| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 15件 |
+| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 13件 |
+| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **72件** |
