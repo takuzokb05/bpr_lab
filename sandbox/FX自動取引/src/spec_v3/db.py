@@ -665,6 +665,32 @@ def recent_pf(db_path: Path, pair: str, n_trades: int = 100) -> Optional[float]:
     return wins / losses
 
 
+def confirm_confidence_outcomes(
+    db_path: Path, pair: str, since_iso: Optional[str] = None,
+) -> list[tuple[float, int]]:
+    """採用群 (CONFIRM 発注 → 決済済) の (confidence, win) リストを返す。
+
+    confidence の判別力 (AUC) 計測用。win = 確定 PnL > 0。
+    trades.llm_confidence × trade_closures.pnl_jpy を JOIN する。
+    抑制 (未採用) シグナルは trade にならないため含まれない
+    (= 採用群内での判別力を測る。抑制群の仮想 PnL は別途 suppressed-PnL で)。
+    """
+    if not db_path.exists():
+        return []
+    q = (
+        "SELECT t.llm_confidence AS conf, c.pnl_jpy AS pnl "
+        "FROM trades t JOIN trade_closures c ON c.trade_id = t.id "
+        "WHERE t.pair = ? AND t.llm_confidence IS NOT NULL AND c.pnl_jpy IS NOT NULL"
+    )
+    params: list = [pair]
+    if since_iso:
+        q += " AND c.exit_at_utc >= ?"
+        params.append(since_iso)
+    with get_conn(db_path) as conn:
+        rows = conn.execute(q, params).fetchall()
+    return [(float(r["conf"]), 1 if (r["pnl"] or 0.0) > 0 else 0) for r in rows]
+
+
 # ============================================================
 # kill_switch_state (永続化、Ultra/Karen バグ⑤ 是正)
 # ============================================================

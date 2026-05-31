@@ -131,6 +131,9 @@ Phase 2'A 終了 (30日後 or 60日延長後) に以下のゲートで Phase 2'C
 | **OOS trades** | USD_JPY ≥ 8 / GBP_JPY ≥ 20 | サンプル不足、Phase 2'A 延長 |
 | **LLM API コスト累計** | ≤ 5,000 円 (月換算) | 撤退条件 #4 発動 |
 | **Phase 0' BT 乖離** | 実約定 PF と BT PF の乖離 ≤ 20% | BT 推定値再評価、閾値再最適化 |
+| **confidence AUC (採用群、ペア別)** | **≥ 0.55** | confidence 閾値ロジック見直し |
+
+**AUC gate 追加背景** (2026-05-31): Phase 0' BT で confidence 判別力を実測したところ USD_JPY AUC=0.51 (コイン投げ)・GBP_JPY 0.54。「confidence≥閾値で絞る」中核メカニズムが特に USD で機能していない疑い。PF だけで採否を決めた過去の盲点 (memory `feedback_confidence_auc_not_pf`) を塞ぐため、実約定 AUC を必須 gate 化。日次監視は `spec_v3_daily_summary_slack.py`、正式測定は `scripts/_spec_v3_confidence_calibration.py --source db`。外部裏付け `docs/analysis/LLM_ADVISORY_EXTERNAL_RESEARCH.md`。
 
 ### 4.2 加点ゲート (満たすと Phase 2'C 確信度高)
 

@@ -104,6 +104,9 @@ Get-ScheduledTaskInfo -TaskName "SPECv3_Demo"
 | OOS trades | USD ≥ 8 / GBP ≥ 20 | 延長 |
 | LLM コスト累計 | ≤ 5,000 円/月 | 撤退条件 #4 |
 | Phase 0' BT 乖離 | 実約定 PF と BT PF の乖離 ≤ 20% | BT 推定値再評価 |
+| **confidence AUC (採用群)** | **≥ 0.55 (ペア別)** | **confidence 閾値ロジック見直し** |
+
+> **AUC gate の根拠** (2026-05-31 追加): Phase 0' BT データで confidence 判別力を実測したところ USD_JPY AUC=0.51 (コイン投げ)・GBP_JPY 0.54。「confidence≥閾値で絞る」中核メカニズムが特に USD で機能していない疑い。PF だけで通した過去の盲点を塞ぐため、実約定 AUC を PF と並ぶ必須 gate に追加。測定: `scripts/_spec_v3_confidence_calibration.py`、日次監視: `spec_v3_daily_summary_slack.py`。詳細 memory [[feedback_confidence_auc_not_pf]] / `docs/analysis/LLM_ADVISORY_EXTERNAL_RESEARCH.md`。
 
 ### 3.2 反論屋3体 (karen / ultrathink / pragmatist) 起動再判定
 

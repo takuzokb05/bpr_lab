@@ -43,8 +43,8 @@
 | **第2サイクル Phase 0'** | signal_v2 + LLM フィルタ 全件判定 (USD_JPY 2,616件 + GBP_JPY 2,443件) | ✅ 完了 |
 | **第2サイクル Phase 0' 改善** | J 改善余地メタ分析で Proposal 3 発見 (PF 1.354 / lift +0.438) | ✅ 完了 |
 | **第2サイクル Phase 0' 検証** | M2 標準分割 4/4 PASS、lift σ=0.04 で分割不変 | ✅ 完了 |
-| **Phase 2'A 起動準備** | SPEC v3 確定、実装 (src/spec_v3/、34テスト PASS)、反論屋3体査読 | 🟡 進行中 (2/3 OK) |
-| **Phase 2'A 実運用** | VPS デモ 30日 | ⬜ 未開始 (N1 修正待ち) |
+| **Phase 2'A 起動準備** | SPEC v3 確定、実装 (src/spec_v3/ 6モジュール、tests/spec_v3/)、反論屋3体査読 | ✅ 完了 (Ultra 5バグ修正済み、karen+pragmatist 2/2 起動 OK) |
+| **Phase 2'A 実運用** | VPS デモ 30日 | ⬜ 未開始 (ユーザー起動承認待ち) |
 | **Phase 2'B 経済性 Gate** | PF≥1.3, Sharpe≥0.8, MaxDD≤15%, 機会費用超過 | ⬜ Phase 2'A 終了後 |
 | **Phase 2'C 本番投入** | lot 段階移行 (0.01→0.02→ATR可変) | ⬜ Phase 2'B 通過後 |
 
@@ -54,16 +54,16 @@
 - **Combined PF 1.354 / lift +0.438** (4 標準分割すべて PASS、Karen ✅、Pragmatist ✅)
 - 2026 Hold-out PF 1.304 (LLM 知識カットオフ後の純粋未見データ)
 
-### 反論屋3体 M3 再査読結果 (2026-05-28)
+### 反論屋3体 再査読結果 (M3: 2026-05-28 → 最終: 2026-05-30)
 - ✅ **karen**: 起動 OK (実質合格)、前回3重大発見すべて解消
 - ✅ **pragmatist**: 起動 OK (無条件、条件付きから格上げ)、年率 +300-600% 確認
-- ❌ **ultra**: 設計修正必要、**H-① close_position 戻り値キー不一致 (致命、PF 計測歪む)** + 4 中低度バグ
+- ✅ **ultra**: 指摘5バグ (H-①〜⑤) 全修正済み (`0d1831b` H-①/③/④/⑤、`4c9c829` H-②)。Ultra 自己提案により最終査読は karen+pragmatist の **2/2** で実施 → 両者起動 OK
 
 ### 残作業 (Phase 2'A 起動まで)
-1. **N1** 即修正 (H-① + H-② 撤退条件 #0 配線、1-2時間)
-2. **N2** 推奨 (H-③④⑤ pipeline ログ / ペア順 / DB status、1日)
-3. **N3** karen + pragmatist 再査読 (Ultra 不要、Ultra 自己提案に従い)
-4. **N4** ユーザー最終承認 → VPS デプロイ → Phase 2'A 起動
+1. ✅ **N1** 即修正 (H-① + H-② 撤退条件 #0 配線) — 完了 (`0d1831b` / `4c9c829`)
+2. ✅ **N2** 推奨 (H-③④⑤ pipeline ログ / ペア順 / DB status) — 完了 (`0d1831b`)
+3. ✅ **N3** karen + pragmatist 再査読 — 完了、**2/2 起動 OK** (`docs/analysis/PHASE2A_REVIEW3_*.md`)
+4. ⬜ **N4** ユーザー最終承認 → VPS デプロイ → Phase 2'A 起動 ← **現在ここ (GO 待ち)**
 
 採点フレーム: `docs/PROPOSAL_TEMPLATE.md`、SPEC: `docs/SPEC_V3.md`、計画: `docs/PHASE_2A_PLAN.md`
 
@@ -112,6 +112,7 @@
 
 ### このセッションでの更新トリガー
 - **2026-05-26**: SPEC v2 PoC 撤退、プロポーザル方式へ移行 (本書き換え)
+- **2026-05-30**: 第2サイクル本文テーブルを冒頭メタと整合 (Ultra 5バグ修正完了・反論屋 2/2 起動 OK・N1〜N3 完了を反映、stale 解消)
 
 ### stale警告
 最終更新から **14日経過** したら、AIは「STATUS.md が stale です」と警告すること。
