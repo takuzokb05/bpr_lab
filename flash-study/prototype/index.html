@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>フラッシュ学習 — Phase 1</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -10,7 +10,7 @@
 <style>
   :root{
     --bg:#171310;--bg2:#1f1a15;--surface:#241e18;--line:#3a3128;
-    --text:#f1e9dd;--muted:#a2978a;--accent:#e0823f;--accent-soft:#e0823f22;
+    --text:#f1e9dd;--muted:#b8ad9e;--accent:#e0823f;--accent-soft:#e0823f22;
     --good:#6fb98f;--bad:#d9686a;
     --serif:'Shippori Mincho',"Hiragino Mincho ProN","Yu Mincho",serif;
     --sans:'Zen Kaku Gothic New',"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
@@ -19,7 +19,8 @@
   html,body{margin:0;height:100%;}
   body{background:radial-gradient(120% 80% at 50% -10%, #2a221b 0%, var(--bg) 55%),var(--bg);
     color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;overscroll-behavior:none;}
-  #app{max-width:560px;margin:0 auto;min-height:100dvh;display:flex;flex-direction:column;padding:22px 20px 28px;}
+  #app{max-width:560px;margin:0 auto;min-height:100dvh;display:flex;flex-direction:column;
+    padding:max(22px,env(safe-area-inset-top)) max(20px,env(safe-area-inset-right)) calc(28px + env(safe-area-inset-bottom)) max(20px,env(safe-area-inset-left));}
   .top{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
   .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent);}
   .top h1{font-size:15px;font-weight:700;letter-spacing:.04em;margin:0;color:var(--muted);}
@@ -37,8 +38,9 @@
   .card:active{transform:scale(.985);}
   .card.sel{border-color:var(--accent);background:linear-gradient(var(--accent-soft),transparent);}
   .card .ic{font-family:var(--serif);font-size:20px;color:var(--accent);width:30px;text-align:center;flex:none;}
-  .card .ct{font-weight:700;font-size:15.5px;}
-  .card .cd{color:var(--muted);font-size:12px;margin-top:3px;}
+  .card .cmid{flex:1;min-width:0;overflow:hidden;}
+  .card .ct{font-weight:700;font-size:15.5px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .card .cd{color:var(--muted);font-size:12px;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
   .card .chev{margin-left:auto;color:var(--muted);font-size:18px;}
   .pill{font-size:11px;padding:2px 8px;border-radius:20px;border:1px solid var(--line);color:var(--muted);margin-left:auto;}
   .pill.rdy{color:var(--good);border-color:#3c5546;}
@@ -75,7 +77,7 @@
   .chk .t{font-size:14px;font-weight:700;}
   .chk .d{font-size:11.5px;color:var(--muted);margin-top:2px;}
 
-  .back{background:none;border:none;color:var(--muted);font-size:14px;cursor:pointer;padding:6px 0;display:flex;align-items:center;gap:6px;}
+  .back{background:none;border:none;color:var(--muted);font-size:14px;cursor:pointer;padding:6px 0;min-height:44px;display:flex;align-items:center;gap:6px;}
   .dtitle{font-family:var(--serif);font-weight:800;font-size:26px;line-height:1.3;margin:10px 0 4px;}
   .meta{color:var(--muted);font-size:13px;margin-bottom:18px;}
   .box2{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px;}
@@ -101,8 +103,9 @@
 
   /* reader */
   .reader{flex:1;display:flex;flex-direction:column;}
-  .rtop{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:13px;}
-  .xbtn{background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;padding:4px 8px;}
+  .rtop{display:flex;justify-content:space-between;align-items:center;gap:10px;color:var(--muted);font-size:13px;}
+  .rtop > span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;}
+  .xbtn{background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;flex:none;min-width:44px;min-height:44px;}
   .progress{height:3px;background:var(--line);border-radius:3px;margin-top:12px;overflow:hidden;}
   .progress > i{display:block;height:100%;width:0;background:var(--accent);transition:width .12s linear;}
   .stage{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;}
@@ -166,6 +169,23 @@ async function callClaude(prompt){
   return out;
 }
 function stripFences(t){return t.replace(/^```(?:json)?/i,"").replace(/```$/,"").trim();}
+// クイズ配列を背骨スキーマに正規化（AI生成/JSON貼付/ファイル取込の全経路で共用）。
+// ・o が配列で2件以上ある問題だけ採用、それ以外は drop（クラッシュ防止）
+// ・a は元の選択肢数に対して範囲チェックし、外れていれば 0 にクランプ（正解の無い問題を作らない）
+// ・必ず4択に揃える（不足は空で補い、超過は切る）
+function normalizeQuiz(arr){
+  if(!Array.isArray(arr))return[];
+  const out=[];
+  for(const x of arr){
+    if(!x||typeof x!=='object'||!x.q||!Array.isArray(x.o)||x.o.length<2)continue;
+    let o=x.o.map(v=>String(v==null?'':v));
+    let a=Number(x.a); if(!Number.isInteger(a)||a<0||a>=o.length)a=0;
+    while(o.length<4)o.push('');
+    o=o.slice(0,4); if(a>3)a=0;
+    out.push({q:String(x.q),o,a,e:String(x.e||'')});
+  }
+  return out;
+}
 // 出力が途中で切れても、完成した {...} だけを救出する堅牢パーサ
 function parseQuizLoose(raw){
   raw=stripFences(raw);
@@ -175,12 +195,9 @@ function parseQuizLoose(raw){
     if(ch==='"'){inStr=true;continue;}
     if(ch==='{'){if(depth===0)start=k;depth++;}
     else if(ch==='}'){depth--;if(depth===0&&start>=0){objs.push(raw.slice(start,k+1));start=-1;}}}
-  const out=[];
-  for(const o of objs){try{const x=JSON.parse(o);
-    if(x&&x.q&&Array.isArray(x.o)&&x.o.length>=2)
-      out.push({q:String(x.q),o:x.o.map(String),a:Number(x.a)||0,e:String(x.e||"")});
-  }catch(_){}}
-  return out;
+  const parsed=[];
+  for(const o of objs){try{parsed.push(JSON.parse(o));}catch(_){}}
+  return normalizeQuiz(parsed);
 }
 
 async function genQuiz(text){
@@ -260,8 +277,8 @@ function chunkText(text){
 }
 function delayFor(c){let base=660-(speed-1)*56,d=base+c.length*30;
   if(/[。！？]$/.test(c))d+=280;else if(/、$/.test(c))d+=130;return d;}
-function renderFlash(c){const m=Math.floor((c.length-1)/2);let h="";
-  for(let i=0;i<c.length;i++)h+= i===m?`<span class="focus">${c[i]}</span>`:c[i];return h;}
+function renderFlash(c){const m=Math.min(c.length-1,Math.floor(c.length*0.35));let h="";
+  for(let i=0;i<c.length;i++)h+= i===m?`<span class="focus">${esc(c[i])}</span>`:esc(c[i]);return h;}
 function uid(){return"d"+Date.now().toString(36)+Math.random().toString(36).slice(2,5);}
 function esc(s){return(s||"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));}
 
@@ -269,7 +286,7 @@ function esc(s){return(s||"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":
 function cardHtml(d){return `
   <button class="card" data-id="${d.id}" style="margin-bottom:10px;">
     <span class="ic">${d.icon||"新"}</span>
-    <span><span class="ct">${esc(d.title)}</span><span class="cd">${esc(d.desc||"")}${d.flashMode==='ai'?' · AI再構成':''}</span></span>
+    <span class="cmid"><span class="ct">${esc(d.title)}</span><span class="cd">${esc(d.desc||"")}${d.flashMode==='ai'?' · AI再構成':''}</span></span>
     <span class="pill ${d.quizStatus==='ready'?'rdy':'uns'}">${d.quizStatus==='ready'?d.quiz.length+'問':'問題なし'}</span>
   </button>`;}
 function library(){
@@ -336,7 +353,8 @@ async function make(){
     if(aiMode) flashText=await reconstruct(src);
     let quiz=[],status="unset";
     if(gen){quiz=await genQuiz(src);status="ready";}
-    const d={id:uid(),icon:"新",title:src.slice(0,12)+(src.length>12?"…":""),desc:"作成したデッキ",
+    const cleanTitle=src.replace(/\s+/g,' ').trim();
+    const d={id:uid(),icon:"新",title:cleanTitle.slice(0,12)+(cleanTitle.length>12?"…":""),desc:"作成したデッキ",
       category:cat||"未分類",flashMode:aiMode?"ai":"original",flashText,quiz,quizStatus:status,source:src};
     decks.unshift(d);cur=d;deckDetail();
   }catch(e){
@@ -392,9 +410,9 @@ function showPaste(){
     <button class="btn sm" id="pjok">取り込む</button></div>`;
   document.getElementById('pjok').onclick=()=>{
     try{const arr=JSON.parse(stripFences(document.getElementById('pj').value.trim()));
-      if(!Array.isArray(arr)||!arr.length)throw new Error("配列が空");
-      cur.quiz=arr.map(x=>({q:String(x.q),o:x.o.map(String),a:Number(x.a),e:String(x.e||"")}));
-      cur.quizStatus="ready";deckDetail();
+      const quiz=normalizeQuiz(arr);
+      if(!quiz.length)throw new Error("有効な4択問題が見つかりません");
+      cur.quiz=quiz;cur.quizStatus="ready";deckDetail();
     }catch(e){alert("読み込めませんでした: "+e.message);}
   };
 }
@@ -407,8 +425,11 @@ function exportDeck(d){
   document.body.appendChild(a);a.click();a.remove();
 }
 filein.onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();
-  r.onload=()=>{try{const d=JSON.parse(r.result);d.id=uid();if(!d.quizStatus)d.quizStatus=(d.quiz&&d.quiz.length)?"ready":"unset";
-    if(!d.flashText)throw new Error("flashTextがありません");decks.unshift(d);library();}
+  r.onload=()=>{try{const d=JSON.parse(r.result);
+    if(!d||typeof d!=='object'||Array.isArray(d))throw new Error("デッキ形式ではありません");
+    if(!d.flashText)throw new Error("flashTextがありません");
+    d.id=uid();d.quiz=normalizeQuiz(d.quiz);d.quizStatus=d.quiz.length?"ready":"unset";
+    decks.unshift(d);library();}
     catch(err){alert("読み込めませんでした: "+err.message);}};
   r.readAsText(f);filein.value="";};
 
@@ -424,7 +445,7 @@ function startReading(){
     <div class="hint">タップで一時停止／再開</div>
   </div>`;
   document.getElementById('x').onclick=()=>deckDetail();
-  document.getElementById('restart').onclick=()=>{idx=0;playing=true;document.getElementById('pp').textContent='一時停止';tick();};
+  document.getElementById('restart').onclick=()=>{clearTimeout(timer);idx=0;playing=true;document.getElementById('pp').textContent='一時停止';tick();};
   document.getElementById('pp').onclick=togglePlay;
   document.querySelector('.stage').onclick=togglePlay;
   countdown(3);
@@ -433,7 +454,7 @@ function countdown(n){const f=document.getElementById('flash');if(!f)return;
   if(n===0){f.className='flash';tick();return;}
   f.className='countdown';f.textContent=n;timer=setTimeout(()=>{f.className='flash';countdown(n-1);},800);}
 function tick(){if(!playing)return;const f=document.getElementById('flash'),bar=document.getElementById('bar');if(!f)return;
-  if(idx>=chunks.length){playing=false;setTimeout(afterFlash,450);return;}
+  if(idx>=chunks.length){playing=false;timer=setTimeout(afterFlash,450);return;}
   const c=chunks[idx];f.innerHTML=renderFlash(c);
   f.style.animation='none';f.offsetHeight;f.style.animation='fade .12s ease';
   bar.style.width=((idx+1)/chunks.length*100)+'%';const d=delayFor(c);idx++;timer=setTimeout(tick,d);}
