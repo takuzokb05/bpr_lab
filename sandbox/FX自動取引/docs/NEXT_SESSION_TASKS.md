@@ -1,12 +1,37 @@
 # 次回セッション タスク整理 — Phase 2'A 起動 + 運用
 
-> **作成日**: 2026-05-30
-> **直前状態**: Phase 2'A 起動準備完了、3反論屋 2/2 起動 OK (Ultra 自己提案で karen+pragmatist のみ)、ユーザー最終承認待ち
-> **次回エントリーポイント**: 本ファイル + `STATUS.md` + `docs/SPEC_V3_DEPLOY.md`
+> **作成日**: 2026-05-30 / **更新**: 2026-05-31
+> **直前状態 (2026-05-31)**: ユーザー承認済み → コード commit/push 済み (`86137ea`) → VPS を `feature/proposal-selection` に切替・**dry-run 成功 (MT5/signal_v2/DB 動作確認)** → **VPS の `.env` API キー記入待ちで停止** (RDP が重く後日対応)
+> **次回エントリーポイント**: 本ファイル冒頭の「🔴 次回の最短手順」
 
 ---
 
-## 🎯 Phase 1: VPS 起動 (次回最初、30分〜1時間)
+## 🔴 次回の最短手順 (2026-05-31 クローズ時点)
+
+**残るブロッカーは VPS の API キー設定だけ。** コード・依存(Python313)・MT5・DB は VPS で dry-run 動作確認済み。連鎖していたデプロイ漏れ (spec_v2 全体・spec_v3 `__init__`/`slack_notifier`・運用スクリプト) は全て git に乗せて解消済み。
+
+1. **VPS の `.env` に API キーを記入** (空テンプレート作成済み、BOM無し UTF-8)
+   - 場所: `C:\bpr_lab_spec_v2\sandbox\FX自動取引\.env`
+   - `ANTHROPIC_API_KEY=` の **= 直後**に値 (前後スペース/引用符なし)。**ANTHROPIC は必須** (LLM filter)
+   - `SPEC_V3_SLACK_WEBHOOK_URL=` も推奨 (無いと通知 no-op・日次 AUC が Slack に出ない)
+   - 記入は **RDP → メモ帳** 推奨 (ssh だとキーがコマンド履歴に残る)
+2. 記入後 (Claude に依頼可)、ssh で:
+   ```powershell
+   cd C:\bpr_lab_spec_v2\sandbox\FX自動取引
+   $py = "C:\Users\Administrator\AppData\Local\Programs\Python\Python313\python.exe"  # ★Python313必須(311はpandas無し)
+   # LLM 疎通 (judge 1回 ~$0.004)
+   & $py -c "from dotenv import load_dotenv; load_dotenv(); from src.spec_v3.llm_filter import LLMFilter; LLMFilter(); print('LLM init OK')"
+   .\scripts\_register_spec_v3_tasks.ps1     # 3タスク登録 (Python313 指定済)
+   Start-ScheduledTask -TaskName "SPECv3_Demo"
+   Get-ScheduledTaskInfo -TaskName "SPECv3_Demo"
+   ```
+3. 起動直後チェックは下記 1.3
+
+> ⚠️ **今日の教訓**: VPS の `python` (PATH) は **Python311 で pandas 無し**。タスクと手動実行は必ず **Python313 のフルパス**を使う (`_register_spec_v3_tasks.ps1` は対応済み)。
+
+---
+
+## 🎯 Phase 1: VPS 起動 (詳細手順・参考)
 
 ### 1.1 起動前最終確認
 

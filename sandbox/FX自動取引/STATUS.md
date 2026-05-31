@@ -5,11 +5,11 @@
 
 | メタ | 値 |
 |---|---|
-| **最終更新** | 2026-05-30 JST (Ultra 5バグ修正完了 N1+N2、karen+pragmatist 最終査読 2/2 起動 OK、**ユーザー最終承認待ち**) |
-| **次回更新予定** | Phase 2'A 起動後 + 1週間運用 |
-| **稼働状態** | **🛑 全停止維持** (起動承認待ち、VPS デプロイ未実施) |
-| **現フェーズ** | 🌳 第2サイクル Phase 2'A 起動承認待ち (PHASE_2A_PLAN.md §11 Step 3 user approval) |
-| **次回エントリーポイント** | **`docs/NEXT_SESSION_TASKS.md`** (Phase 1.1 起動前最終確認から着手) |
+| **最終更新** | 2026-05-31 JST (ユーザー承認 → commit/push `86137ea` → VPS デプロイ・**dry-run 成功** → **VPS .env API キー記入待ち**) |
+| **次回更新予定** | API キー設定 → 起動後 |
+| **稼働状態** | **🛑 全停止** (VPS デプロイ進行中、`.env` の ANTHROPIC_API_KEY 記入待ちで停止) |
+| **現フェーズ** | 🌳 Phase 2'A **VPS デプロイ中** (コード配置・依存(Python313)・MT5・DB を dry-run で確認済、API キー設定後に起動) |
+| **次回エントリーポイント** | **`docs/NEXT_SESSION_TASKS.md` の「🔴 次回の最短手順」** |
 
 ---
 
