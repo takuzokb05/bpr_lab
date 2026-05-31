@@ -142,6 +142,8 @@
   .rmsg{font-size:17px;font-weight:700;margin:18px 0 6px;}
   .rsub{color:var(--muted);font-size:14px;line-height:1.7;max-width:300px;}
 </style>
+<!-- PDFテキスト抽出用（UMDビルド。window.pdfjsLib を公開）。読み込み失敗時はPDF機能のみ無効化し他は動く。 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
 <body>
 <div id="app">
@@ -448,8 +450,12 @@ function createView(){
   <div class="screen">
     <button class="back" id="bk">‹ ライブラリ</button>
     <div class="dtitle">教材から作成</div>
-    <div class="meta">本文を貼り付け → AIが本文整形とクイズを用意</div>
+    <div class="meta">本文を貼り付け（またはPDFから抽出） → AIが本文整形とクイズを用意</div>
     <div id="err"></div>
+    <div class="rowbtns" style="margin-top:0;">
+      <button class="btn sm ghost" id="pdfbtn" style="margin-top:0;">📄 PDFから読み込む</button>
+    </div>
+    <input type="file" id="pdfin" accept="application/pdf,.pdf" style="display:none">
     <textarea id="src" placeholder="参考書やノートの本文をここに貼り付け…"></textarea>
     <div class="label">カテゴリ（任意）</div>
     <input id="cat" class="inp" placeholder="例: 行政書士 / 簿記2級 / 通知文">
@@ -468,6 +474,20 @@ function createView(){
   document.getElementById('chk').onclick=()=>{cGen=!cGen;document.getElementById('chk').classList.toggle('on',cGen);
     document.getElementById('chk').querySelector('.box').textContent=cGen?'✓':'';};
   document.getElementById('make').onclick=make;
+  document.getElementById('pdfbtn').onclick=()=>document.getElementById('pdfin').click();
+  document.getElementById('pdfin').onchange=async ev=>{
+    const f=ev.target.files[0];if(!f)return;
+    const err=document.getElementById('err');
+    err.innerHTML=`<div class="banner">PDFを読み込み中…（${esc(f.name)}）</div>`;
+    try{
+      const text=await extractPdf(f);
+      if(!text){err.innerHTML=`<div class="banner">テキストを抽出できませんでした（画像主体のPDFかもしれません）。</div>`;return;}
+      const ta=document.getElementById('src');
+      ta.value=ta.value?ta.value+"\n"+text:text;
+      err.innerHTML=`<div class="banner" style="background:rgba(111,185,143,.12);border-color:#3c5546;color:#cfead9;">PDFから ${text.length} 字を読み込みました。原文モードのまま「作成する」でOK。</div>`;
+    }catch(e){err.innerHTML=`<div class="banner">PDF読込に失敗（${esc(e.message)}）。</div>`;}
+    ev.target.value="";
+  };
 }
 async function make(){
   const src=document.getElementById('src').value.trim();
@@ -548,6 +568,24 @@ function showPaste(){
       cur.quiz=quiz;cur.quizStatus="ready";deckDetail();
     }catch(e){alert("読み込めませんでした: "+e.message);}
   };
+}
+
+// ====== PDF intake (pdf.js, local extraction) ======
+// PDFをローカルでテキスト化。サーバ不要・APIキー不要（職場でも使える）。
+async function extractPdf(file){
+  const lib=window.pdfjsLib;
+  if(!lib) throw new Error("pdf.jsを読み込めていません（ネット接続を確認）");
+  if(!lib.GlobalWorkerOptions.workerSrc)
+    lib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+  const buf=await file.arrayBuffer();
+  const pdf=await lib.getDocument({data:buf}).promise;
+  let text="";
+  for(let p=1;p<=pdf.numPages;p++){
+    const page=await pdf.getPage(p);
+    const content=await page.getTextContent();
+    text += content.items.map(it=>it.str).join("")+"\n";   // 日本語は語間スペース無しなので "" 連結
+  }
+  return text.replace(/\n{2,}/g,"\n").trim();
 }
 
 // ====== export / import ======
