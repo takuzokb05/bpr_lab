@@ -88,18 +88,20 @@ system_prompt: |
 
 ## 4. 実装 TODO（順序）
 
-- [ ] **Phase 0**: core/ ディレクトリ作成・既存資産を archive と整理
-- [ ] **Phase 1**: `core/llm_client.py` を単一プロバイダー（Claude）に縮小・安定化
-- [ ] **Phase 2**: `core/personas.py` + `personas/*.yaml` のレジストリ実装
-- [ ] **Phase 3**: `core/orchestrator.py` を UI 非依存のジェネレータとして実装（ターン/フェーズ/終了条件）
-  - 4.5-A: 1ペルソナ=1隔離コール（自分=assistant / 他者=name付きuser側。AutoGen方式）で人格混線を根治
-  - 4.5-B: コード側のラウンドロビン＋公平スケジューラ＋強制ロールコールで沈黙を根治
-  - 4.5-C: 均質化対策＝`persona.model`分散＋反同調プロンプト＋対立ペア＋温度差（調査レポート4-5節）
-  - 4.5-D: 討論は短く＋収束検知で停止＋chairman統合（Perplexity/Karpathy方式。`generate_audit_report`流用可）
-  - 4.5-E: 長時間討論ではペルソナ定義を定期再注入（fidelity decay対策）
+- [~] **Phase 0**: core/ ディレクトリ作成（done）／既存 v2 資産の archive 整理は未（旧 app.py 等は当面残置）
+- [x] **Phase 1**: `core/llm_client.py` を単一プロバイダー（Claude）に縮小・安定化（抽象IF＋AnthropicClient＋MockLLMClient）
+- [x] **Phase 2**: `core/personas.py` + `personas/*.yaml` のレジストリ実装（thinking/founders/philosophers、id重複検知つき）
+- [x] **Phase 3**: `core/orchestrator.py` を UI 非依存のジェネレータとして実装（run() が Turn を逐次 yield）
+  - [x] 4.5-A: 1ペルソナ=1隔離コール（自分=assistant / 他者=name付きuser側。AutoGen方式）で人格混線を根治 → `core/context.py`・テスト pass
+  - [x] 4.5-B: コード側のラウンドロビンで各ラウンド全員発言＝沈黙を根治 → `RoundRobinScheduler`・テスト pass
+  - [x] 4.5-C: 均質化対策の土台＝`persona.model`分散（テスト pass）＋反同調プロンプト（`ANTI_CONFORMITY`）＋温度差（YAML）
+  - [x] 4.5-D: chairman統合（chair ペルソナが最後に合意/対立/リスク/ネクストアクションを統合）※収束検知での早期停止は未
+  - [x] 4.5-E: 毎ターン system にペルソナ再注入（fidelity decay対策）
+  - 検証: `tests/run_tests.py`（API不要・全 pass）、疎通は `demo.py`
 - [ ] **Phase 4**: `app.py` を薄い UI に作り直し（途中経過のストリーム表示を最優先で検証）
-- [ ] **Phase 5**: 経営者・哲学者ペルソナを YAML で追加
+- [ ] **Phase 5**: 経営者・哲学者ペルソナを YAML で追加（jobs / socrates を雛形として実装済み。今後拡充）
 - [ ] **Phase 6**: 永続化（SQLite）を「あれば便利」レベルで戻す（v2のDB資産を流用可）
+- [ ] **Phase 7（残課題）**: 収束検知による早期停止、ストリーミング出力、コスト計上
 
 ---
 
