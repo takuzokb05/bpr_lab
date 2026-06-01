@@ -1024,6 +1024,122 @@ def test_run_backward_compat():
 
 
 # ---------------------------------------------------------------------------
+def test_materials_in_context():
+    """(A) build_context に materials を渡すと先頭 user に【資料・前提】が入る。
+
+    materials="" のときは従来と完全同一（test_context_isolation を壊さない）。
+    """
+    print("[test] materials grounding in build_context (資料接地)")
+    a, b, c = make("a"), make("b"), make("c")
+    transcript = [
+        Turn("a", "A", "a-said", "発散", 0),
+        Turn("b", "B", "b-said", "発散", 0),
+        Turn("c", "C", "c-said", "発散", 0),
+    ]
+
+    # 1. materials 付き: 先頭 user に【資料・前提】が【議題】に続いて入る
+    system, messages = build_context(
+        transcript=transcript, active=b, topic="T", materials="売上 100 億円・粗利率 30%"
+    )
+    head = messages[0]["content"]
+    check(messages[0]["role"] == "user", "先頭メッセージは user（Anthropic 要件）")
+    check("【議題】" in head, "先頭 user に【議題】が入る")
+    check("【資料・前提】" in head, "先頭 user に【資料・前提】が入る")
+    check("売上 100 億円・粗利率 30%" in head, "materials 本文が先頭 user に載る")
+    # 【議題】が【資料・前提】より前にある（順序）
+    check(
+        head.index("【議題】") < head.index("【資料・前提】"),
+        "【議題】の後に【資料・前提】が続く",
+    )
+
+    # 2. materials="" は従来と完全同一（既定値・明示空の両方）
+    sys_default, msg_default = build_context(transcript=transcript, active=b, topic="T")
+    sys_empty, msg_empty = build_context(
+        transcript=transcript, active=b, topic="T", materials=""
+    )
+    check(
+        [m["content"] for m in msg_default] == [m["content"] for m in msg_empty],
+        "materials='' は materials 未指定（従来）と完全一致",
+    )
+    check("【資料・前提】" not in msg_empty[0]["content"], "materials='' でブロックを足さない")
+    # 空 transcript なら先頭 user は【議題】のみ（資料ブロックを足さないことを純粋に確認）。
+    _sys, msg_bare = build_context(transcript=[], active=b, topic="T", materials="")
+    check(
+        msg_bare[0]["content"].startswith("【議題】\nT"),
+        "materials='' の先頭 user は【議題】で始まる（資料ブロック無し）",
+    )
+    check("【資料・前提】" not in msg_bare[0]["content"], "空 transcript+materials='' で資料ブロックを足さない")
+
+
+def test_intake_questions():
+    """(B) generate_intake_questions(mock) が 2〜4 個の質問 list を返す。"""
+    print("[test] generate_intake_questions (主訴確認・mock 定型)")
+
+    qs = service.generate_intake_questions("新規事業をやるべきか", mock=True)
+    check(isinstance(qs, list), "list を返す")
+    check(all(isinstance(q, str) for q in qs), "各要素は str")
+    check(2 <= len(qs) <= 4, f"質問数は 2〜4 個: {len(qs)}")
+    check(all(q.strip() for q in qs), "空の質問を含まない")
+
+    # materials 付きでも 2〜4 個（mock は定型・決定的）
+    qs2 = service.generate_intake_questions(
+        "新規事業をやるべきか", materials="予算 500 万円・3 名体制", mock=True
+    )
+    check(2 <= len(qs2) <= 4, f"materials 付きでも 2〜4 個: {len(qs2)}")
+
+    # パーサ単体: 番号・箇条書き記号を剥がし、空行を捨て、最大 4 件に切る
+    parsed = service._parse_intake_questions(
+        "1. 主訴は何ですか\n- 制約はありますか\n\n３．既に試したことは？\n* 良い結論とは\n5) 余分な5件目"
+    )
+    check(len(parsed) == 4, f"最大 4 件に切り詰める: {len(parsed)}")
+    check(parsed[0] == "主訴は何ですか", f"先頭番号 '1.' を剥がす: {parsed[0]}")
+    check(parsed[1] == "制約はありますか", f"箇条書き '- ' を剥がす: {parsed[1]}")
+    check(parsed[2] == "既に試したことは？", f"全角番号 '３．' を剥がす: {parsed[2]}")
+
+
+def test_materials_propagation_e2e():
+    """(C) build_council(materials=…) で Council.materials が伝播し _speak 経由で資料が載る。"""
+    print("[test] materials propagation (build_council -> Council -> _speak)")
+    from core import Council, MockLLMClient
+
+    # 1. Council.materials に保持され、_speak 経由でパネリストの messages に資料が載る
+    material_text = "前提: 競合 A 社のシェアは 40%"
+    personas = [
+        make("mod", cat="facilitation"),
+        make("logic"),
+        make("idea"),
+        make("chair", cat="chair"),
+    ]
+    client = MockLLMClient()
+    council = Council(
+        personas, client, phases=[("発散", "d", True)], rounds_per_phase=1,
+        materials=material_text,
+    )
+    check(council.materials == material_text, "Council.materials に伝播する")
+    list(council.run("議題M"))  # mock で1ターン回す
+    # 全 LLM 呼び出しの先頭 user に資料が載っている（パネリスト・司会・議長すべて）
+    seen = False
+    for call in client.calls:
+        first_user = next((m["content"] for m in call["messages"] if m["role"] == "user"), "")
+        if material_text in first_user and "【資料・前提】" in first_user:
+            seen = True
+    check(seen, "_speak 経由でパネリストの messages 先頭 user に資料が載る")
+
+    # 2. build_council(materials=…) で Council に届く（service 経由）
+    council2 = service.build_council(
+        ["moderator", "logic", "idea", "chair"],
+        rounds_per_phase=1, mock=True, materials="サービス層からの資料",
+    )
+    check(council2.materials == "サービス層からの資料", "build_council(materials=…) が Council に届く")
+
+    # 3. materials 既定（未指定）なら Council.materials は ""（後方互換）
+    council3 = service.build_council(
+        ["moderator", "logic", "idea", "chair"], rounds_per_phase=1, mock=True
+    )
+    check(council3.materials == "", "build_council の materials 既定は ''（後方互換）")
+
+
+# ---------------------------------------------------------------------------
 if __name__ == "__main__":
     test_context_isolation()
     test_no_silence_and_round_robin()
@@ -1043,6 +1159,9 @@ if __name__ == "__main__":
     test_floor_open_pause()
     test_floor_open_close_then_finish()
     test_run_backward_compat()
+    test_materials_in_context()
+    test_intake_questions()
+    test_materials_propagation_e2e()
     print()
     if _failures:
         print(f"[FAIL] {len(_failures)} 件 FAIL")

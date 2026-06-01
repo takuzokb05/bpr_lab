@@ -29,6 +29,13 @@ export interface Turn {
   ts?: number; // サーバ採番の UNIX 秒（_append の time.time()）。再接続でも不変
 }
 
+// 主訴確認（intake）の Q&A。討論前に主訴を固め逸脱を防ぐ確認質問とその回答。
+// 回答は任意（answer="" のままでもよい）。回答済みのものだけ /sessions に渡す。
+export interface IntakeQA {
+  question: string;
+  answer: string;
+}
+
 // system_prompt 等を含むペルソナ詳細（GET /personas/{id}）。一覧の Persona は安全版。
 export interface PersonaDetail extends Persona {
   system_prompt: string;

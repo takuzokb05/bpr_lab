@@ -130,12 +130,16 @@ class Council:
         rounds_per_phase: int = 1,
         red_team: bool = True,
         red_team_id: str | None = None,
+        materials: str = "",
     ) -> None:
         self.client = client
         self.default_model = default_model
         self.default_temperature = default_temperature
         self.phases = phases if phases is not None else DEFAULT_PHASES
         self.rounds_per_phase = rounds_per_phase
+        # 全ペルソナが共有する「資料・前提」。セッション中は不変（構築時に確定）。
+        # _speak が build_context に渡す。"" のとき従来と完全同一（ブロックを足さない）。
+        self.materials = materials
 
         personas = list(personas)
         # 役割ごとに振り分ける
@@ -194,6 +198,7 @@ class Council:
             topic=topic,
             phase_directive=phase_directive,
             anti_conformity=anti_conformity,
+            materials=self.materials,
         )
         model, temperature = self._resolve(persona)
 

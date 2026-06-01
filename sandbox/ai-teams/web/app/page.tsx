@@ -5,6 +5,7 @@ import {
   cancelSession,
   closeSession,
   fetchHealth,
+  fetchIntake,
   fetchPersonas,
   finishSession,
   sendFollowup,
@@ -14,6 +15,7 @@ import {
 import { fetchPresets } from "@/lib/api";
 import {
   FOLLOWUP_DISABLED_PHASES,
+  type IntakeQA,
   type Persona,
   type Preset,
   type Turn,
@@ -27,7 +29,19 @@ import { Timeline } from "@/components/Timeline";
 import { MinutesPanel } from "@/components/MinutesPanel";
 import { OnAir } from "@/components/OnAir";
 import { Chyron } from "@/components/Chyron";
-import { Play, Square, AlertCircle, Send, FileText, CircleStop } from "lucide-react";
+import {
+  Play,
+  Square,
+  AlertCircle,
+  Send,
+  FileText,
+  CircleStop,
+  Paperclip,
+  ListChecks,
+} from "lucide-react";
+
+// 準備フェーズ: クライアント側で読み込む資料の拡張子（PDF/Office は MVP 対象外）。
+const MATERIAL_FILE_ACCEPT = ".txt,.md,.csv,.json";
 
 // "paused" = 議場開放（floor-open）。本編後に自動 synthesis せず入力待ちで停止した状態。
 type Status = "idle" | "running" | "paused" | "done" | "error";
@@ -48,6 +62,15 @@ export default function Home() {
 
   const [topicInput, setTopicInput] = useState("");
   const [activeTopic, setActiveTopic] = useState<string | null>(null);
+
+  // 準備フェーズ（idle のみ）: 資料・前提と主訴確認。討論中/paused/done では一切出さない。
+  const [materials, setMaterials] = useState("");
+  // 確認質問（fetchIntake の結果）と各質問への回答。回答は任意・スキップ可。
+  const [intakeQuestions, setIntakeQuestions] = useState<string[]>([]);
+  const [intakeAnswers, setIntakeAnswers] = useState<Record<number, string>>({});
+  const [intakeLoading, setIntakeLoading] = useState(false);
+
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [turns, setTurns] = useState<Turn[]>([]);
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
@@ -97,6 +120,8 @@ export default function Home() {
   const currentPhase = turns.length ? turns[turns.length - 1].phase : null;
 
   const running = status === "running";
+  // 準備フェーズ（資料接地＋主訴確認）を出すのは idle のときだけ。running/paused/done/error では出さない。
+  const idle = status === "idle";
   // floor-open（議場開放）= 本編後の入力待ち。追い質問の主戦場。
   const paused = status === "paused";
   // セッション稼働中（編成は固定・入力欄は追い質問モード）。running または paused。
@@ -151,6 +176,53 @@ export default function Home() {
     setStreamingTurnId(null);
   }
 
+  // 準備フェーズ: 「確認する（任意）」→ 主訴を固める確認質問を 2〜4 個取得。
+  // 失敗しても討論自体は妨げない（資料だけ／質問なしで開始できる）。
+  async function loadIntake() {
+    const topic = topicInput.trim();
+    if (!topic || intakeLoading || active) return;
+    setIntakeLoading(true);
+    setError(null);
+    try {
+      const questions = await fetchIntake(topic, materials);
+      setIntakeQuestions(questions);
+      setIntakeAnswers({}); // 質問が差し替わったら回答もリセット
+    } catch (err) {
+      setError(err instanceof Error ? err.message : String(err));
+    } finally {
+      setIntakeLoading(false);
+    }
+  }
+
+  // 準備フェーズ: 確認をスキップ（質問・回答を破棄）。資料・議題はそのまま。
+  function skipIntake() {
+    setIntakeQuestions([]);
+    setIntakeAnswers({});
+  }
+
+  // 準備フェーズ: ファイル添付（.txt/.md/.csv/.json）をクライアント側で読み、資料欄に取り込む。
+  // PDF/Office は対象外。複数選択時は区切って連結。読み込み後は input をリセットして同じ
+  // ファイルを再選択できるようにする。
+  function onAttachFiles(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+    const readers = Array.from(files).map(
+      (file) =>
+        new Promise<string>((resolve) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(`【${file.name}】\n${String(reader.result ?? "")}`);
+          reader.onerror = () => resolve(""); // 読めないファイルは黙って飛ばす（他は活かす）
+          reader.readAsText(file);
+        })
+    );
+    Promise.all(readers).then((texts) => {
+      const chunk = texts.filter((t) => t.trim()).join("\n\n");
+      if (!chunk) return;
+      setMaterials((prev) => (prev.trim() ? `${prev}\n\n${chunk}` : chunk));
+    });
+    e.target.value = ""; // 同じファイルを続けて選べるようにする
+  }
+
   async function start() {
     const topic = topicInput.trim();
     if (!topic || selected.size === 0 || active) return;
@@ -159,6 +231,13 @@ export default function Home() {
     const ctrl = new AbortController();
     abortRef.current = ctrl;
 
+    // 準備フェーズの確定値を組む。回答済み（trim 後 非空）の Q&A だけを intake に載せる。
+    // 質問未取得でも materials だけで開始できる。
+    const trimmedMaterials = materials.trim();
+    const intake: IntakeQA[] = intakeQuestions
+      .map((question, i) => ({ question, answer: (intakeAnswers[i] ?? "").trim() }))
+      .filter((qa) => qa.answer !== "");
+
     setActiveTopic(topic);
     setTurns([]);
     setError(null);
@@ -166,6 +245,10 @@ export default function Home() {
     setStreamingTurnId(null);
     setSessionId(null);
     setTopicInput("");
+    // 準備フェーズの入力は開始時に確定済み。idle に戻ったとき前回分が残らないようクリア。
+    setMaterials("");
+    setIntakeQuestions([]);
+    setIntakeAnswers({});
 
     try {
       await startSession({
@@ -175,6 +258,8 @@ export default function Home() {
         redTeam, // GAP6
         redTeamId, // GAP6
         mock: !willUseRealLlm, // GAP5: NOT(useLlm AND api_key_set)
+        materials: trimmedMaterials, // 準備フェーズ: 資料接地（空なら body に載らない）
+        intake, // 準備フェーズ: 回答済み確認 Q&A（空なら body に載らない）
         interactive: true, // Web は floor-open（本編後に一時停止して入力を待つ）
         signal: ctrl.signal,
         onEvent: (e) => {
@@ -374,6 +459,106 @@ export default function Home() {
             <p className="mx-6 mb-2 text-[11px] leading-relaxed text-[var(--color-ink-muted)]">
               実 LLM で討論します。開始後は画面を閉じても完走し、API 利用料が発生します。
             </p>
+          )}
+
+          {/* 準備フェーズ（idle のみ）: 資料・前提（任意）＋ 主訴確認（任意）。
+              討論中/paused/done/error では出さない＝既存の討論 UI は不変。 */}
+          {idle && (
+            <div className="mx-6 mb-2 max-h-[42vh] space-y-3 overflow-y-auto rounded-md border border-[var(--color-line)] bg-[var(--color-paper)] px-3.5 py-3">
+              {/* 資料・前提 */}
+              <div className="flex flex-col gap-1.5">
+                <div className="flex items-center justify-between gap-3">
+                  <span className="text-[11px] font-medium uppercase tracking-wider text-[var(--color-ink-muted)]">
+                    資料・前提（任意）
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    className="flex items-center gap-1.5 rounded-md border border-[var(--color-line)] px-2.5 py-1 text-[11px] text-[var(--color-ink-muted)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+                  >
+                    <Paperclip size={12} /> ファイルを取り込む
+                  </button>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept={MATERIAL_FILE_ACCEPT}
+                    multiple
+                    onChange={onAttachFiles}
+                    className="hidden"
+                  />
+                </div>
+                <textarea
+                  value={materials}
+                  onChange={(e) => setMaterials(e.target.value)}
+                  rows={3}
+                  placeholder="討論で踏まえてほしい資料・前提・数字を貼り付け（全ペルソナが共有します）"
+                  className="max-h-40 min-h-[60px] w-full resize-y rounded-md border border-[var(--color-line)] bg-[var(--color-surface)] px-2.5 py-2 text-sm outline-none focus:border-[var(--color-accent)]"
+                />
+                <p className="text-[11px] leading-relaxed text-[var(--color-ink-muted)]">
+                  取り込めるファイル: .txt / .md / .csv / .json（PDF・Office は対象外）。
+                </p>
+              </div>
+
+              {/* 主訴確認 */}
+              <div className="flex flex-col gap-1.5 border-t border-[var(--color-line)] pt-3">
+                <div className="flex items-center justify-between gap-3">
+                  <span className="flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wider text-[var(--color-ink-muted)]">
+                    <ListChecks size={12} /> 主訴確認（任意）
+                  </span>
+                  <div className="flex shrink-0 items-center gap-2">
+                    {intakeQuestions.length > 0 && (
+                      <button
+                        type="button"
+                        onClick={skipIntake}
+                        className="rounded-md px-2 py-1 text-[11px] text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]"
+                      >
+                        確認をスキップして開始
+                      </button>
+                    )}
+                    <button
+                      type="button"
+                      onClick={loadIntake}
+                      disabled={!topicInput.trim() || intakeLoading}
+                      title={
+                        topicInput.trim() ? undefined : "先に議題を入力してください"
+                      }
+                      className="rounded-md border border-[var(--color-line)] px-2.5 py-1 text-[11px] text-[var(--color-ink-muted)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] disabled:opacity-40"
+                    >
+                      {intakeLoading
+                        ? "確認質問を作成中…"
+                        : intakeQuestions.length > 0
+                          ? "確認質問を作り直す"
+                          : "確認する"}
+                    </button>
+                  </div>
+                </div>
+
+                {intakeQuestions.length === 0 ? (
+                  <p className="text-[11px] leading-relaxed text-[var(--color-ink-muted)]">
+                    討論前に主訴を固め、論点の逸脱を防ぐ確認質問を作れます（回答は任意）。
+                  </p>
+                ) : (
+                  <ul className="space-y-2.5">
+                    {intakeQuestions.map((q, i) => (
+                      <li key={i} className="flex flex-col gap-1">
+                        <span className="text-xs leading-relaxed text-[var(--color-ink)]">
+                          {q}
+                        </span>
+                        <textarea
+                          value={intakeAnswers[i] ?? ""}
+                          onChange={(e) =>
+                            setIntakeAnswers((prev) => ({ ...prev, [i]: e.target.value }))
+                          }
+                          rows={1}
+                          placeholder="回答（任意・空欄のまま開始してもよい）"
+                          className="max-h-28 min-h-[34px] w-full resize-y rounded-md border border-[var(--color-line)] bg-[var(--color-surface)] px-2.5 py-1.5 text-sm outline-none focus:border-[var(--color-accent)]"
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
           )}
 
           {/* 議場開放（floor-open）コントロール。本編が終わり入力待ちのときだけ出す。

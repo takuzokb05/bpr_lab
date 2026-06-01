@@ -6,6 +6,7 @@
 // バックエンドへ直結する（プロキシ経由だと討論が一括表示になりライブ感が消える）。
 
 import { apiUrl } from "./config";
+import type { IntakeQA } from "./types";
 
 // 各イベントに ts（サーバ採番の UNIX 秒、_append の time.time()）を任意で載せる。
 // 再接続再生でも同じ ts が来るので表示時刻がブレない（凍結契約: 時刻）。
@@ -35,6 +36,10 @@ export interface StartSessionArgs {
   redTeam?: boolean;
   redTeamId?: string | null;
   mock?: boolean;
+  // 準備フェーズ（資料接地）。全ペルソナが共有する「資料・前提」。既定 "" で従来と完全同一。
+  materials?: string;
+  // 準備フェーズ（主訴確認）。回答済みの確認 Q&A。既定 [] で従来と完全同一。
+  intake?: IntakeQA[];
   // 対話モード（議場開放）。Web は既定 true＝本編後に自動 synthesis せず一時停止して入力を待つ。
   interactive?: boolean;
   signal?: AbortSignal;
@@ -62,6 +67,8 @@ export async function startSession({
   redTeam,
   redTeamId,
   mock = false,
+  materials = "",
+  intake = [],
   interactive = true,
   signal,
   onEvent,
@@ -77,6 +84,9 @@ export async function startSession({
   };
   if (redTeam !== undefined) body.red_team = redTeam;
   if (redTeamId !== undefined && redTeamId !== null) body.red_team_id = redTeamId;
+  // 準備フェーズ。後方互換: 空のときは body に載せない（従来の POST と完全同一）。
+  if (materials.trim()) body.materials = materials;
+  if (intake.length > 0) body.intake = intake;
 
   const res = await fetch(apiUrl("/sessions"), {
     method: "POST",
@@ -275,4 +285,25 @@ export async function fetchHealth(): Promise<Health> {
   const res = await fetch(apiUrl("/health"));
   if (!res.ok) throw new Error(`health fetch failed: HTTP ${res.status}`);
   return res.json();
+}
+
+// -- 主訴確認（intake） -----------------------------------------------------
+//
+// 準備フェーズ: 討論の手前で主訴を固め逸脱を防ぐ確認質問を 2〜4 個もらう。
+// POST /intake {topic, materials?} → 200 {questions: string[]}。
+// mock or キー未設定ならサーバが LLM を呼ばず定型質問を返す（安価）。直結で取得する。
+export async function fetchIntake(topic: string, materials?: string): Promise<string[]> {
+  const body: Record<string, unknown> = { topic };
+  if (materials && materials.trim()) body.materials = materials;
+  const res = await fetch(apiUrl("/intake"), {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) throw new Error(await errorDetail(res));
+  const j = (await res.json()) as { questions?: unknown };
+  // 防御的に整形: questions が配列でない / 空文字混入でも壊れない。
+  return Array.isArray(j.questions)
+    ? j.questions.filter((q): q is string => typeof q === "string" && q.trim() !== "")
+    : [];
 }

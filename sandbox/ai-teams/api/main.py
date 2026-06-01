@@ -27,6 +27,17 @@ app.add_middleware(
 )
 
 
+class IntakeQA(BaseModel):
+    """主訴確認の 1 問 1 答（質問とユーザー回答のペア）。回答は任意・空可。"""
+
+    question: str = Field(..., min_length=1)
+    answer: str = ""
+
+
+# 「資料・前提」テキストの上限（文字）。毎ターン再注入されるため過大プロンプトを入口で弾く。
+_MATERIALS_MAX = 20000
+
+
 class SessionRequest(BaseModel):
     topic: str = Field(..., min_length=1)
     persona_ids: list[str] = Field(..., min_length=1)
@@ -37,6 +48,43 @@ class SessionRequest(BaseModel):
     # 議場開放（floor-open）モデル。Web（HTTP）は既定で本編後に一時停止し、ユーザーの
     # 追い質問 / 締め（議事録） / 終了 を待つ。False にすると従来どおり自動完走する。
     interactive: bool = True
+    # 全ペルソナが共有する「資料・前提」テキスト（任意）。intake の Q&A と合成して Council に渡す。
+    # materials は毎ターン全ペルソナの文脈へ再注入されるため、上限を設けて実LLMのトークン費暴走を防ぐ。
+    materials: str = Field("", max_length=_MATERIALS_MAX)
+    # 主訴確認（intake）の回答（任意）。空でも動く。資料の末尾に Q&A として連結する。
+    intake: list[IntakeQA] = Field(default_factory=list)
+
+
+class IntakeRequest(BaseModel):
+    topic: str = Field(..., min_length=1)
+    materials: str | None = Field(None, max_length=_MATERIALS_MAX)
+    # 検証・デモ時に LLM を呼ばず定型質問を返す（二重課金防止）。
+    mock: bool = False
+
+
+def _compose_materials(materials: str, intake: list[IntakeQA]) -> str:
+    """ユーザー materials と intake の Q&A を1つの「資料・前提」テキストに合成する。
+
+    intake は回答済み（answer 非空）の項目だけを「【確認事項への回答】Q: …\nA: …」形式で
+    連結する。materials が空で intake も空なら空文字（＝従来と完全同一の Council）。
+    """
+    parts: list[str] = []
+    if materials and materials.strip():
+        parts.append(materials.strip())
+    qa_lines: list[str] = []
+    for qa in intake:
+        answer = (qa.answer or "").strip()
+        if not answer:
+            continue  # 未回答（スキップ）は載せない
+        qa_lines.append(f"Q: {qa.question.strip()}\nA: {answer}")
+    if qa_lines:
+        parts.append("【確認事項への回答】\n" + "\n\n".join(qa_lines))
+    composed = "\n\n".join(parts)
+    # 防御的上限（materials の Field 上限 + intake 回答の余地）。超過時は明示して切り詰める。
+    cap = _MATERIALS_MAX + 4000
+    if len(composed) > cap:
+        composed = composed[:cap] + "\n\n…（資料が長いため以降を省略）"
+    return composed
 
 
 @app.get("/health")
@@ -53,6 +101,18 @@ def list_personas() -> list[dict]:
 _SSE_HEADERS = {"Cache-Control": "no-cache", "X-Accel-Buffering": "no"}
 
 
+@app.post("/intake")
+def intake(req: IntakeRequest) -> dict:
+    """討論前の主訴確認質問を 2〜4 個返す（回答は任意・スキップ可）。
+
+    mock=True または API キー未設定なら LLM を呼ばず決定的な定型質問を返す（二重課金防止）。
+    """
+    questions = service.generate_intake_questions(
+        req.topic, req.materials or "", mock=req.mock
+    )
+    return {"questions": questions}
+
+
 @app.post("/sessions")
 def create_session(req: SessionRequest) -> StreamingResponse:
     """討論をバックグラウンドで開始し、cursor 0 から tail する SSE を返す。
@@ -60,6 +120,8 @@ def create_session(req: SessionRequest) -> StreamingResponse:
     プロデューサは接続が切れても完走するので、後から GET /sessions/{id}/stream で
     再接続して取りこぼしを再生できる。`start` イベントに session_id が載る。
     """
+    # 資料・前提 + intake の Q&A を合成（どちらも空なら "" ＝従来と完全同一の Council）。
+    composed_materials = _compose_materials(req.materials, req.intake)
     try:
         council = service.build_council(
             req.persona_ids,
@@ -67,6 +129,7 @@ def create_session(req: SessionRequest) -> StreamingResponse:
             red_team=req.red_team,
             red_team_id=req.red_team_id,
             mock=req.mock,
+            materials=composed_materials,
         )
     except KeyError as exc:
         raise HTTPException(status_code=400, detail=f"unknown persona ids: {exc.args[0]}")

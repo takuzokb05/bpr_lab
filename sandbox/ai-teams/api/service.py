@@ -35,6 +35,7 @@ except ImportError:
 from core import (  # noqa: E402 — .env を先に読むため core import はここ
     AnthropicClient,
     Council,
+    DEFAULT_MODEL,
     LLMClient,
     MockLLMClient,
     Persona,
@@ -97,8 +98,13 @@ def build_council(
     red_team: bool = True,
     red_team_id: str | None = None,
     mock: bool = False,
+    materials: str = "",
 ) -> Council:
-    """指定 id のペルソナで Council を作る。未知 id は KeyError。"""
+    """指定 id のペルソナで Council を作る。未知 id は KeyError。
+
+    materials は全ペルソナが共有する「資料・前提」。Council 構築時に確定し、討論中は
+    不変（_speak 経由で build_context に渡る）。materials="" で従来と完全同一。
+    """
     registry = {p.id: p for p in load_registry()}
     missing = [pid for pid in persona_ids if pid not in registry]
     if missing:
@@ -110,7 +116,86 @@ def build_council(
         rounds_per_phase=rounds_per_phase,
         red_team=red_team,
         red_team_id=red_team_id,
+        materials=materials,
     )
+
+
+# -- intake（主訴確認） -----------------------------------------------------
+#
+# 討論の手前に「主訴を固め逸脱を防ぐ確認質問」を 2〜4 個出す。検証で判明した
+# 「事実/数字なしの抽象進行」と「主訴からの逸脱」を準備フェーズで抑える狙い。
+# mock or キー未設定なら LLM を呼ばず決定的な定型質問を返す（二重課金防止）。
+
+# mock / キー未設定時に返す決定的な定型質問（曖昧点・制約・既に試したこと・"良い"の定義）。
+_INTAKE_FALLBACK_QUESTIONS = [
+    "この議題で最も解決したい core の問い（主訴）は何ですか。曖昧な点があれば明確にしてください。",
+    "守るべき制約（予算・期限・体制・技術・法務など）はありますか。",
+    "すでに試したこと・検討済みの案があれば教えてください（同じ結論の蒸し返しを避けるため）。",
+    "この討論にとって「良い結論」とはどういう状態を指しますか（成功の定義）。",
+]
+
+_INTAKE_INSTRUCTION = (
+    "あなたは討論ファシリテーターです。これから始まる討論の前に、依頼者の主訴を固め、"
+    "討論が論点から逸脱しないようにするための確認質問を 2〜4 個作ってください。"
+    "曖昧点・前提となる制約・すでに試したこと・『良い結論』の定義などを問う質問にしてください。"
+    "質問文のみを改行区切りで出力し、前置きや番号・記号・解説は付けないこと。"
+)
+
+
+def _parse_intake_questions(text: str) -> list[str]:
+    """LLM 出力を堅牢に質問 list へパースする。
+
+    - 行分割し、各行の先頭の番号（1. / 1) / １．）や記号（- * ・ ● など）を除去。
+    - 前後空白を除き、空行を捨てる。最大 4 件に切り詰める。
+    """
+    out: list[str] = []
+    for raw in (text or "").splitlines():
+        line = raw.strip()
+        if not line:
+            continue
+        # 先頭の番号付け（"1." "1)" "1、" "１．" など）と箇条書き記号を剥がす。
+        # 区切りは半角/全角の . ) ] 、． 。 : ： を許容（全角 '．' 対応）。
+        line = re.sub(r"^[\s]*[\(\[（［]?[0-9０-９]+[\)\]．。.、，:：）］]?[\s]*", "", line)
+        line = re.sub(r"^[\s]*[-*・●○◯••>＞]+[\s]*", "", line)
+        line = line.strip()
+        if line:
+            out.append(line)
+        if len(out) >= 4:
+            break
+    return out
+
+
+def generate_intake_questions(
+    topic: str, materials: str = "", *, mock: bool = False
+) -> list[str]:
+    """討論前の主訴確認質問を 2〜4 個返す。
+
+    mock=True または API キー未設定なら LLM を呼ばず決定的な定型質問を返す（検証・コスト
+    対策）。実呼び出し時は make_client 経由で LLM に依頼し、_parse_intake_questions で
+    堅牢にパースする。LLM が 2 個未満しか返さなかった等で取れなければ定型にフォールバック。
+    """
+    client = make_client(mock)
+    if isinstance(client, MockLLMClient):
+        # mock / キー未設定: LLM を呼ばず定型（決定的）。
+        return list(_INTAKE_FALLBACK_QUESTIONS)
+
+    head = f"【議題】\n{topic}"
+    if materials:
+        head += f"\n\n【資料・前提】\n{materials}"
+    try:
+        text = client.generate(
+            system=_INTAKE_INSTRUCTION,
+            messages=[{"role": "user", "content": head}],
+            model=DEFAULT_MODEL,
+            temperature=0.3,
+        )
+    except Exception:  # noqa: BLE001 — LLM 失敗時は定型にフォールバック（討論は止めない）
+        return list(_INTAKE_FALLBACK_QUESTIONS)
+    questions = _parse_intake_questions(text)
+    if len(questions) < 2:
+        # パースで 2 個に満たなければ定型で補う（最低 2 個・最大 4 個を保証）。
+        return list(_INTAKE_FALLBACK_QUESTIONS)
+    return questions
 
 
 # -- SSE --------------------------------------------------------------------

@@ -45,13 +45,21 @@ def build_context(
     topic: str,
     phase_directive: str = "",
     anti_conformity: bool = True,
+    materials: str = "",
 ) -> tuple[str, list[Message]]:
     """active ペルソナが「次の1発言」を生成するための (system, messages) を組む。
 
     返り値の messages は必ず user で始まり user で終わる（先頭 user は Anthropic の要件、
     末尾 user は「今あなたが問われている」状態を作るため）。
+
+    materials は全ペルソナが共有する「資料・前提」。先頭 user の【議題】に続けて
+    【資料・前提】ブロックを差し込む。materials="" のときはブロックを足さず、従来と
+    完全に同一の出力になる（後方互換）。
     """
-    events: list[tuple[str, str]] = [("user", f"【議題】\n{topic}")]
+    head = f"【議題】\n{topic}"
+    if materials:
+        head += f"\n\n【資料・前提】\n{materials}"
+    events: list[tuple[str, str]] = [("user", head)]
 
     for turn in transcript:
         if turn.speaker_id == active.id:
