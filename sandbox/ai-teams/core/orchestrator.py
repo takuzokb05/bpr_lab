@@ -19,8 +19,9 @@ from typing import Callable, Iterator, Sequence
 # 答えてから本編に戻る、という流れを作る。
 FOLLOWUP_DIRECTIVE = (
     "【追い質問対応】司会が今読み上げた人間からの追い質問に、"
-    "まずあなたの立場から簡潔に答えてください。その上で、これまでの議論との"
-    "つながりを一言添えること。"
+    "まずあなたの立場から要点を絞って答えてください"
+    "（目安: 最も強い論点1〜2つ。過度な箇条書きや見出しで水増ししない）。"
+    "その上で、これまでの議論とのつながりを一言添えること。"
 )
 
 from .context import build_context
@@ -61,13 +62,25 @@ RED_TEAM_DIRECTIVE = (
     "全員が賛成していても、あえて穴を探すのがあなたの責務です。"
 )
 
+# 収束フェーズ専用の Red Team 特命。反対役は降りないが、穴を突いて終わらず
+# 「塞ぐ最小条件（これを満たすなら進めてよい）」まで示させ、意思決定を前に進める。
+RED_TEAM_CONVERGE_DIRECTIVE = (
+    "【あなたの特命: Red Team（収束）】"
+    "最後まで反対役を降りる必要はありません。ただし収束フェーズでは、"
+    "最も強い反証を1つ突いた上で、その反証を踏まえてもなお実行に値する"
+    "『条件付きの一手』（これを満たすなら進めてよい、という具体的な前提条件）を"
+    "必ず1つ提示してください。穴を指摘して終わるのではなく、穴を塞ぐ最小条件を示すこと。"
+)
+
 
 # (フェーズ名, 指示, 反同調を効かせるか) のデフォルト進行。
 DEFAULT_PHASES: list[tuple[str, str, bool]] = [
     (
         "発散",
         "【発散フェーズ】既出の案に乗らず、新しい角度・対案・突飛な視点を出してください。"
-        "幅を広げるのが目的で、深掘りや合意はまだ早い。",
+        "幅を広げるのが目的で、深掘りや合意はまだ早い。突飛でよいが、各案に"
+        "「これが成立する前提」または「これが崩れる条件」を一言添え、後続の批判フェーズが"
+        "噛めるフックを残すこと。",
         True,
     ),
     (
@@ -171,8 +184,10 @@ class Council:
         turn_id: int | None = None,
     ) -> Turn:
         # Red Team に指名されたパネリストには、毎ターン反対役の特命を上乗せする。
+        # 収束フェーズだけは「穴突き＋塞ぐ最小条件」版に切替える（phase 名は DEFAULT_PHASES と一致）。
         if persona.id == self.red_team_id:
-            phase_directive = f"{phase_directive}\n\n{RED_TEAM_DIRECTIVE}"
+            rt = RED_TEAM_CONVERGE_DIRECTIVE if phase == "収束" else RED_TEAM_DIRECTIVE
+            phase_directive = f"{phase_directive}\n\n{rt}"
         system, messages = build_context(
             transcript=transcript,
             active=persona,
@@ -294,7 +309,8 @@ class Council:
                 phase_directive=(
                     "【追い質問の取り次ぎ】視聴者（人間）から次の追い質問が入りました。"
                     "パネリストに分かるよう簡潔に取り次ぎ、これに答えるよう促してください。"
-                    "あなた自身が答えてしまわないこと。\n" + questions
+                    "あなた自身が答えてしまわないこと。論点を増やさず、質問をそのまま簡潔に"
+                    "取り次ぐこと（自分で論点を3つに展開しない）。\n" + questions
                 ),
                 anti_conformity=False,
                 emit=emit,
@@ -343,8 +359,8 @@ class Council:
                 phase="opening",
                 round_no=0,
                 phase_directive=(
-                    "【オープニング】議題を一言で整理し、論点を提示して討論の口火を切ってください。"
-                    "結論は出さないこと。"
+                    "【オープニング】議題を一言で整理し、論点を2〜3つ提示して討論の口火を切って"
+                    "ください。結論は出さず、最後に特定の立場の人へ発言を促すこと。"
                 ),
                 anti_conformity=False,
                 emit=emit,

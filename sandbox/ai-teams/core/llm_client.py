@@ -71,13 +71,15 @@ def _supports_temperature(model: str) -> bool:
 class AnthropicClient(LLMClient):
     """本番用。anthropic SDK を遅延 import する。"""
 
-    def __init__(self, api_key: str | None = None, max_tokens: int = 1024) -> None:
+    def __init__(self, api_key: str | None = None, max_tokens: int | None = None) -> None:
         import anthropic  # 遅延 import
 
         self._client = (
             anthropic.Anthropic(api_key=api_key) if api_key else anthropic.Anthropic()
         )
-        self._max_tokens = max_tokens
+        # 1024 では Opus 4.8 の豊かな発言が文中で切れる。既定 2048・AI_TEAMS_MAX_TOKENS で可変。
+        # max_tokens は上限であり、モデルは必要分で停止するので過大でも常時その量を消費はしない。
+        self._max_tokens = max_tokens or int(os.environ.get("AI_TEAMS_MAX_TOKENS", "2048"))
 
     def _params(self, *, system: str, messages: list[Message], model: str, temperature: float) -> dict:
         """API 呼び出しパラメータ。temperature 非対応モデルには temperature を含めない。"""
