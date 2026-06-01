@@ -3,8 +3,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   cancelSession,
+  closeSession,
   fetchHealth,
   fetchPersonas,
+  finishSession,
   sendFollowup,
   startSession,
   type Health,
@@ -25,9 +27,10 @@ import { Timeline } from "@/components/Timeline";
 import { MinutesPanel } from "@/components/MinutesPanel";
 import { OnAir } from "@/components/OnAir";
 import { Chyron } from "@/components/Chyron";
-import { Play, Square, AlertCircle, Send } from "lucide-react";
+import { Play, Square, AlertCircle, Send, FileText, CircleStop } from "lucide-react";
 
-type Status = "idle" | "running" | "done" | "error";
+// "paused" = 議場開放（floor-open）。本編後に自動 synthesis せず入力待ちで停止した状態。
+type Status = "idle" | "running" | "paused" | "done" | "error";
 
 const DEFAULT_SELECTED = ["moderator", "logic", "idea", "empathy", "chair"];
 
@@ -94,6 +97,10 @@ export default function Home() {
   const currentPhase = turns.length ? turns[turns.length - 1].phase : null;
 
   const running = status === "running";
+  // floor-open（議場開放）= 本編後の入力待ち。追い質問の主戦場。
+  const paused = status === "paused";
+  // セッション稼働中（編成は固定・入力欄は追い質問モード）。running または paused。
+  const active = running || paused;
 
   // 実 LLM が実際に使われるか（GAP5: NOT(useLlm AND key_set) が mock）。
   const willUseRealLlm = useLlm && (health?.api_key_set ?? false);
@@ -102,13 +109,16 @@ export default function Home() {
   const processingFollowup =
     currentPhase === "human" || currentPhase === "followup";
 
-  // 追い質問が出せる状態か: running 中・フェーズ確定済み・本編フェーズ・処理中でない。
+  // 追い質問が出せる状態か:
+  //  - paused（floor-open）: 常に true。議場開放は追い質問の主戦場。
+  //  - running: フェーズ確定済み・本編フェーズ・処理中でない（本編フェーズ中の注入）。
   const canFollowup =
-    running &&
     sessionId !== null &&
-    currentPhase !== null &&
-    !(FOLLOWUP_DISABLED_PHASES as readonly string[]).includes(currentPhase) &&
-    !processingFollowup;
+    (paused ||
+      (running &&
+        currentPhase !== null &&
+        !(FOLLOWUP_DISABLED_PHASES as readonly string[]).includes(currentPhase) &&
+        !processingFollowup));
 
   function toggle(id: string) {
     setSelectedPresetId(null); // 手動変更したらプリセット選択を解除
@@ -137,13 +147,13 @@ export default function Home() {
     // （実 LLM の発注を次のターン前に止めて課金を抑える）。
     if (sessionId) cancelSession(sessionId);
     abortRef.current?.abort();
-    setStatus((s: Status) => (s === "running" ? "done" : s));
+    setStatus((s: Status) => (s === "running" || s === "paused" ? "done" : s));
     setStreamingTurnId(null);
   }
 
   async function start() {
     const topic = topicInput.trim();
-    if (!topic || selected.size === 0 || running) return;
+    if (!topic || selected.size === 0 || active) return;
 
     const ordered = personas.filter((p) => selected.has(p.id)).map((p) => p.id);
     const ctrl = new AbortController();
@@ -165,11 +175,14 @@ export default function Home() {
         redTeam, // GAP6
         redTeamId, // GAP6
         mock: !willUseRealLlm, // GAP5: NOT(useLlm AND api_key_set)
+        interactive: true, // Web は floor-open（本編後に一時停止して入力を待つ）
         signal: ctrl.signal,
         onEvent: (e) => {
           if (e.type === "start") {
             setSessionId(e.sessionId);
           } else if (e.type === "turn_start") {
+            // floor-open から再開（追い質問 deepen / 締め synthesis）。running に戻す。
+            setStatus((s: Status) => (s === "paused" ? "running" : s));
             setTurns((prev) => {
               let base = prev;
               // GAP4: サーバの human ターンが来たら、未確定(turn_id<0)の human エコーを
@@ -204,6 +217,10 @@ export default function Home() {
             );
           } else if (e.type === "turn_end") {
             setStreamingTurnId((cur) => (cur === e.turnId ? null : cur));
+          } else if (e.type === "paused") {
+            // floor-open に入った。入力待ちへ。ストリーミング表示はクリアする。
+            setStatus("paused");
+            setStreamingTurnId(null);
           } else if (e.type === "error") {
             setError(e.message);
             setStatus("error");
@@ -251,9 +268,31 @@ export default function Home() {
     }
   }
 
+  // 議場開放（floor-open）: 「議事録を作る」＝議長に synthesis を生成させる。
+  // 締めても議場は開いたまま＝終了後の深掘りも同機構（status は paused→running→paused）。
+  async function makeMinutes() {
+    if (!paused || !sessionId) return;
+    try {
+      await closeSession(sessionId);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : String(err));
+    }
+  }
+
+  // 議場開放（floor-open）: 「終了」＝floor-open ループを抜けて done。
+  async function finishCouncil() {
+    if (!paused || !sessionId) return;
+    try {
+      await finishSession(sessionId);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : String(err));
+    }
+  }
+
   function onComposerKeyDown(e: React.KeyboardEvent) {
     if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
-      if (running) {
+      if (active) {
+        // running/paused とも、追い質問が出せる状態なら送信。
         if (canFollowup) sendQuestion();
       } else {
         start();
@@ -262,15 +301,15 @@ export default function Home() {
   }
 
   // 入力欄が追い質問モードのとき、無効なら理由 microcopy を出す。
-  const followupBlockReason = running
-    ? canFollowup
-      ? null
-      : currentPhase === null
+  // paused（floor-open）は常に追い質問可なので理由は出さない。
+  const followupBlockReason =
+    running && !canFollowup
+      ? currentPhase === null
         ? "討論の開始を待っています。"
         : processingFollowup
           ? "前の追い質問を処理中です。応答が出そろうと送信できます。"
           : "このフェーズ（要約・統合・冒頭）では追い質問を受け付けられません。"
-    : null;
+      : null;
 
   return (
     <div className="flex h-screen flex-col">
@@ -290,21 +329,21 @@ export default function Home() {
             selectedPresetId={selectedPresetId}
             onApply={applyPreset}
             onSaveCurrent={() => setSaveOpen(true)}
-            disabled={running}
+            disabled={active}
           />
 
           <LlmToggle
             useLlm={useLlm}
             health={health}
             onChange={setUseLlm}
-            disabled={running}
+            disabled={active}
           />
 
           <PersonaPicker
             personas={personas}
             selected={selected}
             onToggle={toggle}
-            disabled={running}
+            disabled={active}
             onManage={() => setManageOpen(true)}
           />
         </aside>
@@ -331,13 +370,39 @@ export default function Home() {
           )}
 
           {/* 実 LLM 選択時のみ、控えめにコスト注記（GAP5） */}
-          {willUseRealLlm && !running && (
+          {willUseRealLlm && !active && (
             <p className="mx-6 mb-2 text-[11px] leading-relaxed text-[var(--color-ink-muted)]">
               実 LLM で討論します。開始後は画面を閉じても完走し、API 利用料が発生します。
             </p>
           )}
 
-          {/* 入力バー（running 中は同じ textarea を追い質問モードに切替） */}
+          {/* 議場開放（floor-open）コントロール。本編が終わり入力待ちのときだけ出す。
+              追い質問は下の入力バーが主戦場。ここでは「議事録を作る」「終了」を提示する。 */}
+          {paused && (
+            <div className="mx-6 mb-2 rounded-md border border-[var(--color-line)] bg-[var(--color-paper)] px-3 py-2.5">
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-[11px] leading-relaxed text-[var(--color-ink-muted)]">
+                  本編が終わり、議場を開いています。追い質問を続けるか、議事録を作るか、終了できます。
+                </p>
+                <div className="flex shrink-0 items-center gap-2">
+                  <button
+                    onClick={makeMinutes}
+                    className="flex items-center gap-1.5 rounded-md border border-[var(--color-line)] px-3 py-1.5 text-xs hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+                  >
+                    <FileText size={13} /> 議事録を作る
+                  </button>
+                  <button
+                    onClick={finishCouncil}
+                    className="flex items-center gap-1.5 rounded-md border border-[var(--color-line)] px-3 py-1.5 text-xs hover:border-[var(--color-ink-muted)]"
+                  >
+                    <CircleStop size={13} /> 終了
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* 入力バー（active 中＝running/paused は同じ textarea を追い質問モードに切替） */}
           <div className="border-t border-[var(--color-line)] bg-[var(--color-surface)] px-6 py-3">
             {followupBlockReason && (
               <p className="mb-1.5 text-[11px] text-[var(--color-ink-muted)]">
@@ -351,16 +416,16 @@ export default function Home() {
                 onKeyDown={onComposerKeyDown}
                 rows={1}
                 placeholder={
-                  running
+                  active
                     ? canFollowup
                       ? "追い質問を入力（⌘/Ctrl+Enter で送信）"
                       : "いまは追い質問を受け付けていません"
                     : "議題を入力（⌘/Ctrl+Enter で開始）"
                 }
-                disabled={running && !canFollowup}
+                disabled={active && !canFollowup}
                 className="max-h-32 min-h-[40px] flex-1 resize-none rounded-md border border-[var(--color-line)] bg-[var(--color-paper)] px-3 py-2 text-sm outline-none focus:border-[var(--color-accent)] disabled:opacity-50"
               />
-              {running ? (
+              {active ? (
                 <>
                   <button
                     onClick={sendQuestion}

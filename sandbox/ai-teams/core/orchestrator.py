@@ -255,32 +255,32 @@ class Council:
             emit({"type": "delta", "turn_id": turn_id, "text": content})
         return Turn(speaker_id, speaker_name, content, phase, round_no, turn_id=turn_id)
 
-    def _drain_and_inject(
+    def deepen(
         self,
-        transcript: list[Turn],
         topic: str,
-        round_no: int,
+        transcript: list[Turn],
+        msgs: Sequence,
         *,
-        emit: Emit | None,
+        emit: Emit | None = None,
         ids: "count[int]",
-        pull: Pull | None,
     ) -> Iterator[Turn]:
-        """本編フェーズの各 Turn 直後に呼ばれ、溜まった追い質問を注入する。
+        """人間ターン(msgs)→司会再提示→パネリスト1周の「深掘り1周」を yield する公開メソッド。
 
-        pull=None なら何もしない（従来動作＝既存テストはこの経路）。pull() が空なら
-        即 return。来ていたら:
+        本編中の追い質問注入（_drain_and_inject）と floor-open 中の deepen で共有する。
+        msgs は .text を持つオブジェクトの列（duck typing）。空なら何もしない。
           (a) 各追い質問を「人間ターン」として transcript に積み yield（LLM 不使用）。
           (b) 司会在席時のみ、司会が再提示する followup ターンを生成・yield。
           (c) list(self.panelists) を **本編とは独立に1周** し、followup directive 前置きで
               各パネリストに答えさせる（順序固定でローテーションを乱さない）。Red Team 指名者
               には _speak が自動で反対役の特命を上乗せする。
         複数の追い質問は 1 ラウンドに束ねて処理する（(a) で全件積んでから (b)(c) は1回）。
+        turn_id は呼び出し側が所有する ids=count() を共有して継続採番する。
+        round_no は人間入力起点の深掘りなので 0 固定（本編ラウンドとは独立）。
         """
-        if pull is None:
-            return
-        msgs = pull()
+        msgs = list(msgs)
         if not msgs:
             return
+        round_no = 0
 
         # (a) 人間ターン（追い質問のエコー）を順に積む。
         for msg in msgs:
@@ -335,21 +335,49 @@ class Council:
             transcript.append(turn)
             yield turn
 
-    # -- 公開 API ----------------------------------------------------------
-    def run(self, topic: str, *, emit: Emit | None = None, pull: Pull | None = None) -> Iterator[Turn]:
-        """討論を進行し、確定した Turn を1件ずつ yield する。
+    def _drain_and_inject(
+        self,
+        transcript: list[Turn],
+        topic: str,
+        *,
+        emit: Emit | None,
+        ids: "count[int]",
+        pull: Pull | None,
+    ) -> Iterator[Turn]:
+        """本編フェーズの各 Turn 直後に呼ばれ、溜まった追い質問を注入する薄いラッパ。
 
-        emit を渡すと各発言を turn_start → delta* のイベント列として流す
-        （ストリーミング経路）。emit=None なら従来どおり一括生成し Turn だけを
-        yield する（後方互換・既存テストはこの経路）。turn_id は両経路で採番する。
-
-        pull を渡すと、本編フェーズ（発散/批判/収束）の各 Turn 直後に追い質問を drain して
-        注入する（人間ターン → 司会再提示 → パネリスト1周）。pull=None なら従来動作
-        （注入なし＝既存テストはこの経路）。opening/summary/synthesis では拾わない。
+        pull=None なら何もしない（従来動作＝既存テストはこの経路）。pull() が空なら
+        即 return。来ていたら deepen() に委譲する（人間ターン→司会再提示→パネリスト1周）。
         """
-        transcript: list[Turn] = []
-        ids = count()  # turn_id の採番（単調増加）
+        if pull is None:
+            return
+        msgs = pull()
+        if not msgs:
+            return
+        yield from self.deepen(topic, transcript, msgs, emit=emit, ids=ids)
 
+    # -- 公開 API ----------------------------------------------------------
+    def deliberate(
+        self,
+        topic: str,
+        transcript: list[Turn],
+        *,
+        emit: Emit | None = None,
+        pull: Pull | None = None,
+        ids: "count[int]",
+    ) -> Iterator[Turn]:
+        """opening＋本編フェーズ（発散/批判/収束）を進行し Turn を yield する。synthesis はやらない。
+
+        transcript と ids（採番カウンタ）は呼び出し側が所有・共有する（floor-open ループで
+        deepen/synthesize と transcript・採番を継続させるため）。
+
+        emit を渡すと各発言を turn_start → delta* のイベント列として流す（ストリーミング経路）。
+        emit=None なら一括生成し Turn だけを yield する（後方互換）。
+
+        pull を渡すと、本編フェーズの各 Turn 直後に追い質問を drain して注入する
+        （人間ターン → 司会再提示 → パネリスト1周）。pull=None なら従来動作（注入なし）。
+        opening では拾わない。
+        """
         # 1. 司会オープニング（任意）
         if self.moderator is not None:
             turn = self._speak(
@@ -388,29 +416,59 @@ class Council:
                     yield turn
                     # 本編フェーズの各 Turn 直後にだけ追い質問を拾う（pull=None なら no-op）。
                     yield from self._drain_and_inject(
-                        transcript, topic, round_no, emit=emit, ids=ids, pull=pull
+                        transcript, topic, emit=emit, ids=ids, pull=pull
                     )
 
-        # 3. 議長による統合（chairman パターン）。chair が無ければ司会が兼任。
-        #    かつて 3行エグゼクティブサマリ(summary フェーズ)を別に出していたが、実 LLM が
-        #    3行指示を守らず議事録と重複した上、短すぎて読まれないため廃止。議事録1枚に集約する。
+    def synthesize(
+        self,
+        topic: str,
+        transcript: list[Turn],
+        *,
+        emit: Emit | None = None,
+        ids: "count[int]",
+    ) -> Iterator[Turn]:
+        """議長による統合（議事録）ターンを1つ yield する。chair が無ければ司会が兼任。
+
+        かつて 3行エグゼクティブサマリ(summary フェーズ)を別に出していたが、実 LLM が
+        3行指示を守らず議事録と重複した上、短すぎて読まれないため廃止。議事録1枚に集約する。
+        synthesizer（chair も moderator も）が居なければ何も yield しない。
+        transcript と ids は呼び出し側が所有・共有する。
+        """
         synthesizer = self.chair or self.moderator
-        if synthesizer is not None:
-            # 議事録（合意/対立/リスク/アクション）。
-            turn = self._speak(
-                synthesizer,
-                transcript,
-                topic,
-                phase="synthesis",
-                round_no=0,
-                phase_directive=(
-                    "【統合】これまでの議論を、合意点 / 対立が残った点 / 主要リスク / "
-                    "ネクストアクション の4見出しで簡潔に1枚にまとめてください。"
-                    "新しい意見は足さず、出た議論だけを統合すること。"
-                ),
-                anti_conformity=False,
-                emit=emit,
-                turn_id=next(ids),
-            )
-            transcript.append(turn)
-            yield turn
+        if synthesizer is None:
+            return
+        # 議事録（合意/対立/リスク/アクション）。
+        turn = self._speak(
+            synthesizer,
+            transcript,
+            topic,
+            phase="synthesis",
+            round_no=0,
+            phase_directive=(
+                "【統合】これまでの議論を、合意点 / 対立が残った点 / 主要リスク / "
+                "ネクストアクション の4見出しで簡潔に1枚にまとめてください。"
+                "新しい意見は足さず、出た議論だけを統合すること。"
+            ),
+            anti_conformity=False,
+            emit=emit,
+            turn_id=next(ids),
+        )
+        transcript.append(turn)
+        yield turn
+
+    def run(self, topic: str, *, emit: Emit | None = None, pull: Pull | None = None) -> Iterator[Turn]:
+        """討論を進行し、確定した Turn を1件ずつ yield する（後方互換の自動完走経路）。
+
+        deliberate（opening+本編）→ synthesize（議事録）の合成。ids=count() と transcript=[]
+        をこの中で所有するので、従来と完全に同一の出力（opening+本編+synthesis）になる。
+
+        emit を渡すと各発言を turn_start → delta* のイベント列として流す（ストリーミング経路）。
+        emit=None なら従来どおり一括生成し Turn だけを yield する。turn_id は両経路で採番する。
+
+        pull を渡すと本編フェーズの各 Turn 直後に追い質問を drain して注入する。pull=None なら
+        従来動作（注入なし）。opening/synthesis では拾わない。
+        """
+        transcript: list[Turn] = []
+        ids = count()  # turn_id の採番（単調増加。deliberate→synthesize で継続）
+        yield from self.deliberate(topic, transcript, emit=emit, pull=pull, ids=ids)
+        yield from self.synthesize(topic, transcript, emit=emit, ids=ids)

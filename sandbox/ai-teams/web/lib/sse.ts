@@ -22,6 +22,9 @@ export type StreamEvent =
     }
   | { type: "delta"; turnId: number; text: string; ts?: number }
   | { type: "turn_end"; turnId: number; ts?: number }
+  // floor-open（議場開放）: 本編フェーズの後、自動 synthesis せず入力待ちに入った合図。
+  // フロントは追い質問入力＋「議事録を作る」「終了」を提示する（凍結契約: floor-open）。
+  | { type: "paused"; phase?: string; ts?: number }
   | { type: "error"; message: string; ts?: number }
   | { type: "done"; ts?: number };
 
@@ -32,6 +35,8 @@ export interface StartSessionArgs {
   redTeam?: boolean;
   redTeamId?: string | null;
   mock?: boolean;
+  // 対話モード（議場開放）。Web は既定 true＝本編後に自動 synthesis せず一時停止して入力を待つ。
+  interactive?: boolean;
   signal?: AbortSignal;
   onEvent: (e: StreamEvent) => void;
 }
@@ -57,15 +62,18 @@ export async function startSession({
   redTeam,
   redTeamId,
   mock = false,
+  interactive = true,
   signal,
   onEvent,
 }: StartSessionArgs): Promise<void> {
   // GAP6: プリセットの設定（ラウンド数・Red Team）が無視されないよう必ず body に載せる。
+  // interactive: Web は既定 true（本編後に floor-open で一時停止）。
   const body: Record<string, unknown> = {
     topic,
     persona_ids: personaIds,
     rounds_per_phase: roundsPerPhase,
     mock,
+    interactive,
   };
   if (redTeam !== undefined) body.red_team = redTeam;
   if (redTeamId !== undefined && redTeamId !== null) body.red_team_id = redTeamId;
@@ -179,6 +187,10 @@ function toEvent(
       return { type: "delta", turnId: d.turn_id as number, text: d.text as string, ts };
     case "turn_end":
       return { type: "turn_end", turnId: d.turn_id as number, ts };
+    case "paused":
+      // floor-open。lastSeq 更新は pump 側の既存ロジックに任せる（seq は _append 付与）。
+      // terminal にはしない＝接続は保ったまま、ユーザー入力で turn_start が再開する。
+      return { type: "paused", phase: d.phase as string | undefined, ts };
     case "error":
       return { type: "error", message: d.message as string, ts };
     case "done":
@@ -222,6 +234,22 @@ export async function sendFollowup(sessionId: string, text: string): Promise<voi
   if (!res.ok) {
     throw new Error(await errorDetail(res));
   }
+}
+
+// -- 議場開放（floor-open）の締め／終了 -------------------------------------
+//
+// 凍結契約: floor-open 中の3アクションのうち「締める」「終了」は body なしの POST。
+// 締める(close)＝議事録(synthesis)を1回生成して再び floor-open に戻る。
+// 終了(finish)＝floor-open ループを抜けて done。どちらも結果は既存の
+// turn_start→delta→turn_end / done として SSE で返る（新イベントは増やさない）。
+export async function closeSession(sessionId: string): Promise<void> {
+  const res = await fetch(apiUrl(`/sessions/${sessionId}/close`), { method: "POST" });
+  if (!res.ok) throw new Error(await errorDetail(res));
+}
+
+export async function finishSession(sessionId: string): Promise<void> {
+  const res = await fetch(apiUrl(`/sessions/${sessionId}/finish`), { method: "POST" });
+  if (!res.ok) throw new Error(await errorDetail(res));
 }
 
 // -- 停止（協調キャンセル） -------------------------------------------------

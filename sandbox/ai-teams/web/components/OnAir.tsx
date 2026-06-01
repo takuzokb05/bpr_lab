@@ -3,7 +3,7 @@
 // 報道番組の「ON AIR」表示。running のときだけ赤ドット＋小ラベルで点灯（小面積限定）。
 // それ以外の状態は無彩色テキストで静かに示す（黒ベタ・絵文字・影は使わない）。
 
-type Status = "idle" | "running" | "done" | "error";
+type Status = "idle" | "running" | "paused" | "done" | "error";
 
 export function OnAir({ status }: { status: Status }) {
   if (status === "running") {
@@ -26,6 +26,7 @@ export function OnAir({ status }: { status: Status }) {
 
   const labels: Record<Exclude<Status, "running">, string> = {
     idle: "待機中",
+    paused: "一時停止",
     done: "完了",
     error: "中断",
   };

@@ -22,7 +22,7 @@ export function Timeline({
   turns: Turn[];
   streamingTurnId: number | null;
   looks: Record<string, PersonaLook>;
-  status: "idle" | "running" | "done" | "error";
+  status: "idle" | "running" | "paused" | "done" | "error";
 }) {
   const endRef = useRef<HTMLDivElement>(null);
 

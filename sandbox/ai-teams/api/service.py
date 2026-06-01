@@ -15,6 +15,7 @@ import time
 import uuid
 from dataclasses import dataclass, field
 from pathlib import Path
+from itertools import count
 from typing import Iterator
 
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -152,7 +153,14 @@ MAX_SESSIONS = 50
 
 @dataclass
 class HumanMessage:
-    """人間からの割り込み入力。MVP は followup のみ。将来 intervention/rewind を kind で追加。"""
+    """人間からの割り込み入力。
+
+    kind:
+      - "followup": 追い質問。本編中は各 Turn 直後に注入、floor-open 中は deepen 1周のトリガ。
+      - "close": floor-open で synthesis（議事録）を生成→再び floor-open。
+      - "finish": floor-open でループを抜けて done。
+    将来 intervention/rewind を kind で追加。
+    """
 
     kind: str = "followup"
     text: str = ""
@@ -169,8 +177,12 @@ class Session:
     inbox: "queue.Queue[HumanMessage]" = field(default_factory=queue.Queue)
     events: list[dict] = field(default_factory=list)
     cond: threading.Condition = field(default_factory=threading.Condition)
-    status: str = "running"  # running | done | error
+    status: str = "running"  # running | paused | done | error
     thread: threading.Thread | None = None
+    # 議場開放（floor-open）モデルを使うか。True なら本編フェーズ後に自動 synthesis せず
+    # 一時停止（paused）してユーザー入力（followup/close/finish）を待つ。False なら従来どおり
+    # 自動完走（直接 start_session を呼ぶ既存テストの後方互換）。HTTP（Web）は既定 True。
+    interactive: bool = False
     # 追い質問の受付可否。仕上げ（summary/synthesis）に入ったら False にして、
     # それ以降の追い質問は受理せず 409 を返す（202 のまま永久ドロップを防ぐ）。
     accepting: bool = True
@@ -198,13 +210,37 @@ def _append(session: Session, event: str, data: dict) -> None:
 
 
 def _drain(inbox: "queue.Queue[HumanMessage]") -> list[HumanMessage]:
-    """inbox に溜まった人間メッセージを非ブロッキングで全件取り出す。"""
+    """inbox に溜まった人間メッセージを非ブロッキングで全件取り出す（kind 不問）。"""
     out: list[HumanMessage] = []
     while True:
         try:
             out.append(inbox.get_nowait())
         except queue.Empty:
             break
+    return out
+
+
+def _drain_followups(inbox: "queue.Queue[HumanMessage]") -> list[HumanMessage]:
+    """本編フェーズ中の注入用に kind=="followup" のみを drain する。
+
+    close/finish が誤って人間ターン化されないよう、本編中は followup だけを拾う。
+    close/finish は floor-open ループの inbox 待機側で処理する（誤って drain したものは
+    inbox に戻す）。
+    """
+    out: list[HumanMessage] = []
+    not_followup: list[HumanMessage] = []
+    while True:
+        try:
+            msg = inbox.get_nowait()
+        except queue.Empty:
+            break
+        if getattr(msg, "kind", "followup") == "followup":
+            out.append(msg)
+        else:
+            not_followup.append(msg)
+    # 本編中に届いた close/finish は inbox に戻し、floor-open で処理させる。
+    for msg in not_followup:
+        inbox.put(msg)
     return out
 
 
@@ -218,38 +254,127 @@ def cancel_session(session: Session) -> None:
 
     プロデューサは次のターンの LLM 発注前に cancelled を見て break する（実 LLM の
     課金を止める）。既に発注済みの当該ターンは完走する（per-turn 粒度）。
+    floor-open で inbox 待機中でも _FLOOR_WAIT_POLL ごとに cancelled を見て抜ける。
     """
     session.cancelled = True
     session.accepting = False
 
 
-def _produce(session: Session) -> None:
-    """バックグラウンドで council.run(emit=…) を完走させ、イベントを溜める。
+def close_floor(session: Session) -> None:
+    """floor-open に close を投函する → プロデューサが synthesis（議事録）を生成し再び floor-open。"""
+    post_message(session, HumanMessage(kind="close"))
 
-    接続の有無に関わらず最後まで走る（再接続のため）。orchestrator は turn_start/delta を
-    emit するので、Turn 確定後に turn_end を、全体の前後に start/done を付ける（設計 v2）。
+
+def finish_floor(session: Session) -> None:
+    """floor-open に finish を投函する → プロデューサが floor-open ループを抜けて done。"""
+    post_message(session, HumanMessage(kind="finish"))
+
+
+# floor-open 中の inbox 待機ポーリング間隔（秒）。cancelled を見られるよう短くブロックする。
+_FLOOR_WAIT_POLL = 0.1
+
+
+def _produce(session: Session) -> None:
+    """バックグラウンドで討論を完走（非対話）または floor-open ループ（対話）で進める。
+
+    接続の有無に関わらず走る（再接続のため）。orchestrator は turn_start/delta を emit するので、
+    Turn 確定後に turn_end を、全体の前後に start/done を付ける（設計 v2）。
+
+    interactive=False: 従来どおり council.run(...) を1回回して done（後方互換・非対話）。
+    interactive=True: 本編（deliberate）後に floor-open ループへ入り、ユーザー入力
+      （followup/close/finish）を待って deepen/synthesize し、finish で done。
     """
 
     def emit(ev: dict) -> None:
         etype = ev["type"]
-        # 仕上げフェーズ（summary/synthesis）の turn_start を見た瞬間に追い質問を締め切る。
-        # turn_start は生成より前に来るので、ここで締めれば「受理したのに拾われない」窓を塞げる。
-        if etype == "turn_start" and ev.get("phase") in ("summary", "synthesis"):
+        # 非対話のみ: 仕上げフェーズ（summary/synthesis）の turn_start を見た瞬間に追い質問を
+        # 締め切る（受理したのに拾われない窓を塞ぐ）。対話（floor-open）では締めた後も deepen
+        # できるので、followup は最後まで受理し続ける（ここで accepting を落とさない）。
+        if (
+            not session.interactive
+            and etype == "turn_start"
+            and ev.get("phase") in ("summary", "synthesis")
+        ):
             session.accepting = False
         data = {k: v for k, v in ev.items() if k != "type"}
         _append(session, etype, data)
 
     try:
         _append(session, "start", {"topic": session.topic, "session_id": session.id})
-        # pull は本編フェーズの各 Turn 直後に inbox を drain し、追い質問を注入する。
-        for turn in session.council.run(
-            session.topic, emit=emit, pull=lambda: _drain(session.inbox)
+
+        if not session.interactive:
+            # --- 非対話（後方互換）: opening+本編+synthesis を自動完走 ---
+            for turn in session.council.run(
+                session.topic, emit=emit, pull=lambda: _drain_followups(session.inbox)
+            ):
+                _append(session, "turn_end", {"turn_id": turn.turn_id})
+                # 停止操作（cancelled）なら、次のターンの LLM 発注前に打ち切る（コスト抑制）。
+                if session.cancelled:
+                    session.accepting = False
+                    break
+            _append(session, "done", {})
+            _set_status(session, "done")
+            return
+
+        # --- 対話（floor-open）---
+        council = session.council
+        transcript: list = []
+        ids = count()  # turn_id 採番。deliberate/deepen/synthesize で継続共有する。
+
+        # 本編フェーズ（opening+発散/批判/収束）。本編中の追い質問は followup のみ注入。
+        for turn in council.deliberate(
+            session.topic, transcript, emit=emit,
+            pull=lambda: _drain_followups(session.inbox), ids=ids,
         ):
             _append(session, "turn_end", {"turn_id": turn.turn_id})
-            # 停止操作（cancelled）なら、次のターンの LLM 発注前に打ち切る（コスト抑制）。
             if session.cancelled:
                 session.accepting = False
+                _append(session, "done", {})
+                _set_status(session, "done")
+                return
+
+        # floor-open ループ。
+        while True:
+            if session.cancelled:
                 break
+            # (a) 一時停止に入る合図。
+            _set_status(session, "paused")
+            _append(session, "paused", {"phase": "floor_open"})
+
+            # (b) inbox をブロッキング待機（無期限・無料）。cancelled を一定間隔で見て抜けられる。
+            msg: HumanMessage | None = None
+            while msg is None:
+                if session.cancelled:
+                    break
+                try:
+                    msg = session.inbox.get(timeout=_FLOOR_WAIT_POLL)
+                except queue.Empty:
+                    continue
+            if msg is None:  # cancelled で抜けた
+                break
+
+            # (c) kind で分岐。
+            if msg.kind == "finish":
+                break
+            if msg.kind == "close":
+                _set_status(session, "running")
+                for turn in council.synthesize(session.topic, transcript, emit=emit, ids=ids):
+                    _append(session, "turn_end", {"turn_id": turn.turn_id})
+                    if session.cancelled:
+                        break
+                # 締めても議場は開いたまま → a に戻って再び floor-open。
+                continue
+            # followup（既定）: 同時に届いた followup も束ねて drain し deepen 1周。
+            _set_status(session, "running")
+            extra = _drain_followups(session.inbox)
+            for turn in council.deepen(
+                session.topic, transcript, [msg, *extra], emit=emit, ids=ids
+            ):
+                _append(session, "turn_end", {"turn_id": turn.turn_id})
+                if session.cancelled:
+                    break
+            # a に戻って再び floor-open。
+
         _append(session, "done", {})
         _set_status(session, "done")
     except Exception as exc:  # noqa: BLE001 — 読み手にエラーを通知して締める
@@ -264,19 +389,28 @@ def _set_status(session: Session, status: str) -> None:
 
 
 def _gc_locked() -> None:
-    """件数上限を超えたら、終了済み(running でない)セッションを古い順に破棄する。"""
+    """件数上限を超えたら、終了済み（done/error）セッションを古い順に破棄する。
+
+    running / paused（floor-open で入力待機中）は進行中とみなして残す。
+    """
     if len(SESSIONS) <= MAX_SESSIONS:
         return
     for sid, s in list(SESSIONS.items()):  # dict は挿入順 = 古い順
         if len(SESSIONS) <= MAX_SESSIONS:
             break
-        if s.status != "running":
+        if s.status in ("done", "error"):
             del SESSIONS[sid]
 
 
-def start_session(council: Council, topic: str) -> Session:
-    """Session を生成・登録し、プロデューサスレッドを起動して返す。"""
-    session = Session(id=uuid.uuid4().hex, topic=topic, council=council)
+def start_session(council: Council, topic: str, *, interactive: bool = False) -> Session:
+    """Session を生成・登録し、プロデューサスレッドを起動して返す。
+
+    interactive=False（既定）なら従来どおり自動完走する（直接呼ぶ既存テストの後方互換）。
+    interactive=True なら本編後に floor-open（一時停止）してユーザー入力を待つ。
+    """
+    session = Session(
+        id=uuid.uuid4().hex, topic=topic, council=council, interactive=interactive
+    )
     with _REGISTRY_LOCK:
         _gc_locked()
         SESSIONS[session.id] = session
@@ -291,20 +425,26 @@ def get_session(session_id: str) -> Session | None:
         return SESSIONS.get(session_id)
 
 
+_ALIVE_STATUSES = ("running", "paused")
+_FINAL_STATUSES = ("done", "error")
+
+
 def tail(session: Session, cursor: int = 0) -> Iterator[str]:
     """events[cursor:] を再生 → ライブ tail を SSE 文字列で yield する（再接続対応）。
 
     各 data に seq と ts を載せる（seq=再接続カーソル用、ts=採番時刻で再接続再生でも不変）。
-    プロデューサが done/error で終端し、それまでに溜まったイベントを送り切ったら return する
-    （ハングしない）。
+    終端は status が done/error のときだけ。running/paused（floor-open 入力待機）では
+    接続を保ち cond.wait で待ち続ける（paused で SSE を閉じない）。
     """
     while True:
         with session.cond:
-            while cursor >= len(session.events) and session.status == "running":
+            while cursor >= len(session.events) and session.status in _ALIVE_STATUSES:
                 session.cond.wait()
             new = session.events[cursor:]
             cursor += len(new)
-            finished = session.status != "running" and cursor >= len(session.events)
+            finished = (
+                session.status in _FINAL_STATUSES and cursor >= len(session.events)
+            )
         for ev in new:
             yield sse(ev["event"], {**ev["data"], "seq": ev["seq"], "ts": ev["ts"]})
         if finished:

@@ -856,6 +856,173 @@ def test_followup_e2e():
         gate.set()
 
 
+def test_floor_open_pause():
+    """(A) interactive=True: 本編後に status=="paused" になり paused イベントが出る。"""
+    print("[test] floor-open pause (interactive: deliberate -> paused)")
+    import time
+
+    from core import Council, MockLLMClient
+
+    personas = [
+        make("mod", cat="facilitation"),
+        make("logic"),
+        make("idea"),
+        make("chair", cat="chair"),
+    ]
+    council = Council(personas, MockLLMClient(), phases=[("発散", "d", True)], rounds_per_phase=1)
+    sess = service.start_session(council, "議題FLOOR", interactive=True)
+    try:
+        # 本編完走後、floor-open に入って paused になるのを待つ（mock は瞬時）。
+        deadline = time.time() + 5
+        while sess.status != "paused" and time.time() < deadline:
+            time.sleep(0.02)
+        check(sess.status == "paused", f"本編後に status=paused になる: {sess.status}")
+
+        events = sess.events
+        kinds = [e["event"] for e in events]
+        check("paused" in kinds, "paused イベントが出る")
+        paused_ev = next(e for e in events if e["event"] == "paused")
+        check(paused_ev["data"].get("phase") == "floor_open", "paused の phase は floor_open")
+        check("seq" in paused_ev and "ts" in paused_ev, "paused イベントに seq/ts が載る")
+
+        # 自動 synthesis していない（締めるまで議事録は出ない）。
+        check(
+            "synthesis" not in [e["data"].get("phase") for e in events if e["event"] == "turn_start"],
+            "floor-open では自動 synthesis しない（締めるまで議事録は出ない）",
+        )
+        # opening+本編は出ている。
+        phases = [e["data"].get("phase") for e in events if e["event"] == "turn_start"]
+        check("opening" in phases and "発散" in phases, "opening と本編フェーズは出ている")
+        # まだ done になっていない。
+        check("done" not in kinds, "floor-open ではまだ done になっていない")
+    finally:
+        sess.cancelled = True
+        service.finish_floor(sess)
+        if sess.thread is not None:
+            sess.thread.join(timeout=5)
+
+
+def test_floor_open_close_then_finish():
+    """(B) close で synthesis が出て再び paused、finish で done になる。"""
+    print("[test] floor-open close (synthesis) then finish (done)")
+    import threading
+    import time
+
+    from core import Council, MockLLMClient
+
+    def wait_until(pred, timeout=5):
+        deadline = time.time() + timeout
+        while not pred() and time.time() < deadline:
+            time.sleep(0.02)
+        return pred()
+
+    def synthesis_count(sess):
+        return sum(
+            1 for e in sess.events
+            if e["event"] == "turn_start" and e["data"].get("phase") == "synthesis"
+        )
+
+    def paused_count(sess):
+        return sum(1 for e in sess.events if e["event"] == "paused")
+
+    personas = [
+        make("mod", cat="facilitation"),
+        make("logic"),
+        make("idea"),
+        make("chair", cat="chair"),
+    ]
+    council = Council(personas, MockLLMClient(), phases=[("発散", "d", True)], rounds_per_phase=1)
+    sess = service.start_session(council, "議題CLOSE", interactive=True)
+    try:
+        # 1. 最初の floor-open（本編後）まで待つ
+        check(wait_until(lambda: paused_count(sess) >= 1), "本編後に paused になる")
+
+        # 2. close を post（threading で投函）→ synthesis が出て再び paused（paused が2回目に）
+        before = len(sess.events)
+        threading.Thread(target=service.close_floor, args=(sess,), daemon=True).start()
+        # synthesis ターンが現れ、かつ paused イベントが2回目（再び floor-open）になるのを待つ
+        check(
+            wait_until(lambda: synthesis_count(sess) == 1 and paused_count(sess) >= 2),
+            "close 後に synthesis を回して再び paused に戻る",
+        )
+
+        syn_starts = [
+            e for e in sess.events
+            if e["event"] == "turn_start" and e["data"].get("phase") == "synthesis"
+        ]
+        check(len(syn_starts) == 1, f"close で synthesis ターンが1件出る: {len(syn_starts)}")
+        check(syn_starts[0]["data"]["speaker_id"] == "chair", "議事録は議長(chair)が書く")
+        # close 後にイベントが増えている（synthesis + paused 再掲）
+        check(len(sess.events) > before, "close でイベントが増える")
+        # 締めた後も議場は開いたまま（paused）＝深掘り継続可能
+        check(wait_until(lambda: sess.status == "paused"), "締めた後も議場は開いたまま（paused）")
+
+        # 3. finish を post → done になり paused が閉じる
+        threading.Thread(target=service.finish_floor, args=(sess,), daemon=True).start()
+        check(wait_until(lambda: sess.status == "done"), "finish 後に done になる")
+        check(sess.events[-1]["event"] == "done", "最後のイベントは done")
+        if sess.thread is not None:
+            sess.thread.join(timeout=5)
+        check(not sess.thread.is_alive(), "プロデューサスレッドが終了する")
+    finally:
+        sess.cancelled = True
+        service.finish_floor(sess)
+        if sess.thread is not None:
+            sess.thread.join(timeout=5)
+
+
+def test_run_backward_compat():
+    """(C) run() 後方互換: emit/pull=None で従来と同一 turn 列（opening+本編+synthesis）。
+
+    deliberate→synthesize の合成が、抽出前の単一 run() と同じ turn 列を出すことを保証する。
+    deliberate+synthesize を手で繋いだ列とも一致する（合成の等価性）。
+    """
+    print("[test] run() backward compat (deliberate+synthesize == run)")
+    from itertools import count
+
+    from core import Council, MockLLMClient
+
+    def build():
+        return Council(
+            [
+                make("mod", cat="facilitation"),
+                make("logic"),
+                make("idea"),
+                make("empathy"),
+                make("chair", cat="chair"),
+            ],
+            MockLLMClient(),
+            phases=[("発散", "d", True), ("批判", "c", True)],
+            rounds_per_phase=1,
+        )
+
+    # 1. run() の出力
+    run_turns = list(build().run("議題BC"))
+    run_sig = [(t.speaker_id, t.phase, t.round, t.turn_id, t.content) for t in run_turns]
+
+    # 2. deliberate + synthesize を手で繋いだ出力（ids/transcript を共有）
+    council = build()
+    transcript: list = []
+    ids = count()
+    composed = list(council.deliberate("議題BC", transcript, ids=ids))
+    composed += list(council.synthesize("議題BC", transcript, ids=ids))
+    comp_sig = [(t.speaker_id, t.phase, t.round, t.turn_id, t.content) for t in composed]
+
+    check(run_sig == comp_sig, "run() == deliberate()+synthesize()（合成の等価性）")
+
+    # 3. 構造: opening が先頭、synthesis が末尾1回、turn_id は 0 から連番
+    check(run_turns[0].phase == "opening", "先頭は opening")
+    check(run_turns[-1].phase == "synthesis", "末尾は synthesis")
+    check([t.phase for t in run_turns].count("synthesis") == 1, "synthesis は1回だけ")
+    check(
+        [t.turn_id for t in run_turns] == list(range(len(run_turns))),
+        "turn_id は 0 から連番（deliberate→synthesize で継続採番）",
+    )
+    # 本編フェーズが両方出ている（発散・批判 各3パネリスト）
+    phases = [t.phase for t in run_turns]
+    check(phases.count("発散") == 3 and phases.count("批判") == 3, "本編は各フェーズ3人ずつ発言")
+
+
 # ---------------------------------------------------------------------------
 if __name__ == "__main__":
     test_context_isolation()
@@ -873,6 +1040,9 @@ if __name__ == "__main__":
     test_preset_service()
     test_http_api()
     test_followup_e2e()
+    test_floor_open_pause()
+    test_floor_open_close_then_finish()
+    test_run_backward_compat()
     print()
     if _failures:
         print(f"[FAIL] {len(_failures)} 件 FAIL")

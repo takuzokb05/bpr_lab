@@ -9,7 +9,7 @@ export function Chyron({
   status,
 }: {
   phase: string | null;
-  status: "idle" | "running" | "done" | "error";
+  status: "idle" | "running" | "paused" | "done" | "error";
 }) {
   // running 以外、またはフェーズ未確定なら何も出さない（null 返しガード）。
   if (status !== "running" || !phase) return null;

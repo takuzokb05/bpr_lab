@@ -9,7 +9,7 @@ export function MinutesPanel({
   status,
 }: {
   synthesis: Turn | null;
-  status: "idle" | "running" | "done" | "error";
+  status: "idle" | "running" | "paused" | "done" | "error";
 }) {
   return (
     <div className="flex h-full flex-col">
@@ -30,7 +30,9 @@ export function MinutesPanel({
           <p className="text-xs leading-relaxed text-[var(--color-ink-muted)]">
             {status === "running"
               ? "討論が進行中です。すべての発言が終わると、議長が議事録（合意点・対立点・リスク・ネクストアクション）をまとめます。"
-              : "討論が終わると、ここに議事のまとめが表示されます。"}
+              : status === "paused"
+                ? "本編が終わり、議場を開いています。下のパネルで追い質問を続けるか、「議事録を作る」で議長にまとめさせてください。"
+                : "討論が終わると、ここに議事のまとめが表示されます。"}
           </p>
         )}
       </div>

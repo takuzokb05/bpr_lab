@@ -34,6 +34,9 @@ class SessionRequest(BaseModel):
     red_team: bool = True
     red_team_id: str | None = None
     mock: bool = False
+    # 議場開放（floor-open）モデル。Web（HTTP）は既定で本編後に一時停止し、ユーザーの
+    # 追い質問 / 締め（議事録） / 終了 を待つ。False にすると従来どおり自動完走する。
+    interactive: bool = True
 
 
 @app.get("/health")
@@ -70,7 +73,7 @@ def create_session(req: SessionRequest) -> StreamingResponse:
     except ValueError as exc:  # パネリスト0人など
         raise HTTPException(status_code=400, detail=str(exc))
 
-    session = service.start_session(council, req.topic)
+    session = service.start_session(council, req.topic, interactive=req.interactive)
     return StreamingResponse(
         service.tail(session, cursor=0),
         media_type="text/event-stream",
@@ -101,23 +104,57 @@ class FollowupRequest(BaseModel):
 
 @app.post("/sessions/{session_id}/messages")
 def post_session_message(session_id: str, req: FollowupRequest) -> JSONResponse:
-    """進行中の討論に追い質問を割り込ませる。成功は 202 {"queued": true}。
+    """追い質問を割り込ませる。成功は 202 {"queued": true}。
 
-    未知 session は 404、running でないセッションも 404。
+    本編フェーズ中（running）は各 Turn 直後に注入、floor-open 中（paused）は deepen 1周の
+    トリガになる。未知 session は 404、running/paused でないセッションも 404。
     """
     session = service.get_session(session_id)
     if session is None:
         raise HTTPException(status_code=404, detail="unknown session id")
-    if session.status != "running":
+    if session.status not in ("running", "paused"):
         raise HTTPException(status_code=404, detail="session is not running")
-    # 仕上げ（summary/synthesis）に入った後は受け付けない。202 で受理したのに二度と
-    # drain されず永久ドロップする窓を塞ぐ（本編フェーズ中のみ受理＝202 の約束を守る）。
+    # 非対話で仕上げ（summary/synthesis）に入った後は受け付けない。202 で受理したのに二度と
+    # drain されず永久ドロップする窓を塞ぐ。対話（floor-open）では accepting は落とさない。
     if not session.accepting:
         raise HTTPException(status_code=409, detail="session is finalizing; no more followups")
     service.post_message(
         session,
         service.HumanMessage(kind=req.kind, text=req.text, target=req.target),
     )
+    return JSONResponse(status_code=202, content={"queued": True})
+
+
+@app.post("/sessions/{session_id}/close", status_code=202)
+def close_session(session_id: str) -> JSONResponse:
+    """floor-open を締める（議事録 synthesis を生成）。body なし。成功は 202。
+
+    HumanMessage(kind="close") を inbox に積む。プロデューサは synthesis を1回回し、
+    締めた後も議場は開いたまま（再び floor-open）＝終了後の深掘りも可能。
+    未知 session、running/paused でないセッションは 404。
+    """
+    session = service.get_session(session_id)
+    if session is None:
+        raise HTTPException(status_code=404, detail="unknown session id")
+    if session.status not in ("running", "paused"):
+        raise HTTPException(status_code=404, detail="session is not running")
+    service.close_floor(session)
+    return JSONResponse(status_code=202, content={"queued": True})
+
+
+@app.post("/sessions/{session_id}/finish", status_code=202)
+def finish_session(session_id: str) -> JSONResponse:
+    """floor-open を終了する（done）。body なし。成功は 202。
+
+    HumanMessage(kind="finish") を inbox に積む。プロデューサは floor-open ループを抜けて
+    done で締める。未知 session、既に終了済み（done/error）のセッションは 404。
+    """
+    session = service.get_session(session_id)
+    if session is None:
+        raise HTTPException(status_code=404, detail="unknown session id")
+    if session.status in ("done", "error"):
+        raise HTTPException(status_code=404, detail="session is already finished")
+    service.finish_floor(session)
     return JSONResponse(status_code=202, content={"queued": True})
 
 
