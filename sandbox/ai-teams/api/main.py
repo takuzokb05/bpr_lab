@@ -43,8 +43,16 @@ def list_personas() -> list[dict]:
     return [service.persona_public(p) for p in service.load_registry()]
 
 
+_SSE_HEADERS = {"Cache-Control": "no-cache", "X-Accel-Buffering": "no"}
+
+
 @app.post("/sessions")
 def create_session(req: SessionRequest) -> StreamingResponse:
+    """討論をバックグラウンドで開始し、cursor 0 から tail する SSE を返す。
+
+    プロデューサは接続が切れても完走するので、後から GET /sessions/{id}/stream で
+    再接続して取りこぼしを再生できる。`start` イベントに session_id が載る。
+    """
     try:
         council = service.build_council(
             req.persona_ids,
@@ -58,8 +66,22 @@ def create_session(req: SessionRequest) -> StreamingResponse:
     except ValueError as exc:  # パネリスト0人など
         raise HTTPException(status_code=400, detail=str(exc))
 
+    session = service.start_session(council, req.topic)
     return StreamingResponse(
-        service.stream_council(council, req.topic),
+        service.tail(session, cursor=0),
         media_type="text/event-stream",
-        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+        headers=_SSE_HEADERS,
+    )
+
+
+@app.get("/sessions/{session_id}/stream")
+def reconnect_session(session_id: str, cursor: int = 0) -> StreamingResponse:
+    """再接続。events[cursor:] を再生 → ライブ tail。未知 id は 404。"""
+    session = service.get_session(session_id)
+    if session is None:
+        raise HTTPException(status_code=404, detail="unknown session id")
+    return StreamingResponse(
+        service.tail(session, cursor=cursor),
+        media_type="text/event-stream",
+        headers=_SSE_HEADERS,
     )

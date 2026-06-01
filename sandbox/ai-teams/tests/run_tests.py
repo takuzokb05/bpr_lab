@@ -341,6 +341,60 @@ def test_streaming():
     )
 
 
+def _parse_sse(wire: list[str]) -> list[dict]:
+    """SSE 文字列の列を {event, data} のリストにパースする（テスト用）。"""
+    import json
+
+    out = []
+    for chunk in wire:
+        lines = chunk.strip().splitlines()
+        event = next(l.removeprefix("event: ") for l in lines if l.startswith("event: "))
+        data = next(l.removeprefix("data: ") for l in lines if l.startswith("data: "))
+        out.append({"event": event, "data": json.loads(data)})
+    return out
+
+
+def test_session_transport():
+    """Step 2: バックグラウンド実行＋seqバッファ＋cursor 再接続。"""
+    print("[test] session transport (background run / seq / reconnect)")
+
+    council = service.build_council(
+        ["moderator", "logic", "idea", "chair"], rounds_per_phase=1, mock=True
+    )
+    session = service.start_session(council, "議題BG")
+
+    # 1. cursor 0 から tail（プロデューサ完走まで読み切る）
+    wire = list(service.tail(session, cursor=0))
+    session.thread.join(timeout=5)
+    check(session.status == "done", f"プロデューサ完走で status=done: {session.status}")
+
+    parsed = _parse_sse(wire)
+    kinds = [e["event"] for e in parsed]
+    check(kinds[0] == "start", "最初は start")
+    check(kinds[-1] == "done", "最後は done")
+    check(parsed[0]["data"]["session_id"] == session.id, "start に session_id が載る")
+    check("error" not in kinds, "error は出ない")
+
+    # seq は 0 から連番・単調増加
+    seqs = [e["data"]["seq"] for e in parsed]
+    check(seqs == list(range(len(seqs))), f"seq が 0 から連番: {seqs[:5]}...")
+
+    # turn_start→delta*→turn_end が含まれる（Step 1 のイベント列が乗っている）
+    check("turn_start" in kinds and "delta" in kinds and "turn_end" in kinds,
+          "turn_start/delta/turn_end がワイヤに乗る")
+
+    # 2. 再接続: 終了後に events が TTL で残っている間、cursor から再生できる
+    cut = 3
+    again = _parse_sse(list(service.tail(session, cursor=cut)))
+    check([e["data"]["seq"] for e in again] == list(range(cut, len(seqs))),
+          f"cursor={cut} で events[cursor:] を再生（バックログ再生）")
+    check(again[0]["data"]["seq"] == cut, "再接続は指定 cursor から始まる")
+
+    # 3. get_session / 未知 id
+    check(service.get_session(session.id) is session, "get_session で取得できる")
+    check(service.get_session("nope") is None, "未知 id は None（API では 404）")
+
+
 # ---------------------------------------------------------------------------
 if __name__ == "__main__":
     test_context_isolation()
@@ -351,6 +405,7 @@ if __name__ == "__main__":
     test_red_team()
     test_exec_summary()
     test_streaming()
+    test_session_transport()
     print()
     if _failures:
         print(f"[FAIL] {len(_failures)} 件 FAIL")
