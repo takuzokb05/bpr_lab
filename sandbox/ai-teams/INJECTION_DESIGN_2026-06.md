@@ -1,119 +1,164 @@
-# 追い質問の割り込み — 設計（2026-06）
+# 追い質問の割り込み — 設計 v2（2026-06・レビュー反映）
 
 MVP必須機能の本丸。議論の進行中に人間が「追い質問」を差し込み、パネリストに
-深掘りさせる。`FEATURE_REVIEW_2026-06.md` のF節で MVP 入りが確定した機能。
+深掘りさせる。`FEATURE_REVIEW_2026-06.md` F節で MVP 入りが確定。
+
+> **v2 改訂**: 設計レビューで「実装の手間よりUX」を再確認し、2つの上位決定を追加した
+> 結果、**注入単体**から**セッション/トランスポート層の再設計**にスコープが広がった
+> （実装量は当初比 約2〜3倍）。本書はその確定版。
 
 ## 決定（ユーザー確定）
 
-- **アーキ = 案A：ステートフル・セッション＋注入キュー**（実装の手間より最もUXが高い方）。
-- **応答ルーティング = 司会が再提示 → 次ラウンドで全員が織り込む**。
-- drain 粒度 = **ターン境界**（各発言の直後に確認）。フェーズ境界より反応が速く、
-  「割り込んだ感」が出る＝最高UX方針に合わせる。半同期だが体感はほぼ即時。
+1. **アーキ = 案A：ステートフル・セッション**（最もUXが高い方）。
+2. **応答ルーティング = 司会が再提示 → 次ラウンドで全員が織り込む**。
+3. **drain 粒度 = ターン境界**（各発言の直後に確認）。
+4. **🆕 トークンストリーミングを先に入れる**（UX最大のレバー。「生きた会議」感）。
+5. **🆕 軽い再接続 resume を入れる**（案Aの弱点「切断でセッション消滅」を緩和）。
 
-## 大前提（唯一の制約）
+レビューで挙げた軽量UX修正 B/E/F も本設計に織り込み済み（後述）。
 
-SSE は **サーバー→クライアントの一方向**。進行中の議論に届く追い質問を扱うには、
-ストリーム実行中の **クライアント→サーバーの裏チャネル** が要る。案Aはこれを
-「メモリ上のセッション＋別エンドポイント＋スレッドセーフなキュー」で作る。
+## 大前提（唯一の制約）と、再設計の理由
 
-FastAPI は同期ジェネレータの `StreamingResponse` を **スレッドプール** で回す。
-よって `queue.Queue` をそのまま裏チャネルにできる（**asyncio 書き換え不要**）。
-`POST /sessions/{id}/messages` ハンドラがキューに積み、ストリーム側のジェネレータが
-ターン境界で drain する。
+SSE は **サーバー→クライアントの一方向**。進行中の議論への割り込みには
+**クライアント→サーバーの裏チャネル**が要る（→ 別エンドポイント＋キュー）。
 
-## データモデル（メモリ常駐）
+決定4・5により、さらに次が必要になる:
+
+- **再接続 resume**: 討論を **HTTP接続から切り離してバックグラウンドで実行**し、
+  セッションが **イベントを溜める**。接続が切れても進行は続き、再接続時に
+  「溜まったぶんを再生 → ライブ継続」できる。
+- **ストリーミング**: 1発言を「`turn_start` → `delta`* → `turn_end`」の
+  **イベント列**に変える。
+
+この2つは同じ「セッション内イベントバッファ＋ファンアウト」機構で噛み合う。
+
+## アーキ全体像
+
+```
+POST /sessions ──▶ Session生成 + プロデューサ起動(別スレッド) ──▶ SSEで tail
+                      │
+   council.run(topic, pull=…, emit=…)  ← バックグラウンドで完走まで実行
+                      │  各 turn_start/delta/turn_end を
+                      ▼
+            Session.events: list[Event]   (append-only, 各 event に連番 seq)
+                      ▲                         │ notify
+   POST /sessions/{id}/messages              読み手(複数可)が cursor から tail
+        → inbox.put(HumanMessage)         GET /sessions/{id}/stream?cursor=N で再接続
+```
+
+- FastAPI は同期ジェネレータ/スレッドを **スレッドプール** で回すので、`queue.Queue`
+  と `threading.Condition` でスレッド間連携できる（**asyncio 全面書き換えは不要**）。
+- プロデューサは **接続が無くても完走**（resume のため）。誰も見ていない間も LLM が
+  進む点は「軽い」MVP の割り切り。将来 pause-on-no-client を足せる。
+
+## データモデル（メモリ常駐・単一ワーカー前提）
 
 ```python
-# api/service.py（プロセス内・1ワーカー前提のMVP）
 @dataclass
 class HumanMessage:
-    kind: str          # "followup" | "intervention"（当面 followup のみ使用）
-    text: str
-    target: str | None = None   # 将来のペルソナ指名用。MVPでは未使用
+    kind: str = "followup"   # 将来: "intervention" | "rewind" を同機構で追加
+    text: str = ""
+    target: str | None = None   # 将来のペルソナ指名。MVP未使用
 
 @dataclass
 class Session:
     id: str
     inbox: "queue.Queue[HumanMessage]"
+    events: list[dict]                 # 連番 seq 付きイベントログ（再生元）
+    cond: "threading.Condition"        # 新イベントを読み手に通知
+    status: str = "running"            # running | done | error
+    # producer スレッド参照、created_at など
 
-SESSIONS: dict[str, Session] = {}   # id -> Session
+SESSIONS: dict[str, Session] = {}
 ```
 
-- セッションは `POST /sessions` で生成・登録、ストリーム終了（done/error/切断）で
-  `finally` にて破棄。リークしないことをテストで担保。
-- MVPは **単一ワーカー** 前提（uvicorn 1プロセス）。複数ワーカーに分けるなら
-  共有ストア（Redis等）が要るが、それは Phase 6 の永続化と一緒に検討。
+- 終了後も **短時間 TTL** で残し、遅れた再接続が最終 transcript を再生/エクスポート
+  できるようにする。その後 GC（件数上限＋古い順破棄）。
 
-## core 側：`Council.run` を注入可能にする
+## イベント・プロトコル（SSE）
 
-シグネチャ拡張（後方互換・既存呼び出しはそのまま動く）:
+各イベントに単調増加 `seq` を載せる（再接続カーソル用）。
 
-```python
-def run(self, topic, *, pull=None) -> Iterator[Turn]:
-    # pull: Callable[[], list[HumanMessage]] | None
-    #   呼ぶと「未処理の人間メッセージを全部取り出してキューを空にする」非ブロッキング関数
-```
+| event | data |
+|---|---|
+| `start` | `{topic, session_id}` |
+| `turn_start` | `{turn_id, speaker_id, speaker_name, phase, round}` |
+| `delta` | `{turn_id, text}` （差分トークン） |
+| `turn_end` | `{turn_id}` （発言確定） |
+| `done` | `{}` |
+| `error` | `{message}` |
 
-進行ロジックの変更点:
+- 人間ターン／司会の再提示も、同じ `turn_start`→`delta`→`turn_end`（`speaker_id` が
+  `"human"` ／ 司会id、`phase` が `"human"` ／ `"followup"`）。新イベント型は増やさない。
 
-1. フェーズ・ラウンドの二重ループは現状維持。**各パネリスト発言を yield した直後**に
-   `pull()` を呼ぶ（pull が None なら何もしない＝現状と完全一致）。
-2. 取り出した各メッセージにつき、次を transcript に積み yield する:
-   - **人間ターン** `Turn(speaker_id="human", speaker_name="あなた", phase="human")`。
-     `build_context` は active 以外の発言を `【名前】…` の user 行として全員に渡すので、
-     **改修不要**で全パネリストの文脈に「【あなた】追い質問…」が入る。
-   - **司会の再提示** `phase="followup"`：司会が追い質問を論点として言い直す
-     （司会が居なければスキップ）。
-3. 直後に **追い質問ラウンド**（ラウンドロビン1周）を挿入。この周回の phase_directive に
-   `【追い質問対応】人間から問いが入りました: "…"。各自まずこれに正面から答えてから…`
-   を前置きし、全員が織り込む。Red Team 指名者にはこれまで通り反対役の特命も乗る。
-4. 追い質問ラウンドが終わったら、**元のフェーズ・プランの続き**へ復帰。
-5. 複数同時に積まれていたら、古い順に1件ずつ 2〜4 を繰り返す。
+## core 側：ストリーミング＋注入
 
-> 設計判断: 追い質問は「割り込みの1ラウンド」を挿入する方式（元の進行は失わない）。
-> opening 前 / synthesis・summary 中の割り込みは MVP では拾わない（本編フェーズのみ）。
+### llm_client
+- `generate_stream(*, system, messages, model, temperature) -> Iterator[str]` を追加。
+  Anthropic は `messages.stream()` のテキスト差分を yield。
+  `MockLLMClient` は決定的に数チャンクに割って yield（テスト可能）。
+- 既存 `generate()` は残す（非ストリーム経路・後方互換）。
+
+### orchestrator: `run(topic, *, pull=None, emit=None)`
+- `emit: Callable[[dict], None] | None` … `turn_start` と `delta` を流す。
+- `pull: Callable[[], list[HumanMessage]] | None` … 未処理の人間メッセージを drain。
+- 各発言 `_speak` は:
+  1. `turn_id` を採番し `emit(turn_start…)`。
+  2. `generate_stream` を消費して `emit(delta…)` しつつ全文を蓄積。
+  3. 完成した `Turn`（`turn_id` 付き）を **yield**（=従来の契約を維持）。呼び出し側が
+     `turn_end` を出し、transcript に積む。
+- **後方互換**: `emit=None` なら `generate()` で一括生成し、従来どおり `Turn` だけを
+  yield ＝ **既存テストは無改修で通る**。
+- 注入（決定2・3）: 各 `Turn` を yield した直後に `pull()`。来ていたら順に:
+  - **人間ターン**を transcript に積み emit（`build_context` は他者発言を `【名前】…`
+    で全員に渡すので **改修不要**で「【あなた】追い質問…」が文脈に入る）。
+  - **司会の再提示**（`phase="followup"`、ストリーム発言）。司会不在ならスキップ。
+  - **追い質問ラウンド**を挿入。本編ローテーションを乱さないよう **順序スナップショット
+    固定**で1周（修正E）。directive に `【追い質問対応】…まずこれに答えてから…` を前置き。
+    Red Team 指名者には反対役の特命も従来どおり付与。
+  - 復帰して元プラン継続。複数同時は **1ラウンドに束ねて**処理（修正E）。
+- 割り込みを拾うのは本編フェーズのみ（opening 前・summary/synthesis 中は拾わない）。
 
 ## API 側
-
-- `POST /sessions`：Session を生成して `SESSIONS` に登録し、その `inbox.get_nowait`
-  ベースの `pull` を `run(topic, pull=...)` に渡す。`start` イベントに **`session_id`** を
-  載せる（`{"topic":…, "session_id":…}`）。クライアントは start から id を得る。
-  `finally` で `SESSIONS.pop(id, None)`。
-- `POST /sessions/{id}/messages`：body `{kind, text, target?}`。該当 Session の
-  `inbox.put(HumanMessage(...))` して `202 Accepted`。未知/終了済み id は `404`。
-- `human` / `followup` フェーズも既存の `turn` イベントとして流れる（新イベント型は不要）。
+- `POST /sessions`: Session 生成 → プロデューサ起動 → cursor 0 から tail する SSE を返す。
+  `start` に `session_id`。
+- `GET /sessions/{id}/stream?cursor=N`: **再接続**。`events[N:]` を再生 → ライブ tail。
+  未知 id は 404。
+- `POST /sessions/{id}/messages`: `{kind,text,target?}` → `inbox.put` → 202。未知/終了は 404。
+- プロデューサ終了で `status` 更新、TTL 後に `SESSIONS` から破棄（リークしない）。
 
 ## web 側
-
-- `lib/sse.ts`：`start` イベントから `sessionId` を取り出し `onEvent({type:"start", sessionId})`。
-  案Aはストリームを開いたままにするので **abort は不要**。
-- `lib/sse.ts`：`sendFollowup(sessionId, text)` を追加 → `POST /api/sessions/{id}/messages`。
-- Next.js の rewrite が `/api/sessions/:id/messages` を API へ転送するよう確認（`next.config`）。
-- UI：タイムライン下部に追い質問の入力欄。`status==="running"` の間だけ有効。
-  送信後、注入された「あなた」「司会(followup)」ターンが同じストリームで流れて表示される。
-  `human` フェーズはタイムライン上で人間の発言として強調（右寄せ等）。
+- `lib/sse.ts`: `turn_start/delta/turn_end` をパース。`turn_id` ごとに部分テキストを
+  保持し `delta` で追記 → **タイピング表示**。`start` で `sessionId` と `seq` 追跡開始。
+- **再接続**: `done` 前にストリームが切れたら `GET …/stream?cursor=lastSeq+1` で
+  自動再接続し、バックログ＋ライブをマージ。
+- **楽観的エコー（修正B）**: 追い質問の送信時に、クライアント生成idで即「あなた」吹き出し
+  ＋「次の発言から反映します」を表示。サーバーの human ターン到着時に重複解消。
+- **入力欄**: `status==="running"` かつ本編フェーズの間だけ有効。summary/synthesis 突入で
+  無効化＋理由表示（修正F）。
+- 案A はストリームを開いたままなので通常時 abort 不要（切断時のみ再接続）。
+- Next.js rewrite が `/api/sessions/:id/stream` と `/messages` を転送するか確認。
 
 ## テスト計画（mock で決定的に）
+- llm: `generate_stream` の連結が全文と一致。
+- orchestrator: `emit` 捕捉で `turn_start→delta*→turn_end` の順序／delta連結＝`Turn.content`
+  ／`turn_id` 単調増加。`pull` 注入がストリーム経路でも動く。`emit=None` で従来と一致。
+- service: `events`/`seq` のバッファ、cursor 再生（バックログ→tail）、`inbox` 取り出し、
+  終了後の TTL 破棄。
+- 既存テスト（ターン数・分離・モデル上書き・Red Team・summary）が無改修で通ること。
 
-- core: `pull` が1回だけメッセージを返すフェイクを渡して `run()` を回し、
-  (a) `human` ターンが出る (b) `followup`（司会）ターンが続く
-  (c) その後のパネリスト発言の messages に追い質問テキストが含まれる
-  (d) pull=None なら従来と完全一致（ターン数不変）。
-- service: Session 登録→pull が積んだ HumanMessage を取り出す→ストリーム終了で
-  `SESSIONS` から消える（リークしない）。
-- 既存のターン数テスト等が壊れないこと（pull 未指定の経路は不変）。
-
-## 実装ステップ（小さく刻む）
-
-1. core: `run(pull=...)` ＋ 追い質問ラウンド挿入 ＋ core テスト。
-2. api: `Session`/`SESSIONS`、`POST /sessions/{id}/messages`、`start` に session_id、
-   `finally` で破棄 ＋ service テスト。
-3. web: sse.ts に sessionId 取得と sendFollowup、入力欄UI、human ターン表示。
-4. 実起動で疎通（ストリーム中に追い質問POST→注入ターンが流れる）。
+## 実装ステップ（小さく刻む・ストリーミング先行）
+1. **core ストリーミング**: `generate_stream` ＋ `run(emit=…)` ＋ テスト（既存維持）。
+2. **API トランスポート**: バックグラウンド実行＋`events/seq`バッファ＋tail SSE
+   ＋`GET …/stream`再接続 ＋ テスト。
+3. **core 注入**: `run(pull=…)` ＋ 追い質問ラウンド（順序固定・束ね）＋ テスト。
+4. **API メッセージ**: `POST …/messages`、`start` に session_id。
+5. **web**: delta タイピング描画／再接続／楽観的エコー／入力欄（フェーズ制御）。
+6. 実起動で疎通（ストリーム表示・割り込み注入・接続断→再接続）。
 
 ## 既知の限界 / 将来拡張
-
-- 単一ワーカー前提（マルチワーカーは共有ストアが要る → Phase 6）。
-- `target`（ペルソナ指名）・`intervention`（司会への指示）・巻き戻しは **同じキュー/同じ
-  human ターン機構** に後付けできる設計。`kind` を増やすだけで「人間操作を厚く」を拡張可能。
-- セッションの TTL/上限は未実装（メモリ保護が要るなら後で max件数＋古いものから破棄）。
+- 単一ワーカー前提（マルチワーカーは共有ストア＝Phase 6 永続化と一緒に）。
+- 誰も見ていない間も進行＝LLM コストが出る（pause-on-no-client は将来）。
+- `target`（指名）・`intervention`（司会への指示）・`rewind`（巻き戻し）は **同じ
+  inbox / human ターン機構** に `kind` 追加で後付け可能＝「人間操作を厚く」を1本で拡張。
+- セッション TTL/上限は MVP で簡易（件数上限＋古い順破棄）。
