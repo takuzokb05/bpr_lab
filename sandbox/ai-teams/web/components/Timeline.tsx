@@ -56,6 +56,14 @@ export function Timeline({
       </div>
 
       <div className="flex flex-col gap-5">
+        {/* 最初の発言が来るまでの「生きてる感」。実LLMは初回トークンまで数秒かかる。 */}
+        {status === "running" && visible.length === 0 && (
+          <div className="flex items-center gap-2 text-sm text-[var(--color-ink-muted)]">
+            <span className="animate-pulse-soft inline-block h-2 w-2 rounded-full bg-[var(--color-accent)]" />
+            接続しました。最初の発言を準備しています…
+          </div>
+        )}
+
         {visible.map((t) => {
           const isStreaming = t.turn_id === streamingTurnId;
 
