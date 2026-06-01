@@ -102,8 +102,9 @@ system_prompt: |
   - 見た目=報道番組系の静かな上質さ／絵文字ほぼ全廃＋アイコン体系／**Streamlitから Next.js+SSE へ移行検討**
   - [x] `api/`(FastAPI) で `council.run()` を SSE 配信（`/health` `/personas` `/sessions`）→ v2の「途中経過が見えない」を構造的に解消。service.py はFW非依存でテスト済み
   - [x] ペルソナに `accent` 色＋`monogram` を追加（絵文字 `avatar` 依存をUIから外す下ごしらえ）
-  - [ ] `web/`(Next.js+Tailwind) で3レーンIA・モノグラムアバター・ストリーミング表示
-  - [ ] ボイス刷新（厨二語の置換）をUI文言に反映
+  - [x] `web/`(Next.js15+Tailwind4) で3レーンIA・モノグラムアバター・SSEストリーミング表示。`next build`通過＋両サーバ実起動でプロキシ/SSE/HTML描画を疎通確認
+  - [x] ボイス刷新（厨二語の置換）をUI文言に反映（討論を開始/編成/成果(議事録)/進行中…）
+  - [ ] 人間操作系UI（「介入」「巻き戻し」）・実LLM接続トグル（現状フロントは mock 固定）・モバイル縦積みは次段
 - [ ] **Phase 5**: 経営者・哲学者ペルソナを YAML で追加（jobs / socrates を雛形として実装済み。今後拡充）
 - [ ] **Phase 6**: 永続化（SQLite）を「あれば便利」レベルで戻す（v2のDB資産を流用可）
 - [ ] **Phase 7（残課題）**: 収束検知による早期停止、ストリーミング出力、コスト計上

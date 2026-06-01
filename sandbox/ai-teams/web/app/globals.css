@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+/* ===========================================================================
+   AI COUNCIL — デザイントークン（UIUX_REVIEW_2026-05.md 準拠）
+   報道番組系の静かな上質さ：温かい黒インク × 生成り紙面 × 唯一のアクセント深青。
+   絵文字でなく余白・タイポ・罫線で階層を作る。
+   =========================================================================== */
+@theme {
+  --color-ink: #1f1d1a;        /* 本文（温かみのある黒） */
+  --color-ink-muted: #6b675f;  /* 補助テキスト */
+  --color-paper: #fafaf7;      /* 背景（生成り） */
+  --color-surface: #ffffff;    /* カード面 */
+  --color-line: #e7e4dd;       /* 罫線 */
+  --color-accent: #2e5d7d;     /* 唯一のアクセント（深い青＝報道の知的さ） */
+  --color-accent-weak: #eaf1f5;
+
+  --font-sans: "Noto Sans JP", system-ui, sans-serif;
+  --font-serif: "Noto Serif JP", serif;
+
+  --radius-card: 6px;
+}
+
+html,
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 見出しは明朝を少量だけ使い、報道紙面の格を出す */
+.font-display {
+  font-family: var(--font-serif);
+  letter-spacing: 0.02em;
+}
+
+/* 新発言は静かにフェードイン（派手なアニメは禁止） */
+@keyframes turn-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-turn-in {
+  animation: turn-in 0.35s ease-out both;
+}
+
+/* 発言中インジケータの控えめな点滅 */
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.animate-pulse-soft {
+  animation: pulse-soft 1.4s ease-in-out infinite;
+}
