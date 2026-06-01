@@ -20,9 +20,10 @@ export interface Persona {
 }
 
 export interface Turn {
+  turn_id: number; // ストリーミング/再接続でターンを一意に識別
   speaker_id: string;
   speaker_name: string;
-  content: string;
+  content: string; // ストリーミング中は delta で伸びていく
   phase: string;
   round: number;
 }

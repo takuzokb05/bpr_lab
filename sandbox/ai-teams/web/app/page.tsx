@@ -20,7 +20,7 @@ export default function Home() {
   const [turns, setTurns] = useState<Turn[]>([]);
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
-  const [streamingSpeakerId, setStreamingSpeakerId] = useState<string | null>(null);
+  const [streamingTurnId, setStreamingTurnId] = useState<number | null>(null);
   const abortRef = useRef<AbortController | null>(null);
 
   useEffect(() => {
@@ -57,7 +57,7 @@ export default function Home() {
   function stop() {
     abortRef.current?.abort();
     setStatus((s: Status) => (s === "running" ? "done" : s));
-    setStreamingSpeakerId(null);
+    setStreamingTurnId(null);
   }
 
   async function start() {
@@ -72,7 +72,7 @@ export default function Home() {
     setTurns([]);
     setError(null);
     setStatus("running");
-    setStreamingSpeakerId(null);
+    setStreamingTurnId(null);
 
     try {
       await startSession({
@@ -81,15 +81,35 @@ export default function Home() {
         mock: true, // APIキー未設定でも動くようデフォルトはモック。実LLMは false に。
         signal: ctrl.signal,
         onEvent: (e) => {
-          if (e.type === "turn") {
-            setTurns((prev) => [...prev, e.turn]);
-            setStreamingSpeakerId(null);
+          if (e.type === "turn_start") {
+            // 空の発言を1件追加し、以降の delta で本文を伸ばす（タイピング表示）。
+            setTurns((prev) => [
+              ...prev,
+              {
+                turn_id: e.turnId,
+                speaker_id: e.speakerId,
+                speaker_name: e.speakerName,
+                content: "",
+                phase: e.phase,
+                round: e.round,
+              },
+            ]);
+            setStreamingTurnId(e.turnId);
+          } else if (e.type === "delta") {
+            setTurns((prev) =>
+              prev.map((t) =>
+                t.turn_id === e.turnId ? { ...t, content: t.content + e.text } : t
+              )
+            );
+          } else if (e.type === "turn_end") {
+            setStreamingTurnId((cur) => (cur === e.turnId ? null : cur));
           } else if (e.type === "error") {
             setError(e.message);
             setStatus("error");
+            setStreamingTurnId(null);
           } else if (e.type === "done") {
             setStatus("done");
-            setStreamingSpeakerId(null);
+            setStreamingTurnId(null);
           }
         },
       });
@@ -127,7 +147,7 @@ export default function Home() {
             <Timeline
               topic={activeTopic}
               turns={turns}
-              streamingSpeakerId={streamingSpeakerId}
+              streamingTurnId={streamingTurnId}
               looks={looks}
               status={status}
             />

@@ -12,21 +12,24 @@ interface PersonaLook {
 export function Timeline({
   topic,
   turns,
-  streamingSpeakerId,
+  streamingTurnId,
   looks,
   status,
 }: {
   topic: string | null;
   turns: Turn[];
-  streamingSpeakerId: string | null;
+  streamingTurnId: number | null;
   looks: Record<string, PersonaLook>;
   status: "idle" | "running" | "done" | "error";
 }) {
   const endRef = useRef<HTMLDivElement>(null);
 
+  // 末尾ターンの本文が伸びるたびに追従スクロールする
+  const lastContent = turns.length ? turns[turns.length - 1].content : "";
+
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
-  }, [turns.length, streamingSpeakerId]);
+  }, [turns.length, lastContent, streamingTurnId]);
 
   if (!topic) {
     return (
@@ -51,10 +54,11 @@ export function Timeline({
       </div>
 
       <div className="flex flex-col gap-5">
-        {visible.map((t, i) => {
+        {visible.map((t) => {
           const look = looks[t.speaker_id] ?? { accent: "#5B7C8A", monogram: "?" };
+          const isStreaming = t.turn_id === streamingTurnId;
           return (
-            <article key={i} className="animate-turn-in flex gap-3">
+            <article key={t.turn_id} className="animate-turn-in flex gap-3">
               <Avatar monogram={look.monogram} accent={look.accent} size={36} />
               <div className="min-w-0 flex-1">
                 <header className="flex items-baseline gap-2">
@@ -64,20 +68,24 @@ export function Timeline({
                   </span>
                 </header>
                 <p className="mt-1 whitespace-pre-wrap text-sm leading-relaxed text-[var(--color-ink)]">
-                  {t.content}
+                  {/* 本文が空のまま発言中なら「考え中」、delta が来たら本文＋点滅キャレット */}
+                  {t.content === "" && isStreaming ? (
+                    <span className="text-[var(--color-ink-muted)]">考えています…</span>
+                  ) : (
+                    <>
+                      {t.content}
+                      {isStreaming && (
+                        <span className="animate-pulse-soft ml-0.5 inline-block align-middle">
+                          ▍
+                        </span>
+                      )}
+                    </>
+                  )}
                 </p>
               </div>
             </article>
           );
         })}
-
-        {status === "running" && streamingSpeakerId && (
-          <div className="flex items-center gap-3 pl-12 text-xs text-[var(--color-ink-muted)]">
-            <span className="animate-pulse-soft">
-              {looks[streamingSpeakerId]?.monogram ?? ""} が発言中…
-            </span>
-          </div>
-        )}
       </div>
       <div ref={endRef} />
     </div>
