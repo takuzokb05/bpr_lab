@@ -239,6 +239,26 @@
   .feed b{color:var(--text);}
   .feed .src{margin-top:var(--sp-2);color:var(--muted);font-size:var(--fs-base);border-left:2px solid var(--accent-weak);padding-left:var(--sp-3);}
 
+  /* クイズ生成レビュー（Step4 信頼ガード） */
+  .rv-summary{font-weight:var(--fw-bold);font-size:var(--fs-md);margin:var(--sp-2) 0 var(--sp-3);color:var(--text);}
+  .rv-item{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:var(--sp-3) var(--sp-4);margin-bottom:var(--sp-3);box-shadow:var(--shadow-1);}
+  .rv-item.bad{border-color:var(--bad-line);}
+  .rv-item.dropped{opacity:.5;}
+  .rv-head{display:flex;align-items:flex-start;gap:var(--sp-3);cursor:pointer;}
+  .rv-head input{margin-top:3px;width:20px;height:20px;flex:none;accent-color:var(--accent);}
+  .rv-q{flex:1;font-weight:var(--fw-bold);font-size:var(--fs-md);line-height:1.5;}
+  .rv-badge{flex:none;font-size:var(--fs-xs);padding:2px 8px;border-radius:var(--r-pill);border:1px solid var(--line);white-space:nowrap;}
+  .rv-badge.ok{color:var(--good);border-color:var(--good-line);}
+  .rv-badge.ng{color:var(--bad);border-color:var(--bad-line);background:rgba(217,104,106,.10);}
+  .rv-body{margin-top:var(--sp-2);padding-left:calc(20px + var(--sp-3));}
+  .rv-o{font-size:var(--fs-base);color:var(--muted);line-height:1.7;}
+  .rv-o.cor{color:var(--text);}
+  .rv-o .mk{color:var(--muted);margin-right:6px;}
+  .rv-o.cor .mk{color:var(--good);}
+  .rv-e{margin-top:var(--sp-2);font-size:var(--fs-sm);color:var(--muted);}
+  .rv-src{margin-top:var(--sp-1);font-size:var(--fs-sm);color:var(--muted);border-left:2px solid var(--accent-weak);padding-left:var(--sp-2);}
+  .rv-issues{margin-top:var(--sp-2);font-size:var(--fs-sm);color:var(--bad);}
+
   .result{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;}
   .score{font-family:var(--serif);font-size:var(--score-fs);font-weight:800;color:var(--accent);line-height:1;}
   .score small{font-size:1.625rem;color:var(--muted);}
@@ -427,7 +447,8 @@ function normalizeQuiz(arr){
     const a = aText!=null ? o.indexOf(aText) : -1;  // 正解の位置を本文で再特定
     if(a<0 || a>3) continue;                         // 正解不明 → 不採用（でっち上げない）
     while(o.length<4) o.push('');
-    out.push({q:String(x.q), o:o.slice(0,4), a, e:String(x.e||'')});
+    // src（本文根拠スニペット）はメモリ内のみ保持。toDeckJSON では剥がす（背骨9フィールド契約外）。
+    out.push({q:String(x.q), o:o.slice(0,4), a, e:String(x.e||''), src:String(x.src||'')});
   }
   return out;
 }
@@ -446,9 +467,10 @@ function normalizeDeck(raw){
     createdAt:d.createdAt||new Date().toISOString()
   });
 }
-// 書き出し用：正準9フィールドだけを emit（icon/desc等の派生値は混入させない）。
+// 書き出し用：正準9フィールドだけを emit（icon/desc/src 等の派生・補助値は混入させない）。
 function toDeckJSON(d){
-  const quiz=normalizeQuiz(d.quiz);
+  // quiz は {q,o,a,e} の4フィールドのみ。src（本文根拠）はエクスポートに含めない。
+  const quiz=normalizeQuiz(d.quiz).map(q=>({q:q.q, o:q.o, a:q.a, e:q.e}));
   return {
     id:d.id||uid(), title:String(d.title||''), source:String(d.source||''),
     flashMode:d.flashMode==='ai'?'ai':'original', flashText:String(d.flashText||''),
@@ -472,18 +494,76 @@ function parseJsonObjects(raw){
 }
 function parseQuizLoose(raw){ return normalizeQuiz(parseJsonObjects(raw)); }
 
+// 信憑性テスト(docs/QUIZ_CREDIBILITY_TEST.md §3)を反映した強化版プロンプト。
+// 本文外参照の明示禁止 / 一意性・相互排他を独立条項化 / 数値取り違え厳禁 / 各問に本文根拠 src を必須化。
 async function genQuiz(text){
   const prompt =
-`あなたは資格試験の問題作成者です。次の本文だけを根拠に4択問題を作ってください。
-・問題数は本文量に応じて適切に（目安: 本文200〜300字あたり1問、重要論点を網羅）。
-・選択肢は必ず4つ・正解1つ。・解説は40字以内で簡潔に。
-出力はJSON配列のみ。前後の説明やマークダウンは禁止。
-形式: [{"q":"問題文","o":["1","2","3","4"],"a":正解番号(0始まり),"e":"短い解説"}]
-本文:
+`あなたは資格試験の問題作成者です。【本文】の記述だけを根拠に4択問題を作ります。
+
+# 厳守ルール（破ったら出題しない）
+1. 本文外参照の禁止: 本文に書かれていない事実・一般常識・あなたの知識を一切使わない。本文に根拠が無い論点は出題しない（無理に問題数を埋めない）。
+2. 一意性: 正解は本文上ただ1つに定まること。本文だけで答えが2つ以上取れる問題は作らない。
+3. 選択肢の相互排他: 4つの選択肢は互いに両立しない。誤りの3つは「本文に照らすと明確に誤り」であること。本文上も正しい・部分的に正しい選択肢を誤りに混ぜない。
+4. 数値・固有名詞: 本文の値を一字一句そのまま使う。近い数値を誤選択肢に置くときも、正解の値は本文と完全一致させる（取り違え厳禁）。
+5. 各問に "src"（本文根拠スニペット）を必須で付ける: 正解の根拠になる本文の一節を改変せず10〜60字そのまま抜き出す。抜き出せない＝本文に根拠が無い問題は作らない。
+6. 解説 "e" は40字以内。正解が本文のどこに基づくかを簡潔に。
+
+# 出力（JSON配列のみ。前後の説明・マークダウン・コードフェンス禁止）
+[{"q":"問題文","o":["選択肢1","選択肢2","選択肢3","選択肢4"],"a":正解番号(0始まり),"e":"短い解説","src":"本文からの根拠抜粋"}]
+
+# 問題数
+本文量に応じて適切に（目安: 200〜300字あたり1問、重要論点を網羅）。質を量より優先する。
+
+【本文】
 """${text}"""`;
   const arr = parseQuizLoose(await callLLM(prompt,{maxTokens:8192}));
   if(!arr.length) throw new Error("問題を取り出せませんでした");
   return arr;
+}
+// Step4 自己検証（docs/QUIZ_CREDIBILITY_TEST.md §4）: callLLM バッチ1回で各問を本文のみ基準に判定。
+// 戻り: items と同順・同数の [{ok,unique,wrongClear,grounded,reason}]。失敗時は全 ok=true 扱い（過剰除外を避ける）。
+async function verifyQuiz(items, source){
+  const passAll = items.map(()=>({ok:true,unique:true,wrongClear:true,grounded:true,reason:''}));
+  if(!items.length) return [];
+  const payload = items.map((x,i)=>({i, q:x.q, o:x.o, a:x.a, e:x.e, src:x.src||''}));
+  const prompt =
+`あなたはクイズの校閲者です。【本文】だけを唯一の根拠として各設問を検査します。あなた自身の知識・一般常識は使わない（本文に書いていなければ「判断不能」とみなし不合格）。
+
+各設問について次の3点を判定:
+- unique: 本文だけを根拠に、正解(aが指す選択肢)が唯一の正解として定まるか（他の選択肢も正しい/正解が2つ取れるなら false）
+- wrongClear: 正解以外の3つすべてが本文に照らして「明確に誤り」か（1つでも本文上正しい・部分的に正しい・判断不能なら false）
+- grounded: 設問・正解・解説のすべてが本文の記述に基づくか（本文外の事実を含まないか）
+
+判定ルール:
+- unique・wrongClear・grounded すべて true のときだけ ok=true。1つでも false なら ok=false。
+- 数値・固有名詞は本文と完全一致か確認（近い別数値が正解に化けていないか）。
+- reason は20字以内で簡潔に。
+
+出力（JSON配列のみ。前後の説明・マークダウン禁止。入力と同じ順序・同じ件数）:
+[{"i":0,"ok":true,"unique":true,"wrongClear":true,"grounded":true,"reason":"理由"}]
+
+【本文】
+"""${source}"""
+
+【設問】
+${JSON.stringify(payload)}`;
+  let arr;
+  try{ arr = parseJsonObjects(await callLLM(prompt,{maxTokens:4096})); }
+  catch(e){ if(e&&(e.code==='abort')) throw e; return passAll; }   // 中断は伝播、その他失敗は全採用
+  if(!Array.isArray(arr)||!arr.length) return passAll;
+  // i で対応付け。欠落は ok=true 既定（過剰除外しない）
+  const out = items.map((_,i)=>{
+    const v = arr.find(r=>r&&Number(r.i)===i) || {};
+    const has = ('ok' in v);
+    return {
+      ok: has ? !!v.ok : true,
+      unique: ('unique' in v)?!!v.unique:true,
+      wrongClear: ('wrongClear' in v)?!!v.wrongClear:true,
+      grounded: ('grounded' in v)?!!v.grounded:true,
+      reason: String(v.reason||'')
+    };
+  });
+  return out;
 }
 async function reconstruct(text){
   const prompt =
@@ -1201,7 +1281,12 @@ async function make(){
     if(made.length){
       decks=made.concat(decks); saveDecks();
       if(stopMsg) showToast(`${made.length}件を作成（${stopMsg}で停止）`);
-      if(made.length===1 && sections.length===1){ cur=made[0]; deckDetail(); } else library();
+      // 単一教材＆クイズ生成ありなら、信頼ガードのレビュー画面へ（複数は枚数が多すぎるため自動）
+      if(made.length===1 && sections.length===1){
+        cur=made[0];
+        if(gen && made[0].quiz.length){ genAbort=null; await reviewQuiz(made[0], made[0].quiz); }
+        else deckDetail();
+      } else library();
       return;
     }
     restore(stopMsg||'生成に失敗しました。本文を短くするか、もう一度お試しください。');
@@ -1268,9 +1353,7 @@ function deckDetail(){
     saveDecks();
   };});
   if(d.quizStatus!=='ready'){
-    document.getElementById('qgen').onclick=async()=>{loading("4択を作成中…");
-      try{cur.quiz=await genQuiz(cur.source||cur.flashText);cur.quizStatus="ready";saveDecks();deckDetail();}
-      catch(e){deckDetail();document.getElementById('qzone').insertAdjacentHTML('beforebegin',`<div class="banner">生成失敗（${esc(e.message)}）。</div>`);}};
+    document.getElementById('qgen').onclick=()=>quizGenAndReview(cur);
     document.getElementById('qpaste').onclick=showPaste;
   }
 }
@@ -1545,9 +1628,7 @@ function afterFlash(){
     <button class="btn ghost block" id="b">教材に戻る</button></div>`;
     focusHeading();
     document.getElementById('b').onclick=deckDetail;
-    document.getElementById('g').onclick=async()=>{loading("4択を作成中…");
-      try{cur.quiz=await genQuiz(cur.source||cur.flashText);cur.quizStatus="ready";saveDecks();startQuiz();}
-      catch(e){deckDetail();}};
+    document.getElementById('g').onclick=()=>quizGenAndReview(cur);
   }
 }
 
@@ -1591,7 +1672,7 @@ function answer(pick){
   });
   const last=quizI===activeQuiz.length-1;
   const head=correct?'<b>正解</b>':'<b>正解はこちら</b>';
-  const srcHtml=q._src?`<div class="src">本文の根拠：${esc(q._src)}</div>`:'';
+  const srcHtml=q.src?`<div class="src">本文の根拠：${esc(q.src)}</div>`:'';
   document.getElementById('feedslot').innerHTML=
     `<div class="feed" role="alert"><span class="sr-only">${correct?'正解':'不正解'}。</span>${head} ${esc(q.e||'')}${correct?'':`<br>正答：${esc(q.o[q.a]||'')}`}${srcHtml}</div>
      <button class="btn block" id="next">${last?'結果を見る':'次の問題'}</button>`;
@@ -1631,6 +1712,71 @@ function result(){
   document.getElementById('again').onclick=()=>startQuiz();
   document.getElementById('deck').onclick=deckDetail;
   document.getElementById('back').onclick=library;
+}
+
+// ====== クイズ生成＋信頼ガード（Step4） ======
+// 生成 → 自己検証 → レビュー画面。deck.quiz は採用分のみ確定する。
+async function quizGenAndReview(deck){
+  loading("4択を作成中…（生成＋自己点検でAPI約2回）",{abortable:true});
+  genAbort=new AbortController();
+  try{
+    const items=await genQuiz(deck.source||deck.flashText);
+    genAbort=null;
+    await reviewQuiz(deck, items);
+  }catch(e){
+    genAbort=null;
+    cur=deck; deckDetail();
+    if(!(e&&e.code==='abort')) showToast('生成に失敗：'+friendlyErr(e));
+  }
+}
+// 生成済み items を自己検証してレビュー画面へ。
+async function reviewQuiz(deck, items){
+  items=normalizeQuiz(items);   // src保持・空/重複/正解不明をここでも除去
+  if(!items.length){ deck.quiz=[]; deck.quizStatus='unset'; saveDecks(); cur=deck; deckDetail(); showToast('有効な問題を作れませんでした'); return; }
+  loading("作った問題を点検中…（本文との整合を自己検証）",{abortable:true});
+  genAbort=new AbortController();
+  let verdicts;
+  try{ verdicts=await verifyQuiz(items, deck.source||deck.flashText); }
+  catch(_){ verdicts=items.map(()=>({ok:true,unique:true,wrongClear:true,grounded:true,reason:''})); }
+  finally{ genAbort=null; }
+  const sel=items.map((_,i)=> verdicts[i]?!!verdicts[i].ok:true);   // 要確認は既定で除外
+  renderReview(deck, items, verdicts, sel);
+}
+function renderReview(deck, items, verdicts, sel){
+  const rows=items.map((q,i)=>{
+    const v=verdicts[i]||{}, bad=!v.ok;
+    const iss=[]; if(v.unique===false)iss.push('正解が一意でない'); if(v.wrongClear===false)iss.push('誤答が誤りと言い切れない'); if(v.grounded===false)iss.push('本文に根拠なし');
+    const badge=bad?`<span class="rv-badge ng">要確認</span>`:`<span class="rv-badge ok">本文と整合</span>`;
+    const opts=q.o.filter(o=>o!=='').map((o,oi)=>`<div class="rv-o${oi===q.a?' cor':''}"><span class="mk" aria-hidden="true">${oi===q.a?'○':'・'}</span>${esc(o)}</div>`).join('');
+    return `<div class="rv-item${bad?' bad':''}${sel[i]?'':' dropped'}">
+      <label class="rv-head"><input type="checkbox" data-i="${i}" ${sel[i]?'checked':''}><span class="rv-q">${esc(q.q)}</span>${badge}</label>
+      <div class="rv-body">${opts}
+        <div class="rv-e">${esc(q.e||'')}</div>
+        ${q.src?`<div class="rv-src">本文の根拠：${esc(q.src)}</div>`:''}
+        ${iss.length?`<div class="rv-issues">⚠ ${esc(iss.join(' / '))}${v.reason?'（'+esc(v.reason)+'）':''}</div>`:''}
+      </div></div>`;
+  }).join('');
+  screenEl.innerHTML=`<div class="screen form">
+    <div class="dtitle" tabindex="-1">問題の点検</div>
+    <div class="meta">AIが本文だけを根拠に自己点検しました。「要確認」は既定で除外しています。採用する問題にチェックを残してください。</div>
+    <div class="rv-summary" id="rvsum">採用 ${sel.filter(Boolean).length} / ${items.length}問</div>
+    <div id="rvlist">${rows}</div>
+    <button class="btn block" id="rvok">この内容で確定</button>
+    <button class="btn ghost block" id="rvregen">全部作り直す</button>
+    <button class="btn ghost block" id="rvskip">問題なしで保存</button>
+  </div>`;
+  focusHeading();
+  document.getElementById('rvlist').onchange=e=>{ const cb=e.target.closest('input[type=checkbox]'); if(!cb)return;
+    sel[+cb.dataset.i]=cb.checked;
+    document.getElementById('rvsum').textContent=`採用 ${sel.filter(Boolean).length} / ${items.length}問`;
+    const it=cb.closest('.rv-item'); if(it) it.classList.toggle('dropped',!cb.checked); };
+  document.getElementById('rvok').onclick=()=>{
+    const accepted=items.filter((_,i)=>sel[i]);
+    deck.quiz=accepted; deck.quizStatus=accepted.length?'ready':'unset'; saveDecks();
+    cur=deck; deckDetail(); showToast(`${accepted.length}問を採用しました`);
+  };
+  document.getElementById('rvregen').onclick=()=>quizGenAndReview(deck);
+  document.getElementById('rvskip').onclick=()=>{ deck.quiz=[]; deck.quizStatus='unset'; saveDecks(); cur=deck; deckDetail(); };
 }
 
 function stop(){playing=false;clearTimeout(timer);teardownReader();document.onkeydown=null;}
