@@ -9,11 +9,14 @@ v2 の不安定さの主因だった「3社マルチ API 吸収」をやめ、IF
 
 from __future__ import annotations
 
+import os
 from abc import ABC, abstractmethod
 from typing import Callable, Iterator
 
 # エンジン既定モデル。ペルソナ側で model を指定すればそちらが優先される。
-DEFAULT_MODEL = "claude-sonnet-4-6"
+# 意思決定の討論は低頻度・高単価でも質を優先するため既定を Opus にする。
+# コスト優先なら .env の AI_TEAMS_MODEL=claude-sonnet-4-6 等で上書きできる。
+DEFAULT_MODEL = os.environ.get("AI_TEAMS_MODEL", "claude-opus-4-8")
 
 # Anthropic Messages API が期待する message の形:
 #   {"role": "user" | "assistant", "content": "..."}
@@ -56,6 +59,15 @@ class LLMClient(ABC):
             yield text
 
 
+# temperature を受け付けないモデル（API が 400 "temperature is deprecated" を返す）。
+# Opus 4.8 以降が該当。該当モデルには temperature を送らない。
+_TEMP_UNSUPPORTED_MARKERS = ("opus-4-8",)
+
+
+def _supports_temperature(model: str) -> bool:
+    return not any(m in model for m in _TEMP_UNSUPPORTED_MARKERS)
+
+
 class AnthropicClient(LLMClient):
     """本番用。anthropic SDK を遅延 import する。"""
 
@@ -67,6 +79,18 @@ class AnthropicClient(LLMClient):
         )
         self._max_tokens = max_tokens
 
+    def _params(self, *, system: str, messages: list[Message], model: str, temperature: float) -> dict:
+        """API 呼び出しパラメータ。temperature 非対応モデルには temperature を含めない。"""
+        params: dict = {
+            "model": model,
+            "system": system,
+            "messages": messages,
+            "max_tokens": self._max_tokens,
+        }
+        if _supports_temperature(model):
+            params["temperature"] = temperature
+        return params
+
     def generate(
         self,
         *,
@@ -76,11 +100,7 @@ class AnthropicClient(LLMClient):
         temperature: float = 0.7,
     ) -> str:
         resp = self._client.messages.create(
-            model=model,
-            system=system,
-            messages=messages,
-            max_tokens=self._max_tokens,
-            temperature=temperature,
+            **self._params(system=system, messages=messages, model=model, temperature=temperature)
         )
         return "".join(
             block.text for block in resp.content if getattr(block, "type", None) == "text"
@@ -96,11 +116,7 @@ class AnthropicClient(LLMClient):
     ) -> Iterator[str]:
         # Anthropic SDK の messages.stream() からテキスト差分を逐次 yield する。
         with self._client.messages.stream(
-            model=model,
-            system=system,
-            messages=messages,
-            max_tokens=self._max_tokens,
-            temperature=temperature,
+            **self._params(system=system, messages=messages, model=model, temperature=temperature)
         ) as stream:
             for text in stream.text_stream:
                 if text:

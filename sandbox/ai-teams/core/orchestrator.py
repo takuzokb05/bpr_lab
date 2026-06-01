@@ -376,32 +376,11 @@ class Council:
                     )
 
         # 3. 議長による統合（chairman パターン）。chair が無ければ司会が兼任。
+        #    かつて 3行エグゼクティブサマリ(summary フェーズ)を別に出していたが、実 LLM が
+        #    3行指示を守らず議事録と重複した上、短すぎて読まれないため廃止。議事録1枚に集約する。
         synthesizer = self.chair or self.moderator
         if synthesizer is not None:
-            # 3a. エグゼクティブサマリ（3行）。意思決定者がまず読む結論・根拠・次の一手。
-            #     議事録より先に出すことで、UI上段に置ける。
-            summary = self._speak(
-                synthesizer,
-                transcript,
-                topic,
-                phase="summary",
-                round_no=0,
-                phase_directive=(
-                    "【エグゼクティブサマリ】これまでの討論を踏まえ、意思決定者向けに"
-                    "ちょうど3行で要約してください。各行は次の見出しで始めること:\n"
-                    "結論: （何を推すか、一文で）\n"
-                    "根拠: （なぜそう言えるか、一文で）\n"
-                    "次の一手: （直ちに取るべき行動、一文で）\n"
-                    "新しい意見は足さず、出た議論だけから書くこと。"
-                ),
-                anti_conformity=False,
-                emit=emit,
-                turn_id=next(ids),
-            )
-            transcript.append(summary)
-            yield summary
-
-            # 3b. 議事録（合意/対立/リスク/アクション）。
+            # 議事録（合意/対立/リスク/アクション）。
             turn = self._speak(
                 synthesizer,
                 transcript,

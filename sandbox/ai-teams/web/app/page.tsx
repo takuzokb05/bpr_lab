@@ -89,10 +89,6 @@ export default function Home() {
     () => turns.find((t) => t.phase === "synthesis") ?? null,
     [turns]
   );
-  const summary = useMemo(
-    () => turns.find((t) => t.phase === "summary") ?? null,
-    [turns]
-  );
 
   // 最新ターンのフェーズ（Chyron 表示・追い質問可否の判定に使う）。
   const currentPhase = turns.length ? turns[turns.length - 1].phase : null;
@@ -395,7 +391,7 @@ export default function Home() {
 
         {/* 右：成果 */}
         <aside className="overflow-hidden border-l border-[var(--color-line)] bg-[var(--color-surface)]">
-          <MinutesPanel summary={summary} synthesis={synthesis} status={status} />
+          <MinutesPanel synthesis={synthesis} status={status} />
         </aside>
       </div>
 

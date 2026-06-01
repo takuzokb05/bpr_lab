@@ -17,7 +17,21 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Iterator
 
-from core import (
+_PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
+# .env を読み込んでおく（ANTHROPIC_API_KEY / AI_TEAMS_MODEL 等）。**core を import する前に**
+# 読むことで、DEFAULT_MODEL のように import 時点で確定する値も .env を反映できる。
+# python-dotenv が無い環境でも動くよう import を握り潰す。override=False で既存の環境変数
+# （明示 export）を尊重する（VPS/CI を壊さない）。
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv(_PROJECT_ROOT / ".env", override=False)
+except ImportError:
+    # python-dotenv 未インストールでも API 自体は動く（キー未設定なら Mock にフォールバック）。
+    pass
+
+from core import (  # noqa: E402 — .env を先に読むため core import はここ
     AnthropicClient,
     Council,
     LLMClient,
@@ -28,21 +42,9 @@ from core import (
     persona_from_dict,
 )
 
-_PROJECT_ROOT = Path(__file__).resolve().parent.parent
 PERSONAS_DIR = _PROJECT_ROOT / "personas"
 PRESETS_DIR = _PROJECT_ROOT / "presets"
 PRESETS_BUILTIN_DIR = PRESETS_DIR / "builtin"
-
-# .env を読み込んでおく（ANTHROPIC_API_KEY 等）。python-dotenv が無い環境でも動くよう
-# import を握り潰す（本番では requirements-v3.txt 経由で入る）。override=False で、
-# 既に export 済みの環境変数を .env が上書きしないようにする（明示設定を尊重）。
-try:
-    from dotenv import load_dotenv
-
-    load_dotenv(_PROJECT_ROOT / ".env", override=False)
-except ImportError:
-    # python-dotenv 未インストールでも API 自体は動く（キー未設定なら Mock にフォールバック）。
-    pass
 
 
 # -- ペルソナ ---------------------------------------------------------------

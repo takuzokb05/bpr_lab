@@ -174,8 +174,8 @@ def test_sse_stream():
     check("error" not in kinds, "error イベントは出ない")
 
     turns = [e for e, k in zip(events, kinds) if k == "turn"]
-    # opening1 + (3人×3フェーズ=9) + summary1 + synthesis1 = 12
-    check(len(turns) == 12, f"turn 数が想定どおり: {len(turns)}")
+    # opening1 + (3人×3フェーズ=9) + synthesis1 = 11（summary 廃止後）
+    check(len(turns) == 11, f"turn 数が想定どおり: {len(turns)}")
 
     # data 行の JSON 検証（最初の turn）
     data_line = [ln for ln in turns[0].splitlines() if ln.startswith("data: ")][0]
@@ -237,22 +237,19 @@ def test_red_team():
     check(solo1.red_team_id is None, "パネリスト1人なら Red Team は立てない")
 
 
-def test_exec_summary():
-    """エグゼクティブサマリ: synthesis の前に summary フェーズが1回出る。"""
-    print("[test] exec summary 3-line")
+def test_synthesis_only():
+    """議事録(synthesis)が1回・議長が書く。要約3行(summary)は廃止済み。"""
+    print("[test] synthesis only (summary phase removed)")
     council = service.build_council(
         ["moderator", "logic", "idea", "chair"],
         rounds_per_phase=1, mock=True,
     )
     turns = list(council.run("議題S"))
     phases = [t.phase for t in turns]
-    check("summary" in phases, "summary フェーズが存在する")
-    check(
-        phases.index("summary") < phases.index("synthesis"),
-        "summary は synthesis より前に出る（UI上段用）",
-    )
-    summary_turn = next(t for t in turns if t.phase == "summary")
-    check(summary_turn.speaker_id == "chair", "サマリは議長が書く")
+    check("summary" not in phases, "summary フェーズは廃止された")
+    check(phases.count("synthesis") == 1, "synthesis は1回だけ出る")
+    syn = next(t for t in turns if t.phase == "synthesis")
+    check(syn.speaker_id == "chair", "議事録は議長が書く")
 
 
 def test_streaming():
@@ -464,7 +461,7 @@ def test_followup_injection():
 
     # opening/summary/synthesis では拾わない（human/followup はそれらの直後に出ない）
     check("opening" in phases, "opening は出る")
-    check("summary" in phases and "synthesis" in phases, "summary/synthesis は出る")
+    check("synthesis" in phases, "synthesis は出る")
 
     # 追い質問は最初の本編フェーズ Turn の直後（opening 直後ではない）に挿入される
     first_human_idx = speakers.index("human")
@@ -867,7 +864,7 @@ if __name__ == "__main__":
     test_persona_public()
     test_sse_stream()
     test_red_team()
-    test_exec_summary()
+    test_synthesis_only()
     test_streaming()
     test_session_transport()
     test_followup_injection()
