@@ -2,6 +2,7 @@
 
 import type { Turn } from "@/lib/types";
 import { FileText } from "lucide-react";
+import { Markdown } from "./Markdown";
 
 export function MinutesPanel({
   synthesis,
@@ -23,9 +24,7 @@ export function MinutesPanel({
         {/* 議事録本体（合意/対立/リスク/アクション）。議長の統合を1枚で表示。 */}
         {synthesis ? (
           <div className="animate-turn-in">
-            <p className="whitespace-pre-wrap text-sm leading-relaxed">
-              {synthesis.content}
-            </p>
+            <Markdown>{synthesis.content}</Markdown>
           </div>
         ) : (
           <p className="text-xs leading-relaxed text-[var(--color-ink-muted)]">

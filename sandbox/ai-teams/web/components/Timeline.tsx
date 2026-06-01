@@ -3,6 +3,7 @@
 import { type Turn } from "@/lib/types";
 import { Avatar } from "./Avatar";
 import { NamePlate } from "./NamePlate";
+import { Markdown } from "./Markdown";
 import { useEffect, useRef } from "react";
 
 interface PersonaLook {
@@ -80,9 +81,7 @@ export function Timeline({
                 <div className="min-w-0 flex-1">
                   <NamePlate name="あなた" phase={t.phase} ts={t.ts} />
                   <div className="mt-1 rounded-md bg-[var(--color-accent-weak)] px-3 py-2">
-                    <p className="whitespace-pre-wrap text-sm leading-relaxed text-[var(--color-ink)]">
-                      {t.content}
-                    </p>
+                    <Markdown>{t.content}</Markdown>
                   </div>
                   {pending && (
                     <p className="mt-1 text-[11px] text-[var(--color-ink-muted)]">
@@ -105,21 +104,25 @@ export function Timeline({
                     追い質問
                   </span>
                 )}
-                <p className="mt-1 whitespace-pre-wrap text-sm leading-relaxed text-[var(--color-ink)]">
-                  {/* 本文が空のまま発言中なら「考え中」、delta が来たら本文＋点滅キャレット */}
-                  {t.content === "" && isStreaming ? (
+                {/* 本文が空のまま発言中なら「考え中」、delta 中は素テキスト＋点滅キャレット
+                    (delta 毎の markdown 再パースを避け、タイピングのライブ感も維持)。
+                    turn 確定後(非ストリーミング)は Markdown として上質に描画する。 */}
+                {t.content === "" && isStreaming ? (
+                  <p className="mt-1 text-sm leading-relaxed">
                     <span className="text-[var(--color-ink-muted)]">考えています…</span>
-                  ) : (
-                    <>
-                      {t.content}
-                      {isStreaming && (
-                        <span className="animate-pulse-soft ml-0.5 inline-block align-middle">
-                          ▍
-                        </span>
-                      )}
-                    </>
-                  )}
-                </p>
+                  </p>
+                ) : isStreaming ? (
+                  <p className="mt-1 whitespace-pre-wrap text-sm leading-relaxed text-[var(--color-ink)]">
+                    {t.content}
+                    <span className="animate-pulse-soft ml-0.5 inline-block align-middle">
+                      ▍
+                    </span>
+                  </p>
+                ) : (
+                  <div className="mt-1">
+                    <Markdown>{t.content}</Markdown>
+                  </div>
+                )}
               </div>
             </article>
           );
