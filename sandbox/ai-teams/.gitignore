@@ -51,6 +51,11 @@ web/next-env.d.ts
 *.sqlite
 *.sqlite3
 
+# ユーザー作成プリセット編成（同梱の presets/builtin/ と .gitkeep はコミット対象）
+# UI から保存したプリセットは個人設定なのでコミットしない。
+/presets/*.yaml
+/presets/*.yml
+
 # IDE
 .vscode/
 .idea/
