@@ -255,6 +255,92 @@ def test_exec_summary():
     check(summary_turn.speaker_id == "chair", "サマリは議長が書く")
 
 
+def test_streaming():
+    """core ストリーミング: emit で turn_start→delta*→turn_end、delta連結＝content。"""
+    print("[test] core streaming (emit: turn_start/delta/turn_end)")
+
+    # 1. llm: generate_stream の連結が generate と一致
+    c = MockLLMClient()
+    full = c.generate(system="s", messages=[{"role": "user", "content": "x"}], model="m")
+    c2 = MockLLMClient()
+    chunks = list(
+        c2.generate_stream(system="s", messages=[{"role": "user", "content": "x"}], model="m")
+    )
+    check(len(chunks) >= 1, "generate_stream は1個以上のチャンクを返す")
+    check("".join(chunks) == full, "delta 連結が generate と一致")
+    check(len(c2.calls) == 1, "generate_stream も calls に1回記録する（generate と同じ）")
+
+    # 2. orchestrator: emit 経路で turn_start/delta を捕捉、消費側が turn_end を出す
+    personas = [
+        make("mod", cat="facilitation"),
+        make("logic"),
+        make("idea"),
+        make("chair", cat="chair"),
+    ]
+    council = Council(
+        personas, MockLLMClient(), phases=[("発散", "d", True)], rounds_per_phase=1
+    )
+    events: list[dict] = []
+    turns: list[Turn] = []
+    for turn in council.run("議題T", emit=events.append):
+        # API 層を模して、Turn 確定後に turn_end を出す（設計 v2）
+        events.append({"type": "turn_end", "turn_id": turn.turn_id})
+        turns.append(turn)
+
+    check(events[0]["type"] == "turn_start", f"最初の emit は turn_start: {events[0]['type']}")
+
+    start_ids = [e["turn_id"] for e in events if e["type"] == "turn_start"]
+    check(
+        start_ids == list(range(len(start_ids))),
+        f"turn_id が 0 から単調増加: {start_ids}",
+    )
+    check(
+        [t.turn_id for t in turns] == start_ids,
+        "yield された Turn の turn_id が turn_start と一致",
+    )
+
+    # ターンごとに turn_start … delta* … turn_end の順序、delta連結＝content
+    for turn in turns:
+        evs = [e["type"] for e in events if e.get("turn_id") == turn.turn_id]
+        check(
+            evs[0] == "turn_start" and evs[-1] == "turn_end",
+            f"turn {turn.turn_id}: turn_start で始まり turn_end で終わる",
+        )
+        check(
+            all(t == "delta" for t in evs[1:-1]),
+            f"turn {turn.turn_id}: 中間イベントは delta のみ",
+        )
+        deltas = [
+            e["text"]
+            for e in events
+            if e["type"] == "delta" and e["turn_id"] == turn.turn_id
+        ]
+        check("".join(deltas) == turn.content, f"turn {turn.turn_id}: delta 連結 = content")
+
+    # 3. emit=None（後方互換）は従来どおり Turn だけを yield し、内容は決定的に一致
+    council_none = Council(
+        [
+            make("mod", cat="facilitation"),
+            make("logic"),
+            make("idea"),
+            make("chair", cat="chair"),
+        ],
+        MockLLMClient(),
+        phases=[("発散", "d", True)],
+        rounds_per_phase=1,
+    )
+    turns_none = list(council_none.run("議題T"))
+    check(len(turns_none) == len(turns), "emit 有無で turn 数が一致")
+    check(
+        [t.content for t in turns_none] == [t.content for t in turns],
+        "emit 有無で発言内容が一致（決定的・経路非依存）",
+    )
+    check(
+        all(t.turn_id is not None for t in turns_none),
+        "emit=None でも turn_id は採番される",
+    )
+
+
 # ---------------------------------------------------------------------------
 if __name__ == "__main__":
     test_context_isolation()
@@ -264,8 +350,9 @@ if __name__ == "__main__":
     test_sse_stream()
     test_red_team()
     test_exec_summary()
+    test_streaming()
     print()
     if _failures:
-        print(f"❌ {len(_failures)} 件 FAIL")
+        print(f"[FAIL] {len(_failures)} 件 FAIL")
         sys.exit(1)
-    print("✅ 全テスト pass")
+    print("[OK] 全テスト pass")

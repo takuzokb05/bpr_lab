@@ -11,7 +11,8 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Iterator, Sequence
+from itertools import count
+from typing import Callable, Iterator, Sequence
 
 from .context import build_context
 from .llm_client import DEFAULT_MODEL, LLMClient
@@ -27,6 +28,12 @@ class Turn:
     content: str
     phase: str
     round: int
+    # ストリーミング/再接続用の単調増加 ID。run() が採番する（非ストリーム経路でも付与）。
+    turn_id: int | None = None
+
+
+# emit に流すイベント（turn_start / delta）。turn_end は呼び出し側が出す（設計 v2）。
+Emit = Callable[[dict], None]
 
 
 # Red Team（反対役）への追加指示。指名されたパネリストの発言時に毎ターン注入する。
@@ -129,14 +136,13 @@ class Council:
                 self.red_team_id = self.panelists[0].id
 
     # -- 内部ヘルパ --------------------------------------------------------
-    def _call(self, persona: Persona, system: str, messages: list[dict[str, str]]) -> str:
+    def _resolve(self, persona: Persona) -> tuple[str, float]:
+        """ペルソナ指定があればそれを、無ければエンジン既定の (model, temperature)。"""
         model = persona.model or self.default_model
         temperature = (
             persona.temperature if persona.temperature is not None else self.default_temperature
         )
-        return self.client.generate(
-            system=system, messages=messages, model=model, temperature=temperature
-        )
+        return model, temperature
 
     def _speak(
         self,
@@ -148,6 +154,8 @@ class Council:
         *,
         phase_directive: str,
         anti_conformity: bool,
+        emit: Emit | None = None,
+        turn_id: int | None = None,
     ) -> Turn:
         # Red Team に指名されたパネリストには、毎ターン反対役の特命を上乗せする。
         if persona.id == self.red_team_id:
@@ -159,13 +167,45 @@ class Council:
             phase_directive=phase_directive,
             anti_conformity=anti_conformity,
         )
-        content = self._call(persona, system, messages)
-        return Turn(persona.id, persona.display_name, content, phase, round_no)
+        model, temperature = self._resolve(persona)
+
+        if emit is None:
+            # 後方互換: 一括生成して Turn だけを返す（既存テストはこの経路）。
+            content = self.client.generate(
+                system=system, messages=messages, model=model, temperature=temperature
+            )
+        else:
+            # ストリーミング経路: turn_start → delta* を emit しつつ全文を蓄積。
+            # turn_end は呼び出し側（API 層）が yield 後に出す（設計 v2）。
+            emit(
+                {
+                    "type": "turn_start",
+                    "turn_id": turn_id,
+                    "speaker_id": persona.id,
+                    "speaker_name": persona.display_name,
+                    "phase": phase,
+                    "round": round_no,
+                }
+            )
+            parts: list[str] = []
+            for chunk in self.client.generate_stream(
+                system=system, messages=messages, model=model, temperature=temperature
+            ):
+                parts.append(chunk)
+                emit({"type": "delta", "turn_id": turn_id, "text": chunk})
+            content = "".join(parts).strip()
+        return Turn(persona.id, persona.display_name, content, phase, round_no, turn_id=turn_id)
 
     # -- 公開 API ----------------------------------------------------------
-    def run(self, topic: str) -> Iterator[Turn]:
-        """討論を進行し、確定した Turn を1件ずつ yield する。"""
+    def run(self, topic: str, *, emit: Emit | None = None) -> Iterator[Turn]:
+        """討論を進行し、確定した Turn を1件ずつ yield する。
+
+        emit を渡すと各発言を turn_start → delta* のイベント列として流す
+        （ストリーミング経路）。emit=None なら従来どおり一括生成し Turn だけを
+        yield する（後方互換・既存テストはこの経路）。turn_id は両経路で採番する。
+        """
         transcript: list[Turn] = []
+        ids = count()  # turn_id の採番（単調増加）
 
         # 1. 司会オープニング（任意）
         if self.moderator is not None:
@@ -180,6 +220,8 @@ class Council:
                     "結論は出さないこと。"
                 ),
                 anti_conformity=False,
+                emit=emit,
+                turn_id=next(ids),
             )
             transcript.append(turn)
             yield turn
@@ -196,6 +238,8 @@ class Council:
                         round_no=round_no,
                         phase_directive=directive,
                         anti_conformity=anti,
+                        emit=emit,
+                        turn_id=next(ids),
                     )
                     transcript.append(turn)
                     yield turn
@@ -220,6 +264,8 @@ class Council:
                     "新しい意見は足さず、出た議論だけから書くこと。"
                 ),
                 anti_conformity=False,
+                emit=emit,
+                turn_id=next(ids),
             )
             transcript.append(summary)
             yield summary
@@ -237,6 +283,8 @@ class Council:
                     "新しい意見は足さず、出た議論だけを統合すること。"
                 ),
                 anti_conformity=False,
+                emit=emit,
+                turn_id=next(ids),
             )
             transcript.append(turn)
             yield turn

@@ -10,7 +10,7 @@ v2 の不安定さの主因だった「3社マルチ API 吸収」をやめ、IF
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Callable
+from typing import Callable, Iterator
 
 # エンジン既定モデル。ペルソナ側で model を指定すればそちらが優先される。
 DEFAULT_MODEL = "claude-sonnet-4-6"
@@ -34,6 +34,26 @@ class LLMClient(ABC):
     ) -> str:
         """system プロンプトと会話履歴から、1人格の1発言を返す。"""
         raise NotImplementedError
+
+    def generate_stream(
+        self,
+        *,
+        system: str,
+        messages: list[Message],
+        model: str,
+        temperature: float = 0.7,
+    ) -> Iterator[str]:
+        """1発言をテキスト差分（delta）の列として yield する。
+
+        既定実装は `generate()` の結果を1チャンクとして返すフォールバック。
+        ストリーミング対応のクライアントはこれをオーバーライドする。
+        delta を連結すると `generate()` と同じ全文になることを契約とする。
+        """
+        text = self.generate(
+            system=system, messages=messages, model=model, temperature=temperature
+        )
+        if text:
+            yield text
 
 
 class AnthropicClient(LLMClient):
@@ -65,6 +85,26 @@ class AnthropicClient(LLMClient):
         return "".join(
             block.text for block in resp.content if getattr(block, "type", None) == "text"
         ).strip()
+
+    def generate_stream(
+        self,
+        *,
+        system: str,
+        messages: list[Message],
+        model: str,
+        temperature: float = 0.7,
+    ) -> Iterator[str]:
+        # Anthropic SDK の messages.stream() からテキスト差分を逐次 yield する。
+        with self._client.messages.stream(
+            model=model,
+            system=system,
+            messages=messages,
+            max_tokens=self._max_tokens,
+            temperature=temperature,
+        ) as stream:
+            for text in stream.text_stream:
+                if text:
+                    yield text
 
 
 class MockLLMClient(LLMClient):
@@ -98,3 +138,23 @@ class MockLLMClient(LLMClient):
         if self._responder is not None:
             return self._responder(system, messages, model)
         return f"(mock応答#{len(self.calls)})"
+
+    def generate_stream(
+        self,
+        *,
+        system: str,
+        messages: list[Message],
+        model: str,
+        temperature: float = 0.7,
+    ) -> Iterator[str]:
+        # generate() と同じ呼び出し記録・同じ全文を保ったまま、決定的に数チャンクへ割る。
+        # delta を連結すると generate() と一致する（テストの契約）。
+        text = self.generate(
+            system=system, messages=messages, model=model, temperature=temperature
+        )
+        if not text:
+            return
+        chunks = 3
+        size = max(1, (len(text) + chunks - 1) // chunks)
+        for i in range(0, len(text), size):
+            yield text[i : i + size]
