@@ -13,6 +13,7 @@
   --color-line: #e7e4dd;       /* 罫線 */
   --color-accent: #2e5d7d;     /* 唯一のアクセント（深い青＝報道の知的さ） */
   --color-accent-weak: #eaf1f5;
+  --color-onair: #b4453a;      /* ON AIR の状態色（赤）。ドット＋小ラベルの小面積限定 */
 
   --font-sans: "Noto Sans JP", system-ui, sans-serif;
   --font-serif: "Noto Serif JP", serif;
@@ -56,4 +57,34 @@ body {
 }
 .animate-pulse-soft {
   animation: pulse-soft 1.4s ease-in-out infinite;
+}
+
+/* ===========================================================================
+   報道テロップ（chyron）と ON AIR の呼吸。
+   原則（UIUX_REVIEW 厳守）: グラデ禁止 / 影禁止 / 絵文字禁止 / 派手なアニメ禁止。
+   移動は 4px 以下、時間は 0.3〜0.5s に収める。
+   =========================================================================== */
+
+/* フェーズ切替時にテロップが静かにせり上がる（移動 4px・0.3s） */
+@keyframes chyron-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-chyron-in {
+  animation: chyron-in 0.3s ease-out both;
+}
+
+/* ON AIR ドットの呼吸（点滅ではなく緩やかな明滅・2.4s） */
+@keyframes onair-breathe {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+.animate-onair-breathe {
+  animation: onair-breathe 2.4s ease-in-out infinite;
 }

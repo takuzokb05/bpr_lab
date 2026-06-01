@@ -1,7 +1,8 @@
 "use client";
 
-import { PHASE_LABELS, type Turn } from "@/lib/types";
+import { type Turn } from "@/lib/types";
 import { Avatar } from "./Avatar";
+import { NamePlate } from "./NamePlate";
 import { useEffect, useRef } from "react";
 
 interface PersonaLook {
@@ -41,7 +42,8 @@ export function Timeline({
     );
   }
 
-  // 議長の要約(summary)・統合(synthesis)はタイムラインから除外し、右の成果パネルに回す
+  // 議長の要約(summary)・統合(synthesis)はタイムラインから除外し、右の成果パネルに回す。
+  // 人間ターン(human)・追い質問の再提示(followup)は本編として残す。
   const visible = turns.filter((t) => t.phase !== "synthesis" && t.phase !== "summary");
 
   return (
@@ -55,18 +57,46 @@ export function Timeline({
 
       <div className="flex flex-col gap-5">
         {visible.map((t) => {
-          const look = looks[t.speaker_id] ?? { accent: "#5B7C8A", monogram: "?" };
           const isStreaming = t.turn_id === streamingTurnId;
+
+          // 人間ターン: 右寄せ・アクセント弱背景で「あなた」の発言として描く。
+          // turn_id<0 は楽観的エコー（未確定）→ pending microcopy を添える。
+          if (t.phase === "human") {
+            const pending = t.turn_id < 0;
+            return (
+              <article
+                key={t.turn_id}
+                className="animate-turn-in flex flex-row-reverse gap-3"
+              >
+                <Avatar monogram="あ" accent="var(--color-ink-muted)" size={36} />
+                <div className="min-w-0 flex-1">
+                  <NamePlate name="あなた" phase={t.phase} ts={t.ts} />
+                  <div className="mt-1 rounded-md bg-[var(--color-accent-weak)] px-3 py-2">
+                    <p className="whitespace-pre-wrap text-sm leading-relaxed text-[var(--color-ink)]">
+                      {t.content}
+                    </p>
+                  </div>
+                  {pending && (
+                    <p className="mt-1 text-[11px] text-[var(--color-ink-muted)]">
+                      次の発言から反映します
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          }
+
+          const look = looks[t.speaker_id] ?? { accent: "#5B7C8A", monogram: "?" };
           return (
             <article key={t.turn_id} className="animate-turn-in flex gap-3">
               <Avatar monogram={look.monogram} accent={look.accent} size={36} />
               <div className="min-w-0 flex-1">
-                <header className="flex items-baseline gap-2">
-                  <span className="text-sm font-medium">{t.speaker_name}</span>
-                  <span className="text-[11px] text-[var(--color-ink-muted)]">
-                    {PHASE_LABELS[t.phase] ?? t.phase}
+                <NamePlate name={t.speaker_name} phase={t.phase} ts={t.ts} />
+                {t.phase === "followup" && (
+                  <span className="mt-1 inline-block text-[10px] font-medium uppercase tracking-wider text-[var(--color-accent)]">
+                    追い質問
                   </span>
-                </header>
+                )}
                 <p className="mt-1 whitespace-pre-wrap text-sm leading-relaxed text-[var(--color-ink)]">
                   {/* 本文が空のまま発言中なら「考え中」、delta が来たら本文＋点滅キャレット */}
                   {t.content === "" && isStreaming ? (

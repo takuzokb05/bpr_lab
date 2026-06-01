@@ -2,8 +2,10 @@
 // done / error、各 data に seq）を購読し、接続が切れたら GET …/stream?cursor=N で
 // 自動再接続してバックログを再生 → ライブ継続する（設計 v2 Step 5）。
 
+// 各イベントに ts（サーバ採番の UNIX 秒、_append の time.time()）を任意で載せる。
+// 再接続再生でも同じ ts が来るので表示時刻がブレない（凍結契約: 時刻）。
 export type StreamEvent =
-  | { type: "start"; topic: string; sessionId: string }
+  | { type: "start"; topic: string; sessionId: string; ts?: number }
   | {
       type: "turn_start";
       turnId: number;
@@ -11,16 +13,19 @@ export type StreamEvent =
       speakerName: string;
       phase: string;
       round: number;
+      ts?: number;
     }
-  | { type: "delta"; turnId: number; text: string }
-  | { type: "turn_end"; turnId: number }
-  | { type: "error"; message: string }
-  | { type: "done" };
+  | { type: "delta"; turnId: number; text: string; ts?: number }
+  | { type: "turn_end"; turnId: number; ts?: number }
+  | { type: "error"; message: string; ts?: number }
+  | { type: "done"; ts?: number };
 
 export interface StartSessionArgs {
   topic: string;
   personaIds: string[];
   roundsPerPhase?: number;
+  redTeam?: boolean;
+  redTeamId?: string | null;
   mock?: boolean;
   signal?: AbortSignal;
   onEvent: (e: StreamEvent) => void;
@@ -44,19 +49,26 @@ export async function startSession({
   topic,
   personaIds,
   roundsPerPhase = 1,
+  redTeam,
+  redTeamId,
   mock = false,
   signal,
   onEvent,
 }: StartSessionArgs): Promise<void> {
+  // GAP6: プリセットの設定（ラウンド数・Red Team）が無視されないよう必ず body に載せる。
+  const body: Record<string, unknown> = {
+    topic,
+    persona_ids: personaIds,
+    rounds_per_phase: roundsPerPhase,
+    mock,
+  };
+  if (redTeam !== undefined) body.red_team = redTeam;
+  if (redTeamId !== undefined && redTeamId !== null) body.red_team_id = redTeamId;
+
   const res = await fetch("/api/sessions", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      topic,
-      persona_ids: personaIds,
-      rounds_per_phase: roundsPerPhase,
-      mock,
-    }),
+    body: JSON.stringify(body),
     signal,
   });
 
@@ -143,10 +155,11 @@ function toEvent(
   d: Record<string, unknown>,
   state: PumpState
 ): StreamEvent | null {
+  const ts = d.ts as number | undefined;
   switch (event) {
     case "start":
       state.sessionId = (d.session_id as string) ?? state.sessionId;
-      return { type: "start", topic: d.topic as string, sessionId: state.sessionId! };
+      return { type: "start", topic: d.topic as string, sessionId: state.sessionId!, ts };
     case "turn_start":
       return {
         type: "turn_start",
@@ -155,21 +168,23 @@ function toEvent(
         speakerName: d.speaker_name as string,
         phase: d.phase as string,
         round: d.round as number,
+        ts,
       };
     case "delta":
-      return { type: "delta", turnId: d.turn_id as number, text: d.text as string };
+      return { type: "delta", turnId: d.turn_id as number, text: d.text as string, ts };
     case "turn_end":
-      return { type: "turn_end", turnId: d.turn_id as number };
+      return { type: "turn_end", turnId: d.turn_id as number, ts };
     case "error":
-      return { type: "error", message: d.message as string };
+      return { type: "error", message: d.message as string, ts };
     case "done":
-      return { type: "done" };
+      return { type: "done", ts };
     default:
       return null;
   }
 }
 
-async function errorDetail(res: Response): Promise<string> {
+/** FastAPI の {detail:...}（文字列 or 422 配列）を人間向けメッセージにする。 */
+export async function errorDetail(res: Response): Promise<string> {
   try {
     const j = await res.json();
     if (j?.detail) {
@@ -184,5 +199,47 @@ async function errorDetail(res: Response): Promise<string> {
 export async function fetchPersonas(): Promise<import("./types").Persona[]> {
   const res = await fetch("/api/personas");
   if (!res.ok) throw new Error(`personas fetch failed: HTTP ${res.status}`);
+  return res.json();
+}
+
+// -- 追い質問 ---------------------------------------------------------------
+//
+// 凍結契約: SSE には新イベント型を増やさない。追い質問は POST で投函するだけで、
+// 結果は既存の turn_start→delta→turn_end として返ってくる（人間ターン＋司会再提示＋
+// パネリスト1周）。成功は 202 {"queued":true}。
+export async function sendFollowup(sessionId: string, text: string): Promise<void> {
+  const res = await fetch(`/api/sessions/${sessionId}/messages`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ kind: "followup", text, target: null }),
+  });
+  // 2xx を成功とみなす（202 固定に依存しない＝プロキシが 200/204 にしても壊れない）。
+  if (!res.ok) {
+    throw new Error(await errorDetail(res));
+  }
+}
+
+// -- 停止（協調キャンセル） -------------------------------------------------
+//
+// 討論はバックグラウンドで完走する設計なので、停止は DELETE で明示的に伝える
+// （実 LLM の発注を次のターン前に止めてコストを抑える）。404/既終了でも実害なく握る。
+export async function cancelSession(sessionId: string): Promise<void> {
+  try {
+    await fetch(`/api/sessions/${sessionId}`, { method: "DELETE" });
+  } catch {
+    /* ネットワーク断などは無視（表示側はすでに停止扱い） */
+  }
+}
+
+// -- ヘルス（LLM 状態） -----------------------------------------------------
+export interface Health {
+  status: string;
+  llm: "anthropic" | "mock";
+  api_key_set: boolean;
+}
+
+export async function fetchHealth(): Promise<Health> {
+  const res = await fetch("/api/health");
+  if (!res.ok) throw new Error(`health fetch failed: HTTP ${res.status}`);
   return res.json();
 }
