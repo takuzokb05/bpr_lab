@@ -1,6 +1,11 @@
 // SSE クライアント。Step 2 の新プロトコル（start / turn_start / delta / turn_end /
 // done / error、各 data に seq）を購読し、接続が切れたら GET …/stream?cursor=N で
 // 自動再接続してバックログを再生 → ライブ継続する（設計 v2 Step 5）。
+//
+// 重要: Next の rewrite プロキシは SSE をバッファするため、API は apiUrl() で
+// バックエンドへ直結する（プロキシ経由だと討論が一括表示になりライブ感が消える）。
+
+import { apiUrl } from "./config";
 
 // 各イベントに ts（サーバ採番の UNIX 秒、_append の time.time()）を任意で載せる。
 // 再接続再生でも同じ ts が来るので表示時刻がブレない（凍結契約: 時刻）。
@@ -65,7 +70,7 @@ export async function startSession({
   if (redTeam !== undefined) body.red_team = redTeam;
   if (redTeamId !== undefined && redTeamId !== null) body.red_team_id = redTeamId;
 
-  const res = await fetch("/api/sessions", {
+  const res = await fetch(apiUrl("/sessions"), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
@@ -85,7 +90,7 @@ export async function startSession({
     let r: Response;
     try {
       r = await fetch(
-        `/api/sessions/${state.sessionId}/stream?cursor=${state.lastSeq + 1}`,
+        apiUrl(`/sessions/${state.sessionId}/stream?cursor=${state.lastSeq + 1}`),
         { signal }
       );
     } catch {
@@ -197,7 +202,7 @@ export async function errorDetail(res: Response): Promise<string> {
 }
 
 export async function fetchPersonas(): Promise<import("./types").Persona[]> {
-  const res = await fetch("/api/personas");
+  const res = await fetch(apiUrl("/personas"));
   if (!res.ok) throw new Error(`personas fetch failed: HTTP ${res.status}`);
   return res.json();
 }
@@ -208,7 +213,7 @@ export async function fetchPersonas(): Promise<import("./types").Persona[]> {
 // 結果は既存の turn_start→delta→turn_end として返ってくる（人間ターン＋司会再提示＋
 // パネリスト1周）。成功は 202 {"queued":true}。
 export async function sendFollowup(sessionId: string, text: string): Promise<void> {
-  const res = await fetch(`/api/sessions/${sessionId}/messages`, {
+  const res = await fetch(apiUrl(`/sessions/${sessionId}/messages`), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ kind: "followup", text, target: null }),
@@ -225,7 +230,7 @@ export async function sendFollowup(sessionId: string, text: string): Promise<voi
 // （実 LLM の発注を次のターン前に止めてコストを抑える）。404/既終了でも実害なく握る。
 export async function cancelSession(sessionId: string): Promise<void> {
   try {
-    await fetch(`/api/sessions/${sessionId}`, { method: "DELETE" });
+    await fetch(apiUrl(`/sessions/${sessionId}`), { method: "DELETE" });
   } catch {
     /* ネットワーク断などは無視（表示側はすでに停止扱い） */
   }
@@ -239,7 +244,7 @@ export interface Health {
 }
 
 export async function fetchHealth(): Promise<Health> {
-  const res = await fetch("/api/health");
+  const res = await fetch(apiUrl("/health"));
   if (!res.ok) throw new Error(`health fetch failed: HTTP ${res.status}`);
   return res.json();
 }

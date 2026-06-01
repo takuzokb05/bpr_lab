@@ -154,7 +154,15 @@ class MockLLMClient(LLMClient):
         )
         if not text:
             return
+        # 環境変数 AI_TEAMS_MOCK_DELAY（秒）でチャンク毎に待つ。実LLMを使わずに
+        # ストリーミングの“ライブ感”を再現・検証するための affordance（既定0＝従来動作）。
+        import os
+        import time
+
+        delay = float(os.environ.get("AI_TEAMS_MOCK_DELAY", "0") or "0")
         chunks = 3
         size = max(1, (len(text) + chunks - 1) // chunks)
         for i in range(0, len(text), size):
+            if delay > 0:
+                time.sleep(delay)
             yield text[i : i + size]
