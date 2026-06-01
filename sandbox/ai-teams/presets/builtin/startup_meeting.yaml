@@ -1,0 +1,15 @@
+id: startup_meeting
+name: スタートアップ経営会議
+description: |
+  プロダクトの方向性を尖らせる会議。ジョブズ（演）が本質に絞り込み、アイデア役が幅を出し、
+  論理役がリスクを突く。司会が進行し、議長が議事を統合する。
+# 実 id を使う（jobs.yaml の id は steve_jobs。"jobs" は誤り）。
+persona_ids:
+  - moderator
+  - steve_jobs
+  - idea
+  - logic
+  - chair
+rounds_per_phase: 1
+red_team: true
+# 反対役は明示せず先頭パネリスト（steve_jobs）に既定で割り当てる。

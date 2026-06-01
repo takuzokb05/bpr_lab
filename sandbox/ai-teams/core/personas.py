@@ -50,7 +50,9 @@ class Persona:
     display_name: str
     system_prompt: str
     category: str = "thinking"
-    avatar: str = "🧠"
+    # レガシー絵文字フィールド（後方互換でのみ受理・保持）。UI は描画に使わず
+    # モノグラム＋カテゴリ色で識別する（UIUX_REVIEW: 絵文字全廃）。既定は空。
+    avatar: str = ""
     # model=None はエンジン既定モデルを使う。collapse（均質化）対策として、
     # 思考の多様性が欲しいペルソナには個別に別モデルを割り当てられる。
     model: str | None = None
@@ -114,7 +116,7 @@ def persona_from_dict(data: dict[str, Any]) -> Persona:
         display_name=data.get("display_name", data["id"]),
         system_prompt=data["system_prompt"],
         category=data.get("category", "thinking"),
-        avatar=data.get("avatar", "🧠"),
+        avatar=data.get("avatar", ""),
         model=data.get("model"),
         temperature=data.get("temperature"),
         tags=list(data.get("tags", [])),
@@ -123,10 +125,15 @@ def persona_from_dict(data: dict[str, Any]) -> Persona:
     )
 
 
-def load_personas(directory: str | Path) -> list[Persona]:
-    """ディレクトリ配下の *.yaml / *.yml を再帰的に読み込み、Persona のリストを返す。
+def load_personas_with_paths(directory: str | Path) -> list[tuple[Persona, Path]]:
+    """ディレクトリ配下の *.yaml / *.yml を再帰的に読み込み、(Persona, Path) の列を返す。
 
-    id の重複は許さない（取り違え防止）。
+    id の重複は許さない（取り違え防止）。save_persona は id→実パスの対応で旧ファイルを
+    unlink するため、ファイル名から id を推測せずこの実パスを使う（jobs.yaml の
+    id=steve_jobs のような不一致があるため）。
+
+    戻り値・例外・sorted 順・id 重複検出は load_personas と完全に同じ挙動（薄いラッパが
+    Persona だけを取り出せるよう、ここに本体ロジックを集約する）。
     """
     import yaml  # 遅延 import（テストはモックのみで動く）
 
@@ -134,7 +141,7 @@ def load_personas(directory: str | Path) -> list[Persona]:
     if not directory.is_dir():
         raise FileNotFoundError(f"persona ディレクトリが見つかりません: {directory}")
 
-    personas: list[Persona] = []
+    pairs: list[tuple[Persona, Path]] = []
     seen: dict[str, Path] = {}
     for path in sorted(directory.rglob("*.y*ml")):
         with path.open(encoding="utf-8") as f:
@@ -147,5 +154,14 @@ def load_personas(directory: str | Path) -> list[Persona]:
                 f"persona id '{persona.id}' が重複しています: {seen[persona.id]} と {path}"
             )
         seen[persona.id] = path
-        personas.append(persona)
-    return personas
+        pairs.append((persona, path))
+    return pairs
+
+
+def load_personas(directory: str | Path) -> list[Persona]:
+    """ディレクトリ配下の *.yaml / *.yml を再帰的に読み込み、Persona のリストを返す。
+
+    id の重複は許さない（取り違え防止）。実体は load_personas_with_paths（後方互換のため
+    Persona だけを取り出す薄いラッパ）。
+    """
+    return [persona for persona, _path in load_personas_with_paths(directory)]

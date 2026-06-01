@@ -9,15 +9,40 @@ from __future__ import annotations
 import json
 import os
 import queue
+import re
 import threading
+import time
 import uuid
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Iterator
 
-from core import AnthropicClient, Council, LLMClient, MockLLMClient, Persona, load_personas
+from core import (
+    AnthropicClient,
+    Council,
+    LLMClient,
+    MockLLMClient,
+    Persona,
+    load_personas,
+    load_personas_with_paths,
+    persona_from_dict,
+)
 
-PERSONAS_DIR = Path(__file__).resolve().parent.parent / "personas"
+_PROJECT_ROOT = Path(__file__).resolve().parent.parent
+PERSONAS_DIR = _PROJECT_ROOT / "personas"
+PRESETS_DIR = _PROJECT_ROOT / "presets"
+PRESETS_BUILTIN_DIR = PRESETS_DIR / "builtin"
+
+# .env を読み込んでおく（ANTHROPIC_API_KEY 等）。python-dotenv が無い環境でも動くよう
+# import を握り潰す（本番では requirements-v3.txt 経由で入る）。override=False で、
+# 既に export 済みの環境変数を .env が上書きしないようにする（明示設定を尊重）。
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv(_PROJECT_ROOT / ".env", override=False)
+except ImportError:
+    # python-dotenv 未インストールでも API 自体は動く（キー未設定なら Mock にフォールバック）。
+    pass
 
 
 # -- ペルソナ ---------------------------------------------------------------
@@ -42,10 +67,23 @@ def persona_public(p: Persona) -> dict:
 
 # -- LLM クライアント -------------------------------------------------------
 def make_client(mock: bool = False) -> LLMClient:
-    """mock 指定、または API キー未設定なら MockLLMClient にフォールバック。"""
+    """mock 指定、または API キー未設定なら MockLLMClient にフォールバック。
+
+    mock=True はキーの有無に関わらず必ず Mock を返す（検証・デモ時の二重課金防止）。
+    """
     if mock or not os.environ.get("ANTHROPIC_API_KEY"):
         return MockLLMClient()
     return AnthropicClient()
+
+
+def llm_status() -> dict:
+    """LLM 構成の公開ステータス（純関数）。API キーの値そのものは絶対に返さない。
+
+    api_key_set=True かつ非 mock 起動なら Anthropic を実呼び出しする、という前提を
+    フロントに伝えるための情報。キー文字列は含めない（漏洩防止）。
+    """
+    api_key_set = bool(os.environ.get("ANTHROPIC_API_KEY"))
+    return {"llm": "anthropic" if api_key_set else "mock", "api_key_set": api_key_set}
 
 
 # -- Council 組み立て -------------------------------------------------------
@@ -131,6 +169,12 @@ class Session:
     cond: threading.Condition = field(default_factory=threading.Condition)
     status: str = "running"  # running | done | error
     thread: threading.Thread | None = None
+    # 追い質問の受付可否。仕上げ（summary/synthesis）に入ったら False にして、
+    # それ以降の追い質問は受理せず 409 を返す（202 のまま永久ドロップを防ぐ）。
+    accepting: bool = True
+    # 協調キャンセル。停止操作で True にすると、プロデューサが次のターン前に打ち切る
+    # （実 LLM の発注を止めてコストを抑える）。
+    cancelled: bool = False
 
 
 SESSIONS: dict[str, Session] = {}
@@ -138,11 +182,43 @@ _REGISTRY_LOCK = threading.Lock()
 
 
 def _append(session: Session, event: str, data: dict) -> None:
-    """seq を採番してイベントを追加し、tail 中の読み手全員に通知する。"""
+    """seq と ts を採番してイベントを追加し、tail 中の読み手全員に通知する。
+
+    ts（time.time()）は採番時に1回だけ確定して event dict に格納する。tail() は再生時に
+    この保存済み ts をそのまま載せるので、再接続で同じイベントを再生しても ts は不変。
+    """
     with session.cond:
         seq = len(session.events)
-        session.events.append({"seq": seq, "event": event, "data": data})
+        session.events.append(
+            {"seq": seq, "ts": time.time(), "event": event, "data": data}
+        )
         session.cond.notify_all()
+
+
+def _drain(inbox: "queue.Queue[HumanMessage]") -> list[HumanMessage]:
+    """inbox に溜まった人間メッセージを非ブロッキングで全件取り出す。"""
+    out: list[HumanMessage] = []
+    while True:
+        try:
+            out.append(inbox.get_nowait())
+        except queue.Empty:
+            break
+    return out
+
+
+def post_message(session: Session, msg: HumanMessage) -> None:
+    """人間メッセージをセッションの inbox に積む（プロデューサが次の drain で拾う）。"""
+    session.inbox.put(msg)
+
+
+def cancel_session(session: Session) -> None:
+    """進行中の討論を協調的に打ち切る。
+
+    プロデューサは次のターンの LLM 発注前に cancelled を見て break する（実 LLM の
+    課金を止める）。既に発注済みの当該ターンは完走する（per-turn 粒度）。
+    """
+    session.cancelled = True
+    session.accepting = False
 
 
 def _produce(session: Session) -> None:
@@ -154,13 +230,24 @@ def _produce(session: Session) -> None:
 
     def emit(ev: dict) -> None:
         etype = ev["type"]
+        # 仕上げフェーズ（summary/synthesis）の turn_start を見た瞬間に追い質問を締め切る。
+        # turn_start は生成より前に来るので、ここで締めれば「受理したのに拾われない」窓を塞げる。
+        if etype == "turn_start" and ev.get("phase") in ("summary", "synthesis"):
+            session.accepting = False
         data = {k: v for k, v in ev.items() if k != "type"}
         _append(session, etype, data)
 
     try:
         _append(session, "start", {"topic": session.topic, "session_id": session.id})
-        for turn in session.council.run(session.topic, emit=emit):
+        # pull は本編フェーズの各 Turn 直後に inbox を drain し、追い質問を注入する。
+        for turn in session.council.run(
+            session.topic, emit=emit, pull=lambda: _drain(session.inbox)
+        ):
             _append(session, "turn_end", {"turn_id": turn.turn_id})
+            # 停止操作（cancelled）なら、次のターンの LLM 発注前に打ち切る（コスト抑制）。
+            if session.cancelled:
+                session.accepting = False
+                break
         _append(session, "done", {})
         _set_status(session, "done")
     except Exception as exc:  # noqa: BLE001 — 読み手にエラーを通知して締める
@@ -205,8 +292,9 @@ def get_session(session_id: str) -> Session | None:
 def tail(session: Session, cursor: int = 0) -> Iterator[str]:
     """events[cursor:] を再生 → ライブ tail を SSE 文字列で yield する（再接続対応）。
 
-    各 data に seq を載せる（クライアントの再接続カーソル用）。プロデューサが done/error で
-    終端し、それまでに溜まったイベントを送り切ったら return する（ハングしない）。
+    各 data に seq と ts を載せる（seq=再接続カーソル用、ts=採番時刻で再接続再生でも不変）。
+    プロデューサが done/error で終端し、それまでに溜まったイベントを送り切ったら return する
+    （ハングしない）。
     """
     while True:
         with session.cond:
@@ -216,6 +304,295 @@ def tail(session: Session, cursor: int = 0) -> Iterator[str]:
             cursor += len(new)
             finished = session.status != "running" and cursor >= len(session.events)
         for ev in new:
-            yield sse(ev["event"], {**ev["data"], "seq": ev["seq"]})
+            yield sse(ev["event"], {**ev["data"], "seq": ev["seq"], "ts": ev["ts"]})
         if finished:
             return
+
+
+# -- ペルソナ CRUD ----------------------------------------------------------
+#
+# personas/{category}/{id}.yaml に保存する。書き出すキーは known セットのみ。
+# id→実パスの対応は load_personas_with_paths で取り、category 変更時は旧パスを unlink する
+# （ファイル名から id を推測しない＝jobs.yaml の id=steve_jobs のような不一致に対応）。
+
+# YAML に書き出すキー（persona_from_dict の known と揃える）。
+_PERSONA_WRITE_KEYS = (
+    "id",
+    "display_name",
+    "system_prompt",
+    "category",
+    "avatar",
+    "model",
+    "temperature",
+    "tags",
+    "speaks",
+    "accent",
+)
+
+
+def slugify(text: str) -> str:
+    """表示名などから安全な id（小文字英数とハイフン）を作る。空なら 'persona'。"""
+    text = (text or "").strip().lower()
+    # 英数とハイフン・アンダースコア以外を区切りに潰す
+    slug = re.sub(r"[^a-z0-9_-]+", "-", text).strip("-")
+    return slug or "persona"
+
+
+_SLUG_RE = re.compile(r"^[a-z0-9_-]+$")
+
+
+def _validate_id(value: str, *, kind: str) -> None:
+    """書込先パスに使う id を検証する（パストラバーサル防止）。
+
+    `../` や絶対パス・区切り文字を含む id で PERSONAS_DIR/PRESETS_DIR の外に
+    書き込まれる/既存ファイルを上書きされるのを防ぐ。小文字英数・ハイフン・
+    アンダースコアのみ許可。不正なら ValueError（呼び出し側で 400 にマップ）。
+    """
+    if not isinstance(value, str) or not _SLUG_RE.match(value):
+        raise ValueError(
+            f"invalid {kind} id: 小文字英数字・ハイフン・アンダースコアのみ使用できます"
+        )
+
+
+def _assert_within(path: Path, base: Path) -> None:
+    """多層防御: 解決後パスが base 配下であることを保証する（外なら ValueError）。"""
+    if not path.resolve().is_relative_to(base.resolve()):
+        raise ValueError("invalid path: 書込先がディレクトリ外です")
+
+
+def persona_detail(p: Persona) -> dict:
+    """編集画面向けの完全表現。persona_public に system_prompt/temperature/avatar を足す。
+
+    accent は accent_color（フォールバック後）ではなく **生値** で上書きする（編集時に
+    「未指定（=カテゴリ色）」と「明示指定」を区別できるように）。
+    """
+    detail = persona_public(p)
+    detail["system_prompt"] = p.system_prompt
+    detail["temperature"] = p.temperature
+    detail["avatar"] = p.avatar
+    detail["accent"] = p.accent  # 生値で上書き（未指定なら None）
+    return detail
+
+
+def get_persona_detail(persona_id: str) -> dict:
+    """1件の編集用詳細を返す。未知 id は KeyError（404 にマップ）。"""
+    for p in load_registry():
+        if p.id == persona_id:
+            return persona_detail(p)
+    raise KeyError(persona_id)
+
+
+def _persona_path(category: str, persona_id: str) -> Path:
+    return PERSONAS_DIR / category / f"{persona_id}.yaml"
+
+
+def _write_persona_file(path: Path, data: dict) -> None:
+    """known キーのみを safe_dump で書き出す。"""
+    import yaml
+
+    out = {k: data[k] for k in _PERSONA_WRITE_KEYS if k in data and data[k] is not None}
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8") as f:
+        yaml.safe_dump(
+            out, f, allow_unicode=True, sort_keys=False, default_flow_style=False
+        )
+
+
+def save_persona(data: dict, *, expect_id: str | None = None) -> Persona:
+    """ペルソナを作成（expect_id=None）または更新（expect_id=既存id）して保存する。
+
+    - persona_from_dict で検証（ValueError は呼び出し側で 400 にマップ）。
+    - 新規作成で id 衝突 → ValueError("persona id exists")（409 にマップ）。
+    - 更新で expect_id が存在しない → KeyError（404 にマップ）。
+    - 保存先 = personas/{category}/{id}.yaml。category 変更時は **旧パスを unlink**。
+      旧パスは load_personas_with_paths が返す id→実パスから取る（ファイル名から推測しない）。
+    - 手順: 新ファイル書込 → 旧ファイル unlink。書込失敗時は新ファイルを削除してロールバック。
+    """
+    persona = persona_from_dict(data)  # 検証（ValueError）
+    _validate_id(persona.id, kind="persona")  # パストラバーサル防止
+    pairs = load_personas_with_paths(PERSONAS_DIR)
+    id_to_path = {p.id: path for p, path in pairs}
+
+    new_path = _persona_path(persona.category, persona.id)
+    _assert_within(new_path, PERSONAS_DIR)  # 多層防御
+
+    if expect_id is None:
+        # 新規作成: id 衝突を弾く
+        if persona.id in id_to_path:
+            raise ValueError("persona id exists")
+        old_path: Path | None = None
+    else:
+        # 更新: 対象が存在しなければ 404
+        if expect_id not in id_to_path:
+            raise KeyError(expect_id)
+        # id 変更先が別の既存 id と衝突するなら弾く
+        if persona.id != expect_id and persona.id in id_to_path:
+            raise ValueError("persona id exists")
+        old_path = id_to_path[expect_id]
+
+    # 新ファイル書込 → 旧ファイル unlink（順序厳守）。書込失敗時はロールバック。
+    existed_before = new_path.exists()
+    try:
+        _write_persona_file(new_path, data)
+    except Exception:
+        # 書き出し途中で失敗したら、今回新規作成したファイルを消す（既存上書き時は残す）。
+        if not existed_before and new_path.exists():
+            new_path.unlink()
+        raise
+
+    if old_path is not None and old_path.resolve() != new_path.resolve():
+        # category や id の変更でパスが動いた → 旧ファイルを削除
+        try:
+            old_path.unlink()
+        except FileNotFoundError:
+            pass
+
+    return persona
+
+
+def delete_persona(persona_id: str) -> None:
+    """ペルソナを削除する。未知 id は KeyError（404 にマップ）。実パスは id→path で引く。"""
+    pairs = load_personas_with_paths(PERSONAS_DIR)
+    id_to_path = {p.id: path for p, path in pairs}
+    if persona_id not in id_to_path:
+        raise KeyError(persona_id)
+    try:
+        id_to_path[persona_id].unlink()
+    except FileNotFoundError:
+        # 既に消えていれば成功扱い（冪等）。生 OSError を 500 にしない。
+        pass
+
+
+# -- プリセット -------------------------------------------------------------
+#
+# presets/builtin/ … 同梱（builtin:true, 読取専用）。presets/ 直下 … ユーザー（書込可）。
+# スキーマ: {id, name, description?, persona_ids[], rounds_per_phase=1, red_team=true,
+#           red_team_id?, builtin}
+
+_PRESET_WRITE_KEYS = (
+    "id",
+    "name",
+    "description",
+    "persona_ids",
+    "rounds_per_phase",
+    "red_team",
+    "red_team_id",
+)
+
+
+def preset_public(preset: dict) -> dict:
+    """プリセットの公開表現（builtin フラグを明示）。"""
+    return {
+        "id": preset["id"],
+        "name": preset.get("name", preset["id"]),
+        "description": preset.get("description"),
+        "persona_ids": list(preset.get("persona_ids", [])),
+        "rounds_per_phase": int(preset.get("rounds_per_phase", 1)),
+        "red_team": bool(preset.get("red_team", True)),
+        "red_team_id": preset.get("red_team_id"),
+        "builtin": bool(preset.get("builtin", False)),
+    }
+
+
+def _preset_from_file(path: Path, *, builtin: bool) -> dict:
+    import yaml
+
+    with path.open(encoding="utf-8") as f:
+        data = yaml.safe_load(f)
+    if not isinstance(data, dict):
+        raise ValueError(f"{path}: トップレベルは mapping である必要があります")
+    data.setdefault("id", path.stem)
+    data["builtin"] = builtin
+    return data
+
+
+def load_presets() -> list[dict]:
+    """builtin + ユーザーの全プリセットを id でソートして返す（公開表現）。
+
+    同 id が両方にあればユーザー側を優先する（上書き想定）。
+    """
+    presets: dict[str, dict] = {}
+    if PRESETS_BUILTIN_DIR.is_dir():
+        for path in sorted(PRESETS_BUILTIN_DIR.glob("*.y*ml")):
+            p = _preset_from_file(path, builtin=True)
+            presets[p["id"]] = p
+    if PRESETS_DIR.is_dir():
+        for path in sorted(PRESETS_DIR.glob("*.y*ml")):  # 直下のみ（builtin/ は除外）
+            p = _preset_from_file(path, builtin=False)
+            presets[p["id"]] = p
+    return [preset_public(presets[pid]) for pid in sorted(presets)]
+
+
+def get_preset(preset_id: str) -> dict:
+    """1件取得。未知 id は KeyError（404 にマップ）。"""
+    for p in load_presets():
+        if p["id"] == preset_id:
+            return p
+    raise KeyError(preset_id)
+
+
+def _user_preset_path(preset_id: str) -> Path:
+    return PRESETS_DIR / f"{preset_id}.yaml"
+
+
+def _validate_preset_personas(persona_ids: list[str]) -> None:
+    """persona_ids が全て実在することを確認する。未知があれば ValueError。"""
+    known = {p.id for p in load_personas(PERSONAS_DIR)}
+    missing = [pid for pid in persona_ids if pid not in known]
+    if missing:
+        raise ValueError(f"unknown persona ids: {missing}")
+
+
+def _existing_preset_or_none(preset_id: str) -> dict | None:
+    try:
+        return get_preset(preset_id)
+    except KeyError:
+        return None
+
+
+def save_preset(data: dict, *, create: bool) -> dict:
+    """プリセットを作成（create=True）または更新（create=False）して保存する。
+
+    - create=True で id 衝突 → ValueError("preset id exists")（409）。
+    - update で対象が存在しない → KeyError（404）。
+    - builtin プリセットへの更新 → ValueError("builtin preset is read-only")（409）。
+    - 未知 persona → ValueError("unknown persona ids: [...]")（400）。
+    - 保存先は必ず presets/ 直下（ユーザー領域）。builtin/ には書かない。
+    """
+    import yaml
+
+    preset_id = data["id"]
+    _validate_id(preset_id, kind="preset")  # パストラバーサル防止
+    existing = _existing_preset_or_none(preset_id)
+
+    if create:
+        if existing is not None:
+            raise ValueError("preset id exists")
+    else:
+        if existing is None:
+            raise KeyError(preset_id)
+        if existing.get("builtin"):
+            raise ValueError("builtin preset is read-only")
+
+    _validate_preset_personas(list(data.get("persona_ids", [])))
+
+    out = {k: data[k] for k in _PRESET_WRITE_KEYS if k in data and data[k] is not None}
+    out["id"] = preset_id
+    path = _user_preset_path(preset_id)
+    _assert_within(path, PRESETS_DIR)  # 多層防御
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8") as f:
+        yaml.safe_dump(
+            out, f, allow_unicode=True, sort_keys=False, default_flow_style=False
+        )
+    return get_preset(preset_id)
+
+
+def delete_preset(preset_id: str) -> None:
+    """プリセットを削除する。未知 id は KeyError（404）。builtin は ValueError（409）。"""
+    existing = _existing_preset_or_none(preset_id)
+    if existing is None:
+        raise KeyError(preset_id)
+    if existing.get("builtin"):
+        raise ValueError("builtin preset is read-only")
+    _user_preset_path(preset_id).unlink()

@@ -6,9 +6,12 @@
 
 from __future__ import annotations
 
+import os
+from typing import Literal, NoReturn
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel, Field
 
 from . import service
@@ -35,7 +38,8 @@ class SessionRequest(BaseModel):
 
 @app.get("/health")
 def health() -> dict:
-    return {"status": "ok"}
+    """稼働確認 + LLM 構成。API キーの値そのものは返さない（漏洩防止）。"""
+    return {"status": "ok", **service.llm_status()}
 
 
 @app.get("/personas")
@@ -85,3 +89,171 @@ def reconnect_session(session_id: str, cursor: int = 0) -> StreamingResponse:
         media_type="text/event-stream",
         headers=_SSE_HEADERS,
     )
+
+
+# -- 追い質問（人間からの割り込み） -----------------------------------------
+class FollowupRequest(BaseModel):
+    # kind は Literal["followup"] のみ（他値は pydantic が 422 にする）。MVP は追い質問だけ。
+    kind: Literal["followup"] = "followup"
+    text: str = Field(..., min_length=1, max_length=2000)
+    target: str | None = None
+
+
+@app.post("/sessions/{session_id}/messages")
+def post_session_message(session_id: str, req: FollowupRequest) -> JSONResponse:
+    """進行中の討論に追い質問を割り込ませる。成功は 202 {"queued": true}。
+
+    未知 session は 404、running でないセッションも 404。
+    """
+    session = service.get_session(session_id)
+    if session is None:
+        raise HTTPException(status_code=404, detail="unknown session id")
+    if session.status != "running":
+        raise HTTPException(status_code=404, detail="session is not running")
+    # 仕上げ（summary/synthesis）に入った後は受け付けない。202 で受理したのに二度と
+    # drain されず永久ドロップする窓を塞ぐ（本編フェーズ中のみ受理＝202 の約束を守る）。
+    if not session.accepting:
+        raise HTTPException(status_code=409, detail="session is finalizing; no more followups")
+    service.post_message(
+        session,
+        service.HumanMessage(kind=req.kind, text=req.text, target=req.target),
+    )
+    return JSONResponse(status_code=202, content={"queued": True})
+
+
+@app.delete("/sessions/{session_id}", status_code=202)
+def cancel_session(session_id: str) -> JSONResponse:
+    """進行中の討論を停止する（協調キャンセル）。
+
+    実 LLM の発注を次のターン前に打ち切ってコストを抑える。未知 session は 404。
+    既に終了済みでも冪等に 202 を返す。
+    """
+    session = service.get_session(session_id)
+    if session is None:
+        raise HTTPException(status_code=404, detail="unknown session id")
+    service.cancel_session(session)
+    return JSONResponse(status_code=202, content={"cancelled": True})
+
+
+# -- 例外マッピング（ValueError / KeyError → HTTP） -------------------------
+def _raise_value_error(exc: ValueError) -> NoReturn:
+    """ValueError を HTTP に変換する（必ず raise する＝戻らない）。
+
+    - "exists" を含む（id 衝突）→ 409
+    - "read-only" を含む（builtin 編集）→ 409
+    - それ以外（検証エラー・未知 persona など）→ 400
+    """
+    msg = str(exc)
+    if "exists" in msg or "read-only" in msg:
+        raise HTTPException(status_code=409, detail=msg)
+    raise HTTPException(status_code=400, detail=msg)
+
+
+# -- プリセット CRUD --------------------------------------------------------
+class PresetUpsert(BaseModel):
+    # id は書込先パスに使うため charset を制限（パストラバーサル防止・入口で 422）。
+    id: str = Field(..., min_length=1, pattern=r"^[a-z0-9_-]+$")
+    name: str = Field(..., min_length=1)
+    description: str | None = None
+    persona_ids: list[str] = Field(..., min_length=1)
+    rounds_per_phase: int = Field(1, ge=1, le=5)
+    red_team: bool = True
+    red_team_id: str | None = None
+
+
+@app.get("/presets")
+def list_presets() -> list[dict]:
+    return service.load_presets()
+
+
+@app.get("/presets/{preset_id}")
+def get_preset(preset_id: str) -> dict:
+    try:
+        return service.get_preset(preset_id)
+    except KeyError:
+        raise HTTPException(status_code=404, detail="unknown preset id")
+
+
+@app.post("/presets", status_code=201)
+def create_preset(req: PresetUpsert) -> dict:
+    try:
+        return service.save_preset(req.model_dump(), create=True)
+    except ValueError as exc:
+        _raise_value_error(exc)
+
+
+@app.put("/presets/{preset_id}")
+def update_preset(preset_id: str, req: PresetUpsert) -> dict:
+    data = req.model_dump()
+    data["id"] = preset_id  # パスの id を正とする
+    try:
+        return service.save_preset(data, create=False)
+    except KeyError:
+        raise HTTPException(status_code=404, detail="unknown preset id")
+    except ValueError as exc:
+        _raise_value_error(exc)
+
+
+@app.delete("/presets/{preset_id}", status_code=204)
+def remove_preset(preset_id: str) -> None:
+    try:
+        service.delete_preset(preset_id)
+    except KeyError:
+        raise HTTPException(status_code=404, detail="unknown preset id")
+    except ValueError as exc:
+        _raise_value_error(exc)
+
+
+# -- ペルソナ CRUD ----------------------------------------------------------
+class PersonaUpsert(BaseModel):
+    # id は書込先パスに使うため charset を制限（パストラバーサル防止・入口で 422）。
+    id: str = Field(..., min_length=1, pattern=r"^[a-z0-9_-]+$")
+    display_name: str = Field(..., min_length=1)
+    system_prompt: str = Field(..., min_length=1)
+    # category は 6 種のみ（不正は入口で 422）。
+    category: Literal[
+        "facilitation", "chair", "scribe", "thinking", "founders", "philosophers"
+    ] = "thinking"
+    # レガシー絵文字フィールド。UI は使わず、既定は None（YAML に書き出さない）。
+    avatar: str | None = None
+    model: str | None = None
+    temperature: float | None = None
+    tags: list[str] = Field(default_factory=list)
+    speaks: bool = True
+    accent: str | None = None
+
+
+@app.get("/personas/{persona_id}")
+def get_persona(persona_id: str) -> dict:
+    try:
+        return service.get_persona_detail(persona_id)
+    except KeyError:
+        raise HTTPException(status_code=404, detail="unknown persona id")
+
+
+@app.post("/personas", status_code=201)
+def create_persona(req: PersonaUpsert) -> dict:
+    try:
+        persona = service.save_persona(req.model_dump(), expect_id=None)
+    except ValueError as exc:
+        _raise_value_error(exc)
+    return service.persona_detail(persona)
+
+
+@app.put("/personas/{persona_id}")
+def update_persona(persona_id: str, req: PersonaUpsert) -> dict:
+    try:
+        persona = service.save_persona(req.model_dump(), expect_id=persona_id)
+    except KeyError:
+        raise HTTPException(status_code=404, detail="unknown persona id")
+    except ValueError as exc:
+        _raise_value_error(exc)
+    return service.persona_detail(persona)
+
+
+@app.delete("/personas/{persona_id}", status_code=204)
+def remove_persona(persona_id: str) -> None:
+    try:
+        service.delete_persona(persona_id)
+    except KeyError:
+        raise HTTPException(status_code=404, detail="unknown persona id")

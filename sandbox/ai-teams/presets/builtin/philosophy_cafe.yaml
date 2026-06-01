@@ -1,0 +1,13 @@
+id: philosophy_cafe
+name: 哲学カフェ
+description: |
+  問いを深める対話。ソクラテス（演）が前提を問い直し、共感役が当事者の手触りを戻し、
+  論理役が筋を通す。司会が進行し、議長が議事を統合する。
+persona_ids:
+  - moderator
+  - socrates
+  - empathy
+  - logic
+  - chair
+rounds_per_phase: 1
+red_team: true

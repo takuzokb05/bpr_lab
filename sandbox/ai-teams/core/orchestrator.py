@@ -14,6 +14,15 @@ from dataclasses import dataclass
 from itertools import count
 from typing import Callable, Iterator, Sequence
 
+# 追い質問ラウンドで各パネリストに前置きする指示。本編ローテーションを乱さないよう、
+# 順序を list(self.panelists) で固定し（scheduler.order() は使わない）、まずこの質問に
+# 答えてから本編に戻る、という流れを作る。
+FOLLOWUP_DIRECTIVE = (
+    "【追い質問対応】司会が今読み上げた人間からの追い質問に、"
+    "まずあなたの立場から簡潔に答えてください。その上で、これまでの議論との"
+    "つながりを一言添えること。"
+)
+
 from .context import build_context
 from .llm_client import DEFAULT_MODEL, LLMClient
 from .personas import Persona
@@ -34,6 +43,11 @@ class Turn:
 
 # emit に流すイベント（turn_start / delta）。turn_end は呼び出し側が出す（設計 v2）。
 Emit = Callable[[dict], None]
+
+# 未処理の人間メッセージ（追い質問など）を drain して返すコールバック。
+# 返り値は .text / .target を持つオブジェクトの列（api.service.HumanMessage を import せず
+# duck typing で扱う＝core を API 層に依存させない）。pull=None なら従来動作（注入なし）。
+Pull = Callable[[], list]
 
 
 # Red Team（反対役）への追加指示。指名されたパネリストの発言時に毎ターン注入する。
@@ -124,16 +138,15 @@ class Council:
             raise ValueError("パネリストが0人です。thinking/founders/philosophers のペルソナが必要です。")
         self.scheduler = RoundRobinScheduler(self.panelists)
 
+        # red_team_id の妥当性はフラグと独立に検証する（red_team=False でも不正 id は
+        # サイレント無視せず弾く＝同一入力で挙動が割れない）。
+        if red_team_id is not None and not any(p.id == red_team_id for p in self.panelists):
+            raise ValueError(f"red_team_id '{red_team_id}' はパネリストにいません")
         # Red Team（反対役）の選定。明示指定が無ければ先頭パネリストを充てる。
         # 1人しかいない討論では反対役を立てない（全員反対では討論にならない）。
         self.red_team_id: str | None = None
         if red_team and len(self.panelists) >= 2:
-            if red_team_id is not None:
-                if not any(p.id == red_team_id for p in self.panelists):
-                    raise ValueError(f"red_team_id '{red_team_id}' はパネリストにいません")
-                self.red_team_id = red_team_id
-            else:
-                self.red_team_id = self.panelists[0].id
+            self.red_team_id = red_team_id if red_team_id is not None else self.panelists[0].id
 
     # -- 内部ヘルパ --------------------------------------------------------
     def _resolve(self, persona: Persona) -> tuple[str, float]:
@@ -196,13 +209,127 @@ class Council:
             content = "".join(parts).strip()
         return Turn(persona.id, persona.display_name, content, phase, round_no, turn_id=turn_id)
 
+    def _emit_simple_turn(
+        self,
+        *,
+        speaker_id: str,
+        speaker_name: str,
+        content: str,
+        phase: str,
+        round_no: int,
+        emit: Emit | None,
+        turn_id: int,
+    ) -> Turn:
+        """LLM を呼ばずに、与えられた本文をそのまま1ターンとして流す。
+
+        人間ターン（追い質問のエコー）に使う。emit があれば turn_start → delta（全文を
+        1チャンク）を流す。turn_end は呼び出し側（_produce）が出すので、ここでは出さない
+        （二重防止）。Turn を返す（呼び出し側が transcript に積む）。
+        """
+        if emit is not None:
+            emit(
+                {
+                    "type": "turn_start",
+                    "turn_id": turn_id,
+                    "speaker_id": speaker_id,
+                    "speaker_name": speaker_name,
+                    "phase": phase,
+                    "round": round_no,
+                }
+            )
+            emit({"type": "delta", "turn_id": turn_id, "text": content})
+        return Turn(speaker_id, speaker_name, content, phase, round_no, turn_id=turn_id)
+
+    def _drain_and_inject(
+        self,
+        transcript: list[Turn],
+        topic: str,
+        round_no: int,
+        *,
+        emit: Emit | None,
+        ids: "count[int]",
+        pull: Pull | None,
+    ) -> Iterator[Turn]:
+        """本編フェーズの各 Turn 直後に呼ばれ、溜まった追い質問を注入する。
+
+        pull=None なら何もしない（従来動作＝既存テストはこの経路）。pull() が空なら
+        即 return。来ていたら:
+          (a) 各追い質問を「人間ターン」として transcript に積み yield（LLM 不使用）。
+          (b) 司会在席時のみ、司会が再提示する followup ターンを生成・yield。
+          (c) list(self.panelists) を **本編とは独立に1周** し、followup directive 前置きで
+              各パネリストに答えさせる（順序固定でローテーションを乱さない）。Red Team 指名者
+              には _speak が自動で反対役の特命を上乗せする。
+        複数の追い質問は 1 ラウンドに束ねて処理する（(a) で全件積んでから (b)(c) は1回）。
+        """
+        if pull is None:
+            return
+        msgs = pull()
+        if not msgs:
+            return
+
+        # (a) 人間ターン（追い質問のエコー）を順に積む。
+        for msg in msgs:
+            text = getattr(msg, "text", "") or ""
+            human = self._emit_simple_turn(
+                speaker_id="human",
+                speaker_name="あなた",
+                content=text,
+                phase="human",
+                round_no=round_no,
+                emit=emit,
+                turn_id=next(ids),
+            )
+            transcript.append(human)
+            yield human
+
+        # (b) 司会が在席していれば、追い質問を討論に投げ直す（再提示）。
+        if self.moderator is not None:
+            questions = "\n".join(f"- {getattr(m, 'text', '') or ''}" for m in msgs)
+            mod_turn = self._speak(
+                self.moderator,
+                transcript,
+                topic,
+                phase="followup",
+                round_no=round_no,
+                phase_directive=(
+                    "【追い質問の取り次ぎ】視聴者（人間）から次の追い質問が入りました。"
+                    "パネリストに分かるよう簡潔に取り次ぎ、これに答えるよう促してください。"
+                    "あなた自身が答えてしまわないこと。\n" + questions
+                ),
+                anti_conformity=False,
+                emit=emit,
+                turn_id=next(ids),
+            )
+            transcript.append(mod_turn)
+            yield mod_turn
+
+        # (c) パネリスト全員が1周して追い質問に答える（順序固定＝本編ローテーション不変）。
+        for persona in list(self.panelists):
+            turn = self._speak(
+                persona,
+                transcript,
+                topic,
+                phase="followup",
+                round_no=round_no,
+                phase_directive=FOLLOWUP_DIRECTIVE,
+                anti_conformity=False,
+                emit=emit,
+                turn_id=next(ids),
+            )
+            transcript.append(turn)
+            yield turn
+
     # -- 公開 API ----------------------------------------------------------
-    def run(self, topic: str, *, emit: Emit | None = None) -> Iterator[Turn]:
+    def run(self, topic: str, *, emit: Emit | None = None, pull: Pull | None = None) -> Iterator[Turn]:
         """討論を進行し、確定した Turn を1件ずつ yield する。
 
         emit を渡すと各発言を turn_start → delta* のイベント列として流す
         （ストリーミング経路）。emit=None なら従来どおり一括生成し Turn だけを
         yield する（後方互換・既存テストはこの経路）。turn_id は両経路で採番する。
+
+        pull を渡すと、本編フェーズ（発散/批判/収束）の各 Turn 直後に追い質問を drain して
+        注入する（人間ターン → 司会再提示 → パネリスト1周）。pull=None なら従来動作
+        （注入なし＝既存テストはこの経路）。opening/summary/synthesis では拾わない。
         """
         transcript: list[Turn] = []
         ids = count()  # turn_id の採番（単調増加）
@@ -243,6 +370,10 @@ class Council:
                     )
                     transcript.append(turn)
                     yield turn
+                    # 本編フェーズの各 Turn 直後にだけ追い質問を拾う（pull=None なら no-op）。
+                    yield from self._drain_and_inject(
+                        transcript, topic, round_no, emit=emit, ids=ids, pull=pull
+                    )
 
         # 3. 議長による統合（chairman パターン）。chair が無ければ司会が兼任。
         synthesizer = self.chair or self.moderator

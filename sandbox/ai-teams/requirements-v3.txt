@@ -1,6 +1,8 @@
 # AI Teams v3 (core エンジン) の依存。旧 requirements.txt は v2 用。
 anthropic>=0.40
 pyyaml>=6.0
+# .env から ANTHROPIC_API_KEY 等を読み込む（未インストールでも service.py 側で握り潰す）。
+python-dotenv>=1.0
 # API (FastAPI + SSE):
 fastapi>=0.110
 uvicorn[standard]>=0.29
