@@ -38,8 +38,8 @@ export function Timeline({
     );
   }
 
-  // 議長の統合（synthesis）はタイムラインから除外し、右の成果パネルに回す
-  const visible = turns.filter((t) => t.phase !== "synthesis");
+  // 議長の要約(summary)・統合(synthesis)はタイムラインから除外し、右の成果パネルに回す
+  const visible = turns.filter((t) => t.phase !== "synthesis" && t.phase !== "summary");
 
   return (
     <div className="flex h-full flex-col overflow-y-auto px-6 py-5">

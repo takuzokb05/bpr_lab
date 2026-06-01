@@ -174,9 +174,8 @@ def test_sse_stream():
     check("error" not in kinds, "error イベントは出ない")
 
     turns = [e for e, k in zip(events, kinds) if k == "turn"]
-    # 司会1 + パネリスト3 + 議長1 = 5（1フェーズ×1ラウンド）。デフォルト3フェーズなので
-    # ここではフェーズ既定のまま: opening1 + (3人×3フェーズ) + synthesis1 = 11
-    check(len(turns) == 11, f"turn 数が想定どおり: {len(turns)}")
+    # opening1 + (3人×3フェーズ=9) + summary1 + synthesis1 = 12
+    check(len(turns) == 12, f"turn 数が想定どおり: {len(turns)}")
 
     # data 行の JSON 検証（最初の turn）
     data_line = [ln for ln in turns[0].splitlines() if ln.startswith("data: ")][0]
@@ -187,12 +186,84 @@ def test_sse_stream():
 
 
 # ---------------------------------------------------------------------------
+def test_red_team():
+    """Red Team 保証: 指名パネリストの発言時に反対役の特命が注入される。"""
+    print("[test] red team guarantee (同調バイアス対策)")
+    from core.orchestrator import RED_TEAM_DIRECTIVE
+
+    personas = [
+        make("mod", cat="facilitation"),
+        make("logic"),
+        make("idea"),
+        make("chair", cat="chair"),
+    ]
+    client = MockLLMClient()
+    # red_team を logic に明示
+    council = Council(
+        personas, client, red_team=True, red_team_id="logic",
+        phases=[("発散", "d", True)], rounds_per_phase=1,
+    )
+    check(council.red_team_id == "logic", "red_team_id が設定される")
+    list(council.run("議題R"))
+
+    # logic の呼び出しメッセージに Red Team 特命が入り、idea には入らない
+    redteam_seen = False
+    other_clean = True
+    marker = RED_TEAM_DIRECTIVE[:20]
+    for call in client.calls:
+        joined = "\n".join(m["content"] for m in call["messages"])
+        if "logic" in call["system"]:
+            if marker in joined:
+                redteam_seen = True
+        elif "idea" in call["system"]:
+            if marker in joined:
+                other_clean = False
+    check(redteam_seen, "Red Team 指名者(logic)の発言に反対役の特命が注入される")
+    check(other_clean, "非指名者(idea)には反対役の特命が入らない")
+
+    # パネリスト2人なら既定で先頭が Red Team
+    duo = Council(
+        [make("mod", cat="facilitation"), make("aaa"), make("bbb"), make("chair", cat="chair")],
+        MockLLMClient(), red_team=True,
+        phases=[("発散", "d", True)], rounds_per_phase=1,
+    )
+    check(duo.red_team_id == "aaa", "パネリスト2人以上なら既定で先頭が Red Team")
+    # パネリスト1人なら Red Team は立てない（全員反対では討論にならない）
+    solo1 = Council(
+        [make("mod", cat="facilitation"), make("only"), make("chair", cat="chair")],
+        MockLLMClient(), red_team=True,
+        phases=[("発散", "d", True)], rounds_per_phase=1,
+    )
+    check(solo1.red_team_id is None, "パネリスト1人なら Red Team は立てない")
+
+
+def test_exec_summary():
+    """エグゼクティブサマリ: synthesis の前に summary フェーズが1回出る。"""
+    print("[test] exec summary 3-line")
+    council = service.build_council(
+        ["moderator", "logic", "idea", "chair"],
+        rounds_per_phase=1, mock=True,
+    )
+    turns = list(council.run("議題S"))
+    phases = [t.phase for t in turns]
+    check("summary" in phases, "summary フェーズが存在する")
+    check(
+        phases.index("summary") < phases.index("synthesis"),
+        "summary は synthesis より前に出る（UI上段用）",
+    )
+    summary_turn = next(t for t in turns if t.phase == "summary")
+    check(summary_turn.speaker_id == "chair", "サマリは議長が書く")
+
+
+# ---------------------------------------------------------------------------
 if __name__ == "__main__":
     test_context_isolation()
     test_no_silence_and_round_robin()
     test_model_override()
     test_persona_public()
     test_sse_stream()
+    test_red_team()
+    test_exec_summary()
     print()
     if _failures:
         print(f"❌ {len(_failures)} 件 FAIL")

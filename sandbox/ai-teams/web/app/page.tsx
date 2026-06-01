@@ -39,6 +39,10 @@ export default function Home() {
     () => turns.find((t) => t.phase === "synthesis") ?? null,
     [turns]
   );
+  const summary = useMemo(
+    () => turns.find((t) => t.phase === "summary") ?? null,
+    [turns]
+  );
 
   const running = status === "running";
 
@@ -172,7 +176,7 @@ export default function Home() {
 
         {/* 右：成果 */}
         <aside className="overflow-hidden border-l border-[var(--color-line)] bg-[var(--color-surface)]">
-          <MinutesPanel synthesis={synthesis} status={status} />
+          <MinutesPanel summary={summary} synthesis={synthesis} status={status} />
         </aside>
       </div>
     </div>

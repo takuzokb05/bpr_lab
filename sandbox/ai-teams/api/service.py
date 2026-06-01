@@ -49,6 +49,8 @@ def build_council(
     persona_ids: list[str],
     *,
     rounds_per_phase: int = 1,
+    red_team: bool = True,
+    red_team_id: str | None = None,
     mock: bool = False,
 ) -> Council:
     """指定 id のペルソナで Council を作る。未知 id は KeyError。"""
@@ -57,7 +59,13 @@ def build_council(
     if missing:
         raise KeyError(missing)
     personas = [registry[pid] for pid in persona_ids]
-    return Council(personas, make_client(mock), rounds_per_phase=rounds_per_phase)
+    return Council(
+        personas,
+        make_client(mock),
+        rounds_per_phase=rounds_per_phase,
+        red_team=red_team,
+        red_team_id=red_team_id,
+    )
 
 
 # -- SSE --------------------------------------------------------------------

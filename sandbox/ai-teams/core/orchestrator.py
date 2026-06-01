@@ -29,6 +29,18 @@ class Turn:
     round: int
 
 
+# Red Team（反対役）への追加指示。指名されたパネリストの発言時に毎ターン注入する。
+# 同調バイアス対策（研究: 討論を放置すると同調で精度が下がる）として、最低1名の
+# 反論を構造的に保証する。
+RED_TEAM_DIRECTIVE = (
+    "【あなたの特命: Red Team（反対役）】"
+    "あなたはこの討論で意図的に反対の立場を取る担当です。"
+    "多数派や心地よい結論に流されず、最も強い反証・最悪のシナリオ・"
+    "見落とされている前提を必ず1つ提示してください。"
+    "全員が賛成していても、あえて穴を探すのがあなたの責務です。"
+)
+
+
 # (フェーズ名, 指示, 反同調を効かせるか) のデフォルト進行。
 DEFAULT_PHASES: list[tuple[str, str, bool]] = [
     (
@@ -82,6 +94,8 @@ class Council:
         default_temperature: float = 0.7,
         phases: list[tuple[str, str, bool]] | None = None,
         rounds_per_phase: int = 1,
+        red_team: bool = True,
+        red_team_id: str | None = None,
     ) -> None:
         self.client = client
         self.default_model = default_model
@@ -102,6 +116,17 @@ class Council:
         if not self.panelists:
             raise ValueError("パネリストが0人です。thinking/founders/philosophers のペルソナが必要です。")
         self.scheduler = RoundRobinScheduler(self.panelists)
+
+        # Red Team（反対役）の選定。明示指定が無ければ先頭パネリストを充てる。
+        # 1人しかいない討論では反対役を立てない（全員反対では討論にならない）。
+        self.red_team_id: str | None = None
+        if red_team and len(self.panelists) >= 2:
+            if red_team_id is not None:
+                if not any(p.id == red_team_id for p in self.panelists):
+                    raise ValueError(f"red_team_id '{red_team_id}' はパネリストにいません")
+                self.red_team_id = red_team_id
+            else:
+                self.red_team_id = self.panelists[0].id
 
     # -- 内部ヘルパ --------------------------------------------------------
     def _call(self, persona: Persona, system: str, messages: list[dict[str, str]]) -> str:
@@ -124,6 +149,9 @@ class Council:
         phase_directive: str,
         anti_conformity: bool,
     ) -> Turn:
+        # Red Team に指名されたパネリストには、毎ターン反対役の特命を上乗せする。
+        if persona.id == self.red_team_id:
+            phase_directive = f"{phase_directive}\n\n{RED_TEAM_DIRECTIVE}"
         system, messages = build_context(
             transcript=transcript,
             active=persona,
@@ -175,6 +203,28 @@ class Council:
         # 3. 議長による統合（chairman パターン）。chair が無ければ司会が兼任。
         synthesizer = self.chair or self.moderator
         if synthesizer is not None:
+            # 3a. エグゼクティブサマリ（3行）。意思決定者がまず読む結論・根拠・次の一手。
+            #     議事録より先に出すことで、UI上段に置ける。
+            summary = self._speak(
+                synthesizer,
+                transcript,
+                topic,
+                phase="summary",
+                round_no=0,
+                phase_directive=(
+                    "【エグゼクティブサマリ】これまでの討論を踏まえ、意思決定者向けに"
+                    "ちょうど3行で要約してください。各行は次の見出しで始めること:\n"
+                    "結論: （何を推すか、一文で）\n"
+                    "根拠: （なぜそう言えるか、一文で）\n"
+                    "次の一手: （直ちに取るべき行動、一文で）\n"
+                    "新しい意見は足さず、出た議論だけから書くこと。"
+                ),
+                anti_conformity=False,
+            )
+            transcript.append(summary)
+            yield summary
+
+            # 3b. 議事録（合意/対立/リスク/アクション）。
             turn = self._speak(
                 synthesizer,
                 transcript,

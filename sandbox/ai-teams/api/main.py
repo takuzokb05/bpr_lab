@@ -28,6 +28,8 @@ class SessionRequest(BaseModel):
     topic: str = Field(..., min_length=1)
     persona_ids: list[str] = Field(..., min_length=1)
     rounds_per_phase: int = Field(1, ge=1, le=5)
+    red_team: bool = True
+    red_team_id: str | None = None
     mock: bool = False
 
 
@@ -45,7 +47,11 @@ def list_personas() -> list[dict]:
 def create_session(req: SessionRequest) -> StreamingResponse:
     try:
         council = service.build_council(
-            req.persona_ids, rounds_per_phase=req.rounds_per_phase, mock=req.mock
+            req.persona_ids,
+            rounds_per_phase=req.rounds_per_phase,
+            red_team=req.red_team,
+            red_team_id=req.red_team_id,
+            mock=req.mock,
         )
     except KeyError as exc:
         raise HTTPException(status_code=400, detail=f"unknown persona ids: {exc.args[0]}")
