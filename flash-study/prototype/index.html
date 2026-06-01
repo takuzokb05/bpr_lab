@@ -3,151 +3,305 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>フラッシュ学習 — Phase 1</title>
+<title>フラッシュ学習</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root{
+    /* 面（既存維持） */
     --bg:#171310;--bg2:#1f1a15;--surface:#241e18;--line:#3a3128;
-    --text:#f1e9dd;--muted:#b8ad9e;--accent:#e0823f;--accent-soft:#e0823f22;
-    --good:#6fb98f;--bad:#d9686a;
+    --text:#f1e9dd;
+    /* muted: 本文級で4.5:1を満たすよう明度UP。12px以下用に強muted */
+    --muted:#c8bdac;--muted-strong:#cabfae;
+    /* アクセント階層（塗りは主役CTAとORP焦点のみ） */
+    --accent:#e0823f;--accent-600:#eb9152;--accent-700:#c96d2e;
+    --accent-weak:#e0823f29;--on-accent:#1a1006;
+    /* 状態色（正誤は色＋✓/✗の二重符号化を必須に） */
+    --good:#6fb98f;--bad:#d9686a;--good-line:#3c5546;--bad-line:#6b3b3c;
+    /* タイポスケール（rem基盤・整数px相当） */
+    --fs-xs:.6875rem;--fs-sm:.75rem;--fs-base:.8125rem;--fs-md:.875rem;--fs-lg:.9375rem;--fs-xl:1.125rem;
+    --fw-reg:400;--fw-med:500;--fw-bold:700;--ls-label:.08em;--ls-head:.02em;
+    /* 余白（4pxグリッド） */
+    --sp-1:4px;--sp-2:8px;--sp-3:12px;--sp-4:16px;--sp-5:24px;--sp-6:32px;
+    /* 角丸（4段） */
+    --r-sm:9px;--r-md:13px;--r-lg:16px;--r-pill:999px;
+    /* 影（elevation 3段） */
+    --shadow-1:0 1px 2px rgba(0,0,0,.30);--shadow-2:0 4px 12px rgba(0,0,0,.35);
+    --shadow-cta:0 4px 14px rgba(224,130,63,.18);--shadow-inset:inset 0 1px 0 rgba(255,255,255,.03);
+    /* モーション */
+    --t-fast:.15s;--t-base:.2s;--t-slow:.3s;
+    /* 表示用フォント（没入面・clampのまま） */
+    --flash-fs:clamp(34px,11vw,56px);--lead-fs:clamp(24px,6.5vw,32px);--score-fs:64px;
     --serif:'Shippori Mincho',"Hiragino Mincho ProN","Yu Mincho",serif;
     --sans:'Zen Kaku Gothic New',"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
   }
+  html{font-size:100%;}
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   html,body{margin:0;height:100%;}
   body{background:radial-gradient(120% 80% at 50% -10%, #2a221b 0%, var(--bg) 55%),var(--bg);
-    color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;overscroll-behavior:none;}
+    color:var(--text);font-family:var(--sans);font-size:var(--fs-md);-webkit-font-smoothing:antialiased;overscroll-behavior:none;}
+  /* キーボード可視フォーカス（WCAG 2.4.7）。マウス時は抑制 */
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:inherit;}
+  :focus:not(:focus-visible){outline:none;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
   #app{max-width:560px;margin:0 auto;min-height:100dvh;display:flex;flex-direction:column;
     padding:max(22px,env(safe-area-inset-top)) max(20px,env(safe-area-inset-right)) calc(28px + env(safe-area-inset-bottom)) max(20px,env(safe-area-inset-left));}
-  .top{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
-  .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent);}
-  .top h1{font-size:15px;font-weight:700;letter-spacing:.04em;margin:0;color:var(--muted);}
-  .screen{flex:1;display:flex;flex-direction:column;animation:fade .4s ease both;}
+  .top{display:flex;align-items:center;gap:var(--sp-2);margin-bottom:var(--sp-1);}
+  .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent);flex:none;}
+  .top h1{font-size:var(--fs-lg);font-weight:var(--fw-bold);letter-spacing:var(--ls-head);margin:0;color:var(--muted);}
+  .screen{flex:1;display:flex;flex-direction:column;animation:fade var(--t-slow) ease both;}
   @keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
 
-  .lead{font-family:var(--serif);font-weight:700;font-size:clamp(24px,6.5vw,32px);line-height:1.3;margin:16px 0 4px;}
+  .lead{font-family:var(--serif);font-weight:var(--fw-bold);font-size:var(--lead-fs);line-height:1.3;margin:var(--sp-4) 0 var(--sp-1);}
   .lead em{color:var(--accent);font-style:normal;}
-  .sub{color:var(--muted);font-size:13.5px;line-height:1.7;margin-bottom:18px;}
-  .label{font-size:12px;letter-spacing:.08em;color:var(--muted);margin:16px 0 9px;text-transform:uppercase;}
+  .sub{color:var(--muted);font-size:var(--fs-base);line-height:1.7;margin-bottom:var(--sp-4);}
+  .label{font-size:var(--fs-sm);letter-spacing:var(--ls-label);color:var(--muted);margin:var(--sp-5) 0 var(--sp-2);}
 
-  .cards{display:flex;flex-direction:column;gap:10px;}
-  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:15px 17px;
-    text-align:left;cursor:pointer;color:var(--text);font-family:var(--sans);transition:.18s;display:flex;align-items:center;gap:13px;}
+  /* 学習サマリ帯（ライブラリ先頭） */
+  .sumbar{display:flex;align-items:center;gap:var(--sp-3);flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);
+    border-radius:var(--r-lg);padding:var(--sp-3) var(--sp-4);box-shadow:var(--shadow-1);margin-bottom:var(--sp-4);}
+  .sumbar .stat{display:flex;flex-direction:column;gap:2px;}
+  .sumbar .stat b{font-family:var(--serif);font-size:var(--fs-xl);color:var(--text);line-height:1;}
+  .sumbar .stat span{font-size:var(--fs-xs);color:var(--muted-strong);}
+  .sumbar .btn{margin-left:auto;}
+
+  .cards{display:flex;flex-direction:column;gap:var(--sp-3);}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:var(--sp-4);
+    text-align:left;cursor:pointer;color:var(--text);font-family:var(--sans);transition:box-shadow var(--t-fast),border-color var(--t-fast),transform var(--t-fast);
+    display:flex;align-items:center;gap:var(--sp-3);box-shadow:var(--shadow-1);}
+  .card:hover{box-shadow:var(--shadow-2);border-color:#4a3f33;}
   .card:active{transform:scale(.985);}
-  .card.sel{border-color:var(--accent);background:linear-gradient(var(--accent-soft),transparent);}
-  .card .ic{font-family:var(--serif);font-size:20px;color:var(--accent);width:30px;text-align:center;flex:none;}
+  .card.sel{border-color:var(--accent);background:var(--accent-weak);}
+  .card .ic{font-family:var(--serif);font-size:1.25rem;color:var(--accent);width:30px;text-align:center;flex:none;}
   .card .cmid{flex:1;min-width:0;overflow:hidden;}
-  .card .ct{font-weight:700;font-size:15.5px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-  .card .cd{color:var(--muted);font-size:12px;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-  .card .chev{margin-left:auto;color:var(--muted);font-size:18px;}
-  .pill{font-size:11px;padding:2px 8px;border-radius:20px;border:1px solid var(--line);color:var(--muted);margin-left:auto;}
-  .pill.rdy{color:var(--good);border-color:#3c5546;}
+  .card .ct{font-weight:var(--fw-bold);font-size:var(--fs-lg);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .card .cd{color:var(--muted);font-size:var(--fs-sm);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .pill{display:inline-flex;align-items:center;gap:4px;font-size:var(--fs-xs);padding:3px 9px;border-radius:var(--r-pill);
+    border:1px solid var(--line);color:var(--muted-strong);margin-left:auto;flex:none;white-space:nowrap;}
+  .pill.rdy{color:var(--good);border-color:var(--good-line);}
   .pill.uns{color:var(--accent);border-color:#5c4530;}
-  .grouphd{font-size:12px;letter-spacing:.06em;color:var(--muted);margin:20px 0 10px;display:flex;align-items:center;gap:8px;}
-  .grouphd b{font-weight:700;color:var(--text);}
-  .grouphd .cnt{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:1px 8px;font-size:11px;}
-  .inp{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:12px;color:var(--text);font-family:var(--sans);font-size:14.5px;padding:13px 15px;}
-  .inp:focus{outline:none;border-color:var(--accent);}
+  .pill.due{color:var(--accent);border-color:#5c4530;background:var(--accent-weak);}
+  .grouphd{font-size:var(--fs-sm);letter-spacing:.06em;color:var(--muted);margin:var(--sp-5) 0 var(--sp-3);display:flex;align-items:center;gap:var(--sp-2);}
+  .grouphd b{font-weight:var(--fw-bold);color:var(--text);}
+  .grouphd .cnt{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-pill);padding:1px 8px;font-size:var(--fs-xs);}
+  /* デッキツリー（大 / 中 / 小 フォルダ。<details>で折りたたみ） */
+  .cardgrid{display:flex;flex-direction:column;gap:var(--sp-3);}
+  .fold{margin:0;}
+  .fold>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:var(--sp-2);min-height:44px;padding:var(--sp-2);border-radius:var(--r-sm);}
+  .fold>summary::-webkit-details-marker{display:none;}
+  .fold>summary:hover{background:var(--surface);}
+  .fold>summary .tw{width:0;height:0;border-left:6px solid var(--muted);border-top:4px solid transparent;border-bottom:4px solid transparent;transition:transform var(--t-fast);flex:none;}
+  .fold[open]>summary .tw{transform:rotate(90deg);}
+  .fold>summary .cnt{margin-left:auto;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-pill);padding:1px 8px;font-size:var(--fs-xs);color:var(--muted-strong);}
+  .foldbody{padding:var(--sp-1) 0 var(--sp-1) var(--sp-3);margin-left:9px;border-left:1px solid var(--line);}
+  .f1>summary b{font-size:var(--fs-lg);color:var(--text);}
+  .f2>summary b{font-size:var(--fs-md);color:var(--text);}
+  .f3>summary b{font-size:var(--fs-base);color:var(--muted-strong);font-weight:var(--fw-med);}
+  .fold>summary .fold-act{display:inline-flex;gap:2px;margin-left:var(--sp-1);opacity:0;transition:opacity var(--t-fast);}
+  .fold>summary:hover .fold-act,.fold>summary:focus-within .fold-act{opacity:1;}
+  .ficon{background:none;border:none;color:var(--muted);cursor:pointer;min-width:34px;min-height:34px;border-radius:var(--r-sm);font-size:var(--fs-md);}
+  .ficon:hover{background:rgba(255,255,255,.06);color:var(--text);}
+  .statictext{font-family:var(--serif);font-size:1.0625rem;line-height:2;color:var(--text);overflow:auto;flex:1;padding:var(--sp-2) 0;}
 
-  .rowbtns{display:flex;gap:10px;margin-top:14px;}
-  .rowbtns .btn{margin-top:0;}
-  .btn{margin-top:auto;border:none;border-radius:14px;padding:16px;font-size:15.5px;font-weight:700;
-    font-family:var(--sans);background:var(--accent);color:#1a1006;cursor:pointer;width:100%;transition:.15s;
-    box-shadow:0 6px 20px rgba(224,130,63,.28);}
-  .btn:active{transform:translateY(1px);}
-  .btn:disabled{opacity:.45;box-shadow:none;cursor:default;}
-  .btn.ghost{background:transparent;color:var(--muted);border:1px solid var(--line);box-shadow:none;margin-top:12px;}
-  .btn.sm{padding:13px;font-size:14px;}
+  /* 検索・ソート */
+  .lib-tools{display:flex;gap:var(--sp-2);margin-top:var(--sp-4);}
+  .lib-tools .inp{flex:1;}
+  .lib-tools select{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);color:var(--text);
+    font-family:var(--sans);font-size:var(--fs-base);padding:0 var(--sp-3);min-height:44px;flex:none;}
 
-  textarea{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:14px;color:var(--text);
-    font-family:var(--sans);font-size:14.5px;line-height:1.7;padding:14px;resize:vertical;min-height:130px;}
-  textarea:focus{outline:none;border-color:var(--accent);}
+  .inp{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);color:var(--text);
+    font-family:var(--sans);font-size:var(--fs-md);padding:var(--sp-3) var(--sp-4);min-height:44px;}
+  .inp:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-weak);}
+  .catrow{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-2);margin-top:var(--sp-2);}
+  .catrow .inp{font-size:var(--fs-base);padding:var(--sp-3);}
 
-  .seg{display:flex;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px;gap:4px;}
-  .seg button{flex:1;border:none;background:none;color:var(--muted);font-family:var(--sans);font-weight:700;
-    font-size:13.5px;padding:11px;border-radius:9px;cursor:pointer;transition:.15s;}
-  .seg button.on{background:var(--accent);color:#1a1006;}
-  .chk{display:flex;align-items:center;gap:11px;background:var(--surface);border:1px solid var(--line);
-    border-radius:12px;padding:14px 16px;cursor:pointer;}
-  .chk .box{width:22px;height:22px;border-radius:7px;border:2px solid var(--line);flex:none;display:flex;
-    align-items:center;justify-content:center;color:#1a1006;font-weight:900;font-size:14px;}
+  /* ===== ボタン体系: 高さで統一し、横幅は役割（block / sm / icon）で決める。 ===== */
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--sp-2);
+    min-height:48px;padding:0 22px;border:none;border-radius:var(--r-md);
+    font-family:var(--sans);font-size:var(--fs-lg);font-weight:var(--fw-bold);line-height:1;
+    background:var(--accent);color:var(--on-accent);cursor:pointer;transition:background var(--t-fast),box-shadow var(--t-fast),transform var(--t-fast);
+    box-shadow:var(--shadow-cta);}
+  .btn:hover{background:var(--accent-600);}
+  .btn:active{background:var(--accent-700);transform:translateY(1px);}
+  .btn:disabled{opacity:.45;box-shadow:none;cursor:default;background:var(--accent);}
+  .btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line);box-shadow:none;}
+  .btn.ghost:hover{background:var(--surface);border-color:#4a3f33;}
+  .btn.ghost:active{background:var(--surface);}
+  .btn.block{display:flex;width:100%;margin-top:var(--sp-4);}
+  .btn.block + .btn.block{margin-top:var(--sp-3);}
+  .btn.sm{min-height:44px;font-size:var(--fs-md);padding:0 var(--sp-4);}
+  .btn.icon{min-height:44px;width:44px;padding:0;font-size:1.125rem;}
+  .btn.ghost.danger{color:var(--bad);border-color:var(--bad-line);}
+  .btn.ghost.danger:hover{background:rgba(217,104,106,.08);}
+  .box2 > .btn{margin-top:var(--sp-3);}
+
+  .rowbtns{display:flex;gap:var(--sp-3);margin-top:var(--sp-4);align-items:stretch;}
+  .rowbtns > .btn{flex:1;margin-top:0;}
+  .rowbtns > .btn.icon{flex:0 0 44px;}
+
+  textarea{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);color:var(--text);
+    font-family:var(--sans);font-size:var(--fs-md);line-height:1.7;padding:var(--sp-4);resize:vertical;min-height:130px;}
+  textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-weak);}
+
+  .seg{display:flex;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:var(--sp-1);gap:var(--sp-1);}
+  .seg button{flex:1;border:none;background:none;color:var(--muted);font-family:var(--sans);font-weight:var(--fw-bold);
+    font-size:var(--fs-base);min-height:44px;padding:0 var(--sp-2);border-radius:var(--r-sm);cursor:pointer;transition:background var(--t-fast),color var(--t-fast);}
+  .seg button:hover{color:var(--text);background:rgba(255,255,255,.03);}
+  .seg button.on{background:var(--accent);color:var(--on-accent);}
+  .seg.dim{opacity:.5;pointer-events:none;}
+  .chk{display:flex;align-items:center;gap:var(--sp-3);background:var(--surface);border:1px solid var(--line);
+    border-radius:var(--r-md);padding:var(--sp-4);cursor:pointer;}
+  .chk .box{width:22px;height:22px;border-radius:var(--r-sm);border:2px solid var(--line);flex:none;display:flex;
+    align-items:center;justify-content:center;color:var(--on-accent);font-weight:var(--fw-bold);font-size:var(--fs-md);}
   .chk.on .box{background:var(--accent);border-color:var(--accent);}
-  .chk .t{font-size:14px;font-weight:700;}
-  .chk .d{font-size:11.5px;color:var(--muted);margin-top:2px;}
+  .chk .t{font-size:var(--fs-md);font-weight:var(--fw-bold);}
+  .chk .d{font-size:var(--fs-sm);color:var(--muted);margin-top:2px;}
 
-  .back{background:none;border:none;color:var(--muted);font-size:14px;cursor:pointer;padding:6px 0;min-height:44px;display:flex;align-items:center;gap:6px;}
-  .dtitle{font-family:var(--serif);font-weight:800;font-size:26px;line-height:1.3;margin:10px 0 4px;}
-  .meta{color:var(--muted);font-size:13px;margin-bottom:18px;}
-  .box2{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px;}
-  .box2 .h{font-weight:700;font-size:14px;margin-bottom:4px;}
-  .box2 .p{color:var(--muted);font-size:12.5px;line-height:1.6;}
+  .back{background:none;border:none;color:var(--muted);font-size:var(--fs-md);cursor:pointer;padding:var(--sp-1) 0;min-height:44px;display:flex;align-items:center;gap:6px;}
+  .back:hover{color:var(--text);}
+  .dtitle{font-family:var(--serif);font-weight:800;font-size:1.625rem;line-height:1.3;margin:var(--sp-3) 0 var(--sp-1);}
+  .dtitle:focus{outline:none;}
+  .meta{color:var(--muted);font-size:var(--fs-base);margin-bottom:var(--sp-4);}
+  .box2{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:var(--sp-4);margin-bottom:var(--sp-3);box-shadow:var(--shadow-1);}
+  .box2 .h{font-weight:var(--fw-bold);font-size:var(--fs-md);margin-bottom:var(--sp-1);}
+  .box2 .p{color:var(--muted);font-size:var(--fs-base);line-height:1.6;}
 
-  .banner{background:rgba(217,104,106,.12);border:1px solid #6b3b3c;color:#f0c9c9;border-radius:12px;
-    padding:13px 15px;font-size:13px;line-height:1.6;margin-bottom:12px;}
-  .loading{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;}
+  .banner{background:rgba(217,104,106,.12);border:1px solid var(--bad-line);color:#f0c9c9;border-radius:var(--r-md);
+    padding:var(--sp-3) var(--sp-4);font-size:var(--fs-base);line-height:1.6;margin-bottom:var(--sp-3);}
+  .banner.ok{background:rgba(111,185,143,.12);border-color:var(--good-line);color:#cfead9;}
+  .banner .lnk{color:var(--accent);font-weight:var(--fw-bold);cursor:pointer;text-decoration:underline;}
+  .loading{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--sp-5);text-align:center;}
   .spin{width:42px;height:42px;border:3px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:sp 1s linear infinite;}
   @keyframes sp{to{transform:rotate(360deg);}}
-  .loading .lt{font-weight:700;}.loading .ld{color:var(--muted);font-size:13px;}
+  .loading .lt{font-weight:var(--fw-bold);}.loading .ld{color:var(--muted);font-size:var(--fs-base);}
 
   /* speed */
-  .speedwrap{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:15px 17px;margin-top:10px;}
+  .speedwrap{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:var(--sp-4);margin-top:var(--sp-3);box-shadow:var(--shadow-1);}
   .speedrow{display:flex;justify-content:space-between;align-items:baseline;}
-  .speedrow span:first-child{font-weight:700;}
-  .speedrow span:last-child{color:var(--accent);font-family:var(--serif);font-weight:700;}
-  input[type=range]{width:100%;margin-top:13px;-webkit-appearance:none;height:4px;border-radius:4px;background:var(--line);}
-  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:var(--accent);box-shadow:0 2px 10px rgba(0,0,0,.4);}
-  input[type=range]::-moz-range-thumb{width:24px;height:24px;border:none;border-radius:50%;background:var(--accent);}
-  .ticks{display:flex;justify-content:space-between;color:var(--muted);font-size:11px;margin-top:6px;}
+  .speedrow span:first-child{font-weight:var(--fw-bold);}
+  .speedrow span:last-child{color:var(--accent);font-family:var(--serif);font-weight:var(--fw-bold);}
+  input[type=range]{width:100%;margin-top:var(--sp-3);-webkit-appearance:none;height:4px;border-radius:var(--r-pill);background:var(--line);}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;border-radius:50%;background:var(--accent);box-shadow:0 2px 10px rgba(0,0,0,.4);}
+  input[type=range]::-moz-range-thumb{width:28px;height:28px;border:none;border-radius:50%;background:var(--accent);}
+  .ticks{display:flex;justify-content:space-between;color:var(--muted-strong);font-size:var(--fs-xs);margin-top:6px;}
 
   /* reader */
   .reader{flex:1;display:flex;flex-direction:column;}
-  .rtop{display:flex;justify-content:space-between;align-items:center;gap:10px;color:var(--muted);font-size:13px;}
-  .rtop > span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;}
-  .xbtn{background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;flex:none;min-width:44px;min-height:44px;}
-  .progress{height:3px;background:var(--line);border-radius:3px;margin-top:12px;overflow:hidden;}
-  .progress > i{display:block;height:100%;width:0;background:var(--accent);transition:width .12s linear;}
-  .stage{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;}
-  .guide{position:absolute;left:50%;transform:translateX(-50%);width:1px;background:var(--accent);opacity:.25;}
-  .guide.t{top:calc(50% - 78px);height:18px;}.guide.b{top:calc(50% + 60px);height:18px;}
-  .flash{font-family:var(--serif);font-weight:800;font-size:clamp(34px,11vw,56px);line-height:1.2;text-align:center;min-height:1.4em;}
+  .rtop{display:flex;justify-content:space-between;align-items:center;gap:var(--sp-3);color:var(--muted);font-size:var(--fs-base);}
+  .rtop > span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;}
+  .xbtn{background:none;border:none;color:var(--muted);font-size:1.375rem;cursor:pointer;flex:none;min-width:44px;min-height:44px;}
+  .xbtn:hover{color:var(--text);}
+  .progress{height:4px;background:var(--line);border-radius:var(--r-pill);margin-top:var(--sp-3);overflow:hidden;}
+  .progress > i{display:block;height:100%;width:0;background:var(--accent);transition:width var(--t-fast) linear;}
+  .stage{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;cursor:pointer;min-height:36vh;overflow:hidden;}
+  /* 塊全体を常に中央表示（焦点固定はやめ、ブロック中心＝画面中央で固定。脳のノイズになる左右ブレを排除）。
+     焦点はオレンジ色のハイライトのみ。長い塊は fitFlash が font-size を縮めて必ず収める。 */
+  .flash{font-family:var(--serif);font-weight:800;font-size:var(--flash-fs);line-height:1.25;
+    white-space:nowrap;text-align:center;transition:opacity var(--t-fast);}
   .flash .focus{color:var(--accent);}
-  .countdown{font-family:var(--serif);font-size:90px;color:var(--accent);animation:pop .9s ease;}
+  .flash.countdown{animation:pop .6s ease;}
+  .stage.paused .flash{opacity:.42;}
+  .guide{display:none;}   /* 焦点固定をやめたため視線ガイドは非表示 */
+  .pausedovl{position:absolute;left:50%;top:calc(50% + 1.8em);transform:translateX(-50%);color:var(--muted-strong);
+    font-size:var(--fs-base);white-space:nowrap;display:none;}
+  .stage.paused .pausedovl{display:block;}
+  .countdown{font-family:var(--serif);font-size:5.5rem;color:var(--accent);animation:pop .9s ease;}
   @keyframes pop{from{opacity:0;transform:scale(.5);}to{opacity:1;transform:scale(1);}}
-  .seekwrap{margin-top:14px;}
-  .seekwrap .pos{color:var(--muted);font-size:12px;text-align:center;margin-top:7px;}
-  .rctrl{display:flex;gap:12px;margin-top:14px;}
-  .rctrl button{flex:1;border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:13px;
-    padding:15px;font-size:15px;font-weight:700;font-family:var(--sans);cursor:pointer;}
-  .rctrl button.main{background:var(--accent);color:#1a1006;border-color:var(--accent);}
-  .hint{text-align:center;color:var(--muted);font-size:12.5px;margin-top:14px;}
+  .seekwrap{margin-top:var(--sp-4);}
+  .seekwrap .pos{color:var(--muted-strong);font-size:var(--fs-sm);text-align:center;margin-top:7px;}
+  .rctrl{display:flex;gap:var(--sp-3);margin-top:var(--sp-4);}
+  .rctrl button{flex:1;min-height:48px;border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:var(--r-md);
+    padding:0 var(--sp-3);font-size:var(--fs-lg);font-weight:var(--fw-bold);font-family:var(--sans);cursor:pointer;transition:background var(--t-fast);}
+  .rctrl button:hover{background:#2c251d;}
+  .rctrl button.main{background:var(--accent);color:var(--on-accent);border-color:var(--accent);}
+  .rctrl button.main:hover{background:var(--accent-600);}
+  .hint{text-align:center;color:var(--muted-strong);font-size:var(--fs-sm);margin-top:var(--sp-4);line-height:1.6;}
 
   /* quiz */
-  .qhead{font-family:var(--serif);font-weight:700;font-size:22px;margin:6px 0 2px;}
-  .qcount{color:var(--muted);font-size:13px;margin-bottom:20px;}
-  .question{font-size:18px;font-weight:700;line-height:1.6;margin-bottom:20px;}
-  .opt{display:block;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:14px;
-    padding:15px 17px;margin-bottom:10px;color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.5;cursor:pointer;transition:.15s;}
+  .qhead{font-family:var(--serif);font-weight:var(--fw-bold);font-size:1.375rem;margin:var(--sp-1) 0 2px;}
+  .qcount{color:var(--muted);font-size:var(--fs-base);margin-bottom:var(--sp-2);}
+  .qprog{height:4px;background:var(--line);border-radius:var(--r-pill);overflow:hidden;margin-bottom:var(--sp-5);}
+  .qprog > i{display:block;height:100%;background:var(--accent);transition:width var(--t-base);}
+  .question{font-size:var(--fs-xl);font-weight:var(--fw-bold);line-height:1.6;margin-bottom:var(--sp-5);}
+  .opt{display:flex;align-items:center;gap:var(--sp-3);width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);
+    padding:var(--sp-4);margin-bottom:var(--sp-3);color:var(--text);font-family:var(--sans);font-size:var(--fs-lg);line-height:1.5;cursor:pointer;transition:border-color var(--t-fast),background var(--t-fast);}
+  .opt:hover{border-color:#4a3f33;}
   .opt:active{transform:scale(.99);}
+  .opt .mk{flex:none;width:1.4em;font-weight:var(--fw-bold);}
   .opt.correct{border-color:var(--good);background:rgba(111,185,143,.12);}
+  .opt.correct .mk{color:var(--good);}
   .opt.wrong{border-color:var(--bad);background:rgba(217,104,106,.12);}
+  .opt.wrong .mk{color:var(--bad);}
   .opt.dim{opacity:.5;}
-  .feed{margin-top:6px;padding:14px 16px;border-radius:12px;font-size:14px;line-height:1.7;background:var(--bg2);border:1px solid var(--line);color:var(--muted);}
+  .opt[aria-disabled=true]{cursor:default;}
+  .feed{margin-top:var(--sp-2);padding:var(--sp-4);border-radius:var(--r-md);font-size:var(--fs-md);line-height:1.7;background:var(--bg2);border:1px solid var(--line);color:var(--text);}
   .feed b{color:var(--text);}
+  .feed .src{margin-top:var(--sp-2);color:var(--muted);font-size:var(--fs-base);border-left:2px solid var(--accent-weak);padding-left:var(--sp-3);}
 
   .result{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;}
-  .score{font-family:var(--serif);font-size:64px;font-weight:800;color:var(--accent);line-height:1;}
-  .score small{font-size:26px;color:var(--muted);}
-  .rmsg{font-size:17px;font-weight:700;margin:18px 0 6px;}
-  .rsub{color:var(--muted);font-size:14px;line-height:1.7;max-width:300px;}
+  .score{font-family:var(--serif);font-size:var(--score-fs);font-weight:800;color:var(--accent);line-height:1;}
+  .score small{font-size:1.625rem;color:var(--muted);}
+  .rmsg{font-size:var(--fs-xl);font-weight:var(--fw-bold);margin:var(--sp-5) 0 var(--sp-1);}
+  .rsub{color:var(--muted);font-size:var(--fs-md);line-height:1.7;max-width:320px;}
+  .result .btn.block{max-width:340px;}
+
+  /* トースト（Undoの器） */
+  .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translateX(-50%);
+    max-width:520px;width:calc(100% - 40px);background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);
+    box-shadow:var(--shadow-2);padding:var(--sp-3) var(--sp-4);display:flex;align-items:center;gap:var(--sp-3);font-size:var(--fs-md);z-index:50;
+    animation:toastin var(--t-slow) ease both;}
+  .toast .act{margin-left:auto;color:var(--accent);background:none;border:none;font-weight:var(--fw-bold);cursor:pointer;min-height:44px;padding:0 var(--sp-2);}
+  @keyframes toastin{from{opacity:0;transform:translate(-50%,8px);}to{opacity:1;transform:translateX(-50%);}}
+
+  /* モーダル（native confirm/alert の置換） */
+  .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;padding:20px;z-index:60;animation:fade var(--t-base) ease both;}
+  .modal{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-2);max-width:420px;width:100%;padding:var(--sp-5);}
+  .modal .mt{font-weight:var(--fw-bold);font-size:var(--fs-lg);margin-bottom:var(--sp-2);}
+  .modal .mp{color:var(--muted);font-size:var(--fs-md);line-height:1.7;margin-bottom:var(--sp-4);white-space:pre-line;}
+  .modal .row{display:flex;gap:var(--sp-3);}
+  .modal .row .btn{flex:1;margin-top:0;}
+
+  /* ===================== PC 専用レイアウト（≥880px） ===================== */
+  @media (min-width:880px){
+    body{background:radial-gradient(70% 55% at 50% -5%, #2a221b 0%, var(--bg) 50%),var(--bg);}
+    #app{max-width:1080px;padding:max(30px,env(safe-area-inset-top)) max(40px,env(safe-area-inset-right)) max(40px,env(safe-area-inset-bottom)) max(40px,env(safe-area-inset-left));}
+    #app > #screen{flex:1;display:flex;flex-direction:column;}
+    .top{margin-bottom:var(--sp-5);}
+    .top h1{font-size:var(--fs-xl);}
+    .lib .lead{font-size:2.625rem;margin:var(--sp-1) 0 var(--sp-2);}
+    .lib .sub{font-size:var(--fs-lg);max-width:720px;margin-bottom:var(--sp-2);}
+    .lib .rowbtns{max-width:560px;margin-top:var(--sp-4);}
+    .lib #cards{margin-top:var(--sp-4);}
+    .lib .cardgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:var(--sp-3);align-content:start;}
+    .lib .card{padding:var(--sp-4);}
+    .lib .card .ct{font-size:var(--fs-lg);}
+    .form{max-width:680px;width:100%;margin:0 auto;}
+    .reader{max-width:920px;width:100%;margin:0 auto;}
+    .reader{--flash-fs:clamp(56px,8.5vw,108px);}   /* flash も guide も同じ変数で拡大 */
+    .reader .stage{min-height:48vh;}
+    .reader .rtop,.reader .progress,.reader .seekwrap{max-width:760px;margin-left:auto;margin-right:auto;width:100%;}
+    .reader .rctrl{max-width:560px;margin-left:auto;margin-right:auto;width:100%;}
+    .reader .hint{font-size:var(--fs-base);}
+    .quiz{max-width:840px;width:100%;margin:0 auto;}
+    .quiz .qhead{font-size:1.625rem;}
+    .quiz .question{font-size:1.4375rem;line-height:1.6;margin-bottom:var(--sp-5);}
+    .quiz #opts{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-3);}
+    .quiz #opts .opt{margin-bottom:0;}
+    .quiz #feedslot{margin-top:var(--sp-2);}
+    .result{max-width:600px;margin:0 auto;}
+  }
+  /* 動きの低減（WCAG 2.3.3 / 2.2.2） */
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;}
+  }
 </style>
 <!-- PDFテキスト抽出用（UMDビルド。window.pdfjsLib を公開）。読み込み失敗時はPDF機能のみ無効化し他は動く。 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
 <body>
 <div id="app">
-  <div class="top"><span class="dot"></span><h1>FLASH STUDY · Phase 1</h1></div>
+  <div class="top"><span class="dot" aria-hidden="true"></span><h1>フラッシュ学習</h1></div>
   <div id="screen"></div>
 </div>
 <input type="file" id="filein" accept="application/json,.json" style="display:none">
@@ -155,62 +309,125 @@
 <script>
 // ====== LLM access ======
 // 全モデル呼び出しは provider 非依存の callLLM(prompt,opts) に集約する（CLAUDE.md / spec §8 準拠）。
-// Phase 1 はアーティファクトのキーレス代理で Anthropic のみ。Phase 3 で callLLM 内に
-// OpenAI(gpt-5.5) / Google(gemini-3.1-pro-preview) の分岐と BYOK を足す。
-// 能力優先で令和8年(2026)6月時点の最上位を既定に。クイズ品質が本アプリ最大のリスクのため節約より能力。
-// 候補(能力順): claude-opus-4-8 > claude-sonnet-4-6 > claude-haiku-4-5
-// ※アーティファクトのキーレス代理がOpusを弾く場合はMODEL_FALLBACKに自動降格する。
-const MODEL = "claude-opus-4-8";
-const MODEL_FALLBACK = "claude-sonnet-4-6";
-// 1モデルで1回だけ叩く。モデル未対応は専用エラー(code:"model")で投げ、上位でフォールバックさせる。
-async function callOnce(model,prompt,maxTokens){
+// BYOK（持ち込みキー）対応:
+//   ・⚙設定で provider と APIキーを登録すると、その provider に直接アクセスする。
+//   ・キー未設定 かつ Anthropic のときだけ、従来どおりアーティファクトのキーレス代理にフォールバック。
+//   ・キーは settings.keys に保持し localStorage に保存（端末内のみ・ログ/コミットはしない）。
+// 能力優先で令和8年(2026)6月時点の最上位を既定に。モデルIDは各社更新が速いので要再確認。
+const PROVIDER_MODEL = {
+  anthropic: "claude-opus-4-8",   // 弾かれたら claude-sonnet-4-6 に自動降格
+  openai:    "gpt-5.5",
+  google:    "gemini-3.1-pro-preview"
+};
+const ANTHROPIC_FALLBACK = "claude-sonnet-4-6";
+const PROVIDER_LABEL = { anthropic:"Anthropic", openai:"OpenAI", google:"Google" };
+
+// 生成の中断（ユーザの「中断」ボタン）用。各リクエストは60秒のタイムアウトも併設。
+let genAbort=null;
+function abortSignals(){
+  const sigs=[];
+  if(genAbort) sigs.push(genAbort.signal);
+  try{ sigs.push(AbortSignal.timeout(60000)); }catch(_){}
+  try{ return sigs.length>1 ? AbortSignal.any(sigs) : sigs[0]; }catch(_){ return sigs[0]; }
+}
+// fetch 共通: 通信失敗・非200・空応答・中断・タイムアウトを分かりやすいエラーに正規化。
+async function postJSON(url, headers, body){
   let res;
-  try{
-    res = await fetch("https://api.anthropic.com/v1/messages",{
-      method:"POST",headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({model,max_tokens:maxTokens,messages:[{role:"user",content:prompt}]})
-    });
-  }catch(e){ throw new Error("通信に失敗: "+e.message); }
+  try{ res = await fetch(url,{method:"POST",headers,body:JSON.stringify(body),signal:abortSignals()}); }
+  catch(e){
+    if(e&&(e.name==='AbortError'||e.name==='TimeoutError')){
+      const a=new Error(genAbort&&genAbort.signal.aborted?'中断しました':'時間切れになりました。通信環境をご確認ください'); a.code='abort'; throw a;
+    }
+    throw new Error("通信に失敗: "+e.message);
+  }
   const txt = await res.text();
   if(!res.ok){
-    const e=new Error("API "+res.status+" / "+txt.slice(0,140));
-    // モデル名が弾かれた系（404/400 + model言及）はフォールバック対象
-    if((res.status===404||res.status===400)&&/model/i.test(txt)) e.code="model";
+    const e=new Error("API "+res.status+" / "+txt.slice(0,160));
+    if((res.status===404||res.status===400)&&/model/i.test(txt)) e.code="model";  // モデル名拒否→降格対象
+    if(res.status===401||res.status===403) e.code="auth";                          // キー不正/権限不足
     throw e;
   }
-  let data;
-  try{ data = JSON.parse(txt); }catch(e){ throw new Error("応答がJSONではない / "+txt.slice(0,140)); }
-  if(data && data.error) throw new Error("APIエラー: "+((data.error.message)||JSON.stringify(data.error)).slice(0,140));
+  try{ return JSON.parse(txt); }catch(e){ throw new Error("応答がJSONではない / "+txt.slice(0,160)); }
+}
+// e.code 別に分かりやすい日本語へ（IT非専門ユーザ向け。生例外は詳細に折りたたみ）
+function friendlyErr(e){
+  const code=e&&e.code, msg=String((e&&e.message)||e||'');
+  if(code==='abort') return msg;
+  if(code==='auth') return 'APIキーが正しくないようです。⚙設定でキーを確認してください。';
+  if(code==='model') return 'モデルを利用できませんでした。⚙設定のプロバイダ/モデルをご確認ください。';
+  if(/通信に失敗|Failed to fetch|NetworkError/.test(msg)) return 'ネットに接続できませんでした。通信環境をご確認ください。';
+  if(/JSON/.test(msg)) return 'AIの応答を読み取れませんでした。もう一度お試しください。';
+  return msg.slice(0,120);
+}
+// --- Anthropic（key 無し=アーティファクトのキーレス代理 / key 有り=BYOK直叩き） ---
+async function callAnthropic(key, model, prompt, maxTokens){
+  const headers={"Content-Type":"application/json"};
+  if(key){ headers["x-api-key"]=key; headers["anthropic-version"]="2023-06-01"; headers["anthropic-dangerous-direct-browser-access"]="true"; }
+  const data=await postJSON("https://api.anthropic.com/v1/messages", headers,
+    {model, max_tokens:maxTokens, messages:[{role:"user",content:prompt}]});
+  if(data&&data.error) throw new Error("APIエラー: "+((data.error.message)||JSON.stringify(data.error)).slice(0,160));
   const out=(data.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("").trim();
-  if(!out) throw new Error("空応答 / "+txt.slice(0,140));
+  if(!out) throw new Error("空応答");
+  return out;
+}
+// --- OpenAI（BYOK必須） ---
+async function callOpenAI(key, model, prompt, maxTokens){
+  const data=await postJSON("https://api.openai.com/v1/chat/completions",
+    {"Content-Type":"application/json","Authorization":"Bearer "+key},
+    {model, max_completion_tokens:maxTokens, messages:[{role:"user",content:prompt}]});
+  const out=((((data.choices||[])[0]||{}).message||{}).content||"").trim();
+  if(!out) throw new Error("空応答");
+  return out;
+}
+// --- Google Gemini（BYOK必須・キーはクエリパラメータ） ---
+async function callGoogle(key, model, prompt, maxTokens){
+  const data=await postJSON(
+    "https://generativelanguage.googleapis.com/v1beta/models/"+encodeURIComponent(model)+":generateContent?key="+encodeURIComponent(key),
+    {"Content-Type":"application/json"},
+    {contents:[{parts:[{text:prompt}]}], generationConfig:{maxOutputTokens:maxTokens}});
+  const parts=((((data.candidates||[])[0]||{}).content||{}).parts)||[];
+  const out=parts.map(p=>p.text||"").join("").trim();
+  if(!out) throw new Error("空応答");
   return out;
 }
 // provider 非依存の単一窓口。genQuiz/reconstruct/categorize はこれだけを呼ぶ。
 async function callLLM(prompt,opts={}){
-  const maxTokens=opts.maxTokens||8192;   // 1000は今のモデルには不必要に低い。既定を大きく、呼び出し側で上書き可。
-  try{
-    return await callOnce(MODEL,prompt,maxTokens);                 // 能力優先: まず最上位
-  }catch(e){
-    if(e&&e.code==="model"&&MODEL_FALLBACK&&MODEL_FALLBACK!==MODEL)
-      return await callOnce(MODEL_FALLBACK,prompt,maxTokens);      // 代理が最上位を弾いた時だけ降格
-    throw e;
+  const maxTokens=opts.maxTokens||8192;
+  const prov=(settings.provider)||"anthropic";
+  const key=((settings.keys&&settings.keys[prov])||"").trim();
+  const model=PROVIDER_MODEL[prov]||PROVIDER_MODEL.anthropic;
+  if(prov==="anthropic"){
+    try{ return await callAnthropic(key, model, prompt, maxTokens); }   // key有=BYOK / key無=キーレス代理
+    catch(e){
+      if(e&&e.code==="model"&&ANTHROPIC_FALLBACK!==model) return await callAnthropic(key, ANTHROPIC_FALLBACK, prompt, maxTokens);
+      throw e;
+    }
   }
+  if(!key) throw new Error(PROVIDER_LABEL[prov]+" のAPIキーが未設定です。⚙設定でキーを入力してください。");
+  if(prov==="openai") return await callOpenAI(key, model, prompt, maxTokens);
+  if(prov==="google") return await callGoogle(key, model, prompt, maxTokens);
+  throw new Error("未知のプロバイダ: "+prov);
 }
 function stripFences(t){return t.replace(/^```(?:json)?/i,"").replace(/```$/,"").trim();}
 // クイズ配列を背骨スキーマに正規化（AI生成/JSON貼付/ファイル取込の全経路で共用）。
-// ・o が配列で2件以上ある問題だけ採用、それ以外は drop（クラッシュ防止）
-// ・a は元の選択肢数に対して範囲チェックし、外れていれば 0 にクランプ（正解の無い問題を作らない）
-// ・必ず4択に揃える（不足は空で補い、超過は切る）
+// ・空/重複の選択肢を除去（無意味な選択肢を作らない）
+// ・正解は「正解の本文」基準で再特定。dedup でズレても正しく追従し、特定不能なら問題ごと drop
+//   （黙って a=0 にして“もっともらしい誤クイズ”を量産しない＝最大リスクへの対応）
+// ・背骨は4択固定のため、足りなければ末尾を空で補う（空はクイズ画面で選べない体裁ダミー）
 function normalizeQuiz(arr){
   if(!Array.isArray(arr))return[];
   const out=[];
   for(const x of arr){
-    if(!x||typeof x!=='object'||!x.q||!Array.isArray(x.o)||x.o.length<2)continue;
-    let o=x.o.map(v=>String(v==null?'':v));
-    let a=Number(x.a); if(!Number.isInteger(a)||a<0||a>=o.length)a=0;
-    while(o.length<4)o.push('');
-    o=o.slice(0,4); if(a>3)a=0;
-    out.push({q:String(x.q),o,a,e:String(x.e||'')});
+    if(!x||typeof x!=='object'||!x.q||!Array.isArray(x.o))continue;
+    const ai=Number(x.a);
+    const aText=(Number.isInteger(ai)&&x.o[ai]!=null)?String(x.o[ai]).trim():null; // 正解本文を退避
+    const seen=new Set(); const o=[];
+    for(const v of x.o){ const s=String(v==null?'':v).trim(); if(!s||seen.has(s))continue; seen.add(s); o.push(s); }
+    if(o.length<2) continue;                        // 実質的な選択肢が2未満 → 不採用
+    const a = aText!=null ? o.indexOf(aText) : -1;  // 正解の位置を本文で再特定
+    if(a<0 || a>3) continue;                         // 正解不明 → 不採用（でっち上げない）
+    while(o.length<4) o.push('');
+    out.push({q:String(x.q), o:o.slice(0,4), a, e:String(x.e||'')});
   }
   return out;
 }
@@ -240,7 +457,8 @@ function toDeckJSON(d){
   };
 }
 // 出力が途中で切れても、完成した {...} だけを救出する堅牢パーサ
-function parseQuizLoose(raw){
+// 出力が途中で切れても、完成した {...} だけを救出する汎用パーサ（オブジェクト配列を返す）。
+function parseJsonObjects(raw){
   raw=stripFences(raw);
   const objs=[];let depth=0,start=-1,inStr=false,esc2=false;
   for(let k=0;k<raw.length;k++){const ch=raw[k];
@@ -250,8 +468,9 @@ function parseQuizLoose(raw){
     else if(ch==='}'){depth--;if(depth===0&&start>=0){objs.push(raw.slice(start,k+1));start=-1;}}}
   const parsed=[];
   for(const o of objs){try{parsed.push(JSON.parse(o));}catch(_){}}
-  return normalizeQuiz(parsed);
+  return parsed;
 }
+function parseQuizLoose(raw){ return normalizeQuiz(parseJsonObjects(raw)); }
 
 async function genQuiz(text){
   const prompt =
@@ -286,60 +505,243 @@ async function categorize(text){
   out=out.replace(/[「」『』"'`。、，．,.\n\r]/g,'').split(/\s/)[0]||'';
   return out.slice(0,16);
 }
+// ====== 複数デッキ計画（長文を大/中/小フォルダ付きの複数デッキに分割） ======
+// 本文を echo させず「開始マーカー(本文からの抜粋)」だけ返させ、分割は手元で行う（出力量を抑える）。
+async function planDecks(src, splitMode){
+  const guide = splitMode==='merge' ? 'できるだけ少なく、大きくまとめる（目安1〜3個）'
+              : splitMode==='split' ? '小さな単元ごとに細かく分ける（多めでよい。最大12個）'
+              : '内容の構造に応じて適切な数に分ける（最大12個）';
+  const prompt =
+`次の学習用テキストを、フラッシュ学習の教材に分割する計画を立ててください。
+方針: ${guide}。
+各教材について階層フォルダ（大項目・中項目・小項目）と、本文中でその教材が始まる箇所を示す「開始マーカー」を返します。
+・開始マーカーは本文から一字一句そのまま抜き出した10〜30字の連続文字列（見出しや最初の文）。改変・要約は禁止。
+・最初の教材の開始マーカーは本文の冒頭にする。教材は本文の登場順に並べる。最大12個。
+出力はJSON配列のみ（前後の説明・マークダウン禁止）:
+[{"title":"短い教材名","big":"大項目","mid":"中項目","small":"小項目","start":"開始マーカー"}]
+本文:
+"""${src}"""`;
+  const arr = parseJsonObjects(await callLLM(prompt,{maxTokens:4096}));
+  return arr.filter(p=>p&&typeof p==='object').slice(0,12);
+}
+// 計画(開始マーカー)に従って原文を区切り、各デッキの本文を割り当てる。
+function buildSections(src, plans){
+  const marks=[];
+  plans.forEach((p,i)=>{
+    let at = i===0 ? 0 : src.indexOf(String(p.start||'').trim());
+    marks.push({p, at: (String(p.start||'').trim() && at>=0)||i===0 ? at : null});
+  });
+  const bnds=marks.filter(m=>m.at!=null).sort((a,b)=>a.at-b.at);
+  if(!bnds.length) return [{p:plans[0]||{}, text:src}];   // 全滅→単一デッキ
+  bnds[0].at=0;
+  const out=[];
+  for(let i=0;i<bnds.length;i++){
+    const start=bnds[i].at, end=(i+1<bnds.length)?bnds[i+1].at:src.length;
+    const text=src.slice(start,end).trim();
+    if(text) out.push({p:bnds[i].p, text});
+  }
+  return out;
+}
 
 // ====== built-in sample decks (no API needed) ======
-let decks = [
-  {id:"s1",icon:"自",title:"地方自治のしくみ",desc:"サンプル",category:"サンプル",flashMode:"original",quizStatus:"ready",
+// category は「大 / 中 / 小」のパス文字列（背骨は9フィールドのまま category 1本）。
+const SAMPLE_DECKS = [
+  {id:"s1",icon:"自",title:"地方自治のしくみ",desc:"サンプル",category:"サンプル / 行政 / 地方自治",flashMode:"original",quizStatus:"ready",
    flashText:"地方公共団体には、都道府県と市町村からなる普通地方公共団体と、特別区などの特別地方公共団体がある。住民は、首長と議会の議員を、それぞれ直接選挙で選ぶ。これを二元代表制という。住民には選挙権のほか、条例の制定や改廃を求める直接請求の権利も認められている。",
    quiz:[
      {q:"住民が首長と議員をそれぞれ直接選挙で選ぶしくみは？",o:["議院内閣制","二元代表制","間接民主制","直接民主制"],a:1,e:"国は議院内閣制、地方は両方を住民が直接選ぶ二元代表制。"},
      {q:"普通地方公共団体に当てはまるのは？",o:["特別区","市町村","財産区","地方公社"],a:1,e:"普通＝都道府県と市町村。特別区や財産区は特別地方公共団体。"},
      {q:"条例の制定・改廃を住民が求める権利は？",o:["直接請求","行政指導","不服申立て","住民訴訟"],a:0,e:"署名を集めて行う直接請求の一つ。"}
    ]},
-  {id:"s2",icon:"税",title:"固定資産税の基礎",desc:"サンプル",category:"サンプル",flashMode:"original",quizStatus:"ready",
+  {id:"s2",icon:"税",title:"固定資産税の基礎",desc:"サンプル",category:"サンプル / 税務 / 固定資産税",flashMode:"original",quizStatus:"ready",
    flashText:"固定資産税は、土地・家屋・償却資産を課税対象とする市町村税である。課税の基準となる賦課期日は一月一日で、その時点の所有者に課税される。標準税率は百分の一・四である。事業用の機械や設備などの償却資産については、所有者が市町村に申告する申告制がとられている。",
    quiz:[
      {q:"固定資産税の賦課期日はいつ？",o:["毎年4月1日","毎年1月1日","取得した日","登記した日"],a:1,e:"1月1日時点の所有者にその年度分が課税。"},
      {q:"固定資産税の標準税率は？",o:["1.4%","2.0%","0.3%","1.0%"],a:0,e:"標準税率は1.4%。"},
      {q:"償却資産の課税で取られているしくみは？",o:["申告制","賦課課税のみ","非課税","申告不要"],a:0,e:"土地・家屋と違い償却資産は所有者の申告制。"}
    ]},
-  {id:"s3",icon:"行",title:"行政手続のきほん",desc:"サンプル",category:"サンプル",flashMode:"original",quizStatus:"ready",
+  {id:"s3",icon:"行",title:"行政手続のきほん",desc:"サンプル",category:"サンプル / 行政 / 行政手続",flashMode:"original",quizStatus:"ready",
    flashText:"行政手続法は、行政運営における公正の確保と透明性の向上を目的とする。申請に対する処分、不利益処分、行政指導、届出などについて共通のルールを定めている。とくに不利益処分をするときは、相手方に対して原則としてその理由を示さなければならない。",
    quiz:[
      {q:"行政手続法の目的に含まれるのは？",o:["公正の確保と透明性の向上","税収の確保","効率化のみ","国民の監視"],a:0,e:"手続を共通ルール化し公正さと透明性を高める。"},
      {q:"不利益処分をするとき原則必要なのは？",o:["理由の提示","住民投票","議会の議決","首長の許可"],a:0,e:"相手が納得・反論できるよう原則理由を示す。"}
    ]}
-].map(normalizeDeck);
+];
+// ====== persistence (localStorage) ======
+// 保存があればそれを正（サンプル削除も維持）、無ければサンプルを初期投入。保存形は正準9フィールド。
+const DECKS_KEY="flashstudy.decks";
+function loadDecks(){
+  try{ const raw=localStorage.getItem(DECKS_KEY);
+    if(raw!==null){ const arr=JSON.parse(raw); if(Array.isArray(arr)) return arr.map(normalizeDeck); } }
+  catch(_){}
+  return SAMPLE_DECKS.map(normalizeDeck);
+}
+function saveDecks(){ try{ localStorage.setItem(DECKS_KEY, JSON.stringify(decks.map(toDeckJSON))); }catch(_){} }
+let decks = loadDecks();
+
+// ====== 学習記憶レイヤ（背骨9フィールドとは別キー。エクスポートに混ぜない） ======
+// 形: { [deckId]: {attempts,lastScore,bestScore,total,lastStudiedAt(ISO),wrongIdx:[],lastReadIdx,due(ISO)} }
+const PROGRESS_KEY="flashstudy.progress";
+let progress = (function(){ try{ const r=localStorage.getItem(PROGRESS_KEY); const o=r?JSON.parse(r):null; return (o&&typeof o==='object')?o:{}; }catch(_){ return {}; } })();
+function saveProgress(){ try{ localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress)); }catch(_){} }
+function getProg(id){ return progress[id]||null; }
+function setProg(id, patch){ progress[id]=Object.assign({}, progress[id]||{}, patch); saveProgress(); }
+function nowISO(){ return new Date().toISOString(); }
+function addDays(iso, d){ const t=new Date(iso); t.setDate(t.getDate()+d); return t.toISOString(); }
+// 復習期限到来か（due が無い=未学習は対象外。due<=今 なら復習対象）
+function isDue(id){ const p=progress[id]; return !!(p&&p.due&&p.due<=nowISO()); }
+function dueCount(){ return decks.filter(d=>d.quizStatus==='ready'&&isDue(d.id)).length; }
+// 連続学習日数（lastStudiedAt の日付集合から概算）
+function streakDays(){
+  const days=new Set(Object.values(progress).map(p=>p&&p.lastStudiedAt&&p.lastStudiedAt.slice(0,10)).filter(Boolean));
+  let s=0; const t=new Date();
+  for(;;){ const k=t.toISOString().slice(0,10); if(days.has(k)){s++; t.setDate(t.getDate()-1);} else break; }
+  return s;
+}
+// 直近の正答率（attemptsのある教材の lastScore/total 平均）
+function recentAccuracy(){
+  const ps=Object.values(progress).filter(p=>p&&p.total>0&&typeof p.lastScore==='number');
+  if(!ps.length) return null;
+  const r=ps.reduce((a,p)=>a+p.lastScore/p.total,0)/ps.length;
+  return Math.round(r*100);
+}
+// 読了/学習位置の記録
+function noteRead(id, i){ if(id) setProg(id,{lastReadIdx:i|0, lastStudiedAt:nowISO()}); }
+// 削除/取込時に進捗の孤児を掃除
+function pruneProgress(){ const ids=new Set(decks.map(d=>d.id)); let ch=false;
+  for(const k of Object.keys(progress)){ if(!ids.has(k)){ delete progress[k]; ch=true; } } if(ch) saveProgress(); }
+
+// ====== ゴミ箱（削除Undo用。背骨とは別キー） ======
+const TRASH_KEY="flashstudy.trash";
+let trash=(function(){ try{ const r=localStorage.getItem(TRASH_KEY); const o=r?JSON.parse(r):null; return Array.isArray(o)?o:[]; }catch(_){ return []; } })();
+function saveTrash(){ try{ localStorage.setItem(TRASH_KEY, JSON.stringify(trash.slice(-100))); }catch(_){} }
+
+// ====== トースト / モーダル（OS素のalert/confirmを置換） ======
+let toastTimer=null;
+function showToast(msg, actLabel, actFn, ms){
+  const ex=document.getElementById('toast'); if(ex)ex.remove(); clearTimeout(toastTimer);
+  const t=document.createElement('div'); t.className='toast'; t.id='toast'; t.setAttribute('role','status'); t.setAttribute('aria-live','polite');
+  const s=document.createElement('span'); s.textContent=msg; t.appendChild(s);
+  if(actLabel){ const b=document.createElement('button'); b.className='act'; b.textContent=actLabel;
+    b.onclick=()=>{ clearTimeout(toastTimer); t.remove(); actFn&&actFn(); }; t.appendChild(b); }
+  document.body.appendChild(t);
+  toastTimer=setTimeout(()=>{ if(t.parentNode)t.remove(); }, ms||5000);
+}
+// モーダル確認。Promise<boolean> を返す。破壊的操作は danger=true でデフォルトをキャンセル側に。
+function showModal(o){ o=o||{};
+  return new Promise(resolve=>{
+    const prev=document.activeElement;
+    const bg=document.createElement('div'); bg.className='modal-bg';
+    bg.innerHTML=`<div class="modal" role="dialog" aria-modal="true" aria-labelledby="mttl">
+      <div class="mt" id="mttl"></div><div class="mp" id="mbody"></div>
+      <div class="row"><button class="btn ghost" id="mcancel"></button><button class="btn" id="mok"></button></div></div>`;
+    bg.querySelector('#mttl').textContent=o.title||'';
+    const mb=bg.querySelector('#mbody'); if(o.body){ mb.textContent=o.body; } else { mb.style.display='none'; }
+    bg.querySelector('#mcancel').textContent=o.cancel||'キャンセル';
+    const ok=bg.querySelector('#mok'); ok.textContent=o.confirm||'OK'; if(o.danger) ok.classList.add('ghost','danger');
+    document.body.appendChild(bg);
+    const done=v=>{ bg.remove(); document.removeEventListener('keydown',onk); try{prev&&prev.focus&&prev.focus();}catch(_){}; resolve(v); };
+    const onk=e=>{ if(e.key==='Escape'){e.preventDefault();done(false);} };
+    document.addEventListener('keydown',onk);
+    bg.addEventListener('click',e=>{ if(e.target===bg) done(false); });
+    bg.querySelector('#mcancel').onclick=()=>done(false);
+    ok.onclick=()=>done(true);
+    (o.danger?bg.querySelector('#mcancel'):ok).focus();
+  });
+}
+// 教材をまとめて削除（Undo付き）。Undo窓の間は progress を消さず、確定時にだけ掃除する。
+function removeDecks(ids, label){
+  const set=new Set(ids);
+  const removed=decks.filter(d=>set.has(d.id));
+  if(!removed.length) return;
+  const savedProg={}; removed.forEach(d=>{ if(progress[d.id]) savedProg[d.id]=progress[d.id]; });  // 進捗を退避
+  decks=decks.filter(d=>!set.has(d.id));
+  removed.forEach(d=>trash.push(toDeckJSON(d))); saveTrash();
+  if(cur && set.has(cur.id)) cur=null;
+  saveDecks(); library();   // progress はまだ消さない（Undo可能なため）
+  let undone=false;
+  showToast(`${label} を削除しました（${removed.length}件）`, '元に戻す', ()=>{
+    undone=true;
+    removed.forEach(d=>{ decks.unshift(normalizeDeck(d)); });
+    const rids=new Set(removed.map(d=>d.id)); trash=trash.filter(t=>!rids.has(t.id)); saveTrash();
+    Object.assign(progress, savedProg); saveProgress();   // 進捗も復元
+    saveDecks(); library();
+  });
+  // Undo窓が閉じたら（戻されなければ）孤児progressを確定削除
+  setTimeout(()=>{ if(!undone) pruneProgress(); }, 6000);
+}
 
 // ====== state ======
 let cur=null, speed=4, chunks=[], sentStarts=[0], idx=0, playing=false, timer=null;
-// セッション内設定（アーティファクトはlocalStorage不可のためメモリ保持。PWAで永続化予定）。
-let settings={ defaultSpeed:4 };
-let quizI=0, score=0, answered=false;
-const screen=document.getElementById('screen');
+// セッション内設定 + BYOKキー。standalone では localStorage に保存（端末内のみ・サーバ送信なし）。
+// ※アーティファクト内は localStorage 不可なので try/catch で握って無害化（その場合はメモリ保持）。
+let settings={ defaultSpeed:4, provider:"anthropic", keys:{anthropic:"",openai:"",google:""} };
+try{ const _s=JSON.parse(localStorage.getItem("flashstudy.settings")||"null");
+  if(_s){ if(_s.defaultSpeed) settings.defaultSpeed=_s.defaultSpeed;
+    if(_s.provider) settings.provider=_s.provider;
+    settings.keys=Object.assign(settings.keys,_s.keys||{}); } }catch(_){}
+function saveSettings(){ try{ localStorage.setItem("flashstudy.settings", JSON.stringify(settings)); }catch(_){} }
+let quizI=0, score=0, answered=false, activeQuiz=[], wrongThis=[];
+const screenEl=document.getElementById('screen');
 const filein=document.getElementById('filein');
 
 // ====== chunker ======
 // 文節チャンク＋文の開始インデックスを返す（長文での文単位ナビゲーション用）。
 function buildChunks(text){
-  const minLen=3, maxLen=8;
-  const breakAfter=new Set(['、','は','が','を','に','へ','と','で','も','の','や','か','て','り']);
+  const MIN=2, TARGET=6, MAX=12, HARDCAP=18, WHOLE=9;
+  // 文字種で区切る方式: 漢字熟語・カタカナ語・数値(単位含む)を塊として保ち、
+  // 「種が変わる位置」を語境界とみなす（助詞文字での誤切＝「よこはま」を「は」で割る等を防ぐ）。
+  const T_OTHER=0,T_KANJI=1,T_HIRA=2,T_KATA=3,T_NUM=4,T_PUNCT=5;
+  const reKanji=/[一-鿿々〆]/, reHira=/[ぁ-ゟ]/, reKata=/[ァ-ヿ]/,
+        reNum=/[0-9０-９A-Za-zＡ-Ｚａ-ｚ]/, rePunct=/[、，。．！？；：）)\]｝」』】》〉]/;
+  function ctype(ch){
+    if(!ch) return T_OTHER;
+    if(rePunct.test(ch)) return T_PUNCT;
+    if(reHira.test(ch))  return T_HIRA;
+    if(reKata.test(ch))  return T_KATA;
+    if(reNum.test(ch))   return T_NUM;
+    if(reKanji.test(ch)) return T_KANJI;
+    return T_OTHER;
+  }
+  // 数の途中を割らないための「数値部品」: 数字・英字・小数点/桁区切り・単位・接頭。
+  const reNumPart=/[0-9０-９A-Za-zＡ-Ｚａ-ｚ.,，．・万億兆千百十%％円人件年度月日割期号第約％]/;
+  const numPart=ch=>!!ch&&reNumPart.test(ch);
+  // s[j-1] と s[j] の間が「安全に切れる」境界か
+  function safe(s,j){
+    if(j<=0||j>=s.length) return false;
+    const a=s[j-1], b=s[j];
+    if(numPart(a)&&numPart(b)) return false;        // 数値の途中は不可（94万3,400人 / 第9期 等）
+    const ta=ctype(a), tb=ctype(b);
+    if(ta===T_PUNCT) return true;                   // 句読点の直後は常に可
+    if(tb===T_PUNCT) return false;                  // 句読点を次の塊の先頭にしない
+    if(ta===tb) return false;                       // 同種連続の内部は不可（熟語/カナ語/数を割らない）
+    if(ta===T_KANJI && tb===T_HIRA) return false;   // 漢字→ひらがなは送り仮名の途中になりやすい
+    return true;                                    // それ以外の種の変わり目は概ね語境界
+  }
   const sents=String(text||'').match(/[^。！？\n]+[。！？]?/g)||[];
   const raw=[], rawSentStart=[];
   for(let s of sents){ s=s.trim(); if(!s)continue;
     rawSentStart.push(raw.length); let i=0;
     while(i<s.length){
-      let end=Math.min(i+maxLen,s.length), cut=end;
-      for(let j=end;j>=i+minLen;j--){ if(breakAfter.has(s[j-1])){cut=j;break;} }
-      if(s.length-cut>0 && s.length-cut<minLen) cut=s.length;  // 末尾の極小断片を作らない
+      if(s.length-i<=WHOLE){ raw.push(s.slice(i)); break; }   // 残りが短ければ一気に
+      // [i+MIN, i+MAX] で TARGET に最も近い安全境界を採用
+      let cut=-1, bestDist=1e9;
+      const lo=i+MIN, hi=Math.min(i+MAX, s.length-1);
+      for(let j=lo;j<=hi;j++){
+        if(safe(s,j)){ const d=Math.abs((j-i)-TARGET); if(d<=bestDist){bestDist=d; cut=j;} }
+      }
+      if(cut<0){ // 範囲内に境界なし（長い熟語/カナ語）→ HARDCAP まで延ばして最初の境界、無ければ強制
+        const hi2=Math.min(i+HARDCAP, s.length-1);
+        for(let j=i+MAX;j<=hi2;j++){ if(safe(s,j)){cut=j;break;} }
+        if(cut<0) cut=Math.min(i+MAX, s.length);
+      }
       raw.push(s.slice(i,cut)); i=cut;
     }
   }
   // 後処理: 実質1文字以下の断片（「が、」「。」等）は前の語にくっつける。
-  // 結合で添字がずれるので map で旧→新インデックスを追跡し、文開始位置を補正する。
   const out=[], map=[];
   for(let k=0;k<raw.length;k++){
-    const c=raw[k], core=c.replace(/[、。！？\s]/g,'');
+    const c=raw[k], core=c.replace(/[、。！？，．；：・\s]/g,'');
     if(out.length && core.length<=1){ out[out.length-1]+=c; map[k]=out.length-1; }
     else { map[k]=out.length; out.push(c); }
   }
@@ -348,53 +750,230 @@ function buildChunks(text){
 }
 // 互換ラッパ（チャンク文字列だけ欲しい場合）
 function chunkText(text){ return buildChunks(text).chunks; }
-function delayFor(c){let base=660-(speed-1)*56,d=base+c.length*30;
-  if(/[。！？]$/.test(c))d+=280;else if(/、$/.test(c))d+=130;return d;}
-function renderFlash(c){const m=Math.min(c.length-1,Math.floor(c.length*0.35));let h="";
-  for(let i=0;i<c.length;i++)h+= i===m?`<span class="focus">${esc(c[i])}</span>`:esc(c[i]);return h;}
+// 表示時間: 認知律速（漢字は重く、数字/英字はやや重く）＋句末で保持＋停留に床220ms。
+function delayFor(c){
+  c=String(c||''); let units=0;
+  for(const ch of c){
+    if(/[一-鿿々〆]/.test(ch)) units+=1.5;
+    else if(/[0-9０-９A-Za-z]/.test(ch)) units+=1.2;
+    else units+=1;
+  }
+  const base=540-(speed-1)*44;
+  let d=base+units*34;
+  if(/[。！？]$/.test(c)) d+=280; else if(/[、，]$/.test(c)) d+=130;
+  return Math.max(220, d);
+}
+// ORP焦点位置: 短いチャンクは先頭寄り、長いほど中央寄りに（固視点をなるべく安定させる）。
+function focusIndex(len){ if(len<=1)return 0; if(len<=4)return 1; return Math.min(len-1, Math.round(len*0.3)); }
+// pre/focus/post の3部構成。.flash のグリッドが focus を常に画面水平中央へ固定する。
+function renderFlash(c){
+  c=String(c||'');
+  if(!c.length) return '<span class="pre"></span><span class="focus"></span><span class="post"></span>';
+  const m=focusIndex(c.length);
+  return `<span class="pre">${esc(c.slice(0,m))}</span><span class="focus">${esc(c[m])}</span><span class="post">${esc(c.slice(m+1))}</span>`;
+}
 function uid(){return"d"+Date.now().toString(36)+Math.random().toString(36).slice(2,5);}
 function esc(s){return(s||"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));}
 
+// ====== category path utils（大 / 中 / 小） ======
+function catParts(cat){ return String(cat||'').split('/').map(s=>s.trim()).filter(Boolean); }
+function catLevel(cat,n){ return catParts(cat)[n]||''; }            // 0=大,1=中,2=小
+function joinCat(a,b,c){ return [a,b,c].map(s=>String(s||'').trim()).filter(Boolean).join(' / '); }
+
 // ====== LIBRARY ======
-function cardHtml(d){return `
-  <button class="card" data-id="${d.id}" style="margin-bottom:10px;">
-    <span class="ic">${esc(d.icon||(d.category?d.category[0]:"新"))}</span>
-    <span class="cmid"><span class="ct">${esc(d.title)||"(無題)"}</span><span class="cd">${esc(d.desc||d.category||"")}${d.flashMode==='ai'?' · AI再構成':''}</span></span>
-    <span class="pill ${d.quizStatus==='ready'?'rdy':'uns'}">${d.quizStatus==='ready'?d.quiz.length+'問':'問題なし'}</span>
+let libQuery='', libSort='recent';
+let closedFolders=new Set();   // 既定は全開。ユーザが閉じたフォルダだけ記録（再訪でも保持）
+// 経過日数の人にやさしい表記
+function agoLabel(iso){ if(!iso)return''; const d=Math.floor((Date.now()-new Date(iso).getTime())/86400000);
+  return d<=0?'今日':d===1?'昨日':d<7?d+'日前':d<30?Math.floor(d/7)+'週間前':Math.floor(d/30)+'ヶ月前'; }
+// 学習状態を表す pill（進捗レイヤを参照）
+function pillFor(d){
+  if(d.quizStatus!=='ready') return `<span class="pill uns">問題なし</span>`;
+  const p=getProg(d.id);
+  if(p&&p.attempts){
+    if(isDue(d.id)) return `<span class="pill due"><span aria-hidden="true">↻</span>復習</span>`;
+    return `<span class="pill rdy"><span aria-hidden="true">✓</span>${p.lastScore}/${p.total}</span>`;
+  }
+  return `<span class="pill uns">${d.quiz.length}問</span>`;
+}
+function cardHtml(d){
+  const ic=d.icon||catLevel(d.category,0)[0]||'新';
+  const p=getProg(d.id);
+  const bits=[(d.flashMode==='ai'?'AI再構成':'原文'),'約'+d.flashText.length+'字'];
+  if(p&&p.lastStudiedAt) bits.push(agoLabel(p.lastStudiedAt));
+  return `
+  <button class="card" data-id="${d.id}">
+    <span class="ic" aria-hidden="true">${esc(ic)}</span>
+    <span class="cmid"><span class="ct">${esc(d.title)||"(無題)"}</span><span class="cd">${esc(bits.join(' · '))}</span></span>
+    ${pillFor(d)}
   </button>`;}
+function cardsWrap(list){ return `<div class="cardgrid">${list.map(cardHtml).join('')}</div>`; }
+// 検索＋ソート適用後の表示対象
+function visibleDecks(){
+  const q=libQuery.trim().toLowerCase();
+  let list=decks.filter(d=>!q || (d.title+' '+d.category+' '+d.source).toLowerCase().includes(q));
+  const t=d=>{ const p=getProg(d.id); return p&&p.lastStudiedAt?new Date(p.lastStudiedAt).getTime():0; };
+  const due=d=>{ const p=getProg(d.id); return p&&p.due?new Date(p.due).getTime():Infinity; };
+  if(libSort==='recent') list=list.slice().sort((a,b)=>t(b)-t(a));
+  else if(libSort==='due') list=list.slice().sort((a,b)=>due(a)-due(b));
+  else if(libSort==='name') list=list.slice().sort((a,b)=>String(a.title).localeCompare(String(b.title),'ja'));
+  return list;
+}
+// 大>中>小の入れ子ツリー。中/小が空のデッキはその階層の直下に並ぶ。
+function buildTree(list){
+  const root=new Map();
+  list.forEach(d=>{
+    const p=catParts(d.category), L1=p[0]||'未分類', L2=p[1]||'', L3=p[2]||'';
+    if(!root.has(L1)) root.set(L1,new Map());
+    const mids=root.get(L1), mk=L2||'__none__';
+    if(!mids.has(mk)) mids.set(mk,{label:L2,subs:new Map()});
+    const subs=mids.get(mk).subs, sk=L3||'__none__';
+    if(!subs.has(sk)) subs.set(sk,{label:L3,decks:[]});
+    subs.get(sk).decks.push(d);
+  });
+  return root;
+}
+// フォルダ見出し: 開閉(open-state保持) ＋ 改名/削除ボタン。data-path にパスを持たせる。
+function fold(cls,label,count,path,inner){
+  const open = closedFolders.has(path) ? '' : ' open';
+  return `<details class="fold ${cls}"${open} data-path="${esc(path)}">
+    <summary><span class="tw" aria-hidden="true"></span><b>${esc(label)}</b><span class="cnt">${count}</span>
+    <span class="fold-act">
+      <button class="ficon" data-act="rename" data-path="${esc(path)}" aria-label="フォルダ名を変更"><span aria-hidden="true">✎</span></button>
+      <button class="ficon" data-act="del" data-path="${esc(path)}" aria-label="このフォルダをまとめて削除"><span aria-hidden="true">🗑</span></button>
+    </span></summary><div class="foldbody">${inner}</div></details>`;
+}
+function renderTree(){
+  const list=visibleDecks();
+  // 初回のみ全フォルダ open をシード（以後はユーザ操作を openFolders で保持）
+  const root=buildTree(list);
+  let body='';
+  for(const [L1,mids] of root){
+    let c1=0, inner='';
+    for(const [,m] of mids) for(const [,s] of m.subs) c1+=s.decks.length;
+    for(const [mk,m] of mids){
+      let c2=0; for(const [,s] of m.subs) c2+=s.decks.length;
+      let subsHtml='';
+      for(const [sk,s] of m.subs){
+        subsHtml += s.label ? fold('f3',s.label,s.decks.length, L1+' / '+m.label+' / '+s.label, cardsWrap(s.decks)) : cardsWrap(s.decks);
+      }
+      inner += m.label ? fold('f2',m.label,c2, L1+' / '+m.label, subsHtml) : subsHtml;
+    }
+    body += fold('f1',L1,c1,L1,inner);
+  }
+  return body || `<div class="meta" style="margin-top:16px;">${libQuery?'該当する教材がありません。':'教材がありません。「＋ 教材から新規」または「⤓ 読み込む」で追加してください。'}</div>`;
+}
+// パス（"大 / 中"）配下の教材
+function decksUnderFolder(parts){
+  return decks.filter(d=>{ const p=catParts(d.category); return parts.every((seg,i)=>p[i]===seg); });
+}
+function summaryBar(){
+  const due=dueCount(), st=streakDays(), acc=recentAccuracy();
+  return `<div class="sumbar">
+    <div class="stat"><b>${due}</b><span>今日の復習</span></div>
+    <div class="stat"><b>${st}</b><span>連続日数</span></div>
+    <div class="stat"><b>${acc==null?'—':acc+'%'}</b><span>直近正答率</span></div>
+    ${due?`<button class="btn sm" id="dorev">復習する</button>`:''}
+  </div>`;
+}
 function library(){
   stop();
-  const groups={};
-  decks.forEach(d=>{const k=(d.category&&d.category.trim())||"未分類";(groups[k]=groups[k]||[]).push(d);});
-  const body=Object.keys(groups).map(k=>
-    `<div class="grouphd"><b>${esc(k)}</b><span class="cnt">${groups[k].length}</span></div>`
-    + groups[k].map(cardHtml).join('')).join('');
-  screen.innerHTML=`
-  <div class="screen">
-    <div class="lead">デッキを選んで<br><em>パッと読む。</em></div>
-    <div class="sub">教材を貼ればAIが4択を自動生成。カテゴリで分けて溜められます。最後のまとめ問題が定着の本命です。</div>
+  const hasDecks=decks.length>0;
+  screenEl.innerHTML=`
+  <div class="screen lib">
+    <div class="lead" tabindex="-1">今日も<br><em>ひと区切り。</em></div>
+    ${hasDecks?summaryBar():'<div class="sub">教材を貼ればAIがフラッシュ本文と4択を用意。大・中・小のフォルダで整理できます。最後のまとめ問題が定着の本命です。</div>'}
     <div class="rowbtns">
       <button class="btn sm" id="new">＋ 教材から新規</button>
-      <button class="btn sm ghost" id="imp" style="margin-top:0;">⤓ 読込</button>
-      <button class="btn sm ghost" id="settings" style="margin-top:0;flex:0 0 auto;">⚙</button>
+      <button class="btn sm ghost" id="imp">⤓ 読み込む</button>
+      <button class="btn ghost icon" id="settings" aria-label="設定">⚙</button>
     </div>
-    <div id="cards">${body}</div>
+    ${hasDecks?`<div class="lib-tools">
+      <input class="inp" id="q" placeholder="教材を検索" value="${esc(libQuery)}" aria-label="教材を検索">
+      <select id="sort" aria-label="並び替え">
+        <option value="recent"${libSort==='recent'?' selected':''}>最近学習した順</option>
+        <option value="due"${libSort==='due'?' selected':''}>復習が近い順</option>
+        <option value="name"${libSort==='name'?' selected':''}>名前順</option>
+      </select></div>`:''}
+    <div id="cards">${renderTree()}</div>
   </div>`;
+  focusHeading();
   document.getElementById('new').onclick=createView;
   document.getElementById('imp').onclick=importMenu;
   document.getElementById('settings').onclick=settingsView;
-  document.getElementById('cards').onclick=e=>{const b=e.target.closest('.card');if(!b)return;
-    cur=decks.find(d=>d.id===b.dataset.id);deckDetail();};
+  const rev=document.getElementById('dorev'); if(rev) rev.onclick=startReview;
+  const q=document.getElementById('q'); if(q) q.oninput=()=>{ libQuery=q.value; refreshTree(); };
+  const sort=document.getElementById('sort'); if(sort) sort.onchange=()=>{ libSort=sort.value; refreshTree(); };
+  wireTree();
+}
+// ツリーだけ再描画（検索/ソート時。フォーカスを奪わない）
+function refreshTree(){ const c=document.getElementById('cards'); if(c){ c.innerHTML=renderTree(); wireTree(); } }
+function wireTree(){
+  const c=document.getElementById('cards'); if(!c)return;
+  // カードクリック → 教材を開く
+  c.onclick=e=>{
+    const fb=e.target.closest('.ficon');
+    if(fb){ e.preventDefault(); e.stopPropagation(); folderAction(fb.dataset.act, fb.dataset.path); return; }
+    const b=e.target.closest('.card'); if(!b)return;
+    cur=decks.find(d=>d.id===b.dataset.id); if(cur) deckDetail();
+  };
+  // 開閉状態を openFolders に保持（toggleはバブルしないので各detailsに付与）
+  c.querySelectorAll('details.fold').forEach(d=>{
+    d.ontoggle=()=>{ const p=d.dataset.path; if(d.open)closedFolders.delete(p); else closedFolders.add(p); };
+  });
+}
+function startReview(){
+  const dueDecks=decks.filter(d=>d.quizStatus==='ready'&&isDue(d.id));
+  if(!dueDecks.length){ showToast('今日の復習はありません'); return; }
+  cur=dueDecks[0]; startQuiz();
+}
+async function folderAction(act, path){
+  const parts=catParts(path);
+  const targets=decksUnderFolder(parts);
+  if(!targets.length) return;
+  if(act==='del'){
+    const ok=await showModal({title:`「${parts.join(' / ')}」を削除`,
+      body:`このフォルダの教材 ${targets.length}件 をまとめて削除します。\nこの操作は取り消せます（数秒間）。`,
+      confirm:'削除する', danger:true});
+    if(ok) removeDecks(targets.map(d=>d.id), parts.join(' / '));
+  } else if(act==='rename'){
+    const lvl=parts.length-1;
+    const nv=await showPrompt(`「${parts[lvl]}」の名前を変更`, parts[lvl]);
+    if(nv==null) return;
+    const nm=nv.trim(); if(!nm||nm===parts[lvl]) return;
+    targets.forEach(d=>{ const p=catParts(d.category); p[lvl]=nm; d.category=joinCat(p[0],p[1],p[2]); });
+    saveDecks(); library(); showToast('フォルダ名を変更しました');
+  }
+}
+// 入力付きモーダル。Promise<string|null>
+function showPrompt(title, value){
+  return new Promise(resolve=>{
+    const prev=document.activeElement;
+    const bg=document.createElement('div'); bg.className='modal-bg';
+    bg.innerHTML=`<div class="modal" role="dialog" aria-modal="true" aria-labelledby="pttl">
+      <div class="mt" id="pttl"></div>
+      <input class="inp" id="pinp" style="margin-bottom:var(--sp-4)">
+      <div class="row"><button class="btn ghost" id="pcancel">キャンセル</button><button class="btn" id="pok">変更</button></div></div>`;
+    bg.querySelector('#pttl').textContent=title; const inp=bg.querySelector('#pinp'); inp.value=value||'';
+    document.body.appendChild(bg);
+    const done=v=>{ bg.remove(); document.removeEventListener('keydown',onk); try{prev&&prev.focus();}catch(_){}; resolve(v); };
+    const onk=e=>{ if(e.key==='Escape'){e.preventDefault();done(null);} if(e.key==='Enter'){e.preventDefault();done(inp.value);} };
+    document.addEventListener('keydown',onk);
+    bg.addEventListener('click',e=>{ if(e.target===bg) done(null); });
+    bg.querySelector('#pcancel').onclick=()=>done(null);
+    bg.querySelector('#pok').onclick=()=>done(inp.value);
+    inp.focus(); inp.select();
+  });
 }
 
 // ====== SETTINGS ======
 function settingsView(){
   stop();
-  screen.innerHTML=`
-  <div class="screen">
+  screenEl.innerHTML=`
+  <div class="screen form">
     <button class="back" id="bk">‹ ライブラリ</button>
-    <div class="dtitle">設定</div>
-    <div class="meta">この端末/セッション内のみ。アーティファクト制約のため保存はされません（PWA化で永続化）。</div>
+    <div class="dtitle" tabindex="-1">設定</div>
+    <div class="meta">設定とAPIキーはこの端末のブラウザ内だけに保存されます（localStorage・サーバ送信なし）。</div>
     <div class="box2">
       <div class="h">表示スピードの既定</div>
       <div class="speedwrap" style="margin-top:8px;">
@@ -405,75 +984,147 @@ function settingsView(){
     </div>
     <div class="box2">
       <div class="h">AIプロバイダ（BYOK）</div>
-      <div class="p">Phase 3で有効化。キーは端末内のみ・サーバ送信なし。<b>いまは枠のみで、キーは保存しません。</b></div>
+      <div class="p">キーは<b>この端末のブラウザ内だけ</b>に保存され、サーバには送られません。AI生成・本文再構成・自動分類で使われます。</div>
       <div class="label">プロバイダ</div>
       <div class="seg" id="prov">
-        <button data-p="anthropic" class="on">Anthropic</button>
-        <button data-p="openai">OpenAI</button>
-        <button data-p="google">Google</button>
+        <button data-p="anthropic" class="${settings.provider==='anthropic'?'on':''}">Anthropic</button>
+        <button data-p="openai" class="${settings.provider==='openai'?'on':''}">OpenAI</button>
+        <button data-p="google" class="${settings.provider==='google'?'on':''}">Google</button>
       </div>
-      <div class="label">APIキー</div>
-      <input class="inp" type="password" placeholder="Phase 3で有効化（現在は無効）" disabled>
-      <div class="p" id="provmodel" style="margin-top:8px;">既定モデル: claude-opus-4-8</div>
+      <div class="label">APIキー（<span id="provname"></span>）</div>
+      <input class="inp" id="apikey" type="password" autocomplete="off" placeholder="例: sk-ant-... / sk-... / AIza...">
+      <div class="rowbtns">
+        <button class="btn sm" id="keysave">保存</button>
+        <button class="btn sm ghost" id="keytest">接続テスト</button>
+        <button class="btn sm ghost" id="keyclear">消去</button>
+      </div>
+      <div class="p" id="keystat" style="margin-top:10px;"></div>
+      <div class="p" id="provmodel" style="margin-top:4px;"></div>
     </div>
     <div class="box2">
-      <div class="h">デッキ整理</div>
-      <div class="p">「未分類」のデッキをまとめてAIで分類します（callLLM経由）。</div>
-      <button class="btn sm" id="recat" style="margin-top:10px;">未分類をAIで分類</button>
+      <div class="h">フォルダの自動整理</div>
+      <div class="p">「未分類」の教材をまとめてAIでフォルダ分けします。</div>
+      <button class="btn sm" id="recat">未分類の教材を分類する</button>
+    </div>
+    <div class="box2">
+      <div class="h">サンプルの復元</div>
+      <div class="p">削除した内蔵サンプル3件を戻します（既存の教材はそのまま）。</div>
+      <button class="btn sm ghost" id="restore">サンプルを復元</button>
     </div>
   </div>`;
   document.getElementById('bk').onclick=library;
+  focusHeading();
   document.getElementById('recat').onclick=recategorizeAll;
+  document.getElementById('restore').onclick=()=>{
+    const existing=new Set(decks.map(x=>x.id));
+    SAMPLE_DECKS.map(normalizeDeck).forEach(s=>{ if(!existing.has(s.id)) decks.push(s); });
+    saveDecks(); library();
+  };
   const dsp=document.getElementById('dsp');
   dsp.oninput=()=>{settings.defaultSpeed=+dsp.value;document.getElementById('spv').textContent=spLabel(settings.defaultSpeed);};
+  // --- BYOK: プロバイダ選択 / キー保存・テスト・消去 ---
+  const provBtns=document.querySelectorAll('#prov button');
+  const apikey=document.getElementById('apikey');
+  const keystat=document.getElementById('keystat');
+  function refreshKeyUI(){
+    const p=settings.provider;
+    document.getElementById('provname').textContent=PROVIDER_LABEL[p];
+    document.getElementById('provmodel').textContent='既定モデル: '+PROVIDER_MODEL[p];
+    apikey.value=settings.keys[p]||'';
+    const has=(settings.keys[p]||'').trim();
+    keystat.textContent=has?'キー登録済み（保存済み）'
+      :'キー未登録（登録すると、この端末からAI生成が使えます）';
+    keystat.style.color='';
+  }
+  refreshKeyUI();
   document.getElementById('prov').onclick=e=>{const b=e.target.closest('button');if(!b)return;
-    document.querySelectorAll('#prov button').forEach(x=>x.classList.toggle('on',x===b));
-    const m={anthropic:'claude-opus-4-8',openai:'gpt-5.5',google:'gemini-3.1-pro-preview'}[b.dataset.p];
-    document.getElementById('provmodel').textContent='既定モデル: '+m;};
+    settings.provider=b.dataset.p; saveSettings();
+    provBtns.forEach(x=>x.classList.toggle('on',x===b));
+    refreshKeyUI();};
+  document.getElementById('keysave').onclick=()=>{
+    settings.keys[settings.provider]=apikey.value.trim(); saveSettings();
+    keystat.textContent=settings.keys[settings.provider]?'保存しました ✓':'空のキーを保存（=未設定）';
+    keystat.style.color='var(--good)';};
+  document.getElementById('keyclear').onclick=()=>{
+    settings.keys[settings.provider]=''; apikey.value=''; saveSettings();
+    keystat.textContent='消去しました'; keystat.style.color='var(--muted)';};
+  document.getElementById('keytest').onclick=async()=>{
+    const k=apikey.value.trim();
+    if(!k && settings.provider!=='anthropic'){keystat.textContent='先にキーを入力してください'; keystat.style.color='var(--bad)'; return;}
+    settings.keys[settings.provider]=k; saveSettings();   // テスト対象を先に反映
+    keystat.textContent='接続テスト中…'; keystat.style.color='';
+    try{ const r=await callLLM('「OK」とだけ短く返答してください。',{maxTokens:16});
+      keystat.textContent='接続OK ✓（応答: '+r.slice(0,20)+'）'; keystat.style.color='var(--good)';
+    }catch(e){ keystat.textContent='失敗: '+String(e.message||e).slice(0,90); keystat.style.color='var(--bad)'; }
+  };
 }
 // 「未分類」デッキをまとめてAI分類。
 async function recategorizeAll(){
   const targets=decks.filter(d=>!d.category||!d.category.trim()||d.category==='未分類');
-  if(!targets.length){alert('未分類のデッキはありません');return;}
+  if(!targets.length){showToast('未分類の教材はありません');return;}
   loading(`未分類 ${targets.length} 件をAIで分類中…`);
   for(const d of targets){
     try{const c=await categorize(d.source||d.flashText);if(c)d.category=c;}catch(_){}
   }
+  saveDecks();
   library();
 }
 
 // ====== CREATE (paste -> AI) ======
-let cMode="original", cGen=true;
+let cMode="original", cGen=true, cSplit="auto";
 function createView(){
-  cMode="original";cGen=true;
-  screen.innerHTML=`
-  <div class="screen">
+  cMode="original";cGen=true;cSplit="auto";
+  screenEl.innerHTML=`
+  <div class="screen form">
     <button class="back" id="bk">‹ ライブラリ</button>
-    <div class="dtitle">教材から作成</div>
-    <div class="meta">本文を貼り付け（またはPDFから抽出） → AIが本文整形とクイズを用意</div>
+    <div class="dtitle" tabindex="-1">教材から作成</div>
+    <div class="meta">本文を貼り付け（またはPDFから抽出）→ AIがフラッシュ本文と4択を用意します。</div>
     <div id="err"></div>
     <div class="rowbtns" style="margin-top:0;">
-      <button class="btn sm ghost" id="pdfbtn" style="margin-top:0;">📄 PDFから読み込む</button>
+      <button class="btn sm ghost" id="pdfbtn">📄 PDFから読み込む</button>
     </div>
     <input type="file" id="pdfin" accept="application/pdf,.pdf" style="display:none">
     <textarea id="src" placeholder="参考書やノートの本文をここに貼り付け…"></textarea>
-    <div class="label">カテゴリ（任意）</div>
-    <input id="cat" class="inp" placeholder="例: 行政書士 / 簿記2級 / 通知文">
+    <div class="label">教材の分け方</div>
+    <div class="seg" id="split">
+      <button data-s="merge">まとめる（1〜3個）</button>
+      <button data-s="split">細かく分ける</button>
+      <button data-s="auto" class="on">おまかせ</button>
+    </div>
+    <div class="p" id="splithint" style="margin-top:var(--sp-2);color:var(--muted);font-size:var(--fs-sm);"></div>
+    <div class="label">親フォルダ・大項目（任意）</div>
+    <input id="cat" class="inp" placeholder="空欄ならAIが提案（例: 介護保険 / 行政書士）">
     <div class="label">フラッシュ本文の扱い</div>
     <div class="seg" id="seg">
       <button data-m="original" class="on">原文のまま</button>
-      <button data-m="ai">AIで再構成</button>
+      <button data-m="ai">AIで読みやすく再構成</button>
     </div>
     <div class="label">まとめ問題</div>
-    <div class="chk on" id="chk"><span class="box">✓</span><span><span class="t">4択をAIで自動生成</span><span class="d">オフなら問題なしで作成（あとで生成/貼付可）</span></span></div>
-    <button class="btn" id="make">作成する</button>
+    <div class="chk on" id="chk"><span class="box" aria-hidden="true">✓</span><span><span class="t">4択をAIで自動生成</span><span class="d">オフなら問題なしで作成（あとで追加できます）</span></span></div>
+    <button class="btn block" id="make">作成する</button>
   </div>`;
+  focusHeading();
+  const updateSplitHint=()=>{
+    const useAI=(cMode==='ai')||cGen;
+    const seg=document.getElementById('split'); if(seg) seg.classList.toggle('dim', !useAI);
+    const len=(document.getElementById('src').value||'').length;
+    const h=document.getElementById('splithint'); if(!h)return;
+    if(!useAI){ h.textContent='分割はAIを使う設定（再構成 か 4択生成）でのみ有効です。'; return; }
+    const est = cSplit==='merge' ? Math.max(1,Math.min(3,Math.round(len/1200)))
+              : cSplit==='split' ? Math.max(1,Math.min(12,Math.round(len/350)))
+              : Math.max(1,Math.min(12,Math.round(len/700)));
+    h.textContent = len<10 ? '本文を貼り付けると分割の目安を表示します。' : `目安：約 ${est} 個の教材に分割予定。`;
+  };
   document.getElementById('bk').onclick=library;
+  document.getElementById('src').oninput=updateSplitHint;
   document.getElementById('seg').onclick=e=>{const b=e.target.closest('button');if(!b)return;cMode=b.dataset.m;
-    document.querySelectorAll('#seg button').forEach(x=>x.classList.toggle('on',x.dataset.m===cMode));};
+    document.querySelectorAll('#seg button').forEach(x=>x.classList.toggle('on',x.dataset.m===cMode));updateSplitHint();};
+  document.getElementById('split').onclick=e=>{const b=e.target.closest('button');if(!b)return;cSplit=b.dataset.s;
+    document.querySelectorAll('#split button').forEach(x=>x.classList.toggle('on',x.dataset.s===cSplit));updateSplitHint();};
   document.getElementById('chk').onclick=()=>{cGen=!cGen;document.getElementById('chk').classList.toggle('on',cGen);
-    document.getElementById('chk').querySelector('.box').textContent=cGen?'✓':'';};
+    document.getElementById('chk').querySelector('.box').textContent=cGen?'✓':'';updateSplitHint();};
   document.getElementById('make').onclick=make;
+  updateSplitHint();
   document.getElementById('pdfbtn').onclick=()=>document.getElementById('pdfin').click();
   document.getElementById('pdfin').onchange=async ev=>{
     const f=ev.target.files[0];if(!f)return;
@@ -484,54 +1135,113 @@ function createView(){
       if(!text){err.innerHTML=`<div class="banner">テキストを抽出できませんでした（画像主体のPDFかもしれません）。</div>`;return;}
       const ta=document.getElementById('src');
       ta.value=ta.value?ta.value+"\n"+text:text;
-      err.innerHTML=`<div class="banner" style="background:rgba(111,185,143,.12);border-color:#3c5546;color:#cfead9;">PDFから ${text.length} 字を読み込みました。原文モードのまま「作成する」でOK。</div>`;
-    }catch(e){err.innerHTML=`<div class="banner">PDF読込に失敗（${esc(e.message)}）。</div>`;}
+      err.innerHTML=`<div class="banner ok">PDFから ${text.length} 字を読み込みました。そのまま「作成する」でOKです。</div>`;
+      updateSplitHint();
+    }catch(e){err.innerHTML=`<div class="banner">PDFを読み込めませんでした（${esc(friendlyErr(e))}）。</div>`;}
     ev.target.value="";
   };
 }
 async function make(){
   const src=document.getElementById('src').value.trim();
-  const cat=document.getElementById('cat').value.trim();
+  const parent=document.getElementById('cat').value.trim();   // 親(大項目)。空ならAIが提案
   const err=document.getElementById('err');
   if(src.length<10){err.innerHTML=`<div class="banner">本文が短すぎます。もう少し貼り付けてください。</div>`;return;}
-  const aiMode=cMode==="ai", gen=cGen;
-  loading(aiMode&&gen?"本文を整形し、問題を作成中…":aiMode?"本文を整形中…":gen?"4択を作成中…":"準備中…");
+  const aiMode=cMode==="ai", gen=cGen, split=cSplit, useAI=aiMode||gen;
+  const restore=(msg,ok)=>{ createView();
+    document.getElementById('src').value=src; document.getElementById('cat').value=parent;
+    if(msg){ const e=document.getElementById('err');
+      if(/設定でキー/.test(msg)) e.innerHTML=`<div class="banner">${esc(msg)} <span class="lnk" id="goset">⚙設定を開く</span></div>`, (document.getElementById('goset')||{}).onclick=settingsView;
+      else e.innerHTML=`<div class="banner${ok?' ok':''}">${esc(msg)}</div>`; } };
+
+  genAbort=new AbortController();
   try{
-    let flashText=src;
-    if(aiMode) flashText=await reconstruct(src);
-    let quiz=[],status="unset";
-    if(gen){quiz=await genQuiz(src);status="ready";}
-    let category=cat;
-    if(!category){ try{category=await categorize(src);}catch(_){} }   // 未入力ならAI提案、失敗時は未分類
-    category=category||"未分類";
-    const cleanTitle=src.replace(/\s+/g,' ').trim();
-    const d={id:uid(),icon:"新",title:cleanTitle.slice(0,12)+(cleanTitle.length>12?"…":""),desc:"作成したデッキ",
-      category,flashMode:aiMode?"ai":"original",flashText,quiz,quizStatus:status,source:src,
-      createdAt:new Date().toISOString()};
-    decks.unshift(d);cur=d;deckDetail();
-  }catch(e){
-    createView();
-    document.getElementById('src').value=src;
-    document.getElementById('cat').value=cat;
-    document.getElementById('err').innerHTML=`<div class="banner">生成に失敗しました（${esc(e.message)}）。本文を短くするか、もう一度お試しください。長文は要約してから貼ると安定します。</div>`;
-  }
+    // 1) 分割プラン（AI不使用なら分割せず1教材。プラン失敗時も丸ごと1教材にフォールバック）
+    let sections;
+    if(!useAI){ sections=[{p:{},text:src}]; }
+    else{
+      loading("構成を分析中…（分け方を計画）",{abortable:true});
+      try{ sections=buildSections(src, await planDecks(src, split)); }
+      catch(e){ if(e&&e.code==='abort'){ restore('作成を中断しました。'); return; } sections=[{p:{},text:src}]; }
+      if(!sections.length) sections=[{p:{},text:src}];
+    }
+
+    // 2) 複数になる場合だけ、件数とAPI回数をモーダルで確認
+    const perDeck=(aiMode?1:0)+(gen?1:0);
+    if(sections.length>1){
+      const ok=await showModal({title:`${sections.length}個の教材に分けて作成`,
+        body:`このあとAI呼び出しが約 ${sections.length*perDeck} 回 発生します（BYOKキーの実費）。\n作成中は「中断する」も押せます。`,
+        confirm:'作成する'});
+      if(!ok){ restore(); return; }
+    }
+
+    // 3) 各教材を生成（1件失敗は継続。中断/キー無効は即中止し、できたぶんは保存）
+    const made=[]; let stopMsg='';
+    for(let i=0;i<sections.length;i++){
+      if(genAbort.signal.aborted){ stopMsg='中断しました'; break; }
+      const p=sections[i].p||{}, text=sections[i].text;
+      loading(`教材を作成中…（${i+1} / ${sections.length}）`,{abortable:true});
+      try{
+        let flashText=text;
+        if(aiMode){ try{ flashText=await reconstruct(text); }catch(e){ if(e&&(e.code==='abort'||e.code==='auth'))throw e; flashText=text; } }
+        let quiz=[], status="unset";
+        if(gen){ try{ quiz=await genQuiz(text); status="ready"; }catch(e){ if(e&&(e.code==='abort'||e.code==='auth'))throw e; } }
+        let big=parent||p.big||'';
+        if(!big && sections.length===1){ try{ big=await categorize(text); }catch(_){} }
+        const category=joinCat(big||'未分類', p.mid, p.small);
+        const t=(p.title||text.replace(/\s+/g,' ').trim()).trim();
+        made.push({id:uid(), title:t.slice(0,20)+(t.length>20?"…":""),
+          category, flashMode:aiMode?"ai":"original", flashText, quiz, quizStatus:status,
+          source:text, createdAt:new Date().toISOString()});
+      }catch(e){
+        if(e&&e.code==='abort'){ stopMsg='中断しました'; break; }
+        if(e&&e.code==='auth'){ stopMsg=friendlyErr(e); break; }     // 鍵が無効なら残りも無駄なので即中止
+        if(sections.length===1){ stopMsg=friendlyErr(e); }            // 単一はそのまま失敗理由を提示
+      }
+    }
+    if(made.length){
+      decks=made.concat(decks); saveDecks();
+      if(stopMsg) showToast(`${made.length}件を作成（${stopMsg}で停止）`);
+      if(made.length===1 && sections.length===1){ cur=made[0]; deckDetail(); } else library();
+      return;
+    }
+    restore(stopMsg||'生成に失敗しました。本文を短くするか、もう一度お試しください。');
+  } finally { genAbort=null; }
 }
-function loading(msg){screen.innerHTML=`<div class="screen"><div class="loading"><div class="spin"></div><div><div class="lt">${esc(msg)}</div><div class="ld">AIが処理しています</div></div></div></div>`;}
+function loading(msg, opts){
+  const ab=opts&&opts.abortable;
+  screenEl.innerHTML=`<div class="screen"><div class="loading" role="status" aria-live="polite">
+    <div class="spin" aria-hidden="true"></div>
+    <div><div class="lt">${esc(msg)}</div><div class="ld">AIが処理しています</div></div>
+    ${ab?'<button class="btn ghost sm" id="cancelgen">中断する</button>':''}</div></div>`;
+  if(ab){ const b=document.getElementById('cancelgen'); if(b) b.onclick=()=>{ try{genAbort&&genAbort.abort();}catch(_){} b.disabled=true; b.textContent='中断中…'; }; }
+}
 
 // ====== DECK DETAIL ======
 function deckDetail(){
-  stop();const d=cur;
+  stop();const d=cur; if(!d){ library(); return; }
   speed=settings.defaultSpeed;   // 既定スピードを反映（スライダーで個別調整可）
+  const prog=getProg(d.id);
+  const total=buildChunks(d.flashText).chunks.length||1;
+  const resumeAt=(prog&&prog.lastReadIdx>0&&prog.lastReadIdx<total-1)?prog.lastReadIdx:0;
   const qbox = d.quizStatus==='ready'
-    ? `<div class="box2"><div class="h">まとめ問題：${d.quiz.length}問 ✓</div><div class="p">学習後に4択で出題されます。</div></div>`
-    : `<div class="box2"><div class="h">まとめ問題：未セット</div><div class="p">フラッシュだけでも学習できます。下のいずれかで追加可能。</div>
-        <div class="rowbtns"><button class="btn sm" id="qgen" style="margin-top:0;">AIで生成</button>
-        <button class="btn sm ghost" id="qpaste" style="margin-top:0;">JSON貼付</button></div></div>`;
-  screen.innerHTML=`
-  <div class="screen">
+    ? `<div class="box2"><div class="h">まとめ問題：${d.quiz.length}問 ✓</div><div class="p">${prog&&prog.attempts?`前回 ${prog.lastScore}/${prog.total}・${agoLabel(prog.lastStudiedAt)}`:'学習後に4択で出題されます。'}</div></div>`
+    : `<div class="box2"><div class="h">まとめ問題：未設定</div><div class="p">フラッシュだけでも学習できます。下のいずれかで追加できます。</div>
+        <div class="rowbtns"><button class="btn sm" id="qgen">AIで作る</button>
+        <button class="btn sm ghost" id="qpaste">JSON貼付</button></div></div>`;
+  screenEl.innerHTML=`
+  <div class="screen form">
     <button class="back" id="bk">‹ ライブラリ</button>
     <div class="dtitle">${esc(d.title)}</div>
     <div class="meta">${d.flashMode==='ai'?'AI再構成':'原文'} · 約${d.flashText.length}字</div>
+    <div class="box2">
+      <div class="h">フォルダ（大 / 中 / 小）</div>
+      <div class="p">空欄でもOK。大項目だけでも分類できます。変更は自動保存。</div>
+      <div class="catrow">
+        <input class="inp" id="c1" placeholder="大項目" value="${esc(catLevel(d.category,0))}">
+        <input class="inp" id="c2" placeholder="中項目" value="${esc(catLevel(d.category,1))}">
+        <input class="inp" id="c3" placeholder="小項目" value="${esc(catLevel(d.category,2))}">
+      </div>
+    </div>
     <div id="qzone">${qbox}</div>
     <div id="paste"></div>
     <div class="speedwrap">
@@ -539,34 +1249,52 @@ function deckDetail(){
       <input type="range" id="sp" min="1" max="10" value="${speed}">
       <div class="ticks"><span>ゆっくり</span><span>速い</span></div>
     </div>
-    <button class="btn" id="go">学習をはじめる</button>
-    <button class="btn ghost" id="exp">⤴ このデッキを書き出す（JSON）</button>
+    ${resumeAt?`<button class="btn block" id="resume">続きから（${resumeAt+1}/${total}コマ）</button>
+    <button class="btn ghost block" id="go">最初から読む</button>`
+    :`<button class="btn block" id="go">学習をはじめる</button>`}
+    <button class="btn ghost block" id="exp">⤴ 書き出す（JSON）</button>
+    <button class="btn ghost block danger" id="del">この教材を削除</button>
   </div>`;
   document.getElementById('bk').onclick=library;
   const sp=document.getElementById('sp');
   sp.oninput=()=>{speed=+sp.value;document.getElementById('spv').textContent=spLabel();};
-  document.getElementById('go').onclick=startReading;
+  focusHeading();
+  document.getElementById('go').onclick=()=>startReading();
+  const rs=document.getElementById('resume'); if(rs) rs.onclick=()=>startReading({from:resumeAt});
   document.getElementById('exp').onclick=()=>exportDeck(d);
+  document.getElementById('del').onclick=()=>deleteDeck(d);
+  ['c1','c2','c3'].forEach(id=>{document.getElementById(id).onchange=()=>{
+    d.category=joinCat(document.getElementById('c1').value,document.getElementById('c2').value,document.getElementById('c3').value);
+    saveDecks();
+  };});
   if(d.quizStatus!=='ready'){
     document.getElementById('qgen').onclick=async()=>{loading("4択を作成中…");
-      try{cur.quiz=await genQuiz(cur.source||cur.flashText);cur.quizStatus="ready";deckDetail();}
+      try{cur.quiz=await genQuiz(cur.source||cur.flashText);cur.quizStatus="ready";saveDecks();deckDetail();}
       catch(e){deckDetail();document.getElementById('qzone').insertAdjacentHTML('beforebegin',`<div class="banner">生成失敗（${esc(e.message)}）。</div>`);}};
     document.getElementById('qpaste').onclick=showPaste;
   }
+}
+// 教材を1件削除（モーダル確認 → Undo付き）。
+async function deleteDeck(d){
+  if(!d) return;
+  const ok=await showModal({title:`「${d.title||'(無題)'}」を削除`,
+    body:'この教材を削除します。\nこの操作は数秒間なら取り消せます。', confirm:'削除する', danger:true});
+  if(ok) removeDecks([d.id], d.title||'(無題)');
 }
 function spLabel(n){n=(n==null?speed:n);return['','とても遅い','遅い','ややゆっくり','標準','標準＋','やや速い','速い','かなり速い','とても速い','最速'][n];}
 function showPaste(){
   document.getElementById('paste').innerHTML=`
     <div class="box2"><div class="h">問題JSONを貼り付け</div>
-    <div class="p">職場のCopilot等で作った配列を貼って取り込み。形式: [{"q","o":[4],"a","e"}]</div>
-    <textarea id="pj" style="min-height:110px;margin-top:10px;"></textarea>
+    <div class="p">社内の生成AI（Copilot等）が出力した4択データをそのまま貼り付けて取り込めます。形式: [{"q","o":[4],"a","e"}]</div>
+    <textarea id="pj" style="min-height:110px;margin-top:var(--sp-3);"></textarea>
+    <div id="pjerr"></div>
     <button class="btn sm" id="pjok">取り込む</button></div>`;
   document.getElementById('pjok').onclick=()=>{
     try{const arr=JSON.parse(stripFences(document.getElementById('pj').value.trim()));
       const quiz=normalizeQuiz(arr);
       if(!quiz.length)throw new Error("有効な4択問題が見つかりません");
-      cur.quiz=quiz;cur.quizStatus="ready";deckDetail();
-    }catch(e){alert("読み込めませんでした: "+e.message);}
+      cur.quiz=quiz;cur.quizStatus="ready";saveDecks();deckDetail();
+    }catch(e){ document.getElementById('pjerr').innerHTML=`<div class="banner">データの形式が読み取れませんでした。コピー範囲をご確認ください。</div>`; }
   };
 }
 
@@ -592,24 +1320,25 @@ async function extractPdf(file){
 // 読込メニュー：ファイル選択 と デッキJSON貼り付け（職場モード）。
 function importMenu(){
   stop();
-  screen.innerHTML=`
-  <div class="screen">
+  screenEl.innerHTML=`
+  <div class="screen form">
     <button class="back" id="bk">‹ ライブラリ</button>
-    <div class="dtitle">デッキを読み込む</div>
-    <div class="meta">ファイル、またはJSON貼り付けから。職場モードはCopilot等が吐いたデッキJSONをそのまま貼れます。</div>
+    <div class="dtitle" tabindex="-1">教材を読み込む</div>
+    <div class="meta">書き出したファイル、またはJSONの貼り付けから取り込めます。</div>
     <div class="box2">
       <div class="h">ファイルから</div>
-      <div class="p">書き出したデッキJSON(.json)を選択。</div>
-      <button class="btn sm" id="fromfile" style="margin-top:10px;">ファイルを選択</button>
+      <div class="p">書き出した教材ファイル（.json）を選択します。</div>
+      <button class="btn sm" id="fromfile">ファイルを選択</button>
     </div>
     <div class="box2">
       <div class="h">JSONを貼り付け</div>
-      <div class="p">デッキ1件のオブジェクト、または複数件の配列。多少崩れていても正準化して取り込みます（flashText必須）。</div>
+      <div class="p">教材1件、または複数件の配列。社内の生成AI（Copilot等）が出力した問題データもそのまま使えます（本文 flashText が必須）。</div>
       <textarea id="pj" style="min-height:140px;margin-top:10px;" placeholder='{"title":"…","flashText":"…","quiz":[…]} もしくは [ {…}, {…} ]'></textarea>
       <div id="perr"></div>
-      <button class="btn sm" id="pjok" style="margin-top:10px;">貼り付けから取り込む</button>
+      <button class="btn sm" id="pjok">貼り付けから取り込む</button>
     </div>
   </div>`;
+  focusHeading();
   document.getElementById('bk').onclick=library;
   document.getElementById('fromfile').onclick=()=>filein.click();
   document.getElementById('pjok').onclick=()=>{
@@ -618,12 +1347,13 @@ function importMenu(){
     if(!ta){perr.innerHTML=`<div class="banner">JSONが空です。</div>`;return;}
     let parsed;
     try{parsed=JSON.parse(stripFences(ta));}
-    catch(e){perr.innerHTML=`<div class="banner">JSONとして読めません（${esc(e.message)}）。</div>`;return;}
+    catch(e){perr.innerHTML=`<div class="banner">データの形式が読み取れませんでした。コピー範囲をご確認ください。</div>`;return;}
     const arr=Array.isArray(parsed)?parsed:[parsed];
     const valid=arr.filter(x=>x&&typeof x==='object'&&!Array.isArray(x)&&x.flashText);
-    if(!valid.length){perr.innerHTML=`<div class="banner">取り込めるデッキがありません（flashTextが必要）。</div>`;return;}
+    if(!valid.length){perr.innerHTML=`<div class="banner">取り込める教材がありません（本文 flashText が必要です）。</div>`;return;}
     valid.forEach(raw=>{const d=normalizeDeck(raw);d.id=uid();decks.unshift(d);});
-    library();
+    saveDecks();
+    library(); showToast(`${valid.length}件読み込みました`);
   };
 }
 function exportDeck(d){
@@ -634,122 +1364,281 @@ function exportDeck(d){
 }
 filein.onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();
   r.onload=()=>{try{const raw=JSON.parse(r.result);
-    if(!raw||typeof raw!=='object'||Array.isArray(raw))throw new Error("デッキ形式ではありません");
-    if(!raw.flashText)throw new Error("flashTextがありません");
+    if(!raw||typeof raw!=='object'||Array.isArray(raw))throw new Error("教材データの形式ではありません");
+    if(!raw.flashText)throw new Error("本文（flashText）がありません");
     const d=normalizeDeck(raw);d.id=uid();
-    decks.unshift(d);library();}
-    catch(err){alert("読み込めませんでした: "+err.message);}};
+    decks.unshift(d);saveDecks();library();showToast('1件読み込みました');}
+    catch(err){showToast('読み込めませんでした：'+friendlyErr(err));}};
   r.readAsText(f);filein.value="";};
 
 // ====== READER ======
-function startReading(){
+let readerKey=null, wakeLockObj=null, staticMode=false;
+const prefersReduced = !!(window.matchMedia && matchMedia('(prefers-reduced-motion:reduce)').matches);
+async function requestWake(){ try{ if(navigator.wakeLock && !wakeLockObj) wakeLockObj=await navigator.wakeLock.request('screen'); }catch(_){ } }
+function releaseWake(){ try{ wakeLockObj && wakeLockObj.release(); }catch(_){} wakeLockObj=null; }
+function onVisWake(){ if(document.visibilityState==='visible' && playing) requestWake(); }
+// リスナー/ロックの後始末（SPA遷移・stop時に必ず呼ぶ＝多重登録/リーク防止）
+function teardownReader(){
+  if(readerKey){ document.removeEventListener('keydown',readerKey); readerKey=null; }
+  document.removeEventListener('visibilitychange',onVisWake);
+  releaseWake();
+}
+function startReading(opts){
+  teardownReader();
   const built=buildChunks(cur.flashText);
-  chunks=built.chunks;sentStarts=built.sentStarts;idx=0;playing=true;
+  chunks=built.chunks;sentStarts=built.sentStarts;
+  idx=Math.max(0, Math.min(Math.max(0,chunks.length-1), (opts&&opts.from)|0));
+  staticMode=false;
+  const autostart=!prefersReduced;          // 動きの低減ONなら手動送り既定（自動進行オフ）
+  playing=autostart;
   const maxSeek=Math.max(0,chunks.length-1);
-  screen.innerHTML=`
+  screenEl.innerHTML=`
   <div class="screen reader">
-    <div class="rtop"><span>${esc(cur.title)}</span><button class="xbtn" id="x">✕</button></div>
+    <div class="rtop">
+      <span>${esc(cur.title)}</span>
+      <button class="btn sm ghost" id="rstatic" aria-pressed="false" title="自動送りをやめて全文を表示">全文表示</button>
+      <button class="xbtn" id="x" aria-label="リーダーを閉じる"><span aria-hidden="true">✕</span></button>
+    </div>
     <div class="progress"><i id="bar"></i></div>
-    <div class="stage"><div class="guide t"></div><div id="flash" class="flash"></div><div class="guide b"></div></div>
+    <div class="stage" id="stage" tabindex="0" role="button" aria-label="タップまたはSpaceで一時停止・再開">
+      <div class="guide" aria-hidden="true"></div>
+      <div id="flash" class="flash" aria-hidden="true"></div>
+      <div class="pausedovl" aria-hidden="true">❙❙ タップ / Space で再開</div>
+    </div>
+    <div class="sr-only" id="srlive" aria-live="polite"></div>
     <div class="seekwrap">
-      <input type="range" id="seek" min="0" max="${maxSeek}" value="0">
+      <input type="range" id="seek" min="0" max="${maxSeek}" value="${idx}" aria-label="読む位置">
       <div class="pos" id="pos"></div>
     </div>
     <div class="rctrl">
-      <button id="rew" title="前の文へ">◀◀ 巻戻</button>
-      <button id="pp" class="main">一時停止</button>
-      <button id="fwd" title="次の文へ">送り ▶▶</button>
+      <button id="rew" aria-label="前の文へ"><span aria-hidden="true">◀◀</span> 前の文</button>
+      <button id="pp" class="main">${playing?'一時停止':'再生'}</button>
+      <button id="fwd" aria-label="次の文へ">次の文 <span aria-hidden="true">▶▶</span></button>
     </div>
-    <button class="btn ghost" id="restart" style="margin-top:10px;">↺ 最初から</button>
-    <div class="hint">画面タップで一時停止／再開・◀◀▶▶で文単位移動・バーでシーク</div>
+    <button class="btn ghost block" id="restart">↺ 最初から</button>
+    <div class="hint">画面タップ／Space で一時停止・再開。◀◀▶▶ は文の頭出し、下のバーで好きな位置へ。
+      <span class="sr-only">キーボード: スペースで再生／一時停止、左右キーで文の頭出し、上下キーで速度、Homeで最初から、Escで終了。</span></div>
   </div>`;
-  document.getElementById('x').onclick=()=>{stop();deckDetail();};
+  const stage=document.getElementById('stage');
+  document.getElementById('x').onclick=exitReader;
   document.getElementById('pp').onclick=togglePlay;
   document.getElementById('rew').onclick=()=>navSentence(-1);
   document.getElementById('fwd').onclick=()=>navSentence(1);
   document.getElementById('restart').onclick=restartReading;
   document.getElementById('seek').oninput=ev=>seekTo(+ev.target.value);
-  document.querySelector('.stage').onclick=togglePlay;
-  countdown(3);
+  document.getElementById('rstatic').onclick=staticReader;
+  // ポインタ操作: タップ(移動<10px)=再生/停止、横スワイプ(>40px)=文移動。マウス/タッチ共通。
+  let px=0,py=0,down=false;
+  stage.addEventListener('pointerdown',e=>{px=e.clientX;py=e.clientY;down=true;});
+  stage.addEventListener('pointerup',e=>{ if(!down)return; down=false;
+    if(e.target.closest('button,input,a'))return;
+    const dx=e.clientX-px, dy=e.clientY-py;
+    if(Math.abs(dx)>40 && Math.abs(dx)>Math.abs(dy)) navSentence(dx<0?1:-1);
+    else if(Math.abs(dx)<10 && Math.abs(dy)<10) togglePlay();
+  });
+  // キーボード（textarea/input中は無効）
+  readerKey=function(e){
+    if(/^(INPUT|TEXTAREA|SELECT)$/.test((e.target&&e.target.tagName)||'')) return;
+    switch(e.key){
+      case ' ': case 'Spacebar': e.preventDefault(); togglePlay(); break;
+      case 'ArrowLeft': e.preventDefault(); navSentence(-1); break;
+      case 'ArrowRight': e.preventDefault(); navSentence(1); break;
+      case 'ArrowUp': e.preventDefault(); setSpeed(speed+1); break;
+      case 'ArrowDown': e.preventDefault(); setSpeed(speed-1); break;
+      case 'Home': e.preventDefault(); restartReading(); break;
+      case 'Escape': e.preventDefault(); exitReader(); break;
+    }
+  };
+  document.addEventListener('keydown',readerKey);
+  document.addEventListener('visibilitychange',onVisWake);
+  paint(); setPP(); setPaused(!playing);
+  try{ stage.focus({preventScroll:true}); }catch(_){ stage.focus(); }
+  // Web書体の読込が遅れると寸法がズレるため、読込完了で一度だけ再フィット（自動再生中はtickが直す）
+  if(document.fonts&&document.fonts.ready){ document.fonts.ready.then(()=>{ const ff=document.getElementById('flash'); if(ff&&!playing) paint(); }); }
+  if(autostart){ requestWake(); countdown(3); }
 }
-function setPP(){const pp=document.getElementById('pp');if(pp)pp.textContent=playing?'一時停止':'再開';}
+function exitReader(){ noteRead(cur&&cur.id, idx); stop(); deckDetail(); }
+function setSpeed(v){ speed=Math.max(1,Math.min(10,v|0)); paint(); }
+function setPaused(p){ const s=document.getElementById('stage'); if(s)s.classList.toggle('paused',p); }
+// SR向け: 停止時に「断片」でなく現在の文全体を1回だけ読み上げる（自動再生中は読み上げない）
+function currentSentenceText(){
+  const s=sentenceOf(idx), a=sentStarts[s], b=(sentStarts[s+1]!==undefined)?sentStarts[s+1]:chunks.length;
+  return chunks.slice(a,b).join('');
+}
+function announceSentence(){ const el=document.getElementById('srlive'); if(el) el.textContent=currentSentenceText(); }
+function setPP(){const pp=document.getElementById('pp');if(pp)pp.textContent=playing?'一時停止':'再生';}
 function sentenceOf(i){let s=0;for(let k=0;k<sentStarts.length;k++){if(sentStarts[k]<=i)s=k;else break;}return s;}
 // 現在位置を描画するだけ（idxは進めない）。再生/一時停止/シーク/ナビで共用。
+// 塊全体がステージ幅に収まるよう font-size を1パスで縮小（中央寄せは flex に任せる）。
+function fitFlash(f){
+  const stage=f.parentElement; if(!stage)return;
+  f.style.fontSize=''; f.style.transform='';     // CSS既定(--flash-fs)へ戻し、旧translateを除去
+  const avail=Math.max(40, stage.clientWidth-24);
+  const w=f.scrollWidth;
+  if(w>avail && w>0){
+    const cur=parseFloat(getComputedStyle(f).fontSize)||40;
+    f.style.fontSize=Math.max(20, Math.floor(cur*avail/w))+'px';
+  }
+}
 function paint(){
   const f=document.getElementById('flash'),bar=document.getElementById('bar'),
         sk=document.getElementById('seek'),pos=document.getElementById('pos');
   if(!f)return;
   f.className='flash';f.innerHTML=renderFlash(chunks[idx]||'');
-  f.style.animation='none';f.offsetHeight;f.style.animation='fade .12s ease';
+  fitFlash(f);
   const n=chunks.length;
   if(bar)bar.style.width=(n?((idx+1)/n*100):0)+'%';
   if(sk&&document.activeElement!==sk)sk.value=idx;
-  if(pos)pos.textContent=n?`語 ${Math.min(idx+1,n)}/${n} ・ 文 ${sentenceOf(idx)+1}/${sentStarts.length}`:'本文なし';
+  if(pos)pos.textContent=n?`${Math.min(idx+1,n)}/${n}（コマ）・ 文 ${sentenceOf(idx)+1}/${sentStarts.length} ・ 速度 ${speed}`:'本文なし';
 }
 function countdown(n){const f=document.getElementById('flash');if(!f)return;
-  if(n===0){paint();timer=setTimeout(tick,delayFor(chunks[idx]||''));idx++;return;}
-  f.className='countdown';f.textContent=n;timer=setTimeout(()=>{countdown(n-1);},800);}
-function tick(){if(!playing)return;const f=document.getElementById('flash');if(!f)return;
-  if(idx>=chunks.length){playing=false;setPP();timer=setTimeout(afterFlash,450);return;}
+  if(!playing){ paint(); return; }
+  if(n<=0){ tick(); return; }
+  f.className='flash countdown';
+  f.innerHTML=`<span class="pre"></span><span class="focus">${n}</span><span class="post"></span>`;
+  fitFlash(f);
+  timer=setTimeout(()=>countdown(n-1),700);}
+function tick(){
+  if(!playing)return;const f=document.getElementById('flash');if(!f)return;
+  if(idx>=chunks.length){playing=false;setPP();setPaused(true);releaseWake();timer=setTimeout(afterFlash,450);return;}
   paint();const d=delayFor(chunks[idx]);idx++;timer=setTimeout(tick,d);}
-function togglePlay(){if(!chunks.length)return;playing=!playing;setPP();
-  if(playing)tick();else clearTimeout(timer);}
+function togglePlay(){
+  if(!chunks.length)return;
+  if(!playing && idx>=chunks.length) idx=0;   // 末尾で再生したら頭出し
+  playing=!playing;setPP();setPaused(!playing);
+  if(playing){requestWake();tick();}else{clearTimeout(timer);releaseWake();announceSentence();}}
 // 文単位の巻き戻し/送り。常に一時停止して現在地を表示する。
 function navSentence(dir){
-  clearTimeout(timer);playing=false;setPP();
+  clearTimeout(timer);playing=false;setPP();setPaused(true);
   const s=sentenceOf(idx);
   let target;
   if(dir>0){ target = (sentStarts[s+1]!==undefined)?sentStarts[s+1]:chunks.length-1; }
   else { target = (idx>sentStarts[s])?sentStarts[s]:sentStarts[Math.max(0,s-1)]; }
-  idx=Math.max(0,Math.min(chunks.length-1,target));paint();
+  idx=Math.max(0,Math.min(chunks.length-1,target));paint();announceSentence();
 }
-function seekTo(i){clearTimeout(timer);playing=false;setPP();
-  idx=Math.max(0,Math.min(chunks.length-1,i|0));paint();}
-function restartReading(){clearTimeout(timer);idx=0;playing=true;setPP();tick();}
+function seekTo(i){clearTimeout(timer);playing=false;setPP();setPaused(true);
+  idx=Math.max(0,Math.min(chunks.length-1,i|0));paint();announceSentence();}
+function restartReading(){clearTimeout(timer);idx=0;playing=true;setPP();setPaused(false);requestWake();tick();}
+// 全文を静的に表示（RSVPを任意化。読字/認知配慮・動きの低減）
+function staticReader(){
+  stop();
+  screenEl.innerHTML=`
+  <div class="screen reader">
+    <div class="rtop"><span>${esc(cur.title)}</span>
+      <button class="btn sm ghost" id="rflash">フラッシュで読む</button>
+      <button class="xbtn" id="x" aria-label="リーダーを閉じる"><span aria-hidden="true">✕</span></button></div>
+    <div class="statictext" tabindex="0">${esc(cur.flashText).replace(/\n/g,'<br>')}</div>
+    <button class="btn block" id="done">${cur.quizStatus==='ready'?'読み終えた → 問題へ':'読み終えた'}</button>
+  </div>`;
+  document.getElementById('x').onclick=()=>{ noteRead(cur.id, Math.max(0,chunks.length-1)); deckDetail(); };
+  document.getElementById('rflash').onclick=()=>startReading();
+  document.getElementById('done').onclick=()=>{ noteRead(cur.id, Math.max(0,chunks.length-1)); if(cur.quizStatus==='ready') startQuiz(); else deckDetail(); };
+}
 function afterFlash(){
+  noteRead(cur.id, Math.max(0,chunks.length-1));
   if(cur.quizStatus==='ready'){startQuiz();}
-  else{screen.innerHTML=`<div class="screen result">
-    <div class="score" style="font-size:40px;">読了 ✓</div>
+  else{screenEl.innerHTML=`<div class="screen result">
+    <div class="score" style="font-size:2.5rem;">読了 ✓</div>
     <div class="rmsg">フラッシュ完了</div>
-    <div class="rsub">このデッキはまだ問題が未セットです。問題を追加すると定着確認ができます。</div>
-    <button class="btn" id="g" style="margin-top:28px;max-width:300px;">AIで問題を生成</button>
-    <button class="btn ghost" id="b" style="max-width:300px;">デッキに戻る</button></div>`;
+    <div class="rsub">この教材はまだ問題が未設定です。問題を追加すると定着を確認できます。</div>
+    <button class="btn block" id="g">AIで問題を作る</button>
+    <button class="btn ghost block" id="b">教材に戻る</button></div>`;
+    focusHeading();
     document.getElementById('b').onclick=deckDetail;
     document.getElementById('g').onclick=async()=>{loading("4択を作成中…");
-      try{cur.quiz=await genQuiz(cur.source||cur.flashText);cur.quizStatus="ready";startQuiz();}
+      try{cur.quiz=await genQuiz(cur.source||cur.flashText);cur.quizStatus="ready";saveDecks();startQuiz();}
       catch(e){deckDetail();}};
   }
 }
 
 // ====== QUIZ ======
-function startQuiz(){quizI=0;score=0;renderQuiz();}
-function renderQuiz(){answered=false;const q=cur.quiz[quizI];
-  screen.innerHTML=`<div class="screen">
-    <div class="qhead">まとめ問題</div>
-    <div class="qcount">${esc(cur.title)} ・ ${quizI+1} / ${cur.quiz.length}問</div>
-    <div class="question">${esc(q.q)}</div>
-    <div id="opts">${q.o.map((o,i)=>`<button class="opt" data-i="${i}">${esc(o)}</button>`).join('')}</div>
-    <div id="feedslot"></div></div>`;
-  document.getElementById('opts').onclick=e=>{const b=e.target.closest('.opt');if(!b||answered)return;answered=true;
-    const pick=+b.dataset.i,q=cur.quiz[quizI];
-    document.querySelectorAll('.opt').forEach((el,i)=>{if(i===q.a)el.classList.add('correct');else if(i===pick)el.classList.add('wrong');else el.classList.add('dim');});
-    if(pick===q.a)score++;const last=quizI===cur.quiz.length-1;
-    document.getElementById('feedslot').innerHTML=`<div class="feed"><b>${pick===q.a?'正解！':'おしい'}</b> ${esc(q.e)}</div>
-      <button class="btn" id="next">${last?'結果を見る':'次の問題'}</button>`;
-    document.getElementById('next').onclick=()=>{if(last)result();else{quizI++;renderQuiz();}};};
+// opts.only = 復習する元インデックス配列（未指定なら全問）。各設問に元インデックス _oi を持たせる。
+function startQuiz(opts){
+  clearTimeout(timer); teardownReader();   // リーダーから来た場合のリスナー/タイマー後始末
+  const only=opts&&Array.isArray(opts.only)?opts.only:null;
+  activeQuiz = only ? only.map(i=>Object.assign({},cur.quiz[i],{_oi:i}))
+                    : cur.quiz.map((q,i)=>Object.assign({},q,{_oi:i}));
+  quizI=0;score=0;wrongThis=[];
+  if(!activeQuiz.length){ deckDetail(); return; }
+  renderQuiz();
 }
-function result(){const total=cur.quiz.length,pct=score/total;
-  const msg=pct===1?'完璧。定着しています。':pct>=.5?'いい感じ。あと一歩。':'ここを重点復習に。';
-  const sub=pct===1?'フラッシュで入れて、問題で出す。このループが効いています。':'間違えた論点だけもう一度フラッシュすると効率的です。';
-  screen.innerHTML=`<div class="screen result"><div class="score">${score}<small> / ${total}</small></div>
-    <div class="rmsg">${msg}</div><div class="rsub">${sub}</div>
-    <button class="btn" id="again" style="margin-top:30px;max-width:300px;">もう一度学習</button>
-    <button class="btn ghost" id="back" style="max-width:300px;">ライブラリへ</button></div>`;
-  document.getElementById('again').onclick=startReading;
+const MK_OK='○', MK_NG='✕';
+function renderQuiz(){
+  answered=false;const q=activeQuiz[quizI];const total=activeQuiz.length;
+  screenEl.innerHTML=`<div class="screen quiz">
+    <div class="qhead" tabindex="-1">まとめ問題</div>
+    <div class="qcount">${esc(cur.title)} ・ ${quizI+1} / ${total}問</div>
+    <div class="qprog"><i style="width:${Math.round(quizI/total*100)}%"></i></div>
+    <div class="question">${esc(q.q)}</div>
+    <div id="opts" role="group" aria-label="選択肢">${q.o.map((o,i)=>o===''?'':`<button class="opt" data-i="${i}"><span class="mk" aria-hidden="true"></span><span>${esc(o)}</span></button>`).join('')}</div>
+    <div id="feedslot" aria-live="polite"></div></div>`;
+  focusHeading();
+  const live=q.o.filter(o=>o!=='').length;   // 空paddingは描画しない
+  const pick=i=>answer(i);
+  document.getElementById('opts').onclick=e=>{const b=e.target.closest('.opt');if(!b||answered)return;pick(+b.dataset.i);};
+  // PCの数字キー（実在する選択肢数まで）
+  document.onkeydown=e=>{ if(answered)return; const n=parseInt(e.key,10); if(n>=1&&n<=live){e.preventDefault();pick(n-1);} };
+}
+function answer(pick){
+  if(answered)return; answered=true; document.onkeydown=null;
+  const q=activeQuiz[quizI], correct=pick===q.a;
+  if(correct)score++; else wrongThis.push(q._oi);
+  document.querySelectorAll('.opt').forEach((el,i)=>{
+    const mk=el.querySelector('.mk'); el.setAttribute('aria-disabled','true');
+    if(i===q.a){el.classList.add('correct'); if(mk)mk.textContent=MK_OK;}
+    else if(i===pick){el.classList.add('wrong'); if(mk)mk.textContent=MK_NG;}
+    else el.classList.add('dim');
+  });
+  const last=quizI===activeQuiz.length-1;
+  const head=correct?'<b>正解</b>':'<b>正解はこちら</b>';
+  const srcHtml=q._src?`<div class="src">本文の根拠：${esc(q._src)}</div>`:'';
+  document.getElementById('feedslot').innerHTML=
+    `<div class="feed" role="alert"><span class="sr-only">${correct?'正解':'不正解'}。</span>${head} ${esc(q.e||'')}${correct?'':`<br>正答：${esc(q.o[q.a]||'')}`}${srcHtml}</div>
+     <button class="btn block" id="next">${last?'結果を見る':'次の問題'}</button>`;
+  const nx=document.getElementById('next');
+  nx.onclick=()=>{ if(last)result(); else{quizI++;renderQuiz();} };
+  try{ nx.scrollIntoView({block:'nearest'}); }catch(_){}
+}
+function result(){
+  const total=activeQuiz.length, pct=total?score/total:0;
+  // 記憶レイヤへ保存（背骨JSONとは別キー）。誤答→翌日 / 全問正解→3日後の簡易due。
+  const prev=getProg(cur.id)||{};
+  setProg(cur.id,{
+    attempts:(prev.attempts||0)+1, lastScore:score, bestScore:Math.max(prev.bestScore||0,score),
+    total, lastStudiedAt:nowISO(), wrongIdx:wrongThis.slice(),
+    due: (score===total)?addDays(nowISO(),3):addDays(nowISO(),1)
+  });
+  const msg = pct===1?'完璧。定着しています。' : pct>=.8?'よく入っています。' : pct>=.5?'いい感じ。あと一歩。' : 'ここを重点復習に。';
+  let sub = pct===1?'フラッシュで入れて、問題で出す。このループが効いています。'
+          : '間違えた問題だけ、もう一度。能動的に思い出すほど定着します。';
+  // 低スコア時は外した論点を1-2件名指し
+  if(pct<.5 && wrongThis.length){
+    const names=wrongThis.slice(0,2).map(i=>(cur.quiz[i]&&cur.quiz[i].q||'').slice(0,18)).filter(Boolean);
+    if(names.length) sub='とくに：'+names.map(n=>'「'+n+'…」').join(' / ');
+  }
+  const reviewBtn = wrongThis.length ? `<button class="btn block" id="rev">間違えた ${wrongThis.length}問 だけ復習</button>` : '';
+  screenEl.innerHTML=`<div class="screen result">
+    <div class="score">${score}<small> / ${total}</small></div>
+    <div class="rmsg" tabindex="-1" role="status" aria-live="polite">${msg}</div>
+    <div class="rsub">${esc(sub)}</div>
+    ${reviewBtn}
+    <button class="btn ${wrongThis.length?'ghost ':''}block" id="again">もう一度（全問）</button>
+    <button class="btn ghost block" id="deck">教材に戻る</button>
+    <button class="btn ghost block" id="back">ライブラリへ</button>
+  </div>`;
+  focusHeading();
+  if(wrongThis.length) document.getElementById('rev').onclick=()=>{ const only=wrongThis.slice(); startQuiz({only}); };
+  document.getElementById('again').onclick=()=>startQuiz();
+  document.getElementById('deck').onclick=deckDetail;
   document.getElementById('back').onclick=library;
 }
 
-function stop(){playing=false;clearTimeout(timer);}
+function stop(){playing=false;clearTimeout(timer);teardownReader();document.onkeydown=null;}
+// SPA遷移後にフォーカスを主見出しへ移す（WCAG 2.4.3）
+function focusHeading(){
+  const h=screenEl.querySelector('.dtitle,.lead,.qhead,.rmsg,.statictext');
+  if(h){ h.setAttribute('tabindex','-1'); try{h.focus({preventScroll:true});}catch(_){h.focus();} }
+}
 library();
 </script>
 </body>
