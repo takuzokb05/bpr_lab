@@ -1,6 +1,6 @@
 # Library Catalog
 
-最終更新: 2026-05-31
+最終更新: 2026-06-01
 
 ## 凡例
 - 状態: 未読 / 既読 / 要精読
@@ -139,12 +139,43 @@
 
 ---
 
+---
+
+## 2026-06-01 収集分（18件収集 → 15件SIGNAL）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 073 | [2026-06-01_073](articles/2026-06-01_073_Claude-Code-weekly-limit-50pct-increase-July13-all-plans.md) | Claude Code 週次利用制限50%増加 — 全プラン即時適用・7月13日まで | claude-code | 未読 | #web-signal #urgent |
+| 074 | [2026-06-01_074](articles/2026-06-01_074_builder-io-50-Claude-Code-tips-best-practices-daily-use.md) | builder.io 50 Claude Code Tips and Best Practices For Daily Use | claude-code | 未読 | #web-signal |
+| 075 | [2026-06-01_075](articles/2026-06-01_075_Claude-Code-subagents-parallel-workflows-50-70pct-reduction-2026.md) | Claude Code Subagents 2026 実践ガイド — 並列ワークフローで50-70%時間削減 | claude-code | 未読 | #web-signal |
+| 076 | [2026-06-01_076](articles/2026-06-01_076_OpenAI-GPT-5-5-release-benchmarks-pricing-Terminal-Bench-82pct.md) | OpenAI GPT-5.5 正式リリース — Terminal-Bench 82.7%・$5/$30 per 1M tokens | ai-news | 未読 | #web-signal |
+| 077 | [2026-06-01_077](articles/2026-06-01_077_Google-Gemini-3-5-Flash-GA-Google-IO-2026-benchmark-pricing.md) | Google Gemini 3.5 Flash GA — Google I/O 2026・Terminal-Bench 76.2% | ai-news | 未読 | #web-signal |
+| 078 | [2026-06-01_078](articles/2026-06-01_078_Japan-AI-guideline-v1-2-METI-agent-HITL-traceability-2026.md) | 日本AI事業者ガイドライン1.2版 — AIエージェント・HITL義務化・学習データトレーサビリティ強化 | ai-news | 未読 | #web-signal |
+| 079 | [2026-06-01_079](articles/2026-06-01_079_Claude-Code-June15-pricing-after-decision-table-programmatic-cost.md) | Claude Code June 15 課金変更 — プラン別コスト意思決定テーブル完全版 | claude-ecosystem | 未読 | #web-signal #urgent |
+| 080 | [2026-06-01_080](articles/2026-06-01_080_firecrawl-best-claude-code-skills-2026-curated-categories.md) | Best Claude Code Skills 2026 — firecrawl.dev カテゴリ別厳選リスト | claude-code | 未読 | #web-signal |
+| 081 | [2026-06-01_081](articles/2026-06-01_081_awesome-claude-skills-github-10k-community-curated-2026.md) | awesome-claude-skills GitHub — コミュニティ10,006件スキルキュレーション 2026年6月 | claude-code | 未読 | #web-signal |
+| 082 | [2026-06-01_082](articles/2026-06-01_082_Claude-Code-Extensions-MCP-Skills-Agents-Hooks-decision-guide-morphllm.md) | Claude Code Extensions 完全ガイド 2026 — MCP・Skills・Agents・Hooks の使い分け | claude-code | 未読 | #web-signal |
+| 083 | [2026-06-01_083](articles/2026-06-01_083_Claude-Skills-complete-guide-ja-f2t-usecase-30min-to-30sec.md) | Claude Skills 完全ガイド（日本語）— 使い方・事例・30分→30秒の業務効率化 | claude-code | 未読 | #web-signal |
+| 084 | [2026-06-01_084](articles/2026-06-01_084_Claude-Code-Skills-full-guide-2026-team-deployment-Qiita-nogataka.md) | Claude Code Skills 完全活用ガイド 2026 — チーム展開・スキル育成メソッド（Qiita） | claude-code | 未読 | #web-signal |
+| 085 | [2026-06-01_085](articles/2026-06-01_085_AI-trading-agent-3-months-monitoring-LLM-real-performance-Medium.md) | AIトレーディングエージェント3ヶ月監視レポート — LLMの実取引パフォーマンス分析 | ai-trading | 未読 | #web-signal |
+| 086 | [2026-06-01_086](articles/2026-06-01_086_Japan-digital-government-LLM-selection-tsuzumi2-PLaMo2-ELYZA.md) | デジタル庁 ガバメントAI 国産LLM選定 — tsuzumi 2・PLaMo 2.0・ELYZA 3モデル採用 | ai-news | 未読 | #web-signal |
+| 087 | [2026-06-01_087](articles/2026-06-01_087_Claude-Agent-SDK-tutorial-serpapi-build-agent-June15-billing.md) | Build an AI Agent with Claude Agent SDK — SerpApi Tutorial 2026 + June 15 課金解説 | claude-ecosystem | 未読 | #web-signal |
+
+### NOISEとして除外
+| ファイル | 理由 |
+|---|---|
+| inbox/web/2026-06-01_014_Claude-Subscriptions-課金分離の全貌... | 課金変更記事は既に007/067/079と3件存在、独立分析価値あるが重複感強い |
+| inbox/web/2026-06-01_015_LLM-Updates-Today-June-2026... | モデルトラッカーページ、深度不足・定期更新ページにつき個別記事化に不向き |
+| inbox/web/2026-06-01_017_LLM-TradeBot-GitHub... | GitHubリポジトリリンクのみ、記事コンテンツなし・具体的技術情報未確認 |
+
+---
+
 ## ドメイン別統計（累計）
 
-| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 累計 |
-|---|---|---|---|---|---|---|
-| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 29件 |
-| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 15件 |
-| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 15件 |
-| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 13件 |
-| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **72件** |
+| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 累計 |
+|---|---|---|---|---|---|---|---|
+| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 37件 |
+| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 17件 |
+| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 16件 |
+| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 17件 |
+| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **87件** |
