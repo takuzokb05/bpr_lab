@@ -5,14 +5,9 @@ import { CATEGORY_LABELS, type Persona, type PersonaCategory } from "@/lib/types
 import { Avatar } from "./Avatar";
 import { Check, Search, ChevronDown, ChevronRight, Settings2 } from "lucide-react";
 
-const CATEGORY_ORDER: PersonaCategory[] = [
-  "facilitation",
-  "thinking",
-  "founders",
-  "philosophers",
-  "chair",
-  "scribe",
-];
+// ピッカーに出すのは「議論する人＝パネリスト」だけ。司会(facilitation)・議長(chair)は
+// 進行の固定役として自動で含めるためトグル表示しない。書記(scribe)は発言しない死に役なので除外。
+const CATEGORY_ORDER: PersonaCategory[] = ["thinking", "founders", "philosophers"];
 
 export function PersonaPicker({
   personas,
@@ -20,13 +15,16 @@ export function PersonaPicker({
   onToggle,
   disabled,
   onManage,
+  autoRoles = [],
 }: {
   personas: Persona[];
   selected: Set<string>;
   onToggle: (id: string) => void;
   disabled: boolean;
-  // 指定時のみ「管理」ボタンを出す。
+  // 指定時のみ「管理」ボタンを出す（readonly では page 側が渡さない＝非表示）。
   onManage?: () => void;
+  // 自動で含める進行役（司会・議長）。固定行で明示するだけでトグルはしない。
+  autoRoles?: Persona[];
 }) {
   const [query, setQuery] = useState("");
   const [activeTags, setActiveTags] = useState<Set<string>>(new Set());
@@ -82,7 +80,7 @@ export function PersonaPicker({
             編成
           </h2>
           <p className="mt-1 text-xs text-[var(--color-ink-muted)]">
-            {selected.size} 名を選択中
+            パネリスト {selected.size} 名
           </p>
         </div>
         {onManage && (
@@ -95,6 +93,23 @@ export function PersonaPicker({
           </button>
         )}
       </div>
+
+      {/* 進行役（固定・自動で含む）。司会＝オープニング、議長＝議事録。トグル不可。 */}
+      {autoRoles.length > 0 && (
+        <div className="flex flex-col gap-1 rounded-md border border-dashed border-[var(--color-line)] px-2.5 py-2">
+          <span className="text-[11px] font-medium uppercase tracking-wider text-[var(--color-ink-muted)]">
+            進行役（自動）
+          </span>
+          <div className="flex flex-wrap gap-x-3 gap-y-1">
+            {autoRoles.map((p) => (
+              <span key={p.id} className="flex items-center gap-1.5 text-xs text-[var(--color-ink)]">
+                <Avatar monogram={p.monogram} accent={p.accent} size={18} />
+                {p.display_name}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* 検索 */}
       <div className="relative">

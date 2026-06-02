@@ -183,6 +183,8 @@ def llm_status() -> dict:
         # フロントの provider 選択用。Web 検索（調査役）は anthropic のみ対応。
         "providers": list(PROVIDERS),
         "research_provider": "anthropic",
+        # 編成 CRUD が書き込み禁止か（共有インスタンス）。フロントは「管理」UI を隠す。
+        "readonly": readonly_mode(),
     }
 
 

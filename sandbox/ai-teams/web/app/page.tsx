@@ -61,7 +61,11 @@ const MATERIAL_FILE_ACCEPT = ".txt,.md,.csv,.json";
 // "paused" = 議場開放（floor-open）。本編後に自動 synthesis せず入力待ちで停止した状態。
 type Status = "idle" | "running" | "paused" | "done" | "error";
 
-const DEFAULT_SELECTED = ["moderator", "logic", "idea", "empathy", "chair"];
+// 司会(facilitation)・議長(chair)は進行の固定役として自動で含める（ユーザーは選ばない）。
+// 書記(scribe)は発言しないので編成から除外。ピッカーで選ぶのはパネリストだけ。
+const STRUCTURAL_CATS = ["facilitation", "chair"];
+// 既定で選択するパネリスト（構造役は自動付与するので含めない）。
+const DEFAULT_SELECTED = ["logic", "idea", "empathy"];
 
 // 楽観的エコー用の負の turn_id を払い出す（サーバ採番は 0 以上なので衝突しない）。
 let echoSeq = -1;
@@ -164,6 +168,18 @@ export default function Home() {
     return m;
   }, [personas]);
 
+  // 進行役（司会・議長）= 各カテゴリの先頭ペルソナ。常に自動で編成へ含める（ユーザーは選ばない）。
+  const autoRoles = useMemo(
+    () =>
+      STRUCTURAL_CATS.map((c) => personas.find((p) => p.category === c)).filter(
+        (p): p is Persona => Boolean(p)
+      ),
+    [personas]
+  );
+  const autoRoleIds = useMemo(() => autoRoles.map((p) => p.id), [autoRoles]);
+  // 編成 CRUD が書込可能か（readonly な共有インスタンスでは「管理」UI を出さない）。
+  const canManage = !(health?.readonly ?? false);
+
   const synthesis = useMemo(
     () => turns.find((t) => t.phase === "synthesis") ?? null,
     [turns]
@@ -222,8 +238,13 @@ export default function Home() {
       return;
     }
     setSelectedPresetId(preset.id);
-    const known = new Set(personas.map((p) => p.id));
-    setSelected(new Set(preset.persona_ids.filter((id) => known.has(id))));
+    // プリセットの persona_ids からパネリストだけ採用（司会・議長・書記は自動付与/除外）。
+    const byId = new Map(personas.map((p) => [p.id, p]));
+    const panelistIds = preset.persona_ids.filter((id) => {
+      const p = byId.get(id);
+      return p && !STRUCTURAL_CATS.includes(p.category) && p.category !== "scribe";
+    });
+    setSelected(new Set(panelistIds));
     setRoundsPerPhase(preset.rounds_per_phase);
     setRedTeam(preset.red_team);
     setRedTeamId(preset.red_team_id ?? null);
@@ -326,7 +347,9 @@ export default function Home() {
     const topic = topicInput.trim();
     if (!topic || selected.size === 0 || active) return;
 
-    const ordered = personas.filter((p) => selected.has(p.id)).map((p) => p.id);
+    // 進行役（司会・議長）を先頭に自動付与し、続けて選択パネリスト。重複は除く。
+    const panelistIds = personas.filter((p) => selected.has(p.id)).map((p) => p.id);
+    const ordered = Array.from(new Set([...autoRoleIds, ...panelistIds]));
     const ctrl = new AbortController();
     abortRef.current = ctrl;
 
@@ -548,7 +571,8 @@ export default function Home() {
             selected={selected}
             onToggle={toggle}
             disabled={active}
-            onManage={() => setManageOpen(true)}
+            autoRoles={autoRoles}
+            onManage={canManage ? () => setManageOpen(true) : undefined}
           />
         </aside>
 

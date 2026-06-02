@@ -304,6 +304,8 @@ export interface Health {
   // 対応プロバイダ（anthropic/openai/google）。Web 検索は research_provider のみ対応。
   providers?: string[];
   research_provider?: string;
+  // 編成 CRUD が書き込み禁止か（共有インスタンス）。true なら「管理」UI を隠す。
+  readonly?: boolean;
 }
 
 export async function fetchHealth(): Promise<Health> {
