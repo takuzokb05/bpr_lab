@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import {
   cancelSession,
   closeSession,
@@ -95,6 +95,9 @@ export default function Home() {
   const [saveOpen, setSaveOpen] = useState(false);
 
   const abortRef = useRef<AbortController | null>(null);
+  // 入力欄（議題／追い質問の兼用コンポーザー）。内容に応じて高さを自動可変にし、送信前に
+  // 入力全体を見返せるようにする（max-h まで伸び、それ以上はスクロール）。
+  const composerRef = useRef<HTMLTextAreaElement | null>(null);
 
   const loadPersonas = () => {
     fetchPersonas()
@@ -232,6 +235,15 @@ export default function Home() {
     // loadIntake は最新クロージャを使うため deps から除外（topicInput 変化で再設定される）。
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [intakeEnabled, topicInput, active]);
+
+  // 入力欄の高さを内容に追従させる（送信前の見返し用）。一旦 0 に潰してから scrollHeight を測り、
+  // CSS の max-h でクランプ＋それ以上はスクロール。topicInput が変わるたびに再計算。
+  useLayoutEffect(() => {
+    const el = composerRef.current;
+    if (!el) return;
+    el.style.height = "0px";
+    el.style.height = `${el.scrollHeight}px`;
+  }, [topicInput]);
 
   // 準備フェーズ: ファイル添付（.txt/.md/.csv/.json）をクライアント側で読み、資料欄に取り込む。
   // PDF/Office は対象外。複数選択時は区切って連結。読み込み後は input をリセットして同じ
@@ -710,6 +722,7 @@ export default function Home() {
             )}
             <div className="flex items-end gap-2">
               <textarea
+                ref={composerRef}
                 value={topicInput}
                 onChange={(e) => setTopicInput(e.target.value)}
                 onKeyDown={onComposerKeyDown}
@@ -722,7 +735,7 @@ export default function Home() {
                     : "議題を入力（⌘/Ctrl+Enter で開始）"
                 }
                 disabled={active && !canFollowup}
-                className="max-h-32 min-h-[40px] flex-1 resize-none rounded-md border border-[var(--color-line)] bg-[var(--color-paper)] px-3 py-2 text-sm outline-none focus:border-[var(--color-accent)] disabled:opacity-50"
+                className="max-h-[40vh] min-h-[40px] flex-1 resize-none overflow-y-auto rounded-md border border-[var(--color-line)] bg-[var(--color-paper)] px-3 py-2 text-sm leading-relaxed outline-none focus:border-[var(--color-accent)] disabled:opacity-50"
               />
               {active ? (
                 <>
