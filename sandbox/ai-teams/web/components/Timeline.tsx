@@ -4,8 +4,8 @@ import { type Turn, formatTurnTime } from "@/lib/types";
 import { Avatar } from "./Avatar";
 import { NamePlate } from "./NamePlate";
 import { Markdown } from "./Markdown";
-import { Search, Globe, Users } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { Search, Globe, Users, ChevronDown } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 interface PersonaLook {
   accent: string;
@@ -69,65 +69,10 @@ export function Timeline({
         {visible.map((t) => {
           const isStreaming = t.turn_id === streamingTurnId;
 
-          // 調査メモ: 調査役（researcher / phase=research）のターンは persona 吹き出しでなく
-          // 無彩色枠の「調査メモ」カードで描く。本文は Markdown＝出典 URL がリンク表示される。
-          // 本文が空のまま検索中なら「調べています…」。
+          // 調査メモ: 調査役（researcher / phase=research）のターン。会議の流れを邪魔しないよう、
+          // 既定はコンパクト1行（検索中はライブ表示）。全文は折り畳み＋右の「調べたこと」に集約。
           if (t.speaker_id === "researcher" || t.phase === "research") {
-            const time = formatTurnTime(t.ts);
-            const searching = t.content === "" && isStreaming;
-            return (
-              <article
-                key={t.turn_id}
-                className="animate-turn-in rounded-md border border-[var(--color-line)] bg-[var(--color-surface)] px-3.5 py-3"
-              >
-                <header className="flex flex-wrap items-center gap-x-2 gap-y-0.5 border-b border-[var(--color-line)] pb-1.5">
-                  <Globe size={14} className="shrink-0 text-[var(--color-ink-muted)]" />
-                  <span className="text-sm font-medium text-[var(--color-ink)]">
-                    調査メモ
-                  </span>
-                  <span
-                    className="text-[10px] font-medium uppercase tracking-wider text-[var(--color-ink-muted)]"
-                  >
-                    Web 検索
-                  </span>
-                  {t.query && (
-                    <span className="min-w-0 max-w-full truncate text-[11px] text-[var(--color-ink-muted)]">
-                      「{t.query}」
-                    </span>
-                  )}
-                  {time && (
-                    <>
-                      <span className="text-[var(--color-line)]" aria-hidden="true">
-                        ・
-                      </span>
-                      <span className="font-mono text-[11px] text-[var(--color-ink-muted)]">
-                        {time}
-                      </span>
-                    </>
-                  )}
-                </header>
-                {searching ? (
-                  <p className="mt-2 flex items-start gap-2 text-sm leading-relaxed text-[var(--color-ink-muted)]">
-                    <Search size={13} className="mt-0.5 shrink-0 animate-pulse-soft" />
-                    <span className="min-w-0 [overflow-wrap:anywhere]">
-                      {t.query
-                        ? `「${t.query}」を調べています…（数十秒かかることがあります）`
-                        : "Web で事実を調べています…（数十秒かかることがあります）"}
-                    </span>
-                  </p>
-                ) : (
-                  <div className="mt-2">
-                    <Markdown>{t.content}</Markdown>
-                    {/* 「流れて消える」不安への最小ラベル。詳しい説明と集約は右の「調べたこと」側に集約し、
-                        ここは各ターンで反復しても煩くない短いチップに留める（報道トーンの簡潔さ）。 */}
-                    <p className="mt-2 flex items-center gap-1.5 border-t border-[var(--color-line)] pt-1.5 text-[10px] text-[var(--color-ink-muted)]">
-                      <Users size={11} className="shrink-0" />
-                      全員に共有
-                    </p>
-                  </div>
-                )}
-              </article>
-            );
+            return <ResearchMemo key={t.turn_id} turn={t} isStreaming={isStreaming} />;
           }
 
           // 人間ターン: 右寄せ・アクセント弱背景で「あなた」の発言として描く。
@@ -190,5 +135,67 @@ export function Timeline({
       </div>
       <div ref={endRef} />
     </div>
+  );
+}
+
+/**
+ * タイムライン上の調査メモ。会議の流れを邪魔しないよう既定はコンパクト1行に畳み、全文は
+ * クリックで展開（全文・出典は右の「調べたこと」パネルにも集約済み）。検索中はライブ表示。
+ */
+function ResearchMemo({ turn, isStreaming }: { turn: Turn; isStreaming: boolean }) {
+  const [expanded, setExpanded] = useState(false);
+  const searching = turn.content === "" && isStreaming;
+  const time = formatTurnTime(turn.ts);
+
+  if (searching) {
+    return (
+      <article className="animate-turn-in rounded-md border border-[var(--color-line)] bg-[var(--color-surface)] px-3.5 py-2.5">
+        <p className="flex items-start gap-2 text-sm leading-relaxed text-[var(--color-ink-muted)]">
+          <Search size={13} className="mt-0.5 shrink-0 animate-pulse-soft" />
+          <span className="min-w-0 [overflow-wrap:anywhere]">
+            {turn.query
+              ? `「${turn.query}」を調べています…（数十秒かかることがあります）`
+              : "Web で事実を調べています…（数十秒かかることがあります）"}
+          </span>
+        </p>
+      </article>
+    );
+  }
+
+  return (
+    <article className="animate-turn-in rounded-md border border-[var(--color-line)] bg-[var(--color-surface)] px-3.5 py-2">
+      <button
+        type="button"
+        onClick={() => setExpanded((v) => !v)}
+        className="flex w-full items-center gap-2 text-left"
+      >
+        <Globe size={13} className="shrink-0 text-[var(--color-ink-muted)]" />
+        <span className="min-w-0 flex-1 truncate text-[12px] text-[var(--color-ink-muted)]">
+          調べました：
+          <span className="text-[var(--color-ink)]">「{turn.query ?? "Web 検索"}」</span>
+        </span>
+        {time && (
+          <span className="shrink-0 font-mono text-[10px] text-[var(--color-ink-muted)]">
+            {time}
+          </span>
+        )}
+        <ChevronDown
+          size={12}
+          className={`shrink-0 text-[var(--color-ink-muted)] transition-transform ${
+            expanded ? "rotate-180" : ""
+          }`}
+        />
+      </button>
+      {expanded ? (
+        <div className="mt-2 border-t border-[var(--color-line)] pt-2 [overflow-wrap:anywhere]">
+          <Markdown>{turn.content}</Markdown>
+        </div>
+      ) : (
+        <p className="mt-0.5 flex items-center gap-1 pl-[21px] text-[10px] text-[var(--color-ink-muted)]">
+          <Users size={10} className="shrink-0" />
+          全員に共有・全文は右の「調べたこと」に
+        </p>
+      )}
+    </article>
   );
 }

@@ -279,10 +279,16 @@ class OpenAIClient(LLMClient):
             "messages": self._messages(system, messages),
         }
         if self._local:
-            # 内製（OpenAI 互換の自前サーバ・Ollama/vLLM）。max_completion_tokens/reasoning_effort は
-            # 非対応のことが多いので、古典的な max_tokens + temperature を使う（温度がそのまま効く）。
+            # 内製（OpenAI 互換の自前サーバ・Ollama/vLLM・OpenRouter）。max_completion_tokens/
+            # reasoning_effort は非対応のことが多いので、古典的な max_tokens + temperature を使う。
             params["max_tokens"] = self._max_tokens
             params["temperature"] = temperature
+            # 思考モデル（Kimi K2.6 / DeepSeek V4 Pro 等）は reasoning が max_tokens を食い、可視発言が
+            # 枯れて空ターン化する。OpenRouter の reasoning 制御（extra_body）で抑え、応答の長さ
+            # (verbosity) が可視出力に効くようにする。既定 low。AI_TEAMS_LOCAL_REASONING="" で無効（生挙動）。
+            effort = os.environ.get("AI_TEAMS_LOCAL_REASONING", "low").strip()
+            if effort:
+                params["extra_body"] = {"reasoning": {"effort": effort}}
             return params
         # クラウド OpenAI（GPT-5/o 系は max_completion_tokens・temperature 非対応で reasoning_effort）。
         params["max_completion_tokens"] = self._max_tokens

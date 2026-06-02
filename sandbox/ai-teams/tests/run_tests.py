@@ -806,6 +806,7 @@ def test_local_provider():
         "AI_TEAMS_LOCAL_SEARCH",
         "AI_TEAMS_FORCE_LOCAL",
         "AI_TEAMS_BYOK",
+        "AI_TEAMS_LOCAL_REASONING",
     )
     saved = {k: os.environ.get(k) for k in keys}
     try:
@@ -841,6 +842,10 @@ def test_local_provider():
         p = c._params("sys", [{"role": "user", "content": "hi"}], 0.6)
         check("max_tokens" in p and "max_completion_tokens" not in p, "local は max_tokens を使う")
         check(p.get("temperature") == 0.6, "local は temperature が効く（per-persona）")
+        check(
+            p.get("extra_body", {}).get("reasoning", {}).get("effort") == "low",
+            "local は reasoning=low を既定で送る（思考が出力枠を食う空ターン化を抑制）",
+        )
         # 検索未設定 → web_research は未対応（ネットワークは叩かない）
         check(c._search_mode == "", "検索未設定なら search_mode 空")
         check("Anthropic" in c.web_research("x"), "検索未設定の local は web_research 未対応を返す")
