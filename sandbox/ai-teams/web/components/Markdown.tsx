@@ -14,7 +14,7 @@ import remarkGfm from "remark-gfm";
  */
 export function Markdown({ children }: { children: string }) {
   return (
-    <div className="text-sm leading-relaxed text-[var(--color-ink)]">
+    <div className="text-sm leading-relaxed text-[var(--color-ink)] [overflow-wrap:anywhere]">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{

@@ -52,6 +52,8 @@ import { PersonaManagerDrawer } from "@/components/PersonaManagerDrawer";
 import { PresetSaveDialog } from "@/components/PresetSaveDialog";
 import { Timeline } from "@/components/Timeline";
 import { MinutesPanel } from "@/components/MinutesPanel";
+import { ResearchNotes } from "@/components/ResearchNotes";
+import { ExportBar } from "@/components/ExportBar";
 import { OnAir } from "@/components/OnAir";
 import { Chyron } from "@/components/Chyron";
 import {
@@ -66,6 +68,8 @@ import {
   Globe,
   Search,
   History,
+  Menu,
+  X,
 } from "lucide-react";
 
 // 準備フェーズ: クライアント側で読み込む資料の拡張子（PDF/Office は MVP 対象外）。
@@ -138,6 +142,11 @@ export default function Home() {
   const [manageOpen, setManageOpen] = useState(false);
   const [saveOpen, setSaveOpen] = useState(false);
 
+  // モバイル（lg 未満）の左右スライドパネル。デスクトップ（lg 以上）では常時 3 レーンなので
+  // この state は無視され、編成/成果は固定列として常に表示される。
+  const [mobileSetupOpen, setMobileSetupOpen] = useState(false);
+  const [mobileOutcomeOpen, setMobileOutcomeOpen] = useState(false);
+
   const abortRef = useRef<AbortController | null>(null);
   // ストリーム（SSE）が生きているか。モバイルのバックグラウンド化で切れた後、フォアグラウンド
   // 復帰時に再接続すべきか判定する（生きている間は二重接続しない）。
@@ -152,6 +161,11 @@ export default function Home() {
   // 入力欄（議題／追い質問の兼用コンポーザー）。内容に応じて高さを自動可変にし、送信前に
   // 入力全体を見返せるようにする（max-h まで伸び、それ以上はスクロール）。
   const composerRef = useRef<HTMLTextAreaElement | null>(null);
+  // モバイルドロワーのフォーカス制御用。開いたら閉じるボタンへ、閉じたらトリガへ戻す。
+  const setupTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const outcomeTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const setupCloseRef = useRef<HTMLButtonElement | null>(null);
+  const outcomeCloseRef = useRef<HTMLButtonElement | null>(null);
 
   const loadPersonas = () => {
     fetchPersonas()
@@ -236,6 +250,40 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // モバイルの左右パネルを Escape で閉じる（開いている時だけ購読）。
+  useEffect(() => {
+    if (!mobileSetupOpen && !mobileOutcomeOpen) return;
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        setMobileSetupOpen(false);
+        setMobileOutcomeOpen(false);
+      }
+    }
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [mobileSetupOpen, mobileOutcomeOpen]);
+
+  // lg(1024px)以上か。閉じたモバイルドロワーを a11y ツリー/タブ順から外す（inert）判定に使う。
+  // lg 以上では左右 aside は固定列として常時表示なので inert を付けない。
+  const [isDesktop, setIsDesktop] = useState(false);
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return;
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const update = () => setIsDesktop(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  // モバイルドロワーを開いたら閉じるボタンへフォーカスを移す（キーボード/SR の読み上げ位置を移す）。
+  // 閉じる時のトリガ復帰は各×ボタンの onClick で行う（mount 時の false で誤発火させない）。
+  useEffect(() => {
+    if (mobileSetupOpen) setupCloseRef.current?.focus();
+  }, [mobileSetupOpen]);
+  useEffect(() => {
+    if (mobileOutcomeOpen) outcomeCloseRef.current?.focus();
+  }, [mobileOutcomeOpen]);
+
   // BYOK キーの更新（localStorage に保存し state も同期）。空文字で保存＝クリア。
   function updateUserKey(key: string) {
     setUserKey(key);
@@ -295,6 +343,20 @@ export default function Home() {
 
   const synthesis = useMemo(
     () => turns.find((t) => t.phase === "synthesis") ?? null,
+    [turns]
+  );
+
+  // 調査役（researcher）ターンを横断で集約する＝「調べたこと」パネルの素。検索結果が
+  // タイムラインを流れて消える不安に応え、出典付きの第一級成果物として常設する。
+  // 本文が出そろった調査ターンのみ集約パネルへ。検索中(content空)の turn_start を含めると、
+  // 本文到着までの数十秒だけ空枠＋下罫線がチラつくため除外する（「調べています…」は Timeline 側で表示）。
+  const researchTurns = useMemo(
+    () =>
+      turns.filter(
+        (t) =>
+          (t.speaker_id === "researcher" || t.phase === "research") &&
+          (t.content ?? "").trim().length > 0
+      ),
     [turns]
   );
 
@@ -600,6 +662,9 @@ export default function Home() {
     setIntakeQuestions([]);
     setIntakeAnswers({});
     setHistoryOpen(false);
+    // モバイルで編成パネルから開始した場合、討論が見えるよう左右パネルを閉じる。
+    setMobileSetupOpen(false);
+    setMobileOutcomeOpen(false);
     streamAliveRef.current = true;
     try {
       await startSession({
@@ -664,6 +729,31 @@ export default function Home() {
     const body = entry.turns.filter(
       (t) => t.phase !== "synthesis" && t.phase !== "summary" && t.speaker_id !== "researcher"
     );
+    // 前回 Web 検索で全員に共有された「調べた事実」も引き継ぐ（出典付き）。集約パネルと同思想で、
+    // 調査結果を transient にせず continue でも土台に残す。クエリ単位で重複排除し件数・長さを抑える。
+    const researchSeen = new Set<string>();
+    const researchItems = entry.turns.filter((t) => {
+      if (t.speaker_id !== "researcher" && t.phase !== "research") return false;
+      if (!(t.content ?? "").trim()) return false;
+      const key = (t.query ?? t.content).slice(0, 80);
+      if (researchSeen.has(key)) return false;
+      researchSeen.add(key);
+      return true;
+    });
+    const researchBlock = researchItems.length
+      ? "◆調べた事実（前回 Web 検索で全員に共有された出典付きの事実）\n" +
+        researchItems
+          .slice(0, 6)
+          .map((t) => {
+            // query も content も無制限長になり得る（要調査:行/seed=topic はサーバ側に上限なし）。
+            // researchBlock を固定費として budget から引くので、ここで必ず頭打ちにする。
+            const qt = t.query && t.query.length > 120 ? t.query.slice(0, 120) + "…" : t.query;
+            const q = qt ? `「${qt}」\n` : "";
+            const c = t.content.length > 700 ? t.content.slice(0, 700) + "…" : t.content;
+            return q + c;
+          })
+          .join("\n\n")
+      : "";
     const head = `【前回の討論（議題: ${entry.topic}）${scope === "full" ? "全文" : "の要点"}】`;
     const focus = focusText.trim()
       ? `特に次の点を深めてください: ${focusText.trim()}。`
@@ -672,8 +762,11 @@ export default function Home() {
       "\n\n【ここから続き】上記の前回討論を踏まえ、続きとして議論を深めてください。" +
       focus +
       "同じ結論の蒸し返しは避け、未解決の論点や新しい角度を進めること。";
-    const budget = 19000 - head.length - tail.length - 200;
+    // 調査ブロックは tail と同じく「必ず残す」固定費として budget から先に差し引く。
+    // 下限0でクランプ（head/research が極端に長くても full ループが負 budget で即 break しない）。
+    const budget = Math.max(0, 19000 - head.length - tail.length - researchBlock.length - 200);
     const parts: string[] = [];
+    if (researchBlock) parts.push(researchBlock);
     if (scope === "full") {
       const chosen: string[] = [];
       let used = 0;
@@ -691,9 +784,13 @@ export default function Home() {
       if (synthesis) parts.push(`◆議事録\n${synthesis.content}`);
       parts.push("◆直近の発言", ...body.slice(-5).map(fmt));
     }
-    let text = `${head}\n\n${parts.join("\n\n")}${tail}`;
-    if (text.length > 19500) text = text.slice(0, 19500) + "\n…（長いため省略）";
-    return text;
+    // 上限超過時の切り詰めは **本文側（head+parts）だけ** に効かせ、tail（【ここから続き】の
+    // 続行指示＋focus）は必ず残す。tail を含めて末尾から切ると「続ける」の核心指示が無言で
+    // 落ち、前回の蒸し返しを誘発する（light スコープは budget 非依存なので特に効く）。
+    const room = 19500 - tail.length - 20;
+    let bodyText = `${head}\n\n${parts.join("\n\n")}`;
+    if (bodyText.length > room) bodyText = bodyText.slice(0, room) + "\n…（長いため省略）";
+    return bodyText + tail;
   }
 
   // 終了/凍結した討論を「続ける（深掘る）」。前回のパネリストを transcript から復元し、前回討論を
@@ -819,32 +916,91 @@ export default function Home() {
   return (
     <div className="flex h-screen flex-col">
       {/* ヘッダー */}
-      <header className="flex items-center justify-between border-b border-[var(--color-line)] bg-[var(--color-surface)] px-6 py-3">
-        <button
-          onClick={resetToIdle}
-          title="新規討論（トップへ戻る）"
-          className="font-display text-base tracking-widest transition-opacity hover:opacity-70"
-        >
-          AI COUNCIL
-        </button>
-        <div className="flex items-center gap-4">
+      <header className="relative z-20 flex items-center justify-between border-b border-[var(--color-line)] bg-[var(--color-surface)] px-4 py-3 sm:px-6">
+        <div className="flex items-center gap-2">
+          {/* モバイル：編成パネル（左ドロワー）を開く。lg 以上では固定列なので非表示。 */}
+          <button
+            ref={setupTriggerRef}
+            onClick={() => setMobileSetupOpen(true)}
+            title="編成"
+            aria-label="編成を開く"
+            className="-ml-1 flex h-11 w-11 items-center justify-center rounded-md text-[var(--color-ink-muted)] hover:text-[var(--color-accent)] lg:hidden"
+          >
+            <Menu size={18} />
+          </button>
+          <button
+            onClick={resetToIdle}
+            title="新規討論（トップへ戻る）"
+            className="font-display text-base tracking-widest transition-opacity hover:opacity-70"
+          >
+            AI COUNCIL
+          </button>
+        </div>
+        <div className="flex items-center gap-3 sm:gap-4">
           <button
             onClick={() => {
               setHistory(getHistory());
               setHistoryOpen(true);
             }}
-            className="flex items-center gap-1 text-[11px] text-[var(--color-ink-muted)] hover:text-[var(--color-accent)]"
+            className="flex min-h-11 items-center gap-1 py-2 text-[11px] text-[var(--color-ink-muted)] hover:text-[var(--color-accent)] lg:min-h-0 lg:py-0"
           >
-            <History size={14} /> 履歴
+            <History size={14} /> <span className="hidden sm:inline">履歴</span>
+          </button>
+          {/* モバイル：成果パネル（右ドロワー＝調べたこと＋議事録）を開く。lg 以上では固定列。 */}
+          <button
+            ref={outcomeTriggerRef}
+            onClick={() => setMobileOutcomeOpen(true)}
+            title="成果"
+            aria-label="成果を開く"
+            className="flex min-h-11 items-center gap-1 py-2 text-[11px] text-[var(--color-ink-muted)] hover:text-[var(--color-accent)] lg:hidden"
+          >
+            <FileText size={14} /> 成果
           </button>
           <OnAir status={status} />
         </div>
       </header>
 
-      {/* 3レーン */}
-      <div className="grid min-h-0 flex-1 grid-cols-[260px_1fr_320px]">
-        {/* 左：編成 */}
-        <aside className="flex flex-col gap-5 overflow-y-auto border-r border-[var(--color-line)] bg-[var(--color-surface)] px-4 py-5">
+      {/* 3レーン（lg 以上）／チャット全画面＋左右ドロワー（lg 未満）。
+          モバイルでは左右の aside を fixed のスライドパネルにし、中央の討論を全幅にする。 */}
+      <div className="flex min-h-0 flex-1 flex-col lg:grid lg:grid-cols-[260px_1fr_320px]">
+        {/* モバイル用バックドロップ（左右どちらかが開いている時だけ）。 */}
+        {(mobileSetupOpen || mobileOutcomeOpen) && (
+          <div
+            className="fixed inset-0 z-30 bg-black/30 lg:hidden"
+            aria-hidden="true"
+            onClick={() => {
+              setMobileSetupOpen(false);
+              setMobileOutcomeOpen(false);
+            }}
+          />
+        )}
+
+        {/* 左：編成（lg 未満は左スライドパネル、lg 以上は固定列）。
+            閉じたモバイル状態では inert でタブ順・SR から除外（画面外の編成UIへフォーカスが飛ぶのを防ぐ）。 */}
+        <aside
+          aria-label="編成"
+          inert={!isDesktop && !mobileSetupOpen}
+          className={`flex flex-col gap-5 overflow-y-auto border-r border-[var(--color-line)] bg-[var(--color-surface)] px-4 py-5 fixed inset-y-0 left-0 z-40 w-[86%] max-w-xs transform transition-transform duration-300 lg:static lg:z-auto lg:w-auto lg:max-w-none lg:translate-none lg:transition-none ${
+            mobileSetupOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
+        >
+          {/* モバイル用の閉じる行（lg 以上では固定列なので不要） */}
+          <div className="flex items-center justify-between lg:hidden">
+            <span className="text-[11px] font-medium uppercase tracking-wider text-[var(--color-ink-muted)]">
+              編成
+            </span>
+            <button
+              ref={setupCloseRef}
+              onClick={() => {
+                setMobileSetupOpen(false);
+                setupTriggerRef.current?.focus();
+              }}
+              aria-label="編成を閉じる"
+              className="flex h-9 w-9 items-center justify-center rounded-md text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]"
+            >
+              <X size={18} />
+            </button>
+          </div>
           <PresetBar
             presets={presets}
             personas={personas}
@@ -890,8 +1046,9 @@ export default function Home() {
           />
         </aside>
 
-        {/* 中央：討論 */}
-        <main className="flex min-h-0 flex-col">
+        {/* 中央：討論。min-w-0 が要：これが無いと無改行の長文（検索クエリ/URL）が中央列を
+            押し広げ、グリッド全体＝チャットまで横長になる（モバイル横スクロールの主因）。 */}
+        <main className="flex min-h-0 min-w-0 flex-1 flex-col">
           <Chyron phase={currentPhase} status={status} />
 
           <div className="min-h-0 flex-1">
@@ -1244,9 +1401,46 @@ export default function Home() {
           </div>
         </main>
 
-        {/* 右：成果 */}
-        <aside className="overflow-hidden border-l border-[var(--color-line)] bg-[var(--color-surface)]">
-          <MinutesPanel synthesis={synthesis} status={status} />
+        {/* 右：成果（調べたこと＋議事録）。lg 未満は右スライドパネル、lg 以上は固定列。
+            閉じたモバイル状態では inert でタブ順・SR から除外。 */}
+        <aside
+          aria-label="成果"
+          inert={!isDesktop && !mobileOutcomeOpen}
+          className={`flex flex-col border-l border-[var(--color-line)] bg-[var(--color-surface)] fixed inset-y-0 right-0 z-40 w-[86%] max-w-sm transform transition-transform duration-300 lg:static lg:z-auto lg:w-auto lg:max-w-none lg:translate-none lg:transition-none ${
+            mobileOutcomeOpen ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          {/* モバイル用の閉じる行 */}
+          <div className="flex items-center justify-between border-b border-[var(--color-line)] px-4 py-2 lg:hidden">
+            <span className="text-[11px] font-medium uppercase tracking-wider text-[var(--color-ink-muted)]">
+              成果
+            </span>
+            <button
+              ref={outcomeCloseRef}
+              onClick={() => {
+                setMobileOutcomeOpen(false);
+                outcomeTriggerRef.current?.focus();
+              }}
+              aria-label="成果を閉じる"
+              className="flex h-9 w-9 items-center justify-center rounded-md text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]"
+            >
+              <X size={18} />
+            </button>
+          </div>
+          {/* 調べたこと（あれば上半分まで）＋ 議事録（残り）。 */}
+          <div className="flex min-h-0 flex-1 flex-col">
+            {researchTurns.length > 0 && (
+              <div className="max-h-[50%] shrink-0 border-b border-[var(--color-line)]">
+                <ResearchNotes research={researchTurns} />
+              </div>
+            )}
+            <div className="min-h-0 flex-1">
+              <MinutesPanel synthesis={synthesis} status={status} />
+            </div>
+            {/* 会議結果の書き出し（要約/調査結果/会議内容を選んでコピー or Markdown 保存）。
+                手持ちの LLM にそのまま投げられる素の Markdown を 1ファイルにまとめる。 */}
+            {turns.length > 0 && <ExportBar topic={activeTopic} turns={turns} />}
+          </div>
         </aside>
       </div>
 

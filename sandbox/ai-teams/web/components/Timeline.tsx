@@ -4,7 +4,7 @@ import { type Turn, formatTurnTime } from "@/lib/types";
 import { Avatar } from "./Avatar";
 import { NamePlate } from "./NamePlate";
 import { Markdown } from "./Markdown";
-import { Search, Globe } from "lucide-react";
+import { Search, Globe, Users } from "lucide-react";
 import { useEffect, useRef } from "react";
 
 interface PersonaLook {
@@ -54,7 +54,7 @@ export function Timeline({
         <p className="text-[11px] font-medium uppercase tracking-wider text-[var(--color-ink-muted)]">
           議題
         </p>
-        <h2 className="font-display mt-1 text-lg leading-snug">{topic}</h2>
+        <h2 className="font-display mt-1 text-lg leading-snug [overflow-wrap:anywhere]">{topic}</h2>
       </div>
 
       <div className="flex flex-col gap-5">
@@ -80,8 +80,8 @@ export function Timeline({
                 key={t.turn_id}
                 className="animate-turn-in rounded-md border border-[var(--color-line)] bg-[var(--color-surface)] px-3.5 py-3"
               >
-                <header className="flex items-center gap-2 border-b border-[var(--color-line)] pb-1.5">
-                  <Globe size={14} className="text-[var(--color-ink-muted)]" />
+                <header className="flex flex-wrap items-center gap-x-2 gap-y-0.5 border-b border-[var(--color-line)] pb-1.5">
+                  <Globe size={14} className="shrink-0 text-[var(--color-ink-muted)]" />
                   <span className="text-sm font-medium text-[var(--color-ink)]">
                     調査メモ
                   </span>
@@ -91,7 +91,7 @@ export function Timeline({
                     Web 検索
                   </span>
                   {t.query && (
-                    <span className="truncate text-[11px] text-[var(--color-ink-muted)]">
+                    <span className="min-w-0 max-w-full truncate text-[11px] text-[var(--color-ink-muted)]">
                       「{t.query}」
                     </span>
                   )}
@@ -107,15 +107,23 @@ export function Timeline({
                   )}
                 </header>
                 {searching ? (
-                  <p className="mt-2 flex items-center gap-2 text-sm leading-relaxed text-[var(--color-ink-muted)]">
-                    <Search size={13} className="shrink-0 animate-pulse-soft" />
-                    {t.query
-                      ? `「${t.query}」を調べています…（数十秒かかることがあります）`
-                      : "Web で事実を調べています…（数十秒かかることがあります）"}
+                  <p className="mt-2 flex items-start gap-2 text-sm leading-relaxed text-[var(--color-ink-muted)]">
+                    <Search size={13} className="mt-0.5 shrink-0 animate-pulse-soft" />
+                    <span className="min-w-0 [overflow-wrap:anywhere]">
+                      {t.query
+                        ? `「${t.query}」を調べています…（数十秒かかることがあります）`
+                        : "Web で事実を調べています…（数十秒かかることがあります）"}
+                    </span>
                   </p>
                 ) : (
                   <div className="mt-2">
                     <Markdown>{t.content}</Markdown>
+                    {/* 「流れて消える」不安への最小ラベル。詳しい説明と集約は右の「調べたこと」側に集約し、
+                        ここは各ターンで反復しても煩くない短いチップに留める（報道トーンの簡潔さ）。 */}
+                    <p className="mt-2 flex items-center gap-1.5 border-t border-[var(--color-line)] pt-1.5 text-[10px] text-[var(--color-ink-muted)]">
+                      <Users size={11} className="shrink-0" />
+                      全員に共有
+                    </p>
                   </div>
                 )}
               </article>
