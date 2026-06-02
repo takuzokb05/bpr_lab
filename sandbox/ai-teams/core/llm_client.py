@@ -203,8 +203,15 @@ class AnthropicClient(LLMClient):
 # 各 provider の既定モデル（env で上書き可）。BYOK では各自が1社のキーだけ入れる想定で、
 # その provider の既定モデルを全ペルソナに使う（ペルソナの model 上書きは Anthropic 用 ID なので
 # 非 Anthropic では無視＝混線防止。発言の多様性は system プロンプトで担保する）。
-_OPENAI_DEFAULT_MODEL = os.environ.get("AI_TEAMS_OPENAI_MODEL", "gpt-4o")
-_GEMINI_DEFAULT_MODEL = os.environ.get("AI_TEAMS_GEMINI_MODEL", "gemini-2.5-flash")
+#
+# モデル名は更新が速い。ここは **2026-06 時点の現行フラッグシップ（GA）** を置き、新型が出たら
+# env（AI_TEAMS_OPENAI_MODEL / AI_TEAMS_GEMINI_MODEL）で差し替える運用にする。
+#   OpenAI: gpt-5.5（推奨フラッグシップ）。安価重視なら gpt-5.4 / gpt-5.4-mini、
+#           最新 Instant 追従なら chat-latest エイリアス。
+#   Gemini: gemini-3.5-flash（GA・現行の高性能）。上位は gemini-2.5-pro 系、
+#           自動追従は gemini-flash-latest エイリアス（preview に振れる点に注意）。
+_OPENAI_DEFAULT_MODEL = os.environ.get("AI_TEAMS_OPENAI_MODEL", "gpt-5.5")
+_GEMINI_DEFAULT_MODEL = os.environ.get("AI_TEAMS_GEMINI_MODEL", "gemini-3.5-flash")
 
 # 非 Anthropic provider では Web 検索（調査役）は未対応。その旨を正直に返す（討論は止めない）。
 _RESEARCH_UNSUPPORTED = "（Web 検索は現在 Anthropic 選択時のみ対応です。検索なしで進めます。）"
