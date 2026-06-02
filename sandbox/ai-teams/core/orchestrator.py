@@ -272,12 +272,15 @@ class Council:
             emit({"type": "delta", "turn_id": turn_id, "text": content})
         return Turn(speaker_id, speaker_name, content, phase, round_no, turn_id=turn_id)
 
-    def emit_research_start(self, emit: Emit | None, turn_id: int) -> None:
+    def emit_research_start(
+        self, emit: Emit | None, turn_id: int, query: str = ""
+    ) -> None:
         """検索の**前**に researcher ターンの turn_start だけを流す（本文は空）。
 
         web 検索は数十秒かかることがあり、その間イベントが無いと UI は「準備中…」のまま固まる。
         先に turn_start（content 未着）を出すと、UI は調査役カードを「調べています…」状態で表示でき、
-        検索中であることが伝わる。検索完了後に emit_research_turn(emit_start=False) で本文(delta)を流す。
+        検索中であることが伝わる。query を載せると UI が「『〇〇』を調べています…」と出せる
+        （リアルタイム感）。検索完了後に emit_research_turn(emit_start=False) で本文(delta)を流す。
         """
         if emit is not None:
             emit(
@@ -288,6 +291,7 @@ class Council:
                     "speaker_name": "調査",
                     "phase": "research",
                     "round": 0,
+                    "query": query,
                 }
             )
 

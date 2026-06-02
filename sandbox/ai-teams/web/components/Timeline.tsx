@@ -90,6 +90,11 @@ export function Timeline({
                   >
                     Web 検索
                   </span>
+                  {t.query && (
+                    <span className="truncate text-[11px] text-[var(--color-ink-muted)]">
+                      「{t.query}」
+                    </span>
+                  )}
                   {time && (
                     <>
                       <span className="text-[var(--color-line)]" aria-hidden="true">
@@ -104,7 +109,9 @@ export function Timeline({
                 {searching ? (
                   <p className="mt-2 flex items-center gap-2 text-sm leading-relaxed text-[var(--color-ink-muted)]">
                     <Search size={13} className="shrink-0 animate-pulse-soft" />
-                    Web で事実を調べています…（数十秒かかることがあります）
+                    {t.query
+                      ? `「${t.query}」を調べています…（数十秒かかることがあります）`
+                      : "Web で事実を調べています…（数十秒かかることがあります）"}
                   </p>
                 ) : (
                   <div className="mt-2">

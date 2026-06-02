@@ -70,6 +70,7 @@ export interface Turn {
   phase: string;
   round: number;
   ts?: number; // サーバ採番の UNIX 秒（_append の time.time()）。再接続でも不変
+  query?: string; // 調査役の検索クエリ（research のみ。「『〇〇』を調べています…」表示用）
 }
 
 // 主訴確認（intake）の Q&A。討論前に主訴を固め逸脱を防ぐ確認質問とその回答。

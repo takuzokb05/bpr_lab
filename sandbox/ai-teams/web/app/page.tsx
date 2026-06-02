@@ -500,6 +500,7 @@ export default function Home() {
             phase: e.phase,
             round: e.round,
             ts: e.ts,
+            query: e.query, // 調査役: 検索クエリ（「『〇〇』を調べています…」表示用）
           },
         ];
       });

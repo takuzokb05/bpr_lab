@@ -1443,9 +1443,10 @@ def test_research_turn_emit():
 
     # 検索前先出し: emit_research_start は turn_start だけを流す（本文未着＝UI「調べています…」）。
     ev2: list[dict] = []
-    council.emit_research_start(ev2.append, turn_id=99)
+    council.emit_research_start(ev2.append, turn_id=99, query="日本の出生率")
     check([e["type"] for e in ev2] == ["turn_start"], "emit_research_start は turn_start のみ")
     check(ev2[0]["speaker_id"] == "researcher" and ev2[0]["turn_id"] == 99, "turn_start は researcher/該当id")
+    check(ev2[0]["query"] == "日本の出生率", "turn_start に検索クエリが載る（UI のリアルタイム表示用）")
     # 検索後: emit_start=False なら turn_start を出さず delta のみ（先出し済みのため）。
     tr3: list = []
     ev3: list[dict] = []

@@ -19,6 +19,7 @@ export type StreamEvent =
       speakerName: string;
       phase: string;
       round: number;
+      query?: string; // 調査役の検索クエリ（research のみ。「『〇〇』を調べています…」表示用）
       ts?: number;
     }
   | { type: "delta"; turnId: number; text: string; ts?: number }
@@ -268,6 +269,7 @@ function toEvent(
         speakerName: d.speaker_name as string,
         phase: d.phase as string,
         round: d.round as number,
+        query: typeof d.query === "string" ? (d.query as string) : undefined,
         ts,
       };
     case "delta":
