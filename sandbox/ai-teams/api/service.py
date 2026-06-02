@@ -69,25 +69,62 @@ def persona_public(p: Persona) -> dict:
     }
 
 
-# -- LLM クライアント -------------------------------------------------------
-def make_client(mock: bool = False) -> LLMClient:
-    """mock 指定、または API キー未設定なら MockLLMClient にフォールバック。
+# -- 動作モード（env-gated） ------------------------------------------------
+def byok_mode() -> bool:
+    """BYOK（各自が自分の API キーを持参）モードか。
 
-    mock=True はキーの有無に関わらず必ず Mock を返す（検証・デモ時の二重課金防止）。
+    共有/公開インスタンスでは AI_TEAMS_BYOK=1 を設定する。すると make_client は
+    **サーバの ANTHROPIC_API_KEY を来訪者リクエストに一切使わず**、リクエスト毎に
+    渡された api_key だけで実 LLM を呼ぶ（来訪者は自分のキーで課金）。未設定（個人/テスト）
+    なら従来どおりサーバ env キーへフォールバックできる（後方互換）。
     """
-    if mock or not os.environ.get("ANTHROPIC_API_KEY"):
+    return os.environ.get("AI_TEAMS_BYOK", "").strip().lower() in ("1", "true", "yes")
+
+
+def readonly_mode() -> bool:
+    """編成 CRUD（ペルソナ/プリセットの作成・更新・削除）を禁止するか。
+
+    共有インスタンスでは AI_TEAMS_READONLY=1 を設定し、来訪者がサーバ上のファイルを
+    書き換え/量産/削除できないようにする（main.py 側で 403 にマップ）。
+    """
+    return os.environ.get("AI_TEAMS_READONLY", "").strip().lower() in ("1", "true", "yes")
+
+
+# -- LLM クライアント -------------------------------------------------------
+def make_client(mock: bool = False, api_key: str | None = None) -> LLMClient:
+    """LLM クライアントを作る。優先順位は mock > 明示 api_key > サーバ env キー。
+
+    - mock=True: キーの有無に関わらず必ず Mock（検証・デモ・二重課金防止）。
+    - api_key 指定: そのキーで AnthropicClient（BYOK の本線。来訪者は自分のキーで課金）。
+    - api_key 無し:
+        - BYOK モード → サーバ env キーは使わない。安全側で Mock を返す
+          （real を要求するなら呼び出し側＝route が事前にキー必須を弾く想定）。
+        - 非 BYOK（個人/テスト） → サーバ env キーがあれば従来どおり使う。
+    """
+    if mock:
         return MockLLMClient()
-    return AnthropicClient()
+    key = api_key
+    if not key and not byok_mode():
+        key = os.environ.get("ANTHROPIC_API_KEY")
+    if not key:
+        return MockLLMClient()
+    return AnthropicClient(api_key=key)
 
 
 def llm_status() -> dict:
     """LLM 構成の公開ステータス（純関数）。API キーの値そのものは絶対に返さない。
 
-    api_key_set=True かつ非 mock 起動なら Anthropic を実呼び出しする、という前提を
-    フロントに伝えるための情報。キー文字列は含めない（漏洩防止）。
+    byok=True なら「各自キー持参」モード。この場合サーバ env キーは来訪者に使われない
+    ため、api_key_set は常に False を返す（無認証の /health からの偵察情報を絞る）。
+    非 BYOK では従来どおり api_key_set を返す（個人運用でフロントが実 LLM 可否を判定）。
     """
-    api_key_set = bool(os.environ.get("ANTHROPIC_API_KEY"))
-    return {"llm": "anthropic" if api_key_set else "mock", "api_key_set": api_key_set}
+    byok = byok_mode()
+    api_key_set = False if byok else bool(os.environ.get("ANTHROPIC_API_KEY"))
+    return {
+        "llm": "byok" if byok else ("anthropic" if api_key_set else "mock"),
+        "api_key_set": api_key_set,
+        "byok": byok,
+    }
 
 
 # -- Web 検索（調査役） -----------------------------------------------------
@@ -137,6 +174,7 @@ def build_council(
     red_team: bool = True,
     red_team_id: str | None = None,
     mock: bool = False,
+    api_key: str | None = None,
     materials: str = "",
     research: bool = False,
 ) -> Council:
@@ -156,7 +194,7 @@ def build_council(
     personas = [registry[pid] for pid in persona_ids]
     return Council(
         personas,
-        make_client(mock),
+        make_client(mock, api_key),
         rounds_per_phase=rounds_per_phase,
         red_team=red_team,
         red_team_id=red_team_id,
@@ -211,15 +249,15 @@ def _parse_intake_questions(text: str) -> list[str]:
 
 
 def generate_intake_questions(
-    topic: str, materials: str = "", *, mock: bool = False
+    topic: str, materials: str = "", *, mock: bool = False, api_key: str | None = None
 ) -> list[str]:
     """討論前の主訴確認質問を 2〜4 個返す。
 
-    mock=True または API キー未設定なら LLM を呼ばず決定的な定型質問を返す（検証・コスト
-    対策）。実呼び出し時は make_client 経由で LLM に依頼し、_parse_intake_questions で
-    堅牢にパースする。LLM が 2 個未満しか返さなかった等で取れなければ定型にフォールバック。
+    mock=True または（実キーが取得できない場合）LLM を呼ばず決定的な定型質問を返す
+    （検証・コスト対策）。実呼び出し時は make_client(mock, api_key) 経由で LLM に依頼し、
+    _parse_intake_questions で堅牢にパースする。LLM から取れなければ定型にフォールバック。
     """
-    client = make_client(mock)
+    client = make_client(mock, api_key)
     if isinstance(client, MockLLMClient):
         # mock / キー未設定: LLM を呼ばず定型（決定的）。
         return list(_INTAKE_FALLBACK_QUESTIONS)
@@ -279,6 +317,15 @@ def stream_council(council: Council, topic: str) -> Iterator[str]:
 
 # 終了後も短時間残し、遅れた再接続が最終 transcript を再生できるようにする（簡易 GC）。
 MAX_SESSIONS = 50
+
+# 同時に「進行中（running/paused）」でいられるセッションの上限。floor-open の paused は
+# 無期限待機で GC されないため、これが無いと公開時に大量生成でスレッド/メモリを枯渇させられる。
+# env AI_TEAMS_MAX_ACTIVE で可変（既定 12）。超過時の生成は CapacityError → 429。
+MAX_ACTIVE_SESSIONS = int(os.environ.get("AI_TEAMS_MAX_ACTIVE", "12"))
+
+
+class CapacityError(RuntimeError):
+    """同時進行セッション数が上限に達した（main.py で 429 にマップ）。"""
 
 
 @dataclass
@@ -591,6 +638,14 @@ def start_session(council: Council, topic: str, *, interactive: bool = False) ->
     )
     with _REGISTRY_LOCK:
         _gc_locked()
+        # 進行中（running/paused）の同時上限。paused は GC されないので、ここで生成を絞り
+        # スレッド/メモリ枯渇（公開時の DoS）を防ぐ。done/error は数に含めない。
+        active = sum(1 for s in SESSIONS.values() if s.status in _ALIVE_STATUSES)
+        if active >= MAX_ACTIVE_SESSIONS:
+            raise CapacityError(
+                f"同時に進行できる討論は {MAX_ACTIVE_SESSIONS} 件までです。"
+                "進行中の討論を終了してから再度お試しください。"
+            )
         SESSIONS[session.id] = session
     thread = threading.Thread(target=_produce, args=(session,), daemon=True)
     session.thread = thread

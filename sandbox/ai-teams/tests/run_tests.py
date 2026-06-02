@@ -504,8 +504,12 @@ def test_llm_status():
     try:
         # 1. キー未設定 → mock
         os.environ.pop("ANTHROPIC_API_KEY", None)
+        os.environ.pop("AI_TEAMS_BYOK", None)
         st = service.llm_status()
-        check(st == {"llm": "mock", "api_key_set": False}, f"キー未設定で mock: {st}")
+        check(
+            st == {"llm": "mock", "api_key_set": False, "byok": False},
+            f"キー未設定で mock: {st}",
+        )
         check(isinstance(service.make_client(mock=False), _Mock),
               "キー未設定なら非 mock 指定でも Mock にフォールバック")
 
@@ -556,6 +560,61 @@ def _setup_temp_dirs():
 
 def _restore_dirs(saved):
     service.PERSONAS_DIR, service.PRESETS_DIR, service.PRESETS_BUILTIN_DIR = saved
+
+
+def test_byok_make_client():
+    """BYOK: リクエスト毎のキーで AnthropicClient、byok モードはサーバ env キーを来訪者に使わない。"""
+    print("[test] BYOK make_client (per-request key / no server-key for visitors)")
+    import os
+
+    from core import AnthropicClient as _Anthropic, MockLLMClient as _Mock
+
+    saved_key = os.environ.get("ANTHROPIC_API_KEY")
+    saved_byok = os.environ.get("AI_TEAMS_BYOK")
+    try:
+        # 1. mock=True は api_key があっても必ず Mock（二重課金防止）
+        check(
+            isinstance(service.make_client(mock=True, api_key="sk-ant-xxx"), _Mock),
+            "mock=True は api_key 指定でも Mock",
+        )
+        # 2. api_key 明示 → その鍵で AnthropicClient（BYOK 本線）
+        check(
+            isinstance(service.make_client(mock=False, api_key="sk-ant-USERKEY"), _Anthropic),
+            "api_key 指定で AnthropicClient を返す（来訪者は自分の鍵で課金）",
+        )
+        # 3. BYOK モード: api_key 無し＋サーバ env キー有り → サーバ鍵を使わず Mock
+        os.environ["ANTHROPIC_API_KEY"] = "sk-ant-SERVERKEY"
+        os.environ["AI_TEAMS_BYOK"] = "1"
+        check(service.byok_mode() is True, "AI_TEAMS_BYOK=1 で byok_mode True")
+        check(
+            isinstance(service.make_client(mock=False, api_key=None), _Mock),
+            "BYOK でキー未提供なら サーバ env キーを使わず Mock（来訪者にサーバ鍵を使わせない）",
+        )
+        st = service.llm_status()
+        check(
+            st.get("byok") is True and st.get("api_key_set") is False,
+            f"BYOK の llm_status は byok:true・api_key_set:false（偵察情報を絞る）: {st}",
+        )
+        # 4. 非 BYOK: api_key 無し＋サーバ env キー有り → 従来どおりサーバ鍵で AnthropicClient
+        os.environ.pop("AI_TEAMS_BYOK", None)
+        check(
+            isinstance(service.make_client(mock=False, api_key=None), _Anthropic),
+            "非 BYOK は従来どおりサーバ env キーで AnthropicClient（個人運用の後方互換）",
+        )
+        # 5. readonly_mode は env-gated
+        check(service.readonly_mode() is False, "AI_TEAMS_READONLY 未設定で readonly_mode False")
+        os.environ["AI_TEAMS_READONLY"] = "1"
+        check(service.readonly_mode() is True, "AI_TEAMS_READONLY=1 で readonly_mode True")
+        os.environ.pop("AI_TEAMS_READONLY", None)
+    finally:
+        os.environ.pop("AI_TEAMS_BYOK", None)
+        os.environ.pop("AI_TEAMS_READONLY", None)
+        if saved_byok is not None:
+            os.environ["AI_TEAMS_BYOK"] = saved_byok
+        if saved_key is None:
+            os.environ.pop("ANTHROPIC_API_KEY", None)
+        else:
+            os.environ["ANTHROPIC_API_KEY"] = saved_key
 
 
 def test_persona_service_crud():
@@ -1401,6 +1460,55 @@ def test_api_auth_token():
             os.environ["AI_TEAMS_API_TOKEN"] = saved
 
 
+def test_byok_http_guards():
+    """HTTP: BYOK で実LLM要求にキー必須(400)、mock は不要(200)、readonly で CRUD 403。"""
+    print("[test] BYOK http guards (400 no-key / 200 mock / 403 readonly)")
+    import os
+
+    from fastapi.testclient import TestClient
+
+    from api.main import app
+
+    saved_byok = os.environ.get("AI_TEAMS_BYOK")
+    saved_ro = os.environ.get("AI_TEAMS_READONLY")
+    saved_tok = os.environ.get("AI_TEAMS_API_TOKEN")
+    client = TestClient(app)
+    sess = {
+        "topic": "BYOK議題",
+        "persona_ids": ["moderator", "logic", "idea", "chair"],
+        "interactive": False,
+    }
+    try:
+        os.environ.pop("AI_TEAMS_API_TOKEN", None)  # 認証は別テスト。ここは BYOK 挙動に集中
+        os.environ["AI_TEAMS_BYOK"] = "1"
+        # 実 LLM（mock:false）＋キー未提供 → 400
+        r = client.post("/sessions", json={**sess, "mock": False})
+        check(r.status_code == 400, f"BYOK・実LLM・キー無しは 400: {r.status_code}")
+        # mock:true はキー不要で 200（プレビュー）
+        r = client.post("/sessions", json={**sess, "mock": True})
+        check(r.status_code == 200, f"BYOK でも mock:true は 200: {r.status_code}")
+        # intake も同様（mock:false・キー無し → 400）
+        r = client.post("/intake", json={"topic": "x", "mock": False})
+        check(r.status_code == 400, f"BYOK・intake・キー無しは 400: {r.status_code}")
+        # readonly: 編成の書込は 403
+        os.environ["AI_TEAMS_READONLY"] = "1"
+        r = client.post(
+            "/personas",
+            json={"id": "ro", "display_name": "RO", "system_prompt": "p", "category": "thinking"},
+        )
+        check(r.status_code == 403, f"readonly で POST /personas は 403: {r.status_code}")
+    finally:
+        for k, v in (
+            ("AI_TEAMS_BYOK", saved_byok),
+            ("AI_TEAMS_READONLY", saved_ro),
+            ("AI_TEAMS_API_TOKEN", saved_tok),
+        ):
+            if v is None:
+                os.environ.pop(k, None)
+            else:
+                os.environ[k] = v
+
+
 def test_cors_allowed_origins_env():
     """CORS allow_origins が env AI_TEAMS_ALLOWED_ORIGINS（カンマ区切り）で可変。
 
@@ -1453,6 +1561,7 @@ if __name__ == "__main__":
     test_session_transport()
     test_followup_injection()
     test_llm_status()
+    test_byok_make_client()
     test_persona_service_crud()
     test_preset_service()
     test_http_api()
@@ -1468,6 +1577,7 @@ if __name__ == "__main__":
     test_extract_research_queries()
     test_research_disabled_backward_compat()
     test_api_auth_token()
+    test_byok_http_guards()
     test_cors_allowed_origins_env()
     print()
     if _failures:

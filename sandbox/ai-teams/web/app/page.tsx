@@ -20,9 +20,11 @@ import {
   type Preset,
   type Turn,
 } from "@/lib/types";
+import { getUserKey, setUserKey } from "@/lib/config";
 import { PersonaPicker } from "@/components/PersonaPicker";
 import { PresetBar } from "@/components/PresetBar";
 import { LlmToggle } from "@/components/LlmToggle";
+import { KeyEntry } from "@/components/KeyEntry";
 import { PersonaManagerDrawer } from "@/components/PersonaManagerDrawer";
 import { PresetSaveDialog } from "@/components/PresetSaveDialog";
 import { Timeline } from "@/components/Timeline";
@@ -90,6 +92,8 @@ export default function Home() {
 
   const [useLlm, setUseLlm] = useState(false); // GAP5: 既定は mock（無料）
   const [health, setHealth] = useState<Health | null>(null);
+  // BYOK: 各自の Anthropic キー。localStorage が実体（SSR/export 時は空なので mount 後に読む）。
+  const [userKey, setUserKeyState] = useState("");
 
   const [manageOpen, setManageOpen] = useState(false);
   const [saveOpen, setSaveOpen] = useState(false);
@@ -107,6 +111,7 @@ export default function Home() {
 
   useEffect(() => {
     loadPersonas();
+    setUserKeyState(getUserKey()); // localStorage は client のみ。mount 後に読む
     fetchPresets()
       .then(setPresets)
       .catch(() => {
@@ -118,6 +123,12 @@ export default function Home() {
         /* health 取得失敗時は mock 既定のまま動かす */
       });
   }, []);
+
+  // BYOK キーの更新（localStorage に保存し state も同期）。空文字で保存＝クリア。
+  function updateUserKey(key: string) {
+    setUserKey(key);
+    setUserKeyState(key.trim());
+  }
 
   const looks = useMemo(() => {
     const m: Record<string, { accent: string; monogram: string }> = {};
@@ -141,8 +152,12 @@ export default function Home() {
   // セッション稼働中（編成は固定・入力欄は追い質問モード）。running または paused。
   const active = running || paused;
 
-  // 実 LLM が実際に使われるか（GAP5: NOT(useLlm AND key_set) が mock）。
-  const willUseRealLlm = useLlm && (health?.api_key_set ?? false);
+  // BYOK モードか（サーバが共有/公開設定）。実 LLM のキー所在が分岐する。
+  const byok = health?.byok ?? false;
+  // 実 LLM に使えるキーがあるか: BYOK は各自のキー（localStorage）、個人運用はサーバキー。
+  const keyAvailable = byok ? userKey.trim().length > 0 : (health?.api_key_set ?? false);
+  // 実 LLM が実際に使われるか（mock = NOT(useLlm AND keyAvailable)。キーが無ければ常に mock）。
+  const willUseRealLlm = useLlm && keyAvailable;
 
   // 追い質問の処理中（人間ターンのエコー・司会再提示・パネリスト応答が流れている間）。
   const processingFollowup =
@@ -463,9 +478,14 @@ export default function Home() {
             disabled={active}
           />
 
+          {byok && (
+            <KeyEntry value={userKey} onChange={updateUserKey} disabled={active} />
+          )}
+
           <LlmToggle
             useLlm={useLlm}
-            health={health}
+            keyAvailable={keyAvailable}
+            byok={byok}
             onChange={setUseLlm}
             disabled={active}
           />

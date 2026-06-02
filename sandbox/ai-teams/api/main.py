@@ -6,11 +6,13 @@
 
 from __future__ import annotations
 
+import hmac
 import os
+import time
 from pathlib import Path
 from typing import Literal, NoReturn
 
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, Header, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
@@ -52,8 +54,9 @@ async def require_api_token(request: Request, call_next):
         # API（コスト・データ操作）パスだけ保護。静的フロント(/ や /_next)・/health は通す。
         path = request.url.path
         if any(path == p or path.startswith(p + "/") for p in _PROTECTED_PREFIXES):
-            authorization = request.headers.get("authorization")
-            if authorization != f"Bearer {token}":
+            authorization = request.headers.get("authorization") or ""
+            # 定数時間比較（タイミング攻撃でのトークン推測を防ぐ）。
+            if not hmac.compare_digest(authorization, f"Bearer {token}"):
                 return JSONResponse(status_code=401, content={"detail": "unauthorized"})
     return await call_next(request)
 
@@ -66,6 +69,77 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+# -- レート制限（簡易・インメモリ・単一ワーカー前提） -------------------------
+# 公開時のコスト/DoS 抑止。クライアント IP ごとに固定窓でリクエスト数を制限する。
+# cloudflared 経由では request.client.host が 127.0.0.1 になるため、実 IP は
+# CF-Connecting-IP / X-Forwarded-For を優先して見る（無ければ接続元）。注意: これらの
+# ヘッダは原理的に偽装可能なので「完全な本人特定」ではなく濫用のハードルを上げる多層防御。
+_RATE_MAX = int(os.environ.get("AI_TEAMS_RATE_MAX", "20"))  # 窓あたり許容数
+_RATE_WINDOW = float(os.environ.get("AI_TEAMS_RATE_WINDOW", "60"))  # 窓（秒）
+_RATE_HITS: dict[str, list[float]] = {}
+
+
+def _client_ip(request: Request) -> str:
+    cf = request.headers.get("cf-connecting-ip")
+    if cf:
+        return cf.strip()
+    xff = request.headers.get("x-forwarded-for")
+    if xff:
+        return xff.split(",")[0].strip()
+    return request.client.host if request.client else "unknown"
+
+
+def _rate_check(request: Request) -> None:
+    """固定窓レート制限。超過なら 429。LLM/コストを伴う重い経路で呼ぶ。"""
+    ip = _client_ip(request)
+    now = time.monotonic()
+    hits = [t for t in _RATE_HITS.get(ip, ()) if now - t < _RATE_WINDOW]
+    if len(hits) >= _RATE_MAX:
+        _RATE_HITS[ip] = hits
+        raise HTTPException(
+            status_code=429,
+            detail="リクエストが多すぎます。しばらく待って再度お試しください。",
+        )
+    hits.append(now)
+    _RATE_HITS[ip] = hits
+    if len(_RATE_HITS) > 1024:  # 肥大防止: 期限切れエントリを掃除
+        stale = [
+            k
+            for k, v in _RATE_HITS.items()
+            if not any(now - t < _RATE_WINDOW for t in v)
+        ]
+        for k in stale:
+            _RATE_HITS.pop(k, None)
+
+
+def _assert_writable() -> None:
+    """読み取り専用モード（共有インスタンス）では編成の書き込みを 403 で拒否する。"""
+    if service.readonly_mode():
+        raise HTTPException(
+            status_code=403,
+            detail="この公開インスタンスでは編成の作成・変更・削除はできません（読み取り専用）。",
+        )
+
+
+def _resolve_api_key(mock: bool, x_anthropic_key: str | None) -> str | None:
+    """実 LLM 呼び出しに使う API キーを決める（BYOK ガード）。
+
+    - mock=True: キー不要（None を返す。make_client が Mock を返す）。
+    - BYOK モードで実 LLM を要求したのにキー未提供 → 400（来訪者は自分のキーが必須）。
+    - それ以外: 渡されたキー（無ければ None ＝ サーバ env キーへフォールバック可）。
+    キーはどこにもログ/保存しない（AnthropicClient のメモリ内のみ・セッション終了で消える）。
+    """
+    if mock:
+        return None
+    key = (x_anthropic_key or "").strip() or None
+    if service.byok_mode() and not key:
+        raise HTTPException(
+            status_code=400,
+            detail="このインスタンスは各自の Anthropic API キーが必要です（左の設定でキーを入力してください）。",
+        )
+    return key
 
 
 class IntakeQA(BaseModel):
@@ -146,24 +220,38 @@ _SSE_HEADERS = {"Cache-Control": "no-cache", "X-Accel-Buffering": "no"}
 
 
 @app.post("/intake")
-def intake(req: IntakeRequest) -> dict:
+def intake(
+    req: IntakeRequest,
+    request: Request,
+    x_anthropic_key: str | None = Header(default=None, alias="X-Anthropic-Key"),
+) -> dict:
     """討論前の主訴確認質問を 2〜4 個返す（回答は任意・スキップ可）。
 
-    mock=True または API キー未設定なら LLM を呼ばず決定的な定型質問を返す（二重課金防止）。
+    mock=True なら LLM を呼ばず定型質問。実呼び出しは BYOK のユーザーキー（X-Anthropic-Key）
+    を使う。レート制限あり。
     """
+    _rate_check(request)
+    api_key = _resolve_api_key(req.mock, x_anthropic_key)
     questions = service.generate_intake_questions(
-        req.topic, req.materials or "", mock=req.mock
+        req.topic, req.materials or "", mock=req.mock, api_key=api_key
     )
     return {"questions": questions}
 
 
 @app.post("/sessions")
-def create_session(req: SessionRequest) -> StreamingResponse:
+def create_session(
+    req: SessionRequest,
+    request: Request,
+    x_anthropic_key: str | None = Header(default=None, alias="X-Anthropic-Key"),
+) -> StreamingResponse:
     """討論をバックグラウンドで開始し、cursor 0 から tail する SSE を返す。
 
     プロデューサは接続が切れても完走するので、後から GET /sessions/{id}/stream で
     再接続して取りこぼしを再生できる。`start` イベントに session_id が載る。
+    実 LLM は BYOK のユーザーキー（X-Anthropic-Key）を使う。レート制限・同時上限あり。
     """
+    _rate_check(request)
+    api_key = _resolve_api_key(req.mock, x_anthropic_key)
     # 資料・前提 + intake の Q&A を合成（どちらも空なら "" ＝従来と完全同一の Council）。
     composed_materials = _compose_materials(req.materials, req.intake)
     try:
@@ -173,6 +261,7 @@ def create_session(req: SessionRequest) -> StreamingResponse:
             red_team=req.red_team,
             red_team_id=req.red_team_id,
             mock=req.mock,
+            api_key=api_key,
             materials=composed_materials,
             research=req.research,
         )
@@ -181,7 +270,10 @@ def create_session(req: SessionRequest) -> StreamingResponse:
     except ValueError as exc:  # パネリスト0人など
         raise HTTPException(status_code=400, detail=str(exc))
 
-    session = service.start_session(council, req.topic, interactive=req.interactive)
+    try:
+        session = service.start_session(council, req.topic, interactive=req.interactive)
+    except service.CapacityError as exc:
+        raise HTTPException(status_code=429, detail=str(exc))
     return StreamingResponse(
         service.tail(session, cursor=0),
         media_type="text/event-stream",
@@ -321,6 +413,7 @@ def get_preset(preset_id: str) -> dict:
 
 @app.post("/presets", status_code=201)
 def create_preset(req: PresetUpsert) -> dict:
+    _assert_writable()
     try:
         return service.save_preset(req.model_dump(), create=True)
     except ValueError as exc:
@@ -329,6 +422,7 @@ def create_preset(req: PresetUpsert) -> dict:
 
 @app.put("/presets/{preset_id}")
 def update_preset(preset_id: str, req: PresetUpsert) -> dict:
+    _assert_writable()
     data = req.model_dump()
     data["id"] = preset_id  # パスの id を正とする
     try:
@@ -341,6 +435,7 @@ def update_preset(preset_id: str, req: PresetUpsert) -> dict:
 
 @app.delete("/presets/{preset_id}", status_code=204)
 def remove_preset(preset_id: str) -> None:
+    _assert_writable()
     try:
         service.delete_preset(preset_id)
     except KeyError:
@@ -378,6 +473,7 @@ def get_persona(persona_id: str) -> dict:
 
 @app.post("/personas", status_code=201)
 def create_persona(req: PersonaUpsert) -> dict:
+    _assert_writable()
     try:
         persona = service.save_persona(req.model_dump(), expect_id=None)
     except ValueError as exc:
@@ -387,6 +483,7 @@ def create_persona(req: PersonaUpsert) -> dict:
 
 @app.put("/personas/{persona_id}")
 def update_persona(persona_id: str, req: PersonaUpsert) -> dict:
+    _assert_writable()
     try:
         persona = service.save_persona(req.model_dump(), expect_id=persona_id)
     except KeyError:
@@ -398,6 +495,7 @@ def update_persona(persona_id: str, req: PersonaUpsert) -> dict:
 
 @app.delete("/personas/{persona_id}", status_code=204)
 def remove_persona(persona_id: str) -> None:
+    _assert_writable()
     try:
         service.delete_persona(persona_id)
     except KeyError:

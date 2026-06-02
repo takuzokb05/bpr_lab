@@ -292,8 +292,10 @@ export async function cancelSession(sessionId: string): Promise<void> {
 // -- ヘルス（LLM 状態） -----------------------------------------------------
 export interface Health {
   status: string;
-  llm: "anthropic" | "mock";
+  llm: "anthropic" | "mock" | "byok";
   api_key_set: boolean;
+  // BYOK（各自が自分の API キーを持参）モードか。true なら実 LLM は各自のキーが必要。
+  byok?: boolean;
 }
 
 export async function fetchHealth(): Promise<Health> {
