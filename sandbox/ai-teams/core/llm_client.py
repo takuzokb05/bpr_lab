@@ -265,6 +265,23 @@ class OpenAIClient(LLMClient):
         # OpenAI は system を messages 先頭ロールで渡す。
         return [{"role": "system", "content": system}, *messages]
 
+    def _openrouter_provider(self) -> dict | None:
+        """OpenRouter の provider ルーティング設定。
+
+        OpenRouter は1モデルを複数の下流プロバイダに分散ルーティングする。一部（Venice 等）は
+        コンテンツフィルタが強く、討論の正当な批判を "inappropriate content" で弾いて発言が
+        空/エラーになる。env AI_TEAMS_OPENROUTER_IGNORE（カンマ区切り・既定 "Venice"）で除外する。
+        OpenRouter 以外の base_url（Ollama/vLLM 等）では None（provider 概念が無い）。
+        """
+        if "openrouter" not in self._base_url:
+            return None
+        ignore = [
+            s.strip()
+            for s in os.environ.get("AI_TEAMS_OPENROUTER_IGNORE", "Venice").split(",")
+            if s.strip()
+        ]
+        return {"ignore": ignore, "allow_fallbacks": True} if ignore else None
+
     def _params(self, system: str, messages: list[Message], temperature: float) -> dict:
         """chat.completions のパラメータ。新旧モデル差を吸収する。
 
@@ -283,12 +300,19 @@ class OpenAIClient(LLMClient):
             # reasoning_effort は非対応のことが多いので、古典的な max_tokens + temperature を使う。
             params["max_tokens"] = self._max_tokens
             params["temperature"] = temperature
+            extra: dict = {}
             # 思考モデル（Kimi K2.6 / DeepSeek V4 Pro 等）は reasoning が max_tokens を食い、可視発言が
-            # 枯れて空ターン化する。OpenRouter の reasoning 制御（extra_body）で抑え、応答の長さ
-            # (verbosity) が可視出力に効くようにする。既定 low。AI_TEAMS_LOCAL_REASONING="" で無効（生挙動）。
+            # 枯れて空ターン化する。OpenRouter の reasoning 制御で抑え、応答の長さ(verbosity)が可視
+            # 出力に効くようにする。既定 low。AI_TEAMS_LOCAL_REASONING="" で無効（生挙動）。
             effort = os.environ.get("AI_TEAMS_LOCAL_REASONING", "low").strip()
             if effort:
-                params["extra_body"] = {"reasoning": {"effort": effort}}
+                extra["reasoning"] = {"effort": effort}
+            # 検閲の強い下流プロバイダ（Venice 等）を避ける（正当な批判の弾かれを防ぐ）。
+            prov = self._openrouter_provider()
+            if prov:
+                extra["provider"] = prov
+            if extra:
+                params["extra_body"] = extra
             return params
         # クラウド OpenAI（GPT-5/o 系は max_completion_tokens・temperature 非対応で reasoning_effort）。
         params["max_completion_tokens"] = self._max_tokens
@@ -308,12 +332,16 @@ class OpenAIClient(LLMClient):
         失敗しても空文字を返すだけ（討論は止めない）。
         """
         try:
+            extra: dict = {"reasoning": {"enabled": False}}
+            prov = self._openrouter_provider()
+            if prov:
+                extra["provider"] = prov
             params: dict = {
                 "model": self._model,
                 "messages": self._messages(system, messages),
                 "max_tokens": max(self._max_tokens, 4096),
                 "temperature": temperature,
-                "extra_body": {"reasoning": {"enabled": False}},
+                "extra_body": extra,
             }
             resp = self._client.chat.completions.create(**params)
             return (resp.choices[0].message.content or "").strip()
@@ -362,12 +390,16 @@ class OpenAIClient(LLMClient):
         import urllib.request
 
         prompt = _RESEARCH_PROMPT_TEMPLATE.format(query=query)
-        body = {
+        body: dict = {
             "model": self._model,
             "messages": [{"role": "user", "content": prompt}],
             "tools": [{"type": "openrouter:web_search"}],
             "max_tokens": self._max_tokens,
         }
+        # 検閲の強い下流プロバイダ（Venice 等）を避ける（検索結果が弾かれないように）。
+        prov = self._openrouter_provider()
+        if prov:
+            body["provider"] = prov
         url = f"{self._base_url}/chat/completions"
         req = urllib.request.Request(
             url,
