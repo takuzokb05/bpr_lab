@@ -300,18 +300,50 @@ class OpenAIClient(LLMClient):
             params["temperature"] = temperature
         return params
 
+    def _retry_no_reasoning(self, system: str, messages: list[Message], temperature: float) -> str:
+        """空ターン救済: reasoning を切り max_tokens を増やして1回だけ非ストリームで取り直す。
+
+        思考モデル（Kimi/DeepSeek Pro 等）が reasoning に出力枠を食われ、可視発言が空になった場合の
+        フォールバック。reasoning を無効化すれば予算が全部可視出力に回るので、ほぼ必ず本文が返る。
+        失敗しても空文字を返すだけ（討論は止めない）。
+        """
+        try:
+            params: dict = {
+                "model": self._model,
+                "messages": self._messages(system, messages),
+                "max_tokens": max(self._max_tokens, 4096),
+                "temperature": temperature,
+                "extra_body": {"reasoning": {"enabled": False}},
+            }
+            resp = self._client.chat.completions.create(**params)
+            return (resp.choices[0].message.content or "").strip()
+        except Exception:  # noqa: BLE001 — 救済の失敗で討論を止めない
+            return ""
+
     def generate(self, *, system: str, messages: list[Message], model: str, temperature: float = 0.7) -> str:
         resp = self._client.chat.completions.create(**self._params(system, messages, temperature))
-        return (resp.choices[0].message.content or "").strip()
+        content = (resp.choices[0].message.content or "").strip()
+        # local（思考モデル）が空を返したら reasoning を切って取り直す（空ターン防止）。
+        if self._local and not content:
+            content = self._retry_no_reasoning(system, messages, temperature)
+        return content
 
     def generate_stream(self, *, system: str, messages: list[Message], model: str, temperature: float = 0.7) -> Iterator[str]:
         stream = self._client.chat.completions.create(
             **self._params(system, messages, temperature), stream=True
         )
+        got: list[str] = []
         for chunk in stream:
             delta = chunk.choices[0].delta.content if chunk.choices else None
             if delta:
+                got.append(delta)
                 yield delta
+        # local（思考モデル）が何も発しなかったら reasoning を切って取り直し、その全文を流す
+        # （「発言者が無言で次へ流れる」空ターンの根治）。
+        if self._local and not "".join(got).strip():
+            retry = self._retry_no_reasoning(system, messages, temperature)
+            if retry:
+                yield retry
 
     def web_research(self, query: str) -> str:
         """内製（local）経路の Web 検索。
