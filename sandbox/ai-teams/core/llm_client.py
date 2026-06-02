@@ -229,10 +229,35 @@ class OpenAIClient(LLMClient):
     provider の既定モデルを使う。Web 検索は未対応（honest に伝える）。
     """
 
-    def __init__(self, api_key: str | None = None, model: str | None = None, max_tokens: int | None = None) -> None:
+    def __init__(
+        self,
+        api_key: str | None = None,
+        model: str | None = None,
+        max_tokens: int | None = None,
+        base_url: str | None = None,
+        search_mode: str = "",
+    ) -> None:
         from openai import OpenAI  # 遅延 import（未インストールでも他 provider は動く）
 
-        self._client = OpenAI(api_key=api_key) if api_key else OpenAI()
+        # base_url を渡すと OpenAI 互換の自前推論サーバ（Ollama/vLLM）や開源フロンティアAPI
+        # （DeepSeek/GLM/Qwen, OpenRouter）に向く＝内製（自前ホスト/開源）LLM。
+        # この local 経路では max_completion_tokens/reasoning_effort 非対応のことが多いので、_params で
+        # 古典的な max_tokens + temperature に切り替える（per-persona temperature がそのまま効く）。
+        self._local = bool(base_url)
+        # web_research を直 HTTP で叩くため base_url / api_key を保持する（OpenRouter は SDK 標準の
+        # tools 経路と互換でないため）。search_mode="openrouter" のとき web_search サーバツールを使う。
+        self._search_mode = (search_mode or "").strip().lower()
+        self._base_url = (base_url or "").rstrip("/")
+        key = (api_key or os.environ.get("AI_TEAMS_LOCAL_API_KEY") or "local") if base_url else api_key
+        self._api_key_value = key
+        kwargs: dict = {}
+        if base_url:
+            kwargs["base_url"] = base_url
+            # ローカル(Ollama 等)は鍵不要だが OpenAI SDK が api_key を要求するためダミーを入れる。
+            kwargs["api_key"] = key
+        elif api_key:
+            kwargs["api_key"] = api_key
+        self._client = OpenAI(**kwargs) if kwargs else OpenAI()
         self._model = model or _OPENAI_DEFAULT_MODEL
         self._max_tokens = max_tokens or int(os.environ.get("AI_TEAMS_MAX_TOKENS", "2048"))
 
@@ -252,8 +277,15 @@ class OpenAIClient(LLMClient):
         params: dict = {
             "model": self._model,  # 渡された model（Claude ID の可能性）は使わない
             "messages": self._messages(system, messages),
-            "max_completion_tokens": self._max_tokens,
         }
+        if self._local:
+            # 内製（OpenAI 互換の自前サーバ・Ollama/vLLM）。max_completion_tokens/reasoning_effort は
+            # 非対応のことが多いので、古典的な max_tokens + temperature を使う（温度がそのまま効く）。
+            params["max_tokens"] = self._max_tokens
+            params["temperature"] = temperature
+            return params
+        # クラウド OpenAI（GPT-5/o 系は max_completion_tokens・temperature 非対応で reasoning_effort）。
+        params["max_completion_tokens"] = self._max_tokens
         if any(m in self._model for m in _OPENAI_NO_TEMP_MARKERS):
             effort = os.environ.get("AI_TEAMS_OPENAI_REASONING", "low").strip()
             if effort:
@@ -276,7 +308,61 @@ class OpenAIClient(LLMClient):
                 yield delta
 
     def web_research(self, query: str) -> str:
+        """内製（local）経路の Web 検索。
+
+        search_mode="openrouter" のとき、OpenRouter の web_search **サーバツール**を有効にした
+        chat.completions を1回呼び、本文＋出典(url_citation)を返す（どのモデルでも検索可）。
+        OpenRouter は SDK 標準の tools 経路と互換でないため直 HTTP で叩く。
+        検索バックエンド未設定（""）のときは honest に「未対応」を返す（討論は止めない）。
+        """
+        if self._search_mode == "openrouter":
+            return self._openrouter_web_research(query)
         return _RESEARCH_UNSUPPORTED
+
+    def _openrouter_web_research(self, query: str) -> str:
+        import json
+        import urllib.request
+
+        prompt = _RESEARCH_PROMPT_TEMPLATE.format(query=query)
+        body = {
+            "model": self._model,
+            "messages": [{"role": "user", "content": prompt}],
+            "tools": [{"type": "openrouter:web_search"}],
+            "max_tokens": self._max_tokens,
+        }
+        url = f"{self._base_url}/chat/completions"
+        req = urllib.request.Request(
+            url,
+            data=json.dumps(body).encode("utf-8"),
+            headers={
+                "Authorization": f"Bearer {self._api_key_value}",
+                "Content-Type": "application/json",
+            },
+            method="POST",
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=120) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+        except Exception as exc:  # noqa: BLE001 — 失敗しても討論を止めず、その旨を返す
+            return f"（調査に失敗: {exc}）"
+
+        choices = data.get("choices") or [{}]
+        msg = choices[0].get("message", {}) if choices else {}
+        text = (msg.get("content") or "").strip()
+        # url_citation annotations から出典 URL を集める（重複排除・順序維持）。
+        urls: list[str] = []
+        seen: set[str] = set()
+        for ann in msg.get("annotations") or []:
+            uc = ann.get("url_citation") or {}
+            u = uc.get("url")
+            if u and u not in seen:
+                seen.add(u)
+                urls.append(u)
+        if urls:
+            text += "\n\n出典:\n" + "\n".join(f"- {u}" for u in urls)
+        if not text:
+            return f"（調査結果が空でした: {query}）"
+        return text
 
 
 class GeminiClient(LLMClient):

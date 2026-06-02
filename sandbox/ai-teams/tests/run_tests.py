@@ -792,6 +792,96 @@ def test_provider_params():
     check(getattr(cfg, "thinking_config", None) is not None, "Gemini は thinking_config を設定（出力枯れ防止）")
 
 
+def test_local_provider():
+    """内製（local）: base_url で OpenAI 互換へ・検索設定・force_local・research_providers。"""
+    print("[test] local provider (self-hosted / open-frontier via base_url)")
+    import os
+
+    from core import OpenAIClient as _OpenAI, MockLLMClient as _Mock
+
+    keys = (
+        "AI_TEAMS_LOCAL_BASE_URL",
+        "AI_TEAMS_LOCAL_MODEL",
+        "AI_TEAMS_LOCAL_API_KEY",
+        "AI_TEAMS_LOCAL_SEARCH",
+        "AI_TEAMS_FORCE_LOCAL",
+        "AI_TEAMS_BYOK",
+    )
+    saved = {k: os.environ.get(k) for k in keys}
+    try:
+        for k in keys:
+            os.environ.pop(k, None)
+
+        # 正規化
+        check(service.normalize_provider("local") == "local", "provider=local は local")
+        check(service.normalize_provider("ollama") == "local", "ollama は local に正規化")
+
+        # base_url 未設定 → 内製は無効・make_client は Mock（落とさない）
+        check(service.local_enabled() is False, "base_url 未設定で local 無効")
+        check(
+            isinstance(service.make_client(mock=False, provider="local"), _Mock),
+            "local だが base_url 未設定なら Mock",
+        )
+        check(service.research_providers() == ["anthropic"], "既定 research_providers は anthropic のみ")
+        check(service.force_local() is False, "force_local 未設定で False")
+
+        # base_url 設定 → OpenAIClient（local モード）
+        os.environ["AI_TEAMS_LOCAL_BASE_URL"] = "http://127.0.0.1:11434/v1"
+        os.environ["AI_TEAMS_LOCAL_MODEL"] = "qwen3:14b"
+        os.environ["AI_TEAMS_LOCAL_API_KEY"] = "test-key"
+        check(service.local_enabled() is True, "base_url 設定で local 有効")
+        c = service.make_client(mock=False, provider="local", max_tokens=1234)
+        check(isinstance(c, _OpenAI), "local + base_url で OpenAIClient")
+        check(
+            c._local is True and c._base_url == "http://127.0.0.1:11434/v1",
+            "base_url を保持・local モード",
+        )
+        check(c._model == "qwen3:14b", "AI_TEAMS_LOCAL_MODEL を使う")
+        # local の _params は max_tokens + temperature（max_completion_tokens は使わない）
+        p = c._params("sys", [{"role": "user", "content": "hi"}], 0.6)
+        check("max_tokens" in p and "max_completion_tokens" not in p, "local は max_tokens を使う")
+        check(p.get("temperature") == 0.6, "local は temperature が効く（per-persona）")
+        # 検索未設定 → web_research は未対応（ネットワークは叩かない）
+        check(c._search_mode == "", "検索未設定なら search_mode 空")
+        check("Anthropic" in c.web_research("x"), "検索未設定の local は web_research 未対応を返す")
+
+        # 検索設定（openrouter）
+        os.environ["AI_TEAMS_LOCAL_SEARCH"] = "openrouter"
+        check(service.local_search_enabled() is True, "AI_TEAMS_LOCAL_SEARCH=openrouter で検索有効")
+        check("local" in service.research_providers(), "検索設定済みで research_providers に local")
+        c2 = service.make_client(mock=False, provider="local")
+        check(c2._search_mode == "openrouter", "make_client が search_mode を渡す")
+        cc = service.build_council(
+            ["moderator", "logic", "idea", "chair"], mock=True, provider="local", research=True
+        )
+        check(cc.research is True, "検索設定済みの local では research=True が活きる")
+        os.environ.pop("AI_TEAMS_LOCAL_SEARCH", None)
+        cc2 = service.build_council(
+            ["moderator", "logic", "idea", "chair"], mock=True, provider="local", research=True
+        )
+        check(cc2.research is False, "検索未設定の local では research 強制 off")
+
+        # force_local
+        os.environ["AI_TEAMS_FORCE_LOCAL"] = "1"
+        check(service.force_local() is True, "FORCE_LOCAL=1 + base_url で force_local True")
+        st = service.llm_status()
+        check(
+            st.get("local") is True and st.get("force_local") is True,
+            f"llm_status に local/force_local: {st}",
+        )
+        check("local" in st.get("providers", []), "providers に local")
+
+        # base_url を消すと force_local は False（誤設定で落とさない）
+        os.environ.pop("AI_TEAMS_LOCAL_BASE_URL", None)
+        check(service.force_local() is False, "base_url 無しなら force_local False（誤設定耐性）")
+    finally:
+        for k, v in saved.items():
+            if v is None:
+                os.environ.pop(k, None)
+            else:
+                os.environ[k] = v
+
+
 def test_persona_service_crud():
     """ペルソナ service: 保存/詳細/category 変更 unlink/旧パス unlink を id→path で。"""
     print("[test] persona service CRUD (save/detail/category-move unlink)")
@@ -1752,6 +1842,7 @@ if __name__ == "__main__":
     test_byok_make_client()
     test_verbosity()
     test_provider_params()
+    test_local_provider()
     test_custom_personas()
     test_persona_service_crud()
     test_preset_service()

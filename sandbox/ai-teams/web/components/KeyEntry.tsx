@@ -24,6 +24,12 @@ const PROVIDER_META: Record<
     keyUrl: "https://aistudio.google.com/apikey",
     hint: "AIza...",
   },
+  // local（内製/開源）は鍵不要なので BYOK のキー選択には出さない（型を満たすためのみ定義）。
+  local: {
+    label: "内製/オープン",
+    keyUrl: "#",
+    hint: "キー不要",
+  },
 };
 
 // BYOK のプロバイダ選択＋キー入力。キーは page 側で localStorage に保存し、ここは表示・編集だけ。

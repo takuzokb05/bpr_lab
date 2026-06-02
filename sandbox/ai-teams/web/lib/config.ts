@@ -23,8 +23,10 @@ export function apiUrl(path: string): string {
 const USER_KEY_STORAGE = "aiteams_llm_key";
 const PROVIDER_STORAGE = "aiteams_llm_provider";
 
-// 対応プロバイダ。各自は **1社のキーだけ**入れればよい（単一キー）。Web 検索は anthropic のみ。
-export type LlmProvider = "anthropic" | "openai" | "google";
+// 対応プロバイダ。anthropic/openai/google は BYOK（各自1社のキー）。local は内製（自前ホスト/開源API）で
+// キー不要（サーバ設定）＝BYOK のキー選択 UI には出さない（force_local で server 側が固定する）。
+export type LlmProvider = "anthropic" | "openai" | "google" | "local";
+// BYOK のキー入力で選べるプロバイダ（local は鍵不要なので含めない）。
 export const LLM_PROVIDERS: LlmProvider[] = ["anthropic", "openai", "google"];
 
 export function getProvider(): LlmProvider {

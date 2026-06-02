@@ -369,9 +369,16 @@ export interface Health {
   api_key_set: boolean;
   // BYOK（各自が自分の API キーを持参）モードか。true なら実 LLM は各自のキーが必要。
   byok?: boolean;
-  // 対応プロバイダ（anthropic/openai/google）。Web 検索は research_provider のみ対応。
+  // 対応プロバイダ（anthropic/openai/google/local）。Web 検索は research_providers のみ対応。
   providers?: string[];
-  research_provider?: string;
+  research_provider?: string; // 後方互換（単一）
+  research_providers?: string[]; // Web 検索が使える provider 一覧（anthropic ＋ 検索設定済みの local）
+  // 内製（自前ホスト/開源API）が使えるか。true なら「内製（キー不要）」を出し分ける。
+  local?: boolean;
+  // 内製経路で Web 検索が使えるか（OpenRouter 等の検索バックエンド設定済み）。
+  local_search?: boolean;
+  // サーバを丸ごと内製に固定しているか。true なら全実 LLM が内製＝キー不要で実 LLM 可。
+  force_local?: boolean;
   // 編成 CRUD が書き込み禁止か（共有インスタンス）。true なら「管理」UI を隠す。
   readonly?: boolean;
 }

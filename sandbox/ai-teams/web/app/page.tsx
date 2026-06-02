@@ -373,15 +373,24 @@ export default function Home() {
 
   // BYOK モードか（サーバが共有/公開設定）。実 LLM のキー所在が分岐する。
   const byok = health?.byok ?? false;
-  // 実 LLM に使えるキーがあるか: BYOK は各自のキー（localStorage）、個人運用はサーバキー。
-  const keyAvailable = byok ? userKey.trim().length > 0 : (health?.api_key_set ?? false);
+  // サーバを丸ごと内製（開源/自前ホスト）に固定しているか。true なら実 LLM はキー不要（サーバ設定の鍵で動く）。
+  const forceLocal = health?.force_local ?? false;
+  // 実 LLM に使えるキーがあるか: 内製固定ならキー不要、BYOK は各自のキー、個人運用はサーバキー。
+  const keyAvailable = forceLocal
+    ? true
+    : byok
+      ? userKey.trim().length > 0
+      : (health?.api_key_set ?? false);
   // 実 LLM が実際に使われるか（mock = NOT(useLlm AND keyAvailable)。キーが無ければ常に mock）。
   const willUseRealLlm = useLlm && keyAvailable;
   // 対応プロバイダ（health から。未取得時は全 3 社）。
   const availableProviders = (health?.providers as LlmProvider[] | undefined) ?? LLM_PROVIDERS;
-  // Web 検索（調査役）は anthropic のみ対応。非 anthropic では研究トグルを無効化する。
-  const researchProvider = health?.research_provider ?? "anthropic";
-  const researchAvailable = provider === researchProvider;
+  // Web 検索（調査役）が使える provider 一覧。内製固定なら local_search の有無で決まる。
+  const researchProviders = (health?.research_providers as string[] | undefined) ??
+    [health?.research_provider ?? "anthropic"];
+  const researchAvailable = forceLocal
+    ? (health?.local_search ?? false)
+    : researchProviders.includes(provider);
 
   // 追い質問の処理中（人間ターンのエコー・司会再提示・パネリスト応答が流れている間）。
   const processingFollowup =
@@ -1016,7 +1025,7 @@ export default function Home() {
               onProviderChange={updateProvider}
               value={userKey}
               onChange={updateUserKey}
-              providers={availableProviders}
+              providers={availableProviders.filter((p) => p !== "local")}
               disabled={active}
             />
           )}
@@ -1028,6 +1037,19 @@ export default function Home() {
             onChange={setUseLlm}
             disabled={active}
           />
+
+          {/* 内製固定（force_local）時の明示。キー不要で開源/自前モデルが応答する。 */}
+          {forceLocal && (
+            <p className="-mt-3 flex items-start gap-1.5 text-[11px] leading-relaxed text-[var(--color-ink-muted)]">
+              <Globe size={12} className="mt-0.5 shrink-0 text-[var(--color-accent)]" />
+              <span>
+                内製／オープンモデルで討論します（サーバ設定・キー不要）。
+                {health?.local_search
+                  ? "Web 検索も利用できます。"
+                  : "Web 検索は未設定です（AI_TEAMS_LOCAL_SEARCH）。"}
+              </span>
+            </p>
+          )}
 
           <VerbositySelect
             value={verbosity}

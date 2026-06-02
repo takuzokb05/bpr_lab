@@ -92,9 +92,66 @@ def readonly_mode() -> bool:
     return os.environ.get("AI_TEAMS_READONLY", "").strip().lower() in ("1", "true", "yes")
 
 
-# 対応プロバイダ（BYOK・各自が1社のキーだけ入れる）。研究=Web 検索は Anthropic のみ対応。
-PROVIDERS = ("anthropic", "openai", "google")
+# 対応プロバイダ。anthropic/openai/google は BYOK（各自が1社のキー）。local は内製（自前ホスト）LLM＝
+# OpenAI 互換の自前推論サーバ（Ollama/vLLM）に base_url で繋ぐ。鍵不要・従量ゼロ。研究=Web 検索は
+# Anthropic のみ対応（local も非対応で honest に劣化）。
+PROVIDERS = ("anthropic", "openai", "google", "local")
 _DEFAULT_PROVIDER = "anthropic"
+
+
+def local_base_url() -> str:
+    """内製（自前ホスト）LLM の OpenAI 互換エンドポイント。
+
+    env AI_TEAMS_LOCAL_BASE_URL（例: http://127.0.0.1:11434/v1 ＝ Ollama、http://host:8000/v1 ＝ vLLM）。
+    未設定なら空（＝内製は無効）。推論サーバは uvicorn と別ホストでよい（base_url で繋ぐだけ）。
+    """
+    return os.environ.get("AI_TEAMS_LOCAL_BASE_URL", "").strip()
+
+
+def local_model() -> str:
+    """内製 LLM のモデル名（env AI_TEAMS_LOCAL_MODEL、例: qwen3:14b）。未設定なら汎用 'qwen3'。"""
+    return os.environ.get("AI_TEAMS_LOCAL_MODEL", "").strip() or "qwen3"
+
+
+def local_enabled() -> bool:
+    """内製 LLM が使えるよう設定されているか（base_url が設定済みか）。UI の出し分けに使う。"""
+    return bool(local_base_url())
+
+
+def local_search_mode() -> str:
+    """内製（local）経路の Web 検索バックエンド。
+
+    env AI_TEAMS_LOCAL_SEARCH:
+      - "openrouter": base_url が OpenRouter のとき、web_search サーバツールで検索する
+        （どのモデルでも検索可・$0.005/検索程度）。
+      - ""（既定）: 検索なし（非 Anthropic と同じく honest に劣化）。
+    将来 "searxng" 等を足せる拡張点。
+    """
+    return os.environ.get("AI_TEAMS_LOCAL_SEARCH", "").strip().lower()
+
+
+def local_search_enabled() -> bool:
+    """内製（local）経路で Web 検索が使える設定か（base_url 済み＋検索バックエンド指定済み）。"""
+    return local_enabled() and local_search_mode() in ("openrouter",)
+
+
+def research_providers() -> list[str]:
+    """Web 検索（調査役）が使える provider 一覧。anthropic は常時、local は検索設定済みのとき。"""
+    out = ["anthropic"]
+    if local_search_enabled():
+        out.append("local")
+    return out
+
+
+def force_local() -> bool:
+    """サーバを丸ごと内製（local）に固定するか（env AI_TEAMS_FORCE_LOCAL）。
+
+    True かつ local 設定済みなら、来訪者の provider 指定に関わらず**全実 LLM を内製に回す**
+    （個人運用で「開源フロンティアAPIで全部動かす」最短スイッチ）。フロントの provider 選択 UI を
+    増やさずに切り替えられる。local 未設定なら False（誤設定で落とさない）。
+    """
+    flag = os.environ.get("AI_TEAMS_FORCE_LOCAL", "").strip().lower() in ("1", "true", "yes")
+    return flag and local_enabled()
 
 # 応答の長さプリセット（ユーザーはトークン数を意識しない。質感だけ選ぶ）。
 #   max_tokens: 1発言の出力上限。**上限**でありモデルは必要分で止まるので、上げても常時その量を
@@ -128,10 +185,12 @@ def normalize_verbosity(v: str | None) -> str:
 
 
 def normalize_provider(provider: str | None) -> str:
-    """provider 文字列を正規化（未知/空は既定 anthropic）。"gemini" は google に寄せる。"""
+    """provider 文字列を正規化（未知/空は既定 anthropic）。"gemini" は google、"ollama" 等は local に寄せる。"""
     p = (provider or "").strip().lower()
     if p in ("gemini", "google-gemini"):
         return "google"
+    if p in ("local", "ollama", "vllm", "self-hosted", "selfhosted"):
+        return "local"
     return p if p in PROVIDERS else _DEFAULT_PROVIDER
 
 
@@ -155,6 +214,19 @@ def make_client(
     if mock:
         return MockLLMClient()
     prov = normalize_provider(provider)
+    # 内製（自前ホスト）LLM: OpenAI 互換の自前サーバへ base_url で繋ぐ。鍵不要。base_url 未設定なら
+    # 黙って Mock（来訪者を落とさない／課金しない。UI は llm_status.local で出し分ける）。
+    if prov == "local":
+        base = local_base_url()
+        if not base:
+            return MockLLMClient()
+        return OpenAIClient(
+            api_key=api_key,
+            base_url=base,
+            model=local_model(),
+            max_tokens=max_tokens,
+            search_mode=local_search_mode(),
+        )
     key = api_key
     if not key and not byok_mode() and prov == "anthropic":
         key = os.environ.get("ANTHROPIC_API_KEY")  # 非 BYOK 個人運用の後方互換（Anthropic のみ）
@@ -176,13 +248,27 @@ def llm_status() -> dict:
     """
     byok = byok_mode()
     api_key_set = False if byok else bool(os.environ.get("ANTHROPIC_API_KEY"))
+    local = local_enabled()
+    forced = force_local()
+    # フロントの provider 選択用。内製（local）は設定済みのときだけ出す（未設定なら選ばせない）。
+    providers = ["anthropic", "openai", "google"]
+    if local:
+        providers.append("local")
     return {
         "llm": "byok" if byok else ("anthropic" if api_key_set else "mock"),
         "api_key_set": api_key_set,
         "byok": byok,
-        # フロントの provider 選択用。Web 検索（調査役）は anthropic のみ対応。
-        "providers": list(PROVIDERS),
+        "providers": providers,
+        # 後方互換（単一）。新しくは research_providers（list）を見る。
         "research_provider": "anthropic",
+        # Web 検索（調査役）が使える provider 一覧（anthropic ＋ 検索設定済みの local）。
+        "research_providers": research_providers(),
+        # 内製（自前ホスト/開源API）が使えるか（base_url 設定済み）。UI は「内製（キー不要）」を出し分ける。
+        "local": local,
+        # 内製経路で Web 検索が使えるか（OpenRouter 等の検索バックエンド設定済み）。
+        "local_search": local_search_enabled(),
+        # サーバを丸ごと内製に固定しているか（true なら全実 LLM を内製に回す＝キー不要で実 LLM 可）。
+        "force_local": forced,
         # 編成 CRUD が書き込み禁止か（共有インスタンス）。フロントは「管理」UI を隠す。
         "readonly": readonly_mode(),
     }
@@ -261,10 +347,11 @@ def build_council(
     if missing:
         raise KeyError(missing)
     personas = [registry[pid] for pid in persona_ids]
-    # Web 検索（調査役）は Anthropic のみ対応。非 Anthropic provider では強制 off にして、
-    # 「要調査:」ナッジや無意味な researcher ターンが出ないようにする（honest な劣化）。
+    # Web 検索（調査役）が使える provider でなければ強制 off にして、「要調査:」ナッジや
+    # 無意味な researcher ターンが出ないようにする（honest な劣化）。anthropic は常時、
+    # local は検索バックエンド（OpenRouter 等）が設定済みのときだけ research を許す。
     prov = normalize_provider(provider)
-    research = research and prov == "anthropic"
+    research = research and prov in research_providers()
     # 応答の長さプリセット → 出力上限（途中切れ防止）＋発話スタイル指示。
     vb = VERBOSITY[normalize_verbosity(verbosity)]
     return Council(

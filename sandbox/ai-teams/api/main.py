@@ -123,16 +123,21 @@ def _assert_writable() -> None:
         )
 
 
-def _resolve_api_key(mock: bool, key_header: str | None) -> str | None:
-    """実 LLM 呼び出しに使う API キーを決める（BYOK ガード）。provider 非依存。
+def _resolve_api_key(
+    mock: bool, key_header: str | None, provider: str | None = None
+) -> str | None:
+    """実 LLM 呼び出しに使う API キーを決める（BYOK ガード）。
 
     - mock=True: キー不要（None を返す。make_client が Mock を返す）。
+    - provider=local（内製・自前ホスト）: キー不要（None。make_client が base_url で繋ぐ）。BYOK でも 400 にしない。
     - BYOK モードで実 LLM を要求したのにキー未提供 → 400（来訪者は自分のキーが必須）。
     - それ以外: 渡されたキー（無ければ None ＝ 非 BYOK で Anthropic はサーバ env キーへフォールバック可）。
     キーはどこにもログ/保存しない（クライアントのメモリ内のみ・セッション終了で消える）。
     """
     if mock:
         return None
+    if service.normalize_provider(provider) == "local":
+        return None  # 内製は鍵不要。BYOK 公開時でも local は所有者の自前サーバを使う（鍵を求めない）。
     key = (key_header or "").strip() or None
     if service.byok_mode() and not key:
         raise HTTPException(
@@ -256,9 +261,11 @@ def intake(
     X-LLM-Provider）を使う。X-Anthropic-Key は後方互換。レート制限あり。
     """
     _rate_check(request)
-    api_key = _resolve_api_key(req.mock, x_llm_key or x_anthropic_key)
+    # force_local 時は来訪者の provider 指定に関わらず内製（local）へ固定する。
+    eff_provider = "local" if service.force_local() else x_llm_provider
+    api_key = _resolve_api_key(req.mock, x_llm_key or x_anthropic_key, eff_provider)
     questions = service.generate_intake_questions(
-        req.topic, req.materials or "", mock=req.mock, api_key=api_key, provider=x_llm_provider
+        req.topic, req.materials or "", mock=req.mock, api_key=api_key, provider=eff_provider
     )
     return {"questions": questions}
 
@@ -279,7 +286,9 @@ def create_session(
     X-Anthropic-Key は後方互換。レート制限・同時上限あり。
     """
     _rate_check(request)
-    api_key = _resolve_api_key(req.mock, x_llm_key or x_anthropic_key)
+    # force_local 時は来訪者の provider 指定に関わらず内製（local）へ固定する。
+    eff_provider = "local" if service.force_local() else x_llm_provider
+    api_key = _resolve_api_key(req.mock, x_llm_key or x_anthropic_key, eff_provider)
     # 資料・前提 + intake の Q&A を合成（どちらも空なら "" ＝従来と完全同一の Council）。
     composed_materials = _compose_materials(req.materials, req.intake)
     try:
@@ -290,7 +299,7 @@ def create_session(
             red_team_id=req.red_team_id,
             mock=req.mock,
             api_key=api_key,
-            provider=x_llm_provider,
+            provider=eff_provider,
             verbosity=req.verbosity,
             custom_personas=[cp.model_dump() for cp in req.custom_personas],
             materials=composed_materials,

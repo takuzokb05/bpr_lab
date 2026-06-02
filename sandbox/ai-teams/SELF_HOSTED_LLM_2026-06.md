@@ -101,6 +101,41 @@
 - **Phase 3**：vLLM 化（必要なら）／推論サーバの常駐・監視／自前 Web 検索（SearXNG＋tool calling）。
 - **Phase 4（任意・遊び）**：人格ごとに別モデル（多様性＝collapse 対策）／ペルソナ特化 fine-tune。
 
+## 2026-06 後半: 情勢更新（カットオフ後の事実調査）＋Phase 1 実装＋クイックスタート
+
+> 設計図初稿（本書前半）は Jan 2026 知識ベースで「自前はOpus級に届かない／検索が無い」と書いたが、
+> **2026-06 時点の事実調査で2点が古かった**ので訂正する（出典は git コミット説明/会話ログ）。
+
+### 情勢の訂正（実測ベース）
+- **開源モデルはOpus級に肉薄**：GLM-5.1（MIT・754B MoE）がGPT-5.4/Opus 4.6/Gemini 3.1 ProをSWE-Bench Proで同時に上回った初の開源モデル。DeepSeek V4 Pro はSWE-Bench Verified 80.6%でクローズド同水準。**Opus 4.8 は依然 #1** だが差は僅か。日本語も Qwen3.5-397B が日本語ベンチ初の0.80超え。
+- **検索は解決済み**：OpenRouter の **web_search サーバツール**（`tools:[{type:"openrouter:web_search"}]`・$0.005/検索）で**どのモデルでも検索可**。Ollama も web_search API（ただし Ollama クラウド転送・要アカウント）。完全プライベートは SearXNG 自前。
+- **コストが自前の動機を消した**：開源フロンティアAPIが激安（DeepSeek V4 Flash $0.14/$0.28 per M）。月90討論でも **$1-17/月**（Opus直接は ~$300/月）。**「コストゼロのために自前ホスト」はもう不要**＝自前の価値はコストでなく**所有・プライバシー・オフライン・特化**。
+- **「育てる（蒸留）」**：DeepSeek-R1蒸留（32Bがo1-miniを超え）が示す通り**狙い撃ちタスクなら小型が教師に肉薄**。データ生成$50-300＋LoRA$10で可。ただし**教師にAnthropicを使うのはToS違反リスク**（競合モデル訓練禁止＋能動検出）→ **教師は開源フロンティア（GLM/Qwen/DeepSeek・寛容ライセンス）にする**。
+
+### 採用方針：**シナリオA（開源フロンティアAPIを base_url で叩く）** を当面のベストとする
+個人運用で最短・最安。蒸留や高価GPUは不要。Phase 1 のコードで即動く。
+
+### Phase 1 実装済み（2026-06-02 後半）
+- `OpenAIClient(base_url=, search_mode=)`：base_url で OpenAI互換（Ollama/vLLM/DeepSeek/GLM/Qwen/OpenRouter）へ。
+  **local モードは `max_tokens`+`temperature`**（`max_completion_tokens`/`reasoning_effort` を使わない＝per-persona温度が効く）。
+- `provider="local"`（`make_client`/`normalize_provider`、"ollama"等も寄せる）。鍵不要（`AI_TEAMS_LOCAL_API_KEY`）。
+- **Web検索**：`web_research` が `search_mode="openrouter"` のとき OpenRouter web_search を直HTTPで叩き、本文＋`url_citation`出典を返す。`research_providers()`＝anthropic＋（検索設定済みの)local。`build_council` が local-with-search で research を許可。
+- **`AI_TEAMS_FORCE_LOCAL=1`**：来訪者の provider 指定に関わらず**全実LLMを内製に固定**（フロント大改修不要・キー不要で実LLM可）。フロントは `/health` の `force_local`/`local_search` を見て実LLM/検索トグルを出し分け＋「内製/オープンで討論」注記。
+- テスト：`test_local_provider`（normalize/make_client/_params/検索/research_providers/force_local/llm_status・全pass）。
+
+### クイックスタート（シナリオA：OpenRouterで全開源モデル＋検索）
+VPS/ローカルの `.env` に追記して uvicorn 再起動（**8000をListenするPIDをkillしてから** `Start-ScheduledTask`）：
+```
+AI_TEAMS_LOCAL_BASE_URL=https://openrouter.ai/api/v1
+AI_TEAMS_LOCAL_MODEL=deepseek/deepseek-v4-pro   # or z-ai/glm-5.1, qwen/qwen3.5-plus
+AI_TEAMS_LOCAL_API_KEY=<OpenRouterのAPIキー>
+AI_TEAMS_LOCAL_SEARCH=openrouter                # 検索を使うとき
+AI_TEAMS_FORCE_LOCAL=1                           # 全部を内製に固定（個人運用）
+```
+→ 実LLMトグルON＋Web検索ONで、DeepSeek/GLM/Qwen が検索付きで討論する。OpenRouter キーは [openrouter.ai/keys](https://openrouter.ai/keys)。
+**完全プライベートにしたい**なら base_url を自前 vLLM/Ollama＋検索を SearXNG に差し替え（Phase 3）。
+**育てる（蒸留）**に進むなら、A で集めた討論ログを開源教師で生成→Qwen3.5中型をLoRA（Phase 4）。
+
 ## リスク / 留意
 
 - **v2 の轍**：provider を増やすほど不安定化した。**1枚クリーンに足す**（OpenAI 互換に寄せる）こと。
