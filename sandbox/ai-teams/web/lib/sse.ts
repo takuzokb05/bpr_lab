@@ -305,10 +305,15 @@ export async function fetchHealth(): Promise<Health> {
 // -- 主訴確認（intake） -----------------------------------------------------
 //
 // 準備フェーズ: 討論の手前で主訴を固め逸脱を防ぐ確認質問を 2〜4 個もらう。
-// POST /intake {topic, materials?} → 200 {questions: string[]}。
+// POST /intake {topic, materials?, mock} → 200 {questions: string[]}。
 // mock or キー未設定ならサーバが LLM を呼ばず定型質問を返す（安価）。直結で取得する。
-export async function fetchIntake(topic: string, materials?: string): Promise<string[]> {
-  const body: Record<string, unknown> = { topic };
+// mock は討論の設定に追従させる＝mock モードで主訴確認だけ勝手に課金しないようにする。
+export async function fetchIntake(
+  topic: string,
+  materials?: string,
+  mock = false
+): Promise<string[]> {
+  const body: Record<string, unknown> = { topic, mock };
   if (materials && materials.trim()) body.materials = materials;
   const res = await fetch(apiUrl("/intake"), {
     method: "POST",

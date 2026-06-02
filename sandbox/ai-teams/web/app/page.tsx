@@ -67,10 +67,15 @@ export default function Home() {
 
   // 準備フェーズ（idle のみ）: 資料・前提と主訴確認。討論中/paused/done では一切出さない。
   const [materials, setMaterials] = useState("");
+  // 主訴確認トグル（Web 検索と同じ作法）。ON にすると議題から確認質問を自動生成する。
+  // 既定 OFF で従来同一（質問なしで即開始できる）。
+  const [intakeEnabled, setIntakeEnabled] = useState(false);
   // 確認質問（fetchIntake の結果）と各質問への回答。回答は任意・スキップ可。
   const [intakeQuestions, setIntakeQuestions] = useState<string[]>([]);
   const [intakeAnswers, setIntakeAnswers] = useState<Record<number, string>>({});
   const [intakeLoading, setIntakeLoading] = useState(false);
+  // 自動生成済みの議題（同じ議題で二重生成・課金しないためのガード）。
+  const intakeTopicRef = useRef<string | null>(null);
 
   // Web 検索（調査役）。既定 false で従来と完全同一（mock/キー未設定なら canned で無料）。
   // true のとき調査役が序盤と「要調査:」マーカーで検索し、結果を全員に共有する（コスト増）。
@@ -182,17 +187,18 @@ export default function Home() {
     setStreamingTurnId(null);
   }
 
-  // 準備フェーズ: 「確認する（任意）」→ 主訴を固める確認質問を 2〜4 個取得。
-  // 失敗しても討論自体は妨げない（資料だけ／質問なしで開始できる）。
+  // 準備フェーズ: 主訴を固める確認質問を 2〜4 個取得。トグル ON＋議題確定で自動的に呼ばれる。
+  // 失敗しても討論自体は妨げない（資料だけ／質問なしで開始できる）。mock は討論設定に追従。
   async function loadIntake() {
     const topic = topicInput.trim();
     if (!topic || intakeLoading || active) return;
     setIntakeLoading(true);
     setError(null);
     try {
-      const questions = await fetchIntake(topic, materials);
+      const questions = await fetchIntake(topic, materials, !willUseRealLlm);
       setIntakeQuestions(questions);
       setIntakeAnswers({}); // 質問が差し替わったら回答もリセット
+      intakeTopicRef.current = topic; // この議題は生成済み（二重生成を防ぐ）
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
     } finally {
@@ -200,11 +206,32 @@ export default function Home() {
     }
   }
 
-  // 準備フェーズ: 確認をスキップ（質問・回答を破棄）。資料・議題はそのまま。
-  function skipIntake() {
-    setIntakeQuestions([]);
-    setIntakeAnswers({});
+  // 主訴確認トグル。OFF にしたら生成済みの質問・回答を破棄（資料・議題はそのまま）。
+  function toggleIntake() {
+    setIntakeEnabled((v) => {
+      const next = !v;
+      if (!next) {
+        setIntakeQuestions([]);
+        setIntakeAnswers({});
+        intakeTopicRef.current = null;
+      }
+      return next;
+    });
   }
+
+  // トグル ON のとき、議題が確定したら確認質問を自動生成（Web 検索トグルと同じ「ON にすれば後は自動」）。
+  // 議題が変わるたびに作り直す。入力中の連打を避けるため 700ms デバウンス。同一議題は再生成しない。
+  useEffect(() => {
+    if (!intakeEnabled || active) return;
+    const topic = topicInput.trim();
+    if (!topic || intakeTopicRef.current === topic) return;
+    const t = setTimeout(() => {
+      loadIntake();
+    }, 700);
+    return () => clearTimeout(t);
+    // loadIntake は最新クロージャを使うため deps から除外（topicInput 変化で再設定される）。
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [intakeEnabled, topicInput, active]);
 
   // 準備フェーズ: ファイル添付（.txt/.md/.csv/.json）をクライアント側で読み、資料欄に取り込む。
   // PDF/Office は対象外。複数選択時は区切って連結。読み込み後は input をリセットして同じ
@@ -506,64 +533,90 @@ export default function Home() {
                 </p>
               </div>
 
-              {/* 主訴確認 */}
+              {/* 主訴確認（トグル）。ON にすると議題から確認質問を自動生成し、回答（任意）を
+                  討論に渡して論点の逸脱を防ぐ。OFF（既定）では一切生成しない＝従来同一。
+                  議題入力欄（最下部）が空でもトグルは操作でき、議題を入れると自動生成される。 */}
               <div className="flex flex-col gap-1.5 border-t border-[var(--color-line)] pt-3">
-                <div className="flex items-center justify-between gap-3">
-                  <span className="flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wider text-[var(--color-ink-muted)]">
-                    <ListChecks size={12} /> 主訴確認（任意）
-                  </span>
-                  <div className="flex shrink-0 items-center gap-2">
-                    {intakeQuestions.length > 0 && (
-                      <button
-                        type="button"
-                        onClick={skipIntake}
-                        className="rounded-md px-2 py-1 text-[11px] text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]"
-                      >
-                        確認をスキップして開始
-                      </button>
-                    )}
-                    <button
-                      type="button"
-                      onClick={loadIntake}
-                      disabled={!topicInput.trim() || intakeLoading}
-                      title={
-                        topicInput.trim() ? undefined : "先に議題を入力してください"
+                <button
+                  type="button"
+                  role="switch"
+                  aria-checked={intakeEnabled}
+                  onClick={toggleIntake}
+                  className={`flex items-center justify-between gap-3 rounded-md border px-2.5 py-2 text-left transition-colors ${
+                    intakeEnabled
+                      ? "border-[var(--color-accent)] bg-[var(--color-accent-weak)]"
+                      : "border-[var(--color-line)] hover:border-[var(--color-ink-muted)]"
+                  }`}
+                >
+                  <span className="flex items-center gap-2">
+                    <ListChecks
+                      size={14}
+                      className={
+                        intakeEnabled
+                          ? "text-[var(--color-accent)]"
+                          : "text-[var(--color-ink-muted)]"
                       }
-                      className="rounded-md border border-[var(--color-line)] px-2.5 py-1 text-[11px] text-[var(--color-ink-muted)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] disabled:opacity-40"
+                    />
+                    <span
+                      className={`text-xs ${
+                        intakeEnabled
+                          ? "text-[var(--color-accent)]"
+                          : "text-[var(--color-ink)]"
+                      }`}
                     >
-                      {intakeLoading
-                        ? "確認質問を作成中…"
-                        : intakeQuestions.length > 0
-                          ? "確認質問を作り直す"
-                          : "確認する"}
-                    </button>
-                  </div>
-                </div>
+                      主訴確認で論点の逸脱を防ぐ
+                    </span>
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className={`inline-flex h-4 w-7 shrink-0 items-center rounded-full p-0.5 transition-colors ${
+                      intakeEnabled
+                        ? "bg-[var(--color-accent)]"
+                        : "bg-[var(--color-line)]"
+                    }`}
+                  >
+                    <span
+                      className={`h-3 w-3 rounded-full bg-[var(--color-surface)] transition-transform ${
+                        intakeEnabled ? "translate-x-3" : "translate-x-0"
+                      }`}
+                    />
+                  </span>
+                </button>
 
-                {intakeQuestions.length === 0 ? (
-                  <p className="text-[11px] leading-relaxed text-[var(--color-ink-muted)]">
-                    討論前に主訴を固め、論点の逸脱を防ぐ確認質問を作れます（回答は任意）。
-                  </p>
-                ) : (
-                  <ul className="space-y-2.5">
-                    {intakeQuestions.map((q, i) => (
-                      <li key={i} className="flex flex-col gap-1">
-                        <span className="text-xs leading-relaxed text-[var(--color-ink)]">
-                          {q}
-                        </span>
-                        <textarea
-                          value={intakeAnswers[i] ?? ""}
-                          onChange={(e) =>
-                            setIntakeAnswers((prev) => ({ ...prev, [i]: e.target.value }))
-                          }
-                          rows={1}
-                          placeholder="回答（任意・空欄のまま開始してもよい）"
-                          className="max-h-28 min-h-[34px] w-full resize-y rounded-md border border-[var(--color-line)] bg-[var(--color-surface)] px-2.5 py-1.5 text-sm outline-none focus:border-[var(--color-accent)]"
-                        />
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                {intakeEnabled &&
+                  (!topicInput.trim() ? (
+                    <p className="flex items-start gap-1.5 text-[11px] leading-relaxed text-[var(--color-ink-muted)]">
+                      <ListChecks size={12} className="mt-0.5 shrink-0" />
+                      下の入力欄に議題を入れると、主訴を固める確認質問を自動で作成します（回答は任意）。
+                    </p>
+                  ) : intakeLoading ? (
+                    <p className="text-[11px] leading-relaxed text-[var(--color-ink-muted)]">
+                      確認質問を作成中…
+                    </p>
+                  ) : intakeQuestions.length === 0 ? (
+                    <p className="text-[11px] leading-relaxed text-[var(--color-ink-muted)]">
+                      確認質問を準備しています…
+                    </p>
+                  ) : (
+                    <ul className="space-y-2.5">
+                      {intakeQuestions.map((q, i) => (
+                        <li key={i} className="flex flex-col gap-1">
+                          <span className="text-xs leading-relaxed text-[var(--color-ink)]">
+                            {q}
+                          </span>
+                          <textarea
+                            value={intakeAnswers[i] ?? ""}
+                            onChange={(e) =>
+                              setIntakeAnswers((prev) => ({ ...prev, [i]: e.target.value }))
+                            }
+                            rows={1}
+                            placeholder="回答（任意・空欄のまま開始してもよい）"
+                            className="max-h-28 min-h-[34px] w-full resize-y rounded-md border border-[var(--color-line)] bg-[var(--color-surface)] px-2.5 py-1.5 text-sm outline-none focus:border-[var(--color-accent)]"
+                          />
+                        </li>
+                      ))}
+                    </ul>
+                  ))}
               </div>
 
               {/* Web 検索（調査役）。既定 OFF。ON のとき調査役が序盤と「要調査:」で
