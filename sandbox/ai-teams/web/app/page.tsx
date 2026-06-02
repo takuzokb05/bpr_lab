@@ -137,6 +137,16 @@ export default function Home() {
   const [saveOpen, setSaveOpen] = useState(false);
 
   const abortRef = useRef<AbortController | null>(null);
+  // ストリーム（SSE）が生きているか。モバイルのバックグラウンド化で切れた後、フォアグラウンド
+  // 復帰時に再接続すべきか判定する（生きている間は二重接続しない）。
+  const streamAliveRef = useRef(false);
+  // visibilitychange ハンドラから最新のセッション状態を参照する（delta 毎の購読し直しを避ける）。
+  const sessionStateRef = useRef<{
+    sessionId: string | null;
+    status: Status;
+    activeTopic: string | null;
+    turns: Turn[];
+  }>({ sessionId: null, status: "idle", activeTopic: null, turns: [] });
   // 入力欄（議題／追い質問の兼用コンポーザー）。内容に応じて高さを自動可変にし、送信前に
   // 入力全体を見返せるようにする（max-h まで伸び、それ以上はスクロール）。
   const composerRef = useRef<HTMLTextAreaElement | null>(null);
@@ -192,6 +202,33 @@ export default function Home() {
     setHistory(getHistory());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sessionId, activeTopic, status, turns.length]);
+
+  // 最新セッション状態を ref に同期（visibilitychange ハンドラが参照する）。
+  sessionStateRef.current = { sessionId, status, activeTopic, turns };
+
+  // モバイルでバックグラウンド化→フォアグラウンド復帰したとき、進行中セッションのストリームが
+  // 切れていたら再接続する（cursor=0 で replay 再構築）。購読は一度だけ（ref で最新値を読む）。
+  useEffect(() => {
+    function onVisible() {
+      if (typeof document === "undefined") return;
+      if (document.visibilityState !== "visible") return;
+      if (streamAliveRef.current) return; // まだ繋がっている
+      const s = sessionStateRef.current;
+      if (!s.sessionId) return;
+      if (s.status !== "running" && s.status !== "paused") return;
+      void resumeOrLoad({
+        id: s.sessionId,
+        topic: s.activeTopic ?? "",
+        startedAt: Date.now(),
+        updatedAt: Date.now(),
+        status: s.status,
+        turns: s.turns,
+      });
+    }
+    document.addEventListener("visibilitychange", onVisible);
+    return () => document.removeEventListener("visibilitychange", onVisible);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // BYOK キーの更新（localStorage に保存し state も同期）。空文字で保存＝クリア。
   function updateUserKey(key: string) {
@@ -478,6 +515,7 @@ export default function Home() {
       setStreamingTurnId(null);
       const ctrl = new AbortController();
       abortRef.current = ctrl;
+      streamAliveRef.current = true;
       try {
         const ok = await resumeSession({
           sessionId: entry.id,
@@ -486,7 +524,7 @@ export default function Home() {
         });
         if (!ok && !ctrl.signal.aborted) {
           setTurns(entry.turns);
-          setStatus(entry.status === "paused" ? "done" : "done");
+          setStatus("done");
           setError(
             "このセッションはサーバ側で終了/再起動により失われたため再開できません。ここまでの記録を表示しています。"
           );
@@ -497,6 +535,8 @@ export default function Home() {
           setStatus("done");
           setError(String(err));
         }
+      } finally {
+        streamAliveRef.current = false;
       }
     } else {
       // 完了/エラー: 保存済み transcript を読み取り表示。
@@ -537,6 +577,7 @@ export default function Home() {
     setIntakeQuestions([]);
     setIntakeAnswers({});
 
+    streamAliveRef.current = true;
     try {
       await startSession({
         topic,
@@ -555,10 +596,14 @@ export default function Home() {
         onEvent: handleEvent,
       });
     } catch (err) {
+      // 接続前（POST 失敗等）の例外。"TypeError: Load failed" 等の生メッセージは出さず、
+      // 通信失敗の分かりやすい案内にする（セッション確立後の切断は再接続ループ側で復帰）。
       if (!ctrl.signal.aborted) {
-        setError(String(err));
+        setError("接続に失敗しました。通信環境を確認して、もう一度お試しください。");
         setStatus("error");
       }
+    } finally {
+      streamAliveRef.current = false;
     }
   }
 

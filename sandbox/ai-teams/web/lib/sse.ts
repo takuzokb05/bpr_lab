@@ -121,24 +121,38 @@ export async function startSession({
   await runReconnectLoop(state, onEvent, signal);
 }
 
-/** 切断時に /sessions/{id}/stream?cursor=lastSeq+1 で続きを取りに行く共通ループ。 */
+/** 切断時に /sessions/{id}/stream?cursor=lastSeq+1 で続きを取りに行く共通ループ。
+ *
+ * モバイルのバックグラウンド化でストリームが切れても諦めず、バックオフ再試行する
+ * （iOS は背面で timer を止めるので、復帰時に setTimeout が発火して自然に再接続される）。
+ * 404（サーバがセッションを失った＝再起動/TTL）は復帰不可なので即停止。
+ */
 async function runReconnectLoop(
   state: PumpState,
   onEvent: (e: StreamEvent) => void,
   signal?: AbortSignal
 ): Promise<void> {
+  let attempts = 0;
+  const MAX_ATTEMPTS = 12;
   while (!state.terminal && !signal?.aborted && state.sessionId) {
-    let r: Response;
+    let r: Response | null = null;
     try {
       r = await fetch(
         apiUrl(`/sessions/${state.sessionId}/stream?cursor=${state.lastSeq + 1}`),
         { headers: apiHeaders(), signal }
       );
     } catch {
-      break; // ネットワーク断など。これ以上は諦める（MVP の割り切り）。
+      r = null; // ネットワーク断（バックグラウンド化等）
     }
-    if (!r.ok || !r.body) break;
-    await pump(r, state, onEvent);
+    if (signal?.aborted) break;
+    if (r && r.ok && r.body) {
+      attempts = 0; // 繋がったらリトライ回数をリセット
+      await pump(r, state, onEvent);
+      continue;
+    }
+    if (r && r.status === 404) break; // サーバがセッションを失った＝復帰不可
+    if (++attempts > MAX_ATTEMPTS) break; // 一時エラーが続く: 諦める（復帰は visibilitychange / 再読込）
+    await new Promise((resolve) => setTimeout(resolve, 1500)); // バックオフ
   }
 }
 
@@ -183,26 +197,32 @@ async function pump(
   const decoder = new TextDecoder();
   let buffer = "";
 
-  while (true) {
-    const { value, done } = await reader.read();
-    if (done) break;
-    buffer += decoder.decode(value, { stream: true });
+  // 読取中の例外（モバイルのバックグラウンド化・ネットワーク断）は throw せず return し、
+  // 呼び出し側の再接続ループに委ねる（ここで投げると再接続が走らず "Load failed" で止まる）。
+  try {
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
 
-    let sep: number;
-    while ((sep = buffer.indexOf("\n\n")) !== -1) {
-      const raw = buffer.slice(0, sep);
-      buffer = buffer.slice(sep + 2);
-      const frame = parseFrame(raw);
-      if (!frame) continue;
+      let sep: number;
+      while ((sep = buffer.indexOf("\n\n")) !== -1) {
+        const raw = buffer.slice(0, sep);
+        buffer = buffer.slice(sep + 2);
+        const frame = parseFrame(raw);
+        if (!frame) continue;
 
-      const { event, data } = frame;
-      if (typeof data.seq === "number") {
-        state.lastSeq = Math.max(state.lastSeq, data.seq);
+        const { event, data } = frame;
+        if (typeof data.seq === "number") {
+          state.lastSeq = Math.max(state.lastSeq, data.seq);
+        }
+        const ev = toEvent(event, data, state);
+        if (ev) onEvent(ev);
+        if (event === "done" || event === "error") state.terminal = true;
       }
-      const ev = toEvent(event, data, state);
-      if (ev) onEvent(ev);
-      if (event === "done" || event === "error") state.terminal = true;
     }
+  } catch {
+    /* 接続断: return して再接続ループに任せる */
   }
 }
 
