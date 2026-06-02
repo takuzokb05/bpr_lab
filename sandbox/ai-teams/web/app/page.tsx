@@ -184,9 +184,11 @@ export default function Home() {
     setHistory(h);
     const last = h[0];
     const RECENT_MS = 30 * 60 * 1000;
+    // running/paused だけでなく error（接続断で誤って error 記録された可能性）も再接続を試みる。
+    // done は完了済みなので自動再開しない。
     if (
       last &&
-      (last.status === "running" || last.status === "paused") &&
+      last.status !== "done" &&
       Date.now() - last.updatedAt < RECENT_MS
     ) {
       resumeOrLoad(last);
@@ -509,40 +511,46 @@ export default function Home() {
     setSessionId(entry.id);
     setError(null);
     setHistoryOpen(false);
-    if (entry.status === "running" || entry.status === "paused") {
-      setTurns([]); // replay（cursor=0）で作り直すので一旦クリア
-      setStatus("running");
-      setStreamingTurnId(null);
-      const ctrl = new AbortController();
-      abortRef.current = ctrl;
-      streamAliveRef.current = true;
-      try {
-        const ok = await resumeSession({
-          sessionId: entry.id,
-          signal: ctrl.signal,
-          onEvent: handleEvent,
-        });
-        if (!ok && !ctrl.signal.aborted) {
-          setTurns(entry.turns);
-          setStatus("done");
-          setError(
-            "このセッションはサーバ側で終了/再起動により失われたため再開できません。ここまでの記録を表示しています。"
-          );
-        }
-      } catch (err) {
-        if (!ctrl.signal.aborted) {
-          setTurns(entry.turns);
-          setStatus("done");
-          setError(String(err));
-        }
-      } finally {
-        streamAliveRef.current = false;
-      }
-    } else {
-      // 完了/エラー: 保存済み transcript を読み取り表示。
+    // 完了済みは再生せず保存済み transcript をそのまま表示（再アニメ不要）。
+    if (entry.status === "done") {
       setTurns(entry.turns);
-      setStatus(entry.status === "error" ? "error" : "done");
+      setStatus("done");
       setStreamingTurnId(null);
+      return;
+    }
+    // running/paused/error: まずサーバに繋ぎ直して**真の状態**を取りに行く。クライアントが
+    // 接続断で error と記録していても、サーバにまだ running/paused で残っていれば再開でき、
+    // 投げかけ（追い質問）も再び使える。replay（cursor=0）で作り直すので一旦クリア。
+    setTurns([]);
+    setStatus("running");
+    setStreamingTurnId(null);
+    const ctrl = new AbortController();
+    abortRef.current = ctrl;
+    streamAliveRef.current = true;
+    try {
+      const ok = await resumeSession({
+        sessionId: entry.id,
+        signal: ctrl.signal,
+        onEvent: handleEvent,
+      });
+      if (!ok && !ctrl.signal.aborted) {
+        // サーバが持っていない（再起動/TTL）→ 保存済み transcript を凍結表示。
+        setTurns(entry.turns);
+        setStatus(entry.status === "error" ? "error" : "done");
+        setError(
+          entry.turns.length
+            ? "このセッションはサーバ側で失われたため再開できません。ここまでの記録を表示しています。"
+            : "このセッションはサーバから失われ、記録もありませんでした。"
+        );
+      }
+    } catch (err) {
+      if (!ctrl.signal.aborted) {
+        setTurns(entry.turns);
+        setStatus("done");
+        setError(String(err));
+      }
+    } finally {
+      streamAliveRef.current = false;
     }
   }
 
@@ -677,6 +685,13 @@ export default function Home() {
         : processingFollowup
           ? "前の追い質問を処理中です。応答が出そろうと送信できます。"
           : "このフェーズ（要約・統合・冒頭）では追い質問を受け付けられません。"
+      : null;
+
+  // 完了/エラーで transcript を表示中は、コンポーザーが「新しい討論」を始める入口になる。
+  // 「コメントしたら別の会議が始まった」事故を防ぐため明示する。
+  const finishedNote =
+    (status === "done" || status === "error") && turns.length > 0
+      ? "これは終了した討論です。新しい議題を入力すると別の討論が始まります（投げかけは進行中のみ）。"
       : null;
 
   return (
@@ -996,6 +1011,11 @@ export default function Home() {
                 {followupBlockReason}
               </p>
             )}
+            {finishedNote && (
+              <p className="mb-1.5 text-[11px] text-[var(--color-ink-muted)]">
+                {finishedNote}
+              </p>
+            )}
             <div className="flex items-end gap-2">
               <textarea
                 ref={composerRef}
@@ -1008,7 +1028,9 @@ export default function Home() {
                     ? canFollowup
                       ? "追い質問を入力（⌘/Ctrl+Enter で送信）"
                       : "いまは追い質問を受け付けていません"
-                    : "議題を入力（⌘/Ctrl+Enter で開始）"
+                    : status === "done" || status === "error"
+                      ? "新しい議題で討論を開始（⌘/Ctrl+Enter）"
+                      : "議題を入力（⌘/Ctrl+Enter で開始）"
                 }
                 disabled={active && !canFollowup}
                 className="max-h-[40vh] min-h-[40px] flex-1 resize-none overflow-y-auto rounded-md border border-[var(--color-line)] bg-[var(--color-paper)] px-3 py-2 text-sm leading-relaxed outline-none focus:border-[var(--color-accent)] disabled:opacity-50"
@@ -1035,7 +1057,7 @@ export default function Home() {
                   disabled={!topicInput.trim() || selected.size === 0}
                   className="flex items-center gap-1.5 rounded-md bg-[var(--color-accent)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-40"
                 >
-                  <Play size={14} /> 討論を開始
+                  <Play size={14} /> {turns.length > 0 ? "新しい討論を開始" : "討論を開始"}
                 </button>
               )}
             </div>

@@ -345,9 +345,17 @@ def _parse_sse(wire: list[str]) -> list[dict]:
     out = []
     for chunk in wire:
         lines = chunk.strip().splitlines()
-        event = next(l.removeprefix("event: ") for l in lines if l.startswith("event: "))
-        data = next(l.removeprefix("data: ") for l in lines if l.startswith("data: "))
-        out.append({"event": event, "data": json.loads(data)})
+        ev_line = next((l for l in lines if l.startswith("event: ")), None)
+        data_line = next((l for l in lines if l.startswith("data: ")), None)
+        # heartbeat / 初回パディング（": ..." コメント）は event/data を持たない → スキップ。
+        if ev_line is None or data_line is None:
+            continue
+        out.append(
+            {
+                "event": ev_line.removeprefix("event: "),
+                "data": json.loads(data_line.removeprefix("data: ")),
+            }
+        )
     return out
 
 

@@ -743,17 +743,31 @@ _ALIVE_STATUSES = ("running", "paused")
 _FINAL_STATUSES = ("done", "error")
 
 
+# floor-open（paused）中などアイドル時の keepalive 間隔（秒）。バッファするプロキシ
+# （cloudflared クイックトンネル等）に溜めたデータを flush させ、モバイル/プロキシの idle 切断も防ぐ。
+_HEARTBEAT_S = 10.0
+# 初回パディング: バッファするプロキシは「最初の数 KB を溜めてから流す」ことがあり、再接続の
+# backlog バースト＋その後の idle（floor-open 待機）だと flush されず 0 バイトで止まる。先頭に
+# 2KB 超のコメント（: 始まり＝SSE では無視される）を流して stream を開かせる。
+_OPEN_PADDING = ":" + (" " * 2048) + "\n\n"
+_HEARTBEAT = ": hb\n\n"
+
+
 def tail(session: Session, cursor: int = 0) -> Iterator[str]:
     """events[cursor:] を再生 → ライブ tail を SSE 文字列で yield する（再接続対応）。
 
     各 data に seq と ts を載せる（seq=再接続カーソル用、ts=採番時刻で再接続再生でも不変）。
     終端は status が done/error のときだけ。running/paused（floor-open 入力待機）では
     接続を保ち cond.wait で待ち続ける（paused で SSE を閉じない）。
+
+    バッファするプロキシ対策に、先頭でパディング、各バッチ後と待機タイムアウト時に heartbeat
+    （`: hb` コメント＝クライアントは無視）を流して確実に flush させ、idle 接続も保つ。
     """
+    yield _OPEN_PADDING
     while True:
         with session.cond:
-            while cursor >= len(session.events) and session.status in _ALIVE_STATUSES:
-                session.cond.wait()
+            if cursor >= len(session.events) and session.status in _ALIVE_STATUSES:
+                session.cond.wait(timeout=_HEARTBEAT_S)
             new = session.events[cursor:]
             cursor += len(new)
             finished = (
@@ -763,6 +777,8 @@ def tail(session: Session, cursor: int = 0) -> Iterator[str]:
             yield sse(ev["event"], {**ev["data"], "seq": ev["seq"], "ts": ev["ts"]})
         if finished:
             return
+        # backlog/新規を出した直後・待機タイムアウト時とも heartbeat を流して flush＋keepalive。
+        yield _HEARTBEAT
 
 
 # -- ペルソナ CRUD ----------------------------------------------------------
