@@ -244,15 +244,21 @@ class OpenAIClient(LLMClient):
         """chat.completions のパラメータ。新旧モデル差を吸収する。
 
         - 出力上限は **max_completion_tokens**（max_tokens は非推奨で GPT-5/o 系は拒否）。
-        - GPT-5 / o 系（推論モデル）は temperature 既定(1)以外を拒否するので送らない。
-          gpt-4o 等の従来モデルにだけ temperature を渡す（_OPENAI_NO_TEMP_MARKERS で判定）。
+        - GPT-5 / o 系（推論モデル）は temperature 既定(1)以外を拒否するので送らない。代わりに
+          reasoning_effort を低め（既定 low）にする。理由: max_completion_tokens に内部推論が
+          食い込むので、推論を抑えて可視発言にトークンを回す＋討論用途では速度/コストを優先。
+        - gpt-4o 等の従来モデルには temperature を渡す（_OPENAI_NO_TEMP_MARKERS で判定）。
         """
         params: dict = {
             "model": self._model,  # 渡された model（Claude ID の可能性）は使わない
             "messages": self._messages(system, messages),
             "max_completion_tokens": self._max_tokens,
         }
-        if not any(m in self._model for m in _OPENAI_NO_TEMP_MARKERS):
+        if any(m in self._model for m in _OPENAI_NO_TEMP_MARKERS):
+            effort = os.environ.get("AI_TEAMS_OPENAI_REASONING", "low").strip()
+            if effort:
+                params["reasoning_effort"] = effort
+        else:
             params["temperature"] = temperature
         return params
 
@@ -299,11 +305,17 @@ class GeminiClient(LLMClient):
     def _config(self, system: str, temperature: float):
         from google.genai import types
 
-        return types.GenerateContentConfig(
-            system_instruction=system,
-            temperature=temperature,
-            max_output_tokens=self._max_tokens,
-        )
+        # temperature は Gemini 3 では非推奨（送らず既定に従う）。
+        kwargs: dict = {"system_instruction": system, "max_output_tokens": self._max_tokens}
+        # 思考(thinking)は既定 ON で max_output_tokens を食い、可視出力が枯れる（ほぼ空応答に
+        # なりうる）。討論用途では低めに固定して発言にトークンを回す（env AI_TEAMS_GEMINI_THINKING で可変）。
+        level = os.environ.get("AI_TEAMS_GEMINI_THINKING", "low").strip()
+        if level:
+            try:
+                kwargs["thinking_config"] = types.ThinkingConfig(thinking_level=level)
+            except Exception:
+                pass  # SDK が thinking_level 非対応なら無理に付けない（古い SDK 等）
+        return types.GenerateContentConfig(**kwargs)
 
     def generate(self, *, system: str, messages: list[Message], model: str, temperature: float = 0.7) -> str:
         resp = self._client.models.generate_content(

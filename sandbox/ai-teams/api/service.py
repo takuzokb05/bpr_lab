@@ -103,7 +103,10 @@ _DEFAULT_PROVIDER = "anthropic"
 #     簡潔は graceful に短く、じっくりは「簡潔に」を外して深掘りを許可する。
 VERBOSITY = {
     "brief": {
-        "max_tokens": 1024,
+        # 2048: 推論モデル（gpt-5/gemini thinking）は出力予算に内部推論が食い込むため、また
+        # 日本語は英語よりトークンを食うため、1024 では 3〜5 文でも途中切れし得る。上限は
+        # ceiling でありスタイル指示(hint)で実際の長さは短く保たれる。
+        "max_tokens": 2048,
         "hint": "結論と主な理由を3〜5文で簡潔に",
     },
     "standard": {

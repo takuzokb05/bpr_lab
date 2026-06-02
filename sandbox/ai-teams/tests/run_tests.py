@@ -697,6 +697,33 @@ def test_verbosity():
     check("簡潔に発言してください" not in tail_deep, "deep では『簡潔に』が外れる")
 
 
+def test_provider_params():
+    """OpenAI/Gemini のパラメータ整形: 推論モデル対応・Gemini temp 非送信・thinking 抑制。"""
+    print("[test] provider params (reasoning_effort / no-temp / thinking_level)")
+    from core import OpenAIClient, GeminiClient
+
+    # OpenAI 推論モデル(gpt-5.5): temperature を送らず reasoning_effort + max_completion_tokens
+    oc5 = OpenAIClient(api_key="x", model="gpt-5.5")
+    p5 = oc5._params("sys", [{"role": "user", "content": "hi"}], 0.7)
+    check("temperature" not in p5, "gpt-5.5 は temperature を送らない（推論モデルは既定1のみ）")
+    check(p5.get("reasoning_effort") == "low", "gpt-5.5 は reasoning_effort=low（出力予算を発言に回す）")
+    check("max_completion_tokens" in p5 and "max_tokens" not in p5, "max_completion_tokens を使う")
+
+    # OpenAI 従来モデル(gpt-4o): temperature あり・reasoning_effort なし
+    oc4 = OpenAIClient(api_key="x", model="gpt-4o")
+    p4 = oc4._params("sys", [], 0.5)
+    check(
+        p4.get("temperature") == 0.5 and "reasoning_effort" not in p4,
+        "gpt-4o は temperature を送り reasoning_effort は付けない",
+    )
+
+    # Gemini: temperature を送らず（Gemini 3 では非推奨）thinking_config を低めに設定
+    gc = GeminiClient(api_key="x")
+    cfg = gc._config("sys", 0.7)
+    check(getattr(cfg, "temperature", None) is None, "Gemini は temperature を送らない（既定に従う）")
+    check(getattr(cfg, "thinking_config", None) is not None, "Gemini は thinking_config を設定（出力枯れ防止）")
+
+
 def test_persona_service_crud():
     """ペルソナ service: 保存/詳細/category 変更 unlink/旧パス unlink を id→path で。"""
     print("[test] persona service CRUD (save/detail/category-move unlink)")
@@ -1643,6 +1670,7 @@ if __name__ == "__main__":
     test_llm_status()
     test_byok_make_client()
     test_verbosity()
+    test_provider_params()
     test_persona_service_crud()
     test_preset_service()
     test_http_api()
