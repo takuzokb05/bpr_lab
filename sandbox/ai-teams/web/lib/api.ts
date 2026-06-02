@@ -1,19 +1,21 @@
 // プリセット / ペルソナ CRUD クライアント。SSE と同様、Next の rewrite プロキシを
 // 通さず apiUrl() でバックエンドへ直結する。失敗時は FastAPI の {detail} を日本語にして throw。
 
-import { apiUrl } from "./config";
+import { apiUrl, apiHeaders } from "./config";
 import { errorDetail } from "./sse";
 import type { Persona, PersonaDetail, Preset } from "./types";
 
 // -- プリセット -------------------------------------------------------------
 export async function fetchPresets(): Promise<Preset[]> {
-  const res = await fetch(apiUrl("/presets"));
+  const res = await fetch(apiUrl("/presets"), { headers: apiHeaders() });
   if (!res.ok) throw new Error(await errorDetail(res));
   return res.json();
 }
 
 export async function fetchPreset(id: string): Promise<Preset> {
-  const res = await fetch(apiUrl(`/presets/${encodeURIComponent(id)}`));
+  const res = await fetch(apiUrl(`/presets/${encodeURIComponent(id)}`), {
+    headers: apiHeaders(),
+  });
   if (!res.ok) throw new Error(await errorDetail(res));
   return res.json();
 }
@@ -30,7 +32,7 @@ export async function createPreset(body: {
 }): Promise<Preset> {
   const res = await fetch(apiUrl("/presets"), {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: apiHeaders({ "Content-Type": "application/json" }),
     body: JSON.stringify(body),
   });
   if (res.status !== 201) throw new Error(await errorDetail(res));
@@ -44,7 +46,7 @@ export async function updatePreset(
 ): Promise<Preset> {
   const res = await fetch(apiUrl(`/presets/${encodeURIComponent(id)}`), {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    headers: apiHeaders({ "Content-Type": "application/json" }),
     body: JSON.stringify(body),
   });
   if (!res.ok) throw new Error(await errorDetail(res));
@@ -55,13 +57,16 @@ export async function updatePreset(
 export async function deletePreset(id: string): Promise<void> {
   const res = await fetch(apiUrl(`/presets/${encodeURIComponent(id)}`), {
     method: "DELETE",
+    headers: apiHeaders(),
   });
   if (res.status !== 204) throw new Error(await errorDetail(res));
 }
 
 // -- ペルソナ ---------------------------------------------------------------
 export async function fetchPersonaDetail(id: string): Promise<PersonaDetail> {
-  const res = await fetch(apiUrl(`/personas/${encodeURIComponent(id)}`));
+  const res = await fetch(apiUrl(`/personas/${encodeURIComponent(id)}`), {
+    headers: apiHeaders(),
+  });
   if (!res.ok) throw new Error(await errorDetail(res));
   return res.json();
 }
@@ -70,7 +75,7 @@ export async function fetchPersonaDetail(id: string): Promise<PersonaDetail> {
 export async function createPersona(body: Record<string, unknown>): Promise<Persona> {
   const res = await fetch(apiUrl("/personas"), {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: apiHeaders({ "Content-Type": "application/json" }),
     body: JSON.stringify(body),
   });
   if (res.status !== 201) throw new Error(await errorDetail(res));
@@ -84,7 +89,7 @@ export async function updatePersona(
 ): Promise<Persona> {
   const res = await fetch(apiUrl(`/personas/${encodeURIComponent(id)}`), {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    headers: apiHeaders({ "Content-Type": "application/json" }),
     body: JSON.stringify(body),
   });
   if (!res.ok) throw new Error(await errorDetail(res));
@@ -95,6 +100,7 @@ export async function updatePersona(
 export async function deletePersona(id: string): Promise<void> {
   const res = await fetch(apiUrl(`/personas/${encodeURIComponent(id)}`), {
     method: "DELETE",
+    headers: apiHeaders(),
   });
   if (res.status !== 204) throw new Error(await errorDetail(res));
 }

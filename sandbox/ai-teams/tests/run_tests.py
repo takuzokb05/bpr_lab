@@ -1306,6 +1306,140 @@ def test_research_disabled_backward_compat():
     check(council_on.research is True, "build_council(research=True) が Council に届く")
 
 
+def test_api_auth_token():
+    """デプロイ用最小認証（env-gated）: token 未設定で従来動作・設定時は Bearer 必須。
+
+    - AI_TEAMS_API_TOKEN 未設定 → 認証無効（全エンドポイントが従来どおり通る）。
+    - 設定あり → Bearer 無し/不一致は 401、正しい Bearer は通る。
+      ただし /health は無認証 200、OPTIONS（CORS プリフライト）は常に通る。
+    """
+    print("[test] api auth token (env-gated minimal auth)")
+    import os
+
+    from fastapi.testclient import TestClient
+
+    from api.main import app
+
+    saved = os.environ.get("AI_TEAMS_API_TOKEN")
+    client = TestClient(app)
+    try:
+        # 1. token 未設定 → 認証無効（従来どおり全エンドポイントが動く）
+        os.environ.pop("AI_TEAMS_API_TOKEN", None)
+        r = client.get("/health")
+        check(r.status_code == 200, f"token 未設定で /health 200: {r.status_code}")
+        r = client.get("/personas")
+        check(r.status_code == 200, f"token 未設定で GET /personas 200: {r.status_code}")
+        # POST /sessions（mock）は token 未設定なら 200 で SSE を返す
+        r = client.post(
+            "/sessions",
+            json={
+                "topic": "認証テスト議題",
+                "persona_ids": ["moderator", "logic", "idea", "chair"],
+                "mock": True,
+                "interactive": False,
+            },
+        )
+        check(r.status_code == 200, f"token 未設定で POST /sessions 200: {r.status_code}")
+
+        # 2. token 設定 → Bearer 必須
+        token = "deploy-secret-token-xyz"
+        os.environ["AI_TEAMS_API_TOKEN"] = token
+
+        # Bearer 無しの GET /personas は 401
+        r = client.get("/personas")
+        check(r.status_code == 401, f"token 設定・Bearer 無しの GET /personas は 401: {r.status_code}")
+        check(r.json() == {"detail": "unauthorized"}, f"401 body は unauthorized: {r.json()}")
+
+        # Bearer 無しの POST /sessions も 401（ボディ検証より前に弾く）
+        r = client.post(
+            "/sessions",
+            json={
+                "topic": "認証テスト議題",
+                "persona_ids": ["moderator", "logic", "idea", "chair"],
+                "mock": True,
+                "interactive": False,
+            },
+        )
+        check(r.status_code == 401, f"token 設定・Bearer 無しの POST /sessions は 401: {r.status_code}")
+
+        # 誤った token は 401
+        r = client.get("/personas", headers={"Authorization": "Bearer wrong-token"})
+        check(r.status_code == 401, f"誤 Bearer は 401: {r.status_code}")
+
+        # 正しい Bearer は通る
+        r = client.get("/personas", headers={"Authorization": f"Bearer {token}"})
+        check(r.status_code == 200, f"正しい Bearer の GET /personas は 200: {r.status_code}")
+        r = client.post(
+            "/sessions",
+            headers={"Authorization": f"Bearer {token}"},
+            json={
+                "topic": "認証テスト議題",
+                "persona_ids": ["moderator", "logic", "idea", "chair"],
+                "mock": True,
+                "interactive": False,
+            },
+        )
+        check(r.status_code == 200, f"正しい Bearer の POST /sessions は 200: {r.status_code}")
+
+        # 3. /health は token 設定時も無認証で 200（稼働確認のため除外）
+        r = client.get("/health")
+        check(r.status_code == 200, f"token 設定でも /health は無認証 200: {r.status_code}")
+
+        # 4. OPTIONS（CORS プリフライト）は token 設定時も通る（401 にしない）
+        r = client.options(
+            "/personas",
+            headers={
+                "Origin": "http://localhost:3000",
+                "Access-Control-Request-Method": "GET",
+            },
+        )
+        check(r.status_code != 401, f"OPTIONS プリフライトは 401 にしない: {r.status_code}")
+    finally:
+        if saved is None:
+            os.environ.pop("AI_TEAMS_API_TOKEN", None)
+        else:
+            os.environ["AI_TEAMS_API_TOKEN"] = saved
+
+
+def test_cors_allowed_origins_env():
+    """CORS allow_origins が env AI_TEAMS_ALLOWED_ORIGINS（カンマ区切り）で可変。
+
+    未設定なら既定 ["http://localhost:3000"]（後方互換）。
+    """
+    print("[test] cors allowed origins (env-configurable)")
+    import os
+
+    from api.main import _allowed_origins
+
+    saved = os.environ.get("AI_TEAMS_ALLOWED_ORIGINS")
+    try:
+        # 1. 未設定 → 既定
+        os.environ.pop("AI_TEAMS_ALLOWED_ORIGINS", None)
+        check(
+            _allowed_origins() == ["http://localhost:3000"],
+            f"env 未設定で既定 localhost:3000: {_allowed_origins()}",
+        )
+
+        # 2. カンマ区切りで複数 origin（空白 trim・空要素除去）
+        os.environ["AI_TEAMS_ALLOWED_ORIGINS"] = "https://app.example.com, https://admin.example.com ,"
+        check(
+            _allowed_origins() == ["https://app.example.com", "https://admin.example.com"],
+            f"カンマ区切りを trim して list 化: {_allowed_origins()}",
+        )
+
+        # 3. 空文字なら既定にフォールバック
+        os.environ["AI_TEAMS_ALLOWED_ORIGINS"] = "   "
+        check(
+            _allowed_origins() == ["http://localhost:3000"],
+            f"空白のみは既定にフォールバック: {_allowed_origins()}",
+        )
+    finally:
+        if saved is None:
+            os.environ.pop("AI_TEAMS_ALLOWED_ORIGINS", None)
+        else:
+            os.environ["AI_TEAMS_ALLOWED_ORIGINS"] = saved
+
+
 # ---------------------------------------------------------------------------
 if __name__ == "__main__":
     test_context_isolation()
@@ -1333,6 +1467,8 @@ if __name__ == "__main__":
     test_research_turn_emit()
     test_extract_research_queries()
     test_research_disabled_backward_compat()
+    test_api_auth_token()
+    test_cors_allowed_origins_env()
     print()
     if _failures:
         print(f"[FAIL] {len(_failures)} 件 FAIL")

@@ -12,3 +12,16 @@ const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
 export function apiUrl(path: string): string {
   return `${API_BASE}${path}`;
 }
+
+// 最小認証（デプロイ準備）。本番ビルドに NEXT_PUBLIC_API_TOKEN を設定すると
+// 全 fetch に Authorization: Bearer <token> を載せる。未設定なら何も足さず
+// 従来と同一ヘッダ（後方互換: ローカル開発・テストはこの経路で無改修動作）。
+// extra（Content-Type 等）とマージして返す。
+export function apiHeaders(extra?: Record<string, string>): Record<string, string> {
+  const headers: Record<string, string> = { ...(extra ?? {}) };
+  const token = process.env.NEXT_PUBLIC_API_TOKEN;
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+  return headers;
+}

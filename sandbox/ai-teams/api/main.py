@@ -9,7 +9,7 @@ from __future__ import annotations
 import os
 from typing import Literal, NoReturn
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel, Field
@@ -18,10 +18,44 @@ from . import service
 
 app = FastAPI(title="AI Teams API", version="3.0.0")
 
-# 開発中の Next.js フロント（localhost:3000）からの呼び出しを許可
+
+def _allowed_origins() -> list[str]:
+    """CORS の allow_origins を env から読む（カンマ区切り）。
+
+    AI_TEAMS_ALLOWED_ORIGINS 未設定なら従来既定 ["http://localhost:3000"]。
+    空白を除去し、空要素は落とす。すべて空なら既定にフォールバック（後方互換）。
+    """
+    raw = os.environ.get("AI_TEAMS_ALLOWED_ORIGINS")
+    if not raw:
+        return ["http://localhost:3000"]
+    origins = [o.strip() for o in raw.split(",") if o.strip()]
+    return origins or ["http://localhost:3000"]
+
+
+@app.middleware("http")
+async def require_api_token(request: Request, call_next):
+    """最小認証ミドルウェア（env-gated）。
+
+    env AI_TEAMS_API_TOKEN を読む。
+    - 未設定 → 認証無効。何もせず通す（ローカル開発・既存テストはこの経路で無改修 pass）。
+    - 設定あり → Authorization ヘッダが "Bearer {token}" と一致しなければ 401。
+      ただし /health（稼働確認）と OPTIONS（CORS プリフライト）は常に通す。
+    """
+    token = os.environ.get("AI_TEAMS_API_TOKEN")
+    if token:
+        # ヘルスチェックと CORS プリフライトは無認証で常に通す。
+        if not (request.url.path == "/health" or request.method == "OPTIONS"):
+            authorization = request.headers.get("authorization")
+            if authorization != f"Bearer {token}":
+                return JSONResponse(status_code=401, content={"detail": "unauthorized"})
+    return await call_next(request)
+
+
+# CORS。allow_origins は env AI_TEAMS_ALLOWED_ORIGINS で可変（未設定なら localhost:3000）。
+# allow_headers=["*"] で Authorization ヘッダを許可（最小認証のため）。
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=_allowed_origins(),
     allow_methods=["*"],
     allow_headers=["*"],
 )

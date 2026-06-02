@@ -5,7 +5,7 @@
 // 重要: Next の rewrite プロキシは SSE をバッファするため、API は apiUrl() で
 // バックエンドへ直結する（プロキシ経由だと討論が一括表示になりライブ感が消える）。
 
-import { apiUrl } from "./config";
+import { apiUrl, apiHeaders } from "./config";
 import type { IntakeQA } from "./types";
 
 // 各イベントに ts（サーバ採番の UNIX 秒、_append の time.time()）を任意で載せる。
@@ -96,7 +96,7 @@ export async function startSession({
 
   const res = await fetch(apiUrl("/sessions"), {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: apiHeaders({ "Content-Type": "application/json" }),
     body: JSON.stringify(body),
     signal,
   });
@@ -115,7 +115,7 @@ export async function startSession({
     try {
       r = await fetch(
         apiUrl(`/sessions/${state.sessionId}/stream?cursor=${state.lastSeq + 1}`),
-        { signal }
+        { headers: apiHeaders(), signal }
       );
     } catch {
       break; // ネットワーク断など。これ以上は諦める（MVP の割り切り）。
@@ -230,7 +230,7 @@ export async function errorDetail(res: Response): Promise<string> {
 }
 
 export async function fetchPersonas(): Promise<import("./types").Persona[]> {
-  const res = await fetch(apiUrl("/personas"));
+  const res = await fetch(apiUrl("/personas"), { headers: apiHeaders() });
   if (!res.ok) throw new Error(`personas fetch failed: HTTP ${res.status}`);
   return res.json();
 }
@@ -243,7 +243,7 @@ export async function fetchPersonas(): Promise<import("./types").Persona[]> {
 export async function sendFollowup(sessionId: string, text: string): Promise<void> {
   const res = await fetch(apiUrl(`/sessions/${sessionId}/messages`), {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: apiHeaders({ "Content-Type": "application/json" }),
     body: JSON.stringify({ kind: "followup", text, target: null }),
   });
   // 2xx を成功とみなす（202 固定に依存しない＝プロキシが 200/204 にしても壊れない）。
@@ -259,12 +259,18 @@ export async function sendFollowup(sessionId: string, text: string): Promise<voi
 // 終了(finish)＝floor-open ループを抜けて done。どちらも結果は既存の
 // turn_start→delta→turn_end / done として SSE で返る（新イベントは増やさない）。
 export async function closeSession(sessionId: string): Promise<void> {
-  const res = await fetch(apiUrl(`/sessions/${sessionId}/close`), { method: "POST" });
+  const res = await fetch(apiUrl(`/sessions/${sessionId}/close`), {
+    method: "POST",
+    headers: apiHeaders(),
+  });
   if (!res.ok) throw new Error(await errorDetail(res));
 }
 
 export async function finishSession(sessionId: string): Promise<void> {
-  const res = await fetch(apiUrl(`/sessions/${sessionId}/finish`), { method: "POST" });
+  const res = await fetch(apiUrl(`/sessions/${sessionId}/finish`), {
+    method: "POST",
+    headers: apiHeaders(),
+  });
   if (!res.ok) throw new Error(await errorDetail(res));
 }
 
@@ -274,7 +280,10 @@ export async function finishSession(sessionId: string): Promise<void> {
 // （実 LLM の発注を次のターン前に止めてコストを抑える）。404/既終了でも実害なく握る。
 export async function cancelSession(sessionId: string): Promise<void> {
   try {
-    await fetch(apiUrl(`/sessions/${sessionId}`), { method: "DELETE" });
+    await fetch(apiUrl(`/sessions/${sessionId}`), {
+      method: "DELETE",
+      headers: apiHeaders(),
+    });
   } catch {
     /* ネットワーク断などは無視（表示側はすでに停止扱い） */
   }
@@ -288,7 +297,7 @@ export interface Health {
 }
 
 export async function fetchHealth(): Promise<Health> {
-  const res = await fetch(apiUrl("/health"));
+  const res = await fetch(apiUrl("/health"), { headers: apiHeaders() });
   if (!res.ok) throw new Error(`health fetch failed: HTTP ${res.status}`);
   return res.json();
 }
@@ -303,7 +312,7 @@ export async function fetchIntake(topic: string, materials?: string): Promise<st
   if (materials && materials.trim()) body.materials = materials;
   const res = await fetch(apiUrl("/intake"), {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: apiHeaders({ "Content-Type": "application/json" }),
     body: JSON.stringify(body),
   });
   if (!res.ok) throw new Error(await errorDetail(res));
