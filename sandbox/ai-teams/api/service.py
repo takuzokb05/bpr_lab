@@ -601,9 +601,13 @@ def _produce(session: Session) -> None:
                 if research_state["count"] >= _RESEARCH_CAP:
                     # cap 到達後は調べない（ログのみ・暴走防止）。
                     break
-                brief = run_research(council.client, query)
                 rid = next(ids)
-                rt = council.emit_research_turn(transcript, brief, emit=emit, turn_id=rid)
+                # 検索の前に「調査中」を先出し（数十秒の検索中も UI に進行が見えるように）。
+                council.emit_research_start(emit, rid)
+                brief = run_research(council.client, query)
+                rt = council.emit_research_turn(
+                    transcript, brief, emit=emit, turn_id=rid, emit_start=False
+                )
                 _append(session, "turn_end", {"turn_id": rt.turn_id})
                 research_seen.add(norm)
                 research_state["count"] += 1
@@ -614,10 +618,12 @@ def _produce(session: Session) -> None:
             seed = session.topic
             seed_norm = seed.lower().strip()
             if seed_norm:
-                seed_brief = run_research(council.client, seed)
                 seed_rid = next(ids)
+                # 検索の前に「調査中」を先出し（最初の発言前の長い待ちを「調べています…」で見せる）。
+                council.emit_research_start(emit, seed_rid)
+                seed_brief = run_research(council.client, seed)
                 seed_turn = council.emit_research_turn(
-                    transcript, seed_brief, emit=emit, turn_id=seed_rid
+                    transcript, seed_brief, emit=emit, turn_id=seed_rid, emit_start=False
                 )
                 _append(session, "turn_end", {"turn_id": seed_turn.turn_id})
                 research_seen.add(seed_norm)

@@ -103,8 +103,8 @@ export function Timeline({
                 </header>
                 {searching ? (
                   <p className="mt-2 flex items-center gap-2 text-sm leading-relaxed text-[var(--color-ink-muted)]">
-                    <Search size={13} className="shrink-0" />
-                    調べています…
+                    <Search size={13} className="shrink-0 animate-pulse-soft" />
+                    Web で事実を調べています…（数十秒かかることがあります）
                   </p>
                 ) : (
                   <div className="mt-2">

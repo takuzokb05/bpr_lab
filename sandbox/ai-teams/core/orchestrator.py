@@ -272,22 +272,12 @@ class Council:
             emit({"type": "delta", "turn_id": turn_id, "text": content})
         return Turn(speaker_id, speaker_name, content, phase, round_no, turn_id=turn_id)
 
-    def emit_research_turn(
-        self,
-        transcript: list[Turn],
-        brief: str,
-        *,
-        emit: Emit | None,
-        turn_id: int,
-    ) -> Turn:
-        """調査役（researcher）の調査結果ブリーフを1ターンとして流し、transcript に積む。
+    def emit_research_start(self, emit: Emit | None, turn_id: int) -> None:
+        """検索の**前**に researcher ターンの turn_start だけを流す（本文は空）。
 
-        LLM は呼ばない（brief は呼び出し側＝producer が run_research で取得済み）。
-        emit があれば turn_start{speaker_id:"researcher", speaker_name:"調査",
-        phase:"research", round:0} → delta{text:brief（全文1チャンク）} を流す。
-        turn_end は呼び出し側（_produce）が出す（_emit_simple_turn と同形・二重防止）。
-        新しい SSE イベント型は増やさず、調査を1人の話者のターンとして討論に乗せる
-        ことで全員が共有する。Turn は transcript に append してから返す。
+        web 検索は数十秒かかることがあり、その間イベントが無いと UI は「準備中…」のまま固まる。
+        先に turn_start（content 未着）を出すと、UI は調査役カードを「調べています…」状態で表示でき、
+        検索中であることが伝わる。検索完了後に emit_research_turn(emit_start=False) で本文(delta)を流す。
         """
         if emit is not None:
             emit(
@@ -300,6 +290,38 @@ class Council:
                     "round": 0,
                 }
             )
+
+    def emit_research_turn(
+        self,
+        transcript: list[Turn],
+        brief: str,
+        *,
+        emit: Emit | None,
+        turn_id: int,
+        emit_start: bool = True,
+    ) -> Turn:
+        """調査役（researcher）の調査結果ブリーフを1ターンとして流し、transcript に積む。
+
+        LLM は呼ばない（brief は呼び出し側＝producer が run_research で取得済み）。
+        emit があれば turn_start{speaker_id:"researcher", speaker_name:"調査",
+        phase:"research", round:0} → delta{text:brief（全文1チャンク）} を流す。
+        emit_start=False のときは turn_start を出さない（emit_research_start で先出し済みの場合）。
+        turn_end は呼び出し側（_produce）が出す（_emit_simple_turn と同形・二重防止）。
+        新しい SSE イベント型は増やさず、調査を1人の話者のターンとして討論に乗せる
+        ことで全員が共有する。Turn は transcript に append してから返す。
+        """
+        if emit is not None:
+            if emit_start:
+                emit(
+                    {
+                        "type": "turn_start",
+                        "turn_id": turn_id,
+                        "speaker_id": "researcher",
+                        "speaker_name": "調査",
+                        "phase": "research",
+                        "round": 0,
+                    }
+                )
             emit({"type": "delta", "turn_id": turn_id, "text": brief})
         turn = Turn("researcher", "調査", brief, "research", 0, turn_id=turn_id)
         transcript.append(turn)

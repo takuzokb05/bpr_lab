@@ -1441,6 +1441,18 @@ def test_research_turn_emit():
     rt2 = council.emit_research_turn(transcript2, "別ブリーフ", emit=None, turn_id=7)
     check(transcript2 == [rt2], "emit=None でも transcript に積む")
 
+    # 検索前先出し: emit_research_start は turn_start だけを流す（本文未着＝UI「調べています…」）。
+    ev2: list[dict] = []
+    council.emit_research_start(ev2.append, turn_id=99)
+    check([e["type"] for e in ev2] == ["turn_start"], "emit_research_start は turn_start のみ")
+    check(ev2[0]["speaker_id"] == "researcher" and ev2[0]["turn_id"] == 99, "turn_start は researcher/該当id")
+    # 検索後: emit_start=False なら turn_start を出さず delta のみ（先出し済みのため）。
+    tr3: list = []
+    ev3: list[dict] = []
+    council.emit_research_turn(tr3, "あとからの本文", emit=ev3.append, turn_id=99, emit_start=False)
+    check([e["type"] for e in ev3] == ["delta"], "emit_start=False は delta のみ（turn_start 二重防止）")
+    check(ev3[0]["text"] == "あとからの本文", "delta に本文が載る")
+
 
 def test_extract_research_queries():
     """(3) _extract_research_queries が「要調査: X」を抽出（半角/全角コロン両対応）。"""
