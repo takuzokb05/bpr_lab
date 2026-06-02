@@ -656,6 +656,47 @@ def test_byok_make_client():
             os.environ["ANTHROPIC_API_KEY"] = saved_key
 
 
+def test_verbosity():
+    """応答の長さプリセット: normalize / build_council→length_hint / max_tokens / build_context 語句。"""
+    print("[test] verbosity preset (length_hint / max_tokens / context wording)")
+    from core import AnthropicClient as _Anthropic
+
+    # 1. 正規化（未指定/未知は standard）
+    check(service.normalize_verbosity(None) == "standard", "未指定は standard")
+    check(service.normalize_verbosity("xxx") == "standard", "未知は standard")
+    check(service.normalize_verbosity("deep") == "deep", "deep はそのまま")
+
+    # 2. build_council が length_hint を Council に渡す（mock で可）
+    c_std = service.build_council(
+        ["moderator", "logic", "idea", "chair"], rounds_per_phase=1, mock=True
+    )
+    check(c_std.length_hint == "", "standard（既定）は length_hint=''（従来＝簡潔に）")
+    c_deep = service.build_council(
+        ["moderator", "logic", "idea", "chair"], rounds_per_phase=1, mock=True, verbosity="deep"
+    )
+    check(
+        c_deep.length_hint == service.VERBOSITY["deep"]["hint"],
+        "deep は深掘りの length_hint を Council に渡す",
+    )
+
+    # 3. make_client に max_tokens が伝わる（real クライアントの構築のみ・無通信）
+    c = service.make_client(mock=False, api_key="sk-ant-x", max_tokens=8192)
+    check(
+        isinstance(c, _Anthropic) and c._max_tokens == 8192,
+        "max_tokens 上限がクライアントに伝わる",
+    )
+
+    # 4. build_context: length_directive が末尾ナッジの長さ語句を差し替える（空＝従来「簡潔に」）
+    b = make("b")
+    _s1, msg_def = build_context(transcript=[], active=b, topic="T")
+    tail_def = msg_def[-1]["content"]
+    check("簡潔に発言してください" in tail_def, "既定は『簡潔に発言してください』（後方互換）")
+    _s2, msg_deep = build_context(transcript=[], active=b, topic="T", length_directive="じっくり丁寧に")
+    tail_deep = msg_deep[-1]["content"]
+    check("じっくり丁寧に発言してください" in tail_deep, "length_directive で長さ語句が差し替わる")
+    check("簡潔に発言してください" not in tail_deep, "deep では『簡潔に』が外れる")
+
+
 def test_persona_service_crud():
     """ペルソナ service: 保存/詳細/category 変更 unlink/旧パス unlink を id→path で。"""
     print("[test] persona service CRUD (save/detail/category-move unlink)")
@@ -1601,6 +1642,7 @@ if __name__ == "__main__":
     test_followup_injection()
     test_llm_status()
     test_byok_make_client()
+    test_verbosity()
     test_persona_service_crud()
     test_preset_service()
     test_http_api()

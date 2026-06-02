@@ -45,6 +45,8 @@ export interface StartSessionArgs {
   // Web 検索（調査役による事実調べ）。既定 false で従来と完全同一（body にも載らない）。
   // true のとき調査役が discussion 序盤と「要調査:」マーカーで検索し全員に共有する（コスト増）。
   research?: boolean;
+  // 応答の長さプリセット（既定 standard）。トークン数ではなく質感で選ぶ。
+  verbosity?: "brief" | "standard" | "deep";
   signal?: AbortSignal;
   onEvent: (e: StreamEvent) => void;
 }
@@ -74,6 +76,7 @@ export async function startSession({
   intake = [],
   interactive = true,
   research = false,
+  verbosity = "standard",
   signal,
   onEvent,
 }: StartSessionArgs): Promise<void> {
@@ -93,6 +96,8 @@ export async function startSession({
   if (intake.length > 0) body.intake = intake;
   // Web 検索（調査役）。後方互換: false のときは body に載せない（従来の POST と完全同一）。
   if (research) body.research = research;
+  // 応答の長さ。後方互換: standard（既定）のときは body に載せない。
+  if (verbosity && verbosity !== "standard") body.verbosity = verbosity;
 
   const res = await fetch(apiUrl("/sessions"), {
     method: "POST",

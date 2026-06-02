@@ -48,6 +48,30 @@ export function setProvider(provider: LlmProvider): void {
   }
 }
 
+// 応答の長さプリセット（トークン数ではなく質感で選ぶ）。
+const VERBOSITY_STORAGE = "aiteams_verbosity";
+export type Verbosity = "brief" | "standard" | "deep";
+export const VERBOSITIES: Verbosity[] = ["brief", "standard", "deep"];
+
+export function getVerbosity(): Verbosity {
+  if (typeof window === "undefined") return "standard";
+  try {
+    const v = window.localStorage.getItem(VERBOSITY_STORAGE);
+    return (VERBOSITIES as string[]).includes(v ?? "") ? (v as Verbosity) : "standard";
+  } catch {
+    return "standard";
+  }
+}
+
+export function setVerbosity(v: Verbosity): void {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(VERBOSITY_STORAGE, v);
+  } catch {
+    /* noop */
+  }
+}
+
 export function getUserKey(): string {
   if (typeof window === "undefined") return ""; // SSR / static export 時は空
   try {

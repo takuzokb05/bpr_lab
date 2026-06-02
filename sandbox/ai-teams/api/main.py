@@ -171,6 +171,9 @@ class SessionRequest(BaseModel):
     # Web 検索（調査役）を有効にするか。True なら seed 調査＋各ペルソナの「要調査:」を
     # 調査役が調べて全員に共有する。False（既定）では一切検索しない（後方互換・無料）。
     research: bool = False
+    # 応答の長さプリセット（ユーザーはトークン数を意識しない）。simple/standard/deep を
+    # max_tokens 上限＋発話スタイル指示にマップ。既定 standard（旧挙動だが上限を上げ切れ防止）。
+    verbosity: Literal["brief", "standard", "deep"] = "standard"
 
 
 class IntakeRequest(BaseModel):
@@ -268,6 +271,7 @@ def create_session(
             mock=req.mock,
             api_key=api_key,
             provider=x_llm_provider,
+            verbosity=req.verbosity,
             materials=composed_materials,
             research=req.research,
         )

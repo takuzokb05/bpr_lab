@@ -25,13 +25,17 @@ import {
   setUserKey,
   getProvider,
   setProvider,
+  getVerbosity,
+  setVerbosity,
   LLM_PROVIDERS,
   type LlmProvider,
+  type Verbosity,
 } from "@/lib/config";
 import { PersonaPicker } from "@/components/PersonaPicker";
 import { PresetBar } from "@/components/PresetBar";
 import { LlmToggle } from "@/components/LlmToggle";
 import { KeyEntry } from "@/components/KeyEntry";
+import { VerbositySelect } from "@/components/VerbositySelect";
 import { PersonaManagerDrawer } from "@/components/PersonaManagerDrawer";
 import { PresetSaveDialog } from "@/components/PresetSaveDialog";
 import { Timeline } from "@/components/Timeline";
@@ -102,6 +106,8 @@ export default function Home() {
   // BYOK: 各自のキー＋プロバイダ。localStorage が実体（SSR/export 時は空なので mount 後に読む）。
   const [userKey, setUserKeyState] = useState("");
   const [provider, setProviderState] = useState<LlmProvider>("anthropic");
+  // 応答の長さ（既定 standard）。トークン数ではなく質感で選ぶ。
+  const [verbosity, setVerbosityState] = useState<Verbosity>("standard");
 
   const [manageOpen, setManageOpen] = useState(false);
   const [saveOpen, setSaveOpen] = useState(false);
@@ -121,6 +127,7 @@ export default function Home() {
     loadPersonas();
     setUserKeyState(getUserKey()); // localStorage は client のみ。mount 後に読む
     setProviderState(getProvider());
+    setVerbosityState(getVerbosity());
     fetchPresets()
       .then(setPresets)
       .catch(() => {
@@ -143,6 +150,12 @@ export default function Home() {
   function updateProvider(p: LlmProvider) {
     setProvider(p);
     setProviderState(p);
+  }
+
+  // 応答の長さ切替（localStorage に保存し state も同期）。
+  function updateVerbosity(v: Verbosity) {
+    setVerbosity(v);
+    setVerbosityState(v);
   }
 
   const looks = useMemo(() => {
@@ -347,6 +360,7 @@ export default function Home() {
         materials: trimmedMaterials, // 準備フェーズ: 資料接地（空なら body に載らない）
         intake, // 準備フェーズ: 回答済み確認 Q&A（空なら body に載らない）
         research, // 準備フェーズ: Web 検索（調査役）。false なら body に載らない＝従来同一
+        verbosity, // 応答の長さ（standard なら body に載らない＝従来同一）
         interactive: true, // Web は floor-open（本編後に一時停止して入力を待つ）
         signal: ctrl.signal,
         onEvent: (e) => {
@@ -520,6 +534,12 @@ export default function Home() {
             keyAvailable={keyAvailable}
             byok={byok}
             onChange={setUseLlm}
+            disabled={active}
+          />
+
+          <VerbositySelect
+            value={verbosity}
+            onChange={updateVerbosity}
             disabled={active}
           />
 

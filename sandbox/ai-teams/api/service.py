@@ -96,6 +96,33 @@ def readonly_mode() -> bool:
 PROVIDERS = ("anthropic", "openai", "google")
 _DEFAULT_PROVIDER = "anthropic"
 
+# 応答の長さプリセット（ユーザーはトークン数を意識しない。質感だけ選ぶ）。
+#   max_tokens: 1発言の出力上限。**上限**でありモデルは必要分で止まるので、上げても常時その量を
+#     消費はしない（主に途中切れ＝truncation 防止）。
+#   hint: build_context 末尾ナッジに差し込む長さの語句（""＝従来の「簡潔に」で後方互換）。
+#     簡潔は graceful に短く、じっくりは「簡潔に」を外して深掘りを許可する。
+VERBOSITY = {
+    "brief": {
+        "max_tokens": 1024,
+        "hint": "結論と主な理由を3〜5文で簡潔に",
+    },
+    "standard": {
+        "max_tokens": 4096,  # 旧既定 2048 では最上位モデルの厚い発言が途中で切れていた
+        "hint": "",  # ""→「簡潔に」（従来挙動）。上限だけ引き上げて切れを防ぐ
+    },
+    "deep": {
+        "max_tokens": 8192,
+        "hint": "要点は押さえつつ、重要な論点は具体例・根拠・想定反論まで踏み込んで丁寧に",
+    },
+}
+_DEFAULT_VERBOSITY = "standard"
+
+
+def normalize_verbosity(v: str | None) -> str:
+    """応答の長さプリセット名を正規化（未知/空は既定 standard）。"""
+    v = (v or "").strip().lower()
+    return v if v in VERBOSITY else _DEFAULT_VERBOSITY
+
 
 def normalize_provider(provider: str | None) -> str:
     """provider 文字列を正規化（未知/空は既定 anthropic）。"gemini" は google に寄せる。"""
@@ -107,11 +134,15 @@ def normalize_provider(provider: str | None) -> str:
 
 # -- LLM クライアント -------------------------------------------------------
 def make_client(
-    mock: bool = False, api_key: str | None = None, provider: str | None = None
+    mock: bool = False,
+    api_key: str | None = None,
+    provider: str | None = None,
+    max_tokens: int | None = None,
 ) -> LLMClient:
     """LLM クライアントを作る。優先順位は mock > 明示 api_key > サーバ env キー。
 
     provider で実体（Anthropic/OpenAI/Gemini）を選ぶ（1セッション=1 provider）。
+    max_tokens は1発言の出力上限（None なら各クライアントの env 既定）。応答の長さプリセットから渡す。
     - mock=True: provider/キーに関わらず必ず Mock（検証・デモ・二重課金防止）。
     - api_key 指定: そのキーで該当 provider のクライアント（BYOK 本線。各自が自分の鍵で課金）。
     - api_key 無し:
@@ -127,10 +158,10 @@ def make_client(
     if not key:
         return MockLLMClient()
     if prov == "openai":
-        return OpenAIClient(api_key=key)
+        return OpenAIClient(api_key=key, max_tokens=max_tokens)
     if prov == "google":
-        return GeminiClient(api_key=key)
-    return AnthropicClient(api_key=key)
+        return GeminiClient(api_key=key, max_tokens=max_tokens)
+    return AnthropicClient(api_key=key, max_tokens=max_tokens)
 
 
 def llm_status() -> dict:
@@ -201,6 +232,7 @@ def build_council(
     mock: bool = False,
     api_key: str | None = None,
     provider: str | None = None,
+    verbosity: str | None = None,
     materials: str = "",
     research: bool = False,
 ) -> Council:
@@ -222,14 +254,17 @@ def build_council(
     # 「要調査:」ナッジや無意味な researcher ターンが出ないようにする（honest な劣化）。
     prov = normalize_provider(provider)
     research = research and prov == "anthropic"
+    # 応答の長さプリセット → 出力上限（途中切れ防止）＋発話スタイル指示。
+    vb = VERBOSITY[normalize_verbosity(verbosity)]
     return Council(
         personas,
-        make_client(mock, api_key, provider),
+        make_client(mock, api_key, provider, max_tokens=vb["max_tokens"]),
         rounds_per_phase=rounds_per_phase,
         red_team=red_team,
         red_team_id=red_team_id,
         materials=materials,
         research=research,
+        length_hint=vb["hint"],
     )
 
 

@@ -132,6 +132,7 @@ class Council:
         red_team_id: str | None = None,
         materials: str = "",
         research: bool = False,
+        length_hint: str = "",
     ) -> None:
         self.client = client
         self.default_model = default_model
@@ -145,6 +146,10 @@ class Council:
         # 「要調査: …」を書いてよい指示を足し、producer がそのマーカーを拾って調査役が
         # 調べ、researcher ターンとして全員に共有する。False では一切何もしない（後方互換）。
         self.research = research
+        # 応答の長さ指示（プリセット由来の語句）。build_context の末尾ナッジに差し込み、
+        # 発話スタイルを誘導する（""＝従来の「簡潔に」で後方互換）。max_tokens 上限は
+        # クライアント側で別途設定する（途中切れ防止）。
+        self.length_hint = length_hint
 
         personas = list(personas)
         # 役割ごとに振り分ける
@@ -205,6 +210,7 @@ class Council:
             anti_conformity=anti_conformity,
             materials=self.materials,
             research_enabled=self.research,
+            length_directive=self.length_hint,
         )
         model, temperature = self._resolve(persona)
 

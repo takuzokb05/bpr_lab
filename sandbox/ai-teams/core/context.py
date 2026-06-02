@@ -56,6 +56,7 @@ def build_context(
     anti_conformity: bool = True,
     materials: str = "",
     research_enabled: bool = False,
+    length_directive: str = "",
 ) -> tuple[str, list[Message]]:
     """active ペルソナが「次の1発言」を生成するための (system, messages) を組む。
 
@@ -88,9 +89,11 @@ def build_context(
     if research_enabled:
         # research=False では一切出さない＝従来と完全一致（後方互換）。
         nudge.append(RESEARCH_NUDGE)
+    # 応答の長さ指示（プリセット由来）。空（標準）なら従来どおり "簡潔に"（後方互換）。
+    length_word = length_directive or "簡潔に"
     nudge.append(
         f"あなた（{active.display_name}）の番です。上記の議論を踏まえ、"
-        f"{active.display_name} として一度だけ簡潔に発言してください。"
+        f"{active.display_name} として一度だけ{length_word}発言してください。"
         "他の参加者のセリフを代弁・捏造しないこと。"
         "見出しや水平線（---）で発言を機械的に飾らないこと。あなたの名前は画面に"
         "既に表示されている——冒頭に「## 〇〇担当の発言」のような見出しを付けないこと。"

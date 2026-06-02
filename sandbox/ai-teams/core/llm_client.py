@@ -216,6 +216,10 @@ _GEMINI_DEFAULT_MODEL = os.environ.get("AI_TEAMS_GEMINI_MODEL", "gemini-3.5-flas
 # 非 Anthropic provider では Web 検索（調査役）は未対応。その旨を正直に返す（討論は止めない）。
 _RESEARCH_UNSUPPORTED = "（Web 検索は現在 Anthropic 選択時のみ対応です。検索なしで進めます。）"
 
+# OpenAI の GPT-5 / o 系（推論モデル）は temperature を既定(1)以外受け付けない（400）。
+# これらのモデル名にマッチしたら temperature を送らない（gpt-4o 等の従来モデルには送る）。
+_OPENAI_NO_TEMP_MARKERS = ("gpt-5", "o1", "o3", "o4")
+
 
 class OpenAIClient(LLMClient):
     """OpenAI Chat Completions を Anthropic と同じ IF に正規化する（BYOK・各自キー）。
@@ -236,22 +240,29 @@ class OpenAIClient(LLMClient):
         # OpenAI は system を messages 先頭ロールで渡す。
         return [{"role": "system", "content": system}, *messages]
 
+    def _params(self, system: str, messages: list[Message], temperature: float) -> dict:
+        """chat.completions のパラメータ。新旧モデル差を吸収する。
+
+        - 出力上限は **max_completion_tokens**（max_tokens は非推奨で GPT-5/o 系は拒否）。
+        - GPT-5 / o 系（推論モデル）は temperature 既定(1)以外を拒否するので送らない。
+          gpt-4o 等の従来モデルにだけ temperature を渡す（_OPENAI_NO_TEMP_MARKERS で判定）。
+        """
+        params: dict = {
+            "model": self._model,  # 渡された model（Claude ID の可能性）は使わない
+            "messages": self._messages(system, messages),
+            "max_completion_tokens": self._max_tokens,
+        }
+        if not any(m in self._model for m in _OPENAI_NO_TEMP_MARKERS):
+            params["temperature"] = temperature
+        return params
+
     def generate(self, *, system: str, messages: list[Message], model: str, temperature: float = 0.7) -> str:
-        resp = self._client.chat.completions.create(
-            model=self._model,  # 渡された model（Claude ID の可能性）は使わない
-            messages=self._messages(system, messages),
-            max_tokens=self._max_tokens,
-            temperature=temperature,
-        )
+        resp = self._client.chat.completions.create(**self._params(system, messages, temperature))
         return (resp.choices[0].message.content or "").strip()
 
     def generate_stream(self, *, system: str, messages: list[Message], model: str, temperature: float = 0.7) -> Iterator[str]:
         stream = self._client.chat.completions.create(
-            model=self._model,
-            messages=self._messages(system, messages),
-            max_tokens=self._max_tokens,
-            temperature=temperature,
-            stream=True,
+            **self._params(system, messages, temperature), stream=True
         )
         for chunk in stream:
             delta = chunk.choices[0].delta.content if chunk.choices else None
