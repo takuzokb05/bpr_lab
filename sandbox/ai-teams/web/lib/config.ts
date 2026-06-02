@@ -49,7 +49,73 @@ export function setProvider(provider: LlmProvider): void {
 }
 
 // 自分のペルソナ（クライアント定義・localStorage が実体・サーバ非保存）。
-import type { CustomPersona } from "./types";
+import type { CustomPersona, Turn } from "./types";
+
+// -- 討論履歴（クライアント保存・サーバ非依存） ------------------------------
+// 討論はサーバのメモリ常駐で、再起動や TTL で消える。見返し／再開できるよう、
+// transcript を **このブラウザの localStorage** に保存する（BYOK と同じ思想）。
+const HISTORY_STORAGE = "aiteams_history";
+const HISTORY_MAX = 20; // localStorage 肥大を避ける（古いものから捨てる）
+
+export interface HistoryEntry {
+  id: string; // = サーバの session_id
+  topic: string;
+  startedAt: number; // UNIX ms（最初に保存した時刻）
+  updatedAt: number;
+  status: string; // running | paused | done | error
+  turns: Turn[];
+}
+
+export function getHistory(): HistoryEntry[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = window.localStorage.getItem(HISTORY_STORAGE);
+    const arr = raw ? JSON.parse(raw) : [];
+    return Array.isArray(arr) ? arr : [];
+  } catch {
+    return [];
+  }
+}
+
+// id で upsert。startedAt は既存を温存し、updatedAt 降順（最近が先頭）で HISTORY_MAX 件に丸める。
+export function saveHistoryEntry(
+  entry: Omit<HistoryEntry, "startedAt" | "updatedAt"> & { startedAt?: number }
+): void {
+  if (typeof window === "undefined") return;
+  if (!entry.id || !entry.topic) return;
+  try {
+    const now = Date.now();
+    const list = getHistory();
+    const existing = list.find((e) => e.id === entry.id);
+    const merged: HistoryEntry = {
+      id: entry.id,
+      topic: entry.topic,
+      status: entry.status,
+      turns: entry.turns,
+      startedAt: existing?.startedAt ?? entry.startedAt ?? now,
+      updatedAt: now,
+    };
+    const rest = list.filter((e) => e.id !== entry.id);
+    const next = [merged, ...rest]
+      .sort((a, b) => b.updatedAt - a.updatedAt)
+      .slice(0, HISTORY_MAX);
+    window.localStorage.setItem(HISTORY_STORAGE, JSON.stringify(next));
+  } catch {
+    /* 失敗（容量超過等）は無視。本体は動く */
+  }
+}
+
+export function deleteHistoryEntry(id: string): void {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(
+      HISTORY_STORAGE,
+      JSON.stringify(getHistory().filter((e) => e.id !== id))
+    );
+  } catch {
+    /* noop */
+  }
+}
 
 const CUSTOM_PERSONAS_STORAGE = "aiteams_custom_personas";
 const VALID_CUSTOM_CATS = ["thinking", "founders", "philosophers"];

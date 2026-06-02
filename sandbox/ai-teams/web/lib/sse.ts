@@ -118,8 +118,15 @@ export async function startSession({
 
   const state: PumpState = { sessionId: null, lastSeq: -1, terminal: false };
   await pump(res, state, onEvent);
+  await runReconnectLoop(state, onEvent, signal);
+}
 
-  // 再接続ループ: 正常終了でも abort でもなく切れた場合、続きを取りに行く。
+/** 切断時に /sessions/{id}/stream?cursor=lastSeq+1 で続きを取りに行く共通ループ。 */
+async function runReconnectLoop(
+  state: PumpState,
+  onEvent: (e: StreamEvent) => void,
+  signal?: AbortSignal
+): Promise<void> {
   while (!state.terminal && !signal?.aborted && state.sessionId) {
     let r: Response;
     try {
@@ -133,6 +140,37 @@ export async function startSession({
     if (!r.ok || !r.body) break;
     await pump(r, state, onEvent);
   }
+}
+
+/**
+ * 既存セッションへ再接続して再生する（ページ再読込・ロード失敗からの復帰）。
+ * cursor=0 で events[0:] を replay → onEvent が turn を作り直す（呼び出し側は事前に turns をクリア）。
+ * サーバがそのセッションを持っていなければ（再起動・TTL 切れ等で 404）false を返す＝復帰不可。
+ * 持っていれば true を返し、running なら続きをライブ配信、paused なら入力待ちで開いたまま。
+ */
+export async function resumeSession({
+  sessionId,
+  signal,
+  onEvent,
+}: {
+  sessionId: string;
+  signal?: AbortSignal;
+  onEvent: (e: StreamEvent) => void;
+}): Promise<boolean> {
+  let r: Response;
+  try {
+    r = await fetch(apiUrl(`/sessions/${sessionId}/stream?cursor=0`), {
+      headers: apiHeaders(),
+      signal,
+    });
+  } catch {
+    return false;
+  }
+  if (!r.ok || !r.body) return false; // 404 = サーバがこのセッションを持っていない
+  const state: PumpState = { sessionId, lastSeq: -1, terminal: false };
+  await pump(r, state, onEvent);
+  await runReconnectLoop(state, onEvent, signal);
+  return true;
 }
 
 /** 1レスポンスの本文を読み切り、SSE フレームを onEvent に流す（切断で return）。 */

@@ -10,7 +10,9 @@ import {
   finishSession,
   sendFollowup,
   startSession,
+  resumeSession,
   type Health,
+  type StreamEvent,
 } from "@/lib/sse";
 import { fetchPresets } from "@/lib/api";
 import {
@@ -31,9 +33,13 @@ import {
   setVerbosity,
   getCustomPersonas,
   setCustomPersonas,
+  getHistory,
+  saveHistoryEntry,
+  deleteHistoryEntry,
   LLM_PROVIDERS,
   type LlmProvider,
   type Verbosity,
+  type HistoryEntry,
 } from "@/lib/config";
 import { PersonaPicker } from "@/components/PersonaPicker";
 import { PresetBar } from "@/components/PresetBar";
@@ -41,6 +47,7 @@ import { LlmToggle } from "@/components/LlmToggle";
 import { KeyEntry } from "@/components/KeyEntry";
 import { VerbositySelect } from "@/components/VerbositySelect";
 import { MyPersonasDrawer } from "@/components/MyPersonasDrawer";
+import { HistoryDrawer } from "@/components/HistoryDrawer";
 import { PersonaManagerDrawer } from "@/components/PersonaManagerDrawer";
 import { PresetSaveDialog } from "@/components/PresetSaveDialog";
 import { Timeline } from "@/components/Timeline";
@@ -58,6 +65,7 @@ import {
   ListChecks,
   Globe,
   Search,
+  History,
 } from "lucide-react";
 
 // 準備フェーズ: クライアント側で読み込む資料の拡張子（PDF/Office は MVP 対象外）。
@@ -120,6 +128,10 @@ export default function Home() {
   // 自分のペルソナ（クライアント定義・localStorage・サーバ非保存）。
   const [customPersonas, setCustomPersonasState] = useState<CustomPersona[]>([]);
   const [myPersonasOpen, setMyPersonasOpen] = useState(false);
+  // 討論履歴（クライアント保存・サーバ非依存）。見返し・再開の入口。
+  const [history, setHistory] = useState<HistoryEntry[]>([]);
+  const [historyOpen, setHistoryOpen] = useState(false);
+  const restoredRef = useRef(false); // 初回マウントの自動再開を一度だけ行う
 
   const [manageOpen, setManageOpen] = useState(false);
   const [saveOpen, setSaveOpen] = useState(false);
@@ -152,6 +164,34 @@ export default function Home() {
         /* health 取得失敗時は mock 既定のまま動かす */
       });
   }, []);
+
+  // 履歴の読込＋復帰。直近の running/paused かつ最近（30分以内）の討論は自動で再接続を試みる
+  // （ページ再読込・ロード失敗からの復帰）。サーバが失っていれば保存済み transcript を凍結表示。
+  useEffect(() => {
+    if (restoredRef.current) return;
+    restoredRef.current = true;
+    const h = getHistory();
+    setHistory(h);
+    const last = h[0];
+    const RECENT_MS = 30 * 60 * 1000;
+    if (
+      last &&
+      (last.status === "running" || last.status === "paused") &&
+      Date.now() - last.updatedAt < RECENT_MS
+    ) {
+      resumeOrLoad(last);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // 進行中/完了の討論を localStorage に保存（見返し・再開用）。delta 毎の重い書込を避けるため
+  // turns.length と status の変化時に保存する（保存値は最新の turns 全体＝確定後の本文も入る）。
+  useEffect(() => {
+    if (!sessionId || !activeTopic) return;
+    saveHistoryEntry({ id: sessionId, topic: activeTopic, status, turns });
+    setHistory(getHistory());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sessionId, activeTopic, status, turns.length]);
 
   // BYOK キーの更新（localStorage に保存し state も同期）。空文字で保存＝クリア。
   function updateUserKey(key: string) {
@@ -373,6 +413,99 @@ export default function Home() {
     e.target.value = ""; // 同じファイルを続けて選べるようにする
   }
 
+  // SSE イベント → 画面状態の反映。start（新規）と resume（再接続）で共有する。
+  function handleEvent(e: StreamEvent) {
+    if (e.type === "start") {
+      setSessionId(e.sessionId);
+    } else if (e.type === "turn_start") {
+      // floor-open から再開（追い質問 deepen / 締め synthesis）。running に戻す。
+      setStatus((s: Status) => (s === "paused" ? "running" : s));
+      setTurns((prev) => {
+        let base = prev;
+        // GAP4: サーバの human ターンが来たら、未確定(turn_id<0)の human エコーを
+        // FIFO 先頭から1件だけ除去する（turn_start 時点で本文未着＝content 照合不可）。
+        if (e.speakerId === "human") {
+          const idx = base.findIndex((t) => t.phase === "human" && t.turn_id < 0);
+          if (idx !== -1) {
+            base = [...base.slice(0, idx), ...base.slice(idx + 1)];
+          }
+        }
+        return [
+          ...base,
+          {
+            turn_id: e.turnId,
+            speaker_id: e.speakerId,
+            speaker_name: e.speakerName,
+            content: "",
+            phase: e.phase,
+            round: e.round,
+            ts: e.ts,
+          },
+        ];
+      });
+      setStreamingTurnId(e.turnId);
+    } else if (e.type === "delta") {
+      setTurns((prev) =>
+        prev.map((t) =>
+          t.turn_id === e.turnId ? { ...t, content: t.content + e.text } : t
+        )
+      );
+    } else if (e.type === "turn_end") {
+      setStreamingTurnId((cur) => (cur === e.turnId ? null : cur));
+    } else if (e.type === "paused") {
+      setStatus("paused");
+      setStreamingTurnId(null);
+    } else if (e.type === "error") {
+      setError(e.message);
+      setStatus("error");
+      setStreamingTurnId(null);
+    } else if (e.type === "done") {
+      setStatus("done");
+      setStreamingTurnId(null);
+    }
+  }
+
+  // 既存セッションへ再接続して再生（ページ再読込・ロード失敗からの復帰）。サーバが持っていれば
+  // ライブ継続、無ければ（再起動/TTL）保存済み transcript を凍結表示する。履歴クリックからも使う。
+  async function resumeOrLoad(entry: HistoryEntry) {
+    setActiveTopic(entry.topic);
+    setSessionId(entry.id);
+    setError(null);
+    setHistoryOpen(false);
+    if (entry.status === "running" || entry.status === "paused") {
+      setTurns([]); // replay（cursor=0）で作り直すので一旦クリア
+      setStatus("running");
+      setStreamingTurnId(null);
+      const ctrl = new AbortController();
+      abortRef.current = ctrl;
+      try {
+        const ok = await resumeSession({
+          sessionId: entry.id,
+          signal: ctrl.signal,
+          onEvent: handleEvent,
+        });
+        if (!ok && !ctrl.signal.aborted) {
+          setTurns(entry.turns);
+          setStatus(entry.status === "paused" ? "done" : "done");
+          setError(
+            "このセッションはサーバ側で終了/再起動により失われたため再開できません。ここまでの記録を表示しています。"
+          );
+        }
+      } catch (err) {
+        if (!ctrl.signal.aborted) {
+          setTurns(entry.turns);
+          setStatus("done");
+          setError(String(err));
+        }
+      }
+    } else {
+      // 完了/エラー: 保存済み transcript を読み取り表示。
+      setTurns(entry.turns);
+      setStatus(entry.status === "error" ? "error" : "done");
+      setStreamingTurnId(null);
+    }
+  }
+
   async function start() {
     const topic = topicInput.trim();
     if (!topic || selected.size === 0 || active) return;
@@ -419,59 +552,7 @@ export default function Home() {
         customPersonas: selectedCustom, // 自分のペルソナ（選択中のみ・サーバ非保存）
         interactive: true, // Web は floor-open（本編後に一時停止して入力を待つ）
         signal: ctrl.signal,
-        onEvent: (e) => {
-          if (e.type === "start") {
-            setSessionId(e.sessionId);
-          } else if (e.type === "turn_start") {
-            // floor-open から再開（追い質問 deepen / 締め synthesis）。running に戻す。
-            setStatus((s: Status) => (s === "paused" ? "running" : s));
-            setTurns((prev) => {
-              let base = prev;
-              // GAP4: サーバの human ターンが来たら、未確定(turn_id<0)の human エコーを
-              // FIFO 先頭から1件だけ除去する（turn_start 時点で本文未着＝content 照合不可）。
-              if (e.speakerId === "human") {
-                const idx = base.findIndex(
-                  (t) => t.phase === "human" && t.turn_id < 0
-                );
-                if (idx !== -1) {
-                  base = [...base.slice(0, idx), ...base.slice(idx + 1)];
-                }
-              }
-              return [
-                ...base,
-                {
-                  turn_id: e.turnId,
-                  speaker_id: e.speakerId,
-                  speaker_name: e.speakerName,
-                  content: "",
-                  phase: e.phase,
-                  round: e.round,
-                  ts: e.ts,
-                },
-              ];
-            });
-            setStreamingTurnId(e.turnId);
-          } else if (e.type === "delta") {
-            setTurns((prev) =>
-              prev.map((t) =>
-                t.turn_id === e.turnId ? { ...t, content: t.content + e.text } : t
-              )
-            );
-          } else if (e.type === "turn_end") {
-            setStreamingTurnId((cur) => (cur === e.turnId ? null : cur));
-          } else if (e.type === "paused") {
-            // floor-open に入った。入力待ちへ。ストリーミング表示はクリアする。
-            setStatus("paused");
-            setStreamingTurnId(null);
-          } else if (e.type === "error") {
-            setError(e.message);
-            setStatus("error");
-            setStreamingTurnId(null);
-          } else if (e.type === "done") {
-            setStatus("done");
-            setStreamingTurnId(null);
-          }
-        },
+        onEvent: handleEvent,
       });
     } catch (err) {
       if (!ctrl.signal.aborted) {
@@ -558,7 +639,18 @@ export default function Home() {
       {/* ヘッダー */}
       <header className="flex items-center justify-between border-b border-[var(--color-line)] bg-[var(--color-surface)] px-6 py-3">
         <h1 className="font-display text-base tracking-widest">AI COUNCIL</h1>
-        <OnAir status={status} />
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => {
+              setHistory(getHistory());
+              setHistoryOpen(true);
+            }}
+            className="flex items-center gap-1 text-[11px] text-[var(--color-ink-muted)] hover:text-[var(--color-accent)]"
+          >
+            <History size={14} /> 履歴
+          </button>
+          <OnAir status={status} />
+        </div>
       </header>
 
       {/* 3レーン */}
@@ -926,6 +1018,19 @@ export default function Home() {
         items={customPersonas}
         onSave={updateCustomPersonas}
         disabled={active}
+      />
+
+      {/* 討論履歴（クライアント保存・見返し/再開） */}
+      <HistoryDrawer
+        open={historyOpen}
+        onClose={() => setHistoryOpen(false)}
+        entries={history}
+        currentId={sessionId}
+        onOpen={resumeOrLoad}
+        onDelete={(id) => {
+          deleteHistoryEntry(id);
+          setHistory(getHistory());
+        }}
       />
 
       {/* プリセット保存ダイアログ */}
