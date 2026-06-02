@@ -20,7 +20,14 @@ import {
   type Preset,
   type Turn,
 } from "@/lib/types";
-import { getUserKey, setUserKey } from "@/lib/config";
+import {
+  getUserKey,
+  setUserKey,
+  getProvider,
+  setProvider,
+  LLM_PROVIDERS,
+  type LlmProvider,
+} from "@/lib/config";
 import { PersonaPicker } from "@/components/PersonaPicker";
 import { PresetBar } from "@/components/PresetBar";
 import { LlmToggle } from "@/components/LlmToggle";
@@ -92,8 +99,9 @@ export default function Home() {
 
   const [useLlm, setUseLlm] = useState(false); // GAP5: 既定は mock（無料）
   const [health, setHealth] = useState<Health | null>(null);
-  // BYOK: 各自の Anthropic キー。localStorage が実体（SSR/export 時は空なので mount 後に読む）。
+  // BYOK: 各自のキー＋プロバイダ。localStorage が実体（SSR/export 時は空なので mount 後に読む）。
   const [userKey, setUserKeyState] = useState("");
+  const [provider, setProviderState] = useState<LlmProvider>("anthropic");
 
   const [manageOpen, setManageOpen] = useState(false);
   const [saveOpen, setSaveOpen] = useState(false);
@@ -112,6 +120,7 @@ export default function Home() {
   useEffect(() => {
     loadPersonas();
     setUserKeyState(getUserKey()); // localStorage は client のみ。mount 後に読む
+    setProviderState(getProvider());
     fetchPresets()
       .then(setPresets)
       .catch(() => {
@@ -128,6 +137,12 @@ export default function Home() {
   function updateUserKey(key: string) {
     setUserKey(key);
     setUserKeyState(key.trim());
+  }
+
+  // プロバイダ切替（localStorage に保存し state も同期）。キーのクリアは KeyEntry 側で行う。
+  function updateProvider(p: LlmProvider) {
+    setProvider(p);
+    setProviderState(p);
   }
 
   const looks = useMemo(() => {
@@ -158,6 +173,11 @@ export default function Home() {
   const keyAvailable = byok ? userKey.trim().length > 0 : (health?.api_key_set ?? false);
   // 実 LLM が実際に使われるか（mock = NOT(useLlm AND keyAvailable)。キーが無ければ常に mock）。
   const willUseRealLlm = useLlm && keyAvailable;
+  // 対応プロバイダ（health から。未取得時は全 3 社）。
+  const availableProviders = (health?.providers as LlmProvider[] | undefined) ?? LLM_PROVIDERS;
+  // Web 検索（調査役）は anthropic のみ対応。非 anthropic では研究トグルを無効化する。
+  const researchProvider = health?.research_provider ?? "anthropic";
+  const researchAvailable = provider === researchProvider;
 
   // 追い質問の処理中（人間ターンのエコー・司会再提示・パネリスト応答が流れている間）。
   const processingFollowup =
@@ -250,6 +270,12 @@ export default function Home() {
     // loadIntake は最新クロージャを使うため deps から除外（topicInput 変化で再設定される）。
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [intakeEnabled, topicInput, active]);
+
+  // Web 検索が使えない provider（非 Anthropic）に切り替わったら研究トグルを強制 off。
+  // （ON のまま残ると、サーバ側でも強制 off だが UI の表示と挙動が食い違うのを防ぐ）
+  useEffect(() => {
+    if (!researchAvailable && research) setResearch(false);
+  }, [researchAvailable, research]);
 
   // 入力欄の高さを内容に追従させる（送信前の見返し用）。一旦 0 に潰してから scrollHeight を測り、
   // CSS の max-h でクランプ＋それ以上はスクロール。topicInput が変わるたびに再計算。
@@ -479,7 +505,14 @@ export default function Home() {
           />
 
           {byok && (
-            <KeyEntry value={userKey} onChange={updateUserKey} disabled={active} />
+            <KeyEntry
+              provider={provider}
+              onProviderChange={updateProvider}
+              value={userKey}
+              onChange={updateUserKey}
+              providers={availableProviders}
+              disabled={active}
+            />
           )}
 
           <LlmToggle
@@ -658,8 +691,14 @@ export default function Home() {
                   type="button"
                   role="switch"
                   aria-checked={research}
-                  onClick={() => setResearch((v) => !v)}
-                  className={`flex items-center justify-between gap-3 rounded-md border px-2.5 py-2 text-left transition-colors ${
+                  disabled={!researchAvailable}
+                  title={
+                    researchAvailable
+                      ? undefined
+                      : "Web 検索は Anthropic 選択時のみ対応です"
+                  }
+                  onClick={() => researchAvailable && setResearch((v) => !v)}
+                  className={`flex items-center justify-between gap-3 rounded-md border px-2.5 py-2 text-left transition-colors disabled:opacity-40 ${
                     research
                       ? "border-[var(--color-accent)] bg-[var(--color-accent-weak)]"
                       : "border-[var(--color-line)] hover:border-[var(--color-ink-muted)]"
@@ -701,7 +740,9 @@ export default function Home() {
                 </button>
                 <p className="flex items-start gap-1.5 text-[11px] leading-relaxed text-[var(--color-ink-muted)]">
                   <Search size={12} className="mt-0.5 shrink-0" />
-                  調査役が序盤と「要調査」の問いだけを検索し、出典付きで全員に共有します。重複は省きます。
+                  {researchAvailable
+                    ? "調査役が序盤と「要調査」の問いだけを検索し、出典付きで全員に共有します。重複は省きます。"
+                    : "Web 検索は Anthropic 選択時のみ対応です（OpenAI/Google では検索なしで進めます）。"}
                 </p>
               </div>
             </div>

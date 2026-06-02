@@ -2,6 +2,10 @@
 # NOTE: keep comments ASCII-only. pip's requirements parser auto-decodes this file with
 # the OS locale (cp932 on Japanese Windows) and crashes on non-ASCII bytes (UnicodeDecodeError).
 anthropic>=0.40
+# BYOK multi-provider (each visitor brings their own single key). Lazy-imported, so a
+# missing package only errors when that provider is actually selected/used.
+openai>=1.40
+google-genai>=1.0
 pyyaml>=6.0
 # Loads ANTHROPIC_API_KEY / AI_TEAMS_* from .env (optional; service.py guards the import).
 python-dotenv>=1.0

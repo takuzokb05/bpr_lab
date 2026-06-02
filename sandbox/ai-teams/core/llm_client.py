@@ -200,6 +200,116 @@ class AnthropicClient(LLMClient):
         return brief
 
 
+# 各 provider の既定モデル（env で上書き可）。BYOK では各自が1社のキーだけ入れる想定で、
+# その provider の既定モデルを全ペルソナに使う（ペルソナの model 上書きは Anthropic 用 ID なので
+# 非 Anthropic では無視＝混線防止。発言の多様性は system プロンプトで担保する）。
+_OPENAI_DEFAULT_MODEL = os.environ.get("AI_TEAMS_OPENAI_MODEL", "gpt-4o")
+_GEMINI_DEFAULT_MODEL = os.environ.get("AI_TEAMS_GEMINI_MODEL", "gemini-2.5-flash")
+
+# 非 Anthropic provider では Web 検索（調査役）は未対応。その旨を正直に返す（討論は止めない）。
+_RESEARCH_UNSUPPORTED = "（Web 検索は現在 Anthropic 選択時のみ対応です。検索なしで進めます。）"
+
+
+class OpenAIClient(LLMClient):
+    """OpenAI Chat Completions を Anthropic と同じ IF に正規化する（BYOK・各自キー）。
+
+    v2 を不安定化させた「1プロセスで複数 provider を同時に吸収」はしない。1セッション=1 provider=
+    このクライアント1個に限定する。ペルソナの model 上書き（Anthropic 用 ID）は無視し、この
+    provider の既定モデルを使う。Web 検索は未対応（honest に伝える）。
+    """
+
+    def __init__(self, api_key: str | None = None, model: str | None = None, max_tokens: int | None = None) -> None:
+        from openai import OpenAI  # 遅延 import（未インストールでも他 provider は動く）
+
+        self._client = OpenAI(api_key=api_key) if api_key else OpenAI()
+        self._model = model or _OPENAI_DEFAULT_MODEL
+        self._max_tokens = max_tokens or int(os.environ.get("AI_TEAMS_MAX_TOKENS", "2048"))
+
+    def _messages(self, system: str, messages: list[Message]) -> list[Message]:
+        # OpenAI は system を messages 先頭ロールで渡す。
+        return [{"role": "system", "content": system}, *messages]
+
+    def generate(self, *, system: str, messages: list[Message], model: str, temperature: float = 0.7) -> str:
+        resp = self._client.chat.completions.create(
+            model=self._model,  # 渡された model（Claude ID の可能性）は使わない
+            messages=self._messages(system, messages),
+            max_tokens=self._max_tokens,
+            temperature=temperature,
+        )
+        return (resp.choices[0].message.content or "").strip()
+
+    def generate_stream(self, *, system: str, messages: list[Message], model: str, temperature: float = 0.7) -> Iterator[str]:
+        stream = self._client.chat.completions.create(
+            model=self._model,
+            messages=self._messages(system, messages),
+            max_tokens=self._max_tokens,
+            temperature=temperature,
+            stream=True,
+        )
+        for chunk in stream:
+            delta = chunk.choices[0].delta.content if chunk.choices else None
+            if delta:
+                yield delta
+
+    def web_research(self, query: str) -> str:
+        return _RESEARCH_UNSUPPORTED
+
+
+class GeminiClient(LLMClient):
+    """Google Gemini（google-genai SDK）を Anthropic と同じ IF に正規化する（BYOK・各自キー）。
+
+    OpenAIClient と同じ方針（1セッション1 provider・model 上書き無視・検索未対応）。
+    Gemini はロールが user/model なので assistant→model に変換し、system は config の
+    system_instruction で渡す。
+    """
+
+    def __init__(self, api_key: str | None = None, model: str | None = None, max_tokens: int | None = None) -> None:
+        from google import genai  # 遅延 import
+
+        self._client = genai.Client(api_key=api_key) if api_key else genai.Client()
+        self._model = model or _GEMINI_DEFAULT_MODEL
+        self._max_tokens = max_tokens or int(os.environ.get("AI_TEAMS_MAX_TOKENS", "2048"))
+
+    def _contents(self, messages: list[Message]) -> list[dict]:
+        # Gemini: role は "user" | "model"。Anthropic の assistant を model に読み替える。
+        out: list[dict] = []
+        for m in messages:
+            role = "model" if m["role"] == "assistant" else "user"
+            out.append({"role": role, "parts": [{"text": m["content"]}]})
+        return out
+
+    def _config(self, system: str, temperature: float):
+        from google.genai import types
+
+        return types.GenerateContentConfig(
+            system_instruction=system,
+            temperature=temperature,
+            max_output_tokens=self._max_tokens,
+        )
+
+    def generate(self, *, system: str, messages: list[Message], model: str, temperature: float = 0.7) -> str:
+        resp = self._client.models.generate_content(
+            model=self._model,
+            contents=self._contents(messages),
+            config=self._config(system, temperature),
+        )
+        return (getattr(resp, "text", "") or "").strip()
+
+    def generate_stream(self, *, system: str, messages: list[Message], model: str, temperature: float = 0.7) -> Iterator[str]:
+        stream = self._client.models.generate_content_stream(
+            model=self._model,
+            contents=self._contents(messages),
+            config=self._config(system, temperature),
+        )
+        for chunk in stream:
+            text = getattr(chunk, "text", None)
+            if text:
+                yield text
+
+    def web_research(self, query: str) -> str:
+        return _RESEARCH_UNSUPPORTED
+
+
 class MockLLMClient(LLMClient):
     """テスト/デモ用。API キー不要で決定的に動く。
 

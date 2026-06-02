@@ -20,7 +20,33 @@ export function apiUrl(path: string): string {
 // 各リクエストの X-Anthropic-Key ヘッダで送り、サーバはそのキーで実 LLM を呼ぶ
 // （セッション中のメモリ保持のみ・ログ/ディスクに残さない）。共有/公開時に
 // 「サーバ所有者のキーが他人に使われる」事故を防ぐための仕組み。
-const USER_KEY_STORAGE = "aiteams_anthropic_key";
+const USER_KEY_STORAGE = "aiteams_llm_key";
+const PROVIDER_STORAGE = "aiteams_llm_provider";
+
+// 対応プロバイダ。各自は **1社のキーだけ**入れればよい（単一キー）。Web 検索は anthropic のみ。
+export type LlmProvider = "anthropic" | "openai" | "google";
+export const LLM_PROVIDERS: LlmProvider[] = ["anthropic", "openai", "google"];
+
+export function getProvider(): LlmProvider {
+  if (typeof window === "undefined") return "anthropic";
+  try {
+    const v = window.localStorage.getItem(PROVIDER_STORAGE);
+    return (LLM_PROVIDERS as string[]).includes(v ?? "")
+      ? (v as LlmProvider)
+      : "anthropic";
+  } catch {
+    return "anthropic";
+  }
+}
+
+export function setProvider(provider: LlmProvider): void {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(PROVIDER_STORAGE, provider);
+  } catch {
+    /* noop */
+  }
+}
 
 export function getUserKey(): string {
   if (typeof window === "undefined") return ""; // SSR / static export 時は空
@@ -44,7 +70,7 @@ export function setUserKey(key: string): void {
 
 // 最小認証（デプロイ準備）。本番ビルドに NEXT_PUBLIC_API_TOKEN を設定すると
 // 全 fetch に Authorization: Bearer <token> を載せる。未設定なら何も足さない。
-// さらに BYOK のユーザーキーがあれば X-Anthropic-Key を載せる（実 LLM 用）。
+// さらに BYOK のキーがあれば X-LLM-Provider + X-LLM-Key を載せる（実 LLM 用）。
 // extra（Content-Type 等）とマージして返す。
 export function apiHeaders(extra?: Record<string, string>): Record<string, string> {
   const headers: Record<string, string> = { ...(extra ?? {}) };
@@ -54,7 +80,8 @@ export function apiHeaders(extra?: Record<string, string>): Record<string, strin
   }
   const userKey = getUserKey();
   if (userKey) {
-    headers["X-Anthropic-Key"] = userKey;
+    headers["X-LLM-Key"] = userKey;
+    headers["X-LLM-Provider"] = getProvider();
   }
   return headers;
 }

@@ -10,7 +10,14 @@ from .personas import (
     load_personas,
     load_personas_with_paths,
 )
-from .llm_client import LLMClient, AnthropicClient, MockLLMClient, DEFAULT_MODEL
+from .llm_client import (
+    LLMClient,
+    AnthropicClient,
+    OpenAIClient,
+    GeminiClient,
+    MockLLMClient,
+    DEFAULT_MODEL,
+)
 from .context import build_context
 from .orchestrator import Council, Turn, RoundRobinScheduler
 
@@ -21,6 +28,8 @@ __all__ = [
     "load_personas_with_paths",
     "LLMClient",
     "AnthropicClient",
+    "OpenAIClient",
+    "GeminiClient",
     "MockLLMClient",
     "DEFAULT_MODEL",
     "build_context",

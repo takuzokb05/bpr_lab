@@ -507,8 +507,12 @@ def test_llm_status():
         os.environ.pop("AI_TEAMS_BYOK", None)
         st = service.llm_status()
         check(
-            st == {"llm": "mock", "api_key_set": False, "byok": False},
+            st["llm"] == "mock" and st["api_key_set"] is False and st["byok"] is False,
             f"キー未設定で mock: {st}",
+        )
+        check(
+            "anthropic" in st.get("providers", []) and st.get("research_provider") == "anthropic",
+            f"providers に anthropic / 検索は anthropic のみ: {st}",
         )
         check(isinstance(service.make_client(mock=False), _Mock),
               "キー未設定なら非 mock 指定でも Mock にフォールバック")
@@ -567,7 +571,12 @@ def test_byok_make_client():
     print("[test] BYOK make_client (per-request key / no server-key for visitors)")
     import os
 
-    from core import AnthropicClient as _Anthropic, MockLLMClient as _Mock
+    from core import (
+        AnthropicClient as _Anthropic,
+        OpenAIClient as _OpenAI,
+        GeminiClient as _Gemini,
+        MockLLMClient as _Mock,
+    )
 
     saved_key = os.environ.get("ANTHROPIC_API_KEY")
     saved_byok = os.environ.get("AI_TEAMS_BYOK")
@@ -577,11 +586,41 @@ def test_byok_make_client():
             isinstance(service.make_client(mock=True, api_key="sk-ant-xxx"), _Mock),
             "mock=True は api_key 指定でも Mock",
         )
-        # 2. api_key 明示 → その鍵で AnthropicClient（BYOK 本線）
+        # 2. api_key 明示 → その鍵で AnthropicClient（BYOK 本線・既定 provider）
         check(
             isinstance(service.make_client(mock=False, api_key="sk-ant-USERKEY"), _Anthropic),
-            "api_key 指定で AnthropicClient を返す（来訪者は自分の鍵で課金）",
+            "api_key 指定（既定 provider）で AnthropicClient を返す",
         )
+        # 2b. provider 指定で OpenAI / Gemini クライアントに振り分け（1セッション=1 provider）
+        check(
+            isinstance(service.make_client(mock=False, api_key="sk-xxx", provider="openai"), _OpenAI),
+            "provider=openai で OpenAIClient",
+        )
+        check(
+            isinstance(service.make_client(mock=False, api_key="AIza-xxx", provider="google"), _Gemini),
+            "provider=google で GeminiClient",
+        )
+        check(
+            isinstance(service.make_client(mock=False, api_key="g", provider="gemini"), _Gemini),
+            "provider=gemini も google に正規化",
+        )
+        check(service.normalize_provider("unknown") == "anthropic", "未知 provider は anthropic に既定化")
+        # 2c. mock は provider 指定でも Mock（課金しない）
+        check(
+            isinstance(service.make_client(mock=True, api_key="x", provider="openai"), _Mock),
+            "mock=True は provider 指定でも Mock",
+        )
+        # 2d. build_council: 非 anthropic provider では Web 検索を強制 off（検索は anthropic のみ）
+        c_oa = service.build_council(
+            ["moderator", "logic", "idea", "chair"],
+            rounds_per_phase=1, mock=True, provider="openai", research=True,
+        )
+        check(c_oa.research is False, "非 anthropic provider では research 強制 off")
+        c_an = service.build_council(
+            ["moderator", "logic", "idea", "chair"],
+            rounds_per_phase=1, mock=True, provider="anthropic", research=True,
+        )
+        check(c_an.research is True, "anthropic provider では research=True が活きる")
         # 3. BYOK モード: api_key 無し＋サーバ env キー有り → サーバ鍵を使わず Mock
         os.environ["ANTHROPIC_API_KEY"] = "sk-ant-SERVERKEY"
         os.environ["AI_TEAMS_BYOK"] = "1"

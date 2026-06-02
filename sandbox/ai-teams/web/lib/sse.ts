@@ -296,6 +296,9 @@ export interface Health {
   api_key_set: boolean;
   // BYOK（各自が自分の API キーを持参）モードか。true なら実 LLM は各自のキーが必要。
   byok?: boolean;
+  // 対応プロバイダ（anthropic/openai/google）。Web 検索は research_provider のみ対応。
+  providers?: string[];
+  research_provider?: string;
 }
 
 export async function fetchHealth(): Promise<Health> {

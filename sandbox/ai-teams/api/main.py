@@ -123,21 +123,21 @@ def _assert_writable() -> None:
         )
 
 
-def _resolve_api_key(mock: bool, x_anthropic_key: str | None) -> str | None:
-    """実 LLM 呼び出しに使う API キーを決める（BYOK ガード）。
+def _resolve_api_key(mock: bool, key_header: str | None) -> str | None:
+    """実 LLM 呼び出しに使う API キーを決める（BYOK ガード）。provider 非依存。
 
     - mock=True: キー不要（None を返す。make_client が Mock を返す）。
     - BYOK モードで実 LLM を要求したのにキー未提供 → 400（来訪者は自分のキーが必須）。
-    - それ以外: 渡されたキー（無ければ None ＝ サーバ env キーへフォールバック可）。
-    キーはどこにもログ/保存しない（AnthropicClient のメモリ内のみ・セッション終了で消える）。
+    - それ以外: 渡されたキー（無ければ None ＝ 非 BYOK で Anthropic はサーバ env キーへフォールバック可）。
+    キーはどこにもログ/保存しない（クライアントのメモリ内のみ・セッション終了で消える）。
     """
     if mock:
         return None
-    key = (x_anthropic_key or "").strip() or None
+    key = (key_header or "").strip() or None
     if service.byok_mode() and not key:
         raise HTTPException(
             status_code=400,
-            detail="このインスタンスは各自の Anthropic API キーが必要です（左の設定でキーを入力してください）。",
+            detail="このインスタンスは各自の API キーが必要です（左の設定でプロバイダを選びキーを入力してください）。",
         )
     return key
 
@@ -223,17 +223,19 @@ _SSE_HEADERS = {"Cache-Control": "no-cache", "X-Accel-Buffering": "no"}
 def intake(
     req: IntakeRequest,
     request: Request,
+    x_llm_provider: str | None = Header(default=None, alias="X-LLM-Provider"),
+    x_llm_key: str | None = Header(default=None, alias="X-LLM-Key"),
     x_anthropic_key: str | None = Header(default=None, alias="X-Anthropic-Key"),
 ) -> dict:
     """討論前の主訴確認質問を 2〜4 個返す（回答は任意・スキップ可）。
 
-    mock=True なら LLM を呼ばず定型質問。実呼び出しは BYOK のユーザーキー（X-Anthropic-Key）
-    を使う。レート制限あり。
+    mock=True なら LLM を呼ばず定型質問。実呼び出しは BYOK のユーザーキー（X-LLM-Key、provider は
+    X-LLM-Provider）を使う。X-Anthropic-Key は後方互換。レート制限あり。
     """
     _rate_check(request)
-    api_key = _resolve_api_key(req.mock, x_anthropic_key)
+    api_key = _resolve_api_key(req.mock, x_llm_key or x_anthropic_key)
     questions = service.generate_intake_questions(
-        req.topic, req.materials or "", mock=req.mock, api_key=api_key
+        req.topic, req.materials or "", mock=req.mock, api_key=api_key, provider=x_llm_provider
     )
     return {"questions": questions}
 
@@ -242,16 +244,19 @@ def intake(
 def create_session(
     req: SessionRequest,
     request: Request,
+    x_llm_provider: str | None = Header(default=None, alias="X-LLM-Provider"),
+    x_llm_key: str | None = Header(default=None, alias="X-LLM-Key"),
     x_anthropic_key: str | None = Header(default=None, alias="X-Anthropic-Key"),
 ) -> StreamingResponse:
     """討論をバックグラウンドで開始し、cursor 0 から tail する SSE を返す。
 
     プロデューサは接続が切れても完走するので、後から GET /sessions/{id}/stream で
     再接続して取りこぼしを再生できる。`start` イベントに session_id が載る。
-    実 LLM は BYOK のユーザーキー（X-Anthropic-Key）を使う。レート制限・同時上限あり。
+    実 LLM は BYOK のユーザーキー（X-LLM-Key、provider は X-LLM-Provider）を使う。
+    X-Anthropic-Key は後方互換。レート制限・同時上限あり。
     """
     _rate_check(request)
-    api_key = _resolve_api_key(req.mock, x_anthropic_key)
+    api_key = _resolve_api_key(req.mock, x_llm_key or x_anthropic_key)
     # 資料・前提 + intake の Q&A を合成（どちらも空なら "" ＝従来と完全同一の Council）。
     composed_materials = _compose_materials(req.materials, req.intake)
     try:
@@ -262,6 +267,7 @@ def create_session(
             red_team_id=req.red_team_id,
             mock=req.mock,
             api_key=api_key,
+            provider=x_llm_provider,
             materials=composed_materials,
             research=req.research,
         )
