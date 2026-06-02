@@ -17,6 +17,49 @@ export interface Persona {
   tags: string[];
   speaks: boolean;
   model: string | null;
+  custom?: boolean; // クライアント定義（自分のペルソナ）か。バッジ表示・送信判定に使う
+}
+
+// クライアント（ブラウザ）定義のカスタムペルソナ。localStorage が実体、サーバ非保存。
+// category はパネリスト系のみ（構造役は自動固定なので対象外）。
+export interface CustomPersona {
+  id: string;
+  display_name: string;
+  category: "thinking" | "founders" | "philosophers";
+  system_prompt: string;
+  tags?: string[];
+}
+
+// クライアント側のカテゴリ色（core/personas.py の CATEGORY_ACCENT と一致させる）。
+const CUSTOM_CATEGORY_ACCENT: Record<string, string> = {
+  thinking: "#5B7C8A",
+  founders: "#8A6D3B",
+  philosophers: "#6E5B8A",
+};
+
+// display_name から頭文字（モノグラム）を作る（core の monogram ロジックに準拠）。
+export function customMonogram(name: string): string {
+  const words = name.replace("　", " ").trim().split(/\s+/);
+  if (words.length >= 2 && /^[A-Za-z]/.test(words[0]) && /^[A-Za-z]/.test(words[1])) {
+    return (words[0][0] + words[1][0]).toUpperCase();
+  }
+  const base = name.split("（")[0].split("(")[0].trim();
+  return base.slice(0, 1) || "?";
+}
+
+// カスタムペルソナを画面表示用 Persona に変換（accent/monogram をクライアントで補う）。
+export function customToPersona(cp: CustomPersona): Persona {
+  return {
+    id: cp.id,
+    display_name: cp.display_name,
+    category: cp.category,
+    accent: CUSTOM_CATEGORY_ACCENT[cp.category] ?? "#5B7C8A",
+    monogram: customMonogram(cp.display_name),
+    tags: cp.tags ?? [],
+    speaks: true,
+    model: null,
+    custom: true,
+  };
 }
 
 export interface Turn {

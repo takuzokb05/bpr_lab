@@ -153,6 +153,23 @@ class IntakeQA(BaseModel):
 _MATERIALS_MAX = 20000
 
 
+class CustomPersona(BaseModel):
+    """クライアント（ブラウザ）定義のペルソナ。サーバには保存せず、このセッション限定で
+    レジストリに重ねて使う（readonly な共有インスタンスでも各自が自分の編成を持てる）。
+
+    category はパネリスト系のみ許可（司会/議長/書記の構造役は乗っ取らせない）。id は
+    パストラバーサル防止と衝突回避のため charset 制限（書込はしないが speaker_id 等に使う）。
+    system_prompt と件数に上限を設けて実 LLM のトークン費・濫用を抑える。
+    """
+
+    id: str = Field(..., min_length=1, max_length=64, pattern=r"^[a-z0-9_-]+$")
+    display_name: str = Field(..., min_length=1, max_length=80)
+    system_prompt: str = Field(..., min_length=1, max_length=4000)
+    category: Literal["thinking", "founders", "philosophers"] = "thinking"
+    tags: list[str] = Field(default_factory=list, max_length=8)
+    model: str | None = None
+
+
 class SessionRequest(BaseModel):
     topic: str = Field(..., min_length=1)
     persona_ids: list[str] = Field(..., min_length=1)
@@ -174,6 +191,9 @@ class SessionRequest(BaseModel):
     # 応答の長さプリセット（ユーザーはトークン数を意識しない）。simple/standard/deep を
     # max_tokens 上限＋発話スタイル指示にマップ。既定 standard（旧挙動だが上限を上げ切れ防止）。
     verbosity: Literal["brief", "standard", "deep"] = "standard"
+    # クライアント定義のカスタムペルソナ（サーバ非保存・このセッション限定）。persona_ids から
+    # これらの id を参照できる。件数上限で濫用・コスト暴走を防ぐ。
+    custom_personas: list[CustomPersona] = Field(default_factory=list, max_length=12)
 
 
 class IntakeRequest(BaseModel):
@@ -272,6 +292,7 @@ def create_session(
             api_key=api_key,
             provider=x_llm_provider,
             verbosity=req.verbosity,
+            custom_personas=[cp.model_dump() for cp in req.custom_personas],
             materials=composed_materials,
             research=req.research,
         )

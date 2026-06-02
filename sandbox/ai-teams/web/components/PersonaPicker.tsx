@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { CATEGORY_LABELS, type Persona, type PersonaCategory } from "@/lib/types";
 import { Avatar } from "./Avatar";
-import { Check, Search, ChevronDown, ChevronRight, Settings2 } from "lucide-react";
+import { Check, Search, ChevronDown, ChevronRight, Settings2, Plus } from "lucide-react";
 
 // ピッカーに出すのは「議論する人＝パネリスト」だけ。司会(facilitation)・議長(chair)は
 // 進行の固定役として自動で含めるためトグル表示しない。書記(scribe)は発言しない死に役なので除外。
@@ -15,6 +15,7 @@ export function PersonaPicker({
   onToggle,
   disabled,
   onManage,
+  onAddOwn,
   autoRoles = [],
 }: {
   personas: Persona[];
@@ -23,6 +24,8 @@ export function PersonaPicker({
   disabled: boolean;
   // 指定時のみ「管理」ボタンを出す（readonly では page 側が渡さない＝非表示）。
   onManage?: () => void;
+  // 「自分のペルソナ」（クライアント定義）ドロワーを開く。readonly でも使える。
+  onAddOwn?: () => void;
   // 自動で含める進行役（司会・議長）。固定行で明示するだけでトグルはしない。
   autoRoles?: Persona[];
 }) {
@@ -83,15 +86,26 @@ export function PersonaPicker({
             パネリスト {selected.size} 名
           </p>
         </div>
-        {onManage && (
-          <button
-            onClick={onManage}
-            disabled={disabled}
-            className="flex items-center gap-1 text-[11px] text-[var(--color-ink-muted)] hover:text-[var(--color-accent)] disabled:opacity-50"
-          >
-            <Settings2 size={13} /> 管理
-          </button>
-        )}
+        <div className="flex shrink-0 items-center gap-2">
+          {onAddOwn && (
+            <button
+              onClick={onAddOwn}
+              disabled={disabled}
+              className="flex items-center gap-1 text-[11px] text-[var(--color-ink-muted)] hover:text-[var(--color-accent)] disabled:opacity-50"
+            >
+              <Plus size={13} /> 自分の
+            </button>
+          )}
+          {onManage && (
+            <button
+              onClick={onManage}
+              disabled={disabled}
+              className="flex items-center gap-1 text-[11px] text-[var(--color-ink-muted)] hover:text-[var(--color-accent)] disabled:opacity-50"
+            >
+              <Settings2 size={13} /> 管理
+            </button>
+          )}
+        </div>
       </div>
 
       {/* 進行役（固定・自動で含む）。司会＝オープニング、議長＝議事録。トグル不可。 */}
@@ -180,7 +194,14 @@ export function PersonaPicker({
                   >
                     <Avatar monogram={p.monogram} accent={p.accent} size={30} />
                     <span className="flex min-w-0 flex-1 flex-col">
-                      <span className="truncate text-sm">{p.display_name}</span>
+                      <span className="flex items-center gap-1.5 truncate text-sm">
+                        {p.display_name}
+                        {p.custom && (
+                          <span className="shrink-0 rounded-sm bg-[var(--color-accent-weak)] px-1 py-0.5 text-[9px] font-medium text-[var(--color-accent)]">
+                            自分
+                          </span>
+                        )}
+                      </span>
                       {p.model && (
                         <span className="truncate font-mono text-[10px] text-[var(--color-ink-muted)]">
                           {p.model}

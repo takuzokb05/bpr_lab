@@ -238,6 +238,7 @@ def build_council(
     api_key: str | None = None,
     provider: str | None = None,
     verbosity: str | None = None,
+    custom_personas: list[dict] | None = None,
     materials: str = "",
     research: bool = False,
 ) -> Council:
@@ -251,6 +252,11 @@ def build_council(
     research=False（既定）では一切何もしない（後方互換）。
     """
     registry = {p.id: p for p in load_registry()}
+    # クライアント定義のカスタムペルソナを重ねる（サーバ非保存・このセッション限定）。
+    # persona_from_dict が検証（不正は ValueError → 呼び出し側で 400）。同 id はカスタムが優先。
+    for cp in custom_personas or []:
+        p = persona_from_dict(cp)
+        registry[p.id] = p
     missing = [pid for pid in persona_ids if pid not in registry]
     if missing:
         raise KeyError(missing)

@@ -48,6 +48,50 @@ export function setProvider(provider: LlmProvider): void {
   }
 }
 
+// 自分のペルソナ（クライアント定義・localStorage が実体・サーバ非保存）。
+import type { CustomPersona } from "./types";
+
+const CUSTOM_PERSONAS_STORAGE = "aiteams_custom_personas";
+const VALID_CUSTOM_CATS = ["thinking", "founders", "philosophers"];
+
+function isValidCustom(x: unknown): x is CustomPersona {
+  if (!x || typeof x !== "object") return false;
+  const o = x as Record<string, unknown>;
+  return (
+    typeof o.id === "string" &&
+    /^[a-z0-9_-]+$/.test(o.id) &&
+    typeof o.display_name === "string" &&
+    o.display_name.trim().length > 0 &&
+    typeof o.system_prompt === "string" &&
+    o.system_prompt.trim().length > 0 &&
+    typeof o.category === "string" &&
+    VALID_CUSTOM_CATS.includes(o.category)
+  );
+}
+
+export function getCustomPersonas(): CustomPersona[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = window.localStorage.getItem(CUSTOM_PERSONAS_STORAGE);
+    const arr = raw ? JSON.parse(raw) : [];
+    return Array.isArray(arr) ? arr.filter(isValidCustom) : [];
+  } catch {
+    return [];
+  }
+}
+
+export function setCustomPersonas(list: CustomPersona[]): void {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(
+      CUSTOM_PERSONAS_STORAGE,
+      JSON.stringify(list.filter(isValidCustom))
+    );
+  } catch {
+    /* localStorage 不可でも本体は動く */
+  }
+}
+
 // 応答の長さプリセット（トークン数ではなく質感で選ぶ）。
 const VERBOSITY_STORAGE = "aiteams_verbosity";
 export type Verbosity = "brief" | "standard" | "deep";

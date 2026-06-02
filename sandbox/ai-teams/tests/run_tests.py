@@ -697,6 +697,66 @@ def test_verbosity():
     check("簡潔に発言してください" not in tail_deep, "deep では『簡潔に』が外れる")
 
 
+def test_custom_personas():
+    """クライアント定義のカスタムペルソナ: セッション限定でレジストリに重なり、サーバ非保存。"""
+    print("[test] custom personas (client-defined / session-only / non-persisted)")
+    import os
+
+    from fastapi.testclient import TestClient
+
+    from api.main import app
+
+    # 1. build_council でカスタムがパネリストとして編成に入る（mock）
+    custom = [
+        {"id": "my-x", "display_name": "自作役", "system_prompt": "あなたは自作のテスト役です。", "category": "thinking"}
+    ]
+    c = service.build_council(
+        ["moderator", "my-x", "logic", "chair"], rounds_per_phase=1, mock=True, custom_personas=custom
+    )
+    check("my-x" in [p.id for p in c.panelists], "カスタムペルソナがパネリストとして編成に入る")
+
+    # 2. 不正なカスタム（system_prompt 空）は ValueError（→400）
+    try:
+        service.build_council(
+            ["my-y"], rounds_per_phase=1, mock=True,
+            custom_personas=[{"id": "my-y", "display_name": "x", "system_prompt": "", "category": "thinking"}],
+        )
+        check(False, "空 system_prompt のカスタムは弾く")
+    except ValueError:
+        check(True, "空 system_prompt のカスタムは ValueError（→400）")
+
+    # 3. 非保存・後方互換: 未指定なら従来編成（カスタムは残らない＝レジストリに書かない）
+    c2 = service.build_council(
+        ["moderator", "logic", "idea", "chair"], rounds_per_phase=1, mock=True
+    )
+    check("my-x" not in {p.id for p in c2.panelists}, "custom_personas 未指定なら従来編成（サーバ非保存）")
+    check("my-x" not in {p.id for p in service.load_registry()}, "カスタムはレジストリ(ディスク)に残らない")
+
+    # 4. HTTP: mock セッションにカスタム同送→200、不正 id（pattern 違反）→422
+    saved_tok = os.environ.get("AI_TEAMS_API_TOKEN")
+    saved_byok = os.environ.get("AI_TEAMS_BYOK")
+    client = TestClient(app)
+    try:
+        os.environ.pop("AI_TEAMS_API_TOKEN", None)
+        os.environ.pop("AI_TEAMS_BYOK", None)
+        r = client.post("/sessions", json={
+            "topic": "t", "persona_ids": ["logic", "my-z"], "mock": True, "interactive": False,
+            "custom_personas": [{"id": "my-z", "display_name": "Z", "system_prompt": "テスト役", "category": "thinking"}],
+        })
+        check(r.status_code == 200, f"カスタム同送 mock セッションは 200: {r.status_code}")
+        r = client.post("/sessions", json={
+            "topic": "t", "persona_ids": ["logic"], "mock": True, "interactive": False,
+            "custom_personas": [{"id": "Bad Id!", "display_name": "Z", "system_prompt": "x", "category": "thinking"}],
+        })
+        check(r.status_code == 422, f"不正 id のカスタムは 422（pattern）: {r.status_code}")
+    finally:
+        for k, v in (("AI_TEAMS_API_TOKEN", saved_tok), ("AI_TEAMS_BYOK", saved_byok)):
+            if v is None:
+                os.environ.pop(k, None)
+            else:
+                os.environ[k] = v
+
+
 def test_provider_params():
     """OpenAI/Gemini のパラメータ整形: 推論モデル対応・Gemini temp 非送信・thinking 抑制。"""
     print("[test] provider params (reasoning_effort / no-temp / thinking_level)")
@@ -1671,6 +1731,7 @@ if __name__ == "__main__":
     test_byok_make_client()
     test_verbosity()
     test_provider_params()
+    test_custom_personas()
     test_persona_service_crud()
     test_preset_service()
     test_http_api()

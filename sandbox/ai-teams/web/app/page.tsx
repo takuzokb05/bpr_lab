@@ -15,10 +15,12 @@ import {
 import { fetchPresets } from "@/lib/api";
 import {
   FOLLOWUP_DISABLED_PHASES,
+  customToPersona,
   type IntakeQA,
   type Persona,
   type Preset,
   type Turn,
+  type CustomPersona,
 } from "@/lib/types";
 import {
   getUserKey,
@@ -27,6 +29,8 @@ import {
   setProvider,
   getVerbosity,
   setVerbosity,
+  getCustomPersonas,
+  setCustomPersonas,
   LLM_PROVIDERS,
   type LlmProvider,
   type Verbosity,
@@ -36,6 +40,7 @@ import { PresetBar } from "@/components/PresetBar";
 import { LlmToggle } from "@/components/LlmToggle";
 import { KeyEntry } from "@/components/KeyEntry";
 import { VerbositySelect } from "@/components/VerbositySelect";
+import { MyPersonasDrawer } from "@/components/MyPersonasDrawer";
 import { PersonaManagerDrawer } from "@/components/PersonaManagerDrawer";
 import { PresetSaveDialog } from "@/components/PresetSaveDialog";
 import { Timeline } from "@/components/Timeline";
@@ -112,6 +117,9 @@ export default function Home() {
   const [provider, setProviderState] = useState<LlmProvider>("anthropic");
   // 応答の長さ（既定 standard）。トークン数ではなく質感で選ぶ。
   const [verbosity, setVerbosityState] = useState<Verbosity>("standard");
+  // 自分のペルソナ（クライアント定義・localStorage・サーバ非保存）。
+  const [customPersonas, setCustomPersonasState] = useState<CustomPersona[]>([]);
+  const [myPersonasOpen, setMyPersonasOpen] = useState(false);
 
   const [manageOpen, setManageOpen] = useState(false);
   const [saveOpen, setSaveOpen] = useState(false);
@@ -132,6 +140,7 @@ export default function Home() {
     setUserKeyState(getUserKey()); // localStorage は client のみ。mount 後に読む
     setProviderState(getProvider());
     setVerbosityState(getVerbosity());
+    setCustomPersonasState(getCustomPersonas());
     fetchPresets()
       .then(setPresets)
       .catch(() => {
@@ -162,11 +171,32 @@ export default function Home() {
     setVerbosityState(v);
   }
 
+  // 自分のペルソナの更新（localStorage 保存＋state 同期）。削除されたペルソナは選択からも外す。
+  function updateCustomPersonas(list: CustomPersona[]) {
+    setCustomPersonas(list);
+    setCustomPersonasState(list);
+    const ids = new Set(list.map((p) => p.id));
+    setSelected((prev) => {
+      const next = new Set<string>();
+      for (const id of prev) {
+        // サーバのパネリスト or 残っているカスタムだけ選択に残す。
+        if (personas.some((p) => p.id === id) || ids.has(id)) next.add(id);
+      }
+      return next;
+    });
+  }
+
+  // サーバのペルソナ＋自分のペルソナ（クライアント定義）を統合。ピッカー・looks・編成で使う。
+  const allPersonas = useMemo(
+    () => [...personas, ...customPersonas.map(customToPersona)],
+    [personas, customPersonas]
+  );
+
   const looks = useMemo(() => {
     const m: Record<string, { accent: string; monogram: string }> = {};
-    for (const p of personas) m[p.id] = { accent: p.accent, monogram: p.monogram };
+    for (const p of allPersonas) m[p.id] = { accent: p.accent, monogram: p.monogram };
     return m;
-  }, [personas]);
+  }, [allPersonas]);
 
   // 進行役（司会・議長）= 各カテゴリの先頭ペルソナ。常に自動で編成へ含める（ユーザーは選ばない）。
   const autoRoles = useMemo(
@@ -347,9 +377,11 @@ export default function Home() {
     const topic = topicInput.trim();
     if (!topic || selected.size === 0 || active) return;
 
-    // 進行役（司会・議長）を先頭に自動付与し、続けて選択パネリスト。重複は除く。
-    const panelistIds = personas.filter((p) => selected.has(p.id)).map((p) => p.id);
+    // 進行役（司会・議長）を先頭に自動付与し、続けて選択パネリスト（カスタム含む）。重複は除く。
+    const panelistIds = allPersonas.filter((p) => selected.has(p.id)).map((p) => p.id);
     const ordered = Array.from(new Set([...autoRoleIds, ...panelistIds]));
+    // 選択中の自分のペルソナだけ定義を同送（サーバ非保存・このセッション限定）。
+    const selectedCustom = customPersonas.filter((cp) => selected.has(cp.id));
     const ctrl = new AbortController();
     abortRef.current = ctrl;
 
@@ -384,6 +416,7 @@ export default function Home() {
         intake, // 準備フェーズ: 回答済み確認 Q&A（空なら body に載らない）
         research, // 準備フェーズ: Web 検索（調査役）。false なら body に載らない＝従来同一
         verbosity, // 応答の長さ（standard なら body に載らない＝従来同一）
+        customPersonas: selectedCustom, // 自分のペルソナ（選択中のみ・サーバ非保存）
         interactive: true, // Web は floor-open（本編後に一時停止して入力を待つ）
         signal: ctrl.signal,
         onEvent: (e) => {
@@ -567,12 +600,13 @@ export default function Home() {
           />
 
           <PersonaPicker
-            personas={personas}
+            personas={allPersonas}
             selected={selected}
             onToggle={toggle}
             disabled={active}
             autoRoles={autoRoles}
             onManage={canManage ? () => setManageOpen(true) : undefined}
+            onAddOwn={() => setMyPersonasOpen(true)}
           />
         </aside>
 
@@ -877,12 +911,21 @@ export default function Home() {
         </aside>
       </div>
 
-      {/* ペルソナ管理ドロワー */}
+      {/* ペルソナ管理ドロワー（サーバ CRUD・readonly では非表示の入口） */}
       <PersonaManagerDrawer
         open={manageOpen}
         personas={personas}
         onClose={() => setManageOpen(false)}
         onChanged={loadPersonas}
+      />
+
+      {/* 自分のペルソナ（クライアント定義・localStorage・サーバ非保存） */}
+      <MyPersonasDrawer
+        open={myPersonasOpen}
+        onClose={() => setMyPersonasOpen(false)}
+        items={customPersonas}
+        onSave={updateCustomPersonas}
+        disabled={active}
       />
 
       {/* プリセット保存ダイアログ */}
