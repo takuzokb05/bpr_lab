@@ -280,11 +280,17 @@ def llm_status() -> dict:
 # 「調査」話者のターンとして討論に乗せ、全員が共有する（新 SSE イベント型は増やさない）。
 # mock / キー未設定では web_research が canned を返す（無料・テスト可）。real のみ課金。
 
-# 「要調査:」マーカーを行頭から拾う正規表現（半角/全角コロンの両方を許容）。
-_RESEARCH_QUERY_RE = re.compile(r"^\s*要調査\s*[:：]\s*(.+?)\s*$")
+# 「要調査:」マーカーを拾う正規表現（半角/全角コロンの両方を許容・行頭限定はしない）。
+# モデルは "- 要調査:" "**要調査:**" "1. 要調査:" "…。要調査:" など多様に書くため、行頭限定だと
+# 取りこぼす（→ 検索されず次の話者が進む事故）。強調記号を外して行内どこでも search で拾う。
+_RESEARCH_QUERY_RE = re.compile(r"要調査\s*[:：]\s*(.+?)\s*$")
+# 行から markdown 強調を外してからマッチする（** や ` を除去。_ は URL/識別子に出るので残す）。
+_RESEARCH_EMPHASIS_RE = re.compile(r"[*＊`]")
 
-# Web 検索の合計回数上限（seed 1 + 派生 5 ＝ 暴走防止）。cap 到達後は無視（ログのみ）。
-_RESEARCH_CAP = 6
+# Web 検索の「新規クエリ」合計上限（暴走防止）。env AI_TEAMS_RESEARCH_CAP で可変（既定 12）。
+# 旧既定 6 は中規模討論の中盤で枯れて「要調査が無視される」事故になった。dedup 済みの新規クエリ
+# だけを数えるので、同じ問いの再検索は数に入らない。1検索 ≒ $0.005 なので 12 でも安い。
+_RESEARCH_CAP = int(os.environ.get("AI_TEAMS_RESEARCH_CAP", "12"))
 
 
 def run_research(client: LLMClient, query: str) -> str:
@@ -297,17 +303,20 @@ def run_research(client: LLMClient, query: str) -> str:
 
 
 def _extract_research_queries(text: str) -> list[str]:
-    """発言本文から「要調査: <問い>」（全角コロンも可）の問いを行単位で抽出する。
+    """発言本文から「要調査: <問い>」を抽出する（全角コロン可・箇条書き/強調/行内も拾う）。
 
-    行頭の「要調査:」「要調査：」に続く文字列を取り出し trim。空は除く。
-    research=False なら build_context が指示を出さない＝そもそもマーカーは現れない。
+    モデルは "- 要調査:" "**要調査:**" "1. 要調査:" "…。要調査:" のように多様に書くため、行頭限定だと
+    取りこぼす（→ 検索されず次の話者が進む事故）。強調記号(* `)を外し、行内のどこに現れても search で
+    拾う。research=False なら build_context が指示を出さない＝そもそもマーカーは現れない。
     """
     out: list[str] = []
     for raw in (text or "").splitlines():
-        m = _RESEARCH_QUERY_RE.match(raw)
+        line = _RESEARCH_EMPHASIS_RE.sub("", raw)
+        m = _RESEARCH_QUERY_RE.search(line)
         if not m:
             continue
-        q = m.group(1).strip()
+        # query 末尾に残りがちな閉じ括弧/記号を軽く掃除（出典リンク等を巻き込まない）。
+        q = m.group(1).strip().strip("」』）)").strip()
         if q:
             out.append(q)
     return out

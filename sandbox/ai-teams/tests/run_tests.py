@@ -1570,6 +1570,25 @@ def test_extract_research_queries():
     check(service._extract_research_queries("ただの発言") == [], "マーカー無しは空 list")
     check(service._extract_research_queries("") == [], "空文字は空 list")
 
+    # 箇条書き/強調/番号/行内（行頭限定をやめた強化分）。モデルの多様な書き方を取りこぼさない。
+    check(
+        service._extract_research_queries("- 要調査: 半導体の国産化率") == ["半導体の国産化率"],
+        "箇条書き(- )の要調査を抽出",
+    )
+    check(
+        service._extract_research_queries("**要調査:** 円相場の推移") == ["円相場の推移"],
+        "強調(**要調査:**)を抽出",
+    )
+    check(
+        service._extract_research_queries("1. 要調査： 生成AIの市場規模") == ["生成AIの市場規模"],
+        "番号付き(1. )の要調査を抽出",
+    )
+    check(
+        service._extract_research_queries("結論として確認が要る。要調査: 法改正の施行日")
+        == ["法改正の施行日"],
+        "行内(文中)の要調査を抽出",
+    )
+
 
 def test_research_disabled_backward_compat():
     """(4) research=False で build_context に要調査指示が出ず、従来と一致する。"""
