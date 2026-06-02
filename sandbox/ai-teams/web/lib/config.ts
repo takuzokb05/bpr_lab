@@ -7,7 +7,9 @@
 //
 // 既定はローカルの FastAPI(:8000)。別ホスト/本番は NEXT_PUBLIC_API_BASE で上書きする
 // （例: NEXT_PUBLIC_API_BASE=https://api.example.com）。CORS はバックエンド側で許可済み。
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
+// 未設定(undefined) → ローカル開発の :8000。明示的に "" を渡すと相対パス＝同一オリジン
+// （uvicorn が静的フロントを同居配信する本番構成。?? なので空文字はそのまま採用される）。
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:8000";
 
 export function apiUrl(path: string): string {
   return `${API_BASE}${path}`;

@@ -7,16 +7,22 @@
 from __future__ import annotations
 
 import os
+from pathlib import Path
 from typing import Literal, NoReturn
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from . import service
 
 app = FastAPI(title="AI Teams API", version="3.0.0")
+
+# トークン認証で保護する API パスのプレフィックス。これら以外（静的フロント / や /_next、
+# /health）は無認証で通す（SPA を読み込めるように・同一オリジン配信のため）。
+_PROTECTED_PREFIXES = ("/sessions", "/personas", "/presets", "/intake")
 
 
 def _allowed_origins() -> list[str]:
@@ -42,9 +48,10 @@ async def require_api_token(request: Request, call_next):
       ただし /health（稼働確認）と OPTIONS（CORS プリフライト）は常に通す。
     """
     token = os.environ.get("AI_TEAMS_API_TOKEN")
-    if token:
-        # ヘルスチェックと CORS プリフライトは無認証で常に通す。
-        if not (request.url.path == "/health" or request.method == "OPTIONS"):
+    if token and request.method != "OPTIONS":
+        # API（コスト・データ操作）パスだけ保護。静的フロント(/ や /_next)・/health は通す。
+        path = request.url.path
+        if any(path == p or path.startswith(p + "/") for p in _PROTECTED_PREFIXES):
             authorization = request.headers.get("authorization")
             if authorization != f"Bearer {token}":
                 return JSONResponse(status_code=401, content={"detail": "unauthorized"})
@@ -395,3 +402,13 @@ def remove_persona(persona_id: str) -> None:
         service.delete_persona(persona_id)
     except KeyError:
         raise HTTPException(status_code=404, detail="unknown persona id")
+
+
+# -- フロント静的配信（同一オリジン） ---------------------------------------
+# web/out（Next.js の static export）があれば "/" にマウントして SPA を配信する。
+# **全 API ルートの後に置く**ので /sessions 等が優先され、それ以外（/ や /_next/*）は
+# 静的ファイルを返す。out が無い環境（ローカル開発・テスト）ではマウントせず従来どおり。
+# これにより uvicorn 1プロセスで API とフロントを同一オリジン配信でき、CORS 不要・低RAM。
+_FRONTEND_DIR = Path(__file__).resolve().parent.parent / "web" / "out"
+if _FRONTEND_DIR.is_dir():
+    app.mount("/", StaticFiles(directory=str(_FRONTEND_DIR), html=True), name="frontend")

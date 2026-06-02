@@ -1,10 +1,11 @@
-# AI Teams v3 (core エンジン) の依存。旧 requirements.txt は v2 用。
+# AI Teams v3 (core engine + API) dependencies. Legacy requirements.txt was for v2.
+# NOTE: keep comments ASCII-only. pip's requirements parser auto-decodes this file with
+# the OS locale (cp932 on Japanese Windows) and crashes on non-ASCII bytes (UnicodeDecodeError).
 anthropic>=0.40
 pyyaml>=6.0
-# .env から ANTHROPIC_API_KEY 等を読み込む（未インストールでも service.py 側で握り潰す）。
+# Loads ANTHROPIC_API_KEY / AI_TEAMS_* from .env (optional; service.py guards the import).
 python-dotenv>=1.0
 # API (FastAPI + SSE):
 fastapi>=0.110
 uvicorn[standard]>=0.29
-# UI を作るとき:
-# (web/ は別途 Next.js。Python 依存ではない)
+# (web/ is a separate Next.js app, built to static export; not a Python dependency.)
