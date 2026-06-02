@@ -151,23 +151,21 @@ export function Timeline({
                     追い質問
                   </span>
                 )}
-                {/* 本文が空のまま発言中なら「考え中」、delta 中は素テキスト＋点滅キャレット
-                    (delta 毎の markdown 再パースを避け、タイピングのライブ感も維持)。
-                    turn 確定後(非ストリーミング)は Markdown として上質に描画する。 */}
+                {/* 本文が空のまま発言中なら「考え中」。本文があればストリーミング中でも Markdown で
+                    描く（**強調** や箇条書きが生の記号で見えないように）。ストリーミング中は末尾に
+                    点滅キャレットを添えてライブ感を保つ。delta 毎の再パースは討論規模なら十分軽い。 */}
                 {t.content === "" && isStreaming ? (
                   <p className="mt-1 text-sm leading-relaxed">
                     <span className="text-[var(--color-ink-muted)]">考えています…</span>
                   </p>
-                ) : isStreaming ? (
-                  <p className="mt-1 whitespace-pre-wrap text-sm leading-relaxed text-[var(--color-ink)]">
-                    {t.content}
-                    <span className="animate-pulse-soft ml-0.5 inline-block align-middle">
-                      ▍
-                    </span>
-                  </p>
                 ) : (
                   <div className="mt-1">
                     <Markdown>{t.content}</Markdown>
+                    {isStreaming && (
+                      <span className="animate-pulse-soft -mt-1 inline-block align-middle text-[var(--color-ink-muted)]">
+                        ▍
+                      </span>
+                    )}
                   </div>
                 )}
               </div>
