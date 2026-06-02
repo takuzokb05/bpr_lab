@@ -370,6 +370,25 @@ export default function Home() {
     setStreamingTurnId(null);
   }
 
+  // トップ（idle）へ戻る＝新規討論。準備パネル（資料添付・主訴確認・編成）は idle でのみ出るため、
+  // 討論後に添付付きの新規開始ができるようにする入口。ヘッダの「AI COUNCIL」から呼ぶ。
+  // running 中は生成を止めてコストを抑える。paused は止めない（サーバに残し履歴から再開可能）。
+  function resetToIdle() {
+    if (running && sessionId) cancelSession(sessionId);
+    abortRef.current?.abort();
+    streamAliveRef.current = false;
+    setStatus("idle");
+    setTurns([]);
+    setActiveTopic(null);
+    setSessionId(null);
+    setStreamingTurnId(null);
+    setError(null);
+    setTopicInput("");
+    setMaterials("");
+    setIntakeQuestions([]);
+    setIntakeAnswers({});
+  }
+
   // 準備フェーズ: 主訴を固める確認質問を 2〜4 個取得。トグル ON＋議題確定で自動的に呼ばれる。
   // 失敗しても討論自体は妨げない（資料だけ／質問なしで開始できる）。mock は討論設定に追従。
   async function loadIntake() {
@@ -770,7 +789,13 @@ export default function Home() {
     <div className="flex h-screen flex-col">
       {/* ヘッダー */}
       <header className="flex items-center justify-between border-b border-[var(--color-line)] bg-[var(--color-surface)] px-6 py-3">
-        <h1 className="font-display text-base tracking-widest">AI COUNCIL</h1>
+        <button
+          onClick={resetToIdle}
+          title="新規討論（トップへ戻る）"
+          className="font-display text-base tracking-widest transition-opacity hover:opacity-70"
+        >
+          AI COUNCIL
+        </button>
         <div className="flex items-center gap-4">
           <button
             onClick={() => {
