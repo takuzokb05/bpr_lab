@@ -312,7 +312,9 @@ def create_session(
     )
 
 
-@app.get("/sessions/{session_id}/stream")
+# GET と POST の両方を受ける。**cloudflared クイックトンネルは GET ストリームをバッファして
+# 流さない**（キャッシュ対象扱い）が POST は素通しするため、フロントは再接続を POST で叩く。
+@app.api_route("/sessions/{session_id}/stream", methods=["GET", "POST"])
 def reconnect_session(session_id: str, cursor: int = 0) -> StreamingResponse:
     """再接続。events[cursor:] を再生 → ライブ tail。未知 id は 404。"""
     session = service.get_session(session_id)

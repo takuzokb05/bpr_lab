@@ -745,12 +745,11 @@ _FINAL_STATUSES = ("done", "error")
 
 # floor-open（paused）中などアイドル時の keepalive 間隔（秒）。バッファするプロキシ
 # （cloudflared クイックトンネル等）に溜めたデータを flush させ、モバイル/プロキシの idle 切断も防ぐ。
-_HEARTBEAT_S = 2.0
-# 初回パディング: バッファするプロキシ（cloudflared 等）は「一定サイズ溜めてから流す」ことがあり、
-# 再接続の backlog バースト＋その後の idle（floor-open 待機）だと flush されず 0 バイトで止まる。
-# 先頭に十分大きなコメント（: 始まり＝SSE では無視される）を流して、サイズ閾値を超えさせ stream を
-# 開かせる。短い heartbeat（2s）と併せ、サイズ/頻度どちらの buffering でも flush させる。
-_OPEN_PADDING = ":" + (" " * 16384) + "\n\n"
+# floor-open など idle 時の keepalive 間隔（秒）。プロキシ/モバイルの idle 切断を防ぐ。
+# 本命の cloudflared バッファ対策は「再接続を POST で叩く」こと（GET はバッファ、POST は素通し）。
+# 以下は補助（一部プロキシで stream を早く開かせる初回パディング＋idle keepalive）。
+_HEARTBEAT_S = 15.0
+_OPEN_PADDING = ":" + (" " * 1024) + "\n\n"
 _HEARTBEAT = ": hb\n\n"
 
 

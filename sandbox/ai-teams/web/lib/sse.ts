@@ -137,9 +137,10 @@ async function runReconnectLoop(
   while (!state.terminal && !signal?.aborted && state.sessionId) {
     let r: Response | null = null;
     try {
+      // POST で叩く（cloudflared は GET ストリームをバッファするが POST は素通しする）。
       r = await fetch(
         apiUrl(`/sessions/${state.sessionId}/stream?cursor=${state.lastSeq + 1}`),
-        { headers: apiHeaders(), signal }
+        { method: "POST", headers: apiHeaders(), signal }
       );
     } catch {
       r = null; // ネットワーク断（バックグラウンド化等）
@@ -173,7 +174,9 @@ export async function resumeSession({
 }): Promise<boolean> {
   let r: Response;
   try {
+    // POST で叩く（cloudflared は GET ストリームをバッファするが POST は素通しする）。
     r = await fetch(apiUrl(`/sessions/${sessionId}/stream?cursor=0`), {
+      method: "POST",
       headers: apiHeaders(),
       signal,
     });
