@@ -1140,6 +1140,173 @@ def test_materials_propagation_e2e():
 
 
 # ---------------------------------------------------------------------------
+def test_web_research_mock():
+    """(1) web_research(Mock) が canned 文字列を返す（LLM/検索を呼ばない・無料）。"""
+    print("[test] web_research mock canned (検索せず決定的)")
+    c = MockLLMClient()
+    brief = c.web_research("USD/JPY の 2026 年見通し")
+    check(
+        brief == "（モック調査結果: USD/JPY の 2026 年見通し ／出典なし・検証用）",
+        f"Mock web_research は canned を返す: {brief}",
+    )
+    # web_research は generate を呼ばない（calls に記録されない＝検索/LLM 非発火）。
+    check(len(c.calls) == 0, "web_research(Mock) は generate を呼ばない（calls 空・無料）")
+
+    # service.run_research は client.web_research の薄いラッパ
+    brief2 = service.run_research(c, "X についての統計")
+    check(
+        brief2 == "（モック調査結果: X についての統計 ／出典なし・検証用）",
+        f"run_research は web_research をそのまま返す: {brief2}",
+    )
+
+
+def test_research_turn_emit():
+    """(2) Council(research=True)+emit_research_turn で researcher ターンが emit され transcript に乗る。"""
+    print("[test] emit_research_turn (speaker_id=researcher / phase=research)")
+    from core import Council, MockLLMClient
+
+    personas = [
+        make("mod", cat="facilitation"),
+        make("logic"),
+        make("idea"),
+        make("chair", cat="chair"),
+    ]
+    council = Council(
+        personas, MockLLMClient(), phases=[("発散", "d", True)], rounds_per_phase=1,
+        research=True,
+    )
+    check(council.research is True, "Council.research=True が伝播する")
+
+    transcript: list = []
+    events: list[dict] = []
+    rt = council.emit_research_turn(
+        transcript, "調査結果ブリーフ本文", emit=events.append, turn_id=42
+    )
+
+    # Turn の形
+    check(rt.speaker_id == "researcher", "Turn.speaker_id は researcher")
+    check(rt.speaker_name == "調査", "Turn.speaker_name は 調査")
+    check(rt.phase == "research", "Turn.phase は research")
+    check(rt.round == 0, "Turn.round は 0")
+    check(rt.turn_id == 42, "Turn.turn_id は渡した値")
+    check(rt.content == "調査結果ブリーフ本文", "Turn.content はブリーフ本文")
+
+    # transcript に append される
+    check(transcript == [rt], "emit_research_turn は transcript に Turn を積む")
+
+    # emit イベント: turn_start → delta（全文1チャンク）。turn_end は呼び出し側が出すのでここでは出ない。
+    types = [e["type"] for e in events]
+    check(types == ["turn_start", "delta"], f"turn_start→delta を emit（turn_end は出さない）: {types}")
+    ts = events[0]
+    check(ts["speaker_id"] == "researcher" and ts["phase"] == "research", "turn_start に researcher/research")
+    check(ts["turn_id"] == 42, "turn_start の turn_id は渡した値")
+    check(events[1]["text"] == "調査結果ブリーフ本文", "delta は全文1チャンク")
+
+    # emit=None でも transcript には積まれる（Turn を返す）
+    transcript2: list = []
+    rt2 = council.emit_research_turn(transcript2, "別ブリーフ", emit=None, turn_id=7)
+    check(transcript2 == [rt2], "emit=None でも transcript に積む")
+
+
+def test_extract_research_queries():
+    """(3) _extract_research_queries が「要調査: X」を抽出（半角/全角コロン両対応）。"""
+    print("[test] _extract_research_queries (要調査マーカー抽出)")
+
+    # 半角コロン
+    qs = service._extract_research_queries("本文です。\n要調査: 日本の出生率の推移")
+    check(qs == ["日本の出生率の推移"], f"半角コロンを抽出: {qs}")
+
+    # 全角コロン
+    qs2 = service._extract_research_queries("要調査：競合A社の市場シェア")
+    check(qs2 == ["競合A社の市場シェア"], f"全角コロンを抽出: {qs2}")
+
+    # 複数行・余分な空白・空マーカーを除去
+    qs3 = service._extract_research_queries(
+        "前段\n要調査:  EV 充電インフラの普及率  \nつなぎ\n要調査：再エネ比率\n要調査:   "
+    )
+    check(
+        qs3 == ["EV 充電インフラの普及率", "再エネ比率"],
+        f"複数抽出・trim・空除去: {qs3}",
+    )
+
+    # マーカーが無ければ空
+    check(service._extract_research_queries("ただの発言") == [], "マーカー無しは空 list")
+    check(service._extract_research_queries("") == [], "空文字は空 list")
+
+
+def test_research_disabled_backward_compat():
+    """(4) research=False で build_context に要調査指示が出ず、従来と一致する。"""
+    print("[test] research=False backward compat (要調査指示を出さない)")
+    from core.context import RESEARCH_NUDGE
+
+    a, b, c = make("a"), make("b"), make("c")
+    transcript = [
+        Turn("a", "A", "a-said", "発散", 0),
+        Turn("b", "B", "b-said", "発散", 0),
+        Turn("c", "C", "c-said", "発散", 0),
+    ]
+
+    # research_enabled 既定（False）: 要調査ナッジが出ない＝従来と完全一致
+    sys_off, msg_off = build_context(transcript=transcript, active=b, topic="T")
+    all_user_off = "\n".join(m["content"] for m in msg_off if m["role"] == "user")
+    check(RESEARCH_NUDGE not in all_user_off, "research_enabled=False で要調査指示を出さない")
+
+    # 明示 False も既定と完全一致（後方互換）
+    sys_expl, msg_expl = build_context(
+        transcript=transcript, active=b, topic="T", research_enabled=False
+    )
+    check(
+        [m["content"] for m in msg_off] == [m["content"] for m in msg_expl],
+        "research_enabled 既定 == 明示 False（従来一致）",
+    )
+
+    # research_enabled=True のときだけナッジが入る
+    sys_on, msg_on = build_context(
+        transcript=transcript, active=b, topic="T", research_enabled=True
+    )
+    all_user_on = "\n".join(m["content"] for m in msg_on if m["role"] == "user")
+    check(RESEARCH_NUDGE in all_user_on, "research_enabled=True で要調査指示が入る")
+
+    # Council.research=False のとき _speak が要調査指示を出さない（既定と同じ発言列）
+    from core import Council, MockLLMClient
+
+    def build(research):
+        return Council(
+            [make("mod", cat="facilitation"), make("logic"), make("idea"),
+             make("chair", cat="chair")],
+            MockLLMClient(),
+            phases=[("発散", "d", True)], rounds_per_phase=1,
+            research=research,
+        )
+
+    off = build(False)
+    list(off.run("議題NR"))
+    off_clean = all(
+        RESEARCH_NUDGE not in "\n".join(m["content"] for m in call["messages"])
+        for call in off.client.calls
+    )
+    check(off_clean, "research=False の Council は全 LLM 呼び出しに要調査指示を含めない")
+
+    on = build(True)
+    list(on.run("議題NR"))
+    on_seen = any(
+        RESEARCH_NUDGE in "\n".join(m["content"] for m in call["messages"])
+        for call in on.client.calls
+    )
+    check(on_seen, "research=True の Council は LLM 呼び出しに要調査指示を含める")
+
+    # build_council の research 既定は False（後方互換）
+    council_default = service.build_council(
+        ["moderator", "logic", "idea", "chair"], rounds_per_phase=1, mock=True
+    )
+    check(council_default.research is False, "build_council の research 既定は False（後方互換）")
+    council_on = service.build_council(
+        ["moderator", "logic", "idea", "chair"], rounds_per_phase=1, mock=True, research=True
+    )
+    check(council_on.research is True, "build_council(research=True) が Council に届く")
+
+
+# ---------------------------------------------------------------------------
 if __name__ == "__main__":
     test_context_isolation()
     test_no_silence_and_round_robin()
@@ -1162,6 +1329,10 @@ if __name__ == "__main__":
     test_materials_in_context()
     test_intake_questions()
     test_materials_propagation_e2e()
+    test_web_research_mock()
+    test_research_turn_emit()
+    test_extract_research_queries()
+    test_research_disabled_backward_compat()
     print()
     if _failures:
         print(f"[FAIL] {len(_failures)} 件 FAIL")

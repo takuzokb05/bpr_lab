@@ -38,6 +38,8 @@ import {
   CircleStop,
   Paperclip,
   ListChecks,
+  Globe,
+  Search,
 } from "lucide-react";
 
 // 準備フェーズ: クライアント側で読み込む資料の拡張子（PDF/Office は MVP 対象外）。
@@ -69,6 +71,10 @@ export default function Home() {
   const [intakeQuestions, setIntakeQuestions] = useState<string[]>([]);
   const [intakeAnswers, setIntakeAnswers] = useState<Record<number, string>>({});
   const [intakeLoading, setIntakeLoading] = useState(false);
+
+  // Web 検索（調査役）。既定 false で従来と完全同一（mock/キー未設定なら canned で無料）。
+  // true のとき調査役が序盤と「要調査:」マーカーで検索し、結果を全員に共有する（コスト増）。
+  const [research, setResearch] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [turns, setTurns] = useState<Turn[]>([]);
@@ -260,6 +266,7 @@ export default function Home() {
         mock: !willUseRealLlm, // GAP5: NOT(useLlm AND api_key_set)
         materials: trimmedMaterials, // 準備フェーズ: 資料接地（空なら body に載らない）
         intake, // 準備フェーズ: 回答済み確認 Q&A（空なら body に載らない）
+        research, // 準備フェーズ: Web 検索（調査役）。false なら body に載らない＝従来同一
         interactive: true, // Web は floor-open（本編後に一時停止して入力を待つ）
         signal: ctrl.signal,
         onEvent: (e) => {
@@ -557,6 +564,60 @@ export default function Home() {
                     ))}
                   </ul>
                 )}
+              </div>
+
+              {/* Web 検索（調査役）。既定 OFF。ON のとき調査役が序盤と「要調査:」で
+                  事実を調べ全員に共有する＝コスト増（mock/キー未設定なら canned で無料）。 */}
+              <div className="flex flex-col gap-1.5 border-t border-[var(--color-line)] pt-3">
+                <button
+                  type="button"
+                  role="switch"
+                  aria-checked={research}
+                  onClick={() => setResearch((v) => !v)}
+                  className={`flex items-center justify-between gap-3 rounded-md border px-2.5 py-2 text-left transition-colors ${
+                    research
+                      ? "border-[var(--color-accent)] bg-[var(--color-accent-weak)]"
+                      : "border-[var(--color-line)] hover:border-[var(--color-ink-muted)]"
+                  }`}
+                >
+                  <span className="flex items-center gap-2">
+                    <Globe
+                      size={14}
+                      className={
+                        research
+                          ? "text-[var(--color-accent)]"
+                          : "text-[var(--color-ink-muted)]"
+                      }
+                    />
+                    <span
+                      className={`text-xs ${
+                        research
+                          ? "text-[var(--color-accent)]"
+                          : "text-[var(--color-ink)]"
+                      }`}
+                    >
+                      Web 検索で事実を調べる（コスト増）
+                    </span>
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className={`inline-flex h-4 w-7 shrink-0 items-center rounded-full p-0.5 transition-colors ${
+                      research
+                        ? "bg-[var(--color-accent)]"
+                        : "bg-[var(--color-line)]"
+                    }`}
+                  >
+                    <span
+                      className={`h-3 w-3 rounded-full bg-[var(--color-surface)] transition-transform ${
+                        research ? "translate-x-3" : "translate-x-0"
+                      }`}
+                    />
+                  </span>
+                </button>
+                <p className="flex items-start gap-1.5 text-[11px] leading-relaxed text-[var(--color-ink-muted)]">
+                  <Search size={12} className="mt-0.5 shrink-0" />
+                  調査役が序盤と「要調査」の問いだけを検索し、出典付きで全員に共有します。重複は省きます。
+                </p>
               </div>
             </div>
           )}

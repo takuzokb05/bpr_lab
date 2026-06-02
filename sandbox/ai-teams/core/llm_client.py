@@ -58,6 +58,15 @@ class LLMClient(ABC):
         if text:
             yield text
 
+    def web_research(self, query: str) -> str:
+        """query を web 検索し、出典付きの簡潔なブリーフ（1文字列）を返す。
+
+        基底実装は LLM/検索を一切呼ばず、決定的な canned 文字列を返す（無料・テスト可）。
+        実検索する AnthropicClient だけがこれをオーバーライドする。検索するのは討論の
+        「調査役」だけで、各ペルソナは検索しない＝重複ゼロ・課金は調査ターンに限定。
+        """
+        return f"（モック調査結果: {query} ／出典なし・検証用）"
+
 
 # temperature を受け付けないモデル（API が 400 "temperature is deprecated" を返す）。
 # Opus 4.8 以降が該当。該当モデルには temperature を送らない。
@@ -66,6 +75,15 @@ _TEMP_UNSUPPORTED_MARKERS = ("opus-4-8",)
 
 def _supports_temperature(model: str) -> bool:
     return not any(m in model for m in _TEMP_UNSUPPORTED_MARKERS)
+
+
+# 調査役（web_research）の研究プロンプト雛形。憶測を禁じ、調べて分かった事実だけを
+# 各項目に出典 URL を付けて箇条書き化させる。{query} に調べたい問いを差し込む。
+_RESEARCH_PROMPT_TEMPLATE = (
+    "次について web 検索し、意思決定に必要な事実・統計・先行事例を、各項目に出典URLを"
+    "付けて簡潔にブリーフ化せよ。憶測や一般論は書かず、調べて分かったことだけを箇条書きで。"
+    ": {query}"
+)
 
 
 class AnthropicClient(LLMClient):
@@ -123,6 +141,63 @@ class AnthropicClient(LLMClient):
             for text in stream.text_stream:
                 if text:
                     yield text
+
+    def web_research(self, query: str) -> str:
+        """Anthropic web_search ツールで query を調べ、出典付きブリーフを1文字列で返す。
+
+        messages.create(..., tools=[{type:"web_search_20250305", name:"web_search", ...}]) を
+        呼ぶ。応答 content は server_tool_use → web_search_tool_result → text(複数, 各 text
+        block の .citations[].url に出典) の並びになる。text block を連結し、各 citation の
+        URL を集めて末尾に「出典:\n- url...」として付す。temperature は tools 経路でも
+        opus-4-8 には送らない（_supports_temperature と同じ判定）。
+
+        例外時は「（調査に失敗: 理由）」を返し、討論は止めない（呼び出し側が継続できる）。
+        """
+        prompt = _RESEARCH_PROMPT_TEMPLATE.format(query=query)
+        params: dict = {
+            "model": DEFAULT_MODEL,
+            "max_tokens": self._max_tokens,
+            "messages": [{"role": "user", "content": prompt}],
+            "tools": [
+                {
+                    "type": "web_search_20250305",
+                    "name": "web_search",
+                    "max_uses": 4,
+                }
+            ],
+        }
+        # tools 経路でも temperature 非対応モデル（opus-4-8）には temperature を送らない。
+        if _supports_temperature(DEFAULT_MODEL):
+            params["temperature"] = 0.3
+        try:
+            resp = self._client.messages.create(**params)
+        except Exception as exc:  # noqa: BLE001 — 失敗しても討論を止めず、その旨を返す
+            return f"（調査に失敗: {exc}）"
+
+        texts: list[str] = []
+        urls: list[str] = []
+        seen_urls: set[str] = set()
+        for block in resp.content:
+            if getattr(block, "type", None) != "text":
+                continue
+            text = getattr(block, "text", "") or ""
+            if text:
+                texts.append(text)
+            # 各 text block の citations から出典 URL を集める（重複は除く・順序維持）。
+            for citation in getattr(block, "citations", None) or []:
+                url = getattr(citation, "url", None) or (
+                    citation.get("url") if isinstance(citation, dict) else None
+                )
+                if url and url not in seen_urls:
+                    seen_urls.add(url)
+                    urls.append(url)
+
+        brief = "\n".join(texts).strip()
+        if urls:
+            brief += "\n\n出典:\n" + "\n".join(f"- {u}" for u in urls)
+        if not brief:
+            return f"（調査結果が空でした: {query}）"
+        return brief
 
 
 class MockLLMClient(LLMClient):

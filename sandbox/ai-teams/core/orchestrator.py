@@ -131,6 +131,7 @@ class Council:
         red_team: bool = True,
         red_team_id: str | None = None,
         materials: str = "",
+        research: bool = False,
     ) -> None:
         self.client = client
         self.default_model = default_model
@@ -140,6 +141,10 @@ class Council:
         # 全ペルソナが共有する「資料・前提」。セッション中は不変（構築時に確定）。
         # _speak が build_context に渡す。"" のとき従来と完全同一（ブロックを足さない）。
         self.materials = materials
+        # Web 検索（調査役）を有効にするか。True のとき各ペルソナの末尾ナッジに
+        # 「要調査: …」を書いてよい指示を足し、producer がそのマーカーを拾って調査役が
+        # 調べ、researcher ターンとして全員に共有する。False では一切何もしない（後方互換）。
+        self.research = research
 
         personas = list(personas)
         # 役割ごとに振り分ける
@@ -199,6 +204,7 @@ class Council:
             phase_directive=phase_directive,
             anti_conformity=anti_conformity,
             materials=self.materials,
+            research_enabled=self.research,
         )
         model, temperature = self._resolve(persona)
 
@@ -259,6 +265,39 @@ class Council:
             )
             emit({"type": "delta", "turn_id": turn_id, "text": content})
         return Turn(speaker_id, speaker_name, content, phase, round_no, turn_id=turn_id)
+
+    def emit_research_turn(
+        self,
+        transcript: list[Turn],
+        brief: str,
+        *,
+        emit: Emit | None,
+        turn_id: int,
+    ) -> Turn:
+        """調査役（researcher）の調査結果ブリーフを1ターンとして流し、transcript に積む。
+
+        LLM は呼ばない（brief は呼び出し側＝producer が run_research で取得済み）。
+        emit があれば turn_start{speaker_id:"researcher", speaker_name:"調査",
+        phase:"research", round:0} → delta{text:brief（全文1チャンク）} を流す。
+        turn_end は呼び出し側（_produce）が出す（_emit_simple_turn と同形・二重防止）。
+        新しい SSE イベント型は増やさず、調査を1人の話者のターンとして討論に乗せる
+        ことで全員が共有する。Turn は transcript に append してから返す。
+        """
+        if emit is not None:
+            emit(
+                {
+                    "type": "turn_start",
+                    "turn_id": turn_id,
+                    "speaker_id": "researcher",
+                    "speaker_name": "調査",
+                    "phase": "research",
+                    "round": 0,
+                }
+            )
+            emit({"type": "delta", "turn_id": turn_id, "text": brief})
+        turn = Turn("researcher", "調査", brief, "research", 0, turn_id=turn_id)
+        transcript.append(turn)
+        return turn
 
     def deepen(
         self,

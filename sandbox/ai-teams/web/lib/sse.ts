@@ -42,6 +42,9 @@ export interface StartSessionArgs {
   intake?: IntakeQA[];
   // 対話モード（議場開放）。Web は既定 true＝本編後に自動 synthesis せず一時停止して入力を待つ。
   interactive?: boolean;
+  // Web 検索（調査役による事実調べ）。既定 false で従来と完全同一（body にも載らない）。
+  // true のとき調査役が discussion 序盤と「要調査:」マーカーで検索し全員に共有する（コスト増）。
+  research?: boolean;
   signal?: AbortSignal;
   onEvent: (e: StreamEvent) => void;
 }
@@ -70,6 +73,7 @@ export async function startSession({
   materials = "",
   intake = [],
   interactive = true,
+  research = false,
   signal,
   onEvent,
 }: StartSessionArgs): Promise<void> {
@@ -87,6 +91,8 @@ export async function startSession({
   // 準備フェーズ。後方互換: 空のときは body に載せない（従来の POST と完全同一）。
   if (materials.trim()) body.materials = materials;
   if (intake.length > 0) body.intake = intake;
+  // Web 検索（調査役）。後方互換: false のときは body に載せない（従来の POST と完全同一）。
+  if (research) body.research = research;
 
   const res = await fetch(apiUrl("/sessions"), {
     method: "POST",

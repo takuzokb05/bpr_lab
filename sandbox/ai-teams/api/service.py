@@ -90,6 +90,45 @@ def llm_status() -> dict:
     return {"llm": "anthropic" if api_key_set else "mock", "api_key_set": api_key_set}
 
 
+# -- Web 検索（調査役） -----------------------------------------------------
+#
+# 凍結契約: 検索するのは「調査役」だけ。各ペルソナは検索しない＝重複ゼロ。結果は
+# 「調査」話者のターンとして討論に乗せ、全員が共有する（新 SSE イベント型は増やさない）。
+# mock / キー未設定では web_research が canned を返す（無料・テスト可）。real のみ課金。
+
+# 「要調査:」マーカーを行頭から拾う正規表現（半角/全角コロンの両方を許容）。
+_RESEARCH_QUERY_RE = re.compile(r"^\s*要調査\s*[:：]\s*(.+?)\s*$")
+
+# Web 検索の合計回数上限（seed 1 + 派生 5 ＝ 暴走防止）。cap 到達後は無視（ログのみ）。
+_RESEARCH_CAP = 6
+
+
+def run_research(client: LLMClient, query: str) -> str:
+    """調査役による web 検索の薄いラッパ。client.web_research(query) をそのまま返す。
+
+    mock / キー未設定なら canned（無料）、real のみ課金。例外は web_research 側で
+    握って「（調査に失敗: …）」を返すので、ここでは討論を止めない。
+    """
+    return client.web_research(query)
+
+
+def _extract_research_queries(text: str) -> list[str]:
+    """発言本文から「要調査: <問い>」（全角コロンも可）の問いを行単位で抽出する。
+
+    行頭の「要調査:」「要調査：」に続く文字列を取り出し trim。空は除く。
+    research=False なら build_context が指示を出さない＝そもそもマーカーは現れない。
+    """
+    out: list[str] = []
+    for raw in (text or "").splitlines():
+        m = _RESEARCH_QUERY_RE.match(raw)
+        if not m:
+            continue
+        q = m.group(1).strip()
+        if q:
+            out.append(q)
+    return out
+
+
 # -- Council 組み立て -------------------------------------------------------
 def build_council(
     persona_ids: list[str],
@@ -99,11 +138,16 @@ def build_council(
     red_team_id: str | None = None,
     mock: bool = False,
     materials: str = "",
+    research: bool = False,
 ) -> Council:
     """指定 id のペルソナで Council を作る。未知 id は KeyError。
 
     materials は全ペルソナが共有する「資料・前提」。Council 構築時に確定し、討論中は
     不変（_speak 経由で build_context に渡る）。materials="" で従来と完全同一。
+
+    research=True で Web 検索（調査役）を有効化する。各ペルソナは「要調査: …」を書ける
+    ようになり、producer がそれを拾って調査役が調べ、researcher ターンで全員に共有する。
+    research=False（既定）では一切何もしない（後方互換）。
     """
     registry = {p.id: p for p in load_registry()}
     missing = [pid for pid in persona_ids if pid not in registry]
@@ -117,6 +161,7 @@ def build_council(
         red_team=red_team,
         red_team_id=red_team_id,
         materials=materials,
+        research=research,
     )
 
 
@@ -406,12 +451,58 @@ def _produce(session: Session) -> None:
         transcript: list = []
         ids = count()  # turn_id 採番。deliberate/deepen/synthesize で継続共有する。
 
+        # Web 検索（調査役）の状態。research=False なら一切使わない（後方互換）。
+        #   seen: 正規化済みクエリの重複排除集合（クエリ単位で重複ゼロ）。
+        #   count: 累計検索回数（seed 含む。_RESEARCH_CAP で打ち止め）。
+        research_seen: set[str] = set()
+        research_state = {"count": 0}
+
+        def _pickup_research(turn) -> None:
+            """1ターンの本文から「要調査:」を拾い、新規クエリだけ調べて researcher ターンを挿入する。
+
+            research=False なら何もしない。クエリは正規化（小文字 strip）して seen で重複排除し、
+            _RESEARCH_CAP に達したら無視（暴走防止）。検索結果は researcher ターンとして
+            transcript に乗り、全員が共有する（emit_research_turn が transcript.append する）。
+            """
+            if not council.research or session.cancelled:
+                return  # 無効時、またはキャンセル後は新規検索を発火しない（コスト抑制）
+            for query in _extract_research_queries(getattr(turn, "content", "") or ""):
+                norm = query.lower().strip()
+                if not norm or norm in research_seen:
+                    continue
+                if research_state["count"] >= _RESEARCH_CAP:
+                    # cap 到達後は調べない（ログのみ・暴走防止）。
+                    break
+                brief = run_research(council.client, query)
+                rid = next(ids)
+                rt = council.emit_research_turn(transcript, brief, emit=emit, turn_id=rid)
+                _append(session, "turn_end", {"turn_id": rt.turn_id})
+                research_seen.add(norm)
+                research_state["count"] += 1
+
+        # Phase A: seed 調査（research=True のときだけ）。deliberate 開始前に topic を1回調べ、
+        # researcher ターンとして全員の議論の土台に乗せる。seed を seen に登録し、カウンタ+1。
+        if council.research:
+            seed = session.topic
+            seed_norm = seed.lower().strip()
+            if seed_norm:
+                seed_brief = run_research(council.client, seed)
+                seed_rid = next(ids)
+                seed_turn = council.emit_research_turn(
+                    transcript, seed_brief, emit=emit, turn_id=seed_rid
+                )
+                _append(session, "turn_end", {"turn_id": seed_turn.turn_id})
+                research_seen.add(seed_norm)
+                research_state["count"] += 1
+
         # 本編フェーズ（opening+発散/批判/収束）。本編中の追い質問は followup のみ注入。
         for turn in council.deliberate(
             session.topic, transcript, emit=emit,
             pull=lambda: _drain_followups(session.inbox), ids=ids,
         ):
             _append(session, "turn_end", {"turn_id": turn.turn_id})
+            # 各ターン後に「要調査:」を拾って調べ、researcher ターンを挿入（research=False なら no-op）。
+            _pickup_research(turn)
             if session.cancelled:
                 session.accepting = False
                 _append(session, "done", {})
@@ -456,6 +547,8 @@ def _produce(session: Session) -> None:
                 session.topic, transcript, [msg, *extra], emit=emit, ids=ids
             ):
                 _append(session, "turn_end", {"turn_id": turn.turn_id})
+                # deepen 中のターンも「要調査:」を拾う（synthesize 中は拾わない）。
+                _pickup_research(turn)
                 if session.cancelled:
                     break
             # a に戻って再び floor-open。

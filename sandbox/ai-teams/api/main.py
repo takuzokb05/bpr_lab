@@ -53,6 +53,9 @@ class SessionRequest(BaseModel):
     materials: str = Field("", max_length=_MATERIALS_MAX)
     # 主訴確認（intake）の回答（任意）。空でも動く。資料の末尾に Q&A として連結する。
     intake: list[IntakeQA] = Field(default_factory=list)
+    # Web 検索（調査役）を有効にするか。True なら seed 調査＋各ペルソナの「要調査:」を
+    # 調査役が調べて全員に共有する。False（既定）では一切検索しない（後方互換・無料）。
+    research: bool = False
 
 
 class IntakeRequest(BaseModel):
@@ -130,6 +133,7 @@ def create_session(req: SessionRequest) -> StreamingResponse:
             red_team_id=req.red_team_id,
             mock=req.mock,
             materials=composed_materials,
+            research=req.research,
         )
     except KeyError as exc:
         raise HTTPException(status_code=400, detail=f"unknown persona ids: {exc.args[0]}")

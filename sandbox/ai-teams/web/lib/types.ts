@@ -65,6 +65,7 @@ export const PHASE_LABELS: Record<string, string> = {
   synthesis: "統合",
   human: "あなた",
   followup: "追い質問",
+  research: "調査",
 };
 
 // 本編フェーズ（追い質問を拾える＝pull 対象）

@@ -1,9 +1,10 @@
 "use client";
 
-import { type Turn } from "@/lib/types";
+import { type Turn, formatTurnTime } from "@/lib/types";
 import { Avatar } from "./Avatar";
 import { NamePlate } from "./NamePlate";
 import { Markdown } from "./Markdown";
+import { Search, Globe } from "lucide-react";
 import { useEffect, useRef } from "react";
 
 interface PersonaLook {
@@ -67,6 +68,52 @@ export function Timeline({
 
         {visible.map((t) => {
           const isStreaming = t.turn_id === streamingTurnId;
+
+          // 調査メモ: 調査役（researcher / phase=research）のターンは persona 吹き出しでなく
+          // 無彩色枠の「調査メモ」カードで描く。本文は Markdown＝出典 URL がリンク表示される。
+          // 本文が空のまま検索中なら「調べています…」。
+          if (t.speaker_id === "researcher" || t.phase === "research") {
+            const time = formatTurnTime(t.ts);
+            const searching = t.content === "" && isStreaming;
+            return (
+              <article
+                key={t.turn_id}
+                className="animate-turn-in rounded-md border border-[var(--color-line)] bg-[var(--color-surface)] px-3.5 py-3"
+              >
+                <header className="flex items-center gap-2 border-b border-[var(--color-line)] pb-1.5">
+                  <Globe size={14} className="text-[var(--color-ink-muted)]" />
+                  <span className="text-sm font-medium text-[var(--color-ink)]">
+                    調査メモ
+                  </span>
+                  <span
+                    className="text-[10px] font-medium uppercase tracking-wider text-[var(--color-ink-muted)]"
+                  >
+                    Web 検索
+                  </span>
+                  {time && (
+                    <>
+                      <span className="text-[var(--color-line)]" aria-hidden="true">
+                        ・
+                      </span>
+                      <span className="font-mono text-[11px] text-[var(--color-ink-muted)]">
+                        {time}
+                      </span>
+                    </>
+                  )}
+                </header>
+                {searching ? (
+                  <p className="mt-2 flex items-center gap-2 text-sm leading-relaxed text-[var(--color-ink-muted)]">
+                    <Search size={13} className="shrink-0" />
+                    調べています…
+                  </p>
+                ) : (
+                  <div className="mt-2">
+                    <Markdown>{t.content}</Markdown>
+                  </div>
+                )}
+              </article>
+            );
+          }
 
           // 人間ターン: 右寄せ・アクセント弱背景で「あなた」の発言として描く。
           // turn_id<0 は楽観的エコー（未確定）→ pending microcopy を添える。

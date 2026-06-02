@@ -26,6 +26,15 @@ ANTI_CONFORMITY = (
     "見落とされている論点を、必ず最低1つ含めること。"
 )
 
+# 調査要請ディレクティブ（research_enabled=True のときだけ末尾ナッジに足す）。
+# 事実・数字が欲しいのに【資料・前提】や【調査】に無ければ「要調査: …」を1行で書かせ、
+# 調査役（researcher ターン）が調べて全員に共有する。乱発を抑えるよう明示する。
+RESEARCH_NUDGE = (
+    "事実・数字が必要なのに【資料・前提】や【調査】に無い場合、発言の最後に"
+    "『要調査: <調べたい具体的な問い>』を1行だけ書いてよい。調査役が調べて全員に共有する。"
+    "乱発しないこと。"
+)
+
 
 def _merge(events: list[tuple[str, str]]) -> list[Message]:
     """連続する同一 role を1メッセージに結合する（Anthropic の role 交互制約に適合）。"""
@@ -46,6 +55,7 @@ def build_context(
     phase_directive: str = "",
     anti_conformity: bool = True,
     materials: str = "",
+    research_enabled: bool = False,
 ) -> tuple[str, list[Message]]:
     """active ペルソナが「次の1発言」を生成するための (system, messages) を組む。
 
@@ -75,6 +85,9 @@ def build_context(
         nudge.append(phase_directive)
     if anti_conformity:
         nudge.append(ANTI_CONFORMITY)
+    if research_enabled:
+        # research=False では一切出さない＝従来と完全一致（後方互換）。
+        nudge.append(RESEARCH_NUDGE)
     nudge.append(
         f"あなた（{active.display_name}）の番です。上記の議論を踏まえ、"
         f"{active.display_name} として一度だけ簡潔に発言してください。"
