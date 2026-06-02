@@ -131,6 +131,8 @@ export default function Home() {
   // 討論履歴（クライアント保存・サーバ非依存）。見返し・再開の入口。
   const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [historyOpen, setHistoryOpen] = useState(false);
+  // 「この討論を続ける」時に前回討論をどれだけ文脈に載せるか。既定=軽量（議事録＋直近）。
+  const [continueScope, setContinueScope] = useState<"light" | "full">("light");
   const restoredRef = useRef(false); // 初回マウントの自動再開を一度だけ行う
 
   const [manageOpen, setManageOpen] = useState(false);
@@ -554,58 +556,49 @@ export default function Home() {
     }
   }
 
-  async function start() {
-    const topic = topicInput.trim();
-    if (!topic || selected.size === 0 || active) return;
-
-    // 進行役（司会・議長）を先頭に自動付与し、続けて選択パネリスト（カスタム含む）。重複は除く。
-    const panelistIds = allPersonas.filter((p) => selected.has(p.id)).map((p) => p.id);
-    const ordered = Array.from(new Set([...autoRoleIds, ...panelistIds]));
-    // 選択中の自分のペルソナだけ定義を同送（サーバ非保存・このセッション限定）。
-    const selectedCustom = customPersonas.filter((cp) => selected.has(cp.id));
+  // セッション起動の共通核（新規 start と「続ける」continue で共有）。topic/personas/materials/
+  // customPersonas を明示で受け、その他（rounds/redTeam/verbosity/research/LLM）は現在の設定を使う。
+  async function launchSession(opts: {
+    topic: string;
+    personaIds: string[];
+    customPersonas: CustomPersona[];
+    materials: string;
+    intake?: IntakeQA[];
+  }) {
     const ctrl = new AbortController();
     abortRef.current = ctrl;
-
-    // 準備フェーズの確定値を組む。回答済み（trim 後 非空）の Q&A だけを intake に載せる。
-    // 質問未取得でも materials だけで開始できる。
-    const trimmedMaterials = materials.trim();
-    const intake: IntakeQA[] = intakeQuestions
-      .map((question, i) => ({ question, answer: (intakeAnswers[i] ?? "").trim() }))
-      .filter((qa) => qa.answer !== "");
-
-    setActiveTopic(topic);
+    setActiveTopic(opts.topic);
     setTurns([]);
     setError(null);
     setStatus("running");
     setStreamingTurnId(null);
     setSessionId(null);
     setTopicInput("");
-    // 準備フェーズの入力は開始時に確定済み。idle に戻ったとき前回分が残らないようクリア。
     setMaterials("");
     setIntakeQuestions([]);
     setIntakeAnswers({});
-
+    setHistoryOpen(false);
     streamAliveRef.current = true;
     try {
       await startSession({
-        topic,
-        personaIds: ordered,
+        topic: opts.topic,
+        personaIds: opts.personaIds,
         roundsPerPhase, // GAP6
         redTeam, // GAP6
         redTeamId, // GAP6
-        mock: !willUseRealLlm, // GAP5: NOT(useLlm AND api_key_set)
-        materials: trimmedMaterials, // 準備フェーズ: 資料接地（空なら body に載らない）
-        intake, // 準備フェーズ: 回答済み確認 Q&A（空なら body に載らない）
-        research, // 準備フェーズ: Web 検索（調査役）。false なら body に載らない＝従来同一
-        verbosity, // 応答の長さ（standard なら body に載らない＝従来同一）
-        customPersonas: selectedCustom, // 自分のペルソナ（選択中のみ・サーバ非保存）
-        interactive: true, // Web は floor-open（本編後に一時停止して入力を待つ）
+        mock: !willUseRealLlm, // GAP5: NOT(useLlm AND key)
+        materials: opts.materials,
+        intake: opts.intake ?? [],
+        research,
+        verbosity,
+        customPersonas: opts.customPersonas,
+        interactive: true,
         signal: ctrl.signal,
         onEvent: handleEvent,
       });
     } catch (err) {
-      // 接続前（POST 失敗等）の例外。"TypeError: Load failed" 等の生メッセージは出さず、
-      // 通信失敗の分かりやすい案内にする（セッション確立後の切断は再接続ループ側で復帰）。
+      // 接続前（POST 失敗等）の例外。生の "TypeError: Load failed" でなく分かりやすい案内に
+      // （セッション確立後の切断は再接続ループ側で復帰）。
       if (!ctrl.signal.aborted) {
         setError("接続に失敗しました。通信環境を確認して、もう一度お試しください。");
         setStatus("error");
@@ -613,6 +606,85 @@ export default function Home() {
     } finally {
       streamAliveRef.current = false;
     }
+  }
+
+  async function start() {
+    const topic = topicInput.trim();
+    if (!topic || selected.size === 0 || active) return;
+    // 進行役（司会・議長）を先頭に自動付与し、続けて選択パネリスト（カスタム含む）。重複は除く。
+    const panelistIds = allPersonas.filter((p) => selected.has(p.id)).map((p) => p.id);
+    const ordered = Array.from(new Set([...autoRoleIds, ...panelistIds]));
+    const selectedCustom = customPersonas.filter((cp) => selected.has(cp.id));
+    const trimmedMaterials = materials.trim();
+    const intake: IntakeQA[] = intakeQuestions
+      .map((question, i) => ({ question, answer: (intakeAnswers[i] ?? "").trim() }))
+      .filter((qa) => qa.answer !== "");
+    await launchSession({
+      topic,
+      personaIds: ordered,
+      customPersonas: selectedCustom,
+      materials: trimmedMaterials,
+      intake,
+    });
+  }
+
+  // 前回討論の文脈テキスト（資料）を組む。scope="light"=議事録＋直近、"full"=全文（budget 内）。
+  // materials の上限（サーバ 20000 字）に収めるため、全文は新しい発言から詰めて古いものから落とす。
+  function buildContinuationContext(entry: HistoryEntry, scope: "light" | "full"): string {
+    const fmt = (t: Turn) => `【${t.speaker_name}】\n${t.content}`;
+    const synthesis = entry.turns.find((t) => t.phase === "synthesis");
+    // 発言（議事録・要約・調査メモは除く。人間の追い質問は含める）。
+    const body = entry.turns.filter(
+      (t) => t.phase !== "synthesis" && t.phase !== "summary" && t.speaker_id !== "researcher"
+    );
+    const head = `【前回の討論（議題: ${entry.topic}）${scope === "full" ? "全文" : "の要点"}】`;
+    const tail =
+      "\n\n【ここから続き】上記の前回討論を踏まえ、続きとして議論を深めてください。" +
+      "同じ結論の蒸し返しは避け、未解決の論点や新しい角度を進めること。";
+    const budget = 19000 - head.length - tail.length - 200;
+    const parts: string[] = [];
+    if (scope === "full") {
+      const chosen: string[] = [];
+      let used = 0;
+      for (let i = body.length - 1; i >= 0; i--) {
+        const s = fmt(body[i]);
+        if (used + s.length > budget) {
+          chosen.unshift("…（これより前の発言は長いため省略）");
+          break;
+        }
+        chosen.unshift(s);
+        used += s.length + 2;
+      }
+      parts.push(...chosen);
+    } else {
+      if (synthesis) parts.push(`◆議事録\n${synthesis.content}`);
+      parts.push("◆直近の発言", ...body.slice(-5).map(fmt));
+    }
+    let text = `${head}\n\n${parts.join("\n\n")}${tail}`;
+    if (text.length > 19500) text = text.slice(0, 19500) + "\n…（長いため省略）";
+    return text;
+  }
+
+  // 終了/凍結した討論を「続ける（深掘る）」。前回のパネリストを transcript から復元し、前回討論を
+  // 文脈（資料）として読み込ませた新セッションを立てる＝同じ顔ぶれで続きから議論する。
+  async function continueDiscussion(entry: HistoryEntry, scope: "light" | "full") {
+    if (active) return;
+    const priorIds = Array.from(new Set(entry.turns.map((t) => t.speaker_id))).filter((id) => {
+      const p = allPersonas.find((x) => x.id === id);
+      return p && !STRUCTURAL_CATS.includes(p.category) && p.category !== "scribe";
+    });
+    if (priorIds.length === 0) {
+      setError("続けられる発言者が記録から復元できませんでした。");
+      return;
+    }
+    const ordered = Array.from(new Set([...autoRoleIds, ...priorIds]));
+    const usedCustom = customPersonas.filter((cp) => priorIds.includes(cp.id));
+    await launchSession({
+      topic: entry.topic,
+      personaIds: ordered,
+      customPersonas: usedCustom,
+      materials: buildContinuationContext(entry, scope),
+    });
   }
 
   // 追い質問の送信。楽観エコー → POST → 失敗ならロールバック（UIはクラッシュしない）。
@@ -1012,9 +1084,53 @@ export default function Home() {
               </p>
             )}
             {finishedNote && (
-              <p className="mb-1.5 text-[11px] text-[var(--color-ink-muted)]">
-                {finishedNote}
-              </p>
+              <div className="mb-2 flex flex-col gap-1.5">
+                <p className="text-[11px] text-[var(--color-ink-muted)]">{finishedNote}</p>
+                <div className="flex flex-wrap items-center gap-2">
+                  <button
+                    onClick={() =>
+                      activeTopic &&
+                      continueDiscussion(
+                        {
+                          id: sessionId ?? "",
+                          topic: activeTopic,
+                          turns,
+                          status,
+                          startedAt: 0,
+                          updatedAt: 0,
+                        },
+                        continueScope
+                      )
+                    }
+                    className="flex items-center gap-1.5 rounded-md border border-[var(--color-accent)] px-3 py-1.5 text-xs font-medium text-[var(--color-accent)] transition-colors hover:bg-[var(--color-accent-weak)]"
+                  >
+                    <Play size={13} /> この討論を続ける
+                  </button>
+                  <span className="text-[10px] text-[var(--color-ink-muted)]">文脈:</span>
+                  <div className="flex rounded-md border border-[var(--color-line)] p-0.5">
+                    <button
+                      onClick={() => setContinueScope("light")}
+                      className={`rounded px-2 py-0.5 text-[10px] transition-colors ${
+                        continueScope === "light"
+                          ? "bg-[var(--color-accent-weak)] text-[var(--color-accent)]"
+                          : "text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]"
+                      }`}
+                    >
+                      議事録＋直近（推奨）
+                    </button>
+                    <button
+                      onClick={() => setContinueScope("full")}
+                      className={`rounded px-2 py-0.5 text-[10px] transition-colors ${
+                        continueScope === "full"
+                          ? "bg-[var(--color-accent-weak)] text-[var(--color-accent)]"
+                          : "text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]"
+                      }`}
+                    >
+                      全文
+                    </button>
+                  </div>
+                </div>
+              </div>
             )}
             <div className="flex items-end gap-2">
               <textarea
