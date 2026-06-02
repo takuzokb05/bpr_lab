@@ -201,7 +201,9 @@ export default function Home() {
   // 進行中/完了の討論を localStorage に保存（見返し・再開用）。delta 毎の重い書込を避けるため
   // turns.length と status の変化時に保存する（保存値は最新の turns 全体＝確定後の本文も入る）。
   useEffect(() => {
-    if (!sessionId || !activeTopic) return;
+    // 空の turns では保存しない（resume/launch のクリア中に保存済み transcript を空で
+    // 上書きしてしまうのを防ぐ＝履歴消失の防御）。
+    if (!sessionId || !activeTopic || turns.length === 0) return;
     saveHistoryEntry({ id: sessionId, topic: activeTopic, status, turns });
     setHistory(getHistory());
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -650,7 +652,12 @@ export default function Home() {
 
   // 前回討論の文脈テキスト（資料）を組む。scope="light"=議事録＋直近、"full"=全文（budget 内）。
   // materials の上限（サーバ 20000 字）に収めるため、全文は新しい発言から詰めて古いものから落とす。
-  function buildContinuationContext(entry: HistoryEntry, scope: "light" | "full"): string {
+  // focusText があれば「特に深めたい点」として末尾指示に織り込む（コンポーザーから続ける時）。
+  function buildContinuationContext(
+    entry: HistoryEntry,
+    scope: "light" | "full",
+    focusText = ""
+  ): string {
     const fmt = (t: Turn) => `【${t.speaker_name}】\n${t.content}`;
     const synthesis = entry.turns.find((t) => t.phase === "synthesis");
     // 発言（議事録・要約・調査メモは除く。人間の追い質問は含める）。
@@ -658,8 +665,12 @@ export default function Home() {
       (t) => t.phase !== "synthesis" && t.phase !== "summary" && t.speaker_id !== "researcher"
     );
     const head = `【前回の討論（議題: ${entry.topic}）${scope === "full" ? "全文" : "の要点"}】`;
+    const focus = focusText.trim()
+      ? `特に次の点を深めてください: ${focusText.trim()}。`
+      : "";
     const tail =
       "\n\n【ここから続き】上記の前回討論を踏まえ、続きとして議論を深めてください。" +
+      focus +
       "同じ結論の蒸し返しは避け、未解決の論点や新しい角度を進めること。";
     const budget = 19000 - head.length - tail.length - 200;
     const parts: string[] = [];
@@ -687,7 +698,11 @@ export default function Home() {
 
   // 終了/凍結した討論を「続ける（深掘る）」。前回のパネリストを transcript から復元し、前回討論を
   // 文脈（資料）として読み込ませた新セッションを立てる＝同じ顔ぶれで続きから議論する。
-  async function continueDiscussion(entry: HistoryEntry, scope: "light" | "full") {
+  async function continueDiscussion(
+    entry: HistoryEntry,
+    scope: "light" | "full",
+    focusText = ""
+  ) {
     if (active) return;
     const priorIds = Array.from(new Set(entry.turns.map((t) => t.speaker_id))).filter((id) => {
       const p = allPersonas.find((x) => x.id === id);
@@ -703,8 +718,19 @@ export default function Home() {
       topic: entry.topic,
       personaIds: ordered,
       customPersonas: usedCustom,
-      materials: buildContinuationContext(entry, scope),
+      materials: buildContinuationContext(entry, scope, focusText),
     });
+  }
+
+  // 終了/凍結した討論を見ている時にコンポーザーから送る＝この討論を続ける（前回を引き継ぐ）。
+  // 入力テキストは「特に深めたい点」になる。新規ブランク討論はロゴ（resetToIdle）からのみ。
+  function continueFromComposer() {
+    if (!activeTopic || turns.length === 0) return;
+    continueDiscussion(
+      { id: sessionId ?? "", topic: activeTopic, turns, status, startedAt: 0, updatedAt: 0 },
+      continueScope,
+      topicInput.trim()
+    );
   }
 
   // 追い質問の送信。楽観エコー → POST → 失敗ならロールバック（UIはクラッシュしない）。
@@ -762,6 +788,9 @@ export default function Home() {
       if (active) {
         // running/paused とも、追い質問が出せる状態なら送信。
         if (canFollowup) sendQuestion();
+      } else if (finishedWithTranscript) {
+        // 終了済み討論への入力＝続ける（履歴をクリアして新規にしない）。
+        if (topicInput.trim()) continueFromComposer();
       } else {
         start();
       }
@@ -779,12 +808,13 @@ export default function Home() {
           : "このフェーズ（要約・統合・冒頭）では追い質問を受け付けられません。"
       : null;
 
-  // 完了/エラーで transcript を表示中は、コンポーザーが「新しい討論」を始める入口になる。
-  // 「コメントしたら別の会議が始まった」事故を防ぐため明示する。
-  const finishedNote =
-    (status === "done" || status === "error") && turns.length > 0
-      ? "これは終了した討論です。新しい議題を入力すると別の討論が始まります（投げかけは進行中のみ）。"
-      : null;
+  // 完了/エラーで transcript を表示中か。この時コンポーザー送信は「新規ブランク」でなく
+  // 「この討論を続ける（前回を引き継ぐ）」に流す＝履歴が消えない。新規はロゴ（resetToIdle）から。
+  const finishedWithTranscript =
+    (status === "done" || status === "error") && turns.length > 0;
+  const finishedNote = finishedWithTranscript
+    ? "この討論は終了しています。下に続けたい点を書いて送信すると、前回を引き継いで深掘りします（新規討論はロゴ『AI COUNCIL』から）。"
+    : null;
 
   return (
     <div className="flex h-screen flex-col">
@@ -1130,7 +1160,7 @@ export default function Home() {
                     }
                     className="flex items-center gap-1.5 rounded-md border border-[var(--color-accent)] px-3 py-1.5 text-xs font-medium text-[var(--color-accent)] transition-colors hover:bg-[var(--color-accent-weak)]"
                   >
-                    <Play size={13} /> この討論を続ける
+                    <Play size={13} /> そのまま続ける
                   </button>
                   <span className="text-[10px] text-[var(--color-ink-muted)]">文脈:</span>
                   <div className="flex rounded-md border border-[var(--color-line)] p-0.5">
@@ -1170,8 +1200,8 @@ export default function Home() {
                     ? canFollowup
                       ? "追い質問を入力（⌘/Ctrl+Enter で送信）"
                       : "いまは追い質問を受け付けていません"
-                    : status === "done" || status === "error"
-                      ? "新しい議題で討論を開始（⌘/Ctrl+Enter）"
+                    : finishedWithTranscript
+                      ? "この討論に続けて深めたい点を入力（送信で続ける）"
                       : "議題を入力（⌘/Ctrl+Enter で開始）"
                 }
                 disabled={active && !canFollowup}
@@ -1193,13 +1223,21 @@ export default function Home() {
                     <Square size={14} /> 停止
                   </button>
                 </>
+              ) : finishedWithTranscript ? (
+                <button
+                  onClick={continueFromComposer}
+                  disabled={!topicInput.trim()}
+                  className="flex items-center gap-1.5 rounded-md bg-[var(--color-accent)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-40"
+                >
+                  <Play size={14} /> 続けて質問
+                </button>
               ) : (
                 <button
                   onClick={start}
                   disabled={!topicInput.trim() || selected.size === 0}
                   className="flex items-center gap-1.5 rounded-md bg-[var(--color-accent)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-40"
                 >
-                  <Play size={14} /> {turns.length > 0 ? "新しい討論を開始" : "討論を開始"}
+                  <Play size={14} /> 討論を開始
                 </button>
               )}
             </div>
