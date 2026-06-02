@@ -329,3 +329,70 @@ FX自動売買の構成（P-014の4層アーキテクチャ）において、Gem
 1. sandbox/FX自動取引/ のバックテスト設定にリアルスプレッド・スリッページ（pips）・コミッション・最大レイテンシを必ず含める
 2. LLMシグナルの用途を「センチメント分析・ニュースフィルタリング」に絞り、エントリー/エグジットの最終判断はルールベースロジックに委ねる設計変更を検討
 3. 毎月の実取引結果とバックテスト結果を比較する「乖離分析レポート」をSkill化（P-003のSkill提案群に追加）
+
+---
+
+## 2026-06-02 提案
+
+### P-027: Context7 + rtkプラグインを日次収集エージェントに導入 — トークン節約
+
+**根拠記事**: 098 (Best Claude Code Plugins tested), 099 (10 productivity workflows)
+**詳細**: Context7プラグインは`/plugin install context7`でインストール後、Claude CodeがライブラリドキュメントをWebFetchせずにバージョン固定で参照できる。rtkはCLI出力をLLMコンテキストに入る前にフィルタリング・圧縮するツール。本プロジェクトの日次収集エージェントではWebSearch・WebFetchの結果がコンテキストを大量消費しており、両ツールの導入でコスト削減効果が見込める。Context7は「追加コンテキスト最小・精度向上最大」の最高ROIプラグインと評価されている。
+
+**提案アクション**:
+1. `/plugin install context7` でContext7プラグインをインストール
+2. `pip install rtk` でrtkをインストールし、Bashコマンドの出力を事前圧縮するラッパーをHooksに設定
+3. 日次収集エージェントのWebSearch後の出力をrtkでフィルタリングするプリプロセスを追加
+4. Claude APIやAnthropicSDKのドキュメント参照をContext7経由に切り替え
+
+---
+
+### P-028: CLAUDE.md @インポート構文で3層構造への移行
+
+**根拠記事**: 093 (CLAUDE.md Best Practices Ultimate Guide 2026 - amitray)
+**詳細**: P-015（段階的開示3層構造）・P-002（CLAUDE.md整備）に対して、amitrayガイドの`@インポート構文`による具体的な実装方法が明確になった。CLAUDE.md本体（500語以内）→`.claude/rules/fx-trading.md`・`.claude/rules/library.md`・`.claude/rules/coding-style.md`へのインポートで、命令数を200以内に維持しながらトピック別詳細を保持できる。
+
+**提案アクション**:
+1. 現在のCLAUDE.md を監査し、FX自動取引・ライブラリ管理・コーディングスタイルの3カテゴリに分類
+2. `.claude/rules/fx-trading.md`・`.claude/rules/library.md`・`.claude/rules/coding-style.md` を作成して移動
+3. CLAUDE.md本体に `@.claude/rules/fx-trading.md` 等のインポート行を追加
+4. CLAUDE.md本体が500語以内・削除基準「削除してもClaudeが間違えないなら削除」で精査
+
+---
+
+### P-029: TradingAgents v0.2.0でClaude 4.xバックエンドの実動テスト
+
+**根拠記事**: 096 (TradingAgents Python tutorial - algoinsights)
+**詳細**: TradingAgents v0.2.0（2026年2月）でClaude 4.x系（Opus 4.8等）をバックエンドLLMとして直接指定できるようになった。P-004（TradingAgentsアーキテクチャ採用）の実行環境として既存のAnthropicAPIキーを使ってローカルテストが可能。`pip install tradingagents`で環境構築でき、sandbox/FX自動取引/の概念実証として7エージェント構成を試せる。
+
+**提案アクション**:
+1. `pip install tradingagents` で環境構築
+2. `ANTHROPIC_API_KEY` を設定してClaude Opus 4.8バックエンドでAAPL等で動作確認
+3. FX通貨ペア（EUR/USD等）でのシグナル生成をテストし、P-014（信頼度閾値）のconfidence出力を確認
+4. バックテスト結果のSharp比・ドローダウンを検証し、統計的信頼性を評価
+
+---
+
+### P-030: Quant AI Agents MT5のFastAPIアーキテクチャを sandbox/FX自動取引/ に適用
+
+**根拠記事**: 095 (Quant AI Agents MT5 setup guide - mql5.com)
+**詳細**: MT5ブリッジEA→Python FastAPI→LLM層のアーキテクチャが完全に公開された。出力JSONは`{signal, confidence, sl, tp, lot}`形式でP-014の信頼度閾値と完全互換。sandbox/FX自動取引/main.pyの現状（MT5連携目標）に対して、FastAPIサーバー追加→ブリッジEAアタッチの2ステップで実動テスト環境を構築できる。P-013（MetaTrader MCPサーバー）と組み合わせることでClaude Desktop→MT5の完全な自然言語制御パイプラインも実現可能。
+
+**提案アクション**:
+1. `pip install fastapi uvicorn anthropic` で環境構築
+2. sandbox/FX自動取引/server.py として LLMシグナル生成FastAPIサーバーを実装（P-014の信頼度閾値ロジック込み）
+3. MT5デモ口座でブリッジEAをアタッチし、Paperトレードモードで動作確認
+4. P-025（HITL設計）のcheckpoint（confidence 0.55-0.75の中間帯で人間確認）を組み込む
+
+---
+
+### P-031: /ultrareview をFX自動取引コードのリリース前チェックに採用
+
+**根拠記事**: 089 (Claude Code /ultrareview cloud agents)
+**詳細**: /ultrareviewは5-20並列エージェントがバグを独立再現検証するクラウドレビューシステム。sandbox/FX自動取引/のコードは実資金を扱うためセキュリティ・ロジックバグのリスクが高く、特に`server.py`・`main.py`・注文送信ロジックのレビューに/ultrareviewが適している。`/ultrareview --pr <番号>`で特定PRを対象にできる。
+
+**提案アクション**:
+1. FX自動取引コードの主要機能実装後、`/ultrareview`でリリース前チェックを実施
+2. 特に競合状態（注文の重複送信）・入力バリデーション（sl/tp/lot値の検証）・エラーハンドリングを重点的に検査
+3. /ultrareviewの結果をPRコメントとして記録し、修正後に再実行して確認
+4. Pro/Max/Team/Enterprise プランで利用可能。現在のプランを確認してから利用開始

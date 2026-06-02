@@ -1,6 +1,6 @@
 # Library Catalog
 
-最終更新: 2026-06-01
+最終更新: 2026-06-02
 
 ## 凡例
 - 状態: 未読 / 既読 / 要精読
@@ -170,12 +170,36 @@
 
 ---
 
+---
+
+## 2026-06-02 収集分（12件収集 → 12件SIGNAL）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 088 | [2026-06-02_088](articles/2026-06-02_088_Claude-Code-Plugin-Marketplace-101plugins-discover-install-2026.md) | Claude Code Plugin Marketplace 2026 — 101プラグイン・公式+コミュニティ77マーケットプレイス | claude-code | 未読 | #web-signal |
+| 089 | [2026-06-02_089](articles/2026-06-02_089_Claude-Code-ultrareview-multi-agent-cloud-bug-verification-fleet.md) | Claude Code /ultrareview — クラウドバグ検出エージェントフリート（5-20並列・独立再現検証） | claude-code | 未読 | #web-signal |
+| 090 | [2026-06-02_090](articles/2026-06-02_090_Claude-Code-Voice-Mode-push-to-talk-20-languages-March2026-TechCrunch.md) | Claude Code Voice Mode 公式ローンチ — プッシュ・トゥ・トーク・20言語対応（TechCrunch） | claude-code | 未読 | #web-signal |
+| 091 | [2026-06-02_091](articles/2026-06-02_091_Anthropic-Claude-Dreaming-managed-agents-memory-consolidation-NewStack.md) | Anthropic「Claude Dreaming」— Managed Agentsの自律メモリ統合・セルフ改善機能（The New Stack） | claude-ecosystem | 未読 | #web-signal |
+| 092 | [2026-06-02_092](articles/2026-06-02_092_AI-agent-frameworks-2026-LangGraph-Claude-SDK-CrewAI-MSAgent-comparison.md) | AI Agent Frameworks 2026: LangGraph・Claude SDK・CrewAI・MS Agent Framework 包括比較 | claude-ecosystem | 未読 | #web-signal |
+| 093 | [2026-06-02_093](articles/2026-06-02_093_CLAUDE-md-best-practices-ultimate-guide-10sections-amitray.md) | CLAUDE.md Best Practices Ultimate Guide 2026 — 10必須セクション・3層構造・削除基準（amitray） | claude-code | 未読 | #web-signal |
+| 094 | [2026-06-02_094](articles/2026-06-02_094_open-source-LLM-trading-bot-backtesting-CoT-risk-management-gopenai.md) | Open-Source LLM Trading Bot with Full Backtesting — CoT推論・リスク管理統合（GoPenAI） | ai-trading | 未読 | #web-signal |
+| 095 | [2026-06-02_095](articles/2026-06-02_095_Quant-AI-Agents-MT5-Python-FastAPI-LLM-setup-guide-mql5.md) | Quant AI Agents MT5 Complete Setup Guide — Python FastAPI + LLM統合 (mql5.com 2026-05-18) | ai-trading | 未読 | #web-signal |
+| 096 | [2026-06-02_096](articles/2026-06-02_096_TradingAgents-Python-open-source-LLM-trading-framework-tutorial-51k-stars.md) | TradingAgents Python チュートリアル — LLM取引ファームシミュレーター（GitHub 51k★・Claude対応） | ai-trading | 未読 | #web-signal |
+| 097 | [2026-06-02_097](articles/2026-06-02_097_LLM-AI-news-model-tracker-June2026-Qwen37-Gemini35-GPT55.md) | AI/LLM Model Tracker June 2026 — Qwen 3.7 Max・Gemini 3.5 Flash・GPT-5.5 最新動向 | ai-news | 未読 | #web-signal |
+| 098 | [2026-06-02_098](articles/2026-06-02_098_best-claude-code-plugins-11-tested-4-worth-context7-rtk-playwright.md) | Best Claude Code Plugins 2026: 11テスト・真に使えた4本 — Context7・rtk・Playwright・GitHub | claude-code | 未読 | #web-signal |
+| 099 | [2026-06-02_099](articles/2026-06-02_099_Claude-Code-10-productivity-workflows-2026-context-plan-inline-shell.md) | Claude Code 10 実践的生産性ワークフロー 2026 — コンテキスト・Plan Mode・インラインシェル | claude-code | 未読 | #web-signal |
+
+### NOISEとして除外
+なし（X投稿データなし・drop.mdにURLなし・全12件SIGNAL判定）
+
+---
+
 ## ドメイン別統計（累計）
 
-| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 累計 |
-|---|---|---|---|---|---|---|---|
-| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 37件 |
-| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 17件 |
-| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 16件 |
-| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 17件 |
-| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **87件** |
+| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 累計 |
+|---|---|---|---|---|---|---|---|---|
+| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 43件 |
+| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 19件 |
+| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 19件 |
+| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 18件 |
+| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **99件** |
