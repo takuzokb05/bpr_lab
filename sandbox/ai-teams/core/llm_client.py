@@ -34,8 +34,13 @@ class LLMClient(ABC):
         messages: list[Message],
         model: str,
         temperature: float = 0.7,
+        max_tokens: int | None = None,
     ) -> str:
-        """system プロンプトと会話履歴から、1人格の1発言を返す。"""
+        """system プロンプトと会話履歴から、1人格の1発言を返す。
+
+        max_tokens を渡すとこの呼び出しの出力上限を上書きする（None なら構築時の既定）。
+        議事録（synthesis）は討論全体を1枚に圧縮し単一発言より長くなるため、大きめを渡す。
+        """
         raise NotImplementedError
 
     def generate_stream(
@@ -45,15 +50,21 @@ class LLMClient(ABC):
         messages: list[Message],
         model: str,
         temperature: float = 0.7,
+        max_tokens: int | None = None,
     ) -> Iterator[str]:
         """1発言をテキスト差分（delta）の列として yield する。
 
         既定実装は `generate()` の結果を1チャンクとして返すフォールバック。
         ストリーミング対応のクライアントはこれをオーバーライドする。
         delta を連結すると `generate()` と同じ全文になることを契約とする。
+        max_tokens はこの呼び出しの出力上限の上書き（None なら構築時の既定）。
         """
         text = self.generate(
-            system=system, messages=messages, model=model, temperature=temperature
+            system=system,
+            messages=messages,
+            model=model,
+            temperature=temperature,
+            max_tokens=max_tokens,
         )
         if text:
             yield text
@@ -99,13 +110,21 @@ class AnthropicClient(LLMClient):
         # max_tokens は上限であり、モデルは必要分で停止するので過大でも常時その量を消費はしない。
         self._max_tokens = max_tokens or int(os.environ.get("AI_TEAMS_MAX_TOKENS", "2048"))
 
-    def _params(self, *, system: str, messages: list[Message], model: str, temperature: float) -> dict:
+    def _params(
+        self,
+        *,
+        system: str,
+        messages: list[Message],
+        model: str,
+        temperature: float,
+        max_tokens: int | None = None,
+    ) -> dict:
         """API 呼び出しパラメータ。temperature 非対応モデルには temperature を含めない。"""
         params: dict = {
             "model": model,
             "system": system,
             "messages": messages,
-            "max_tokens": self._max_tokens,
+            "max_tokens": self._max_tokens if max_tokens is None else max_tokens,
         }
         if _supports_temperature(model):
             params["temperature"] = temperature
@@ -118,9 +137,13 @@ class AnthropicClient(LLMClient):
         messages: list[Message],
         model: str,
         temperature: float = 0.7,
+        max_tokens: int | None = None,
     ) -> str:
         resp = self._client.messages.create(
-            **self._params(system=system, messages=messages, model=model, temperature=temperature)
+            **self._params(
+                system=system, messages=messages, model=model,
+                temperature=temperature, max_tokens=max_tokens,
+            )
         )
         return "".join(
             block.text for block in resp.content if getattr(block, "type", None) == "text"
@@ -133,10 +156,14 @@ class AnthropicClient(LLMClient):
         messages: list[Message],
         model: str,
         temperature: float = 0.7,
+        max_tokens: int | None = None,
     ) -> Iterator[str]:
         # Anthropic SDK の messages.stream() からテキスト差分を逐次 yield する。
         with self._client.messages.stream(
-            **self._params(system=system, messages=messages, model=model, temperature=temperature)
+            **self._params(
+                system=system, messages=messages, model=model,
+                temperature=temperature, max_tokens=max_tokens,
+            )
         ) as stream:
             for text in stream.text_stream:
                 if text:
@@ -282,15 +309,23 @@ class OpenAIClient(LLMClient):
         ]
         return {"ignore": ignore, "allow_fallbacks": True} if ignore else None
 
-    def _params(self, system: str, messages: list[Message], temperature: float) -> dict:
+    def _params(
+        self,
+        system: str,
+        messages: list[Message],
+        temperature: float,
+        max_tokens: int | None = None,
+    ) -> dict:
         """chat.completions のパラメータ。新旧モデル差を吸収する。
 
         - 出力上限は **max_completion_tokens**（max_tokens は非推奨で GPT-5/o 系は拒否）。
+          max_tokens 引数で呼び出し毎に上書きできる（議事録など長い出力用。None なら構築時既定）。
         - GPT-5 / o 系（推論モデル）は temperature 既定(1)以外を拒否するので送らない。代わりに
           reasoning_effort を低め（既定 low）にする。理由: max_completion_tokens に内部推論が
           食い込むので、推論を抑えて可視発言にトークンを回す＋討論用途では速度/コストを優先。
         - gpt-4o 等の従来モデルには temperature を渡す（_OPENAI_NO_TEMP_MARKERS で判定）。
         """
+        mt = self._max_tokens if max_tokens is None else max_tokens
         params: dict = {
             "model": self._model,  # 渡された model（Claude ID の可能性）は使わない
             "messages": self._messages(system, messages),
@@ -298,7 +333,7 @@ class OpenAIClient(LLMClient):
         if self._local:
             # 内製（OpenAI 互換の自前サーバ・Ollama/vLLM・OpenRouter）。max_completion_tokens/
             # reasoning_effort は非対応のことが多いので、古典的な max_tokens + temperature を使う。
-            params["max_tokens"] = self._max_tokens
+            params["max_tokens"] = mt
             params["temperature"] = temperature
             extra: dict = {}
             # 思考モデル（Kimi K2.6 / DeepSeek V4 Pro 等）は reasoning が max_tokens を食い、可視発言が
@@ -315,7 +350,7 @@ class OpenAIClient(LLMClient):
                 params["extra_body"] = extra
             return params
         # クラウド OpenAI（GPT-5/o 系は max_completion_tokens・temperature 非対応で reasoning_effort）。
-        params["max_completion_tokens"] = self._max_tokens
+        params["max_completion_tokens"] = mt
         if any(m in self._model for m in _OPENAI_NO_TEMP_MARKERS):
             effort = os.environ.get("AI_TEAMS_OPENAI_REASONING", "low").strip()
             if effort:
@@ -324,12 +359,14 @@ class OpenAIClient(LLMClient):
             params["temperature"] = temperature
         return params
 
-    def _retry_no_reasoning(self, system: str, messages: list[Message], temperature: float) -> str:
+    def _retry_no_reasoning(
+        self, system: str, messages: list[Message], temperature: float, max_tokens: int | None = None
+    ) -> str:
         """空ターン救済: reasoning を切り max_tokens を増やして1回だけ非ストリームで取り直す。
 
         思考モデル（Kimi/DeepSeek Pro 等）が reasoning に出力枠を食われ、可視発言が空になった場合の
         フォールバック。reasoning を無効化すれば予算が全部可視出力に回るので、ほぼ必ず本文が返る。
-        失敗しても空文字を返すだけ（討論は止めない）。
+        max_tokens は呼び出し側の上限（議事録は大きい）に揃える。失敗しても空文字を返す（討論は止めない）。
         """
         try:
             extra: dict = {"reasoning": {"enabled": False}}
@@ -339,7 +376,7 @@ class OpenAIClient(LLMClient):
             params: dict = {
                 "model": self._model,
                 "messages": self._messages(system, messages),
-                "max_tokens": max(self._max_tokens, 4096),
+                "max_tokens": max(self._max_tokens if max_tokens is None else max_tokens, 4096),
                 "temperature": temperature,
                 "extra_body": extra,
             }
@@ -348,17 +385,35 @@ class OpenAIClient(LLMClient):
         except Exception:  # noqa: BLE001 — 救済の失敗で討論を止めない
             return ""
 
-    def generate(self, *, system: str, messages: list[Message], model: str, temperature: float = 0.7) -> str:
-        resp = self._client.chat.completions.create(**self._params(system, messages, temperature))
+    def generate(
+        self,
+        *,
+        system: str,
+        messages: list[Message],
+        model: str,
+        temperature: float = 0.7,
+        max_tokens: int | None = None,
+    ) -> str:
+        resp = self._client.chat.completions.create(
+            **self._params(system, messages, temperature, max_tokens)
+        )
         content = (resp.choices[0].message.content or "").strip()
         # local（思考モデル）が空を返したら reasoning を切って取り直す（空ターン防止）。
         if self._local and not content:
-            content = self._retry_no_reasoning(system, messages, temperature)
+            content = self._retry_no_reasoning(system, messages, temperature, max_tokens)
         return content
 
-    def generate_stream(self, *, system: str, messages: list[Message], model: str, temperature: float = 0.7) -> Iterator[str]:
+    def generate_stream(
+        self,
+        *,
+        system: str,
+        messages: list[Message],
+        model: str,
+        temperature: float = 0.7,
+        max_tokens: int | None = None,
+    ) -> Iterator[str]:
         stream = self._client.chat.completions.create(
-            **self._params(system, messages, temperature), stream=True
+            **self._params(system, messages, temperature, max_tokens), stream=True
         )
         got: list[str] = []
         for chunk in stream:
@@ -369,7 +424,7 @@ class OpenAIClient(LLMClient):
         # local（思考モデル）が何も発しなかったら reasoning を切って取り直し、その全文を流す
         # （「発言者が無言で次へ流れる」空ターンの根治）。
         if self._local and not "".join(got).strip():
-            retry = self._retry_no_reasoning(system, messages, temperature)
+            retry = self._retry_no_reasoning(system, messages, temperature, max_tokens)
             if retry:
                 yield retry
 
@@ -458,11 +513,14 @@ class GeminiClient(LLMClient):
             out.append({"role": role, "parts": [{"text": m["content"]}]})
         return out
 
-    def _config(self, system: str, temperature: float):
+    def _config(self, system: str, temperature: float, max_tokens: int | None = None):
         from google.genai import types
 
-        # temperature は Gemini 3 では非推奨（送らず既定に従う）。
-        kwargs: dict = {"system_instruction": system, "max_output_tokens": self._max_tokens}
+        # temperature は Gemini 3 では非推奨（送らず既定に従う）。max_tokens で呼び出し毎に上書き可。
+        kwargs: dict = {
+            "system_instruction": system,
+            "max_output_tokens": self._max_tokens if max_tokens is None else max_tokens,
+        }
         # 思考(thinking)は既定 ON で max_output_tokens を食い、可視出力が枯れる（ほぼ空応答に
         # なりうる）。討論用途では低めに固定して発言にトークンを回す（env AI_TEAMS_GEMINI_THINKING で可変）。
         level = os.environ.get("AI_TEAMS_GEMINI_THINKING", "low").strip()
@@ -473,19 +531,25 @@ class GeminiClient(LLMClient):
                 pass  # SDK が thinking_level 非対応なら無理に付けない（古い SDK 等）
         return types.GenerateContentConfig(**kwargs)
 
-    def generate(self, *, system: str, messages: list[Message], model: str, temperature: float = 0.7) -> str:
+    def generate(
+        self, *, system: str, messages: list[Message], model: str,
+        temperature: float = 0.7, max_tokens: int | None = None,
+    ) -> str:
         resp = self._client.models.generate_content(
             model=self._model,
             contents=self._contents(messages),
-            config=self._config(system, temperature),
+            config=self._config(system, temperature, max_tokens),
         )
         return (getattr(resp, "text", "") or "").strip()
 
-    def generate_stream(self, *, system: str, messages: list[Message], model: str, temperature: float = 0.7) -> Iterator[str]:
+    def generate_stream(
+        self, *, system: str, messages: list[Message], model: str,
+        temperature: float = 0.7, max_tokens: int | None = None,
+    ) -> Iterator[str]:
         stream = self._client.models.generate_content_stream(
             model=self._model,
             contents=self._contents(messages),
-            config=self._config(system, temperature),
+            config=self._config(system, temperature, max_tokens),
         )
         for chunk in stream:
             text = getattr(chunk, "text", None)
@@ -515,6 +579,7 @@ class MockLLMClient(LLMClient):
         messages: list[Message],
         model: str,
         temperature: float = 0.7,
+        max_tokens: int | None = None,
     ) -> str:
         self.calls.append(
             {
@@ -522,6 +587,7 @@ class MockLLMClient(LLMClient):
                 "messages": messages,
                 "model": model,
                 "temperature": temperature,
+                "max_tokens": max_tokens,
             }
         )
         if self._responder is not None:
@@ -535,11 +601,13 @@ class MockLLMClient(LLMClient):
         messages: list[Message],
         model: str,
         temperature: float = 0.7,
+        max_tokens: int | None = None,
     ) -> Iterator[str]:
         # generate() と同じ呼び出し記録・同じ全文を保ったまま、決定的に数チャンクへ割る。
         # delta を連結すると generate() と一致する（テストの契約）。
         text = self.generate(
-            system=system, messages=messages, model=model, temperature=temperature
+            system=system, messages=messages, model=model,
+            temperature=temperature, max_tokens=max_tokens,
         )
         if not text:
             return

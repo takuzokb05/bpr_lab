@@ -133,6 +133,7 @@ class Council:
         materials: str = "",
         research: bool = False,
         length_hint: str = "",
+        synthesis_max_tokens: int | None = None,
     ) -> None:
         self.client = client
         self.default_model = default_model
@@ -150,6 +151,10 @@ class Council:
         # 発話スタイルを誘導する（""＝従来の「簡潔に」で後方互換）。max_tokens 上限は
         # クライアント側で別途設定する（途中切れ防止）。
         self.length_hint = length_hint
+        # 議事録（synthesis）の出力上限。討論全体を1枚に圧縮するため単一発言より長くなり、
+        # 通常の verbosity max_tokens（標準4096）だと途中で打ち切られる。専用に大きめを与える
+        # （None なら _speak がクライアント既定を使う＝従来動作）。build_council が算出して渡す。
+        self.synthesis_max_tokens = synthesis_max_tokens
 
         personas = list(personas)
         # 役割ごとに振り分ける
@@ -196,6 +201,7 @@ class Council:
         anti_conformity: bool,
         emit: Emit | None = None,
         turn_id: int | None = None,
+        max_tokens: int | None = None,
     ) -> Turn:
         # Red Team に指名されたパネリストには、毎ターン反対役の特命を上乗せする。
         # 収束フェーズだけは「穴突き＋塞ぐ最小条件」版に切替える（phase 名は DEFAULT_PHASES と一致）。
@@ -217,7 +223,8 @@ class Council:
         if emit is None:
             # 後方互換: 一括生成して Turn だけを返す（既存テストはこの経路）。
             content = self.client.generate(
-                system=system, messages=messages, model=model, temperature=temperature
+                system=system, messages=messages, model=model,
+                temperature=temperature, max_tokens=max_tokens,
             )
         else:
             # ストリーミング経路: turn_start → delta* を emit しつつ全文を蓄積。
@@ -234,7 +241,8 @@ class Council:
             )
             parts: list[str] = []
             for chunk in self.client.generate_stream(
-                system=system, messages=messages, model=model, temperature=temperature
+                system=system, messages=messages, model=model,
+                temperature=temperature, max_tokens=max_tokens,
             ):
                 parts.append(chunk)
                 emit({"type": "delta", "turn_id": turn_id, "text": chunk})
@@ -528,6 +536,8 @@ class Council:
             anti_conformity=False,
             emit=emit,
             turn_id=next(ids),
+            # 議事録は討論全体を圧縮するため長い。専用の大きめ上限で途中打ち切りを防ぐ。
+            max_tokens=self.synthesis_max_tokens,
         )
         transcript.append(turn)
         yield turn

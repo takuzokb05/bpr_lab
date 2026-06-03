@@ -363,6 +363,15 @@ def build_council(
     research = research and prov in research_providers()
     # 応答の長さプリセット → 出力上限（途中切れ防止）＋発話スタイル指示。
     vb = VERBOSITY[normalize_verbosity(verbosity)]
+    # 議事録（synthesis）は討論全体を1枚に圧縮するため単一発言より長い。標準4096だと途中で
+    # 打ち切られる（実測: ジョブズ案で途切れ）ので、**本編1発言の上限の2倍**を確保する
+    # （deep=8192 なら議事録 16384 と、最も長文化しやすいモードでもヘッドルームを残す）。
+    # env AI_TEAMS_SYNTHESIS_MAX_TOKENS で下限を可変（既定 8192）。非数値は既定にフォールバック。
+    try:
+        synth_floor = int(os.environ.get("AI_TEAMS_SYNTHESIS_MAX_TOKENS", "8192"))
+    except ValueError:
+        synth_floor = 8192
+    synthesis_mt = max(synth_floor, vb["max_tokens"] * 2)
     return Council(
         personas,
         make_client(mock, api_key, provider, max_tokens=vb["max_tokens"]),
@@ -372,6 +381,7 @@ def build_council(
         materials=materials,
         research=research,
         length_hint=vb["hint"],
+        synthesis_max_tokens=synthesis_mt,
     )
 
 

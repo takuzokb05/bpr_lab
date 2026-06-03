@@ -887,6 +887,43 @@ def test_local_provider():
                 os.environ[k] = v
 
 
+def test_synthesis_max_tokens():
+    """議事録(synthesis)は専用の大きめ max_tokens で生成し、途中打ち切りを防ぐ。"""
+    print("[test] synthesis max_tokens (議事録は専用の大きめ上限で打ち切り防止)")
+
+    c = service.build_council(
+        ["moderator", "logic", "idea", "chair"],
+        rounds_per_phase=1, mock=True, verbosity="standard",
+    )
+    check(c.synthesis_max_tokens >= 8192, f"synthesis_max_tokens は 8192 以上: {c.synthesis_max_tokens}")
+    # 非ストリーム run（emit=None）で全 mock 呼び出しを記録 → 最後が synthesize。
+    list(c.run("テスト議題"))
+    calls = c.client.calls  # MockLLMClient
+    check(len(calls) >= 2, f"複数発言が生成された: {len(calls)}")
+    body_mts = [call.get("max_tokens") for call in calls[:-1]]
+    synth_mt = calls[-1].get("max_tokens")
+    check(all(mt is None for mt in body_mts), f"本編発言は max_tokens 上書きなし(None): {set(body_mts)}")
+    check(
+        synth_mt == c.synthesis_max_tokens,
+        f"議事録は専用 max_tokens({c.synthesis_max_tokens})を渡す: {synth_mt}",
+    )
+    # deep でも本編1発言の2倍のヘッドルームが付く（最も長文化しやすいモードの保護）。
+    cd = service.build_council(["moderator", "logic", "idea", "chair"], mock=True, verbosity="deep")
+    check(cd.synthesis_max_tokens >= 16384, f"deep の議事録は 16384 以上: {cd.synthesis_max_tokens}")
+
+    # stream 経路（emit set）でも synthesis だけ大きい上限になることを固定する（回帰検出）。
+    c2 = service.build_council(
+        ["moderator", "logic", "idea", "chair"], rounds_per_phase=1, mock=True, verbosity="standard"
+    )
+    list(c2.run("テスト議題2", emit=lambda e: None))
+    calls2 = c2.client.calls
+    check(all(call.get("max_tokens") is None for call in calls2[:-1]), "stream: 本編は上書きなし(None)")
+    check(
+        calls2[-1].get("max_tokens") == c2.synthesis_max_tokens,
+        f"stream: 議事録は専用 max_tokens を渡す: {calls2[-1].get('max_tokens')}",
+    )
+
+
 def test_persona_service_crud():
     """ペルソナ service: 保存/詳細/category 変更 unlink/旧パス unlink を id→path で。"""
     print("[test] persona service CRUD (save/detail/category-move unlink)")
@@ -1867,6 +1904,7 @@ if __name__ == "__main__":
     test_verbosity()
     test_provider_params()
     test_local_provider()
+    test_synthesis_max_tokens()
     test_custom_personas()
     test_persona_service_crud()
     test_preset_service()
