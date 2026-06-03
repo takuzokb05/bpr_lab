@@ -91,8 +91,10 @@ DEFAULT_PHASES: list[tuple[str, str, bool]] = [
     ),
     (
         "収束",
-        "【収束フェーズ】批判に耐えた案を統合し、具体的なアクションに落としてください。"
-        "既出の論点の単純な蒸し返しは避け、合意・対立・次の一歩を前に進めること。",
+        "【収束フェーズ】司会がまとめた合意点は**繰り返さない**こと。あなたが新たに付け足す一点だけを"
+        "簡潔に述べてください——実装上の条件、見落とされている前提、残る懸念、または具体的な"
+        "ネクストアクションのいずれか1つ。既出の合意や他者の発言の再掲・言い換えは禁止。"
+        "付け足すことが無ければ『付け足しはありません』と一言で構いません。",
         False,
     ),
 ]
@@ -484,6 +486,26 @@ class Council:
 
         # 2. フェーズ進行（各ラウンドでラウンドロビン＝全員必ず発言）
         for phase_name, directive, anti in self.phases:
+            # 収束の口火（司会・在席時のみ）: 合意点を**1回だけ**まとめ、各登壇者には「新しく付け足す
+            # 点だけ」を促す。各パネリストが同じ合意を再掲する冗長（"AIっぽさ"の主因）を構造的に断つ。
+            if phase_name == "収束" and self.moderator is not None:
+                turn = self._speak(
+                    self.moderator,
+                    transcript,
+                    topic,
+                    phase="収束",
+                    round_no=0,
+                    phase_directive=(
+                        "【収束の口火（司会）】ここまでの議論で固まった合意点を1〜2文で簡潔にまとめてください。"
+                        "そのうえで各登壇者へ、『すでに合意した点は繰り返さず、新しく付け足す一点だけ』を"
+                        "述べるよう促してください。あなた自身は新しい論点や結論を出さないこと。"
+                    ),
+                    anti_conformity=False,
+                    emit=emit,
+                    turn_id=next(ids),
+                )
+                transcript.append(turn)
+                yield turn
             for round_no in range(self.rounds_per_phase):
                 for persona in self.scheduler.order():
                     turn = self._speak(

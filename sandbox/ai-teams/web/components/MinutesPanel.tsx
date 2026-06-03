@@ -7,10 +7,13 @@ import { Markdown } from "./Markdown";
 export function MinutesPanel({
   synthesis,
   status,
+  streaming = false,
 }: {
   synthesis: Turn | null;
   status: "idle" | "running" | "paused" | "done" | "error";
+  streaming?: boolean; // 議事録が今ストリーミング生成中か（生成中表示・末尾キャレット用）
 }) {
+  const hasMinutes = !!synthesis && synthesis.content.trim().length > 0;
   return (
     <div className="flex h-full flex-col">
       <div className="flex items-center gap-2 border-b border-[var(--color-line)] px-5 py-4">
@@ -22,10 +25,21 @@ export function MinutesPanel({
 
       <div className="flex-1 overflow-y-auto px-5 py-4">
         {/* 議事録本体（合意/対立/リスク/アクション）。議長の統合を1枚で表示。 */}
-        {synthesis ? (
+        {hasMinutes ? (
           <div className="animate-turn-in">
-            <Markdown>{synthesis.content}</Markdown>
+            <Markdown>{synthesis!.content}</Markdown>
+            {streaming && (
+              <span className="animate-pulse-soft -mt-1 inline-block align-middle text-[var(--color-ink-muted)]">
+                ▍
+              </span>
+            )}
           </div>
+        ) : synthesis ? (
+          // synthesis ターンは来たが本文未着＝生成中（議事録は時間がかかるので明示する）。
+          <p className="flex items-start gap-2 text-sm leading-relaxed text-[var(--color-ink)]">
+            <span className="animate-pulse-soft mt-1.5 inline-block h-2 w-2 shrink-0 rounded-full bg-[var(--color-accent)]" />
+            議事録を生成しています…（数十秒かかることがあります）
+          </p>
         ) : (
           <p className="text-xs leading-relaxed text-[var(--color-ink-muted)]">
             {status === "running"

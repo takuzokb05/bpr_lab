@@ -1517,7 +1517,11 @@ export default function Home() {
               </div>
             )}
             <div className="min-h-0 flex-1">
-              <MinutesPanel synthesis={synthesis} status={status} />
+              <MinutesPanel
+                synthesis={synthesis}
+                status={status}
+                streaming={synthesis ? synthesis.turn_id === streamingTurnId : false}
+              />
             </div>
             {/* 会議結果の書き出し（要約/調査結果/会議内容を選んでコピー or Markdown 保存）。
                 手持ちの LLM にそのまま投げられる素の Markdown を 1ファイルにまとめる。 */}

@@ -14,7 +14,7 @@ import { Copy, Check, Download } from "lucide-react";
 
 // 書き出すセクションの並び（ドキュメント順と一致：要約→調査結果→会議内容）。
 const SECTIONS: { key: keyof ExportOptions; label: string }[] = [
-  { key: "summary", label: "要約" },
+  { key: "summary", label: "議事録" },
   { key: "research", label: "調査結果" },
   { key: "body", label: "会議内容" },
 ];

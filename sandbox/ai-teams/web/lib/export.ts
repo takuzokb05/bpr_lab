@@ -64,7 +64,7 @@ export function buildMeetingMarkdown(
   const body = turns.filter((t) => isBody(t) && (t.content ?? "").trim());
 
   if (opts.summary && synthesis && synthesis.content.trim()) {
-    blocks.push(`## 要約（議事録）`);
+    blocks.push(`## 議事録`);
     blocks.push(synthesis.content.trim());
   }
 
