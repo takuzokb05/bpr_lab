@@ -378,10 +378,12 @@ export default function Home() {
   // 編成 CRUD が書込可能か（readonly な共有インスタンスでは「管理」UI を出さない）。
   const canManage = !(health?.readonly ?? false);
 
-  const synthesis = useMemo(
-    () => turns.find((t) => t.phase === "synthesis") ?? null,
-    [turns]
-  );
+  // 議事録（synthesis）は close 毎に追記されるため複数あり得る。常に**最新**を表示する
+    // （「作り直す」で再生成したらそれが反映されるように。first だと旧版に貼り付く）。
+  const synthesis = useMemo(() => {
+    const all = turns.filter((t) => t.phase === "synthesis");
+    return all.length ? all[all.length - 1] : null;
+  }, [turns]);
 
   // 調査役（researcher）ターンを横断で集約する＝「調べたこと」パネルの素。検索結果が
   // タイムラインを流れて消える不安に応え、出典付きの第一級成果物として常設する。
@@ -797,7 +799,9 @@ export default function Home() {
     focusText = ""
   ): string {
     const fmt = (t: Turn) => `【${t.speaker_name}】\n${t.content}`;
-    const synthesis = entry.turns.find((t) => t.phase === "synthesis");
+    // 議事録は複数あり得る（作り直し）。続ける文脈には**最新**を引き継ぐ。
+    const synthesisAll = entry.turns.filter((t) => t.phase === "synthesis");
+    const synthesis = synthesisAll.length ? synthesisAll[synthesisAll.length - 1] : undefined;
     // 発言（議事録・要約・調査メモは除く。人間の追い質問は含める）。
     const body = entry.turns.filter(
       (t) => t.phase !== "synthesis" && t.phase !== "summary" && t.speaker_id !== "researcher"
@@ -1000,6 +1004,11 @@ export default function Home() {
   // 「この討論を続ける（前回を引き継ぐ）」に流す＝履歴が消えない。新規はロゴ（resetToIdle）から。
   const finishedWithTranscript =
     (status === "done" || status === "error") && turns.length > 0;
+  // 議事録（synthesis）が既に作られているか。close 後は議場が再び開くため、作成済みなら
+  // floor-open のボタンを「作る」→「作り直す」に出し分け、作成済みなのに未作成に見える混乱を防ぐ。
+  const hasMinutes = turns.some(
+    (t) => t.phase === "synthesis" && t.content.trim().length > 0
+  );
   const finishedNote = finishedWithTranscript
     ? status === "error"
       ? "この討論は途中で中断しました。ここまでの内容で続けるか、ロゴ『AI COUNCIL』から新規に始められます（記録が浅いと続けられないことがあります）。"
@@ -1357,14 +1366,16 @@ export default function Home() {
             <div className="mx-6 mb-2 rounded-md border border-[var(--color-line)] bg-[var(--color-paper)] px-3 py-2.5">
               <div className="flex items-center justify-between gap-3">
                 <p className="text-[11px] leading-relaxed text-[var(--color-ink-muted)]">
-                  本編が終わり、議場を開いています。追い質問を続けるか、議事録を作るか、終了できます。
+                  {hasMinutes
+                    ? "議事録は右の「成果」に作成済みです。追い質問を続けて作り直すことも、終了することもできます。"
+                    : "本編が終わり、議場を開いています。追い質問を続けるか、議事録を作るか、終了できます。"}
                 </p>
                 <div className="flex shrink-0 items-center gap-2">
                   <button
                     onClick={makeMinutes}
                     className="flex items-center gap-1.5 rounded-md border border-[var(--color-line)] px-3 py-1.5 text-xs hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
                   >
-                    <FileText size={13} /> 議事録を作る
+                    <FileText size={13} /> {hasMinutes ? "議事録を作り直す" : "議事録を作る"}
                   </button>
                   <button
                     onClick={finishCouncil}

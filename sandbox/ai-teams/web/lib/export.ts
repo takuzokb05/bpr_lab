@@ -59,7 +59,9 @@ export function buildMeetingMarkdown(
   );
   if (speakers.length) blocks.push(`参加者: ${speakers.join(" / ")}`);
 
-  const synthesis = turns.find((t) => t.phase === "synthesis");
+  // 議事録は close 毎に追記され複数あり得る。書き出しは**最新**を採る（作り直しを反映）。
+  const synthesisAll = turns.filter((t) => t.phase === "synthesis");
+  const synthesis = synthesisAll.length ? synthesisAll[synthesisAll.length - 1] : undefined;
   const research = turns.filter((t) => isResearch(t) && (t.content ?? "").trim());
   const body = turns.filter((t) => isBody(t) && (t.content ?? "").trim());
 
