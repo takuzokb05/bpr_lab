@@ -5,21 +5,49 @@
 
 | メタ | 値 |
 |---|---|
-| **最終更新** | 2026-05-05 13:51 JST |
-| **次回更新予定** | 2026-05-12（7日後）または重要変更時 |
+| **最終更新** | 2026-05-25 (PoC 死活/日次サマリ Slack 通知の実装 + worktree パス記載修正) |
+| **次回更新予定** | 2026-06-01（7日後）または重要変更時 |
 | **更新方法** | `python scripts/update_status.py [--with-vps]` / 手動編集（緊急時） |
 
 ---
 
-## 🟢 いま稼働中の構成
+## 🌐 プロジェクトの状態 (亡き者整理完了 2026-05-13)
+
+**🪦 亡き者の世界は全停止**。SPEC v2 PoC (再構築の世界) のみ稼働。
+PREMISE.md 「過去は捨てた。教訓だけ持って、ゼロから組み立てる」に従い、亡き者の延命を打ち切り。
+
+| 状態 | 内容 |
+|---|---|
+| 🪦 亡き者の世界 | **全停止 (2026-05-13)**。FX_AutoTrading / FX_Healthcheck / FX_DailySummary / FX_MarketAnalysis / FX_MemoryMonitor の5タスク全 `Disabled`、PID 7028 (MTFPullback main.py) 停止 |
+| 🌱 再構築の世界 | SPEC v2 PoC (GBP_JPY 単一通貨) 稼働中。SPECv2_PoC タスク Running |
+| PR #30 | **クローズ (2026-05-13)**。亡き者の世界の論件は運用モデルで答える対象外 (PREMISE.md) |
+
+---
+
+## 🟢 いま稼働中の構成（🌱 再構築の世界）
 
 | 項目 | 値 |
 |---|---|
 | **本番VPS** | ConoHa Windows Server (160.251.221.43) |
-| **Pythonプロセス** | PID 6108、起動 2026-05-05 12:52 JST、RAM 17MB |
-| **稼働ペア** | EUR_USD / USD_JPY / GBP_JPY |
-| **timeframe** | M15、60秒間隔ループ |
-| **ブローカー** | 外為ファイネスト MT5 デモ口座 |
+| **Pythonプロセス** | PID 2880、起動 2026-05-23 19:20:09 JST (自動復旧で立ち上がった現役) |
+| **稼働ペア** | GBP_JPY 単一 (SPEC v2 § 2-1 H4 ★★★★★ 確定) |
+| **戦略** | SeasonalDetector (M15 YZ_vol > 30%ile + H1 YZ_vol > 0.00175 二層判定) |
+| **lot** | 0.01 固定 / 最大保持 4時間 / 1ポジション制限 |
+| **timeframe** | M15+H1 二層、60秒間隔ループ |
+| **ブローカー** | 外為ファイネスト MT5 デモ口座 (22005467) |
+| **リポジトリ** | `C:\bpr_lab_spec_v2\sandbox\FX自動取引` (worktree、亡き者と物理分離) |
+| **DB / ログ** | `data/fx_spec_v2.db` / `data/spec_v2_poc.log` |
+| **タスク設定** | `SPECv2_PoC`: ExecutionTimeLimit=`PT0S` / Trigger=AtStartup + Once-at-18:40 with RepetitionInterval=PT5M / 死活監視済 (kill→3分21秒で自動復旧、2026-05-23 19:16-19:20 実証) |
+
+### 🚨 PoC 稼働履歴（重要 — 1-2週間観察は 5/23 起点でやり直し）
+- **2026-05-12 23:37:51** 初回起動（PID 4036）
+- **2026-05-13 〜 2026-05-15** 正常稼働（iter 4304 まで、エントリー0件、regime=transitional 中心）
+- **2026-05-15 23:37:35** ExecutionTimeLimit=PT72H に到達して強制終了 (267014 = SCHED_S_TASK_TERMINATED)
+- **2026-05-15 〜 2026-05-23** 8日間放置（成功終了扱いで RestartCount 不発火 + 単発トリガーで再起動なし）
+- **2026-05-23 10:09** ユーザー指摘で復旧 + ExecutionTimeLimit を PT0S (無制限) に変更
+- **2026-05-23 18:40** トリガーに Once + RepetitionInterval=PT5M を追加（5分ごとに死活チェック）
+- **2026-05-23 19:16-19:20** kill→3分21秒で自動復旧を実証、死活監視機構の動作確認完了
+- 真因と再発防止 + RestartCount の限界: → `memory/feedback_task_scheduler_execution_time_limit.md`
 
 ---
 
@@ -51,15 +79,56 @@
 
 完全な履歴: `git log --oneline --since="7 days ago"`
 
-## ⚠️ 観察中の課題（高優先度のみ）
+## 🌱 ゼロベース再構築の世界 (SPEC v2 進捗)
+
+| 項目 | 状態 |
+|---|---|
+| **STORY.md** (北極星: 庭師×生命体) | ✅ 完了 |
+| **PREMISE.md** (亡き者と継承) | ✅ 完了 |
+| **OPERATING_MODEL.md v2.1** (15スキーム / 数字なし) | ✅ 完了 |
+| **SPEC v2 § 2-1 季節判定 - 仮説台帳** (HYPOTHESES_2-1.md) | ✅ Step A 完了 |
+| **SPEC v2 § 2-1 - 文献調査** (researcher × 4並列) | ✅ Step B 完了 |
+| **SPEC v2 § 2-1 - Permutation Test** (12閾値中 11/12 p<0.05) | ✅ Step C P0-2 完了 |
+| **SPEC v2 § 2-1 - 多重補正** (Bonferroni N=606 / Romano-Wolf 12) | ✅ Step C P0-3 完了 (AAA 5 / AA 2 / A 3 / 🔴 2) |
+| **SPEC v2 § 2-1 - rolling WFA Mode A** (閾値固定) | ✅ Step C P1-1 完了 (Mode A 5/5 が 9個) |
+| **SPEC v2 § 2-1 - rolling WFA Mode B** (閾値再選定) | ✅ Step C P1-1b 完了 (重大発見: 11/12 が Mode A 値と不一致) |
+| **SPEC v2 § 2-1 - 新 P0 Q1 (単峰性) v1+v2** | ✅ 完了 (50分位+bootstrap CI+dip+Spearman で 11/12 弱U字成分支持) |
+| **SPEC v2 § 2-1 - 新 P0 Q2 (H1 グリッド拡張) v1+v2** | ✅ 完了 (TR bootstrap CI / low感度) — 隣接倍率 CI 重なり多数 |
+| **SPEC v2 § 2-1 - Q1↔Q2 介入実験** (Mode B v2: low 群固定方式) | ✅ 完了 (M15 YZ_vol で CV 0.5-0.84→0.06-0.26、真因部分立証) |
+| **SPEC v2 § 2-1 - 実用性検証 WFA** (固定閾値 ×{1.0,1.5,2.0,2.5}) | ✅ 完了 (EUR_USD ×2.0 は usable 1/5 で崩壊確認) |
+| **SPEC v2 § 2-1 - Q3 (CHOP <25 多重補正)** | ⬜ 残課題 (次回優先順 1) |
+| **SPEC v2 § 2-1 - HYPOTHESES_2-1.md 再起草判断** | ⬜ 庭師判断待ち |
+| **SPEC v2 § 2-1 - PF 置換 + BCa CI / HMM / 直交性** | ⬜ 上記完了まで保留 |
+| **SPEC v2 § 2-2〜5-2 (他14スキーム)** | ⬜ 未着手 |
+| **本番投入** | 🔴 禁止 (Step C 完了まで) |
+
+**現時点の重要発見 (新 P0 v2 検証完了で大幅更新)**:
+- **🚨 物語破棄オプション条項 発火条件 依然成立** — ★☆☆ が 5件 (H2, H3, H6, H7, H8)。ただし v2 検証で「破棄」より「個別仮説更新」が筋
+- **指標–リターン関係は単峰でなく「単調 + 弱U字」の複合形状** — Q1 v2 で 11/12 が二次係数 a の 95%CI 完全正
+- **M15 YZ_vol の Mode B 二極化の主因 = TR 評価式 low 群感度 (M15 のみ立証)** — 介入実験で CV 0.84→0.06 等の劇的改善
+- **EUR_USD H1 YZ_vol ×2.0 は実用 WFA で完全崩壊** (usable 1/5) — Q2 v1 の「採用候補」表現は撤回
+- **真に実用可能な閾値**: USD_JPY ×1.0, EUR_USD ×1.0, GBP_JPY ×1.0-1.5 (×2.0 は条件付き)
+- **H4 (ペア別閾値) は強化** — EUR_USD と他 2 ペアの実用閾値帯が決定的に異なる
+- **D1 層は形状判別困難** — Q1 v2 で D1 全件 a の CI ゼロ跨ぎ
+- σ_TR 仮定値の試算は誤誘導 → `feedback_assumption_vs_measurement.md`
+- ねじれを都合よく片付けない → `feedback_anomaly_is_signal_not_conclusion.md`
+- 介入実験なしの真因主張は仮説止まり (新教訓) / 採用候補は実用 WFA を経てから (新教訓)
+
+詳細: `docs/vision/research/STEP_C_NEW_P0_VERIFIED_SUMMARY.md` (v2 統合) / `memory/project_fx_spec_v2_verification.md` / `docs/vision/HYPOTHESES_2-1.md`
+
+---
+
+## ⚠️ 観察中の課題（🌱 再構築の世界のみ）
 
 | 課題 | ステータス | 次のアクション | 詳細 |
 |---|---|---|---|
-| USD_JPY パフォーマンス | 観察中 (7件中1勝) | 1〜2週間後に再評価 | `memory/project_fx_pending_items.md` |
-| trading_loop.py 重複INFO格下げ (L462/L529/L640) | follow-up 登録済 | 別PRで一括対応 | `memory/project_fx_pending_items.md` § 認識済みfollow-up |
-| EUR/GBP の HOLD パターン | LDN-NY セッション (JST 21:00-02:00) で観察必要 | 該当時刻のログ追加調査 | `memory/project_fx_signal_status_2026_05_05.md` |
-| postmortem 出力率の定常運用率 | サンプル 2/2 = 100% だが少 | 2週間後に再計測 | 同上 |
+| SPEC v2 PoC GBP_JPY 観察 | **5/23 復旧後の再起算**。実稼働は 5/12-5/15 の3日間 + 5/23 から | 1-2週間 regime/PnL 推移確認、エントリー件数監視 | `docs/SPEC_V2_POC_GUIDE.md` § 観察対象 |
+| PoC死活監視の仕組み | ✅ 完了 (2026-05-25)。`SPECv2_AliveCheck` (1h ごと、警告時のみ Slack) + `SPECv2_DailySummary` (JST 07:00 Slack) を VPS 登録。setup_logging() に `force=True` + 各イテレーション flush を追加 | Slack で alive/警告/日次サマリを観察 | `scripts/poc_alive_slack.py` / `scripts/poc_daily_summary_slack.py` |
+| SPEC v2 § 2-2 (HMM) 未着手 | PoC 観察と並行で着手可 | OPERATING_MODEL.md v2.1 § 2-2 起点に Step A→B→C 再開 | `docs/vision/research/STEP_C_COMPLETION_2026-05-10.md` § Phase 4 分岐 |
 | 退避ブランチ `vps-backup-20260505-pre-trace-deploy` 削除 | 2026-05-12 以降 | 1週間経過後 | `memory/feedback_vps_git_hygiene.md` |
+| PR #35 (SPEC v2 一式 main へ) | OPEN | PoC 観察期間中に Bear/コードレビュー → main マージ | `gh pr view 35` |
+
+**🪦 亡き者の世界の課題**: すべて停止により無効化。USD_JPY パフォーマンス / trading_loop.py 重複INFO格下げ / EUR/GBP HOLD パターン / postmortem 出力率 等は亡き者の論件のため対応不要。
 
 ---
 
