@@ -11,6 +11,7 @@ import {
   sendFollowup,
   startSession,
   resumeSession,
+  ApiError,
   type Health,
   type StreamEvent,
 } from "@/lib/sse";
@@ -925,10 +926,24 @@ export default function Home() {
     try {
       await sendFollowup(sessionId, text);
     } catch (err) {
-      // 送信失敗: 楽観エコーを取り消し、理由を表示（未実装 backend の 404 でも安全）。
+      // 送信失敗: 楽観エコーを取り消す。404（セッション消失）はグレースフルに畳む。
       setTurns((prev) => prev.filter((t) => t.turn_id !== echoId));
-      setError(err instanceof Error ? err.message : String(err));
+      if (err instanceof ApiError && err.status === 404) handleSessionGone();
+      else setError(err instanceof Error ? err.message : String(err));
     }
+  }
+
+  // セッションがサーバから失われていた（404＝サーバ再起動/TTL）ときの共通復帰。
+  // 死にボタンのまま放置せず paused を畳んで done（凍結）にし、記録を残したまま
+  // 「続ける」導線へ落とす。原因と次の一手を1文で明示する。
+  function handleSessionGone() {
+    streamAliveRef.current = false;
+    setStatus("done");
+    setStreamingTurnId(null);
+    setError(
+      "このセッションはサーバ上に存在しません（サーバの再起動などで失われました）。" +
+        "ここまでの記録は残っています。下の入力から続けるか、新しい討論を始めてください。"
+    );
   }
 
   // 議場開放（floor-open）: 「議事録を作る」＝議長に synthesis を生成させる。
@@ -940,7 +955,8 @@ export default function Home() {
     try {
       await closeSession(sessionId);
     } catch (err) {
-      setError(err instanceof Error ? err.message : String(err));
+      if (err instanceof ApiError && err.status === 404) handleSessionGone();
+      else setError(err instanceof Error ? err.message : String(err));
     }
   }
 
@@ -950,7 +966,8 @@ export default function Home() {
     try {
       await finishSession(sessionId);
     } catch (err) {
-      setError(err instanceof Error ? err.message : String(err));
+      if (err instanceof ApiError && err.status === 404) handleSessionGone();
+      else setError(err instanceof Error ? err.message : String(err));
     }
   }
 

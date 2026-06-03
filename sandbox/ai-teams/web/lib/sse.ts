@@ -294,6 +294,17 @@ function toEvent(
   }
 }
 
+/** HTTP ステータスを持つ API エラー。404（セッション消失＝サーバ再起動/TTL）を
+ *  呼び出し側で判別し、死にボタンでなくグレースフルな復帰へ落とすのに使う。 */
+export class ApiError extends Error {
+  status: number;
+  constructor(status: number, message: string) {
+    super(message);
+    this.name = "ApiError";
+    this.status = status;
+  }
+}
+
 /** FastAPI の {detail:...}（文字列 or 422 配列）を人間向けメッセージにする。 */
 export async function errorDetail(res: Response): Promise<string> {
   try {
@@ -341,7 +352,7 @@ export async function closeSession(sessionId: string): Promise<void> {
     method: "POST",
     headers: apiHeaders(),
   });
-  if (!res.ok) throw new Error(await errorDetail(res));
+  if (!res.ok) throw new ApiError(res.status, await errorDetail(res));
 }
 
 export async function finishSession(sessionId: string): Promise<void> {
@@ -349,7 +360,7 @@ export async function finishSession(sessionId: string): Promise<void> {
     method: "POST",
     headers: apiHeaders(),
   });
-  if (!res.ok) throw new Error(await errorDetail(res));
+  if (!res.ok) throw new ApiError(res.status, await errorDetail(res));
 }
 
 // -- 停止（協調キャンセル） -------------------------------------------------
@@ -415,7 +426,7 @@ export async function fetchIntake(
     headers: apiHeaders({ "Content-Type": "application/json" }),
     body: JSON.stringify(body),
   });
-  if (!res.ok) throw new Error(await errorDetail(res));
+  if (!res.ok) throw new ApiError(res.status, await errorDetail(res));
   const j = (await res.json()) as { questions?: unknown };
   // 防御的に整形: questions が配列でない / 空文字混入でも壊れない。
   return Array.isArray(j.questions)
