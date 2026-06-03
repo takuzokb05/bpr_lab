@@ -396,3 +396,43 @@ FX自動売買の構成（P-014の4層アーキテクチャ）において、Gem
 2. 特に競合状態（注文の重複送信）・入力バリデーション（sl/tp/lot値の検証）・エラーハンドリングを重点的に検査
 3. /ultrareviewの結果をPRコメントとして記録し、修正後に再実行して確認
 4. Pro/Max/Team/Enterprise プランで利用可能。現在のプランを確認してから利用開始
+
+---
+
+## 2026-06-03 追加提案
+
+---
+
+### P-032: Hooks の `mcp_tool` ハンドラーをシグナル品質チェックに活用
+
+**根拠記事**: 100 (Claude Code Hooks 完全2026リファレンス)
+**詳細**: v2.1.141+でHooksハンドラーに `mcp_tool` タイプが追加された。これは既に接続済みのMCPサーバーのツールをhookから直接呼び出せる機能で、P-011（FastMCP FXバックテストデータ接続）と組み合わせることで、FX取引シグナル生成の`PostToolUse`フックから自動的にバックテスト検証ツールを呼び出すパイプラインが構築できる。例：Trader agentがシグナル出力（PostToolUse）→mcp_toolフックがFXバックテストMCPを呼び出してリアルタイム勝率確認→confidence閾値以下なら次のツール呼び出しをブロック（PreToolUse + exit 2）。
+
+**提案アクション**:
+1. settings.jsonに `PostToolUse` フックを追加し、`mcp_tool` ハンドラーでFXバックテストMCPサーバー（P-011）を呼び出す設定を記述
+2. P-014の信頼度閾値（0.75+）をHookロジックとして実装し、CLAUDE.md依存から確定論的な実行に移行
+3. `PreToolUse` + exit 2でconfidence 0.55未満のシグナルをブロック、0.55-0.75はP-025のHITL確認へルーティング
+
+---
+
+### P-033: TradingAgents v0.2.0 の Claude 4.x ネイティブ対応を FX 取引に活用
+
+**根拠記事**: 108 (TradingAgents 2026 実装チュートリアル)
+**詳細**: TradingAgents v0.2.0がClaude 4.x（含むClaude Opus 4.8）をネイティブサポートした。P-004（TradingAgentsアーキテクチャ採用）の実装ブロッカーが解消され、7エージェント構成（Market/Social/News/Fundamentals Analyst + Bull/Bear Researcher + Trader + Risk Manager）をそのままFXペアに適用できる。取引決定ごとに11 LLM呼び出し+20ツール呼び出しのコスト（約$0.5-2/決定）をP-006の課金変更（6/15）後の新クレジット枠で試算した上で実装判断が必要。AAPL累積リターン+26.62%（バイアンドホールド-5.23%対比）の実績はFXへの転用可能性を示唆するが統計的異常値の可能性も指摘あり。
+
+**提案アクション**:
+1. `pip install tradingagents` 後、Claude Opus 4.8バックエンドで通貨ペア（EUR/USD）を対象にデモ動作確認
+2. 取引頻度・1決定あたりのAPIコスト・Agent SDKクレジット消費量を試算し、P-006（6/15課金変更）後の月次コスト見積もりを算出
+3. Bull/Bear Researcherの対立論証パターンをP-014の信頼度閾値と統合（両者の合意スコアがconfidenceとして機能）
+
+---
+
+### P-034: FX 自動売買ボットのローカル LLM 化オプション検討
+
+**根拠記事**: 109 (FX自動売買BotのローカルLLM切替実践)
+**詳細**: FX相場稼働中はAPIサービス停止でボットが止まるリスクがある。国内個人開発者がqwen3.5:9b→gemma3:12bに切り替えて本番運用している事例が確認された。ローカルLLM化の3つのメリット：①外部API障害リスクの排除（uptime向上）、②APIコスト削減（Opus 4.8は$75/$150 per 1M tokens）、③取引ロジック・市況データの外部送信回避（セキュリティ）。一方でgpu資源・モデル管理コストが発生。P-033（TradingAgents + Claude 4.x）をメインとしつつ、ローカルLLM（LMStudio/Ollama経由でgemma3:12b or qwen3.5:14b）をフォールバックとする可用性設計が現実的。
+
+**提案アクション**:
+1. `ollama run gemma3:12b` でローカルLLMを起動し、FXシグナル生成の精度をClaude Opus 4.8と比較テスト
+2. TradingAgentsのLLMプロバイダー設定をClaude API→ローカルOllama APIに切り替えて同一テストケースで精度・レイテンシを測定
+3. メインはClaude API（高精度）、フォールバックはローカルLLM（可用性）のデュアル構成をsandbox/FX自動取引/config.pyに実装

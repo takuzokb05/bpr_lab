@@ -1,6 +1,6 @@
 # Library Catalog
 
-最終更新: 2026-06-02
+最終更新: 2026-06-03
 
 ## 凡例
 - 状態: 未読 / 既読 / 要精読
@@ -194,12 +194,36 @@
 
 ---
 
+---
+
+## 2026-06-03 収集分（12件収集 → 12件SIGNAL）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 100 | [2026-06-03_100](articles/2026-06-03_100_Claude-Code-Hooks-Complete-2026-Production-Reference-32events.md) | Claude Code Hooks 完全2026リファレンス — 27イベント・5ハンドラータイプ・exit code仕様 | claude-code | 未読 | #web-signal |
+| 101 | [2026-06-03_101](articles/2026-06-03_101_My-Claude-Code-Setup-MCP-Hooks-Skills-Agents-2026-okhlopkov.md) | My Claude Code Setup 2026 — MCP・Hooks・Skills・Agentsの実際の設定ファイル公開 | claude-code | 未読 | #web-signal |
+| 102 | [2026-06-03_102](articles/2026-06-03_102_Effective-Claude-Code-Workflows-2026-What-Changed-What-Works.md) | Effective Claude Code Workflows 2026 — 計画分離・/rewind・Hooks確定論的実行 | claude-code | 未読 | #web-signal |
+| 103 | [2026-06-03_103](articles/2026-06-03_103_Claude-Code-Skills-Subagents-Hooks-Plugins-Harnesses-Production.md) | Claude Code Skills/Subagents/Hooks/Plugins/Harnesses — 本番マルチエージェント設計ガイド | claude-code | 未読 | #web-signal |
+| 104 | [2026-06-03_104](articles/2026-06-03_104_Claude-Code-v2-1-101-5weeks-30releases-complete-guide-uravation.md) | Claude Code v2.1.101 完全ガイド（日本語）— 5週間30+リリース・Opus 4.7 xhigh effort | claude-code | 未読 | #web-signal |
+| 105 | [2026-06-03_105](articles/2026-06-03_105_MCP-2026-Official-Roadmap-streamable-http-enterprise-priorities.md) | MCP 公式2026ロードマップ — Streamable HTTP・エンタープライズ展開優先事項（一次情報） | claude-ecosystem | 未読 | #web-signal |
+| 106 | [2026-06-03_106](articles/2026-06-03_106_Anthropic-ends-subscription-subsidy-agents-June15-credit-pool.md) | Anthropic Agent向けサブスク補助終了 6/15 — クレジットプール移行（TechTimes独立報道） | claude-ecosystem | 未読 | #web-signal #urgent |
+| 107 | [2026-06-03_107](articles/2026-06-03_107_AI-Agent-Frameworks-2026-Production-Tested-Ranking-AliceLabs.md) | AI Agent Frameworks 2026 本番ランキング — LangGraph 1位・Claude Agent SDK 2位・CrewAI 3位 | claude-ecosystem | 未読 | #web-signal |
+| 108 | [2026-06-03_108](articles/2026-06-03_108_Build-Multi-Agent-AI-Trading-System-TradingAgents-2026-pickmytrade.md) | TradingAgents 2026 実装チュートリアル — 7エージェント構成・AAPL +26.62%・Claude対応 | ai-trading | 未読 | #web-signal |
+| 109 | [2026-06-03_109](articles/2026-06-03_109_FX-bot-local-LLM-qwen35-to-gemma3-12b-swap-note.md) | FX自動売買BotのローカルLLM切替実践 — qwen3.5:9b→gemma3:12b・CatBoost複合運用 | ai-trading | 未読 | #web-signal |
+| 110 | [2026-06-03_110](articles/2026-06-03_110_Microsoft-Agent-Framework-1-0-production-ready-dotnet-python.md) | Microsoft Agent Framework 1.0 正式リリース — AutoGen+SK統合・.NET/Python対応 | ai-news | 未読 | #web-signal |
+| 111 | [2026-06-03_111](articles/2026-06-03_111_2026-AI-Laws-Update-Key-Regulations-Practical-Guidance-Gunderson.md) | 2026 AI Laws Update 実務ガイド — 米連邦・CA/CO/NY州法・EU AI Act 8月施行まとめ | ai-news | 未読 | #web-signal |
+
+### NOISEとして除外
+なし（X投稿データなし・drop.mdにURLなし・全12件SIGNAL判定）
+
+---
+
 ## ドメイン別統計（累計）
 
-| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 累計 |
-|---|---|---|---|---|---|---|---|---|
-| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 43件 |
-| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 19件 |
-| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 19件 |
-| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 18件 |
-| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **99件** |
+| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 累計 |
+|---|---|---|---|---|---|---|---|---|---|
+| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 48件 |
+| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 22件 |
+| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 21件 |
+| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 20件 |
+| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **111件** |
