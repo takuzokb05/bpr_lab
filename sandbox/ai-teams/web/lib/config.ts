@@ -184,6 +184,28 @@ export function setVerbosity(v: Verbosity): void {
   }
 }
 
+// 討論モード（エンジン・プリセット）。preset id を localStorage に保存（local 経路でのみ使う）。
+// 既定は health.default_preset（無ければ "standard"）。中身(model/長さ)はサーバが解決する。
+const MODE_STORAGE = "aiteams_mode";
+
+export function getMode(fallback = "standard"): string {
+  if (typeof window === "undefined") return fallback;
+  try {
+    return window.localStorage.getItem(MODE_STORAGE) ?? fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+export function setMode(id: string): void {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(MODE_STORAGE, id);
+  } catch {
+    /* noop */
+  }
+}
+
 export function getUserKey(): string {
   if (typeof window === "undefined") return ""; // SSR / static export 時は空
   try {

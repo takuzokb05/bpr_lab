@@ -143,6 +143,45 @@ def research_providers() -> list[str]:
     return out
 
 
+# 討論モード（エンジン・プリセット）。force_local/local 時にフロントへ提示し、選ばれた id を
+# (model, verbosity) にマップする。**来訪者は許可制**＝この allowlist 外のモデルは選べない
+# （所有者の OpenRouter キーで高額モデルを勝手に使わせない）。env AI_TEAMS_LOCAL_PRESETS で
+# JSON 上書き可（[{id,label,hint,model,verbosity}]）。既定: クイック=Flash / スタンダード=Pro /
+# ディープ=Pro じっくり。既定選択は "standard"（Pro標準＝本命）。
+_DEFAULT_PRESETS = [
+    {"id": "quick", "label": "クイック", "hint": "速い・安い",
+     "model": "deepseek/deepseek-v4-flash", "verbosity": "standard"},
+    {"id": "standard", "label": "スタンダード", "hint": "深い・本命",
+     "model": "deepseek/deepseek-v4-pro", "verbosity": "standard"},
+    {"id": "deep", "label": "ディープ", "hint": "最も深く長い",
+     "model": "deepseek/deepseek-v4-pro", "verbosity": "deep"},
+]
+_DEFAULT_PRESET_ID = "standard"
+
+
+def local_presets() -> list[dict]:
+    """討論モードのプリセット一覧。env AI_TEAMS_LOCAL_PRESETS(JSON) があればそれを、無ければ既定。"""
+    raw = os.environ.get("AI_TEAMS_LOCAL_PRESETS", "").strip()
+    if raw:
+        try:
+            data = json.loads(raw)
+            if isinstance(data, list) and data:
+                return data
+        except Exception:  # noqa: BLE001 — 不正 JSON は既定にフォールバック
+            pass
+    return list(_DEFAULT_PRESETS)
+
+
+def resolve_preset(preset_id: str | None) -> dict | None:
+    """preset id → preset dict（許可制）。未知/未指定は None（呼び出し側が既定 verbosity/モデルを使う）。"""
+    if not preset_id:
+        return None
+    for p in local_presets():
+        if p.get("id") == preset_id:
+            return p
+    return None
+
+
 def force_local() -> bool:
     """サーバを丸ごと内製（local）に固定するか（env AI_TEAMS_FORCE_LOCAL）。
 
@@ -200,6 +239,7 @@ def make_client(
     api_key: str | None = None,
     provider: str | None = None,
     max_tokens: int | None = None,
+    model: str | None = None,
 ) -> LLMClient:
     """LLM クライアントを作る。優先順位は mock > 明示 api_key > サーバ env キー。
 
@@ -223,7 +263,7 @@ def make_client(
         return OpenAIClient(
             api_key=api_key,
             base_url=base,
-            model=local_model(),
+            model=model or local_model(),  # プリセットのモデル上書き（許可制）。無ければ env 既定。
             max_tokens=max_tokens,
             search_mode=local_search_mode(),
         )
@@ -267,6 +307,14 @@ def llm_status() -> dict:
         "local": local,
         # 内製経路で Web 検索が使えるか（OpenRouter 等の検索バックエンド設定済み）。
         "local_search": local_search_enabled(),
+        # 討論モード（エンジン・プリセット）。local 時のみ提示。フロントは「応答の長さ」の代わりに
+        # この3択（クイック/スタンダード/ディープ等）を出す。model は露出しない（id/label/hint のみ）。
+        "presets": (
+            [{"id": p["id"], "label": p.get("label", p["id"]), "hint": p.get("hint", "")}
+             for p in local_presets()]
+            if local else []
+        ),
+        "default_preset": _DEFAULT_PRESET_ID if local else None,
         # サーバを丸ごと内製に固定しているか（true なら全実 LLM を内製に回す＝キー不要で実 LLM 可）。
         "force_local": forced,
         # 編成 CRUD が書き込み禁止か（共有インスタンス）。フロントは「管理」UI を隠す。
@@ -336,6 +384,7 @@ def build_council(
     custom_personas: list[dict] | None = None,
     materials: str = "",
     research: bool = False,
+    preset: str | None = None,
 ) -> Council:
     """指定 id のペルソナで Council を作る。未知 id は KeyError。
 
@@ -361,6 +410,14 @@ def build_council(
     # local は検索バックエンド（OpenRouter 等）が設定済みのときだけ research を許す。
     prov = normalize_provider(provider)
     research = research and prov in research_providers()
+    # 討論モード（エンジン・プリセット）。force_local/local 経路でのみ有効。許可制でモデル＋
+    # verbosity を確定する（来訪者は allowlist 外のモデルを選べない）。preset 未指定/非 local では
+    # 従来どおり verbosity をそのまま使い、モデルは env 既定（local_model）。
+    local_model_override: str | None = None
+    p = resolve_preset(preset) if local_enabled() else None
+    if p:
+        local_model_override = p.get("model")
+        verbosity = p.get("verbosity", verbosity)
     # 応答の長さプリセット → 出力上限（途中切れ防止）＋発話スタイル指示。
     vb = VERBOSITY[normalize_verbosity(verbosity)]
     # 議事録（synthesis）は討論全体を1枚に圧縮するため単一発言より長い。標準4096だと途中で
@@ -374,7 +431,7 @@ def build_council(
     synthesis_mt = max(synth_floor, vb["max_tokens"] * 2)
     return Council(
         personas,
-        make_client(mock, api_key, provider, max_tokens=vb["max_tokens"]),
+        make_client(mock, api_key, provider, max_tokens=vb["max_tokens"], model=local_model_override),
         rounds_per_phase=rounds_per_phase,
         red_team=red_team,
         red_team_id=red_team_id,

@@ -48,6 +48,8 @@ export interface StartSessionArgs {
   research?: boolean;
   // 応答の長さプリセット（既定 standard）。トークン数ではなく質感で選ぶ。
   verbosity?: "brief" | "standard" | "deep";
+  // 討論モード（エンジン・プリセット）id。local 経路でのみ有効。サーバが (model, verbosity) に解決。
+  preset?: string | null;
   // 自分のペルソナ（クライアント定義・サーバ非保存）。選択中のものだけ同送する。
   customPersonas?: import("./types").CustomPersona[];
   signal?: AbortSignal;
@@ -80,6 +82,7 @@ export async function startSession({
   interactive = true,
   research = false,
   verbosity = "standard",
+  preset = null,
   customPersonas = [],
   signal,
   onEvent,
@@ -102,6 +105,8 @@ export async function startSession({
   if (research) body.research = research;
   // 応答の長さ。後方互換: standard（既定）のときは body に載せない。
   if (verbosity && verbosity !== "standard") body.verbosity = verbosity;
+  // 討論モード（プリセット）。local 経路でサーバが (model, verbosity) に解決。空なら従来動作。
+  if (preset) body.preset = preset;
   // 自分のペルソナ（選択中のみ）。後方互換: 空なら body に載せない。
   if (customPersonas.length > 0) body.custom_personas = customPersonas;
 
@@ -377,6 +382,9 @@ export interface Health {
   local?: boolean;
   // 内製経路で Web 検索が使えるか（OpenRouter 等の検索バックエンド設定済み）。
   local_search?: boolean;
+  // 討論モード（エンジン・プリセット）。local 時のみ。フロントは「応答の長さ」の代わりにこれを出す。
+  presets?: { id: string; label: string; hint?: string }[];
+  default_preset?: string | null;
   // サーバを丸ごと内製に固定しているか。true なら全実 LLM が内製＝キー不要で実 LLM 可。
   force_local?: boolean;
   // 編成 CRUD が書き込み禁止か（共有インスタンス）。true なら「管理」UI を隠す。

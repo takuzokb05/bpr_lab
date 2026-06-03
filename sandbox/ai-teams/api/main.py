@@ -196,6 +196,9 @@ class SessionRequest(BaseModel):
     # 応答の長さプリセット（ユーザーはトークン数を意識しない）。simple/standard/deep を
     # max_tokens 上限＋発話スタイル指示にマップ。既定 standard（旧挙動だが上限を上げ切れ防止）。
     verbosity: Literal["brief", "standard", "deep"] = "standard"
+    # 討論モード（エンジン・プリセット）の id。local 経路でのみ有効。サーバ側 allowlist で
+    # (model, verbosity) に解決される（許可制）。未知/未指定なら verbosity をそのまま使う。
+    preset: str | None = Field(default=None, max_length=40)
     # クライアント定義のカスタムペルソナ（サーバ非保存・このセッション限定）。persona_ids から
     # これらの id を参照できる。件数上限で濫用・コスト暴走を防ぐ。
     custom_personas: list[CustomPersona] = Field(default_factory=list, max_length=12)
@@ -301,6 +304,7 @@ def create_session(
             api_key=api_key,
             provider=eff_provider,
             verbosity=req.verbosity,
+            preset=req.preset,
             custom_personas=[cp.model_dump() for cp in req.custom_personas],
             materials=composed_materials,
             research=req.research,

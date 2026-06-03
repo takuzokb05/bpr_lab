@@ -874,6 +874,21 @@ def test_local_provider():
         )
         check(cc2.research is False, "検索未設定の local では research 強制 off")
 
+        # 討論モード（エンジン・プリセット・許可制でモデル＋verbosity）
+        check(
+            (service.resolve_preset("quick") or {}).get("model") == "deepseek/deepseek-v4-flash",
+            "preset quick=Flash に解決",
+        )
+        check(service.resolve_preset("unknown") is None, "未知 preset は None（許可制）")
+        cm = service.make_client(mock=False, provider="local", model="deepseek/deepseek-v4-flash")
+        check(cm._model == "deepseek/deepseek-v4-flash", "make_client が model 上書きを使う")
+        stp = service.llm_status()
+        check(
+            any(p.get("id") == "quick" for p in stp.get("presets", []))
+            and stp.get("default_preset") == "standard",
+            f"llm_status に presets と default_preset(standard): {stp.get('presets')}",
+        )
+
         # force_local
         os.environ["AI_TEAMS_FORCE_LOCAL"] = "1"
         check(service.force_local() is True, "FORCE_LOCAL=1 + base_url で force_local True")

@@ -31,6 +31,8 @@ import {
   setProvider,
   getVerbosity,
   setVerbosity,
+  getMode,
+  setMode,
   getCustomPersonas,
   setCustomPersonas,
   getHistory,
@@ -46,6 +48,7 @@ import { PresetBar } from "@/components/PresetBar";
 import { LlmToggle } from "@/components/LlmToggle";
 import { KeyEntry } from "@/components/KeyEntry";
 import { VerbositySelect } from "@/components/VerbositySelect";
+import { ModeSelect } from "@/components/ModeSelect";
 import { MyPersonasDrawer } from "@/components/MyPersonasDrawer";
 import { HistoryDrawer } from "@/components/HistoryDrawer";
 import { PersonaManagerDrawer } from "@/components/PersonaManagerDrawer";
@@ -143,6 +146,9 @@ export default function Home() {
   const [provider, setProviderState] = useState<LlmProvider>("anthropic");
   // 応答の長さ（既定 standard）。トークン数ではなく質感で選ぶ。
   const [verbosity, setVerbosityState] = useState<Verbosity>("standard");
+  // 討論モード（エンジン・プリセット id）。local 経路で「応答の長さ」の代わりに3択を出す。
+  // 既定は health.default_preset（無ければ "standard"）。
+  const [mode, setModeState] = useState<string>("standard");
   // 自分のペルソナ（クライアント定義・localStorage・サーバ非保存）。
   const [customPersonas, setCustomPersonasState] = useState<CustomPersona[]>([]);
   const [myPersonasOpen, setMyPersonasOpen] = useState(false);
@@ -192,6 +198,7 @@ export default function Home() {
     setUserKeyState(getUserKey()); // localStorage は client のみ。mount 後に読む
     setProviderState(getProvider());
     setVerbosityState(getVerbosity());
+    setModeState(getMode());
     setCustomPersonasState(getCustomPersonas());
     fetchPresets()
       .then(setPresets)
@@ -199,7 +206,15 @@ export default function Home() {
         /* プリセット未提供でも本体は動かす */
       });
     fetchHealth()
-      .then(setHealth)
+      .then((h) => {
+        setHealth(h);
+        // 討論モード: 保存値がサーバの提示プリセットに無ければ default_preset に合わせる。
+        const ids = (h?.presets ?? []).map((p) => p.id);
+        if (ids.length > 0) {
+          const stored = getMode(h?.default_preset ?? "standard");
+          setModeState(ids.includes(stored) ? stored : (h?.default_preset ?? ids[0]));
+        }
+      })
       .catch(() => {
         /* health 取得失敗時は mock 既定のまま動かす */
       });
@@ -316,6 +331,12 @@ export default function Home() {
     setVerbosityState(v);
   }
 
+  // 討論モード切替（localStorage 保存＋state 同期）。preset id を持つだけ（中身はサーバが解決）。
+  function updateMode(id: string) {
+    setMode(id);
+    setModeState(id);
+  }
+
   // 自分のペルソナの更新（localStorage 保存＋state 同期）。削除されたペルソナは選択からも外す。
   function updateCustomPersonas(list: CustomPersona[]) {
     setCustomPersonas(list);
@@ -405,6 +426,8 @@ export default function Home() {
   const researchAvailable = forceLocal
     ? (health?.local_search ?? false)
     : researchProviders.includes(provider);
+  // 討論モード（エンジン・プリセット）。local 時のみサーバが提示。あれば「応答の長さ」の代わりに出す。
+  const enginePresets = health?.presets ?? [];
 
   // 追い質問の処理中（人間ターンのエコー・司会再提示・パネリスト応答が流れている間）。
   const processingFollowup =
@@ -708,6 +731,8 @@ export default function Home() {
         intake: opts.intake ?? [],
         research,
         verbosity,
+        // 討論モード（local 時のみ）。サーバが (model, verbosity) に解決する。無ければ verbosity を使う。
+        preset: enginePresets.length > 0 ? mode : null,
         customPersonas: opts.customPersonas,
         interactive: true,
         signal: ctrl.signal,
@@ -1076,11 +1101,21 @@ export default function Home() {
             </p>
           )}
 
-          <VerbositySelect
-            value={verbosity}
-            onChange={updateVerbosity}
-            disabled={active}
-          />
+          {/* 討論モード（local 時は3択プリセット＝モデル×長さ）。無ければ従来の「応答の長さ」。 */}
+          {enginePresets.length > 0 ? (
+            <ModeSelect
+              presets={enginePresets}
+              value={mode}
+              onChange={updateMode}
+              disabled={active}
+            />
+          ) : (
+            <VerbositySelect
+              value={verbosity}
+              onChange={updateVerbosity}
+              disabled={active}
+            />
+          )}
 
           <PersonaPicker
             personas={allPersonas}
