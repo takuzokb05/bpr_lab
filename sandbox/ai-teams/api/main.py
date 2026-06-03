@@ -231,8 +231,9 @@ class SessionRequest(BaseModel):
     # (model, verbosity) に解決される（許可制）。未知/未指定なら verbosity をそのまま使う。
     preset: str | None = Field(default=None, max_length=40)
     # 発散→批判 の間に司会のブリッジ（叩く価値のある案を名指しして的を絞る）を挟むか。
-    # 議論が深まるかの検証用フラグ（既定 False＝従来どおり挟まない）。
-    phase_bridge: bool = False
+    # A/B 検証で批判フェーズが明確に深まる（噛み合う）ことを確認したため既定 True（全討論で挟む）。
+    # 明示 false で従来どおりにも戻せる。
+    phase_bridge: bool = True
     # クライアント定義のカスタムペルソナ（サーバ非保存・このセッション限定）。persona_ids から
     # これらの id を参照できる。件数上限で濫用・コスト暴走を防ぐ。
     custom_personas: list[CustomPersona] = Field(default_factory=list, max_length=12)

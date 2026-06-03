@@ -387,7 +387,7 @@ def build_council(
     materials: str = "",
     research: bool = False,
     preset: str | None = None,
-    phase_bridge: bool = False,
+    phase_bridge: bool = True,
 ) -> Council:
     """指定 id のペルソナで Council を作る。未知 id は KeyError。
 

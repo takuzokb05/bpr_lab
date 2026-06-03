@@ -174,9 +174,9 @@ def test_sse_stream():
     check("error" not in kinds, "error イベントは出ない")
 
     turns = [e for e, k in zip(events, kinds) if k == "turn"]
-    # opening1 + 発散3 + 批判3 + 収束の口火(司会)1 + 収束3 + closing1 + synthesis1 = 13
-    # （summary 廃止・司会クロージング追加・収束の口火で合意を1回だけまとめる）
-    check(len(turns) == 13, f"turn 数が想定どおり: {len(turns)}")
+    # opening1 + 発散3 + 発散→批判ブリッジ(司会)1 + 批判3 + 収束の口火(司会)1 + 収束3 + closing1
+    # + synthesis1 = 14（build_council は phase_bridge 既定 on＝全討論でブリッジを挟む）。
+    check(len(turns) == 14, f"turn 数が想定どおり: {len(turns)}")
     payloads = [
         json.loads([ln for ln in t.splitlines() if ln.startswith("data: ")][0].removeprefix("data: "))
         for t in turns

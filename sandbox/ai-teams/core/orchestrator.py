@@ -583,8 +583,9 @@ class Council:
                         transcript, topic, emit=emit, ids=ids, pull=pull
                     )
 
-            # 発散→批判 のブリッジ（検証フラグ・既定 off）: 発散の直後に司会が「次の批判で叩く価値の
-            # ある2〜3案」を名指しして的を絞る。phase_bridge=False なら何もしない＝従来どおり。
+            # 発散→批判 のブリッジ: 発散の直後に司会が「次の批判で叩く価値のある2〜3案」を名指しして
+            # 的を絞る（批判が噛み合い深まることを A/B で確認）。アプリは既定 on（build_council 経由）、
+            # Council 単体の既定は False（テスト不変）。phase_bridge=False なら従来どおり挟まない。
             if phase_name == "発散" and self.phase_bridge and self.moderator is not None:
                 turn = self._speak(
                     self.moderator,

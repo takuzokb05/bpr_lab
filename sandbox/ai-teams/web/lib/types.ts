@@ -112,6 +112,7 @@ export interface Preset {
 export const PHASE_LABELS: Record<string, string> = {
   opening: "オープニング",
   発散: "発散",
+  bridge: "論点整理",
   批判: "批判",
   収束: "収束",
   closing: "クロージング",
