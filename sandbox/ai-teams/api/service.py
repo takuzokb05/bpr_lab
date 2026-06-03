@@ -387,6 +387,7 @@ def build_council(
     materials: str = "",
     research: bool = False,
     preset: str | None = None,
+    phase_bridge: bool = False,
 ) -> Council:
     """指定 id のペルソナで Council を作る。未知 id は KeyError。
 
@@ -441,6 +442,7 @@ def build_council(
         research=research,
         length_hint=vb["hint"],
         synthesis_max_tokens=synthesis_mt,
+        phase_bridge=phase_bridge,
     )
 
 
@@ -806,22 +808,9 @@ def _produce(session: Session) -> None:
                 research_seen.add(norm)
                 research_state["count"] += 1
 
-        # Phase A: seed 調査（research=True のときだけ）。deliberate 開始前に topic を1回調べ、
-        # researcher ターンとして全員の議論の土台に乗せる。seed を seen に登録し、カウンタ+1。
-        if council.research:
-            seed = session.topic
-            seed_norm = seed.lower().strip()
-            if seed_norm:
-                seed_rid = next(ids)
-                # 検索の前に「調査中」を先出し（最初の発言前の長い待ちを「『議題』を調べています…」で見せる）。
-                council.emit_research_start(emit, seed_rid, query=seed)
-                seed_brief = run_research(council.client, seed)
-                seed_turn = council.emit_research_turn(
-                    transcript, seed_brief, emit=emit, turn_id=seed_rid, emit_start=False
-                )
-                _append(session, "turn_end", {"turn_id": seed_turn.turn_id})
-                research_seen.add(seed_norm)
-                research_state["count"] += 1
+        # 初回の Web 検索は「生の議題」を seed するのをやめ、司会の【オープニング】が論点に絞って出す
+        # 『要調査: …』を _pickup_research が拾って実行する（的の合ったクエリにする）。research 無効、
+        # または司会が事実確認不要と判断した回は初回検索は走らない（ムダな汎用検索を省く）。
 
         # 本編フェーズ（opening+発散/批判/収束）。本編中の追い質問は followup のみ注入。
         for turn in council.deliberate(

@@ -175,6 +175,7 @@ class Council:
         research: bool = False,
         length_hint: str = "",
         synthesis_max_tokens: int | None = None,
+        phase_bridge: bool = False,
     ) -> None:
         self.client = client
         self.default_model = default_model
@@ -196,6 +197,9 @@ class Council:
         # 通常の verbosity max_tokens（標準4096）だと途中で打ち切られる。専用に大きめを与える
         # （None なら _speak がクライアント既定を使う＝従来動作）。build_council が算出して渡す。
         self.synthesis_max_tokens = synthesis_max_tokens
+        # 発散→批判 の間に司会のブリッジ（叩く価値のある案を名指しして批判の的を絞る）を挟むか。
+        # 議論が深まるかの検証用フラグ（既定 False＝従来どおり挟まない）。
+        self.phase_bridge = phase_bridge
 
         personas = list(personas)
         # 役割ごとに振り分ける
@@ -510,16 +514,25 @@ class Council:
         """
         # 1. 司会オープニング（任意）
         if self.moderator is not None:
+            opening_directive = (
+                "【オープニング】議題を一言で整理し、論点を2〜3つ提示して討論の口火を切って"
+                "ください。結論は出さず、最後に特定の立場の人へ発言を促すこと。"
+            )
+            # 調査有効時は、初回の Web 検索を「生の議題」でなく司会が絞った論点から出させる
+            # （seed 調査を廃し、的の合ったクエリにする）。research 無効なら従来どおり何も足さない。
+            if self.research:
+                opening_directive += (
+                    "また、提示した論点のうち、事実・統計の裏取りが議論の土台に要るものが1つあれば、"
+                    "発言の最後に『要調査: <その具体的な事実の問い>』を1行だけ添えてください"
+                    "（議題そのままの言い換えでなく、いま絞った論点に即した問いにすること）。"
+                )
             turn = self._speak(
                 self.moderator,
                 transcript,
                 topic,
                 phase="opening",
                 round_no=0,
-                phase_directive=(
-                    "【オープニング】議題を一言で整理し、論点を2〜3つ提示して討論の口火を切って"
-                    "ください。結論は出さず、最後に特定の立場の人へ発言を促すこと。"
-                ),
+                phase_directive=opening_directive,
                 anti_conformity=False,
                 emit=emit,
                 turn_id=next(ids),
@@ -568,6 +581,27 @@ class Council:
                     yield from self._drain_and_inject(
                         transcript, topic, emit=emit, ids=ids, pull=pull
                     )
+
+            # 発散→批判 のブリッジ（検証フラグ・既定 off）: 発散の直後に司会が「次の批判で叩く価値の
+            # ある2〜3案」を名指しして的を絞る。phase_bridge=False なら何もしない＝従来どおり。
+            if phase_name == "発散" and self.phase_bridge and self.moderator is not None:
+                turn = self._speak(
+                    self.moderator,
+                    transcript,
+                    topic,
+                    phase="bridge",
+                    round_no=0,
+                    phase_directive=(
+                        "【整理（発散→批判）】発散で出た提案のうち、次の批判で特に検証すべき2〜3案を"
+                        "名指しで挙げ、それぞれ『どこを叩くと議論が深まるか』を一言で示してください。"
+                        "新しい主張は足さず、批判の的を絞るだけにすること。"
+                    ),
+                    anti_conformity=False,
+                    emit=emit,
+                    turn_id=next(ids),
+                )
+                transcript.append(turn)
+                yield turn
 
         # 3. 司会クロージング（任意・在席時のみ）。オープニング↔クロージングの対称を取り、
         #    本編が収束フェーズで唐突に切れる/無言で一時停止に入るのを防ぐ（番組としての締め）。
