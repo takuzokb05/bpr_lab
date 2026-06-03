@@ -57,6 +57,7 @@ def build_context(
     materials: str = "",
     research_enabled: bool = False,
     length_directive: str = "",
+    roster_note: str = "",
 ) -> tuple[str, list[Message]]:
     """active ペルソナが「次の1発言」を生成するための (system, messages) を組む。
 
@@ -66,6 +67,10 @@ def build_context(
     materials は全ペルソナが共有する「資料・前提」。先頭 user の【議題】に続けて
     【資料・前提】ブロックを差し込む。materials="" のときはブロックを足さず、従来と
     完全に同一の出力になる（後方互換）。
+
+    roster_note は「この討論に同席する因縁」（対立/盟友の相手とその関係）。空でなければ
+    active の system_prompt の末尾に追記し、相手を最初から意識して絡ませる。
+    ""（因縁なし／相手が同席しない）のときは何も足さない＝従来と完全同一（後方互換）。
     """
     head = f"【議題】\n{topic}"
     if materials:
@@ -102,4 +107,8 @@ def build_context(
     )
     events.append(("user", "\n\n".join(nudge)))
 
-    return active.system_prompt, _merge(events)
+    # 因縁ブロックは system 末尾に追記（セッション中ずっと効かせる）。空なら従来同一。
+    system = active.system_prompt
+    if roster_note:
+        system = f"{system}\n\n{roster_note}"
+    return system, _merge(events)

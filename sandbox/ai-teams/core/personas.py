@@ -28,6 +28,9 @@ _VALID_CATEGORIES = {
     "philosophers",
 }
 
+# 因縁（relationships）の関係種別。rival=対立 / ally=盟友 / mentor=あなたが師 / student=あなたが弟子。
+_VALID_REL_TYPES = {"rival", "ally", "mentor", "student"}
+
 # カテゴリ別のアクセント色（UIUX_REVIEW_2026-05.md の彩度低めパレット）。
 # persona.accent が未指定のときのフォールバックに使う。絵文字アバターの代わりに
 # 「モノグラム + カテゴリ色」でペルソナを識別する。
@@ -63,6 +66,10 @@ class Persona:
     # UI 用のアクセント色（#RRGGBB）。未指定ならカテゴリ色を使う。絵文字に依らず
     # 「モノグラム + この色」でペルソナを識別する（UIUX_REVIEW 参照）。
     accent: str | None = None
+    # 偉人同士の因縁（対立/盟友/師弟）。各要素 = {"to": <相手 id>, "type": <関係種別>,
+    # "note": <あなた視点の一言>}。同じ討論に相手が同席するとき、その関係を system に注入して
+    # 「最初から相手を意識して絡む」ようにする＋ピッカーで対立相手をサジェストする。空＝従来同一。
+    relationships: list[dict] = field(default_factory=list)
 
     def __post_init__(self) -> None:
         if not self.id:
@@ -74,6 +81,17 @@ class Persona:
                 f"persona '{self.id}' の category '{self.category}' が不正です "
                 f"(有効: {sorted(_VALID_CATEGORIES)})"
             )
+        for r in self.relationships:
+            if not isinstance(r, dict) or not r.get("to"):
+                raise ValueError(f"persona '{self.id}' の relationships に 'to' が無い要素があります")
+            if r.get("type") not in _VALID_REL_TYPES:
+                raise ValueError(
+                    f"persona '{self.id}' の relationship type '{r.get('type')}' が不正です "
+                    f"(有効: {sorted(_VALID_REL_TYPES)})"
+                )
+            # note は任意だが、文字列以外は注入時の .strip() で落ちるため弾く（防御）。
+            if r.get("note") is not None and not isinstance(r.get("note"), str):
+                raise ValueError(f"persona '{self.id}' の relationship note は文字列で指定してください")
 
     @property
     def accent_color(self) -> str:
@@ -107,6 +125,7 @@ def persona_from_dict(data: dict[str, Any]) -> Persona:
         "tags",
         "speaks",
         "accent",
+        "relationships",
     }
     unknown = set(data) - known
     if unknown:
@@ -122,6 +141,7 @@ def persona_from_dict(data: dict[str, Any]) -> Persona:
         tags=list(data.get("tags", [])),
         speaks=bool(data.get("speaks", True)),
         accent=data.get("accent"),
+        relationships=list(data.get("relationships", [])),
     )
 
 

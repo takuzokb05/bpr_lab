@@ -8,6 +8,13 @@ export type PersonaCategory =
   | "founders"
   | "philosophers";
 
+// 偉人同士の因縁（対立/盟友/師弟）。相手 id・関係種別・一言。ピッカーで相手をサジェストする。
+export interface PersonaRelationship {
+  to: string;
+  type: "rival" | "ally" | "mentor" | "student";
+  note?: string;
+}
+
 export interface Persona {
   id: string;
   display_name: string;
@@ -17,6 +24,7 @@ export interface Persona {
   tags: string[];
   speaks: boolean;
   model: string | null;
+  relationships?: PersonaRelationship[]; // 因縁（対立/盟友）。サーバ由来。custom は持たない
   custom?: boolean; // クライアント定義（自分のペルソナ）か。バッジ表示・送信判定に使う
 }
 
@@ -58,6 +66,7 @@ export function customToPersona(cp: CustomPersona): Persona {
     tags: cp.tags ?? [],
     speaks: true,
     model: null,
+    relationships: [],
     custom: true,
   };
 }

@@ -119,6 +119,44 @@ class RoundRobinScheduler:
         return self._panelists[start:] + self._panelists[:start]
 
 
+# 因縁（relationships）の type → 注入時のラベル。
+_REL_LABELS = {
+    "rival": "対立する間柄",
+    "ally": "盟友",
+    "mentor": "師弟（あなたが師）",
+    "student": "師弟（あなたが弟子）",
+}
+
+
+def _build_roster_notes(personas: Sequence[Persona]) -> dict[str, str]:
+    """同じ討論に同席する相手との因縁を、ペルソナ id → system 追記文 に変換する。
+
+    各ペルソナ自身の relationships のうち、相手（to）がこの討論に同席している分だけを拾う
+    （相手が居ない因縁は注入しない＝無関係な討論では従来と完全同一）。
+    """
+    by_id = {p.id: p for p in personas}
+    seated = set(by_id)
+    notes: dict[str, str] = {}
+    for p in personas:
+        lines: list[str] = []
+        for rel in getattr(p, "relationships", None) or []:
+            to = rel.get("to")
+            if to in seated and to != p.id:
+                label = _REL_LABELS.get(rel.get("type"), "因縁")
+                note = (rel.get("note") or "").strip()
+                lines.append(
+                    f"- {by_id[to].display_name}: {label}" + (f" — {note}" if note else "")
+                )
+        if lines:
+            notes[p.id] = (
+                "【この討論に同席する因縁】\n"
+                "本討論には次の登壇者が同席している。関係を踏まえ、相手の発言には遠慮なく"
+                "反応してよい（同調で流さず、対立なら噛みつき、盟友なら呼応する）。"
+                "ただし相手のセリフを代弁・捏造はしないこと。\n" + "\n".join(lines)
+            )
+    return notes
+
+
 class Council:
     """討論セッション1回分のオーケストレーター。"""
 
@@ -173,6 +211,10 @@ class Council:
             raise ValueError("パネリストが0人です。thinking/founders/philosophers のペルソナが必要です。")
         self.scheduler = RoundRobinScheduler(self.panelists)
 
+        # 偉人同士の因縁: 同席する相手との関係を system に注入する文を id 毎に用意する。
+        # 相手が同席しない／因縁が無いペルソナは持たない（その場合 _speak は従来と完全同一）。
+        self._roster_notes = _build_roster_notes(personas)
+
         # red_team_id の妥当性はフラグと独立に検証する（red_team=False でも不正 id は
         # サイレント無視せず弾く＝同一入力で挙動が割れない）。
         if red_team_id is not None and not any(p.id == red_team_id for p in self.panelists):
@@ -220,6 +262,7 @@ class Council:
             materials=self.materials,
             research_enabled=self.research,
             length_directive=self.length_hint,
+            roster_note=self._roster_notes.get(persona.id, ""),
         )
         model, temperature = self._resolve(persona)
 

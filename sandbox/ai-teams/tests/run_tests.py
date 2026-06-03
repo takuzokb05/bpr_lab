@@ -1911,8 +1911,49 @@ def test_cors_allowed_origins_env():
 
 
 # ---------------------------------------------------------------------------
+def test_relationships():
+    """偉人の因縁: 相手が同席する討論でだけ system に因縁ブロックを注入する。"""
+    print("[test] relationships (因縁の文脈注入)")
+    from core import Council, MockLLMClient, Persona, build_context
+
+    a = Persona(id="a", display_name="アルファ", system_prompt="A です。",
+                relationships=[{"to": "b", "type": "rival", "note": "宿敵"}])
+    b = Persona(id="b", display_name="ベータ", system_prompt="B です。")
+    c = Persona(id="c", display_name="ガンマ", system_prompt="C です。")
+    mod = Persona(id="mod", display_name="司会", system_prompt="進行", category="facilitation")
+    chair = Persona(id="chair", display_name="議長", system_prompt="まとめ", category="chair")
+
+    # 1. 相手(b)同席 → a に因縁文が立つ。因縁を持たない b には立たない。
+    co = Council([mod, a, b, chair], MockLLMClient(),
+                 phases=[("発散", "d", True)], rounds_per_phase=1)
+    check("a" in co._roster_notes, "相手同席で a に因縁文が立つ")
+    check("ベータ" in co._roster_notes["a"], "因縁文に相手の表示名が入る")
+    check("宿敵" in co._roster_notes["a"], "因縁文に note が入る")
+    check("b" not in co._roster_notes, "因縁を持たない b には立たない")
+
+    # 2. 相手(b)不在 → 注入しない（無関係な討論では従来同一）。
+    solo = Council([mod, a, c, chair], MockLLMClient(),
+                   phases=[("発散", "d", True)], rounds_per_phase=1)
+    check("a" not in solo._roster_notes, "相手不在なら因縁を注入しない")
+
+    # 3. build_context: roster_note を渡すと system 末尾に付く。空なら system 不変（後方互換）。
+    sys_with, _ = build_context(transcript=[], active=a, topic="T", roster_note="【因縁】X")
+    check(sys_with.endswith("【因縁】X"), "roster_note が system 末尾に付く")
+    sys_without, _ = build_context(transcript=[], active=a, topic="T")
+    check(sys_without == a.system_prompt, "roster_note 無しは system 不変（後方互換）")
+
+    # 4. 不正な relationship は弾く（type 不正 / to 欠落）。
+    try:
+        Persona(id="x", display_name="X", system_prompt="x",
+                relationships=[{"to": "b", "type": "foe"}])
+        check(False, "不正な relationship type を弾く")
+    except ValueError:
+        check(True, "不正な relationship type を弾く")
+
+
 if __name__ == "__main__":
     test_context_isolation()
+    test_relationships()
     test_no_silence_and_round_robin()
     test_model_override()
     test_persona_public()

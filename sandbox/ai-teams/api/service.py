@@ -68,6 +68,8 @@ def persona_public(p: Persona) -> dict:
         "tags": list(p.tags),
         "speaks": p.speaks,
         "model": p.model,
+        # 偉人同士の因縁（対立/盟友/師弟）。ピッカーで対立相手をサジェストするのに使う。
+        "relationships": list(p.relationships),
     }
 
 
@@ -1002,6 +1004,7 @@ _PERSONA_WRITE_KEYS = (
     "tags",
     "speaks",
     "accent",
+    "relationships",
 )
 
 

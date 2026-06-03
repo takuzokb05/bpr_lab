@@ -59,6 +59,31 @@ export function PersonaPicker({
     items: filtered.filter((p) => p.category === cat),
   })).filter((g) => g.items.length > 0);
 
+  // 因縁サジェスト: 選択済みペルソナの対立/盟友相手のうち、まだ選んでいない人を提示。
+  // クリックで編成に足せる＝「火花の散る組み合わせ」を狙って作れる。
+  const REL_LABEL: Record<string, string> = {
+    rival: "対立",
+    ally: "盟友",
+    mentor: "師弟",
+    student: "師弟",
+  };
+  const rivalrySuggestions = useMemo(() => {
+    const byId = new Map(personas.map((p) => [p.id, p]));
+    const out: { persona: Persona; type: string }[] = [];
+    const seen = new Set<string>();
+    for (const p of personas) {
+      if (!selected.has(p.id)) continue;
+      for (const rel of p.relationships ?? []) {
+        if (selected.has(rel.to) || seen.has(rel.to)) continue;
+        const target = byId.get(rel.to);
+        if (!target) continue;
+        seen.add(rel.to);
+        out.push({ persona: target, type: rel.type });
+      }
+    }
+    return out;
+  }, [personas, selected]);
+
   function toggleTag(tag: string) {
     setActiveTags((prev) => {
       const next = new Set(prev);
@@ -158,6 +183,36 @@ export function PersonaPicker({
               </button>
             );
           })}
+        </div>
+      )}
+
+      {/* 因縁で足す（選択中ペルソナの対立/盟友相手を提案。クリックで編成に追加） */}
+      {rivalrySuggestions.length > 0 && (
+        <div className="flex flex-col gap-1.5 rounded-md border border-dashed border-[var(--color-line)] px-2.5 py-2">
+          <span className="text-[11px] font-medium uppercase tracking-wider text-[var(--color-ink-muted)]">
+            因縁で足す
+          </span>
+          <div className="flex flex-wrap gap-1.5">
+            {rivalrySuggestions.map(({ persona, type }) => (
+              <button
+                key={persona.id}
+                onClick={() => onToggle(persona.id)}
+                disabled={disabled}
+                title={`${persona.display_name} を編成に足す`}
+                className="flex items-center gap-1 rounded-full border border-[var(--color-line)] px-2 py-0.5 text-[11px] text-[var(--color-ink-muted)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] disabled:opacity-50"
+              >
+                <span
+                  className={
+                    type === "ally" ? "text-[var(--color-accent)]" : "text-[var(--color-onair)]"
+                  }
+                >
+                  {REL_LABEL[type] ?? "因縁"}
+                </span>
+                {persona.display_name}
+                <Plus size={11} />
+              </button>
+            ))}
+          </div>
         </div>
       )}
 

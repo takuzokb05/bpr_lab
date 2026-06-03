@@ -98,6 +98,8 @@ export function PersonaForm({
     };
     if (model.trim()) body.model = model.trim();
     if (temperature.trim()) body.temperature = Number(temperature);
+    // 因縁（relationships）は専用 UI を持たないが、編集保存で消さないよう既存値を round-trip する。
+    if (initial?.relationships?.length) body.relationships = initial.relationships;
 
     try {
       const saved = isEdit
