@@ -872,6 +872,8 @@ export default function Home() {
   // 締めても議場は開いたまま＝終了後の深掘りも同機構（status は paused→running→paused）。
   async function makeMinutes() {
     if (!paused || !sessionId) return;
+    // モバイルでは議事録の生成が成果パネルにしか出ず「止まって見える」ので、成果ドロワーを開く。
+    setMobileOutcomeOpen(true);
     try {
       await closeSession(sessionId);
     } catch (err) {

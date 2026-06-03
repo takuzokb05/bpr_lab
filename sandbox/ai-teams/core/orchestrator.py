@@ -503,6 +503,28 @@ class Council:
                         transcript, topic, emit=emit, ids=ids, pull=pull
                     )
 
+        # 3. 司会クロージング（任意・在席時のみ）。オープニング↔クロージングの対称を取り、
+        #    本編が収束フェーズで唐突に切れる/無言で一時停止に入るのを防ぐ（番組としての締め）。
+        #    議長の議事録(synthesis)とは分掌＝司会は「番組の締め」を1〜2文短く、議事録は別。
+        if self.moderator is not None:
+            turn = self._speak(
+                self.moderator,
+                transcript,
+                topic,
+                phase="closing",
+                round_no=0,
+                phase_directive=(
+                    "【クロージング】本編はここまでです。新しい論点は足さず、今日の到達点と"
+                    "まだ割れている点を1〜2文で短く締めてください。最後に視聴者へ、この後は"
+                    "追い質問の継続・議事録の作成・終了ができることを一言添えること。"
+                ),
+                anti_conformity=False,
+                emit=emit,
+                turn_id=next(ids),
+            )
+            transcript.append(turn)
+            yield turn
+
     def synthesize(
         self,
         topic: str,

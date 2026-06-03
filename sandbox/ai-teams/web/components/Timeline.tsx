@@ -132,6 +132,21 @@ export function Timeline({
             </article>
           );
         })}
+
+        {/* ライフサイクルの終端/議場開放を本文側にも可視化（司会クロージングと対で「終わった感」を作る）。 */}
+        {visible.length > 0 && (status === "paused" || status === "done" || status === "error") && (
+          <div className="my-1 flex items-center gap-2 text-[11px] text-[var(--color-ink-muted)]">
+            <span className="h-px flex-1 bg-[var(--color-line)]" />
+            <span className="shrink-0">
+              {status === "paused"
+                ? "本編終了・議場を開いています"
+                : status === "done"
+                  ? "討論終了 ・ 議事録は右の「成果」へ"
+                  : "討論が中断しました"}
+            </span>
+            <span className="h-px flex-1 bg-[var(--color-line)]" />
+          </div>
+        )}
       </div>
       <div ref={endRef} />
     </div>

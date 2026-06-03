@@ -637,6 +637,11 @@ def finish_floor(session: Session) -> None:
 # floor-open 中の inbox 待機ポーリング間隔（秒）。cancelled を見られるよう短くブロックする。
 _FLOOR_WAIT_POLL = 0.1
 
+# 議場開放（paused）を放置したセッションを自動終了させる idle タイムアウト（秒）。paused は GC
+# されず MAX_ACTIVE を食い潰すため、一定時間入力が無ければ done に落として枠を解放する。
+# env AI_TEAMS_FLOOR_IDLE_TIMEOUT（既定 1800=30分。0 で無制限＝従来動作）。
+_FLOOR_IDLE_TIMEOUT = float(os.environ.get("AI_TEAMS_FLOOR_IDLE_TIMEOUT", "1800"))
+
 
 def _produce(session: Session) -> None:
     """バックグラウンドで討論を完走（非対話）または floor-open ループ（対話）で進める。
@@ -750,6 +755,7 @@ def _produce(session: Session) -> None:
                 return
 
         # floor-open ループ。
+        finished_explicitly = False  # ユーザーが明示 finish で抜けたか（idle/cancel と区別）。
         while True:
             if session.cancelled:
                 break
@@ -757,20 +763,26 @@ def _produce(session: Session) -> None:
             _set_status(session, "paused")
             _append(session, "paused", {"phase": "floor_open"})
 
-            # (b) inbox をブロッキング待機（無期限・無料）。cancelled を一定間隔で見て抜けられる。
+            # (b) inbox をブロッキング待機。cancelled を一定間隔で見て抜けられる。さらに、議場開放の
+            #     まま放置されたセッションは idle タイムアウトで自動終了し active 枠を解放する（paused は
+            #     GC されず MAX_ACTIVE を食い潰し新規討論を 429 で塞ぐため）。env で可変・0 で無制限。
             msg: HumanMessage | None = None
+            idle_start = time.time()
             while msg is None:
                 if session.cancelled:
                     break
+                if _FLOOR_IDLE_TIMEOUT > 0 and time.time() - idle_start > _FLOOR_IDLE_TIMEOUT:
+                    break  # 放置 → finish 相当で floor-open を抜ける（done へ）。
                 try:
                     msg = session.inbox.get(timeout=_FLOOR_WAIT_POLL)
                 except queue.Empty:
                     continue
-            if msg is None:  # cancelled で抜けた
+            if msg is None:  # cancelled / idle timeout で抜けた
                 break
 
             # (c) kind で分岐。
             if msg.kind == "finish":
+                finished_explicitly = True
                 break
             if msg.kind == "close":
                 _set_status(session, "running")
@@ -792,6 +804,21 @@ def _produce(session: Session) -> None:
                 if session.cancelled:
                     break
             # a に戻って再び floor-open。
+
+        # 明示 finish（議事録を作らずに「終了」した）かつ未作成なら、議事録を自動生成して残す
+        # （討論の中心成果物が永久に空のまま終わる穴を塞ぐ）。idle タイムアウトや cancel（放置/
+        # コスト停止）では自動生成しない。失敗しても done を妨げない。
+        if (
+            finished_explicitly
+            and not session.cancelled
+            and not any(getattr(t, "phase", "") == "synthesis" for t in transcript)
+        ):
+            _set_status(session, "running")
+            try:
+                for turn in council.synthesize(session.topic, transcript, emit=emit, ids=ids):
+                    _append(session, "turn_end", {"turn_id": turn.turn_id})
+            except Exception:  # noqa: BLE001 — 議事録生成失敗で終了を妨げない
+                pass
 
         _append(session, "done", {})
         _set_status(session, "done")

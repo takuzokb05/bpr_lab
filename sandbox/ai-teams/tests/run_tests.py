@@ -174,8 +174,16 @@ def test_sse_stream():
     check("error" not in kinds, "error イベントは出ない")
 
     turns = [e for e, k in zip(events, kinds) if k == "turn"]
-    # opening1 + (3人×3フェーズ=9) + synthesis1 = 11（summary 廃止後）
-    check(len(turns) == 11, f"turn 数が想定どおり: {len(turns)}")
+    # opening1 + (3人×3フェーズ=9) + closing1 + synthesis1 = 12
+    # （summary 廃止後・司会クロージング追加。開始↔終了の対称）
+    check(len(turns) == 12, f"turn 数が想定どおり: {len(turns)}")
+    payloads = [
+        json.loads([ln for ln in t.splitlines() if ln.startswith("data: ")][0].removeprefix("data: "))
+        for t in turns
+    ]
+    closing = [p for p in payloads if p.get("phase") == "closing"]
+    check(len(closing) == 1, f"司会クロージングが1回出る: {len(closing)}")
+    check(closing and closing[0]["speaker_id"] == "moderator", "クロージングは司会が行う")
 
     # data 行の JSON 検証（最初の turn）
     data_line = [ln for ln in turns[0].splitlines() if ln.startswith("data: ")][0]

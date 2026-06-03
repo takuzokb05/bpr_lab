@@ -105,6 +105,7 @@ export const PHASE_LABELS: Record<string, string> = {
   発散: "発散",
   批判: "批判",
   収束: "収束",
+  closing: "クロージング",
   summary: "要約",
   synthesis: "統合",
   human: "あなた",
