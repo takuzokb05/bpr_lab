@@ -397,6 +397,7 @@ class Council:
         *,
         emit: Emit | None = None,
         ids: "count[int]",
+        closing: bool = False,
     ) -> Iterator[Turn]:
         """人間ターン(msgs)→司会再提示→パネリスト1周の「深掘り1周」を yield する公開メソッド。
 
@@ -462,6 +463,30 @@ class Council:
                 phase="followup",
                 round_no=round_no,
                 phase_directive=FOLLOWUP_DIRECTIVE,
+                anti_conformity=False,
+                emit=emit,
+                turn_id=next(ids),
+            )
+            transcript.append(turn)
+            yield turn
+
+        # (d) 司会クロージング: 追い質問ラウンドの締め。本編の closing と対称を取り、最後のパネリスト
+        #     発言で唐突に切れて無言で一時停止に入るのを防ぐ（番組としての締め＋次の選択肢の提示）。
+        #     closing=True（floor-open の追い質問）のときだけ締める。本編中の注入（_drain_and_inject）
+        #     では closing=False＝討論の途中に「クロージング」を混入させない。
+        if closing and self.moderator is not None:
+            turn = self._speak(
+                self.moderator,
+                transcript,
+                topic,
+                phase="closing",
+                round_no=round_no,
+                phase_directive=(
+                    "【追い質問の締め（司会）】いまの追い質問で何が明らかになった／変わったかを1〜2文で"
+                    "短くまとめてください。新しい論点は足さないこと。まだ割れているなら、次に投げると"
+                    "深まる問いを1つだけ、事実の有無を尋ねる形でなく登壇者に判断・選択を迫る形で簡潔に"
+                    "添えてよい。最後に、続けて追い質問・議事録の作成・終了ができることを一言添えること。"
+                ),
                 anti_conformity=False,
                 emit=emit,
                 turn_id=next(ids),

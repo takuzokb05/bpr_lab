@@ -875,7 +875,7 @@ def _produce(session: Session) -> None:
             _set_status(session, "running")
             extra = _drain_followups(session.inbox)
             for turn in council.deepen(
-                session.topic, transcript, [msg, *extra], emit=emit, ids=ids
+                session.topic, transcript, [msg, *extra], emit=emit, ids=ids, closing=True
             ):
                 _append(session, "turn_end", {"turn_id": turn.turn_id})
                 # deepen 中のターンも「要調査:」を拾う（synthesize 中は拾わない）。
