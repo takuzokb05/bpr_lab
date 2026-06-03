@@ -1951,9 +1951,38 @@ def test_relationships():
         check(True, "不正な relationship type を弾く")
 
 
+def test_persona_upsert_relationships():
+    """編集保存で因縁が消えない回帰: PersonaUpsert が relationships を model_dump に通す。"""
+    print("[test] PersonaUpsert relationships round-trip (因縁の編集保存)")
+    from api.main import PersonaUpsert
+
+    u = PersonaUpsert(
+        id="x",
+        display_name="X",
+        system_prompt="x",
+        category="thinking",
+        relationships=[{"to": "rival_y", "type": "rival", "note": "宿敵"}],
+    )
+    d = u.model_dump()
+    check("relationships" in d, "model_dump に relationships が含まれる（extra=ignore で消えない）")
+    check(len(d["relationships"]) == 1, "relationships が1件保持される")
+    check(d["relationships"][0]["to"] == "rival_y", "relationship の to が往復する")
+    check(d["relationships"][0]["type"] == "rival", "relationship の type が往復する")
+    # 不正な type は弾く（Literal 検証）
+    try:
+        PersonaUpsert(
+            id="x", display_name="X", system_prompt="x", category="thinking",
+            relationships=[{"to": "y", "type": "foe"}],
+        )
+        check(False, "不正な relationship type を弾く")
+    except Exception:
+        check(True, "不正な relationship type を弾く")
+
+
 if __name__ == "__main__":
     test_context_isolation()
     test_relationships()
+    test_persona_upsert_relationships()
     test_no_silence_and_round_robin()
     test_model_override()
     test_persona_public()

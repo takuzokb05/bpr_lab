@@ -89,11 +89,19 @@ export function saveHistoryEntry(
     const now = Date.now();
     const list = getHistory();
     const existing = list.find((e) => e.id === entry.id);
+    // 縮小上書き防止: 再接続の cursor=0 replay 中は turns が増えながら何度も保存される。
+    // 非終端(running/paused 等)で既存より短い内容が来たら、途中切断による恒久縮小を避けて既存 turns を温存する。
+    const isTerminal = entry.status === "done" || entry.status === "error";
+    const shrinks =
+      !!existing &&
+      Array.isArray(entry.turns) &&
+      entry.turns.length < existing.turns.length;
+    const turns = !isTerminal && shrinks ? existing!.turns : entry.turns;
     const merged: HistoryEntry = {
       id: entry.id,
       topic: entry.topic,
       status: entry.status,
-      turns: entry.turns,
+      turns,
       startedAt: existing?.startedAt ?? entry.startedAt ?? now,
       updatedAt: now,
     };

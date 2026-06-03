@@ -612,6 +612,9 @@ class Session:
     # 協調キャンセル。停止操作で True にすると、プロデューサが次のターン前に打ち切る
     # （実 LLM の発注を止めてコストを抑える）。
     cancelled: bool = False
+    # mock セッションか（client が MockLLMClient）。無料 mock を多数 paused 化して実 LLM
+    # ユーザーの開始枠（MAX_ACTIVE）を塞ぐ DoS を防ぐため、active 集計から除外する。
+    mock: bool = False
 
 
 SESSIONS: dict[str, Session] = {}
@@ -700,6 +703,20 @@ _FLOOR_WAIT_POLL = 0.1
 # されず MAX_ACTIVE を食い潰すため、一定時間入力が無ければ done に落として枠を解放する。
 # env AI_TEAMS_FLOOR_IDLE_TIMEOUT（既定 1800=30分。0 で無制限＝従来動作）。
 _FLOOR_IDLE_TIMEOUT = float(os.environ.get("AI_TEAMS_FLOOR_IDLE_TIMEOUT", "1800"))
+
+
+def _has_new_content_since_synthesis(transcript: list) -> bool:
+    """前回 synthesis 以降に、新しい非 synthesis 発言があるか（close の冪等化判定）。
+
+    transcript を末尾から走査し、最後の synthesis ターンより後に非 synthesis ターンが
+    1つでもあれば True。synthesis がまだ1つも無ければ常に True（初回 close は必ず作る）。
+    False のときは「前回と同じ内容で議事録を二重生成」になるため close 側で synthesize を skip する。
+    """
+    for t in reversed(transcript):
+        if getattr(t, "phase", "") == "synthesis":
+            return False  # 最後に来たのが synthesis ＝以降に新発言なし → 作り直さない
+        return True  # 末尾が非 synthesis ＝新しい発言がある → 作る
+    return False  # transcript が空（理屈上は起きない）なら作らない
 
 
 def _produce(session: Session) -> None:
@@ -822,6 +839,7 @@ def _produce(session: Session) -> None:
 
         # floor-open ループ。
         finished_explicitly = False  # ユーザーが明示 finish で抜けたか（idle/cancel と区別）。
+        idle_timed_out = False  # idle タイムアウトで抜けたか（議事録は自動生成する／cancel とは区別）。
         while True:
             if session.cancelled:
                 break
@@ -838,6 +856,7 @@ def _produce(session: Session) -> None:
                 if session.cancelled:
                     break
                 if _FLOOR_IDLE_TIMEOUT > 0 and time.time() - idle_start > _FLOOR_IDLE_TIMEOUT:
+                    idle_timed_out = True  # 放置による終了（cancel と区別。議事録は自動生成する）。
                     break  # 放置 → finish 相当で floor-open を抜ける（done へ）。
                 try:
                     msg = session.inbox.get(timeout=_FLOOR_WAIT_POLL)
@@ -851,6 +870,11 @@ def _produce(session: Session) -> None:
                 finished_explicitly = True
                 break
             if msg.kind == "close":
+                # 二重 synthesize 防止（冪等化）。前回 synthesis 以降に新しい非 synthesis 発言
+                # （human/followup/researcher 等）が無ければ、同一内容の議事録を二重生成・二重課金
+                # しないよう skip して floor-open に戻る。
+                if not _has_new_content_since_synthesis(transcript):
+                    continue
                 _set_status(session, "running")
                 for turn in council.synthesize(session.topic, transcript, emit=emit, ids=ids):
                     _append(session, "turn_end", {"turn_id": turn.turn_id})
@@ -871,11 +895,12 @@ def _produce(session: Session) -> None:
                     break
             # a に戻って再び floor-open。
 
-        # 明示 finish（議事録を作らずに「終了」した）かつ未作成なら、議事録を自動生成して残す
-        # （討論の中心成果物が永久に空のまま終わる穴を塞ぐ）。idle タイムアウトや cancel（放置/
-        # コスト停止）では自動生成しない。失敗しても done を妨げない。
+        # 明示 finish または idle タイムアウトで（議事録未作成のまま）抜けたなら、議事録を自動生成
+        # して残す（討論の中心成果物が永久に空のまま done になる穴を塞ぐ）。idle 放置でも1回は議事録
+        # を作ってから done にする。cancel（明示停止/コスト停止）だけは自動生成しない（コスト抑制の
+        # 意図を尊重）。失敗しても done を妨げない。
         if (
-            finished_explicitly
+            (finished_explicitly or idle_timed_out)
             and not session.cancelled
             and not any(getattr(t, "phase", "") == "synthesis" for t in transcript)
         ):
@@ -919,14 +944,22 @@ def start_session(council: Council, topic: str, *, interactive: bool = False) ->
     interactive=False（既定）なら従来どおり自動完走する（直接呼ぶ既存テストの後方互換）。
     interactive=True なら本編後に floor-open（一時停止）してユーザー入力を待つ。
     """
+    # client が MockLLMClient なら mock セッション（無料・課金なし）。active 集計から除外する。
+    is_mock = isinstance(council.client, MockLLMClient)
     session = Session(
-        id=uuid.uuid4().hex, topic=topic, council=council, interactive=interactive
+        id=uuid.uuid4().hex, topic=topic, council=council, interactive=interactive,
+        mock=is_mock,
     )
     with _REGISTRY_LOCK:
         _gc_locked()
         # 進行中（running/paused）の同時上限。paused は GC されないので、ここで生成を絞り
         # スレッド/メモリ枯渇（公開時の DoS）を防ぐ。done/error は数に含めない。
-        active = sum(1 for s in SESSIONS.values() if s.status in _ALIVE_STATUSES)
+        # mock は無料で枠を塞いでも実害が無く、これを集計に入れると無料 mock の大量 paused 化で
+        # 実 LLM ユーザーの開始枠を 429 で塞げてしまう（DoS）。mock は除外して実セッションだけ数える。
+        active = sum(
+            1 for s in SESSIONS.values()
+            if s.status in _ALIVE_STATUSES and not s.mock
+        )
         if active >= MAX_ACTIVE_SESSIONS:
             raise CapacityError(
                 f"同時に進行できる討論は {MAX_ACTIVE_SESSIONS} 件までです。"

@@ -27,6 +27,8 @@ export type StreamEvent =
   // floor-open（議場開放）: 本編フェーズの後、自動 synthesis せず入力待ちに入った合図。
   // フロントは追い質問入力＋「議事録を作る」「終了」を提示する（凍結契約: floor-open）。
   | { type: "paused"; phase?: string; ts?: number }
+  // セッション消失（サーバ再起動/TTL で 404）。再接続ループが復帰不可を UI に通知する合図。
+  | { type: "gone" }
   | { type: "error"; message: string; ts?: number }
   | { type: "done"; ts?: number };
 
@@ -122,7 +124,10 @@ export async function startSession({
     return;
   }
 
-  const state: PumpState = { sessionId: null, lastSeq: -1, terminal: false };
+  // start イベント前に切断しても再接続できるよう、レスポンスヘッダから sessionId を先取りする
+  // （バックエンドが create_session の StreamingResponse に X-Session-Id を載せる契約）。
+  const headerSid = res.headers.get("X-Session-Id");
+  const state: PumpState = { sessionId: headerSid ?? null, lastSeq: -1, terminal: false };
   await pump(res, state, onEvent);
   await runReconnectLoop(state, onEvent, signal);
 }
@@ -157,8 +162,18 @@ async function runReconnectLoop(
       await pump(r, state, onEvent);
       continue;
     }
-    if (r && r.status === 404) break; // サーバがセッションを失った＝復帰不可
-    if (++attempts > MAX_ATTEMPTS) break; // 一時エラーが続く: 諦める（復帰は visibilitychange / 再読込）
+    if (r && r.status === 404) {
+      // サーバがセッションを失った＝復帰不可。UI が "running" 固着しないよう通知して終端化する。
+      onEvent({ type: "gone" });
+      state.terminal = true;
+      break;
+    }
+    if (++attempts > MAX_ATTEMPTS) {
+      // 一時エラーが続く: 諦める（復帰は visibilitychange / 再読込）。UI に固着させず通知して終端化する。
+      onEvent({ type: "error", message: "接続が回復しませんでした。ページを再読み込みすると復帰できます。" });
+      state.terminal = true;
+      break;
+    }
     await new Promise((resolve) => setTimeout(resolve, 1500)); // バックオフ
   }
 }
@@ -336,8 +351,9 @@ export async function sendFollowup(sessionId: string, text: string): Promise<voi
     body: JSON.stringify({ kind: "followup", text, target: null }),
   });
   // 2xx を成功とみなす（202 固定に依存しない＝プロキシが 200/204 にしても壊れない）。
+  // ApiError で投げる＝page.tsx の `err instanceof ApiError` 判定が効きグレースフル復帰へ落ちる。
   if (!res.ok) {
-    throw new Error(await errorDetail(res));
+    throw new ApiError(res.status, await errorDetail(res));
   }
 }
 

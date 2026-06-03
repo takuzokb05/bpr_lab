@@ -130,6 +130,16 @@ def persona_from_dict(data: dict[str, Any]) -> Persona:
     unknown = set(data) - known
     if unknown:
         raise ValueError(f"未知のキー {sorted(unknown)} (persona '{data.get('id')}')")
+    # relationships は要素 dict のリスト。単一 dict を誤って書いた場合は [dict] に正規化し、
+    # それ以外の非リスト（mapping 直書き等）は list() がキー名の並びになって誤検証されるため明示的に弾く。
+    rels = data.get("relationships", [])
+    if isinstance(rels, dict):
+        rels = [rels]
+    elif not isinstance(rels, list):
+        raise ValueError(
+            f"persona '{data.get('id')}' の relationships はリストで指定してください "
+            f"(実際の型: {type(rels).__name__})"
+        )
     return Persona(
         id=data["id"],
         display_name=data.get("display_name", data["id"]),
@@ -141,7 +151,7 @@ def persona_from_dict(data: dict[str, Any]) -> Persona:
         tags=list(data.get("tags", [])),
         speaks=bool(data.get("speaks", True)),
         accent=data.get("accent"),
-        relationships=list(data.get("relationships", [])),
+        relationships=list(rels),
     )
 
 
@@ -168,7 +178,12 @@ def load_personas_with_paths(directory: str | Path) -> list[tuple[Persona, Path]
             data = yaml.safe_load(f)
         if not isinstance(data, dict):
             raise ValueError(f"{path}: トップレベルは mapping である必要があります")
-        persona = persona_from_dict(data)
+        # 1件の不正で全体ロードを落とす挙動は維持しつつ、原因ファイルの path を必ず示す
+        # （現状は persona id だけで、どの YAML が壊れているか特定が困難なため）。
+        try:
+            persona = persona_from_dict(data)
+        except (ValueError, KeyError) as e:
+            raise ValueError(f"{path}: persona の読み込みに失敗しました: {e}") from e
         if persona.id in seen:
             raise ValueError(
                 f"persona id '{persona.id}' が重複しています: {seen[persona.id]} と {path}"

@@ -9,9 +9,25 @@ v2 の不安定さの主因だった「3社マルチ API 吸収」をやめ、IF
 
 from __future__ import annotations
 
+import logging
 import os
 from abc import ABC, abstractmethod
 from typing import Callable, Iterator
+
+# truncation 警告などを出すロガー（標準 logging。ハンドラ未設定なら呼び出し側/アプリ既定に従う）。
+logger = logging.getLogger("ai_teams.llm")
+
+# 字数上限で途中までしか返らなかったときに末尾へ付ける目印。
+_TRUNCATION_MARKER = "…（字数上限で途中まで）"
+
+
+def _llm_timeout() -> float:
+    """SDK クライアントのタイムアウト秒。env AI_TEAMS_LLM_TIMEOUT で可変（既定 600 秒）。"""
+    try:
+        return float(os.environ.get("AI_TEAMS_LLM_TIMEOUT", "600") or "600")
+    except ValueError:
+        return 600.0
+
 
 # エンジン既定モデル。ペルソナ側で model を指定すればそちらが優先される。
 # 意思決定の討論は低頻度・高単価でも質を優先するため既定を Opus にする。
@@ -103,8 +119,12 @@ class AnthropicClient(LLMClient):
     def __init__(self, api_key: str | None = None, max_tokens: int | None = None) -> None:
         import anthropic  # 遅延 import
 
+        # SDK にも明示タイムアウトを渡す（未設定だと長時間ハングし得る）。env で可変。
+        timeout = _llm_timeout()
         self._client = (
-            anthropic.Anthropic(api_key=api_key) if api_key else anthropic.Anthropic()
+            anthropic.Anthropic(api_key=api_key, timeout=timeout)
+            if api_key
+            else anthropic.Anthropic(timeout=timeout)
         )
         # 1024 では Opus 4.8 の豊かな発言が文中で切れる。既定 2048・AI_TEAMS_MAX_TOKENS で可変。
         # max_tokens は上限であり、モデルは必要分で停止するので過大でも常時その量を消費はしない。
@@ -145,9 +165,15 @@ class AnthropicClient(LLMClient):
                 temperature=temperature, max_tokens=max_tokens,
             )
         )
-        return "".join(
+        text = "".join(
             block.text for block in resp.content if getattr(block, "type", None) == "text"
         ).strip()
+        # max_tokens 到達（途中切れ）を検出して警告し、末尾に目印を付ける。
+        if getattr(resp, "stop_reason", None) == "max_tokens":
+            logger.warning("Anthropic 応答が max_tokens で途中切れ (model=%s)", model)
+            if text:
+                text += _TRUNCATION_MARKER
+        return text
 
     def generate_stream(
         self,
@@ -168,6 +194,14 @@ class AnthropicClient(LLMClient):
             for text in stream.text_stream:
                 if text:
                     yield text
+            # ストリーム完了後、最終メッセージの stop_reason で途中切れを検出して警告＋目印。
+            try:
+                final = stream.get_final_message()
+            except Exception:  # noqa: BLE001 — 検出はベストエフォート（本流を止めない）
+                final = None
+            if getattr(final, "stop_reason", None) == "max_tokens":
+                logger.warning("Anthropic ストリームが max_tokens で途中切れ (model=%s)", model)
+                yield _TRUNCATION_MARKER
 
     def web_research(self, query: str) -> str:
         """Anthropic web_search ツールで query を調べ、出典付きブリーフを1文字列で返す。
@@ -277,14 +311,15 @@ class OpenAIClient(LLMClient):
         self._base_url = (base_url or "").rstrip("/")
         key = (api_key or os.environ.get("AI_TEAMS_LOCAL_API_KEY") or "local") if base_url else api_key
         self._api_key_value = key
-        kwargs: dict = {}
+        # SDK にも明示タイムアウトを渡す（未設定だと長時間ハングし得る）。env で可変。
+        kwargs: dict = {"timeout": _llm_timeout()}
         if base_url:
             kwargs["base_url"] = base_url
             # ローカル(Ollama 等)は鍵不要だが OpenAI SDK が api_key を要求するためダミーを入れる。
             kwargs["api_key"] = key
         elif api_key:
             kwargs["api_key"] = api_key
-        self._client = OpenAI(**kwargs) if kwargs else OpenAI()
+        self._client = OpenAI(**kwargs)
         self._model = model or _OPENAI_DEFAULT_MODEL
         self._max_tokens = max_tokens or int(os.environ.get("AI_TEAMS_MAX_TOKENS", "2048"))
 
@@ -385,6 +420,32 @@ class OpenAIClient(LLMClient):
         except Exception:  # noqa: BLE001 — 救済の失敗で討論を止めない
             return ""
 
+    def _retry_cloud_empty(
+        self, system: str, messages: list[Message], temperature: float, max_tokens: int | None = None
+    ) -> str:
+        """クラウド空ターン救済: 推論(reasoning_effort)を抑え出力枠を増やして1回だけ取り直す。
+
+        クラウドの GPT-5/o 系（推論モデル）は内部推論が max_completion_tokens を食い切って可視
+        content が空になることがある。クラウドは extra_body ではなく **top-level** の
+        reasoning_effort / max_completion_tokens を使う点が local 経路（_retry_no_reasoning）と異なる
+        ため、流用せず専用に書く。reasoning_effort='minimal' で予算を可視出力へ回す。
+        失敗しても空文字を返す（討論は止めない）。
+        """
+        try:
+            params: dict = {
+                "model": self._model,
+                "messages": self._messages(system, messages),
+                "max_completion_tokens": max(
+                    self._max_tokens if max_tokens is None else max_tokens, 4096
+                ),
+                # 推論モデルは temperature 既定(1)以外を拒否するので送らない（_params と同方針）。
+                "reasoning_effort": "minimal",
+            }
+            resp = self._client.chat.completions.create(**params)
+            return (resp.choices[0].message.content or "").strip()
+        except Exception:  # noqa: BLE001 — 救済の失敗で討論を止めない
+            return ""
+
     def generate(
         self,
         *,
@@ -398,9 +459,21 @@ class OpenAIClient(LLMClient):
             **self._params(system, messages, temperature, max_tokens)
         )
         content = (resp.choices[0].message.content or "").strip()
+        retried = False
         # local（思考モデル）が空を返したら reasoning を切って取り直す（空ターン防止）。
         if self._local and not content:
             content = self._retry_no_reasoning(system, messages, temperature, max_tokens)
+            retried = True
+        # クラウド（GPT-5/o 系 推論モデル）が空を返したら reasoning を抑えて取り直す（空ターン防止）。
+        elif not self._local and not content:
+            content = self._retry_cloud_empty(system, messages, temperature, max_tokens)
+            retried = True
+        # max_tokens(=finish_reason "length") 到達の途中切れを検出して警告＋目印。
+        # ただし空→救済リトライ済みのときは初回 resp の finish_reason は当てにならないので付けない。
+        if not retried and getattr(resp.choices[0], "finish_reason", None) == "length":
+            logger.warning("OpenAI 応答が length(max_tokens) で途中切れ (model=%s)", self._model)
+            if content:
+                content += _TRUNCATION_MARKER
         return content
 
     def generate_stream(
@@ -416,17 +489,38 @@ class OpenAIClient(LLMClient):
             **self._params(system, messages, temperature, max_tokens), stream=True
         )
         got: list[str] = []
+        finish_reason: str | None = None
         for chunk in stream:
-            delta = chunk.choices[0].delta.content if chunk.choices else None
+            if not chunk.choices:
+                continue
+            delta = chunk.choices[0].delta.content
+            # finish_reason は終端チャンクに乗る（途中切れ "length" 検出用に最後の値を保持）。
+            fr = getattr(chunk.choices[0], "finish_reason", None)
+            if fr:
+                finish_reason = fr
             if delta:
                 got.append(delta)
                 yield delta
+        produced = "".join(got).strip()
+        retried = False
         # local（思考モデル）が何も発しなかったら reasoning を切って取り直し、その全文を流す
         # （「発言者が無言で次へ流れる」空ターンの根治）。
-        if self._local and not "".join(got).strip():
+        if self._local and not produced:
             retry = self._retry_no_reasoning(system, messages, temperature, max_tokens)
+            retried = True
             if retry:
                 yield retry
+        # クラウド（GPT-5/o 系 推論モデル）が空ターンなら reasoning を抑えて取り直し全文を流す。
+        elif not self._local and not produced:
+            retry = self._retry_cloud_empty(system, messages, temperature, max_tokens)
+            retried = True
+            if retry:
+                yield retry
+        # max_tokens(=finish_reason "length") 到達の途中切れを検出して警告＋目印。
+        # 空→救済リトライ済みのときは初回ストリームの finish_reason は当てにならないので付けない。
+        if not retried and finish_reason == "length":
+            logger.warning("OpenAI ストリームが length(max_tokens) で途中切れ (model=%s)", self._model)
+            yield _TRUNCATION_MARKER
 
     def web_research(self, query: str) -> str:
         """内製（local）経路の Web 検索。
@@ -466,7 +560,8 @@ class OpenAIClient(LLMClient):
             method="POST",
         )
         try:
-            with urllib.request.urlopen(req, timeout=120) as resp:
+            # 直 HTTP の urlopen も SDK 経路と同じタイムアウト方針に揃える（env で可変・既定 600）。
+            with urllib.request.urlopen(req, timeout=_llm_timeout()) as resp:
                 data = json.loads(resp.read().decode("utf-8"))
         except Exception as exc:  # noqa: BLE001 — 失敗しても討論を止めず、その旨を返す
             return f"（調査に失敗: {exc}）"
@@ -501,7 +596,20 @@ class GeminiClient(LLMClient):
     def __init__(self, api_key: str | None = None, model: str | None = None, max_tokens: int | None = None) -> None:
         from google import genai  # 遅延 import
 
-        self._client = genai.Client(api_key=api_key) if api_key else genai.Client()
+        # google-genai は http_options.timeout を **ミリ秒** で受ける。env 既定 600 秒→ms に換算。
+        # SDK 版差で HttpOptions/timeout 非対応なら安全側で timeout 無しにフォールバック（握りつぶさない）。
+        client_kwargs: dict = {}
+        if api_key:
+            client_kwargs["api_key"] = api_key
+        try:
+            from google.genai import types as _genai_types
+
+            client_kwargs["http_options"] = _genai_types.HttpOptions(
+                timeout=int(_llm_timeout() * 1000)
+            )
+        except Exception:  # noqa: BLE001 — 古い SDK 等で非対応なら timeout 無しで生成
+            pass
+        self._client = genai.Client(**client_kwargs)
         self._model = model or _GEMINI_DEFAULT_MODEL
         self._max_tokens = max_tokens or int(os.environ.get("AI_TEAMS_MAX_TOKENS", "2048"))
 
@@ -531,6 +639,22 @@ class GeminiClient(LLMClient):
                 pass  # SDK が thinking_level 非対応なら無理に付けない（古い SDK 等）
         return types.GenerateContentConfig(**kwargs)
 
+    @staticmethod
+    def _is_truncated(resp) -> bool:
+        """Gemini 応答が MAX_TOKENS（字数上限）で途中切れか判定する。
+
+        candidate.finish_reason は enum（FinishReason.MAX_TOKENS）か文字列で来る版があるので、
+        どちらでも拾えるよう name/str を見て "MAX_TOKENS" を含むかで判定する。
+        """
+        for cand in getattr(resp, "candidates", None) or []:
+            fr = getattr(cand, "finish_reason", None)
+            if fr is None:
+                continue
+            name = getattr(fr, "name", None) or str(fr)
+            if "MAX_TOKENS" in name.upper():
+                return True
+        return False
+
     def generate(
         self, *, system: str, messages: list[Message], model: str,
         temperature: float = 0.7, max_tokens: int | None = None,
@@ -540,7 +664,13 @@ class GeminiClient(LLMClient):
             contents=self._contents(messages),
             config=self._config(system, temperature, max_tokens),
         )
-        return (getattr(resp, "text", "") or "").strip()
+        text = (getattr(resp, "text", "") or "").strip()
+        # max_output_tokens 到達（途中切れ）を検出して警告し、末尾に目印を付ける。
+        if self._is_truncated(resp):
+            logger.warning("Gemini 応答が MAX_TOKENS で途中切れ (model=%s)", self._model)
+            if text:
+                text += _TRUNCATION_MARKER
+        return text
 
     def generate_stream(
         self, *, system: str, messages: list[Message], model: str,
@@ -551,10 +681,17 @@ class GeminiClient(LLMClient):
             contents=self._contents(messages),
             config=self._config(system, temperature, max_tokens),
         )
+        truncated = False
         for chunk in stream:
             text = getattr(chunk, "text", None)
             if text:
                 yield text
+            # 終端チャンクの finish_reason で途中切れを拾う（ストリームでも検出）。
+            if self._is_truncated(chunk):
+                truncated = True
+        if truncated:
+            logger.warning("Gemini ストリームが MAX_TOKENS で途中切れ (model=%s)", self._model)
+            yield _TRUNCATION_MARKER
 
     def web_research(self, query: str) -> str:
         return _RESEARCH_UNSUPPORTED

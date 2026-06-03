@@ -141,6 +141,12 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [streamingTurnId, setStreamingTurnId] = useState<number | null>(null);
   const [sessionId, setSessionId] = useState<string | null>(null);
+  // 議事録生成（synthesis）の多重実行ガード。二度押しで close が2発飛ぶ＝二重課金を防ぐ。
+  // ref は即時判定用（state 反映前の連打に勝つ）、state はボタン disabled 用。
+  const makingMinutesRef = useRef(false);
+  const [makingMinutes, setMakingMinutes] = useState(false);
+  // ストリーミング中ターンの phase を保持（turn_end で synthesis 完了を判定しガード解除する）。
+  const streamingPhaseRef = useRef<string | null>(null);
 
   const [health, setHealth] = useState<Health | null>(null);
   // BYOK: 各自のキー＋プロバイダ。localStorage が実体（SSR/export 時は空なので mount 後に読む）。
@@ -481,9 +487,11 @@ export default function Home() {
     // floor-open（paused）での停止は「終了」に寄せる：サーバが議事録を作ってから done になり、
     // 「討論したのに成果ゼロ」を防ぐ（議事録＋done はストリームで届くので abort しない）。
     if (paused && sessionId) {
-      finishSession(sessionId).catch((err) =>
-        setError(err instanceof Error ? err.message : String(err))
-      );
+      // 404（セッション消失）は finishCouncil と同様にグレースフルに畳む（paused 固着を防ぐ）。
+      finishSession(sessionId).catch((err) => {
+        if (err instanceof ApiError && err.status === 404) handleSessionGone();
+        else setError(err instanceof Error ? err.message : String(err));
+      });
       return;
     }
     // running 中の停止＝協調キャンセル（次ターンの実 LLM 発注を止めて課金を抑える）。
@@ -642,6 +650,7 @@ export default function Home() {
         ];
       });
       setStreamingTurnId(e.turnId);
+      streamingPhaseRef.current = e.phase; // turn_end での synthesis 判定用
     } else if (e.type === "delta") {
       setTurns((prev) =>
         prev.map((t) =>
@@ -650,9 +659,21 @@ export default function Home() {
       );
     } else if (e.type === "turn_end") {
       setStreamingTurnId((cur) => (cur === e.turnId ? null : cur));
+      // synthesis ターンが出そろったら議事録ガードを解除（再度「作り直す」が押せる）。
+      if (streamingPhaseRef.current === "synthesis") {
+        makingMinutesRef.current = false;
+        setMakingMinutes(false);
+      }
+      streamingPhaseRef.current = null;
     } else if (e.type === "paused") {
       setStatus("paused");
       setStreamingTurnId(null);
+      // paused 再遷移でも議事録ガードを解除（turn_end を取りこぼしても固着しない保険）。
+      makingMinutesRef.current = false;
+      setMakingMinutes(false);
+    } else if (e.type === "gone") {
+      // セッションがサーバから消失（404 再接続/枯渇）。paused 固着させず畳んで続ける導線へ。
+      handleSessionGone();
     } else if (e.type === "error") {
       setError(e.message);
       setStatus("error");
@@ -954,11 +975,19 @@ export default function Home() {
   // 締めても議場は開いたまま＝終了後の深掘りも同機構（status は paused→running→paused）。
   async function makeMinutes() {
     if (!paused || !sessionId) return;
+    // 多重実行ガード: 二度押しで close が2発飛ぶ＝二重 synthesis 課金を防ぐ。
+    // ガード解除は synthesis ターンの turn_end 受領、または paused 再遷移時（handleEvent）。
+    if (makingMinutesRef.current) return;
+    makingMinutesRef.current = true;
+    setMakingMinutes(true);
     // モバイルでは議事録の生成が成果パネルにしか出ず「止まって見える」ので、成果ドロワーを開く。
     setMobileOutcomeOpen(true);
     try {
       await closeSession(sessionId);
     } catch (err) {
+      // 送信自体が失敗したらガードを戻す（turn_end が来ず固着するのを防ぐ）。
+      makingMinutesRef.current = false;
+      setMakingMinutes(false);
       if (err instanceof ApiError && err.status === 404) handleSessionGone();
       else setError(err instanceof Error ? err.message : String(err));
     }
@@ -1373,7 +1402,8 @@ export default function Home() {
                 <div className="flex shrink-0 items-center gap-2">
                   <button
                     onClick={makeMinutes}
-                    className="flex items-center gap-1.5 rounded-md border border-[var(--color-line)] px-3 py-1.5 text-xs hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+                    disabled={makingMinutes}
+                    className="flex items-center gap-1.5 rounded-md border border-[var(--color-line)] px-3 py-1.5 text-xs hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] disabled:cursor-not-allowed disabled:opacity-40"
                   >
                     <FileText size={13} /> {hasMinutes ? "議事録を作り直す" : "議事録を作る"}
                   </button>
