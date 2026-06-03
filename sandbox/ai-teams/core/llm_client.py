@@ -253,11 +253,16 @@ class AnthropicClient(LLMClient):
                     seen_urls.add(url)
                     urls.append(url)
 
-        brief = "\n".join(texts).strip()
+        # 要約本文と出典を分離して空判定する（出典を足した後に判定すると、要約が空で出典だけ
+        # でも「非空」になり、リンクだけの調査結果がそのまま流れてしまうため）。
+        summary = "\n".join(texts).strip()
+        if not summary and not urls:
+            return f"（調査結果が空でした: {query}）"
+        if not summary:
+            summary = "（検索はできましたが、要約テキストが生成されませんでした。下記の出典をご確認ください）"
+        brief = summary
         if urls:
             brief += "\n\n出典:\n" + "\n".join(f"- {u}" for u in urls)
-        if not brief:
-            return f"（調査結果が空でした: {query}）"
         return brief
 
 
@@ -535,16 +540,44 @@ class OpenAIClient(LLMClient):
         return _RESEARCH_UNSUPPORTED
 
     def _openrouter_web_research(self, query: str) -> str:
+        summary, urls = self._openrouter_search_once(query, no_reasoning=False)
+        # 推論モデルが web_search の引用だけ返して要約本文(content)を空で返すことがある。
+        # その場合は推論を切り「出典の列挙で終わらせず必ず要約を書け」と促して一度だけ取り直す
+        # （generate 側の空ターン救済 _retry_no_reasoning と同じ思想を調査経路にも適用）。
+        if not summary:
+            summary2, urls2 = self._openrouter_search_once(query, no_reasoning=True)
+            if summary2:
+                summary = summary2
+            if not urls:
+                urls = urls2
+        if not summary and not urls:
+            return f"（調査結果が空でした: {query}）"
+        # 取り直しても要約が出ない時は、出典は活かしつつ要約欠落を明示する（リンクだけにしない）。
+        if not summary:
+            summary = "（検索はできましたが、要約テキストが生成されませんでした。下記の出典をご確認ください）"
+        text = summary
+        if urls:
+            text += "\n\n出典:\n" + "\n".join(f"- {u}" for u in urls)
+        return text
+
+    def _openrouter_search_once(self, query: str, *, no_reasoning: bool) -> tuple[str, list[str]]:
+        """OpenRouter web_search を1回叩き、(要約本文, 出典URL列) を返す。要約と出典を分離して返すのが要点
+        （呼び出し側が『出典だけで要約が空』を検出できるように）。失敗時は ("（調査に失敗…）", []) を返す。"""
         import json
         import urllib.request
 
         prompt = _RESEARCH_PROMPT_TEMPLATE.format(query=query)
+        if no_reasoning:
+            # 取り直し: 推論を切って出力枠を本文に回し、要約を必ず書かせる。
+            prompt += "\n\n重要: 出典URLの列挙だけで終わらせず、検索で分かった事実の要約を必ず本文として書くこと。"
         body: dict = {
             "model": self._model,
             "messages": [{"role": "user", "content": prompt}],
             "tools": [{"type": "openrouter:web_search"}],
             "max_tokens": self._max_tokens,
         }
+        if no_reasoning:
+            body["reasoning"] = {"enabled": False}  # OpenRouter 統一 reasoning トグル（本文を直接出させる）
         # 検閲の強い下流プロバイダ（Venice 等）を避ける（検索結果が弾かれないように）。
         prov = self._openrouter_provider()
         if prov:
@@ -564,11 +597,11 @@ class OpenAIClient(LLMClient):
             with urllib.request.urlopen(req, timeout=_llm_timeout()) as resp:
                 data = json.loads(resp.read().decode("utf-8"))
         except Exception as exc:  # noqa: BLE001 — 失敗しても討論を止めず、その旨を返す
-            return f"（調査に失敗: {exc}）"
+            return (f"（調査に失敗: {exc}）", [])
 
         choices = data.get("choices") or [{}]
         msg = choices[0].get("message", {}) if choices else {}
-        text = (msg.get("content") or "").strip()
+        summary = (msg.get("content") or "").strip()
         # url_citation annotations から出典 URL を集める（重複排除・順序維持）。
         urls: list[str] = []
         seen: set[str] = set()
@@ -578,11 +611,7 @@ class OpenAIClient(LLMClient):
             if u and u not in seen:
                 seen.add(u)
                 urls.append(u)
-        if urls:
-            text += "\n\n出典:\n" + "\n".join(f"- {u}" for u in urls)
-        if not text:
-            return f"（調査結果が空でした: {query}）"
-        return text
+        return (summary, urls)
 
 
 class GeminiClient(LLMClient):
