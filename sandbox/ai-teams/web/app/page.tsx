@@ -45,7 +45,6 @@ import {
 } from "@/lib/config";
 import { PersonaPicker } from "@/components/PersonaPicker";
 import { PresetBar } from "@/components/PresetBar";
-import { LlmToggle } from "@/components/LlmToggle";
 import { KeyEntry } from "@/components/KeyEntry";
 import { VerbositySelect } from "@/components/VerbositySelect";
 import { ModeSelect } from "@/components/ModeSelect";
@@ -116,8 +115,11 @@ export default function Home() {
   const [topicInput, setTopicInput] = useState("");
   const [activeTopic, setActiveTopic] = useState<string | null>(null);
 
-  // 準備フェーズ（idle のみ）: 資料・前提と主訴確認。討論中/paused/done では一切出さない。
-  const [materials, setMaterials] = useState("");
+  // 準備フェーズ（idle のみ）: 添付資料と主訴確認。討論中/paused/done では一切出さない。
+  // テキストの前提はプロンプト（議題欄）に直接書く。資料はプロンプト欄の📎から取り込み、
+  // materials はその添付から派生させる（別フィールドを持たない）。
+  const [attachments, setAttachments] = useState<{ name: string; content: string }[]>([]);
+  const materials = attachments.map((a) => `【${a.name}】\n${a.content}`).join("\n\n");
   // 主訴確認トグル（Web 検索と同じ作法）。ON にすると議題から確認質問を自動生成する。
   // 既定 OFF で従来同一（質問なしで即開始できる）。
   const [intakeEnabled, setIntakeEnabled] = useState(false);
@@ -139,7 +141,6 @@ export default function Home() {
   const [streamingTurnId, setStreamingTurnId] = useState<number | null>(null);
   const [sessionId, setSessionId] = useState<string | null>(null);
 
-  const [useLlm, setUseLlm] = useState(false); // GAP5: 既定は mock（無料）
   const [health, setHealth] = useState<Health | null>(null);
   // BYOK: 各自のキー＋プロバイダ。localStorage が実体（SSR/export 時は空なので mount 後に読む）。
   const [userKey, setUserKeyState] = useState("");
@@ -416,8 +417,10 @@ export default function Home() {
     : byok
       ? userKey.trim().length > 0
       : (health?.api_key_set ?? false);
-  // 実 LLM が実際に使われるか（mock = NOT(useLlm AND keyAvailable)。キーが無ければ常に mock）。
-  const willUseRealLlm = useLlm && keyAvailable;
+  // 実 LLM が実際に使われるか。Mock トグルは撤廃し、既定で常に実 LLM を使う。
+  // キーが無い（BYOK 未入力／サーバ未設定）ときだけ自動で mock に落ちる＝安全弁＋無料。
+  // 内製固定（force_local）の本番ではキー所在が常にあるため、必ず実 LLM で動く。
+  const willUseRealLlm = keyAvailable;
   // 対応プロバイダ（health から。未取得時は全 3 社）。
   const availableProviders = (health?.providers as LlmProvider[] | undefined) ?? LLM_PROVIDERS;
   // Web 検索（調査役）が使える provider 一覧。内製固定なら local_search の有無で決まる。
@@ -501,7 +504,7 @@ export default function Home() {
     setStreamingTurnId(null);
     setError(null);
     setTopicInput("");
-    setMaterials("");
+    setAttachments([]);
     setIntakeQuestions([]);
     setIntakeAnswers({});
   }
@@ -573,21 +576,35 @@ export default function Home() {
   function onAttachFiles(e: React.ChangeEvent<HTMLInputElement>) {
     const files = e.target.files;
     if (!files || files.length === 0) return;
+    type Attachment = { name: string; content: string };
     const readers = Array.from(files).map(
       (file) =>
-        new Promise<string>((resolve) => {
+        new Promise<Attachment | null>((resolve) => {
           const reader = new FileReader();
-          reader.onload = () => resolve(`【${file.name}】\n${String(reader.result ?? "")}`);
-          reader.onerror = () => resolve(""); // 読めないファイルは黙って飛ばす（他は活かす）
+          reader.onload = () => {
+            const content = String(reader.result ?? "").trim();
+            resolve(content ? { name: file.name, content } : null);
+          };
+          reader.onerror = () => resolve(null); // 読めないファイルは黙って飛ばす（他は活かす）
           reader.readAsText(file);
         })
     );
-    Promise.all(readers).then((texts) => {
-      const chunk = texts.filter((t) => t.trim()).join("\n\n");
-      if (!chunk) return;
-      setMaterials((prev) => (prev.trim() ? `${prev}\n\n${chunk}` : chunk));
+    Promise.all(readers).then((items) => {
+      const got = items.filter((x): x is Attachment => x !== null);
+      if (got.length === 0) return;
+      setAttachments((prev) => {
+        // 同名は最新で置き換え、新規は末尾に追加（同じファイルを選び直しても重複しない）。
+        const map = new Map(prev.map((a) => [a.name, a]));
+        for (const it of got) map.set(it.name, it);
+        return Array.from(map.values());
+      });
     });
     e.target.value = ""; // 同じファイルを続けて選べるようにする
+  }
+
+  // 添付資料を1件取り除く（コンポーザーのチップ×）。
+  function removeAttachment(name: string) {
+    setAttachments((prev) => prev.filter((a) => a.name !== name));
   }
 
   // SSE イベント → 画面状態の反映。start（新規）と resume（再接続）で共有する。
@@ -711,7 +728,7 @@ export default function Home() {
     setStreamingTurnId(null);
     setSessionId(null);
     setTopicInput("");
-    setMaterials("");
+    setAttachments([]);
     setIntakeQuestions([]);
     setIntakeAnswers({});
     setHistoryOpen(false);
@@ -1080,13 +1097,18 @@ export default function Home() {
             />
           )}
 
-          <LlmToggle
-            useLlm={useLlm}
-            keyAvailable={keyAvailable}
-            byok={byok}
-            onChange={setUseLlm}
-            disabled={active}
-          />
+          {/* Mock/実LLM トグルは撤廃（既定で実 LLM）。キーが無いときだけ自動で mock に落ちるので、
+              その場合だけ「無料のサンプル応答になる」旨を静かに明示する＝不意の挙動を防ぐ。 */}
+          {!keyAvailable && !active && (
+            <p className="flex items-start gap-1.5 text-[11px] leading-relaxed text-[var(--color-ink-muted)]">
+              <AlertCircle size={12} className="mt-0.5 shrink-0" />
+              <span>
+                {byok
+                  ? "上の「APIキー（各自）」にキーを入れると実 LLM で討論します。未入力の今はモック（無料のサンプル応答）です。"
+                  : "サーバに API キーが未設定のため、モック（無料のサンプル応答）で討論します。"}
+              </span>
+            </p>
+          )}
 
           {/* 内製固定（force_local）時の明示。キー不要で開源/自前モデルが応答する。 */}
           {forceLocal && (
@@ -1157,48 +1179,15 @@ export default function Home() {
             </p>
           )}
 
-          {/* 準備フェーズ（idle のみ）: 資料・前提（任意）＋ 主訴確認（任意）。
+          {/* 準備フェーズ（idle のみ）: 主訴確認（任意）＋ Web検索（任意）。
+              資料はプロンプト欄の📎から添付する（テキストの前提は議題欄に直接書く）。
               討論中/paused/done/error では出さない＝既存の討論 UI は不変。 */}
           {idle && (
             <div className="mx-6 mb-2 max-h-[42vh] space-y-3 overflow-y-auto rounded-md border border-[var(--color-line)] bg-[var(--color-paper)] px-3.5 py-3">
-              {/* 資料・前提 */}
-              <div className="flex flex-col gap-1.5">
-                <div className="flex items-center justify-between gap-3">
-                  <span className="text-[11px] font-medium uppercase tracking-wider text-[var(--color-ink-muted)]">
-                    資料・前提（任意）
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => fileInputRef.current?.click()}
-                    className="flex items-center gap-1.5 rounded-md border border-[var(--color-line)] px-2.5 py-1 text-[11px] text-[var(--color-ink-muted)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
-                  >
-                    <Paperclip size={12} /> ファイルを取り込む
-                  </button>
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept={MATERIAL_FILE_ACCEPT}
-                    multiple
-                    onChange={onAttachFiles}
-                    className="hidden"
-                  />
-                </div>
-                <textarea
-                  value={materials}
-                  onChange={(e) => setMaterials(e.target.value)}
-                  rows={3}
-                  placeholder="討論で踏まえてほしい資料・前提・数字を貼り付け（全ペルソナが共有します）"
-                  className="max-h-40 min-h-[60px] w-full resize-y rounded-md border border-[var(--color-line)] bg-[var(--color-surface)] px-2.5 py-2 text-sm outline-none focus:border-[var(--color-accent)]"
-                />
-                <p className="text-[11px] leading-relaxed text-[var(--color-ink-muted)]">
-                  取り込めるファイル: .txt / .md / .csv / .json（PDF・Office は対象外）。
-                </p>
-              </div>
-
               {/* 主訴確認（トグル）。ON にすると議題から確認質問を自動生成し、回答（任意）を
                   討論に渡して論点の逸脱を防ぐ。OFF（既定）では一切生成しない＝従来同一。
                   議題入力欄（最下部）が空でもトグルは操作でき、議題を入れると自動生成される。 */}
-              <div className="flex flex-col gap-1.5 border-t border-[var(--color-line)] pt-3">
+              <div className="flex flex-col gap-1.5">
                 <button
                   type="button"
                   role="switch"
@@ -1427,7 +1416,49 @@ export default function Home() {
                 </div>
               </div>
             )}
+            {/* 添付資料チップ（idle のみ）。📎で取り込んだ資料を可視化し、×で1件ずつ外せる。 */}
+            {idle && attachments.length > 0 && (
+              <div className="mb-2 flex flex-wrap gap-1.5">
+                {attachments.map((a) => (
+                  <span
+                    key={a.name}
+                    className="flex items-center gap-1.5 rounded-md border border-[var(--color-line)] bg-[var(--color-paper)] px-2 py-1 text-[11px] text-[var(--color-ink-muted)]"
+                  >
+                    <Paperclip size={11} className="shrink-0" />
+                    <span className="max-w-[180px] truncate">{a.name}</span>
+                    <button
+                      type="button"
+                      onClick={() => removeAttachment(a.name)}
+                      aria-label={`${a.name} を外す`}
+                      className="shrink-0 rounded-sm hover:text-[var(--color-accent)]"
+                    >
+                      <X size={11} />
+                    </button>
+                  </span>
+                ))}
+              </div>
+            )}
             <div className="flex items-end gap-2">
+              {/* 📎資料添付（idle のみ）。テキストの前提は議題欄に直接書く。 */}
+              {idle && (
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  title="資料を添付（.txt / .md / .csv / .json）"
+                  aria-label="資料を添付"
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-[var(--color-line)] text-[var(--color-ink-muted)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+                >
+                  <Paperclip size={16} />
+                </button>
+              )}
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept={MATERIAL_FILE_ACCEPT}
+                multiple
+                onChange={onAttachFiles}
+                className="hidden"
+              />
               <textarea
                 ref={composerRef}
                 value={topicInput}
