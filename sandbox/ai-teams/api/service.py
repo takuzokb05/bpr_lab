@@ -710,7 +710,14 @@ def _produce(session: Session) -> None:
                 if not norm or norm in research_seen:
                     continue
                 if research_state["count"] >= _RESEARCH_CAP:
-                    # cap 到達後は調べない（ログのみ・暴走防止）。
+                    # cap 到達後は調べない（暴走防止）。一度だけ調査メモで明示し、無言で
+                    # 「要調査」が無視される不可解さを消す（以降の同種マーカーは黙って無視）。
+                    if not research_state.get("cap_noticed"):
+                        research_state["cap_noticed"] = True
+                        nid = next(ids)
+                        note = f"（今回の調査上限 {_RESEARCH_CAP} 件に達したため、以降は新たに検索しません）"
+                        nt = council.emit_research_turn(transcript, note, emit=emit, turn_id=nid)
+                        _append(session, "turn_end", {"turn_id": nt.turn_id})
                     break
                 rid = next(ids)
                 # 検索の前に「調査中」を先出し（数十秒の検索中も UI に進行が見えるように・クエリ付き）。

@@ -101,8 +101,13 @@ export function Timeline({
           }
 
           const look = looks[t.speaker_id] ?? { accent: "#5B7C8A", monogram: "?" };
+          // 追い質問への応答は左罫線で弱くグルーピングし、本編発言と読み分けやすくする。
+          const followupAccent =
+            t.phase === "followup"
+              ? "border-l-2 border-[var(--color-accent-weak)] pl-3"
+              : "";
           return (
-            <article key={t.turn_id} className="animate-turn-in flex gap-3">
+            <article key={t.turn_id} className={`animate-turn-in flex gap-3 ${followupAccent}`}>
               <Avatar monogram={look.monogram} accent={look.accent} size={36} />
               <div className="min-w-0 flex-1">
                 <NamePlate name={t.speaker_name} phase={t.phase} ts={t.ts} />

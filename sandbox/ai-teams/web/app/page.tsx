@@ -84,6 +84,20 @@ const STRUCTURAL_CATS = ["facilitation", "chair"];
 // 既定で選択するパネリスト（構造役は自動付与するので含めない）。
 const DEFAULT_SELECTED = ["logic", "idea", "empathy"];
 
+// 調査結果として「使える」中身か。失敗/未対応/上限通知/モックは、成果(調べたこと)集約と
+// 「続ける」の文脈継承から除く（信頼性の誤認防止）。タイムラインには痕跡として残す。
+function isUsefulResearch(content: string): boolean {
+  const c = (content ?? "").trim();
+  if (!c) return false;
+  return !(
+    c.startsWith("（調査に失敗") ||
+    c.startsWith("（調査結果が空") ||
+    c.startsWith("（今回の調査上限") ||
+    c.startsWith("（Web 検索は現在") ||
+    c.startsWith("（モック調査結果")
+  );
+}
+
 // 楽観的エコー用の負の turn_id を払い出す（サーバ採番は 0 以上なので衝突しない）。
 let echoSeq = -1;
 
@@ -355,7 +369,7 @@ export default function Home() {
       turns.filter(
         (t) =>
           (t.speaker_id === "researcher" || t.phase === "research") &&
-          (t.content ?? "").trim().length > 0
+          isUsefulResearch(t.content)
       ),
     [turns]
   );
@@ -435,11 +449,18 @@ export default function Home() {
   }
 
   function stop() {
-    // 表示の購読を止めるだけでなく、バックエンドにも協調キャンセルを伝える
-    // （実 LLM の発注を次のターン前に止めて課金を抑える）。
+    // floor-open（paused）での停止は「終了」に寄せる：サーバが議事録を作ってから done になり、
+    // 「討論したのに成果ゼロ」を防ぐ（議事録＋done はストリームで届くので abort しない）。
+    if (paused && sessionId) {
+      finishSession(sessionId).catch((err) =>
+        setError(err instanceof Error ? err.message : String(err))
+      );
+      return;
+    }
+    // running 中の停止＝協調キャンセル（次ターンの実 LLM 発注を止めて課金を抑える）。
     if (sessionId) cancelSession(sessionId);
     abortRef.current?.abort();
-    setStatus((s: Status) => (s === "running" || s === "paused" ? "done" : s));
+    setStatus((s: Status) => (s === "running" ? "done" : s));
     setStreamingTurnId(null);
   }
 
@@ -743,7 +764,7 @@ export default function Home() {
     const researchSeen = new Set<string>();
     const researchItems = entry.turns.filter((t) => {
       if (t.speaker_id !== "researcher" && t.phase !== "research") return false;
-      if (!(t.content ?? "").trim()) return false;
+      if (!isUsefulResearch(t.content)) return false; // 失敗/未対応/上限通知は継承しない
       const key = (t.query ?? t.content).slice(0, 80);
       if (researchSeen.has(key)) return false;
       researchSeen.add(key);
@@ -921,7 +942,9 @@ export default function Home() {
   const finishedWithTranscript =
     (status === "done" || status === "error") && turns.length > 0;
   const finishedNote = finishedWithTranscript
-    ? "この討論は終了しています。下に続けたい点を書いて送信すると、前回を引き継いで深掘りします（新規討論はロゴ『AI COUNCIL』から）。"
+    ? status === "error"
+      ? "この討論は途中で中断しました。ここまでの内容で続けるか、ロゴ『AI COUNCIL』から新規に始められます（記録が浅いと続けられないことがあります）。"
+      : "この討論は終了しています。下に続けたい点を書いて送信すると、前回を引き継いで深掘りします（新規討論はロゴ『AI COUNCIL』から）。"
     : null;
 
   return (
