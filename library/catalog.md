@@ -1,6 +1,6 @@
 # Library Catalog
 
-最終更新: 2026-06-03
+最終更新: 2026-06-04
 
 ## 凡例
 - 状態: 未読 / 既読 / 要精読
@@ -218,12 +218,44 @@
 
 ---
 
+---
+
+## 2026-06-04 収集分（14件収集 → 14件SIGNAL）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 112 | [2026-06-04_112](articles/2026-06-04_112_Claude-Code-Complete-Beginners-Guide-Skills-Agents-Hooks-Plu.md) | Complete Beginner's Guide to Claude Code 2026 — 5層アーキテクチャ・意思決定フレームワーク解説 | claude-code | 未読 | #web-signal |
+| 113 | [2026-06-04_113](articles/2026-06-04_113_Claude-Code-Slash-Commands-Complete-Guide-May2026.md) | Claude Code 全スラッシュコマンドリファレンス May 2026 — 7カテゴリ・コアコマンド6本整理 | claude-code | 未読 | #web-signal |
+| 114 | [2026-06-04_114](articles/2026-06-04_114_KnowledgeWork-400PRs-per-month-Claude-Code-case-study.md) | 月間400件超のPRをClaude Codeで生産 — KnowledgeWork 実企業定量事例（Subagents並列60%短縮） | claude-code | 未読 | #web-signal |
+| 115 | [2026-06-04_115](articles/2026-06-04_115_Claude-Code-official-17-skills-complete-guide-GMO-tenbin.md) | Claude Code公式スキル17個全解説 — /pptx・/pdf・/xlsx・/review等インストールコマンド付き | claude-code | 未読 | #web-signal |
+| 116 | [2026-06-04_116](articles/2026-06-04_116_VentureBeat-Anthropic-reinstates-OpenClaw-third-party-agents.md) | VentureBeat: Anthropic がOpenClaw・サードパーティAgent再開 — 6/15クレジットプール条件付き | claude-ecosystem | 未読 | #web-signal #urgent |
+| 117 | [2026-06-04_117](articles/2026-06-04_117_Top-15-MCP-Servers-developer-must-install-2026-DevTo.md) | Top 15 MCP Servers Every Developer Should Install 2026 — カテゴリ別選定・13000+サーバー | claude-ecosystem | 未読 | #web-signal |
+| 118 | [2026-06-04_118](articles/2026-06-04_118_Microsoft-Agent-Framework-BUILD-2026-MAI-IQ-Scout-official.md) | Microsoft Agent Framework at BUILD 2026 — MAI-Thinking-1・Scout・Agent 365 SDK GA公式発表 | claude-ecosystem | 未読 | #web-signal |
+| 119 | [2026-06-04_119](articles/2026-06-04_119_Leading-AI-Day-Trading-Bots-2026-why-most-fail-crypto-news.md) | Leading AI Day Trading Bots 2026: なぜ大半が失敗か — Bot Pilot・Claude Sonnet 4.6 Sharpe 1.94 | ai-trading | 未読 | #web-signal |
+| 120 | [2026-06-04_120](articles/2026-06-04_120_TradingAgents-Explained-UCLA-MIT-multi-agent-paper-2026.md) | TradingAgents論文解説: UCLA+MIT 7エージェント構成・AAPL +26.62%・1決定$0.5〜$2コスト | ai-trading | 未読 | #web-signal |
+| 121 | [2026-06-04_121](articles/2026-06-04_121_Best-AI-Trading-Agents-2026-Pinggy-make-money-analysis.md) | Best AI Trading Agents 2026 — TradingAgents/FinGPT/FinMem比較・ルールベース執行推奨 | ai-trading | 未読 | #web-signal |
+| 122 | [2026-06-04_122](articles/2026-06-04_122_White-House-EO-Promoting-Advanced-AI-Innovation-Security-Jun.md) | White House EO: AI Innovation & Security 2026-06-02 — リリース前30日任意政府テスト制度（一次情報） | ai-news | 未読 | #web-signal |
+| 123 | [2026-06-04_123](articles/2026-06-04_123_NPR-Trump-AI-safety-order-voluntary-review-June2026.md) | NPR: トランプAI安全令 — 任意提出・Colorado州法競合・EU AI Act比較（2026-06-02） | ai-news | 未読 | #web-signal |
+| 124 | [2026-06-04_124](articles/2026-06-04_124_Microsoft-Build-2026-AI-Announcements-complete-recap.md) | Microsoft BUILD 2026 完全AI発表まとめ — MAI・IQ・Scout・Foundry・Agent365全解説 | ai-news | 未読 | #web-signal |
+| 125 | [2026-06-04_125](articles/2026-06-04_125_AI-Agent-Guideline-v12-EU-AI-Act-METI-Japan-2026-complete.md) | AIエージェントガイドライン完全解説2026-05 — EU AI Act・経産省v1.2・HITL義務化・委任設計5原則 | ai-news | 未読 | #web-signal |
+
+### NOISEとして除外
+| ファイル | 理由 |
+|---|---|
+| releasebot.io/updates/anthropic/claude-code | アグリゲーターのみ、一次情報なし、既存記事と重複 |
+| claudefa.st/blog/guide/changelog | 既存003（April changelog）と内容重複 |
+| smart-webtech.com/blog/claude-code-workflows | medium.com/data-science-collective（既存035）と重複 |
+| maketocreate.com/claude-md-best-practices | amitray.com（既存093）と同内容 |
+| uravation.com/media/claude-code-automation-case-studies-2026 | 114（KnowledgeWork定量事例）の方が具体性高い |
+
+---
+
 ## ドメイン別統計（累計）
 
-| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 累計 |
-|---|---|---|---|---|---|---|---|---|---|
-| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 48件 |
-| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 22件 |
-| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 21件 |
-| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 20件 |
-| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **111件** |
+| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 累計 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 52件 |
+| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 25件 |
+| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 24件 |
+| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 24件 |
+| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **125件** |

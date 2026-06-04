@@ -1,7 +1,7 @@
 # PROPOSALS.md
 
 収集記事を横断分析して得られた反映提案。
-最終更新: 2026-06-01
+最終更新: 2026-06-04
 
 ---
 
@@ -436,3 +436,42 @@ FX自動売買の構成（P-014の4層アーキテクチャ）において、Gem
 1. `ollama run gemma3:12b` でローカルLLMを起動し、FXシグナル生成の精度をClaude Opus 4.8と比較テスト
 2. TradingAgentsのLLMプロバイダー設定をClaude API→ローカルOllama APIに切り替えて同一テストケースで精度・レイテンシを測定
 3. メインはClaude API（高精度）、フォールバックはローカルLLM（可用性）のデュアル構成をsandbox/FX自動取引/config.pyに実装
+
+---
+
+## 2026-06-04 提案
+
+### P-035: 白宮AI大統領令への対応 — FX自動取引ボットの「任意提出対象外」確認と開発方針明記
+
+**根拠記事**: 122 (White House EO AI Innovation Security), 123 (NPR Trump AI safety order)
+**詳細**: 2026年6月2日署名の大統領令は「最先端（フロンティア）AIモデル」の開発者に任意の政府提出を求める内容。bpr_labのFX自動取引ボットはフロンティアモデル開発者ではなく「APIユーザー」であるため直接の対象外。ただし、ボットが使用するClaude Opus 4.8はAnthropicが開発するフロンティアモデルであり、Anthropicが政府テストに参加した場合の新安全基準がAPIの利用可能機能・レスポンス形式に影響する可能性がある。また、Colorado州AI法（6月30日施行）はAI「利用者」も対象に含む可能性があり、FX自動売買のような「自動化意思決定システム」が適用範囲に入るか確認が必要。
+
+**提案アクション**:
+1. Colorado AI法（6月30日施行）のADMT（Automated Decision-Making Technology）適用範囲を確認し、FX自動売買ボットが対象か法的チェックを実施
+2. sandbox/FX自動取引/README.mdに「本システムはClaude API利用者であり、フロンティアモデル開発者規制の直接対象外」という注記と、使用モデル・バージョン・用途を明記
+3. P-025（HITL設計）の実装を優先し、「自動化意思決定への人間関与」を記録可能にしておくことでADMT規制への事前対応とする
+
+---
+
+### P-036: Microsoft Agent 365 SDK GA — Claude Agent SDKとの相互運用性検討
+
+**根拠記事**: 118 (Microsoft Agent Framework at BUILD 2026), 124 (Microsoft Build 2026 recap)
+**詳細**: Microsoft BUILD 2026でAgent 365 SDK（無料・フレームワーク非依存）がGAとなった。LangChain・OpenAI Agents SDK・LangGraph・Semantic Kernel・Azure AI Foundry と並列に**Claude Agent SDK**もサポートパッケージを提供予定。bpr_labの日次収集エージェントはClaude Agent SDKで構築されているが、Agent 365 SDKが提供するFoundry Agent Service（ホスト型エージェント）・Microsoft IQのWork IQ（M365知識）・Fabric IQ（データグラウンディング）との連携で、Excel/PowerPoint等のM365データをFX分析コンテキストに取り込む経路が開かれた可能性がある。競合ではなく補完的な位置づけとして評価すべき。
+
+**提案アクション**:
+1. Agent 365 SDKのClaude Agent SDK向けパッケージを確認し、統合の技術的実現性を調査
+2. Microsoft Fabric IQ経由でExcelベースのFXデータ（MT5エクスポート）をClaude Agentのコンテキストに取り込むパイプライン設計を検討
+3. 現在のClaude Agent SDK（P-003・P-008のSkills統合）はそのまま維持し、M365連携部分のみAgent 365 SDKを追加する差分アーキテクチャを採用
+
+---
+
+### P-037: FX自動取引の「Bot Pilot」運用体制と月次パフォーマンスレビュースキル化
+
+**根拠記事**: 119 (AI Day Trading Bots Why Most Fail), 121 (Best AI Trading Agents 2026)
+**詳細**: 2026年のAI取引ボット研究の共通知見として「48時間放置すれば大半のボットがストップロスに到達」「成功事例はBot Pilot（常時プロンプト調整する専門役割）が存在する」が確認された。Claude Sonnet 4.6は487%・Sharpe 1.94の成績を示したが、これも継続的なパラメータ調整の結果である可能性が高い。sandbox/FX自動取引/ のボットを単純な自動化ではなく「Bot Pilot + 自律実行」のハイブリッドとして設計する必要がある。月次の乖離分析（P-026）と組み合わせたレビュースキルのSkill化が実用的。
+
+**提案アクション**:
+1. `.claude/skills/fx-review/SKILL.md` を作成：月次取引結果サマリー・バックテスト乖離分析・戦略パラメータ調整提案の自動生成スキル
+2. 週次の `/fx-review` 実行をRoutines（P-008）でスケジュール化し、毎週月曜AM7:00 JSTに自動実行
+3. P-025（HITL）のconfidence閾値（0.55-0.75帯）を毎月見直す「Bot Pilot月次調整セッション」をCLAUDE.mdに手順として記録
+4. LLMのニュース・感情分析機能（強み）と、ルールベース高頻度執行（弱みを補完）の役割分担をsandbox/FX自動取引/architecture.mdに明文化
