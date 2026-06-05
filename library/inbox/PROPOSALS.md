@@ -1,7 +1,7 @@
 # PROPOSALS.md
 
 収集記事を横断分析して得られた反映提案。
-最終更新: 2026-06-04
+最終更新: 2026-06-05
 
 ---
 
@@ -475,3 +475,54 @@ FX自動売買の構成（P-014の4層アーキテクチャ）において、Gem
 2. 週次の `/fx-review` 実行をRoutines（P-008）でスケジュール化し、毎週月曜AM7:00 JSTに自動実行
 3. P-025（HITL）のconfidence閾値（0.55-0.75帯）を毎月見直す「Bot Pilot月次調整セッション」をCLAUDE.mdに手順として記録
 4. LLMのニュース・感情分析機能（強み）と、ルールベース高頻度執行（弱みを補完）の役割分担をsandbox/FX自動取引/architecture.mdに明文化
+
+---
+
+## 2026-06-05 提案
+
+### P-038: 自己学習型フックの実装 — セッション終了時に学習内容を CLAUDE.md へ自動追記
+
+**根拠記事**: 128 (Dev.to 30 Skills MCPs Self-Learning Hooks)
+**詳細**: 実チームの事例で「セッション終了フックがClaudeに学習内容を問い合わせてCLAUDE.mdへ自動追記する」自己学習型フックの有効性が実証された。現状のbpr_labセットアップではセッション間の知識継承は手動であり、知見が蓄積されない課題がある。フックはstdout/stderrとexitコードのみ通信し、シェルコマンドで実装できる（SDK不要）。例: `PostResponse` フックで `claude -p "このセッションで学んだ技術的な知見を箇条書きで出力" >> CLAUDE.md` を実行するパターン。
+
+**提案アクション**:
+1. `.claude/settings.json` の `hooks` セクションに `PostResponse` または `Stop` フックを追加し、学習内容抽出プロンプトを設定
+2. 追記先はプロジェクトのCLAUDE.mdの「セッション学習ログ」セクション（日付付き）として整理
+3. ノイズを防ぐため、追記条件として「ツール呼び出しが3件以上あったセッション」のみ発火させる
+
+---
+
+### P-039: Claude Code 4象限フレームワークによる bpr_lab スキル体系の再整理
+
+**根拠記事**: 135 (GenAI Unplugged Skills/Hooks/Agents Tutorial), 129 (CLAUDE.md Best Practices)
+**詳細**: 「CLAUDE.md=メモリ、Skills=ルーティン、Hooks=保証、Agents=委任」の4象限フレームワークが標準的な設計指針として確立した。bpr_labの現在の構成を4象限で棚卸しし、①CLAUDE.mdの肥大化防止（200行以下）、②限定的ワークフローのSkills移行、③自動品質保証のHooks実装、④大規模タスクのAgent委任の4方向で最適化できる。特に日次収集エージェント（本スクリプト）がHooksで自動化できる部分とAgentとして委任すべき部分の境界を明確化すべき。
+
+**提案アクション**:
+1. 現在のCLAUDE.md（存在する場合）を4象限で分類し、Skills移行候補を特定
+2. `~/.claude/skills/` に「日次収集」「FXシグナル分析」「コードレビュー」「デプロイ」の最低4スキルを整備
+3. Hooks候補として「ファイル保存時の命名規則チェック」「コミット前の型チェック実行」「記事追加時のcatalog.md自動更新」を実装
+
+---
+
+### P-040: Claude Opus 4.8 GA確認 — P-033 TradingAgents実装ブロッカー解除
+
+**根拠記事**: 126 (Claude Opus 4.8 公式リリース), 136 (TradingAgents 正式リリース)
+**詳細**: Claude Opus 4.8が2026年5月28日に正式GA（Anthropic API・Bedrock・Vertex AI・Microsoft Foundry全対応）。P-033（TradingAgents + Claude 4.x）の実装ブロッカーであった「Claude 4.xの安定GA未確認」が解消された。TradingAgentsのv0.2.0マルチプロバイダー対応と合わせて、今すぐ `tradingagents --llm anthropic --model claude-opus-4-8` の構成でプロトタイプを実装できる。Fast Modeが2.5×速度・3分の1コストで利用可能なため、バックテスト段階ではFast Modeで試算コストを抑えることが推奨される。
+
+**提案アクション**:
+1. P-033のアクション1「デモ動作確認」を即時実行：`pip install tradingagents[anthropic]` 後にEUR/USDで動作確認
+2. Fast ModeとStandard Modeで同一バックテストを実行し、精度差とコスト差を計測（目標: コスト3分の1で精度95%以上維持）
+3. sandbox/FX自動取引/ の `config.py` に `LLM_PROVIDER=anthropic`・`MODEL=claude-opus-4-8`・`USE_FAST_MODE=True`（バックテスト用）を追加
+
+---
+
+### P-041: MCP サーバーのステートレス設計方針への移行準備
+
+**根拠記事**: 134 (MCP Cheat Sheet 2026), 133 (Claude Agent SDK Managed Agents)
+**詳細**: MCPの2026年ロードマップ核心は「ステートレス動作への移行」（現行: セッション維持が必須 → 移行後: ステートレスで水平スケーリング可能）。bpr_labでMCPサーバーを新規開発する際（FX自動取引データ取得MCP等）は、今からステートレス設計を採用することで将来の仕様対応コストをゼロにできる。FastMCP 3.0がデコレータ1行でPythonサーバー実装を実現しており、新規MCPの開発コストが大幅低下。加えてMCPトンネル（リサーチプレビュー）によりプライベートネット内MT5サーバーへの安全接続が可能になる見通し。
+
+**提案アクション**:
+1. sandbox/FX自動取引/ 向けのMT5データ取得MCPサーバーをFastMCP 3.0でステートレス実装（`@mcp.tool()` デコレータ使用）
+2. MCPサーバーはステートをRedis/SQLiteに外出しし、サーバー本体は常にステートレスになるよう設計
+3. MCPトンネルの正式リリース後に、VPS上のMT5インスタンスへのMCPアクセス経路を評価
+
