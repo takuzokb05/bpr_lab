@@ -63,8 +63,10 @@ def persona_public(p: Persona) -> dict:
         "id": p.id,
         "display_name": p.display_name,
         "category": p.category,
-        # ピッカーで名前の下に出す一行説明（「どんな人か」）。空文字なら UI 側で非表示。
+        # ピッカーで名前の下に出す一行ティーザー（「どんな人か」）。空文字なら UI 側で非表示。
         "description": p.description,
+        # 「詳細」展開で出す詳しい説明（偉人の背景＋持ち味 等）。空文字なら UI 側で非表示。
+        "detail": p.detail,
         "accent": p.accent_color,
         "monogram": p.monogram,
         "tags": list(p.tags),
@@ -1023,6 +1025,7 @@ _PERSONA_WRITE_KEYS = (
     "system_prompt",
     "category",
     "description",
+    "detail",
     "avatar",
     "model",
     "temperature",

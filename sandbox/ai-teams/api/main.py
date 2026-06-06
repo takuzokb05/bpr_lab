@@ -204,9 +204,10 @@ class CustomPersona(BaseModel):
     category: Literal["thinking", "founders", "philosophers"] = "thinking"
     tags: list[str] = Field(default_factory=list, max_length=8)
     model: str | None = None
-    # ピッカー表示専用の一行説明（サーバ非保存・討論プロンプトには不使用）。受け口に無いと
+    # ピッカー表示専用の一行説明＋詳細（サーバ非保存・討論プロンプトには不使用）。受け口に無いと
     # extra='ignore' で捨てられるため明示。表示のみだが濫用防止に長さ上限を付ける。
     description: str | None = Field(default=None, max_length=200)
+    detail: str | None = Field(default=None, max_length=600)
 
 
 class SessionRequest(BaseModel):
@@ -571,6 +572,9 @@ class PersonaUpsert(BaseModel):
     # save_persona は全置換のため編集保存で既存 YAML の description が消える。明示が必須。None なら
     # _write_persona_file が書き出さない＝空のまま（クリアも兼ねる）。公開サーバ濫用防止に長さ上限。
     description: str | None = Field(default=None, max_length=200)
+    # 「詳細」で開く詳しい説明（偉人の背景＋持ち味 等）。description と同じく明示しないと
+    # extra='ignore' で捨てられ、全置換 save で編集時に消える。None なら書き出さない。
+    detail: str | None = Field(default=None, max_length=600)
     # 因縁（relationships）。受け口に無いと extra='ignore' で捨てられ編集保存で消えるため明示。
     # model_dump で dict 化され save_persona→persona_from_dict→YAML 保存まで通る（service 側は対応済み）。
     relationships: list[PersonaRelationshipIn] = Field(default_factory=list)

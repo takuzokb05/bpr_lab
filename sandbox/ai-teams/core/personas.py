@@ -56,6 +56,9 @@ class Persona:
     # ピッカー表示用の一行説明（「この人はどんな人か」）。選ぶときに一目で分かる短文を持たせる
     # （system_prompt 全文とは別物）。空なら UI は説明を出さない＝後方互換。
     description: str = ""
+    # 「詳細」展開で出す詳しい説明（偉人=何をした人か＋討論での持ち味 / 役割=会議での振る舞い）。
+    # description より長い段落。空なら UI は出さない＝後方互換。
+    detail: str = ""
     # レガシー絵文字フィールド（後方互換でのみ受理・保持）。UI は描画に使わず
     # モノグラム＋カテゴリ色で識別する（UIUX_REVIEW: 絵文字全廃）。既定は空。
     avatar: str = ""
@@ -123,6 +126,7 @@ def persona_from_dict(data: dict[str, Any]) -> Persona:
         "system_prompt",
         "category",
         "description",
+        "detail",
         "avatar",
         "model",
         "temperature",
@@ -151,6 +155,7 @@ def persona_from_dict(data: dict[str, Any]) -> Persona:
         category=data.get("category", "thinking"),
         # None（PersonaUpsert の未指定）も空文字に正規化し、dataclass の str 不変条件を保つ。
         description=data.get("description") or "",
+        detail=data.get("detail") or "",
         avatar=data.get("avatar", ""),
         model=data.get("model"),
         temperature=data.get("temperature"),

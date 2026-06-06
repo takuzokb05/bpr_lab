@@ -49,6 +49,7 @@ export function PersonaForm({
     initial?.category ?? "thinking"
   );
   const [description, setDescription] = useState(initial?.description ?? "");
+  const [detail, setDetail] = useState(initial?.detail ?? "");
   const [systemPrompt, setSystemPrompt] = useState(initial?.system_prompt ?? "");
   const [temperature, setTemperature] = useState(
     initial?.temperature != null ? String(initial.temperature) : ""
@@ -100,6 +101,7 @@ export function PersonaForm({
     if (model.trim()) body.model = model.trim();
     if (temperature.trim()) body.temperature = Number(temperature);
     if (description.trim()) body.description = description.trim();
+    if (detail.trim()) body.detail = detail.trim();
     // 因縁（relationships）は専用 UI を持たないが、編集保存で消さないよう既存値を round-trip する。
     if (initial?.relationships?.length) body.relationships = initial.relationships;
 
@@ -172,12 +174,22 @@ export function PersonaForm({
         </select>
       </Field>
 
-      <Field label="一行説明（任意・ピッカーに表示）">
+      <Field label="一行説明（任意・カードのティーザー）">
         <input
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder="例: 根拠と数字で筋を通し、論理の穴を突く番人。"
           className={inputCls}
+        />
+      </Field>
+
+      <Field label="詳細説明（任意・「詳細」で開く。偉人なら何をした人かも）">
+        <textarea
+          value={detail}
+          onChange={(e) => setDetail(e.target.value)}
+          rows={3}
+          placeholder="例: 会議における論理の番人。主張の根拠と数字を求め、感情だけの合意を許さず、検証可能な論点へ整理し直す役。"
+          className={inputCls + " resize-y leading-relaxed"}
         />
       </Field>
 

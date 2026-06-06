@@ -1132,20 +1132,25 @@ def test_http_api():
         # description round-trip（PersonaUpsert に description が無いと extra='ignore' で黙って
         # 落ち、全置換 save で編集時に既存 YAML から消える回帰の番人。service 直叩きでは検出不能）。
         dp = {"id": "desc_test", "display_name": "説明テスト", "system_prompt": "P",
-              "category": "thinking", "description": "数字で筋を通す番人。"}
+              "category": "thinking", "description": "数字で筋を通す番人。",
+              "detail": "会議の論理の番人。主張の根拠と数字を求め、検証可能な論点へ整理し直す。"}
         r = client.post("/personas", json=dp)
-        check(r.status_code == 201, f"POST /personas(description) 201: {r.status_code}")
-        check(r.json().get("description") == "数字で筋を通す番人。", "作成レスポンスに description が残る")
+        check(r.status_code == 201, f"POST /personas(description+detail) 201: {r.status_code}")
+        check(r.json().get("description") == dp["description"], "作成レスポンスに description が残る")
+        check(r.json().get("detail") == dp["detail"], "作成レスポンスに detail が残る")
         r = client.get("/personas/desc_test")
-        check(r.json().get("description") == "数字で筋を通す番人。", "GET で description が永続する")
-        # 編集保存で description を送り続ければ消えない（フォームの round-trip 経路を模す）。
+        check(r.json().get("description") == dp["description"], "GET で description が永続する")
+        check(r.json().get("detail") == dp["detail"], "GET で detail が永続する")
+        # 編集保存で送り続ければ消えない（フォームの round-trip 経路を模す）。
         r = client.put("/personas/desc_test", json={**dp, "display_name": "説明テスト2"})
         check(r.status_code == 200, f"PUT /personas 200: {r.status_code}")
-        check(r.json().get("description") == "数字で筋を通す番人。", "編集保存で description が消えない")
-        # description を省いた編集は全置換でクリアされる（意図的な「空にする」挙動を固定）。
+        check(r.json().get("description") == dp["description"], "編集保存で description が消えない")
+        check(r.json().get("detail") == dp["detail"], "編集保存で detail が消えない")
+        # description/detail を省いた編集は全置換でクリアされる（意図的な「空にする」挙動を固定）。
         r = client.put("/personas/desc_test",
-                       json={k: v for k, v in dp.items() if k != "description"})
+                       json={k: v for k, v in dp.items() if k not in ("description", "detail")})
         check(not r.json().get("description"), "description 省略の編集はクリア（全置換）")
+        check(not r.json().get("detail"), "detail 省略の編集はクリア（全置換）")
         client.delete("/personas/desc_test")
 
         # パストラバーサル: id の charset 制限で入口 422（PERSONAS_DIR 外に書かせない）

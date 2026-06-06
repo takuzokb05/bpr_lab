@@ -19,7 +19,8 @@ export interface Persona {
   id: string;
   display_name: string;
   category: PersonaCategory;
-  description?: string; // ピッカー表示用の一行説明（「どんな人か」）。空/未定義なら非表示
+  description?: string; // ピッカーの1行ティーザー（「どんな人か」）。空/未定義なら非表示
+  detail?: string; // 「詳細」展開で出す詳しい説明（偉人の背景＋持ち味 等）。空/未定義なら非表示
   accent: string; // #RRGGBB
   monogram: string;
   tags: string[];
@@ -36,7 +37,8 @@ export interface CustomPersona {
   display_name: string;
   category: "thinking" | "founders" | "philosophers";
   system_prompt: string;
-  description?: string; // ピッカー表示用の一行説明（任意）
+  description?: string; // ピッカーの1行ティーザー（任意）
+  detail?: string; // 「詳細」展開の詳しい説明（任意）
   tags?: string[];
 }
 
@@ -64,6 +66,7 @@ export function customToPersona(cp: CustomPersona): Persona {
     display_name: cp.display_name,
     category: cp.category,
     description: cp.description ?? "",
+    detail: cp.detail ?? "",
     accent: CUSTOM_CATEGORY_ACCENT[cp.category] ?? "#5B7C8A",
     monogram: customMonogram(cp.display_name),
     tags: cp.tags ?? [],

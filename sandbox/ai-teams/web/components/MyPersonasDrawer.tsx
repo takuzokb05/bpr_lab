@@ -35,6 +35,7 @@ export function MyPersonasDrawer({
   const [name, setName] = useState("");
   const [category, setCategory] = useState<CustomPersona["category"]>("thinking");
   const [desc, setDesc] = useState("");
+  const [detailText, setDetailText] = useState("");
   const [prompt, setPrompt] = useState("");
 
   if (!open) return null;
@@ -44,6 +45,7 @@ export function MyPersonasDrawer({
     setName("");
     setCategory("thinking");
     setDesc("");
+    setDetailText("");
     setPrompt("");
   }
 
@@ -52,6 +54,7 @@ export function MyPersonasDrawer({
     setName(p.display_name);
     setCategory(p.category);
     setDesc(p.description ?? "");
+    setDetailText(p.detail ?? "");
     setPrompt(p.system_prompt);
   }
 
@@ -60,9 +63,17 @@ export function MyPersonasDrawer({
     const system_prompt = prompt.trim();
     if (!display_name || !system_prompt) return;
     const description = desc.trim();
+    const detail = detailText.trim();
     const id = editingId ?? newId();
     const next = items.filter((p) => p.id !== id);
-    next.push({ id, display_name, category, system_prompt, ...(description ? { description } : {}) });
+    next.push({
+      id,
+      display_name,
+      category,
+      system_prompt,
+      ...(description ? { description } : {}),
+      ...(detail ? { detail } : {}),
+    });
     onSave(next);
     resetForm();
   }
@@ -142,6 +153,14 @@ export function MyPersonasDrawer({
             placeholder="一行説明（任意・例: 数字でリターンを問う投資家）"
             disabled={disabled}
             className="rounded-md border border-[var(--color-line)] bg-[var(--color-paper)] px-2.5 py-1.5 text-sm outline-none focus:border-[var(--color-accent)] disabled:opacity-50"
+          />
+          <textarea
+            value={detailText}
+            onChange={(e) => setDetailText(e.target.value)}
+            placeholder="詳細説明（任意・「詳細」ボタンで開く。どんな人か・何が持ち味か）"
+            rows={2}
+            disabled={disabled}
+            className="resize-y rounded-md border border-[var(--color-line)] bg-[var(--color-paper)] px-2.5 py-1.5 text-sm leading-relaxed outline-none focus:border-[var(--color-accent)] disabled:opacity-50"
           />
           <div className="flex rounded-md border border-[var(--color-line)] p-0.5">
             {CATS.map((c) => (

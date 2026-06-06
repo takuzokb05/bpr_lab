@@ -32,6 +32,8 @@ export function PersonaPicker({
   const [query, setQuery] = useState("");
   const [activeTags, setActiveTags] = useState<Set<string>>(new Set());
   const [collapsed, setCollapsed] = useState<Set<PersonaCategory>>(new Set());
+  // 「詳細」を展開しているペルソナ id 群（複数同時に開ける）。
+  const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
 
   // 全タグ（出現順・重複なし）。
   const allTags = useMemo(() => {
@@ -48,7 +50,8 @@ export function PersonaPicker({
         !q ||
         p.display_name.toLowerCase().includes(q) ||
         p.id.toLowerCase().includes(q) ||
-        (p.description ?? "").toLowerCase().includes(q);
+        (p.description ?? "").toLowerCase().includes(q) ||
+        (p.detail ?? "").toLowerCase().includes(q);
       const hitTag =
         activeTags.size === 0 || p.tags.some((t) => activeTags.has(t));
       return hitQ && hitTag;
@@ -97,6 +100,14 @@ export function PersonaPicker({
     setCollapsed((prev) => {
       const next = new Set(prev);
       next.has(cat) ? next.delete(cat) : next.add(cat);
+      return next;
+    });
+  }
+
+  function toggleExpand(id: string) {
+    setExpandedIds((prev) => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
       return next;
     });
   }
@@ -238,41 +249,82 @@ export function PersonaPicker({
             {!isCollapsed &&
               g.items.map((p) => {
                 const on = selected.has(p.id);
+                const expanded = expandedIds.has(p.id);
+                // 「詳細」で出す中身。detail（充実説明）優先、無ければ description にフォールバック。
+                const detailText = p.detail || p.description || "";
+                const panelId = `persona-detail-${p.id}`;
                 return (
-                  <button
+                  <div
                     key={p.id}
-                    onClick={() => onToggle(p.id)}
-                    disabled={disabled}
-                    className={`group flex items-start gap-3 rounded-md border px-2.5 py-2 text-left transition-colors disabled:opacity-50 ${
+                    className={`overflow-hidden rounded-md border transition-colors ${
+                      disabled ? "opacity-60" : ""
+                    } ${
                       on
                         ? "border-[var(--color-accent)] bg-[var(--color-accent-weak)]"
                         : "border-[var(--color-line)] bg-[var(--color-surface)] hover:border-[var(--color-ink-muted)]"
                     }`}
                   >
-                    <Avatar monogram={p.monogram} accent={p.accent} size={30} />
-                    <span className="flex min-w-0 flex-1 flex-col">
-                      <span className="flex items-center gap-1.5 truncate text-sm">
-                        {p.display_name}
-                        {p.custom && (
-                          <span className="shrink-0 rounded-sm bg-[var(--color-accent-weak)] px-1 py-0.5 text-[9px] font-medium text-[var(--color-accent)]">
-                            自分
+                    <div className="flex items-stretch">
+                      {/* 選択トグル（行本体）。詳細ボタンと別 button にしてネストを避ける。
+                          dim は行全体（外側 div）に掛けるのでここでは opacity を持たせない。 */}
+                      <button
+                        onClick={() => onToggle(p.id)}
+                        disabled={disabled}
+                        aria-pressed={on}
+                        className="flex min-w-0 flex-1 items-center gap-3 px-2.5 py-2 text-left focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[var(--color-accent)]"
+                      >
+                        <Avatar monogram={p.monogram} accent={p.accent} size={30} />
+                        <span className="flex min-w-0 flex-1 flex-col">
+                          <span className="flex items-center gap-1.5 truncate text-sm">
+                            {p.display_name}
+                            {p.custom && (
+                              <span className="shrink-0 rounded-sm bg-[var(--color-accent-weak)] px-1 py-0.5 text-[9px] font-medium text-[var(--color-accent)]">
+                                自分
+                              </span>
+                            )}
                           </span>
-                        )}
-                      </span>
-                      {/* 「どんな人か」を一目で。知らないペルソナを選べない問題への回答。 */}
-                      {p.description && (
-                        <span className="mt-0.5 line-clamp-2 text-[11px] leading-snug text-[var(--color-ink-muted)] [overflow-wrap:anywhere]">
-                          {p.description}
+                          {/* 1行ティーザー（truncate＝1行で綺麗に省略。全文は「詳細」へ）。 */}
+                          {p.description && (
+                            <span className="truncate text-[11px] leading-snug text-[var(--color-ink-muted)]">
+                              {p.description}
+                            </span>
+                          )}
+                          {p.model && (
+                            <span className="truncate font-mono text-[10px] text-[var(--color-ink-muted)]">
+                              {p.model}
+                            </span>
+                          )}
                         </span>
+                        {on && <Check size={15} className="shrink-0 self-center text-[var(--color-accent)]" />}
+                      </button>
+                      {/* 詳細トグル: 「この人はどんな人？」を開く。討論中(disabled)でも閲覧できるよう無効化しない。 */}
+                      {detailText && (
+                        <button
+                          type="button"
+                          onClick={() => toggleExpand(p.id)}
+                          aria-expanded={expanded}
+                          aria-controls={panelId}
+                          aria-label={`${p.display_name} の詳細`}
+                          title="この人の詳細"
+                          className="flex shrink-0 items-center gap-0.5 self-stretch border-l border-[var(--color-line)] px-2 text-[10px] text-[var(--color-ink-muted)] transition-colors hover:text-[var(--color-accent)] focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[var(--color-accent)]"
+                        >
+                          詳細
+                          <ChevronDown
+                            size={12}
+                            className={`transition-transform ${expanded ? "rotate-180" : ""}`}
+                          />
+                        </button>
                       )}
-                      {p.model && (
-                        <span className="mt-0.5 truncate font-mono text-[10px] text-[var(--color-ink-muted)]">
-                          {p.model}
-                        </span>
-                      )}
-                    </span>
-                    {on && <Check size={15} className="mt-0.5 shrink-0 text-[var(--color-accent)]" />}
-                  </button>
+                    </div>
+                    {expanded && detailText && (
+                      <div
+                        id={panelId}
+                        className="border-t border-[var(--color-line)] px-3 py-2 text-[12px] leading-relaxed text-[var(--color-ink)] [overflow-wrap:anywhere]"
+                      >
+                        {detailText}
+                      </div>
+                    )}
+                  </div>
                 );
               })}
           </div>
