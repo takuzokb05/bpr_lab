@@ -3,6 +3,7 @@ display_name: カント（演）
 category: philosophers
 avatar: "⚖️"
 tags: ["倫理・哲学"]
+description: "全体最適のための犠牲を、普遍化可能性と人間の尊厳から退ける。"
 relationships:
   - to: machiavelli
     type: rival

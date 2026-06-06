@@ -3,6 +3,7 @@ display_name: マキャヴェッリ（演）
 category: philosophers
 avatar: "👑"
 tags: ["政治・正義"]
+description: "理想論の甘さを突き、現実の力学から実際に効く統治の一手を示す。"
 relationships:
   - to: confucius
     type: rival

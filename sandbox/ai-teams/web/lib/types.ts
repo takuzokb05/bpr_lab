@@ -19,6 +19,7 @@ export interface Persona {
   id: string;
   display_name: string;
   category: PersonaCategory;
+  description?: string; // ピッカー表示用の一行説明（「どんな人か」）。空/未定義なら非表示
   accent: string; // #RRGGBB
   monogram: string;
   tags: string[];
@@ -35,6 +36,7 @@ export interface CustomPersona {
   display_name: string;
   category: "thinking" | "founders" | "philosophers";
   system_prompt: string;
+  description?: string; // ピッカー表示用の一行説明（任意）
   tags?: string[];
 }
 
@@ -61,6 +63,7 @@ export function customToPersona(cp: CustomPersona): Persona {
     id: cp.id,
     display_name: cp.display_name,
     category: cp.category,
+    description: cp.description ?? "",
     accent: CUSTOM_CATEGORY_ACCENT[cp.category] ?? "#5B7C8A",
     monogram: customMonogram(cp.display_name),
     tags: cp.tags ?? [],

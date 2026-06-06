@@ -48,6 +48,7 @@ export function PersonaForm({
   const [category, setCategory] = useState<PersonaCategory>(
     initial?.category ?? "thinking"
   );
+  const [description, setDescription] = useState(initial?.description ?? "");
   const [systemPrompt, setSystemPrompt] = useState(initial?.system_prompt ?? "");
   const [temperature, setTemperature] = useState(
     initial?.temperature != null ? String(initial.temperature) : ""
@@ -98,6 +99,7 @@ export function PersonaForm({
     };
     if (model.trim()) body.model = model.trim();
     if (temperature.trim()) body.temperature = Number(temperature);
+    if (description.trim()) body.description = description.trim();
     // 因縁（relationships）は専用 UI を持たないが、編集保存で消さないよう既存値を round-trip する。
     if (initial?.relationships?.length) body.relationships = initial.relationships;
 
@@ -168,6 +170,15 @@ export function PersonaForm({
             </option>
           ))}
         </select>
+      </Field>
+
+      <Field label="一行説明（任意・ピッカーに表示）">
+        <input
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="例: 根拠と数字で筋を通し、論理の穴を突く番人。"
+          className={inputCls}
+        />
       </Field>
 
       <Field label="システムプロンプト">

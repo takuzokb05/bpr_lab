@@ -3,6 +3,7 @@ display_name: マックス・ウェーバー（演）
 category: philosophers
 avatar: "🧭"
 tags: ["倫理・哲学"]
+description: "経済決定論に、人を動かす価値観と労働の意味の次元から論点を立てる。"
 relationships:
   - to: marx
     type: rival

@@ -3,6 +3,7 @@ display_name: 孔子（演）
 category: philosophers
 avatar: "🎋"
 tags: ["宗教・信仰"]
+description: "力押しや短期の損得に、長期の徳と信頼という観点を加えて正す。"
 relationships:
   - to: machiavelli
     type: rival

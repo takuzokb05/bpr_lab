@@ -47,7 +47,8 @@ export function PersonaPicker({
       const hitQ =
         !q ||
         p.display_name.toLowerCase().includes(q) ||
-        p.id.toLowerCase().includes(q);
+        p.id.toLowerCase().includes(q) ||
+        (p.description ?? "").toLowerCase().includes(q);
       const hitTag =
         activeTags.size === 0 || p.tags.some((t) => activeTags.has(t));
       return hitQ && hitTag;
@@ -159,7 +160,8 @@ export function PersonaPicker({
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="名前・IDで検索"
+          placeholder="名前・説明で検索"
+          aria-label="ペルソナを名前・説明で検索"
           className="w-full rounded-md border border-[var(--color-line)] bg-[var(--color-surface)] py-1.5 pl-8 pr-2.5 text-sm outline-none focus:border-[var(--color-accent)]"
         />
       </div>
@@ -241,7 +243,7 @@ export function PersonaPicker({
                     key={p.id}
                     onClick={() => onToggle(p.id)}
                     disabled={disabled}
-                    className={`group flex items-center gap-3 rounded-md border px-2.5 py-2 text-left transition-colors disabled:opacity-50 ${
+                    className={`group flex items-start gap-3 rounded-md border px-2.5 py-2 text-left transition-colors disabled:opacity-50 ${
                       on
                         ? "border-[var(--color-accent)] bg-[var(--color-accent-weak)]"
                         : "border-[var(--color-line)] bg-[var(--color-surface)] hover:border-[var(--color-ink-muted)]"
@@ -257,13 +259,19 @@ export function PersonaPicker({
                           </span>
                         )}
                       </span>
+                      {/* 「どんな人か」を一目で。知らないペルソナを選べない問題への回答。 */}
+                      {p.description && (
+                        <span className="mt-0.5 line-clamp-2 text-[11px] leading-snug text-[var(--color-ink-muted)] [overflow-wrap:anywhere]">
+                          {p.description}
+                        </span>
+                      )}
                       {p.model && (
-                        <span className="truncate font-mono text-[10px] text-[var(--color-ink-muted)]">
+                        <span className="mt-0.5 truncate font-mono text-[10px] text-[var(--color-ink-muted)]">
                           {p.model}
                         </span>
                       )}
                     </span>
-                    {on && <Check size={15} className="text-[var(--color-accent)]" />}
+                    {on && <Check size={15} className="mt-0.5 shrink-0 text-[var(--color-accent)]" />}
                   </button>
                 );
               })}

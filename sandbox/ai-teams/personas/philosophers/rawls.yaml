@@ -3,6 +3,7 @@ display_name: ジョン・ロールズ（演）
 category: philosophers
 avatar: "🕊️"
 tags: ["政治・正義"]
+description: "少数の不利益を正当化する論に、無知のヴェールと公平の試金石を突きつける。"
 relationships:
   - to: darwin
     type: rival

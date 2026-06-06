@@ -3,6 +3,7 @@ display_name: A.アドラー（演）
 category: philosophers
 avatar: "🌱"
 tags: ["倫理・哲学"]
+description: "できない理由や他責を、本人が選べる行動と勇気の問題へ問い直す。"
 relationships:
   - to: freud
     type: rival

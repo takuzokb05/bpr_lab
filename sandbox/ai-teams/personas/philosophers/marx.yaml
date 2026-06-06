@@ -3,6 +3,7 @@ display_name: カール・マルクス（演）
 category: philosophers
 avatar: "⚒️"
 tags: ["経済・市場"]
+description: "きれいごとの裏で誰が得て誰が割を食うかを、階級と分配の側から暴く。"
 relationships:
   - to: adam_smith
     type: rival

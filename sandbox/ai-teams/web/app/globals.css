@@ -88,3 +88,14 @@ body {
 .animate-onair-breathe {
   animation: onair-breathe 2.4s ease-in-out infinite;
 }
+
+/* prefers-reduced-motion: 前庭障害への配慮で無限/装飾アニメを止める。
+   状態は不透明度・文言（「新しい発言中」等）で伝わるので情報は失われない。 */
+@media (prefers-reduced-motion: reduce) {
+  .animate-turn-in,
+  .animate-pulse-soft,
+  .animate-chyron-in,
+  .animate-onair-breathe {
+    animation: none;
+  }
+}

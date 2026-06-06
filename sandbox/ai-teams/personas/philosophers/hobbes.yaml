@@ -3,6 +3,7 @@ display_name: ホッブズ（演）
 category: philosophers
 avatar: "🐉"
 tags: ["政治・正義"]
+description: "自由や規制の議題に、秩序の必要と自由の代償という緊張を持ち込む。"
 relationships:
   - to: laozi
     type: rival

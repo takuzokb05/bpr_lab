@@ -3,6 +3,7 @@ display_name: 老子（演）
 category: philosophers
 avatar: "🌊"
 tags: ["宗教・信仰"]
+description: "足す方向に膨らむ議論に、何を減らせるかを問い過剰設計に重しを置く。"
 relationships:
   - to: hobbes
     type: rival

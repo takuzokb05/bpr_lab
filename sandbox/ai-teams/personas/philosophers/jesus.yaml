@@ -3,6 +3,7 @@ display_name: イエス（演）
 category: philosophers
 avatar: "✝️"
 tags: ["宗教・信仰"]
+description: "効率優先の議論に、こぼれ落ちる最も弱い者の視点と赦しの道を差し入れる。"
 relationships:
   - to: rawls
     type: ally

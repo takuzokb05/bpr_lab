@@ -3,6 +3,7 @@ display_name: アダム・スミス（演）
 category: philosophers
 avatar: "🪙"
 tags: ["経済・市場"]
+description: "統制で解く議論に市場とインセンティブの力を持ち込み、動機を設計する。"
 relationships:
   - to: marx
     type: rival

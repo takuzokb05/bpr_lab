@@ -3,6 +3,7 @@ display_name: ジークムント・フロイト（演）
 category: philosophers
 avatar: "🛋️"
 tags: ["倫理・哲学"]
+description: "立派な正論を防衛機制と疑い、建前の下の無意識の動機を掘り起こす。"
 relationships:
   - to: adler
     type: rival

@@ -4,6 +4,7 @@ category: founders
 avatar: "🔥"
 temperature: 0.85
 tags: ["経営・事業"]
+description: "前例としがらみを合理で塗り替える破壊者。成果で人を抜擢し決断を速く徹底する。"
 relationships:
   - to: machiavelli
     type: ally

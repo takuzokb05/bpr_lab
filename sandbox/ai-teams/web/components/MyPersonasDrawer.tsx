@@ -34,6 +34,7 @@ export function MyPersonasDrawer({
   const [editingId, setEditingId] = useState<string | null>(null);
   const [name, setName] = useState("");
   const [category, setCategory] = useState<CustomPersona["category"]>("thinking");
+  const [desc, setDesc] = useState("");
   const [prompt, setPrompt] = useState("");
 
   if (!open) return null;
@@ -42,6 +43,7 @@ export function MyPersonasDrawer({
     setEditingId(null);
     setName("");
     setCategory("thinking");
+    setDesc("");
     setPrompt("");
   }
 
@@ -49,6 +51,7 @@ export function MyPersonasDrawer({
     setEditingId(p.id);
     setName(p.display_name);
     setCategory(p.category);
+    setDesc(p.description ?? "");
     setPrompt(p.system_prompt);
   }
 
@@ -56,9 +59,10 @@ export function MyPersonasDrawer({
     const display_name = name.trim();
     const system_prompt = prompt.trim();
     if (!display_name || !system_prompt) return;
+    const description = desc.trim();
     const id = editingId ?? newId();
     const next = items.filter((p) => p.id !== id);
-    next.push({ id, display_name, category, system_prompt });
+    next.push({ id, display_name, category, system_prompt, ...(description ? { description } : {}) });
     onSave(next);
     resetForm();
   }
@@ -129,6 +133,13 @@ export function MyPersonasDrawer({
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="名前（例: 投資家 / 現場の看護師 / 孫子）"
+            disabled={disabled}
+            className="rounded-md border border-[var(--color-line)] bg-[var(--color-paper)] px-2.5 py-1.5 text-sm outline-none focus:border-[var(--color-accent)] disabled:opacity-50"
+          />
+          <input
+            value={desc}
+            onChange={(e) => setDesc(e.target.value)}
+            placeholder="一行説明（任意・例: 数字でリターンを問う投資家）"
             disabled={disabled}
             className="rounded-md border border-[var(--color-line)] bg-[var(--color-paper)] px-2.5 py-1.5 text-sm outline-none focus:border-[var(--color-accent)] disabled:opacity-50"
           />

@@ -3,6 +3,7 @@ display_name: チャールズ・ダーウィン（演）
 category: philosophers
 avatar: "🧬"
 tags: ["科学・技術"]
+description: "組織や戦略の存続を、変化への適応力と多様性・淘汰の視点で捉え直す。"
 relationships:
   - to: rawls
     type: rival

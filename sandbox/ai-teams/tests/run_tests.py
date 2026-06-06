@@ -1129,6 +1129,25 @@ def test_http_api():
         r = client.delete("/personas/tester")
         check(r.status_code == 404, f"二重 DELETE は 404: {r.status_code}")
 
+        # description round-trip（PersonaUpsert に description が無いと extra='ignore' で黙って
+        # 落ち、全置換 save で編集時に既存 YAML から消える回帰の番人。service 直叩きでは検出不能）。
+        dp = {"id": "desc_test", "display_name": "説明テスト", "system_prompt": "P",
+              "category": "thinking", "description": "数字で筋を通す番人。"}
+        r = client.post("/personas", json=dp)
+        check(r.status_code == 201, f"POST /personas(description) 201: {r.status_code}")
+        check(r.json().get("description") == "数字で筋を通す番人。", "作成レスポンスに description が残る")
+        r = client.get("/personas/desc_test")
+        check(r.json().get("description") == "数字で筋を通す番人。", "GET で description が永続する")
+        # 編集保存で description を送り続ければ消えない（フォームの round-trip 経路を模す）。
+        r = client.put("/personas/desc_test", json={**dp, "display_name": "説明テスト2"})
+        check(r.status_code == 200, f"PUT /personas 200: {r.status_code}")
+        check(r.json().get("description") == "数字で筋を通す番人。", "編集保存で description が消えない")
+        # description を省いた編集は全置換でクリアされる（意図的な「空にする」挙動を固定）。
+        r = client.put("/personas/desc_test",
+                       json={k: v for k, v in dp.items() if k != "description"})
+        check(not r.json().get("description"), "description 省略の編集はクリア（全置換）")
+        client.delete("/personas/desc_test")
+
         # パストラバーサル: id の charset 制限で入口 422（PERSONAS_DIR 外に書かせない）
         r = client.post("/personas", json={**new_p, "id": "../evil"})
         check(r.status_code == 422, f"../ を含む persona id は 422: {r.status_code}")

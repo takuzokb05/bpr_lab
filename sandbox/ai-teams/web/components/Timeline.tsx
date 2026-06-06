@@ -4,7 +4,7 @@ import { type Turn, formatTurnTime } from "@/lib/types";
 import { Avatar } from "./Avatar";
 import { NamePlate } from "./NamePlate";
 import { Markdown } from "./Markdown";
-import { Search, Globe, Users, ChevronDown } from "lucide-react";
+import { Search, Globe, Users, ChevronDown, ArrowDown } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 interface PersonaLook {
@@ -25,14 +25,60 @@ export function Timeline({
   looks: Record<string, PersonaLook>;
   status: "idle" | "running" | "paused" | "done" | "error";
 }) {
-  const endRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  // 末尾付近に「貼り付いて」追従しているか。読むために上へスクロールしたら false になり、
+  // false の間は新規発言・delta が来ても勝手に末尾へ動かさない（＝「置いて読める」）。
+  const stickRef = useRef(true);
+  // 「最新へ」フロートボタンの表示（= 末尾から離れて読んでいる）。
+  const [detached, setDetached] = useState(false);
 
-  // 末尾ターンの本文が伸びるたびに追従スクロールする
+  // 末尾ターンの本文（delta で伸びる）。追従 effect の依存に使う。
   const lastContent = turns.length ? turns[turns.length - 1].content : "";
+  // ターン列が空＝launch/resume/continue の再構築クリア地点。貼り付き再初期化の手掛かりに使う。
+  const noTurns = turns.length === 0;
 
+  // 末尾付近にいるか（64px 以内なら「貼り付き」とみなす）。閾値が小さいと、行が増える瞬間に
+  // 一瞬下端から離れて追従が切れるため、ゆとりを持たせる。
+  function nearBottom(el: HTMLDivElement): boolean {
+    return el.scrollHeight - el.scrollTop - el.clientHeight < 64;
+  }
+
+  // スクロールのたびに貼り付き状態を更新。上へ離れたらボタンを出し追従を止める。
+  // プログラム追従で末尾に着いた直後もここが呼ばれ stick=true に戻る（無限ループにはならない）。
+  function onScroll() {
+    const el = scrollRef.current;
+    if (!el) return;
+    const stick = nearBottom(el);
+    stickRef.current = stick;
+    setDetached((prev) => (prev === !stick ? prev : !stick));
+  }
+
+  // 末尾に貼り付いている時だけ、新規発言・delta に追従して末尾へ。離れて読んでいる間は動かさない。
+  // 連続 delta 中の smooth はカクつくので瞬間移動（scrollTop 直書き）で追う。
   useEffect(() => {
-    endRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+    if (!stickRef.current) return;
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollTop = el.scrollHeight;
   }, [turns.length, lastContent, streamingTurnId]);
+
+  // 別討論への切替・履歴読込・再接続 replay でターン列が差し替わる時は、貼り付き状態を初期化して
+  // 末尾に着地させる（旧挙動＝常に末尾、への回帰防止）。topic 変化＝別議題、turns 空＝launch/resume の
+  // 再構築クリア。これが無いと前の討論で上にスクロールしていた状態が残り、開いた瞬間に追従が止まった
+  // まま「最新へ」ボタンがスプリアス表示される（特にモバイル復帰時のライブ追従停止が実害）。
+  useEffect(() => {
+    stickRef.current = true;
+    setDetached(false);
+  }, [topic, noTurns]);
+
+  // 「最新へ」: 末尾へ滑らかに戻し、追従を再開する。
+  function jumpToBottom() {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
+    stickRef.current = true;
+    setDetached(false);
+  }
 
   if (!topic) {
     return (
@@ -49,7 +95,12 @@ export function Timeline({
   const visible = turns.filter((t) => t.phase !== "synthesis" && t.phase !== "summary");
 
   return (
-    <div className="flex h-full flex-col overflow-y-auto px-6 py-5">
+    <div className="relative flex h-full flex-col">
+      <div
+        ref={scrollRef}
+        onScroll={onScroll}
+        className="flex min-h-0 flex-1 flex-col overflow-y-auto px-6 py-5"
+      >
       <div className="mb-5 border-b border-[var(--color-line)] pb-4">
         <p className="text-[11px] font-medium uppercase tracking-wider text-[var(--color-ink-muted)]">
           議題
@@ -153,7 +204,21 @@ export function Timeline({
           </div>
         )}
       </div>
-      <div ref={endRef} />
+      </div>
+
+      {detached && (
+        <button
+          onClick={jumpToBottom}
+          aria-label="最新の発言へ移動"
+          className="animate-turn-in absolute bottom-4 left-1/2 z-10 flex min-h-[40px] -translate-x-1/2 items-center gap-1.5 rounded-full border border-[var(--color-line)] bg-[var(--color-surface)] px-4 py-2.5 text-xs text-[var(--color-ink)] shadow-md transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+        >
+          {streamingTurnId !== null && (
+            <span className="animate-pulse-soft inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
+          )}
+          <ArrowDown size={13} />
+          {streamingTurnId !== null ? "新しい発言中" : "最新へ"}
+        </button>
+      )}
     </div>
   );
 }
