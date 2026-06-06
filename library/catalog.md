@@ -1,6 +1,6 @@
 # Library Catalog
 
-最終更新: 2026-06-05
+最終更新: 2026-06-06
 
 ## 凡例
 - 状態: 未読 / 既読 / 要精読
@@ -280,12 +280,38 @@
 
 ---
 
+## 2026-06-06 収集分（16件収集 → 16件SIGNAL）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 144 | [2026-06-06_144](articles/2026-06-06_144_Anthropic-Claude-Code-Auto-Mode-Engineering-Architecture.md) | Claude Code Auto Mode 設計解説 — モデル判断リスク評価・バックグラウンド安全チェック（Anthropic一次資料） | claude-code | 未読 | #web-signal |
+| 145 | [2026-06-06_145](articles/2026-06-06_145_Claude-Code-Dynamic-Workflows-Parallel-Agents-InfoQ.md) | Claude Code Dynamic Workflows 技術解説 — 並列サブエージェント・JSオーケストレーション・非同期実行（InfoQ） | claude-code | 未読 | #web-signal |
+| 146 | [2026-06-06_146](articles/2026-06-06_146_Claude-Code-5-Workflow-Patterns-Sequential-Autonomous-MindStudio.md) | Claude Code 5ワークフローパターン分類 — Sequential〜Fully Autonomous・コスト特性比較（MindStudio） | claude-code | 未読 | #web-signal |
+| 147 | [2026-06-06_147](articles/2026-06-06_147_Claude-Code-Agents-2026-AgentView-Subagents-Teams-Cost-Analysis.md) | Claude Code Agents 2026 コスト実態 — Agent View/Subagents/Teams・並列10倍コスト警告（CloudZero） | claude-code | 未読 | #web-signal |
+| 148 | [2026-06-06_148](articles/2026-06-06_148_ServerWorks-CLAUDE-md-Writing-Guide-JA.md) | CLAUDE.md 書き方ガイド（JA） — 4セクション推奨・200行制限・命令形で遵守率向上（サーバーワークス） | claude-code | 未読 | #web-signal |
+| 149 | [2026-06-06_149](articles/2026-06-06_149_Anthropic-Claude-Subscription-Split-AgentSDK-Credit-June15.md) | Anthropic サブスクリプション分割 6/15施行 — Agent SDK専用クレジット分離・2バケット制移行 | claude-ecosystem | 未読 | #web-signal #urgent |
+| 150 | [2026-06-06_150](articles/2026-06-06_150_Claude-Agent-SDK-Production-Patterns-2026.md) | Claude Agent SDK 本番運用5パターン — コストキャップ・サーキットブレーカー・マルチエージェント実装例 | claude-ecosystem | 未読 | #web-signal |
+| 151 | [2026-06-06_151](articles/2026-06-06_151_Nader-Dabit-Complete-Guide-Claude-Agent-SDK-Agents.md) | Nader Dabit: Claude Agent SDK完全ガイド — コードレビューエージェント実装・サブエージェント並列委譲 | claude-ecosystem | 未読 | #web-signal |
+| 152 | [2026-06-06_152](articles/2026-06-06_152_AWS-MCP-Servers-54-Category-List-2026-JA.md) | AWS公式MCPサーバー54種カテゴリ別早見表（JA） — IAMロール認証・Claude Codeとの連携ユースケース | claude-ecosystem | 未読 | #web-signal |
+| 153 | [2026-06-06_153](articles/2026-06-06_153_AI-vs-Algorithmic-Trading-LLM-2026-Architecture.md) | AI取引 vs アルゴリズム取引 — LLM判断の定義・6エージェント典型アーキテクチャ・用語混乱の整理 | ai-trading | 未読 | #web-signal |
+| 154 | [2026-06-06_154](articles/2026-06-06_154_TradingAgents-Reproducibility-Study-ACM-ICAIF-2026.md) | TradingAgents 再現性検証論文 ACM ICAIF 2026 — バックテストバイアス・センチメントLLM依存リスク | ai-trading | 未読 | #web-signal |
+| 155 | [2026-06-06_155](articles/2026-06-06_155_FX-AutoTrading-LLM-EA-Development-Experiment-JA.md) | FX自動売買LLM活用実験記録（JA） — MT5 MQL5コード生成・Claude vs GPT比較・ローカルLLM構成 | ai-trading | 未読 | #web-signal |
+| 156 | [2026-06-06_156](articles/2026-06-06_156_Mercury-2-Inception-Labs-Diffusion-LLM-1000tps.md) | Mercury 2: 拡散アーキテクチャLLM — 1,000トークン/秒・Haiku比1/10コスト・エージェントループ向け | ai-news | 未読 | #web-signal |
+| 157 | [2026-06-06_157](articles/2026-06-06_157_Illinois-AI-Accountability-Bill-Safety-Audits-2026.md) | イリノイ州AI説明責任法 — 米国初フロンティアAI安全監査義務化・超党派110-0可決（一次報道） | ai-news | 未読 | #web-signal |
+| 158 | [2026-06-06_158](articles/2026-06-06_158_AI-Regulations-State-Federal-Laws-2026-Comprehensive.md) | 2026年米国AI規制総覧 — 連邦EO vs 州レベル格差・EU AI Act 8月施行・ハイリスクAI要件（Drata） | ai-news | 未読 | #web-signal |
+| 159 | [2026-06-06_159](articles/2026-06-06_159_LLM-AI-Model-News-June-2026-Monthly-Roundup.md) | LLMニュース 2026年6月まとめ — Opus 4.8・中国系急追・Mercury 2・Copilotトークン課金移行 | ai-news | 未読 | #web-signal |
+
+### NOISEとして除外
+なし（全16件SIGNAL判定・X投稿データなし・drop.mdにURLなし）
+
+---
+
 ## ドメイン別統計（累計）
 
-| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 累計 |
-|---|---|---|---|---|---|---|---|---|---|---|---|
-| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 8件 | 60件 |
-| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 5件 | 30件 |
-| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 27件 |
-| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 26件 |
-| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **18件** | **143件** |
+| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 累計 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 8件 | 5件 | 65件 |
+| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 5件 | 4件 | 34件 |
+| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 3件 | 30件 |
+| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 4件 | 30件 |
+| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **18件** | **16件** | **159件** |
