@@ -6,28 +6,23 @@
 
 ---
 
-## 🔴 次回の最短手順 (2026-05-31 クローズ時点)
+## ✅ 起動完了 (2026-06-07) — Phase 2'A デモ稼働中
 
-**残るブロッカーは VPS の API キー設定だけ。** コード・依存(Python313)・MT5・DB は VPS で dry-run 動作確認済み。連鎖していたデプロイ漏れ (spec_v2 全体・spec_v3 `__init__`/`slack_notifier`・運用スクリプト) は全て git に乗せて解消済み。
+**VPS で SPECv3_Demo 起動済み (State=Running)。** 残ブロッカーだった API キーは `~/.secrets/anthropic.env` から scp で VPS `.env` に投入。連鎖デプロイ漏れ (anthropic パッケージ未install→手動 `pip install`、`register.ps1` の BOM無し UTF-8 cp932 誤読→BOM付き一時コピー) を是正して起動。Slack は GLOBAL webhook 失効 (404) のため **JAPAN webhook** に切替 (疎通200)。
 
-1. **VPS の `.env` に API キーを記入** (空テンプレート作成済み、BOM無し UTF-8)
-   - 場所: `C:\bpr_lab_spec_v2\sandbox\FX自動取引\.env`
-   - `ANTHROPIC_API_KEY=` の **= 直後**に値 (前後スペース/引用符なし)。**ANTHROPIC は必須** (LLM filter)
-   - `SPEC_V3_SLACK_WEBHOOK_URL=` も推奨 (無いと通知 no-op・日次 AUC が Slack に出ない)
-   - 記入は **RDP → メモ帳** 推奨 (ssh だとキーがコマンド履歴に残る)
-2. 記入後 (Claude に依頼可)、ssh で:
-   ```powershell
-   cd C:\bpr_lab_spec_v2\sandbox\FX自動取引
-   $py = "C:\Users\Administrator\AppData\Local\Programs\Python\Python313\python.exe"  # ★Python313必須(311はpandas無し)
-   # LLM 疎通 (judge 1回 ~$0.004)
-   & $py -c "from dotenv import load_dotenv; load_dotenv(); from src.spec_v3.llm_filter import LLMFilter; LLMFilter(); print('LLM init OK')"
-   .\scripts\_register_spec_v3_tasks.ps1     # 3タスク登録 (Python313 指定済)
-   Start-ScheduledTask -TaskName "SPECv3_Demo"
-   Get-ScheduledTaskInfo -TaskName "SPECv3_Demo"
-   ```
-3. 起動直後チェックは下記 1.3
+| 項目 | 値 |
+|---|---|
+| 稼働 | SPECv3_Demo Running / USD_JPY+GBP_JPY / CONFIRM×conf≥0.65,0.60 |
+| タスク | Demo(常駐) + AliveCheck(1h) + DailySummary(JST07:00)、全 ETL=PT0S |
+| 環境 | Python313、anthropic 0.107.0、ANTHROPIC_API_KEY + Slack(JAPAN) |
+| デモ期間 | 2026-06-07 〜 07-07 目安 (30日) |
 
-> ⚠️ **今日の教訓**: VPS の `python` (PATH) は **Python311 で pandas 無し**。タスクと手動実行は必ず **Python313 のフルパス**を使う (`_register_spec_v3_tasks.ps1` は対応済み)。
+### 次回の関心事 = 日次観察 (下記 Phase 2 §2.1)
+- Slack(JAPAN) 日次サマリで 取引件数 / confidence分布 / PF / **AUC** / LLMコスト / 撤退条件近接 を確認
+- ssh 死活確認: `Get-ScheduledTaskInfo -TaskName SPECv3_Demo` / `data\spec_v3_demo.log` tail / `data\fx_spec_v3.db`
+- 緊急停止: `Stop-ScheduledTask -TaskName SPECv3_Demo; Disable-ScheduledTask -TaskName SPECv3_Demo`
+
+> ⚠️ **VPS 運用の罠 (是正済だが再発注意)**: ①`python` (PATH) は Python311 で pandas/anthropic 無し → 必ず **Python313 フルパス** ②日本語入り `.ps1` は **BOM付き UTF-8** でないと cp932 誤読でパースエラー ③`requirements.txt` のコメントは ASCII (cp932 install 失敗回避) — いずれも git 側を恒久修正済み (本コミット)。
 
 ---
 

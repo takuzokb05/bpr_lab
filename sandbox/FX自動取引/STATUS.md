@@ -5,15 +5,29 @@
 
 | メタ | 値 |
 |---|---|
-| **最終更新** | 2026-05-31 JST (ユーザー承認 → commit/push `86137ea` → VPS デプロイ・**dry-run 成功** → **VPS .env API キー記入待ち**) |
-| **次回更新予定** | API キー設定 → 起動後 |
-| **稼働状態** | **🛑 全停止** (VPS デプロイ進行中、`.env` の ANTHROPIC_API_KEY 記入待ちで停止) |
-| **現フェーズ** | 🌳 Phase 2'A **VPS デプロイ中** (コード配置・依存(Python313)・MT5・DB を dry-run で確認済、API キー設定後に起動) |
-| **次回エントリーポイント** | **`docs/NEXT_SESSION_TASKS.md` の「🔴 次回の最短手順」** |
+| **最終更新** | 2026-06-07 JST (**Phase 2'A VPS 起動完了**・SPECv3_Demo Running・Slack(JAPAN) 通知確立) |
+| **次回更新予定** | 30日デモ中の週次 or 異常時 |
+| **稼働状態** | **🟢 Phase 2'A デモ稼働中** (SPECv3_Demo Running / USD_JPY+GBP_JPY / 死活1h・日次サマリ JST07:00) |
+| **現フェーズ** | 🌳 Phase 2'A **30日デモ運用** (2026-06-07〜07-07目安。終了後 Phase 2'B 経済性Gate + AUC≥0.55 判定) |
+| **次回エントリーポイント** | 本書冒頭の稼働状態 + `docs/NEXT_SESSION_TASKS.md` (日次観察) |
 
 ---
 
-## 🛑 稼働状態 — 完全停止 (2026-05-26〜)
+## 🟢 稼働状態 — Phase 2'A デモ稼働中 (2026-06-07〜)
+
+| カテゴリ | 状態 |
+|---|---|
+| 🌳 SPEC v3 Phase 2'A (Proposal 3) | **稼働中** — SPECv3_Demo Running、USD_JPY+GBP_JPY、CONFIRM×conf≥0.65/0.60 |
+| タスク | SPECv3_Demo (常駐) / SPECv3_AliveCheck (1h) / SPECv3_DailySummary (JST07:00)、全 ETL=PT0S |
+| 環境 | VPS Python313、anthropic 0.107.0、ANTHROPIC_API_KEY + Slack(JAPAN) webhook 設定済 |
+| Slack 通知先 | JAPAN webhook (GLOBAL は失効 404 のため切替) |
+| 監視 | 日次 AUC サマリ + 死活、撤退条件 5レベル、Phase 2'B で AUC≥0.55 gate 追加 |
+
+> 起動経緯 (2026-06-07): APIキーは `~/.secrets/anthropic.env`→scp。連鎖デプロイ漏れ (anthropic 未install / register.ps1 BOM無し cp932 誤読) を是正。詳細 memory project_fx_llm_advisory_diagnostics / feedback_deploy_completeness_git_check。
+
+---
+
+## 🛑 (履歴) 稼働状態 — 完全停止 (2026-05-26〜2026-06-06)
 
 | カテゴリ | 状態 |
 |---|---|
@@ -44,7 +58,7 @@
 | **第2サイクル Phase 0' 改善** | J 改善余地メタ分析で Proposal 3 発見 (PF 1.354 / lift +0.438) | ✅ 完了 |
 | **第2サイクル Phase 0' 検証** | M2 標準分割 4/4 PASS、lift σ=0.04 で分割不変 | ✅ 完了 |
 | **Phase 2'A 起動準備** | SPEC v3 確定、実装 (src/spec_v3/ 6モジュール、tests/spec_v3/)、反論屋3体査読 | ✅ 完了 (Ultra 5バグ修正済み、karen+pragmatist 2/2 起動 OK) |
-| **Phase 2'A 実運用** | VPS デモ 30日 | ⬜ 未開始 (ユーザー起動承認待ち) |
+| **Phase 2'A 実運用** | VPS デモ 30日 | 🟢 **稼働中 (2026-06-07 起動)** |
 | **Phase 2'B 経済性 Gate** | PF≥1.3, Sharpe≥0.8, MaxDD≤15%, 機会費用超過 | ⬜ Phase 2'A 終了後 |
 | **Phase 2'C 本番投入** | lot 段階移行 (0.01→0.02→ATR可変) | ⬜ Phase 2'B 通過後 |
 
@@ -63,7 +77,7 @@
 1. ✅ **N1** 即修正 (H-① + H-② 撤退条件 #0 配線) — 完了 (`0d1831b` / `4c9c829`)
 2. ✅ **N2** 推奨 (H-③④⑤ pipeline ログ / ペア順 / DB status) — 完了 (`0d1831b`)
 3. ✅ **N3** karen + pragmatist 再査読 — 完了、**2/2 起動 OK** (`docs/analysis/PHASE2A_REVIEW3_*.md`)
-4. ⬜ **N4** ユーザー最終承認 → VPS デプロイ → Phase 2'A 起動 ← **現在ここ (GO 待ち)**
+4. ✅ **N4** ユーザー承認 → VPS デプロイ → **Phase 2'A 起動完了 (2026-06-07)** — anthropic 未install / register.ps1 BOM 罠を是正して起動
 
 採点フレーム: `docs/PROPOSAL_TEMPLATE.md`、SPEC: `docs/SPEC_V3.md`、計画: `docs/PHASE_2A_PLAN.md`
 

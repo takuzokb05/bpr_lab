@@ -1,37 +1,40 @@
-# FX自動取引システム Phase 1 依存パッケージ
+# FX auto-trading system - dependencies
+# NOTE: keep comments ASCII-only. On Windows, pip reads this file with the cp932
+# locale; non-ASCII bytes raise UnicodeDecodeError and silently abort the install.
 
-# === ブローカーAPI ===
+# === Broker API ===
 oandapyV20>=0.7.2
 MetaTrader5>=5.0.45
 
-# === データ処理 ===
+# === Data processing ===
 pandas>=2.0.0
 numpy>=1.24.0
 
-# === テクニカル指標 ===
+# === Technical indicators ===
 pandas-ta>=0.3.14b
 
-# === シグナル処理（bear_researcher のダイバージェンス検出: scipy.signal.find_peaks） ===
+# === Signal processing (bear_researcher divergence: scipy.signal.find_peaks) ===
 scipy>=1.10.0
 
-# === バックテスト ===
+# === Backtest ===
 Backtesting>=0.3.3
 
-# === Telegram通知 ===
+# === HTTP / Telegram notify ===
 requests>=2.28.0
 
-# === 環境変数管理 ===
+# === LLM (SPEC v3 Direct Filter: Claude Sonnet 4.6) ===
+anthropic>=0.40.0
+
+# === Env management ===
 python-dotenv>=1.0.0
 
-# === 設定ファイル（pair_config.yaml） ===
+# === Config (pair_config.yaml) ===
 PyYAML>=6.0
 
-# === データベース ===
-# SQLiteはPython標準ライブラリに含まれる
+# === Database: SQLite is in the Python stdlib ===
 
-# === テスト ===
+# === Test ===
 pytest>=7.0.0
 pytest-cov>=4.0.0
 
-# === ロギング ===
-# loggingはPython標準ライブラリに含まれる
+# === Logging: logging is in the Python stdlib ===

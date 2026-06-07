@@ -1,4 +1,4 @@
-# SPEC v3 デモ運用タスクスケジューラ登録 (VPS で実行)
+﻿# SPEC v3 デモ運用タスクスケジューラ登録 (VPS で実行)
 #
 # - SPECv3_Demo:           60秒ループのメイン PoC (常駐)
 # - SPECv3_AliveCheck:     1h ごと死活監視 (Once + RepetitionInterval=PT1H)
