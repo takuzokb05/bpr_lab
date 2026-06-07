@@ -306,12 +306,44 @@
 
 ---
 
+## 2026-06-07 収集分（22件収集 → 20件SIGNAL）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 160 | [2026-06-07_160](articles/2026-06-07_160_Anthropic-IPO-S1-Confidential-Filing-47B-Revenue-965B-Valuation.md) | Anthropic IPO S-1 機密提出 — $47B売上ランレート・$965B評価額・SECレビュー中 | claude-ecosystem | 未読 | #web-signal |
+| 161 | [2026-06-07_161](articles/2026-06-07_161_Anthropic-SpaceX-Colossus-300MW-220k-GPUs-Claude-Code-Limits-Doubled.md) | Anthropic-SpaceX Colossus提携 — 300MW/22万GPU・Claude Code 5時間制限2倍（Anthropic公式） | claude-ecosystem | 未読 | #web-signal |
+| 162 | [2026-06-07_162](articles/2026-06-07_162_Apple-Xcode-26-3-Claude-Agent-SDK-Native-Integration-Autonomous-Coding.md) | Apple Xcode 26.3 Claude Agent SDKネイティブ統合 — ビジュアルプレビュー・自律デバッグループ | claude-ecosystem | 未読 | #web-signal |
+| 163 | [2026-06-07_163](articles/2026-06-07_163_AI-News-Today-June-7-2026-OpenAI-Dreaming-MAI-Models-Congress-AI-Bill.md) | AIニュース 2026年6月7日 — OpenAI Dreaming V3・Microsoft MAI・議会AI連邦法案269ページ | ai-news | 未読 | #web-signal |
+| 164 | [2026-06-07_164](articles/2026-06-07_164_Uravation-Claude-Code-Use-Cases-10-by-Department-Industry-2026-JA.md) | 部署別・業種別Claude Code活用事例10選 — 実プロンプト付き・開発/営業/HR/医療（JA） | claude-code | 未読 | #web-signal |
+| 165 | [2026-06-07_165](articles/2026-06-07_165_Firecracker-50-Dev-Company-6-Months-Claude-Code-AI-Driven-10x-Productivity-JA.md) | 50名開発会社Claude Code 6ヶ月記録 — AI駆動開発で生産性10倍・受注量150%増（JA） | claude-code | 未読 | #web-signal |
+| 166 | [2026-06-07_166](articles/2026-06-07_166_TrueFountry-Claude-Code-MCP-Integrations-Guide-Tool-Connection-2026.md) | Claude Code MCP Integrations Guide 2026 — ファーストパーティサーバー推奨・接続パターン | claude-code | 未読 | #web-signal |
+| 167 | [2026-06-07_167](articles/2026-06-07_167_TrueFountry-MCP-Authentication-Claude-Code-OAuth-Security-2026.md) | MCP Authentication in Claude Code 2026 — OAuth/APIキー・セキュリティベストプラクティス | claude-code | 未読 | #web-signal |
+| 168 | [2026-06-07_168](articles/2026-06-07_168_Anthropic-Q2-2026-First-Operating-Profit-10-9B-Revenue-130pct-QoQ-JA.md) | Anthropic Q2 2026 初の営業黒字 — 売上$10.9B・前四半期比130%増・営業利益$559M（JA） | claude-ecosystem | 未読 | #web-signal |
+| 169 | [2026-06-07_169](articles/2026-06-07_169_Clarista-Claude-Code-MCP-Servers-Plugins-Complete-2026-Guide.md) | Claude Code MCP Servers & Plugins Complete 2026 Guide — 50+サーバー・信頼モデル・設定例 | claude-code | 未読 | #web-signal |
+| 170 | [2026-06-07_170](articles/2026-06-07_170_Uravation-AI-Major-Updates-June-2026-Anthropic-Marketplace-Dynamic-Workflows-JA.md) | 生成AI主要アップデート2026年6月総まとめ — Anthropic Marketplace・動的ワークフロー・Computer Use（JA） | ai-news | 未読 | #web-signal |
+| 171 | [2026-06-07_171](articles/2026-06-07_171_Impress-Anthropic-SpaceX-Colossus-Compute-Claude-Limits-Expanded-JA.md) | AnthropicがSpaceXと計算インフラ提携・Claude利用制限大幅緩和（窓の杜・JA） | claude-ecosystem | 未読 | #web-signal |
+| 172 | [2026-06-07_172](articles/2026-06-07_172_Uravation-Claude-Code-Automation-10-Case-Studies-Prompts-2026-JA.md) | Claude Code業務自動化10事例 — 実装プロンプト全公開・ROI付き2026年最新版（JA） | claude-code | 未読 | #web-signal |
+| 173 | [2026-06-07_173](articles/2026-06-07_173_Medium-Claude-Code-Hooks-Complete-PM-Guide-Nobody-Wrote-2026.md) | Claude Code Hooks Complete PM Guide 2026 — 非エンジニア視点・自動承認・CIパターン | claude-code | 未読 | #web-signal |
+| 174 | [2026-06-07_174](articles/2026-06-07_174_Smart-Webtech-Claude-Code-Workflows-Best-Practices-4-Phase-2026.md) | Claude Code Workflows Best Practices 2026 — 4フェーズフロー・Plan Mode・MCP・証拠提示 | claude-code | 未読 | #web-signal |
+| 175 | [2026-06-07_175](articles/2026-06-07_175_MindWiredAI-Claude-Code-Creator-100-Line-Workflow-CLAUDE-md.md) | Claude Code制作者自身の100行CLAUDE.md構造 — 作者が実際に使うワークフローを公開 | claude-code | 未読 | #web-signal |
+| 176 | [2026-06-07_176](articles/2026-06-07_176_NII-LLM-jp-4-8B-32B-Open-Source-Japanese-LLM-GPT4o-Benchmark-JA.md) | 国産LLM「LLM-jp-4」オープンソース公開 — 12兆トークン学習・GPT-4o超えベンチマーク（NII・JA） | ai-news | 未読 | #web-signal |
+| 177 | [2026-06-07_177](articles/2026-06-07_177_MQL5-How-to-Trade-With-AI-2026-7-Components-MT5-LLM-Architecture.md) | How to Trade With AI 2026: 7コンポーネント — MT5 LLMアーキテクチャ・Middlewareパターン | ai-trading | 未読 | #web-signal |
+| 178 | [2026-06-07_178](articles/2026-06-07_178_Uravation-CLAUDE-md-Writing-Guide-5-Templates-2026-JA.md) | CLAUDE.md書き方ガイド + 活用テンプレ5選 — 用途別テンプレートと育て方（Uravation・JA） | claude-code | 未読 | #web-signal |
+| 179 | [2026-06-07_179](articles/2026-06-07_179_GenAI-AI-Stock-Auto-Trading-Guide-2026-Personal-Investor-JA.md) | AI自動株取引の仕組みと始め方2026年6月版 — 個人投資家向け実践ガイド（JA） | ai-trading | 未読 | #web-signal |
+
+### NOISEとして除外
+- MCP 2026-07-28 RC: 既存記事と重複（2026-05-30_005）
+- SmartScope hooks guide March 2026: 既存hooks記事と重複度高
+（22件収集、2件NOISE除外、20件SIGNAL）
+
+---
+
 ## ドメイン別統計（累計）
 
-| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 累計 |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 8件 | 5件 | 65件 |
-| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 5件 | 4件 | 34件 |
-| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 3件 | 30件 |
-| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 4件 | 30件 |
-| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **18件** | **16件** | **159件** |
+| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 2026-06-07 | 累計 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 8件 | 5件 | 10件 | 75件 |
+| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 5件 | 4件 | 5件 | 39件 |
+| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 3件 | 2件 | 32件 |
+| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 4件 | 3件 | 33件 |
+| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **18件** | **16件** | **20件** | **179件** |
