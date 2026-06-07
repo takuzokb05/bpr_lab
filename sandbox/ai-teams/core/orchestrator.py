@@ -176,6 +176,7 @@ class Council:
         length_hint: str = "",
         synthesis_max_tokens: int | None = None,
         phase_bridge: bool = False,
+        redefine: bool = False,
     ) -> None:
         self.client = client
         self.default_model = default_model
@@ -200,6 +201,8 @@ class Council:
         # 発散→批判 の間に司会のブリッジ（叩く価値のある案を名指しして批判の的を絞る）を挟むか。
         # 議論が深まるかの検証用フラグ（既定 False＝従来どおり挟まない）。
         self.phase_bridge = phase_bridge
+        # ② 問題再定義ゲート: 発散の前に各パネリストが議題を捉え直す1周を挟むか（既定 False）。
+        self.redefine = redefine
 
         personas = list(personas)
         # 役割ごとに振り分ける
@@ -566,6 +569,29 @@ class Council:
             transcript.append(turn)
             yield turn
 
+        # 1.5. 問題再定義ゲート（任意）: 発散の前に各パネリストが議題を自分の視点で捉え直す1周。
+        #      司会1人のフレーミング(opening/intake)では吸収できない解釈ズレを多視点で炙り出し、
+        #      後続フェーズの噛み合いを上げる。redefine=False（既定）では一切出さない（後方互換）。
+        if self.redefine:
+            for persona in list(self.panelists):
+                turn = self._speak(
+                    persona,
+                    transcript,
+                    topic,
+                    phase="redefine",
+                    round_no=0,
+                    phase_directive=(
+                        "【問題の捉え直し】発散に入る前に、この議題をあなたの視点で一言に捉え直してください。"
+                        "『私はこれを〈…〉の問題だと捉える』の形で、論点の本質がどこにあるかを各自の角度から"
+                        "示すこと。提案・対策・結論はまだ出さず、問いの枠組みだけを1〜2文で簡潔に。"
+                    ),
+                    anti_conformity=True,
+                    emit=emit,
+                    turn_id=next(ids),
+                )
+                transcript.append(turn)
+                yield turn
+
         # 2. フェーズ進行（各ラウンドでラウンドロビン＝全員必ず発言）
         for phase_name, directive, anti in self.phases:
             # 収束の口火（司会・在席時のみ）: 合意点を**1回だけ**まとめ、各登壇者には「新しく付け足す
@@ -688,9 +714,15 @@ class Council:
             phase="synthesis",
             round_no=0,
             phase_directive=(
-                "【統合】これまでの議論を、合意点 / 対立が残った点 / 主要リスク / "
-                "ネクストアクション の4見出しで簡潔に1枚にまとめてください。"
+                "【統合】これまでの議論を1枚に統合してください。意思決定者が"
+                "『どこが危ういか』を最初に見られるよう、必ず次の順序の見出しで簡潔にまとめること:\n"
+                "1. 残った対立点・未解決の問い（最初に置く。どの論点で誰と誰が割れたか）\n"
+                "2. 棄却された/少数の意見（多数決で消さず、何をなぜ退けたかを1行ずつ残す）\n"
+                "3. 主要リスク\n"
+                "4. 合意できた点\n"
+                "5. ネクストアクション\n"
                 "新しい意見は足さず、出た議論だけを統合すること。"
+                "自信ありげな結論から書き始めず、まず割れた点・残る問いを明示すること。"
             ),
             anti_conformity=False,
             emit=emit,

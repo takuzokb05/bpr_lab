@@ -238,6 +238,10 @@ class SessionRequest(BaseModel):
     # A/B 検証で批判フェーズが明確に深まる（噛み合う）ことを確認したため既定 True（全討論で挟む）。
     # 明示 false で従来どおりにも戻せる。
     phase_bridge: bool = True
+    # ② 問題再定義ゲート: 発散の前に各パネリストが議題を自分の視点で捉え直す1周を挟むか。
+    # 司会1人のフレーミングでは吸収できない解釈ズレを多視点で炙り出す（コスト/時間は1周増える）。
+    # 既定 false で従来同一。
+    redefine: bool = False
     # クライアント定義のカスタムペルソナ（サーバ非保存・このセッション限定）。persona_ids から
     # これらの id を参照できる。件数上限で濫用・コスト暴走を防ぐ。
     custom_personas: list[CustomPersona] = Field(default_factory=list, max_length=12)
@@ -348,6 +352,7 @@ def create_session(
             materials=composed_materials,
             research=req.research,
             phase_bridge=req.phase_bridge,
+            redefine=req.redefine,
         )
     except KeyError as exc:
         raise HTTPException(status_code=400, detail=f"unknown persona ids: {exc.args[0]}")

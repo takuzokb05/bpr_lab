@@ -48,6 +48,9 @@ export interface StartSessionArgs {
   // Web 検索（調査役による事実調べ）。既定 false で従来と完全同一（body にも載らない）。
   // true のとき調査役が discussion 序盤と「要調査:」マーカーで検索し全員に共有する（コスト増）。
   research?: boolean;
+  // ② 問題再定義ゲート。発散の前に各パネリストが議題を自分の視点で捉え直す1周を挟む。
+  // 既定 false で従来同一（body にも載らない）。1周分コスト/時間が増える。
+  redefine?: boolean;
   // 応答の長さプリセット（既定 standard）。トークン数ではなく質感で選ぶ。
   verbosity?: "brief" | "standard" | "deep";
   // 討論モード（エンジン・プリセット）id。local 経路でのみ有効。サーバが (model, verbosity) に解決。
@@ -83,6 +86,7 @@ export async function startSession({
   intake = [],
   interactive = true,
   research = false,
+  redefine = false,
   verbosity = "standard",
   preset = null,
   customPersonas = [],
@@ -105,6 +109,8 @@ export async function startSession({
   if (intake.length > 0) body.intake = intake;
   // Web 検索（調査役）。後方互換: false のときは body に載せない（従来の POST と完全同一）。
   if (research) body.research = research;
+  // ② 問題再定義ゲート。後方互換: false のときは body に載せない。
+  if (redefine) body.redefine = redefine;
   // 応答の長さ。後方互換: standard（既定）のときは body に載せない。
   if (verbosity && verbosity !== "standard") body.verbosity = verbosity;
   // 討論モード（プリセット）。local 経路でサーバが (model, verbosity) に解決。空なら従来動作。

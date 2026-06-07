@@ -117,6 +117,7 @@ export interface Preset {
 // フェーズ名（API値）→ 報道トーンの表示ラベル
 export const PHASE_LABELS: Record<string, string> = {
   opening: "オープニング",
+  redefine: "問題の捉え直し",
   発散: "発散",
   bridge: "論点整理",
   批判: "批判",
@@ -133,7 +134,7 @@ export const PHASE_LABELS: Record<string, string> = {
 export const MAIN_PHASES = ["発散", "批判", "収束"] as const;
 
 // 追い質問を出せないフェーズ（opening/要約/統合の間は入力を無効化する）
-export const FOLLOWUP_DISABLED_PHASES = ["opening", "summary", "synthesis"] as const;
+export const FOLLOWUP_DISABLED_PHASES = ["opening", "redefine", "summary", "synthesis"] as const;
 
 /**
  * サーバ採番の ts（UNIX 秒）を日本時間の HH:mm にする。未定義なら空文字。

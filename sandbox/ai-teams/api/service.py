@@ -392,6 +392,7 @@ def build_council(
     research: bool = False,
     preset: str | None = None,
     phase_bridge: bool = True,
+    redefine: bool = False,
 ) -> Council:
     """指定 id のペルソナで Council を作る。未知 id は KeyError。
 
@@ -447,6 +448,7 @@ def build_council(
         length_hint=vb["hint"],
         synthesis_max_tokens=synthesis_mt,
         phase_bridge=phase_bridge,
+        redefine=redefine,
     )
 
 

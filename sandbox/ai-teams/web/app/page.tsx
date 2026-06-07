@@ -70,6 +70,7 @@ import {
   ListChecks,
   Globe,
   Search,
+  Compass,
   History,
   Menu,
   X,
@@ -134,6 +135,8 @@ export default function Home() {
   // Web 検索（調査役）。既定 false で従来と完全同一（mock/キー未設定なら canned で無料）。
   // true のとき調査役が序盤と「要調査:」マーカーで検索し、結果を全員に共有する（コスト増）。
   const [research, setResearch] = useState(false);
+  // ② 問題再定義ゲート。既定 false。ON で発散の前に各登壇者が議題を捉え直す1周を挟む（コスト増）。
+  const [redefine, setRedefine] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [turns, setTurns] = useState<Turn[]>([]);
@@ -771,6 +774,7 @@ export default function Home() {
         materials: opts.materials,
         intake: opts.intake ?? [],
         research,
+        redefine,
         verbosity,
         // 討論モード（local 時のみ）。サーバが (model, verbosity) に解決する。無ければ verbosity を使う。
         preset: enginePresets.length > 0 ? mode : null,
@@ -1384,6 +1388,54 @@ export default function Home() {
                   {researchAvailable
                     ? "調査役が序盤と「要調査」の問いだけを検索し、出典付きで全員に共有します。重複は省きます。"
                     : "Web 検索は Anthropic 選択時のみ対応です（OpenAI/Google では検索なしで進めます）。"}
+                </p>
+              </div>
+
+              {/* ② 問題再定義ゲート（任意）。ON で発散の前に各登壇者が議題を自分の視点で捉え直す
+                  1周を挟む。論点の解釈ズレを揃え後続の噛み合いを上げる（コスト/時間は1周増える）。 */}
+              <div className="flex flex-col gap-1.5 border-t border-[var(--color-line)] pt-3">
+                <button
+                  type="button"
+                  role="switch"
+                  aria-checked={redefine}
+                  onClick={() => setRedefine((v) => !v)}
+                  className={`flex items-center justify-between gap-3 rounded-md border px-2.5 py-2 text-left transition-colors ${
+                    redefine
+                      ? "border-[var(--color-accent)] bg-[var(--color-accent-weak)]"
+                      : "border-[var(--color-line)] hover:border-[var(--color-ink-muted)]"
+                  }`}
+                >
+                  <span className="flex items-center gap-2">
+                    <Compass
+                      size={14}
+                      className={
+                        redefine ? "text-[var(--color-accent)]" : "text-[var(--color-ink-muted)]"
+                      }
+                    />
+                    <span
+                      className={`text-xs ${
+                        redefine ? "text-[var(--color-accent)]" : "text-[var(--color-ink)]"
+                      }`}
+                    >
+                      発散の前に問題を捉え直す（噛み合いUP）
+                    </span>
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className={`inline-flex h-4 w-7 shrink-0 items-center rounded-full p-0.5 transition-colors ${
+                      redefine ? "bg-[var(--color-accent)]" : "bg-[var(--color-line)]"
+                    }`}
+                  >
+                    <span
+                      className={`h-3 w-3 rounded-full bg-[var(--color-surface)] transition-transform ${
+                        redefine ? "translate-x-3" : "translate-x-0"
+                      }`}
+                    />
+                  </span>
+                </button>
+                <p className="flex items-start gap-1.5 text-[11px] leading-relaxed text-[var(--color-ink-muted)]">
+                  <Compass size={12} className="mt-0.5 shrink-0" />
+                  各登壇者が議題を自分の言葉で言い換えてから発散します。論点のズレを揃えますが、1周分コストが増えます。
                 </p>
               </div>
             </div>
