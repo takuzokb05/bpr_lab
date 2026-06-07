@@ -25,7 +25,7 @@ FOLLOWUP_DIRECTIVE = (
 )
 
 from .context import build_context
-from .llm_client import DEFAULT_MODEL, LLMClient
+from .llm_client import DEFAULT_MODEL, LLMClient, _strip_model_artifacts
 from .personas import Persona
 
 
@@ -254,6 +254,7 @@ class Council:
         emit: Emit | None = None,
         turn_id: int | None = None,
         max_tokens: int | None = None,
+        research_override: bool | None = None,
     ) -> Turn:
         # Red Team に指名されたパネリストには、毎ターン反対役の特命を上乗せする。
         # 収束フェーズだけは「穴突き＋塞ぐ最小条件」版に切替える（phase 名は DEFAULT_PHASES と一致）。
@@ -267,7 +268,10 @@ class Council:
             phase_directive=phase_directive,
             anti_conformity=anti_conformity,
             materials=self.materials,
-            research_enabled=self.research,
+            # research_override は OFF 専用（論理積）。枠組みターン（redefine/収束口火/bridge/closing/
+            # followup）で False を渡すと RESEARCH_NUDGE が出ない。self.research=False の後方互換経路は
+            # override 値に依らず常に False（捉え直しなのに要調査が出る問題の根治）。
+            research_enabled=(self.research if research_override is None else (self.research and research_override)),
             length_directive=self.length_hint,
             roster_note=self._roster_notes.get(persona.id, ""),
         )
@@ -299,7 +303,9 @@ class Council:
             ):
                 parts.append(chunk)
                 emit({"type": "delta", "turn_id": turn_id, "text": chunk})
-            content = "".join(parts).strip()
+            # delta は逐次そのまま流す（境界跨ぎで壊れるため）。確定 content は artifact 除去して
+            # transcript/build_context/議事録/export への二次汚染を断つ（本番 stream 経路の防波堤）。
+            content = _strip_model_artifacts("".join(parts))
         return Turn(persona.id, persona.display_name, content, phase, round_no, turn_id=turn_id)
 
     def _emit_simple_turn(
@@ -451,6 +457,7 @@ class Council:
                     "取り次ぐこと（自分で論点を3つに展開しない）。\n" + questions
                 ),
                 anti_conformity=False,
+                research_override=False,  # 取り次ぎは枠組みターン＝要調査を誘発しない
                 emit=emit,
                 turn_id=next(ids),
             )
@@ -467,6 +474,7 @@ class Council:
                 round_no=round_no,
                 phase_directive=FOLLOWUP_DIRECTIVE,
                 anti_conformity=False,
+                research_override=False,  # 追い質問への応答は枠組み扱い（研究乱発を抑制）
                 emit=emit,
                 turn_id=next(ids),
             )
@@ -491,6 +499,7 @@ class Council:
                     "添えてよい。最後に、続けて追い質問・議事録の作成・終了ができることを一言添えること。"
                 ),
                 anti_conformity=False,
+                research_override=False,  # 締めは枠組みターン＝要調査を誘発しない
                 emit=emit,
                 turn_id=next(ids),
             )
@@ -544,7 +553,8 @@ class Council:
         if self.moderator is not None:
             opening_directive = (
                 "【オープニング】議題を一言で整理し、論点を2〜3つ提示して討論の口火を切って"
-                "ください。結論は出さず、最後に特定の立場の人へ発言を促すこと。"
+                "ください。結論は出さず、特定の個人を名指しせず、最後に〈これから登壇者全員が"
+                "順に意見を述べます〉と告げて口火を切ること。"
             )
             # 調査有効時は、初回の Web 検索を「生の議題」でなく司会が絞った論点から出させる
             # （seed 調査を廃し、的の合ったクエリにする）。research 無効なら従来どおり何も足さない。
@@ -586,6 +596,7 @@ class Council:
                         "示すこと。提案・対策・結論はまだ出さず、問いの枠組みだけを1〜2文で簡潔に。"
                     ),
                     anti_conformity=True,
+                    research_override=False,  # 捉え直しは枠組み提示のみ＝要調査を誘発しない（rank5 主目的）
                     emit=emit,
                     turn_id=next(ids),
                 )
@@ -609,6 +620,7 @@ class Council:
                         "述べるよう促してください。あなた自身は新しい論点や結論を出さないこと。"
                     ),
                     anti_conformity=False,
+                    research_override=False,  # 収束の口火は枠組みターン＝要調査を誘発しない
                     emit=emit,
                     turn_id=next(ids),
                 )
@@ -650,6 +662,7 @@ class Council:
                         "新しい主張は足さず、批判の的を絞るだけにすること。"
                     ),
                     anti_conformity=False,
+                    research_override=False,  # ブリッジは的絞りの枠組みターン＝要調査を誘発しない
                     emit=emit,
                     turn_id=next(ids),
                 )
@@ -682,6 +695,7 @@ class Council:
                     "最後に、この後は追い質問の継続・議事録の作成・終了ができることを一言添えること。"
                 ),
                 anti_conformity=False,
+                research_override=False,  # クロージングは枠組みターン＝要調査を誘発しない
                 emit=emit,
                 turn_id=next(ids),
             )

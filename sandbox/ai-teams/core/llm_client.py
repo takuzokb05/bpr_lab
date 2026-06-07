@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import logging
 import os
+import re
 from abc import ABC, abstractmethod
 from typing import Callable, Iterator
 
@@ -19,6 +20,70 @@ logger = logging.getLogger("ai_teams.llm")
 
 # 字数上限で途中までしか返らなかったときに末尾へ付ける目印。
 _TRUNCATION_MARKER = "…（字数上限で途中まで）"
+
+# モデルが可視本文に混ぜて吐く「tool-call 用特殊トークン」「思考(<think>)タグ」を除去する。
+# オープンモデル（DeepSeek/Kimi/Qwen 等）は OpenRouter のツール呼び出し用マークアップ
+# （<｜｜DSML｜｜tool_calls> 等）や推論ブロックを可視 content に漏らすことがあり、それが
+# transcript→build_context→議事録/export/調査ブリーフへ恒久混入する。これを断つための純粋関数。
+# 全文が確定する地点（generate の戻り・調査要約）でのみ適用する。delta（逐次差分）には適用しない
+# ＝チャンク境界をまたぐタグを壊すため（画面ライブ表示での除去は別対応）。
+# コードフェンス(```…```)／インラインコード(`…`)。本アプリは多人格討論ツールで議題が「LLM内部仕様・
+# プロンプト設計・AIツーリング」になり得る。その際パネリストが <think> / <|im_start|> / <invoke> を
+# “リテラル例”としてコードで囲んで書くのは正当な討論内容なので、artifact 除去から保護する（誤爆防止）。
+_CODE_SPAN_RE = re.compile(r"```.*?```|`[^`\n]+`", re.DOTALL)
+_THINK_RE = re.compile(r"<think\b[^>]*>.*?</think>", re.DOTALL | re.IGNORECASE)
+# 閉じ無し <think> の「以降を全削除」は、応答が \A（先頭・コード外）から <think> で始まる＝先頭の
+# 推論リークのときだけに限定する。本文“途中”で <think> を話題として言及しても全消ししない
+# （AI内部仕様を論じる討論での発言全消失＝対抗レビュー M1 を回避）。途中の孤立タグは _ORPHAN_TAG_RE
+# が「タグだけ」落とし本文は残す。
+_THINK_OPEN_RE = re.compile(r"\A\s*<think\b[^>]*>.*\Z", re.DOTALL | re.IGNORECASE)
+# <｜…｜> / <|…|> 系の特殊トークン。「< の直後が縦棒」で始まり、内部に縦棒をもう1個以上含み、次の >
+# まで（改行は跨がない）。実トークン（<｜｜DSML｜｜tool_calls> / <｜tool▁calls▁begin｜> / <|im_start|>）は
+# 縦棒を2個以上持つのでこれで掴める。一方「縦棒1個＋後方に > がある正当文」（例: a<｜b … x > y）は
+# 2個目の縦棒を欠くのでマッチせず誤爆しない。通常の不等号や HTML タグ（<details>）も当然非対象。
+_SPECIAL_TOK_RE = re.compile(r"<[｜|][^>\n]*[｜|][^>\n]*>", re.IGNORECASE)
+_ORPHAN_TAG_RE = re.compile(
+    r"</?(?:think|tool_call|tool_calls|invoke|parameter|antml(?::[\w-]+)?)\b[^>]*>",
+    re.IGNORECASE,
+)
+
+
+def _strip_model_artifacts(text: str) -> str:
+    """モデルが本文に混ぜた tool-call 特殊トークン・<think> 思考タグを除去する純粋関数。
+
+    artifact を含まない通常文では前後 strip だけ＝従来挙動と完全一致（後方互換）。
+    貪欲なブロック削除はせず、先頭の推論リークと単発の特殊トークン・孤立タグだけを落とす。
+    コード(```…``` / `…`)内のリテラル例は保護し、討論本文の誤爆破壊を避ける（対抗レビュー M1）。
+    全文確定地点でのみ呼ぶ（delta には呼ばない＝境界跨ぎで壊れるため）。
+    """
+    if not text:
+        return text
+    # コード片を退避（プレースホルダは artifact 正規表現のどれにもマッチしない＝確実に保護）。
+    spans: list[str] = []
+
+    def _stash(m: "re.Match[str]") -> str:
+        spans.append(m.group(0))
+        return f"\x00C{len(spans) - 1}\x00"
+
+    t = _CODE_SPAN_RE.sub(_stash, text)
+    t = _THINK_RE.sub("", t)
+    t = _THINK_OPEN_RE.sub("", t)  # \A 固定＝先頭リークのみ。途中言及は全消ししない。
+    t = _SPECIAL_TOK_RE.sub("", t)
+    t = _ORPHAN_TAG_RE.sub("", t)
+    for i, s in enumerate(spans):
+        t = t.replace(f"\x00C{i}\x00", s)
+    return t.strip()
+
+
+def _sanitize_research_snippet(raw: str, limit: int = 500) -> str:
+    """調査の生レスポンス（非JSON時のエラー本文）を、秘密を伏せて先頭だけ surface する。
+
+    Authorization の Bearer トークンや sk- 形式のキーが HTTP エラー本文に混じり得るので伏字にする。
+    """
+    s = (raw or "").strip().replace("\n", " ")
+    s = re.sub(r"(?i)bearer\s+[A-Za-z0-9._\-]+", "Bearer ***", s)
+    s = re.sub(r"sk-[A-Za-z0-9._\-]{8,}", "sk-***", s)
+    return s[:limit]
 
 
 def _llm_timeout() -> float:
@@ -109,8 +174,28 @@ def _supports_temperature(model: str) -> bool:
 _RESEARCH_PROMPT_TEMPLATE = (
     "次について web 検索し、意思決定に必要な事実・統計・先行事例を、各項目に出典URLを"
     "付けて簡潔にブリーフ化せよ。憶測や一般論は書かず、調べて分かったことだけを箇条書きで。"
+    "箇条書きは最大5項目、各項目は1〜2文に収め、長文の散文や前置き・総括は書かない。"
     ": {query}"
 )
+
+
+def _format_research_brief(summary: str, urls: list[str], query: str) -> str:
+    """調査の要約本文と出典URLを1つのブリーフ文字列に整形する（Anthropic/OpenRouter 共通）。
+
+    要約が空でも出典があれば出典を活かし、両方空なら「空でした」を返す。出力フォーマットは
+    従来（各 web_research 内のインライン処理）とバイト一致＝後方互換。'出典:' の見出しは
+    フロント(splitBrief)/context.py(_truncate_research_sources) と凍結契約のため変えない。
+    """
+    summary = (summary or "").strip()
+    urls = list(urls or [])
+    if not summary and not urls:
+        return f"（調査結果が空でした: {query}）"
+    if not summary:
+        summary = "（検索はできましたが、要約テキストが生成されませんでした。下記の出典をご確認ください）"
+    brief = summary
+    if urls:
+        brief += "\n\n出典:\n" + "\n".join(f"- {u}" for u in urls)
+    return brief
 
 
 class AnthropicClient(LLMClient):
@@ -165,9 +250,9 @@ class AnthropicClient(LLMClient):
                 temperature=temperature, max_tokens=max_tokens,
             )
         )
-        text = "".join(
+        text = _strip_model_artifacts("".join(
             block.text for block in resp.content if getattr(block, "type", None) == "text"
-        ).strip()
+        ))
         # max_tokens 到達（途中切れ）を検出して警告し、末尾に目印を付ける。
         if getattr(resp, "stop_reason", None) == "max_tokens":
             logger.warning("Anthropic 応答が max_tokens で途中切れ (model=%s)", model)
@@ -253,17 +338,10 @@ class AnthropicClient(LLMClient):
                     seen_urls.add(url)
                     urls.append(url)
 
-        # 要約本文と出典を分離して空判定する（出典を足した後に判定すると、要約が空で出典だけ
-        # でも「非空」になり、リンクだけの調査結果がそのまま流れてしまうため）。
-        summary = "\n".join(texts).strip()
-        if not summary and not urls:
-            return f"（調査結果が空でした: {query}）"
-        if not summary:
-            summary = "（検索はできましたが、要約テキストが生成されませんでした。下記の出典をご確認ください）"
-        brief = summary
-        if urls:
-            brief += "\n\n出典:\n" + "\n".join(f"- {u}" for u in urls)
-        return brief
+        # 要約本文を artifact 除去のうえ確定し、出典整形は共通ヘルパに委譲（OpenRouter 経路と統一）。
+        # _format_research_brief 内で「要約・出典とも空」「要約だけ空」を判定する（リンクだけ流れる事故を防ぐ）。
+        summary = _strip_model_artifacts("\n".join(texts))
+        return _format_research_brief(summary, urls, query)
 
 
 # 各 provider の既定モデル（env で上書き可）。BYOK では各自が1社のキーだけ入れる想定で、
@@ -401,8 +479,11 @@ class OpenAIClient(LLMClient):
 
     def _retry_no_reasoning(
         self, system: str, messages: list[Message], temperature: float, max_tokens: int | None = None
-    ) -> str:
+    ) -> tuple[str, str | None]:
         """空ターン救済: reasoning を切り max_tokens を増やして1回だけ非ストリームで取り直す。
+
+        戻り値は (本文, finish_reason)。リトライ後の応答も length で途中切れしうるので、呼び出し側が
+        切れ目印を付けられるよう finish_reason を返す（捨てない＝議事録の黙った途中切れを可視化）。
 
         思考モデル（Kimi/DeepSeek Pro 等）が reasoning に出力枠を食われ、可視発言が空になった場合の
         フォールバック。reasoning を無効化すれば予算が全部可視出力に回るので、ほぼ必ず本文が返る。
@@ -421,14 +502,18 @@ class OpenAIClient(LLMClient):
                 "extra_body": extra,
             }
             resp = self._client.chat.completions.create(**params)
-            return (resp.choices[0].message.content or "").strip()
+            content = _strip_model_artifacts(resp.choices[0].message.content or "")
+            fr = getattr(resp.choices[0], "finish_reason", None)
+            return (content, fr)
         except Exception:  # noqa: BLE001 — 救済の失敗で討論を止めない
-            return ""
+            return ("", None)
 
     def _retry_cloud_empty(
         self, system: str, messages: list[Message], temperature: float, max_tokens: int | None = None
-    ) -> str:
+    ) -> tuple[str, str | None]:
         """クラウド空ターン救済: 推論(reasoning_effort)を抑え出力枠を増やして1回だけ取り直す。
+
+        戻り値は (本文, finish_reason)。_retry_no_reasoning と同じく切れ検出を捨てない。
 
         クラウドの GPT-5/o 系（推論モデル）は内部推論が max_completion_tokens を食い切って可視
         content が空になることがある。クラウドは extra_body ではなく **top-level** の
@@ -447,9 +532,11 @@ class OpenAIClient(LLMClient):
                 "reasoning_effort": "minimal",
             }
             resp = self._client.chat.completions.create(**params)
-            return (resp.choices[0].message.content or "").strip()
+            content = _strip_model_artifacts(resp.choices[0].message.content or "")
+            fr = getattr(resp.choices[0], "finish_reason", None)
+            return (content, fr)
         except Exception:  # noqa: BLE001 — 救済の失敗で討論を止めない
-            return ""
+            return ("", None)
 
     def generate(
         self,
@@ -463,19 +550,22 @@ class OpenAIClient(LLMClient):
         resp = self._client.chat.completions.create(
             **self._params(system, messages, temperature, max_tokens)
         )
-        content = (resp.choices[0].message.content or "").strip()
+        # 先に artifact を除去してから空判定する（救済 retry が「artifact 除去後の空」を見るように）。
+        content = _strip_model_artifacts(resp.choices[0].message.content or "")
         retried = False
+        retry_fr: str | None = None
         # local（思考モデル）が空を返したら reasoning を切って取り直す（空ターン防止）。
         if self._local and not content:
-            content = self._retry_no_reasoning(system, messages, temperature, max_tokens)
+            content, retry_fr = self._retry_no_reasoning(system, messages, temperature, max_tokens)
             retried = True
         # クラウド（GPT-5/o 系 推論モデル）が空を返したら reasoning を抑えて取り直す（空ターン防止）。
         elif not self._local and not content:
-            content = self._retry_cloud_empty(system, messages, temperature, max_tokens)
+            content, retry_fr = self._retry_cloud_empty(system, messages, temperature, max_tokens)
             retried = True
         # max_tokens(=finish_reason "length") 到達の途中切れを検出して警告＋目印。
-        # ただし空→救済リトライ済みのときは初回 resp の finish_reason は当てにならないので付けない。
-        if not retried and getattr(resp.choices[0], "finish_reason", None) == "length":
+        # 救済リトライ時はリトライ後応答の finish_reason を見る（初回 resp のは当てにならない＝検出を捨てない）。
+        fr = retry_fr if retried else getattr(resp.choices[0], "finish_reason", None)
+        if fr == "length":
             logger.warning("OpenAI 応答が length(max_tokens) で途中切れ (model=%s)", self._model)
             if content:
                 content += _TRUNCATION_MARKER
@@ -506,24 +596,31 @@ class OpenAIClient(LLMClient):
             if delta:
                 got.append(delta)
                 yield delta
-        produced = "".join(got).strip()
+        # 空判定は artifact 除去後の値で行う（generate と同順＝strip→空判定→救済）。
+        # こうしないと可視本文が <think>/特殊トークンだけのストリームで produced が非空になり、
+        # 救済が発火しないまま orchestrator 側の全文 strip で content='' ＝空ターン化してしまう。
+        produced = _strip_model_artifacts("".join(got))
         retried = False
+        retry = ""
+        retry_fr: str | None = None
         # local（思考モデル）が何も発しなかったら reasoning を切って取り直し、その全文を流す
         # （「発言者が無言で次へ流れる」空ターンの根治）。
         if self._local and not produced:
-            retry = self._retry_no_reasoning(system, messages, temperature, max_tokens)
+            retry, retry_fr = self._retry_no_reasoning(system, messages, temperature, max_tokens)
             retried = True
             if retry:
                 yield retry
         # クラウド（GPT-5/o 系 推論モデル）が空ターンなら reasoning を抑えて取り直し全文を流す。
         elif not self._local and not produced:
-            retry = self._retry_cloud_empty(system, messages, temperature, max_tokens)
+            retry, retry_fr = self._retry_cloud_empty(system, messages, temperature, max_tokens)
             retried = True
             if retry:
                 yield retry
         # max_tokens(=finish_reason "length") 到達の途中切れを検出して警告＋目印。
-        # 空→救済リトライ済みのときは初回ストリームの finish_reason は当てにならないので付けない。
-        if not retried and finish_reason == "length":
+        # 救済リトライ時はリトライ後応答の finish_reason を見る（検出を捨てない）。ただしリトライが空文字
+        # （ゴースト）なら目印だけのターンを作らないため、retry 非空のときに限り付ける。
+        fr = retry_fr if retried else finish_reason
+        if fr == "length" and (not retried or retry):
             logger.warning("OpenAI ストリームが length(max_tokens) で途中切れ (model=%s)", self._model)
             yield _TRUNCATION_MARKER
 
@@ -550,15 +647,8 @@ class OpenAIClient(LLMClient):
                 summary = summary2
             if not urls:
                 urls = urls2
-        if not summary and not urls:
-            return f"（調査結果が空でした: {query}）"
-        # 取り直しても要約が出ない時は、出典は活かしつつ要約欠落を明示する（リンクだけにしない）。
-        if not summary:
-            summary = "（検索はできましたが、要約テキストが生成されませんでした。下記の出典をご確認ください）"
-        text = summary
-        if urls:
-            text += "\n\n出典:\n" + "\n".join(f"- {u}" for u in urls)
-        return text
+        # 空判定・出典整形は Anthropic 経路と共通のヘルパに委譲（フォーマットをバイト一致で統一）。
+        return _format_research_brief(summary, urls, query)
 
     def _openrouter_search_once(self, query: str, *, no_reasoning: bool) -> tuple[str, list[str]]:
         """OpenRouter web_search を1回叩き、(要約本文, 出典URL列) を返す。要約と出典を分離して返すのが要点
@@ -575,6 +665,7 @@ class OpenAIClient(LLMClient):
             "messages": [{"role": "user", "content": prompt}],
             "tools": [{"type": "openrouter:web_search"}],
             "max_tokens": self._max_tokens,
+            "stream": False,  # SSE でなく単一 JSON を明示要求（非JSON応答での json.loads 破綻を予防）。
         }
         if no_reasoning:
             body["reasoning"] = {"enabled": False}  # OpenRouter 統一 reasoning トグル（本文を直接出させる）
@@ -589,19 +680,28 @@ class OpenAIClient(LLMClient):
             headers={
                 "Authorization": f"Bearer {self._api_key_value}",
                 "Content-Type": "application/json",
+                "Accept": "application/json",  # JSON を要求（プロキシ等の SSE/HTML 応答を抑制）。
             },
             method="POST",
         )
+        # 通信失敗（タイムアウト/HTTPError 等）と「応答が JSON でない」を分けて捕捉する。
+        # 後者はプロキシ/ゲートウェイが 200 で HTML エラーページや空 body を返すと起きる
+        # （『Expecting value: line N』の正体）。生本文を無条件 json.loads して握り潰さない。
         try:
             # 直 HTTP の urlopen も SDK 経路と同じタイムアウト方針に揃える（env で可変・既定 600）。
             with urllib.request.urlopen(req, timeout=_llm_timeout()) as resp:
-                data = json.loads(resp.read().decode("utf-8"))
+                raw = resp.read().decode("utf-8", errors="replace")
         except Exception as exc:  # noqa: BLE001 — 失敗しても討論を止めず、その旨を返す
             return (f"（調査に失敗: {exc}）", [])
+        try:
+            data = json.loads(raw)
+        except json.JSONDecodeError as exc:
+            snippet = _sanitize_research_snippet(raw)
+            return (f"（調査に失敗: 応答がJSONではありません: {exc}; 先頭: {snippet}）", [])
 
         choices = data.get("choices") or [{}]
         msg = choices[0].get("message", {}) if choices else {}
-        summary = (msg.get("content") or "").strip()
+        summary = _strip_model_artifacts(msg.get("content") or "")
         # url_citation annotations から出典 URL を集める（重複排除・順序維持）。
         urls: list[str] = []
         seen: set[str] = set()
@@ -693,7 +793,7 @@ class GeminiClient(LLMClient):
             contents=self._contents(messages),
             config=self._config(system, temperature, max_tokens),
         )
-        text = (getattr(resp, "text", "") or "").strip()
+        text = _strip_model_artifacts(getattr(resp, "text", "") or "")
         # max_output_tokens 到達（途中切れ）を検出して警告し、末尾に目印を付ける。
         if self._is_truncated(resp):
             logger.warning("Gemini 応答が MAX_TOKENS で途中切れ (model=%s)", self._model)

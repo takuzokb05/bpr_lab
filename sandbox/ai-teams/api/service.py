@@ -346,6 +346,30 @@ _RESEARCH_EMPHASIS_RE = re.compile(r"[*＊`]")
 # だけを数えるので、同じ問いの再検索は数に入らない。1検索 ≒ $0.005 なので 12 でも安い。
 _RESEARCH_CAP = int(os.environ.get("AI_TEAMS_RESEARCH_CAP", "12"))
 
+# 低価値ブリーフ（失敗/空/未対応/上限通知/モック）の接頭辞。これらは cap を消費させない
+# （= cap を「成功した有益調査の回数」基準にする＝『該当なし』量産で序盤に cap が枯れる事故を防ぐ）。
+# llm_client.py の定型文言・web のフロント isUsefulResearch とバイト一致させること（凍結契約）。
+_LOW_VALUE_RESEARCH_PREFIXES = (
+    "（調査に失敗",
+    "（調査結果が空",
+    "（Web 検索は現在",
+    "（今回の調査上限",
+    "（モック調査結果",
+)
+
+
+def _is_useful_research(brief: str) -> bool:
+    """調査ブリーフが「中身のある結果」か（cap 算入の可否）。失敗/空/未対応/上限/モックは False。"""
+    c = (brief or "").strip()
+    if not c:
+        return False
+    return not c.startswith(_LOW_VALUE_RESEARCH_PREFIXES)
+
+
+# 1ターンの本文から拾って実検索する「要調査:」の上限（1発言に複数マーカーが出ても律速）。
+# env AI_TEAMS_RESEARCH_PER_TURN で可変（既定 2）。序盤に検索が殺到するのを抑える。
+_RESEARCH_PER_TURN = int(os.environ.get("AI_TEAMS_RESEARCH_PER_TURN", "2"))
+
 
 def run_research(client: LLMClient, query: str) -> str:
     """調査役による web 検索の薄いラッパ。client.web_research(query) をそのまま返す。
@@ -789,7 +813,10 @@ def _produce(session: Session) -> None:
             """
             if not council.research or session.cancelled:
                 return  # 無効時、またはキャンセル後は新規検索を発火しない（コスト抑制）
+            picked = 0  # この1ターンで実検索したクエリ数（_RESEARCH_PER_TURN で律速＝序盤殺到を抑制）
             for query in _extract_research_queries(getattr(turn, "content", "") or ""):
+                if picked >= _RESEARCH_PER_TURN:
+                    break  # 1発言で複数の「要調査:」を書いても、ターンあたりの実検索は上限まで
                 norm = query.lower().strip()
                 if not norm or norm in research_seen:
                     continue
@@ -811,8 +838,12 @@ def _produce(session: Session) -> None:
                     transcript, brief, emit=emit, turn_id=rid, emit_start=False
                 )
                 _append(session, "turn_end", {"turn_id": rt.turn_id})
+                # クエリは（失敗/空でも）seen に登録して同一クエリの再検索を防ぐ。ただし cap は
+                # 「有益な結果が出た回数」だけ消費する（失敗/空/未対応/モックは count に算入しない）。
                 research_seen.add(norm)
-                research_state["count"] += 1
+                picked += 1
+                if _is_useful_research(brief):
+                    research_state["count"] += 1
 
         # 初回の Web 検索は「生の議題」を seed するのをやめ、司会の【オープニング】が論点に絞って出す
         # 『要調査: …』を _pickup_research が拾って実行する（的の合ったクエリにする）。research 無効、

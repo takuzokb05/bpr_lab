@@ -12,6 +12,8 @@ v2 の致命傷は「全員の発言を role=assistant で1配列に詰め、モ
 
 from __future__ import annotations
 
+import os
+import re
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:  # 循環 import 回避（型注釈のみ）
@@ -19,6 +21,34 @@ if TYPE_CHECKING:  # 循環 import 回避（型注釈のみ）
     from .personas import Persona
 
 Message = dict[str, str]
+
+# 調査ブリーフの出典リストは1件あたり数十URLに膨れ、全 researcher ターンが後続の全発言に
+# 再注入されると LLM 文脈が肥大する（コスト・トークン切れ・可読性の複合悪化）。フロント表示や
+# export は全件保持したいので Turn.content 自体は変えず、ここ（build_context が組む LLM 文脈の
+# コピー）でだけ出典を上位 N 件に圧縮する。env AI_TEAMS_RESEARCH_CTX_MAX_SOURCES で可変（既定 5）。
+_RESEARCH_CTX_MAX_SOURCES = int(os.environ.get("AI_TEAMS_RESEARCH_CTX_MAX_SOURCES", "5"))
+# 「\n\n出典:\n- …」ブロックを丸ごと掴む（'出典:' 見出しは llm_client/フロントと凍結契約）。
+# 「- 」行に加え空行/空白のみ行も許容して連続性を保つ（モデル生成URLに改行混入時の取りこぼし防止
+# ＝対抗レビュー L1）。非"- "の本文行はマッチを切る（後続プローズを食わない）。
+_RESEARCH_SOURCES_RE = re.compile(r"\n\n出典[:：]\n(?:(?:- .*|[^\S\n]*)(?:\n|$))+")
+
+
+def _truncate_research_sources(content: str, max_sources: int = _RESEARCH_CTX_MAX_SOURCES) -> str:
+    """調査ブリーフ content の末尾「出典:」リストを上位 max_sources 件に圧縮する（LLM 文脈用）。
+
+    出典節が無い／件数が上限以下なら content をそのまま返す（no-op＝後方互換）。Turn.content 自体は
+    変えず、build_context が messages に積むコピーにだけ適用する（フロント/export はフル保持）。
+    """
+    m = _RESEARCH_SOURCES_RE.search(content)
+    if not m:
+        return content
+    head = content[: m.start()]
+    lines = [ln for ln in m.group(0).strip().splitlines() if ln.startswith("- ")]
+    if len(lines) <= max_sources:
+        return content
+    kept = "\n".join(lines[:max_sources])
+    omitted = len(lines) - max_sources
+    return f"{head}\n\n出典:\n{kept}\n- （他{omitted}件省略）"
 
 # 既出に流されないための反同調ディレクティブ（collapse / echo chamber 対策）。
 ANTI_CONFORMITY = (
@@ -82,8 +112,12 @@ def build_context(
             # 自分の発言は素の assistant（名前ラベルを付けない＝自分の声として認識させる）
             events.append(("assistant", turn.content))
         else:
-            # 他者の発言は user 側に、誰の発言かを明示して提示
-            events.append(("user", f"【{turn.speaker_name}】\n{turn.content}"))
+            # 他者の発言は user 側に、誰の発言かを明示して提示。調査(researcher)ターンは出典が
+            # 肥大するので、LLM 文脈に積むコピーだけ上位 N 件に圧縮する（Turn.content 自体は不変）。
+            text = turn.content
+            if turn.speaker_id == "researcher" or getattr(turn, "phase", "") == "research":
+                text = _truncate_research_sources(text)
+            events.append(("user", f"【{turn.speaker_name}】\n{text}"))
 
     # 末尾の指名ナッジ（フェーズ指示・反同調・本人指名をまとめて user として注入）
     nudge: list[str] = []

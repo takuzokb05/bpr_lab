@@ -4,45 +4,7 @@ import { useState } from "react";
 import type { Turn } from "@/lib/types";
 import { Globe, ExternalLink, ChevronDown, Search } from "lucide-react";
 import { Markdown } from "./Markdown";
-
-// 調査ブリーフ本文から出典 URL を拾う（「出典:」節に限らず本文中の素 URL も拾う）。
-const URL_RE = /https?:\/\/[^\s)>\]）」]+/g;
-
-function extractUrls(text: string): string[] {
-  const out: string[] = [];
-  const seen = new Set<string>();
-  for (const m of (text ?? "").matchAll(URL_RE)) {
-    // 末尾の句読点・閉じ括弧・Markdown 装飾記号(** _ ~ 等)を URL から外す。本文プローズ中に
-    // モデルが **https://...** のように装飾付きで書いた素 URL を壊れた href にしないため。
-    const u = m[0].replace(/[.,;:!?。、，；：！？)\]）」』】>*_~"'`]+$/u, "");
-    if (!seen.has(u)) {
-      seen.add(u);
-      out.push(u);
-    }
-  }
-  return out;
-}
-
-function hostOf(u: string): string {
-  try {
-    return new URL(u).hostname.replace(/^www\./, "");
-  } catch {
-    return u;
-  }
-}
-
-// 調査ブリーフを「本文（findings）」と「出典 URL」に分ける。web_research は末尾に
-// "出典:\n- url..." を付けるので、そこで割って本文に出典を二重表示しない（ソースは折り畳みへ）。
-function splitBrief(content: string): { findings: string; urls: string[] } {
-  const text = content ?? "";
-  const m = text.match(/(?:^|\n)\s*出典[:：]\s*\n/);
-  if (m && m.index !== undefined) {
-    const findings = text.slice(0, m.index).trim();
-    const urls = extractUrls(text.slice(m.index));
-    return { findings: findings || text.trim(), urls: urls.length ? urls : extractUrls(text) };
-  }
-  return { findings: text.trim(), urls: extractUrls(text) };
-}
+import { splitBrief, hostOf } from "@/lib/research";
 
 /**
  * 「調べたこと」集約パネル。調査役（researcher）ターンを横断で集め、出典付きで一覧する。
@@ -82,7 +44,7 @@ export function ResearchNotes({ research }: { research: Turn[] }) {
 function ResearchItem({ turn }: { turn: Turn }) {
   // 並び順: 検索クエリ → 調査結果（最初から表示）→ 出典（折り畳み・既定で閉じる）。
   const [showSources, setShowSources] = useState(false);
-  const { findings, urls } = splitBrief(turn.content);
+  const { findings, urls, hadSourcesSection } = splitBrief(turn.content);
   return (
     <li className="rounded-md border border-[var(--color-line)] bg-[var(--color-paper)] px-3 py-2">
       {/* 1. 検索クエリ */}
@@ -96,8 +58,9 @@ function ResearchItem({ turn }: { turn: Turn }) {
       <div className="[overflow-wrap:anywhere]">
         <Markdown>{findings}</Markdown>
       </div>
-      {/* 3. 出典（多くなりがちなので折り畳み・既定で閉じる） */}
-      {urls.length > 0 && (
+      {/* 3. 出典（多くなりがちなので折り畳み・既定で閉じる）。出典節を分離できたときだけ＝
+          本文にインライン URL が残っていないときだけ別枠を出す（二重表示の回避）。 */}
+      {hadSourcesSection && urls.length > 0 && (
         <div className="mt-1.5 border-t border-[var(--color-line)] pt-1.5">
           <button
             type="button"

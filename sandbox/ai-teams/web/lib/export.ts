@@ -2,6 +2,7 @@
 // セクション（要約 / 調査結果 / 会議内容）はチェックボックスで取捨選択し、1ファイルにまとめる。
 
 import { type Turn, PHASE_LABELS } from "./types";
+import { splitBrief } from "./research";
 
 export interface ExportOptions {
   summary: boolean; // 要約（議長の議事録 = synthesis）
@@ -74,7 +75,15 @@ export function buildMeetingMarkdown(
     blocks.push(`## 調査結果`);
     for (const t of research) {
       if (t.query) blocks.push(`### 「${t.query}」`);
-      blocks.push(t.content.trim());
+      // 本文（findings）と出典 URL を分離。UI（ResearchNotes）と同じ splitBrief を使い、
+      // 出典は <details> 折り畳みに圧縮する（URL は全件保持＝不可逆な hostname 圧縮はしない）。
+      const { findings, urls, hadSourcesSection } = splitBrief(t.content);
+      blocks.push(findings);
+      // 出典節を分離できたときだけ折り畳みを足す（インライン URL の二重表示を避ける）。
+      if (hadSourcesSection && urls.length) {
+        const list = urls.map((u) => `- ${u}`).join("\n");
+        blocks.push(`<details>\n<summary>出典 ${urls.length} 件</summary>\n\n${list}\n</details>`);
+      }
     }
   }
 

@@ -2003,6 +2003,347 @@ def test_persona_upsert_relationships():
         check(True, "不正な relationship type を弾く")
 
 
+# ===========================================================================
+# QA 修正（2026-06-08）の回帰テスト群。実LLM/実SDKは使わず注入Fakeで検証する。
+# ===========================================================================
+import types as _types  # Fake オブジェクト用
+
+
+class _FakeRespChoice:
+    def __init__(self, content, finish_reason=None):
+        self.message = _types.SimpleNamespace(content=content)
+        self.finish_reason = finish_reason
+
+
+class _FakeResp:
+    """非ストリーム chat.completions.create の戻り（.choices[0].message.content / .finish_reason）。"""
+
+    def __init__(self, content, finish_reason=None):
+        self.choices = [_FakeRespChoice(content, finish_reason)]
+
+
+class _FakeStreamChunk:
+    def __init__(self, content, finish_reason=None):
+        self.choices = [
+            _types.SimpleNamespace(
+                delta=_types.SimpleNamespace(content=content), finish_reason=finish_reason
+            )
+        ]
+
+
+class _FakeCompletions:
+    """queue から1つずつ返す。stream=True のときは要素を chunk のリスト（反復可能）にする。"""
+
+    def __init__(self, queue):
+        self._q = list(queue)
+
+    def create(self, **kw):
+        return self._q.pop(0)
+
+
+def _fake_openai_client(queue):
+    """OpenAIClient を __new__ で生成し、SDK 依存なしに必要属性だけ差し込む（local 経路）。"""
+    from core import llm_client
+
+    c = llm_client.OpenAIClient.__new__(llm_client.OpenAIClient)
+    c._local = True
+    c._search_mode = ""
+    c._base_url = ""
+    c._api_key_value = "local"
+    c._model = "deepseek/test"
+    c._max_tokens = 2048
+    c._client = _types.SimpleNamespace(
+        chat=_types.SimpleNamespace(completions=_FakeCompletions(queue))
+    )
+    return c
+
+
+def test_strip_model_artifacts():
+    """rank1: tool-call 特殊トークン・<think> を全文確定地点で除去（通常文は不変）。"""
+    print("[test] strip model artifacts (rank1: タグ/特殊トークン除去)")
+    from core.llm_client import _strip_model_artifacts
+
+    check(_strip_model_artifacts("<think>内緒</think>本文") == "本文", "<think>…</think> を除去")
+    check(_strip_model_artifacts("<think>閉じ無しは以降全削除") == "", "閉じ無し <think> は以降を全削除")
+    check(
+        _strip_model_artifacts("<｜｜DSML｜｜tool_calls>結論です") == "結論です",
+        "実観測の <｜｜DSML｜｜tool_calls> トークンを除去",
+    )
+    check(_strip_model_artifacts("<｜tool｜>結論") == "結論", "単一バー特殊トークンを除去")
+    check(_strip_model_artifacts("</tool_call>結論") == "結論", "孤立 </tool_call> タグを除去")
+    check(_strip_model_artifacts("<invoke name=x>本文") == "本文", "孤立 <invoke …> タグを除去")
+    normal = "これは普通の発言です。x < y の関係。"
+    check(_strip_model_artifacts(normal) == normal, "artifact 無しの通常文は不変（誤爆なし）")
+    check(_strip_model_artifacts("  前後空白  ") == "前後空白", "前後 strip は従来どおり")
+
+    # e2e: emit 経路（generate_stream→orchestrator の全文確定地点）で transcript が浄化される
+    art = "<think>秘密の思考</think>本論はAだ <｜｜DSML｜｜tool_calls>"
+    coun = Council(
+        [make("a"), make("b")],
+        MockLLMClient(responder=lambda s, m, model: art),
+        phases=[("発散", "d", True)],
+        rounds_per_phase=1,
+    )
+    turns = list(coun.run("T", emit=lambda e: None))
+    leaked = [t for t in turns if "<think>" in t.content or "<｜" in t.content or "DSML" in t.content]
+    check(not leaked, f"transcript に artifact が残らない（{len(leaked)} 件の漏れ）")
+    check(all(t.content == "本論はAだ" for t in turns), "確定 content は浄化済み本文のみ")
+
+    # 誤爆ガード: 縦棒1個＋後方に > がある正当文は特殊トークンと誤認しない（パイプ2個必須）。
+    legit_pipe = "比較で a<｜b として、後で x > y も言及する重要結論"
+    check(_strip_model_artifacts(legit_pipe) == legit_pipe, "縦棒1個＋後方>の正当文を誤爆しない")
+
+    # M1 回帰（対抗レビュー）: AI内部仕様を“話題として”論じる討論本文を全消ししない。
+    mid = "DeepSeekは <think> タグを使う。この設計には議論の余地がある。"
+    check("議論の余地がある" in _strip_model_artifacts(mid), "途中の <think> 言及で本文を全消ししない")
+    # コード(`…` / ```…```)内のリテラル例（制御トークン）は完全保持する。
+    fenced = "例えば `<think>` や `<|im_start|>` は制御トークンだ。"
+    check(_strip_model_artifacts(fenced) == fenced, "インラインコード内の制御トークン例は保持")
+    block = "```\n<think>reasoning</think>\n<｜｜DSML｜｜tool_calls>\n```"
+    check(_strip_model_artifacts(block) == block, "コードブロック内の artifact 例は保持")
+    # ただし先頭（コード外）の閉じ無し think は従来どおり全削除＝推論リーク掃除は維持。
+    check(_strip_model_artifacts("<think>推論リークだけで本文なし") == "", "先頭の閉じ無し think は従来どおり全削除")
+
+    # rank1-fix 回帰の番人: 可視本文が artifact だけのストリームは「artifact 除去後の空」で救済が発火する。
+    # 生 delta で空判定すると非空→救済スルー→orchestrator の全文 strip で空ターン化する退行（沈黙ゼロ破れ）。
+    c_art = _fake_openai_client(
+        [
+            [_FakeStreamChunk("<think>推論だけで可視本文なし</think>"), _FakeStreamChunk(None, "stop")],
+            _FakeResp("救済された本文"),
+        ]
+    )
+    out_art = list(
+        c_art.generate_stream(system="s", messages=[{"role": "user", "content": "x"}], model="m")
+    )
+    check("救済された本文" in out_art, f"artifact-only ストリームで空救済が発火し本文が流れる: {out_art}")
+
+
+def test_openai_retry_truncation_marker():
+    """rank2: 空ターン救済リトライ後も length を検出し途中切れ目印を付ける（空retryはゴースト防止）。"""
+    print("[test] openai retry truncation marker (rank2: 救済後の途中切れ検出)")
+    from core.llm_client import _TRUNCATION_MARKER
+
+    # (1) 初回空→救済本文ありかつ length → marker 付与
+    c = _fake_openai_client([_FakeResp(""), _FakeResp("本文", "length")])
+    out = c.generate(system="s", messages=[{"role": "user", "content": "x"}], model="m")
+    check(out.endswith(_TRUNCATION_MARKER), f"救済リトライ後も length で途中切れ目印: {out!r}")
+    check(out.startswith("本文"), "救済本文が返る")
+    # (2) 救済本文が空 → marker を付けない（ゴーストターン防止）
+    c2 = _fake_openai_client([_FakeResp(""), _FakeResp("", "length")])
+    out2 = c2.generate(system="s", messages=[{"role": "user", "content": "x"}], model="m")
+    check(out2 == "", f"救済も空なら目印だけのゴーストを出さない: {out2!r}")
+    # (3) generate_stream: 初回空ストリーム→救済('本文','length') で末尾が marker
+    c3 = _fake_openai_client([[_FakeStreamChunk(None, None)], _FakeResp("本文", "length")])
+    chunks = list(
+        c3.generate_stream(system="s", messages=[{"role": "user", "content": "x"}], model="m")
+    )
+    check("本文" in chunks, "救済本文が stream に流れる")
+    check(bool(chunks) and chunks[-1] == _TRUNCATION_MARKER, f"stream 末尾が途中切れ目印: {chunks}")
+    # (4) 初回から content あり＋length（救済なし）でも従来どおり marker
+    c4 = _fake_openai_client([_FakeResp("直接本文", "length")])
+    out4 = c4.generate(system="s", messages=[{"role": "user", "content": "x"}], model="m")
+    check(out4.endswith(_TRUNCATION_MARKER), "救済なし length でも従来どおり目印")
+
+
+def test_openrouter_search_nonjson():
+    """rank3: urlopen 戻りが非JSONでも例外で死なず失敗文言＋秘密伏字、stream:false/Accept を要求。"""
+    print("[test] openrouter search non-JSON robustness (rank3)")
+    import json as _json
+    import urllib.request
+    from core import llm_client
+
+    c = llm_client.OpenAIClient.__new__(llm_client.OpenAIClient)
+    c._local = True
+    c._search_mode = "openrouter"
+    c._base_url = "https://openrouter.ai/api/v1"
+    c._api_key_value = "sk-secrettoken123456"
+    c._model = "deepseek/test"
+    c._max_tokens = 2048
+
+    state = {"body": b""}
+    captured: dict = {}
+
+    class _CM:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *a):
+            return False
+
+        def read(self):
+            return state["body"]
+
+    def fake_urlopen(req, timeout=None):
+        captured["req"] = req
+        return _CM()
+
+    orig = urllib.request.urlopen
+    urllib.request.urlopen = fake_urlopen
+    try:
+        # (a) 非JSON(HTML)応答 → 例外で死なず失敗文言
+        state["body"] = "<html>502 Bad Gateway</html>".encode("utf-8")
+        summary, urls = c._openrouter_search_once("Q", no_reasoning=False)
+        check(urls == [] and "JSONではありません" in summary, f"非JSON応答を失敗文言で返す: {summary!r}")
+        body = _json.loads(captured["req"].data)
+        check(body.get("stream") is False, "リクエスト body に stream:false が入る")
+        check(
+            captured["req"].get_header("Accept") == "application/json",
+            "リクエストに Accept: application/json ヘッダが入る",
+        )
+        # (b) 秘密のキーが失敗文言に漏れない
+        state["body"] = "error: Authorization: Bearer sk-secrettoken123456 denied".encode("utf-8")
+        summary2, _ = c._openrouter_search_once("Q", no_reasoning=False)
+        check("sk-secrettoken123456" not in summary2, "生の API キーが失敗文言に出ない（伏字）")
+        # (c) 正常JSON → 要約と出典を分離
+        good = {
+            "choices": [
+                {
+                    "message": {
+                        "content": "要約本文",
+                        "annotations": [{"url_citation": {"url": "https://a"}}],
+                    }
+                }
+            ]
+        }
+        state["body"] = _json.dumps(good).encode("utf-8")
+        summary3, urls3 = c._openrouter_search_once("Q", no_reasoning=False)
+        check(summary3 == "要約本文" and urls3 == ["https://a"], "正常JSONで要約/出典を分離")
+    finally:
+        urllib.request.urlopen = orig
+
+
+def test_opening_directive_no_nomination():
+    """rank4: 司会オープニングが個人名指しでなく『全員が順に』告知（RoundRobin 実順と一致）。"""
+    print("[test] opening directive no nomination (rank4: 司会指名の食い違い解消)")
+    coun = Council(
+        [make("mod", cat="facilitation"), make("a"), make("b")],
+        MockLLMClient(),
+        phases=[("発散", "d", True)],
+        rounds_per_phase=1,
+    )
+    list(coun.run("T", emit=lambda e: None))
+    alltext = "\n".join(
+        "".join(m["content"] for m in c["messages"]) for c in coun.client.calls
+    )
+    check("特定の立場の人へ発言を促す" not in alltext, "旧『特定の立場の人へ発言を促す』文言が消えている")
+    check(
+        "登壇者全員が" in alltext and "順に意見を述べ" in alltext,
+        "『全員が順に述べる』告知に変わっている",
+    )
+
+
+def test_research_nudge_phase_gating():
+    """rank5: research=True でも枠組みフェーズ（redefine/bridge/closing/収束口火）に要調査を出さない。"""
+    print("[test] research nudge phase gating (rank5: 捉え直し等で要調査を誘発しない)")
+    from core.context import RESEARCH_NUDGE
+
+    coun = Council(
+        [make("mod", cat="facilitation"), make("a"), make("b"), make("chair", cat="chair")],
+        MockLLMClient(),
+        research=True,
+        redefine=True,
+        phase_bridge=True,
+        rounds_per_phase=1,
+    )
+    list(coun.run("T", emit=lambda e: None))
+    by_marker: dict = {}
+    markers = (
+        "【問題の捉え直し】",
+        "【整理（発散→批判）】",
+        "【クロージング】",
+        "【収束の口火（司会）】",
+        "【オープニング】",
+        "【発散フェーズ】",
+        "【批判フェーズ】",
+    )
+    for c in coun.client.calls:
+        t = "".join(m["content"] for m in c["messages"])
+        for marker in markers:
+            if marker in t:
+                by_marker.setdefault(marker, []).append(RESEARCH_NUDGE in t)
+    for marker in ("【問題の捉え直し】", "【整理（発散→批判）】", "【クロージング】", "【収束の口火（司会）】"):
+        got = by_marker.get(marker, [])
+        check(bool(got) and not any(got), f"{marker} に RESEARCH_NUDGE が出ない")
+    for marker in ("【オープニング】", "【発散フェーズ】", "【批判フェーズ】"):
+        got = by_marker.get(marker, [])
+        check(bool(got) and all(got), f"{marker} に RESEARCH_NUDGE が出る（研究の正規面）")
+
+
+def test_research_sources_truncated_in_context():
+    """rank6: 調査ターンの出典は LLM 文脈では上位N件に圧縮（Turn.content 自体はフル保持）。"""
+    print("[test] research sources truncated in context (rank6: 文脈肥大の抑制)")
+    from core.context import _RESEARCH_CTX_MAX_SOURCES
+
+    n = _RESEARCH_CTX_MAX_SOURCES
+    urls = [f"https://src{i}.example.com" for i in range(n + 6)]
+    brief = "調査の要約本文。\n\n出典:\n" + "\n".join(f"- {u}" for u in urls)
+    rt = Turn("researcher", "調査", brief, "research", 0)
+    b = make("b")
+    transcript = [rt, Turn("a", "A", "a-said", "発散", 0)]
+    _, messages = build_context(transcript=transcript, active=b, topic="T")
+    ctx = "\n".join(m["content"] for m in messages)
+    kept = [u for u in urls if u in ctx]
+    check(len(kept) == n, f"LLM 文脈に出典は {n} 件だけ（実: {len(kept)}）")
+    check("（他" in ctx and "件省略）" in ctx, "省略表示が付く")
+    check(urls[-1] not in ctx, "上限超過の URL は文脈に出ない")
+    check(rt.content == brief and rt.content.count("https://") == n + 6, "Turn.content はフル保持（不変）")
+    # 上限以下のブリーフは素通し（no-op）
+    short = Turn("researcher", "調査", "要約\n\n出典:\n- https://only.example.com", "research", 0)
+    _, m2 = build_context(transcript=[short, Turn("a", "A", "x", "発散", 0)], active=b, topic="T")
+    ctx2 = "\n".join(m["content"] for m in m2)
+    check("https://only.example.com" in ctx2, "上限以下の出典は素通し（圧縮しない）")
+    # L1 回帰（対抗レビュー）: 出典の途中に空行が混入しても全件を1ブロックとして掴み圧縮する。
+    from core.context import _truncate_research_sources
+
+    blanks = "要約\n\n出典:\n- https://a\n- https://b\n\n- https://c\n- https://d"
+    out = _truncate_research_sources(blanks, max_sources=1)
+    check("（他3件省略）" in out, f"空行を跨いで全4出典を圧縮（実: {out!r}）")
+    # 非"- "の本文行はマッチを切る（後続プローズ行を出典として食わない＝過剰マッチ防止）。
+    # a,b で切れて 2件→1件圧縮なら「他1件」。もし注記行を越えて c まで食えば「他2件」になる。
+    prose = "要約\n\n出典:\n- https://a\n- https://b\n注記: 参考まで\n- https://c"
+    check("（他1件省略）" in _truncate_research_sources(prose, max_sources=1), "後続プローズ行で出典マッチを切る")
+
+
+def test_research_prompt_and_format():
+    """rank9: 研究プロンプトに分量ガード、出典整形は共通ヘルパに集約（出力はバイト一致）。"""
+    print("[test] research prompt guard + format helper (rank9)")
+    from core.llm_client import _RESEARCH_PROMPT_TEMPLATE, _format_research_brief
+
+    check("最大5項目" in _RESEARCH_PROMPT_TEMPLATE, "プロンプトに分量ガード（最大5項目）がある")
+    check("{query}" in _RESEARCH_PROMPT_TEMPLATE, "{query} プレースホルダを維持")
+    check(_format_research_brief("", [], "Q") == "（調査結果が空でした: Q）", "要約・出典とも空")
+    check(
+        _format_research_brief("要約", ["https://a", "https://b"], "Q")
+        == "要約\n\n出典:\n- https://a\n- https://b",
+        "要約＋出典の整形がバイト一致",
+    )
+    check(
+        "要約テキストが生成され" in _format_research_brief("", ["https://a"], "Q"),
+        "要約だけ空なら出典を活かし欠落を明示",
+    )
+
+
+def test_research_useful_and_cap_constants():
+    """rank7: 低価値ブリーフ判定と定型文言のバイト一致（cap を有益調査だけで消費）。"""
+    print("[test] research useful filter + low-value prefixes (rank7)")
+    from api.service import _is_useful_research, _LOW_VALUE_RESEARCH_PREFIXES, _RESEARCH_PER_TURN
+    from core.llm_client import _RESEARCH_UNSUPPORTED
+
+    check(_is_useful_research("有益な調査結果。\n\n出典:\n- https://a") is True, "中身ありは有益")
+    check(_is_useful_research("（調査に失敗: timeout）") is False, "失敗は無価値")
+    check(_is_useful_research("（調査結果が空でした: Q）") is False, "空は無価値")
+    check(_is_useful_research("（モック調査結果: Q ／出典なし・検証用）") is False, "モックは無価値")
+    check(_is_useful_research("") is False, "空文字は無価値")
+    check(_RESEARCH_PER_TURN >= 1, "per-turn 上限は1以上")
+    # 実際の canned 文言が prefix とバイト一致するか（将来文言変更でズレないことの検知）
+    check(
+        _RESEARCH_UNSUPPORTED.startswith(_LOW_VALUE_RESEARCH_PREFIXES),
+        "llm_client の未対応文言が低価値 prefix と一致（凍結契約）",
+    )
+    mock = MockLLMClient().web_research("Q")
+    check(not _is_useful_research(mock), f"MockLLMClient.web_research の結果は無価値判定: {mock!r}")
+
+
 if __name__ == "__main__":
     test_context_isolation()
     test_relationships()
@@ -2040,6 +2381,15 @@ if __name__ == "__main__":
     test_api_auth_token()
     test_byok_http_guards()
     test_cors_allowed_origins_env()
+    # --- QA 修正（2026-06-08）の回帰テスト ---
+    test_strip_model_artifacts()
+    test_openai_retry_truncation_marker()
+    test_openrouter_search_nonjson()
+    test_opening_directive_no_nomination()
+    test_research_nudge_phase_gating()
+    test_research_sources_truncated_in_context()
+    test_research_prompt_and_format()
+    test_research_useful_and_cap_constants()
     print()
     if _failures:
         print(f"[FAIL] {len(_failures)} 件 FAIL")
