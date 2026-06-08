@@ -2249,6 +2249,7 @@ def test_research_nudge_phase_gating():
     by_marker: dict = {}
     markers = (
         "【問題の捉え直し】",
+        "【捉え直しの統合（司会）】",
         "【整理（発散→批判）】",
         "【クロージング】",
         "【収束の口火（司会）】",
@@ -2261,7 +2262,7 @@ def test_research_nudge_phase_gating():
         for marker in markers:
             if marker in t:
                 by_marker.setdefault(marker, []).append(RESEARCH_NUDGE in t)
-    for marker in ("【問題の捉え直し】", "【整理（発散→批判）】", "【クロージング】", "【収束の口火（司会）】"):
+    for marker in ("【問題の捉え直し】", "【捉え直しの統合（司会）】", "【整理（発散→批判）】", "【クロージング】", "【収束の口火（司会）】"):
         got = by_marker.get(marker, [])
         check(bool(got) and not any(got), f"{marker} に RESEARCH_NUDGE が出ない")
     for marker in ("【オープニング】", "【発散フェーズ】", "【批判フェーズ】"):

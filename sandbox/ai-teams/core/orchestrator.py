@@ -579,9 +579,10 @@ class Council:
             transcript.append(turn)
             yield turn
 
-        # 1.5. 問題再定義ゲート（任意）: 発散の前に各パネリストが議題を自分の視点で捉え直す1周。
-        #      司会1人のフレーミング(opening/intake)では吸収できない解釈ズレを多視点で炙り出し、
-        #      後続フェーズの噛み合いを上げる。redefine=False（既定）では一切出さない（後方互換）。
+        # 1.5. 問題再定義ゲート（任意）: 発散の前に「各パネリストが捉え直す(発散)→司会が共有フレームに
+        #      統合する(収束)」の1セット。リフレーミング/弁証法/Double Diamond の定石は 発散→収束 で1つ。
+        #      収束を欠くと各自の私的フレームに散らすだけで、下流(批判/収束)の噛み合いをむしろ下げる
+        #      （A/B検証で実測: 収束なし版は具体論題で裏目）。redefine=False（既定）では一切出さない。
         if self.redefine:
             for persona in list(self.panelists):
                 turn = self._speak(
@@ -595,8 +596,30 @@ class Council:
                         "『私はこれを〈…〉の問題だと捉える』の形で、論点の本質がどこにあるかを各自の角度から"
                         "示すこと。提案・対策・結論はまだ出さず、問いの枠組みだけを1〜2文で簡潔に。"
                     ),
-                    anti_conformity=True,
-                    research_override=False,  # 捉え直しは枠組み提示のみ＝要調査を誘発しない（rank5 主目的）
+                    anti_conformity=False,  # 捉え直しは自然な差異でよい＝発散を強制しない（強制は散らす元凶）
+                    research_override=False,  # 捉え直しは枠組み提示のみ＝要調査を誘発しない
+                    emit=emit,
+                    turn_id=next(ids),
+                )
+                transcript.append(turn)
+                yield turn
+            # 収束（共有フレーム化）: 司会が各自の捉え直しを1つの共有問題定義に束ねる。この収束ステップが
+            # 「常に刺さる」リフレーミング技法の核で、発散しっぱなしを防ぐ。司会不在なら省略（従来の散らし）。
+            if self.moderator is not None:
+                turn = self._speak(
+                    self.moderator,
+                    transcript,
+                    topic,
+                    phase="redefine",
+                    round_no=0,
+                    phase_directive=(
+                        "【捉え直しの統合（司会）】各登壇者が示した問題の捉え直しを突き合わせ、"
+                        "共通して本質を突いている問いを1つに束ねてください。"
+                        "『整理すると、我々が本当に問うているのは〈…〉だ。この共通の問いから発散に入る』"
+                        "の形で、共有フレームを1〜2文で宣言すること。新しい論点や結論は出さないこと。"
+                    ),
+                    anti_conformity=False,
+                    research_override=False,
                     emit=emit,
                     turn_id=next(ids),
                 )
