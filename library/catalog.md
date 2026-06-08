@@ -1,6 +1,6 @@
 # Library Catalog
 
-最終更新: 2026-06-06
+最終更新: 2026-06-08
 
 ## 凡例
 - 状態: 未読 / 既読 / 要精読
@@ -338,12 +338,43 @@
 
 ---
 
+
+## 2026-06-08 収集分（20件収集 → 20件SIGNAL）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 180 | [2026-06-08_180](articles/2026-06-08_180_Marktechpost-Claude-Opus-4-8-Dynamic-Workflows-1000-Subagents-Parallel.md) | Claude Opus 4.8 + Dynamic Workflows — 最大1,000並列サブエージェント・Ultracode自動オーケストレーター | claude-code | 未読 | #web-signal |
+| 181 | [2026-06-08_181](articles/2026-06-08_181_TowardsAI-Claude-Code-Extensions-Skills-MCP-Hooks-Subagents-AgentTeams-Plugins.md) | Claude Code 6拡張システム完全解説 — Skills/MCP/Hooks/Subagents/AgentTeams/Plugins の体系的比較 | claude-code | 未読 | #web-signal |
+| 182 | [2026-06-08_182](articles/2026-06-08_182_Blink-Claude-Code-Subagents-Parallel-Tasks-Workflow-Guide.md) | Claude Code Sub-Agents 並列実行ガイド — 独立コンテキスト・YAML定義・並列探索パターン | claude-code | 未読 | #web-signal |
+| 183 | [2026-06-08_183](articles/2026-06-08_183_Alexop-Claude-Code-Workflows-Deterministic-Multi-Agent-Orchestration.md) | Claude Code Workflows: 決定論的マルチエージェントオーケストレーション — shinpr/claude-code-workflows 解説 | claude-code | 未読 | #web-signal |
+| 184 | [2026-06-08_184](articles/2026-06-08_184_MindStudio-Claude-Opus-4-8-Dynamic-Workflows-Parallel-Sub-Agents-Guide.md) | Dynamic Workflows実装詳解 — JS自動生成→バックグラウンド実行→検証済み回答の5ステップフロー | claude-code | 未読 | #web-signal |
+| 185 | [2026-06-08_185](articles/2026-06-08_185_TheAICorner-Claude-Best-Practices-2026-Power-User-Guide.md) | Claude パワーユーザーガイド 2026 — CLAUDE.md 3層・計画優先・モデル選択・コンテキスト管理 | claude-code | 未読 | #web-signal |
+| 186 | [2026-06-08_186](articles/2026-06-08_186_Ranthebuilder-Claude-Code-Best-Practices-Real-Projects-Lessons.md) | Claude Code実プロジェクト知見 — CLAUDE.md恒久ルール・/plan 70%ミス削減・Hooks品質ゲート | claude-code | 未読 | #web-signal |
+| 187 | [2026-06-08_187](articles/2026-06-08_187_Digirise-Claude-Code-Katsuyou-Jireishu-10-Non-Engineer-JA.md) | Claude Code活用事例10選（非エンジニア向け）— 議事録・スクレイピング・レポート・FAQ・採用 | claude-code | 未読 | #web-signal |
+| 188 | [2026-06-08_188](articles/2026-06-08_188_GenAI-Claude-Skills-Intro-2026-JA-vs-GPTs.md) | Claude Skills入門 2026年6月最新（JA）— GPTsとの違い・自分専用スキル作成・公式17種解説 | claude-code | 未読 | #web-signal |
+| 189 | [2026-06-08_189](articles/2026-06-08_189_Zenn-Anthropic-MCP-Official-Design-98pct-Token-Reduction-JA.md) | Anthropic公式MCPサーバー設計術 — Tool description最適化で98.7%トークン削減・FastMCP実装例 | claude-ecosystem | 未読 | #web-signal |
+| 190 | [2026-06-08_190](articles/2026-06-08_190_TechNoisy-Anthropic-Acquires-Stainless-MCP-SDK-JA.md) | AnthropicがStainless買収（JA） — MCPサーバー自動生成内製化・REST→MCP変換簡素化の戦略的意味 | claude-ecosystem | 未読 | #web-signal |
+| 191 | [2026-06-08_191](articles/2026-06-08_191_Composio-Claude-Agents-SDK-vs-OpenAI-vs-Google-ADK-Comparison.md) | Claude Agent SDK vs OpenAI vs Google ADK — 3大フレームワーク比較・6/15課金後コスト考慮 | claude-ecosystem | 未読 | #web-signal |
+| 192 | [2026-06-08_192](articles/2026-06-08_192_AIWorkflowLab-Build-Production-AI-Agents-Claude-Agent-SDK-Python-Guide.md) | Claude Agent SDK本番エージェント構築ガイド — カスタムツール/@tool・Hooks・MCP統合・実装例 | claude-ecosystem | 未読 | #web-signal |
+| 193 | [2026-06-08_193](articles/2026-06-08_193_GPTrader-Best-AI-Trading-Agents-2026-Definitive-Ranking-88pct-Returns.md) | AIトレーディングエージェント2026年定番ランキング — 88%リターン誇大広告の実態と判断基準 | ai-trading | 未読 | #web-signal |
+| 194 | [2026-06-08_194](articles/2026-06-08_194_Medium-TradingAgents-Best-AI-Agent-Financial-Trading-Analysis.md) | TradingAgents 詳細分析 — 7エージェント合意形成・v0.2.2 Claude 4.6対応・AAPL+26.62%の詳細 | ai-trading | 未読 | #web-signal |
+| 195 | [2026-06-08_195](articles/2026-06-08_195_MQL5-Blog-5-AI-Trading-Bot-Setups-Automate-MT5-Profits-June2026.md) | MT5 AIトレーディングボット5パターン（MQL5公式 2026/06）— LSTM+Transformer・Agentic AI・EA Generator | ai-trading | 未読 | #web-signal |
+| 196 | [2026-06-08_196](articles/2026-06-08_196_Medium-I-Tested-47-Forex-Robots-Lost-11400-Best-AI-Trading-Agent-2026.md) | 47本FXロボット実検証・$11,400損失レポート — バックテスト過剰最適化の実態・生き残り条件 | ai-trading | 未読 | #web-signal |
+| 197 | [2026-06-08_197](articles/2026-06-08_197_GVALaw-Japan-AI-Guideline-v12-Revision-Agent-HITL-2026-JA.md) | AI事業者ガイドライン1.2版改訂要点（JA・GVA法律事務所）— AIエージェントHITL義務化・5段階リスク分類 | ai-news | 未読 | #web-signal |
+| 198 | [2026-06-08_198](articles/2026-06-08_198_StartupHub-20-AI-Agent-Frameworks-Production-2026-Rankings.md) | 2026年本番AIエージェントフレームワーク20選 — LangGraph/Claude SDK/CrewAI/MAF 選択マトリクス | ai-news | 未読 | #web-signal |
+| 199 | [2026-06-08_199](articles/2026-06-08_199_Essamamdani-Complete-Guide-MCP-2026-USB-C-for-AI.md) | MCP完全ガイド 2026「AIのUSB-C」— 9700万DL・3プリミティブ・ロードマップ（Essa Mamdani） | claude-ecosystem | 未読 | #web-signal |
+
+### NOISEとして除外
+なし（全20件SIGNAL判定・X投稿収集データなし・drop.mdにURLなし）
+
+---
+
 ## ドメイン別統計（累計）
 
-| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 2026-06-07 | 累計 |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 8件 | 5件 | 10件 | 75件 |
-| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 5件 | 4件 | 5件 | 39件 |
-| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 3件 | 2件 | 32件 |
-| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 4件 | 3件 | 33件 |
-| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **18件** | **16件** | **20件** | **179件** |
+| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 2026-06-07 | 2026-06-08 | 累計 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 8件 | 5件 | 10件 | 9件 | 84件 |
+| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 5件 | 4件 | 5件 | 5件 | 44件 |
+| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 3件 | 2件 | 4件 | 36件 |
+| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 4件 | 3件 | 2件 | 35件 |
+| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **18件** | **16件** | **20件** | **20件** | **199件** |
