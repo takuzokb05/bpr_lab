@@ -12,9 +12,10 @@ v2 の致命傷は「全員の発言を role=assistant で1配列に詰め、モ
 
 from __future__ import annotations
 
-import os
 import re
 from typing import TYPE_CHECKING
+
+from .llm_client import _env
 
 if TYPE_CHECKING:  # 循環 import 回避（型注釈のみ）
     from .orchestrator import Turn
@@ -25,8 +26,8 @@ Message = dict[str, str]
 # 調査ブリーフの出典リストは1件あたり数十URLに膨れ、全 researcher ターンが後続の全発言に
 # 再注入されると LLM 文脈が肥大する（コスト・トークン切れ・可読性の複合悪化）。フロント表示や
 # export は全件保持したいので Turn.content 自体は変えず、ここ（build_context が組む LLM 文脈の
-# コピー）でだけ出典を上位 N 件に圧縮する。env AI_TEAMS_RESEARCH_CTX_MAX_SOURCES で可変（既定 5）。
-_RESEARCH_CTX_MAX_SOURCES = int(os.environ.get("AI_TEAMS_RESEARCH_CTX_MAX_SOURCES", "5"))
+# コピー）でだけ出典を上位 N 件に圧縮する。env AI_COUNCIL_RESEARCH_CTX_MAX_SOURCES で可変（既定 5）。
+_RESEARCH_CTX_MAX_SOURCES = int(_env("RESEARCH_CTX_MAX_SOURCES", "5"))
 # 「\n\n出典:\n- …」ブロックを丸ごと掴む（'出典:' 見出しは llm_client/フロントと凍結契約）。
 # 「- 」行に加え空行/空白のみ行も許容して連続性を保つ（モデル生成URLに改行混入時の取りこぼし防止
 # ＝対抗レビュー L1）。非"- "の本文行はマッチを切る（後続プローズを食わない）。

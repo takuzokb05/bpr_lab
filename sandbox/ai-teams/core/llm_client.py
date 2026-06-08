@@ -18,6 +18,16 @@ from typing import Callable, Iterator
 # truncation 警告などを出すロガー（標準 logging。ハンドラ未設定なら呼び出し側/アプリ既定に従う）。
 logger = logging.getLogger("ai_teams.llm")
 
+
+def _env(key: str, default: str | None = None) -> str | None:
+    """設定 env を読む共通ヘルパ。公開ブランドの AI_COUNCIL_ を優先し、後方互換で旧 AI_TEAMS_ も読む。
+    新規 env は AI_COUNCIL_<KEY> で追加する（既存の AI_TEAMS_<KEY> は当面フォールバックとして有効）。"""
+    v = os.environ.get("AI_COUNCIL_" + key)
+    if v is not None:
+        return v
+    return os.environ.get("AI_TEAMS_" + key, default)
+
+
 # 字数上限で途中までしか返らなかったときに末尾へ付ける目印。
 _TRUNCATION_MARKER = "…（字数上限で途中まで）"
 
@@ -87,17 +97,17 @@ def _sanitize_research_snippet(raw: str, limit: int = 500) -> str:
 
 
 def _llm_timeout() -> float:
-    """SDK クライアントのタイムアウト秒。env AI_TEAMS_LLM_TIMEOUT で可変（既定 600 秒）。"""
+    """SDK クライアントのタイムアウト秒。env AI_COUNCIL_LLM_TIMEOUT で可変（既定 600 秒）。"""
     try:
-        return float(os.environ.get("AI_TEAMS_LLM_TIMEOUT", "600") or "600")
+        return float(_env("LLM_TIMEOUT", "600") or "600")
     except ValueError:
         return 600.0
 
 
 # エンジン既定モデル。ペルソナ側で model を指定すればそちらが優先される。
 # 意思決定の討論は低頻度・高単価でも質を優先するため既定を Opus にする。
-# コスト優先なら .env の AI_TEAMS_MODEL=claude-sonnet-4-6 等で上書きできる。
-DEFAULT_MODEL = os.environ.get("AI_TEAMS_MODEL", "claude-opus-4-8")
+# コスト優先なら .env の AI_COUNCIL_MODEL=claude-sonnet-4-6 等で上書きできる。
+DEFAULT_MODEL = _env("MODEL", "claude-opus-4-8")
 
 # Anthropic Messages API が期待する message の形:
 #   {"role": "user" | "assistant", "content": "..."}
@@ -211,9 +221,9 @@ class AnthropicClient(LLMClient):
             if api_key
             else anthropic.Anthropic(timeout=timeout)
         )
-        # 1024 では Opus 4.8 の豊かな発言が文中で切れる。既定 2048・AI_TEAMS_MAX_TOKENS で可変。
+        # 1024 では Opus 4.8 の豊かな発言が文中で切れる。既定 2048・AI_COUNCIL_MAX_TOKENS で可変。
         # max_tokens は上限であり、モデルは必要分で停止するので過大でも常時その量を消費はしない。
-        self._max_tokens = max_tokens or int(os.environ.get("AI_TEAMS_MAX_TOKENS", "2048"))
+        self._max_tokens = max_tokens or int(_env("MAX_TOKENS", "2048"))
 
     def _params(
         self,
@@ -349,13 +359,13 @@ class AnthropicClient(LLMClient):
 # 非 Anthropic では無視＝混線防止。発言の多様性は system プロンプトで担保する）。
 #
 # モデル名は更新が速い。ここは **2026-06 時点の現行フラッグシップ（GA）** を置き、新型が出たら
-# env（AI_TEAMS_OPENAI_MODEL / AI_TEAMS_GEMINI_MODEL）で差し替える運用にする。
+# env（AI_COUNCIL_OPENAI_MODEL / AI_COUNCIL_GEMINI_MODEL）で差し替える運用にする。
 #   OpenAI: gpt-5.5（推奨フラッグシップ）。安価重視なら gpt-5.4 / gpt-5.4-mini、
 #           最新 Instant 追従なら chat-latest エイリアス。
 #   Gemini: gemini-3.5-flash（GA・現行の高性能）。上位は gemini-2.5-pro 系、
 #           自動追従は gemini-flash-latest エイリアス（preview に振れる点に注意）。
-_OPENAI_DEFAULT_MODEL = os.environ.get("AI_TEAMS_OPENAI_MODEL", "gpt-5.5")
-_GEMINI_DEFAULT_MODEL = os.environ.get("AI_TEAMS_GEMINI_MODEL", "gemini-3.5-flash")
+_OPENAI_DEFAULT_MODEL = _env("OPENAI_MODEL", "gpt-5.5")
+_GEMINI_DEFAULT_MODEL = _env("GEMINI_MODEL", "gemini-3.5-flash")
 
 # 非 Anthropic provider では Web 検索（調査役）は未対応。その旨を正直に返す（討論は止めない）。
 _RESEARCH_UNSUPPORTED = "（Web 検索は現在 Anthropic 選択時のみ対応です。検索なしで進めます。）"
@@ -392,7 +402,7 @@ class OpenAIClient(LLMClient):
         # tools 経路と互換でないため）。search_mode="openrouter" のとき web_search サーバツールを使う。
         self._search_mode = (search_mode or "").strip().lower()
         self._base_url = (base_url or "").rstrip("/")
-        key = (api_key or os.environ.get("AI_TEAMS_LOCAL_API_KEY") or "local") if base_url else api_key
+        key = (api_key or _env("LOCAL_API_KEY") or "local") if base_url else api_key
         self._api_key_value = key
         # SDK にも明示タイムアウトを渡す（未設定だと長時間ハングし得る）。env で可変。
         kwargs: dict = {"timeout": _llm_timeout()}
@@ -404,7 +414,7 @@ class OpenAIClient(LLMClient):
             kwargs["api_key"] = api_key
         self._client = OpenAI(**kwargs)
         self._model = model or _OPENAI_DEFAULT_MODEL
-        self._max_tokens = max_tokens or int(os.environ.get("AI_TEAMS_MAX_TOKENS", "2048"))
+        self._max_tokens = max_tokens or int(_env("MAX_TOKENS", "2048"))
 
     def _messages(self, system: str, messages: list[Message]) -> list[Message]:
         # OpenAI は system を messages 先頭ロールで渡す。
@@ -415,14 +425,14 @@ class OpenAIClient(LLMClient):
 
         OpenRouter は1モデルを複数の下流プロバイダに分散ルーティングする。一部（Venice 等）は
         コンテンツフィルタが強く、討論の正当な批判を "inappropriate content" で弾いて発言が
-        空/エラーになる。env AI_TEAMS_OPENROUTER_IGNORE（カンマ区切り・既定 "Venice"）で除外する。
+        空/エラーになる。env AI_COUNCIL_OPENROUTER_IGNORE（カンマ区切り・既定 "Venice"）で除外する。
         OpenRouter 以外の base_url（Ollama/vLLM 等）では None（provider 概念が無い）。
         """
         if "openrouter" not in self._base_url:
             return None
         ignore = [
             s.strip()
-            for s in os.environ.get("AI_TEAMS_OPENROUTER_IGNORE", "Venice").split(",")
+            for s in _env("OPENROUTER_IGNORE", "Venice").split(",")
             if s.strip()
         ]
         return {"ignore": ignore, "allow_fallbacks": True} if ignore else None
@@ -456,8 +466,8 @@ class OpenAIClient(LLMClient):
             extra: dict = {}
             # 思考モデル（Kimi K2.6 / DeepSeek V4 Pro 等）は reasoning が max_tokens を食い、可視発言が
             # 枯れて空ターン化する。OpenRouter の reasoning 制御で抑え、応答の長さ(verbosity)が可視
-            # 出力に効くようにする。既定 low。AI_TEAMS_LOCAL_REASONING="" で無効（生挙動）。
-            effort = os.environ.get("AI_TEAMS_LOCAL_REASONING", "low").strip()
+            # 出力に効くようにする。既定 low。AI_COUNCIL_LOCAL_REASONING="" で無効（生挙動）。
+            effort = _env("LOCAL_REASONING", "low").strip()
             if effort:
                 extra["reasoning"] = {"effort": effort}
             # 検閲の強い下流プロバイダ（Venice 等）を避ける（正当な批判の弾かれを防ぐ）。
@@ -470,7 +480,7 @@ class OpenAIClient(LLMClient):
         # クラウド OpenAI（GPT-5/o 系は max_completion_tokens・temperature 非対応で reasoning_effort）。
         params["max_completion_tokens"] = mt
         if any(m in self._model for m in _OPENAI_NO_TEMP_MARKERS):
-            effort = os.environ.get("AI_TEAMS_OPENAI_REASONING", "low").strip()
+            effort = _env("OPENAI_REASONING", "low").strip()
             if effort:
                 params["reasoning_effort"] = effort
         else:
@@ -740,7 +750,7 @@ class GeminiClient(LLMClient):
             pass
         self._client = genai.Client(**client_kwargs)
         self._model = model or _GEMINI_DEFAULT_MODEL
-        self._max_tokens = max_tokens or int(os.environ.get("AI_TEAMS_MAX_TOKENS", "2048"))
+        self._max_tokens = max_tokens or int(_env("MAX_TOKENS", "2048"))
 
     def _contents(self, messages: list[Message]) -> list[dict]:
         # Gemini: role は "user" | "model"。Anthropic の assistant を model に読み替える。
@@ -759,8 +769,8 @@ class GeminiClient(LLMClient):
             "max_output_tokens": self._max_tokens if max_tokens is None else max_tokens,
         }
         # 思考(thinking)は既定 ON で max_output_tokens を食い、可視出力が枯れる（ほぼ空応答に
-        # なりうる）。討論用途では低めに固定して発言にトークンを回す（env AI_TEAMS_GEMINI_THINKING で可変）。
-        level = os.environ.get("AI_TEAMS_GEMINI_THINKING", "low").strip()
+        # なりうる）。討論用途では低めに固定して発言にトークンを回す（env AI_COUNCIL_GEMINI_THINKING で可変）。
+        level = _env("GEMINI_THINKING", "low").strip()
         if level:
             try:
                 kwargs["thinking_config"] = types.ThinkingConfig(thinking_level=level)
@@ -877,12 +887,12 @@ class MockLLMClient(LLMClient):
         )
         if not text:
             return
-        # 環境変数 AI_TEAMS_MOCK_DELAY（秒）でチャンク毎に待つ。実LLMを使わずに
+        # 環境変数 AI_COUNCIL_MOCK_DELAY（秒）でチャンク毎に待つ。実LLMを使わずに
         # ストリーミングの“ライブ感”を再現・検証するための affordance（既定0＝従来動作）。
         import os
         import time
 
-        delay = float(os.environ.get("AI_TEAMS_MOCK_DELAY", "0") or "0")
+        delay = float(_env("MOCK_DELAY", "0") or "0")
         chunks = 3
         size = max(1, (len(text) + chunks - 1) // chunks)
         for i in range(0, len(text), size):

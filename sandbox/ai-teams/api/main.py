@@ -8,7 +8,6 @@ from __future__ import annotations
 
 import hmac
 import logging
-import os
 import time
 from pathlib import Path
 from typing import Literal, NoReturn
@@ -20,6 +19,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from . import service
+from core.llm_client import _env
 
 app = FastAPI(title="AI Teams API", version="3.0.0")
 
@@ -31,10 +31,10 @@ _PROTECTED_PREFIXES = ("/sessions", "/personas", "/presets", "/intake")
 def _allowed_origins() -> list[str]:
     """CORS の allow_origins を env から読む（カンマ区切り）。
 
-    AI_TEAMS_ALLOWED_ORIGINS 未設定なら従来既定 ["http://localhost:3000"]。
+    AI_COUNCIL_ALLOWED_ORIGINS 未設定なら従来既定 ["http://localhost:3000"]。
     空白を除去し、空要素は落とす。すべて空なら既定にフォールバック（後方互換）。
     """
-    raw = os.environ.get("AI_TEAMS_ALLOWED_ORIGINS")
+    raw = _env("ALLOWED_ORIGINS")
     if not raw:
         return ["http://localhost:3000"]
     origins = [o.strip() for o in raw.split(",") if o.strip()]
@@ -45,12 +45,12 @@ def _allowed_origins() -> list[str]:
 async def require_api_token(request: Request, call_next):
     """最小認証ミドルウェア（env-gated）。
 
-    env AI_TEAMS_API_TOKEN を読む。
+    env AI_COUNCIL_API_TOKEN を読む。
     - 未設定 → 認証無効。何もせず通す（ローカル開発・既存テストはこの経路で無改修 pass）。
     - 設定あり → Authorization ヘッダが "Bearer {token}" と一致しなければ 401。
       ただし /health（稼働確認）と OPTIONS（CORS プリフライト）は常に通す。
     """
-    token = os.environ.get("AI_TEAMS_API_TOKEN")
+    token = _env("API_TOKEN")
     if token and request.method != "OPTIONS":
         # API（コスト・データ操作）パスだけ保護。静的フロント(/ や /_next)・/health は通す。
         path = request.url.path
@@ -62,7 +62,7 @@ async def require_api_token(request: Request, call_next):
     return await call_next(request)
 
 
-# CORS。allow_origins は env AI_TEAMS_ALLOWED_ORIGINS で可変（未設定なら localhost:3000）。
+# CORS。allow_origins は env AI_COUNCIL_ALLOWED_ORIGINS で可変（未設定なら localhost:3000）。
 # allow_headers=["*"] で Authorization ヘッダを許可（最小認証のため）。
 app.add_middleware(
     CORSMiddleware,
@@ -80,8 +80,8 @@ app.add_middleware(
 # cloudflared 経由では request.client.host が 127.0.0.1 になるため、実 IP は
 # CF-Connecting-IP / X-Forwarded-For を優先して見る（無ければ接続元）。注意: これらの
 # ヘッダは原理的に偽装可能なので「完全な本人特定」ではなく濫用のハードルを上げる多層防御。
-_RATE_MAX = int(os.environ.get("AI_TEAMS_RATE_MAX", "20"))  # 窓あたり許容数
-_RATE_WINDOW = float(os.environ.get("AI_TEAMS_RATE_WINDOW", "60"))  # 窓（秒）
+_RATE_MAX = int(_env("RATE_MAX", "20"))  # 窓あたり許容数
+_RATE_WINDOW = float(_env("RATE_WINDOW", "60"))  # 窓（秒）
 _RATE_HITS: dict[str, list[float]] = {}
 
 
@@ -91,7 +91,7 @@ def _trust_proxy_ip() -> bool:
     既定 "1"（現行挙動維持＝cloudflared 経由で実 IP を見る）。"0" のときはこれらの
     偽装可能ヘッダを信頼せず、接続元 request.client.host のみでレート制限する。
     """
-    return os.environ.get("AI_TEAMS_TRUST_PROXY_IP", "1").strip().lower() not in (
+    return _env("TRUST_PROXY_IP", "1").strip().lower() not in (
         "0",
         "false",
         "no",
@@ -145,11 +145,11 @@ def _assert_writable() -> None:
 @app.on_event("startup")
 def _warn_public_writable() -> None:
     """公開時の安全策。書込可（readonly でない）かつ BYOK でない構成は、同梱ペルソナ/プリセットを
-    来訪者が誤って上書き・削除し得るため、共有公開なら AI_TEAMS_READONLY=1 を推奨する旨を1回警告する。
+    来訪者が誤って上書き・削除し得るため、共有公開なら AI_COUNCIL_READONLY=1 を推奨する旨を1回警告する。
     """
     if not service.readonly_mode() and not service.byok_mode():
         logging.getLogger("uvicorn.error").warning(
-            "書込可能かつ非 BYOK 構成です。共有公開する場合は AI_TEAMS_READONLY=1 を推奨します"
+            "書込可能かつ非 BYOK 構成です。共有公開する場合は AI_COUNCIL_READONLY=1 を推奨します"
             "（同梱ペルソナ/プリセットの誤上書き・削除を防ぐため）。"
         )
 

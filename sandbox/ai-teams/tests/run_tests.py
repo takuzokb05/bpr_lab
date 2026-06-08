@@ -2344,6 +2344,35 @@ def test_research_useful_and_cap_constants():
     check(not _is_useful_research(mock), f"MockLLMClient.web_research の結果は無価値判定: {mock!r}")
 
 
+def test_env_prefix_fallback():
+    """env は AI_COUNCIL_ を優先し、未設定時のみ後方互換で旧 AI_TEAMS_ を読む。"""
+    print("[test] env prefix AI_COUNCIL_ primary + AI_TEAMS_ fallback")
+    import os
+    from core.llm_client import _env
+
+    keys = ("AI_COUNCIL_ENVTEST_X", "AI_TEAMS_ENVTEST_X")
+    saved = {k: os.environ.get(k) for k in keys}
+    try:
+        for k in keys:
+            os.environ.pop(k, None)
+        check(_env("ENVTEST_X", "def") == "def", "両方未設定なら default")
+        check(_env("ENVTEST_X") is None, "未設定・default無しは None（従来の get と同一）")
+        os.environ["AI_TEAMS_ENVTEST_X"] = "old"
+        check(_env("ENVTEST_X", "def") == "old", "AI_TEAMS_ のみ設定なら後方互換で読む")
+        os.environ["AI_COUNCIL_ENVTEST_X"] = "new"
+        check(_env("ENVTEST_X", "def") == "new", "両方設定なら AI_COUNCIL_ が優先")
+        os.environ.pop("AI_TEAMS_ENVTEST_X", None)
+        check(_env("ENVTEST_X", "def") == "new", "AI_COUNCIL_ のみ設定でも読む")
+        os.environ["AI_COUNCIL_ENVTEST_X"] = ""
+        check(_env("ENVTEST_X", "def") == "", "空文字も有効値として返す（未設定と区別）")
+    finally:
+        for k, v in saved.items():
+            if v is None:
+                os.environ.pop(k, None)
+            else:
+                os.environ[k] = v
+
+
 if __name__ == "__main__":
     test_context_isolation()
     test_relationships()
@@ -2390,6 +2419,7 @@ if __name__ == "__main__":
     test_research_sources_truncated_in_context()
     test_research_prompt_and_format()
     test_research_useful_and_cap_constants()
+    test_env_prefix_fallback()
     print()
     if _failures:
         print(f"[FAIL] {len(_failures)} 件 FAIL")

@@ -1177,7 +1177,7 @@ export default function Home() {
                 内製／オープンモデルで討論します（サーバ設定・キー不要）。
                 {health?.local_search
                   ? "Web 検索も利用できます。"
-                  : "Web 検索は未設定です（AI_TEAMS_LOCAL_SEARCH）。"}
+                  : "Web 検索は未設定です（AI_COUNCIL_LOCAL_SEARCH）。"}
               </span>
             </p>
           )}
