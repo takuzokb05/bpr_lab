@@ -1,6 +1,6 @@
 # Library Catalog
 
-最終更新: 2026-06-08
+最終更新: 2026-06-09
 
 ## 凡例
 - 状態: 未読 / 既読 / 要精読
@@ -369,12 +369,39 @@
 
 ---
 
+
+## 2026-06-09 収集分（15件収集 → 14件SIGNAL）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 200 | [2026-06-09_200](articles/2026-06-09_200_Anthropic-Claude-Fable-5-Mythos-5-release-June9-VentureBeat.md) | Claude Fable 5リリース（2026-06-09）: SWE-Bench Pro 80.3%・Mythos-class初公開・$10/$50 per Mトークン | claude-ecosystem | 未読 | #web-signal #urgent |
+| 201 | [2026-06-09_201](articles/2026-06-09_201_Claude-Fable-5-Mythos-5-full-benchmark-vellum.md) | Claude Fable 5&Mythos 5ベンチマーク詳解 — GPT-5.5比+21.7pt・Hex 90%超え・安全分類器フォールバック仕様 | claude-ecosystem | 未読 | #web-signal |
+| 202 | [2026-06-09_202](articles/2026-06-09_202_Claude-Fable-5-TechCrunch-safety-capability-tension.md) | Fable 5リリースとAI安全性警告の矛盾（TechCrunch）— 能力競争とResponsible Scaling Policyの緊張 | ai-news | 未読 | #web-signal |
+| 203 | [2026-06-09_203](articles/2026-06-09_203_Claude-Code-v2-1-169-safe-mode-cd-disableBundledSkills-DevelopersIO.md) | Claude Code v2.1.169詳解 — safe-mode・/cd・disableBundledSkills・セキュリティ修正2件（DevelopersIO） | claude-code | 未読 | #web-signal |
+| 204 | [2026-06-09_204](articles/2026-06-09_204_WWDC-2026-Apple-Foundation-Models-Claude-Gemini-no-code-change-swap.md) | WWDC 2026: Apple Foundation ModelsがClaude/GeminiをSPM更新のみでスワップ可能に | claude-ecosystem | 未読 | #web-signal |
+| 205 | [2026-06-09_205](articles/2026-06-09_205_Anthropic-Claude-Apple-Foundation-Models-Swift-official-blog.md) | Anthropic公式: Claude for Apple Foundation Models — iOS/macOS 27系・LanguageModelプロトコル実装 | claude-ecosystem | 未読 | #web-signal |
+| 206 | [2026-06-09_206](articles/2026-06-09_206_Great-American-AI-Act-2026-bipartisan-federal-framework-269pages.md) | Great American AI Act 2026草案 — 米国初連邦AI包括法・IVO監査義務・州法3年プリエンプション | ai-news | 未読 | #web-signal #urgent |
+| 207 | [2026-06-09_207](articles/2026-06-09_207_Colorado-AI-Act-rewrite-SB26-189-effective-January-2027.md) | Colorado AI法改正SB 26-189 — ADMT限定・消費者権利中心・施行日2027年1月1日へ延期 | ai-news | 未読 | #web-signal |
+| 208 | [2026-06-09_208](articles/2026-06-09_208_MCP-2026-upcoming-release-stateless-protocol-big-deal-Medium.md) | MCP 2026-07-28 RC解説: ステートレス化で普通のLBが使えるようになる実用インパクト | claude-ecosystem | 未読 | #web-signal |
+| 209 | [2026-06-09_209](articles/2026-06-09_209_Claude-Code-fallbackModel-529-overload-fix-resilient-sessions.md) | Claude Code fallbackModel設定ガイド — 529過負荷自動回復・最大3バックアップモデル・BG継承 | claude-code | 未読 | #web-signal |
+| 210 | [2026-06-09_210](articles/2026-06-09_210_Anthropic-staff-Claude-Code-8-tips-context-engineering-Zenn.md) | Anthropic社員Claude Code活用術8選（Zenn）— コンテキストエンジニアリング・並列5+10セッション・サブエージェント基準 | claude-code | 未読 | #web-signal |
+| 211 | [2026-06-09_211](articles/2026-06-09_211_Claude-Code-recommended-skills-10-June2026-libecity.md) | Claude Code おすすめスキル10選【2026年6月最新】— Context7・Code Review必須・Git管理チーム展開パターン | claude-code | 未読 | #web-signal |
+| 212 | [2026-06-09_212](articles/2026-06-09_212_Blake-Crosley-Claude-Code-CLI-complete-guide-56k-words-v2-1-169.md) | Claude Code CLI 完全技術リファレンス56,000語（Blake Crosley）— v2.1.169対応・5コアシステム詳解 | claude-code | 未読 | #web-signal |
+| 213 | [2026-06-09_213](articles/2026-06-09_213_Anthropic-revenue-47B-run-rate-Claude-Code-1B-fastest-growth.md) | Anthropic ARR $47B達成・Claude Code 6ヶ月で$1B — Simon Willison解説・$87M→$47Bの成長軌跡 | ai-news | 未読 | #web-signal |
+
+### NOISEとして除外
+| ファイル | 理由 |
+|---|---|
+| inbox/web/2026-06-09_014_AI-trading-bot-mobile-apps-control-centers-June2026.md | モバイルアプリ製品紹介メイン・技術的一次情報なし・感想レベルのまとめ記事 |
+
+---
+
 ## ドメイン別統計（累計）
 
-| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 2026-06-07 | 2026-06-08 | 累計 |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 8件 | 5件 | 10件 | 9件 | 84件 |
-| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 5件 | 4件 | 5件 | 5件 | 44件 |
-| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 3件 | 2件 | 4件 | 36件 |
-| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 4件 | 3件 | 2件 | 35件 |
+| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 2026-06-07 | 2026-06-08 | 2026-06-09 | 累計 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 8件 | 5件 | 10件 | 9件 | 5件 | 89件 |
+| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 5件 | 4件 | 5件 | 5件 | 5件 | 49件 |
+| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 3件 | 2件 | 4件 | 0件 | 36件 |
+| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 4件 | 3件 | 2件 | 4件 | 39件 |
 | **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **18件** | **16件** | **20件** | **20件** | **199件** |
