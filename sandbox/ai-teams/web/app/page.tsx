@@ -54,6 +54,7 @@ import { HistoryDrawer } from "@/components/HistoryDrawer";
 import { PersonaManagerDrawer } from "@/components/PersonaManagerDrawer";
 import { PresetSaveDialog } from "@/components/PresetSaveDialog";
 import { Timeline } from "@/components/Timeline";
+import { IdleStage, type SeatedPersona } from "@/components/IdleStage";
 import { MinutesPanel } from "@/components/MinutesPanel";
 import { ResearchNotes } from "@/components/ResearchNotes";
 import { ExportBar } from "@/components/ExportBar";
@@ -82,6 +83,14 @@ const MATERIAL_FILE_ACCEPT = ".txt,.md,.csv,.json";
 
 // "paused" = 議場開放（floor-open）。本編後に自動 synthesis せず入力待ちで停止した状態。
 type Status = "idle" | "running" | "paused" | "done" | "error";
+
+// 開演前の議場に出す議題例。初見の「何を投げればいいか分からない」をワンタップで越えさせる。
+// このツールの得意領域＝単体LLMで煮え切らない価値判断・トレードオフの議題を例示する。
+const EXAMPLE_TOPICS = [
+  "転職するか、いまの職場に残ってスキルを磨くか。判断の決め手を出してほしい",
+  "平日の自由時間が90分しかない。資格の勉強と作りたい個人開発、どちらを優先すべきか",
+  "生成AIを仕事でどこまで使ってよいか。チームの線引きを決めたい",
+];
 
 // 司会(facilitation)・議長(chair)は進行の固定役として自動で含める（ユーザーは選ばない）。
 // 書記(scribe)は発言しないので編成から除外。ピッカーで選ぶのはパネリストだけ。
@@ -385,6 +394,27 @@ export default function Home() {
     [personas]
   );
   const autoRoleIds = useMemo(() => autoRoles.map((p) => p.id), [autoRoles]);
+
+  // 開演前の議場（IdleStage）に座らせる顔ぶれ: 進行役（自動）＋選択中パネリスト。
+  // 編成パネルの選択がそのまま中央に反映され、「呼んだ顔ぶれで始まる」感を作る。
+  const seated = useMemo<SeatedPersona[]>(() => {
+    const roles: SeatedPersona[] = autoRoles.map((p) => ({
+      id: p.id,
+      name: p.display_name,
+      monogram: p.monogram,
+      accent: p.accent,
+      role: p.category === "facilitation" ? "司会" : "議長",
+    }));
+    const picked: SeatedPersona[] = allPersonas
+      .filter((p) => selected.has(p.id))
+      .map((p) => ({
+        id: p.id,
+        name: p.display_name,
+        monogram: p.monogram,
+        accent: p.accent,
+      }));
+    return [...roles, ...picked];
+  }, [autoRoles, allPersonas, selected]);
   // 編成 CRUD が書込可能か（readonly な共有インスタンスでは「管理」UI を出さない）。
   const canManage = !(health?.readonly ?? false);
 
@@ -1258,13 +1288,27 @@ export default function Home() {
           <Chyron phase={currentPhase} status={status} />
 
           <div className="min-h-0 flex-1">
-            <Timeline
-              topic={activeTopic}
-              turns={turns}
-              streamingTurnId={streamingTurnId}
-              looks={looks}
-              status={status}
-            />
+            {activeTopic ? (
+              <Timeline
+                topic={activeTopic}
+                turns={turns}
+                streamingTurnId={streamingTurnId}
+                looks={looks}
+                status={status}
+              />
+            ) : (
+              // 開演前の議場: 席に着いた登壇者＋裁定への道筋＋議題例＋前回の続き（再訪導線）。
+              <IdleStage
+                seated={seated}
+                examples={EXAMPLE_TOPICS}
+                onPickExample={(t) => {
+                  setTopicInput(t);
+                  composerRef.current?.focus();
+                }}
+                lastEntry={history[0] ?? null}
+                onOpenLast={resumeOrLoad}
+              />
+            )}
           </div>
 
           {error && (
