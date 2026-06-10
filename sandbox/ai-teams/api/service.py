@@ -739,16 +739,18 @@ _FLOOR_IDLE_TIMEOUT = float(_env("FLOOR_IDLE_TIMEOUT", "1800"))
 
 
 def _has_new_content_since_synthesis(transcript: list) -> bool:
-    """前回 synthesis 以降に、新しい非 synthesis 発言があるか（close の冪等化判定）。
+    """前回の統合（議事録→裁定）以降に、新しい発言があるか（close の冪等化判定）。
 
-    transcript を末尾から走査し、最後の synthesis ターンより後に非 synthesis ターンが
-    1つでもあれば True。synthesis がまだ1つも無ければ常に True（初回 close は必ず作る）。
-    False のときは「前回と同じ内容で議事録を二重生成」になるため close 側で synthesize を skip する。
+    synthesize() は synthesis→verdict を対で積むので、**末尾が verdict** のときだけ
+    「組が完結し以降に新発言なし」＝同一内容の二重生成・二重課金を防ぐため skip する。
+    末尾が synthesis（＝裁定の生成だけ失敗した）の場合は True を返し、再 close での
+    作り直しを許す（skip すると裁定が永久に作れなくなる）。
+    synthesis がまだ1つも無ければ常に True（初回 close は必ず作る）。
     """
     for t in reversed(transcript):
-        if getattr(t, "phase", "") == "synthesis":
-            return False  # 最後に来たのが synthesis ＝以降に新発言なし → 作り直さない
-        return True  # 末尾が非 synthesis ＝新しい発言がある → 作る
+        if getattr(t, "phase", "") == "verdict":
+            return False  # 末尾が裁定＝統合の組が完結・以降に新発言なし → 作り直さない
+        return True  # 末尾が非 verdict（新発言 or 裁定欠落の議事録）→ 作る/作り直す
     return False  # transcript が空（理屈上は起きない）なら作らない
 
 
@@ -903,10 +905,23 @@ def _produce(session: Session) -> None:
                 if not _has_new_content_since_synthesis(transcript):
                     continue
                 _set_status(session, "running")
-                for turn in council.synthesize(session.topic, transcript, emit=emit, ids=ids):
-                    _append(session, "turn_end", {"turn_id": turn.turn_id})
-                    if session.cancelled:
-                        break
+                # close は synthesis（議事録）→ verdict（裁定）の2回の LLM 呼び出しになる。
+                # 2発目（裁定）の失敗でセッション全体を error で殺すと、成功・課金済みの議事録ごと
+                # 議場を失う（finish 経路の保護と非対称）。失敗はエラーイベントで知らせた上で
+                # floor-open に戻し、追い質問・作り直し・終了を続けられるようにする。
+                try:
+                    for turn in council.synthesize(session.topic, transcript, emit=emit, ids=ids):
+                        _append(session, "turn_end", {"turn_id": turn.turn_id})
+                        if session.cancelled:
+                            break
+                except Exception as exc:  # noqa: BLE001 — 議場（floor-open）は失わない
+                    # error イベントはフロントの SSE 契約で terminal（再接続停止）扱いのため使わない。
+                    # 非終端の notice で知らせ、直後の paused で議場が開いていることを伝える。
+                    _append(
+                        session,
+                        "notice",
+                        {"message": f"議事録・裁定の生成に失敗しました（議場は開いたままです）: {exc}"},
+                    )
                 # 締めても議場は開いたまま → a に戻って再び floor-open。
                 continue
             # followup（既定）: 同時に届いた followup も束ねて drain し deepen 1周。

@@ -29,6 +29,8 @@ export type StreamEvent =
   | { type: "paused"; phase?: string; ts?: number }
   // セッション消失（サーバ再起動/TTL で 404）。再接続ループが復帰不可を UI に通知する合図。
   | { type: "gone" }
+  // 非終端の警告（例: close 中の裁定生成失敗）。error と違いセッションは続く＝terminal にしない。
+  | { type: "notice"; message: string; ts?: number }
   | { type: "error"; message: string; ts?: number }
   | { type: "done"; ts?: number };
 
@@ -306,6 +308,9 @@ function toEvent(
       // floor-open。lastSeq 更新は pump 側の既存ロジックに任せる（seq は _append 付与）。
       // terminal にはしない＝接続は保ったまま、ユーザー入力で turn_start が再開する。
       return { type: "paused", phase: d.phase as string | undefined, ts };
+    case "notice":
+      // 非終端の警告。terminal 判定（pump 側の done/error）には含めない＝接続・議場は続く。
+      return { type: "notice", message: d.message as string, ts };
     case "error":
       return { type: "error", message: d.message as string, ts };
     case "done":

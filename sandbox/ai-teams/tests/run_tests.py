@@ -175,8 +175,8 @@ def test_sse_stream():
 
     turns = [e for e, k in zip(events, kinds) if k == "turn"]
     # opening1 + 発散3 + 発散→批判ブリッジ(司会)1 + 批判3 + 収束の口火(司会)1 + 収束3 + closing1
-    # + synthesis1 = 14（build_council は phase_bridge 既定 on＝全討論でブリッジを挟む）。
-    check(len(turns) == 14, f"turn 数が想定どおり: {len(turns)}")
+    # + synthesis1 + verdict1 = 15（build_council は phase_bridge 既定 on、議事録の後に裁定）。
+    check(len(turns) == 15, f"turn 数が想定どおり: {len(turns)}")
     payloads = [
         json.loads([ln for ln in t.splitlines() if ln.startswith("data: ")][0].removeprefix("data: "))
         for t in turns
@@ -246,8 +246,8 @@ def test_red_team():
 
 
 def test_synthesis_only():
-    """議事録(synthesis)が1回・議長が書く。要約3行(summary)は廃止済み。"""
-    print("[test] synthesis only (summary phase removed)")
+    """議事録(synthesis)→裁定(verdict)が各1回・議長が書く。要約3行(summary)は廃止済み。"""
+    print("[test] synthesis + verdict (summary phase removed)")
     council = service.build_council(
         ["moderator", "logic", "idea", "chair"],
         rounds_per_phase=1, mock=True,
@@ -258,6 +258,57 @@ def test_synthesis_only():
     check(phases.count("synthesis") == 1, "synthesis は1回だけ出る")
     syn = next(t for t in turns if t.phase == "synthesis")
     check(syn.speaker_id == "chair", "議事録は議長が書く")
+    # 裁定（verdict）: 議事録の直後に議長が「依頼者への答え」を1回出す。
+    check(phases.count("verdict") == 1, "verdict は1回だけ出る")
+    check(
+        phases.index("verdict") == phases.index("synthesis") + 1,
+        "verdict は synthesis の直後に出る",
+    )
+    ver = next(t for t in turns if t.phase == "verdict")
+    check(ver.speaker_id == "chair", "裁定は議長が下す")
+
+
+def test_verdict_directive_and_convergence():
+    """裁定ディレクティブの注入と、収束フェーズの「立場更新」化（平行線対策）を固定する。"""
+    print("[test] verdict directive + convergence position-update (平行線対策)")
+    from core.orchestrator import VERDICT_DIRECTIVE, DEFAULT_PHASES
+
+    # 収束フェーズは「相手の最強論点を認める＋判断が覆る条件」を要求する（再掲禁止は維持）。
+    converge = next(d for name, d, _ in DEFAULT_PHASES if name == "収束")
+    check("覆る" in converge and "条件" in converge, "収束は『判断が覆る条件』を要求する")
+    check("認める" in converge, "収束は相手の最強論点を認めることを要求する")
+
+    personas = [
+        make("mod", cat="facilitation"),
+        make("logic"),
+        make("idea"),
+        make("chair", cat="chair"),
+    ]
+    client = MockLLMClient()
+    council = Council(personas, client, red_team=False, rounds_per_phase=1)
+    list(council.run("議題V"))
+
+    # 裁定の呼び出し: VERDICT_DIRECTIVE が注入され、議長(chair)が呼ばれている。
+    marker = VERDICT_DIRECTIVE[:12]
+    verdict_calls = [
+        c for c in client.calls
+        if marker in "\n".join(m["content"] for m in c["messages"])
+    ]
+    check(len(verdict_calls) == 1, f"裁定ディレクティブの呼び出しが1回: {len(verdict_calls)}")
+    check("chair" in verdict_calls[0]["system"], "裁定は議長の system で呼ばれる")
+    # 裁定にも議事録と同じ大きめ max_tokens（途中切れ防止）。
+    if council.synthesis_max_tokens is not None:
+        check(
+            verdict_calls[0].get("max_tokens") == council.synthesis_max_tokens,
+            "裁定は synthesis_max_tokens を使う",
+        )
+
+    # 収束の口火（司会）: 争点診断（対立軸の特定＋割れの源泉の分類）を要求する。
+    sparks = [
+        c for c in client.calls
+        if "争点診断" in "\n".join(m["content"] for m in c["messages"])
+    ]
+    check(len(sparks) == 1, f"収束の口火は争点診断を1回要求する: {len(sparks)}")
 
 
 def test_streaming():
@@ -919,17 +970,17 @@ def test_synthesis_max_tokens():
         rounds_per_phase=1, mock=True, verbosity="standard",
     )
     check(c.synthesis_max_tokens >= 8192, f"synthesis_max_tokens は 8192 以上: {c.synthesis_max_tokens}")
-    # 非ストリーム run（emit=None）で全 mock 呼び出しを記録 → 最後が synthesize。
+    # 非ストリーム run（emit=None）で全 mock 呼び出しを記録 → 最後の2件が synthesize（議事録→裁定）。
     list(c.run("テスト議題"))
     calls = c.client.calls  # MockLLMClient
-    check(len(calls) >= 2, f"複数発言が生成された: {len(calls)}")
-    body_mts = [call.get("max_tokens") for call in calls[:-1]]
-    synth_mt = calls[-1].get("max_tokens")
+    check(len(calls) >= 3, f"複数発言が生成された: {len(calls)}")
+    body_mts = [call.get("max_tokens") for call in calls[:-2]]
     check(all(mt is None for mt in body_mts), f"本編発言は max_tokens 上書きなし(None): {set(body_mts)}")
-    check(
-        synth_mt == c.synthesis_max_tokens,
-        f"議事録は専用 max_tokens({c.synthesis_max_tokens})を渡す: {synth_mt}",
-    )
+    for label, call in (("議事録", calls[-2]), ("裁定", calls[-1])):
+        check(
+            call.get("max_tokens") == c.synthesis_max_tokens,
+            f"{label}は専用 max_tokens({c.synthesis_max_tokens})を渡す: {call.get('max_tokens')}",
+        )
     # deep でも本編1発言の2倍のヘッドルームが付く（最も長文化しやすいモードの保護）。
     cd = service.build_council(["moderator", "logic", "idea", "chair"], mock=True, verbosity="deep")
     check(cd.synthesis_max_tokens >= 16384, f"deep の議事録は 16384 以上: {cd.synthesis_max_tokens}")
@@ -940,10 +991,10 @@ def test_synthesis_max_tokens():
     )
     list(c2.run("テスト議題2", emit=lambda e: None))
     calls2 = c2.client.calls
-    check(all(call.get("max_tokens") is None for call in calls2[:-1]), "stream: 本編は上書きなし(None)")
+    check(all(call.get("max_tokens") is None for call in calls2[:-2]), "stream: 本編は上書きなし(None)")
     check(
-        calls2[-1].get("max_tokens") == c2.synthesis_max_tokens,
-        f"stream: 議事録は専用 max_tokens を渡す: {calls2[-1].get('max_tokens')}",
+        all(call.get("max_tokens") == c2.synthesis_max_tokens for call in calls2[-2:]),
+        f"stream: 議事録・裁定は専用 max_tokens を渡す: {[c.get('max_tokens') for c in calls2[-2:]]}",
     )
 
 
@@ -1384,6 +1435,155 @@ def test_floor_open_close_then_finish():
             sess.thread.join(timeout=5)
 
 
+def test_close_idempotent_with_verdict():
+    """close の冪等化が verdict 対応後も効く: transcript 末尾が verdict でも、新発言なしの
+    再 close は synthesis/verdict を二重生成しない（二重課金防止の回帰テスト）。"""
+    print("[test] close idempotency with verdict (末尾 verdict でも skip する)")
+    import time
+    import threading
+
+    def wait_until(pred, timeout=5):
+        deadline = time.time() + timeout
+        while not pred() and time.time() < deadline:
+            time.sleep(0.02)
+        return pred()
+
+    def phase_count(sess, phase):
+        return sum(
+            1 for e in sess.events
+            if e["event"] == "turn_start" and e["data"].get("phase") == phase
+        )
+
+    def paused_count(sess):
+        return sum(1 for e in sess.events if e["event"] == "paused")
+
+    # 単体: 末尾 verdict は「新発言なし」と判定される（これが False だと再 close で二重生成）。
+    from core.orchestrator import Turn
+
+    t_syn = Turn("chair", "議長", "minutes", "synthesis", 0)
+    t_ver = Turn("chair", "議長", "answer", "verdict", 0)
+    t_new = Turn("logic", "論理", "x", "followup", 0)
+    check(not service._has_new_content_since_synthesis([t_syn, t_ver]), "末尾 verdict は skip 判定")
+    check(service._has_new_content_since_synthesis([t_syn, t_ver, t_new]), "verdict 後の新発言で再生成可")
+    check(service._has_new_content_since_synthesis([t_new]), "synthesis 未作成なら必ず作る")
+    # 裁定の生成だけ失敗した場合（末尾が synthesis）は再 close で作り直せる（skip しない）。
+    check(service._has_new_content_since_synthesis([t_new, t_syn]), "裁定欠落（末尾 synthesis）は作り直し可")
+
+    # e2e: close → synthesis+verdict 各1 → 再 close（新発言なし）→ どちらも増えない。
+    personas = [
+        make("mod", cat="facilitation"),
+        make("logic"),
+        make("idea"),
+        make("chair", cat="chair"),
+    ]
+    council = Council(personas, MockLLMClient(), phases=[("発散", "d", True)], rounds_per_phase=1)
+    sess = service.start_session(council, "議題IDEM", interactive=True)
+    try:
+        check(wait_until(lambda: paused_count(sess) >= 1), "本編後に paused になる")
+        threading.Thread(target=service.close_floor, args=(sess,), daemon=True).start()
+        check(
+            wait_until(
+                lambda: phase_count(sess, "synthesis") == 1
+                and phase_count(sess, "verdict") == 1
+                and paused_count(sess) >= 2
+            ),
+            "close で synthesis→verdict が各1件出て再び paused",
+        )
+        # 新発言なしの再 close: skip して floor-open に戻る（paused 3回目）が、生成は増えない。
+        threading.Thread(target=service.close_floor, args=(sess,), daemon=True).start()
+        check(wait_until(lambda: paused_count(sess) >= 3), "skip 後に再び paused へ戻る")
+        check(phase_count(sess, "synthesis") == 1, "再 close で synthesis は増えない（冪等）")
+        check(phase_count(sess, "verdict") == 1, "再 close で verdict は増えない（冪等）")
+    finally:
+        sess.cancelled = True
+        service.finish_floor(sess)
+        if sess.thread is not None:
+            sess.thread.join(timeout=5)
+
+
+def test_close_verdict_failure_keeps_floor_open():
+    """close 中の裁定（2発目）失敗で議場を失わない: notice（非終端）を流して paused に戻る。
+
+    error イベントはフロント SSE 契約で terminal（再接続停止）のため使わない。
+    また末尾が synthesis（裁定欠落）の transcript は再 close で作り直せる（skip しない）。
+    """
+    print("[test] close verdict failure -> notice + floor-open keeps alive")
+    import time
+    import threading
+
+    from core.orchestrator import VERDICT_DIRECTIVE
+
+    def wait_until(pred, timeout=5):
+        deadline = time.time() + timeout
+        while not pred() and time.time() < deadline:
+            time.sleep(0.02)
+        return pred()
+
+    def paused_count(sess):
+        return sum(1 for e in sess.events if e["event"] == "paused")
+
+    class VerdictFailClient(MockLLMClient):
+        """裁定（VERDICT_DIRECTIVE 注入時）だけ失敗する mock。議事録までは成功する。"""
+
+        def generate(self, *, system, messages, model, temperature=0.7, max_tokens=None):
+            joined = "\n".join(m["content"] for m in messages)
+            if VERDICT_DIRECTIVE[:12] in joined:
+                raise RuntimeError("verdict generation failed (simulated)")
+            return super().generate(
+                system=system, messages=messages, model=model,
+                temperature=temperature, max_tokens=max_tokens,
+            )
+
+        def generate_stream(self, *, system, messages, model, temperature=0.7, max_tokens=None):
+            joined = "\n".join(m["content"] for m in messages)
+            if VERDICT_DIRECTIVE[:12] in joined:
+                raise RuntimeError("verdict generation failed (simulated)")
+            yield from super().generate_stream(
+                system=system, messages=messages, model=model,
+                temperature=temperature, max_tokens=max_tokens,
+            )
+
+    personas = [
+        make("mod", cat="facilitation"),
+        make("logic"),
+        make("idea"),
+        make("chair", cat="chair"),
+    ]
+    council = Council(personas, VerdictFailClient(), phases=[("発散", "d", True)], rounds_per_phase=1)
+    sess = service.start_session(council, "議題VFAIL", interactive=True)
+    try:
+        check(wait_until(lambda: paused_count(sess) >= 1), "本編後に paused になる")
+        threading.Thread(target=service.close_floor, args=(sess,), daemon=True).start()
+        # 裁定失敗 → notice が流れ、再び paused（議場は開いたまま・status は error にならない）。
+        check(wait_until(lambda: paused_count(sess) >= 2), "裁定失敗後も再び paused に戻る")
+        notices = [e for e in sess.events if e["event"] == "notice"]
+        check(len(notices) == 1, f"notice（非終端の警告）が1件出る: {len(notices)}")
+        check("議場は開いたまま" in notices[0]["data"].get("message", ""), "notice が議場継続を明示")
+        check(sess.status == "paused", f"status は error でなく paused: {sess.status}")
+        check(
+            not any(e["event"] == "error" for e in sess.events),
+            "terminal な error イベントは出ない（再接続契約を壊さない）",
+        )
+        # 議事録は積まれたが裁定が無い＝再 close は skip されず作り直しに進む（議事録の再生成が走る）。
+        syn_before = sum(
+            1 for e in sess.events
+            if e["event"] == "turn_start" and e["data"].get("phase") == "synthesis"
+        )
+        check(syn_before == 1, "議事録（1発目）は成功して積まれている")
+        threading.Thread(target=service.close_floor, args=(sess,), daemon=True).start()
+        check(wait_until(lambda: paused_count(sess) >= 3), "再 close 後も paused に戻る")
+        syn_after = sum(
+            1 for e in sess.events
+            if e["event"] == "turn_start" and e["data"].get("phase") == "synthesis"
+        )
+        check(syn_after == 2, f"裁定欠落の再 close は skip されず作り直しが走る: {syn_after}")
+    finally:
+        sess.cancelled = True
+        service.finish_floor(sess)
+        if sess.thread is not None:
+            sess.thread.join(timeout=5)
+
+
 def test_run_backward_compat():
     """(C) run() 後方互換: emit/pull=None で従来と同一 turn 列（opening+本編+synthesis）。
 
@@ -1423,10 +1623,12 @@ def test_run_backward_compat():
 
     check(run_sig == comp_sig, "run() == deliberate()+synthesize()（合成の等価性）")
 
-    # 3. 構造: opening が先頭、synthesis が末尾1回、turn_id は 0 から連番
+    # 3. 構造: opening が先頭、synthesis→verdict が末尾、turn_id は 0 から連番
     check(run_turns[0].phase == "opening", "先頭は opening")
-    check(run_turns[-1].phase == "synthesis", "末尾は synthesis")
+    check(run_turns[-1].phase == "verdict", "末尾は verdict（裁定）")
+    check(run_turns[-2].phase == "synthesis", "verdict の直前が synthesis")
     check([t.phase for t in run_turns].count("synthesis") == 1, "synthesis は1回だけ")
+    check([t.phase for t in run_turns].count("verdict") == 1, "verdict は1回だけ")
     check(
         [t.turn_id for t in run_turns] == list(range(len(run_turns))),
         "turn_id は 0 から連番（deliberate→synthesize で継続採番）",
@@ -2252,7 +2454,8 @@ def test_research_nudge_phase_gating():
         "【捉え直しの統合（司会）】",
         "【整理（発散→批判）】",
         "【クロージング】",
-        "【収束の口火（司会）】",
+        "【収束の口火（司会・争点診断）】",
+        "【裁定】",
         "【オープニング】",
         "【発散フェーズ】",
         "【批判フェーズ】",
@@ -2262,7 +2465,7 @@ def test_research_nudge_phase_gating():
         for marker in markers:
             if marker in t:
                 by_marker.setdefault(marker, []).append(RESEARCH_NUDGE in t)
-    for marker in ("【問題の捉え直し】", "【捉え直しの統合（司会）】", "【整理（発散→批判）】", "【クロージング】", "【収束の口火（司会）】"):
+    for marker in ("【問題の捉え直し】", "【捉え直しの統合（司会）】", "【整理（発散→批判）】", "【クロージング】", "【収束の口火（司会・争点診断）】", "【裁定】"):
         got = by_marker.get(marker, [])
         check(bool(got) and not any(got), f"{marker} に RESEARCH_NUDGE が出ない")
     for marker in ("【オープニング】", "【発散フェーズ】", "【批判フェーズ】"):
@@ -2411,6 +2614,10 @@ if __name__ == "__main__":
     test_api_auth_token()
     test_byok_http_guards()
     test_cors_allowed_origins_env()
+    # --- 裁定（verdict）＋収束の立場更新（2026-06-10・平行線対策）---
+    test_verdict_directive_and_convergence()
+    test_close_idempotent_with_verdict()
+    test_close_verdict_failure_keeps_floor_open()
     # --- QA 修正（2026-06-08）の回帰テスト ---
     test_strip_model_artifacts()
     test_openai_retry_truncation_marker()

@@ -4,7 +4,7 @@ import { type Turn, formatTurnTime } from "@/lib/types";
 import { Avatar } from "./Avatar";
 import { NamePlate } from "./NamePlate";
 import { Markdown } from "./Markdown";
-import { Search, Globe, Users, ChevronDown, ArrowDown } from "lucide-react";
+import { Search, Globe, Users, ChevronDown, ArrowDown, Gavel } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 interface PersonaLook {
@@ -91,8 +91,21 @@ export function Timeline({
   }
 
   // 議長の要約(summary)・統合(synthesis)はタイムラインから除外し、右の成果パネルに回す。
+  // 裁定(verdict)＝依頼者への答えは**本文に残す**: 討論を読み下した視線の終着点に「結論」が
+  // 来るのがこのツールの提供価値（答えがサイドバーに埋もれる、を構造から直す）。
+  // ただし本文が空で確定した裁定（生成失敗の残骸）は出さない（空のヒーローカード防止）。
   // 人間ターン(human)・追い質問の再提示(followup)は本編として残す。
-  const visible = turns.filter((t) => t.phase !== "synthesis" && t.phase !== "summary");
+  const visible = turns.filter(
+    (t) =>
+      t.phase !== "synthesis" &&
+      t.phase !== "summary" &&
+      !(t.phase === "verdict" && t.content === "" && t.turn_id !== streamingTurnId)
+  );
+  // 作り直しで裁定は複数あり得る。最新だけをヒーロー扱いし、旧裁定は弱い枠で時系列に残す。
+  const latestVerdictId = visible.reduce<number | null>(
+    (acc, t) => (t.phase === "verdict" ? t.turn_id : acc),
+    null
+  );
 
   return (
     <div className="relative flex h-full flex-col">
@@ -124,6 +137,20 @@ export function Timeline({
           // 既定はコンパクト1行（検索中はライブ表示）。全文は折り畳み＋右の「調べたこと」に集約。
           if (t.speaker_id === "researcher" || t.phase === "research") {
             return <ResearchMemo key={t.turn_id} turn={t} isStreaming={isStreaming} />;
+          }
+
+          // 裁定: 議長が依頼者の議題に答えを言い切るターン。討論の終着点＝このツールの成果物
+          // なので、発言カードでなくヒーローカード（アクセント枠・明朝見出し）で目立たせる。
+          // 作り直し後の旧裁定は stale（弱い枠）で残す＝最新だけが「答え」に見えるように。
+          if (t.phase === "verdict") {
+            return (
+              <VerdictCard
+                key={t.turn_id}
+                turn={t}
+                isStreaming={isStreaming}
+                stale={latestVerdictId !== null && t.turn_id !== latestVerdictId}
+              />
+            );
           }
 
           // 人間ターン: 右寄せ・アクセント弱背景で「あなた」の発言として描く。
@@ -197,7 +224,7 @@ export function Timeline({
               {status === "paused"
                 ? "本編終了・議場を開いています"
                 : status === "done"
-                  ? "討論終了 ・ 議事録は右の「成果」へ"
+                  ? "討論終了 ・ 裁定と議事録は右の「成果」にも残ります"
                   : "討論が中断しました"}
             </span>
             <span className="h-px flex-1 bg-[var(--color-line)]" />
@@ -220,6 +247,69 @@ export function Timeline({
         </button>
       )}
     </div>
+  );
+}
+
+/**
+ * 裁定カード。議長が議事録の後に出す「依頼者への答え」（結論・決め手・結論が変わる条件・
+ * 残る反対意見）。討論の読み流れの終着点として、本文中で唯一のヒーロー扱い:
+ * アクセント色の枠＋明朝の「裁定」見出し。生成中はストリーミング表示（答えが書かれていく瞬間）。
+ */
+function VerdictCard({
+  turn,
+  isStreaming,
+  stale = false,
+}: {
+  turn: Turn;
+  isStreaming: boolean;
+  stale?: boolean; // 作り直しで新しい裁定が出た後の旧版か（弱い枠・「旧版」表記）
+}) {
+  const time = formatTurnTime(turn.ts);
+  return (
+    <article
+      className={`animate-turn-in rounded-md bg-[var(--color-surface)] px-5 py-4 ${
+        stale
+          ? "border border-[var(--color-line)] opacity-70"
+          : "border-2 border-[var(--color-accent)]"
+      }`}
+    >
+      <div className="flex items-center gap-2 border-b border-[var(--color-line)] pb-2.5">
+        <Gavel
+          size={15}
+          className={`shrink-0 ${stale ? "text-[var(--color-ink-muted)]" : "text-[var(--color-accent)]"}`}
+        />
+        <span
+          className={`font-display text-sm tracking-widest ${
+            stale ? "text-[var(--color-ink-muted)]" : "text-[var(--color-accent)]"
+          }`}
+        >
+          {stale ? "裁定（旧版）" : "裁定"}
+        </span>
+        <span className="min-w-0 flex-1 truncate text-[11px] text-[var(--color-ink-muted)]">
+          {turn.speaker_name} による結論{stale ? "（このあと作り直し済み）" : ""}
+        </span>
+        {time && (
+          <span className="shrink-0 font-mono text-[10px] text-[var(--color-ink-muted)]">
+            {time}
+          </span>
+        )}
+      </div>
+      {turn.content === "" && isStreaming ? (
+        <p className="mt-3 flex items-center gap-2 text-sm text-[var(--color-ink-muted)]">
+          <span className="animate-pulse-soft inline-block h-2 w-2 rounded-full bg-[var(--color-accent)]" />
+          討論全体を踏まえ、裁定を下しています…
+        </p>
+      ) : (
+        <div className="mt-3">
+          <Markdown>{turn.content}</Markdown>
+          {isStreaming && (
+            <span className="animate-pulse-soft -mt-1 inline-block align-middle text-[var(--color-ink-muted)]">
+              ▍
+            </span>
+          )}
+        </div>
+      )}
+    </article>
   );
 }
 

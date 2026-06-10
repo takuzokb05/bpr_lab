@@ -5,7 +5,7 @@ import type { HistoryEntry } from "@/lib/config";
 
 const STATUS_LABEL: Record<string, string> = {
   running: "進行中",
-  paused: "一時停止",
+  paused: "議場開放",
   done: "完了",
   error: "エラー",
 };

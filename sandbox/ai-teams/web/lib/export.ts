@@ -5,7 +5,7 @@ import { type Turn, PHASE_LABELS } from "./types";
 import { splitBrief } from "./research";
 
 export interface ExportOptions {
-  summary: boolean; // 要約（議長の議事録 = synthesis）
+  summary: boolean; // 結論＋議事録（議長の verdict + synthesis）
   research: boolean; // 調査結果（調査役 researcher のブリーフ）
   body: boolean; // 会議内容（発言の全文ログ）
 }
@@ -19,9 +19,10 @@ function isResearch(t: Turn): boolean {
 }
 
 function isBody(t: Turn): boolean {
-  // 本編＝議事録/要約/調査メモを除いた発言（人間の追い質問は含む）。
+  // 本編＝議事録/裁定/要約/調査メモを除いた発言（人間の追い質問は含む）。
   return (
     t.phase !== "synthesis" &&
+    t.phase !== "verdict" &&
     t.phase !== "summary" &&
     !isResearch(t)
   );
@@ -30,7 +31,11 @@ function isBody(t: Turn): boolean {
 // 各セクションに中身があるか（チェックボックスの有効/無効に使う）。
 export function sectionAvailability(turns: Turn[]): ExportOptions {
   return {
-    summary: turns.some((t) => t.phase === "synthesis" && (t.content ?? "").trim().length > 0),
+    summary: turns.some(
+      (t) =>
+        (t.phase === "synthesis" || t.phase === "verdict") &&
+        (t.content ?? "").trim().length > 0
+    ),
     research: turns.some((t) => isResearch(t) && (t.content ?? "").trim().length > 0),
     body: turns.some((t) => isBody(t) && (t.content ?? "").trim().length > 0),
   };
@@ -60,11 +65,19 @@ export function buildMeetingMarkdown(
   );
   if (speakers.length) blocks.push(`参加者: ${speakers.join(" / ")}`);
 
-  // 議事録は close 毎に追記され複数あり得る。書き出しは**最新**を採る（作り直しを反映）。
+  // 議事録・裁定は close 毎に追記され複数あり得る。書き出しは**最新**を採る（作り直しを反映）。
   const synthesisAll = turns.filter((t) => t.phase === "synthesis");
   const synthesis = synthesisAll.length ? synthesisAll[synthesisAll.length - 1] : undefined;
+  const verdictAll = turns.filter((t) => t.phase === "verdict");
+  const verdict = verdictAll.length ? verdictAll[verdictAll.length - 1] : undefined;
   const research = turns.filter((t) => isResearch(t) && (t.content ?? "").trim());
   const body = turns.filter((t) => isBody(t) && (t.content ?? "").trim());
+
+  // 裁定（結論）を議事録より先に置く: TL;DR 先頭が LLM 投入にも人の読みにも効く。
+  if (opts.summary && verdict && verdict.content.trim()) {
+    blocks.push(`## 裁定（結論）`);
+    blocks.push(verdict.content.trim());
+  }
 
   if (opts.summary && synthesis && synthesis.content.trim()) {
     blocks.push(`## 議事録`);

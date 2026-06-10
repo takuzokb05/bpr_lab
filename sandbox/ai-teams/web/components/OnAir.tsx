@@ -26,7 +26,7 @@ export function OnAir({ status }: { status: Status }) {
 
   const labels: Record<Exclude<Status, "running">, string> = {
     idle: "待機中",
-    paused: "一時停止",
+    paused: "議場開放",
     done: "完了",
     error: "中断",
   };

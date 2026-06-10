@@ -125,6 +125,7 @@ export const PHASE_LABELS: Record<string, string> = {
   closing: "クロージング",
   summary: "要約",
   synthesis: "統合",
+  verdict: "裁定",
   human: "あなた",
   followup: "追い質問",
   research: "調査",
@@ -133,8 +134,8 @@ export const PHASE_LABELS: Record<string, string> = {
 // 本編フェーズ（追い質問を拾える＝pull 対象）
 export const MAIN_PHASES = ["発散", "批判", "収束"] as const;
 
-// 追い質問を出せないフェーズ（opening/要約/統合の間は入力を無効化する）
-export const FOLLOWUP_DISABLED_PHASES = ["opening", "redefine", "summary", "synthesis"] as const;
+// 追い質問を出せないフェーズ（opening/要約/統合/裁定の間は入力を無効化する）
+export const FOLLOWUP_DISABLED_PHASES = ["opening", "redefine", "summary", "synthesis", "verdict"] as const;
 
 /**
  * サーバ採番の ts（UNIX 秒）を日本時間の HH:mm にする。未定義なら空文字。

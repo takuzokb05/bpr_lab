@@ -73,6 +73,7 @@ import {
   Compass,
   History,
   Menu,
+  Plus,
   X,
 } from "lucide-react";
 
@@ -394,6 +395,12 @@ export default function Home() {
     return all.length ? all[all.length - 1] : null;
   }, [turns]);
 
+  // 裁定（verdict）= 議長が議事録の後に出す「依頼者への答え」。議事録と同様に最新を採る。
+  const verdict = useMemo(() => {
+    const all = turns.filter((t) => t.phase === "verdict");
+    return all.length ? all[all.length - 1] : null;
+  }, [turns]);
+
   // 調査役（researcher）ターンを横断で集約する＝「調べたこと」パネルの素。検索結果が
   // タイムラインを流れて消える不安に応え、出典付きの第一級成果物として常設する。
   // 本文が出そろった調査ターンのみ集約パネルへ。検索中(content空)の turn_start を含めると、
@@ -662,8 +669,10 @@ export default function Home() {
       );
     } else if (e.type === "turn_end") {
       setStreamingTurnId((cur) => (cur === e.turnId ? null : cur));
-      // synthesis ターンが出そろったら議事録ガードを解除（再度「作り直す」が押せる）。
-      if (streamingPhaseRef.current === "synthesis") {
+      // 裁定（verdict）まで出そろったらガードを解除（再度「作り直す」が押せる）。
+      // close は synthesis→verdict の2ターンを生成するので、解除は最後の verdict で行う
+      // （synthesis 解除だと裁定の生成中に再 close が押せてしまう）。
+      if (streamingPhaseRef.current === "verdict") {
         makingMinutesRef.current = false;
         setMakingMinutes(false);
       }
@@ -677,6 +686,10 @@ export default function Home() {
     } else if (e.type === "gone") {
       // セッションがサーバから消失（404 再接続/枯渇）。paused 固着させず畳んで続ける導線へ。
       handleSessionGone();
+    } else if (e.type === "notice") {
+      // 非終端の警告（例: close 中の裁定生成失敗）。セッションは続く＝status は変えない。
+      // 直後に paused が来て議場が開いていることが伝わる（追い質問・作り直し・終了は可能なまま）。
+      setError(e.message);
     } else if (e.type === "error") {
       setError(e.message);
       setStatus("error");
@@ -824,12 +837,18 @@ export default function Home() {
     focusText = ""
   ): string {
     const fmt = (t: Turn) => `【${t.speaker_name}】\n${t.content}`;
-    // 議事録は複数あり得る（作り直し）。続ける文脈には**最新**を引き継ぐ。
+    // 議事録・裁定は複数あり得る（作り直し）。続ける文脈には**最新**を引き継ぐ。
     const synthesisAll = entry.turns.filter((t) => t.phase === "synthesis");
     const synthesis = synthesisAll.length ? synthesisAll[synthesisAll.length - 1] : undefined;
-    // 発言（議事録・要約・調査メモは除く。人間の追い質問は含める）。
+    const verdictAll = entry.turns.filter((t) => t.phase === "verdict");
+    const verdict = verdictAll.length ? verdictAll[verdictAll.length - 1] : undefined;
+    // 発言（議事録・裁定・要約・調査メモは除く。人間の追い質問は含める）。
     const body = entry.turns.filter(
-      (t) => t.phase !== "synthesis" && t.phase !== "summary" && t.speaker_id !== "researcher"
+      (t) =>
+        t.phase !== "synthesis" &&
+        t.phase !== "verdict" &&
+        t.phase !== "summary" &&
+        t.speaker_id !== "researcher"
     );
     // 前回 Web 検索で全員に共有された「調べた事実」も引き継ぐ（出典付き）。集約パネルと同思想で、
     // 調査結果を transient にせず continue でも土台に残す。クエリ単位で重複排除し件数・長さを抑える。
@@ -883,6 +902,14 @@ export default function Home() {
       }
       parts.push(...chosen);
     } else {
+      // 裁定（前回の結論）を先頭に置く: 続きの討論が「前回どこに着地したか」を直接踏まえられる。
+      // 裁定が長文化すると light スコープでも「◆直近の発言」が末尾クランプで丸ごと落ちるため、
+      // 裁定はエッセンス（結論・決め手・分岐条件）が先頭にある前提で頭から 4000 字に抑える。
+      if (verdict) {
+        const v =
+          verdict.content.length > 4000 ? verdict.content.slice(0, 4000) + "…" : verdict.content;
+        parts.push(`◆前回の裁定（結論）\n${v}`);
+      }
       if (synthesis) parts.push(`◆議事録\n${synthesis.content}`);
       parts.push("◆直近の発言", ...body.slice(-5).map(fmt));
     }
@@ -975,12 +1002,12 @@ export default function Home() {
     );
   }
 
-  // 議場開放（floor-open）: 「議事録を作る」＝議長に synthesis を生成させる。
+  // 議場開放（floor-open）: 「結論を出す」＝議長に synthesis（議事録）→ verdict（裁定）を生成させる。
   // 締めても議場は開いたまま＝終了後の深掘りも同機構（status は paused→running→paused）。
   async function makeMinutes() {
     if (!paused || !sessionId) return;
-    // 多重実行ガード: 二度押しで close が2発飛ぶ＝二重 synthesis 課金を防ぐ。
-    // ガード解除は synthesis ターンの turn_end 受領、または paused 再遷移時（handleEvent）。
+    // 多重実行ガード: 二度押しで close が2発飛ぶ＝二重 synthesis/verdict 課金を防ぐ。
+    // ガード解除は verdict ターンの turn_end 受領、または paused 再遷移時（handleEvent）。
     if (makingMinutesRef.current) return;
     makingMinutesRef.current = true;
     setMakingMinutes(true);
@@ -1030,7 +1057,7 @@ export default function Home() {
         ? "討論の開始を待っています。"
         : processingFollowup
           ? "前の追い質問を処理中です。応答が出そろうと送信できます。"
-          : "このフェーズ（要約・統合・冒頭）では追い質問を受け付けられません。"
+          : "このフェーズ（冒頭・統合・裁定）では追い質問を受け付けられません。"
       : null;
 
   // 完了/エラーで transcript を表示中か。この時コンポーザー送信は「新規ブランク」でなく
@@ -1041,6 +1068,11 @@ export default function Home() {
   // floor-open のボタンを「作る」→「作り直す」に出し分け、作成済みなのに未作成に見える混乱を防ぐ。
   const hasMinutes = turns.some(
     (t) => t.phase === "synthesis" && t.content.trim().length > 0
+  );
+  // 裁定（結論）まで揃っているか。verdict 生成だけ失敗した場合に「裁定は作成済み」と
+  // 嘘をつかないための出し分け（議事録のみ成功＝作り直しを促す）。
+  const hasVerdictText = turns.some(
+    (t) => t.phase === "verdict" && t.content.trim().length > 0
   );
   const finishedNote = finishedWithTranscript
     ? status === "error"
@@ -1072,6 +1104,17 @@ export default function Home() {
           </button>
         </div>
         <div className="flex items-center gap-3 sm:gap-4">
+          {/* 新規討論の明示入口。従来はロゴクリックのみで発見困難だった。討論が画面にある時だけ出す
+              （idle では冗長）。running 中は resetToIdle が生成を止める＝誤押下対策にラベルで明示。 */}
+          {status !== "idle" && (
+            <button
+              onClick={resetToIdle}
+              title="この討論を離れて新しい討論を始める"
+              className="flex min-h-11 items-center gap-1 py-2 text-[11px] text-[var(--color-ink-muted)] hover:text-[var(--color-accent)] lg:min-h-0 lg:py-0"
+            >
+              <Plus size={14} /> <span className="hidden sm:inline">新規討論</span>
+            </button>
+          )}
           <button
             onClick={() => {
               setHistory(getHistory());
@@ -1448,16 +1491,18 @@ export default function Home() {
               <div className="flex items-center justify-between gap-3">
                 <p className="text-[11px] leading-relaxed text-[var(--color-ink-muted)]">
                   {hasMinutes
-                    ? "議事録は右の「成果」に作成済みです。追い質問を続けて作り直すことも、終了することもできます。"
-                    : "本編が終わり、議場を開いています。追い質問を続けるか、議事録を作るか、終了できます。"}
+                    ? hasVerdictText
+                      ? "裁定（結論）と議事録は作成済みです（討論の末尾と右の「成果」）。追い質問を続けて作り直すことも、終了することもできます。"
+                      : "議事録は作成済みですが、裁定（結論）はまだありません。「結論を作り直す」でもう一度まとめられます。"
+                    : "本編が終わり、議場を開いています。追い質問を続けるか、結論を出す（裁定＋議事録）か、終了できます。"}
                 </p>
                 <div className="flex shrink-0 items-center gap-2">
                   <button
                     onClick={makeMinutes}
                     disabled={makingMinutes}
-                    className="flex items-center gap-1.5 rounded-md border border-[var(--color-line)] px-3 py-1.5 text-xs hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] disabled:cursor-not-allowed disabled:opacity-40"
+                    className="flex items-center gap-1.5 rounded-md border border-[var(--color-accent)] px-3 py-1.5 text-xs font-medium text-[var(--color-accent)] hover:bg-[var(--color-accent-weak)] disabled:cursor-not-allowed disabled:opacity-40"
                   >
-                    <FileText size={13} /> {hasMinutes ? "議事録を作り直す" : "議事録を作る"}
+                    <FileText size={13} /> {hasMinutes ? "結論を作り直す" : "結論を出す"}
                   </button>
                   <button
                     onClick={finishCouncil}
@@ -1510,7 +1555,7 @@ export default function Home() {
                           : "text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]"
                       }`}
                     >
-                      議事録＋直近（推奨）
+                      結論＋直近（推奨）
                     </button>
                     <button
                       onClick={() => setContinueScope("full")}
@@ -1660,8 +1705,10 @@ export default function Home() {
             <div className="min-h-0 flex-1">
               <MinutesPanel
                 synthesis={synthesis}
+                verdict={verdict}
                 status={status}
                 streaming={synthesis ? synthesis.turn_id === streamingTurnId : false}
+                verdictStreaming={verdict ? verdict.turn_id === streamingTurnId : false}
               />
             </div>
             {/* 会議結果の書き出し（要約/調査結果/会議内容を選んでコピー or Markdown 保存）。
