@@ -315,19 +315,18 @@ class TestMarketOrder:
         assert result["order_id"] == "12345"
         assert result["units"] == 10000
 
-        # market_order は1回目=約定、2回目=SL/TP設定 で order_send を2回呼ぶ
-        # 約定リクエストを検証
+        # market_order は SL/TP 同梱 (atomic) で 1 回の order_send で完結する
+        # (2026-06-09 裸ポジション事故対応: 後付け SLTP の失敗窓をなくす)
+        assert mt5_mock.order_send.call_count == 1
         deal_request = mt5_mock.order_send.call_args_list[0][0][0]
         assert deal_request["symbol"] == "USDJPY-"
         assert deal_request["type"] == mt5_mock.ORDER_TYPE_BUY
         assert deal_request["volume"] == 0.1  # 10000 / 100000
         assert deal_request["action"] == mt5_mock.TRADE_ACTION_DEAL
 
-        # SL/TPリクエストを検証
-        sltp_request = mt5_mock.order_send.call_args_list[1][0][0]
-        assert sltp_request["action"] == mt5_mock.TRADE_ACTION_SLTP
-        assert sltp_request["sl"] == 152.0
-        assert sltp_request["tp"] == 154.0
+        # SL/TP が発注リクエストに同梱されていることを検証
+        assert deal_request["sl"] == 152.0
+        assert deal_request["tp"] == 154.0
 
     def test_sell_order(self, client, mt5_mock):
         """売り注文が正しく発注される（unitsが負）"""
@@ -757,18 +756,14 @@ class TestRetryLogic:
         success_result.price = 152.73
         success_result.comment = "Done"
 
-        # market_order は SL/TP設定で追加の order_send 呼び出しがある
-        sltp_result = MagicMock()
-        sltp_result.retcode = mt5_mock.TRADE_RETCODE_DONE
-        sltp_result.comment = "SL/TP set"
-        mt5_mock.order_send.side_effect = [requote_result, success_result, sltp_result]
+        mt5_mock.order_send.side_effect = [requote_result, success_result]
 
         with patch("src.mt5_client.time.sleep"):
             result = client.market_order("USD_JPY", 10000, 152.0, 154.0)
 
         assert result["status"] == "filled"
-        # 約定リトライ2回 + SL/TP設定1回 = 3回
-        assert mt5_mock.order_send.call_count == 3
+        # SL/TP 同梱 (atomic) 発注のリトライ 2 回のみ (後付け SLTP 呼び出しなし)
+        assert mt5_mock.order_send.call_count == 2
 
     def test_no_retry_on_invalid_request(self, client, mt5_mock):
         """リトライ不可能なエラーではリトライしない"""
@@ -787,8 +782,9 @@ class TestRetryLogic:
         with pytest.raises(Mt5ClientError, match="MT5注文エラー"):
             client.market_order("USD_JPY", 10000, 152.0, 154.0)
 
-        # リトライなし = 1回のみ
-        assert mt5_mock.order_send.call_count == 1
+        # リトライなし。SL/TP 同梱 (atomic) 1回 + フォールバック (SL/TP なし) 1回
+        # のみで、REQUOTE 系のリトライは発生しない
+        assert mt5_mock.order_send.call_count == 2
 
 
 # ================================================================

@@ -639,8 +639,10 @@ def signal_base_pf_window(
     return out
 
 
-def recent_pf(db_path: Path, pair: str, n_trades: int = 100) -> Optional[float]:
-    """直近 n_trades の Profit Factor。trade<5 なら None (撤退条件 #1 と区別)"""
+def recent_pf(
+    db_path: Path, pair: str, n_trades: int = 100, min_trades: int = 5,
+) -> Optional[float]:
+    """直近 n_trades の Profit Factor。trade<min_trades なら None (撤退条件 #1 と区別)"""
     if not db_path.exists():
         return None
     with get_conn(db_path) as conn:
@@ -656,7 +658,7 @@ def recent_pf(db_path: Path, pair: str, n_trades: int = 100) -> Optional[float]:
             (pair, n_trades),
         )
         pnls = [float(row["pnl_pips"]) for row in cur.fetchall()]
-    if len(pnls) < 5:
+    if len(pnls) < min_trades:
         return None
     wins = sum(p for p in pnls if p > 0)
     losses = -sum(p for p in pnls if p < 0)

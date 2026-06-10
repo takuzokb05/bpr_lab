@@ -40,6 +40,11 @@ except ImportError:
 
 DB_PATH = ROOT / "data" / "fx_spec_v3.db"
 ALIVE_THRESHOLD_MIN = 10
+# 死活判定はハートビート (loop_health、約1時間ごと) 基準。
+# 旧実装は「直近10分以内に LLM 判定があるか」基準だったが、判定はシグナル発生時
+# しか記録されない (実測平均 17 分に 1 件) ため、稼働中でも WARN が頻発して
+# オオカミ少年化し、2026-06-09 の本当の停止 (撤退発火) が 2 日間埋もれた。
+HEARTBEAT_THRESHOLD_MIN = 75
 
 logger = logging.getLogger("spec_v3_alive")
 logging.basicConfig(
@@ -141,6 +146,7 @@ def gather_status() -> dict:
             "SELECT event_at_utc FROM loop_health WHERE event_type='start' "
             "ORDER BY id DESC LIMIT 1"
         ).fetchone()
+        last_start_iso = row["event_at_utc"] if row else None
         if row:
             start_dt = parse_iso(row["event_at_utc"])
             status["uptime_hours"] = round(
@@ -148,6 +154,41 @@ def gather_status() -> dict:
             )
         else:
             status["uptime_hours"] = None
+
+        # 停止検知: 最後の start より後に stop イベントがあれば「停止中」
+        row = conn.execute(
+            "SELECT event_at_utc, message FROM loop_health WHERE event_type='stop' "
+            "ORDER BY id DESC LIMIT 1"
+        ).fetchone()
+        status["stopped"] = False
+        if row and (last_start_iso is None or row["event_at_utc"] > last_start_iso):
+            status["stopped"] = True
+            status["stop_at"] = row["event_at_utc"]
+            status["stop_age_hours"] = round(
+                (now - parse_iso(row["event_at_utc"])).total_seconds() / 3600, 1,
+            )
+            # 停止理由 (retreat 等) も拾う
+            reason_row = conn.execute(
+                "SELECT event_type, message FROM loop_health "
+                "WHERE event_type IN ('retreat', 'kill_switch', 'error') "
+                "AND event_at_utc >= ? ORDER BY id DESC LIMIT 1",
+                ((parse_iso(row["event_at_utc"]) - timedelta(minutes=5)).isoformat(timespec="seconds"),),
+            ).fetchone()
+            status["stop_reason"] = (
+                f"{reason_row['event_type']}: {reason_row['message']}"
+                if reason_row else row["message"]
+            )
+
+        # ハートビート鮮度 (start/heartbeat/stop いずれでも最新の loop_health)
+        row = conn.execute(
+            "SELECT event_at_utc FROM loop_health ORDER BY id DESC LIMIT 1"
+        ).fetchone()
+        if row:
+            status["heartbeat_age_min"] = round(
+                (now - parse_iso(row["event_at_utc"])).total_seconds() / 60, 1,
+            )
+        else:
+            status["heartbeat_age_min"] = None
     finally:
         conn.close()
 
@@ -155,23 +196,38 @@ def gather_status() -> dict:
 
 
 def is_alive(status: dict) -> bool:
-    """判定が直近 ALIVE_THRESHOLD_MIN 分以内ならアライブ扱い"""
-    j = status.get("latest_judgment")
-    if not j:
-        # 判定が一度もないと「未起動」扱い (撤退条件抵触ではない)
+    """ハートビート (loop_health) が直近 HEARTBEAT_THRESHOLD_MIN 分以内なら稼働中。
+
+    LLM 判定はシグナル発生時しか記録されず夜間は数時間空くため、
+    判定鮮度を死活判定に使わない (旧実装のオオカミ少年化対策)。
+    """
+    if status.get("stopped"):
         return False
-    age = j.get("age_min")
+    age = status.get("heartbeat_age_min")
     if age is None:
         return False
-    return age <= ALIVE_THRESHOLD_MIN
+    return age <= HEARTBEAT_THRESHOLD_MIN
 
 
 def format_status_text(status: dict, alive: bool) -> str:
+    if status.get("stopped"):
+        header = ":rotating_light: *SPEC v3 ループ停止中* (STOPPED)"
+    elif alive:
+        header = "*SPEC v3 死活レポート* (ALIVE)"
+    else:
+        header = ":warning: *SPEC v3 死活レポート* (WARN: ハートビート途絶)"
     lines = [
-        f"*SPEC v3 死活レポート* ({'ALIVE' if alive else 'WARN'})",
+        header,
         f"PID: {status.get('pid')}",
         f"now_utc: {status['now_utc']}",
     ]
+    if status.get("stopped"):
+        lines.append(
+            f"停止時刻: {status.get('stop_at')} ({status.get('stop_age_hours')} 時間前)"
+        )
+        lines.append(f"停止理由: {status.get('stop_reason')}")
+    if status.get("heartbeat_age_min") is not None:
+        lines.append(f"最終ハートビート: {status['heartbeat_age_min']} 分前")
     j = status.get("latest_judgment")
     if j:
         lines.append(

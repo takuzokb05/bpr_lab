@@ -254,8 +254,12 @@ def _calc_pnl(pair: str, direction: str, entry: float, exit_price: float,
     return pips, pnl_jpy
 
 
-def manage_open_trades(client, kill_switch: KillSwitchState) -> None:
-    """オープン中ポジションの管理 (時間損切り / MT5 側 TP/SL ヒットの同期)"""
+def manage_open_trades(
+    client,
+    kill_switch: KillSwitchState,
+    notifier: Optional[SpecV3SlackNotifier] = None,
+) -> None:
+    """オープン中ポジションの管理 (時間損切り / MT5 側 TP/SL ヒットの同期 / 裸ポジション検知)"""
     open_trades = v3_db.get_open_trades(DB_PATH)
     if not open_trades:
         return
@@ -281,6 +285,15 @@ def manage_open_trades(client, kill_switch: KillSwitchState) -> None:
             _record_closure_from_history(client, trade, reason="tp_or_sl")
             continue
 
+        # 裸ポジション検知 → SL/TP 再設定 or ソフトウェアストップ
+        # (2026-06-09 事故対応: SLTP 後付けの無言失敗で SL なしポジションが
+        #  24h 放置され、想定 SL の 2.8 倍の損失。FreqTrade の
+        #  stoploss_on_exchange_interval 型の毎ループ検証を第二防衛線として置く)
+        pos = mt5_ticket_map[int(ticket)]
+        closed_by_guard = _ensure_position_protected(client, trade, pos, notifier)
+        if closed_by_guard:
+            continue
+
         # 時間損切り
         entry_dt = _parse_iso_utc(trade["entry_at_utc"])
         holding_min = int((now_utc - entry_dt).total_seconds() / 60)
@@ -289,6 +302,94 @@ def manage_open_trades(client, kill_switch: KillSwitchState) -> None:
             _close_and_record(client, trade, reason="time_limit",
                               holding_minutes=holding_min)
             continue
+
+
+def _ensure_position_protected(
+    client,
+    trade,
+    pos: dict,
+    notifier: Optional[SpecV3SlackNotifier] = None,
+) -> bool:
+    """MT5 ポジションに SL/TP が実際に付いているか検証し、欠けていれば是正する。
+
+    是正手順:
+    1. DB に記録された SL/TP をポジションに再設定 (検証付き)
+    2. 再設定も失敗し、かつ現在価格が SL 水準を超えて逆行している場合は
+       ソフトウェアストップとして即クローズ (exit_reason="synthetic_sl")
+
+    Returns:
+        True = このループでポジションをクローズした (後続処理は不要)
+    """
+    sl_target = float(trade["sl_price"] or 0.0)
+    tp_target = float(trade["tp_price"] or 0.0)
+    if not sl_target and not tp_target:
+        return False
+
+    pos_sl = float(pos.get("sl") or 0.0)
+    pos_tp = float(pos.get("tp") or 0.0)
+    sl_missing = sl_target and pos_sl <= 0.0
+    tp_missing = tp_target and pos_tp <= 0.0
+    if not sl_missing and not tp_missing:
+        return False
+
+    ticket = int(trade["mt5_ticket"])
+    logger.error(
+        "裸ポジション検知: ticket=%d pair=%s 実値 sl=%.5f tp=%.5f → 再設定を試行",
+        ticket, trade["pair"], pos_sl, pos_tp,
+    )
+    v3_db.insert_loop_health(
+        DB_PATH, "naked_position",
+        f"ticket={ticket} sl={pos_sl} tp={pos_tp}", pair=trade["pair"],
+    )
+
+    # 1. SL/TP 再設定 (検証付き)
+    reapplied = False
+    if hasattr(client, "set_position_sltp"):
+        try:
+            reapplied = client.set_position_sltp(ticket, sl_target, tp_target)
+        except Exception as e:  # noqa: BLE001
+            logger.error("SL/TP 再設定で例外: ticket=%d %s", ticket, e)
+    if reapplied:
+        logger.warning("裸ポジションに SL/TP を再設定した: ticket=%d", ticket)
+        if notifier:
+            try:
+                notifier.raw(
+                    f":warning: 裸ポジション検知 → SL/TP 再設定 "
+                    f"{trade['pair']} ticket={ticket}"
+                )
+            except Exception:  # noqa: BLE001
+                pass
+        return False
+
+    # 2. 再設定失敗 → SL 水準を既に超えていれば即クローズ (ソフトウェアストップ)
+    price_current = float(pos.get("price_current") or 0.0)
+    breached = False
+    if sl_target and price_current > 0:
+        if trade["direction"] == "long":
+            breached = price_current <= sl_target
+        else:
+            breached = price_current >= sl_target
+    if breached:
+        entry_dt = _parse_iso_utc(trade["entry_at_utc"])
+        holding_min = int(
+            (datetime.now(timezone.utc) - entry_dt).total_seconds() / 60
+        )
+        logger.error(
+            "SL 再設定不能かつ SL 水準逆行 → ソフトウェアストップ発動: ticket=%d", ticket,
+        )
+        _close_and_record(client, trade, reason="synthetic_sl",
+                          holding_minutes=holding_min, notifier=notifier)
+        return True
+
+    if notifier:
+        try:
+            notifier.raw(
+                f":rotating_light: 裸ポジション ticket={ticket} の SL/TP 再設定に失敗 "
+                f"(SL 水準内のため保持中、次ループで再試行)"
+            )
+        except Exception:  # noqa: BLE001
+            pass
+    return False
 
 
 def _parse_iso_utc(s: str) -> datetime:
@@ -1082,7 +1183,7 @@ def run_loop(
 
                 # オープン中ポジション管理
                 try:
-                    manage_open_trades(mt5_client, kill_switch)
+                    manage_open_trades(mt5_client, kill_switch, notifier=notifier)
                 except Exception as e:  # noqa: BLE001
                     logger.error("manage_open_trades 失敗: %s", e)
 

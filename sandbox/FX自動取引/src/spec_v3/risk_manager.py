@@ -48,6 +48,10 @@ RETREAT_DAYS_NO_TRADES = 90
 RETREAT_MIN_TRADES_REQUIRED = 5
 RETREAT_PF_FLOOR = 1.0
 RETREAT_PF_WINDOW = 100              # 直近 100 trades
+# PF 撤退判定に必要な最小 trade 数。n=5 では 1 取引の異常値で発火する
+# (2026-06-09: SL 未設定事故の 1 取引が PF を 1.25→0.739 に押し下げて発火)。
+# FreqTrade MaxDrawdown protection の trade_limit=20 に倣う。
+RETREAT_PF_MIN_TRADES = 20
 RETREAT_CUMULATIVE_PNL_JPY = -3_000.0
 RETREAT_LLM_COST_MONTHLY_USD = 5_000.0 / 150.0  # 5,000円 ÷ 150円/USD ≒ $33
 
@@ -408,8 +412,11 @@ def check_retreat_per_pair(db_path: Path, pair: str) -> RetreatStatus:
             message=f"{pair} は {days} 日経過したが trades={n_trades} < {RETREAT_MIN_TRADES_REQUIRED}",
         )
 
-    # 2. PF 維持失敗
-    pf = v3_db.recent_pf(db_path, pair, n_trades=RETREAT_PF_WINDOW)
+    # 2. PF 維持失敗 (最小サンプル RETREAT_PF_MIN_TRADES 未満では判定しない)
+    pf = v3_db.recent_pf(
+        db_path, pair, n_trades=RETREAT_PF_WINDOW,
+        min_trades=RETREAT_PF_MIN_TRADES,
+    )
     if pf is not None and pf < RETREAT_PF_FLOOR:
         return RetreatStatus(
             pair=pair, triggered=True,

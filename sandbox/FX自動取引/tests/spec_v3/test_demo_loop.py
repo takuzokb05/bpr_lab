@@ -298,15 +298,28 @@ def test_retreat_cumulative_loss_with_high_pf(tmp_db):
 
 
 def test_retreat_pf_below_floor_triggers(tmp_db):
-    # 直近 trades の PF < 1.0 (勝ち 1 件 + 負け 5 件で PF ≒ 0.2)
-    for _ in range(5):
-        _insert_closed_trade(tmp_db, "USD_JPY", pnl_pips=-50.0, pnl_jpy=-500.0)
-    _insert_closed_trade(tmp_db, "USD_JPY", pnl_pips=100.0, pnl_jpy=1000.0)
+    # 直近 trades の PF < 1.0 (n >= RETREAT_PF_MIN_TRADES=20 で判定される)
+    # 勝ち 10 件 (+10 pips) + 負け 10 件 (-15 pips) → PF = 100/150 ≒ 0.67
+    for _ in range(10):
+        _insert_closed_trade(tmp_db, "USD_JPY", pnl_pips=10.0, pnl_jpy=100.0)
+    for _ in range(10):
+        _insert_closed_trade(tmp_db, "USD_JPY", pnl_pips=-15.0, pnl_jpy=-190.0)
     status = check_retreat_per_pair(tmp_db, "USD_JPY")
-    # 累計 PnL = -1,500 で #3 はまだ発火しない (-3000 未満は確保)
-    # PF = 100 / 250 = 0.4 で #2 発火するべき
+    # 累計 PnL = -900 で #3 はまだ発火しない (-3000 未満は確保)
+    # PF ≒ 0.67 < 1.0 で #2 発火するべき
     assert status.triggered is True
     assert status.code == "retreat_2_pf_below_floor"
+
+
+def test_retreat_pf_not_evaluated_below_min_trades(tmp_db):
+    # n=19 (< RETREAT_PF_MIN_TRADES=20) では PF 撤退を判定しない
+    # (2026-06-09: n=5 時点の異常値 1 件で発火した事故の再発防止)
+    for _ in range(19):
+        _insert_closed_trade(tmp_db, "USD_JPY", pnl_pips=-10.0, pnl_jpy=-50.0)
+    status = check_retreat_per_pair(tmp_db, "USD_JPY")
+    # 累計 -950 JPY > -3,000 なので #3 も発火しない
+    assert status.triggered is False
+    assert status.code == "ok"
 
 
 def test_retreat_not_triggered_when_few_trades(tmp_db):
@@ -1119,6 +1132,106 @@ def test_close_all_positions_updates_db_status(tmp_db, monkeypatch):
     assert row_gbp["status"] == "close_failed", (
         f"close_failed status マークがされていない (status={row_gbp['status']})"
     )
+
+
+# ============================================================
+# 裸ポジション検知ガード (2026-06-09 SL 未設定事故の再発防止)
+# ============================================================
+
+
+def _insert_open_trade_for_guard(tmp_db, ticket: int, direction: str = "long"):
+    """ガードテスト用の open trade (SL/TP あり、エントリー直後) を仕込む"""
+    entry_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    return v3_db.insert_trade(
+        tmp_db, mt5_ticket=ticket, entry_at_utc=entry_at,
+        pair="GBP_JPY", direction=direction, lots=0.01,
+        entry_price=213.373,
+        sl_price=213.535 if direction == "short" else 213.211,
+        tp_price=213.049 if direction == "short" else 213.697,
+        sl_pips=16.2, tp_pips=32.4,
+        judgment_id=None, signal_reason="test",
+        llm_label="CONFIRM", llm_confidence=0.7,
+    )
+
+
+def test_naked_position_reapplies_sltp(tmp_db, monkeypatch):
+    """SL=0 のポジションを検知したら set_position_sltp で再設定する"""
+    from src.spec_v3 import demo_loop
+
+    monkeypatch.setattr(demo_loop, "DB_PATH", tmp_db)
+    ticket = 10188884
+    _insert_open_trade_for_guard(tmp_db, ticket, direction="short")
+
+    mt5_mock = MagicMock()
+    mt5_mock.get_positions.return_value = [
+        {"trade_id": ticket, "sl": 0.0, "tp": 0.0, "price_current": 213.400},
+    ]
+    mt5_mock.set_position_sltp.return_value = True
+
+    demo_loop.manage_open_trades(mt5_mock, KillSwitchState())
+
+    mt5_mock.set_position_sltp.assert_called_once_with(ticket, 213.535, 213.049)
+    mt5_mock.close_position.assert_not_called()
+    # loop_health に naked_position イベントが残ること
+    with v3_db.get_conn(tmp_db) as conn:
+        row = conn.execute(
+            "SELECT COUNT(*) FROM loop_health WHERE event_type='naked_position'"
+        ).fetchone()
+    assert row[0] == 1
+
+
+def test_naked_position_synthetic_stop_when_breached(tmp_db, monkeypatch):
+    """SL 再設定不能 + SL 水準を逆行済みなら synthetic_sl で即クローズ"""
+    from src.spec_v3 import demo_loop
+
+    monkeypatch.setattr(demo_loop, "DB_PATH", tmp_db)
+    ticket = 10188884
+    tid = _insert_open_trade_for_guard(tmp_db, ticket, direction="short")
+
+    mt5_mock = MagicMock()
+    # short の SL=213.535 を上回る価格 (逆行)
+    mt5_mock.get_positions.return_value = [
+        {"trade_id": ticket, "sl": 0.0, "tp": 0.0, "price_current": 213.831},
+    ]
+    mt5_mock.set_position_sltp.return_value = False  # 再設定も失敗
+    mt5_mock.close_position.return_value = {
+        "trade_id": str(ticket), "close_price": 213.831, "comment": "ok",
+    }
+
+    demo_loop.manage_open_trades(mt5_mock, KillSwitchState())
+
+    mt5_mock.close_position.assert_called_once_with(str(ticket))
+    with v3_db.get_conn(tmp_db) as conn:
+        row = conn.execute(
+            "SELECT exit_reason FROM trade_closures WHERE trade_id=?", (tid,),
+        ).fetchone()
+    assert row is not None
+    assert row["exit_reason"] == "synthetic_sl"
+
+
+def test_protected_position_guard_noop(tmp_db, monkeypatch):
+    """SL/TP が両方付いていればガードは何もしない"""
+    from src.spec_v3 import demo_loop
+
+    monkeypatch.setattr(demo_loop, "DB_PATH", tmp_db)
+    ticket = 10188884
+    _insert_open_trade_for_guard(tmp_db, ticket, direction="short")
+
+    mt5_mock = MagicMock()
+    mt5_mock.get_positions.return_value = [
+        {"trade_id": ticket, "sl": 213.535, "tp": 213.049,
+         "price_current": 213.400},
+    ]
+
+    demo_loop.manage_open_trades(mt5_mock, KillSwitchState())
+
+    mt5_mock.set_position_sltp.assert_not_called()
+    mt5_mock.close_position.assert_not_called()
+    with v3_db.get_conn(tmp_db) as conn:
+        row = conn.execute(
+            "SELECT COUNT(*) FROM loop_health WHERE event_type='naked_position'"
+        ).fetchone()
+    assert row[0] == 0
 
 
 if __name__ == "__main__":

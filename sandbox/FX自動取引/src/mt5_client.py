@@ -222,8 +222,12 @@ class Mt5Client(BrokerClient):
         price = tick.ask if is_buy else tick.bid
         order_type = mt5.ORDER_TYPE_BUY if is_buy else mt5.ORDER_TYPE_SELL
 
-        # Step 1: SL/TPなしで約定（外為ファイネスト互換）
-        request = {
+        # Step 1: まず SL/TP 同梱 (atomic) で発注を試みる。
+        # 裸ポジションの時間窓をゼロにする第一原則 (FreqTrade / MQL5 定石)。
+        # 外為ファイネストでは SL/TP 同梱が retcode 10013 になるケースが過去に
+        # あったため、拒否されたら SL/TP なし発注 + 検証付き後付け (Step 2) に
+        # フォールバックする。
+        base_request = {
             "action": mt5.TRADE_ACTION_DEAL,
             "symbol": symbol,
             "volume": volume,
@@ -233,27 +237,52 @@ class Mt5Client(BrokerClient):
             "type_time": mt5.ORDER_TIME_GTC,
         }
 
-        # フィリングモード自動検出
-        request = self._find_valid_filling(request)
-
-        # リトライ付き注文送信
-        result = self._send_order_with_retry(request)
-
-        # Step 2: SL/TPを後から設定
+        sltp_attached = False
+        result = None
         if stop_loss or take_profit:
-            sltp_request = {
-                "action": mt5.TRADE_ACTION_SLTP,
-                "symbol": symbol,
-                "position": result.order,
-                "sl": stop_loss,
-                "tp": take_profit,
-            }
-            sltp_result = mt5.order_send(sltp_request)
-            if sltp_result.retcode != mt5.TRADE_RETCODE_DONE:
-                # SL/TP設定失敗はログに残すが約定自体は成功しているので例外にしない
+            atomic_request = dict(base_request)
+            if stop_loss:
+                atomic_request["sl"] = stop_loss
+            if take_profit:
+                atomic_request["tp"] = take_profit
+            atomic_request = self._find_valid_filling(atomic_request)
+            try:
+                result = self._send_order_with_retry(atomic_request)
+                sltp_attached = True
+            except Mt5ClientError as e:
                 logger.warning(
-                    "SL/TP設定失敗（約定済み）: retcode=%d, comment=%s",
-                    sltp_result.retcode, sltp_result.comment,
+                    "SL/TP 同梱発注が拒否されたため 2 段方式にフォールバック: %s", e,
+                )
+
+        if result is None:
+            request = self._find_valid_filling(dict(base_request))
+            result = self._send_order_with_retry(request)
+
+        # Step 2: SL/TPを後から設定 (実反映を検証、失敗時はフェイルセーフで即クローズ)
+        # 2026-06-09 事故対応: SLTP の order_send が成功扱いでも SL/TP が
+        # ポジションに反映されないケースが実在した (ticket 10188884、SL なしで
+        # 24h 放置 → 想定 SL の 2.8 倍の損失)。retcode を鵜呑みにせず
+        # positions_get で実反映を確認し、確認できなければ裸ポジションを保持しない。
+        if (stop_loss or take_profit) and not sltp_attached:
+            sltp_ok = self.set_position_sltp(result.order, stop_loss, take_profit)
+            if not sltp_ok:
+                logger.error(
+                    "SL/TP 設定を検証できないためフェイルセーフで即クローズ: ticket=%d",
+                    result.order,
+                )
+                try:
+                    self.close_position(str(result.order))
+                except Mt5ClientError as close_err:
+                    logger.critical(
+                        "フェイルセーフクローズも失敗、裸ポジション残存の恐れ: ticket=%d, %s",
+                        result.order, close_err,
+                    )
+                    raise Mt5ClientError(
+                        f"SL/TP設定失敗かつクローズ失敗 (裸ポジション残存の恐れ): "
+                        f"ticket={result.order}"
+                    ) from close_err
+                raise Mt5ClientError(
+                    f"SL/TP設定を検証できずフェイルセーフクローズ実施: ticket={result.order}"
                 )
 
         return {
@@ -263,6 +292,87 @@ class Mt5Client(BrokerClient):
             "price": result.price,
             "comment": result.comment,
         }
+
+    def set_position_sltp(
+        self,
+        position_ticket: int,
+        stop_loss: float,
+        take_profit: float,
+        max_attempts: int = 3,
+    ) -> bool:
+        """既存ポジションに SL/TP を設定し、実際に反映されたことを検証する。
+
+        order_send の retcode=DONE だけでは反映を保証できない (2026-06-09 の
+        裸ポジション事故) ため、設定後に positions_get で SL/TP の実値を確認する。
+        反映が確認できるまで最大 max_attempts 回リトライする。
+
+        Args:
+            position_ticket: 対象ポジションのチケット番号
+            stop_loss: 損切り価格 (0.0 なら設定しない)
+            take_profit: 利確価格 (0.0 なら設定しない)
+            max_attempts: 試行回数上限
+
+        Returns:
+            True = SL/TP の実反映を確認できた
+            False = 反映を確認できなかった (呼び出し側でフェイルセーフ判断)
+        """
+        positions = mt5.positions_get(ticket=position_ticket)
+        if not positions:
+            # ポジションが存在しない (既に決済済み等) → 裸ポジションの恐れなし
+            logger.info(
+                "set_position_sltp: ポジションが存在しない (決済済みの可能性): ticket=%d",
+                position_ticket,
+            )
+            return True
+        symbol = positions[0].symbol
+
+        for attempt in range(1, max_attempts + 1):
+            sltp_request = {
+                "action": mt5.TRADE_ACTION_SLTP,
+                "symbol": symbol,
+                "position": position_ticket,
+                "sl": stop_loss,
+                "tp": take_profit,
+            }
+            sltp_result = mt5.order_send(sltp_request)
+            if sltp_result is None:
+                logger.warning(
+                    "SLTP order_send が None (attempt %d/%d): %s",
+                    attempt, max_attempts, mt5.last_error(),
+                )
+            elif sltp_result.retcode != mt5.TRADE_RETCODE_DONE:
+                logger.warning(
+                    "SL/TP設定失敗 (attempt %d/%d): retcode=%d, comment=%s",
+                    attempt, max_attempts, sltp_result.retcode, sltp_result.comment,
+                )
+
+            # retcode に関わらず実ポジションで反映を確認する
+            time.sleep(0.5)
+            positions = mt5.positions_get(ticket=position_ticket)
+            if not positions:
+                logger.info(
+                    "set_position_sltp: 検証中にポジション消滅 (決済済み): ticket=%d",
+                    position_ticket,
+                )
+                return True
+            pos = positions[0]
+            sl_applied = (not stop_loss) or abs(pos.sl - stop_loss) < 1e-6
+            tp_applied = (not take_profit) or abs(pos.tp - take_profit) < 1e-6
+            if sl_applied and tp_applied:
+                if attempt > 1:
+                    logger.info(
+                        "SL/TP 反映確認 (attempt %d): ticket=%d sl=%.5f tp=%.5f",
+                        attempt, position_ticket, pos.sl, pos.tp,
+                    )
+                return True
+            logger.warning(
+                "SL/TP 未反映 (attempt %d/%d): ticket=%d 実値 sl=%.5f tp=%.5f "
+                "期待値 sl=%.5f tp=%.5f",
+                attempt, max_attempts, position_ticket, pos.sl, pos.tp,
+                stop_loss, take_profit,
+            )
+            time.sleep(RETRY_DELAY)
+        return False
 
     def limit_order(
         self,
@@ -359,6 +469,10 @@ class Mt5Client(BrokerClient):
                 "units": units,
                 "unrealized_pl": pos.profit,
                 "price_open": pos.price_open,
+                # 裸ポジション検知用 (2026-06-09 事故対応): 0.0 = 未設定
+                "sl": float(getattr(pos, "sl", 0.0) or 0.0),
+                "tp": float(getattr(pos, "tp", 0.0) or 0.0),
+                "price_current": float(getattr(pos, "price_current", 0.0) or 0.0),
             })
 
         return result

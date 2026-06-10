@@ -5,9 +5,9 @@
 
 | メタ | 値 |
 |---|---|
-| **最終更新** | 2026-06-07 JST (**Phase 2'A VPS 起動完了**・SPECv3_Demo Running・Slack(JAPAN) 通知確立) |
+| **最終更新** | 2026-06-11 JST (**SL未設定事故の修正＋デモ再起動**。詳細は下記「2026-06-09 インシデント」) |
 | **次回更新予定** | 30日デモ中の週次 or 異常時 |
-| **稼働状態** | **🟢 Phase 2'A デモ稼働中** (SPECv3_Demo Running / USD_JPY+GBP_JPY / 死活1h・日次サマリ JST07:00) |
+| **稼働状態** | **🟢 Phase 2'A デモ再稼働** (2026-06-11 再起動 / USD_JPY+GBP_JPY / 死活=ハートビート基準に修正) |
 | **現フェーズ** | 🌳 Phase 2'A **30日デモ運用** (2026-06-07〜07-07目安。終了後 Phase 2'B 経済性Gate + AUC≥0.55 判定) |
 | **次回エントリーポイント** | 本書冒頭の稼働状態 + `docs/NEXT_SESSION_TASKS.md` (日次観察) |
 
@@ -24,6 +24,15 @@
 | 監視 | 日次 AUC サマリ + 死活、撤退条件 5レベル、Phase 2'B で AUC≥0.55 gate 追加 |
 
 > 起動経緯 (2026-06-07): APIキーは `~/.secrets/anthropic.env`→scp。連鎖デプロイ漏れ (anthropic 未install / register.ps1 BOM無し cp932 誤読) を是正。詳細 memory project_fx_llm_advisory_diagnostics / feedback_deploy_completeness_git_check。
+
+---
+
+## 🚨 2026-06-09 インシデント: SL未設定の裸ポジション → 撤退条件誤発火 (修正済 2026-06-11)
+
+- **事象**: 初取引 (GBP_JPY short, ticket 10188884) で SLTP 後付けが無言で失敗し、SL/TP なしの裸ポジションが 24h 放置 → -45.8 pips (想定 SL 16.2 pips の 2.8 倍)。この 1 件で PF が 1.25→0.739 に下がり、n=5 時点で撤退条件 #2 (PF<1.0) が発火してループ自己停止。停止が AliveCheck の誤設計 (LLM判定鮮度基準のオオカミ少年化) で 2 日間埋もれた。
+- **5取引の実績**: -458 / -113 / +243 / +293 / -154 JPY (計 -189 JPY)。取引 2-5 は SL/TP がサーバ側で正常発動 (MT5 deal reason 4/5 で確認)。
+- **修正 (2026-06-11)**: ①発注を SL/TP 同梱 (atomic) 優先に変更 ②後付け時は positions_get で実反映を検証、失敗時はフェイルセーフ即クローズ ③毎ループの裸ポジション検知＋再設定＋synthetic_sl ④PF撤退の最小サンプル 5→20 (FreqTrade trade_limit に倣う) ⑤死活監視をハートビート基準＋停止状態の明示通知に変更 ⑥LLM confidence を離散ビン化 (0.72 張り付き対策)
+- **外部比較**: FreqTrade (stoploss_on_exchange + emergency_exit / MaxDrawdown trade_limit=20) ・MQL5 定石 (atomic SLTP) ・healthchecks.io 型 dead man's switch を参照。
 
 ---
 
