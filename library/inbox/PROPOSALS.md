@@ -1,7 +1,7 @@
 # PROPOSALS.md
 
 収集記事を横断分析して得られた反映提案。
-最終更新: 2026-06-09
+最終更新: 2026-06-10
 
 ---
 
@@ -727,3 +727,39 @@ FX自動売買の構成（P-014の4層アーキテクチャ）において、Gem
 1. CLAUDE.mdに「サブエージェント使用シグナル：10ファイル超の探索が必要な場合 または 3つ以上の独立作業を含む場合（Anthropic公式基準2026）」を追記
 2. P-023のSubagent YAML定義作成時に上記基準を組み込んだオーケストレーターエージェントの判断ロジックを設計
 3. 「成功基準の先行定義」（例：「テスト全通過」「このAPIレスポンスがこの形式」）をClaude Code使用時の標準プロセスとしてCLAUDE.mdに追記（ステップ指示よりも成果物記述が効果的）
+
+---
+
+### P-058: Claude Agent SDK 6/15請求変更への対応準備
+
+**根拠記事**: 219 (Claude Agent SDK Complete Guide - Hidekazu Konishi)
+**詳細**: 2026年6月15日より、Claude Agent SDK / `claude -p` / Claude Code GitHub Actions / 第三者エージェントがサブスクリプション枠から切り離され、専用クレジットプール（フルAPIレート課金）に移行。bpr_labの日次収集エージェントが `claude -p` 経由で実行されている場合、6/15以降は費用が発生するクレジットプールから引かれる。
+
+**提案アクション**:
+1. bpr_labの日次収集ワークフローが `claude -p` を使っているか確認し、使っている場合はMonthlyクレジット上限を設定（Claude設定 → Agent SDK Credit Limitから設定可能）
+2. FX自動取引サンドボックスがAgent SDKを使う場合は同様に上限設定を検討
+3. CLAUDE.mdに「Agent SDK / claude -p 実行は6/15以降クレジットプール消費（フルAPIレート）。バッチ処理はMessage Batches API優先で30%コスト削減」を注記
+
+---
+
+### P-059: FX自動取引へのONNX/MT5内蔵NN実行パターン採用検討
+
+**根拠記事**: 220 (AI Trading Tools 2026 - Ventureburn)
+**詳細**: MT5のONNX統合を使えば、Python外部スクリプト不要でEA（MQL5）内から直接ニューラルネットワークモデルを実行できる。現在のsandbox/FX自動取引/がPython+ZeroMQ/REST APIブリッジでMT5と通信する構成を採用している場合、高頻度の判断部分（テクニカル指標計算など）はONNX経由でEA内蔵に移行することでレイテンシ削減が可能。LLMセンチメント分析（低頻度・高コスト）は引き続きPython側でClaude APIを呼び出す2層構造が現実的。
+
+**提案アクション**:
+1. `sandbox/FX自動取引/` の現行アーキテクチャを確認し、EA内ONNX推論とPython側LLM分析の責任分界点を設計
+2. テクニカル判断（エントリー/エグジット条件）はONNX化、センチメント・ファンダメンタル判断はClaude API（claude-haiku-4-5 軽量モデル）に割り当てる「コスト最適2層」構成を文書化
+3. P-005（MT5+Python+LLM統合パターン）と統合した実装ロードマップを更新
+
+---
+
+### P-060: Skills SKILL.md descriptionの自然言語最適化
+
+**根拠記事**: 216 (100 Claude Skills試用 - PyCoach), 217 (70+ Skills自作 - PyCoach)
+**詳細**: 100件・70件の大規模Skills実験から得られた知見：「SKILL.mdのdescriptionを自然言語で具体的に書くほど、自動トリガー精度が上がる」「スキルは小さく・焦点を絞って作る」「チーム共有はgitサブモジュールかnpmパッケージが有効」。bpr_labの既存スキル（.claude/skills/配下）のdescriptionが曖昧・短い場合、自動トリガーが外れてスキルが活用されていない可能性がある。
+
+**提案アクション**:
+1. bpr_labの `.claude/skills/*/SKILL.md` を一覧し、各スキルのdescriptionを「いつ・何のために使うか」を具体的に記した自然言語文に書き直す
+2. 1スキル1責務の原則で肥大化しているスキルを分割（特にcurateスキルなど複数処理を含むもの）
+3. 更新後、3回の日次収集で自動トリガー率を測定し効果を確認

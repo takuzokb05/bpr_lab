@@ -396,12 +396,29 @@
 
 ---
 
+
+## 2026-06-10 収集分（9件収集 → 9件SIGNAL）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 214 | [2026-06-10_214](articles/2026-06-10_214_Claude-Code-Best-Practices-5layer-Architecture-mcp-directory.md) | Claude Code 5層アーキテクチャ Best Practices — Hooks決定論的/Skills手順的/Subagents分離という設計指針 | claude-code | 未読 | #web-signal |
+| 215 | [2026-06-10_215](articles/2026-06-10_215_GitHub-disler-claude-code-hooks-mastery-practical-examples.md) | claude-code-hooks-mastery (disler) — Hooks完全マスター実践サンプル集・updatedToolOutput差し替えパターン | claude-code | 未読 | #web-signal |
+| 216 | [2026-06-10_216](articles/2026-06-10_216_Medium-PyCoach-I-Tried-100-Claude-Skills-Best-Ranking.md) | 100 Claude Skills試用ランキング(PyCoach) — コードレビュー/セキュリティ監査が上位・description精度の知見 | claude-code | 未読 | #web-signal |
+| 217 | [2026-06-10_217](articles/2026-06-10_217_Medium-PyCoach-We-Built-70plus-Claude-Skills-Team-Templates.md) | 70+ Claude Skills自作まとめ(PyCoach) — チーム運用テンプレ・gitサブモジュール共有パターン | claude-code | 未読 | #web-signal |
+| 218 | [2026-06-10_218](articles/2026-06-10_218_WSGR-US-AI-Regulatory-Developments-Federal-State-2026.md) | Wilson Sonsini米国AI規制2026総まとめ — 連邦先占方針・Deceptive AI Act・CA/TX/CO州法施行スケジュール | ai-news | 未読 | #web-signal |
+| 219 | [2026-06-10_219](articles/2026-06-10_219_Hidekazu-Konishi-Claude-Agent-SDK-Complete-Guide-Billing-Change.md) | Claude Agent SDK完全ガイド(Konishi) — SDK/CLI使い分け・6/15請求変更対応・フローチャート付き | claude-ecosystem | 未読 | #web-signal |
+| 220 | [2026-06-10_220](articles/2026-06-10_220_Ventureburn-AI-Trading-Tools-2026-ONNX-MT5-LLM-Sentiment.md) | AI取引ツール2026市場概観(Ventureburn) — ONNX/MT5内蔵NN・ZeroMQブリッジ・LLMセンチメント実用化 | ai-trading | 未読 | #web-signal |
+| 221 | [2026-06-10_221](articles/2026-06-10_221_AX-Inc-生成AI規制動向-EU-米国-日本-2026年最新.md) | 生成AI規制動向2026 日本語総まとめ(AX) — EUハイリスクAI8/2施行・日本JFTC報告書・GPAI適用リスク | ai-news | 未読 | #web-signal |
+| 222 | [2026-06-10_222](articles/2026-06-10_222_Renue-AIエージェント開発フレームワーク比較-Claude-LangGraph-MAF-2026.md) | AIエージェントFW比較 Claude/LangGraph/MAF/ADK 5軸評価(renue) — MCP連携・マルチエージェント対応比較 | claude-ecosystem | 未読 | #web-signal |
+
+---
+
 ## ドメイン別統計（累計）
 
-| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 2026-06-07 | 2026-06-08 | 2026-06-09 | 累計 |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 8件 | 5件 | 10件 | 9件 | 5件 | 89件 |
-| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 5件 | 4件 | 5件 | 5件 | 5件 | 49件 |
-| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 3件 | 2件 | 4件 | 0件 | 36件 |
-| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 4件 | 3件 | 2件 | 4件 | 39件 |
-| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **18件** | **16件** | **20件** | **20件** | **199件** |
+| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 2026-06-07 | 2026-06-08 | 2026-06-09 | 2026-06-10 | 累計 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 8件 | 5件 | 10件 | 9件 | 5件 | 4件 | 93件 |
+| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 5件 | 4件 | 5件 | 5件 | 5件 | 2件 | 51件 |
+| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 3件 | 2件 | 4件 | 0件 | 1件 | 37件 |
+| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 4件 | 3件 | 2件 | 4件 | 2件 | 41件 |
+| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **18件** | **16件** | **20件** | **20件** | **14件** | **9件** | **222件** |
