@@ -1,6 +1,6 @@
 # Library Catalog
 
-最終更新: 2026-06-09
+最終更新: 2026-06-11
 
 ## 凡例
 - 状態: 未読 / 既読 / 要精読
@@ -413,12 +413,38 @@
 
 ---
 
+
+## 2026-06-11 収集分（14件収集 → 12件SIGNAL）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 223 | [2026-06-11_223](articles/2026-06-11_223_MCP-2026-07-28-Release-Candidate-stateless-core-Tasks-Extensions-breaking-changes.md) | MCP 2026-07-28 RC公式発表 — ステートレス化・Tasks拡張・エラーコード変更・Roots/Sampling非推奨化 | claude-ecosystem | 未読 | #web-signal #urgent |
+| 224 | [2026-06-11_224](articles/2026-06-11_224_Claude-Code-Hooks-20plus-Ready-to-Use-Examples-Complete-Guide-DEV-2026.md) | Claude Code Hooks 20+実装例完全ガイド(DEV) — 12イベント・3ハンドラー型・セキュリティ/品質/自動化パターン | claude-code | 未読 | #web-signal |
+| 225 | [2026-06-11_225](articles/2026-06-11_225_LangGraph-vs-AutoGen-2026-Production-Framework-Comparison-DEV-Community.md) | LangGraph vs AutoGen 2026本番比較 — 決定論的ワークフロー(LG)vs対話型協働(AG)・本番推奨はLangGraph 0.4 | claude-ecosystem | 未読 | #web-signal |
+| 226 | [2026-06-11_226](articles/2026-06-11_226_TradingAgents-Multi-Agent-LLM-Setup-Tutorial-Docker-Python-LangGraph-byteiota.md) | TradingAgentsセットアップ完全チュートリアル — Docker/Python・7エージェント構成・v0.2.4新機能・年間24.9%リターン | ai-trading | 未読 | #web-signal |
+| 227 | [2026-06-11_227](articles/2026-06-11_227_Uravation-Claude-Code-Update-Operation-Guide-7-Patterns-Version-Management-JA.md) | Claude Code Update運用ガイド2026(JA) — 7パターン・破壊的変更実例・3段階バージョン管理戦略（Uravation） | claude-code | 未読 | #web-signal |
+| 228 | [2026-06-11_228](articles/2026-06-11_228_Cooley-State-AI-Laws-2026-Colorado-California-New-York-Federal-Preemption.md) | 米国州別AI法2026(Cooley法律事務所) — Colorado差し止め・CA18本施行・NY RAISE法改正・連邦プリエンプション | ai-news | 未読 | #web-signal |
+| 229 | [2026-06-11_229](articles/2026-06-11_229_Wundertrading-Agentic-Trading-LLM-Autonomous-AI-Financial-Markets-Explained.md) | Agentic Trading解説(Wundertrading) — 静的アルゴからLLMマルチエージェントへの転換・推論ジャーナル・実取引乖離 | ai-trading | 未読 | #web-signal |
+| 230 | [2026-06-11_230](articles/2026-06-11_230_QuantLabs-LLM-Showdown-Best-Python-Algo-Trading-Bot-Claude-GPT-DeepSeek-2026.md) | LLMショーダウン2026(QuantLabs) — Claude Opusがコード品質最高・GPT-5.5がデバッグ優位・DeepSeek R3がコスパ最強 | ai-trading | 未読 | #web-signal |
+| 231 | [2026-06-11_231](articles/2026-06-11_231_AI-Smiley-Claude-Code-2026-Updates-Summary-Auto-Mode-SubAgents-Apple-JA.md) | Claude Code 2026アップデートまとめ(JA) — Auto Mode・5階層サブエージェント・Agent View・Apple統合（AI Smiley） | claude-code | 未読 | #web-signal |
+| 232 | [2026-06-11_232](articles/2026-06-11_232_Uravation-Japan-AI-Promotion-Law-Trends-2026-HITL-Checklist-JA.md) | AI推進法施行後の動向と中小企業影響2026(JA) — HITL推奨・学習データトレーサビリティ・NICT評価基盤開始（Uravation） | ai-news | 未読 | #web-signal |
+| 233 | [2026-06-11_233](articles/2026-06-11_233_Totalum-Claude-Agent-SDK-2026-Complete-Guide-Billing-Production-Deploy.md) | Claude Agent SDK 2026完全ガイド(Totalum) — CLI/SDK使い分け・6/15クレジット分離対応・コストキャップ・本番パターン | claude-ecosystem | 未読 | #web-signal |
+| 234 | [2026-06-11_234](articles/2026-06-11_234_Fungies-MCP-Servers-Complete-Developer-Guide-Stateless-RC-FastMCP-2026.md) | MCPサーバー開発者完全ガイド2026(Fungies) — RC対応ステートレス設計・FastMCP・Tool Annotations・9700万DL | claude-ecosystem | 未読 | #web-signal |
+
+### NOISEとして除外
+| ファイル | 理由 |
+|---|---|
+| inbox/web/2026-06-11_035_AlgoInsights-TradingAgents... | TradingAgents記事が本日226含め既存194と内容重複度高 |
+| inbox/web/2026-06-11_038_Releasebot-Anthropic-Claude-Code... | リリースノートアグリゲーター。一次情報なし |
+
+---
+
 ## ドメイン別統計（累計）
 
-| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 2026-06-07 | 2026-06-08 | 2026-06-09 | 2026-06-10 | 累計 |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 8件 | 5件 | 10件 | 9件 | 5件 | 4件 | 93件 |
-| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 5件 | 4件 | 5件 | 5件 | 5件 | 2件 | 51件 |
-| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 3件 | 2件 | 4件 | 0件 | 1件 | 37件 |
-| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 4件 | 3件 | 2件 | 4件 | 2件 | 41件 |
-| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **18件** | **16件** | **20件** | **20件** | **14件** | **9件** | **222件** |
+| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 2026-06-07 | 2026-06-08 | 2026-06-09 | 2026-06-10 | 2026-06-11 | 累計 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 8件 | 5件 | 10件 | 9件 | 5件 | 4件 | 3件 | 96件 |
+| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 5件 | 4件 | 5件 | 5件 | 5件 | 2件 | 4件 | 55件 |
+| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 3件 | 2件 | 4件 | 0件 | 1件 | 3件 | 40件 |
+| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 4件 | 3件 | 2件 | 4件 | 2件 | 2件 | 43件 |
+| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **18件** | **16件** | **20件** | **20件** | **14件** | **9件** | **12件** | **234件** |
