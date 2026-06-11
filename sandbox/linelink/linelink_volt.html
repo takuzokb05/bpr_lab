@@ -98,7 +98,7 @@ body{
     </div>
     <div id="scoreRow">
       <div class="stat"><div class="lbl">SCORE</div><div id="scoreVal" class="big">0</div></div>
-      <div class="stat right"><div class="lbl">TIME</div><div id="timeVal" class="big">1:00</div></div>
+      <div class="stat right"><div class="lbl">LINES</div><div id="timeVal" class="big">7</div></div>
     </div>
     <div id="voltWrap">
       <div id="voltBat">
@@ -147,8 +147,8 @@ if(!document.querySelector('meta[name="viewport"]')){
 /* ---------- 定数 ---------- */
 const COLS = 6, ROWS = 6, NCOLORS = 5;
 const COLORS = ['#00E5FF', '#FF2E88', '#FFD600', '#7C4DFF', '#00E676'];
-const GAME_TIME = 60;
-const VOLT_STEP_TILES = 12;   // 累積n個消すごとに電圧+1段
+const LINES_MAX = 7;          // 1プレイで引ける線の本数(時間制限なし)
+const VOLT_STEP_TILES = 9;    // 累積n個消すごとに電圧+1段
 const VOLT_STEP = 0.5;        // 1段あたりの倍率上昇
 const VOLT_MAX = 3.0;         // 倍率上限
 const ENCLOSE_PTS = 30;       // 囲み巻き込み1タイルあたりの点
@@ -354,8 +354,7 @@ function vibrate(p){ try{ navigator.vibrate && navigator.vibrate(p); }catch(e){}
 let state = 'TITLE';            // TITLE | PLAYING | RESULT
 let grid = null;                // grid[r][c] = tile
 let clock = 0;                  // 内部時計(秒)
-let timeLeft = GAME_TIME;
-let lastTickSec = -1;
+let linesLeft = LINES_MAX;
 let ending = false, endTimer = 0;
 let score = 0;
 let scoreTween = { from:0, to:0, t:1 };
@@ -704,6 +703,15 @@ function commitClear(isLoop){
 
   removeAndRefill(cells);
   needMoveCheck = true;
+
+  /* 線を1本消費(消去成功時のみ。キャンセルはノーカウント) */
+  linesLeft--;
+  if(linesLeft <= 0){
+    ending = true; endTimer = 0;
+    A.end();
+  } else if(linesLeft === 1){
+    A.tick();                              // ラストライン通知
+  }
 }
 
 /* 落下・補充 (§4.3) — 落下完了を待たずに次入力を受け付ける */
@@ -751,7 +759,7 @@ function startGame(){
   const colors = genColors();
   grid = buildGrid(colors, true);
   score = 0; scoreTween = { from:0, to:0, t:1 };
-  timeLeft = GAME_TIME; lastTickSec = -1;
+  linesLeft = LINES_MAX;
   cumCleared = 0; volt = 1;
   voltWrap.classList.remove('max', 'pulse');
   chain = []; loopClosed = false; enclosed = []; dragging = false; chainColor = -1;
@@ -833,20 +841,7 @@ function update(dt){
   }
 
   if(state === 'PLAYING'){
-    if(!ending){
-      timeLeft -= dt;
-      const s = Math.ceil(timeLeft);
-      if(s !== lastTickSec){
-        lastTickSec = s;
-        if(s <= 3 && s >= 1) A.tick();                     // カウントダウン(残り3秒)
-      }
-      if(timeLeft <= 0){
-        timeLeft = 0;
-        if(dragging) release();                            // 終了時、有効なら寛大にコミット
-        ending = true; endTimer = 0;
-        A.end();
-      }
-    } else {
+    if(ending){
       endTimer += dt;
       if(endTimer >= 0.65) showResult();
     }
@@ -1057,8 +1052,8 @@ function render(){
   }
   ctx.globalAlpha = 1;
 
-  /* 残り10秒: 盤面外周が赤くパルス */
-  if(state==='PLAYING' && timeLeft <= 10 && timeLeft > 0){
+  /* ラスト1本: 盤面外周が赤くパルス */
+  if(state==='PLAYING' && linesLeft === 1 && !ending){
     const a = 0.3 + 0.3*Math.sin(clock*Math.PI*3.2);
     ctx.globalAlpha = Math.max(0, a);
     ctx.strokeStyle = '#FF3355';
@@ -1096,8 +1091,7 @@ let lastScoreText = '', lastTimeText = '';
 function updateHUD(){
   const st = scoreDisplayed().toLocaleString('en-US');
   if(st !== lastScoreText){ scoreEl.textContent = st; lastScoreText = st; }
-  const s = Math.max(0, Math.ceil(timeLeft));
-  const tt = `${(s/60)|0}:${String(s%60).padStart(2,'0')}`;
+  const tt = String(Math.max(0, linesLeft));
   if(tt !== lastTimeText){ timeEl.textContent = tt; lastTimeText = tt; }
 
   /* 電圧バッテリー(単調増加・リセットなし) */
