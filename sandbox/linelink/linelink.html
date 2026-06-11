@@ -29,7 +29,7 @@ body{
   -webkit-tap-highlight-color:transparent;
   touch-action:none;
 }
-#app{position:relative;height:100dvh;max-width:480px;margin:0 auto;background:var(--bg);overflow:hidden}
+#app{position:relative;height:100vh;height:100dvh;max-width:480px;margin:0 auto;background:var(--bg);overflow:hidden}
 #cv{position:absolute;inset:0;display:block;touch-action:none;z-index:1}
 
 /* ---- HUD ---- */
@@ -131,6 +131,15 @@ body{
    LINELINK — 一筆書きライン消しゲーム
    単一HTML / 依存ゼロ / Canvas 2D + WebAudio
    ========================================================= */
+
+/* htmlpreview等のローダーがviewport metaを落とした場合の保険
+   (動的追加でもiOS Safari/Chromeは適用する) */
+if(!document.querySelector('meta[name="viewport"]')){
+  const m = document.createElement('meta');
+  m.name = 'viewport';
+  m.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover';
+  document.head.appendChild(m);
+}
 
 /* ---------- 定数 ---------- */
 const COLS = 6, ROWS = 6, NCOLORS = 5;
@@ -452,6 +461,12 @@ function layout(){
   rebuildSprites();
 }
 window.addEventListener('resize', layout);
+window.addEventListener('orientationchange', layout);
+if(window.visualViewport) visualViewport.addEventListener('resize', layout);
+/* スタイル適用遅延・URLバー伸縮などサイズ変化を確実に追従 */
+if(window.ResizeObserver) new ResizeObserver(() => {
+  if(app.clientWidth !== W || app.clientHeight !== H) layout();
+}).observe(app);
 
 /* =========================================================
    入力(Pointer Events / 当たり判定補正 §2-4)
