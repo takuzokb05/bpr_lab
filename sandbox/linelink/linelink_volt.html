@@ -66,7 +66,7 @@ body{
 @keyframes tpulse{0%,100%{opacity:.35}50%{opacity:1}}
 #titleBest{margin-top:18px;font-size:13px;color:var(--text-dim);letter-spacing:.1em;font-weight:700}
 #titleBest b{color:var(--text);font-variant-numeric:tabular-nums;margin-left:6px}
-#marksBtn{position:absolute;bottom:18px;right:16px;width:40px;height:40px;background:transparent;border:1px solid #232a44;border-radius:11px;color:var(--tile-4);font-size:17px;cursor:pointer;transition:opacity .2s;touch-action:manipulation}
+#marksBtn{position:absolute;bottom:18px;right:16px;width:40px;height:40px;background:transparent;border:1px solid #232a44;border-radius:11px;color:var(--tile-2);font-size:17px;cursor:pointer;transition:opacity .2s;touch-action:manipulation}
 #marksBtn.off{opacity:.3}
 
 #result{background:rgba(11,14,26,.9);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px)}
@@ -145,10 +145,10 @@ if(!document.querySelector('meta[name="viewport"]')){
 }
 
 /* ---------- 定数 ---------- */
-const COLS = 6, ROWS = 6, NCOLORS = 5;
-const COLORS = ['#00E5FF', '#FF2E88', '#FFD600', '#7C4DFF', '#00E676'];
+const COLS = 6, ROWS = 6, NCOLORS = 4;
+const COLORS = ['#00E5FF', '#FF2E88', '#FFD600', '#00E676'];
 const LINES_MAX = 7;          // 1プレイで引ける線の本数(時間制限なし)
-const VOLT_STEP_TILES = 9;    // 累積n個消すごとに電圧+1段
+const VOLT_STEP_TILES = 11;   // 累積n個消すごとに電圧+1段(4色は線が伸びる分やや重め)
 const VOLT_STEP = 0.5;        // 1段あたりの倍率上昇
 const VOLT_MAX = 3.0;         // 倍率上限
 const ENCLOSE_PTS = 30;       // 囲み巻き込み1タイルあたりの点
@@ -423,8 +423,7 @@ function drawMark(g, i, cx, cy, s){
     case 0: g.arc(cx, cy, s*0.85, 0, Math.PI*2); g.stroke(); break;               // ○
     case 1: g.moveTo(cx,cy-s); g.lineTo(cx+s,cy); g.lineTo(cx,cy+s); g.lineTo(cx-s,cy); g.closePath(); g.fill(); break; // ◆
     case 2: g.moveTo(cx,cy-s); g.lineTo(cx+s*0.95,cy+s*0.75); g.lineTo(cx-s*0.95,cy+s*0.75); g.closePath(); g.fill(); break; // ▲
-    case 3: g.fillRect(cx-s*0.75, cy-s*0.75, s*1.5, s*1.5); break;                // ■
-    case 4:                                                                       // ✦
+    case 3:                                                                       // ✦
       for(let k=0;k<4;k++){
         const a=k*Math.PI/2;
         if(k===0) g.moveTo(cx+Math.cos(a)*s, cy+Math.sin(a)*s);
