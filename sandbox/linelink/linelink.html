@@ -30,7 +30,7 @@ body{
   touch-action:none;
 }
 #app{position:relative;height:100vh;height:100dvh;max-width:480px;margin:0 auto;background:var(--bg);overflow:hidden}
-#cv{position:absolute;inset:0;display:block;touch-action:none;z-index:1}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;z-index:1}
 
 /* ---- HUD ---- */
 #hud{position:absolute;inset:0;pointer-events:none;z-index:2;opacity:0;transition:opacity .25s}
@@ -450,6 +450,7 @@ function layout(){
   W = app.clientWidth; H = app.clientHeight;
   dpr = Math.min(window.devicePixelRatio||1, 2);
   cv.width = Math.round(W*dpr); cv.height = Math.round(H*dpr);
+  cv.style.width = W + 'px'; cv.style.height = H + 'px';   // CSSサイズを明示(dpr>1端末での拡大表示防止)
   ctx.setTransform(dpr,0,0,dpr,0,0);
   const topUI = 150;                       // 上端バー48 + スコア行 + コンボリング
   const size = Math.min(W*0.92, H - topUI - 26);
