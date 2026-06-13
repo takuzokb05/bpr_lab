@@ -138,6 +138,17 @@ header.app-head p {
   color: var(--gold);
 }
 
+.progress-stats {
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  margin: -6px 0 16px;
+}
+
+.progress-stats b {
+  color: var(--accent2);
+}
+
 .cat-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;

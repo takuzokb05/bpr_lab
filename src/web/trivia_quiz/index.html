@@ -18,6 +18,7 @@
       <section id="screen-start" class="screen active">
         <div class="best-banner" id="bestBanner"></div>
         <p class="lead">分野を選んでスタート。<br />各問に「どの資格で役立つ知識か」が出ます。</p>
+        <p class="progress-stats" id="progressStats"></p>
         <div id="catGrid" class="cat-grid"><!-- JSで生成 --></div>
       </section>
 
@@ -92,7 +93,10 @@
       </footer>
     </div>
 
-    <script src="questions.js"></script>
+    <script src="questions/_categories.js"></script>
+    <script src="questions/it.js"></script>
+    <script src="questions/life.js"></script>
+    <script src="questions/culture.js"></script>
     <script>
       "use strict";
 
@@ -104,6 +108,7 @@
       };
       const catGrid = document.getElementById("catGrid");
       const bestBanner = document.getElementById("bestBanner");
+      const progressStats = document.getElementById("progressStats");
       const progressText = document.getElementById("progressText");
       const progressBar = document.getElementById("progressBar");
       const xpText = document.getElementById("xpText");
@@ -128,6 +133,85 @@
       const COMBO_XP = 5; // 連続正解1つにつき上乗せされるXP
       const BEST_KEY = "trivia_quiz_best_v1"; // localStorage キー
       const SOUND_KEY = "trivia_quiz_sound_v1"; // 音のオン/オフ保存
+      const PROGRESS_KEY = "trivia_quiz_progress_v1"; // 問題ごとの出題履歴
+
+      // ---- 各問に安定した id を付与（問題文から生成。並べ替えても壊れない） ----
+      function hashId(str) {
+        let h = 5381;
+        for (let i = 0; i < str.length; i++) {
+          h = ((h << 5) + h) ^ str.charCodeAt(i);
+        }
+        return (h >>> 0).toString(36);
+      }
+      QUIZ_DATA.forEach((q) => {
+        if (!q.id) q.id = hashId(q.category + "|" + q.question);
+      });
+
+      // ---- 出題履歴（localStorage。未対応環境でも落ちない） ----
+      function loadProgress() {
+        try {
+          return JSON.parse(localStorage.getItem(PROGRESS_KEY)) || {};
+        } catch (e) {
+          return {};
+        }
+      }
+      function saveProgress(p) {
+        try {
+          localStorage.setItem(PROGRESS_KEY, JSON.stringify(p));
+        } catch (e) {}
+      }
+      function recordResult(id, correct) {
+        const p = loadProgress();
+        const e = p[id] || { seen: 0, correct: 0, wrong: 0, last: null };
+        e.seen++;
+        if (correct) {
+          e.correct++;
+          e.last = "correct";
+        } else {
+          e.wrong++;
+          e.last = "wrong";
+        }
+        e.lastSeenAt = Date.now();
+        p[id] = e;
+        saveProgress(p);
+      }
+
+      /*
+       * セッションの問題選び（B＋間違い復習）
+       * 優先度: ① 前回間違えた問題（復習）を最大で半分まで
+       *         ② まだ出していない問題
+       *         ③ それでも足りなければ 残りの復習 → 正解済み で埋める
+       * 最後に並びをシャッフルして、復習が必ず先頭…にならないようにする。
+       */
+      function pickSession(pool) {
+        const p = loadProgress();
+        const review = [];
+        const unseen = [];
+        const known = [];
+        pool.forEach((q) => {
+          const e = p[q.id];
+          if (!e) unseen.push(q);
+          else if (e.last === "wrong") review.push(q);
+          else known.push(q);
+        });
+        const r = shuffle(review);
+        const u = shuffle(unseen);
+        const k = shuffle(known);
+
+        const picked = [];
+        const reviewCap = Math.ceil(MAX_PER_SESSION / 2);
+        const add = (arr) => {
+          for (const q of arr) {
+            if (picked.length >= MAX_PER_SESSION) break;
+            if (!picked.includes(q)) picked.push(q);
+          }
+        };
+        add(r.slice(0, reviewCap)); // ①復習（最大半分）
+        add(u); // ②未出題
+        add(r.slice(reviewCap)); // ③残りの復習
+        add(k); // ④正解済みで穴埋め
+        return shuffle(picked);
+      }
 
       // ---- 効果音（WebAudio。音源ファイル不要・オフラインでも鳴る） ----
       let audioCtx = null;
@@ -247,6 +331,31 @@
         }
       }
 
+      // スタート画面に学習の進み具合を表示（出題スキームが効いている実感のため）
+      function renderProgressStats() {
+        const p = loadProgress();
+        const total = QUIZ_DATA.length;
+        let cleared = 0;
+        let review = 0;
+        QUIZ_DATA.forEach((q) => {
+          const e = p[q.id];
+          if (!e) return;
+          if (e.last === "correct") cleared++;
+          else if (e.last === "wrong") review++;
+        });
+        if (cleared === 0 && review === 0) {
+          progressStats.textContent = "全 " + total + " 問。まずは1ラウンドどうぞ！";
+          return;
+        }
+        progressStats.innerHTML =
+          "クリア <b>" +
+          cleared +
+          "</b> / 全 " +
+          total +
+          " 問" +
+          (review > 0 ? " ・ 復習待ち <b>" + review + "</b> 問" : "");
+      }
+
       // ---- 画面切り替え ----
       function show(name) {
         Object.values(screens).forEach((s) => s.classList.remove("active"));
@@ -312,7 +421,7 @@
           categoryKey === "mix"
             ? QUIZ_DATA
             : QUIZ_DATA.filter((q) => q.category === categoryKey);
-        session = shuffle(pool).slice(0, MAX_PER_SESSION);
+        session = pickSession(pool);
         current = 0;
         score = 0;
         streak = 0;
@@ -360,6 +469,7 @@
         const q = session[current];
         const buttons = Array.from(choicesEl.children);
         const isCorrect = idx === q.answer;
+        recordResult(q.id, isCorrect);
 
         buttons.forEach((b, i) => {
           b.disabled = true;
@@ -505,12 +615,14 @@
         .addEventListener("click", () => startQuiz(lastCategory));
       document.getElementById("homeBtn").addEventListener("click", () => {
         renderBestBanner();
+        renderProgressStats();
         show("start");
       });
 
       // ---- 初期化 ----
       buildCategoryButtons();
       renderBestBanner();
+      renderProgressStats();
       updateSoundButton();
     </script>
   </body>
