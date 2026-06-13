@@ -15,7 +15,8 @@
 
       <!-- ===== スタート画面 ===== -->
       <section id="screen-start" class="screen active">
-        <p class="lead">分野を選んでスタート。<br />1問ごとに、めちゃくちゃ詳しい解説つきです。</p>
+        <div class="best-banner" id="bestBanner"></div>
+        <p class="lead">分野を選んでスタート。<br />各問に「どの資格の話か」が出ます。</p>
         <div id="catGrid" class="cat-grid"><!-- JSで生成 --></div>
       </section>
 
@@ -23,25 +24,31 @@
       <section id="screen-quiz" class="screen">
         <div class="quiz-bar">
           <span id="progressText">1 / 10</span>
-          <span class="streak" id="streakText">🔥 0連続</span>
+          <span><span class="xp" id="xpText">0 XP</span> ・ <span class="streak" id="streakText">🔥 0</span></span>
         </div>
         <div class="progress"><span id="progressBar"></span></div>
 
         <div class="card">
-          <span class="cat-tag" id="catTag">分野</span>
+          <div class="tags">
+            <span class="cat-tag" id="catTag">分野</span>
+            <span class="qual-tag" id="qualTag">資格</span>
+          </div>
           <p class="question" id="questionText">問題文</p>
           <div class="choices" id="choices"><!-- JSで生成 --></div>
 
           <div class="explain" id="explain">
-            <p class="verdict" id="verdict">正解！</p>
-            <h3>結論</h3>
+            <div class="verdict-row">
+              <p class="verdict" id="verdict">正解！</p>
+              <span class="xp-gain" id="xpGain" style="display: none"></span>
+            </div>
+            <h3 class="c-conclusion">結論</h3>
             <p id="exConclusion"></p>
-            <h3>なぜそうなるの？</h3>
+            <h3 class="c-why">なぜそうなるの？</h3>
             <p id="exWhy"></p>
-            <h3>こう役立つ</h3>
+            <h3 class="c-useful">こう役立つ</h3>
             <p id="exUseful"></p>
             <div id="triviaBlock">
-              <h3>おまけ豆知識</h3>
+              <h3 class="c-trivia">おまけ豆知識</h3>
               <p id="exTrivia"></p>
             </div>
             <button class="next-btn" id="nextBtn">次の問題へ →</button>
@@ -57,6 +64,7 @@
             <span id="resultScore">0</span
             ><small> / <span id="resultTotal">0</span> 問正解</small>
           </p>
+          <p class="new-best" id="newBest">🏅 自己ベスト更新！</p>
           <p class="result-msg" id="resultMsg"></p>
           <div class="result-stats">
             <div>
@@ -64,11 +72,17 @@
               <span class="lbl">正答率</span>
             </div>
             <div>
+              <span class="num" id="resultXp">0</span>
+              <span class="lbl">獲得XP</span>
+            </div>
+            <div>
               <span class="num" id="resultBestStreak">0</span>
-              <span class="lbl">最高連続正解</span>
+              <span class="lbl">最高連続</span>
             </div>
           </div>
+          <div class="badges" id="badges"><!-- JSで生成 --></div>
           <button class="primary-btn" id="retryBtn">もう一度チャレンジ</button>
+          <button class="ghost-btn" id="homeBtn">分野を選び直す</button>
         </div>
       </section>
 
@@ -88,14 +102,18 @@
         result: document.getElementById("screen-result"),
       };
       const catGrid = document.getElementById("catGrid");
+      const bestBanner = document.getElementById("bestBanner");
       const progressText = document.getElementById("progressText");
       const progressBar = document.getElementById("progressBar");
+      const xpText = document.getElementById("xpText");
       const streakText = document.getElementById("streakText");
       const catTag = document.getElementById("catTag");
+      const qualTag = document.getElementById("qualTag");
       const questionText = document.getElementById("questionText");
       const choicesEl = document.getElementById("choices");
       const explainEl = document.getElementById("explain");
       const verdictEl = document.getElementById("verdict");
+      const xpGainEl = document.getElementById("xpGain");
       const exConclusion = document.getElementById("exConclusion");
       const exWhy = document.getElementById("exWhy");
       const exUseful = document.getElementById("exUseful");
@@ -104,6 +122,9 @@
       const nextBtn = document.getElementById("nextBtn");
 
       const MAX_PER_SESSION = 10; // 1回の出題数の上限
+      const BASE_XP = 10; // 正解の基礎XP
+      const COMBO_XP = 5; // 連続正解1つにつき上乗せされるXP
+      const BEST_KEY = "trivia_quiz_best_v1"; // localStorage キー
 
       // ---- 出題状態 ----
       let session = [];
@@ -111,7 +132,38 @@
       let score = 0;
       let streak = 0;
       let bestStreak = 0;
+      let xp = 0;
       let answered = false;
+      let lastCategory = "mix"; // 「もう一度」で同じ分野を出すため
+
+      // ---- ベスト記録（localStorage、使えない環境でも落ちないように） ----
+      function loadBest() {
+        try {
+          return JSON.parse(localStorage.getItem(BEST_KEY)) || {};
+        } catch (e) {
+          return {};
+        }
+      }
+      function saveBest(best) {
+        try {
+          localStorage.setItem(BEST_KEY, JSON.stringify(best));
+        } catch (e) {
+          /* 保存できなくても続行 */
+        }
+      }
+
+      function renderBestBanner() {
+        const best = loadBest();
+        if (best.xp) {
+          bestBanner.classList.add("show");
+          bestBanner.innerHTML =
+            "これまでのベスト：<b>" +
+            best.xp +
+            " XP</b>（正答率 " +
+            (best.rate || 0) +
+            "%）";
+        }
+      }
 
       // ---- 画面切り替え ----
       function show(name) {
@@ -130,11 +182,22 @@
         return a;
       }
 
+      // ---- ある分野に登場する資格名の一覧（重複なし） ----
+      function qualsOf(categoryKey) {
+        const list = QUIZ_DATA.filter((q) => q.category === categoryKey).map(
+          (q) => q.qual
+        );
+        return [...new Set(list)];
+      }
+
       // ---- スタート画面のカテゴリボタンを生成 ----
       function buildCategoryButtons() {
         catGrid.innerHTML = "";
         Object.entries(CATEGORIES).forEach(([key, meta]) => {
           const n = QUIZ_DATA.filter((q) => q.category === key).length;
+          const quals = qualsOf(key);
+          const preview =
+            quals.slice(0, 3).join("・") + (quals.length > 3 ? " ほか" : "");
           const btn = document.createElement("button");
           btn.className = "cat-btn";
           btn.innerHTML =
@@ -142,9 +205,12 @@
             meta.emoji +
             "</span>" +
             meta.label +
-            '<span class="count">' +
+            "（" +
             n +
-            "問</span>";
+            "問）" +
+            '<span class="quals">' +
+            preview +
+            "</span>";
           btn.addEventListener("click", () => startQuiz(key));
           catGrid.appendChild(btn);
         });
@@ -152,13 +218,14 @@
         const mix = document.createElement("button");
         mix.className = "cat-btn mix";
         mix.innerHTML =
-          '<span class="emoji">🎲</span>おまかせミックス<span class="count">全分野からランダム</span>';
+          '<span class="emoji">🎲</span>おまかせミックス<span class="quals">全分野からランダム出題</span>';
         mix.addEventListener("click", () => startQuiz("mix"));
         catGrid.appendChild(mix);
       }
 
       // ---- クイズ開始 ----
       function startQuiz(categoryKey) {
+        lastCategory = categoryKey;
         const pool =
           categoryKey === "mix"
             ? QUIZ_DATA
@@ -168,6 +235,7 @@
         score = 0;
         streak = 0;
         bestStreak = 0;
+        xp = 0;
         show("quiz");
         renderQuestion();
       }
@@ -179,10 +247,11 @@
         const meta = CATEGORIES[q.category];
 
         progressText.textContent = current + 1 + " / " + session.length;
-        progressBar.style.width =
-          (current / session.length) * 100 + "%";
-        streakText.textContent = "🔥 " + streak + "連続";
+        progressBar.style.width = (current / session.length) * 100 + "%";
+        xpText.textContent = xp + " XP";
+        streakText.textContent = "🔥 " + streak;
         catTag.textContent = meta.emoji + " " + meta.label;
+        qualTag.textContent = q.qual;
         questionText.textContent = q.question;
 
         choicesEl.innerHTML = "";
@@ -221,15 +290,23 @@
           score++;
           streak++;
           bestStreak = Math.max(bestStreak, streak);
-          verdictEl.textContent = "正解！ 🎯";
+          // コンボボーナス：連続正解が伸びるほど多くもらえる
+          const gain = BASE_XP + (streak - 1) * COMBO_XP;
+          xp += gain;
+          verdictEl.textContent = streak >= 3 ? "正解！ " + streak + "連続🔥" : "正解！ 🎯";
           verdictEl.className = "verdict ok";
+          xpGainEl.textContent = "+" + gain + " XP";
+          xpGainEl.style.display = "";
         } else {
           streak = 0;
-          verdictEl.textContent =
-            "残念… 正解は「" + "ABCD"[q.answer] + "」";
+          verdictEl.textContent = "残念… 正解は「" + "ABCD"[q.answer] + "」";
           verdictEl.className = "verdict ng";
+          xpGainEl.style.display = "none";
         }
-        streakText.textContent = "🔥 " + streak + "連続";
+        xpText.textContent = xp + " XP";
+        streakText.textContent = "🔥 " + streak;
+        progressBar.style.width =
+          ((current + 1) / session.length) * 100 + "%";
 
         const ex = q.explanation;
         exConclusion.textContent = ex.conclusion || "";
@@ -257,6 +334,34 @@
         }
       });
 
+      // ---- 達成バッジを組み立てる ----
+      function buildBadges(rate, total) {
+        const badges = [];
+        if (rate === 100) badges.push("👑 全問正解");
+        if (bestStreak >= 5) badges.push("🔥 5連続コンボ");
+        else if (bestStreak >= 3) badges.push("🔥 3連続コンボ");
+        if (total >= 10) badges.push("🎓 10問完走");
+        if (rate >= 70 && rate < 100) badges.push("✨ 好成績");
+        return badges;
+      }
+
+      // ---- 紙吹雪 ----
+      function launchConfetti() {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+          return;
+        const colors = ["#38bdf8", "#fbbf24", "#22c55e", "#6366f1", "#ef4444"];
+        for (let i = 0; i < 80; i++) {
+          const c = document.createElement("div");
+          c.className = "confetti";
+          c.style.left = Math.random() * 100 + "vw";
+          c.style.background = colors[i % colors.length];
+          c.style.animationDuration = 2.2 + Math.random() * 1.8 + "s";
+          c.style.animationDelay = Math.random() * 0.6 + "s";
+          document.body.appendChild(c);
+          setTimeout(() => c.remove(), 4200);
+        }
+      }
+
       // ---- 結果画面 ----
       function showResult() {
         const total = session.length;
@@ -264,6 +369,7 @@
         document.getElementById("resultScore").textContent = score;
         document.getElementById("resultTotal").textContent = total;
         document.getElementById("resultRate").textContent = rate + "%";
+        document.getElementById("resultXp").textContent = xp;
         document.getElementById("resultBestStreak").textContent = bestStreak;
 
         let emoji, msg;
@@ -283,15 +389,41 @@
         document.getElementById("resultEmoji").textContent = emoji;
         document.getElementById("resultMsg").textContent = msg;
 
+        // バッジ
+        const badgesEl = document.getElementById("badges");
+        badgesEl.innerHTML = "";
+        buildBadges(rate, total).forEach((label) => {
+          const b = document.createElement("span");
+          b.className = "badge";
+          b.textContent = label;
+          badgesEl.appendChild(b);
+        });
+
+        // 自己ベスト更新判定（XP基準）
+        const best = loadBest();
+        const newBestEl = document.getElementById("newBest");
+        if (!best.xp || xp > best.xp) {
+          saveBest({ xp: xp, rate: rate, score: score, total: total });
+          newBestEl.classList.add("show");
+        } else {
+          newBestEl.classList.remove("show");
+        }
+
         show("result");
+        if (rate >= 70) launchConfetti();
       }
 
       document
         .getElementById("retryBtn")
-        .addEventListener("click", () => show("start"));
+        .addEventListener("click", () => startQuiz(lastCategory));
+      document.getElementById("homeBtn").addEventListener("click", () => {
+        renderBestBanner();
+        show("start");
+      });
 
       // ---- 初期化 ----
       buildCategoryButtons();
+      renderBestBanner();
     </script>
   </body>
 </html>

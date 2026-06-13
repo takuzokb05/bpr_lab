@@ -5,7 +5,8 @@
  *
  * 1問の形:
  *   {
- *     category: "it" | "life" | "culture",   // CATEGORIES のキー
+ *     category: "it" | "life" | "culture",   // CATEGORIES のキー（大まかな分野）
+ *     qual: "ITパスポート",                   // この雑学が出てくる代表的な資格名
  *     question: "問題文",
  *     choices: ["選択肢1", "選択肢2", "選択肢3", "選択肢4"], // 4つ
  *     answer: 0,  // 正解の choices の番号（0始まり）
@@ -28,6 +29,7 @@ const QUIZ_DATA = [
   // ===================== IT・デジタル =====================
   {
     category: "it",
+    qual: "ITパスポート",
     question: "「Wi-Fi」という名前は、もともと何の略でしょう？",
     choices: [
       "Wireless Fidelity（ワイヤレス・フィデリティ）",
@@ -45,6 +47,7 @@ const QUIZ_DATA = [
   },
   {
     category: "it",
+    qual: "基本情報技術者",
     question: "プログラムの不具合を「バグ（bug＝虫）」と呼ぶのは、ある出来事が由来とされます。それは？",
     choices: [
       "技術者が虫歯に苦しみながら修正したから",
@@ -62,6 +65,7 @@ const QUIZ_DATA = [
   },
   {
     category: "it",
+    qual: "ITパスポート",
     question: "「1バイト（byte）」は、何ビット（bit）でしょう？",
     choices: ["4ビット", "8ビット", "16ビット", "10ビット"],
     answer: 1,
@@ -74,6 +78,7 @@ const QUIZ_DATA = [
   },
   {
     category: "it",
+    qual: "情報セキュリティマネジメント",
     question: "サイトのURLが「https://」のとき、最後の「s」は何を表す？",
     choices: ["Speed（速い）", "Secure（安全・暗号化）", "Server（サーバー）", "Standard（標準）"],
     answer: 1,
@@ -86,6 +91,7 @@ const QUIZ_DATA = [
   },
   {
     category: "it",
+    qual: "ITパスポート",
     question: "「クラウド（cloud）にデータを保存する」とき、実際にデータはどこにある？",
     choices: [
       "空中の電波の中に漂っている",
@@ -103,6 +109,7 @@ const QUIZ_DATA = [
   },
   {
     category: "it",
+    qual: "ITパスポート",
     question: "近距離無線「Bluetooth」の名前の由来は？",
     choices: [
       "歯医者が発明したから",
@@ -122,6 +129,7 @@ const QUIZ_DATA = [
   // ===================== 日常お役立ち =====================
   {
     category: "life",
+    qual: "食生活アドバイザー",
     question: "食品の「賞味期限」と「消費期限」。正しい説明はどれ？",
     choices: [
       "どちらも『安全に食べられる限界』で意味は同じ",
@@ -139,6 +147,7 @@ const QUIZ_DATA = [
   },
   {
     category: "life",
+    qual: "FP技能士3級",
     question: "クレジットカードの「リボ払い」が要注意とされる一番の理由は？",
     choices: [
       "ポイントが一切つかないから",
@@ -156,6 +165,7 @@ const QUIZ_DATA = [
   },
   {
     category: "life",
+    qual: "FP技能士3級",
     question: "「複利」の効果をざっくり知る『72の法則』。年利6%でお金が約2倍になるのは何年後？",
     choices: ["約6年", "約12年", "約36年", "約72年"],
     answer: 1,
@@ -168,6 +178,7 @@ const QUIZ_DATA = [
   },
   {
     category: "life",
+    qual: "日商簿記3級",
     question: "5万円以上の領収書に「収入印紙」を貼る必要があるのは、何のため？",
     choices: [
       "領収書を本物だと証明するため",
@@ -185,6 +196,7 @@ const QUIZ_DATA = [
   },
   {
     category: "life",
+    qual: "FP技能士3級",
     question: "地震で家が壊れたとき、一般的な「火災保険」だけで補償される？",
     choices: [
       "はい、火災保険に自動で含まれる",
@@ -202,6 +214,7 @@ const QUIZ_DATA = [
   },
   {
     category: "life",
+    qual: "FP技能士3級",
     question: "「ふるさと納税」で寄付をしたとき、自己負担になる金額は基本いくら？",
     choices: [
       "寄付額の全額",
@@ -221,6 +234,7 @@ const QUIZ_DATA = [
   // ===================== 教養・一般常識 =====================
   {
     category: "culture",
+    qual: "国内旅行業務取扱管理者",
     question: "日本一高い山は富士山。では“2番目に高い山”は？",
     choices: ["槍ヶ岳", "北岳（きただけ）", "立山", "御嶽山"],
     answer: 1,
@@ -233,6 +247,7 @@ const QUIZ_DATA = [
   },
   {
     category: "culture",
+    qual: "漢字検定（漢検）",
     question: "漢字の「右」と「左」。実は書き順（最初の一画）が違います。正しいのは？",
     choices: [
       "どちらも横棒（一）から書く",
@@ -250,6 +265,7 @@ const QUIZ_DATA = [
   },
   {
     category: "culture",
+    qual: "天文宇宙検定",
     question: "4年に一度「うるう年」で2月が29日まである、一番の理由は？",
     choices: [
       "昔の暦の計算ミスを補うため",
@@ -267,6 +283,7 @@ const QUIZ_DATA = [
   },
   {
     category: "culture",
+    qual: "世界遺産検定",
     question: "世界遺産を「世界遺産」として登録・管理している国際機関は？",
     choices: ["WHO（世界保健機関）", "ユネスコ（UNESCO）", "国連安全保障理事会", "オリンピック委員会（IOC）"],
     answer: 1,
@@ -279,6 +296,7 @@ const QUIZ_DATA = [
   },
   {
     category: "culture",
+    qual: "ニュース時事能力検定",
     question: "ノーベル賞に「数学賞」が無いのは有名です。数学界で“ノーベル賞級”とされる賞は？",
     choices: ["フィールズ賞", "ピューリッツァー賞", "アカデミー賞", "ダーウィン賞"],
     answer: 0,
@@ -291,6 +309,7 @@ const QUIZ_DATA = [
   },
   {
     category: "culture",
+    qual: "色彩検定",
     question: "「虹は何色？」——実はこれ、世界共通ではありません。正しいのは？",
     choices: [
       "世界中どこでも必ず7色と決まっている",
