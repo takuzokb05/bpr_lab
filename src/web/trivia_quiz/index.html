@@ -97,6 +97,10 @@
     <script src="questions/it.js"></script>
     <script src="questions/life.js"></script>
     <script src="questions/culture.js"></script>
+    <script src="questions/health.js"></script>
+    <script src="questions/law.js"></script>
+    <script src="questions/business.js"></script>
+    <script src="questions/nature.js"></script>
     <script>
       "use strict";
 
@@ -301,6 +305,7 @@
       let xp = 0;
       let answered = false;
       let lastCategory = "mix"; // 「もう一度」で同じ分野を出すため
+      let choiceOrder = []; // 選択肢の表示順（毎問シャッフルし、正解位置の偏りを消す）
 
       // ---- ベスト記録（localStorage、使えない環境でも落ちないように） ----
       function loadBest() {
@@ -386,6 +391,7 @@
         catGrid.innerHTML = "";
         Object.entries(CATEGORIES).forEach(([key, meta]) => {
           const n = QUIZ_DATA.filter((q) => q.category === key).length;
+          if (n === 0) return; // 問題が無いカテゴリはボタンを出さない
           const quals = qualsOf(key);
           const preview =
             quals.slice(0, 3).join("・") + (quals.length > 3 ? " ほか" : "");
@@ -445,17 +451,19 @@
         qualTag.textContent = q.qual;
         questionText.textContent = q.question;
 
+        // 選択肢の表示順を毎回シャッフル（正解位置の偏りをなくす）
+        choiceOrder = shuffle([...Array(q.choices.length).keys()]);
         choicesEl.innerHTML = "";
-        q.choices.forEach((text, idx) => {
+        choiceOrder.forEach((originalIdx, pos) => {
           const btn = document.createElement("button");
           btn.className = "choice";
           btn.innerHTML =
             '<span class="mark">' +
-            "ABCD"[idx] +
+            "ABCD"[pos] +
             "</span><span>" +
-            text +
+            q.choices[originalIdx] +
             "</span>";
-          btn.addEventListener("click", () => selectAnswer(idx));
+          btn.addEventListener("click", () => selectAnswer(pos));
           choicesEl.appendChild(btn);
         });
 
@@ -468,12 +476,13 @@
         answered = true;
         const q = session[current];
         const buttons = Array.from(choicesEl.children);
-        const isCorrect = idx === q.answer;
+        const isCorrect = choiceOrder[idx] === q.answer;
+        const correctPos = choiceOrder.indexOf(q.answer); // 正解が表示されている位置
         recordResult(q.id, isCorrect);
 
         buttons.forEach((b, i) => {
           b.disabled = true;
-          if (i === q.answer) b.classList.add("correct");
+          if (i === correctPos) b.classList.add("correct");
           else if (i === idx) b.classList.add("wrong");
           else b.classList.add("dim");
         });
@@ -492,7 +501,7 @@
           playCorrect(streak);
         } else {
           streak = 0;
-          verdictEl.textContent = "残念… 正解は「" + "ABCD"[q.answer] + "」";
+          verdictEl.textContent = "残念… 正解は「" + "ABCD"[correctPos] + "」";
           verdictEl.className = "verdict ng";
           xpGainEl.style.display = "none";
           playWrong();

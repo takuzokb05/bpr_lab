@@ -14,6 +14,10 @@ const CATEGORIES = {
   it: { label: "IT・デジタル", emoji: "💻" },
   life: { label: "日常お役立ち", emoji: "💰" },
   culture: { label: "教養・一般常識", emoji: "📚" },
+  health: { label: "健康・からだ", emoji: "🩺" },
+  law: { label: "くらしと法律", emoji: "⚖️" },
+  business: { label: "仕事・ビジネス", emoji: "💼" },
+  nature: { label: "自然・防災", emoji: "🌏" },
 };
 
 // 全問題がここに集まる

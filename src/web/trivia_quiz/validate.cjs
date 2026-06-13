@@ -9,7 +9,12 @@ const vm = require("vm");
 const path = require("path");
 
 const dir = path.join(__dirname, "questions");
-const files = ["_categories.js", "it.js", "life.js", "culture.js"];
+// _categories.js を先に、その後は questions/ 内の全 .js を読み込む
+const rest = fs
+  .readdirSync(dir)
+  .filter((f) => f.endsWith(".js") && f !== "_categories.js")
+  .sort();
+const files = ["_categories.js", ...rest];
 
 const ctx = { window: {} };
 vm.createContext(ctx);
