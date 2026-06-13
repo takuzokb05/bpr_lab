@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>へぇ〜雑学クイズ｜資格の超入門</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="app-head">
+        <h1>へぇ〜雑学クイズ</h1>
+        <p>色んな資格の“知ってると役に立つ”を、超初心者向けに1問ずつ</p>
+      </header>
+
+      <!-- ===== スタート画面 ===== -->
+      <section id="screen-start" class="screen active">
+        <p class="lead">分野を選んでスタート。<br />1問ごとに、めちゃくちゃ詳しい解説つきです。</p>
+        <div id="catGrid" class="cat-grid"><!-- JSで生成 --></div>
+      </section>
+
+      <!-- ===== クイズ画面 ===== -->
+      <section id="screen-quiz" class="screen">
+        <div class="quiz-bar">
+          <span id="progressText">1 / 10</span>
+          <span class="streak" id="streakText">🔥 0連続</span>
+        </div>
+        <div class="progress"><span id="progressBar"></span></div>
+
+        <div class="card">
+          <span class="cat-tag" id="catTag">分野</span>
+          <p class="question" id="questionText">問題文</p>
+          <div class="choices" id="choices"><!-- JSで生成 --></div>
+
+          <div class="explain" id="explain">
+            <p class="verdict" id="verdict">正解！</p>
+            <h3>結論</h3>
+            <p id="exConclusion"></p>
+            <h3>なぜそうなるの？</h3>
+            <p id="exWhy"></p>
+            <h3>こう役立つ</h3>
+            <p id="exUseful"></p>
+            <div id="triviaBlock">
+              <h3>おまけ豆知識</h3>
+              <p id="exTrivia"></p>
+            </div>
+            <button class="next-btn" id="nextBtn">次の問題へ →</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 結果画面 ===== -->
+      <section id="screen-result" class="screen">
+        <div class="card result-card">
+          <div class="result-emoji" id="resultEmoji">🎉</div>
+          <p class="result-score">
+            <span id="resultScore">0</span
+            ><small> / <span id="resultTotal">0</span> 問正解</small>
+          </p>
+          <p class="result-msg" id="resultMsg"></p>
+          <div class="result-stats">
+            <div>
+              <span class="num" id="resultRate">0%</span>
+              <span class="lbl">正答率</span>
+            </div>
+            <div>
+              <span class="num" id="resultBestStreak">0</span>
+              <span class="lbl">最高連続正解</span>
+            </div>
+          </div>
+          <button class="primary-btn" id="retryBtn">もう一度チャレンジ</button>
+        </div>
+      </section>
+
+      <footer class="app-foot">
+        知るほど賢くなった気がする。 — へぇ〜雑学クイズ
+      </footer>
+    </div>
+
+    <script src="questions.js"></script>
+    <script>
+      "use strict";
+
+      // ---- 要素参照 ----
+      const screens = {
+        start: document.getElementById("screen-start"),
+        quiz: document.getElementById("screen-quiz"),
+        result: document.getElementById("screen-result"),
+      };
+      const catGrid = document.getElementById("catGrid");
+      const progressText = document.getElementById("progressText");
+      const progressBar = document.getElementById("progressBar");
+      const streakText = document.getElementById("streakText");
+      const catTag = document.getElementById("catTag");
+      const questionText = document.getElementById("questionText");
+      const choicesEl = document.getElementById("choices");
+      const explainEl = document.getElementById("explain");
+      const verdictEl = document.getElementById("verdict");
+      const exConclusion = document.getElementById("exConclusion");
+      const exWhy = document.getElementById("exWhy");
+      const exUseful = document.getElementById("exUseful");
+      const exTrivia = document.getElementById("exTrivia");
+      const triviaBlock = document.getElementById("triviaBlock");
+      const nextBtn = document.getElementById("nextBtn");
+
+      const MAX_PER_SESSION = 10; // 1回の出題数の上限
+
+      // ---- 出題状態 ----
+      let session = [];
+      let current = 0;
+      let score = 0;
+      let streak = 0;
+      let bestStreak = 0;
+      let answered = false;
+
+      // ---- 画面切り替え ----
+      function show(name) {
+        Object.values(screens).forEach((s) => s.classList.remove("active"));
+        screens[name].classList.add("active");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      // ---- 配列シャッフル（Fisher–Yates） ----
+      function shuffle(arr) {
+        const a = arr.slice();
+        for (let i = a.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+      }
+
+      // ---- スタート画面のカテゴリボタンを生成 ----
+      function buildCategoryButtons() {
+        catGrid.innerHTML = "";
+        Object.entries(CATEGORIES).forEach(([key, meta]) => {
+          const n = QUIZ_DATA.filter((q) => q.category === key).length;
+          const btn = document.createElement("button");
+          btn.className = "cat-btn";
+          btn.innerHTML =
+            '<span class="emoji">' +
+            meta.emoji +
+            "</span>" +
+            meta.label +
+            '<span class="count">' +
+            n +
+            "問</span>";
+          btn.addEventListener("click", () => startQuiz(key));
+          catGrid.appendChild(btn);
+        });
+
+        const mix = document.createElement("button");
+        mix.className = "cat-btn mix";
+        mix.innerHTML =
+          '<span class="emoji">🎲</span>おまかせミックス<span class="count">全分野からランダム</span>';
+        mix.addEventListener("click", () => startQuiz("mix"));
+        catGrid.appendChild(mix);
+      }
+
+      // ---- クイズ開始 ----
+      function startQuiz(categoryKey) {
+        const pool =
+          categoryKey === "mix"
+            ? QUIZ_DATA
+            : QUIZ_DATA.filter((q) => q.category === categoryKey);
+        session = shuffle(pool).slice(0, MAX_PER_SESSION);
+        current = 0;
+        score = 0;
+        streak = 0;
+        bestStreak = 0;
+        show("quiz");
+        renderQuestion();
+      }
+
+      // ---- 1問を描画 ----
+      function renderQuestion() {
+        answered = false;
+        const q = session[current];
+        const meta = CATEGORIES[q.category];
+
+        progressText.textContent = current + 1 + " / " + session.length;
+        progressBar.style.width =
+          (current / session.length) * 100 + "%";
+        streakText.textContent = "🔥 " + streak + "連続";
+        catTag.textContent = meta.emoji + " " + meta.label;
+        questionText.textContent = q.question;
+
+        choicesEl.innerHTML = "";
+        q.choices.forEach((text, idx) => {
+          const btn = document.createElement("button");
+          btn.className = "choice";
+          btn.innerHTML =
+            '<span class="mark">' +
+            "ABCD"[idx] +
+            "</span><span>" +
+            text +
+            "</span>";
+          btn.addEventListener("click", () => selectAnswer(idx));
+          choicesEl.appendChild(btn);
+        });
+
+        explainEl.classList.remove("show");
+      }
+
+      // ---- 回答処理 ----
+      function selectAnswer(idx) {
+        if (answered) return;
+        answered = true;
+        const q = session[current];
+        const buttons = Array.from(choicesEl.children);
+        const isCorrect = idx === q.answer;
+
+        buttons.forEach((b, i) => {
+          b.disabled = true;
+          if (i === q.answer) b.classList.add("correct");
+          else if (i === idx) b.classList.add("wrong");
+          else b.classList.add("dim");
+        });
+
+        if (isCorrect) {
+          score++;
+          streak++;
+          bestStreak = Math.max(bestStreak, streak);
+          verdictEl.textContent = "正解！ 🎯";
+          verdictEl.className = "verdict ok";
+        } else {
+          streak = 0;
+          verdictEl.textContent =
+            "残念… 正解は「" + "ABCD"[q.answer] + "」";
+          verdictEl.className = "verdict ng";
+        }
+        streakText.textContent = "🔥 " + streak + "連続";
+
+        const ex = q.explanation;
+        exConclusion.textContent = ex.conclusion || "";
+        exWhy.textContent = ex.why || "";
+        exUseful.textContent = ex.useful || "";
+        if (ex.trivia) {
+          exTrivia.textContent = ex.trivia;
+          triviaBlock.style.display = "";
+        } else {
+          triviaBlock.style.display = "none";
+        }
+
+        nextBtn.textContent =
+          current + 1 >= session.length ? "結果を見る →" : "次の問題へ →";
+        explainEl.classList.add("show");
+      }
+
+      // ---- 次の問題 / 結果へ ----
+      nextBtn.addEventListener("click", () => {
+        current++;
+        if (current >= session.length) {
+          showResult();
+        } else {
+          renderQuestion();
+        }
+      });
+
+      // ---- 結果画面 ----
+      function showResult() {
+        const total = session.length;
+        const rate = Math.round((score / total) * 100);
+        document.getElementById("resultScore").textContent = score;
+        document.getElementById("resultTotal").textContent = total;
+        document.getElementById("resultRate").textContent = rate + "%";
+        document.getElementById("resultBestStreak").textContent = bestStreak;
+
+        let emoji, msg;
+        if (rate === 100) {
+          emoji = "🏆";
+          msg = "全問正解！ もう立派な雑学マスターです。";
+        } else if (rate >= 70) {
+          emoji = "🎉";
+          msg = "お見事。確実に賢くなっていますね。";
+        } else if (rate >= 40) {
+          emoji = "💡";
+          msg = "いい調子。解説を読んだぶん、知識が増えました。";
+        } else {
+          emoji = "🌱";
+          msg = "ここからが伸びしろ。解説こそが本番です。";
+        }
+        document.getElementById("resultEmoji").textContent = emoji;
+        document.getElementById("resultMsg").textContent = msg;
+
+        show("result");
+      }
+
+      document
+        .getElementById("retryBtn")
+        .addEventListener("click", () => show("start"));
+
+      // ---- 初期化 ----
+      buildCategoryButtons();
+    </script>
+  </body>
+</html>
