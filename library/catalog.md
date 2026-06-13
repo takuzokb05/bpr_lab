@@ -1,6 +1,6 @@
 # Library Catalog
 
-最終更新: 2026-06-11
+最終更新: 2026-06-13
 
 ## 凡例
 - 状態: 未読 / 既読 / 要精読
@@ -456,12 +456,60 @@
 
 ---
 
+## 2026-06-13 収集分（36件検索 → 23件SIGNAL）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 252 | [2026-06-13_252](articles/2026-06-13_252_Claude-Code-Q1-2026-Update-Roundup-Every-Feature-.md) | Claude Code Q1 2026 総まとめ — Computer Use・Remote Control・Visualizations・Scheduled Tasks 全機能解説（MindStudio） | claude-code | 未読 | #web-signal |
+| 253 | [2026-06-13_253](articles/2026-06-13_253_Claude-Code-Changelog-All-Release-Notes-2026-cl.md) | Claude Code 全リリースノート追跡 2026 — v2.1.x全バージョン・6月更新内容・コスト早見表付き（claudefa.st） | claude-code | 未読 | #web-signal |
+| 254 | [2026-06-13_254](articles/2026-06-13_254_Claude-Code-Tutorial-for-Beginners-Complete-2026.md) | Claude Code入門完全ガイド 2026 — インストール・CLAUDE.md・Plan Mode・Skills・Cursor比較（codewithmukesh） | claude-code | 未読 | #web-signal |
+| 255 | [2026-06-13_255](articles/2026-06-13_255_Claude-Code-Skills-A-Practical-Guide-for-2026-D.md) | Claude Code Skills 実践ガイド 2026 — SKILL.md構造・スラッシュコマンド/サブエージェント比較・配置方法（DEV Community） | claude-code | 未読 | #web-signal |
+| 256 | [2026-06-13_256](articles/2026-06-13_256_Claude-Skills-The-Complete-2026-Guide-Build-Ins.md) | Claude Skills 完全ガイド 2026 — Chat/Cowork/Code共通スキル・マーケットプレイス・ビジネス自動化事例（Build Fast with AI） | claude-code | 未読 | #web-signal |
+| 257 | [2026-06-13_257](articles/2026-06-13_257_Best-Claude-Code-Skills-in-2026-A-Curated-Directo.md) | おすすめClaude Codeスキルキュレーション 2026 — 用途別評価・verify/loop/run系需要増・品質評価基準（Developers Digest） | claude-code | 未読 | #web-signal |
+| 258 | [2026-06-13_258](articles/2026-06-13_258_Claude-Code-Agent-Teams-Subagents-and-MCP-The-202.md) | Claude Code Agent Teams + Subagents + MCP プレイブック 2026 — 3層設計・bypassPermissions並列・トークン予算管理 | claude-code | 未読 | #web-signal |
+| 259 | [2026-06-13_259](articles/2026-06-13_259_Claude-Code-2026-Complete-Cheat-Sheet-Slash-Comma.md) | Claude Code 2026 完全チートシート — スラッシュコマンド全覧・Hooksイベント早見表・MCP設定テンプレ・API料金表 | claude-code | 未読 | #web-signal |
+| 260 | [2026-06-13_260](articles/2026-06-13_260_CLAUDE.md-Best-Practices-The-Complete-Guide-for-2.md) | CLAUDE.md ベストプラクティス 完全ガイド 2026 — 200行制限の根拠・コンテキストロット・WHY付記の重要性（Medium/IAKH） | claude-code | 未読 | #web-signal |
+| 261 | [2026-06-13_261](articles/2026-06-13_261_CLAUDE.md-Best-Practices-10-Sections-to-Include-.md) | CLAUDE.md 必須10セクション — What/Why/How三層・200行A/Bテスト結果・禁止事項リスト（UX Planet） | claude-code | 未読 | #web-signal |
+| 262 | [2026-06-13_262](articles/2026-06-13_262_Claude-Code最新アップデート-Subagentと新機能-2026年6月-JA.md) | Claude Code 2026年6月最新アップデート(JA) — 5段階ネストサブエージェント・Opus 4.8デフォルト化・Safe Mode詳解（Sei San Sei） | claude-code | 未読 | #web-signal |
+| 263 | [2026-06-13_263](articles/2026-06-13_263_Claude-Code入門-#2-CLAUDE.mdの書き方と育て方-Qiita-JA.md) | CLAUDE.md書き方・育て方(JA) — 会話から反復改善するサイクル・Global vs Project使い分け・コスト節約数値（Qiita） | claude-code | 未読 | #web-signal |
+| 264 | [2026-06-13_264](articles/2026-06-13_264_Claude-Code-Skillsの使い方と汎用テンプレート公開-SIOS-Tech-Lab-JA.md) | Claude Code Skills汎用テンプレート公開(JA) — コードレビュー/テスト/ドキュメント/リファクタ4種SKILL.md無償提供（SIOS） | claude-code | 未読 | #web-signal |
+| 265 | [2026-06-13_265](articles/2026-06-13_265_Claude-Codeスキル活用術-作り方から育てる運用まで実践解説-01lab-JA.md) | Claude Codeスキル「育てる」運用ガイド(JA) — フィードバック→反復改善サイクル・チームGit管理・CI lintパターン（01lab） | claude-code | 未読 | #web-signal |
+| 266 | [2026-06-13_266](articles/2026-06-13_266_MCP-Model-Context-Protocol-Complete-2026-Guide-fo.md) | MCP 完全ガイド 2026 AI統合 — 9700万DL・ステートレス化ロードマップ・OAuth 2.1・FastMCP実装例（Sitepoint） | claude-ecosystem | 未読 | #web-signal |
+| 267 | [2026-06-13_267](articles/2026-06-13_267_Claude-Agent-SDK-Billing-Splits-June-15-What-Team.md) | Claude Agent SDK 6/15課金変更 チーム実務ガイド — クレジットプール移行・CI/CDコスト試算・判断フローチャート | claude-ecosystem | 未読 | #web-signal #urgent |
+| 268 | [2026-06-13_268](articles/2026-06-13_268_MCP対応ツール一覧-2026年最新版-エンタープライズ完全カタログ-homula-JA.md) | MCPツール完全カタログ(JA) — 国産SaaS対応状況・Salesforce公式20ツール・OAuth 2.1選定基準（homula） | claude-ecosystem | 未読 | #web-signal |
+| 269 | [2026-06-13_269](articles/2026-06-13_269_MCPサーバー全54種-カテゴリ別特徴や選び方-バイテック-JA.md) | MCPサーバー全54種 カテゴリ別解説(JA) — AWS GA対応・ステートレス移行状況・LINE/Chatwork日本市場サーバー紹介 | claude-ecosystem | 未読 | #web-signal |
+| 270 | [2026-06-13_270](articles/2026-06-13_270_AI-Trading-Agents-vs-Bots-2026-Hype-Risks-and-Rea.md) | AIトレーディングエージェント vs ボット 2026 — ハイプ/リスク/実践ワークフロー・TradingAgents v0.2.2評価（Bitsgap） | ai-trading | 未読 | #web-signal |
+| 271 | [2026-06-13_271](articles/2026-06-13_271_15-AI-Trading-Bot-Prompts-You-Can-Copy-Paste-No-Co.md) | AIトレーディングボット プロンプト15選 コピペ可能 2026 — MT5/IB/Alpaca接続コード・バックテスト手順（Fomoed） | ai-trading | 未読 | #web-signal |
+| 272 | [2026-06-13_272](articles/2026-06-13_272_AI-Trading-Strategy-How-to-Connect-MT5-to-ChatGPT.md) | MT5とLLM API接続完全ガイド — 4層アーキテクチャ・信頼度閾値・API呼び出し頻度制限・Claude API実装例（MQL5） | ai-trading | 未読 | #web-signal |
+| 273 | [2026-06-13_273](articles/2026-06-13_273_AIエージェントで株の自動売買-コード不要ノーコードAIトレード入門-moomoo-JA.md) | ノーコードAIトレード入門(JA) — moomoo API + Claude Code自動売買・リスク管理自動設定・金商法との関係解説 | ai-trading | 未読 | #web-signal |
+| 274 | [2026-06-13_274](articles/2026-06-13_274_ChatGPT生成AIの規制状況一覧-日本海外最新法案ビジネス影響-2026年6月-JA.md) | AI規制状況総まとめ 2026年6月(JA) — EU AI Act 8/2施行・GAAIA審議・コロラド差し替え・日本ガイドライン1.2版（genai-ai.co.jp） | ai-news | 未読 | #web-signal |
+
+### NOISEとして除外（2026-06-13）
+| 候補URL | 理由 |
+|---|---|
+| getaiperks.com/claude-code-updates | 既存記事と高重複（releasebot等と同内容） |
+| builder.io/blog/claude-code-updates | 既存2026-05-28_010に収録済み |
+| techsy.io Claude Skills Tutorial | nimbalyst/dev.to記事と内容ほぼ同一 |
+| nimbalyst.com/claude-code-skills-guide/ | DEV Community記事と重複 |
+| dev.to CLAUDE.md best practices | 既存248と重複 |
+| techsy.io CLAUDE.md best practices | 既存248と重複 |
+| nerdleveltech.com MCP guide | Sitepoint記事と重複 |
+| augmentcode Claude Code vs SDK | 既存比較記事と重複 |
+| digital-reclame MCP server intro | 入門レベル、homula/bytech記事で代替可 |
+| s-style MCP server guide | bytech記事と重複 |
+| ai-kenkyujo MCP 12選 | bytech 54種記事で代替可 |
+| flowhunt.io LLM trading bots | 既存245/246と重複 |
+| llm-stats.com news/updates | リスト型ページ・一次情報なし |
+| fazm.ai April 2026 LLM releases | 過去月のまとめ、新鮮度低 |
+
+---
+
 ## ドメイン別統計（累計）
 
-| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 2026-06-07 | 2026-06-08 | 2026-06-09 | 2026-06-10 | 2026-06-11 | 2026-06-12 | 累計 |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 8件 | 5件 | 10件 | 9件 | 5件 | 4件 | 3件 | 7件 | 103件 |
-| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 5件 | 4件 | 5件 | 5件 | 5件 | 2件 | 4件 | 4件 | 59件 |
-| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 3件 | 2件 | 4件 | 0件 | 1件 | 3件 | 2件 | 42件 |
-| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 4件 | 3件 | 2件 | 4件 | 2件 | 2件 | 4件 | 47件 |
-| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **18件** | **16件** | **20件** | **20件** | **14件** | **9件** | **12件** | **17件** | **251件** |
+| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 2026-06-07 | 2026-06-08 | 2026-06-09 | 2026-06-10 | 2026-06-11 | 2026-06-12 | 2026-06-13 | 累計 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 8件 | 5件 | 10件 | 9件 | 5件 | 4件 | 3件 | 7件 | 14件 | 117件 |
+| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 5件 | 4件 | 5件 | 5件 | 5件 | 2件 | 4件 | 4件 | 4件 | 63件 |
+| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 3件 | 2件 | 4件 | 0件 | 1件 | 3件 | 2件 | 4件 | 46件 |
+| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 4件 | 3件 | 2件 | 4件 | 2件 | 2件 | 4件 | 1件 | 48件 |
+| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **18件** | **16件** | **20件** | **20件** | **14件** | **9件** | **12件** | **17件** | **23件** | **274件** |
