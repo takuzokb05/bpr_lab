@@ -1,19 +1,22 @@
 :root {
-  --bg: #0f172a;
-  --bg-card: #1e293b;
-  --bg-card-soft: #273449;
-  --text: #e2e8f0;
-  --text-dim: #94a3b8;
-  --accent: #38bdf8;
-  --accent-strong: #0ea5e9;
-  --gold: #fbbf24;
-  --correct: #22c55e;
-  --correct-bg: rgba(34, 197, 94, 0.15);
+  --bg-top: #e0f2fe;
+  --bg-bottom: #f0fdfa;
+  --card: #ffffff;
+  --card-soft: #f1f5f9;
+  --text: #0f172a;
+  --text-dim: #64748b;
+  --accent: #0ea5e9;
+  --accent2: #2563eb;
+  --accent-grad: linear-gradient(135deg, #06b6d4, #3b82f6);
+  --gold: #f59e0b;
+  --correct: #16a34a;
+  --correct-bg: #dcfce7;
   --wrong: #ef4444;
-  --wrong-bg: rgba(239, 68, 68, 0.15);
-  --border: #334155;
-  --radius: 16px;
-  --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  --wrong-bg: #fee2e2;
+  --border: #e2e8f0;
+  --radius: 18px;
+  --shadow: 0 12px 28px rgba(30, 64, 175, 0.1);
+  --shadow-soft: 0 4px 14px rgba(30, 64, 175, 0.08);
 }
 
 * {
@@ -24,7 +27,8 @@ body {
   margin: 0;
   font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", system-ui,
     sans-serif;
-  background: radial-gradient(circle at top, #16233f 0%, var(--bg) 60%);
+  background: linear-gradient(160deg, var(--bg-top) 0%, var(--bg-bottom) 55%, #ffffff 100%);
+  background-attachment: fixed;
   color: var(--text);
   line-height: 1.7;
   min-height: 100vh;
@@ -40,11 +44,17 @@ body {
 header.app-head {
   text-align: center;
   margin-bottom: 18px;
+  position: relative;
 }
 
 header.app-head h1 {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   margin: 0 0 6px;
+  background: var(--accent-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 800;
 }
 
 header.app-head p {
@@ -53,9 +63,28 @@ header.app-head p {
   font-size: 0.9rem;
 }
 
+.sound-toggle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  width: 40px;
+  height: 40px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.12s ease;
+}
+
+.sound-toggle:active {
+  transform: scale(0.92);
+}
+
 .screen {
   display: none;
-  animation: fade 0.25s ease;
+  animation: fade 0.3s ease;
 }
 
 .screen.active {
@@ -65,7 +94,7 @@ header.app-head p {
 @keyframes fade {
   from {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
@@ -74,7 +103,7 @@ header.app-head p {
 }
 
 .card {
-  background: var(--bg-card);
+  background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 22px;
@@ -91,10 +120,11 @@ header.app-head p {
 .best-banner {
   display: none;
   text-align: center;
-  background: var(--bg-card-soft);
-  border: 1px solid var(--border);
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  color: #92400e;
   border-radius: 999px;
-  padding: 8px 14px;
+  padding: 8px 16px;
   font-size: 0.86rem;
   margin: 0 auto 16px;
   width: fit-content;
@@ -115,15 +145,17 @@ header.app-head p {
 }
 
 .cat-btn {
-  background: var(--bg-card-soft);
+  background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 16px 12px;
   color: var(--text);
   font-size: 1rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: transform 0.12s ease, border-color 0.12s ease;
+  transition: transform 0.14s ease, box-shadow 0.14s ease, border-color 0.14s ease;
   text-align: center;
+  box-shadow: var(--shadow-soft);
 }
 
 .cat-btn:active {
@@ -131,13 +163,14 @@ header.app-head p {
 }
 
 .cat-btn:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   border-color: var(--accent);
+  box-shadow: var(--shadow);
 }
 
 .cat-btn .emoji {
   display: block;
-  font-size: 1.7rem;
+  font-size: 1.9rem;
   margin-bottom: 4px;
 }
 
@@ -145,19 +178,20 @@ header.app-head p {
   display: block;
   font-size: 0.72rem;
   color: var(--text-dim);
+  font-weight: 500;
   margin-top: 5px;
   line-height: 1.45;
 }
 
 .cat-btn.mix {
   grid-column: 1 / -1;
-  background: linear-gradient(135deg, var(--accent-strong), #6366f1);
+  background: var(--accent-grad);
   border: none;
-  font-weight: 700;
+  color: #fff;
 }
 
 .cat-btn.mix .quals {
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 /* ---------- クイズ画面 ---------- */
@@ -168,21 +202,22 @@ header.app-head p {
   font-size: 0.85rem;
   color: var(--text-dim);
   margin-bottom: 10px;
+  font-weight: 600;
 }
 
 .quiz-bar .xp {
-  color: var(--accent);
-  font-weight: 700;
+  color: var(--accent2);
+  font-weight: 800;
 }
 
 .quiz-bar .streak {
   color: var(--gold);
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .progress {
-  height: 8px;
-  background: var(--bg-card-soft);
+  height: 10px;
+  background: #e2e8f0;
   border-radius: 999px;
   overflow: hidden;
   margin-bottom: 18px;
@@ -193,8 +228,8 @@ header.app-head p {
   height: 100%;
   width: 0;
   border-radius: 999px;
-  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
-  transition: width 0.4s ease;
+  background: var(--accent-grad);
+  transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .tags {
@@ -210,18 +245,18 @@ header.app-head p {
   font-size: 0.74rem;
   padding: 3px 11px;
   border-radius: 999px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .cat-tag {
-  background: var(--bg-card-soft);
-  color: var(--accent);
+  background: #e0f2fe;
+  color: #0369a1;
 }
 
 .qual-tag {
-  background: rgba(251, 191, 36, 0.16);
-  color: var(--gold);
-  border: 1px solid rgba(251, 191, 36, 0.35);
+  background: #fef3c7;
+  color: #b45309;
+  border: 1px solid #fcd34d;
 }
 
 .qual-tag::before {
@@ -229,8 +264,8 @@ header.app-head p {
 }
 
 .question {
-  font-size: 1.2rem;
-  font-weight: 700;
+  font-size: 1.22rem;
+  font-weight: 800;
   margin: 0 0 18px;
 }
 
@@ -242,15 +277,15 @@ header.app-head p {
 
 .choice {
   text-align: left;
-  background: var(--bg-card-soft);
-  border: 1.5px solid var(--border);
-  border-radius: 12px;
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 13px;
   padding: 13px 16px;
   color: var(--text);
   font-size: 1rem;
   cursor: pointer;
-  transition: border-color 0.12s ease, background 0.12s ease,
-    transform 0.08s ease;
+  transition: border-color 0.12s ease, background 0.12s ease, transform 0.08s ease,
+    box-shadow 0.12s ease;
   display: flex;
   gap: 10px;
   align-items: flex-start;
@@ -262,6 +297,7 @@ header.app-head p {
 
 .choice:hover:not(:disabled) {
   border-color: var(--accent);
+  box-shadow: var(--shadow-soft);
 }
 
 .choice:disabled {
@@ -269,44 +305,71 @@ header.app-head p {
 }
 
 .choice .mark {
-  font-weight: 700;
-  color: var(--accent);
+  font-weight: 800;
+  color: var(--accent2);
   flex-shrink: 0;
 }
 
 .choice.correct {
   border-color: var(--correct);
   background: var(--correct-bg);
+  animation: pop-correct 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .choice.correct .mark {
   color: var(--correct);
 }
 
+@keyframes pop-correct {
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.04);
+    box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.18);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 .choice.wrong {
   border-color: var(--wrong);
   background: var(--wrong-bg);
+  animation: shake 0.4s ease;
 }
 
 .choice.wrong .mark {
   color: var(--wrong);
 }
 
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
 .choice.dim {
-  opacity: 0.5;
+  opacity: 0.45;
 }
 
 /* ---------- 解説 ---------- */
 .explain {
   margin-top: 18px;
-  border-top: 1px dashed var(--border);
+  border-top: 2px dashed var(--border);
   padding-top: 16px;
   display: none;
 }
 
 .explain.show {
   display: block;
-  animation: fade 0.25s ease;
+  animation: fade 0.3s ease;
 }
 
 .verdict-row {
@@ -318,9 +381,10 @@ header.app-head p {
 }
 
 .verdict {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 800;
   margin: 0;
+  animation: pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .verdict.ok {
@@ -332,23 +396,24 @@ header.app-head p {
 }
 
 .xp-gain {
-  font-size: 0.95rem;
+  font-size: 0.98rem;
   font-weight: 800;
-  color: var(--accent);
-  background: rgba(56, 189, 248, 0.12);
-  padding: 3px 10px;
+  color: #fff;
+  background: var(--accent-grad);
+  padding: 4px 12px;
   border-radius: 999px;
   white-space: nowrap;
-  animation: pop 0.3s ease;
+  box-shadow: var(--shadow-soft);
+  animation: pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 @keyframes pop {
   0% {
-    transform: scale(0.6);
+    transform: scale(0.5);
     opacity: 0;
   }
   60% {
-    transform: scale(1.15);
+    transform: scale(1.18);
   }
   100% {
     transform: scale(1);
@@ -357,9 +422,9 @@ header.app-head p {
 }
 
 .explain h3 {
-  font-size: 0.82rem;
-  letter-spacing: 0.04em;
-  color: var(--accent);
+  font-size: 0.84rem;
+  letter-spacing: 0.03em;
+  color: var(--accent2);
   margin: 14px 0 4px;
 }
 
@@ -392,24 +457,26 @@ header.app-head p {
   margin-top: 20px;
   padding: 15px;
   border: none;
-  border-radius: 12px;
-  font-size: 1.02rem;
-  font-weight: 700;
+  border-radius: 13px;
+  font-size: 1.04rem;
+  font-weight: 800;
   cursor: pointer;
-  transition: transform 0.12s ease, opacity 0.12s ease;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
 }
 
 .next-btn,
 .primary-btn {
-  background: linear-gradient(135deg, var(--accent-strong), #6366f1);
+  background: var(--accent-grad);
   color: #fff;
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.28);
 }
 
 .ghost-btn {
   background: transparent;
-  border: 1.5px solid var(--border);
+  border: 2px solid var(--border);
   color: var(--text-dim);
   margin-top: 10px;
+  box-shadow: none;
 }
 
 .next-btn:active,
@@ -420,8 +487,8 @@ header.app-head p {
 
 .next-btn:hover,
 .primary-btn:hover {
-  transform: translateY(-1px);
-  opacity: 0.95;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(37, 99, 235, 0.34);
 }
 
 /* ---------- 結果画面 ---------- */
@@ -432,11 +499,12 @@ header.app-head p {
 }
 
 .result-emoji {
-  font-size: 3rem;
+  font-size: 3.2rem;
+  animation: pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .result-score {
-  font-size: 2.4rem;
+  font-size: 2.5rem;
   font-weight: 800;
   margin: 8px 0 2px;
 }
@@ -444,7 +512,7 @@ header.app-head p {
 .result-score small {
   font-size: 1rem;
   color: var(--text-dim);
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .result-msg {
@@ -457,7 +525,7 @@ header.app-head p {
   color: var(--gold);
   font-weight: 800;
   margin: 0 0 14px;
-  animation: pop 0.4s ease;
+  animation: pop 0.5s ease;
 }
 
 .new-best.show {
@@ -473,16 +541,17 @@ header.app-head p {
 }
 
 .result-stats div {
-  background: var(--bg-card-soft);
-  border-radius: 12px;
+  background: var(--card-soft);
+  border-radius: 13px;
   padding: 12px 16px;
   min-width: 92px;
 }
 
 .result-stats .num {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   font-weight: 800;
   display: block;
+  color: var(--accent2);
 }
 
 .result-stats .lbl {
@@ -499,11 +568,11 @@ header.app-head p {
 }
 
 .badge {
-  background: rgba(251, 191, 36, 0.14);
-  border: 1px solid rgba(251, 191, 36, 0.4);
-  color: var(--gold);
+  background: #fef3c7;
+  border: 1px solid #fcd34d;
+  color: #b45309;
   font-size: 0.78rem;
-  font-weight: 700;
+  font-weight: 800;
   padding: 5px 12px;
   border-radius: 999px;
 }
@@ -514,7 +583,7 @@ header.app-head p {
   top: -12px;
   width: 9px;
   height: 14px;
-  opacity: 0.9;
+  opacity: 0.95;
   z-index: 50;
   pointer-events: none;
   animation: fall linear forwards;
@@ -522,8 +591,8 @@ header.app-head p {
 
 @keyframes fall {
   to {
-    transform: translateY(105vh) rotate(640deg);
-    opacity: 0.9;
+    transform: translateY(105vh) rotate(680deg);
+    opacity: 0.95;
   }
 }
 
@@ -535,7 +604,12 @@ footer.app-foot {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .confetti {
-    display: none;
+  .confetti,
+  .choice.correct,
+  .choice.wrong,
+  .verdict,
+  .xp-gain,
+  .result-emoji {
+    animation: none;
   }
 }

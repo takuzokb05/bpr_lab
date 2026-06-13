@@ -6,7 +6,7 @@
  * 1問の形:
  *   {
  *     category: "it" | "life" | "culture",   // CATEGORIES のキー（大まかな分野）
- *     qual: "ITパスポート",                   // この雑学が出てくる代表的な資格名
+ *     qual: "ITパスポート",                   // この知識が役立つ代表的な資格名
  *     question: "問題文",
  *     choices: ["選択肢1", "選択肢2", "選択肢3", "選択肢4"], // 4つ
  *     answer: 0,  // 正解の choices の番号（0始まり）

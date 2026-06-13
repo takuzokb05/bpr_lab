@@ -3,20 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>へぇ〜雑学クイズ｜資格の超入門</title>
+    <title>知っトク資格クイズ｜知ってると助かる知識</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="wrap">
       <header class="app-head">
-        <h1>へぇ〜雑学クイズ</h1>
-        <p>色んな資格の“知ってると役に立つ”を、超初心者向けに1問ずつ</p>
+        <button class="sound-toggle" id="soundToggle" title="音のオン/オフ" aria-label="音のオン/オフ">🔊</button>
+        <h1>知っトク資格クイズ</h1>
+        <p>知ってると助かる知識を、やさしく1問ずつ</p>
       </header>
 
       <!-- ===== スタート画面 ===== -->
       <section id="screen-start" class="screen active">
         <div class="best-banner" id="bestBanner"></div>
-        <p class="lead">分野を選んでスタート。<br />各問に「どの資格の話か」が出ます。</p>
+        <p class="lead">分野を選んでスタート。<br />各問に「どの資格で役立つ知識か」が出ます。</p>
         <div id="catGrid" class="cat-grid"><!-- JSで生成 --></div>
       </section>
 
@@ -87,7 +88,7 @@
       </section>
 
       <footer class="app-foot">
-        知るほど賢くなった気がする。 — へぇ〜雑学クイズ
+        知るほど、ちょっと得する。 — 知っトク資格クイズ
       </footer>
     </div>
 
@@ -120,11 +121,92 @@
       const exTrivia = document.getElementById("exTrivia");
       const triviaBlock = document.getElementById("triviaBlock");
       const nextBtn = document.getElementById("nextBtn");
+      const soundToggle = document.getElementById("soundToggle");
 
       const MAX_PER_SESSION = 10; // 1回の出題数の上限
       const BASE_XP = 10; // 正解の基礎XP
       const COMBO_XP = 5; // 連続正解1つにつき上乗せされるXP
       const BEST_KEY = "trivia_quiz_best_v1"; // localStorage キー
+      const SOUND_KEY = "trivia_quiz_sound_v1"; // 音のオン/オフ保存
+
+      // ---- 効果音（WebAudio。音源ファイル不要・オフラインでも鳴る） ----
+      let audioCtx = null;
+      let soundOn = true;
+      try {
+        soundOn = localStorage.getItem(SOUND_KEY) !== "off";
+      } catch (e) {}
+
+      function ensureAudio() {
+        if (!audioCtx) {
+          try {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          } catch (e) {
+            audioCtx = null;
+          }
+        }
+        if (audioCtx && audioCtx.state === "suspended") audioCtx.resume();
+      }
+
+      // 単音を鳴らす小さなヘルパー
+      function tone(freq, startAt, dur, type, peak) {
+        const t0 = audioCtx.currentTime + startAt;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type || "sine";
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.0001, t0);
+        gain.gain.exponentialRampToValueAtTime(peak || 0.18, t0 + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+        osc.connect(gain).connect(audioCtx.destination);
+        osc.start(t0);
+        osc.stop(t0 + dur + 0.02);
+      }
+
+      // 正解：明るい上昇アルペジオ。連続正解が伸びるほど少し高く＝爽快感アップ
+      function playCorrect(streakCount) {
+        if (!soundOn) return;
+        ensureAudio();
+        if (!audioCtx) return;
+        const shift = Math.min(streakCount - 1, 5) * 1.5; // 半音ずつ上げる
+        const base = Math.pow(2, shift / 12);
+        tone(523.25 * base, 0, 0.16, "triangle", 0.2); // ド
+        tone(659.25 * base, 0.09, 0.16, "triangle", 0.2); // ミ
+        tone(783.99 * base, 0.18, 0.26, "triangle", 0.22); // ソ
+      }
+
+      // 不正解：やわらかい下降音（きつくしすぎない）
+      function playWrong() {
+        if (!soundOn) return;
+        ensureAudio();
+        if (!audioCtx) return;
+        tone(330, 0, 0.18, "sine", 0.16);
+        tone(247, 0.12, 0.26, "sine", 0.16);
+      }
+
+      // 結果ファンファーレ
+      function playFanfare() {
+        if (!soundOn) return;
+        ensureAudio();
+        if (!audioCtx) return;
+        [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => {
+          tone(f, i * 0.12, 0.3, "triangle", 0.2);
+        });
+      }
+
+      function updateSoundButton() {
+        soundToggle.textContent = soundOn ? "🔊" : "🔇";
+      }
+      soundToggle.addEventListener("click", () => {
+        soundOn = !soundOn;
+        try {
+          localStorage.setItem(SOUND_KEY, soundOn ? "on" : "off");
+        } catch (e) {}
+        updateSoundButton();
+        if (soundOn) {
+          ensureAudio();
+          tone && audioCtx && tone(659.25, 0, 0.12, "triangle", 0.18);
+        }
+      });
 
       // ---- 出題状態 ----
       let session = [];
@@ -297,11 +379,13 @@
           verdictEl.className = "verdict ok";
           xpGainEl.textContent = "+" + gain + " XP";
           xpGainEl.style.display = "";
+          playCorrect(streak);
         } else {
           streak = 0;
           verdictEl.textContent = "残念… 正解は「" + "ABCD"[q.answer] + "」";
           verdictEl.className = "verdict ng";
           xpGainEl.style.display = "none";
+          playWrong();
         }
         xpText.textContent = xp + " XP";
         streakText.textContent = "🔥 " + streak;
@@ -375,7 +459,7 @@
         let emoji, msg;
         if (rate === 100) {
           emoji = "🏆";
-          msg = "全問正解！ もう立派な雑学マスターです。";
+          msg = "全問正解！ もう知っトクマスターです。";
         } else if (rate >= 70) {
           emoji = "🎉";
           msg = "お見事。確実に賢くなっていますね。";
@@ -410,7 +494,10 @@
         }
 
         show("result");
-        if (rate >= 70) launchConfetti();
+        if (rate >= 70) {
+          launchConfetti();
+          playFanfare();
+        }
       }
 
       document
@@ -424,6 +511,7 @@
       // ---- 初期化 ----
       buildCategoryButtons();
       renderBestBanner();
+      updateSoundButton();
     </script>
   </body>
 </html>
