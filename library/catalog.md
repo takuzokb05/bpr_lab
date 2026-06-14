@@ -1,6 +1,6 @@
 # Library Catalog
 
-最終更新: 2026-06-13
+最終更新: 2026-06-14
 
 ## 凡例
 - 状態: 未読 / 既読 / 要精読
@@ -504,12 +504,41 @@
 
 ---
 
+## 2026-06-14 収集分（11件収集 → 11件SIGNAL）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 275 | [2026-06-14_275](articles/2026-06-14_275_Anthropic-Official-Statement-Fable5-Mythos5-US-Government-Shutdown.md) | Anthropic公式声明: 米政府指令によるFable 5・Mythos 5全世界アクセス停止 | ai-news | 未読 | #web-signal #urgent |
+| 276 | [2026-06-14_276](articles/2026-06-14_276_US-Government-Orders-Anthropic-Pull-Fable5-Mythos5-Three-Days-After-Launch.md) | 米政府、リリース3日後にAnthropicへFable 5・Mythos 5停止命令（The New Stack） | ai-news | 未読 | #web-signal #urgent |
+| 277 | [2026-06-14_277](articles/2026-06-14_277_Trump-Administration-Anthropic-Dispute-Foreign-Access-Fable5-June14.md) | Trump政権とAnthropicの対立再燃: Fable 5外国人アクセス禁止命令（6/14） | ai-news | 未読 | #web-signal #urgent |
+| 278 | [2026-06-14_278](articles/2026-06-14_278_Anthropic-Senior-Staff-Meet-White-House-Officials-Next-Week.md) | Anthropicシニア技術スタッフ、来週ホワイトハウスと協議へ（Fable 5停止問題） | ai-news | 未読 | #web-signal |
+| 279 | [2026-06-14_279](articles/2026-06-14_279_LLM-New-Model-Releases-June-2026-Gemma4-Qwen3-Coder-MiniMax.md) | LLM新モデル速報 2026年6月: Gemma 4 12B・Qwen3 Coder Next・MiniMax M2.7 | ai-news | 未読 | #web-signal |
+| 280 | [2026-06-14_280](articles/2026-06-14_280_Claude-Code-June-2026-Full-Changelog-Safe-Mode-Nested-Subagents-Opus48.md) | Claude Code June 2026完全変更ログ: Safe Mode・ネストサブエージェント5段階・Opus 4.8 | claude-code | 未読 | #web-signal |
+| 281 | [2026-06-14_281](articles/2026-06-14_281_AI-Regulation-Battle-White-House-Centralize-vs-States-Opposition.md) | AIガバナンス主導権争い: ホワイトハウスの連邦一元化 vs 各州の持続的抵抗 | ai-news | 未読 | #web-signal |
+| 282 | [2026-06-14_282](articles/2026-06-14_282_MCP-Goes-Stateless-2026-07-28-Release-Candidate-Technical-Deep-Dive.md) | MCPステートレス化の全技術詳細: 2026-07-28リリース候補解説 | claude-ecosystem | 未読 | #web-signal |
+| 283 | [2026-06-14_283](articles/2026-06-14_283_Claude-Code-Skills-67-Complete-List-Planning-Coding-Design-Marketing-JA.md) | Claude Code スキル67選完全リスト（JA）: 計画・コーディング・デザイン・マーケ | claude-code | 未読 | #web-signal |
+| 284 | [2026-06-14_284](articles/2026-06-14_284_Claude-Code-4-Extension-Points-MCP-Skills-Hooks-Subagents-iret-JA.md) | Claude Code本気カスタマイズ: MCP・Skills・Hooks・Subagentsの4拡張点完全解説（JA） | claude-code | 未読 | #web-signal |
+| 285 | [2026-06-14_285](articles/2026-06-14_285_QuantaAlpha-Evolutionary-LLM-Alpha-Mining-Framework-arxiv-Tsinghua.md) | QuantaAlpha: LLM駆動アルファ因子マイニングの進化的フレームワーク（清華大・arxiv） | ai-trading | 未読 | #web-signal |
+
+### NOISEとして除外（2026-06-14）
+| 候補URL | 理由 |
+|---|---|
+| stockbrokers.com/guides/ai-stock-trading-bots | 既存AI trading bots記事と重複 |
+| udemy.com/course/build-autonomous-ai-trading-agents | 有料コース（記事形式でない） |
+| pinggy.io/blog/best_ai_trading_agents/ | 既存2026-06-04_010と重複 |
+| tokenmix.ai/blog/mcp-updates-changelog | MCP RC記事として既存025と重複 |
+| nxcode.io/claude-code-tutorial | 既存beginner guide記事と重複 |
+| techlifeadventures.com/claude-code-tutorial | 既存beginner guide記事と重複 |
+| buildmvpfast.com/best-llms-2026-guide | リスト型、具体的新情報なし |
+
+---
+
 ## ドメイン別統計（累計）
 
-| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 2026-06-07 | 2026-06-08 | 2026-06-09 | 2026-06-10 | 2026-06-11 | 2026-06-12 | 2026-06-13 | 累計 |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 8件 | 5件 | 10件 | 9件 | 5件 | 4件 | 3件 | 7件 | 14件 | 117件 |
-| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 5件 | 4件 | 5件 | 5件 | 5件 | 2件 | 4件 | 4件 | 4件 | 63件 |
-| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 3件 | 2件 | 4件 | 0件 | 1件 | 3件 | 2件 | 4件 | 46件 |
-| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 4件 | 3件 | 2件 | 4件 | 2件 | 2件 | 4件 | 1件 | 48件 |
-| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **18件** | **16件** | **20件** | **20件** | **14件** | **9件** | **12件** | **17件** | **23件** | **274件** |
+| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 2026-06-07 | 2026-06-08 | 2026-06-09 | 2026-06-10 | 2026-06-11 | 2026-06-12 | 2026-06-13 | 2026-06-14 | 累計 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 8件 | 5件 | 10件 | 9件 | 5件 | 4件 | 3件 | 7件 | 14件 | 3件 | 120件 |
+| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 5件 | 4件 | 5件 | 5件 | 5件 | 2件 | 4件 | 4件 | 4件 | 1件 | 64件 |
+| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 3件 | 2件 | 4件 | 0件 | 1件 | 3件 | 2件 | 4件 | 1件 | 47件 |
+| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 4件 | 3件 | 2件 | 4件 | 2件 | 2件 | 4件 | 1件 | 6件 | 54件 |
+| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **18件** | **16件** | **20件** | **20件** | **14件** | **9件** | **12件** | **17件** | **23件** | **11件** | **285件** |
