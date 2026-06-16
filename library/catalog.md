@@ -1,6 +1,6 @@
 # Library Catalog
 
-最終更新: 2026-06-14
+最終更新: 2026-06-16
 
 ## 凡例
 - 状態: 未読 / 既読 / 要精読
@@ -533,12 +533,44 @@
 
 ---
 
+## 2026-06-16 収集分（16件収集 → 16件SIGNAL）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 286 | [2026-06-16_286](articles/2026-06-16_286_Claude-Code-v2-1-178-June16-Permission-Syntax-NestedClaude-JA.md) | Claude Code v2.1.178（6/16）: パーミッション新構文・ネスト `.claude` 強化 | claude-code | 未読 | #web-signal |
+| 287 | [2026-06-16_287](articles/2026-06-16_287_Oliver-Foster-6-Practical-Workflows-Claude-Code-Production.md) | 6 Practical Workflows for Claude Code—プロダクション検証済み6パターン | claude-code | 未読 | #web-signal |
+| 288 | [2026-06-16_288](articles/2026-06-16_288_Claude-Code-Pricing-June15-2026-Per-Plan-Cost-Analysis-BindAI.md) | Claude Code Pricing June 2026: プラン別コスト詳細分析（June 15変更） | claude-code | 未読 | #web-signal |
+| 289 | [2026-06-16_289](articles/2026-06-16_289_Anthropic-Pauses-Agent-SDK-Credit-Split-June15-DigitalApplied.md) | AnthropicがAgent SDK課金分離を直前停止—June 15変更未施行の全容 | claude-ecosystem | 未読 | #web-signal #urgent |
+| 290 | [2026-06-16_290](articles/2026-06-16_290_LLM-Financial-Strategies-Cannot-Outperform-Market-Long-Run-arxiv.md) | LLM金融投資戦略は長期でアウトパフォームできない—arxiv 2505.07078 | ai-trading | 未読 | #web-signal |
+| 291 | [2026-06-16_291](articles/2026-06-16_291_Dive-into-Claude-Code-VILA-Lab-Design-Space-AI-Agents-arxiv.md) | Dive into Claude Code: AIエージェント設計空間の系統的分析—arxiv 2604.14228 | claude-code | 未読 | #web-signal |
+| 292 | [2026-06-16_292](articles/2026-06-16_292_Claude-Agent-SDK-Production-NextJS-Ship-Agent-ProductCompass.md) | Claude Agent SDK × Next.js プロダクションエージェント構築チュートリアル | claude-ecosystem | 未読 | #web-signal |
+| 293 | [2026-06-16_293](articles/2026-06-16_293_How-to-Build-Claude-Dynamic-Workflows-Better-99pct-Guide.md) | Claude Dynamic Workflows 99%より優れた構築法—並列DAG設計実践ガイド | claude-code | 未読 | #web-signal |
+| 294 | [2026-06-16_294](articles/2026-06-16_294_Claude-Dynamic-Workflows-Rewrote-750k-Lines-6Days-Architecture.md) | Dynamic Workflowsで75万行を6日で書き直したアーキテクチャ解析 | claude-code | 未読 | #web-signal |
+| 295 | [2026-06-16_295](articles/2026-06-16_295_Claude-Code-News-June-2026-Roundup-Startup-Edition.md) | Claude Code News June 2026: スタック拡張・Auto Mode・課金変更停止まとめ | claude-code | 未読 | #web-signal |
+| 296 | [2026-06-16_296](articles/2026-06-16_296_AI-Agentic-Autonomous-Trading-Layers-2026-4Layer-Architecture.md) | AI-Agentic Autonomous Trading Layers 2026: 4層アーキテクチャ完全レビュー | ai-trading | 未読 | #web-signal |
+| 297 | [2026-06-16_297](articles/2026-06-16_297_15-Best-Claude-Code-Hooks-Copy-Paste-Examples-2026.md) | 15 Best Claude Code Hooks Examples 2026—コピペ対応・PreToolUse〜SubagentStop | claude-code | 未読 | #web-signal |
+| 298 | [2026-06-16_298](articles/2026-06-16_298_Claude-Agent-SDK-Billing-June15-2026-Separate-Credit-Pool-JA.md) | Claude Agent SDK課金変更 2026年6月15日: 別クレジットプール化の全容（JA） | claude-ecosystem | 未読 | #web-signal |
+| 299 | [2026-06-16_299](articles/2026-06-16_299_Claude-Code-Skill-Growth-Support-System-DevelopersIO-JA.md) | Claude Codeでスキル成長支援システム構築—SKILL.md×フック連携実践（JA） | claude-code | 未読 | #web-signal |
+| 300 | [2026-06-16_300](articles/2026-06-16_300_Claude-Code-Skills-Ecosystem-1000-Skills-Open-Standard-2026.md) | Claude Code Skills Ecosystem 2026: 1,000スキル突破・オープン標準・Top10分析 | claude-code | 未読 | #web-signal |
+| 301 | [2026-06-16_301](articles/2026-06-16_301_New-AI-Model-Releases-June-2026-Mercury2-Qwen3Coder-MiniMax.md) | LLM新モデル速報 2026年6月: Mercury 2（1000tok/s）・Qwen3 Coder Next・MiniMax M2.7 | ai-news | 未読 | #web-signal |
+
+### NOISEとして除外（2026-06-16）
+| 候補URL | 理由 |
+|---|---|
+| skillsplayground.com/guides/claude-code-tutorial | 既存beginner guide記事（254等）と重複 |
+| nxcode.io/claude-code-tutorial | 既存beginner guide記事と重複 |
+| nexustrade.io/llm-algorithmic-trading | 2025年8月の記事、新鮮度低 |
+| generect.com/blog/claude-mcp | 既存MCPガイド記事（008等）と重複 |
+| gaugr.app/claude-mcp-servers | MCPセットアップガイドは既存多数あり重複 |
+
+---
+
 ## ドメイン別統計（累計）
 
-| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 2026-06-07 | 2026-06-08 | 2026-06-09 | 2026-06-10 | 2026-06-11 | 2026-06-12 | 2026-06-13 | 2026-06-14 | 累計 |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 8件 | 5件 | 10件 | 9件 | 5件 | 4件 | 3件 | 7件 | 14件 | 3件 | 120件 |
-| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 5件 | 4件 | 5件 | 5件 | 5件 | 2件 | 4件 | 4件 | 4件 | 1件 | 64件 |
-| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 3件 | 2件 | 4件 | 0件 | 1件 | 3件 | 2件 | 4件 | 1件 | 47件 |
-| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 4件 | 3件 | 2件 | 4件 | 2件 | 2件 | 4件 | 1件 | 6件 | 54件 |
-| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **18件** | **16件** | **20件** | **20件** | **14件** | **9件** | **12件** | **17件** | **23件** | **11件** | **285件** |
+| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 2026-06-07 | 2026-06-08 | 2026-06-09 | 2026-06-10 | 2026-06-11 | 2026-06-12 | 2026-06-13 | 2026-06-14 | 2026-06-16 | 累計 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 8件 | 5件 | 10件 | 9件 | 5件 | 4件 | 3件 | 7件 | 14件 | 3件 | 10件 | 130件 |
+| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 5件 | 4件 | 5件 | 5件 | 5件 | 2件 | 4件 | 4件 | 4件 | 1件 | 3件 | 67件 |
+| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 3件 | 2件 | 4件 | 0件 | 1件 | 3件 | 2件 | 4件 | 1件 | 2件 | 49件 |
+| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 4件 | 3件 | 2件 | 4件 | 2件 | 2件 | 4件 | 1件 | 6件 | 1件 | 55件 |
+| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **18件** | **16件** | **20件** | **20件** | **14件** | **9件** | **12件** | **17件** | **23件** | **11件** | **16件** | **301件** |
