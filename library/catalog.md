@@ -1,6 +1,6 @@
 # Library Catalog
 
-最終更新: 2026-06-16
+最終更新: 2026-06-17
 
 ## 凡例
 - 状態: 未読 / 既読 / 要精読
@@ -565,12 +565,47 @@
 
 ---
 
+## 2026-06-17 収集分（15件収集 → 15件SIGNAL）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 302 | [2026-06-17_302](articles/2026-06-17_302_Claude-Code-Changelog-All-2026-Releases-v2-1-178-Plus.md) | Claude Code Changelog 2026 — 全リリースノート集約リファレンス (v2.1.152+) | claude-code | 未読 | #web-signal |
+| 303 | [2026-06-17_303](articles/2026-06-17_303_Claude-Code-25-Features-Examples-Demo-June14-MarkTechPost.md) | Claude Code Guide 2026: 25の主要機能 + デモ付き完全解説 (June 14) | claude-code | 未読 | #web-signal |
+| 304 | [2026-06-17_304](articles/2026-06-17_304_Claude-Code-Hooks-Subagents-Skills-4Layer-Architecture-ofox.md) | Claude Code 4層アーキテクチャ: Hooks・Subagents・Skills完全ガイド — ofox.ai | claude-code | 未読 | #web-signal |
+| 305 | [2026-06-17_305](articles/2026-06-17_305_Claude-Code-SubAgents-Context-Cost-Parallel-Optimal-Count-MindStudio.md) | Claude Code Sub-Agents: コンテキスト分離・コスト・並列実行数の最適解 | claude-code | 未読 | #web-signal |
+| 306 | [2026-06-17_306](articles/2026-06-17_306_Claude-Code-Customization-Ecosystem-4Points-CLAUDE-md-Hooks-Skills-MCP-JA.md) | Claude Codeカスタマイズ生態系：CLAUDE.md・Hooks・Skills・MCP 4拡張点の設計戦略（JA） | claude-code | 未読 | #web-signal |
+| 307 | [2026-06-17_307](articles/2026-06-17_307_Claude-Code-Hooks-Skills-Auto-Deployment-Check-System-JA.md) | Claude Code HooksとSkillsで「社内展開チェック」を自動化した実装事例（JA） | claude-code | 未読 | #web-signal |
+| 308 | [2026-06-17_308](articles/2026-06-17_308_Claude-Code-Skills-1000-Marketplace-Guide-Model-Invoked-JA.md) | Claude Code Skillsマーケットプレイス攻略：1,000件突破・モデル主導スキルの作り方（JA） | claude-code | 未読 | #web-signal |
+| 309 | [2026-06-17_309](articles/2026-06-17_309_Qiita-Tip-Hooks-Written-in-SKILL-md-Frontmatter-JA.md) | Qiita Tips: Claude CodeのHooksをSKILL.mdのfrontmatterに直書きできる（JA） | claude-code | 未読 | #web-signal |
+| 310 | [2026-06-17_310](articles/2026-06-17_310_Claude-Agent-SDK-MCP-Servers-Practical-Guide-StreamableHTTP-OAuth2.md) | Claude Agent SDK × MCPサーバー実践接続ガイド：StreamableHTTP・OAuth 2.1対応版 | claude-ecosystem | 未読 | #web-signal |
+| 311 | [2026-06-17_311](articles/2026-06-17_311_n8n-MCP-AI-Agent-Complete-Implementation-Guide-2026-JA.md) | n8n × MCP × AIエージェント実装完全ガイド2026：ノーコードでマルチエージェント構築（JA） | claude-ecosystem | 未読 | #web-signal |
+| 312 | [2026-06-17_312](articles/2026-06-17_312_LLM-Showdown-GPT5-Claude-Opus47-Gemini31-Grok-AlgoTrading-Bot-2026.md) | LLM比較: GPT-5.5 vs Claude Opus 4.7 vs Gemini 3.1 vs Grok — Pythonアルゴ取引ボット生成性能 | ai-trading | 未読 | #web-signal |
+| 313 | [2026-06-17_313](articles/2026-06-17_313_AI-Trading-Agent-MT4-MT5-Integration-LangChain-LLM-Architecture-2026.md) | AI Trading Agent × MT4/MT5統合2026：LangChain + LLMアーキテクチャ完全ガイド | ai-trading | 未読 | #web-signal |
+| 314 | [2026-06-17_314](articles/2026-06-17_314_7-Components-AI-Trading-System-2026-MQL5-Nobody-Tells-You.md) | AIトレーディングシステムの7コンポーネント — 誰も教えてくれない完全実装要件（MQL5ブログ） | ai-trading | 未読 | #web-signal |
+| 315 | [2026-06-17_315](articles/2026-06-17_315_June-2026-LLM-Release-Roundup-Fable5-Mercury2-Qwen3Coder-GPT56.md) | 2026年6月LLM新モデル速報: Claude Fable 5/Mythos 5・Mercury 2・GPT-5.6・Gemini 3.2 | ai-news | 未読 | #web-signal |
+| 316 | [2026-06-17_316](articles/2026-06-17_316_EU-AI-Act-Digital-Omnibus-HRAI-Deadline-Extension-New-Prohibitions-June2026.md) | EU AI法 Digital Omnibus改正：HRAI期限延期・新禁止事項追加・実務影響分析（2026年6月） | ai-news | 未読 | #web-signal |
+
+### NOISEとして除外（2026-06-17）
+| 候補URL | 理由 |
+|---|---|
+| releasebot.io/updates/anthropic/claude-code | トラッカーページ、記事内容なし |
+| getbeam.dev/blog/claude-code-tips-productivity-2026.html | 既存builder.io 50 Tips記事と角度が重複 |
+| computingforgeeks.com/claude-code-subagents-guide/ | 初心者向けbeginnerガイド、深度不足 |
+| scriptbyai.com/claude-code-resource-list/ | リソースリスト形式、独自分析なし |
+| digirise.ai/chaen-ai-lab/claude-code-use-cases/ | 汎用ユースケース集、既存記事と内容重複 |
+| nexa-corp.jp/claude-code-skills-guide/ | 既存01lab.co.jp Skills記事と内容重複 |
+| dentro.de/ai/news/ | ニュースアグリゲーター、一次情報なし |
+| insideprivacy.com/...hrai | 316のglobalpolicywatch記事でカバー済み |
+| lw.com/en/insights/ai-act-update... | 316のglobalpolicywatch記事でカバー済み |
+
+---
+
 ## ドメイン別統計（累計）
 
-| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 2026-06-07 | 2026-06-08 | 2026-06-09 | 2026-06-10 | 2026-06-11 | 2026-06-12 | 2026-06-13 | 2026-06-14 | 2026-06-16 | 累計 |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 8件 | 5件 | 10件 | 9件 | 5件 | 4件 | 3件 | 7件 | 14件 | 3件 | 10件 | 130件 |
-| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 5件 | 4件 | 5件 | 5件 | 5件 | 2件 | 4件 | 4件 | 4件 | 1件 | 3件 | 67件 |
-| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 3件 | 2件 | 4件 | 0件 | 1件 | 3件 | 2件 | 4件 | 1件 | 2件 | 49件 |
-| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 4件 | 3件 | 2件 | 4件 | 2件 | 2件 | 4件 | 1件 | 6件 | 1件 | 55件 |
-| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **18件** | **16件** | **20件** | **20件** | **14件** | **9件** | **12件** | **17件** | **23件** | **11件** | **16件** | **301件** |
+| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 2026-06-07 | 2026-06-08 | 2026-06-09 | 2026-06-10 | 2026-06-11 | 2026-06-12 | 2026-06-13 | 2026-06-14 | 2026-06-16 | 2026-06-17 | 累計 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 8件 | 5件 | 10件 | 9件 | 5件 | 4件 | 3件 | 7件 | 14件 | 3件 | 10件 | 8件 | 138件 |
+| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 5件 | 4件 | 5件 | 5件 | 5件 | 2件 | 4件 | 4件 | 4件 | 1件 | 3件 | 2件 | 69件 |
+| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 3件 | 2件 | 4件 | 0件 | 1件 | 3件 | 2件 | 4件 | 1件 | 2件 | 3件 | 52件 |
+| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 4件 | 3件 | 2件 | 4件 | 2件 | 2件 | 4件 | 1件 | 6件 | 1件 | 2件 | 57件 |
+| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **18件** | **16件** | **20件** | **20件** | **14件** | **9件** | **12件** | **17件** | **23件** | **11件** | **16件** | **15件** | **316件** |
