@@ -1,6 +1,6 @@
 # Library Catalog
 
-最終更新: 2026-06-18
+最終更新: 2026-06-19
 
 ## 凡例
 - 状態: 未読 / 既読 / 要精読
@@ -858,6 +858,34 @@
 | inbox/web/2026-06-18_331_AI-News-Key-Events-Releases-June-2026-DentroDe.md | dentro.de/ai/news/ は昨日もNOISE判定済み（アグリゲーター、一次情報なし） |
 | inbox/web/2026-06-18_335_AI-FX-Services-Comparison-2026-Japan-FXQuickNavi-JA.md | FXサービス比較サイト（アフィリエイト系）、独自分析なし |
 
+---
+
+---
+
+## 2026-06-19 収集分（15件収集 → 15件SIGNAL）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 557 | [2026-06-19_557](articles/2026-06-19_557_Claude-Code-Features-Settings-Reference-2026-HidekazuKonishi.md) | Claude Code 全機能・設定リファレンス2026: 5層アーキテクチャ・スコープ・Hooks/Skills設定の完全整理 | claude-code | 未読 | #web-signal |
+| 558 | [2026-06-19_558](articles/2026-06-19_558_CLAUDE-md-Best-Practices-Complete-2026-Guide-DEV.md) | CLAUDE.md ベストプラクティス完全ガイド2026: 「なぜ」の説明を必ず付ける・200行以下・10必須セクション | claude-code | 未読 | #web-signal |
+| 559 | [2026-06-19_559](articles/2026-06-19_559_Claude-Code-Tutorial-2026-Beginners-Guide-NxCode.md) | Claude Code チュートリアル2026 完全初心者ガイド: インストール・Plan Mode・主要コマンド・Day 1ワークフロー | claude-code | 未読 | #web-signal |
+| 560 | [2026-06-19_560](articles/2026-06-19_560_Claude-Code-Latest-Features-2026-05-Uravation-JA.md) | Claude Code最新機能まとめ2026年5月版: Agent View・/goal・Opus 4.8・Subagent @mention の実践解説 | claude-code | 未読 | #web-signal |
+| 561 | [2026-06-19_561](articles/2026-06-19_561_Complete-Guide-MCP-Building-AI-Native-Apps-2026-DEV.md) | MCP完全ガイド2026: 月間9,700万DL・81,000スター・5,000以上サーバー・H2 2026ステートレス化ロードマップ | claude-ecosystem | 未読 | #web-signal |
+| 562 | [2026-06-19_562](articles/2026-06-19_562_Apple-Xcode-263-Claude-Agent-SDK-Native-Integration-Anthropic.md) | Apple Xcode 26.3がClaude Agent SDKをネイティブ統合（Anthropic公式発表） | claude-ecosystem | 未読 | #web-signal |
+| 563 | [2026-06-19_563](articles/2026-06-19_563_Anthropic-MCP-Vulnerability-200K-Servers-RCE-14CVEs-April2026.md) | MCP脆弱性: 200,000台がRCE攻撃に晒され14 CVE付与（2026年4月・OX Security発見） | claude-ecosystem | 未読 | #web-signal |
+| 564 | [2026-06-19_564](articles/2026-06-19_564_Claude-Platform-on-AWS-Launch-Official-AWS-Blog.md) | Claude Platform on AWS GA: Managed Agents・IAM認証・CloudTrail監査・AWS請求一本化（AWS公式） | claude-ecosystem | 未読 | #web-signal |
+| 565 | [2026-06-19_565](articles/2026-06-19_565_Anthropic-Claude-Platform-AWS-Launch-InfoQ.md) | Claude Platform on AWS解説: BedRock との違い・Managed Agentsアーキテクチャ・開発者実装手順（InfoQ） | claude-ecosystem | 未読 | #web-signal |
+| 566 | [2026-06-19_566](articles/2026-06-19_566_Claude-Code-Plugins-MCP-Tools-2026-Complete-Qiita-JA.md) | 【2026年版】Claude Codeを最強にするプラグイン・MCP・ツール総まとめ: メモリ系・コンテキスト95%削減・GitHub等設定一覧 | claude-ecosystem | 未読 | #web-signal |
+| 567 | [2026-06-19_567](articles/2026-06-19_567_Claude-Code-MCP-Practice-Guide-2026-AQUA-JA.md) | Claude Code × MCP実践活用ガイド2026: 設定手順・カスタムMCP実装・MCP脆弱性セキュリティチェックリスト | claude-ecosystem | 未読 | #web-signal |
+| 568 | [2026-06-19_568](articles/2026-06-19_568_MetaTrader-MCP-Server-AI-LLM-Trading-Automation-Agentpedia.md) | MetaTrader MCP Server: MT5+LLMのキューベースアーキテクチャ（OnTick直埋め込みの失敗パターンと解決策） | ai-trading | 未読 | #web-signal |
+| 569 | [2026-06-19_569](articles/2026-06-19_569_LLM-KaigaiFX-Trading-Free-Source-Code-FXSensei-JA.md) | LLM + 海外FXの稼ぎ方（無料ソースコード付き）: Codex生成・MT5+Python・センチメント×テクニカル複合シグナル | ai-trading | 未読 | #web-signal |
+| 570 | [2026-06-19_570](articles/2026-06-19_570_Microsoft-Agent-Framework-BUILD-2026-Harness-CodeAct.md) | Microsoft Agent Framework at BUILD 2026: Agent Harness・Hosted Agents・CodeAct・A2Aクロスランタイム発表 | ai-news | 未読 | #web-signal |
+| 571 | [2026-06-19_571](articles/2026-06-19_571_April-2026-LLM-Update-Rush-Qiita-JA.md) | 2026年4月LLMアップデートラッシュ総括: GLM-5.1・Qwen3.5・Gemma4、競争軸が「環境の使いやすさ」へシフト | ai-news | 未読 | #web-signal |
+
+### NOISEとして除外（2026-06-19）
+
+なし（全15件SIGNAL）
+
 #### X NOISE（222件）
 | ドメイン | SIGNAL | NOISE |
 |---|---|---|
@@ -871,10 +899,10 @@
 
 ## ドメイン別統計（累計）
 
-| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 2026-06-07 | 2026-06-08 | 2026-06-09 | 2026-06-10 | 2026-06-11 | 2026-06-12 | 2026-06-13 | 2026-06-14 | 2026-06-16 | 2026-06-17 | 2026-06-18 | 累計 |
+| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 2026-06-07 | 2026-06-08 | 2026-06-09 | 2026-06-10 | 2026-06-11 | 2026-06-12 | 2026-06-13 | 2026-06-14 | 2026-06-16 | 2026-06-17 | 2026-06-18 | 2026-06-19 | 累計 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 8件 | 5件 | 10件 | 9件 | 5件 | 4件 | 3件 | 7件 | 14件 | 3件 | 10件 | 8件 | 80件 | 218件 |
-| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 5件 | 4件 | 5件 | 5件 | 5件 | 2件 | 4件 | 4件 | 4件 | 1件 | 3件 | 2件 | 67件 | 136件 |
-| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 3件 | 2件 | 4件 | 0件 | 1件 | 3件 | 2件 | 4件 | 1件 | 2件 | 3件 | 39件 | 91件 |
-| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 4件 | 3件 | 2件 | 4件 | 2件 | 2件 | 4件 | 1件 | 6件 | 1件 | 2件 | 52件 | 109件 |
-| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **18件** | **16件** | **20件** | **20件** | **14件** | **9件** | **12件** | **17件** | **23件** | **11件** | **16件** | **15件** | **238件** | **554件** |
+| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 8件 | 5件 | 10件 | 9件 | 5件 | 4件 | 3件 | 7件 | 14件 | 3件 | 10件 | 8件 | 80件 | 4件 | 222件 |
+| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 5件 | 4件 | 5件 | 5件 | 5件 | 2件 | 4件 | 4件 | 4件 | 1件 | 3件 | 2件 | 67件 | 7件 | 143件 |
+| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 3件 | 2件 | 4件 | 0件 | 1件 | 3件 | 2件 | 4件 | 1件 | 2件 | 3件 | 39件 | 2件 | 93件 |
+| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 4件 | 3件 | 2件 | 4件 | 2件 | 2件 | 4件 | 1件 | 6件 | 1件 | 2件 | 52件 | 2件 | 111件 |
+| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **18件** | **16件** | **20件** | **20件** | **14件** | **9件** | **12件** | **17件** | **23件** | **11件** | **16件** | **15件** | **238件** | **15件** | **569件** |
