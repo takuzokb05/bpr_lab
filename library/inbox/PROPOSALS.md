@@ -1,7 +1,7 @@
 # PROPOSALS.md
 
 収集記事を横断分析して得られた反映提案。
-最終更新: 2026-06-19
+最終更新: 2026-06-20
 
 ---
 
@@ -1122,3 +1122,54 @@ FX自動売買の構成（P-014の4層アーキテクチャ）において、Gem
 2. MCPツール定義を `sandbox/FX自動取引/mcp_tools.py` に標準化（open_trade・close_trade・get_ohlc・get_account_info の4ツール最小セット）
 3. P-030（FastAPI実装）と統合: FastAPI → asyncio キュー → MT5ブリッジ の完全パイプラインを実装し、デモ口座でスループットテスト（1秒あたりLLM呼び出し数の上限を計測）
 4. P-025（HITL設計）のconfidence閾値チェックをキュー処理の中間ステップとして組み込む
+
+---
+
+## 2026-06-20 提案
+
+### P-089: Claude Code Artifacts を FX自動取引ダッシュボードとして活用
+
+**根拠記事**: 572 (Claude Code Artifacts 公式ブログ), 573 (VentureBeat Artifacts エンタープライズ)
+**詳細**: 2026年6月18日にリリースされた Claude Code Artifacts（Team/Enterprise 限定ベータ）を使えば、FX自動取引のバックテスト結果・パフォーマンスダッシュボード・戦略比較レポートを、Claude Code セッションから直接ライブ更新のHTMLページとして生成・共有できる。現在の sandbox/FX自動取引/ では月次パフォーマンスレポートを手動で作成しているが、Artifacts を活用すればセッション中に自動生成されたビジュアルダッシュボードとして共有可能になる。Team/Enterprise プラン限定であることに注意。
+
+**提案アクション**:
+1. Claude Code の Artifacts 機能（`/artifacts`コマンド or セッション内で自動検出）を有効化し、FXバックテスト結果を HTML ダッシュボードとして出力するワークフローを試作
+2. P-037（月次パフォーマンスレビュースキル）と連携: `/fx-review` スキル実行時に Artifacts として損益チャート・Sharpe比・ドローダウン推移を自動生成
+3. Enterprise プラン未契約の場合は代替として `/ultrareview` との組み合わせによるテキスト形式のパフォーマンスレポートで暫定対応
+
+---
+
+### P-090: Claude Fable 5 への API モデル切り替え — Opus 4.8 比で安価・高性能
+
+**根拠記事**: 577 (Anthropic公式 Fable 5 仕様), 579 (Simon Willison 分析), 586 (Mean CEO 価格比較)
+**詳細**: Claude Fable 5（2026年6月9日 GA）は Anthropic 史上最強モデルでありながら Opus 4.8 より安価（入力$10/M vs $15/M、出力$50/M vs $75/M）。Simon Willison・Mean CEO ともに「価格逆転現象」として注目しており、特にコーディング・推論・複雑タスクで Opus 4.8 を上回る。1M トークンコンテキスト・128k 出力対応、self-verification behaviors を実装。FX 自動取引の判断層（P-014 の 0.75+ フルサイズエントリー条件）で Fable 5 に切り替えることで、性能向上とコスト削減を同時に達成できる。API モデル ID: `claude-fable-5`。
+
+**提案アクション**:
+1. `sandbox/FX自動取引/config.py` の `MODEL=claude-opus-4-8` を `MODEL=claude-fable-5` に変更し、同一バックテストで精度・レイテンシ・コストを計測
+2. P-043（LLMバージョン固定とリグレッションテスト）の対象をFable 5に更新し、Opus 4.8→Fable 5の移行前後でシャープレシオ・勝率の変化を記録
+3. CLAUDE.md のモデル指定注記を更新: 「FX判断層は `claude-fable-5`（Opus 4.8 比で高性能・低コスト）を使用」を明記
+4. Mythos 5（サイバー能力完全版）は一般開発用途では不要のため Fable 5 を使用すること
+
+---
+
+### P-091: EU AI Act 2026年8月2日施行への対応確認
+
+**根拠記事**: 583 (Axis Intelligence EU AI Act 8月施行), 584 (Latham & Watkins EU AI Act 変更)
+**詳細**: EU AI Act の主要規定が 2026年8月2日に発効（あと約43日）。透明性義務（Article 50）：AI 対話の開示・合成コンテンツのラベリング・ディープフェイク識別が義務化。高リスクAIシステムへの要件も同日発効。Latham & Watkins 分析によれば SME 向けの一部簡素化はあるが 8月2日の期限は変更なし。bpr_lab の FX 自動取引エージェント・日次収集エージェントが EU ユーザーに接触する場合、透明性義務の適用を確認する必要がある。個人利用・日本国内限定であれば直接影響は低いが、Claude API 経由で Anthropic の EU AI Act コンプライアンスに間接的に依存する構造を理解しておくべき。
+
+**提案アクション**:
+1. bpr_lab のシステム（FX 自動取引・日次収集エージェント・Artifacts 共有）が EU ユーザーへのサービスに該当するか用途確認を実施
+2. EU 向けサービスが含まれる場合: Article 50 の透明性義務（AI 対話である旨の表示）を 8月2日までに実装
+3. CLAUDE.md に「EU AI Act 2026年8月2日施行: AI 対話透明性義務の対応状況」を記録し、毎月の規制動向確認を PROPOSALS.md レビューと合わせて実施
+
+---
+
+### P-092: AGENTS.md の採用検討 — マルチエージェント環境での設定統一
+
+**根拠記事**: 576 (Izanami CLAUDE.md vs AGENTS.md ベストプラクティス)
+**詳細**: Izanami 記事により、AGENTS.md フォーマット（OpenAI Codex・Gemini CLI・Claude Code 等の複数エージェント共通）が2026年時点で普及しつつあることが確認された。bpr_lab では Claude Code 専用の CLAUDE.md を使用しているが、P-036（Microsoft Agent 365 SDK）・P-029（TradingAgents）等の複数エージェントフレームワークを導入した場合、CLAUDE.md と AGENTS.md の二重管理が発生する可能性がある。現時点では Claude Code 単一エージェントが主体のため CLAUDE.md で十分だが、マルチエージェント化が進む場合に備えて移行計画を検討すべき。
+
+**提案アクション**:
+1. bpr_lab が使用するエージェントツールを棚卸し（Claude Code・TradingAgents・Microsoft Agent SDK 等）し、AGENTS.md 対応ツールを特定
+2. 複数エージェントが 2 種類以上になった時点で CLAUDE.md → AGENTS.md への移行を実施（現時点では移行不要）
+3. CLAUDE.md の先頭に「この設定は Claude Code 専用。AGENTS.md 対応ツールを導入する場合は PROPOSALS.md P-092 を参照」というコメントを追記し、将来の移行ガイダンスを残す
