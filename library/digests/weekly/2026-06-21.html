@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Weekly Digest — 2026-06-21</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --bg-card: #ffffff;
+    --text: #1a1a1a;
+    --text-secondary: #555;
+    --text-tertiary: #888;
+    --border: #e0e0e0;
+    --border-light: #f0f0f0;
+    --accent-claude: #3b82f6;
+    --accent-claude-bg: #eff6ff;
+    --accent-eco: #10b981;
+    --accent-eco-bg: #ecfdf5;
+    --accent-trade: #f59e0b;
+    --accent-trade-bg: #fffbeb;
+    --accent-news: #8b5cf6;
+    --accent-news-bg: #f5f3ff;
+    --accent-cross: #ef4444;
+    --accent-cross-bg: #fef2f2;
+    --action-bg: #f0fdf4;
+    --action-border: #86efac;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06);
+    --shadow-hover: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #111111;
+      --bg-card: #1a1a1a;
+      --text: #e5e5e5;
+      --text-secondary: #aaa;
+      --text-tertiary: #777;
+      --border: #333;
+      --border-light: #222;
+      --accent-claude-bg: #1e293b;
+      --accent-eco-bg: #0f2922;
+      --accent-trade-bg: #2a2010;
+      --accent-news-bg: #1e1533;
+      --accent-cross-bg: #2a1515;
+      --action-bg: #0f2922;
+      --action-border: #166534;
+      --shadow: 0 1px 3px rgba(0,0,0,0.3);
+      --shadow-hover: 0 2px 8px rgba(0,0,0,0.4);
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    font-size: 16px;
+  }
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+  header {
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 24px;
+    margin-bottom: 40px;
+  }
+  header h1 {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+  header .subtitle {
+    font-size: 14px;
+    color: var(--text-tertiary);
+  }
+  header .meta {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    margin-top: 8px;
+  }
+  h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 48px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-light);
+  }
+  h3 {
+    font-size: 17px;
+    font-weight: 700;
+    margin: 28px 0 12px;
+  }
+  h4 {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 20px 0 8px;
+    color: var(--text-secondary);
+  }
+  p { margin-bottom: 14px; }
+  .summary-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    margin: 20px 0 32px;
+    box-shadow: var(--shadow);
+  }
+  .summary-box p { margin-bottom: 10px; }
+  .summary-box p:last-child { margin-bottom: 0; }
+  .domain-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-right: 6px;
+    vertical-align: middle;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+  .tag-claude { background: var(--accent-claude-bg); color: var(--accent-claude); }
+  .tag-eco { background: var(--accent-eco-bg); color: var(--accent-eco); }
+  .tag-trade { background: var(--accent-trade-bg); color: var(--accent-trade); }
+  .tag-news { background: var(--accent-news-bg); color: var(--accent-news); }
+  .tag-cross { background: var(--accent-cross-bg); color: var(--accent-cross); }
+  .trend-timeline {
+    border-left: 3px solid var(--border);
+    padding-left: 20px;
+    margin: 16px 0 24px;
+  }
+  .trend-timeline .day {
+    position: relative;
+    margin-bottom: 16px;
+  }
+  .trend-timeline .day::before {
+    content: '';
+    position: absolute;
+    left: -26px;
+    top: 8px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--accent-claude);
+  }
+  .trend-timeline .day.eco::before { background: var(--accent-eco); }
+  .trend-timeline .day.trade::before { background: var(--accent-trade); }
+  .trend-timeline .day.news::before { background: var(--accent-news); }
+  .trend-timeline .day-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    margin-bottom: 2px;
+  }
+  .trend-timeline .day-content {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .topic-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    margin: 12px 0;
+    box-shadow: var(--shadow);
+  }
+  .topic-card .card-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .topic-card .card-body {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .topic-card .card-ref {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-top: 8px;
+  }
+  .connection {
+    background: var(--accent-cross-bg);
+    border-left: 3px solid var(--accent-cross);
+    padding: 12px 16px;
+    margin: 12px 0;
+    border-radius: 0 6px 6px 0;
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+  .action-list {
+    list-style: none;
+    margin: 16px 0;
+  }
+  .action-list li {
+    background: var(--action-bg);
+    border: 1px solid var(--action-border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 10px;
+  }
+  .action-list li .priority {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 3px;
+    margin-right: 6px;
+    background: #dc2626;
+    color: #fff;
+  }
+  .action-list li .priority.p2 { background: #ea580c; }
+  .action-list li .priority.p3 { background: #ca8a04; }
+  .action-list li .action-title {
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 4px;
+  }
+  .action-list li .action-reason {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .watch-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 16px 0;
+  }
+  @media (max-width: 600px) {
+    .watch-list { grid-template-columns: 1fr; }
+  }
+  .watch-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .watch-item .watch-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+  }
+  .watch-item .watch-content {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .stats-bar {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin: 16px 0;
+    font-size: 13px;
+    color: var(--text-tertiary);
+  }
+  .stats-bar span { white-space: nowrap; }
+  footer {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-light);
+    font-size: 12px;
+    color: var(--text-tertiary);
+    text-align: center;
+  }
+  .domain-section { margin: 32px 0; }
+  .domain-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .domain-bar {
+    width: 4px;
+    height: 24px;
+    border-radius: 2px;
+  }
+  .domain-bar.claude { background: var(--accent-claude); }
+  .domain-bar.eco { background: var(--accent-eco); }
+  .domain-bar.trade { background: var(--accent-trade); }
+  .domain-bar.news { background: var(--accent-news); }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>AI Weekly Digest</h1>
+  <div class="subtitle">2026-06-16 — 2026-06-20</div>
+  <div class="meta">299記事を分析 / 4ドメイン横断</div>
+  <div class="stats-bar">
+    <span><span class="domain-tag tag-claude">Claude Code</span>148件</span>
+    <span><span class="domain-tag tag-eco">Ecosystem</span>62件</span>
+    <span><span class="domain-tag tag-trade">Trading</span>58件</span>
+    <span><span class="domain-tag tag-news">News</span>31件</span>
+  </div>
+</header>
+
+<!-- ============================================================ -->
+<!-- 1. 今週のサマリー -->
+<!-- ============================================================ -->
+
+<h2>1. 今週のサマリー</h2>
+
+<div class="summary-box">
+  <p>今週の最大の動きは3つ。第一に、<strong>Claude Code Artifactsのベータ公開</strong>（6/18）。セッション作業をチーム共有可能なライブHTMLページに変換する機能で、Claude Codeが「コードを書くツール」から「成果物を生み出すプラットフォーム」へ昇格した瞬間だった。第二に、<strong>6月15日に予定されていたAgent SDK課金分離がユーザーの反発で直前に一時停止</strong>。Pro/Max/Enterprise各プランのクレジット分離は「未施行」のまま宙に浮いており、再開時期は未定。第三に、<strong>Claude Fable 5の一時停止と再開</strong>の全容が判明 — 米政府の外国アクセスへの懸念による介入であり、「公開→規制的懸念→協議→再公開」という前例のないプロセスが明らかになった。</p>
+  <p>加えて、<strong>MCPセキュリティの脆弱性</strong>（200,000台に影響、14 CVE）が改めて報告され、急拡大するMCPエコシステムのセキュリティ管理の重要性が浮き彫りになった。<strong>Claude Platform on AWS</strong>がGA、<strong>Apple Xcode 26.3にClaude Agent SDKがネイティブ統合</strong>、<strong>Skills1,000件突破とオープン標準化</strong>、<strong>EU AI ActのHRAI期限が2027年12月に延期</strong>（ただしGPAI義務は8月2日のまま） — Anthropicのプラットフォーム拡張と業界規制の双方が加速した一週間だった。</p>
+</div>
+
+<!-- ============================================================ -->
+<!-- 2. 継続トレンド総括 -->
+<!-- ============================================================ -->
+
+<h2>2. 今週ずっと話題だったもの</h2>
+
+<h3><span class="domain-tag tag-claude">Claude Code</span>Skills / Hooks / CLAUDE.md — 「書き方」から「運用標準」へ</h3>
+
+<div class="trend-timeline">
+  <div class="day">
+    <div class="day-label">6/16（月）</div>
+    <div class="day-content">Skills1,000件突破とAgent Skillsオープン標準（agentskills.io）により、SkillsがCopilot CLI/Gemini CLI/Codexでも動作するクロスエージェント互換の時代に入った。15件のコピペHook実例集が公開され、PreToolUse/PostToolUse/Stop/Notification/SubagentStopの全イベント分類をカバー。DevelopersIOが成長支援Skillsの実装例を公開し、「コード生成以外」のClaude Code活用パターンを示した。</div>
+  </div>
+  <div class="day">
+    <div class="day-label">6/17（火）</div>
+    <div class="day-content">ofox.aiが4層アーキテクチャ（Advisory=CLAUDE.md / Deterministic=Hooks / Skill=Skills / Parallel=Subagents）を体系化。MindStudioがサブエージェントの最適並列数を3〜5と定量化し、5超で要約マージのオーバーヘッドが増大することを報告。SKILL.mdフロントマターにHookを直接記述できることがQiitaで紹介され、settings.json肥大化問題の解決策として広まった。</div>
+  </div>
+  <div class="day">
+    <div class="day-label">6/18（水）</div>
+    <div class="day-content">Anthropicが公式PDFで「社内でのClaude Code利用法」を開示 — git worktree並列セッション、PR時の複数専門エージェント同時ディスパッチ、成功パターンからのSkill抽出術。KDnuggetsがSkills構築の完全ガイドを掲載。X上では数十件のClaude Code実践Tips投稿が集中し、フォルダ設計・MCP連携・マルチエージェントワークフローの知見が爆発的に共有された。</div>
+  </div>
+  <div class="day">
+    <div class="day-label">6/19（木）</div>
+    <div class="day-content">Claude Code MCP実践ガイド（AQUA）とプラグイン完全ガイド（Qiita）が日本語で公開。特にStreamable HTTP（HTTP+SSEの後継）とOAuth 2.1がリモートMCPの標準トランスポート/認証として確立。設定ファイルリファレンス記事が公開され、CLAUDE.mdのベストプラクティスが「設定ファイル全体の中でどこに位置するか」という文脈で整理された。</div>
+  </div>
+  <div class="day">
+    <div class="day-label">6/20（金）</div>
+    <div class="day-content">CLAUDE.md vs AGENTS.md（OpenAI Codex/Gemini CLI共通フォーマット）の比較記事が登場し、マルチエージェント環境での設定ファイル統一が議論の俎上に。Uravationが20パターンのCLAUDE.mdベストプラクティスを日本語で整理。必須Skillsランキングでcode-reviewer・git-commit-writer・readme-generatorがトップ3に確定。</div>
+  </div>
+</div>
+
+<p>先週確立された「200行上限」「What/Why/How 3層構造」のコンセンサスは今週さらに深化し、<strong>4層アーキテクチャ（CLAUDE.md→Hooks→Skills→Subagents）という運用標準</strong>として確立された。もはや個別のTipsではなく、Claude Codeの「正しい使い方」のフレームワークがエコシステム全体で共有されている。AGENTS.mdの台頭は、この運用標準がClaude Code固有からマルチエージェント共通へ拡大する兆しだ。</p>
+
+<h3><span class="domain-tag tag-claude">Claude Code</span>Fable 5 — 停止・再開の全容と「1モデル2製品」の定着</h3>
+
+<div class="trend-timeline">
+  <div class="day">
+    <div class="day-label">先週（6/9〜14）</div>
+    <div class="day-content">6月9日にFable 5とMythos 5が同時リリース。SWE-Bench Pro 80.3%で業界最高値。12日に「シークレット・サボタージュ」問題が発覚。Anthropicが謝罪・方針転換し、セーフガード介入の可視化を約束。Fable 5無料体験期間（6/9〜22）が設定された。</div>
+  </div>
+  <div class="day">
+    <div class="day-label">6/16〜17</div>
+    <div class="day-content">6月15日の課金分離とFable 5の評価が同時進行。コスト逆転現象の発見 — Fable 5（$10/$50）はOpus 4.8（$15/$75）より安価でありながら高性能。スタートアップ向けの切り替え推奨が複数記事で発信された。</div>
+  </div>
+  <div class="day">
+    <div class="day-label">6/18（水）</div>
+    <div class="day-content">X上でFable 5の一時停止に関する詳細な分析が多数投稿。PenQuesterの投稿（518いいね）が「ジェイルブレイク対策の信頼性問題」としてフレーミング。米政府の外国アクセス懸念による介入の可能性がInfoQで報じられた。</div>
+  </div>
+  <div class="day">
+    <div class="day-label">6/20（金）</div>
+    <div class="day-content">Anthropic公式ドキュメントでFable 5/Mythos 5の完全仕様が公開。Simon Willisonが「価格逆転現象はAnthropicのコスト効率化を示す」と評価。InfoQが一時停止→再開の全経緯をまとめ、「公開→規制的懸念→協議→再公開」がAIモデルリリースの新パターンになると予測。MeanCEOがスタートアップ向けのモデル切り替え意思決定フレームワークを提供。</div>
+  </div>
+</div>
+
+<p>Fable 5のストーリーは先週の「リリースと炎上」から今週は「政府介入と再開、そして実用的評価」のフェーズに移行した。特に<strong>価格逆転現象</strong>（より高性能で安価）は重要なシグナルだ。Anthropicのコスト効率化が進んでおり、Fable 5への切り替えは性能向上とコスト削減を同時に達成できる。「1モデル2製品」（Fable=一般向け、Mythos=承認済みユーザー向け）という設計は、AI安全の新しい実装パターンとして業界標準になりつつある。</p>
+
+<h3><span class="domain-tag tag-eco">Ecosystem</span>Agent SDK課金分離 — 一時停止とその余波</h3>
+
+<div class="trend-timeline">
+  <div class="day eco">
+    <div class="day-label">6/15（日）発効予定日</div>
+    <div class="day-content">当初計画: Agent SDK/GitHub Actions/claude -pをサブスクリプション枠から分離し、API従量課金の別クレジットプール（Pro $20、Max 5x $100、Max 20x $200）に移行。同日Sonnet 4/Opus 4（20250514）の引退も予定。</div>
+  </div>
+  <div class="day eco">
+    <div class="day-label">6/16（月）</div>
+    <div class="day-content">DigitalApplied・LetsDatScienceが独立して報道: <strong>Anthropicが直前に課金分離を一時停止</strong>。ユーザーの反発とプロダクション影響を考慮した判断。現状のサブスクリプション利用は変更なし。引き続き有効な変更はWorkload Identity Federation（APIキーなし認証）のみ。</div>
+  </div>
+  <div class="day eco">
+    <div class="day-label">6/17〜18</div>
+    <div class="day-content">BindAIが詳細なコスト試算を公開。日本語解説（DevelopersIO他）が追随。再開タイムラインは不明だが、「いずれ実施される」というコンセンサスが形成。プロダクションでAgent SDKを使うチームは事前のコスト試算と上限設定を推奨。</div>
+  </div>
+</div>
+
+<p>先週「明日発効」と警報を鳴らした課金分離は、<strong>直前で凍結</strong>された。安堵すべきだが、一時停止であって撤回ではない。再開時にはコスト構造が大幅に変わるため、今のうちにAgent SDK利用量のベースラインを計測しておく必要がある。Sonnet 4/Opus 4の引退状況についても継続監視が必要だ。</p>
+
+<!-- ============================================================ -->
+<!-- 3. 重要トピック（ドメイン別） -->
+<!-- ============================================================ -->
+
+<h2>3. 今週の重要トピック</h2>
+
+<!-- Claude Code -->
+<div class="domain-section">
+  <div class="domain-header">
+    <div class="domain-bar claude"></div>
+    <h3>Claude Code</h3>
+  </div>
+
+  <div class="topic-card">
+    <div class="card-title">Claude Code Artifacts ベータ — セッションがライブ共有ページに</div>
+    <div class="card-body">
+      6月18日、Anthropicが<strong>Claude Code Artifacts</strong>をベータ公開（Team/Enterpriseプランのみ）。Claude Codeのセッション作業を、プライベートURLの自己更新型HTMLページに変換する。PRウォークスルー、システム解説、インシデントページ、プロジェクトダッシュボードとして活用可能。セッションの進行に伴いページが自動更新される点が既存ドキュメント共有との決定的な違い。Enterpriseでは管理者がロール別アクセス制限・保持期間設定・Compliance APIでの監査が可能。VentureBeatはこれを「AIがコードを書くだけでなく成果物を共有可能な形で提示する」ナレッジワーク自動化の新フロンティアと評価した。
+    </div>
+    <div class="card-ref">参照: 572, 573</div>
+  </div>
+
+  <div class="topic-card">
+    <div class="card-title">v2.1.178 — 権限構文の刷新とネスト.claude対応</div>
+    <div class="card-body">
+      6月16日リリース。新しい権限ルール構文でより細かなアクセス制御が可能に。ネストされた<code>.claude</code>ディレクトリのサポートにより、モノレポ内のサブプロジェクトごとに独立した設定を管理できるようになった。<code>enforceAvailableModels</code>オプションでマネージドデプロイメントにおけるモデル許可リストを設定可能。Enterpriseプランでは管理者カスタムロールにgranularな権限（課金・プライバシー等）が追加された。
+    </div>
+    <div class="card-ref">参照: 286, 302</div>
+  </div>
+
+  <div class="topic-card">
+    <div class="card-title">Dynamic Workflows — 75万行を6日で書き直した実証</div>
+    <div class="card-body">
+      並列サブエージェントをLangGraph的DAG構造で制御し、75万行のコードを6日間で書き直した事例が報告された。オーケストレーターが各サブエージェントにファイルセットを割り当て、依存関係を解決する設計。限界も正直に分析: コンテキスト汚染と中間状態の不整合リスク。別記事ではDynamic Workflowsの最適設計パターンとして「タスクを小さな独立ステップに分解しDAG構造で並列実行」を推奨。条件分岐・ループ・状態管理・フォールバックのコードパターンも提供された。
+    </div>
+    <div class="card-ref">参照: 293, 294</div>
+  </div>
+
+  <div class="topic-card">
+    <div class="card-title">Anthropic公式「社内でのClaude Code利用法」PDF公開</div>
+    <div class="card-body">
+      Anthropicが自社チームのClaude Code利用方法を公式PDFとして開示。核心的ワークフロー: (1) git worktreeを使った3〜5セッション並列実行、(2) PR時に複数専門エージェントを同時ディスパッチ（ロジック・セキュリティ・パフォーマンスを各専門エージェントが並行レビュー）、(3) <code>/permissions</code>で安全コマンドを事前許可し<code>.claude/settings.json</code>にコミットしてチーム全体で監査可能に、(4) 困難タスクの成功パターンをSkillとして抽出する手法。公式サポートのパワーユーザーTipsと合わせ、最も信頼性の高いClaude Code活用リファレンスとなった。
+    </div>
+    <div class="card-ref">参照: 317, 319</div>
+  </div>
+
+  <div class="topic-card">
+    <div class="card-title">NVIDIA SkillSpector — Skillsの26%に脆弱性が存在</div>
+    <div class="card-body">
+      NVIDIAが開発したAIエージェントSkillセキュリティスキャナー「SkillSpector」が、64の脆弱性パターンを16のセキュリティカテゴリ（プロンプトインジェクション・データ漏洩・権限昇格等）で検査した結果を公開。分析対象Skillsの<strong>26.1%に脆弱性が発見され、5.2%に悪意のあるインジケーターが確認された</strong>。Skills 1,000件突破とオープン標準化が進む中、セキュリティ検証なしのSkill導入はリスクが高い。MCP脆弱性（14 CVE）と合わせ、エコシステム拡大に伴うセキュリティ課題が二重に浮上している。
+    </div>
+    <div class="card-ref">参照: 357</div>
+  </div>
+
+  <div class="topic-card">
+    <div class="card-title">コミュニティの声 — 賞賛と限界の両面</div>
+    <div class="card-body">
+      今週のX上での大量投稿から浮かぶ実態。<strong>賞賛側</strong>: Claude Codeの生みの親Boris Chernyは「もう手動でコードを書いていない。スマホから1日150件のPRをマージ」と開示（記事374）。化学1,000問アプリを3週間で出荷（記事342）、ステアリングマイコンに接続してジッタを解消（記事386）等、ソフトウェア開発以外の用途も拡大中。<strong>限界側</strong>: 大規模プロジェクトでは「コードを削除せずラッピングを重ね、管理不能になる」（記事376）。レート制限の削減がユーザー離脱を招いている（記事354）。AI-to-AIループセッションの品質劣化（記事343）、プロジェクトセッションの無断削除（記事371）等のバグ報告も。
+    </div>
+    <div class="card-ref">参照: 342, 343, 354, 371, 374, 376, 386</div>
+  </div>
+
+  <div class="connection">
+    接続: Artifactsの登場により、Dynamic Workflowsの実行結果を自動的にドキュメント化・チーム共有するパイプラインが実現可能に。Skills+Hooks+Subagentsで構築→Artifactsで共有→PRレビューで複数エージェント検証、というClaude Code完結型の開発サイクルが見えてきた。ただしSkillsの26%に脆弱性がある現状、導入前のセキュリティ検証プロセスの確立が前提条件となる。
+  </div>
+</div>
+
+<!-- Ecosystem/MCP -->
+<div class="domain-section">
+  <div class="domain-header">
+    <div class="domain-bar eco"></div>
+    <h3>Ecosystem / MCP</h3>
+  </div>
+
+  <div class="topic-card">
+    <div class="card-title">Claude Platform on AWS — Anthropicネイティブ体験をAWS課金で</div>
+    <div class="card-body">
+      2026年5月にGA。Claude Managed Agents・コード実行・Web検索/フェッチ・プロンプトキャッシング・バッチ処理・引用・Files API・Skills・MCPコネクターを含む完全な機能セット。認証はAWS IAM、監査ログはCloudTrail、課金はAWS請求書に一本化。<strong>Amazon Bedrockとの重要な違い</strong>: Claude Platformではデータが「AWS境界外でAnthropicが処理」（Bedrockは「AWS境界内でAWSが処理」）。新API機能とベータ機能をAnthropicネイティブAPIと同日に受け取れることを保証。AWSファーストパーティとして初のクラウドプロバイダー統合。
+    </div>
+    <div class="card-ref">参照: 564, 565</div>
+  </div>
+
+  <div class="topic-card">
+    <div class="card-title">MCPセキュリティ脆弱性 — 200,000台サーバーにRCE、14 CVE</div>
+    <div class="card-body">
+      2026年4月にOX Securityの研究者が発見したMCP脆弱性の詳細報告が改めて公開された。約<strong>200,000台のMCPサーバーがリモートコード実行（RCE）攻撃に晒されていた</strong>ことが判明し、14件のCVEが付与された。Anthropicはパッチをリリースし対処済みだが、MCPエコシステムが急速拡大する中でのセキュリティ管理の重要性を浮き彫りにした。第三者製MCPサーバーについてはAnthropicがセキュリティを検証していないことを再認識させる事例であり、企業導入時のリスク評価が不可欠。
+    </div>
+    <div class="card-ref">参照: 563</div>
+  </div>
+
+  <div class="topic-card">
+    <div class="card-title">Apple Xcode 26.3 — Claude Agent SDKネイティブ統合</div>
+    <div class="card-body">
+      Anthropic公式発表。Xcode 26.3がClaude Agent SDKをネイティブに統合。Claude Codeの能力（ファイル読み書き・シェル実行・git統合）をApple開発環境に直接持ち込む。先週のWWDC 2026でのFoundation Modelsフレームワーク開放に続く具体的な統合ステップ。Appleエコシステム全体へのClaude配信チャネルがさらに拡大した。
+    </div>
+    <div class="card-ref">参照: 562</div>
+  </div>
+
+  <div class="topic-card">
+    <div class="card-title">MCP統計 2026 — 月間9,700万DL、5,800+サーバー、そしてステートレス化へ</div>
+    <div class="card-body">
+      DigitalAppliedがMCPの最新統計を報告。月間SDKダウンロード数9,700万、GitHubスター81,000+、利用可能サーバー5,800+。全主要AIベンダー（Anthropic・OpenAI・Google・Microsoft・AWS）が対応済み。ガバナンスはLinux Foundation管理下（2025年12月移行）。次期RCではステートレス化・Tasks API・OAuth 2.1対応が予定され、スティッキーセッション不要のラウンドロビンLBが可能に。7月28日の最終仕様公開に向けてTier 1 SDKの10週間コンプライアンス期限が進行中。n8nがネイティブMCPクライアント/サーバーノードをリリースし、ノーコードでのMCPマルチエージェント構築も現実的になった。
+    </div>
+    <div class="card-ref">参照: 310, 311, 326</div>
+  </div>
+
+  <div class="topic-card">
+    <div class="card-title">Microsoft Agent Framework — BUILD 2026でClaude Code対抗策を発表</div>
+    <div class="card-body">
+      AutoGenとSemantic Kernelを統合したAgent Framework 1.0がBUILD 2026で新機能を発表。<strong>Agent Harness</strong>（Claude Codeと同様のエージェント実行環境を.NET/Pythonに提供）、<strong>Hosted Agents</strong>（Azureサーバーレス実行）、<strong>CodeAct</strong>（LLMがPythonコード生成・実行で任意ツールを呼び出す）。A2A（Agent-to-Agent）プロトコルによるPython↔.NETクロスランタイム連携も発表。エージェントフレームワーク市場の競争が激化している。
+    </div>
+    <div class="card-ref">参照: 570</div>
+  </div>
+
+  <div class="connection">
+    接続: Claude Platform on AWSのGA + Apple Xcode統合 + MCPの9,700万DLにより、Anthropicの配信チャネルが「自社API」「AWS」「Apple」の三本柱に拡大。一方でMicrosoftがAgent Harnessで真正面から対抗し、MCPの脆弱性報告がエコシステム全体のセキュリティ課題を提起。プラットフォーム拡大と安全性確保の両立が次の焦点になる。
+  </connection>
+</div>
+
+<!-- Trading -->
+<div class="domain-section">
+  <div class="domain-header">
+    <div class="domain-bar trade"></div>
+    <h3>Trading</h3>
+  </div>
+
+  <div class="topic-card">
+    <div class="card-title">学術論文: 「LLM金融戦略は長期的に市場をアウトパフォームしない」</div>
+    <div class="card-body">
+      arxiv 2505.07078による<strong>20年以上・100銘柄超のシステマティックバックテスト</strong>結果。LLMのアルファは短期では存在するが、広いクロスセクション・長期評価で有意に劣化。非対称的な失敗モードが発見された: ブル相場では保守的すぎてパッシブ投資に負け、ベア相場では攻撃的すぎて大損失を生む。バックテスト精度50%が実取引では10〜15%に崩壊する。AI取引への過剰期待を戒める重要な一次情報論文であり、FX自動売買の設計において「LLMを意思決定者にしない」ことの根拠となる。
+    </div>
+    <div class="card-ref">参照: 290</div>
+  </div>
+
+  <div class="topic-card">
+    <div class="card-title">MetaTrader MCPサーバー — LLMとMT5の標準接続パターン</div>
+    <div class="card-body">
+      Agentpediaが公開したMetaTrader MCPサーバーの詳細解説。<code>open_trade</code>・<code>close_trade</code>・<code>get_ohlc</code>・<code>get_account_info</code>等のツール定義とJSON-RPC形式を明示。MQL5のHTTP制限をPythonブリッジで迂回する実装パターンと、OnTick()内にLLM呼び出しを直接埋め込む設計の欠陥（スループット不足・タイムアウト）を指摘。推奨アーキテクチャ: MT5→Pythonキュー→LLM→実行のキューベース設計。日本語のFXSensei記事でもMT5+Python+LLM APIスタックのソースコードが公開された。
+    </div>
+    <div class="card-ref">参照: 568, 569</div>
+  </div>
+
+  <div class="topic-card">
+    <div class="card-title">AIエージェント vs EA — 2026年の実戦比較と4層アーキテクチャ</div>
+    <div class="card-body">
+      TradeLikeMasterがAIトレーディングエージェントとExpert Advisors (EA)の完全比較を公開。EAの限界: 固定if/thenルールで相場レジーム転換に対応不可。AIエージェントの優位性: LLM推論でリアルタイムに戦略適応、ニュース・センチメント・マクロ指標・プライスアクションを同時分析。しかしCoinEditionは「同じモデル・プロンプトを使うエージェントが増えすぎるとクラウデッドトレード→市場不安定化」のリスクを警告。4層自律取引アーキテクチャ（データ収集→戦略→リスク管理→執行）の各層にGPT-5.5/Claude Opus/Geminiを配置するパターンも提示されたが、エージェントの予測困難性・バックテスト困難性は依然として課題。
+    </div>
+    <div class="card-ref">参照: 296, 328, 329, 330</div>
+  </div>
+
+  <div class="topic-card">
+    <div class="card-title">LLMアルゴトレーディング比較 — Opus 4.7 vs GPT-5.5 vs Gemini 3.1 vs Grok</div>
+    <div class="card-body">
+      7基準（コード品質・MT5接続精度・OHLCV処理・リスク管理・エラーハンドリング・バックテスト統合・可読性）での比較結果。<strong>Opus 4.7</strong>: 保守的だがバリデーションロジックが堅牢、リスク管理実装で最高評価。<strong>GPT-5.5</strong>: 高速で決断的、デバッグ対話で優位。<strong>Gemini 3.1</strong>: マルチ通貨ペア処理に秀逸。<strong>Grok</strong>: 創造的な戦略設計が最強。7要素（LLM選択・プロンプト設計・コンテキスト形式・呼出頻度・リスク管理・バックテスト・モニタリング）のうち、DIY実装の大半は2〜3要素しかカバーしていない。
+    </div>
+    <div class="card-ref">参照: 312, 313, 314</div>
+  </div>
+
+  <div class="connection">
+    接続: MetaTrader MCPサーバーの登場により、Claude Code Skills（戦略設計）→ MCP（MT5接続）→ Hooks（取引前安全チェック）→ Dynamic Workflows（マルチ戦略並列バックテスト）というClaude Codeエコシステム内完結型のFXワークフローが技術的に実現可能に。ただしarxiv論文が示す「LLMは長期的にアウトパフォームしない」という学術的エビデンスは、LLMを「意思決定者」ではなく「分析支援・フィルタリングツール」として使う先週の「ボットパイロット」モデルの正当性を改めて裏付けた。
+  </div>
+</div>
+
+<!-- News/Policy -->
+<div class="domain-section">
+  <div class="domain-header">
+    <div class="domain-bar news"></div>
+    <h3>News / Policy</h3>
+  </div>
+
+  <div class="topic-card">
+    <div class="card-title">EU AI Act — HRAI期限が2027年12月に延期、ただしGPAIは8月2日のまま</div>
+    <div class="card-body">
+      EU AI ActのDigital Omnibus改正で重要な変更。<strong>高リスクAI（HRAI/Annex III）義務が2026年8月→2027年12月に1.5年延期</strong>。インフラ・採用・教育分野の企業に準備猶予が生まれた。新たに2つの禁止AIカテゴリが追加: 非同意の性的コンテンツ生成AIとCSAM生成AI。規制サンドボックス設置義務も2027年8月に延期。<strong>ただし汎用AI（GPAI）モデル義務は2026年8月2日のまま変更なし</strong> — LLMプロバイダーにとっての期限は動いていない。Latham &amp; Watkinsの分析では「厳格化と柔軟化の同時進行」と評価。8月2日の透明性義務（AI対話の開示・合成コンテンツラベリング・ディープフェイク識別可能化）は予定通り発効。違反制裁は最大3,500万ユーロまたは年間世界売上高7%。
+    </div>
+    <div class="card-ref">参照: 316, 583, 584</div>
+  </div>
+
+  <div class="topic-card">
+    <div class="card-title">コロラド州AI法 — SB 189署名、施行は2027年1月に延期</div>
+    <div class="card-body">
+      コロラド州の複雑な状況が整理された。元のAI Act（SB 24-205）は範囲が広すぎると批判を受け、SB 26-189が両院通過し5月14日にPolis知事が署名。規制範囲を「高リスクAIシステム全般」から「重大影響を持つ自動意思決定技術（ADMT）」に限定し、リスク管理プログラムや年次影響評価を削除。施行は<strong>2027年1月1日に延期</strong>。ただし連邦レベルでのGAAIA（Great American AI Act）州法専占条項との関係は未解決。
+    </div>
+    <div class="card-ref">参照: 333</div>
+  </div>
+
+  <div class="topic-card">
+    <div class="card-title">LLMリリースラッシュ — Mercury 2のディフュージョン・アーキテクチャに注目</div>
+    <div class="card-body">
+      6月だけで60以上の新モデルがリリースされる異常なペース。最も注目すべきは<strong>Inception社のMercury 2</strong> — ディフュージョン・アーキテクチャLLMで1,000トークン/秒超を実現し、自己回帰型の10倍速を主張。Qwen3 Coder Next（6/15リリース、コーディング特化）、MiniMax M2.5/M2.7 Highspeed、GPT-5.6、Gemini 3.2（マルチモーダル中間更新）も登場。OpenAIはDeployment Simulation（6/16）を導入 — 過去の会話を新モデルで再生してからリリースする手法。
+    </div>
+    <div class="card-ref">参照: 301, 315</div>
+  </div>
+
+  <div class="topic-card">
+    <div class="card-title">Fable 5の一時停止 — AIモデルリリースに政府が介入する時代</div>
+    <div class="card-body">
+      InfoQの詳細レポートにより、Fable 5の一時停止は<strong>米政府の外国アクセスへの懸念</strong>に基づくことが判明。「AIモデルの公開→規制的懸念→協議→再公開」というプロセスが今後の標準パターンになる可能性が指摘された。The Hacker Newsは、Anthropicが初めてモデルレベルでサイバー・生物・化学能力を製品分離した設計に焦点を当て、この「能力の意図的分割によるリスク管理」がAI安全設計の新たな業界標準になると評価した。
+    </div>
+    <div class="card-ref">参照: 527, 578, 580</div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 4. ドメイン横断分析 -->
+<!-- ============================================================ -->
+
+<h2>4. ドメイン横断分析</h2>
+
+<h3>メタトレンド 1: 「エージェント実行環境」の標準争い</h3>
+<p>今週、3つの巨大プレイヤーがエージェント実行環境の標準を競い始めた。AnthropicはClaude Code + Agent SDK + Artifacts（記事572, 319）、MicrosoftはAgent Framework 1.0 + Agent Harness + Hosted Agents（記事570）、そしてAppleはFoundation Models + Xcode Claude Agent SDK統合（記事562）。LangGraphが実績首位を維持する中、「どのエージェントハーネスでコードを書き・テストし・デプロイするか」が開発者にとっての最重要選択になりつつある。Skills 1,000件のオープン標準化（agentskills.io）は、この競争の中でスキルの互換性を確保する動きとして極めて重要だ。AGENTS.md（マルチエージェント共通フォーマット）の台頭は、ベンダーロックインへの開発者側の防衛反応とも読める。</p>
+
+<h3>メタトレンド 2: 「拡大と安全」の緊張がすべてのドメインに</h3>
+<p>Fable 5の政府介入・再開（記事580）、MCPの200,000台脆弱性（記事563）、Agent SDK課金分離の一時停止（記事289）、LLM取引戦略の長期的非有効性（記事290）、EU AI ActのHRAI延期とGPAI維持（記事316） — 今週のすべての重要ニュースは「急速な拡大と安全・信頼性の確保」という同一の緊張構造を持つ。技術は加速しているが、規制・セキュリティ・経済性の制約がそれに追いつこうとしている。この緊張の解決策は、先週から継続する「監督された自律性」（Human-in-the-Loop）のパターンに収束しつつある。</p>
+
+<h3>メタトレンド 3: Anthropicの「垂直統合 + 水平展開」戦略</h3>
+<p>今週のAnthropicの動きを俯瞰すると、驚くほど体系的だ。<strong>垂直方向</strong>: Fable 5（最強モデル）→ Claude Code（開発ツール）→ Artifacts（成果物共有）→ Managed Agents（運用自動化）。<strong>水平方向</strong>: 自社API + Claude Platform on AWS（記事564）+ Apple Xcode統合（記事562）+ Bedrock/Vertex/Foundry対応。課金の一時停止は、この拡大の速度に経済モデルが追いつけていないことを示唆している。シークレット・サボタージュ問題から政府介入まで、透明性と制御の課題も伴走している。開発者はこの垂直統合の恩恵を受けつつも、LangGraphやAGENTS.mdのようなオープン層で独立性を確保する二重戦略が賢明だ。</p>
+
+<h3>メタトレンド 4: 「7要素チェックリスト」思考の浸透</h3>
+<p>今週、各ドメインで「完全な実装に必要な要素の棚卸し」パターンが目立った。AI取引の7要素（記事314）、Claude Codeの4層アーキテクチャ（記事304）、MCPサーバーのセキュリティチェックリスト（記事563）、EU AI Act対応の優先順位づけ（記事584）。DIY実装の大半が失敗するのは、必要な要素の2〜3つしかカバーしないためだ。「何が必要かの全体像を先に描く」という設計思考が、LLM時代の開発・運用・投資のすべてに求められている。</p>
+
+<!-- ============================================================ -->
+<!-- 5. アクション提案 -->
+<!-- ============================================================ -->
+
+<h2>5. アクション提案</h2>
+
+<ul class="action-list">
+  <li>
+    <div class="action-title"><span class="priority">P1</span>Fable 5への切り替え評価（6/22無料体験終了前に）</div>
+    <div class="action-reason">Fable 5（$10/$50）はOpus 4.8（$15/$75）より安価で高性能という「価格逆転現象」が確認された。無料体験期間は6月22日に終了する。既存プロジェクトのベンチマーク実行、fallbackModelチェーン（Fable 5→Opus 4.8→Sonnet 4.6）の設定、プロンプトキャッシュによる60〜70%コスト削減効果の検証を今日中に。Claude Code利用のメインモデルとして切り替える価値は高い。<br>根拠: 記事579「価格逆転現象はAnthropicのコスト効率化を示す」、記事586「Fable 5への切り替えにより性能向上とコスト削減を同時に達成可能」</div>
+  </li>
+  <li>
+    <div class="action-title"><span class="priority">P1</span>MCPサーバーのセキュリティ棚卸し</div>
+    <div class="action-reason">200,000台に影響する14件のCVEが報告された。現在利用中のMCPサーバー（特に第三者製）のバージョン確認とパッチ適用状況を確認する。MCPサーバー選定基準にセキュリティ監査の有無を追加。MetaTrader MCPサーバーなどの新規導入予定がある場合は、サンドボックス環境での事前検証を必須に。<br>根拠: 記事563「第三者製MCPサーバーについてはAnthropicがセキュリティを検証していない」</div>
+  </li>
+  <li>
+    <div class="action-title"><span class="priority p2">P2</span>Claude Code 4層アーキテクチャへの移行</div>
+    <div class="action-reason">今週確立された4層設計（CLAUDE.md=知識 / Hooks=反射 / Skills=手順 / Subagents=並列処理）を自プロジェクトに適用する。最小構成: CLAUDE.md（200行以下）+ 最小限MCP + 1つの安全Hook（rm -rf等のブロック）+ 1つの繰り返しSkill（code-review等）。SKILL.mdフロントマターにHookを直接記述する方式でsettings.jsonの肥大化を回避。Anthropic公式PDFの「成功パターンからSkillを抽出」する手法を試す。<br>根拠: 記事304「CLAUDE.md = knowledge (80% compliance) vs Hooks = reflexes (100% guaranteed)」、記事309「SKILL.mdフロントマターにHookを直接記述可能」</div>
+  </li>
+  <li>
+    <div class="action-title"><span class="priority p2">P2</span>FX自動取引: 「LLMは分析ツール」の設計原則を徹底</div>
+    <div class="action-reason">arxiv論文でLLM戦略の長期的非有効性が実証された。現在のEA設計において、LLMを意思決定者ではなく分析支援・フィルタリングツールとして位置づける。具体的には: (1) LLMセンチメント分析を信頼度閾値フィルターとして使用（0.75超→フルサイズ、0.55未満→スキップ）、(2) リスク管理レイヤーはLLMの外に配置、(3) MT5+Python+LLM APIスタックでキューベース設計を採用。MetaTrader MCPサーバーの評価も開始し、Claude Code Skillsからの戦略プロトタイピング→MCPでMT5接続のワークフローを試す。<br>根拠: 記事290「バックテスト精度50%が実取引で10-15%に崩壊」、記事314「リスク管理レイヤーはLLMの外に置く必要がある」</div>
+  </li>
+  <li>
+    <div class="action-title"><span class="priority p3">P3</span>Agent SDK課金分離の再開に備えた利用量ベースライン計測</div>
+    <div class="action-reason">一時停止は撤回ではない。<code>/usage</code>で現在のAgent SDK利用量を記録し、再開時のコスト試算ベースラインを確保。特にClaude Code Routinesや自動化パイプラインでの消費を定量化しておく。Pro: $20、Max 5x: $100、Max 20x: $200の月次クレジット枠で足りるかシミュレーション。枠超過時のAPI従量課金（Opus 4.8: $5/$25 per MTok）を試算に含める。<br>根拠: 記事289「課金分離は一時停止であり撤回ではない。再開時に大幅なコスト構造変化」、記事298「CI/CDパイプラインに組み込んだSDKエージェントが最も影響を受ける」</div>
+  </li>
+</ul>
+
+<!-- ============================================================ -->
+<!-- 6. 来週の注目ポイント -->
+<!-- ============================================================ -->
+
+<h2>6. 来週の注目ポイント</h2>
+
+<div class="watch-list">
+  <div class="watch-item">
+    <div class="watch-label">Fable 5 無料体験終了（6/22）</div>
+    <div class="watch-content">明日終了。体験期間中の実プロジェクト検証結果がコミュニティから出始める。切り替えを決断する最後のタイミング。</div>
+  </div>
+  <div class="watch-item">
+    <div class="watch-label">Agent SDK課金分離の再開動向</div>
+    <div class="watch-content">Anthropicからの正式アナウンスを待つ。再開時には数日の猶予が与えられるはずだが、準備は今週中に完了しておくべき。</div>
+  </div>
+  <div class="watch-item">
+    <div class="watch-label">Artifacts ベータの実用レポート</div>
+    <div class="watch-content">Team/Enterpriseプラン利用者からの初期フィードバック。PRウォークスルーやインシデントページとしての実用性評価。</div>
+  </div>
+  <div class="watch-item">
+    <div class="watch-label">MCP RC 仕様進捗（7/28向け）</div>
+    <div class="watch-content">ステートレス化・OAuth 2.1対応のSDKコンプライアンス状況。主要MCPサーバーの対応進捗を追跡。</div>
+  </div>
+  <div class="watch-item">
+    <div class="watch-label">EU AI Act GPAI義務（8/2）準備</div>
+    <div class="watch-content">HRAI延期でもGPAI義務は変わらず8月2日。6月中に公開予定のAI生成コンテンツ表示Code of Practiceに注目。</div>
+  </div>
+  <div class="watch-item">
+    <div class="watch-label">ウォッチキーワード</div>
+    <div class="watch-content">Claude Code Artifacts / Agent SDK billing resume / Fable 5 production benchmarks / MCP stateless RC / Mercury 2 diffusion / AGENTS.md adoption / MetaTrader MCP</div>
+  </div>
+</div>
+
+<footer>
+  <p>AI Weekly Digest 2026-06-21 — 299 articles analyzed across 4 domains</p>
+  <p>Generated from library/articles/ (2026-06-16 to 2026-06-20)</p>
+</footer>
+
+</div>
+</body>
+</html>
