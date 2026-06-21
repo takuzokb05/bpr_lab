@@ -1,6 +1,6 @@
 # Library Catalog
 
-最終更新: 2026-06-20
+最終更新: 2026-06-21
 
 ## 凡例
 - 状態: 未読 / 既読 / 要精読
@@ -929,12 +929,46 @@
 
 ---
 
+---
+
+## 2026-06-21 収集分（20件収集 → 8件SIGNAL）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 587 | [2026-06-21_587](articles/2026-06-21_587_Robinhood-Agentic-Trading-MCP-AI-Agents-Official-Launch-2026.md) | Robinhood Agentic Trading正式ローンチ: MCP経由でAIエージェントが株式を自律売買、メインストリーム初の実資金エージェント接続 | ai-trading | 未読 | #web-signal |
+| 588 | [2026-06-21_588](articles/2026-06-21_588_Mastra-TypeScript-AI-Agent-Framework-v1-Complete-Guide-2026.md) | Mastra v1.0: TypeScript専用AIエージェントフレームワーク完全ガイド — Gatsby創設者チーム開発、22k+ Stars・3300超モデル対応 | ai-news | 未読 | #web-signal |
+| 589 | [2026-06-21_589](articles/2026-06-21_589_Redwerk-LangGraph-vs-CrewAI-Production-Adoption-2026.md) | LangGraph vs CrewAI 2026本番環境比較: 月間3450万DL vs 520万・MCP/A2Aネイティブ対応・prototype-then-migrate移行パターン | ai-news | 未読 | #web-signal |
+| 590 | [2026-06-21_590](articles/2026-06-21_590_GitHub-shinpr-claude-code-workflows-Production-Ready-2026.md) | GitHub shinpr/claude-code-workflows: Claude Code専用本番対応ワークフロー集 — SKILL.md形式でコードレビュー・テスト・デプロイを自動化 | claude-code | 未読 | #web-signal |
+| 591 | [2026-06-21_591](articles/2026-06-21_591_JAPAN-AI-AIエージェントフレームワーク比較10選-2026最新.md) | JAPAN AI: AIエージェントフレームワーク比較10選【2026】MCPが標準化の核心、LangGraph/Mastra/CrewAI/Claude SDK日本語比較 | ai-news | 未読 | #web-signal |
+| 592 | [2026-06-21_592](articles/2026-06-21_592_Uravation-AIエージェントフレームワーク先進企業活用事例-2026.md) | Uravation: 先進企業AIエージェントフレームワーク活用事例2026 — 楽楽精算・Hacobu等国内MCP事例、規模別選択パターン | ai-news | 未読 | #web-signal |
+| 593 | [2026-06-21_593](articles/2026-06-21_593_MujinKP-MCP-Claude-Agent-SDK-Anthropic公式動画-完全解説.md) | ムジンケイカク: MCPの5プリミティブとClaude Agent SDK全貌 — Anthropic「Code w/ Claude」公式動画2本の日本語まとめ | claude-ecosystem | 未読 | #web-signal |
+| 594 | [2026-06-21_594](articles/2026-06-21_594_CData-Enterprise-MCP活用事例-ロードマップ-2026年版.md) | CData: エンタープライズMCP活用事例と3フェーズ導入ロードマップ2026 — 400以上データソース対応・国内PoC事例集 | claude-ecosystem | 未読 | #web-signal |
+
+### NOISEとして除外（2026-06-21）
+
+| 候補ファイル | 理由 |
+|---|---|
+| inbox/web/2026-06-21_002_DEV-Community-Claude-Code-Workflow-Best-Practices-Ship-Code.md | 既存Claude Codeワークフローガイド多数と内容重複 |
+| inbox/web/2026-06-21_003_Promptfoo-Claude-Agent-SDK-Provider-Support-Integration.md | Promptfooドキュメントページ、固有技術情報なし |
+| inbox/web/2026-06-21_005_CNBC-Robinhood-AI-Agent-Trade-Stocks-Credit-Card-May2026.md | 587（Robinhood公式）と同ニュースの転載 |
+| inbox/web/2026-06-21_006_TechCrunch-Robinhood-AI-Agents-Trade-Stocks-Launch.md | 587（Robinhood公式）と同ニュースの転載 |
+| inbox/web/2026-06-21_007_CoinRule-LLM-Trading-Agent-Automated-Crypto-2026.md | サービス自己宣伝、定量データなし |
+| inbox/web/2026-06-21_008_KuCoin-AI-Agents-vs-LLMs-Crypto-Analysis-Market-2026.md | 取引所マーケティングブログ、一次情報なし |
+| inbox/web/2026-06-21_010_CallSphere-Mastra-AI-TypeScript-Framework-2026-Review.md | 588（generative.inc Mastraガイド）と内容重複 |
+| inbox/web/2026-06-21_012_Pooya-CrewAI-LangGraph-AutoGen-Benchmark-2026.md | 589（Redwerk比較）と内容大幅重複 |
+| inbox/web/2026-06-21_013_Gurusup-Best-Multi-Agent-Frameworks-2026-LangGraph-CrewAI.md | 既存フレームワーク比較記事と重複 |
+| inbox/web/2026-06-21_014_GitHub-awesome-ai-agents-2026-Curated-Frameworks-List.md | awesomeリスト系、情報密度低く既存coverageで十分 |
+| inbox/web/2026-06-21_019_HarmonicSociety-CLAUDE-md-書き方完全ガイド-AIモデル対話術.md | 既存CLAUDE.mdガイド多数と重複 |
+| inbox/web/2026-06-21_020_PricePerToken-New-AI-Model-Releases-Tracker-June-2026.md | 6/21時点で主要LLM新リリースなし、集約サイトのため一次情報価値なし |
+
+---
+
 ## ドメイン別統計（累計）
 
-| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 2026-06-07 | 2026-06-08 | 2026-06-09 | 2026-06-10 | 2026-06-11 | 2026-06-12 | 2026-06-13 | 2026-06-14 | 2026-06-16 | 2026-06-17 | 2026-06-18 | 2026-06-19 | 2026-06-20 | 累計 |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 8件 | 5件 | 10件 | 9件 | 5件 | 4件 | 3件 | 7件 | 14件 | 3件 | 10件 | 8件 | 80件 | 4件 | 6件 | 228件 |
-| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 5件 | 4件 | 5件 | 5件 | 5件 | 2件 | 4件 | 4件 | 4件 | 1件 | 3件 | 2件 | 67件 | 7件 | 6件 | 149件 |
-| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 3件 | 2件 | 4件 | 0件 | 1件 | 3件 | 2件 | 4件 | 1件 | 2件 | 3件 | 39件 | 2件 | 1件 | 94件 |
-| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 4件 | 3件 | 2件 | 4件 | 2件 | 2件 | 4件 | 1件 | 6件 | 1件 | 2件 | 52件 | 2件 | 2件 | 113件 |
-| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **18件** | **16件** | **20件** | **20件** | **14件** | **9件** | **12件** | **17件** | **23件** | **11件** | **16件** | **15件** | **238件** | **15件** | **15件** | **584件** |
+| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 2026-06-07 | 2026-06-08 | 2026-06-09 | 2026-06-10 | 2026-06-11 | 2026-06-12 | 2026-06-13 | 2026-06-14 | 2026-06-16 | 2026-06-17 | 2026-06-18 | 2026-06-19 | 2026-06-20 | 2026-06-21 | 累計 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 8件 | 5件 | 10件 | 9件 | 5件 | 4件 | 3件 | 7件 | 14件 | 3件 | 10件 | 8件 | 80件 | 4件 | 6件 | 1件 | 229件 |
+| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 5件 | 4件 | 5件 | 5件 | 5件 | 2件 | 4件 | 4件 | 4件 | 1件 | 3件 | 2件 | 67件 | 7件 | 6件 | 2件 | 151件 |
+| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 3件 | 2件 | 4件 | 0件 | 1件 | 3件 | 2件 | 4件 | 1件 | 2件 | 3件 | 39件 | 2件 | 1件 | 1件 | 95件 |
+| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 4件 | 3件 | 2件 | 4件 | 2件 | 2件 | 4件 | 1件 | 6件 | 1件 | 2件 | 52件 | 2件 | 2件 | 4件 | 117件 |
+| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **18件** | **16件** | **20件** | **20件** | **14件** | **9件** | **12件** | **17件** | **23件** | **11件** | **16件** | **15件** | **238件** | **15件** | **15件** | **8件** | **592件** |

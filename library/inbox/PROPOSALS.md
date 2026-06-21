@@ -1,7 +1,7 @@
 # PROPOSALS.md
 
 収集記事を横断分析して得られた反映提案。
-最終更新: 2026-06-20
+最終更新: 2026-06-21
 
 ---
 
@@ -1173,3 +1173,41 @@ FX自動売買の構成（P-014の4層アーキテクチャ）において、Gem
 1. bpr_lab が使用するエージェントツールを棚卸し（Claude Code・TradingAgents・Microsoft Agent SDK 等）し、AGENTS.md 対応ツールを特定
 2. 複数エージェントが 2 種類以上になった時点で CLAUDE.md → AGENTS.md への移行を実施（現時点では移行不要）
 3. CLAUDE.md の先頭に「この設定は Claude Code 専用。AGENTS.md 対応ツールを導入する場合は PROPOSALS.md P-092 を参照」というコメントを追記し、将来の移行ガイダンスを残す
+
+---
+
+## 2026-06-21 提案
+
+### P-093: FX自動取引への参照設計追加 — Robinhood Agentic TradingのMCPアーキテクチャと安全機能
+
+**根拠記事**: 587 (Robinhood Agentic Trading 正式ローンチ)
+**詳細**: Robinhoodが2026年5月27日にMCP経由のAIエージェント自律取引を正式ローンチ。メインストリームプラットフォームが採用した安全設計が bpr_lab のFX自動取引設計（P-013・P-025）の参照モデルとして活用できる。Robinhood設計の3原則：①専用隔離口座（メイン資産と分離）、②ワンタップキルスイッチ（即時切断）、③不正検知AI（エージェント指示と実行の照合）。これらはP-025（HITL設計）・P-034（フォールバック設計）と整合しており、日本の個人向けFX自動取引においても同様の安全設計が規制対応・リスク管理の両面で有効。MCP経由の接続設計（P-013）はRobinhoodと同一アーキテクチャであり、実績ある実装パターンとして確証が得られた。
+
+**提案アクション**:
+1. `sandbox/FX自動取引/architecture.md` に「Robinhood Agentic Trading参照設計」セクションを追加し、3安全原則（隔離口座・キルスイッチ・指示照合）をFX版設計に対応させる
+2. P-025（HITL設計）のconfidence 0.55-0.75帯での人間確認を「キルスイッチ相当」として位置づけ、FX取引でも「ワンコマンドで全エージェント取引を停止」する `/fx-kill` コマンドをスキル化
+3. P-030（FastAPI 4層アーキテクチャ）の実行ゲートウェイ層に、エージェントが要求した取引内容と実際の送信注文を照合するバリデーション関数を追加（Robinhoodの不正検知AIの個人向け代替）
+
+---
+
+### P-094: フレームワーク選択更新 — LangGraph vs CrewAI 2026本番データを反映（P-004・P-033修正）
+
+**根拠記事**: 589 (Redwerk LangGraph vs CrewAI 本番比較 2026)
+**詳細**: 2026年本番実績データで従来の選択指針（P-004・P-033）を更新する必要がある。定量比較：LangGraphが月間PyPIダウンロード3450万（CrewAI 520万・約6.6倍差）で本番採用でリード。CrewAIはMCP・A2Aをネイティブサポート、LangGraphはコミュニティ統合のみ。最も重要な知見は"prototype-then-migrate"パターン：CrewAIでPoC→LangGraphへ移行が最多。bpr_lab は P-004 でTradingAgentsを採用予定だが、TradingAgentsはLangGraphベースであり、本データはLangGraphの本番信頼性を裏付ける。一方FX取引でのMCP接続（P-013）はCrewAIのネイティブ対応が有利であり、用途による使い分けが推奨される。
+
+**提案アクション**:
+1. P-004（TradingAgentsアーキテクチャ）のLangGraphバックエンド選択を「本番実績データで正当化」として更新
+2. P-013（MetaTrader MCPサーバー）のエージェントオーケストレーション層にCrewAIを採用するオプションを追加（MCP/A2Aネイティブ対応のため）
+3. `sandbox/FX自動取引/architecture.md` に「フレームワーク選択根拠：シグナル生成エージェント=LangGraph/TradingAgents（本番実績）、MCPツール統合=CrewAI（ネイティブ対応）のハイブリッド設計」を記録
+
+---
+
+### P-095: Enterprise MCP 3フェーズロードマップをFX自動取引のMCP統合計画に適用
+
+**根拠記事**: 594 (CData Enterprise MCP活用事例 3フェーズロードマップ 2026)
+**詳細**: CDataのエンタープライズMCP 3フェーズ展開（Phase1: 単一部門PoC→Phase2: 部門間連携→Phase3: 全社AIネイティブ基盤）は、個人開発規模に縮小してFX自動取引のMCP統合計画にそのまま適用できる。Phase1（MT5 1通貨ペアのデータ取得MCP化）→Phase2（MT5 + ニュースフィード + センチメント分析の複数MCPサーバー連携）→Phase3（FX自動取引全体のAIネイティブ基盤化）の3段階で段階的に実装することで、P-013・P-030・P-041の各提案を順序立てて実行できる。CDataの具体的事例（Hacobuの静的解析MCP化）は「既存Pythonツールのシンプルなラッパー」から始めることの有効性を示す。
+
+**提案アクション**:
+1. P-041（MCP stateless設計）・P-013（MetaTrader MCPサーバー）をPhase1として優先実装：まずMT5 OHLC取得ツール1本をFastMCPでMCP化し、Claude Desktopから取引データを自然言語で参照できる状態を作る（CData事例と同様の「最小MCPから開始」）
+2. Phase2としてP-030（FastAPI）・P-011（FXバックテストMCP）を統合し、取引シグナル生成+バックテスト検証+MT5実行の3 MCPサーバーが協調するアーキテクチャを構築
+3. Phase3（3フェーズ完了時）の目標状態を `sandbox/FX自動取引/architecture.md` に明記：「Claude Code/Agent SDK から単一の自然言語指示で、MT5のシグナル生成・バックテスト検証・リスク評価・注文送信・パフォーマンスレポートを一気通貫で実行できる」
