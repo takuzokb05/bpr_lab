@@ -1211,3 +1211,57 @@ FX自動売買の構成（P-014の4層アーキテクチャ）において、Gem
 1. P-041（MCP stateless設計）・P-013（MetaTrader MCPサーバー）をPhase1として優先実装：まずMT5 OHLC取得ツール1本をFastMCPでMCP化し、Claude Desktopから取引データを自然言語で参照できる状態を作る（CData事例と同様の「最小MCPから開始」）
 2. Phase2としてP-030（FastAPI）・P-011（FXバックテストMCP）を統合し、取引シグナル生成+バックテスト検証+MT5実行の3 MCPサーバーが協調するアーキテクチャを構築
 3. Phase3（3フェーズ完了時）の目標状態を `sandbox/FX自動取引/architecture.md` に明記：「Claude Code/Agent SDK から単一の自然言語指示で、MT5のシグナル生成・バックテスト検証・リスク評価・注文送信・パフォーマンスレポートを一気通貫で実行できる」
+
+---
+
+## 2026-06-22 提案
+
+### P-096: MCP Tunnelを使いFX自動取引VPS上のMT5へ安全接続（パブリックエンドポイント不要）
+
+**根拠記事**: 595 (Claude Managed Agents Self-Hosted Sandboxes + MCP Tunnels), 605 (InfoQ MCP Tunnels技術詳細)
+**詳細**: Anthropicが2026年5月19日に発表したMCPトンネル（リサーチプレビュー）は、プライベートネットワーク内のMCPサーバーへパブリックインターネット露出なしに接続できる。VPS上のMT5インスタンスにMCPサーバー（P-013: ariadng/metatrader-mcp-server）を立てた場合、これまではVPNまたはポート公開が必要だったが、MCPトンネルを使えばVPS側に軽量ゲートウェイをインストールするだけで済む。インバウンドFW変更不要・E2E暗号化。P-041（MCP stateless設計）と組み合わせることで、VPS側のMT5-MCPサーバーをAWSPrivateLinkなしで安全接続できるシンプルなアーキテクチャが実現する。
+
+**提案アクション**:
+1. MCPトンネルのリサーチプレビューアクセスをリクエスト（platform.claude.com経由）
+2. VPS上の `ariadng/metatrader-mcp-server` のMCPサーバー設定にMCPトンネルゲートウェイを追加（公開ドキュメント確認後）
+3. P-013のアクション3（「VPS上のMT5インスタンスへのMCPアクセス経路を評価」）をMCPトンネルGA後に即時実行に格上げ
+4. VPS側のFWはアウトバウンド443のみ許可でセキュリティ維持
+
+---
+
+### P-097: TradingAgents v0.2.5 へのアップグレード — センチメント捏造問題の修正適用
+
+**根拠記事**: 597 (TradingAgents v0.2.5 Grounded Sentiment Analyst + 80k Stars)
+**詳細**: TradingAgents v0.2.5（2026年5月リリース、GitHub 80k+ stars）でSentiment Analystが根本修正された。従前（v0.2.4以前）はLLMがプロンプト圧力下でYahoo News/StockTwits/Redditの投稿を捏造する「グラウンドなし幻覚」問題があった。v0.2.5から実データ取得後に分析する設計に変更。P-004・P-029・P-033・P-040でTradingAgentsを試験実装する際、v0.2.4以下は使用すべきでない。また、v0.2.5でリモートOllama接続が追加されたため、P-034（ローカルLLMフォールバック設計）でのOllamaバックエンド構成がより容易になった。
+
+**提案アクション**:
+1. `pip install --upgrade tradingagents` で v0.2.5 に更新（P-029・P-033・P-040の環境でも同様に実施）
+2. v0.2.5の `TRADINGAGENTS_*` 環境変数対応を活用し、APIキーを `config.py` ハードコードからenv-varへ移行
+3. P-034（Ollamaローカルフォールバック）の実装時、v0.2.5のリモートOllama設定（`--ollama-url`）を使い、ローカルPC/VPS上のOllamaをTradingAgentsバックエンドとして設定する手順をまとめる
+4. EUR/USDで v0.2.4 と v0.2.5 の同一期間バックテストを実施し、Sentiment Analystの改修によるパフォーマンス変化を計測してP-043のリグレッション記録に追加
+
+---
+
+### P-098: Anthropic Workload Identity Federation (WIF) でAPIキーハードコードを排除
+
+**根拠記事**: 596 (Anthropic WIF GA + ant CLI)
+**詳細**: AnthropicがWIF（Workload Identity Federation）をGA。静的APIキーを短命なスコープ付き認証情報に置き換える。bpr_lab の日次収集エージェント・FX自動取引スクリプトは現在 `ANTHROPIC_API_KEY` 環境変数を使用しているが、長期間有効な静的キーはリポジトリへの誤コミット・VPS侵害時の漏洩リスクがある。GitHub Actions実行（P-008: Routines）に対してはGitHub OIDC→Anthropic WIFの連携が可能。また `ant CLI` でプロファイル切り替え（personal/bpr_lab等の複数ワークスペース管理）が容易になった。
+
+**提案アクション**:
+1. `pip install anthropic --upgrade` でWIF対応バージョンを確認し、認証設定を静的キーからWIFへ移行手順を調査
+2. GitHub Actions（P-008: Routines自動スケジュール）でGitHub OIDC→Anthropic WIF認証に切り替え、APIキーのGitHub Secrets依存を排除
+3. `ant auth login` でブラウザOAuthフロー認証を設定し、ローカル開発環境でのAPIキー環境変数手動設定を不要化
+4. sandbox/FX自動取引/ の設定ファイルに「APIキーは環境変数・WIF・ant CLI経由のいずれかで取得、ハードコード禁止」をREADMEに明記
+
+---
+
+### P-099: 日本AI促進法（2026年6月施行）HITL義務化への緊急対応確認
+
+**根拠記事**: 603 (Didit LLM AI規制コンプライアンス 2026 JA)
+**詳細**: 日本AI促進法が2026年6月に施行。特にAIエージェントの外部アクション（売買注文送信・システム変更等）にHITL（Human-in-the-Loop）義務化条件と学習データトレーサビリティ要件が明記された。bpr_labのFX自動取引エージェントは日本国内での運用であり、直接の規制対象となる可能性がある。P-025（HITL設計：confidence 0.55-0.75帯での人間確認）は既に提案済みだが、**同実装が法令施行前に完了しているか**を緊急確認する必要がある。AI促進法のHITL要件は「ハイリスク用途での最終承認が人間によること」を義務付けており、完全自律売買は法令上問題になる可能性がある。
+
+**提案アクション**:
+1. **緊急確認**: P-025（HITL設計）の実装状況を即時確認。未実装の場合は、confidence 0.55-0.75帯の人間確認ステップを最優先で実装
+2. `sandbox/FX自動取引/` の注文送信ロジックに「人間承認フラグ（`require_human_approval=True`）」をデフォルトONで追加し、完全自律実行はユーザー明示設定でのみ有効化する設計に変更
+3. トレーサビリティ要件対応: 全取引決定の入力データ（シグナル・confidence・モデルバージョン）をログとして永続保存する設計を `sandbox/FX自動取引/trade_log.py` に実装
+4. CLAUDE.md に「日本AI促進法2026年6月施行: FX自動取引エージェントのHITL要件対応状況」を記録し、法令アップデートを毎月確認するルーティンをP-008のRoutinesに追加
