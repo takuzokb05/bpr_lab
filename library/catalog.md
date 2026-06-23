@@ -992,12 +992,34 @@ drop.md: URLなし（処理対象なし）
 
 ---
 
+## 2026-06-23 収集分（12件収集 → 12件SIGNAL）
+
+X投稿: 事前収集データなし（inbox/x/ JSONファイルなし）
+drop.md: URLなし（処理対象なし）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 606 | [2026-06-23_606](articles/2026-06-23_606_Ksred-Claude-Agent-SDK-What-It-Is-Subagents-Sessions-Guide.md) | Claude Agent SDK概説（ksred.com）: SDK全体像・サブエージェント2用途（並列化/コンテキスト分離）・6月15日課金分離（Pro $20/月）・検索量50,000%増 | claude-ecosystem | 未読 | #web-signal |
+| 607 | [2026-06-23_607](articles/2026-06-23_607_AugmentCode-Claude-Agent-SDK-Agent-Loops-Tool-Calls-Implementation.md) | Claude Agent SDK実装ガイド（AugmentCode）: エージェントループ・ツール定義・ストリーミング・stop_reason処理のコードスニペット付き | claude-ecosystem | 未読 | #web-signal |
+| 608 | [2026-06-23_608](articles/2026-06-23_608_GitHub-ECC-Everything-Claude-Code-Agent-Harness-Multi-Tool.md) | ECC（GitHub/affaan-m）OSS: Claude Code/Codex/Cursor横断エージェントハーネス — Skills/Instincts/Memory/Security/Research-Firstの5機能統合 | claude-code | 未読 | #web-signal |
+| 609 | [2026-06-23_609](articles/2026-06-23_609_OneTrust-AI-Regulation-2026-Global-Outlook-US-EU-Asia-Practical.md) | AI規制2026グローバル動向（OneTrust）: CA SB53違反$100万/件・CO SB26-189・EU AI Act 8月施行・日本AI推進法加速 — 企業実務4要件 | ai-news | 未読 | #web-signal |
+| 610 | [2026-06-23_610](articles/2026-06-23_610_EAERA-AI-Powered-MT5-Plugin-LLM-Integration-Trading.md) | AI MT5プラグイン技術解説（EAERA）: MT5→Pythonブリッジ→LLM 3層構造、ATR+LLM信頼度スコア重み付け、PIT設計、目標レイテンシ100ms | ai-trading | 未読 | #web-signal |
+| 611 | [2026-06-23_611](articles/2026-06-23_611_Zenn-AI-Nexus-MCP-2026-Complete-Guide-Implementation-JA.md) | MCP 2026完全ガイド（Zenn/AI Nexus, JA）: 3層アーキテクチャ・3プリミティブ・FastMCP実装例・200+サーバー・セキュリティ注意点まで | claude-ecosystem | 未読 | #web-signal |
+| 612 | [2026-06-23_612](articles/2026-06-23_612_Qiita-agdexai-MCP-Complete-Introduction-JSON-RPC-OAuth-JA.md) | MCP完全入門（Qiita/agdexai, JA）: JSON-RPC 2.0仕様・シーケンス図・Node.js/Python実装・OAuth 2.0認証・MCPコネクタ vs リモートMCPサーバー | claude-ecosystem | 未読 | #web-signal |
+| 613 | [2026-06-23_613](articles/2026-06-23_613_ArXiv-2601-11958-Agentic-AI-Nowcasting-Stock-Returns-Sharpe.md) | 学術論文: エージェント型AIナウキャスティング（arXiv 2601.11958）— シャープレシオ0.87（ベースライン0.31）、PIT管理・マルチモーダル有効性定量実証 | ai-trading | 未読 | #web-signal |
+| 614 | [2026-06-23_614](articles/2026-06-23_614_Microsoft-Dotnet-Agent-Framework-Building-Blocks-Orchestration-Patterns.md) | Microsoft Agent Framework Part 3: 5オーケストレーションパターン（Sequential/Concurrent/Handoff/GroupChat/Magentic-One）+ A2Aプロトコル実装 | ai-news | 未読 | #web-signal |
+| 615 | [2026-06-23_615](articles/2026-06-23_615_Fazm-Anthropic-API-Release-Notes-June-2026-Fable5-Sandboxes-MCP.md) | Anthropic API June 2026リリースノート集約（fazm.ai）: Fable 5 GA・セルフホストサンドボックスβ・Platform on AWS・MCPトンネル・WIF GA | claude-ecosystem | 未読 | #web-signal |
+| 616 | [2026-06-23_616](articles/2026-06-23_616_VerifyWise-US-State-AI-Laws-2026-Compliance-Guide-CA-CO-TX.md) | 米国AI法2026実務ガイド（VerifyWise）: CA SB53・AB2013・SB942、CO SB26-189、TX RAGAT、IL採用AI規制の施行状況と企業4アクション | ai-news | 未読 | #web-signal |
+| 617 | [2026-06-23_617](articles/2026-06-23_617_AI-Advisors-Claude-Plan-Change-June15-Agent-SDK-Credits-Impact-JA.md) | Claude課金変更解説（AI顧問, JA）: 6月15日〜Agent SDK/claude -p が別クレジットプール分離、自動化スクリプトへの影響・移行シミュレーション付き | claude-ecosystem | 未読 | #web-signal |
+
+---
+
 ## ドメイン別統計（累計）
 
-| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 2026-06-07 | 2026-06-08 | 2026-06-09 | 2026-06-10 | 2026-06-11 | 2026-06-12 | 2026-06-13 | 2026-06-14 | 2026-06-16 | 2026-06-17 | 2026-06-18 | 2026-06-19 | 2026-06-20 | 2026-06-21 | 2026-06-22 | 累計 |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 8件 | 5件 | 10件 | 9件 | 5件 | 4件 | 3件 | 7件 | 14件 | 3件 | 10件 | 8件 | 80件 | 4件 | 6件 | 1件 | 1件 | 230件 |
-| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 5件 | 4件 | 5件 | 5件 | 5件 | 2件 | 4件 | 4件 | 4件 | 1件 | 3件 | 2件 | 67件 | 7件 | 6件 | 2件 | 5件 | 156件 |
-| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 3件 | 2件 | 4件 | 0件 | 1件 | 3件 | 2件 | 4件 | 1件 | 2件 | 3件 | 39件 | 2件 | 1件 | 1件 | 2件 | 97件 |
-| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 4件 | 3件 | 2件 | 4件 | 2件 | 2件 | 4件 | 1件 | 6件 | 1件 | 2件 | 52件 | 2件 | 2件 | 4件 | 3件 | 120件 |
-| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **18件** | **16件** | **20件** | **20件** | **14件** | **9件** | **12件** | **17件** | **23件** | **11件** | **16件** | **15件** | **238件** | **15件** | **15件** | **8件** | **11件** | **603件** |
+| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 2026-06-07 | 2026-06-08 | 2026-06-09 | 2026-06-10 | 2026-06-11 | 2026-06-12 | 2026-06-13 | 2026-06-14 | 2026-06-16 | 2026-06-17 | 2026-06-18 | 2026-06-19 | 2026-06-20 | 2026-06-21 | 2026-06-22 | 2026-06-23 | 累計 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 8件 | 5件 | 10件 | 9件 | 5件 | 4件 | 3件 | 7件 | 14件 | 3件 | 10件 | 8件 | 80件 | 4件 | 6件 | 1件 | 1件 | 1件 | 231件 |
+| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 5件 | 4件 | 5件 | 5件 | 5件 | 2件 | 4件 | 4件 | 4件 | 1件 | 3件 | 2件 | 67件 | 7件 | 6件 | 2件 | 5件 | 6件 | 162件 |
+| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 3件 | 2件 | 4件 | 0件 | 1件 | 3件 | 2件 | 4件 | 1件 | 2件 | 3件 | 39件 | 2件 | 1件 | 1件 | 2件 | 2件 | 99件 |
+| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 4件 | 3件 | 2件 | 4件 | 2件 | 2件 | 4件 | 1件 | 6件 | 1件 | 2件 | 52件 | 2件 | 2件 | 4件 | 3件 | 3件 | 123件 |
+| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **18件** | **16件** | **20件** | **20件** | **14件** | **9件** | **12件** | **17件** | **23件** | **11件** | **16件** | **15件** | **238件** | **15件** | **15件** | **8件** | **11件** | **12件** | **615件** |

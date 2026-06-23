@@ -1255,6 +1255,32 @@ FX自動売買の構成（P-014の4層アーキテクチャ）において、Gem
 
 ---
 
+### P-100: FX自動売買バックテストへのPIT（Point-in-Time）データ管理実装
+
+**根拠記事**: 613 (ArXiv 2601.11958: Agentic AI Nowcasting)
+**詳細**: arXiv論文（2601.11958）が実証したエージェント型ナウキャスティング（シャープレシオ0.87、ベースライン0.31比）の鍵はPoint-in-Time（PIT）データ管理によるデータリーク防止設計にある。bpr_labのFX自動取引バックテストでは、現時点で将来の価格データがバックテスト時刻以前に参照可能になっている可能性があり、過剰に楽観的なバックテスト結果が出る恐れがある。PITラッパーとconfidence加重ポジションサイジングを導入することで、実運用に近い精度のバックテストが実現できる。
+
+**提案アクション**:
+1. `sandbox/FX自動取引/` にPITデータラッパークラスを実装: `as_of_date`パラメータを受け取り、指定日時以前のデータのみ返すAPIを設計
+2. LLMシグナルのconfidenceスコアに基づくポジションサイジングを実装: `position_size = base_size * confidence_score`（論文記載の手法）
+3. マルチモーダル入力（チャート画像+テキストデータ）の組み合わせをバックテストパイプラインに追加（単一モダリティより有意に優秀）
+4. CIパイプラインにデータリーク検出テストを追加: バックテスト日より未来のデータ参照を自動検出するアサーションを実装
+
+---
+
+### P-101: ECCフレームワーク参考によるSkills/Instincts設計の強化
+
+**根拠記事**: 608 (GitHub affaan-m/ECC: Everything Claude Code)
+**詳細**: GitHub公開OSSのECC（Everything Claude Code）フレームワークは、Claude Code/Codex/Cursor横断でSkills・Instincts・Memory・Security・Research-Firstの5機能を統合したエージェントハーネス設計を実装している。特に「Instincts」（反射的行動ルール）と「processed_urls.txt」（重複収集防止）の設計はbpr_labの日次収集エージェントとCLAUDE.mdのSkills設計に直接応用できる。
+
+**提案アクション**:
+1. `CLAUDE.md` に `instincts.md` セクションを追加: 「URL重複チェック→スキップ」「信頼度0.5未満のシグナル→NOISE自動分類」等の反射的ルールを宣言的に記述
+2. `library/inbox/processed_urls.txt` を作成し、収集済みURLを永続管理: 日次収集スクリプトが起動時に参照し重複収集をスキップする仕組みを実装
+3. `CLAUDE.md` の PreToolUse フックに「WebFetch前にprocessed_urls.txtを確認」ルールを追加
+4. ECCリポジトリ（affaan-m/ECC）をフォークしてbpr_lab固有のSkills/Instinctsセットをカスタマイズする実験的ブランチを作成
+
+---
+
 ### P-099: 日本AI促進法（2026年6月施行）HITL義務化への緊急対応確認
 
 **根拠記事**: 603 (Didit LLM AI規制コンプライアンス 2026 JA)
