@@ -1,7 +1,7 @@
 # PROPOSALS.md
 
 収集記事を横断分析して得られた反映提案。
-最終更新: 2026-06-21
+最終更新: 2026-06-24
 
 ---
 
@@ -1291,3 +1291,67 @@ FX自動売買の構成（P-014の4層アーキテクチャ）において、Gem
 2. `sandbox/FX自動取引/` の注文送信ロジックに「人間承認フラグ（`require_human_approval=True`）」をデフォルトONで追加し、完全自律実行はユーザー明示設定でのみ有効化する設計に変更
 3. トレーサビリティ要件対応: 全取引決定の入力データ（シグナル・confidence・モデルバージョン）をログとして永続保存する設計を `sandbox/FX自動取引/trade_log.py` に実装
 4. CLAUDE.md に「日本AI促進法2026年6月施行: FX自動取引エージェントのHITL要件対応状況」を記録し、法令アップデートを毎月確認するルーティンをP-008のRoutinesに追加
+
+---
+
+## 2026-06-24 提案
+
+### P-102: MCP 2026-07-28 RC仕様への移行計画を即時開始（10週間カウントダウン開始）
+
+**根拠記事**: 622 (ByteIota MCP RC詳解), 624 (AgentWars Sampling非推奨化), 626 (TokenMix 9変更点チェンジログ)
+**詳細**: MCP 2026-07-28リリース候補が公開され、最終仕様公開まで残り約5週間（6/24時点）。P-017で「計画を立てるべき」と提案していたが、RCが実際に公開されたため「即時移行開始」フェーズに入った。9つの破壊的変更のうち対応必須のものは①ハンドシェイク廃止（initialize/initializedフローなし）、②セッションIDヘッダー削除。新規MCPサーバー開発（P-011・P-013・P-041）は今すぐRC仕様で設計すべき。また、Sampling非推奨化（Agent Wars解説）により、サーバーからLLMに判断を委ねるパターンは非推奨。
+
+**提案アクション**:
+1. 現在使用中または開発予定のMCPサーバーでSampling/Roots/Logging使用箇所を検索: `grep -r "sampling\|roots\|logging" sandbox/FX自動取引/ .claude/`
+2. P-041（MCP stateless設計）をRC仕様準拠に更新：セッションIDなし・_metaフィールド対応・ハンドシェイクなし
+3. P-013（MetaTrader MCPサーバー）のFastMCP実装時に、ステートをSQLiteに外出しし_metaでハンドルを渡す新仕様パターンで設計
+4. 7月28日（最終仕様公開）後2週間以内にSDK更新対応を完了するスケジュールをCLAUDE.mdに記録
+
+---
+
+### P-103: Claude Code 5段階Agentネスト・/cdコマンドをFXバックテスト並列化に活用
+
+**根拠記事**: 620 (Qiita Claude Code 6月新機能), 621 (CodeZine 動的ワークフロー・ワークツリー)
+**詳細**: Claude Code 2026年6月新機能「Agentツール5段階ネスト」と「/cdコマンド（セッション維持ディレクトリ切替）」が確認された。5段階ネストを使えば、FXバックテスト全体のオーケストレーターエージェント（Level 1）→通貨ペア別エージェント（Level 2）→期間別バックテストエージェント（Level 3）→シグナル生成エージェント（Level 4）→パフォーマンス評価エージェント（Level 5）という完全階層型自律パイプラインが実現できる。/cdコマンドはmonorepoでのsandbox/FX自動取引/←→library/間の移動をセッション継続のまま行える。P-009（Dynamic Workflowsでの並列バックテスト）と組み合わせてさらに強力に。
+
+**提案アクション**:
+1. sandbox/FX自動取引/ にLevel 1オーケストレーターのプロンプトを設計：「複数通貨ペア×複数期間のバックテストをLevel 2エージェントに分散し、Level 5評価エージェントが比較レポートを生成」
+2. /cdコマンドを使い、バックテスト結果の集計後に`library/`ディレクトリへ移動してcatalog更新作業を同セッション内で継続する標準ワークフローをCLAUDE.mdに記録
+3. worktree isolation（`isolation: 'worktree'`）と組み合わせて並列バックテストのファイル競合を防止（P-009との統合）
+
+---
+
+### P-104: Claude Code Artifacts機能でFX取引パフォーマンスレポートを自動ライブページ化
+
+**根拠記事**: 619 (Chaen Claude Code 6月アップデート全まとめ)
+**詳細**: Claude Code 6月新機能のArtifacts機能（セッション成果物をライブWebページとして共有）が確認された。FX自動取引のパフォーマンスレポート（月次収益・ドローダウン・シャープレシオ等）をArtifactsとして生成すれば、ブラウザで直接確認できるインタラクティブなダッシュボードとして共有可能になる。Team/Enterpriseプランでは組織内限定共有とバージョン履歴も利用可能（ベータ）。P-037（月次パフォーマンスレビュースキル化）の成果物をArtifactsで提供することで、Bot Pilot向けの視認性が大幅に向上する。
+
+**提案アクション**:
+1. `.claude/skills/fx-review/SKILL.md`（P-037）の成果物出力形式をArtifacts対応（HTMLライブページ）に変更
+2. Artifacts出力要素：チャート（収益推移・ドローダウン）、統計テーブル（シャープレシオ・最大DD・勝率）、最新シグナル一覧
+3. Team/Enterpriseプランの場合、組織限定共有設定でArtifactsをチームメンバーと共有（バージョン履歴付き）
+
+---
+
+### P-105: FX自動売買×LLM記憶の3層構造をbpr_labに実装
+
+**根拠記事**: 631 (note・nic9nic9 FX自動売買+LLM記憶ツール自作体験談)
+**詳細**: 国内個人開発者（nic9nic9氏）がFX自動売買ボットにLLM記憶システム（Python+Claude API+SQLite）を組み込んだ実体験レポートが公開された。3層記憶構造：①短期記憶（直近トレード結果・エントリー理由）、②長期記憶（戦略別パフォーマンス・通貨ペア別傾向）、③失敗記録（ドローダウン原因・同じミスの繰り返し防止）。重要な教訓：コンテキスト長制限により長期記憶全体をLLMに渡せないため、ベクトル検索で関連記憶を取得する方式に移行。また、スキャルピングはLLM応答速度で不可→スイングトレード中心に転換。bpr_labのsandbox/FX自動取引/に同様の記憶システムを統合することで、過去の失敗を繰り返さない自律改善型ボットが実現できる。
+
+**提案アクション**:
+1. `sandbox/FX自動取引/memory/` ディレクトリを作成し、3層記憶SQLiteスキーマを設計（short_term_trades、long_term_performance、failure_records の3テーブル）
+2. Claude API経由の記憶検索：各トレード判断前に関連記憶をベクトル検索（`pip install chromadb`）でコンテキストに追加するラッパーを実装
+3. 失敗記録の自動更新：ストップロス発動後にPostToolUseフックが失敗原因分析プロンプトをClaude APIに送信し、failure_recordsに自動追記
+4. P-043（LLMバージョン固定）との統合：記憶DBにはLLMバージョンも記録し、モデル切り替え時のパフォーマンス変化を追跡
+
+---
+
+### P-106: MDN MCP Serverを日次収集エージェントのWeb標準参照に追加
+
+**根拠記事**: 627 (gihyo.jp MDN公式MCPサーバーリリース), 628 (Zenn MCPサーバー厳選まとめ)
+**詳細**: MDN Web DocsがMCP互換クライアント向けに公式MCPサーバーをリリース（2026年6月15日）。Claude CodeからHTML/CSS/JavaScript/WebAPIの最新ドキュメント、ブラウザ互換性テーブル（Baseline状況）にリアルタイム直接アクセスが可能に。bpr_labのsandbox配下にフロントエンドプロジェクト（ganbarulist、NotebookLM_pptxなど）があり、これらの開発セッションでのWeb標準参照に有用。Zennの厳選まとめでもSerena（LSP統合・コードベース依存関係理解）が紹介されており、合わせて導入を検討すべき。
+
+**提案アクション**:
+1. `.claude/settings.json` の `mcpServers` に MDN MCPサーバーを追加（`claude mcp add mdn-docs @modelcontextprotocol/server-mdn`）
+2. Serena MCPサーバー（`npm install @sernaic/serena-mcp-server`）を評価：大規模コードベース（sandbox/FX自動取引/）のLSP統合によるコンテキスト改善効果を確認
+3. Draw.io MCPサーバーをFX自動取引アーキテクチャ図の作成に活用（architecture.mdの視覚化、P-103・P-105の設計図を自動生成）

@@ -1,6 +1,6 @@
 # Library Catalog
 
-最終更新: 2026-06-22
+最終更新: 2026-06-24
 
 ## 凡例
 - 状態: 未読 / 既読 / 要精読
@@ -1014,12 +1014,51 @@ drop.md: URLなし（処理対象なし）
 
 ---
 
+## 2026-06-24 収集分（24件収集 → 16件SIGNAL）
+
+X投稿: 事前収集データなし（library/inbox/x/ ディレクトリ未作成）
+drop.md: URLなし（処理対象なし）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 618 | [2026-06-24_618](articles/2026-06-24_618_Composio-Top10-Claude-Code-Skills-2026-Karpathy-Caveman-Frontend.md) | Composio Top 10 Claude Code Skills: Karpathy（144K Stars）・Caveman（65%トークン削減）・Frontend Design（277K+インストール） | claude-code | 未読 | #web-signal |
+| 619 | [2026-06-24_619](articles/2026-06-24_619_Chaen-Claude-Code-June-2026-All-Updates-Artifacts-Design-Sandbox.md) | Claude Code 6月アップデート全まとめ（JA）: Artifacts組織共有β・Claude Designコード連携・sandbox.credentials・法人モデル制限 | claude-code | 未読 | #web-signal |
+| 620 | [2026-06-24_620](articles/2026-06-24_620_Qiita-Claude-Code-June-New-Features-5Level-Agent-cd-Command.md) | Claude Code 6月新機能（JA・Qiita）: Agentツール5段階ネスト対応・/cdコマンド（セッション維持ディレクトリ切替） | claude-code | 未読 | #web-signal |
+| 621 | [2026-06-24_621](articles/2026-06-24_621_CodeZine-Claude-Code-RemoteControl-Worktree-DynamicWorkflows-AI-Dev-Style.md) | Claude Code最新3機能解説（CodeZine・JA）: リモートコントロール（スマホ操作）・ワークツリー（並列競合回避）・動的ワークフロー（overnight開発） | claude-code | 未読 | #web-signal |
+| 622 | [2026-06-24_622](articles/2026-06-24_622_ByteIota-MCP-Goes-Stateless-2026-RC-Session-Handshake-Removed.md) | MCP 2026-07-28 RC詳解（ByteIota）: ハンドシェイク廃止・セッションID削除・ステートレス化の技術詳細・Sampling/Roots非推奨・MCP Apps追加 | claude-ecosystem | 未読 | #web-signal |
+| 623 | [2026-06-24_623](articles/2026-06-24_623_WorkOS-Everything-Your-Team-Needs-MCP-2026-Enterprise.md) | MCP 2026エンタープライズガイド（WorkOS）: 14,000+サーバー・97M DL・MDN/Salesforce/AWS新規対応・ツールポイゾニングリスク・B2B SaaS対応動向 | claude-ecosystem | 未読 | #web-signal |
+| 624 | [2026-06-24_624](articles/2026-06-24_624_AgentWars-MCP-Goes-Stateless-Deprecates-Sampling-June2026.md) | MCP 2026-06-23: ステートレス化・Sampling非推奨化の理由詳解（Agent Wars）— Samplingが設計方針と逆方向だった技術的背景 | claude-ecosystem | 未読 | #web-signal |
+| 625 | [2026-06-24_625](articles/2026-06-24_625_Microsoft-MCP-Stateless-Azure-App-Service-Scaling-2026.md) | MCPステートレス化とAzure App Service（Microsoft Tech Community）: スティッキーセッション不要・Entra ID認証・標準LB対応の実装ガイド | claude-ecosystem | 未読 | #web-signal |
+| 626 | [2026-06-24_626](articles/2026-06-24_626_TokenMix-MCP-2026-Protocol-Changes-9-Specs-RC-Migration-Map.md) | MCP 2026仕様変更全9点チェンジログ（TokenMix）: ハンドシェイク廃止・_meta追加・Tasks Extension・MCP Apps・Roots/Sampling/Logging非推奨の移行マップ | claude-ecosystem | 未読 | #web-signal |
+| 627 | [2026-06-24_627](articles/2026-06-24_627_Gihyo-MDN-MCP-Server-Release-Web-Standards-AI-Tool-Access.md) | MDN公式MCPサーバーリリース（gihyo.jp・JA）: Mozilla公式・Web標準/ブラウザ互換性・全MCP互換クライアント対応・Context7の公式代替 | claude-ecosystem | 未読 | #web-signal |
+| 628 | [2026-06-24_628](articles/2026-06-24_628_Zenn-Best-MCP-Servers-2026-Quality-Curated-Filesystem-DrawIO-Serena.md) | MCPサーバー厳選まとめ2026（Zenn・JA）: Filesystem・GitHub・Draw.io・Serena（LSP統合）・AWS・MDNの品質基準付き推薦・設定例付き | claude-ecosystem | 未読 | #web-signal |
+| 629 | [2026-06-24_629](articles/2026-06-24_629_NewStack-Claude-Code-Overnight-Job-Routines-Cloud-Infrastructure.md) | Claude Code Routines: The New Stackが解説するクラウド自動化 — スケジュール/API/GitHubトリガー・overnight実行・PCオフでも継続 | claude-ecosystem | 未読 | #web-signal |
+| 630 | [2026-06-24_630](articles/2026-06-24_630_HidekazuKonishi-Anthropic-Claude-Model-Release-Timeline-Fable5-Family-Tree.md) | Anthropicモデルリリース年表（hidekazu-konishi）: Claude 1〜Fable 5全系譜・2026主要リリース定量スペック・廃止モデル一覧 | claude-ecosystem | 未読 | #web-signal |
+| 631 | [2026-06-24_631](articles/2026-06-24_631_Note-Nic9-AI-FX-AutoTrading-Memory-Tool-LLM-SQLite-3Layer.md) | FX自動売買×LLM記憶ツール自作体験談（note・JA）: Python+Claude API+SQLite 3層記憶構造・ベクトル検索・スキャルピング限界とスイング転換 | ai-trading | 未読 | #web-signal |
+| 632 | [2026-06-24_632](articles/2026-06-24_632_McDermott-US-AI-EO14409-National-Security-Innovation-June2026.md) | 米国AI EO 14409分析（McDermott Law）: トランプ政権6/2 Executive Order — 任意モデル共有・国家安全保障フレームワーク・EU AI Actとの規制路線対比 | ai-news | 未読 | #web-signal |
+| 633 | [2026-06-24_633](articles/2026-06-24_633_Renue-AI-Industry-State-2026-World-25T-Japan-94B-LLM-3Giants-China.md) | AI業界現状2026（Renue・JA）: 世界2.5兆ドル(67%増)・日本940億ドル(52%増)・LLM三強+中国勢・5大トレンド・日本企業PoC→本番移行加速 | ai-news | 未読 | #web-signal |
+
+### NOISEとして除外（2026-06-24）
+
+| 候補ファイル | 理由 |
+|---|---|
+| inbox/web/2026-06-24_002_25-Best-Claude-Code-Skills... | 001と内容重複、スキルリスト記事が多数存在 |
+| inbox/web/2026-06-24_006_Claude-Code-Codex-Skills-Cryptul... | 既存スキルガイド多数と重複、独自情報なし |
+| inbox/web/2026-06-24_007_Claude-Code-Skills-Nexa-Corp... | 既存スキルガイドと重複 |
+| inbox/web/2026-06-24_008_Claude-Code-Skills-LibeCity... | 既存スキルリスト記事と重複 |
+| inbox/web/2026-06-24_014_Claude-Agent-SDK-Complete-Hidekazu... | 606/607（2026-06-23）と内容重複 |
+| inbox/web/2026-06-24_017_Claude-Platform-Guide-Kersai... | Fable 5・Routinesは既存記事(200,023)で対応済み、新情報なし |
+| inbox/web/2026-06-24_019_Building-Agents-Claude-Hatchworks... | 023(Routines)・181(6拡張システム)と重複 |
+| inbox/web/2026-06-24_020_Latest-Anthropic-API-Release-Fazm... | 615（2026-06-23）と内容重複 |
+
+---
+
 ## ドメイン別統計（累計）
 
-| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 2026-06-07 | 2026-06-08 | 2026-06-09 | 2026-06-10 | 2026-06-11 | 2026-06-12 | 2026-06-13 | 2026-06-14 | 2026-06-16 | 2026-06-17 | 2026-06-18 | 2026-06-19 | 2026-06-20 | 2026-06-21 | 2026-06-22 | 2026-06-23 | 累計 |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 8件 | 5件 | 10件 | 9件 | 5件 | 4件 | 3件 | 7件 | 14件 | 3件 | 10件 | 8件 | 80件 | 4件 | 6件 | 1件 | 1件 | 1件 | 231件 |
-| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 5件 | 4件 | 5件 | 5件 | 5件 | 2件 | 4件 | 4件 | 4件 | 1件 | 3件 | 2件 | 67件 | 7件 | 6件 | 2件 | 5件 | 6件 | 162件 |
-| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 3件 | 2件 | 4件 | 0件 | 1件 | 3件 | 2件 | 4件 | 1件 | 2件 | 3件 | 39件 | 2件 | 1件 | 1件 | 2件 | 2件 | 99件 |
-| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 4件 | 3件 | 2件 | 4件 | 2件 | 2件 | 4件 | 1件 | 6件 | 1件 | 2件 | 52件 | 2件 | 2件 | 4件 | 3件 | 3件 | 123件 |
-| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **18件** | **16件** | **20件** | **20件** | **14件** | **9件** | **12件** | **17件** | **23件** | **11件** | **16件** | **15件** | **238件** | **15件** | **15件** | **8件** | **11件** | **12件** | **615件** |
+| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 2026-06-07 | 2026-06-08 | 2026-06-09 | 2026-06-10 | 2026-06-11 | 2026-06-12 | 2026-06-13 | 2026-06-14 | 2026-06-16 | 2026-06-17 | 2026-06-18 | 2026-06-19 | 2026-06-20 | 2026-06-21 | 2026-06-22 | 2026-06-23 | 2026-06-24 | 累計 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 8件 | 5件 | 10件 | 9件 | 5件 | 4件 | 3件 | 7件 | 14件 | 3件 | 10件 | 8件 | 80件 | 4件 | 6件 | 1件 | 1件 | 1件 | 4件 | 235件 |
+| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 5件 | 4件 | 5件 | 5件 | 5件 | 2件 | 4件 | 4件 | 4件 | 1件 | 3件 | 2件 | 67件 | 7件 | 6件 | 2件 | 5件 | 6件 | 9件 | 171件 |
+| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 3件 | 2件 | 4件 | 0件 | 1件 | 3件 | 2件 | 4件 | 1件 | 2件 | 3件 | 39件 | 2件 | 1件 | 1件 | 2件 | 2件 | 1件 | 100件 |
+| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 4件 | 3件 | 2件 | 4件 | 2件 | 2件 | 4件 | 1件 | 6件 | 1件 | 2件 | 52件 | 2件 | 2件 | 4件 | 3件 | 3件 | 2件 | 125件 |
+| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **18件** | **16件** | **20件** | **20件** | **14件** | **9件** | **12件** | **17件** | **23件** | **11件** | **16件** | **15件** | **238件** | **15件** | **15件** | **8件** | **11件** | **12件** | **16件** | **631件** |
