@@ -20,6 +20,8 @@ data/*.db
 data/*.csv
 data/*.json
 !data/.gitkeep
+# SPEC v2 § 2-1 検証出力は再構築の証跡として残す（機密なし、再生成可能だがシード/期間で微差）
+!data/spec_2_1_*.json
 
 # IDE
 .vscode/

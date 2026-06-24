@@ -1,0 +1,1350 @@
+{
+  "config": {
+    "indicators": [
+      "S1_CHOP",
+      "S2_Hurst",
+      "S3_YZ_vol",
+      "S4_Range_ATR",
+      "S5_VR",
+      "S6_MFI"
+    ],
+    "pairs": [
+      "USD_JPY",
+      "EUR_USD",
+      "GBP_JPY"
+    ],
+    "lookahead_bars": 6,
+    "is_ratio": 0.75
+  },
+  "results": [
+    {
+      "indicator": "S1_CHOP",
+      "pair": "USD_JPY",
+      "grid": [
+        30,
+        35,
+        38.2,
+        42,
+        50,
+        60
+      ],
+      "is_results": {
+        "30": {
+          "n_triggers": 892,
+          "trendiness_ratio": 1.085478213101066,
+          "persistence_rate": 0.5526905829596412
+        },
+        "35": {
+          "n_triggers": 2355,
+          "trendiness_ratio": 1.1140832633370081,
+          "persistence_rate": 0.5222929936305732
+        },
+        "38.2": {
+          "n_triggers": 3754,
+          "trendiness_ratio": 1.1138531270686087,
+          "persistence_rate": 0.5215769845498135
+        },
+        "42": {
+          "n_triggers": 6071,
+          "trendiness_ratio": 1.097826736085154,
+          "persistence_rate": 0.5119420194366661
+        },
+        "50": {
+          "n_triggers": 12671,
+          "trendiness_ratio": 1.125502393758486,
+          "persistence_rate": 0.5039065582826928
+        },
+        "60": {
+          "n_triggers": 20718,
+          "trendiness_ratio": 1.144426974731733,
+          "persistence_rate": 0.5010618785597065
+        }
+      },
+      "oos_results": {
+        "30": {
+          "n_triggers": 299,
+          "trendiness_ratio": 1.3922275421010755,
+          "persistence_rate": 0.5819397993311036
+        },
+        "35": {
+          "n_triggers": 768,
+          "trendiness_ratio": 1.1693081204653566,
+          "persistence_rate": 0.5559895833333334
+        },
+        "38.2": {
+          "n_triggers": 1209,
+          "trendiness_ratio": 1.075637571423525,
+          "persistence_rate": 0.5409429280397022
+        },
+        "42": {
+          "n_triggers": 1921,
+          "trendiness_ratio": 1.0833985520041274,
+          "persistence_rate": 0.5377407600208225
+        },
+        "50": {
+          "n_triggers": 4007,
+          "trendiness_ratio": 1.0461503066628006,
+          "persistence_rate": 0.5121038183179436
+        },
+        "60": {
+          "n_triggers": 6712,
+          "trendiness_ratio": 1.0033818446378766,
+          "persistence_rate": 0.5055125148986889
+        }
+      },
+      "spearman_tr": -0.8285714285714287,
+      "spearman_dpr": 1.0,
+      "best_is_threshold": 60,
+      "best_tr_is": 1.144426974731733,
+      "best_dpr_is": 0.5010618785597065,
+      "best_tr_oos": 1.0033818446378766,
+      "best_dpr_oos": 0.5055125148986889
+    },
+    {
+      "indicator": "S1_CHOP",
+      "pair": "EUR_USD",
+      "grid": [
+        30,
+        35,
+        38.2,
+        42,
+        50,
+        60
+      ],
+      "is_results": {
+        "30": {
+          "n_triggers": 821,
+          "trendiness_ratio": 1.029059045824602,
+          "persistence_rate": 0.47990255785627284
+        },
+        "35": {
+          "n_triggers": 2320,
+          "trendiness_ratio": 0.9674051841644445,
+          "persistence_rate": 0.46120689655172414
+        },
+        "38.2": {
+          "n_triggers": 3710,
+          "trendiness_ratio": 0.9717966649877237,
+          "persistence_rate": 0.45849056603773586
+        },
+        "42": {
+          "n_triggers": 5937,
+          "trendiness_ratio": 0.9679750149510544,
+          "persistence_rate": 0.4635337712649486
+        },
+        "50": {
+          "n_triggers": 12613,
+          "trendiness_ratio": 1.007821854499831,
+          "persistence_rate": 0.4779988900340918
+        },
+        "60": {
+          "n_triggers": 20577,
+          "trendiness_ratio": 1.035352024406321,
+          "persistence_rate": 0.481459882392963
+        }
+      },
+      "oos_results": {
+        "30": {
+          "n_triggers": 188,
+          "trendiness_ratio": 0.9920589708603068,
+          "persistence_rate": 0.48936170212765956
+        },
+        "35": {
+          "n_triggers": 622,
+          "trendiness_ratio": 1.0826789725220902,
+          "persistence_rate": 0.4533762057877814
+        },
+        "38.2": {
+          "n_triggers": 1040,
+          "trendiness_ratio": 1.020013430123413,
+          "persistence_rate": 0.4807692307692308
+        },
+        "42": {
+          "n_triggers": 1762,
+          "trendiness_ratio": 0.9805190068691222,
+          "persistence_rate": 0.4875141884222474
+        },
+        "50": {
+          "n_triggers": 3949,
+          "trendiness_ratio": 0.9896438517010552,
+          "persistence_rate": 0.48062800709040265
+        },
+        "60": {
+          "n_triggers": 6772,
+          "trendiness_ratio": 0.8812981249703358,
+          "persistence_rate": 0.48508564678086236
+        }
+      },
+      "spearman_tr": -0.6,
+      "spearman_dpr": 0.48571428571428577,
+      "best_is_threshold": 60,
+      "best_tr_is": 1.035352024406321,
+      "best_dpr_is": 0.481459882392963,
+      "best_tr_oos": 0.8812981249703358,
+      "best_dpr_oos": 0.48508564678086236
+    },
+    {
+      "indicator": "S1_CHOP",
+      "pair": "GBP_JPY",
+      "grid": [
+        30,
+        35,
+        38.2,
+        42,
+        50,
+        60
+      ],
+      "is_results": {
+        "30": {
+          "n_triggers": 694,
+          "trendiness_ratio": 1.1037241474529607,
+          "persistence_rate": 0.4711815561959654
+        },
+        "35": {
+          "n_triggers": 1799,
+          "trendiness_ratio": 1.0663706653605836,
+          "persistence_rate": 0.49972206781545303
+        },
+        "38.2": {
+          "n_triggers": 3168,
+          "trendiness_ratio": 1.0798507256463394,
+          "persistence_rate": 0.5025252525252525
+        },
+        "42": {
+          "n_triggers": 5302,
+          "trendiness_ratio": 1.0911125917221614,
+          "persistence_rate": 0.5013202565069785
+        },
+        "50": {
+          "n_triggers": 11427,
+          "trendiness_ratio": 1.0980360948594425,
+          "persistence_rate": 0.49076748052857266
+        },
+        "60": {
+          "n_triggers": 19667,
+          "trendiness_ratio": 1.1409340818289855,
+          "persistence_rate": 0.4891442517923425
+        }
+      },
+      "oos_results": {
+        "30": {
+          "n_triggers": 158,
+          "trendiness_ratio": 1.3797275500901696,
+          "persistence_rate": 0.5632911392405063
+        },
+        "35": {
+          "n_triggers": 484,
+          "trendiness_ratio": 1.2021790775995087,
+          "persistence_rate": 0.518595041322314
+        },
+        "38.2": {
+          "n_triggers": 891,
+          "trendiness_ratio": 1.1022764525874738,
+          "persistence_rate": 0.48035914702581367
+        },
+        "42": {
+          "n_triggers": 1504,
+          "trendiness_ratio": 1.0559890662146763,
+          "persistence_rate": 0.45811170212765956
+        },
+        "50": {
+          "n_triggers": 3339,
+          "trendiness_ratio": 0.995250194151621,
+          "persistence_rate": 0.47648996705600477
+        },
+        "60": {
+          "n_triggers": 6412,
+          "trendiness_ratio": 1.0886525080150742,
+          "persistence_rate": 0.47629444791016845
+        }
+      },
+      "spearman_tr": -0.14285714285714288,
+      "spearman_dpr": -0.3142857142857143,
+      "best_is_threshold": 60,
+      "best_tr_is": 1.1409340818289855,
+      "best_dpr_is": 0.4891442517923425,
+      "best_tr_oos": 1.0886525080150742,
+      "best_dpr_oos": 0.47629444791016845
+    },
+    {
+      "indicator": "S2_Hurst",
+      "pair": "USD_JPY",
+      "grid": [
+        0.45,
+        0.5,
+        0.55,
+        0.6,
+        0.65
+      ],
+      "is_results": {
+        "0.45": {
+          "n_triggers": 21977,
+          "trendiness_ratio": 1.1754502834594103,
+          "persistence_rate": 0.5012513081858306
+        },
+        "0.5": {
+          "n_triggers": 16292,
+          "trendiness_ratio": 1.13477320148359,
+          "persistence_rate": 0.5005524183648417
+        },
+        "0.55": {
+          "n_triggers": 7108,
+          "trendiness_ratio": 1.1116801987268017,
+          "persistence_rate": 0.4943725379853686
+        },
+        "0.6": {
+          "n_triggers": 1206,
+          "trendiness_ratio": 1.0331442904128632,
+          "persistence_rate": 0.511608623548922
+        },
+        "0.65": {
+          "n_triggers": 36,
+          "trendiness_ratio": null,
+          "persistence_rate": null
+        }
+      },
+      "oos_results": {
+        "0.45": {
+          "n_triggers": 7315,
+          "trendiness_ratio": 1.135351210090135,
+          "persistence_rate": 0.5066302118933698
+        },
+        "0.5": {
+          "n_triggers": 5737,
+          "trendiness_ratio": 1.0157447119556273,
+          "persistence_rate": 0.5009586892103887
+        },
+        "0.55": {
+          "n_triggers": 2474,
+          "trendiness_ratio": 1.0454308649404702,
+          "persistence_rate": 0.4987873888439774
+        },
+        "0.6": {
+          "n_triggers": 456,
+          "trendiness_ratio": 1.0494208787898958,
+          "persistence_rate": 0.5263157894736842
+        },
+        "0.65": {
+          "n_triggers": 32,
+          "trendiness_ratio": null,
+          "persistence_rate": null
+        }
+      },
+      "spearman_tr": 0.6,
+      "spearman_dpr": 0.9999999999999999,
+      "best_is_threshold": 0.45,
+      "best_tr_is": 1.1754502834594103,
+      "best_dpr_is": 0.5012513081858306,
+      "best_tr_oos": 1.135351210090135,
+      "best_dpr_oos": 0.5066302118933698
+    },
+    {
+      "indicator": "S2_Hurst",
+      "pair": "EUR_USD",
+      "grid": [
+        0.45,
+        0.5,
+        0.55,
+        0.6,
+        0.65
+      ],
+      "is_results": {
+        "0.45": {
+          "n_triggers": 20960,
+          "trendiness_ratio": 0.9709097230707138,
+          "persistence_rate": 0.4812977099236641
+        },
+        "0.5": {
+          "n_triggers": 14612,
+          "trendiness_ratio": 0.9659531838160307,
+          "persistence_rate": 0.47878456063509445
+        },
+        "0.55": {
+          "n_triggers": 5737,
+          "trendiness_ratio": 0.9934620802499281,
+          "persistence_rate": 0.4746383127069897
+        },
+        "0.6": {
+          "n_triggers": 473,
+          "trendiness_ratio": 0.9715055867717095,
+          "persistence_rate": 0.48414376321353064
+        },
+        "0.65": {
+          "n_triggers": 0,
+          "trendiness_ratio": null,
+          "persistence_rate": null
+        }
+      },
+      "oos_results": {
+        "0.45": {
+          "n_triggers": 7156,
+          "trendiness_ratio": 1.0358597549860755,
+          "persistence_rate": 0.482811626607043
+        },
+        "0.5": {
+          "n_triggers": 5314,
+          "trendiness_ratio": 0.9870410688617357,
+          "persistence_rate": 0.48362815205118553
+        },
+        "0.55": {
+          "n_triggers": 1993,
+          "trendiness_ratio": 1.0213726472413363,
+          "persistence_rate": 0.48419468138484695
+        },
+        "0.6": {
+          "n_triggers": 194,
+          "trendiness_ratio": 1.0009240136275388,
+          "persistence_rate": 0.4536082474226804
+        },
+        "0.65": {
+          "n_triggers": 0,
+          "trendiness_ratio": null,
+          "persistence_rate": null
+        }
+      },
+      "spearman_tr": 0.7,
+      "spearman_dpr": 0.0,
+      "best_is_threshold": 0.55,
+      "best_tr_is": 0.9934620802499281,
+      "best_dpr_is": 0.4746383127069897,
+      "best_tr_oos": 1.0213726472413363,
+      "best_dpr_oos": 0.48419468138484695
+    },
+    {
+      "indicator": "S2_Hurst",
+      "pair": "GBP_JPY",
+      "grid": [
+        0.45,
+        0.5,
+        0.55,
+        0.6,
+        0.65
+      ],
+      "is_results": {
+        "0.45": {
+          "n_triggers": 21366,
+          "trendiness_ratio": 1.2012948449578749,
+          "persistence_rate": 0.4916690068332865
+        },
+        "0.5": {
+          "n_triggers": 15831,
+          "trendiness_ratio": 1.1382899400047215,
+          "persistence_rate": 0.4924515191712463
+        },
+        "0.55": {
+          "n_triggers": 7692,
+          "trendiness_ratio": 1.076698414543514,
+          "persistence_rate": 0.4875195007800312
+        },
+        "0.6": {
+          "n_triggers": 1152,
+          "trendiness_ratio": 1.0250273886694876,
+          "persistence_rate": 0.4539930555555556
+        },
+        "0.65": {
+          "n_triggers": 2,
+          "trendiness_ratio": null,
+          "persistence_rate": null
+        }
+      },
+      "oos_results": {
+        "0.45": {
+          "n_triggers": 6925,
+          "trendiness_ratio": 1.2310706912126521,
+          "persistence_rate": 0.476101083032491
+        },
+        "0.5": {
+          "n_triggers": 4705,
+          "trendiness_ratio": 1.0780747568819165,
+          "persistence_rate": 0.48331562167906483
+        },
+        "0.55": {
+          "n_triggers": 2028,
+          "trendiness_ratio": 1.0095832299432304,
+          "persistence_rate": 0.48372781065088755
+        },
+        "0.6": {
+          "n_triggers": 246,
+          "trendiness_ratio": 0.8809977460036986,
+          "persistence_rate": 0.4065040650406504
+        },
+        "0.65": {
+          "n_triggers": 0,
+          "trendiness_ratio": null,
+          "persistence_rate": null
+        }
+      },
+      "spearman_tr": 0.9999999999999999,
+      "spearman_dpr": 0.7,
+      "best_is_threshold": 0.45,
+      "best_tr_is": 1.2012948449578749,
+      "best_dpr_is": 0.4916690068332865,
+      "best_tr_oos": 1.2310706912126521,
+      "best_dpr_oos": 0.476101083032491
+    },
+    {
+      "indicator": "S3_YZ_vol",
+      "pair": "USD_JPY",
+      "grid": [
+        0.0007593327549702609,
+        0.0010085259034519907,
+        0.0013323485500851388,
+        0.0017397996687903514
+      ],
+      "is_results": {
+        "0.0007593327549702609": {
+          "n_triggers": 16735,
+          "trendiness_ratio": 1.8587562313831782,
+          "persistence_rate": 0.5008664475649836
+        },
+        "0.0010085259034519907": {
+          "n_triggers": 11543,
+          "trendiness_ratio": 1.8465694902067131,
+          "persistence_rate": 0.5029021918045569
+        },
+        "0.0013323485500851388": {
+          "n_triggers": 6121,
+          "trendiness_ratio": 1.8590716007661285,
+          "persistence_rate": 0.4920764580950825
+        },
+        "0.0017397996687903514": {
+          "n_triggers": 2538,
+          "trendiness_ratio": 2.015831869879171,
+          "persistence_rate": 0.4984239558707644
+        }
+      },
+      "oos_results": {
+        "0.0007593327549702609": {
+          "n_triggers": 6474,
+          "trendiness_ratio": 1.3571449970432132,
+          "persistence_rate": 0.5030892801977139
+        },
+        "0.0010085259034519907": {
+          "n_triggers": 3934,
+          "trendiness_ratio": 1.400384510023325,
+          "persistence_rate": 0.5027961362480935
+        },
+        "0.0013323485500851388": {
+          "n_triggers": 1618,
+          "trendiness_ratio": 1.5930262873873697,
+          "persistence_rate": 0.5105067985166872
+        },
+        "0.0017397996687903514": {
+          "n_triggers": 558,
+          "trendiness_ratio": 1.9164642518140917,
+          "persistence_rate": 0.517921146953405
+        }
+      },
+      "spearman_tr": 0.7999999999999999,
+      "spearman_dpr": -0.7999999999999999,
+      "best_is_threshold": 0.0017397996687903514,
+      "best_tr_is": 2.015831869879171,
+      "best_dpr_is": 0.4984239558707644,
+      "best_tr_oos": 1.9164642518140917,
+      "best_dpr_oos": 0.517921146953405
+    },
+    {
+      "indicator": "S3_YZ_vol",
+      "pair": "EUR_USD",
+      "grid": [
+        0.0006466171406223486,
+        0.0008344132105846549,
+        0.001095645025119699,
+        0.0014281585519158471
+      ],
+      "is_results": {
+        "0.0006466171406223486": {
+          "n_triggers": 17264,
+          "trendiness_ratio": 1.3998873701678143,
+          "persistence_rate": 0.4840129749768304
+        },
+        "0.0008344132105846549": {
+          "n_triggers": 11697,
+          "trendiness_ratio": 1.458716032146909,
+          "persistence_rate": 0.48003761648285886
+        },
+        "0.001095645025119699": {
+          "n_triggers": 5987,
+          "trendiness_ratio": 1.5659454209472092,
+          "persistence_rate": 0.4860531150826791
+        },
+        "0.0014281585519158471": {
+          "n_triggers": 2475,
+          "trendiness_ratio": 1.7720108961395498,
+          "persistence_rate": 0.47474747474747475
+        }
+      },
+      "oos_results": {
+        "0.0006466171406223486": {
+          "n_triggers": 5951,
+          "trendiness_ratio": 1.3522701040982767,
+          "persistence_rate": 0.476558561586288
+        },
+        "0.0008344132105846549": {
+          "n_triggers": 3780,
+          "trendiness_ratio": 1.305985629097959,
+          "persistence_rate": 0.4798941798941799
+        },
+        "0.001095645025119699": {
+          "n_triggers": 1752,
+          "trendiness_ratio": 1.476804271420821,
+          "persistence_rate": 0.4834474885844749
+        },
+        "0.0014281585519158471": {
+          "n_triggers": 621,
+          "trendiness_ratio": 1.9223850831311673,
+          "persistence_rate": 0.4718196457326892
+        }
+      },
+      "spearman_tr": 0.7999999999999999,
+      "spearman_dpr": 0.7999999999999999,
+      "best_is_threshold": 0.0014281585519158471,
+      "best_tr_is": 1.7720108961395498,
+      "best_dpr_is": 0.47474747474747475,
+      "best_tr_oos": 1.9223850831311673,
+      "best_dpr_oos": 0.4718196457326892
+    },
+    {
+      "indicator": "S3_YZ_vol",
+      "pair": "GBP_JPY",
+      "grid": [
+        0.0008455199697163618,
+        0.001057299231826765,
+        0.0013696476146381309,
+        0.0017509710718516599
+      ],
+      "is_results": {
+        "0.0008455199697163618": {
+          "n_triggers": 18379,
+          "trendiness_ratio": 1.5285075662647556,
+          "persistence_rate": 0.48963490940747595
+        },
+        "0.001057299231826765": {
+          "n_triggers": 12698,
+          "trendiness_ratio": 1.5060588034072566,
+          "persistence_rate": 0.4856670341786108
+        },
+        "0.0013696476146381309": {
+          "n_triggers": 6693,
+          "trendiness_ratio": 1.5880519487738853,
+          "persistence_rate": 0.48498431196772745
+        },
+        "0.0017509710718516599": {
+          "n_triggers": 2654,
+          "trendiness_ratio": 1.7758116705259688,
+          "persistence_rate": 0.474378296910324
+        }
+      },
+      "oos_results": {
+        "0.0008455199697163618": {
+          "n_triggers": 4836,
+          "trendiness_ratio": 1.4040310027738274,
+          "persistence_rate": 0.4911083540115798
+        },
+        "0.001057299231826765": {
+          "n_triggers": 2779,
+          "trendiness_ratio": 1.464788963151908,
+          "persistence_rate": 0.4987405541561713
+        },
+        "0.0013696476146381309": {
+          "n_triggers": 1046,
+          "trendiness_ratio": 1.4618064375603939,
+          "persistence_rate": 0.4713193116634799
+        },
+        "0.0017509710718516599": {
+          "n_triggers": 442,
+          "trendiness_ratio": 2.030712591589036,
+          "persistence_rate": 0.4592760180995475
+        }
+      },
+      "spearman_tr": 0.39999999999999997,
+      "spearman_dpr": 0.7999999999999999,
+      "best_is_threshold": 0.0017509710718516599,
+      "best_tr_is": 1.7758116705259688,
+      "best_dpr_is": 0.474378296910324,
+      "best_tr_oos": 2.030712591589036,
+      "best_dpr_oos": 0.4592760180995475
+    },
+    {
+      "indicator": "S4_Range_ATR",
+      "pair": "USD_JPY",
+      "grid": [
+        0.7,
+        0.85,
+        1.0,
+        1.15,
+        1.3
+      ],
+      "is_results": {
+        "0.7": {
+          "n_triggers": 141,
+          "trendiness_ratio": 1.1615559170256644,
+          "persistence_rate": 0.5815602836879432
+        },
+        "0.85": {
+          "n_triggers": 3094,
+          "trendiness_ratio": 1.136460945161688,
+          "persistence_rate": 0.5287653522947641
+        },
+        "1.0": {
+          "n_triggers": 12661,
+          "trendiness_ratio": 1.0972954525089091,
+          "persistence_rate": 0.5088065713608719
+        },
+        "1.15": {
+          "n_triggers": 21343,
+          "trendiness_ratio": 1.003377229953915,
+          "persistence_rate": 0.5019912851988942
+        },
+        "1.3": {
+          "n_triggers": 22979,
+          "trendiness_ratio": 0.654697476883658,
+          "persistence_rate": 0.5015448888115236
+        }
+      },
+      "oos_results": {
+        "0.7": {
+          "n_triggers": 31,
+          "trendiness_ratio": null,
+          "persistence_rate": null
+        },
+        "0.85": {
+          "n_triggers": 669,
+          "trendiness_ratio": 1.0114533832585029,
+          "persistence_rate": 0.523168908819133
+        },
+        "1.0": {
+          "n_triggers": 4312,
+          "trendiness_ratio": 0.925756197319215,
+          "persistence_rate": 0.512291280148423
+        },
+        "1.15": {
+          "n_triggers": 7358,
+          "trendiness_ratio": 1.007584119059291,
+          "persistence_rate": 0.5062516988312041
+        },
+        "1.3": {
+          "n_triggers": 7705,
+          "trendiness_ratio": 0.590682866063196,
+          "persistence_rate": 0.5048669695003245
+        }
+      },
+      "spearman_tr": -0.09999999999999999,
+      "spearman_dpr": 0.0,
+      "best_is_threshold": 0.7,
+      "best_tr_is": 1.1615559170256644,
+      "best_dpr_is": 0.5815602836879432,
+      "best_tr_oos": null,
+      "best_dpr_oos": null
+    },
+    {
+      "indicator": "S4_Range_ATR",
+      "pair": "EUR_USD",
+      "grid": [
+        0.7,
+        0.85,
+        1.0,
+        1.15,
+        1.3
+      ],
+      "is_results": {
+        "0.7": {
+          "n_triggers": 336,
+          "trendiness_ratio": 1.3955476209181807,
+          "persistence_rate": 0.4375
+        },
+        "0.85": {
+          "n_triggers": 5191,
+          "trendiness_ratio": 1.6354834833904008,
+          "persistence_rate": 0.49296859949913313
+        },
+        "1.0": {
+          "n_triggers": 12235,
+          "trendiness_ratio": 1.7274809925848236,
+          "persistence_rate": 0.48557417245606865
+        },
+        "1.15": {
+          "n_triggers": 19859,
+          "trendiness_ratio": 1.4891429461634884,
+          "persistence_rate": 0.4840626416234453
+        },
+        "1.3": {
+          "n_triggers": 22893,
+          "trendiness_ratio": 1.106680779884495,
+          "persistence_rate": 0.48215611759052984
+        }
+      },
+      "oos_results": {
+        "0.7": {
+          "n_triggers": 22,
+          "trendiness_ratio": null,
+          "persistence_rate": null
+        },
+        "0.85": {
+          "n_triggers": 1154,
+          "trendiness_ratio": 1.29219785264814,
+          "persistence_rate": 0.5077989601386482
+        },
+        "1.0": {
+          "n_triggers": 4208,
+          "trendiness_ratio": 1.3709002895003517,
+          "persistence_rate": 0.49881178707224333
+        },
+        "1.15": {
+          "n_triggers": 7070,
+          "trendiness_ratio": 1.2399895520144073,
+          "persistence_rate": 0.4871287128712871
+        },
+        "1.3": {
+          "n_triggers": 7694,
+          "trendiness_ratio": 0.813539264632457,
+          "persistence_rate": 0.48414348843254484
+        }
+      },
+      "spearman_tr": 0.8999999999999998,
+      "spearman_dpr": 0.9999999999999999,
+      "best_is_threshold": 1.0,
+      "best_tr_is": 1.7274809925848236,
+      "best_dpr_is": 0.48557417245606865,
+      "best_tr_oos": 1.3709002895003517,
+      "best_dpr_oos": 0.49881178707224333
+    },
+    {
+      "indicator": "S4_Range_ATR",
+      "pair": "GBP_JPY",
+      "grid": [
+        0.7,
+        0.85,
+        1.0,
+        1.15,
+        1.3
+      ],
+      "is_results": {
+        "0.7": {
+          "n_triggers": 93,
+          "trendiness_ratio": 1.2815467058733758,
+          "persistence_rate": 0.44086021505376344
+        },
+        "0.85": {
+          "n_triggers": 2765,
+          "trendiness_ratio": 1.3470772632617392,
+          "persistence_rate": 0.49873417721518987
+        },
+        "1.0": {
+          "n_triggers": 12602,
+          "trendiness_ratio": 1.3054924419279343,
+          "persistence_rate": 0.4918266941755277
+        },
+        "1.15": {
+          "n_triggers": 21403,
+          "trendiness_ratio": 1.1635641246262023,
+          "persistence_rate": 0.49067887679297295
+        },
+        "1.3": {
+          "n_triggers": 23071,
+          "trendiness_ratio": 0.937094626662676,
+          "persistence_rate": 0.4903992024619652
+        }
+      },
+      "oos_results": {
+        "0.7": {
+          "n_triggers": 7,
+          "trendiness_ratio": null,
+          "persistence_rate": null
+        },
+        "0.85": {
+          "n_triggers": 540,
+          "trendiness_ratio": 1.0563023695509177,
+          "persistence_rate": 0.49444444444444446
+        },
+        "1.0": {
+          "n_triggers": 4358,
+          "trendiness_ratio": 1.0044625216771494,
+          "persistence_rate": 0.4729233593391464
+        },
+        "1.15": {
+          "n_triggers": 7403,
+          "trendiness_ratio": 1.0952080657253174,
+          "persistence_rate": 0.48021072538160203
+        },
+        "1.3": {
+          "n_triggers": 7725,
+          "trendiness_ratio": 0.6069886717191684,
+          "persistence_rate": 0.48
+        }
+      },
+      "spearman_tr": 0.19999999999999998,
+      "spearman_dpr": 0.7,
+      "best_is_threshold": 0.85,
+      "best_tr_is": 1.3470772632617392,
+      "best_dpr_is": 0.49873417721518987,
+      "best_tr_oos": 1.0563023695509177,
+      "best_dpr_oos": 0.49444444444444446
+    },
+    {
+      "indicator": "S5_VR",
+      "pair": "USD_JPY",
+      "grid": [
+        0.8,
+        0.9,
+        1.0,
+        1.1,
+        1.2,
+        1.3
+      ],
+      "is_results": {
+        "0.8": {
+          "n_triggers": 18197,
+          "trendiness_ratio": 1.1356626398790033,
+          "persistence_rate": 0.4995328900368193
+        },
+        "0.9": {
+          "n_triggers": 14173,
+          "trendiness_ratio": 1.128497466402291,
+          "persistence_rate": 0.4958724335003175
+        },
+        "1.0": {
+          "n_triggers": 9726,
+          "trendiness_ratio": 1.1594825207656918,
+          "persistence_rate": 0.49506477483035166
+        },
+        "1.1": {
+          "n_triggers": 6198,
+          "trendiness_ratio": 1.106279502643362,
+          "persistence_rate": 0.4930622781542433
+        },
+        "1.2": {
+          "n_triggers": 3128,
+          "trendiness_ratio": 1.071072676815895,
+          "persistence_rate": 0.4952046035805627
+        },
+        "1.3": {
+          "n_triggers": 1567,
+          "trendiness_ratio": 0.9986099398898147,
+          "persistence_rate": 0.49329929802169753
+        }
+      },
+      "oos_results": {
+        "0.8": {
+          "n_triggers": 6153,
+          "trendiness_ratio": 1.0872055243997083,
+          "persistence_rate": 0.5047944092312693
+        },
+        "0.9": {
+          "n_triggers": 4931,
+          "trendiness_ratio": 1.1374167464578655,
+          "persistence_rate": 0.504562968971811
+        },
+        "1.0": {
+          "n_triggers": 3409,
+          "trendiness_ratio": 1.1899218686933142,
+          "persistence_rate": 0.5022000586682311
+        },
+        "1.1": {
+          "n_triggers": 2165,
+          "trendiness_ratio": 1.1007549542902566,
+          "persistence_rate": 0.5182448036951501
+        },
+        "1.2": {
+          "n_triggers": 1096,
+          "trendiness_ratio": 0.9519088184378708,
+          "persistence_rate": 0.5218978102189781
+        },
+        "1.3": {
+          "n_triggers": 594,
+          "trendiness_ratio": 0.9819193863351201,
+          "persistence_rate": 0.5437710437710438
+        }
+      },
+      "spearman_tr": 0.7714285714285715,
+      "spearman_dpr": -0.3714285714285715,
+      "best_is_threshold": 1.0,
+      "best_tr_is": 1.1594825207656918,
+      "best_dpr_is": 0.49506477483035166,
+      "best_tr_oos": 1.1899218686933142,
+      "best_dpr_oos": 0.5022000586682311
+    },
+    {
+      "indicator": "S5_VR",
+      "pair": "EUR_USD",
+      "grid": [
+        0.8,
+        0.9,
+        1.0,
+        1.1,
+        1.2,
+        1.3
+      ],
+      "is_results": {
+        "0.8": {
+          "n_triggers": 16454,
+          "trendiness_ratio": 0.9744206924886325,
+          "persistence_rate": 0.4818281268992342
+        },
+        "0.9": {
+          "n_triggers": 12410,
+          "trendiness_ratio": 0.9811830039205081,
+          "persistence_rate": 0.48589846897663175
+        },
+        "1.0": {
+          "n_triggers": 8542,
+          "trendiness_ratio": 0.9654156697278028,
+          "persistence_rate": 0.4933270896745493
+        },
+        "1.1": {
+          "n_triggers": 5646,
+          "trendiness_ratio": 0.9713615480045312,
+          "persistence_rate": 0.4914984059511158
+        },
+        "1.2": {
+          "n_triggers": 3222,
+          "trendiness_ratio": 0.9633165602074153,
+          "persistence_rate": 0.49906890130353815
+        },
+        "1.3": {
+          "n_triggers": 1746,
+          "trendiness_ratio": 0.9355799284759717,
+          "persistence_rate": 0.5028636884306987
+        }
+      },
+      "oos_results": {
+        "0.8": {
+          "n_triggers": 6115,
+          "trendiness_ratio": 1.1121250342697433,
+          "persistence_rate": 0.4843826655764514
+        },
+        "0.9": {
+          "n_triggers": 4349,
+          "trendiness_ratio": 1.0880443415047913,
+          "persistence_rate": 0.48930788687054494
+        },
+        "1.0": {
+          "n_triggers": 2816,
+          "trendiness_ratio": 1.0360032502914287,
+          "persistence_rate": 0.4928977272727273
+        },
+        "1.1": {
+          "n_triggers": 1473,
+          "trendiness_ratio": 0.9928676703042569,
+          "persistence_rate": 0.48879837067209775
+        },
+        "1.2": {
+          "n_triggers": 690,
+          "trendiness_ratio": 0.9511148465342796,
+          "persistence_rate": 0.5101449275362319
+        },
+        "1.3": {
+          "n_triggers": 225,
+          "trendiness_ratio": 0.8679808115429964,
+          "persistence_rate": 0.5777777777777777
+        }
+      },
+      "spearman_tr": 0.8857142857142858,
+      "spearman_dpr": 0.942857142857143,
+      "best_is_threshold": 0.9,
+      "best_tr_is": 0.9811830039205081,
+      "best_dpr_is": 0.48589846897663175,
+      "best_tr_oos": 1.0880443415047913,
+      "best_dpr_oos": 0.48930788687054494
+    },
+    {
+      "indicator": "S5_VR",
+      "pair": "GBP_JPY",
+      "grid": [
+        0.8,
+        0.9,
+        1.0,
+        1.1,
+        1.2,
+        1.3
+      ],
+      "is_results": {
+        "0.8": {
+          "n_triggers": 18186,
+          "trendiness_ratio": 1.1507690967443267,
+          "persistence_rate": 0.48834268118332785
+        },
+        "0.9": {
+          "n_triggers": 14040,
+          "trendiness_ratio": 1.0928811053824568,
+          "persistence_rate": 0.48646723646723644
+        },
+        "1.0": {
+          "n_triggers": 9353,
+          "trendiness_ratio": 1.0395442676019724,
+          "persistence_rate": 0.4798460387041591
+        },
+        "1.1": {
+          "n_triggers": 5824,
+          "trendiness_ratio": 1.0120308822041062,
+          "persistence_rate": 0.4809409340659341
+        },
+        "1.2": {
+          "n_triggers": 3335,
+          "trendiness_ratio": 0.9720673107600017,
+          "persistence_rate": 0.48575712143928035
+        },
+        "1.3": {
+          "n_triggers": 1865,
+          "trendiness_ratio": 0.9651799561658954,
+          "persistence_rate": 0.47935656836461127
+        }
+      },
+      "oos_results": {
+        "0.8": {
+          "n_triggers": 5468,
+          "trendiness_ratio": 1.0030981281857447,
+          "persistence_rate": 0.47585954645208484
+        },
+        "0.9": {
+          "n_triggers": 4061,
+          "trendiness_ratio": 1.0315398211109141,
+          "persistence_rate": 0.4735286875153903
+        },
+        "1.0": {
+          "n_triggers": 2527,
+          "trendiness_ratio": 1.0310052431167955,
+          "persistence_rate": 0.4784329244163039
+        },
+        "1.1": {
+          "n_triggers": 1368,
+          "trendiness_ratio": 1.0371581311781874,
+          "persistence_rate": 0.47076023391812866
+        },
+        "1.2": {
+          "n_triggers": 831,
+          "trendiness_ratio": 0.9886248846177836,
+          "persistence_rate": 0.4645006016847172
+        },
+        "1.3": {
+          "n_triggers": 367,
+          "trendiness_ratio": 0.9887250922458277,
+          "persistence_rate": 0.44141689373297005
+        }
+      },
+      "spearman_tr": 0.4285714285714286,
+      "spearman_dpr": 0.3714285714285715,
+      "best_is_threshold": 0.8,
+      "best_tr_is": 1.1507690967443267,
+      "best_dpr_is": 0.48834268118332785,
+      "best_tr_oos": 1.0030981281857447,
+      "best_dpr_oos": 0.47585954645208484
+    },
+    {
+      "indicator": "S6_MFI",
+      "pair": "USD_JPY",
+      "grid": [
+        50,
+        55,
+        60,
+        65,
+        70
+      ],
+      "is_results": {
+        "50": {
+          "n_triggers": 12799,
+          "trendiness_ratio": 0.8501841788061998,
+          "persistence_rate": 0.5170716462223611
+        },
+        "55": {
+          "n_triggers": 10185,
+          "trendiness_ratio": 0.8802897696121751,
+          "persistence_rate": 0.5209621993127148
+        },
+        "60": {
+          "n_triggers": 7683,
+          "trendiness_ratio": 0.8856385037187843,
+          "persistence_rate": 0.5242743719901081
+        },
+        "65": {
+          "n_triggers": 5476,
+          "trendiness_ratio": 0.9151939326731402,
+          "persistence_rate": 0.5381665449233016
+        },
+        "70": {
+          "n_triggers": 3616,
+          "trendiness_ratio": 0.901503048741478,
+          "persistence_rate": 0.5547566371681416
+        }
+      },
+      "oos_results": {
+        "50": {
+          "n_triggers": 4281,
+          "trendiness_ratio": 0.91188534364902,
+          "persistence_rate": 0.5052557813594954
+        },
+        "55": {
+          "n_triggers": 3394,
+          "trendiness_ratio": 0.915565096444205,
+          "persistence_rate": 0.4988214496169711
+        },
+        "60": {
+          "n_triggers": 2552,
+          "trendiness_ratio": 0.9109261389435435,
+          "persistence_rate": 0.5003918495297806
+        },
+        "65": {
+          "n_triggers": 1794,
+          "trendiness_ratio": 0.895970924925217,
+          "persistence_rate": 0.5061315496098104
+        },
+        "70": {
+          "n_triggers": 1172,
+          "trendiness_ratio": 0.8775968183588797,
+          "persistence_rate": 0.5179180887372014
+        }
+      },
+      "spearman_tr": -0.7999999999999999,
+      "spearman_dpr": 0.7,
+      "best_is_threshold": 65,
+      "best_tr_is": 0.9151939326731402,
+      "best_dpr_is": 0.5381665449233016,
+      "best_tr_oos": 0.895970924925217,
+      "best_dpr_oos": 0.5061315496098104
+    },
+    {
+      "indicator": "S6_MFI",
+      "pair": "EUR_USD",
+      "grid": [
+        50,
+        55,
+        60,
+        65,
+        70
+      ],
+      "is_results": {
+        "50": {
+          "n_triggers": 11533,
+          "trendiness_ratio": 0.9843490449921971,
+          "persistence_rate": 0.47749934969218766
+        },
+        "55": {
+          "n_triggers": 9033,
+          "trendiness_ratio": 0.9960222001590501,
+          "persistence_rate": 0.4753680947636444
+        },
+        "60": {
+          "n_triggers": 6621,
+          "trendiness_ratio": 0.9738083171664084,
+          "persistence_rate": 0.4747017066908322
+        },
+        "65": {
+          "n_triggers": 4596,
+          "trendiness_ratio": 0.9803539113395549,
+          "persistence_rate": 0.4730200174064404
+        },
+        "70": {
+          "n_triggers": 2875,
+          "trendiness_ratio": 0.9678221031493882,
+          "persistence_rate": 0.46852173913043477
+        }
+      },
+      "oos_results": {
+        "50": {
+          "n_triggers": 3819,
+          "trendiness_ratio": 1.1117095249482283,
+          "persistence_rate": 0.4935847080387536
+        },
+        "55": {
+          "n_triggers": 2944,
+          "trendiness_ratio": 1.1103805468538674,
+          "persistence_rate": 0.49490489130434784
+        },
+        "60": {
+          "n_triggers": 2175,
+          "trendiness_ratio": 1.1036939510430437,
+          "persistence_rate": 0.48367816091954025
+        },
+        "65": {
+          "n_triggers": 1534,
+          "trendiness_ratio": 1.1402136078193246,
+          "persistence_rate": 0.48435462842242505
+        },
+        "70": {
+          "n_triggers": 976,
+          "trendiness_ratio": 1.1631225532927325,
+          "persistence_rate": 0.4989754098360656
+        }
+      },
+      "spearman_tr": -0.39999999999999997,
+      "spearman_dpr": -0.19999999999999998,
+      "best_is_threshold": 55,
+      "best_tr_is": 0.9960222001590501,
+      "best_dpr_is": 0.4753680947636444,
+      "best_tr_oos": 1.1103805468538674,
+      "best_dpr_oos": 0.49490489130434784
+    },
+    {
+      "indicator": "S6_MFI",
+      "pair": "GBP_JPY",
+      "grid": [
+        50,
+        55,
+        60,
+        65,
+        70
+      ],
+      "is_results": {
+        "50": {
+          "n_triggers": 12717,
+          "trendiness_ratio": 0.9008961412408139,
+          "persistence_rate": 0.5027915388849571
+        },
+        "55": {
+          "n_triggers": 10138,
+          "trendiness_ratio": 0.9112699081358377,
+          "persistence_rate": 0.5021700532649438
+        },
+        "60": {
+          "n_triggers": 7576,
+          "trendiness_ratio": 0.8999094335836312,
+          "persistence_rate": 0.5047518479408659
+        },
+        "65": {
+          "n_triggers": 5243,
+          "trendiness_ratio": 0.8940048963035835,
+          "persistence_rate": 0.5060080106809078
+        },
+        "70": {
+          "n_triggers": 3441,
+          "trendiness_ratio": 0.9088235834873708,
+          "persistence_rate": 0.5071200232490555
+        }
+      },
+      "oos_results": {
+        "50": {
+          "n_triggers": 4481,
+          "trendiness_ratio": 0.9828698206467643,
+          "persistence_rate": 0.4882838652086588
+        },
+        "55": {
+          "n_triggers": 3556,
+          "trendiness_ratio": 0.994172085856515,
+          "persistence_rate": 0.4907199100112486
+        },
+        "60": {
+          "n_triggers": 2631,
+          "trendiness_ratio": 0.9810658177828999,
+          "persistence_rate": 0.4861269479285443
+        },
+        "65": {
+          "n_triggers": 1862,
+          "trendiness_ratio": 0.9317704737718764,
+          "persistence_rate": 0.4897959183673469
+        },
+        "70": {
+          "n_triggers": 1223,
+          "trendiness_ratio": 0.9145481845184119,
+          "persistence_rate": 0.49141455437448894
+        }
+      },
+      "spearman_tr": 0.39999999999999997,
+      "spearman_dpr": 0.3,
+      "best_is_threshold": 55,
+      "best_tr_is": 0.9112699081358377,
+      "best_dpr_is": 0.5021700532649438,
+      "best_tr_oos": 0.994172085856515,
+      "best_dpr_oos": 0.4907199100112486
+    }
+  ]
+}
