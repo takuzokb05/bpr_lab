@@ -1355,3 +1355,31 @@ FX自動売買の構成（P-014の4層アーキテクチャ）において、Gem
 1. `.claude/settings.json` の `mcpServers` に MDN MCPサーバーを追加（`claude mcp add mdn-docs @modelcontextprotocol/server-mdn`）
 2. Serena MCPサーバー（`npm install @sernaic/serena-mcp-server`）を評価：大規模コードベース（sandbox/FX自動取引/）のLSP統合によるコンテキスト改善効果を確認
 3. Draw.io MCPサーバーをFX自動取引アーキテクチャ図の作成に活用（architecture.mdの視覚化、P-103・P-105の設計図を自動生成）
+
+---
+
+### P-107: Claude Code /rewindコマンドをbpr_lab長時間セッションの標準チェックポイント運用に追加
+
+**根拠記事**: 642 (MindStudio Claude Code /rewind解説)
+**取得日**: 2026-06-25
+**詳細**: 2026年6月24日のClaude CodeアップデートでClaude Code CLIに`/rewind`コマンドが追加された。`/clear`実行前の状態（会話コンテキスト＋コード変更の両方）に巻き戻せる機能で、長時間セッションでの安全性が大幅向上。bpr_labでの活用場面：①daily-collect実行中に途中でNOISE判定を変更したくなった場合に、SIGNALとして保存した内容以前に戻れる、②FXバックテストセッションでパラメータ変更が失敗した時に変更前の状態に復元、③catalog.md更新中に誤った連番を付けた場合の修正。現在はセッション開始前の`git stash`に頼っているが、/rewindにより軽量なチェックポイントが増える。
+
+**提案アクション**:
+1. CLAUDE.md の「長時間セッション作業時の注意」セクションに `/rewind` の活用パターンを追記（例：「重要な判断前に `/rewind` でチェックポイントを確認してから実行」）
+2. `.claude/skills/daily-collect/SKILL.md` の手順に「Step 4-2完了後、articles/保存前に `/rewind` 確認ポイント」を明示
+3. /rewindとgit commitの使い分け基準をCLAUDE.mdに記載：/rewind→セッション内の短期巻き戻し、git commit→長期保存・他セッションへの引き継ぎ
+
+---
+
+### P-108: SKILL.md明示起動型（disable-model-invocation: true）をbpr_labスキルに適用
+
+**根拠記事**: 644 (ar-aca.tech Claude Code SKILL.md完全ガイド2026)
+**取得日**: 2026-06-25
+**詳細**: Claude Code Skills には2タイプある。①常時ロード型：descriptionをClaudeが読んで自動判断でロード（誤発火リスクあり）、②明示起動型（`disable-model-invocation: true`）：ユーザーが`/name`で明示起動・Claudeはスキルの存在を認識しない（副作用を伴うワークフローに推奨）。bpr_labの既存スキル（/daily-collect, /fx-backtest, /catalog-update等）はコミット・ファイル作成・push等の副作用を伴うため、明示起動型への移行が安全性向上に直結。現在のSKILL.md設定が常時ロード型になっているスキルは誤発火で意図せずarticlesが追加される危険がある。
+
+**提案アクション**:
+1. `.claude/skills/` 配下の各SKILL.mdを監査し、副作用を伴うスキル（commit/push/write/delete操作を含む）を特定
+2. 対象スキルに `disable-model-invocation: true` を追加し、明示起動型に変更
+3. 変更後は起動方法を `/{skill-name}` コマンドに統一し、CLAUDE.mdのスキル一覧セクションも更新
+4. 常時ロード型として残すべきスキル（参照のみ、読み取り専用の補助スキル）の判断基準をCLAUDE.mdに記載
+
