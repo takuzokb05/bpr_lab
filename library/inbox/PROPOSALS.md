@@ -1,7 +1,7 @@
 # PROPOSALS.md
 
 収集記事を横断分析して得られた反映提案。
-最終更新: 2026-06-24
+最終更新: 2026-06-26
 
 ---
 
@@ -1382,4 +1382,33 @@ FX自動売買の構成（P-014の4層アーキテクチャ）において、Gem
 2. 対象スキルに `disable-model-invocation: true` を追加し、明示起動型に変更
 3. 変更後は起動方法を `/{skill-name}` コマンドに統一し、CLAUDE.mdのスキル一覧セクションも更新
 4. 常時ロード型として残すべきスキル（参照のみ、読み取り専用の補助スキル）の判断基準をCLAUDE.mdに記載
+
+---
+
+## 2026-06-26 提案
+
+### P-109: wshobson/agents マルチハーネスマーケットプレイスの評価 — Claude Code Skills の横断再利用
+
+**根拠記事**: 651 (GitHub wshobson/agents Multi-Harness Agent Plugin Marketplace)
+**取得日**: 2026-06-26
+**詳細**: wshobson氏がClaude Code・Codex CLI・Cursor・OpenCode・GitHub Copilot・Gemini CLI向けの統一プラグインマーケットプレイスをOSSで公開した。チームが複数のAIコーディングツールを使い分ける場合に、SKILL.md定義・MCPサーバー設定・フック定義を一元管理できる。bpr_labのClaude Code Skillsを同フォーマットで管理することで、将来の別ツール移行コストを最小化できる可能性がある。またClaude Codeコミュニティマーケットプレイス構想（2026年6月のSitePoint記事に言及）が実現した際に、bpr_labのSkillsをコントリビュートする基盤にもなる。
+
+**提案アクション**:
+1. wshobson/agentsリポジトリの構造を確認し、bpr_labの`.claude/skills/`配下の既存SkillsをGitHubにマーケットプレイスフォーマットで公開可能か評価
+2. 特に汎用性の高いスキル（/daily-collect・/fx-review等）をClaude Code公式マーケットプレイス候補としてパッケージ化し、再利用可能なフォーマットで整備
+3. 異なるAIツール（Cursor等）を使い始める場合の移行コストゼロを目標に、ツール非依存な設計でSKILL.mdを整備
+
+---
+
+### P-110: FX自動取引ボットへのWalk-Forward Test導入 — LSTMとGradient Boostの精度比較
+
+**根拠記事**: 656 (MacawDigital ML replacing rule-based trading 2026), 654 (Nurp Future of Algorithmic Trading 2026-2030)
+**取得日**: 2026-06-26
+**詳細**: 2026年時点でのアルゴリズム取引MLのベストプラクティスとして「walk-forward testing・out-of-sample検証・ルックアヘッドバイアス排除」の3セットが必須と明確化された。現在sandbox/FX自動取引/ のバックテスト（P-009・P-043）はルックアヘッドバイアス排除の仕組みが未実装の可能性がある。また、LSTM（逐次パターン・長期依存）と勾配ブースティング（高頻度データ・解釈可能性）の2系統が現在のMLトレーディングのベンチマーク。P-014（信頼度閾値）・P-043（再現性リスク）と組み合わせることで、より堅牢なバックテスト評価体系が構築できる。
+
+**提案アクション**:
+1. sandbox/FX自動取引/backtest/ にwalk-forward testing実装を追加（訓練ウィンドウ=過去12ヶ月、検証ウィンドウ=1ヶ月、1ヶ月ずつスライド）
+2. LSTMベースのシグナル生成（PyTorch/Kerasで実装）と既存のLLMシグナル生成を並列実行し、同一バックテスト期間でシャープレシオ・最大ドローダウン・勝率を比較
+3. P-043（LLMバージョン固定）のCI設定にwalk-forward test結果の統計的等価性チェックを追加し、モデル変更時に性能が有意に劣化していないことを自動検証
+4. ルックアヘッドバイアス排除チェックリストをsandbox/FX自動取引/BACKTEST_RULES.mdに作成（特徴量エンジニアリングでの未来データ使用・スプレッド/スリッページ未考慮・スケーラー学習データリークの3大リスクを対象）
 

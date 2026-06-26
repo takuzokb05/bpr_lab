@@ -1,6 +1,6 @@
 # Library Catalog
 
-最終更新: 2026-06-25
+最終更新: 2026-06-26
 
 ## 凡例
 - 状態: 未読 / 既読 / 要精読
@@ -1078,12 +1078,45 @@ drop.md: URLなし（処理対象なし）
 
 ---
 
+---
+
+## 2026-06-26 収集分（12件収集 → 11件SIGNAL）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 646 | [2026-06-26_646](articles/2026-06-26_646_MindStudio-Code-with-Claude-2026-5-New-Agent-Features-Artifacts-Subagents.md) | Claude Code 2026年5大新機能: 5階層ネストサブエージェント・Artifacts・Agent view・/rewind・fallbackModel | claude-code | 未読 | #web-signal |
+| 647 | [2026-06-26_647](articles/2026-06-26_647_DevTo-Artifacts-Claude-Code-Operators-Guide-HTML-Live-Pages-Beta.md) | Claude Code Artifacts運用ガイド（Dev.to）: Live HTMLページ・Team/Enterprise限定・セキュリティモデル・設定キー | claude-code | 未読 | #web-signal |
+| 648 | [2026-06-26_648](articles/2026-06-26_648_VILA-Lab-Dive-into-Claude-Code-Systematic-Research-AI-Agent-Design.md) | VILA-Lab「Dive into Claude Code」: AIエージェント設計のための系統的研究リポジトリ | claude-code | 未読 | #web-signal |
+| 649 | [2026-06-26_649](articles/2026-06-26_649_AyAutomate-8-Production-Claude-Code-Workflows-TDD-Audit-MultiRepo.md) | Claude Code本番8ワークフロー: TDDループ・コードベース監査・multi-repoリファクタ・エージェントスウォーム | claude-code | 未読 | #web-signal |
+| 650 | [2026-06-26_650](articles/2026-06-26_650_Zenn-YamatoSnow-21-Claude-Code-Skills-Design-育て方-JA.md) | Claude Code Skills 21個運用の設計と育て方（Zenn・JA）: Progressive Disclosure・description9割・失敗パターン | claude-code | 未読 | #web-signal |
+| 651 | [2026-06-26_651](articles/2026-06-26_651_GitHub-wshobson-Multi-Harness-Agent-Plugin-Marketplace-ClaudeCode-Cursor-Codex.md) | マルチハーネスエージェントプラグインマーケットプレイス（OSS）: Claude Code・Cursor・Codex CLI・Gemini CLI統一管理 | claude-ecosystem | 未読 | #web-signal |
+| 652 | [2026-06-26_652](articles/2026-06-26_652_AIGovernance-Weekly-June19-2026-EU-AI-Act-August-Agentic-Rollback.md) | AI Governance Weekly 6/19: EU AI Act 8月施行・ロールバック急増・OWASP調達要件化・Least-Agency Principle | ai-news | 未読 | #web-signal |
+| 653 | [2026-06-26_653](articles/2026-06-26_653_AgenticAIInstitute-Enterprise-72pct-Production-60pct-Governance-Gap-2026.md) | エンタープライズ採用調査: 本番稼働72%・ガバナンスギャップ60%・ガバナンスツール導入企業は12倍成功率 | ai-news | 未読 | #web-signal |
+| 654 | [2026-06-26_654](articles/2026-06-26_654_Nurp-Future-Algorithmic-Trading-2026-2030-250B-ML-LSTM-Transformer.md) | アルゴリズム取引の未来2026-2030: 市場$250B→$443B・LSTM→Transformer移行・ハイブリッドモデル主流化 | ai-trading | 未読 | #web-signal |
+| 655 | [2026-06-26_655](articles/2026-06-26_655_DigitalDefynd-10-Ways-AI-Algorithmic-Trading-BlackRock-Citadel-JPMorgan.md) | AIアルゴリズム取引10大活用法+3ケーススタディ: BlackRock Aladdin・Citadel MML・JPMorgan LIME | ai-trading | 未読 | #web-signal |
+| 656 | [2026-06-26_656](articles/2026-06-26_656_MacawDigital-ML-Replacing-Rule-Based-Trading-LSTM-RL-Gradient-Boost.md) | ML→ルールベース取引の置き換え理由2026: LSTM・強化学習・勾配ブースティング実装・walk-forward検証 | ai-trading | 未読 | #web-signal |
+
+### NOISEとして除外（2026-06-26）
+
+| 候補ファイル | 理由 |
+|---|---|
+| kmrahul.com/claude-code-just-added-nested-sub-agents-5-levels-deep | 2026-06-12_243（ofox.ai）と内容重複 |
+| chatforest.com/builders-log/claude-code-nested-sub-agents | 同上・重複 |
+| claudcod.com/claude-agent-sdk-billing-split | 課金変更は複数記事で既カバー済み、変更自体も中止 |
+| buildthisnow.com/claude-billing-change-june-2026 | 同上 |
+| aiforanything.io/claude-subscription-split | 同上 |
+| chatforest.com/anthropic-claude-agent-sdk-billing-split | 同上 |
+| note.com/meichanai nfa611a53ea1e | ネスト型サブエージェント（JA）・2026-06-12_243と重複 |
+| qiita.com/i-inose Claude Code Skills入門 | 既存Skills記事（sios.jp・01lab・playpark等）と重複 |
+
+---
+
 ## ドメイン別統計（累計）
 
-| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 2026-06-07 | 2026-06-08 | 2026-06-09 | 2026-06-10 | 2026-06-11 | 2026-06-12 | 2026-06-13 | 2026-06-14 | 2026-06-16 | 2026-06-17 | 2026-06-18 | 2026-06-19 | 2026-06-20 | 2026-06-21 | 2026-06-22 | 2026-06-23 | 2026-06-24 | 2026-06-25 | 累計 |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 8件 | 5件 | 10件 | 9件 | 5件 | 4件 | 3件 | 7件 | 14件 | 3件 | 10件 | 8件 | 80件 | 4件 | 6件 | 1件 | 1件 | 1件 | 4件 | 4件 | 239件 |
-| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 5件 | 4件 | 5件 | 5件 | 5件 | 2件 | 4件 | 4件 | 4件 | 1件 | 3件 | 2件 | 67件 | 7件 | 6件 | 2件 | 5件 | 6件 | 9件 | 3件 | 174件 |
-| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 3件 | 2件 | 4件 | 0件 | 1件 | 3件 | 2件 | 4件 | 1件 | 2件 | 3件 | 39件 | 2件 | 1件 | 1件 | 2件 | 2件 | 1件 | 2件 | 102件 |
-| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 4件 | 3件 | 2件 | 4件 | 2件 | 2件 | 4件 | 1件 | 6件 | 1件 | 2件 | 52件 | 2件 | 2件 | 4件 | 3件 | 3件 | 2件 | 3件 | 128件 |
-| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **18件** | **16件** | **20件** | **20件** | **14件** | **9件** | **12件** | **17件** | **23件** | **11件** | **16件** | **15件** | **238件** | **15件** | **15件** | **8件** | **11件** | **12件** | **16件** | **12件** | **643件** |
+| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 2026-06-07 | 2026-06-08 | 2026-06-09 | 2026-06-10 | 2026-06-11 | 2026-06-12 | 2026-06-13 | 2026-06-14 | 2026-06-16 | 2026-06-17 | 2026-06-18 | 2026-06-19 | 2026-06-20 | 2026-06-21 | 2026-06-22 | 2026-06-23 | 2026-06-24 | 2026-06-25 | 2026-06-26 | 累計 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 8件 | 5件 | 10件 | 9件 | 5件 | 4件 | 3件 | 7件 | 14件 | 3件 | 10件 | 8件 | 80件 | 4件 | 6件 | 1件 | 1件 | 1件 | 4件 | 4件 | 5件 | 244件 |
+| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 5件 | 4件 | 5件 | 5件 | 5件 | 2件 | 4件 | 4件 | 4件 | 1件 | 3件 | 2件 | 67件 | 7件 | 6件 | 2件 | 5件 | 6件 | 9件 | 3件 | 1件 | 175件 |
+| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 3件 | 2件 | 4件 | 0件 | 1件 | 3件 | 2件 | 4件 | 1件 | 2件 | 3件 | 39件 | 2件 | 1件 | 1件 | 2件 | 2件 | 1件 | 2件 | 3件 | 105件 |
+| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 4件 | 3件 | 2件 | 4件 | 2件 | 2件 | 4件 | 1件 | 6件 | 1件 | 2件 | 52件 | 2件 | 2件 | 4件 | 3件 | 3件 | 2件 | 3件 | 2件 | 130件 |
+| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **18件** | **16件** | **20件** | **20件** | **14件** | **9件** | **12件** | **17件** | **23件** | **11件** | **16件** | **15件** | **238件** | **15件** | **15件** | **8件** | **11件** | **12件** | **16件** | **12件** | **11件** | **654件** |
