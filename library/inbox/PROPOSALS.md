@@ -1,7 +1,7 @@
 # PROPOSALS.md
 
 収集記事を横断分析して得られた反映提案。
-最終更新: 2026-06-26
+最終更新: 2026-06-27
 
 ---
 
@@ -1412,3 +1412,52 @@ FX自動売買の構成（P-014の4層アーキテクチャ）において、Gem
 3. P-043（LLMバージョン固定）のCI設定にwalk-forward test結果の統計的等価性チェックを追加し、モデル変更時に性能が有意に劣化していないことを自動検証
 4. ルックアヘッドバイアス排除チェックリストをsandbox/FX自動取引/BACKTEST_RULES.mdに作成（特徴量エンジニアリングでの未来データ使用・スプレッド/スリッページ未考慮・スケーラー学習データリークの3大リスクを対象）
 
+
+## 2026-06-27 提案
+
+### P-111: FX自動取引への反映 — MT5 + Python + ONNX統合パターン（+57%利益改善実証）
+
+**根拠記事**: 663 (MQL5 MetaTrader5 Python ONNX AI Trading Platform June 22)
+**取得日**: 2026-06-27
+**詳細**: MQL5公式記事（2026年6月22日）がMT5プラットフォーム上でのPython→ONNX→MQL5統合の完全ワークフローを実証。MACD指標にONNXフィルターを追加した実例では取引数209件→152件（27%削減）・利益$884→$1,388（+57%）という具体的な成果が示された。外部LLMへのWebRequest統合も可能で、MT5内からClaude API等を直接呼び出せる。Pythonでモデル訓練→ONNX形式エクスポート→MQL5でインポートして使用というパイプラインは、sandbox/FX自動取引/で現在検討中のLLMシグナル生成に直接応用可能。
+
+**提案アクション**:
+1. sandbox/FX自動取引/ にONNX統合レイヤーを追加（Python側でscikit-learn/PyTorchモデル訓練→`skl2onnx`または`torch.onnx.export`でONNX変換→MT5側でONNXモデルとして読み込み）
+2. MQL5のWebRequest機能を使ってClaude APIをMT5内から直接呼び出す実装を試験（シグナル生成・センチメント分析をLLMに委譲）
+3. P-043（LLMバージョン固定）・P-110（walk-forward test）と組み合わせて、ONNX静的モデル（再現性高）とLLM動的判断（適応性高）のハイブリッドアーキテクチャを設計
+
+---
+
+### P-112: CLAUDE.md・skills-registry への反映 — Fable 5停止事案を受けたfallbackModel設定の標準化
+
+**根拠記事**: 658, 659, 660 (Fortune Fable5停止、Snyk教訓、TrueFoundry マルチプロバイダーゲートウェイ)
+**取得日**: 2026-06-27
+**詳細**: Fable 5/Mythos 5の全世界ゼロ通告停止は、AIモデルへの単一依存がビジネス継続リスクになることを実証した。Claude Code v2.1.185で`fallbackModel`設定が追加されており、主モデルが利用不能の場合に自動フォールバックが可能。Snykの推奨事項（モデル冗長性の確保・AI資産の可視化・段階的制御戦略）はbpr_labの日次収集エージェントにも適用できる。
+
+**提案アクション**:
+1. CLAUDE.mdに以下を追記:
+   ```
+   ## モデルフォールバック設定
+   - 主モデル: claude-sonnet-4-6（または最新sonnet）
+   - fallbackModel: claude-haiku-4-5-20251001（規制・停止時の軽量フォールバック）
+   - Fable 5/Mythos 5は2026年6月13日以降利用不可（輸出管理規制）
+   ```
+2. `.claude/settings.json`に`fallbackModel`設定を追加し、モデル停止時でも日次収集エージェントが継続稼働できる体制を整備
+3. sandbox/FX自動取引/のLLMバックエンド設定にもフォールバックロジックを追加（例：FableModel → Opus 4.8 → Sonnet 4.6の順でフォールバック）
+
+---
+
+### P-113: Claude Code Skills への反映 — `/agent-teams`スキル作成（4役割並列開発パターン）
+
+**根拠記事**: 664 (Medium KargarIsaac Agent Teams Claude Code SDK 実装)
+**取得日**: 2026-06-27
+**詳細**: Agent Teamsは`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`で有効化し、`TeamCreate`・`SendMessage`・`TeamDelete`ツールでマルチエージェント協調が実装できる。実例（アーキテクト・実装者・テスター・ドキュメント作成者の4エージェント）はbpr_labの複合タスク（FX戦略設計・コードレビュー・テスト・ドキュメント同時作業）に直接応用可能。P-009（Dynamic Workflows並列バックテスト）・P-003（/agent-teamsスキル化）との組み合わせが有効。
+
+**提案アクション**:
+1. `.claude/skills/agent-teams/SKILL.md`を作成し、以下のパターンを定義:
+   - `architect`（設計検討・分割計画）
+   - `implementer`（コード実装）
+   - `tester`（テスト実行・品質確認）
+   - `documenter`（README・コメント更新）
+2. sandbox/FX自動取引/ の新機能開発時にAgent Teams（4エージェント）で並列開発する運用フローをCLAUDE.mdに記載
+3. Dynamic Workflowsとの違い（Claude Code内チームvs外部Agent SDK）を理解した上で、用途別の使い分けガイドをCLAUDE.mdに追記
