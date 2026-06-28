@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Weekly Digest — 2026-06-28</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --bg-card: #ffffff;
+    --text: #1a1a1a;
+    --text-secondary: #555;
+    --text-tertiary: #888;
+    --border: #e0e0e0;
+    --border-light: #f0f0f0;
+    --accent-claude: #3b82f6;
+    --accent-claude-bg: #eff6ff;
+    --accent-eco: #10b981;
+    --accent-eco-bg: #ecfdf5;
+    --accent-trade: #f59e0b;
+    --accent-trade-bg: #fffbeb;
+    --accent-news: #8b5cf6;
+    --accent-news-bg: #f5f3ff;
+    --accent-cross: #ef4444;
+    --accent-cross-bg: #fef2f2;
+    --action-bg: #f0fdf4;
+    --action-border: #86efac;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06);
+    --shadow-hover: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #111111;
+      --bg-card: #1a1a1a;
+      --text: #e5e5e5;
+      --text-secondary: #aaa;
+      --text-tertiary: #777;
+      --border: #333;
+      --border-light: #222;
+      --accent-claude-bg: #1e293b;
+      --accent-eco-bg: #0f2922;
+      --accent-trade-bg: #2a2010;
+      --accent-news-bg: #1e1533;
+      --accent-cross-bg: #2a1515;
+      --action-bg: #0f2922;
+      --action-border: #166534;
+      --shadow: 0 1px 3px rgba(0,0,0,0.3);
+      --shadow-hover: 0 2px 8px rgba(0,0,0,0.4);
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    font-size: 16px;
+  }
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+  header {
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 24px;
+    margin-bottom: 40px;
+  }
+  header h1 {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+  header .subtitle {
+    font-size: 14px;
+    color: var(--text-tertiary);
+  }
+  header .meta {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    margin-top: 8px;
+  }
+  h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 48px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-light);
+  }
+  h3 {
+    font-size: 17px;
+    font-weight: 700;
+    margin: 28px 0 12px;
+  }
+  h4 {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 20px 0 8px;
+    color: var(--text-secondary);
+  }
+  p {
+    margin-bottom: 12px;
+    color: var(--text);
+  }
+  .summary-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 32px;
+    box-shadow: var(--shadow);
+  }
+  .summary-box p {
+    font-size: 15px;
+    line-height: 1.9;
+    color: var(--text-secondary);
+  }
+  .summary-box p:last-child {
+    margin-bottom: 0;
+  }
+  .domain-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  .tag-claude { background: var(--accent-claude-bg); color: var(--accent-claude); }
+  .tag-eco { background: var(--accent-eco-bg); color: var(--accent-eco); }
+  .tag-trade { background: var(--accent-trade-bg); color: var(--accent-trade); }
+  .tag-news { background: var(--accent-news-bg); color: var(--accent-news); }
+  .tag-cross { background: var(--accent-cross-bg); color: var(--accent-cross); }
+
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+  }
+  .card h4 {
+    margin-top: 0;
+    color: var(--text);
+  }
+  .card p {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+  .card p:last-child {
+    margin-bottom: 0;
+  }
+  .card-claude { border-left: 3px solid var(--accent-claude); }
+  .card-eco { border-left: 3px solid var(--accent-eco); }
+  .card-trade { border-left: 3px solid var(--accent-trade); }
+  .card-news { border-left: 3px solid var(--accent-news); }
+  .card-cross { border-left: 3px solid var(--accent-cross); }
+
+  .trend-timeline {
+    position: relative;
+    padding-left: 20px;
+    margin: 16px 0;
+  }
+  .trend-timeline::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 4px;
+    bottom: 4px;
+    width: 2px;
+    background: var(--border);
+  }
+  .trend-item {
+    position: relative;
+    margin-bottom: 16px;
+    padding-left: 8px;
+  }
+  .trend-item::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 10px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent-claude);
+    border: 2px solid var(--bg);
+  }
+  .trend-item.eco::before { background: var(--accent-eco); }
+  .trend-item.trade::before { background: var(--accent-trade); }
+  .trend-item.news::before { background: var(--accent-news); }
+  .trend-date {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    margin-bottom: 2px;
+  }
+  .trend-text {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  .action-list {
+    list-style: none;
+    margin: 16px 0;
+  }
+  .action-item {
+    background: var(--action-bg);
+    border: 1px solid var(--action-border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+  .action-priority {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 3px;
+    margin-right: 6px;
+  }
+  .priority-high { background: #fecaca; color: #991b1b; }
+  .priority-mid { background: #fed7aa; color: #9a3412; }
+  .priority-low { background: #d1fae5; color: #065f46; }
+  @media (prefers-color-scheme: dark) {
+    .priority-high { background: #450a0a; color: #fca5a5; }
+    .priority-mid { background: #431407; color: #fdba74; }
+    .priority-low { background: #022c22; color: #6ee7b7; }
+  }
+  .action-title {
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 4px;
+  }
+  .action-reason {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+    line-height: 1.7;
+  }
+
+  .watch-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 16px 0;
+  }
+  @media (max-width: 600px) {
+    .watch-grid { grid-template-columns: 1fr; }
+  }
+  .watch-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .watch-item h4 {
+    font-size: 14px;
+    margin: 0 0 6px;
+    color: var(--text);
+  }
+  .watch-item p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+  .connection-note {
+    background: var(--accent-cross-bg);
+    border: 1px solid var(--accent-cross);
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .stats-row {
+    display: flex;
+    gap: 12px;
+    margin: 16px 0;
+    flex-wrap: wrap;
+  }
+  .stat-box {
+    flex: 1;
+    min-width: 120px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+  }
+  .stat-number {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-top: 4px;
+  }
+  footer {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-light);
+    font-size: 12px;
+    color: var(--text-tertiary);
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>AI Weekly Digest</h1>
+  <div class="subtitle">2026-06-22 ~ 2026-06-28</div>
+  <div class="meta">71記事を分析 / 日次ダイジェストなし（記事から直接分析）</div>
+</header>
+
+<div class="stats-row">
+  <div class="stat-box">
+    <div class="stat-number">71</div>
+    <div class="stat-label">分析記事数</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-number" style="color: var(--accent-claude);">24</div>
+    <div class="stat-label">Claude Code</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-number" style="color: var(--accent-eco);">19</div>
+    <div class="stat-label">Ecosystem / MCP</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-number" style="color: var(--accent-trade);">14</div>
+    <div class="stat-label">Trading / FX</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-number" style="color: var(--accent-news);">14</div>
+    <div class="stat-label">AI News / 規制</div>
+  </div>
+</div>
+
+<!-- ===== 1. 今週のサマリー ===== -->
+<h2>1. 今週のサマリー</h2>
+<div class="summary-box">
+  <p>
+    今週最大の衝撃は、米国商務省の輸出管理指令（ECRA「Is Informed」レター）によるFable 5/Mythos 5の全世界緊急停止だった。単一プロバイダー依存の構造的リスクが現実のものとなり、マルチプロバイダーゲートウェイやフォールバック設計が「あれば良い」から「必須」に格上げされた。一方、MCPプロトコルは7月28日RCに向けたステートレス化の技術詳細が週を通じて続々と公開され、ハンドシェイク廃止・Session-Id削除・Sampling非推奨という大規模な破壊的変更が確定した。Claude Codeは6月アップデートの全貌が出揃い、5段階ネストエージェント・Artifacts・/rewind・Routinesによる夜間自律開発という「開発者不在の開発」が現実的な選択肢になった。FX自動売買領域では、TradingAgents v0.2.5のGround Truth統合、Vibe-Tradingの個人向けForexエンジン、MT5+ONNX+Python統合ガイドと、LLMトレーディングの実装基盤が一気に成熟した週だった。
+  </p>
+</div>
+
+<!-- ===== 2. 継続トレンド ===== -->
+<h2>2. 今週ずっと話題だったもの</h2>
+
+<h3><span class="domain-tag tag-eco">Ecosystem</span> MCPステートレス化 — 7月28日RCへの大転換</h3>
+<div class="trend-timeline">
+  <div class="trend-item eco">
+    <div class="trend-date">6/22 (日)</div>
+    <div class="trend-text">AAIF「MCP Is Growing Up」がRC全変更点を俯瞰。ステートレスコア・MCP Apps・Tasks拡張・OAuth/OIDC強化の4本柱を整理。登録サーバー5,800本超、SDK月間DL 9,700万の規模感を報告。</div>
+  </div>
+  <div class="trend-item eco">
+    <div class="trend-date">6/23 (月)</div>
+    <div class="trend-text">Qiita・Zennに日本語の「MCP完全入門」記事が同日掲載。JSON-RPC 2.0ベースの通信仕様からFastMCPによる実装例まで、入門者向け情報が充実。</div>
+  </div>
+  <div class="trend-item eco">
+    <div class="trend-date">6/24 (火)</div>
+    <div class="trend-text">TokenMixが9つの仕様変更をbefore/after形式で網羅的に整理。ByteIotaがステートレス化の技術詳細（basket_id方式の明示的状態管理）を解説。MicrosoftがAzure App Serviceでのスケーリング実装例を公開。Agent WarsがSampling非推奨の技術的背景を分析。</div>
+  </div>
+  <div class="trend-item eco">
+    <div class="trend-date">6/25 (水)</div>
+    <div class="trend-text">WorkOSがOAuth/OIDCトークンスコープの詳細仕様を公開。Graviteeが「7月までにビルダーが知るべきこと」として移行作業チェックリストを提供。10週間の検証ウィンドウが明確化。</div>
+  </div>
+</div>
+<p>週末時点での評価: ステートレス化は「技術的方向性の議論」から「具体的な移行作業の実行」フェーズに移行した。MCPサーバーを自作・利用している全開発者に、7月28日までの対応が求められている。Session-Id依存コードの削除、_meta対応、Sampling代替実装の3点が最優先。</p>
+
+<h3><span class="domain-tag tag-claude">Claude Code</span> 6月アップデート群 — 「開発者不在の開発」の実現</h3>
+<div class="trend-timeline">
+  <div class="trend-item">
+    <div class="trend-date">6/22 (日)</div>
+    <div class="trend-text">Dynamic Workflows完全ガイドが公開。ultracodeモードの有効化方法と並列サブエージェント起動の仕組みが解説される。</div>
+  </div>
+  <div class="trend-item">
+    <div class="trend-date">6/24 (火)</div>
+    <div class="trend-text">5段階エージェントネスト・/cdコマンド・Artifacts・Claude Design連携・sandbox.credentials設定・Routines Deep Diveと、6月の主要機能が一気に記事化。CodeZineが「リモートコントロール+ワークツリー+動的ワークフロー」の組み合わせによる夜間自律開発を提唱。</div>
+  </div>
+  <div class="trend-item">
+    <div class="trend-date">6/25 (木)</div>
+    <div class="trend-text">/rewindコマンドの実践ガイド、SKILL.md書き方ガイドが公開。SitePointが6月の10新機能をネストサブエージェント・fallbackModel・コスト帰属を中心にまとめる。</div>
+  </div>
+  <div class="trend-item">
+    <div class="trend-date">6/26 (金)</div>
+    <div class="trend-text">VILA-LabがClaude Codeのアーキテクチャ設計原則を学術的に分析。8つの本番ワークフローパターン（TDD・監査・マルチリポ・エージェントスウォーム）が実践ガイドとして公開。21個のSkill運用知見が日本語で共有。</div>
+  </div>
+  <div class="trend-item">
+    <div class="trend-date">6/27 (土)</div>
+    <div class="trend-text">JetBrains CopilotからのClaude Agent利用がパブリックプレビュー開始。Agent Teams（4エージェント並列開発）の実装ガイドが登場。</div>
+  </div>
+</div>
+<p>週末時点での評価: Claude Codeは「対話的コーディング支援」から「自律的開発オーケストレーション」へ決定的に変貌した。Routines（定時自動実行）+ Remote Control（スマホ監視）+ 5段階ネスト + Worktree分離 + /rewind（安全ネット）の組み合わせにより、夜間にタスクを投入し翌朝確認するワークフローが実用水準に達している。</p>
+
+<h3><span class="domain-tag tag-news">Regulation</span> Fable 5停止と規制の波 — AIモデルが「武器」として扱われた週</h3>
+<div class="trend-timeline">
+  <div class="trend-item news">
+    <div class="trend-date">6/22 (日)</div>
+    <div class="trend-text">EU AI Act施行（8月2日）の各国比較記事が複数掲載。日本AI促進法のHITL義務化・学習データトレーサビリティ要件が明確化。</div>
+  </div>
+  <div class="trend-item news">
+    <div class="trend-date">6/24 (火)</div>
+    <div class="trend-text">米国AI大統領令EO 14409の詳細分析が公開。フロンティアAIモデルの政府事前評価・サイバーセキュリティクリアリングハウス設立など国家安全保障軸の規制体系が判明。</div>
+  </div>
+  <div class="trend-item news">
+    <div class="trend-date">6/26 (金)</div>
+    <div class="trend-text">エンタープライズAIエージェント72%本番稼働の調査報告。しかし60%にガバナンスギャップ。AI Governance Weeklyが8月施行まで6週間と警告。</div>
+  </div>
+  <div class="trend-item news">
+    <div class="trend-date">6/27 (土)</div>
+    <div class="trend-text">Fortune報道: Fable 5/Mythos 5が米ECRA輸出管理で全世界停止。コード脆弱性検出能力を「双用途技術」として規制。Snykが防御者側への影響を分析。コロラド州AI法が廃止され軽量ADMT法に置換。</div>
+  </div>
+</div>
+<p>週末時点での評価: Fable 5停止は「AIモデルが輸出管理品目として扱われる」前例を作った。米国内の外国籍者（Anthropic従業員含む）にも適用されるという厳格さは、日本からClaude APIを利用するユーザーにとって直接的なリスクだ。一方、コロラド州は厳格なAI法を施行直前に廃止し、開示中心の軽量規制に転換。規制の方向性は一様ではない。</p>
+
+<!-- ===== 3. 今週の重要トピック（ドメイン別） ===== -->
+<h2>3. 今週の重要トピック</h2>
+
+<h3><span class="domain-tag tag-claude">Claude Code</span></h3>
+
+<div class="card card-claude">
+  <h4>Artifacts — セッション成果物のライブHTML共有</h4>
+  <p>6月18日ベータ開始。Claude Codeが生成する成果物をself-contained HTMLページとして共有可能に。セッション進行に伴いリアルタイム更新される。PRウォークスルー、テスト結果サマリー、インシデントダッシュボード等に最適。Team plan以上で利用可能。週次ダイジェスト自体もArtifacts的な出力形態と言える。</p>
+</div>
+
+<div class="card card-claude">
+  <h4>5段階エージェントネスト + Agent Teams</h4>
+  <p>Agentツールが最大5段階のネストに対応し、ルートエージェント→ドメイン分析→ファイル探索→実装→テストの自律パイプラインが構築可能になった。さらにAgent Teams機能（環境変数 CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1）により、アーキテクト・実装者・テスター・ドキュメント作成者の4エージェント並列協調が実現。階層ごとにトークンコストが複利的に増加する点には注意が必要。</p>
+</div>
+
+<div class="card card-claude">
+  <h4>Routines + Remote Control = 夜間自律開発</h4>
+  <p>Routinesの3トリガー（Scheduled/API/GitHub）により、ラップトップを閉じてもAnthropicクラウド上で継続実行される。Remote Controlでスマートフォンから進捗確認・承認が可能。定期バックテスト、日次レポート生成、PR自動レビューなどの「定型的だが重要な」タスクを完全自動化できる。</p>
+</div>
+
+<div class="card card-claude">
+  <h4>/rewind + fallbackModel — 安全性と信頼性の強化</h4>
+  <p>/rewindコマンド（6月24日追加）で会話コンテキストとコード変更の両方を任意チェックポイントへ復元可能。従来の/clearが一方向リセットだったのに対し、双方向移動による安全ネットを提供。fallbackModelパラメータにより主モデル障害時の自動フォールバックが実現し、Fable 5停止のような事態への備えとなる。</p>
+</div>
+
+<div class="card card-claude">
+  <h4>JetBrains統合 + Skill設計知見の成熟</h4>
+  <p>GitHub Copilot for JetBrainsでClaude Agentがパブリックプレビュー開始。VS Code以外の主要IDE統合として初。一方、Skill設計では「21個運用して分かった」実践知見が日本語で共有され、Progressive Disclosure原則（frontmatter→SKILL.md→scripts/）やdescriptionの書き方など具体的なベストプラクティスが確立された。</p>
+</div>
+
+<h3><span class="domain-tag tag-eco">Ecosystem / MCP</span></h3>
+
+<div class="card card-eco">
+  <h4>MCPステートレス化 — 7月28日RC確定</h4>
+  <p>今週最も記事数が多かったトピック。Mcp-Session-Idヘッダー廃止、initializeハンドシェイク削除により、ラウンドロビンLBが標準で機能するようになる。状態管理はbasket_idのような明示的ハンドルをtool経由で発行する方式に移行。Sampling・Roots・Loggingが非推奨化され、Extensions frameworkで拡張する設計に。10週間の検証ウィンドウは残り4週間を切っている。</p>
+</div>
+
+<div class="card card-eco">
+  <h4>Managed Agents — Self-Hosted Sandboxes + MCP Tunnels</h4>
+  <p>セルフホストサンドボックス（パブリックベータ）により、エージェントのツール実行を自社インフラまたはCloudflare/Daytona/Modal/Vercelで処理可能に。MCPトンネル（リサーチプレビュー）は、軽量ゲートウェイが単一アウトバウンド接続（E2E暗号化）で社内システムにインバウンドFW変更なしで接続できる。行政の閉域網環境に適合する可能性がある。</p>
+</div>
+
+<div class="card card-eco">
+  <h4>Workload Identity Federation GA + ant CLI</h4>
+  <p>静的APIキーをショートリブド・スコープ付き認証情報に置き換えるWIFがGA。AWS IAM/GCP/Azure/GitHub Actions/Okta対応。ant CLI（Go製・MIT）によるOAuthフロー・プロファイル切り替え・CI向けWIF統合を提供。規制業界でのAPIキーハードコード排除に対応する重要なセキュリティ機能。</p>
+</div>
+
+<div class="card card-eco">
+  <h4>Agent SDK課金分離 — 6月15日変更の影響整理</h4>
+  <p>Agent SDK・claude -p（非対話型）の利用が対話型利用制限とは別の「Agent SDKクレジット」に移行。Pro $20/月、Max 5x $100/月、Max 20x $200/月。通常のClaude Code対話利用には影響なし。bpr_labの日次収集スクリプトなど、claude -pやAgent SDKを使う自動化ワークフローはコスト再計算が必要。</p>
+</div>
+
+<div class="card card-eco">
+  <h4>マルチプロバイダーゲートウェイの必要性</h4>
+  <p>Fable 5停止を受け、TrueFoundryがマルチプロバイダーAIゲートウェイの実装例（統一API、1,000+モデル対応、350+ RPS、3-4msレイテンシ）を公開。オープンウェイトモデル・オンプレミス展開を「主権的フォールバック」として組み込む設計思想を提唱。Snykは「モデル冗長性確保、AI資産可視化、AI生成コードのPR段階スキャン」の5項目を推奨。</p>
+</div>
+
+<h3><span class="domain-tag tag-trade">Trading / FX</span></h3>
+
+<div class="card card-trade">
+  <h4>TradingAgents v0.2.5 — ハルシネーション問題の構造的解決</h4>
+  <p>80,000 GitHub Stars到達。最重要変更は「Grounded Sentiment Analyst」: LLMがソーシャル投稿を捏造する問題を根本解決し、Yahoo News・StockTwits・Redditの実データを取得してからレポート生成する方式に改修。GPT-5.5対応、リモートOllama接続（ローカルLLM対応）、環境変数による外部設定化も追加。Claude Sonnet 4.6で487%リターン・Sharpe 1.94の報告あり。</p>
+</div>
+
+<div class="card card-trade">
+  <h4>MT5 + Python + ONNX — AI取引の完全統合ワークフロー</h4>
+  <p>MT5プラットフォーム内でPythonデータ収集→ONNXモデル統合→MQL5トレードロジック→バックテスト→VPS運用が完結する実装ガイドが公開。実装例: MACDにONNXフィルターを追加し、取引数209→152件に削減しつつ利益+57%（$884→$1,388）を達成。WebRequestによるLLM外部API統合で、Claude等のセンチメント分析をMT5内から直接呼び出し可能。</p>
+</div>
+
+<div class="card card-trade">
+  <h4>AI×FX自動売買の記憶統合 — 3層SQLiteアーキテクチャ</h4>
+  <p>個人開発者による実体験レポート。Python+Claude API+SQLite+MT4/MT5連携で、短期記憶（直近トレード結果）・長期記憶（戦略別パフォーマンス）・失敗記録（ドローダウン原因・再発防止）の3層記憶構造を自作。LLM応答速度の制約からスキャルピングを断念しスイングトレード主体に転換。コンテキスト長制限はベクトル検索で対処。</p>
+</div>
+
+<div class="card card-trade">
+  <h4>Vibe-Trading + エージェンティックAIナウキャスティング</h4>
+  <p>香港大学開発のVibe-Tradingが個人向けオープンソースFXエージェントとして注目。Forex/Options/Futures対応、Monte Carlo・Bootstrap CI・Walk-Forward検証搭載。arXiv論文ではエージェント型AIナウキャスティングがシャープレシオ0.87（ベースライン0.31）と有意に改善。マルチモーダル入力（チャート画像+テキスト）が単一モダリティを上回る結果。</p>
+</div>
+
+<div class="card card-trade">
+  <h4>アルゴリズム取引市場 $250B → $443B（2030年）</h4>
+  <p>世界取引高の89%をAIが処理。LSTMからTransformerベース時系列モデルへの移行が進行中。ルールベース取引の根本的限界（市場体制変化への非適応）が明確に指摘され、LSTM・勾配ブースティング・深層強化学習の3アーキテクチャが主流に。BlackRock Aladdin（$21.6兆分析）、Citadel Securities（米国株取引高25-35%処理）のケーススタディも公開。</p>
+</div>
+
+<h3><span class="domain-tag tag-news">AI News / 規制</span></h3>
+
+<div class="card card-news">
+  <h4>Fable 5/Mythos 5 全世界緊急停止</h4>
+  <p>6月12日、米商務省がECRA「Is Informed」レターを発令し、Anthropicの最新モデルへのアクセスを全世界で停止。停止理由はコード脆弱性検出・修復能力を悪用したジェイルブレイクの可能性。米国内の外国籍者（Anthropic従業員含む）にも適用。Claude Opus 4.8等の旧モデルには影響なし。Snykは「停止対象がまさに防御者の日常ツール（脆弱性修復）であった」と指摘し、双用途技術規制の構造的問題を提起。</p>
+</div>
+
+<div class="card card-news">
+  <h4>EU AI Act — 8月2日施行まで5週間</h4>
+  <p>高リスクAI（採用・信用・医療・インフラ・法執行）にリスク管理・技術文書・人間監視義務。違反は最大3,500万ユーロまたは世界売上4%。Digital Omnibus提案による2027年12月延期の可能性はあるが、施行準備は進めるべき段階。エンタープライズ72%がエージェントAI本番稼働中ながら60%にガバナンスギャップ。OWASPが調達セキュリティ要件に組み込まれ事実上の業界標準化へ。</p>
+</div>
+
+<div class="card card-news">
+  <h4>日本AI促進法 + デジタル庁「源内」</h4>
+  <p>日本AI促進法（6月施行）がHITL（Human-in-the-Loop）義務化条件と学習データトレーサビリティ要件を明記。デジタル庁は行政向け生成AIプラットフォーム「源内」への国産LLM導入を公募中。7モデル（tsuzumi-2/PLaMo 2.0/ELYZA/rakuten AI/Takane/LLM-jp/CyberAgent Open LLM）が候補。GPT/Claude依存脱却を目指すデータ主権戦略が明確化。</p>
+</div>
+
+<div class="card card-news">
+  <h4>米国: EO 14409 + コロラド州AI法廃止</h4>
+  <p>トランプ大統領令EO 14409はフロンティアAI開発者に連邦政府への新モデル30日前任意共有を求める枠組み。AIサイバーセキュリティクリアリングハウス設立。EU AI Act（義務的規制）との対比で、米国は任意協力+国家安全保障軸。一方、コロラド州は2024年制定の包括的AI法を施行直前に廃止し、透明性通知・記録保持のみの軽量ADMT法に置換。私的訴訟権なし。規制の振り子が軽量化方向に揺れた事例。</p>
+</div>
+
+<!-- ===== 4. ドメイン横断分析 ===== -->
+<h2>4. ドメイン横断分析</h2>
+
+<div class="card card-cross">
+  <h4><span class="domain-tag tag-cross">横断</span> 「モデル停止リスク」がFX自動売買の設計要件に昇格</h4>
+  <p>Fable 5停止は「AIモデルの政治リスク」という新しいカテゴリの障害を顕在化させた。FX自動売買でLLMを判断エンジンに組み込んでいる場合、モデルが数時間で利用不能になるリスクへの対策が設計要件に加わる。Claude Codeの新fallbackModelパラメータ、TrueFoundryのマルチプロバイダーゲートウェイ、TradingAgentsのリモートOllama対応は、いずれもこの問題への解を提供している。</p>
+</div>
+
+<div class="card card-cross">
+  <h4><span class="domain-tag tag-cross">横断</span> MCPステートレス化 × Claude Code Routines × FX自動売買</h4>
+  <p>MCPのステートレス化（7月28日RC）は、Claude Code Routinesによる定期実行ワークフローと直接連動する。Routinesで夜間にFXバックテストを自動実行し、MCPサーバー経由でMT5のデータや取引履歴にアクセスするアーキテクチャが、ステートレス化によりスケーラブルかつ信頼性の高いものになる。ただし7月28日のBreaking Changesに対応しないと、この統合パイプラインが動かなくなるリスクがある。</p>
+</div>
+
+<div class="card card-cross">
+  <h4><span class="domain-tag tag-cross">横断</span> AI規制とエージェント運用のガバナンスギャップ</h4>
+  <p>EU AI Act 8月施行、日本AI促進法HITL義務化、米EO 14409の三方向から「AIエージェントの監視・制御・監査」が求められている。しかし現実にはエンタープライズの60%にガバナンスギャップがある。FX自動売買のLLMエージェントについても、取引判断の説明可能性（なぜこのポジションを取ったか）、HITL介入ポイントの設計、監査ログの保全が、規制対応として必要になりつつある。Claude CodeのArtifactsやAgent Teamsは、エージェントの意思決定過程を可視化するツールとして規制対応にも活用できる。</p>
+</div>
+
+<div class="card card-cross">
+  <h4><span class="domain-tag tag-cross">横断</span> メタトレンド: 「開発の非同期化」と「判断の自律化」</h4>
+  <p>今週のデータから見える最大のメタトレンドは、人間の関与タイミングが「実行中」から「事前設計と事後確認」に移行していることだ。Claude Codeは夜間にRoutinesで自律開発し翌朝スマホで確認。FXエージェントは3層記憶で過去の失敗を自律的に回避。MCPステートレス化でサーバーは人間のセッション管理なしに水平スケール。人間の役割は「何を・なぜ」を定義し、結果を監査することに集約されつつある。この流れは規制（HITL義務化）とも適合しうるが、「事後確認で間に合わないケース」（FX急変時のLLM判断遅延、エージェント連鎖障害）への対策が次の課題になる。</p>
+</div>
+
+<!-- ===== 5. アクション提案 ===== -->
+<h2>5. アクション提案</h2>
+
+<ul class="action-list">
+  <li class="action-item">
+    <div class="action-title"><span class="action-priority priority-high">最優先</span> MCPサーバーの7月28日RC対応を開始する</div>
+    <div class="action-reason">検証ウィンドウ残り4週間。Session-Id依存コードの削除、_meta対応、Sampling代替実装の3点が必須。自作MCPサーバーだけでなく、利用中のサードパーティサーバーの対応状況も確認が必要。Graviteeの移行チェックリスト（記事639）とTokenMixの9変更一覧（記事626）を基に作業計画を立てること。</div>
+  </li>
+  <li class="action-item">
+    <div class="action-title"><span class="action-priority priority-high">最優先</span> FX自動売買のモデルフォールバック体制を構築する</div>
+    <div class="action-reason">Fable 5停止（記事658）により、最新モデルが無通告で利用不能になるリスクが現実化した。fallbackModelパラメータの設定（Opus 4.8→Sonnet 4.6→ローカルLLM）を即実装。TradingAgentsのリモートOllama対応（記事597）を参考に、ローカルLLMによる「主権的フォールバック」も検討する。</div>
+  </li>
+  <li class="action-item">
+    <div class="action-title"><span class="action-priority priority-mid">今週中</span> Agent SDKクレジット使用量を確認し予算計画を更新する</div>
+    <div class="action-reason">6月15日から課金分離が適用済み（記事617, 636）。bpr_labの日次収集スクリプト・FX自動売買のバッチ処理でclaude -pやAgent SDKを使用している場合、月間クレジット消費量を確認し、Pro $20/月の枠内に収まるか検証する。超過時はAPI従量課金にフォールバックされるが、コスト管理のため事前に把握が必要。</div>
+  </li>
+  <li class="action-item">
+    <div class="action-title"><span class="action-priority priority-mid">今週中</span> MT5+ONNX+Python統合の検証環境を構築する</div>
+    <div class="action-reason">MT5+ONNXによるMLフィルター追加で利益+57%の実証結果（記事663）、3層記憶SQLiteアーキテクチャ（記事631）、TradingAgents v0.2.5のGround Truth統合（記事597）と、FX×LLMの実装基盤が一気に成熟した。Claude CodeのRoutinesで夜間にバックテストを自動実行し、翌朝スマホで結果確認するワークフローが現実的に構築可能。</div>
+  </li>
+  <li class="action-item">
+    <div class="action-title"><span class="action-priority priority-low">月内</span> Claude Code Skills体系を整備する（/rewind・Cavemanスキル導入）</div>
+    <div class="action-reason">21個のSkill運用知見（記事650）とSKILL.md書き方ガイド（記事644）で設計パターンが確立された。Cavemanスキルによるトークン65%削減（記事618）はコスト最適化に直結。/rewind（記事642）はFX取引ロジックの試行錯誤時の安全ネットとして即活用すべき。Progressive Disclosure原則に基づくfrontmatter→SKILL.md→scripts/の3層設計で既存スキルをリファクタリングする。</div>
+  </li>
+</ul>
+
+<!-- ===== 6. 来週の注目ポイント ===== -->
+<h2>6. 来週の注目ポイント</h2>
+
+<div class="watch-grid">
+  <div class="watch-item">
+    <h4>Fable 5/Mythos 5の復旧動向</h4>
+    <p>Anthropicが規制当局とどう折り合うか。復旧条件の公表、あるいは長期停止の確定が来週中にあり得る。日本ユーザーへの影響範囲も注視。</p>
+  </div>
+  <div class="watch-item">
+    <h4>MCP RC仕様の最終詳細</h4>
+    <p>7月28日ファイナル公開まで1ヶ月。Extensions frameworkの具体的なID体系やMCP Apps仕様の詳細が出る可能性。自作サーバーの移行作業に直結。</p>
+  </div>
+  <div class="watch-item">
+    <h4>EU AI Act施行準備の最終局面</h4>
+    <p>8月2日まで5週間。Digital Omnibus延期提案の採否が来週以降に決まる可能性。延期されない場合、企業の駆け込み対応が加速する。</p>
+  </div>
+  <div class="watch-item">
+    <h4>Claude Code Routines GAの兆候</h4>
+    <p>Routinesは現在パブリックベータ。利用報告と安定性レポートが増加中。GA移行の発表があれば、夜間自律開発ワークフローの本格導入タイミング。</p>
+  </div>
+  <div class="watch-item">
+    <h4>デジタル庁「源内」の選定進捗</h4>
+    <p>国産LLM 7モデルの公募が進行中。選定結果の一次情報が出れば、行政AIの方向性が明確化。公務員として最も直接的に影響する動向。</p>
+  </div>
+  <div class="watch-item">
+    <h4>TradingAgents v0.2.5の実運用レポート</h4>
+    <p>Grounded Sentiment Analystのリアルマーケットでの検証結果が出始める時期。80kスターの注目度からコミュニティのフィードバックが集まるはず。</p>
+  </div>
+</div>
+
+<h4>ウォッチすべきキーワード</h4>
+<p style="font-size: 14px; color: var(--text-secondary);">
+  MCP RC final / Fable 5 reinstatement / EU AI Act enforcement / Claude Code Routines GA / fallbackModel / ONNX+MT5 / Grounded Sentiment / Agent SDK credits / 源内 / ADMT法
+</p>
+
+<footer>
+  <p>AI Weekly Digest — 自動生成 by bpr_lab weekly routine</p>
+  <p>対象期間: 2026-06-22 ~ 2026-06-28 / 分析記事数: 71</p>
+</footer>
+
+</div>
+</body>
+</html>
