@@ -1,7 +1,7 @@
 # PROPOSALS.md
 
 収集記事を横断分析して得られた反映提案。
-最終更新: 2026-06-27
+最終更新: 2026-06-28
 
 ---
 
@@ -1461,3 +1461,29 @@ FX自動売買の構成（P-014の4層アーキテクチャ）において、Gem
    - `documenter`（README・コメント更新）
 2. sandbox/FX自動取引/ の新機能開発時にAgent Teams（4エージェント）で並列開発する運用フローをCLAUDE.mdに記載
 3. Dynamic Workflowsとの違い（Claude Code内チームvs外部Agent SDK）を理解した上で、用途別の使い分けガイドをCLAUDE.mdに追記
+
+---
+
+### P-114: FX自動取引への反映 — Claude 4.5 Sonnetの明示的BUY/SELL拒否問題と代替モデル選定
+
+**根拠記事**: 677 (MQL5 MT5 LLM Selection GPT-4o DeepSeek-V3 Claude Comparison)
+**取得日**: 2026-06-28
+**詳細**: MQL5公式ブログが2026年版のMT5向けLLM比較を実施。重大な発見: Claude 4.5 Sonnetは明示的な「BUY」「SELL」という取引指示プロンプトに対して拒否（refusal）が発生し、MT5との直接統合では設計上の課題となる。GPT-4oはネイティブJSON Modeでマルチタイムフレームレジーム分析に最適。DeepSeek-V3はOpenAI比5〜17倍安価で数学的パターン認識に優秀。sandbox/FX自動取引/ のLLMバックエンドにClaudeを使用する場合は、BUY/SELLの直接指示ではなく間接的な「市場分析→人間の解釈→実行」という分離アーキテクチャが必要。
+
+**提案アクション**:
+1. sandbox/FX自動取引/ のLLMプロンプト設計を見直し: 「BUY/SELLを推奨せよ」ではなく「市場状況を分析し、主要なリスク・機会を説明せよ」という形式に変更し、最終売買判断はルールベースエンジンで実施
+2. 代替モデルとしてDeepSeek-V3（コスト効率）またはGPT-4o（JSON Mode安定）を評価対象に追加
+3. P-111（MT5 ONNX統合）と組み合わせ: Claude → 定性的な市場分析・センチメント解説、DeepSeek/GPT → 構造化されたBUY/SELL判断という役割分担ハイブリッドアーキテクチャを設計
+
+---
+
+### P-115: Claude Code MCPセットアップへの反映 — MCPトンネルでプライベートネットワーク内サーバーに接続
+
+**根拠記事**: 671 (Releasebot Anthropic June 2026 Release Notes - MCP Tunnels)
+**取得日**: 2026-06-28
+**詳細**: AnthropicがMCPトンネル（リサーチプレビュー）を2026年6月リリースに含めた。これによりVPNなしにファイアウォール内部のMCPサーバーにClaudeからアクセスできるようになる。bpr_labでVPS上のcronジョブ（collect_x.py）と連携したMCPサーバーを設置し、X投稿収集データをClaudeから直接取得するワークフローの実現可能性が高まった。
+
+**提案アクション**:
+1. VPS上にシンプルなMCP SSEサーバーを設置し、`library/inbox/x/` の最新データをClaudeに提供するエンドポイントを構築
+2. MCPトンネルを使ってリサーチプレビューで接続テスト（セキュリティモデルの確認が必要）
+3. X投稿収集フローを強化: 現在のGitHub push経由ではなく、VPS MCPサーバー経由でリアルタイムデータ取得が可能になる
