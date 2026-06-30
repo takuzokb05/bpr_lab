@@ -1519,6 +1519,45 @@ FX自動売買の構成（P-014の4層アーキテクチャ）において、Gem
 
 ---
 
+### P-119: Claude Sonnet 5（6/30リリース）をエージェント設定に反映する
+
+**根拠記事**: 720 (Claude Sonnet 5 Official Launch), 721 (TechCrunch), 723 (VentureBeat)
+**取得日**: 2026-06-30
+**詳細**: 本日2026年6月30日、Anthropicがclaude-sonnet-5をリリース。Opus 4.8に迫るエージェント性能（推論・ツール使用・コーディング・複数ステップ自律実行）を$2/$10/Mトークン（導入期、8月31日まで）で提供。Opus 4.8（$5/$25）の6割以下。Claude CodeではFree/Proプランのデフォルトモデルに。CLAUDE.mdやagent設定で`claude-sonnet-4-6`を指定している箇所は`claude-sonnet-5`への移行を検討する価値がある。特に多数のサブエージェントを並列実行するFX自動取引エージェントでは、コスト削減効果が大きい。
+
+**提案アクション**:
+1. `sandbox/FX自動取引/.claude/CLAUDE.md` 等でモデル指定があれば`claude-sonnet-5`への移行を検討（エージェント的作業はSonnet 5でOpus水準を期待可能）
+2. skills-registry等のskillでモデルをハードコードしている場合は最新デフォルトを使う形に見直し
+3. claude-sonnet-5の導入価格期間（〜8月31日）を活用した集中的なPoCを実施
+4. `library/catalog.md`の「今週のモデル状況」欄があれば更新（現在のデフォルト: Free/Proプランがclaude-sonnet-5）
+
+---
+
+### P-120: Claude Code Checkpoints機能をFX自動取引の安全設計に組み込む
+
+**根拠記事**: 722 (GitHub Changelog: Claude Sonnet 5 + Checkpoints)
+**取得日**: 2026-06-30
+**詳細**: 本日リリースのClaude Code新機能「Checkpoints」は、最もリクエストの多かった機能として追加されたもので、作業途中の進捗を自動保存し、任意の時点に即時ロールバックできる。FX自動取引エージェントでClaude Codeを使って取引ロジックを開発・修正する際、破壊的な変更前にCheckpointを活用することで、誤ったコード変更による損失を防止できる。
+
+**提案アクション**:
+1. `sandbox/FX自動取引/CLAUDE.md`（または`.claude/CLAUDE.md`）に「危険な変更前に必ずCheckpointを作成する（/checkpoint）」を手順として追記
+2. ネイティブVS Code拡張（本日リリース）をFX取引開発環境にインストールし、IDE内でのClaude Code連携を強化
+
+---
+
+### P-121: MCP × FX自動取引のセキュリティ設計を厳格化する
+
+**根拠記事**: 713 (aurant-technologies: Claude Code × MCP Security 2026)
+**取得日**: 2026-06-30
+**詳細**: 2026年4月にOX SecurityがMCPのSTDIO実行モデルに起因するRCE（任意コマンド実行）脆弱性を公表。Claude CodeでMCPサーバーを使ってMT5・証券会社API・データフィードに接続するFX自動取引システムは、この脆弱性の影響を受けるリスクが高い。リスク資産を扱うシステムでは厳格なセキュリティ設計が必須。
+
+**提案アクション**:
+1. `sandbox/FX自動取引/architecture.md`に「MCPセキュリティ原則」セクションを追加：信頼できるソースのMCPサーバーのみ使用・最小権限（--allow-list）・ネットワーク隔離・監査ログ取得
+2. FX自動取引で使用するMCPサーバー（Trader MCP Server等）のソースコードを必ず検証してから使用
+3. MT5接続MCPサーバーのアクセス権限を取引実行のみに限定し、システム管理コマンドへのアクセスを禁止
+
+---
+
 ### P-118: FX自動取引設計方針の強化 — LLM単体FX実験の否定的データを根拠に
 
 **根拠記事**: 702 (LLM-Driven MT5 Trading実験: GPT-4o/Claude/DeepSeek全モデル統計的優位なし)
