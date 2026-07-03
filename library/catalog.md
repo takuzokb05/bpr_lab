@@ -1191,32 +1191,149 @@ drop.md: URLなし（処理対象なし）
 
 ---
 
+## 2026-06-29 収集分（10件収集 → 10件SIGNAL）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 695 | [2026-06-29_695](articles/2026-06-29_695_Zaikei-Slack-Claude-Tag-August3-Migration.md) | Slack「Claude Tag」登場・8/3移行必須——常駐型AIがSlack標準機能へ（本日付け一次情報） | claude-ecosystem | 未読 | #web-signal |
+| 696 | [2026-06-29_696](articles/2026-06-29_696_Explainx-ClaudeCode-2191-Rewind-MCP-BackgroundAgents.md) | Claude Code 2.1.191: /rewind追加・MCP認証自動再接続・Background Agent改善・CPU37%削減 | claude-code | 未読 | #web-signal |
+| 697 | [2026-06-29_697](articles/2026-06-29_697_BrainPad-AIAgentFrameworks-15Types-Comparison-2026.md) | AIエージェントフレームワーク15種比較2026: LangGraph首位・AutoGenはMicrosoft Agent Frameworkに統合 | ai-news | 未読 | #web-signal |
+| 698 | [2026-06-29_698](articles/2026-06-29_698_Classmethod-ClaudeCode-2026-Complete-Guide-JA.md) | [2026年版] Claude Code を知る・使う・活用する（クラスメソッドDevelopersIO） | claude-code | 未読 | #web-signal |
+| 699 | [2026-06-29_699](articles/2026-06-29_699_Jinrai-Claude-MCP-Servers-15-Best-2026.md) | Claude活用おすすめMCPサーバー15選2026: GitHub・Slack・Exa・BigQuery設定＋連携パターン | claude-ecosystem | 未読 | #web-signal |
+| 700 | [2026-06-29_700](articles/2026-06-29_700_Fazm-LLM-Updates-June2026-Fable5-BIS-Kimi-Gemini.md) | LLM updates June 2026: Fable5 BIS停止・Kimi K2.7 Code・Gemini 3.5 Flash総まとめ | ai-news | 未読 | #web-signal |
+| 701 | [2026-06-29_701](articles/2026-06-29_701_MCPMarket-Trader-Server-MT5-LLM-Trading-Integration.md) | Trader MCP Server: Claude/GPTでMT5を直接操作——LLM×FX取引統合の実装ツール | ai-trading | 未読 | #web-signal |
+| 702 | [2026-06-29_702](articles/2026-06-29_702_Medium-Thibauld-LLM-MT5-Trading-Experiment-Results.md) | LLM-Driven MT5 Trading実験: GPT-4o/Claude/DeepSeek比較——単体FX取引は統計的優位なし | ai-trading | 未読 | #web-signal |
+| 703 | [2026-06-29_703](articles/2026-06-29_703_Dentro-AI-News-June2026-BIS-GPT56-Fugu-SpaceX-Cursor.md) | AI News June 2026: Fable5 BIS規制・GPT-5.6 Sol・Sakana Fugu Ultra・SpaceX Cursor $60B買収 | ai-news | 未読 | #web-signal |
+| 704 | [2026-06-29_704](articles/2026-06-29_704_LLMStats-Daily-Model-Release-Tracker-June2026.md) | LLM Stats Daily Release Tracker June 2026: Fable5仕様・Kimi K2.7・Gemini 3.5 Flash等追跡 | ai-news | 未読 | #web-signal |
+
+### NOISEとして除外（2026-06-29）
+
+| 候補ファイル | 理由 |
+|---|---|
+| code.claude.com/docs/en/whats-new | 公式docs、既収録記事で内容カバー済み |
+| claudefa.st/blog/guide/changelog | 既存の詳細changelog記事（003等）と重複 |
+| releasebot.io/updates/anthropic/claude-code | 情報集約ページ、個別記事でカバー済み |
+| maketocreate.com/claude-md-best-practices | uravation.com等の既存CLAUDE.md記事と重複 |
+| ayautomate.com/blog/best-claude-code-workflows | 既収録済み |
+| f22labs.com Claude Code 10 tips | 既収録済み |
+| dev.to/nishilbhave CLAUDE.md guide | 既存CLAUDE.md記事多数でカバー済み |
+| gptrader.app/best-ai-trading-agents | 既収録済み |
+| coinedition.com LLM trading 2026 | 既収録済み |
+| brokeranalysis.com agentic trading | 既収録済み |
+
+---
+
+## 2026-06-30 収集分（17件検索 → 7件SIGNAL / 10件NOISE（既収録重複除外））
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 713 | [2026-06-30_713](articles/2026-06-30_713_aurant-ClaudeCode-MCP-Security-2026-RCE-SafeDesign.md) | Claude Code × MCP セキュリティ 2026: OX SecurityのRCE脆弱性警告と安全な導入設計 | claude-ecosystem | 未読 | #web-signal |
+| 718 | [2026-06-30_718](articles/2026-06-30_718_nist-AIAgentStandardsInitiative-Feb2026.md) | NIST「AIエージェント標準化イニシアティブ」発表: 相互運用性・安全性・エージェントID標準化 | ai-news | 未読 | #web-signal |
+| 719 | [2026-06-30_719](articles/2026-06-30_719_augmentcode-EU-AI-Act-2026-DevTeams-Impact.md) | EU AI Act 2026年8月2日全面適用: 開発チームが変えるべきリスク分類・監査証跡・透明性対応 | ai-news | 未読 | #web-signal |
+| 720 | [2026-06-30_720](articles/2026-06-30_720_anthropic-ClaudeSonnet5-Official-Launch-June30-2026.md) | Claude Sonnet 5 リリース（6/30）: Opus 4.8に迫るエージェント性能を$2/$10/Mトークンで | claude-ecosystem | 未読 | #web-signal #urgent |
+| 721 | [2026-06-30_721](articles/2026-06-30_721_techcrunch-ClaudeSonnet5-CheaperAgents-IPO-June30.md) | TechCrunch: Anthropic、IPO加速の中Sonnet 5でエージェント実行コストを大幅削減 | claude-ecosystem | 未読 | #web-signal |
+| 722 | [2026-06-30_722](articles/2026-06-30_722_github-ClaudeSonnet5-Copilot-GA-Checkpoints-VSCode.md) | Claude Sonnet 5、GitHub Copilot GA + Claude CodeにCheckpoints・ネイティブVS Code拡張 | claude-code | 未読 | #web-signal #urgent |
+| 723 | [2026-06-30_723](articles/2026-06-30_723_venturebeat-ClaudeSonnet5-Discount-Pricing-Strategy-IPO.md) | VentureBeat: Sonnet 5をOpus比60%割引で投入——エージェント時代のコスト最適化戦略 | claude-ecosystem | 未読 | #web-signal |
+
+### NOISEとして除外（2026-06-30）
+
+| 候補URL | 理由 |
+|---|---|
+| okhlopkov.com/claude-code-setup-mcp-hooks-skills-2026/ | 2026-05-27_002 / 2026-06-03_101と重複 |
+| alexop.dev/posts/understanding-claude-code-full-stack/ | 2026-05-29_033と重複 |
+| medium.com/becoming-for-better/taming-claude-code | 2026-05-27_005と重複 |
+| zenn.dev/farstep/articles/how-to-write-a-great-claude-md | 2026-05-30_060と重複 |
+| www.ai-souken.com/article/claude-code-updates-2026 | 2026-06-05_141と重複 |
+| blog.modelcontextprotocol.io/posts/2026-mcp-roadmap/ | 2026-05-27_009 / 2026-06-03_105と重複 |
+| essamamdani.com/blog/complete-guide-model-context-protocol-mcp-2026 | 2026-06-08_199と重複 |
+| anthropic.com/engineering/building-agents-with-the-claude-agent-sdk | 2026-05-27_010と重複 |
+| coinedition.com/llm-trading-in-2026-can-ai-agents-actually-outperform-humans/ | 2026-06-18_328と重複 |
+| flowhunt.io/blog/llm-trading-bots-comparison/ | 2026-05-29_042と重複 |
+| aitoolly.com TradingAgents launch | 2026-06-05_136と重複 |
+| gptrader.app/ai-trading/best-ai-trading-agents-2026-definitive-ranking | 2026-06-08_193と重複 |
+| gizmodo.jp/2026/05/2026_local_llm_matome.html | 2026-05-28_028と重複 |
+| aiflashreport.com/model-releases.html | 2026-06-05_140と重複 |
+
+---
+
+## 2026-07-01 収集分（10件検索 → 9件SIGNAL / 1件NOISE）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 724 | [2026-07-01_724](articles/2026-07-01_724_ReleaseBot-ClaudeCode-v2197-Sonnet5-Default-July2026.md) | Claude Code v2.1.197: Sonnet 5がデフォルトに——6-7月の全リリース追跡（30件超） | claude-code | 未読 | #web-signal |
+| 725 | [2026-07-01_725](articles/2026-07-01_725_HelpNetSecurity-ClaudeSonnet5-Cybersecurity-Safeguards.md) | Claude Sonnet 5のサイバーセキュリティ保護——リアルタイム脅威検知、PJ攻撃成功率0.93%に激減 | claude-ecosystem | 未読 | #web-signal |
+| 726 | [2026-07-01_726](articles/2026-07-01_726_BuildFastWithAI-ClaudeSonnet5-Benchmarks-Review.md) | Claude Sonnet 5 完全ベンチマーク——Terminal-BenchでOpus 4.8超え、FrontierCode倍増 | claude-ecosystem | 未読 | #web-signal |
+| 727 | [2026-07-01_727](articles/2026-07-01_727_AWS-ClaudeSonnet5-Bedrock-Launch-Official.md) | Claude Sonnet 5、Amazon Bedrockで提供開始——エンタープライズエージェント開発の新標準 | claude-ecosystem | 未読 | #web-signal |
+| 728 | [2026-07-01_728](articles/2026-07-01_728_WMedia-ClaudeCode-Sonnet5-NearOpus-Practical.md) | Claude CodeでSonnet 5を使う実践ガイド——/model sonnet・opusplanモードで近Opus品質を | claude-code | 未読 | #web-signal |
+| 729 | [2026-07-01_729](articles/2026-07-01_729_Anthropic-ClaudeScience-DrugDiscovery-IPO-Launch.md) | Anthropic、Claude Scienceを発表——創薬・ゲノミクス向けAI研究ワークベンチ、60+スキル | claude-ecosystem | 未読 | #web-signal #urgent |
+| 730 | [2026-07-01_730](articles/2026-07-01_730_California-Newsom-Anthropic-Claude-StateGov-50pct.md) | カリフォルニア州とAnthropicが提携——全州機関・市区町村30万人にClaude 50%割引 | ai-news | 未読 | #web-signal |
+| 731 | [2026-07-01_731](articles/2026-07-01_731_BuildFastWithAI-AINews-July1-Fable5-FiveEyes-OpenAI.md) | AIニュース 2026年7月1日——Fable 5全球展開・Five Eyes警告・GPT-5.6・Anthropic IPO | ai-news | 未読 | #web-signal |
+| 732 | [2026-07-01_732](articles/2026-07-01_732_arxiv-FundaPod-MultiPersona-Investment-Research-LLM.md) | FundaPod: LLMマルチペルソナによるファンダメンタル投資リサーチ——知識グラフ「第二の脳」 | ai-trading | 未読 | #web-signal |
+
+### NOISEとして除外（2026-07-01）
+
+| 候補URL | 理由 |
+|---|---|
+| theaicareerlab.com/blog/claude-sonnet-5-for-professionals-2026 | Sonnet 5記事725/726/728と内容重複（技術的付加価値なし） |
+| releasebot.io/updates/anthropic （汎用パス） | 725/726との重複（claude-code特化パスは724として収録） |
+| benchlm.ai/models/claude-sonnet-5 | ベンチマークデータは726に集約済み |
+| androidauthority.com/claude-sonnet-5-launch-3683170/ | 一般向け消費者記事、技術的付加価値なし |
+| llm-stats.com / aiflashreport.com | 既存記事（2026-06-05_140等）と重複 |
+| wsgr.com・collibra.com AI規制記事 | 既存AI規制記事（718/719）と主要内容重複 |
+
+---
+
+## 2026-07-02 収集分（18件検索 → 18件SIGNAL / 0件NOISE）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 733 | [2026-07-02_733](articles/2026-07-02_733_Getbeam-50-Claude-Code-Tips-Productivity-2026.md) | 50 Claude Code Tips——コンテキスト管理・検証・並列worktree・Hooks活用で10x生産性 | claude-code | 未読 | #web-signal |
+| 734 | [2026-07-02_734](articles/2026-07-02_734_Uravation-ClaudeCode-June2026-6Features-BusinessGuide.md) | 【2026年6月】Claude Code新機能6選——Artifacts・MCP認証・/rewind・5段ネスト等業務活用ガイド | claude-code | 未読 | #web-signal |
+| 735 | [2026-07-02_735](articles/2026-07-02_735_Gradually-ClaudeCode-Changelog-June2026.md) | Claude Code Changelog June 2026: 全リリース追跡——Week 26のCPU37%削減・/rewind等 | claude-code | 未読 | #web-signal |
+| 736 | [2026-07-02_736](articles/2026-07-02_736_Nimbalyst-ClaudeCode-Skills-Practical-2026-Guide.md) | Claude Code Skills 実践ガイド2026: Auto-Discovery・SKILL.md構造・disable-model-invocation | claude-code | 未読 | #web-signal |
+| 737 | [2026-07-02_737](articles/2026-07-02_737_Penligent-ClaudeCode-Architecture-Tools-Memory-Hooks-MCP.md) | Inside Claude Code: Tools・Memory・Hooks・MCP 4層アーキテクチャ詳解 | claude-code | 未読 | #web-signal |
+| 738 | [2026-07-02_738](articles/2026-07-02_738_Iwoszapar-ClaudeCode-BestPractices-8Rules.md) | Claude Code Best Practices: 実践者が学んだ8ルール——CLAUDE.md・Plan Mode・Hooks・MCP | claude-code | 未読 | #web-signal |
+| 739 | [2026-07-02_739](articles/2026-07-02_739_CapyTechLog-MCP-Servers-Guide-2026-15servers.md) | MCPサーバー完全ガイド2026: 厳選15選＋アーキテクチャ解説（9700万DL・5000本超） | claude-ecosystem | 未読 | #web-signal |
+| 740 | [2026-07-02_740](articles/2026-07-02_740_Nuco-MCP-Server-Recommendation-15-2026.md) | 業務効率化MCPサーバー15選2026——Brave Search・GitHub MCP・Figma等・国産SaaS対応本格化 | claude-ecosystem | 未読 | #web-signal |
+| 741 | [2026-07-02_741](articles/2026-07-02_741_JapanAI-Claude-Skills-Mechanism-HowTo-Cases.md) | Claude Skillsとは？仕組み・作り方・活用事例——SKILL.md・遅延ロード・bundledスキル使い分け | claude-ecosystem | 未読 | #web-signal |
+| 742 | [2026-07-02_742](articles/2026-07-02_742_AIHerald-AlgoEvolve-LLM-Evolutionary-Trading-2026.md) | AlgoEvolve: LLM進化的トレーディング——セマンティック変異演算子・従来比23%改善・規制懸念 | ai-trading | 未読 | #web-signal |
+| 743 | [2026-07-02_743](articles/2026-07-02_743_Medium-Kojott-AITradingBot-9Days-Experiment.md) | AI Trading Bot 9日間実験——LLMはシグナル生成補助、エグゼキューションはハイブリッド構成が最適 | ai-trading | 未読 | #web-signal |
+| 744 | [2026-07-02_744](articles/2026-07-02_744_TrilogyAI-AutoImprove-Bitcoin-Algo-Trading-LLM.md) | LLMでBitcoin Algo Tradingを自動改善——進化ループ・バックテストスコアリング・Pythonコード例 | ai-trading | 未読 | #web-signal |
+| 745 | [2026-07-02_745](articles/2026-07-02_745_ArXiv-MadEvolve-LLM-Evolutionary-Trading-Systems.md) | MadEvolve (arXiv 2605.23007): LLMによる取引システム進化的最適化——S&P500・Nasdaq実験 | ai-trading | 未読 | #web-signal |
+| 746 | [2026-07-02_746](articles/2026-07-02_746_MeanCEO-NewAIModelReleases-July2026.md) | New AI Model Releases July 2026: Sonnet 5・Gemini 3.5 Flash・Happy Horse・Muse Spark | ai-news | 未読 | #web-signal |
+| 747 | [2026-07-02_747](articles/2026-07-02_747_JetBrains-Top-Agentic-Frameworks-2026-June.md) | Top Agentic Frameworks 2026 JetBrains: LangGraph・CrewAI・Claude SDK等8フレームワーク評価 | ai-news | 未読 | #web-signal |
+| 748 | [2026-07-02_748](articles/2026-07-02_748_LegalNodes-EUAIAct-2026-Compliance-BusinessRisks.md) | EU AI Act 2026 Compliance: 8月2日施行・高リスクAIは2027/2028年に延期・企業対応ガイド | ai-news | 未読 | #web-signal |
+| 749 | [2026-07-02_749](articles/2026-07-02_749_KennedysLaw-EUAIAct-Implementation-Timeline-Deadline.md) | EU AI Act Timeline: Phase 3施行8月2日・高リスクAI2段階延期の法的解説（Kennedys） | ai-news | 未読 | #web-signal |
+| 750 | [2026-07-02_750](articles/2026-07-02_750_AlphaCorp-8-Best-AI-Agent-Frameworks-2026-DevGuide.md) | 8 Best AI Agent Frameworks 2026: Claude SDK・LangGraph・CrewAI等選定マトリクス付き | ai-news | 未読 | #web-signal |
+
+---
+
 ## 2026-07-03 収集分（13件収集 → 13件SIGNAL）
 
 | # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
 |---|---|---|---|---|---|
-| 695 | [2026-07-03_695](articles/2026-07-03_695_Anthropic-Claude-Sonnet-5-Official-Agentic-Model.md) | Claude Sonnet 5 公式リリース：Opus 4.8近似性能・1M Context・$2/$10入門価格（2026-06-30） | claude-ecosystem | 未読 | #web-signal |
-| 696 | [2026-07-03_696](articles/2026-07-03_696_TechCrunch-Claude-Sonnet-5-Cheaper-Agent-Runtime.md) | TechCrunch：Sonnet 5は「より安価なエージェント実行手段」——Robinhoodが初期統合 | claude-ecosystem | 未読 | #web-signal |
-| 697 | [2026-07-03_697](articles/2026-07-03_697_SimonWillison-Claude-Sonnet-5-Tokenizer-Cost-Analysis.md) | Simon Willison：Sonnet 5新トークナイザーで同テキスト比+30%コスト増リスクを警告 | claude-ecosystem | 未読 | #web-signal |
-| 698 | [2026-07-03_698](articles/2026-07-03_698_EU-AI-Act-Article50-Transparency-August2-2026.md) | EU AI Act Article 50 透明性義務：2026年8月2日施行・生成AIマーキング猶予12/2まで | ai-news | 未読 | #web-signal |
-| 699 | [2026-07-03_699](articles/2026-07-03_699_Robinhood-Agentic-Trading-MCP-Brokerage-Launch.md) | RobinhoodがMCP経由でAIエージェントとブローカーアカウントを接続するAgentic Tradingを発表 | ai-trading | 未読 | #web-signal |
-| 700 | [2026-07-03_700](articles/2026-07-03_700_CNBC-Robinhood-CEO-AI-Agents-Match-Human-Traders.md) | CNBC：RobinhoodCEO「AIエージェントは近く人間トレーダーに匹敵する」（2026-07-02） | ai-trading | 未読 | #web-signal |
-| 701 | [2026-07-03_701](articles/2026-07-03_701_MQL5-AI-Expert-Advisors-Complete-Guide-July2026.md) | MQL5：AIエキスパートアドバイザー完全ガイド（2026-07-01）——強化学習EAがリテール市場に浸透 | ai-trading | 未読 | #web-signal |
-| 702 | [2026-07-03_702](articles/2026-07-03_702_MQL5-AI-Replacing-Traditional-Algos-Automated-Trading.md) | MQL5：AIが伝統的アルゴリズムを置き換える自動取引の未来——LLM+MARL統合アーキテクチャ | ai-trading | 未読 | #web-signal |
-| 703 | [2026-07-03_703](articles/2026-07-03_703_METI-AI-Guideline-v1-2-Agent-HITL-Traceability.md) | 経産省・総務省：AI事業者ガイドライン第1.2版——AIエージェントHITL義務化・データトレーサビリティ強化 | ai-news | 未読 | #web-signal |
-| 704 | [2026-07-03_704](articles/2026-07-03_704_Eguweb-AI-News-Daily-July3-2026.md) | Eguweb AI日次ニュース（7/3）：企業AI・エージェント基盤・EU透明性規制が本番運用段階へ | ai-news | 未読 | #web-signal |
-| 705 | [2026-07-03_705](articles/2026-07-03_705_Eguweb-AI-News-Daily-July1-2026.md) | Eguweb AI日次ニュース（7/1）：Claude Sonnet 5・OpenAI Jalapeño・Blackstone日本$300億投資 | ai-news | 未読 | #web-signal |
-| 706 | [2026-07-03_706](articles/2026-07-03_706_Gradually-Claude-Code-Changelog-June2026-NestedAgents.md) | Claude Code 2026年6月チェンジログ：ネストサブエージェント（3階層）・フォールバックモデル・コミュニティマーケットプレイス | claude-code | 未読 | #web-signal |
-| 707 | [2026-07-03_707](articles/2026-07-03_707_EU-AI-Act-Article50-Annotated-Text-Reference.md) | EU AI Act Article 50 条文＋注釈：透明性義務の対象範囲・実装標準・例外規定の法的リファレンス | ai-news | 未読 | #web-signal |
+| 751 | [2026-07-03_751](articles/2026-07-03_751_Anthropic-Claude-Sonnet-5-Official-Agentic-Model.md) | Claude Sonnet 5 公式リリース：Opus 4.8近似性能・1M Context・$2/$10入門価格（2026-06-30） | claude-ecosystem | 未読 | #web-signal |
+| 752 | [2026-07-03_752](articles/2026-07-03_752_TechCrunch-Claude-Sonnet-5-Cheaper-Agent-Runtime.md) | TechCrunch：Sonnet 5は「より安価なエージェント実行手段」——Robinhoodが初期統合 | claude-ecosystem | 未読 | #web-signal |
+| 753 | [2026-07-03_753](articles/2026-07-03_753_SimonWillison-Claude-Sonnet-5-Tokenizer-Cost-Analysis.md) | Simon Willison：Sonnet 5新トークナイザーで同テキスト比+30%コスト増リスクを警告 | claude-ecosystem | 未読 | #web-signal |
+| 754 | [2026-07-03_754](articles/2026-07-03_754_EU-AI-Act-Article50-Transparency-August2-2026.md) | EU AI Act Article 50 透明性義務：2026年8月2日施行・生成AIマーキング猶予12/2まで | ai-news | 未読 | #web-signal |
+| 755 | [2026-07-03_755](articles/2026-07-03_755_Robinhood-Agentic-Trading-MCP-Brokerage-Launch.md) | RobinhoodがMCP経由でAIエージェントとブローカーアカウントを接続するAgentic Tradingを発表 | ai-trading | 未読 | #web-signal |
+| 756 | [2026-07-03_756](articles/2026-07-03_756_CNBC-Robinhood-CEO-AI-Agents-Match-Human-Traders.md) | CNBC：RobinhoodCEO「AIエージェントは近く人間トレーダーに匹敵する」（2026-07-02） | ai-trading | 未読 | #web-signal |
+| 757 | [2026-07-03_757](articles/2026-07-03_757_MQL5-AI-Expert-Advisors-Complete-Guide-July2026.md) | MQL5：AIエキスパートアドバイザー完全ガイド（2026-07-01）——強化学習EAがリテール市場に浸透 | ai-trading | 未読 | #web-signal |
+| 758 | [2026-07-03_758](articles/2026-07-03_758_MQL5-AI-Replacing-Traditional-Algos-Automated-Trading.md) | MQL5：AIが伝統的アルゴリズムを置き換える自動取引の未来——LLM+MARL統合アーキテクチャ | ai-trading | 未読 | #web-signal |
+| 759 | [2026-07-03_759](articles/2026-07-03_759_METI-AI-Guideline-v1-2-Agent-HITL-Traceability.md) | 経産省・総務省：AI事業者ガイドライン第1.2版——AIエージェントHITL義務化・データトレーサビリティ強化 | ai-news | 未読 | #web-signal |
+| 760 | [2026-07-03_760](articles/2026-07-03_760_Eguweb-AI-News-Daily-July3-2026.md) | Eguweb AI日次ニュース（7/3）：企業AI・エージェント基盤・EU透明性規制が本番運用段階へ | ai-news | 未読 | #web-signal |
+| 761 | [2026-07-03_761](articles/2026-07-03_761_Eguweb-AI-News-Daily-July1-2026.md) | Eguweb AI日次ニュース（7/1）：Claude Sonnet 5・OpenAI Jalapeño・Blackstone日本$300億投資 | ai-news | 未読 | #web-signal |
+| 762 | [2026-07-03_762](articles/2026-07-03_762_Gradually-Claude-Code-Changelog-June2026-NestedAgents.md) | Claude Code 2026年6月チェンジログ：ネストサブエージェント（3階層）・フォールバックモデル・コミュニティマーケットプレイス | claude-code | 未読 | #web-signal |
+| 763 | [2026-07-03_763](articles/2026-07-03_763_EU-AI-Act-Article50-Annotated-Text-Reference.md) | EU AI Act Article 50 条文＋注釈：透明性義務の対象範囲・実装標準・例外規定の法的リファレンス | ai-news | 未読 | #web-signal |
 
 ---
 
 ## ドメイン別統計（累計）
 
-| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 2026-06-07 | 2026-06-08 | 2026-06-09 | 2026-06-10 | 2026-06-11 | 2026-06-12 | 2026-06-13 | 2026-06-14 | 2026-06-16 | 2026-06-17 | 2026-06-18 | 2026-06-19 | 2026-06-20 | 2026-06-21 | 2026-06-22 | 2026-06-23 | 2026-06-24 | 2026-06-25 | 2026-06-26 | 2026-06-27 | 2026-06-28 | 2026-07-03 | 累計 |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 8件 | 5件 | 10件 | 9件 | 5件 | 4件 | 3件 | 7件 | 14件 | 3件 | 10件 | 8件 | 80件 | 4件 | 6件 | 1件 | 1件 | 1件 | 4件 | 4件 | 5件 | 3件 | 5件 | 1件 | 253件 |
-| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 5件 | 4件 | 5件 | 5件 | 5件 | 2件 | 4件 | 4件 | 4件 | 1件 | 3件 | 2件 | 67件 | 7件 | 6件 | 2件 | 5件 | 6件 | 9件 | 3件 | 1件 | 0件 | 6件 | 3件 | 184件 |
-| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 3件 | 2件 | 4件 | 0件 | 1件 | 3件 | 2件 | 4件 | 1件 | 2件 | 3件 | 39件 | 2件 | 1件 | 1件 | 2件 | 2件 | 1件 | 2件 | 3件 | 1件 | 6件 | 4件 | 116件 |
-| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 4件 | 3件 | 2件 | 4件 | 2件 | 2件 | 4件 | 1件 | 6件 | 1件 | 2件 | 52件 | 2件 | 2件 | 4件 | 3件 | 3件 | 2件 | 3件 | 2件 | 5件 | 12件 | 5件 | 152件 |
-| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **18件** | **16件** | **20件** | **20件** | **14件** | **9件** | **12件** | **17件** | **23件** | **11件** | **16件** | **15件** | **238件** | **15件** | **15件** | **8件** | **11件** | **12件** | **16件** | **12件** | **11件** | **9件** | **29件** | **13件** | **705件** |
+| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 2026-06-07 | 2026-06-08 | 2026-06-09 | 2026-06-10 | 2026-06-11 | 2026-06-12 | 2026-06-13 | 2026-06-14 | 2026-06-16 | 2026-06-17 | 2026-06-18 | 2026-06-19 | 2026-06-20 | 2026-06-21 | 2026-06-22 | 2026-06-23 | 2026-06-24 | 2026-06-25 | 2026-06-26 | 2026-06-27 | 2026-06-28 | 2026-06-29 | 2026-06-30 | 2026-07-01 | 2026-07-02 | 2026-07-03 | 累計 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 8件 | 5件 | 10件 | 9件 | 5件 | 4件 | 3件 | 7件 | 14件 | 3件 | 10件 | 8件 | 80件 | 4件 | 6件 | 1件 | 1件 | 1件 | 4件 | 4件 | 5件 | 3件 | 5件 | 2件 | 1件 | 2件 | 6件 | 1件 | 264件 |
+| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 5件 | 4件 | 5件 | 5件 | 5件 | 2件 | 4件 | 4件 | 4件 | 1件 | 3件 | 2件 | 67件 | 7件 | 6件 | 2件 | 5件 | 6件 | 9件 | 3件 | 1件 | 0件 | 6件 | 2件 | 4件 | 4件 | 3件 | 3件 | 197件 |
+| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 3件 | 2件 | 4件 | 0件 | 1件 | 3件 | 2件 | 4件 | 1件 | 2件 | 3件 | 39件 | 2件 | 1件 | 1件 | 2件 | 2件 | 1件 | 2件 | 3件 | 1件 | 6件 | 2件 | 0件 | 1件 | 4件 | 4件 | 123件 |
+| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 4件 | 3件 | 2件 | 4件 | 2件 | 2件 | 4件 | 1件 | 6件 | 1件 | 2件 | 52件 | 2件 | 2件 | 4件 | 3件 | 3件 | 2件 | 3件 | 2件 | 5件 | 12件 | 4件 | 2件 | 2件 | 5件 | 5件 | 165件 |
+| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **18件** | **16件** | **20件** | **20件** | **14件** | **9件** | **12件** | **17件** | **23件** | **11件** | **16件** | **15件** | **238件** | **15件** | **15件** | **8件** | **11件** | **12件** | **16件** | **12件** | **11件** | **9件** | **29件** | **10件** | **7件** | **9件** | **18件** | **13件** | **749件** |
