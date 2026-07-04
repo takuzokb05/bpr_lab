@@ -1,7 +1,7 @@
 # PROPOSALS.md
 
 収集記事を横断分析して得られた反映提案。
-最終更新: 2026-07-03
+最終更新: 2026-07-04
 
 ---
 
@@ -1722,3 +1722,31 @@ FX自動売買の構成（P-014の4層アーキテクチャ）において、Gem
 1. sandbox/FX自動取引/ の設計ドキュメントを更新し、「MARL+LLMハイブリッド」アーキテクチャを採用方針として明記（P-014の4層に対して第3.5層としてMARLを追加検討）
 2. MT5 Python Package（`MetaTrader5`）の最新バージョンを確認し、LLM→MT5シグナル送信パイプラインの実装難易度を再評価
 3. P-114（Claudeの直接BUY/SELL拒否問題）に関連して：Claude Sonnet 5（P-126）では拒否ポリシーが変更された可能性があるため、最新モデルで再テスト実施
+
+---
+
+## 2026-07-04 提案
+
+### P-130: Claude Code v2.1.200-201 仕様変更への日次収集エージェント対応
+
+**根拠記事**: 764 (DevelopersIO: v2.1.200-201 アップデート), 770 (GetAIPerks: Claude Code Updates 2026 Tracker)
+**取得日**: 2026-07-04
+**詳細**: 2026年7月3日リリースの v2.1.200-201 で2件の重要な仕様変更が入った。(1) `AskUserQuestion` ダイアログが既定で**自動継続しなくなった**（`askUserQuestionTimeout` で設定変更可能）。(2) デフォルトパーミッションモード「default」が「**Manual**」に表示変更。bpr_labの日次収集エージェント（本スクリプト）はバックグラウンドセッションで無人実行しているため、エージェント内で `AskUserQuestion` が呼び出された場合に処理が止まるリスクが生じた。P-008（Routines自動スケジュール化）実装時は特に影響を確認する必要がある。また Manual モードの表示変更により、設定確認コマンドの出力パーサーが壊れている可能性がある。
+
+**提案アクション**:
+1. CLAUDE.md または `.claude/settings.json` に `askUserQuestionTimeout: 30` を追加し、無人実行でタイムアウト自動継続を保証
+2. 日次収集エージェントのプロンプト内に「人間への質問は行わず、不明点は合理的なデフォルトで判断せよ」の指示を追加（AskUserQuestion 呼び出しを回避）
+3. P-008（Routines自動スケジュール化）実装時に、スケジュール実行環境の `askUserQuestionTimeout` 設定を確認してから本番投入
+
+---
+
+### P-131: スラッシュスキル5件連続呼び出しを日次収集ワークフローに活用
+
+**根拠記事**: 765 (DevelopersIO: v2.1.199 アップデート)
+**取得日**: 2026-07-04
+**詳細**: v2.1.199 からスラッシュスキルを `/skill-a /skill-b /skill-c do XYZ` のように並べて呼び出すと、先頭から最大5件のスキルを同時に読み込んでから実行するようになった（従来は1件のみ）。P-003（`/daily-collect` スキル化）と組み合わせて、日次収集の各フェーズ（Web検索・X取り込み・キュレーション・コミット）を独立したスキルとして設計し、1行のコマンドで全フェーズを順次実行できるようになる。例: `/daily-web /daily-x /daily-curate /daily-commit run daily pipeline`。
+
+**提案アクション**:
+1. 日次収集エージェントの4フェーズを独立Skillとして設計：`/daily-web`（Web検索収集）・`/daily-curate`（SIGNAL/NOISE分類）・`/daily-catalog`（catalog更新）・`/daily-commit`（コミット＆プッシュ）
+2. `.claude/skills/` に各Skillの `SKILL.md` を作成し、description をP-131の5原則（Qiita記事#768）に従って最適化
+3. メインの実行コマンドを `/daily-web /daily-curate /daily-catalog /daily-commit run` の1行に集約し、P-008（Routines）のトリガーとして設定
