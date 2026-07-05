@@ -1,7 +1,7 @@
 # PROPOSALS.md
 
 収集記事を横断分析して得られた反映提案。
-最終更新: 2026-07-04
+最終更新: 2026-07-05: 日次収集+キュレーション 2026-07-05（収集7件 → SIGNAL 7件）)
 
 ---
 
@@ -1750,3 +1750,33 @@ FX自動売買の構成（P-014の4層アーキテクチャ）において、Gem
 1. 日次収集エージェントの4フェーズを独立Skillとして設計：`/daily-web`（Web検索収集）・`/daily-curate`（SIGNAL/NOISE分類）・`/daily-catalog`（catalog更新）・`/daily-commit`（コミット＆プッシュ）
 2. `.claude/skills/` に各Skillの `SKILL.md` を作成し、description をP-131の5原則（Qiita記事#768）に従って最適化
 3. メインの実行コマンドを `/daily-web /daily-curate /daily-catalog /daily-commit run` の1行に集約し、P-008（Routines）のトリガーとして設定
+
+---
+
+## 2026-07-05 提案
+
+### P-132: Nested Sub-Agents (depth=5) を日次収集エージェントに適用——4ドメイン並列の更新
+
+**根拠記事**: 772 (ChatForest: Claude Code v2.1.172 Nested Sub-Agents depth=5), 773 (AIForAnything: 完全ガイド)
+**取得日**: 2026-07-05
+**詳細**: v2.1.172（2026年6月10日）で5階層ネストサブエージェントが利用可能になった。P-042（Dynamic Workflows並列化）と同様の効果を、Claude Agent SDKではなくClaude Code Skillsの文脈で実現できる。日次収集エージェントにおいて：①親エージェントが4ドメインに対してdepth=1のサブエージェントを生成（並列実行）、②各ドメインサブエージェントが複数クエリを独立コンテキストで実行、③親が結果を集約・重複排除・catalog更新という3階層構成が可能。「セーフモード」でサブエージェントの権限をread/searchのみに制限することで、情報収集フェーズの安全性を高められる。
+
+**提案アクション**:
+1. 日次収集エージェントのStep 1（WebSearch）を4ドメイン別サブエージェント（depth=1）で並列化し、所要時間の短縮効果を測定
+2. 各サブエージェントに「セーフモード」（WebSearch・WebFetchのみ許可、ファイル書き込み不可）を適用し、誤ったファイル操作を防止
+3. P-131（スラッシュスキル連続呼び出し）と組み合わせ、`/daily-web`スキル内でサブエージェント並列実行を実装
+
+---
+
+### P-133: MCP SDK Betas 2026-07-28 RC の検証——bpr_lab 既存 MCP 設定の動作確認
+
+**根拠記事**: 771 (MCP SDK Betas for 2026-07-28 RC公式ブログ), 777 (MCP Stateless Spec Breaking Changes)
+**取得日**: 2026-07-05
+**詳細**: MCP SDK Betas（Python/TypeScript/Java/C#）が2026-07-28仕様RC対応で公開された。P-017（MCPステートレス化移行計画）・P-041（ステートレス設計準備）で予告済みの仕様変更が実際のSDKベータとして利用可能になった。6つの破壊的変更（initialize/initialized廃止・Mcp-Session-Id削除等）に対してTier 1 SDKは10週間ウィンドウ内で対応予定。bpr_labで現在使用中のMCPサーバー（GitHub MCP・WebSearch MCP等）がベータSDK上で正常動作するか、最終版（2026-07-28）前に検証すべき。
+
+**提案アクション**:
+1. `.claude/settings.json` の `mcpServers` 一覧を確認し、各サーバーが使用するSDKバージョンを特定
+2. 2026-07-28までに各MCPサーバーのTier 1 SDK対応版がリリースされるかを追跡（GitHub releaseを監視）
+3. P-011（カスタムMCPサーバー開発）・P-013（MetaTrader MCP）の新規実装は2026-07-28 RC仕様準拠で設計し、最終版公開後に本番適用
+
+: 日次収集+キュレーション 2026-07-05（収集7件 → SIGNAL 7件）)
