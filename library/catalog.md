@@ -1,6 +1,6 @@
 # Library Catalog
 
-最終更新: 2026-07-05: 日次収集+キュレーション 2026-07-05（収集7件 → SIGNAL 7件）)
+最終更新: 2026-07-06: 日次収集+キュレーション 2026-07-06（収集22件 → SIGNAL 22件）
 
 ## 凡例
 - 状態: 未読 / 既読 / 要精読
@@ -1361,12 +1361,41 @@ drop.md: URLなし（処理対象なし）
 
 ---
 
+## 2026-07-06 収集分（22件収集 → 22件SIGNAL）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 778 | [2026-07-06_778](articles/2026-07-06_778_MCP-2026-07-28-Spec-Breaking-Changes-Migration-StackTree.md) | MCP 2026-07-28 Spec: What Changed, What Breaks — 破壊的変更とマイグレーションガイド（StackTree） | claude-ecosystem | 未読 | #web-signal |
+| 779 | [2026-07-06_779](articles/2026-07-06_779_MCP-Spec-July28-Breaking-Changes-How-To-Migrate-DevTo.md) | MCP Spec Ships July 28: Every Breaking Change and How to Migrate（Dev.to 実装者向けガイド） | claude-ecosystem | 未読 | #web-signal |
+| 780 | [2026-07-06_780](articles/2026-07-06_780_MCP-New-Spec-Security-Three-Attack-Surfaces-Backslash.md) | New MCP Spec Opens Three New Attack Surfaces — セキュリティ分析（Backslash Security） | claude-ecosystem | 未読 | #web-signal |
+| 781 | [2026-07-06_781](articles/2026-07-06_781_ClaudeCode-Company-Wide-Adoption-Decision-History-Gemcook.md) | Claude Code 全社導入までの意思決定と歴史（Gemcook 実践記録） | claude-code | 未読 | #web-signal |
+| 782 | [2026-07-06_782](articles/2026-07-06_782_ClaudeCode-7-Steering-Surfaces-Context-Debt-Design.md) | Claude Code の指示をどこに書くか — 7つの指示面とコンテキスト負債の設計 | claude-code | 未読 | #web-signal |
+| 783 | [2026-07-06_783](articles/2026-07-06_783_Claude-Fable5-Return-Information-Summary-Zenn.md) | Claude Fable 5 が帰ってきたので情報を整理した（7月7日再提供・Zenn） | claude-ecosystem | 未読 | #web-signal |
+| 784 | [2026-07-06_784](articles/2026-07-06_784_ClaudeCode-Fable5-LocalLLM-Shell-CLI-Practice.md) | Claude Code Fable 5 でローカルLLM用シェル支援 CLI を作ったら仕事の進め方に驚かされた | claude-code | 未読 | #web-signal |
+| 785 | [2026-07-06_785](articles/2026-07-06_785_Claude-Sonnet5-Deep-Dive-Benchmarks-Pricing-KieAI.md) | Claude Sonnet 5 Deep Dive: Release, Benchmarks, Pricing（$2/$10、1Mトークン） | claude-ecosystem | 未読 | #web-signal |
+| 786 | [2026-07-06_786](articles/2026-07-06_786_ClaudeCode-Development-10x-Guide-2026-Zenn.md) | Claude Codeで開発を10倍速にする完全ガイド【2026年版】（Zenn） | claude-code | 未読 | #web-signal |
+| 787 | [2026-07-06_787](articles/2026-07-06_787_GSA-AI-Data-Safeguarding-Rules-LLM-Contractors-2026.md) | GSA Proposes Sweeping AI Data Safeguarding Rules for LLM Contractors（2026年6月17日公表） | ai-news | 未読 | #web-signal |
+| 788 | [2026-07-06_788](articles/2026-07-06_788_MIT-AI-Governance-Landscape-April2026-Update.md) | Mapping the AI Governance Landscape: April 2026 Update — MIT AI Risk Repository | ai-news | 未読 | #web-signal |
+| 789 | [2026-07-06_789](articles/2026-07-06_789_MCP-2026-Stateless-Enterprise-Auth-Audit-Homula.md) | MCPの2026年進化——ステートレス化とエンタープライズ対応（認証・監査・ゲートウェイ） | claude-ecosystem | 未読 | #web-signal |
+| 790 | [2026-07-06_790](articles/2026-07-06_790_MCP-2026-07-28-RC-Stateless-Explained-MCPDirectory.md) | MCP 2026-07-28 Stateless RC 完全解説：6つのSEP統合とSDKティア別対応スケジュール | claude-ecosystem | 未読 | #web-signal |
+| 791 | [2026-07-06_791](articles/2026-07-06_791_MCP-Spec-RC-Six-Breaking-Changes-Builder-Guide-ChatForest.md) | MCP Spec 2026-07-28 RC: Six Breaking Changes Every Production Server Must Address（ChatForest） | claude-ecosystem | 未読 | #web-signal |
+| 792 | [2026-07-06_792](articles/2026-07-06_792_ClaudeCode-VSCode-Subscription-Usage-Visualization-Extension.md) | Claude Code のサブスク使用状況を VSCode で常時可視化する拡張機能を作った | claude-code | 未読 | #web-signal |
+| 793 | [2026-07-06_793](articles/2026-07-06_793_Claude-Sonnet5-Default-Model-All-Users-July2026.md) | Claude Sonnet 5 が7月1日より全ユーザーのデフォルトモデルに（プロモーション価格8月末まで） | claude-ecosystem | 未読 | #web-signal |
+| 794 | [2026-07-06_794](articles/2026-07-06_794_AI-Agent-Framework-Major-Releases-March-2026-Overview.md) | Major AI Agent Framework Releases 2026: Microsoft MAF 1.0・LlamaIndex 1.0・Pydantic AI V2 | ai-news | 未読 | #web-signal |
+| 795 | [2026-07-06_795](articles/2026-07-06_795_AI-GDPR-LLM-Providers-Compliance-Changes-2026.md) | AI & GDPR in 2026: Compliance Changes for LLM Providers（EU AI Act + GDPR 複合コンプライアンス） | ai-news | 未読 | #web-signal |
+| 796 | [2026-07-06_796](articles/2026-07-06_796_ClaudeCode-Company-Introduction-Guide-2026-Firecracker.md) | Claude Code を会社で使うには？導入の始め方・費用・権限設計・活用事例【2026年版】 | claude-code | 未読 | #web-signal |
+| 797 | [2026-07-06_797](articles/2026-07-06_797_MCP-Next-Spec-Stateless-Tasks-Apps-Extensions-2026-Aigentlab.md) | MCP次期仕様2026解説｜ステートレスコアとTasks拡張化（日本語技術解説・Aigentlab） | claude-ecosystem | 未読 | #web-signal |
+| 798 | [2026-07-06_798](articles/2026-07-06_798_Claude-Agent-SDK-Production-Guide-2026-BeginnersAI.md) | Claude Agent SDK: Build Production AI Agents 2026 — 入門から本番運用まで | claude-ecosystem | 未読 | #web-signal |
+| 799 | [2026-07-06_799](articles/2026-07-06_799_Claude-Skills-Complete-Guide-Corporate-Team-2026-Uravation.md) | Claude Skills 完全ガイド｜法人・チーム導入7パターン+運用設計【2026年最新】 | claude-code | 未読 | #web-signal |
+
+---
+
 ## ドメイン別統計（累計）
 
-| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 2026-06-07 | 2026-06-08 | 2026-06-09 | 2026-06-10 | 2026-06-11 | 2026-06-12 | 2026-06-13 | 2026-06-14 | 2026-06-16 | 2026-06-17 | 2026-06-18 | 2026-06-19 | 2026-06-20 | 2026-06-21 | 2026-06-22 | 2026-06-23 | 2026-06-24 | 2026-06-25 | 2026-06-26 | 2026-06-27 | 2026-06-28 | 2026-06-29 | 2026-06-30 | 2026-07-01 | 2026-07-02 | 2026-07-03 | 2026-07-04 | 2026-07-05 | 累計 |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 8件 | 5件 | 10件 | 9件 | 5件 | 4件 | 3件 | 7件 | 14件 | 3件 | 10件 | 8件 | 80件 | 4件 | 6件 | 1件 | 1件 | 1件 | 4件 | 4件 | 5件 | 3件 | 5件 | 2件 | 1件 | 2件 | 6件 | 1件 | 6件 | 2件 | 272件 |
-| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 5件 | 4件 | 5件 | 5件 | 5件 | 2件 | 4件 | 4件 | 4件 | 1件 | 3件 | 2件 | 67件 | 7件 | 6件 | 2件 | 5件 | 6件 | 9件 | 3件 | 1件 | 0件 | 6件 | 2件 | 4件 | 4件 | 3件 | 3件 | 0件 | 2件 | 199件 |
-| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 3件 | 2件 | 4件 | 0件 | 1件 | 3件 | 2件 | 4件 | 1件 | 2件 | 3件 | 39件 | 2件 | 1件 | 1件 | 2件 | 2件 | 1件 | 2件 | 3件 | 1件 | 6件 | 2件 | 0件 | 1件 | 4件 | 4件 | 0件 | 0件 | 123件 |
-| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 4件 | 3件 | 2件 | 4件 | 2件 | 2件 | 4件 | 1件 | 6件 | 1件 | 2件 | 52件 | 2件 | 2件 | 4件 | 3件 | 3件 | 2件 | 3件 | 2件 | 5件 | 12件 | 4件 | 2件 | 2件 | 5件 | 5件 | 1件 | 3件 | 169件 |
-| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **18件** | **16件** | **20件** | **20件** | **14件** | **9件** | **12件** | **17件** | **23件** | **11件** | **16件** | **15件** | **238件** | **15件** | **15件** | **8件** | **11件** | **12件** | **16件** | **12件** | **11件** | **9件** | **29件** | **10件** | **7件** | **9件** | **18件** | **13件** | **7件** | **7件** | **763件** |: 日次収集+キュレーション 2026-07-05（収集7件 → SIGNAL 7件）)
+| ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 2026-06-07 | 2026-06-08 | 2026-06-09 | 2026-06-10 | 2026-06-11 | 2026-06-12 | 2026-06-13 | 2026-06-14 | 2026-06-16 | 2026-06-17 | 2026-06-18 | 2026-06-19 | 2026-06-20 | 2026-06-21 | 2026-06-22 | 2026-06-23 | 2026-06-24 | 2026-06-25 | 2026-06-26 | 2026-06-27 | 2026-06-28 | 2026-06-29 | 2026-06-30 | 2026-07-01 | 2026-07-02 | 2026-07-03 | 2026-07-04 | 2026-07-05 | 2026-07-06 | 累計 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| claude-code | 7件 | 6件 | 7件 | 3件 | 6件 | 8件 | 6件 | 5件 | 4件 | 8件 | 5件 | 10件 | 9件 | 5件 | 4件 | 3件 | 7件 | 14件 | 3件 | 10件 | 8件 | 80件 | 4件 | 6件 | 1件 | 1件 | 1件 | 4件 | 4件 | 5件 | 3件 | 5件 | 2件 | 1件 | 2件 | 6件 | 1件 | 6件 | 2件 | 7件 | 279件 |
+| claude-ecosystem | 5件 | 2件 | 2件 | 4件 | 2件 | 2件 | 2件 | 3件 | 3件 | 5件 | 4件 | 5件 | 5件 | 5件 | 2件 | 4件 | 4件 | 4件 | 1件 | 3件 | 2件 | 67件 | 7件 | 6件 | 2件 | 5件 | 6件 | 9件 | 3件 | 1件 | 0件 | 6件 | 2件 | 4件 | 4件 | 3件 | 3件 | 0件 | 2件 | 11件 | 210件 |
+| ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 3件 | 2件 | 4件 | 0件 | 1件 | 3件 | 2件 | 4件 | 1件 | 2件 | 3件 | 39件 | 2件 | 1件 | 1件 | 2件 | 2件 | 1件 | 2件 | 3件 | 1件 | 6件 | 2件 | 0件 | 1件 | 4件 | 4件 | 0件 | 0件 | 0件 | 123件 |
+| ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 4件 | 3件 | 2件 | 4件 | 2件 | 2件 | 4件 | 1件 | 6件 | 1件 | 2件 | 52件 | 2件 | 2件 | 4件 | 3件 | 3件 | 2件 | 3件 | 2件 | 5件 | 12件 | 4件 | 2件 | 2件 | 5件 | 5件 | 1件 | 3件 | 4件 | 173件 |
+| **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **18件** | **16件** | **20件** | **20件** | **14件** | **9件** | **12件** | **17件** | **23件** | **11件** | **16件** | **15件** | **238件** | **15件** | **15件** | **8件** | **11件** | **12件** | **16件** | **12件** | **11件** | **9件** | **29件** | **10件** | **7件** | **9件** | **18件** | **13件** | **7件** | **7件** | **22件** | **785件** |
