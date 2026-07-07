@@ -1840,3 +1840,42 @@ FX自動売買の構成（P-014の4層アーキテクチャ）において、Gem
 1. GitHub でリポジトリを確認し、信頼性・メンテ状況を検証
 2. Claude Code ヘビーユーザーの環境に試験導入して予算超過の早期検知に活用
 3. 類似機能を hooks（PreCompact や SessionStop ライフサイクル）で自前実装することも検討
+
+---
+
+## 2026-07-07 提案
+
+### P-139: Claude Cowork Mobile — FX自動取引ボット稼働状況のモバイル監視
+
+**根拠記事**: 800 (Claude Cowork expands to mobile/web - TechCrunch)
+**詳細**: 2026年7月7日、Claude CoworkがMaxサブスクライバー向けにウェブ・モバイルで利用可能になった。「デスクで作業開始・スマートフォンで進捗確認・ラップトップを閉じていてもアウトプットを受取」というユースケースは、FX自動取引ボットの稼働監視と親和性が高い。現在P-008（Routines）で自動化を検討しているエージェントの進捗確認をモバイル経由で行えるようになる。
+
+**提案アクション**:
+1. Maxサブスクリプションへのアップグレードを確認し、Claude Cowork on Mobileを試験利用
+2. FX自動取引エージェントの稼働レポートをCowork経由で非同期確認できるワークフローを設計（P-008との組み合わせ）
+3. `/fx-status` スキルをCoworkで実行し、スマートフォンでシグナル品質・残高・オープンポジションを確認できるようにする
+
+---
+
+### P-140: AI規制コンプライアンス対応 — Illinois AISMA + FTC AI精度ポリシー + UN AI Governance
+
+**根拠記事**: 801 (Illinois AI Safety Measures Act), 802 (UN AI Governance), 803 (FTC AI Accuracy)
+**詳細**: 2026年7月6-7日に3つの重要な規制動向が同時に発生した。(1)Illinois AI Safety Measures Act署名（72h報告義務・フレームワーク公開必須）、(2)UN Global Dialogue on AI Governance（法的義務化への国際的コンセンサス形成）、(3)FTC AIの精度ポリシーステートメント草案（コメント7月31日締切）。bpr_labのFX自動取引ボットは「自動化意思決定システム」として今後の規制射程に入る可能性がある（特にP-035参照のColorado ADMTとの整合）。
+
+**提案アクション**:
+1. FTCのパブリックコメント（7月31日締切）を確認し、FX自動売買ボットが「AI Accuracy」の要件対象かどうかを調査
+2. sandbox/FX自動取引/COMPLIANCE.md を作成し、各規制（Illinois AISMA・FTC・EU AI Act・日本ガイドライン1.2版）への対応状況を整理
+3. P-025（HITL設計）・P-035（Colorado ADMT確認）の優先度を「必須」に引き上げ、規制対応の実装を2026年7月中に完了させる
+
+---
+
+### P-141: Anthropic API コスト最適化の実装 — Prompt Cache 90% + Batch API 50% の組み合わせ
+
+**根拠記事**: 809 (Finout.io Anthropic API Pricing 2026 Complete Guide)
+**詳細**: finout.ioの包括的コストガイドにより、2026年時点での主要な最適化手段が定量化された：(1)**Prompt Caching**——同一プレフィックス繰り返し呼び出しで90%コスト削減（5分間TTL）、(2)**Batch API**——24時間遅延許容タスクで50%削減。日次収集エージェント・FXシグナル分析では、同一系統のプロンプトプレフィックス（システムプロンプト・ドメイン別インストラクション）をキャッシュ活用することで現在のAPI費用を大幅に削減できる可能性がある。
+
+**提案アクション**:
+1. 日次収集エージェントのWebSearch後の分類ステップ（4ドメイン判定）にPrompt Cachingを適用——システムプロンプト（SIGNAL基準・NOISE基準）をキャッシュプレフィックスとして固定化
+2. FXシグナル生成のうちセンチメント分析（高頻度・低優先度）をBatch API経由に切り替え（翌日集計で問題ない場合）
+3. 月次APIコストをfinout.ioのコスト計算式で試算し、最適化前後のROIを測定・記録
+
