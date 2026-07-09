@@ -1,7 +1,7 @@
 # PROPOSALS.md
 
 収集記事を横断分析して得られた反映提案。
-最終更新: 2026-07-06: 日次収集+キュレーション 2026-07-06（収集22件 → SIGNAL 22件）
+最終更新: 2026-07-09: 日次収集+キュレーション 2026-07-09（収集16件 → SIGNAL 13件）
 
 ---
 
@@ -1918,3 +1918,41 @@ FX自動売買の構成（P-014の4層アーキテクチャ）において、Gem
 2. GLM-5.2をローカルOllamaで実行できるか確認し、データがローカルに留まる構成でのみ評価テスト
 3. sandbox/FX自動取引/COMPLIANCE.md に「使用LLMプロバイダーと理由」を記録するセクションを追加し、データ主権・規制リスク観点での選定根拠を明文化
 
+
+---
+
+## 2026-07-09 提案
+
+### P-145: GPT-5.6 Sol/Terra/Luna一般公開（7/9）— FX自動取引バックエンドLLM選択肢の更新
+
+**根拠記事**: 833 (AI News July 9 2026), 834 (Neowin GPT-5.6 GA), 835 (GPT-5.6 Pricing Ultra Mode)
+**詳細**: OpenAIがGPT-5.6 Sol（$5/$30）・Terra（$2.50/$15）・Luna（$1/$6）を本日一般公開。P-143（Sonnet 5 評価）に加えて新たな比較対象が追加された。特にTerraNow（$2.50/$15）はSonnet 5（$2/$10プロモ・$3/$15通常）と価格帯が近接する中での直接競合。Speculative Branching技術（並列推論ブランチ後に最適解選択）はFX取引の複数シナリオ評価に適合する可能性がある。一方、SolのCerebrasハードウェアによる750トークン/秒の高速推論は、リアルタイム高頻度取引には魅力的だが現時点では選択ユーザー限定。
+
+**提案アクション**:
+1. sandbox/FX自動取引/ のLLMベンチマーク設定にGPT-5.6 Terra（$2.50/$15）を追加し、Sonnet 5との同一バックテストで精度・コスト・レイテンシを比較
+2. 役割別最適モデル試案を更新: Luna（$1/$6）=高頻度ニュースフィルタリング候補、Terra=テクニカル分析、Fable 5/Sol=最終判断・リスク管理
+3. P-143の8月31日以降コスト試算にTerra $2.50/$15を追加し、Anthropic vs OpenAI の年間コスト比較表を作成
+
+---
+
+### P-146: Senate AI AGENT Act（草案）— Claude Codeエージェント自動化のコンプライアンス対応準備
+
+**根拠記事**: 836 (Ctrl+AI+Reg July 7), 837 (WebProNews AI AGENT Act), 838 (CIO Enterprise Governance)
+**詳細**: Sen. Warner（D-VA）のAI AGENT Act草案（6/29公開・パブコメ中）は、月間5000万ユーザー超の大規模プラットフォームへのエージェントアクセスにFTC登録を義務付ける。bpr_labのClaude Codeベース自動化ツール（日次収集エージェント・FX取引エージェント）が「custodial user agent」定義に該当するかは成立時の最終条文次第だが、現時点でも透明性・制御性・ログ記録の観点から早期対応が望ましい。成立すれば各エージェントは人間オペレーターIDとのリンク・ユーザーによる許可/取消制御が必須要件となる見込み。
+
+**提案アクション**:
+1. 全エージェント設計にオペレーター情報（takuzokb@gmail.com）と目的・スコープを明記するメタデータフィールドを追加
+2. sandbox/FX自動取引/COMPLIANCE.md の「AIエージェント設計」セクションを新設し、AI AGENT Act草案の主要要件（透明性・ユーザー制御・NIST標準準拠）に対する自己評価を記録
+3. P-025（HITL設計）の実装を最優先とし、「ユーザーが許可・取消できる制御機能」の技術的実装記録を残す
+
+---
+
+### P-147: Multi-Agent Orchestration 5 Patterns → FX自動取引のアーキテクチャ設計指針として採用
+
+**根拠記事**: 832 (Multi-Agent Orchestration 5 Patterns 2026)
+**詳細**: DigitalAppliedの整理した5パターン（Supervisor・Pipeline・Parallel・Hierarchical・Event-Driven）は、P-004（TradingAgentsアーキテクチャ）の具体的設計指針として直接活用できる。現在のFX自動取引では「単一エージェントがすべてを実行」となっているが、5パターンの観点から再設計することで障害耐性と拡張性が向上する。特に「Hierarchical（最大3階層）」パターンはFX取引の意思決定階層（戦略エージェント→テクニカル/センチメント分析エージェント→注文執行エージェント）と自然にマッピングできる。Event-Driven（Webhook起動）はMT5からのティックデータイベントに対応可能。
+
+**提案アクション**:
+1. sandbox/FX自動取引/architecture.md にMulti-Agent 5パターンとFX取引の対応表を作成（例: Hierarchical=3層LLM階層、Event-Driven=MT5ティックWebhook）
+2. 現状の単一エージェント設計をHierarchicalパターンに移行する際のリファクタリング計画を立案
+3. P-014（4層MQL5+LLMアーキテクチャ）との統合: 下位2層（データ収集・執行）はPipeline/Event-Driven、上位2層（LLM推論・最終判断）はHierarchicalで設計
