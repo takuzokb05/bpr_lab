@@ -1956,3 +1956,41 @@ FX自動売買の構成（P-014の4層アーキテクチャ）において、Gem
 1. sandbox/FX自動取引/architecture.md にMulti-Agent 5パターンとFX取引の対応表を作成（例: Hierarchical=3層LLM階層、Event-Driven=MT5ティックWebhook）
 2. 現状の単一エージェント設計をHierarchicalパターンに移行する際のリファクタリング計画を立案
 3. P-014（4層MQL5+LLMアーキテクチャ）との統合: 下位2層（データ収集・執行）はPipeline/Event-Driven、上位2層（LLM推論・最終判断）はHierarchicalで設計
+
+---
+
+## 2026-07-10 提案
+
+### P-148: /doctor コマンドによる CLAUDE.md 肥大化の定期チェック自動化
+
+**根拠記事**: 840 (Claude Code v2.1.206 Changelog)
+**詳細**: v2.1.206（2026-07-09）で追加された `/doctor` チェックが、CLAUDE.mdのうちコードベースから自動導出可能なコンテンツを検出してトリム提案する機能を持つようになった。P-015・P-028・P-039で提案してきたCLAUDE.md段階的開示（200行以下・@インポート構造）の実践に、定量的チェックの仕組みが加わった形。定期的に `/doctor` を実行することでCLAUDE.mdの肥大化をサイクルで防止できる。
+
+**提案アクション**:
+1. `.claude/settings.json` の hooks セクションに `SessionStart` フックを追加し、`claude /doctor` の結果をログに残す（週次ベースでもよい）
+2. P-028（@インポート構造）の整備後に `/doctor` を実行し、残存する冗長コンテンツを特定・削除
+3. `EnterWorktree` のプロジェクト外ワークツリー確認ダイアログ（v2.1.206追加）もセキュリティ観点で積極活用
+
+---
+
+### P-149: TradingAgents v0.3.1 の Claude Sonnet 5 対応を FX 取引評価環境に反映
+
+**根拠記事**: 842 (TradingAgents v0.3.1 July 2026)
+**詳細**: TradingAgents v0.3.1（2026年7月5日）でClaude Sonnet 5とFable 5が正式サポートされた。P-143（Claude Sonnet 5をFX自動取引評価モデルに採用）の実装ブロッカーが解消された。v0.3.1はAWS Bedrock APIキー認証も追加されており、既存のAnthropicキーと並列でBedrock経由のモデルアクセスも選択可能になった。Alpha Vantageフィルタリングバグ・ルータークラッシュ・チェックポイント問題の修正も含み、実運用安定性が向上。P-033（TradingAgents + Claude 4.x実動テスト）の実行環境をSonnet 5に更新することで、コスト$2/$10/Mのプロモ料金（〜8/31）で評価できる好機。
+
+**提案アクション**:
+1. `pip install tradingagents --upgrade` でv0.3.1に更新し、Claude Sonnet 5バックエンドで動作確認（`--model claude-sonnet-5` / `--provider anthropic`）
+2. Opus 4.8 vs Sonnet 5のFXシグナル品質・API呼び出しコスト・レイテンシを同一テストケースで比較計測（プロモ料金8/31まで）
+3. v0.3.0で追加されたFREDマクロ指標・Polymarketデータをセンチメント補完情報として活用するパイプラインを設計
+
+---
+
+### P-150: Google Cloud フルマネージド MCP サーバー — FX 取引データパイプラインへの活用評価
+
+**根拠記事**: 841 (Google Cloud Managed MCP Servers GA)
+**詳細**: Google Cloudが50以上のフルマネージドMCPサーバーをGA公開（2026年5月21日）。BigQuery・Spanner・Cloud SQL・Pub/Sub・Cloud Storage等のデータ分析インフラがMCP経由でClaude Codeから直接アクセス可能になった。P-011（カスタムMCPサーバー開発）の代替として、GCPネイティブのMCPサーバーを活用することで実装コストゼロで同等の機能が得られる。具体的にはMT5バックテスト結果をBigQueryに保存し、Google Cloud MCP経由でClaude Codeから自然言語クエリするアーキテクチャが実現可能。Model ArmorによるプロンプトインジェクションとデータExfil防止も組み込み済みでセキュリティ要件を満たす。
+
+**提案アクション**:
+1. GCPアカウントでCloud MCP サーバーを有効化し、Claude Code の `.mcp.json` に `bigquery-mcp` サーバーを追加設定
+2. MT5バックテスト結果CSVをBigQueryにアップロードし、「EUR/USDで過去3ヶ月のシャープレシオを教えて」のような自然言語クエリを試験実行
+3. P-011で検討していたカスタムFastMCP実装と、Google Cloud MCP（ゼロ実装コスト）をROI・レイテンシ・セキュリティで比較評価してから本番採用を決定
