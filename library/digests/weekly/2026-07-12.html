@@ -1,0 +1,587 @@
+<title>AI Weekly Digest 2026-07-12</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --bg-card: #ffffff;
+    --text: #1a1a1a;
+    --text-secondary: #555;
+    --border: #e0e0e0;
+    --accent-claude: #2563eb;
+    --accent-eco: #059669;
+    --accent-trade: #d97706;
+    --accent-reg: #7c3aed;
+    --accent-news: #6b7280;
+    --tag-claude-bg: #dbeafe;
+    --tag-eco-bg: #d1fae5;
+    --tag-trade-bg: #fef3c7;
+    --tag-reg-bg: #ede9fe;
+    --tag-news-bg: #f3f4f6;
+    --highlight: #fef9c3;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #111111;
+      --bg-card: #1a1a1a;
+      --text: #e5e5e5;
+      --text-secondary: #999;
+      --border: #2a2a2a;
+      --tag-claude-bg: #1e3a5f;
+      --tag-eco-bg: #14332a;
+      --tag-trade-bg: #3d2e0a;
+      --tag-reg-bg: #2d1f4e;
+      --tag-news-bg: #252525;
+      --highlight: #3d3510;
+      --shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #111111;
+    --bg-card: #1a1a1a;
+    --text: #e5e5e5;
+    --text-secondary: #999;
+    --border: #2a2a2a;
+    --tag-claude-bg: #1e3a5f;
+    --tag-eco-bg: #14332a;
+    --tag-trade-bg: #3d2e0a;
+    --tag-reg-bg: #2d1f4e;
+    --tag-news-bg: #252525;
+    --highlight: #3d3510;
+    --shadow: 0 1px 3px rgba(0,0,0,0.3);
+  }
+  :root[data-theme="light"] {
+    --bg: #fafafa;
+    --bg-card: #ffffff;
+    --text: #1a1a1a;
+    --text-secondary: #555;
+    --border: #e0e0e0;
+    --tag-claude-bg: #dbeafe;
+    --tag-eco-bg: #d1fae5;
+    --tag-trade-bg: #fef3c7;
+    --tag-reg-bg: #ede9fe;
+    --tag-news-bg: #f3f4f6;
+    --highlight: #fef9c3;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    font-size: 16px;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+  h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.02em;
+  }
+  .subtitle {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 2.5rem 0 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid var(--border);
+  }
+  h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 1.5rem 0 0.5rem;
+  }
+  p { margin-bottom: 0.8rem; }
+  .summary-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow);
+  }
+  .summary-box p { margin-bottom: 0.5rem; }
+  .summary-box p:last-child { margin-bottom: 0; }
+  .tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-right: 4px;
+    vertical-align: middle;
+    letter-spacing: 0.02em;
+  }
+  .tag-claude { background: var(--tag-claude-bg); color: var(--accent-claude); }
+  .tag-eco { background: var(--tag-eco-bg); color: var(--accent-eco); }
+  .tag-trade { background: var(--tag-trade-bg); color: var(--accent-trade); }
+  .tag-reg { background: var(--tag-reg-bg); color: var(--accent-reg); }
+  .tag-news { background: var(--tag-news-bg); color: var(--accent-news); }
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow);
+  }
+  .card h4 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+  .card p {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    margin-bottom: 0;
+    line-height: 1.7;
+  }
+  .timeline {
+    border-left: 2px solid var(--border);
+    margin-left: 0.5rem;
+    padding-left: 1.25rem;
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 1rem;
+  }
+  .timeline-item::before {
+    content: "";
+    position: absolute;
+    left: -1.55rem;
+    top: 0.55rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent-eco);
+  }
+  .timeline-item.ti-claude::before { background: var(--accent-claude); }
+  .timeline-item.ti-reg::before { background: var(--accent-reg); }
+  .timeline-item.ti-trade::before { background: var(--accent-trade); }
+  .timeline-item.ti-news::before { background: var(--accent-news); }
+  .timeline-date {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+  .timeline-text {
+    font-size: 0.92rem;
+    line-height: 1.7;
+  }
+  .action-list {
+    list-style: none;
+    counter-reset: action;
+  }
+  .action-list li {
+    counter-increment: action;
+    position: relative;
+    padding-left: 2.2rem;
+    margin-bottom: 1.2rem;
+  }
+  .action-list li::before {
+    content: counter(action);
+    position: absolute;
+    left: 0;
+    top: 0.1rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: var(--accent-claude);
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 700;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .action-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+  .action-why {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .priority {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 3px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .p-high { background: #fee2e2; color: #b91c1c; }
+  .p-mid { background: #fef3c7; color: #92400e; }
+  @media (prefers-color-scheme: dark) {
+    .p-high { background: #451a1a; color: #fca5a5; }
+    .p-mid { background: #3d2e0a; color: #fcd34d; }
+  }
+  :root[data-theme="dark"] .p-high { background: #451a1a; color: #fca5a5; }
+  :root[data-theme="dark"] .p-mid { background: #3d2e0a; color: #fcd34d; }
+  .watch-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+  @media (max-width: 600px) {
+    .watch-list { grid-template-columns: 1fr; }
+    body { padding: 1.25rem 1rem 3rem; }
+    h1 { font-size: 1.35rem; }
+  }
+  .watch-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+  .watch-item strong {
+    display: block;
+    margin-bottom: 0.15rem;
+    font-size: 0.85rem;
+  }
+  .watch-item span {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  .cross-domain {
+    background: var(--highlight);
+    border-radius: 4px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.92rem;
+    line-height: 1.7;
+  }
+  .stats {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+  .stat {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.6rem 1rem;
+    text-align: center;
+    flex: 1;
+    min-width: 100px;
+  }
+  .stat-num {
+    font-size: 1.6rem;
+    font-weight: 700;
+    display: block;
+  }
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+  }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+  .footer {
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    text-align: center;
+  }
+  .connection-arrow {
+    display: inline-block;
+    margin: 0 0.3rem;
+    color: var(--text-secondary);
+  }
+</style>
+
+<h1>AI Weekly Digest</h1>
+<p class="subtitle">2026-07-05 ~ 2026-07-11 / 収録記事 86件 / 自動生成</p>
+
+<div class="stats">
+  <div class="stat">
+    <span class="stat-num" style="color:var(--accent-claude)">30</span>
+    <span class="stat-label">Claude Code</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num" style="color:var(--accent-eco)">24</span>
+    <span class="stat-label">Ecosystem</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num" style="color:var(--accent-reg)">18</span>
+    <span class="stat-label">Regulation</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num" style="color:var(--accent-trade)">2</span>
+    <span class="stat-label">Trading</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num" style="color:var(--accent-news)">12</span>
+    <span class="stat-label">News</span>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<h2>1. 今週のサマリー</h2>
+<!-- ============================================ -->
+
+<div class="summary-box">
+  <p>今週はAI業界の「地殻変動」の週だった。技術面ではMCP 2026-07-28仕様RCのステートレス化が確定し、5,800以上の既存サーバーに破壊的変更が迫る一方、Claude Code Skillsエコシステムが爆発的に拡大してワークフロー自動化の標準手段として定着しつつある。規制面ではイリノイ州AI安全法署名、米上院AGENT Act草案、FTC精度ポリシー、中国AI三法施行と主要国が一斉に動き、8月2日のEU AI Act完全施行を前にグローバルな規制収斂が加速している。競合モデルではOpenAI GPT-5.6ファミリーが7月9日に一般公開され、Claude Sonnet 5との直接価格競争が始まった。Claude Fable 5が輸出規制解除を経て復帰したことで、Anthropicのモデルラインアップは4段階体制が完成した。</p>
+</div>
+
+<!-- ============================================ -->
+<h2>2. 今週ずっと話題だったもの</h2>
+<!-- ============================================ -->
+
+<h3><span class="tag tag-eco">Ecosystem</span> MCP仕様2026-07-28 RC: ステートレス革命</h3>
+<p>週を通じて最も記事数が多く、MCP実装者コミュニティ全体が移行準備に動いた1週間。</p>
+
+<div class="timeline">
+  <div class="timeline-item">
+    <div class="timeline-date">7/5 (土)</div>
+    <div class="timeline-text">MCP公式ブログがTier 1 SDK（Python/TypeScript/Java/C#）のベータ版提供を発表。10週間の検証ウィンドウが開始。同日、サーバー実装者向けに6件の破壊的変更（initialize廃止、Session-Id廃止等）の移行ガイドが公開。</div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-date">7/6 (日)</div>
+    <div class="timeline-text">移行ガイドが一気に5件以上公開。StackTree、Dev.to、ChatForest、MCPDirectory各コミュニティから独自視点の解説が出る。Backslash Securityがステートレス化で生じる3つの新攻撃面（_metaインジェクション、Apps iframeバイパス、Round-Trip改ざん）を警告。日本語圏でもHomulaがエンタープライズ対応（OAuth 2.1・監査・ゲートウェイ統合）の解説を公開。</div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-date">7/8 (火)</div>
+    <div class="timeline-text">Essamamdaniが包括的開発者ガイドを公開。MCPのSDKダウンロード数が月間9,700万、GitHubスター81,000超と普及状況を数字で確認。</div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-date">7/10 (木)</div>
+    <div class="timeline-text">Google Cloudが50以上のフルマネージドMCPサーバーをGA公開していたことが判明（5月発表）。GKE・BigQuery・Gmail等の主要GCPサービスがMCPプロトコル対応。</div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-date">7/11 (金)</div>
+    <div class="timeline-text">日本のSaaS 8社（freee・kintone・Sansan等）のMCP対応状況が調査公開。国内対応率35%、freeeは330 APIで最高水準。「日本語MCPエコシステム」の形成が報告された。</div>
+  </div>
+</div>
+
+<h3><span class="tag tag-claude">Claude Code</span> Skillsエコシステムの爆発的拡大</h3>
+<p>SKILL.mdを中心としたClaude Codeのワークフロー自動化が、技術ブログ・企業導入記事の両方で今週のトップテーマとなった。</p>
+
+<div class="timeline">
+  <div class="timeline-item ti-claude">
+    <div class="timeline-date">7/6 (日)</div>
+    <div class="timeline-text">法人・チーム導入7パターンのSkills完全ガイド、「7つの指示面（Steering Surfaces）」と「コンテキスト負債」の設計論が公開。CLAUDE.mdが200行超で遵守率が非線形低下するという定量知見が注目を集める。</div>
+  </div>
+  <div class="timeline-item ti-claude">
+    <div class="timeline-date">7/7 (月)</div>
+    <div class="timeline-text">SKILL.md作成の完全ガイドが日本語で公開。Markdownで記述可能・プログラミング知識不要で非エンジニアも作成可能という点が強調される。</div>
+  </div>
+  <div class="timeline-item ti-claude">
+    <div class="timeline-date">7/9 (水)</div>
+    <div class="timeline-text">Skills vs Hooks vs Subagents vs MCPの4コンポーネント比較ガイド（Totalum）と、実践派エンジニア厳選17スキル評価ガイド（Elcamy）が同日公開。スキルの選定・チェーン設計の実用情報が充実。</div>
+  </div>
+  <div class="timeline-item ti-claude">
+    <div class="timeline-date">7/11 (金)</div>
+    <div class="timeline-text">CLAUDE.md Best Practices 9ルール（命令バジェット・決定トライアングル）が公開。「CLAUDE.md（助言的）・hooks（決定論的）・skills（バンドル）」の使い分け体系が確立。</div>
+  </div>
+</div>
+
+<h3><span class="tag tag-reg">Regulation</span> 世界同時多発のAI規制ラッシュ</h3>
+<p>今週は米国・EU・中国・英国・国連の5方面から同時に規制動向が報じられた異例の週。</p>
+
+<div class="timeline">
+  <div class="timeline-item ti-reg">
+    <div class="timeline-date">7/5 (土)</div>
+    <div class="timeline-text">EU AI Actコンプライアンスガイドが公開。8月2日の透明性義務完全施行まで1ヶ月を切り、企業への準備催促が本格化。</div>
+  </div>
+  <div class="timeline-item ti-reg">
+    <div class="timeline-date">7/6 (日)</div>
+    <div class="timeline-text">GSAがLLM請負業者向けデータ保護規則を発表（政府データの訓練利用禁止）。MITがAIガバナンス世界地図を更新。GDPR+AI Actの複合コンプライアンス分析も公開。</div>
+  </div>
+  <div class="timeline-item ti-reg">
+    <div class="timeline-date">7/7 (月)</div>
+    <div class="timeline-text">イリノイ州AI Safety Measures Act署名成立。CA・NY・ILの3州で米国AIマーケット40%を占め、事実上の全国標準に。同日、国連ジュネーブ対話とFTC精度ポリシーコメント募集も発表。</div>
+  </div>
+  <div class="timeline-item ti-reg">
+    <div class="timeline-date">7/9 (水)</div>
+    <div class="timeline-text">Warner上院議員のAI AGENT Act草案が公開。月5,000万ユーザー超プラットフォームのFTC承認義務化、エージェント提供者のFTC登録必須化。初の包括的連邦AIエージェント規制として注目。</div>
+  </div>
+  <div class="timeline-item ti-reg">
+    <div class="timeline-date">7/11 (金)</div>
+    <div class="timeline-text">中国AI規制3本が7月施行（倫理ガイドライン7/1、感情AI・エージェント規制7/15）。米国ではEO14409・NSPM-11・Great American AI Actの連邦3法案が並行審議中。</div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<h2>3. 今週の重要トピック</h2>
+<!-- ============================================ -->
+
+<h3><span class="tag tag-claude">Claude Code</span> Claude Code関連</h3>
+
+<div class="card">
+  <h4>Claude Sonnet 5がデフォルトモデルに</h4>
+  <p>7月1日よりFree/Proユーザーのデフォルトに設定。SWE-bench Pro 63.2%、Terminal-Bench 80.4%とOpus 4.8を超える性能を$2/$10 per MTokのプロモーション価格（8月31日まで）で提供。1Mトークンのネイティブコンテキストウィンドウを持ち、エージェント型作業への最適化が特徴。</p>
+</div>
+
+<div class="card">
+  <h4>Cowork: モバイル・Webへの拡張</h4>
+  <p>TechCrunchが報道。デスクトップ限定だったCoworkがWebとモバイルでMax加入者向けに利用可能に。デスクで開始した作業をスマホで進捗確認する非同期エージェント作業が実現し、コーディングからオフィス業務全般への戦略拡大が明確になった。</p>
+</div>
+
+<div class="card">
+  <h4>ネストサブエージェント depth=5</h4>
+  <p>v2.1.172で最大5階層のネストが実現したが、コンテキスト消費の乗数的増加により実用上限は2-3階層。セーフモードで子エージェントの権限スコープを親より制限可能。v2.1.203-206では安定性の修正が継続。</p>
+</div>
+
+<div class="card">
+  <h4>企業導入事例の増加</h4>
+  <p>Gemcookの全社導入意思決定記録、Firecrackerの企業導入ガイドが公開。段階的ロールアウト（パイロット→拡大→全社）、CLAUDE.md整備、チームごとのスキル設計が成功の共通パターンとして浮かび上がった。6月の課金変更後のROI試算方法も共有されている。</p>
+</div>
+
+<h3><span class="tag tag-eco">Ecosystem</span> エコシステム関連</h3>
+
+<div class="card">
+  <h4>GPT-5.6 Sol/Terra/Luna 一般公開（7/9）</h4>
+  <p>OpenAIが3モデルファミリーをGA公開。Solは並列推論技術で750トークン/秒を達成。価格はSol $5/$30、Terra $2.50/$15、Luna $1/$6。Claude Sonnet 5（$2/$10）との直接競合はTerraが中心で、「Terraは推論特化・Sonnet 5はエージェント/tool use特化」という棲み分けが形成されつつある。</p>
+</div>
+
+<div class="card">
+  <h4>Fable 5の輸出規制解除と復帰</h4>
+  <p>6月9日公開→セーフガードバイパス発見→輸出規制で一時停止→Anthropicが新分類器導入→6月30日規制解除→7月1日再提供。政府による輸出規制がAI業界に直接影響した初の主要事例。創造的タスク・長文生成に特化し、Sonnet 5との使い分け指針が整理されている。</p>
+</div>
+
+<div class="card">
+  <h4>Agent SDK比較: Claude vs LangGraph vs AutoGen</h4>
+  <p>今週5件以上の比較記事が出る。Claude Agent SDKはManaged AgentsとDreaming機能で自律性最高評価、LangGraphはグラフ型ワークフローで複雑状態管理に最優。Pydantic AI V2（6/23 GA）の「capability」プリミティブもダークホースとして注目。AWS SummitではStrands Agents SDKが正式発表され、Bedrock+Claude Agent SDKの統合パターンが提示された。</p>
+</div>
+
+<div class="card">
+  <h4>2026年6月15日課金変更の影響が本格化</h4>
+  <p>Agent SDK・ヘッドレスClaude Code・GitHub Actions等の自動エージェント使用が月次クレジット制（Pro $20〜Max 20x $200）に分離された。サブスクリプションが自動使用を15〜30倍補助していた構造が終了し、CI/CDやcronジョブ運用者のコスト構造が変化。VSCodeでの使用量可視化拡張機能が開発されるなど、コスト管理ツールのニーズが顕在化している。</p>
+</div>
+
+<h3><span class="tag tag-reg">Regulation</span> 規制関連</h3>
+
+<div class="card">
+  <h4>AI AGENT Act: 初の包括的連邦AIエージェント規制</h4>
+  <p>Warner上院議員が起草。(1) 月5,000万ユーザー超プラットフォームのFTC承認エージェントアクセス義務化、(2) エージェント提供者のFTC登録必須化、(3) NISTによるオープン技術標準策定が主要条項。Claude Code・GitHub Copilot等のエージェントコーディングツールも対象範囲に含まれる可能性があり、エンタープライズのガバナンス体制見直しが急務。</p>
+</div>
+
+<div class="card">
+  <h4>EU AI Act 8月2日完全施行: カウントダウン</h4>
+  <p>Article 50の透明性義務が8月2日に発効し、汎用AIモデルにデータセット文書化・透明性レポートが義務化される。GDPRとの複合コンプライアンスも新たな執行焦点に。企業の準備期間は実質3週間を切り、TLT・Collibra・LegalNodes等の法律/コンプライアンス専門情報が急増した。</p>
+</div>
+
+<div class="card">
+  <h4>UK FCA: 金融AIエージェント規制強化要求</h4>
+  <p>自律型エージェントには「自然な中断点がない」ため即時退出メカニズムの実装が困難という規制上の課題を提示。FX自動取引を含む金融エージェントへの影響が注目される。</p>
+</div>
+
+<h3><span class="tag tag-trade">Trading</span> トレーディング関連</h3>
+
+<div class="card">
+  <h4>TradingAgents v0.3.1: Claude Sonnet 5/Fable 5対応</h4>
+  <p>LLM駆動の専門家ロールでプロ取引会社の分業構造を模倣するオープンソースフレームワークが最新モデルに対応。AWS Bedrock APIキー認証と設定可能なLLMリトライ予算を追加。実運用上の重要バグ修正も含まれ、安定性が向上。</p>
+</div>
+
+<div class="card">
+  <h4>LLM+MT5アーキテクチャ: Middleware Webhook方式が標準に</h4>
+  <p>LLMを直接MT5に組み込むのはVRAM・シングルスレッド制約で不可能なため、Python AI AgentレイヤーとZeroMQ/REST APIを介するアーキテクチャが業界標準化。LLMの適用領域はポジション判断・戦略立案・シグナル解釈に限定し、高頻度取引には従来型が依然優位。</p>
+</div>
+
+<!-- ============================================ -->
+<h2>4. ドメイン横断分析</h2>
+<!-- ============================================ -->
+
+<div class="cross-domain">
+  <strong>MCPステートレス化 <span class="connection-arrow">&harr;</span> AI規制の透明性要件</strong><br>
+  MCP 2026-07-28 RCのステートレス化はセッション状態を外部ストアに移行させるが、これはEU AI Act Article 50の透明性義務や、AI AGENT Actの監査ログ要件と直接接続する。ステートレス設計で各リクエストにメタデータ（protocol_version・client_info等）を含める新仕様は、規制が求める「AIエージェントのアクション追跡性」の技術的基盤になりうる。GSAのLLM請負業者データ保護規則もアクセスログ保持を要求しており、MCPゲートウェイでの統合的な監査ログ設計が技術課題と規制要件の交差点になっている。
+</div>
+
+<div class="cross-domain">
+  <strong>Claude Code Skills <span class="connection-arrow">&harr;</span> Agent SDKの本番化 <span class="connection-arrow">&harr;</span> 課金変更</strong><br>
+  SKILL.mdによるワークフロー自動化の普及、Agent SDKのManaged Agents/Dreaming機能の充実、そして6月15日の課金変更（自動使用の分離課金化）は三位一体のストーリーを形成している。Skillsで定型作業を自動化→Agent SDKで本番運用→コスト管理が必須に、という流れは今週のClaude Code系記事30件の共通テーマ。「CLAUDE.md 200行制限」の知見は、この自動化を設計する際の重要な制約条件としてエコシステム全体に影響する。
+</div>
+
+<div class="cross-domain">
+  <strong>FX自動取引 <span class="connection-arrow">&harr;</span> FCA規制 <span class="connection-arrow">&harr;</span> TradingAgents</strong><br>
+  FCAの「自律型エージェントには自然な中断点がない」という指摘は、TradingAgents v0.3.1のようなLLM駆動トレーディングシステムに直接影響する。MT5+LLMのMiddleware Webhook方式が標準化されつつあるが、これに即時停止メカニズムをどう組み込むかが今後の規制対応の焦点。AI AGENT Actの登録義務も含め、自動取引のガバナンス設計は「技術→規制→運用」の3層で考える必要がある。
+</div>
+
+<div class="cross-domain">
+  <strong>メタトレンド: 「デモ」から「本番」へのフェーズ転換</strong><br>
+  今週の86件を俯瞰すると、「AIエージェントがデモから本番システムへ完全移行した」という一文に集約される。Claude Code企業導入事例の急増、Agent SDK比較が「選定基準」から「本番運用パターン」に移行、規制が「原則論」から「運用ガバナンス」に変わっている。フレームワーク史上最多機能追加のQ2を経て、Q3はコンプライアンス・コスト最適化・組織定着のフェーズに入った。
+</div>
+
+<!-- ============================================ -->
+<h2>5. アクション提案</h2>
+<!-- ============================================ -->
+
+<ol class="action-list">
+  <li>
+    <span class="action-title">MCPサーバーの2026-07-28 RC移行準備を開始する <span class="priority p-high">高</span></span>
+    <span class="action-why">10週間の検証ウィンドウが7/5に開始済み。initializeハンドシェイク廃止・Session-Id廃止・Mcp-Method/Nameヘッダ必須化の6件の破壊的変更があり、自作MCPサーバーがある場合は即時対応が必要。Tier 1 SDKのベータ版が公開されているので、まず既存サーバーの互換性テストから着手すべき。（記事#771, #777, #778, #791）</span>
+  </li>
+  <li>
+    <span class="action-title">CLAUDE.mdを200行以内に最適化し、Skills/Hooksへ分離する <span class="priority p-high">高</span></span>
+    <span class="action-why">「CLAUDE.md 200行超で遵守率が非線形に低下する」という定量知見が今週複数記事で確認された。現在のCLAUDE.mdを棚卸しし、決定論的な制約はhooksに、反復的なワークフローはSKILL.mdに分離する「決定トライアングル」設計を適用すべき。（記事#782, #853）</span>
+  </li>
+  <li>
+    <span class="action-title">TradingAgents v0.3.1へのアップデートとClaude Sonnet 5切り替え <span class="priority p-mid">中</span></span>
+    <span class="action-why">v0.3.1でAlpha Vantageバグ修正・ルータークラッシュ修正等の実運用上重要な改善が入った。Sonnet 5のプロモーション価格（$2/$10、8月31日まで）を活かすことで、現行のOpusベースよりコストを大幅削減できる可能性がある。FCA規制動向も念頭に、停止メカニズムの設計を並行検討すべき。（記事#842, #811, #817）</span>
+  </li>
+  <li>
+    <span class="action-title">Agent SDK自動使用のコスト管理体制を構築する <span class="priority p-mid">中</span></span>
+    <span class="action-why">6月15日の課金変更でcronジョブ・CI/CD等の自動使用が分離課金化。VSCode使用量可視化拡張機能の導入、またはAgent SDKクレジットの消費ペース監視を始めるべき。Max 5xプラン（$100/月）のクレジット上限を意識した運用設計が必要。（記事#847, #792, #809）</span>
+  </li>
+  <li>
+    <span class="action-title">EU AI Act 8月2日施行に向け、公務領域でのAI利用の透明性文書を整備する <span class="priority p-mid">中</span></span>
+    <span class="action-why">GSAのLLM請負業者データ保護規則は日本の公共セクターにも波及しうる先行事例。横浜市のDX推進・AI活用において、利用しているAIツール（Claude Code等）のデータ取り扱い・透明性に関する内部整理文書を先行して準備しておくことで、国内の同様の規制動向に対して先手を打てる。（記事#787, #795, #776）</span>
+  </li>
+</ol>
+
+<!-- ============================================ -->
+<h2>6. 来週の注目ポイント</h2>
+<!-- ============================================ -->
+
+<div class="watch-list">
+  <div class="watch-item">
+    <span class="tag tag-reg">Regulation</span>
+    <strong>中国AI規制3本の施行（7/15）</strong>
+    <span>感情AI・AIエージェント規制が7月15日に施行。ByteDanceがエージェント機能をシャットダウンする動きあり。国際的な波及効果に注目。</span>
+  </div>
+  <div class="watch-item">
+    <span class="tag tag-reg">Regulation</span>
+    <strong>FTCパブリックコメント（〜7/31）</strong>
+    <span>AI精度ポリシーステートメントのコメント期間中。業界からの反応が規制の方向性を左右する。</span>
+  </div>
+  <div class="watch-item">
+    <span class="tag tag-eco">Ecosystem</span>
+    <strong>MCP SDK ベータ検証の進捗</strong>
+    <span>Tier 1 SDKベータ公開から2週目。初期検証結果のフィードバックや非互換報告が出始めるタイミング。</span>
+  </div>
+  <div class="watch-item">
+    <span class="tag tag-eco">Ecosystem</span>
+    <strong>GPT-5.6 vs Sonnet 5 ベンチマーク</strong>
+    <span>GPT-5.6 GA公開直後。独立ベンチマーク比較や実務レビューが出揃う週。エージェント性能の直接比較に注目。</span>
+  </div>
+  <div class="watch-item">
+    <span class="tag tag-claude">Claude Code</span>
+    <strong>Sonnet 5プロモーション価格の残り期間</strong>
+    <span>$2/$10は8月31日まで。正規価格がどうなるか、Anthropicからの発表に注意。</span>
+  </div>
+  <div class="watch-item">
+    <span class="tag tag-reg">Regulation</span>
+    <strong>EU AI Act 8/2まで残り3週間</strong>
+    <span>Article 50透明性義務の施行が迫る。コンプライアンス準備の最終段階に入る企業が増える。</span>
+  </div>
+</div>
+
+<div class="footer">
+  AI Weekly Digest / 自動生成 / 収録期間: 2026-07-05 ~ 2026-07-11 / 記事数: 86
+</div>
