@@ -1,7 +1,7 @@
 # PROPOSALS.md
 
 収集記事を横断分析して得られた反映提案。
-最終更新: 2026-07-11: 日次収集+キュレーション 2026-07-11（収集14件 → SIGNAL 13件）
+最終更新: 2026-07-12: 日次収集+キュレーション 2026-07-12（収集11件 → SIGNAL 11件）
 
 ---
 
@@ -2057,3 +2057,44 @@ FX自動売買の構成（P-014の4層アーキテクチャ）において、Gem
 1. AnthropicのJ-lensリポジトリを確認し、FX自動取引エージェントへの適用可能性を評価
 2. テスト環境でJ-lensを実行し、シグナル生成時の内部推論ステップを記録・分析
 3. J-space分析の結果をP-043（LLMバージョン固定・リグレッションテスト）の指標に組み込む
+
+---
+
+## 2026-07-12 提案
+
+### P-156: Claude Codeデスクトップ内蔵ブラウザを日次収集フローに活用（7/10新機能）
+
+**根拠記事**: 864 (9to5Mac Claude Code Desktop InApp Browser)
+**詳細**: 2026年7月10日にClaude Codeデスクトップアプリに内蔵ブラウザが追加された。Cmd+Shift+B（Mac）で起動し、Claudeがドキュメント・WebページをローカルのDOM直接取得で参照できる。現状の日次収集エージェントはWebSearchとWebFetchを組み合わせているが、内蔵ブラウザを使うことで：①JavaScriptレンダリングが必要なSPAサイトの収集が可能に、②WebFetchで取得できないインタラクティブコンテンツへのアクセスが実現、③外部サービス（xやReddit等）のブラウザ操作型収集が理論的に可能。ただし書き込み操作（ログイン等）にはユーザー承認が必要なため、完全自動化には制限あり。
+
+**提案アクション**:
+1. Claude Codeデスクトップ版でCmd+Shift+Bを試し、動作確認
+2. WebFetchで取得できなかったサイト（JavaScript依存SPAやCDNキャッシュ問題）に内蔵ブラウザを試験適用
+3. 日次収集フローの「WebFetch → 内蔵ブラウザ」フォールバックパターンをSKILL.mdに記載
+
+---
+
+### P-157: 緊急 — Fable 5アクセス本日終了 & Sonnet 5 API破壊的変更への対応
+
+**根拠記事**: 863 (DigitalApplied Fable5 Access Extended July12), 862 (Anthropic Sonnet 5 Official Docs), 865 (ITConnect Fable5+Sonnet5)
+**緊急度**: 高（本日2026-07-12がFable 5アクセス最終日）
+**詳細**: Claude Fable 5のアクセスが本日（2026-07-12）期限。また Claude Sonnet 5がClaude Codeのデフォルトモデルとして採用されており、以下のAPI破壊的変更がある：①手動extended thinking設定 → 400エラー、②非デフォルトサンプリングパラメータ → 400エラー。FX自動取引（sandbox/FX自動取引/）のコードでこれらを使っている場合、即日修正が必要。Sonnet 5の新価格：入力$2/$10/Mトークン（8/31まで）→$3/$15（9/1〜）。Claude Code上では既にSonnet 5がデフォルト。
+
+**提案アクション**:
+1. `grep -r "extended_thinking\|thinking.*enabled\|top_p\|temperature" sandbox/FX自動取引/` でAPI破壊的変更の影響箇所を特定
+2. Fable 5を使用していたスクリプト・設定を確認し、Opus 4.8（高精度）またはSonnet 5（コスト効率）への切り替えを即日実施
+3. CLAUDE.mdのモデル指定セクションを更新：「デフォルトはSonnet 5（2026-07-12〜）、高精度用途はOpus 4.8」に変更
+4. プロモーション価格（$2/$10）は2026-08-31まで。それ以降のコスト影響（+50%）を今月中に試算
+
+---
+
+### P-158: MCP 2026-07-28 RC確定仕様への移行準備 — P-017のアップデート
+
+**根拠記事**: 858 (Uravation MCP Server Build Guide), 859 (AIHeartland MCP Production Agents)
+**詳細**: MCP仕様の2026-07-28リリース候補が確定段階に入った。P-017（2026年5月時点の予告）からの主要変更確定内容：①Mcp-MethodとMcp-Nameヘッダーが必須化（SEP-2243）→ ロードバランサー・ゲートウェイでのルーティングが必要、②List/Resourceの結果にttlMs・cacheScopeが追加（SEP-2549）→ キャッシュ戦略の見直しが必要、③Mcp-Session-IdヘッダーとプロトコルレベルセッションIDが廃止（SEP-2567）→ ステートレス化完了・スティッキールーティング不要。FastMCP 3.0はすでにRC仕様対応済み。
+
+**提案アクション**:
+1. P-011・P-013で開発予定のカスタムMCPサーバーのヘッダー要件（Mcp-Method/Mcp-Name）を設計に組み込む
+2. 既存のMCP設定（.mcp.json）でセッション依存の実装がある場合は7/28前にステートレス対応を実施
+3. `uravation.com/media/anthropic-mcp-server-build-tools-resources-prompts-2026/` のTools/Resources/Prompts実装パターンを参照し、RC仕様準拠のサーバーを設計
+4. 2026-07-28最終版公開後、14日以内に既存MCPサーバー設定の互換性テストを実施
