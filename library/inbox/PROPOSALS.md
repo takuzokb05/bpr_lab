@@ -2098,3 +2098,47 @@ FX自動売買の構成（P-014の4層アーキテクチャ）において、Gem
 2. 既存のMCP設定（.mcp.json）でセッション依存の実装がある場合は7/28前にステートレス対応を実施
 3. `uravation.com/media/anthropic-mcp-server-build-tools-resources-prompts-2026/` のTools/Resources/Prompts実装パターンを参照し、RC仕様準拠のサーバーを設計
 4. 2026-07-28最終版公開後、14日以内に既存MCPサーバー設定の互換性テストを実施
+
+---
+
+## 2026-07-13 提案
+
+### P-159: 緊急 — MCP SDK stdio transportにRCE脆弱性（全言語SDK・1.5億DL影響、2026年4月開示）
+
+**根拠記事**: 874 (ShareUHack Best MCP Servers 2026)
+**緊急度**: 高（既に開示済み・パッチ要否確認が必要）
+**詳細**: 2026年4月に、MCP SDKのstdio transportに全言語SDK（Python/TypeScript/Go/Java/Ruby等）に影響するシステムRCE脆弱性が公開された。1億5000万DL超に影響し、MCPサーバーを実行している環境でのリモートコード実行リスクがある。このリポジトリがMCPサーバーを利用している（または開発している）場合、バージョン確認とパッチ適用が必要。
+
+**提案アクション**:
+1. `grep -r "mcp\|@modelcontextprotocol" package.json .mcp.json src/` でMCP SDK使用箇所を特定
+2. 使用中のMCP SDKバージョンを確認し、脆弱性修正版にアップデート
+3. stdioトランスポートを使用しているサーバーを特定し、HTTPSへの切り替えを検討
+4. GitHub MCP Server等でトークンスコープを読み取り専用に最小化（防衛的対策）
+5. 信頼できないソースのMCPサーバーのインストールを禁止するポリシーをCLAUDE.mdに記載
+
+---
+
+### P-160: 戦略 — MCPに対抗する企業連合プロトコル出現（Google・MS・Salesforce・Snowflake・ServiceNow）
+
+**根拠記事**: 868 (BuildFastWithAI AI News July 13)
+**詳細**: 2026年7月13日、Google・Microsoft・Salesforce・Snowflake・ServiceNowがAnthropicのMCPに対抗するAIエージェントバックエンドプロトコルの共同策定に合意した。このリポジトリはMCPに大きく依存（P-011・P-013・P-017・P-158）しており、長期的にはプロトコル選択の戦略的判断が必要になる可能性がある。ただし現時点では新プロトコルの詳細は未公表であり、観察継続が適切。
+
+**提案アクション**:
+1. 新プロトコルの仕様・名称・タイムラインを今後の日次収集でトラッキング
+2. MCPと新プロトコルの共存可能性（ブリッジ層）の動向を確認
+3. 主要ツール（Claude Code・Cursor・GitHub Copilot）の対応状況を注視
+4. FX自動取引エージェントのMCP依存部分（P-011・P-013）はモジュール化して切り替えやすくしておく
+
+---
+
+### P-161: CLAUDE.md見直し — WHAT/WHY/HOW 3層構造・300行以下・Progressive Disclosure適用
+
+**根拠記事**: 873 (Buildcamp CLAUDE.md Ultimate Guide)
+**詳細**: Buildcampの2026年最新CLAUDE.mdガイドで実証された「WHAT/WHY/HOW 3層構造」と「Progressive Disclosure」戦略は、このリポジトリのCLAUDE.md改善に直接適用できる。核心原則："CLAUDE.mdの悪い1行は全タスクに悪影響を与える"—冗長な記述は削除し300行以下を目指す。タスク固有の詳細は.claude/rules/やskillsへ分散させることで常時ロードコンテキストを削減できる。
+
+**提案アクション**:
+1. 現行CLAUDE.mdを監査：全タスクに適用されない命令をリストアップして分離
+2. 3層構造（WHAT=技術スタック/WHY=設計理由/HOW=コマンド）に再編
+3. ビルド・テストコマンドを先頭セクションに移動（最高ROIセクション）
+4. 詳細な仕様・規約を`docs/`に移しリンクで参照（Progressive Disclosure化）
+5. CLAUDE.local.md（gitignore対象）を個人設定の保管場所として整備
