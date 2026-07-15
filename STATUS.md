@@ -11,7 +11,7 @@
 - **bpr_lab は「実験場（sandbox）リポジトリ」**。単一プロダクトではなく、業務効率化ツール・調査・個人アプリなど **30個の独立サブプロジェクト**が `sandbox/` 配下に並ぶ。
 - 各サブPJは基本的に **self-contained**（自前の CLAUDE.md / docs / .claude を持つものが多い）。作業時はそのPJディレクトリを作業ディレクトリにする。
 - **統合ハブは `sandbox/タスクマネージャー`**。蔵書管理（library/、記事2700件超）・情報収集スキル群・session-review 運用がここに集約されている（詳細はそちらの STATUS.md）。
-- ルート直下の `src/` `web/` `data/` はリポジトリ初期の足場（未精査）。**ただしルート `library/` は例外で、日次収集ルーチンが現役で書き込んでいる**（2026-07-16判明。articles 876件・inbox/web 697件滞留。タスクマネージャー `library/`（2,715件）と分裂中 → 統合検討中）。
+- ルート直下の `src/` `web/` `data/` はリポジトリ初期の足場（未精査）。旧ルート `library/` は 2026-07-16 にタスクマネージャー `library/` へ統合済み（記事3,595件に一本化。経緯は `library/MOVED.md`）。収集ルーチン2本（daily-collect-and-curate / weekly-digest）の出力先も同日修正済み。
 - **PC⇔スマホ同期**: PC側で GitAutoSync（15分毎の自動fetch+安全時のみff-pull）が稼働。クラウドセッションからPCに届けたい変更は main へのマージまで完了させること（詳細はルート `CLAUDE.md`）。
 
 ---
