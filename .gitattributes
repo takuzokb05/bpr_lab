@@ -1,0 +1,21 @@
+# 改行コードの安定化（クラウドセッション=Linux と PC=Windows の混在対策）
+# テキストはリポジトリ内LFで統一し、checkout時はOS慣習に従う
+* text=auto
+
+# Windows専用スクリプトは常にCRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Unix系スクリプトは常にLF
+*.sh text eol=lf
+
+# バイナリ（改行変換禁止）
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.pdf binary
+*.ico binary
+*.woff binary
+*.woff2 binary
