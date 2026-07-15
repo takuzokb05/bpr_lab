@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML直す君 - ダッシュボードビジュアルエディタ</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Suppress Tailwind CDN warning
+        window.tailwind = { config: {} };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --primary-dark: #4f46e5;
+            --accent: #a855f7;
+            --bg-app: #f1f5f9;
+            --bg-canvas-area: #cbd5e1;
+            --text-main: #0f172a;
+            --text-sub: #64748b;
+            --glass: rgba(255, 255, 255, 0.82);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --border: #e2e8f0;
+            --shadow-premium: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-app);
+            color: var(--text-main);
+            overflow: hidden;
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* 究極の3カラム・フル・レイアウト */
+        .app-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr 340px;
+            width: 100%;
+            height: 100vh;
+        }
+
+        /* 共通サイドバー・スタイル (Glassmorphism) */
+        .sidebar {
+            background: var(--glass);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            z-index: 100;
+            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.02);
+        }
+
+        .sidebar-right {
+            border-right: none;
+            border-left: 1px solid var(--border);
+            box-shadow: -4px 0 24px rgba(0, 0, 0, 0.02);
+        }
+
+        /* タイトルエリア */
+        .app-branding {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .app-branding h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
+        }
+
+        .app-branding .badge {
+            font-size: 0.6rem;
+            font-weight: 800;
+            color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 4px;
+        }
+
+        /* セクション・ラベル */
+        .section-header {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: var(--text-sub);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin: 1.5rem 0 0.75rem 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-header::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* アクションボタン・グリッド */
+        .action-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            height: 48px;
+            border-radius: 14px;
+            border: 1px solid transparent;
+            font-weight: 700;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-secondary:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+            transform: translateY(-1px);
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* レイヤーリスト */
+        .layer-list {
+            flex: 1;
+            overflow-y: auto;
+            list-style: none;
+            margin: 0 -0.5rem;
+            padding: 0 0.5rem;
+        }
+
+        .layer-item {
+            padding: 0.75rem;
+            border-radius: 12px;
+            margin-bottom: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .layer-item:hover {
+            background: rgba(0, 0, 0, 0.03);
+        }
+
+        .layer-item.selected {
+            background: white;
+            border-color: var(--primary);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .layer-icon {
+            width: 32px;
+            height: 32px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            border: 1px solid var(--border);
+        }
+
+        .layer-info {
+            overflow: hidden;
+        }
+
+        .layer-id {
+            font-weight: 700;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .layer-type {
+            font-size: 0.65rem;
+            color: var(--text-sub);
+            font-weight: 500;
+        }
+
+        /* 中央：ワークスペース */
+        .workspace-area {
+            background-color: var(--bg-canvas-area);
+            background-image:
+                linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            overflow: auto;
+            padding: 4rem 2rem;
+            display: flex;
+            /* センター寄せを復活 */
+            justify-content: center;
+            align-items: flex-start;
+            position: relative;
+        }
+
+        #canvas {
+            width: 1400px;
+            height: 787.5px;
+            /* 16:9 Exact */
+            background-color: transparent;
+            box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            flex-shrink: 0;
+            transform-origin: top center;
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .zoom-slider {
+            width: 100%;
+            accent-color: var(--primary);
+            height: 6px;
+            border-radius: 3px;
+            background: #e2e8f0;
+            outline: none;
+        }
+
+        /* 右サイド：履歴 & プロパティ */
+        .history-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 2rem;
+            background: rgba(0, 0, 0, 0.03);
+            padding: 6px;
+            border-radius: 16px;
+        }
+
+        .property-container {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .property-card {
+            background: white;
+            border-radius: 18px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+        }
+
+        .property-input-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .property-input-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .property-input,
+        .property-select {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            font-size: 0.875rem;
+            background-color: #f8fafc;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .property-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background-color: white;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+
+        .style-tools {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-top: 1rem;
+        }
+
+        .tool-btn {
+            height: 42px;
+            background: #f1f5f9;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tool-btn:hover {
+            background: #e2e8f0;
+        }
+
+        .tool-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary-dark);
+        }
+
+        .color-well {
+            width: 100%;
+            height: 42px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        /* ウィジェット・ステート */
+        .widget {
+            cursor: move;
+            transition: outline 0.1s ease;
+            outline: 2px solid transparent;
+            outline-offset: 2px;
+        }
+
+        .widget:hover {
+            outline: 2px solid rgba(99, 102, 241, 0.3);
+        }
+
+        .widget.selected {
+            outline: 3px solid var(--primary) !important;
+            box-shadow: 0 0 0 12px rgba(99, 102, 241, 0.1) !important;
+        }
+
+        /* リサイズハンドル */
+        .resize-handle {
+            background: white !important;
+            border: 2px solid var(--primary) !important;
+            border-radius: 50% !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+        }
+
+        /* 編集モード */
+        [contenteditable="true"] {
+            outline: 2px dashed var(--accent) !important;
+            outline-offset: 4px;
+            background: rgba(139, 92, 246, 0.05);
+            cursor: text;
+        }
+
+        /* 浮遊通知 */
+        .supreme-toast {
+            position: fixed;
+            top: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: #1e293b;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 100px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 9999;
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            font-weight: 700;
+        }
+
+        .supreme-toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .supreme-toast.error {
+            background: #ef4444;
+        }
+
+        .empty-visual {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--text-sub);
+            height: 100%;
+        }
+
+        #fileInput {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 浮遊通知 -->
+    <div id="notification" class="supreme-toast">
+        <span id="notificationIcon">✅</span>
+        <span id="notificationText">システムの準備が整いました</span>
+    </div>
+
+    <div class="app-layout">
+        <!-- 左サイド：ツール & レイヤー -->
+        <aside class="sidebar">
+            <div class="app-branding">
+                <h1>🛠️ HTML直す君</h1>
+                <span class="badge">PREMIUM EDITION</span>
+            </div>
+
+            <div class="section-header">Main Actions</div>
+            <div class="action-grid">
+                <input type="file" id="fileInput" accept=".html" onchange="handleFileSelect(event)">
+                <button class="btn btn-secondary" onclick="document.getElementById('fileInput').click()">📂 開く</button>
+                <button class="btn btn-primary" onclick="exportHTML()">💾 保存</button>
+            </div>
+
+            <div class="section-header">View Controls</div>
+            <div class="property-card" style="padding: 1rem; margin-bottom: 1rem;">
+                <label class="property-label" id="zoomLabel">Zoom: 100%</label>
+                <input type="range" class="zoom-slider" id="zoomSlider" min="10" max="200" value="100"
+                    style="width: 100%;" oninput="updateZoom(this.value)">
+                <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+                    <button class="btn btn-secondary"
+                        style="height: 30px; font-size: 0.7rem; flex: 1; margin-right: 4px;"
+                        onclick="resetZoom()">Fit</button>
+                    <button class="btn btn-secondary" style="height: 30px; font-size: 0.7rem; flex: 1;"
+                        onclick="updateZoom(100)">100%</button>
+                </div>
+            </div>
+
+            <div class="section-header">Layers</div>
+            <div class="layer-list" id="layerList">
+                <div class="empty-visual">
+                    <div style="font-size: 2rem; opacity: 0.5;">📭</div>
+                    <p style="font-size: 0.75rem; margin-top: 0.5rem;">ロード待ち</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- 中央：作業エリア -->
+        <main class="workspace-area">
+            <div id="canvas">
+                <div class="empty-visual" style="padding: 4rem;">
+                    <div style="font-size: 5rem; margin-bottom: 2rem;">🎨</div>
+                    <h2
+                        style="font-family: 'Outfit', sans-serif; color: var(--text-main); font-size: 2rem; margin-bottom: 1rem;">
+                        Dashboard Processor</h2>
+                    <p style="color: var(--text-sub); max-width: 480px; line-height: 1.8; font-weight: 500;">
+                        GeminiやClaude等で生成したHTMLファイルを読み込んでください。<br>
+                        AIの出力を「至高のダッシュボード」へと瞬時に磨き上げます。
+                    </p>
+                </div>
+            </div>
+        </main>
+
+        <!-- 右サイド：履歴 & プロパティ -->
+        <aside class="sidebar sidebar-right">
+            <div class="section-header">History Control</div>
+            <div class="history-grid">
+                <button class="btn btn-secondary" id="undoBtn" onclick="undo()" title="Undo (Ctrl+Z)"
+                    disabled>↩️</button>
+                <button class="btn btn-secondary" id="redoBtn" onclick="redo()" title="Redo (Ctrl+Y)"
+                    disabled>↪️</button>
+            </div>
+
+            <div class="section-header">Component Details</div>
+            <div id="propertyPanel" class="property-container">
+                <div class="empty-visual">
+                    <div style="font-size: 2rem; opacity: 0.5;">👈</div>
+                    <p style="font-size: 0.8rem; margin-top: 0.5rem;">ウィジェットを選択してください</p>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        let selectedWidget = null;
+        let loadedHTML = '';
+        let widgetData = new Map();
+        let currentlyEditing = null;
+        let savedRange = null; // 最後に選択されていた範囲を保持
+
+        // 履歴管理
+        let undoStack = [];
+        let redoStack = [];
+        const historyLimit = 50; // 最大履歴数
+
+        // 現在のセレクションからスタイルを取得する
+        function getSelectionStyle() {
+            const selection = window.getSelection();
+            let targetNode = null;
+
+            if (selection.rangeCount > 0) {
+                const range = selection.getRangeAt(0);
+                targetNode = range.commonAncestorContainer;
+                if (targetNode.nodeType === 3) targetNode = targetNode.parentNode;
+            } else if (currentlyEditing) {
+                targetNode = currentlyEditing;
+            } else if (selectedWidget) {
+                targetNode = selectedWidget;
+            }
+
+            if (!targetNode) return null;
+            const style = window.getComputedStyle(targetNode);
+            return {
+                color: rgbToHex(style.color),
+                fontSize: parseInt(style.fontSize),
+                fontFamily: style.fontFamily.split(',')[0].replace(/['"]/g, '').trim()
+            };
+        }
+
+        // プロパティパネルの値を現在のセレクションに同期する
+        function syncPropertyPanelValues() {
+            if (!selectedWidget) return;
+
+            // 入力中（フォーカス中）の要素があれば、同期をスキップして入力を保護する
+            const active = document.activeElement;
+            if (active && (active.id === 'typoFontSize' || active.id === 'typoColorText' || active.id === 'typoColorPicker' || active.id === 'typoFontFamily')) {
+                return;
+            }
+
+            const style = getSelectionStyle();
+            if (!style) return;
+
+            const colorPicker = document.getElementById('typoColorPicker');
+            const colorText = document.getElementById('typoColorText');
+            const colorPreview = document.getElementById('colorPreview');
+            const fontFamily = document.getElementById('typoFontFamily');
+            const fontSize = document.getElementById('typoFontSize');
+
+            if (colorPicker) colorPicker.value = style.color;
+            if (colorText) colorText.value = style.color;
+            if (colorPreview) colorPreview.style.backgroundColor = style.color;
+            if (fontFamily) {
+                // 最も近いフォント名を選択
+                for (let option of fontFamily.options) {
+                    if (style.fontFamily.includes(option.value.split(',')[0].trim())) {
+                        fontFamily.value = option.value;
+                        break;
+                    }
+                }
+            }
+            if (fontSize) fontSize.value = style.fontSize;
+        }
+
+        // セレクションの変更を監視し、編集モード中であれば範囲を保存・同期する
+        document.addEventListener('selectionchange', () => {
+            if (currentlyEditing) {
+                const selection = window.getSelection();
+                if (selection.rangeCount > 0) {
+                    const range = selection.getRangeAt(0);
+                    // 選択範囲が編集中の要素内にある場合のみ保存
+                    if (currentlyEditing.contains(range.commonAncestorContainer)) {
+                        savedRange = range.cloneRange();
+                    }
+                }
+                syncPropertyPanelValues();
+            }
+        });
+
+        function showNotification(message, isError) {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notificationText');
+            const notificationIcon = document.getElementById('notificationIcon');
+            notificationText.textContent = message;
+            if (isError) {
+                notification.classList.add('error');
+                notificationIcon.textContent = '❌';
+            } else {
+                notification.classList.remove('error');
+                notificationIcon.textContent = '✅';
+            }
+            notification.classList.add('show');
+            setTimeout(function () {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        function loadDashboard(htmlString) {
+            loadedHTML = htmlString;
+            widgetData.clear();
+
+            const canvas = document.getElementById('canvas');
+            canvas.innerHTML = '';
+
+            // --- 段階1: 隠しIFRAMEでレンダリングして計測 ---
+            // iframeを使わないと、Tailwindのメディアクエリ(md:)やグローバルCSSがメインページと衝突したり、
+            // 現在のウィンドウ幅に依存してレイアウトが崩れたりするため、仮想的な1400px環境で測定する。
+            const iframe = document.createElement('iframe');
+            iframe.style.position = 'absolute';
+            iframe.style.top = '-9999px';
+            iframe.style.width = '1400px';
+            iframe.style.height = '787.5px'; // 16:9 Exact
+            document.body.appendChild(iframe);
+
+            const doc = iframe.contentWindow.document;
+            doc.open();
+            doc.write(htmlString);
+            doc.close();
+
+            // レンダリングとTailwindの適用を少し待つ
+            setTimeout(() => {
+                const renderedBody = doc.body;
+                if (!renderedBody) {
+                    showNotification('HTMLの解析に失敗しました', true);
+                    document.body.removeChild(iframe);
+                    return;
+                }
+
+                const docStyle = iframe.contentWindow.getComputedStyle(renderedBody);
+
+                // 背景とグローバルスタイルの継承
+                const canvasStyles = {
+                    backgroundColor: docStyle.backgroundColor,
+                    backgroundImage: docStyle.backgroundImage,
+                    backgroundSize: docStyle.backgroundSize,
+                    backgroundPosition: docStyle.backgroundPosition,
+                    backgroundRepeat: docStyle.backgroundRepeat,
+                    color: docStyle.color,
+                    fontFamily: docStyle.fontFamily
+                };
+                Object.assign(canvas.style, canvasStyles);
+                canvas.className = renderedBody.className;
+
+                // --- 段階2: 全Widgetの抽出とフラット化 ---
+                const foundWidgets = Array.from(doc.querySelectorAll('[data-id], .widget'));
+                const canvasWidth = 1400;
+                const canvasHeight = 787.5;
+
+                const widgetConfigs = foundWidgets.map((el, idx) => {
+                    // 既に別のwidgetに含まれている場合はスキップ（最外階層のみをwidget化）
+                    if (el.parentElement.closest('[data-id], .widget')) return null;
+
+                    const rect = el.getBoundingClientRect();
+
+                    return {
+                        id: el.dataset.id || `widget-${idx + 1}`,
+                        type: el.dataset.type || 'unknown',
+                        html: el.innerHTML,
+                        tagName: el.tagName,
+                        classList: Array.from(el.classList).filter(c => c !== 'widget' && c !== 'selected'),
+                        style: {
+                            top: (rect.top / canvasHeight * 100) + '%',
+                            left: (rect.left / canvasWidth * 100) + '%',
+                            width: (rect.width / canvasWidth * 100) + '%',
+                            height: (rect.height / canvasHeight * 100) + '%'
+                        }
+                    };
+                }).filter(conf => conf !== null);
+
+                // --- 段階3: Canvasへの展開 ---
+                canvas.innerHTML = '';
+                widgetConfigs.forEach(conf => {
+                    const w = document.createElement(conf.tagName);
+                    w.dataset.id = conf.id;
+                    w.dataset.type = conf.type;
+                    w.innerHTML = conf.html;
+                    conf.classList.forEach(c => w.classList.add(c));
+                    w.classList.add('widget');
+
+                    Object.assign(w.style, conf.style);
+                    w.style.position = 'absolute';
+                    w.style.margin = '0';
+
+                    canvas.appendChild(w);
+                });
+
+                // スクリプトの抽出と再実行
+                const scripts = doc.querySelectorAll('script');
+                scripts.forEach(oldScript => {
+                    const newScript = document.createElement('script');
+                    if (oldScript.src) newScript.src = oldScript.src;
+                    else newScript.textContent = oldScript.textContent;
+                    document.body.appendChild(newScript);
+                });
+
+                document.body.removeChild(iframe);
+
+                // ウィジェットの初期化
+                setTimeout(() => {
+                    const widgets = canvas.querySelectorAll('.widget');
+                    initializeWidgets(widgets);
+                    updateLayerList(widgets);
+                    saveState();
+                    showNotification('16:9 デスクトップ基準で最適化しました ✨', false);
+                }, 100);
+            }, 600); // 描画待ち
+        }
+
+        // stabilizeLayout は loadDashboard に統合されたため、
+        // エクスポート直前の最終微調整用として残す
+        function stabilizeLayout() {
+            const canvas = document.getElementById('canvas');
+            const widgets = Array.from(canvas.children).filter(el => el.classList.contains('widget'));
+            // 現在の表示位置を絶対座標で確定（移動後の保存用）
+            widgets.forEach(w => {
+                if (w.style.position !== 'absolute') w.style.position = 'absolute';
+            });
+        }
+
+        function initializeWidgets(widgets) {
+            for (let i = 0; i < widgets.length; i++) {
+                const widget = widgets[i];
+                const id = widget.dataset.id;
+                widgetData.set(id, widget);
+
+                widget.classList.add('widget');
+
+                widget.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    selectWidget(widget);
+                });
+
+                widget.addEventListener('dblclick', function (e) {
+                    const target = e.target;
+                    if (currentlyEditing && currentlyEditing !== target) {
+                        currentlyEditing.contentEditable = 'false';
+                        currentlyEditing = null;
+                    }
+
+                    if (target.contentEditable !== 'true') {
+                        target.contentEditable = 'true';
+                        target.focus();
+                        currentlyEditing = target;
+
+                        target.addEventListener('keydown', function (ke) {
+                            if (ke.key === 'Enter' && !ke.shiftKey) {
+                                ke.preventDefault();
+                                target.blur();
+                            }
+                        });
+                    }
+                });
+
+                // グローバルな編集終了監視
+                if (!window.editGuardInitialized) {
+                    document.addEventListener('mousedown', function (me) {
+                        if (currentlyEditing) {
+                            if (!currentlyEditing.contains(me.target) && !me.target.closest('#propertyPanel')) {
+                                currentlyEditing.contentEditable = 'false';
+                                currentlyEditing = null;
+                                showNotification('テキストを更新しました ✏️', false);
+                                saveState();
+                            }
+                        }
+                    });
+                    window.editGuardInitialized = true;
+                }
+
+                let resizeHandle = widget.querySelector('[data-role="resize-handle"]');
+                if (!resizeHandle) {
+                    resizeHandle = document.createElement('div');
+                    resizeHandle.setAttribute('data-role', 'resize-handle');
+                    resizeHandle.className = 'resize-handle';
+                    widget.appendChild(resizeHandle);
+                }
+
+                resizeHandle.style.cssText = 'position: absolute; right: -2px; bottom: -2px; width: 32px; height: 32px; cursor: se-resize; z-index: 1000; pointer-events: auto; background: transparent;';
+                resizeHandle.innerHTML = '<svg width="32" height="32" viewBox="0 0 32 32" style="position: absolute; right: 0; bottom: 0;"><path d="M32 32 L32 24 L24 32 Z M32 18 L18 32 L26 32 L32 26 Z M32 12 L12 32 L20 32 L32 20 Z" fill="#667eea" opacity="0.6"/></svg>';
+
+                resizeHandle.addEventListener('mousedown', function (e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    const startX = e.clientX;
+                    const startY = e.clientY;
+                    const startWidth = widget.offsetWidth;
+                    const startHeight = widget.offsetHeight;
+
+                    function onMouseMove(moveE) {
+                        const deltaX = (moveE.clientX - startX) / currentZoom;
+                        const deltaY = (moveE.clientY - startY) / currentZoom;
+
+                        const newWidth = Math.max(20, startWidth + deltaX);
+                        const newHeight = Math.max(20, startHeight + deltaY);
+
+                        widget.style.width = (newWidth / 1400 * 100) + '%';
+                        widget.style.height = (newHeight / 787.5 * 100) + '%';
+                    }
+                    function onMouseUp() {
+                        document.removeEventListener('mousemove', onMouseMove);
+                        document.removeEventListener('mouseup', onMouseUp);
+                        saveState();
+                    }
+                    document.addEventListener('mousemove', onMouseMove);
+                    document.addEventListener('mouseup', onMouseUp);
+                });
+
+                widget.addEventListener('mousedown', function (e) {
+                    e.stopPropagation();
+                    if (e.target.closest('[data-role="resize-handle"]') ||
+                        ['CANVAS', 'INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(e.target.tagName)) {
+                        return;
+                    }
+
+                    const startX = e.clientX;
+                    const startY = e.clientY;
+
+                    // 現在のピクセル位置(キャンバス基準)を取得
+                    const initialLeftPx = widget.offsetLeft;
+                    const initialTopPx = widget.offsetTop;
+
+                    let isDragging = false;
+
+                    function onMouseMove(moveE) {
+                        const deltaX = (moveE.clientX - startX) / currentZoom;
+                        const deltaY = (moveE.clientY - startY) / currentZoom;
+
+                        if (!isDragging && (Math.abs(deltaX) > 3 || Math.abs(deltaY) > 3)) {
+                            isDragging = true;
+                            widget.style.zIndex = '1000';
+                        }
+
+                        if (isDragging) {
+                            const newLeft = initialLeftPx + deltaX;
+                            const newTop = initialTopPx + deltaY;
+                            // 16:9 基準値 (1400x787.5) に対してパーセントで再計算
+                            widget.style.left = (newLeft / 1400 * 100) + '%';
+                            widget.style.top = (newTop / 787.5 * 100) + '%';
+                        }
+                    }
+
+                    function onMouseUp() {
+                        document.removeEventListener('mousemove', onMouseMove);
+                        document.removeEventListener('mouseup', onMouseUp);
+                        if (isDragging) {
+                            widget.style.zIndex = '';
+                            saveState();
+                        }
+                    }
+                    document.addEventListener('mousemove', onMouseMove);
+                    document.addEventListener('mouseup', onMouseUp);
+                });
+            }
+        }
+
+        function updateLayerList(widgets) {
+            const layerList = document.getElementById('layerList');
+            layerList.innerHTML = '';
+            const icons = { 'decision-kpi': '📊', 'decision-action': '⚡', 'decision-status': '🚦', 'chart': '📈', 'summary-text': '📝', 'insight-box': '💡' };
+
+            for (let i = 0; i < widgets.length; i++) {
+                const widget = widgets[i];
+                const li = document.createElement('li');
+                li.className = 'layer-item';
+                li.dataset.widgetId = widget.dataset.id;
+                const icon = icons[widget.dataset.type] || '📦';
+                li.innerHTML = '<div class="layer-icon">' + icon + '</div><div class="layer-info"><div class="layer-id">' + widget.dataset.id + '</div><div class="layer-type">' + widget.dataset.type + '</div></div>';
+                li.addEventListener('click', () => selectWidget(widget));
+                layerList.appendChild(li);
+            }
+        }
+
+        function selectWidget(widget) {
+            if (selectedWidget) {
+                selectedWidget.classList.remove('selected');
+                const prevItem = document.querySelector('[data-widget-id="' + selectedWidget.dataset.id + '"]');
+                if (prevItem) prevItem.classList.remove('selected');
+            }
+            selectedWidget = widget;
+            widget.classList.add('selected');
+            const layerItem = document.querySelector('[data-widget-id="' + widget.dataset.id + '"]');
+            if (layerItem) layerItem.classList.add('selected');
+            updatePropertyPanel(widget);
+        }
+
+        function updatePropertyPanel(widget) {
+            const panel = document.getElementById('propertyPanel');
+            const type = widget.dataset.type;
+            const id = widget.dataset.id;
+
+            const textTags = ['P', 'SPAN', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'DIV', 'LABEL', 'TD', 'TH', 'LI'];
+            let textElement = textTags.includes(widget.tagName) ? widget : null;
+            if (!textElement) {
+                for (let tag of textTags) {
+                    const found = widget.querySelector(tag);
+                    if (found && found.textContent.trim()) {
+                        textElement = found;
+                        break;
+                    }
+                }
+            }
+
+            let html = '<div class="property-card"><label class="property-label">Component Identity</label><div class="property-value" style="font-weight: 800; color: var(--primary);">' + id + '</div><div class="property-value" style="font-size: 0.7rem; color: var(--text-sub);">' + type + '</div></div>';
+
+            if (textElement) {
+                html += '<div class="property-card">' +
+                    '<label class="property-label">✒️ Typography</label>' +
+                    '<div class="style-tools">' +
+                    '<button class="tool-btn" title="Bold" onmousedown="event.preventDefault(); applyTypographyStyle(\'bold\')"><b>B</b></button>' +
+                    '<button class="tool-btn" title="Italic" onmousedown="event.preventDefault(); applyTypographyStyle(\'italic\')"><i>I</i></button>' +
+                    '<button class="tool-btn" title="Underline" onmousedown="event.preventDefault(); applyTypographyStyle(\'underline\')"><u>U</u></button>' +
+                    '</div>' +
+
+                    '<div class="property-input-group" style="margin-top: 1.5rem;">' +
+                    '<label class="property-label">Text Color</label>' +
+                    '<div style="display: flex; gap: 10px; align-items: center;">' +
+                    '<div class="color-well" id="colorPreview"></div>' +
+                    '<input type="color" id="typoColorPicker">' +
+                    '<input type="text" class="property-input" id="typoColorText" placeholder="#000000" style="flex: 1;">' +
+                    '</div>' +
+                    '</div>' +
+
+                    '<div style="display: grid; grid-template-columns: 2fr 1fr; gap: 10px;">' +
+                    '<div><label class="property-label">Font Family</label>' +
+                    '<select class="property-select" id="typoFontFamily">' +
+                    ['Arial', 'Helvetica', 'Inter', 'Outfit', 'Times New Roman', 'Georgia', 'Verdana', '游ゴシック, Yu Gothic', 'メイリオ, Meiryo'].map(f => `<option value="${f}">${f.split(',')[0]}</option>`).join('') +
+                    '</select></div>' +
+                    '<div><label class="property-label">Size</label>' +
+                    '<input type="number" class="property-input" id="typoFontSize" min="8" max="120" step="1"></div>' +
+                    '</div>' +
+                    '<p style="font-size: 0.65rem; color: var(--text-sub); margin-top: 1rem; line-height: 1.4;">💡 Tip: Highlight text to style partially, or edit the whole widget.</p></div>';
+            }
+            html += '<div style="margin-top: 1rem; text-align: center;"><p style="font-size: 0.7rem; color: var(--text-sub);">Double-click text to edit directly.</p></div>';
+            panel.innerHTML = html;
+
+            if (textElement) {
+                // イベント登録
+                const colorPicker = document.getElementById('typoColorPicker');
+                const colorText = document.getElementById('typoColorText');
+                const colorPreview = document.getElementById('colorPreview');
+                const fontFamily = document.getElementById('typoFontFamily');
+                const fontSize = document.getElementById('typoFontSize');
+
+                if (colorPicker && colorText) {
+                    colorPreview.onclick = () => colorPicker.click();
+                    colorPicker.oninput = (e) => { colorText.value = e.target.value; colorPreview.style.backgroundColor = e.target.value; applyTypographyStyle('foreColor', e.target.value); };
+                    colorText.oninput = (e) => { if (/^#[0-9A-F]{6}$/i.test(e.target.value)) { colorPicker.value = e.target.value; colorPreview.style.backgroundColor = e.target.value; applyTypographyStyle('foreColor', e.target.value); } };
+                }
+                if (fontFamily) fontFamily.onchange = (e) => applyTypographyStyle('fontName', e.target.value);
+                if (fontSize) fontSize.oninput = (e) => applyTypographyStyle('fontSizePx', e.target.value);
+
+                // 初回の値同期
+                syncPropertyPanelValues();
+            }
+        }
+
+        function applyTypographyStyle(command, value = null) {
+            if (!selectedWidget) return;
+            const selection = window.getSelection();
+
+            // 選択範囲がクリアされている場合、保存しておいた範囲を復元する
+            if (currentlyEditing && savedRange && (selection.rangeCount === 0 || selection.toString().length === 0)) {
+                selection.removeAllRanges();
+                selection.addRange(savedRange);
+            }
+
+            const range = selection.rangeCount > 0 ? selection.getRangeAt(0) : null;
+            const isEditing = (currentlyEditing && currentlyEditing.contentEditable === 'true');
+            const hasSelection = selection.toString().trim().length > 0;
+
+            if (isEditing && hasSelection) {
+                // --- 段階1: 選択範囲への部分適用 ---
+                if (command === 'fontSizePx') {
+                    // Spanラップによる正確なピクセル指定
+                    const span = document.createElement('span');
+                    span.style.fontSize = value + 'px';
+                    try {
+                        range.surroundContents(span);
+                    } catch (e) {
+                        // 範囲が複雑（LIまたぎ等）な場合はブラウザの標準コマンドにフォールバック
+                        document.execCommand('fontSize', false, '4');
+                    }
+                } else {
+                    document.execCommand(command, false, value);
+                }
+                showNotification('選択範囲を更新しました 🖌️', false);
+            } else if (isEditing) {
+                // --- 段階2: 編集中の特定の要素のみに適用 (Element-level) ---
+                const el = currentlyEditing;
+                const style = el.style;
+                if (command === 'bold') {
+                    const fw = window.getComputedStyle(el).fontWeight;
+                    style.fontWeight = (fw === 'bold' || parseInt(fw) >= 600) ? 'normal' : 'bold';
+                } else if (command === 'italic') {
+                    style.fontStyle = (window.getComputedStyle(el).fontStyle === 'italic') ? 'normal' : 'italic';
+                } else if (command === 'underline') {
+                    style.textDecoration = style.textDecoration.includes('underline') ? 'none' : 'underline';
+                } else if (command === 'foreColor') {
+                    style.color = value;
+                    el.querySelectorAll('*').forEach(c => c.style.color = '');
+                } else if (command === 'fontName') {
+                    style.fontFamily = value;
+                } else if (command === 'fontSizePx') {
+                    style.fontSize = value + 'px';
+                    el.querySelectorAll('*').forEach(c => c.style.fontSize = '');
+                }
+                showNotification('編集中の箇条を更新しました 📎', false);
+            } else {
+                // --- 段階3: ウィジェット全体に適用 (Widget-level) ---
+                const textTags = ['P', 'SPAN', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'DIV', 'LABEL', 'TD', 'TH', 'LI'];
+                let targets = textTags.includes(selectedWidget.tagName) ? [selectedWidget] : [];
+                targets = targets.concat(Array.from(selectedWidget.querySelectorAll(textTags.join(','))));
+
+                targets.forEach(el => {
+                    const style = el.style;
+                    if (command === 'bold') {
+                        const fw = window.getComputedStyle(el).fontWeight;
+                        style.fontWeight = (fw === 'bold' || parseInt(fw) >= 600) ? 'normal' : 'bold';
+                    } else if (command === 'italic') {
+                        style.fontStyle = (window.getComputedStyle(el).fontStyle === 'italic') ? 'normal' : 'italic';
+                    } else if (command === 'underline') {
+                        style.textDecoration = style.textDecoration.includes('underline') ? 'none' : 'underline';
+                    } else if (command === 'foreColor') {
+                        style.color = value;
+                        el.querySelectorAll('*').forEach(c => c.style.color = '');
+                    } else if (command === 'fontName') {
+                        style.fontFamily = value;
+                    } else if (command === 'fontSizePx') {
+                        style.fontSize = value + 'px';
+                        el.querySelectorAll('*').forEach(c => c.style.fontSize = '');
+                    }
+                });
+                showNotification('全体を一括更新しました ✨', false);
+            }
+            saveState(); // スタイル適用後に保存
+        }
+
+        function rgbToHex(rgb) {
+            if (rgb.startsWith('#')) return rgb;
+            const values = rgb.match(/\d+/g);
+            if (!values || values.length < 3) return '#000000';
+            return '#' + [values[0], values[1], values[2]].map(x => parseInt(x).toString(16).padStart(2, '0')).join('');
+        }
+
+        function saveState() {
+            const canvas = document.getElementById('canvas');
+            const state = canvas.innerHTML;
+
+            // 直前の状態と同じなら保存しない
+            if (undoStack.length > 0 && undoStack[undoStack.length - 1] === state) {
+                return;
+            }
+
+            undoStack.push(state);
+            if (undoStack.length > historyLimit) {
+                undoStack.shift();
+            }
+
+            // 新規保存時はやり直しスタックをクリア
+            redoStack = [];
+            updateHistoryButtons();
+        }
+
+        function undo() {
+            if (undoStack.length <= 1) return; // 現在の状態のみなら戻れない
+
+            const currentState = undoStack.pop();
+            redoStack.push(currentState);
+
+            const prevState = undoStack[undoStack.length - 1];
+            restoreState(prevState);
+            updateHistoryButtons();
+        }
+
+        function redo() {
+            if (redoStack.length === 0) return;
+
+            const nextState = redoStack.pop();
+            undoStack.push(nextState);
+
+            restoreState(nextState);
+            updateHistoryButtons();
+        }
+
+        function updateHistoryButtons() {
+            document.getElementById('undoBtn').disabled = (undoStack.length <= 1);
+            document.getElementById('redoBtn').disabled = (redoStack.length === 0);
+        }
+
+        // キーボードショートカット
+        window.addEventListener('keydown', (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                if (e.key === 'z') {
+                    e.preventDefault();
+                    undo();
+                } else if (e.key === 'y' || (e.shiftKey && e.key === 'Z')) {
+                    e.preventDefault();
+                    redo();
+                }
+            }
+        });
+
+        // ズーム管理
+        let currentZoom = 1;
+        function updateZoom(value) {
+            currentZoom = value / 100;
+            const canvas = document.getElementById('canvas');
+            canvas.style.transform = `scale(${currentZoom})`;
+            const label = document.getElementById('zoomLabel');
+            if (label) label.textContent = `Zoom: ${value}%`;
+            const slider = document.getElementById('zoomSlider');
+            if (slider) slider.value = value;
+        }
+
+        function resetZoom() {
+            const container = document.querySelector('.workspace-area');
+            const availableWidth = container.clientWidth - 100; // Left/Right padding
+            const zoomValue = Math.min(100, (availableWidth / 1400) * 100);
+            updateZoom(Math.floor(zoomValue));
+        }
+
+        // 初期ロード時にフィット
+        setTimeout(resetZoom, 500);
+
+        function exportHTML() {
+            if (!loadedHTML) { showNotification('エクスポートするHTMLがありません', true); return; }
+            const canvas = document.getElementById('canvas');
+
+            // 1. 原本HTMLをパース (Headのライブラリ等を維持するため)
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(loadedHTML, 'text/html');
+
+            // 2. 原本のbody内にあるスクリプトを退避 (グラフの初期化コードなどはここにある)
+            const bodyScripts = Array.from(doc.body.querySelectorAll('script'));
+
+            // 3. bodyの中身を編集後の状態（クリーン版）で差し替える
+            const canvasClone = canvas.cloneNode(true);
+
+            // ズーム解除
+            canvasClone.style.transform = '';
+
+            // エディタ専用要素の除去
+            canvasClone.querySelectorAll('.resize-handle').forEach(h => h.remove());
+            canvasClone.querySelectorAll('.selected').forEach(s => s.classList.remove('selected'));
+            canvasClone.querySelectorAll('[contenteditable]').forEach(e => e.removeAttribute('contenteditable'));
+            canvasClone.querySelectorAll('.widget').forEach(w => {
+                w.classList.remove('widget');
+                w.style.cursor = '';
+            });
+
+            // bodyに原本のウィジェット群を展開
+            doc.body.innerHTML = canvasClone.innerHTML;
+
+            // 4. 退避していたスクリプトを末尾に戻す
+            bodyScripts.forEach(script => {
+                doc.body.appendChild(script);
+            });
+
+            // 5. スタイル同期
+            doc.body.style.backgroundColor = canvas.style.backgroundColor;
+            doc.body.style.backgroundImage = canvas.style.backgroundImage;
+            doc.body.style.backgroundSize = canvas.style.backgroundSize;
+            doc.body.style.backgroundPosition = canvas.style.backgroundPosition;
+            doc.body.style.color = canvas.style.color;
+            doc.body.style.fontFamily = canvas.style.fontFamily;
+            doc.body.className = canvas.className;
+
+            // 基本的な表示崩れ防止と、絶対配置の担保
+            if (!doc.head.querySelector('#supreme-export-style')) {
+                const styleTag = doc.createElement('style');
+                styleTag.id = 'supreme-export-style';
+                styleTag.textContent = `
+                    body { margin: 0; padding: 0; width: 100vw; height: 100vh; overflow: auto; position: relative; }
+                    /* Chart.js等のキャンバスが勝手にリサイズされないよう制限を外す */
+                    canvas { max-width: 100%; }
+                `;
+                doc.head.appendChild(styleTag);
+            }
+
+            // 6. ダウンロード
+            const finalHtml = '<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
+            const blob = new Blob([finalHtml], { type: 'text/html;charset=utf-8' });
+            const __a = document.createElement('a');
+            __a.href = URL.createObjectURL(blob);
+            __a.download = `supreme-dashboard-${new Date().getTime()}.html`;
+            __a.click();
+
+            showNotification('グラフと配置を完全維持して保存しました ✨', false);
+        }
+
+        // AIコード・オートリペア読み込み機能
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => loadDashboard(e.target.result);
+            reader.readAsText(file);
+        }
+    </script>
+</body>
+
+</html>

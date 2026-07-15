@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>設定 — Neuro Matrix Task OS</title>
+
+  <script src="../assets/theme.js"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,300..700,0..1,-50..200" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: {
+        colors: {
+          bg: 'var(--bg)', surface: 'var(--surface)', 'surface-hover': 'var(--surface-hover)', 'surface-2': 'var(--surface-2)', 'surface-3': 'var(--surface-3)',
+          border: 'var(--border)', 'border-muted': 'var(--border-muted)',
+          'text-0': 'var(--text-0)', 'text-1': 'var(--text-1)', 'text-2': 'var(--text-2)', 'text-3': 'var(--text-3)',
+          q1: 'var(--q1)', q2: 'var(--q2)', q3: 'var(--q3)', q4: 'var(--q4)', accent: 'var(--accent)',
+        },
+        fontFamily: { sans: ['Inter', 'Noto Sans JP', 'system-ui', 'sans-serif'], mono: ['JetBrains Mono', 'ui-monospace', 'monospace'] }
+      }}
+    }
+  </script>
+  <link rel="stylesheet" href="../assets/styles.css">
+</head>
+
+<body class="bg-bg text-text-0 font-sans antialiased h-screen overflow-hidden">
+<div class="h-screen flex flex-col">
+
+  <header class="app-topbar h-12 flex-shrink-0 flex items-center gap-3 px-4 z-30">
+    <a href="../index.html" class="flex items-center gap-2 pr-4 border-r border-border-muted mr-1 no-underline">
+      <span class="material-symbols-outlined text-q1" style="font-variation-settings: 'FILL' 1, 'wght' 600;">change_history</span>
+      <span class="font-bold tracking-tight text-text-0">NEURO<span class="text-q1">.</span>MATRIX</span>
+    </a>
+    <button id="quick-add-btn" class="group flex items-center gap-2 px-3 h-8 bg-surface-2 hover:bg-surface-3 rounded-md text-text-1 hover:text-text-0 transition-colors" title="実装予定">
+      <span class="material-symbols-outlined text-base">add</span>
+      <span class="text-sm font-medium">新規タスク</span>
+      <kbd class="ml-2 px-1.5 py-0.5 rounded bg-bg/60 border border-border-muted text-[10px] font-mono text-text-3 group-hover:text-text-2">N</kbd>
+    </button>
+    <div class="flex-1"></div>
+    <button class="w-8 h-8 flex items-center justify-center rounded-md hover:bg-surface-2 text-text-2 hover:text-text-0 transition-colors" aria-label="テーマ切替" title="テーマ切替（実装予定）">
+      <span class="material-symbols-outlined text-lg">dark_mode</span>
+    </button>
+    <a href="survival.html" id="survival-btn" class="flex items-center gap-1.5 h-8 px-3 rounded-md no-underline">
+      <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">bolt</span>
+      <span class="text-sm font-semibold tracking-wide">SURVIVAL</span>
+    </a>
+    <div class="w-8 h-8 rounded-full bg-surface-2 border border-border text-text-1 flex items-center justify-center text-xs font-bold ml-1">T</div>
+  </header>
+
+  <div class="flex-1 flex overflow-hidden min-h-0">
+    <aside class="app-sidebar w-60 flex-shrink-0 flex flex-col">
+      <nav class="flex-1 px-2 py-3 space-y-0.5 overflow-y-auto">
+        <div class="px-2 pb-1.5 text-[10px] font-semibold tracking-widest text-text-3 uppercase">Workspace</div>
+        <a href="../index.html" class="nav-item"><span class="material-symbols-outlined text-[20px]">dashboard</span><span>ダッシュボード</span></a>
+        <a href="survival.html" class="nav-item text-q1"><span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">bolt</span><span>サバイバル</span></a>
+        <a href="completed.html" class="nav-item"><span class="material-symbols-outlined text-[20px]">done_all</span><span>完了一覧</span><span class="ml-auto text-[11px] font-mono text-text-3" data-sidebar-count="completed">0</span></a>
+        <div class="pt-4 px-2 pb-1.5 text-[10px] font-semibold tracking-widest text-text-3 uppercase">Views</div>
+        <a href="today.html" class="nav-item"><span class="material-symbols-outlined text-[20px]">today</span><span>今日</span><span class="ml-auto text-[11px] font-mono text-text-3" data-sidebar-count="today">0</span></a>
+        <a href="overdue.html" class="nav-item"><span class="material-symbols-outlined text-[20px]">event_busy</span><span>期限超過</span><span class="ml-auto text-[11px] font-mono text-text-3" data-sidebar-count="overdue">0</span></a>
+      </nav>
+      <div class="border-t border-border-muted p-2 space-y-0.5">
+        <a href="#export" class="nav-item"><span class="material-symbols-outlined text-[20px]">download</span><span>JSON書出</span></a>
+        <a href="#import" class="nav-item"><span class="material-symbols-outlined text-[20px]">upload</span><span>JSON取込</span></a>
+        <a href="settings.html" class="nav-item active"><span class="material-symbols-outlined text-[20px]">settings</span><span>設定</span></a>
+      </div>
+    </aside>
+
+    <main class="flex-1 overflow-hidden flex flex-col bg-bg">
+      <div class="flex-shrink-0 px-8 pt-6 pb-4 border-b border-border-muted bg-surface">
+        <div class="flex items-center gap-2 text-text-2 text-xs font-mono tracking-widest uppercase mb-1">
+          <span class="material-symbols-outlined text-[16px]">settings</span>
+          <span>Preferences</span>
+        </div>
+        <h1 class="text-2xl font-bold tracking-tight text-text-0">設定</h1>
+        <p class="text-sm text-text-2 mt-1">データバックアップ・テーマ・キーボードショートカット</p>
+      </div>
+
+      <div class="flex-1 overflow-y-auto px-8 py-6 max-w-3xl">
+
+        <!-- SECTION: Backup -->
+        <section id="export" class="settings-section">
+          <div class="flex items-center gap-2 mb-1">
+            <span class="material-symbols-outlined text-text-1 text-[20px]">download</span>
+            <h2 class="text-lg font-bold">データバックアップ</h2>
+          </div>
+          <p class="text-sm text-text-2 mb-5">全タスクと履歴を JSON ファイルで出力。オフライン運用なので定期的に手元に保存しておくのが安全です。</p>
+
+          <div class="settings-card">
+            <div class="flex items-center justify-between gap-4">
+              <div>
+                <div class="font-semibold">全タスクを JSON で書き出す</div>
+                <div class="text-xs text-text-2 mt-1 font-mono">neuro_matrix_export_2026-04-17.json · 推定 3.2 KB</div>
+              </div>
+              <button class="btn-primary">
+                <span class="material-symbols-outlined text-[18px]">download</span>
+                <span>書き出す</span>
+              </button>
+            </div>
+          </div>
+
+          <div id="import" class="settings-card mt-3">
+            <div class="flex items-center justify-between gap-4 mb-3">
+              <div>
+                <div class="font-semibold">JSON から取り込む</div>
+                <div class="text-xs text-text-2 mt-1">既存データは自動で <code class="bg-surface-2 px-1.5 py-0.5 rounded text-[11px] font-mono">legacy_backup</code> に退避されます</div>
+              </div>
+            </div>
+            <label class="block">
+              <div class="border-2 border-dashed border-border-muted hover:border-accent/50 rounded-lg p-6 text-center transition-colors cursor-pointer bg-surface-2/50">
+                <span class="material-symbols-outlined text-text-3 text-3xl">cloud_upload</span>
+                <div class="mt-2 text-sm font-medium text-text-1">クリックまたはファイルをドロップ</div>
+                <div class="text-xs text-text-3 mt-1 font-mono">.json のみ受付</div>
+              </div>
+              <input type="file" accept="application/json" class="hidden" />
+            </label>
+          </div>
+        </section>
+
+        <!-- SECTION: Appearance -->
+        <section class="settings-section mt-8">
+          <div class="flex items-center gap-2 mb-1">
+            <span class="material-symbols-outlined text-text-1 text-[20px]">palette</span>
+            <h2 class="text-lg font-bold">外観</h2>
+          </div>
+          <p class="text-sm text-text-2 mb-5">通常モードのテーマ。サバイバルモードは常にダークで固定です。</p>
+
+          <div class="settings-card" id="appearance">
+            <div class="flex items-center justify-between gap-4">
+              <div>
+                <div class="font-semibold">テーマ</div>
+                <div class="text-xs text-text-2 mt-1">Light / Dark / Auto（OS 連動）</div>
+              </div>
+              <div class="flex gap-1 bg-surface-2 p-1 rounded-md" id="theme-picker">
+                <button class="theme-opt" data-theme="light">
+                  <span class="material-symbols-outlined text-[16px]">light_mode</span>
+                  Light
+                </button>
+                <button class="theme-opt" data-theme="dark">
+                  <span class="material-symbols-outlined text-[16px]">dark_mode</span>
+                  Dark
+                </button>
+                <button class="theme-opt" data-theme="auto">
+                  <span class="material-symbols-outlined text-[16px]">brightness_auto</span>
+                  Auto
+                </button>
+              </div>
+            </div>
+          </div>
+          <script>
+            (() => {
+              const picker = document.getElementById('theme-picker');
+              if (!picker || !window.NeuroTheme) return;
+              function paint() {
+                const pref = window.NeuroTheme.get();
+                picker.querySelectorAll('.theme-opt').forEach(b => {
+                  b.classList.toggle('theme-opt-active', b.dataset.theme === pref);
+                });
+              }
+              picker.addEventListener('click', (e) => {
+                const btn = e.target.closest('.theme-opt');
+                if (!btn) return;
+                window.NeuroTheme.set(btn.dataset.theme);
+                paint();
+              });
+              paint();
+            })();
+          </script>
+
+          <div class="settings-card mt-3">
+            <div class="flex items-center justify-between gap-4">
+              <div>
+                <div class="font-semibold">アニメーション</div>
+                <div class="text-xs text-text-2 mt-1">カード浮遊、モード切替、アクション演出</div>
+              </div>
+              <label class="switch">
+                <input type="checkbox" checked />
+                <span class="switch-slider"></span>
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION: Survival defaults -->
+        <section class="settings-section mt-8">
+          <div class="flex items-center gap-2 mb-1">
+            <span class="material-symbols-outlined text-q1 text-[20px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
+            <h2 class="text-lg font-bold">サバイバル</h2>
+          </div>
+          <p class="text-sm text-text-2 mb-5">締切集中モードの既定値。</p>
+
+          <div class="settings-card">
+            <div class="flex items-center justify-between gap-4">
+              <div>
+                <div class="font-semibold">既定の目標時刻</div>
+                <div class="text-xs text-text-2 mt-1">サバイバル起動時のカウントダウン目標</div>
+              </div>
+              <input type="time" value="17:30" class="input-time" />
+            </div>
+          </div>
+
+          <div class="settings-card mt-3">
+            <div class="flex items-center justify-between gap-4">
+              <div>
+                <div class="font-semibold">MUST 上限</div>
+                <div class="text-xs text-text-2 mt-1">絶対やるスロットに割当可能な最大件数</div>
+              </div>
+              <div class="flex items-center gap-2">
+                <button class="step-btn">−</button>
+                <span class="w-10 text-center font-mono font-bold">2</span>
+                <button class="step-btn">＋</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION: Shortcuts -->
+        <section class="settings-section mt-8">
+          <div class="flex items-center gap-2 mb-1">
+            <span class="material-symbols-outlined text-text-1 text-[20px]">keyboard</span>
+            <h2 class="text-lg font-bold">キーボードショートカット</h2>
+          </div>
+          <p class="text-sm text-text-2 mb-5">マウスを離れたくない時に。</p>
+
+          <div class="settings-card divide-y divide-border-muted !p-0">
+            <div class="flex items-center justify-between px-5 py-3">
+              <span class="text-sm">新規タスク追加</span>
+              <kbd class="kbd">N</kbd>
+            </div>
+            <div class="flex items-center justify-between px-5 py-3">
+              <span class="text-sm">サバイバル起動・解除</span>
+              <kbd class="kbd">⌘</kbd> <kbd class="kbd">S</kbd>
+            </div>
+            <div class="flex items-center justify-between px-5 py-3">
+              <span class="text-sm">完了一覧を開閉</span>
+              <kbd class="kbd">⌘</kbd> <kbd class="kbd">J</kbd>
+            </div>
+            <div class="flex items-center justify-between px-5 py-3">
+              <span class="text-sm">削除の取り消し</span>
+              <kbd class="kbd">⌘</kbd> <kbd class="kbd">Z</kbd>
+            </div>
+            <div class="flex items-center justify-between px-5 py-3">
+              <span class="text-sm">ショートカット一覧</span>
+              <kbd class="kbd">?</kbd>
+            </div>
+          </div>
+        </section>
+
+        <!-- About -->
+        <section class="settings-section mt-8 mb-10">
+          <div class="flex items-center gap-2 mb-1">
+            <span class="material-symbols-outlined text-text-1 text-[20px]">info</span>
+            <h2 class="text-lg font-bold">アプリについて</h2>
+          </div>
+          <div class="settings-card">
+            <div class="flex items-center justify-between gap-4">
+              <div>
+                <div class="font-semibold">Neuro Matrix Task OS</div>
+                <div class="text-xs text-text-2 mt-1 font-mono">v2.0.0 (schema v6) · LocalStorage</div>
+              </div>
+              <div class="flex gap-2">
+                <a href="../../docs/design_v2.md" class="btn-ghost no-underline">
+                  <span class="material-symbols-outlined text-[16px]">article</span>
+                  <span>Design Doc</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <footer class="app-statusbar h-7 flex-shrink-0 px-4 flex items-center justify-between text-[11px] font-mono">
+    <div class="flex items-center gap-4">
+      <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-q2"></span>0 件 進行中</span>
+      <span>·</span>
+      <span>0 件 完了</span>
+    </div>
+    <div class="flex items-center gap-4">
+      <span>オフラインモード</span>
+      <kbd>?</kbd>
+      <span>shortcuts</span>
+    </div>
+  </footer>
+</div>
+<script src="../assets/app.js"></script>
+</body>
+</html>

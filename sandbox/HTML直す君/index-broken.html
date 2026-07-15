@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML直す君 - ダッシュボードビジュアルエディタ</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- interact.js -->
+    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8fafc;
+        }
+
+        .app-container {
+            display: grid;
+            grid-template-rows: auto 1fr;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.875rem;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #667eea;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Main Layout */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr 320px;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* Left Panel - Layers */
+        .left-panel {
+            background: white;
+            border-right: 1px solid #e2e8f0;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .panel-title {
+            font-weight: 700;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            color: #64748b;
+            margin-bottom: 1rem;
+            letter-spacing: 0.05em;
+        }
+
+        .layer-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .layer-item {
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .layer-item:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+
+        .layer-item.selected {
+            background: #ede9fe;
+            border-color: #a78bfa;
+        }
+
+        .layer-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .layer-info {
+            flex: 1;
+        }
+
+        .layer-id {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .layer-type {
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+
+        /* Center Panel - Canvas */
+        .center-panel {
+            background: #f1f5f9;
+            overflow: auto;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .canvas {
+            background: white;
+            min-height: 100%;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+            color: #94a3b8;
+            text-align: center;
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Widget Styles */
+        .widget {
+            position: relative;
+            cursor: move;
+            transition: box-shadow 0.2s;
+        }
+
+        .widget.selected {
+            outline: 2px solid #667eea;
+            outline-offset: 2px;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .widget:hover:not(.selected) {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .resize-handle {
+            position: absolute;
+            right: 6px;
+            bottom: 6px;
+            width: 12px;
+            height: 12px;
+            background: #cbd5e1;
+            border-radius: 2px;
+            cursor: se-resize;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .widget:hover .resize-handle,
+        .widget.selected .resize-handle {
+            opacity: 1;
+        }
+
+        /* Right Panel - Properties */
+        .right-panel {
+            background: white;
+            border-left: 1px solid #e2e8f0;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .property-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .property-label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #64748b;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .property-input,
+        .property-select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            background: white;
+            transition: all 0.2s;
+        }
+
+        .property-input:focus,
+        .property-select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .property-value {
+            padding: 0.5rem;
+            background: #f8fafc;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            color: #475569;
+            font-family: 'Courier New', monospace;
+        }
+
+        .status-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .status-btn {
+            flex: 1;
+            padding: 0.5rem;
+            border: 2px solid transparent;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .status-btn.normal {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-btn.warn {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-btn.alert {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .status-btn.active {
+            border-color: currentColor;
+            transform: scale(1.05);
+        }
+
+        .empty-properties {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: #94a3b8;
+        }
+
+        /* File Input */
+        #fileInput {
+            display: none;
+        }
+
+        /* Editable Content */
+        [contenteditable="true"] {
+            outline: 2px dashed #fbbf24;
+            outline-offset: 2px;
+            background: #fffbeb;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 5rem;
+            right: 1.5rem;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #10b981;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            max-width: 300px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.error {
+            border-left-color: #ef4444;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <h1>🛠️ HTML直す君</h1>
+            <div class="header-buttons">
+                <button class="btn btn-secondary" onclick="loadHTMLFile()">📂 HTMLを開く</button>
+                <button class="btn btn-secondary" onclick="loadSampleDashboard()">📄 サンプル</button>
+                <button class="btn btn-primary" onclick="exportHTML()">💾 ダウンロード</button>
+            </div>
+        </header>
+
+        <!-- Main Layout -->
+        <div class="main-layout">
+            <!-- Left Panel: Layers -->
+            <aside class="left-panel">
+                <div class="panel-title">📋 レイヤー</div>
+                <ul class="layer-list" id="layerList">
+                    <li class="empty-state" style="padding: 2rem 0;">
+                        <div style="font-size: 2rem;">📭</div>
+                        <div style="font-size: 0.875rem; margin-top: 0.5rem;">HTMLを開いてください</div>
+                    </li>
+                </ul>
+            </aside>
+
+            <!-- Center Panel: Canvas -->
+            <main class="center-panel">
+                <div class="canvas" id="canvas">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🎨</div>
+                        <h2 style="font-size: 1.25rem; margin-bottom: 0.5rem;">ダッシュボードを読み込んでください</h2>
+                        <p style="max-width: 400px;">
+                            「HTMLを開く」ボタンから、AIが生成したダッシュボードHTMLファイルを読み込んでください。<br>
+                            または「サンプル」でデモを試せます。
+                        </p>
+                        <button class="btn btn-primary" onclick="loadHTMLFile()" style="margin-top: 1.5rem;">
+                            📂 HTMLファイルを選択
+                        </button>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Right Panel: Properties -->
+            <aside class="right-panel">
+                <div class="panel-title">⚙️ プロパティ</div>
+                <div id="propertyPanel" class="empty-properties">
+                    <div style="font-size: 2rem;">👈</div>
+                    <div style="font-size: 0.875rem; margin-top: 0.5rem;">コンポーネントを選択してください</div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Hidden File Input -->
+    <input type="file" id="fileInput" accept=".html" onchange="handleFileSelect(event)">
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <span id="notificationText"></span>
+    </div>
+
+    <script>
+        // グローバル変数
+        let selectedWidget = null;
+        let loadedHTML = '';
+        let widgetData = new Map(); // data-id -> element mapping
+
+        // 通知表示
+        function showNotification(message, isError = false) {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notificationText');
+            notificationText.textContent = message;
+            notification.classList.toggle('error', isError);
+            notification.classList.add('show');
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // HTMLファイル読み込みダイアログ
+        function loadHTMLFile() {
+            console.log('loadHTMLFile called');
+            const fileInput = document.getElementById('fileInput');
+            console.log('fileInput element:', fileInput);
+            if (fileInput) {
+                fileInput.click();
+                console.log('fileInput clicked');
+            } else {
+                console.error('fileInput not found!');
+                showNotification('エラー: ファイル入力が見つかりません', true);
+            }
+        }
+
+        // ファイル選択ハンドラ
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const htmlContent = e.target.result;
+                loadDashboard(htmlContent);
+                showNotification('ダッシュボードを読み込みました 📂');
+            };
+            reader.readAsText(file);
+        }
+
+        // サンプルダッシュボード読み込み
+        function loadSampleDashboard() {
+            // 出力例.txtの内容をベースにしたサンプル
+            const sampleHTML = `
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>戦略ダッシュボード サンプル</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .widget {
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            padding: 1rem;
+        }
+    </style>
+    </head>
+
+    <body class="p-6 space-y-6 bg-gray-50">
+
+        <!-- section-summary -->
+        <section id="section-summary" class="grid grid-cols-3 gap-4">
+            <div class="widget col-span-1" data-id="kpi-001" data-type="decision-kpi" data-editable="true"
+                data-importance="high" data-status="normal">
+                <h3 class="text-sm text-gray-500">申告率（ノーススター）</h3>
+                <div class="text-4xl font-bold text-blue-600 mt-2">92.4%</div>
+                <div class="text-sm text-gray-500 mt-1">
+                    前年比 <span class="text-green-600">+2.1pt</span>
+                </div>
+            </div>
+
+            <div class="widget col-span-2" data-id="summary-001" data-type="summary-text" data-editable="true"
+                data-importance="high" data-status="normal">
+                <h3 class="text-sm text-gray-500 mb-2">戦略サマリー</h3>
+                <p class="text-gray-800 leading-relaxed">
+                    全体の申告率は前年を上回って推移しており、特に中小事業者層での改善が顕著。
+                    一方で一部業種では依然として未申告率が高く、重点的な対応が必要。
+                </p>
+            </div>
+        </section>
+
+        <!-- section-action -->
+        <section id="section-action" class="grid grid-cols-3 gap-4">
+            <div class="widget col-span-2" data-id="action-001" data-type="decision-action" data-editable="true"
+                data-importance="high" data-status="warn">
+                <h3 class="text-sm text-gray-500 mb-2">次の一手</h3>
+                <ul class="text-gray-800 space-y-1">
+                    <li>・未申告率が高い業種への個別通知を強化</li>
+                    <li>・電話催告リソースの再配分</li>
+                </ul>
+                <div class="mt-3 text-sm text-gray-500">
+                    判断期限：<span class="font-medium">2026-03-31</span><br />
+                    担当：<span class="font-medium">資産税課</span>
+                </div>
+            </div>
+
+            <div class="widget col-span-1" data-id="status-001" data-type="decision-status" data-editable="true"
+                data-importance="medium" data-status="warn">
+                <h3 class="text-sm text-gray-500 mb-2">全体判断</h3>
+                <div class="flex items-center space-x-2">
+                    <span class="text-yellow-500 text-2xl">⚠</span>
+                    <span class="font-bold text-yellow-600">WARN</span>
+                </div>
+                <p class="text-sm text-gray-700 mt-2">
+                    改善傾向だが、対策未実施領域あり
+                </p>
+            </div>
+        </section>
+
+        <!-- section-main -->
+        <section id="section-main" class="grid grid-cols-2 gap-4">
+            <div class="widget col-span-1" data-id="chart-001" data-type="chart" data-chart-type="line"
+                data-editable="true" data-importance="medium" data-status="normal">
+                <h3 class="text-sm text-gray-500 mb-2">申告率 推移</h3>
+                <canvas id="lineChart" height="180"></canvas>
+            </div>
+
+            <div class="widget col-span-1 border-l-4 border-red-500" data-id="insight-001" data-type="insight-box"
+                data-editable="true" data-importance="high" data-status="alert">
+                <h3 class="text-sm text-red-600 mb-2">リスク示唆</h3>
+                <p class="text-gray-800">
+                    建設業・運輸業において未申告率が横ばいで推移しており、
+                    対応が遅れると全体改善が頭打ちになる可能性。
+                </p>
+            </div>
+        </section>
+
+        <script>
+    // Chart initialization
+    if (document.getElementById('lineChart')) {
+      const ctx = document.getElementById('lineChart');
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['4月','6月','8月','10月','12月','2月'],
+          datasets: [{
+            label: '申告率',
+            data: [88, 89, 90, 91, 92, 92.4],
+            borderColor: '#2563eb',
+            borderWidth: 2,
+            tension: 0.3
+          }]
+        },
+        options: {
+          plugins: { legend: { display: false } },
+          scales: { y: { min: 80, max: 100 } }
+        }
+      });
+    }
+        <\/script>
+    </body>
+
+</html>\`;
+
+            loadDashboard(sampleHTML);
+            showNotification('サンプルダッシュボードを読み込みました 📄');
+        }
+
+// ダッシュボード読み込み
+function loadDashboard(htmlString) {
+loadedHTML = htmlString;
+widgetData.clear();
+
+// HTMLをパース
+const parser = new DOMParser();
+const doc = parser.parseFromString(htmlString, 'text/html');
+
+// キャンバスに挿入
+const canvas = document.getElementById('canvas');
+canvas.innerHTML = '';
+
+// bodyの内容を移植
+Array.from(doc.body.children).forEach(child => {
+canvas.appendChild(child.cloneNode(true));
+});
+
+// スクリプトを再実行（Chart.jsなど）
+const scripts = canvas.querySelectorAll('script');
+scripts.forEach(oldScript => {
+const newScript = document.createElement('script');
+newScript.textContent = oldScript.textContent;
+oldScript.parentNode.replaceChild(newScript, oldScript);
+});
+
+// data-id を持つ要素を抽出
+const widgets = canvas.querySelectorAll('[data-id]');
+initializeWidgets(widgets);
+
+// レイヤーリストを更新
+updateLayerList(widgets);
+}
+
+// ウィジェット初期化
+function initializeWidgets(widgets) {
+widgets.forEach(widget => {
+const id = widget.dataset.id;
+widgetData.set(id, widget);
+
+// クリックで選択
+widget.addEventListener('click', (e) => {
+e.stopPropagation();
+selectWidget(widget);
+});
+
+// ダブルクリックでテキスト編集
+widget.addEventListener('dblclick', (e) => {
+const target = e.target;
+if (target.contentEditable !== 'true') {
+target.contentEditable = 'true';
+target.focus();
+
+// Enter or blur で確定
+const finishEdit = () => {
+target.contentEditable = 'false';
+showNotification('テキストを更新しました ✏️');
+};
+
+target.addEventListener('blur', finishEdit, { once: true });
+target.addEventListener('keydown', (ke) => {
+if (ke.key === 'Enter' && !ke.shiftKey) {
+ke.preventDefault();
+finishEdit();
+}
+}, { once: true });
+}
+});
+});
+
+// interact.jsでドラッグ＆リサイズ
+if (typeof interact !== 'undefined') {
+interact('.widget')
+.draggable({
+listeners: {
+move(event) {
+const target = event.target;
+const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
+const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+target.style.transform = `translate(${ x } px, ${ y }px)`;
+target.setAttribute('data-x', x);
+target.setAttribute('data-y', y);
+}
+}
+})
+.resizable({
+edges: { right: true, bottom: true },
+listeners: {
+move(event) {
+let { x, y } = event.target.dataset;
+x = parseFloat(x) || 0;
+y = parseFloat(y) || 0;
+
+Object.assign(event.target.style, {
+width: `${ event.rect.width } px`,
+height: `${ event.rect.height } px`,
+transform: `translate(${ x }px, ${ y }px)`
+});
+}
+}
+});
+}
+}
+
+// レイヤーリスト更新
+function updateLayerList(widgets) {
+const layerList = document.getElementById('layerList');
+layerList.innerHTML = '';
+
+widgets.forEach(widget => {
+const li = document.createElement('li');
+li.className = 'layer-item';
+li.dataset.widgetId = widget.dataset.id;
+
+const icon = getIconForType(widget.dataset.type);
+
+li.innerHTML = `
+                < div class="layer-icon" > ${ icon }</div >
+                    <div class="layer-info">
+                        <div class="layer-id">${widget.dataset.id}</div>
+                        <div class="layer-type">${widget.dataset.type}</div>
+                    </div>
+            `;
+
+li.addEventListener('click', () => {
+selectWidget(widget);
+});
+
+layerList.appendChild(li);
+});
+}
+
+// タイプ別アイコン
+function getIconForType(type) {
+const icons = {
+'decision-kpi': '📊',
+'decision-action': '⚡',
+'decision-status': '🚦',
+'chart': '📈',
+'summary-text': '📝',
+'insight-box': '💡',
+'detail-list': '📋',
+'footer-meta': '📄'
+};
+return icons[type] || '📦';
+}
+
+// ウィジェット選択
+function selectWidget(widget) {
+// 前の選択を解除
+if (selectedWidget) {
+selectedWidget.classList.remove('selected');
+const prevLayerItem = document.querySelector(`[data - widget - id= "${selectedWidget.dataset.id}"]`);
+if (prevLayerItem) prevLayerItem.classList.remove('selected');
+}
+
+// 新しい選択
+selectedWidget = widget;
+widget.classList.add('selected');
+
+const layerItem = document.querySelector(`[data - widget - id= "${widget.dataset.id}"]`);
+if (layerItem) layerItem.classList.add('selected');
+
+// プロパティパネル更新
+updatePropertyPanel(widget);
+}
+
+// プロパティパネル更新
+function updatePropertyPanel(widget) {
+const panel = document.getElementById('propertyPanel');
+const type = widget.dataset.type;
+const id = widget.dataset.id;
+const importance = widget.dataset.importance || 'medium';
+const status = widget.dataset.status || 'normal';
+
+panel.innerHTML = `
+                < div class="property-group" >
+    <label class="property-label">コンポーネント ID</label>
+    <div class="property-value">${id}</div>
+</div >
+
+<div class="property-group">
+    <label class="property-label">種別</label>
+    <div class="property-value">${type}</div>
+</div>
+
+<div class="property-group">
+    <label class="property-label">重要度</label>
+    <select class="property-select" onchange="updateImportance('${id}', this.value)">
+        <option value="high" ${importance==='high' ? 'selected' : '' }>High</option>
+        <option value="medium" ${importance==='medium' ? 'selected' : '' }>Medium</option>
+        <option value="low" ${importance==='low' ? 'selected' : '' }>Low</option>
+    </select>
+</div>
+
+<div class="property-group">
+    <label class="property-label">状態</label>
+    <div class="status-buttons">
+        <button class="status-btn normal ${status === 'normal' ? 'active' : ''}"
+            onclick="updateStatus('${id}', 'normal')">Normal</button>
+        <button class="status-btn warn ${status === 'warn' ? 'active' : ''}"
+            onclick="updateStatus('${id}', 'warn')">Warn</button>
+        <button class="status-btn alert ${status === 'alert' ? 'active' : ''}"
+            onclick="updateStatus('${id}', 'alert')">Alert</button>
+    </div>
+</div>
+
+${ getTypeSpecificPropertyFields(type, widget) }
+
+            <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #e2e8f0;">
+                <p style="font-size: 0.75rem; color: #64748b; margin-bottom: 0.75rem;">
+                    💡 ヒント: テキストをダブルクリックで直接編集できます
+                </p>
+            </div>
+            `;
+}
+
+// タイプ別プロパティフィールド
+function getTypeSpecificPropertyFields(type, widget) {
+if (type === 'decision-kpi') {
+const titleEl = widget.querySelector('h3');
+const valueEl = widget.querySelector('[class*="text-4xl"], [class*="text-3xl"]');
+const diffEl = widget.querySelector('[class*="text-green"], [class*="text-red"]');
+
+return `
+                < div class="property-group" >
+    <label class="property-label">タイトル</label>
+    <input type="text" class="property-input" value="${titleEl ? titleEl.textContent : ''}"
+        onchange="updateKPITitle('${widget.dataset.id}', this.value)">
+</div>
+<div class="property-group">
+    <label class="property-label">値</label>
+    <input type="text" class="property-input" value="${valueEl ? valueEl.textContent : ''}"
+        onchange="updateKPIValue('${widget.dataset.id}', this.value)">
+</div>
+<div class="property-group">
+    <label class="property-label">差分</label>
+    <input type="text" class="property-input" value="${diffEl ? diffEl.textContent : ''}"
+        onchange="updateKPIDiff('${widget.dataset.id}', this.value)">
+</div>
+            `;
+}
+return '';
+}
+
+// プロパティ更新関数群
+function updateImportance(id, value) {
+const widget = widgetData.get(id);
+if (widget) {
+widget.dataset.importance = value;
+showNotification('重要度を更新しました ⚙️');
+}
+}
+
+function updateStatus(id, value) {
+const widget = widgetData.get(id);
+if (widget) {
+widget.dataset.status = value;
+updatePropertyPanel(widget);
+showNotification(`状態を ${ value } に変更しました 🚦`);
+}
+}
+
+function updateKPITitle(id, value) {
+const widget = widgetData.get(id);
+if (widget) {
+const titleEl = widget.querySelector('h3');
+if (titleEl) titleEl.textContent = value;
+showNotification('タイトルを更新しました ✏️');
+}
+}
+
+function updateKPIValue(id, value) {
+const widget = widgetData.get(id);
+if (widget) {
+const valueEl = widget.querySelector('[class*="text-4xl"], [class*="text-3xl"]');
+if (valueEl) valueEl.textContent = value;
+showNotification('値を更新しました ✏️');
+}
+}
+
+function updateKPIDiff(id, value) {
+const widget = widgetData.get(id);
+if (widget) {
+const diffEl = widget.querySelector('[class*="text-green"], [class*="text-red"]');
+if (diffEl) diffEl.textContent = value;
+showNotification('差分を更新しました ✏️');
+}
+}
+
+// HTML エクスポート
+function exportHTML() {
+if (!loadedHTML) {
+showNotification('エクスポートするHTMLがありません', true);
+return;
+}
+
+const canvas = document.getElementById('canvas');
+const parser = new DOMParser();
+const doc = parser.parseFromString(loadedHTML, 'text/html');
+
+// 編集後のbody内容で置き換え
+doc.body.innerHTML = canvas.innerHTML;
+
+// transform を style に固定化
+const widgets = doc.querySelectorAll('[data-x], [data-y]');
+widgets.forEach(w => {
+const x = w.getAttribute('data-x') || 0;
+const y = w.getAttribute('data-y') || 0;
+if (x != 0 || y != 0) {
+const currentStyle = w.getAttribute('style') || '';
+w.setAttribute('style', currentStyle + `; transform: translate(${ x }px, ${ y }px); `);
+}
+w.removeAttribute('data-x');
+w.removeAttribute('data-y');
+});
+
+// contenteditable を削除
+const editables = doc.querySelectorAll('[contenteditable]');
+editables.forEach(el => el.removeAttribute('contenteditable'));
+
+// 完成HTMLを出力
+const finalHTML = '
+<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
+
+const blob = new Blob([finalHTML], { type: 'text/html;charset=utf-8' });
+const url = URL.createObjectURL(blob);
+const a = document.createElement('a');
+a.href = url;
+
+const date = new Date();
+const timestamp = `${ date.getFullYear() }${
+                String(date.getMonth() + 1).padStart(2,
+                    '0')
+            }${ String(date.getDate()).padStart(2, '0') } -${
+                String(date.getHours()).padStart(2,
+                    '0')
+            }${ String(date.getMinutes()).padStart(2, '0') } `;
+a.download = `edited - dashboard - ${ timestamp }.html`;
+
+a.click();
+URL.revokeObjectURL(url);
+
+showNotification('HTMLをダウンロードしました 💾');
+}
+
+// キャンバスクリックで選択解除
+document.getElementById('canvas').addEventListener('click', (e) => {
+if (e.target.id === 'canvas' || e.target.classList.contains('empty-state')) {
+if (selectedWidget) {
+selectedWidget.classList.remove('selected');
+const layerItem = document.querySelector(`[data - widget - id= "${selectedWidget.dataset.id}"]`);
+if (layerItem) layerItem.classList.remove('selected');
+selectedWidget = null;
+
+document.getElementById('propertyPanel').innerHTML = `
+                < div class="empty-properties" >
+    <div style="font-size: 2rem;">👈</div>
+    <div style="font-size: 0.875rem; margin-top: 0.5rem;">コンポーネントを選択してください</div>
+</div >
+`;
+}
+}
+});
+        </script>
+    </body>
+
+</html>

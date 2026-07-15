@@ -1,0 +1,1066 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML直す君 - ダッシュボードビジュアルエディタ</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8fafc;
+        }
+
+        .app-container {
+            display: grid;
+            grid-template-rows: auto 1fr;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.875rem;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #667eea;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr 320px;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .left-panel {
+            background: white;
+            border-right: 1px solid #e2e8f0;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .panel-title {
+            font-weight: 700;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            color: #64748b;
+            margin-bottom: 1rem;
+            letter-spacing: 0.05em;
+        }
+
+        .layer-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .layer-item {
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .layer-item:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+
+        .layer-item.selected {
+            background: #ede9fe;
+            border-color: #a78bfa;
+        }
+
+        .layer-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .layer-info {
+            flex: 1;
+        }
+
+        .layer-id {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .layer-type {
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+
+        .center-panel {
+            background: #f1f5f9;
+            overflow: auto;
+            padding: 2rem;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .canvas {
+            background: white;
+            width: 100%;
+            max-width: 1400px;
+            min-height: 800px;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transform: scale(0.85);
+            transform-origin: top center;
+        }
+
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+            color: #94a3b8;
+            text-align: center;
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .widget {
+            position: relative;
+            cursor: move;
+            transition: box-shadow 0.2s;
+        }
+
+        .widget.selected {
+            outline: 2px solid #667eea;
+            outline-offset: 2px;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .widget:hover:not(.selected) {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .right-panel {
+            background: white;
+            border-left: 1px solid #e2e8f0;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .property-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .property-label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #64748b;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .property-input,
+        .property-select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            background: white;
+            transition: all 0.2s;
+        }
+
+        .property-input:focus,
+        .property-select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .property-value {
+            padding: 0.5rem;
+            background: #f8fafc;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            color: #475569;
+            font-family: 'Courier New', monospace;
+        }
+
+        .status-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .status-btn {
+            flex: 1;
+            padding: 0.5rem;
+            border: 2px solid transparent;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .status-btn.normal {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-btn.warn {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-btn.alert {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .status-btn.active {
+            border-color: currentColor;
+            transform: scale(1.05);
+        }
+
+        .empty-properties {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: #94a3b8;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        [contenteditable="true"] {
+            outline: 2px dashed #fbbf24;
+            outline-offset: 2px;
+            background: #fffbeb;
+        }
+
+        .notification {
+            position: fixed;
+            top: 5rem;
+            right: 1.5rem;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #10b981;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            max-width: 300px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.error {
+            border-left-color: #ef4444;
+        }
+
+        .property-textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-family: inherit;
+            resize: vertical;
+            transition: all 0.2s;
+        }
+
+        .property-textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .style-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        .color-input-wrapper {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .color-preview {
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            border: 2px solid #e2e8f0;
+            cursor: pointer;
+        }
+
+        input[type="color"] {
+            width: 0;
+            height: 0;
+            opacity: 0;
+            position: absolute;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .checkbox-label:hover {
+            background: #f8fafc;
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <header class="header">
+            <h1>🛠️ HTML直す君</h1>
+            <div class="header-buttons">
+                <input type="file" id="fileInput" accept=".html" style="display:none">
+                <button class="btn btn-secondary" onclick="document.getElementById('fileInput').click()">📂
+                    HTMLを開く</button>
+                <button class="btn btn-primary" onclick="exportHTML()">💾 ダウンロード</button>
+            </div>
+        </header>
+
+        <div class="main-layout">
+            <aside class="left-panel">
+                <div class="panel-title">📋 レイヤー</div>
+                <ul class="layer-list" id="layerList">
+                    <li class="empty-state" style="padding: 2rem 0;">
+                        <div style="font-size: 2rem;">📭</div>
+                        <div style="font-size: 0.875rem; margin-top: 0.5rem;">HTMLを開いてください</div>
+                    </li>
+                </ul>
+            </aside>
+
+            <main class="center-panel">
+                <div class="canvas" id="canvas">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🎨</div>
+                        <h2 style="font-size: 1.25rem; margin-bottom: 0.5rem;">ダッシュボードを読み込んでください</h2>
+                        <p style="max-width: 400px;">
+                            「HTMLを開く」ボタンから、AIが生成したダッシュボードHTMLファイルを読み込んでください。
+                        </p>
+                        <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()"
+                            style="margin-top: 1.5rem;">
+                            📂 HTMLファイルを選択
+                        </button>
+                    </div>
+                </div>
+            </main>
+
+            <aside class="right-panel">
+                <div class="panel-title">⚙️ プロパティ</div>
+                <div id="propertyPanel" class="empty-properties">
+                    <div style="font-size: 2rem;">👈</div>
+                    <div style="font-size: 0.875rem; margin-top: 0.5rem;">コンポーネントを選択してください</div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <div class="notification" id="notification">
+        <span id="notificationText"></span>
+    </div>
+
+    <script>
+        let selectedWidget = null;
+        let loadedHTML = '';
+        let widgetData = new Map();
+        let currentlyEditing = null;
+
+        function showNotification(message, isError) {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notificationText');
+            notificationText.textContent = message;
+            if (isError) {
+                notification.classList.add('error');
+            } else {
+                notification.classList.remove('error');
+            }
+            notification.classList.add('show');
+            setTimeout(function () {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        document.getElementById('fileInput').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                loadDashboard(e.target.result);
+                showNotification('ダッシュボードを読み込みました 📂', false);
+            };
+            reader.readAsText(file);
+        });
+
+
+
+        function loadDashboard(htmlString) {
+            loadedHTML = htmlString;
+            widgetData.clear();
+
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(htmlString, 'text/html');
+
+            const canvas = document.getElementById('canvas');
+            canvas.innerHTML = '';
+
+            const children = doc.body.children;
+            for (let i = 0; i < children.length; i++) {
+                canvas.appendChild(children[i].cloneNode(true));
+            }
+
+            // スクリプトを再実行（DOMContentLoadedリスナーは特別処理）
+            const scripts = canvas.querySelectorAll('script');
+            for (let i = 0; i < scripts.length; i++) {
+                const oldScript = scripts[i];
+                let scriptContent = oldScript.textContent;
+
+                // DOMContentLoadedイベントリスナーを検出して中身を抽出
+                if (scriptContent.includes('document.addEventListener') && scriptContent.includes('DOMContentLoaded')) {
+                    console.log('📊 Found DOMContentLoaded listener, extracting code...');
+
+                    // リスナーの中身を抽出
+                    const match = scriptContent.match(/document\.addEventListener\s*\(\s*['"]DOMContentLoaded['"]\s*,\s*(?:function\s*\(\)\s*\{|\(\)\s*=>\s*\{)([\s\S]*)\}\s*\)\s*;?/);
+                    if (match && match[1]) {
+                        const innerCode = match[1];
+                        // 抽出したコードを遅延実行
+                        scriptContent = `
+                            console.log('🎨 Executing Chart.js initialization...');
+                            setTimeout(function() {
+                                ${innerCode}
+                                console.log('✅ Chart.js initialized');
+                            }, 300);
+                        `;
+                    }
+                }
+
+                const newScript = document.createElement('script');
+                if (oldScript.src) {
+                    newScript.src = oldScript.src;
+                } else {
+                    newScript.textContent = scriptContent;
+                }
+
+                oldScript.parentNode.replaceChild(newScript, oldScript);
+            }
+
+            console.log('📦 Dashboard loaded - all scripts executed');
+
+            const widgets = canvas.querySelectorAll('[data-id]');
+            initializeWidgets(widgets);
+            updateLayerList(widgets);
+        }
+
+        function initializeWidgets(widgets) {
+            for (let i = 0; i < widgets.length; i++) {
+                const widget = widgets[i];
+                const id = widget.dataset.id;
+                widgetData.set(id, widget);
+
+                // widgetクラスを追加（ドラッグ機能のため）
+                widget.classList.add('widget');
+
+                // positionをrelativeに設定（リサイズハンドルのため）
+                if (!widget.style.position || widget.style.position === 'static') {
+                    widget.style.position = 'relative';
+                }
+
+                widget.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    selectWidget(widget);
+                });
+
+                widget.addEventListener('dblclick', function (e) {
+                    const target = e.target;
+
+                    // 前の編集を終了
+                    if (currentlyEditing && currentlyEditing !== target) {
+                        currentlyEditing.contentEditable = 'false';
+                        currentlyEditing = null;
+                    }
+
+                    if (target.contentEditable !== 'true') {
+                        target.contentEditable = 'true';
+                        target.focus();
+                        currentlyEditing = target;
+
+                        // 編集終了時の処理
+                        var finishEdit = function () {
+                            target.contentEditable = 'false';
+                            currentlyEditing = null;
+                            showNotification('テキストを更新しました ✏️', false);
+                        };
+
+                        target.addEventListener('blur', finishEdit, { once: true });
+                        target.addEventListener('keydown', function (ke) {
+                            if (ke.key === 'Enter' && !ke.shiftKey) {
+                                ke.preventDefault();
+                                target.blur();
+                            }
+                        }, { once: true });
+                    }
+                });
+
+                // リサイズハンドルを追加（存在しない場合）
+                let resizeHandle = widget.querySelector('[data-role="resize-handle"]');
+                if (!resizeHandle) {
+                    resizeHandle = document.createElement('div');
+                    resizeHandle.setAttribute('data-role', 'resize-handle');
+                    resizeHandle.className = 'resize-handle';
+                    widget.appendChild(resizeHandle);
+                }
+
+                // リサイズハンドルのスタイルを設定（既存のものも含めて）
+                resizeHandle.style.cssText = 'position: absolute; right: -2px; bottom: -2px; width: 32px; height: 32px; cursor: se-resize; z-index: 1000; pointer-events: auto; background: transparent;';
+                resizeHandle.innerHTML = '<svg width="32" height="32" viewBox="0 0 32 32" style="position: absolute; right: 0; bottom: 0;"><path d="M32 32 L32 24 L24 32 Z M32 18 L18 32 L26 32 L32 26 Z M32 12 L12 32 L20 32 L32 20 Z" fill="#667eea" opacity="0.6"/></svg>';
+
+                // ホバーエフェクトを追加
+                resizeHandle.addEventListener('mouseenter', function () {
+                    const path = this.querySelector('path');
+                    if (path) path.setAttribute('opacity', '1');
+                });
+                resizeHandle.addEventListener('mouseleave', function () {
+                    const path = this.querySelector('path');
+                    if (path) path.setAttribute('opacity', '0.6');
+                });
+
+                // シンプルなリサイズイベント
+                resizeHandle.addEventListener('mousedown', function (e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+
+                    const startX = e.clientX;
+                    const startY = e.clientY;
+                    const startWidth = widget.offsetWidth;
+                    const startHeight = widget.offsetHeight;
+
+                    function onMouseMove(moveE) {
+                        const deltaX = moveE.clientX - startX;
+                        const deltaY = moveE.clientY - startY;
+                        const newWidth = Math.max(50, startWidth + deltaX);
+                        const newHeight = Math.max(50, startHeight + deltaY);
+                        widget.style.width = newWidth + 'px';
+                        widget.style.height = newHeight + 'px';
+                    }
+
+                    function onMouseUp() {
+                        document.removeEventListener('mousemove', onMouseMove);
+                        document.removeEventListener('mouseup', onMouseUp);
+                    }
+
+                    document.addEventListener('mousemove', onMouseMove);
+                    document.addEventListener('mouseup', onMouseUp);
+                });
+
+                // シンプルなドラッグイベント
+                widget.addEventListener('mousedown', function (e) {
+                    // リサイズハンドル、canvas、入力要素からの開始は無視
+                    if (e.target.closest('[data-role="resize-handle"]') ||
+                        e.target.tagName === 'CANVAS' ||
+                        e.target.tagName === 'INPUT' ||
+                        e.target.tagName === 'TEXTAREA' ||
+                        e.target.tagName === 'SELECT' ||
+                        e.target.tagName === 'BUTTON') {
+                        return;
+                    }
+
+                    const startX = e.clientX;
+                    const startY = e.clientY;
+                    let isDragging = false;
+                    let hasConverted = false;
+
+                    // 現在の位置とサイズを取得
+                    const currentLeft = widget.offsetLeft;
+                    const currentTop = widget.offsetTop;
+                    const currentWidth = widget.offsetWidth;
+                    const currentHeight = widget.offsetHeight;
+
+                    function onMouseMove(moveE) {
+                        const deltaX = moveE.clientX - startX;
+                        const deltaY = moveE.clientY - startY;
+
+                        // 5px以上動いたらドラッグと判定
+                        if (!isDragging && (Math.abs(deltaX) > 5 || Math.abs(deltaY) > 5)) {
+                            isDragging = true;
+
+                            // positionをabsoluteに変更（サイズも明示的に設定）
+                            if (!hasConverted) {
+                                const computedStyle = window.getComputedStyle(widget);
+                                if (computedStyle.position !== 'absolute') {
+                                    widget.style.position = 'absolute';
+                                    widget.style.left = currentLeft + 'px';
+                                    widget.style.top = currentTop + 'px';
+                                    widget.style.width = currentWidth + 'px';
+                                    widget.style.height = currentHeight + 'px';
+                                }
+                                widget.style.zIndex = '1000';
+                                hasConverted = true;
+                            }
+                        }
+
+                        if (isDragging) {
+                            widget.style.left = (currentLeft + deltaX) + 'px';
+                            widget.style.top = (currentTop + deltaY) + 'px';
+                        }
+                    }
+
+                    function onMouseUp() {
+                        document.removeEventListener('mousemove', onMouseMove);
+                        document.removeEventListener('mouseup', onMouseUp);
+                        if (isDragging) {
+                            widget.style.zIndex = '';
+                        }
+                    }
+
+                    document.addEventListener('mousemove', onMouseMove);
+                    document.addEventListener('mouseup', onMouseUp);
+                });
+            }
+        }
+
+        function updateLayerList(widgets) {
+            const layerList = document.getElementById('layerList');
+            layerList.innerHTML = '';
+
+            const icons = {
+                'decision-kpi': '📊',
+                'decision-action': '⚡',
+                'decision-status': '🚦',
+                'chart': '📈',
+                'summary-text': '📝',
+                'insight-box': '💡'
+            };
+
+            for (let i = 0; i < widgets.length; i++) {
+                const widget = widgets[i];
+                const li = document.createElement('li');
+                li.className = 'layer-item';
+                li.dataset.widgetId = widget.dataset.id;
+
+                const icon = icons[widget.dataset.type] || '📦';
+
+                li.innerHTML = '<div class="layer-icon">' + icon + '</div>' +
+                    '<div class="layer-info">' +
+                    '<div class="layer-id">' + widget.dataset.id + '</div>' +
+                    '<div class="layer-type">' + widget.dataset.type + '</div>' +
+                    '</div>';
+
+                li.addEventListener('click', function () {
+                    selectWidget(widget);
+                });
+
+                layerList.appendChild(li);
+            }
+        }
+
+        function selectWidget(widget) {
+            if (selectedWidget) {
+                selectedWidget.classList.remove('selected');
+                const prevItem = document.querySelector('[data-widget-id="' + selectedWidget.dataset.id + '"]');
+                if (prevItem) prevItem.classList.remove('selected');
+            }
+
+            selectedWidget = widget;
+            widget.classList.add('selected');
+
+            const layerItem = document.querySelector('[data-widget-id="' + widget.dataset.id + '"]');
+            if (layerItem) layerItem.classList.add('selected');
+
+            updatePropertyPanel(widget);
+        }
+
+        function updatePropertyPanel(widget) {
+            const panel = document.getElementById('propertyPanel');
+            const type = widget.dataset.type;
+            const id = widget.dataset.id;
+            const importance = widget.dataset.importance || 'medium';
+            const status = widget.dataset.status || 'normal';
+
+            // テキスト要素の検出
+            let textElement = null;
+            const textTags = ['P', 'SPAN', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'DIV', 'LABEL', 'TD', 'TH', 'LI'];
+
+            // ウィジェット自体がテキスト要素か確認
+            if (textTags.includes(widget.tagName)) {
+                textElement = widget;
+            } else {
+                // 子要素からテキスト要素を探す
+                for (let tag of textTags) {
+                    const found = widget.querySelector(tag);
+                    if (found && found.textContent.trim()) {
+                        textElement = found;
+                        break;
+                    }
+                }
+            }
+
+            let html = '<div class="property-group">' +
+                '<label class="property-label">コンポーネント ID</label>' +
+                '<div class="property-value">' + id + '</div>' +
+                '</div>' +
+                '<div class="property-group">' +
+                '<label class="property-label">種別</label>' +
+                '<div class="property-value">' + type + '</div>' +
+                '</div>';
+
+            // テキスト編集セクション
+            if (textElement) {
+                const computedStyle = window.getComputedStyle(textElement);
+                const currentColor = rgbToHex(computedStyle.color);
+                const currentFontSize = parseInt(computedStyle.fontSize);
+                const currentFontFamily = computedStyle.fontFamily.split(',')[0].replace(/['"]/g, '');
+                const currentFontWeight = computedStyle.fontWeight;
+                const currentFontStyle = computedStyle.fontStyle;
+                const currentTextDecoration = computedStyle.textDecoration;
+
+                html += '<div class="property-group" style="border-top: 2px solid #e2e8f0; padding-top: 1rem; margin-top: 1rem;">' +
+                    '<label class="property-label">📝 テキスト編集</label>' +
+                    '<textarea class="property-textarea" id="textEditor" placeholder="テキストを入力...">' +
+                    (textElement.textContent || '') + '</textarea>' +
+                    '</div>';
+
+                // スタイル編集セクション
+                html += '<div class="property-group">' +
+                    '<label class="property-label">🎨 スタイル編集（全体）</label>' +
+
+                    // 文字色
+                    '<div style="margin-bottom: 1rem;">' +
+                    '<label class="property-label" style="font-size: 0.75rem;">全体の文字色</label>' +
+                    '<div class="color-input-wrapper">' +
+                    '<div class="color-preview" id="colorPreview" style="background-color: ' + currentColor + ';"></div>' +
+                    '<input type="color" id="colorPicker" value="' + currentColor + '">' +
+                    '<input type="text" class="property-input" id="colorText" value="' + currentColor + '" style="flex: 1;">' +
+                    '</div>' +
+                    '</div>' +
+
+                    // フォントとサイズ
+                    '<div class="style-grid" style="margin-bottom: 1rem;">' +
+                    '<div>' +
+                    '<label class="property-label" style="font-size: 0.75rem;">全体のフォント</label>' +
+                    '<select class="property-select" id="fontFamilySelect">' +
+                    '<option value="Arial" ' + (currentFontFamily.includes('Arial') ? 'selected' : '') + '>Arial</option>' +
+                    '<option value="Helvetica" ' + (currentFontFamily.includes('Helvetica') ? 'selected' : '') + '>Helvetica</option>' +
+                    '<option value="Times New Roman" ' + (currentFontFamily.includes('Times') ? 'selected' : '') + '>Times New Roman</option>' +
+                    '<option value="Georgia" ' + (currentFontFamily.includes('Georgia') ? 'selected' : '') + '>Georgia</option>' +
+                    '<option value="Courier New" ' + (currentFontFamily.includes('Courier') ? 'selected' : '') + '>Courier New</option>' +
+                    '<option value="Verdana" ' + (currentFontFamily.includes('Verdana') ? 'selected' : '') + '>Verdana</option>' +
+                    '<option value="游ゴシック, Yu Gothic" ' + (currentFontFamily.includes('游ゴシック') || currentFontFamily.includes('Yu Gothic') ? 'selected' : '') + '>游ゴシック</option>' +
+                    '<option value="メイリオ, Meiryo" ' + (currentFontFamily.includes('メイリオ') || currentFontFamily.includes('Meiryo') ? 'selected' : '') + '>メイリオ</option>' +
+                    '<option value="ヒラギノ角ゴ Pro, Hiragino Kaku Gothic Pro" ' + (currentFontFamily.includes('ヒラギノ') || currentFontFamily.includes('Hiragino') ? 'selected' : '') + '>ヒラギノ角ゴ</option>' +
+                    '</select>' +
+                    '</div>' +
+                    '<div>' +
+                    '<label class="property-label" style="font-size: 0.75rem;">全体の文字サイズ</label>' +
+                    '<input type="number" class="property-input" id="fontSizeInput" value="' + currentFontSize + '" min="8" max="72" step="1">' +
+                    '</div>' +
+                    '</div>' +
+
+                    // 全体の装飾
+                    '<div style="margin-bottom: 0.5rem;">' +
+                    '<label class="checkbox-label">' +
+                    '<input type="checkbox" id="boldCheckbox" ' + (parseInt(currentFontWeight) >= 600 ? 'checked' : '') + '>' +
+                    '<span style="font-weight: bold;">全体を太字に</span>' +
+                    '</label>' +
+                    '</div>' +
+                    '<button class="btn btn-primary" onclick="applyTextStyles()" style="width: 100%; margin-bottom: 1rem;">✨ 全体にスタイルを適用</button>' +
+
+                    // 部分装飾ツールバー
+                    '<div style="border-top: 2px solid #e2e8f0; padding-top: 1rem; margin-top: 1rem;">' +
+                    '<label class="property-label">✒️ 部分装飾（選択範囲）</label>' +
+                    '<div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.5rem;">' +
+                    '<button class="btn btn-secondary" style="padding: 0.25rem 0.5rem; min-width: 32px; font-weight: bold;" onmousedown="event.preventDefault(); applyPartialStyle(\'bold\')">B</button>' +
+                    '<button class="btn btn-secondary" style="padding: 0.25rem 0.5rem; min-width: 32px; font-style: italic;" onmousedown="event.preventDefault(); applyPartialStyle(\'italic\')">I</button>' +
+                    '<button class="btn btn-secondary" style="padding: 0.25rem 0.5rem; min-width: 32px; text-decoration: underline;" onmousedown="event.preventDefault(); applyPartialStyle(\'underline\')">U</button>' +
+                    '</div>' +
+                    '<div style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.5rem;">' +
+                    '<input type="color" id="partialColorPicker" value="#ef4444" style="width: 32px; height: 32px; padding: 0; border: none; cursor: pointer;">' +
+                    '<button class="btn btn-secondary" style="font-size: 0.75rem; flex: 1;" onmousedown="event.preventDefault(); applyPartialStyle(\'foreColor\', document.getElementById(\'partialColorPicker\').value)">選択範囲の色を変更</button>' +
+                    '</div>' +
+                    '<div style="display: flex; gap: 0.5rem; align-items: center;">' +
+                    '<select id="partialFontSize" class="property-select" style="flex: 1; font-size: 0.75rem;">' +
+                    '<option value="3">中 (標準)</option>' +
+                    '<option value="1">極小</option>' +
+                    '<option value="2">小</option>' +
+                    '<option value="4">大</option>' +
+                    '<option value="5">特大</option>' +
+                    '<option value="6">超特大</option>' +
+                    '<option value="7">最大</option>' +
+                    '</select>' +
+                    '<button class="btn btn-secondary" style="font-size: 0.75rem;" onmousedown="event.preventDefault(); applyPartialStyle(\'fontSize\', document.getElementById(\'partialFontSize\').value)">サイズ適用</button>' +
+                    '</div>' +
+                    '<p style="font-size: 0.7rem; color: #94a3b8; margin-top: 0.5rem;">※ダブルクリックで編集モード中に範囲を選択してボタンを押してください</p>' +
+                    '</div>' +
+                    '</div>';
+            }
+
+            html += '<div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e2e8f0;">' +
+                '<p style="font-size: 0.75rem; color: #64748b;">💡 ヒント: テキストをダブルクリックで直接編集できます</p>' +
+                '</div>';
+
+            panel.innerHTML = html;
+
+            // イベントリスナーの設定
+            if (textElement) {
+                // テキスト編集の同期
+                const textEditor = document.getElementById('textEditor');
+                if (textEditor) {
+                    textEditor.addEventListener('input', function () {
+                        textElement.textContent = this.value;
+                    });
+                }
+
+                // カラーピッカー
+                const colorPicker = document.getElementById('colorPicker');
+                const colorPreview = document.getElementById('colorPreview');
+                const colorText = document.getElementById('colorText');
+
+                if (colorPicker && colorPreview && colorText) {
+                    colorPreview.addEventListener('click', function () {
+                        colorPicker.click();
+                    });
+
+                    colorPicker.addEventListener('input', function () {
+                        colorPreview.style.backgroundColor = this.value;
+                        colorText.value = this.value;
+                    });
+
+                    colorText.addEventListener('input', function () {
+                        if (/^#[0-9A-F]{6}$/i.test(this.value)) {
+                            colorPreview.style.backgroundColor = this.value;
+                            colorPicker.value = this.value;
+                        }
+                    });
+                }
+            }
+        }
+
+        function applyTextStyles() {
+            if (!selectedWidget) return;
+
+            // テキスト要素を取得
+            const textTags = ['P', 'SPAN', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'DIV', 'LABEL', 'TD', 'TH', 'LI'];
+            let textElement = null;
+
+            if (textTags.includes(selectedWidget.tagName)) {
+                textElement = selectedWidget;
+            } else {
+                for (let tag of textTags) {
+                    const found = selectedWidget.querySelector(tag);
+                    if (found && found.textContent.trim()) {
+                        textElement = found;
+                        break;
+                    }
+                }
+            }
+
+            if (!textElement) return;
+
+            // スタイルを適用
+            const colorText = document.getElementById('colorText');
+            const fontFamilySelect = document.getElementById('fontFamilySelect');
+            const fontSizeInput = document.getElementById('fontSizeInput');
+            const boldCheckbox = document.getElementById('boldCheckbox');
+
+            if (colorText) {
+                textElement.style.color = colorText.value;
+                // 子要素のインラインスタイルもリセット（全体適用を優先）
+                const children = textElement.querySelectorAll('*');
+                children.forEach(child => {
+                    if (child.style.color) child.style.color = '';
+                });
+            }
+
+            if (fontFamilySelect) {
+                textElement.style.fontFamily = fontFamilySelect.value;
+            }
+
+            if (fontSizeInput) {
+                const size = fontSizeInput.value + 'px';
+                textElement.style.fontSize = size;
+                // 子要素のサイズも必要に応じて調整（全体適用を優先）
+                const children = textElement.querySelectorAll('*');
+                children.forEach(child => {
+                    if (child.style.fontSize) child.style.fontSize = '';
+                });
+            }
+
+            if (boldCheckbox) {
+                textElement.style.fontWeight = boldCheckbox.checked ? 'bold' : 'normal';
+            }
+
+            showNotification('全体のスタイルを更新しました ✨', false);
+        }
+
+        function applyPartialStyle(command, value = null) {
+            // 編集モード（contentEditable="true"）の要素があるか確認
+            const activeElement = document.activeElement;
+            if (!activeElement || activeElement.contentEditable !== 'true') {
+                showNotification('テキストをダブルクリックして編集モード中に操作してください 💡', true);
+                return;
+            }
+
+            // document.execCommandを使用して選択範囲にスタイルを適用
+            document.execCommand(command, false, value);
+
+            showNotification('スタイルを適用しました 🖌️', false);
+        }
+
+        function rgbToHex(rgb) {
+            // RGB形式を16進数に変換
+            if (rgb.startsWith('#')) return rgb;
+
+            const values = rgb.match(/\d+/g);
+            if (!values || values.length < 3) return '#000000';
+
+            const r = parseInt(values[0]);
+            const g = parseInt(values[1]);
+            const b = parseInt(values[2]);
+
+            return '#' + [r, g, b].map(x => {
+                const hex = x.toString(16);
+                return hex.length === 1 ? '0' + hex : hex;
+            }).join('');
+        }
+
+        function exportHTML() {
+            if (!loadedHTML) {
+                showNotification('エクスポートするHTMLがありません', true);
+                return;
+            }
+
+            const canvas = document.getElementById('canvas');
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(loadedHTML, 'text/html');
+
+            doc.body.innerHTML = canvas.innerHTML;
+
+            const widgets = doc.querySelectorAll('[data-x], [data-y]');
+            for (let i = 0; i < widgets.length; i++) {
+                const w = widgets[i];
+                const x = w.getAttribute('data-x') || 0;
+                const y = w.getAttribute('data-y') || 0;
+                if (x != 0 || y != 0) {
+                    const currentStyle = w.getAttribute('style') || '';
+                    w.setAttribute('style', currentStyle + '; transform: translate(' + x + 'px, ' + y + 'px);');
+                }
+                w.removeAttribute('data-x');
+                w.removeAttribute('data-y');
+            }
+
+            const editables = doc.querySelectorAll('[contenteditable]');
+            for (let i = 0; i < editables.length; i++) {
+                editables[i].removeAttribute('contenteditable');
+            }
+
+            const finalHTML = '<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
+
+            const blob = new Blob([finalHTML], { type: 'text/html;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+
+            const date = new Date();
+            const timestamp = date.getFullYear() +
+                String(date.getMonth() + 1).padStart(2, '0') +
+                String(date.getDate()).padStart(2, '0') + '-' +
+                String(date.getHours()).padStart(2, '0') +
+                String(date.getMinutes()).padStart(2, '0');
+            a.download = 'edited-dashboard-' + timestamp + '.html';
+
+            a.click();
+            URL.revokeObjectURL(url);
+
+            showNotification('HTMLをダウンロードしました 💾', false);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>横浜市 資産データ照合ツール</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #167b9c;
+            --bg-light: #f6f7f8;
+            --audit-red: #CC2F2F;
+            --text-dark: #0e171b;
+            --text-gray: #508495;
+            --border-color: #e8f0f3;
+            --green: #22c55e;
+            --gray: #6b7280;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', 'Yu Gothic', 'Meiryo', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* ヘッダー */
+        header {
+            background: white;
+            border-bottom: 2px solid var(--border-color);
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        header h1 {
+            color: var(--primary);
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        header .subtitle {
+            color: var(--text-gray);
+            font-size: 12px;
+        }
+
+        /* ファイルアップロード */
+        .upload-area {
+            background: white;
+            border: 3px dashed var(--primary);
+            border-radius: 12px;
+            padding: 60px 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 30px;
+        }
+
+        .upload-area:hover {
+            background: #f0f9fb;
+            border-color: var(--audit-red);
+        }
+
+        .upload-area.dragover {
+            background: #e6f4f7;
+            border-color: var(--audit-red);
+        }
+
+        .upload-icon {
+            font-size: 48px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .upload-text {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .upload-hint {
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+
+        /* 統計カード */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-card .label {
+            color: var(--text-gray);
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .stat-card .value {
+            color: var(--text-dark);
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .stat-card.new {
+            border-left: 4px solid var(--green);
+        }
+
+        .stat-card.deleted {
+            border-left: 4px solid var(--gray);
+        }
+
+        .stat-card.modified {
+            border-left: 4px solid var(--audit-red);
+        }
+
+        /* テーブルコンテナ */
+        .table-container {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        .table-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            background: var(--bg-light);
+        }
+
+        .btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* テーブル */
+        .table-scroll {
+            overflow-x: auto;
+            overflow-y: auto;
+            max-height: 600px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1400px;
+        }
+
+        thead {
+            position: sticky;
+            top: 0;
+            background: var(--bg-light);
+            z-index: 10;
+        }
+
+        th {
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
+        }
+
+        tbody tr:hover {
+            background: #f8fbfc;
+        }
+
+        /* 資産状態別スタイル */
+        .row-new {
+            background: #f0fdf4;
+        }
+
+        .row-deleted {
+            background: #f5f5f5;
+            opacity: 0.7;
+        }
+
+        .row-deleted td {
+            text-decoration: line-through;
+            color: #999;
+        }
+
+        /* 減少資産でも義務者宛名番号は通常表示 */
+        .row-deleted td:nth-child(2) {
+            text-decoration: none;
+            color: #0e171b;
+        }
+
+        /* バッジ */
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .badge.new {
+            background: var(--green);
+            color: white;
+        }
+
+        .badge.deleted {
+            background: var(--gray);
+            color: white;
+        }
+
+        .badge.modified {
+            background: var(--audit-red);
+            color: white;
+        }
+
+        .change-count {
+            font-size: 10px;
+            color: var(--text-gray);
+            margin-top: 4px;
+        }
+
+        /* 変更ハイライト */
+        .changed {
+            color: var(--audit-red);
+            font-weight: 700;
+        }
+
+        .change-icon {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            margin-left: 4px;
+            color: var(--audit-red);
+            font-size: 12px;
+        }
+
+        .new-icon {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--green);
+            border-radius: 50%;
+            margin-left: 4px;
+        }
+
+        /* チェックボックス */
+        input[type="checkbox"] {
+            width: 14px;
+            height: 14px;
+            cursor: pointer;
+            margin-right: 8px;
+        }
+
+        input[type="text"].memo {
+            width: 100%;
+            padding: 6px 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        input[type="text"].memo:disabled {
+            background: #f5f5f5;
+            cursor: not-allowed;
+        }
+
+        /* ローディング */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-gray);
+        }
+
+        .spinner {
+            border: 3px solid var(--border-color);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* プログレスバー */
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: var(--border-color);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        /* エラー表示 */
+        .error {
+            background: #fee;
+            border: 1px solid #fcc;
+            color: #c33;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h1>横浜市役所 資産管理ツール</h1>
+                <p class="subtitle">資産データ照合システム v2.6.0 - 異動結果リスト検証</p>
+            </div>
+            <button id="resetBtn" class="btn"
+                style="display: none; background: #f59e0b; color: white; border-color: #f59e0b;">
+                🔄 最初に戻る
+            </button>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- ファイルアップロード -->
+        <div id="uploadArea" class="upload-area">
+            <div class="upload-icon">📁</div>
+            <div class="upload-text">CSVファイルをドラッグ＆ドロップ</div>
+            <div class="upload-hint">または、クリックしてファイルを選択</div>
+            <input type="file" id="fileInput" accept=".csv" style="display: none;">
+        </div>
+
+        <!-- エラー表示 -->
+        <div id="errorContainer" class="hidden"></div>
+
+        <!-- ローディング -->
+        <div id="loadingContainer" class="hidden loading">
+            <div class="spinner"></div>
+            <div id="loadingText">CSVファイルを読み込んでいます...</div>
+            <div class="progress-bar">
+                <div id="progressFill" class="progress-fill" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <!-- 統計カード -->
+        <div id="statsContainer" class="stats-grid hidden">
+            <div class="stat-card new">
+                <div class="label">新規資産</div>
+                <div class="value" id="statNew">0</div>
+            </div>
+            <div class="stat-card deleted">
+                <div class="label">減少資産</div>
+                <div class="value" id="statDeleted">0</div>
+            </div>
+            <div class="stat-card modified">
+                <div class="label">修正資産</div>
+                <div class="value" id="statModified">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">総資産数</div>
+                <div class="value" id="statTotal">0</div>
+            </div>
+        </div>
+
+        <!-- テーブル -->
+        <div id="tableContainer" class="table-container hidden">
+            <div class="table-header">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="義務者宛名番号、資産の名称で検索...">
+                </div>
+                <div class="filter-buttons">
+                    <button class="btn" id="filterAll">全て表示</button>
+                    <button class="btn" id="filterNew">新規のみ</button>
+                    <button class="btn" id="filterDeleted">減少のみ</button>
+                    <button class="btn" id="filterModified">修正のみ</button>
+                    <button class="btn" id="exportExcel"
+                        style="background: #22c55e; color: white; border-color: #22c55e;">📊 疑義あり資産を出力</button>
+                </div>
+            </div>
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 100px;">状態</th>
+                            <th style="width: 180px;">義務者宛名番号</th>
+                            <th style="width: 120px;">償却種類CD</th>
+                            <th style="width: 250px;">資産の名称</th>
+                            <th style="width: 120px;">取得年月</th>
+                            <th style="width: 150px;">取得価額</th>
+                            <th style="width: 100px;">耐用年数</th>
+                            <th style="width: 200px;">メモ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // グローバル変数
+        let allData = [];
+        let filteredData = [];
+        let currentFilter = 'all';
+
+        // チェック状態管理（キー: rowIndex_fieldName, 値: 0=未チェック, 1=確認済み, 2=疑義あり）
+        const checkStates = new Map();
+
+        // メモ管理（キー: rowIndex, 値: メモ内容）
+        const memoStates = new Map();
+
+        // DOM要素
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const loadingContainer = document.getElementById('loadingContainer');
+        const loadingText = document.getElementById('loadingText');
+        const progressFill = document.getElementById('progressFill');
+        const errorContainer = document.getElementById('errorContainer');
+        const statsContainer = document.getElementById('statsContainer');
+        const tableContainer = document.getElementById('tableContainer');
+        const tableBody = document.getElementById('tableBody');
+        const searchInput = document.getElementById('searchInput');
+
+        // ファイルアップロードイベント
+        uploadArea.addEventListener('click', () => fileInput.click());
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const file = e.dataTransfer.files[0];
+            if (file && file.name.endsWith('.csv')) {
+                handleFile(file);
+            } else {
+                showError('CSVファイルを選択してください');
+            }
+        });
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) handleFile(file);
+        });
+
+        // フィルターボタン
+        document.getElementById('filterAll').addEventListener('click', () => applyFilter('all'));
+        document.getElementById('filterNew').addEventListener('click', () => applyFilter('new'));
+        document.getElementById('filterDeleted').addEventListener('click', () => applyFilter('deleted'));
+        document.getElementById('filterModified').addEventListener('click', () => applyFilter('modified'));
+
+        // 検索
+        searchInput.addEventListener('input', (e) => {
+            applyFilter(currentFilter, e.target.value);
+        });
+
+        // リセットボタン
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            if (confirm('データをクリアして最初に戻りますか？')) {
+                resetApp();
+            }
+        });
+
+        // Excel出力ボタン（後で実装）
+        document.getElementById('exportExcel').addEventListener('click', () => {
+            exportSuspiciousAssets();
+        });
+
+        // ページ読み込み時にlocalStorageから復元
+        window.addEventListener('DOMContentLoaded', () => {
+            restoreFromLocalStorage();
+        });
+
+        // localStorageから復元
+        function restoreFromLocalStorage() {
+            const savedData = localStorage.getItem('assetData');
+            const savedCheckStates = localStorage.getItem('checkStates');
+            const savedMemoStates = localStorage.getItem('memoStates');
+
+            if (savedData) {
+                try {
+                    allData = JSON.parse(savedData);
+
+                    if (savedCheckStates) {
+                        const checkArray = JSON.parse(savedCheckStates);
+                        checkArray.forEach(([key, value]) => checkStates.set(key, value));
+                    }
+
+                    if (savedMemoStates) {
+                        const memoArray = JSON.parse(savedMemoStates);
+                        memoArray.forEach(([key, value]) => memoStates.set(key, value));
+                    }
+
+                    console.log(`Restored ${allData.length} records from localStorage`);
+
+                    uploadArea.classList.add('hidden');
+                    updateStatistics();
+                    applyFilter('all');
+                    showResults();
+                    document.getElementById('resetBtn').style.display = 'block';
+                } catch (error) {
+                    console.error('Failed to restore from localStorage:', error);
+                    localStorage.clear();
+                }
+            }
+        }
+
+        // localStorageに保存
+        function saveToLocalStorage() {
+            try {
+                localStorage.setItem('assetData', JSON.stringify(allData));
+                localStorage.setItem('checkStates', JSON.stringify(Array.from(checkStates.entries())));
+                localStorage.setItem('memoStates', JSON.stringify(Array.from(memoStates.entries())));
+                console.log('Data saved to localStorage');
+            } catch (error) {
+                console.error('Failed to save to localStorage:', error);
+            }
+        }
+
+        // アプリをリセット
+        function resetApp() {
+            allData = [];
+            filteredData = [];
+            checkStates.clear();
+            memoStates.clear();
+            localStorage.clear();
+
+            uploadArea.classList.remove('hidden');
+            statsContainer.classList.add('hidden');
+            tableContainer.classList.add('hidden');
+            document.getElementById('resetBtn').style.display = 'none';
+
+            console.log('App reset');
+        }
+
+        // ファイル処理
+        async function handleFile(file) {
+            try {
+                showLoading('CSVファイルを読み込んでいます...');
+                hideError();
+
+                const text = await readFileAsText(file);
+                updateProgress(20);
+
+                loadingText.textContent = 'データを解析しています...';
+                const records = parseCSV(text);
+                updateProgress(40);
+
+                if (records.length === 0) {
+                    throw new Error('CSVファイルが空です');
+                }
+
+                loadingText.textContent = 'データを処理しています...';
+                allData = await processRecordsInBatches(records);
+                updateProgress(80);
+
+                loadingText.textContent = '表示を準備しています...';
+                updateStatistics();
+                applyFilter('all');
+                updateProgress(100);
+
+                hideLoading();
+                showResults();
+
+                // localStorageに保存
+                saveToLocalStorage();
+
+                // リセットボタンを表示
+                document.getElementById('resetBtn').style.display = 'block';
+
+            } catch (error) {
+                hideLoading();
+                showError(`エラーが発生しました: ${error.message}`);
+                console.error('File processing error:', error);
+            }
+        }
+
+        // ファイル読み込み（エンコーディング自動判定）
+        function readFileAsText(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    let text = e.target.result;
+                    // BOM除去
+                    if (text.charCodeAt(0) === 0xFEFF) {
+                        text = text.slice(1);
+                    }
+
+                    // 文字化けチェック（簡易）
+                    const hasGarbage = /[\uFFFD\u0000-\u0008\u000B\u000C\u000E-\u001F]/.test(text.substring(0, 1000));
+
+                    if (hasGarbage) {
+                        console.log('UTF-8 decoding failed, trying Shift-JIS...');
+                        // Shift-JISで再読み込み
+                        const readerSJIS = new FileReader();
+                        readerSJIS.onload = (e2) => {
+                            resolve(e2.target.result);
+                        };
+                        readerSJIS.onerror = () => reject(new Error('ファイル読み込みエラー'));
+                        readerSJIS.readAsText(file, 'Shift-JIS');
+                    } else {
+                        resolve(text);
+                    }
+                };
+                reader.onerror = () => reject(new Error('ファイル読み込みエラー'));
+                reader.readAsText(file, 'UTF-8');
+            });
+        }
+
+        // CSVパース（特殊形式対応版）
+        function parseCSV(text) {
+            // 前処理：行全体が"で囲まれている場合の対応
+            const lines = text.split(/\r?\n/);
+            const processedLines = lines.map(line => {
+                line = line.trim();
+                if (!line) return '';
+
+                // 行全体が"で囲まれている場合、外側の"を除去
+                if (line.startsWith('"') && line.endsWith('"')) {
+                    line = line.slice(1, -1);
+                    // 内部の""を一時的にプレースホルダーに変換
+                    line = line.replace(/""/g, '\x00');
+                }
+
+                return line;
+            }).filter(line => line);
+
+            if (processedLines.length === 0) return [];
+
+            // CSVパース
+            const rows = [];
+
+            for (const line of processedLines) {
+                const row = [];
+                let currentField = '';
+                let inQuotes = false;
+
+                for (let i = 0; i < line.length; i++) {
+                    const char = line[i];
+                    const nextChar = line[i + 1];
+
+                    if (inQuotes) {
+                        if (char === '"' && nextChar === '"') {
+                            currentField += '"';
+                            i++;
+                        } else if (char === '"') {
+                            inQuotes = false;
+                        } else {
+                            currentField += char;
+                        }
+                    } else {
+                        if (char === '"') {
+                            inQuotes = true;
+                        } else if (char === ',') {
+                            // プレースホルダーを"に戻す
+                            row.push(currentField.replace(/\x00/g, '"').trim());
+                            currentField = '';
+                        } else {
+                            currentField += char;
+                        }
+                    }
+                }
+
+                // 最後のフィールド
+                row.push(currentField.replace(/\x00/g, '"').trim());
+
+                if (row.length > 0) {
+                    rows.push(row);
+                }
+            }
+
+            if (rows.length === 0) return [];
+
+            // ヘッダー行（ダブルクォートを除去）
+            const headers = rows[0].map(h => {
+                // 前後のダブルクォートを除去
+                let cleaned = h.trim();
+                if (cleaned.startsWith('"') && cleaned.endsWith('"')) {
+                    cleaned = cleaned.slice(1, -1);
+                }
+                return cleaned;
+            });
+            console.log(`CSV Headers (${headers.length} columns):`, headers.slice(0, 10));
+
+            // 必要なカラムのインデックスを取得
+            const requiredColumns = [
+                'RTXT義務者宛名番号', 'RTXT資産番号',
+                'RTXT前義務者宛名番号', 'RTXT前資産番号',
+                'RTXT前償却種類CD', 'RTXT前資産の名称', 'RTXT前取得年月',
+                'RTXT前取得価額', 'RTXT前耐用年数1',
+                'RTXT後義務者宛名番号', 'RTXT後資産番号',
+                'RTXT後償却種類CD', 'RTXT後資産の名称', 'RTXT後取得年月',
+                'RTXT後取得価額', 'RTXT後耐用年数1',
+                'RTXT義務者宛名番号比較', 'RTXT償却種類CD比較',
+                'RTXT資産の名称比較', 'RTXT取得年月比較',
+                'RTXT取得価額比較', 'RTXT耐用年数1比較',
+                'RTXT償却種類コード'
+            ];
+
+            const columnIndices = new Map();
+            requiredColumns.forEach(col => {
+                const index = headers.indexOf(col);
+                if (index !== -1) {
+                    columnIndices.set(col, index);
+                }
+            });
+
+            // 必須カラムの確認
+            const missingColumns = requiredColumns.filter(col => !columnIndices.has(col));
+            if (missingColumns.length > 0) {
+                console.warn('Missing columns:', missingColumns);
+                console.log('=== Available Headers (first 30) ===');
+                console.log(headers.slice(0, 30));
+                console.log('=== Searching for these patterns ===');
+                missingColumns.slice(0, 5).forEach(missing => {
+                    const similar = headers.filter(h => h.includes(missing.split('RTXT')[1]?.substring(0, 10) || ''));
+                    console.log(`"${missing}" -> Similar: `, similar.slice(0, 3));
+                });
+            }
+
+            // データ行をオブジェクトに変換
+            const records = [];
+            for (let i = 1; i < rows.length; i++) {
+                const row = rows[i];
+                if (row.length === 0 || (row.length === 1 && !row[0])) continue;
+
+                const record = {};
+                columnIndices.forEach((index, colName) => {
+                    let value = (row[index] || '').trim();
+                    // ダブルクォートを除去
+                    if (value.startsWith('"') && value.endsWith('"')) {
+                        value = value.slice(1, -1);
+                    }
+                    record[colName] = value;
+                });
+
+                records.push(record);
+            }
+
+            console.log(`Parsed ${records.length} records from ${rows.length - 1} data rows`);
+
+            // デバッグ：最初のレコードの内容を表示
+            if (records.length > 0) {
+                console.log('=== First Record Sample ===');
+                console.log('RTXT前資産番号:', records[0]['RTXT前資産番号']);
+                console.log('RTXT後資産番号:', records[0]['RTXT後資産番号']);
+                console.log('RTXT前義務者宛名番号:', records[0]['RTXT前義務者宛名番号']);
+                console.log('RTXT後義務者宛名番号:', records[0]['RTXT後義務者宛名番号']);
+                console.log('RTXT後資産の名称:', records[0]['RTXT後資産の名称']);
+                console.log('RTXT資産の名称比較:', records[0]['RTXT資産の名称比較']);
+            }
+
+            return records;
+        }
+
+        // バッチ処理
+        async function processRecordsInBatches(records, batchSize = 1000) {
+            const results = [];
+            const totalBatches = Math.ceil(records.length / batchSize);
+
+            for (let i = 0; i < records.length; i += batchSize) {
+                const batch = records.slice(i, i + batchSize);
+                const processed = batch.map(buildDisplayData);
+                results.push(...processed);
+
+                // UIスレッドに制御を戻す
+                await new Promise(resolve => setTimeout(resolve, 0));
+
+                // 進捗更新
+                const progress = 40 + Math.round((i + batch.length) / records.length * 40);
+                updateProgress(progress);
+            }
+
+            return results;
+        }
+
+        // 表示用データ構築
+        function buildDisplayData(record) {
+            const status = getAssetStatus(record);
+            const changes = detectChanges(record, status);
+
+            const result = {
+                義務者宛名番号: changes['義務者宛名番号'].value,
+                償却種類CD: changes['償却種類CD'].value,
+                資産の名称: changes['資産の名称'].value,
+                取得年月: changes['取得年月'].value,
+                取得価額: changes['取得価額'].value,
+                耐用年数: changes['耐用年数1'].value,
+
+                _status: status,
+                _changes: changes,
+                _changedCount: Object.values(changes).filter(c => c.shouldHighlight).length,
+
+                _debug: {
+                    beforeAssetNo: record['RTXT前資産番号'],
+                    afterAssetNo: record['RTXT後資産番号'],
+                    rawRecord: record
+                }
+            };
+
+            // デバッグログ（最初の3件のみ）
+            if (allData.length < 3) {
+                console.log('=== Display Data ===', {
+                    status: status.type,
+                    義務者宛名番号: result.義務者宛名番号,
+                    資産の名称: result.資産の名称,
+                    changedCount: result._changedCount,
+                    beforeAssetNo: record['RTXT前資産番号'],
+                    afterAssetNo: record['RTXT後資産番号']
+                });
+            }
+
+            return result;
+        }
+
+        // 資産状態判定
+        function getAssetStatus(record) {
+            const beforeAssetNo = normalizeAssetNumber(record['RTXT前資産番号']);
+            const afterAssetNo = normalizeAssetNumber(record['RTXT後資産番号']);
+
+            // 減少資産（RTXT後資産番号が0）
+            if (afterAssetNo === '0') {
+                return {
+                    type: 'DELETED',
+                    isNew: false,
+                    isDeleted: true,
+                    isModified: false,
+                    displaySource: 'BEFORE'
+                };
+            }
+
+            // 新規資産（RTXT前資産番号が0または空白）
+            if (beforeAssetNo === '0' || beforeAssetNo === '') {
+                return {
+                    type: 'NEW',
+                    isNew: true,
+                    isDeleted: false,
+                    isModified: false,
+                    displaySource: 'AFTER'
+                };
+            }
+
+            // 既存資産（修正の可能性あり）
+            return {
+                type: 'EXISTING',
+                isNew: false,
+                isDeleted: false,
+                isModified: true,
+                displaySource: 'AFTER'
+            };
+        }
+
+        // 資産番号正規化
+        function normalizeAssetNumber(value) {
+            if (value === null || value === undefined) return '';
+
+            const normalized = String(value)
+                .trim()
+                .replace(/[０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xFEE0));
+
+            if (normalized === '' || normalized === '0') {
+                return normalized === '0' ? '0' : '';
+            }
+
+            return normalized;
+        }
+
+        // 表示値取得
+        function getDisplayValue(record, fieldName, status) {
+            if (status.isDeleted) {
+                return record[`RTXT前${fieldName}`] || '';
+            }
+
+            const afterValue = record[`RTXT後${fieldName}`];
+            const beforeValue = record[`RTXT前${fieldName}`];
+
+            if (afterValue !== undefined && afterValue !== null && afterValue !== '') {
+                return afterValue;
+            }
+
+            return beforeValue || '';
+        }
+
+        // 変更検出
+        function detectChanges(record, status) {
+            const fields = [
+                { key: '義務者宛名番号', compare: 'RTXT義務者宛名番号比較' },
+                { key: '償却種類CD', compare: 'RTXT償却種類CD比較' },
+                { key: '資産の名称', compare: 'RTXT資産の名称比較' },
+                { key: '取得年月', compare: 'RTXT取得年月比較' },
+                { key: '取得価額', compare: 'RTXT取得価額比較' },
+                { key: '耐用年数1', compare: 'RTXT耐用年数1比較' }
+            ];
+
+            const changes = {};
+
+            fields.forEach(field => {
+                const beforeValue = record[`RTXT前${field.key}`] || '';
+                const afterValue = record[`RTXT後${field.key}`] || '';
+                const compareFlag = record[field.compare] || '';
+                const displayValue = getDisplayValue(record, field.key, status);
+
+                let hasChanged = false;
+
+                if (status.isDeleted) {
+                    hasChanged = true;
+                } else if (status.isNew) {
+                    hasChanged = true;
+                } else {
+                    hasChanged = compareFlag.includes('*');
+                }
+
+                changes[field.key] = {
+                    value: displayValue,
+                    before: beforeValue,
+                    after: afterValue,
+                    changed: hasChanged,
+                    compareFlag: compareFlag,
+                    shouldHighlight: (status.isNew || (status.type === 'EXISTING' && hasChanged))
+                };
+            });
+
+            return changes;
+        }
+
+        // 統計更新
+        function updateStatistics() {
+            const stats = {
+                total: allData.length,
+                new: allData.filter(d => d._status.isNew).length,
+                deleted: allData.filter(d => d._status.isDeleted).length,
+                modified: allData.filter(d => {
+                    if (d._status.isNew || d._status.isDeleted) return false;
+                    return d._changedCount > 0;
+                }).length
+            };
+
+            document.getElementById('statTotal').textContent = stats.total.toLocaleString();
+            document.getElementById('statNew').textContent = stats.new.toLocaleString();
+            document.getElementById('statDeleted').textContent = stats.deleted.toLocaleString();
+            document.getElementById('statModified').textContent = stats.modified.toLocaleString();
+        }
+
+        // フィルター適用
+        function applyFilter(filter, searchKeyword = '') {
+            currentFilter = filter;
+
+            // フィルターボタンのアクティブ状態更新
+            document.querySelectorAll('.filter-buttons .btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(`filter${filter.charAt(0).toUpperCase() + filter.slice(1)}`).classList.add('active');
+
+            // データフィルタリング
+            filteredData = allData.filter(item => {
+                // 状態フィルター
+                if (filter === 'new' && !item._status.isNew) return false;
+                if (filter === 'deleted' && !item._status.isDeleted) return false;
+                if (filter === 'modified' && (item._status.isNew || item._status.isDeleted || item._changedCount === 0)) return false;
+
+                // 検索フィルター
+                if (searchKeyword) {
+                    const keyword = searchKeyword.toLowerCase();
+                    const searchableText = [
+                        item.義務者宛名番号,
+                        item.資産の名称,
+                        item.償却種類CD
+                    ].join(' ').toLowerCase();
+
+                    if (!searchableText.includes(keyword)) return false;
+                }
+
+                return true;
+            });
+
+            // ソート（優先度順）
+            filteredData.sort((a, b) => {
+                if (a._status.isDeleted !== b._status.isDeleted) {
+                    return a._status.isDeleted ? -1 : 1;
+                }
+                if (a._status.isNew !== b._status.isNew) {
+                    return a._status.isNew ? -1 : 1;
+                }
+                if (a._changedCount !== b._changedCount) {
+                    return b._changedCount - a._changedCount;
+                }
+                return (a.義務者宛名番号 || '').localeCompare(b.義務者宛名番号 || '');
+            });
+
+            renderTable();
+        }
+
+        // テーブル描画
+        function renderTable() {
+            tableBody.innerHTML = '';
+
+            filteredData.forEach((data, index) => {
+                const tr = createTableRow(data, index);
+                tableBody.appendChild(tr);
+            });
+        }
+
+        // テーブル行作成
+        function createTableRow(data, index) {
+            const tr = document.createElement('tr');
+
+            let rowClass = '';
+            if (data._status.isDeleted) {
+                rowClass = 'row-deleted';
+            } else if (data._status.isNew) {
+                rowClass = 'row-new';
+            }
+            tr.className = rowClass;
+
+            // 状態カラム
+            const tdStatus = document.createElement('td');
+            tdStatus.style.textAlign = 'center';
+
+            let badgeHTML = '';
+            if (data._status.isDeleted) {
+                badgeHTML = '<span class="badge deleted">減少</span>';
+            } else if (data._status.isNew) {
+                badgeHTML = '<span class="badge new">新規</span>';
+            } else if (data._changedCount > 0) {
+                badgeHTML = `<span class="badge modified">修正</span><div class="change-count">${data._changedCount}/6項目</div>`;
+            }
+
+            tdStatus.innerHTML = badgeHTML;
+            tr.appendChild(tdStatus);
+
+            // データカラム
+            const fields = ['義務者宛名番号', '償却種類CD', '資産の名称', '取得年月', '取得価額', '耐用年数'];
+
+            fields.forEach((field, fieldIndex) => {
+                const td = document.createElement('td');
+                const change = data._changes[field] || data._changes[field + '1'];
+
+                if (!change) {
+                    td.textContent = '-';
+                    tr.appendChild(td);
+                    return;
+                }
+
+                const shouldHighlight = change.shouldHighlight;
+
+                // 値のフォーマット
+                let displayValue = change.value || '-';
+
+                // 取得価額の場合はカンマ区切りにする
+                if (field === '取得価額' && displayValue !== '-') {
+                    const numericValue = displayValue.replace(/[^\d]/g, '');
+                    if (numericValue) {
+                        displayValue = '¥' + parseInt(numericValue).toLocaleString();
+                    }
+                }
+
+                const cellDiv = document.createElement('div');
+                cellDiv.style.display = 'flex';
+                cellDiv.style.alignItems = 'center';
+                cellDiv.style.gap = '8px';
+
+                // 3状態チェックボックス（減少資産でも有効）
+                const checkKey = `${index}_${field}`;
+                const currentState = checkStates.get(checkKey) || 0;
+
+                const checkBtn = document.createElement('button');
+                checkBtn.style.width = '20px';
+                checkBtn.style.height = '20px';
+                checkBtn.style.border = '2px solid #ccc';
+                checkBtn.style.borderRadius = '4px';
+                checkBtn.style.background = 'white';
+                checkBtn.style.cursor = 'pointer';
+                checkBtn.style.display = 'flex';
+                checkBtn.style.alignItems = 'center';
+                checkBtn.style.justifyContent = 'center';
+                checkBtn.style.fontSize = '14px';
+                checkBtn.style.padding = '0';
+
+                // 状態に応じた表示
+                if (currentState === 1) {
+                    checkBtn.textContent = '✅';
+                    checkBtn.style.borderColor = '#22c55e';
+                } else if (currentState === 2) {
+                    checkBtn.textContent = '⚠';
+                    checkBtn.style.borderColor = '#f59e0b';
+                    checkBtn.style.background = '#fef3c7';
+                } else {
+                    checkBtn.textContent = '';
+                }
+
+                // クリックイベント：0 → 1 → 2 → 0
+                checkBtn.addEventListener('click', () => {
+                    // 最新の状態を取得
+                    const current = checkStates.get(checkKey) || 0;
+                    const newState = (current + 1) % 3;
+                    checkStates.set(checkKey, newState);
+
+                    if (newState === 1) {
+                        checkBtn.textContent = '✅';
+                        checkBtn.style.borderColor = '#22c55e';
+                        checkBtn.style.background = 'white';
+                    } else if (newState === 2) {
+                        checkBtn.textContent = '⚠';
+                        checkBtn.style.borderColor = '#f59e0b';
+                        checkBtn.style.background = '#fef3c7';
+                    } else {
+                        checkBtn.textContent = '';
+                        checkBtn.style.borderColor = '#ccc';
+                        checkBtn.style.background = 'white';
+                    }
+
+                    // localStorageに保存
+                    saveToLocalStorage();
+                });
+
+                cellDiv.appendChild(checkBtn);
+
+                // 値の表示
+                let valueClass = '';
+                let icon = '';
+
+                const isAddressNumber = field === '義務者宛名番号';
+
+                if (data._status.isDeleted && !isAddressNumber) {
+                    valueClass = '';
+                } else if (data._status.isNew) {
+                    valueClass = 'changed';
+                    icon = '<span class="new-icon"></span>';
+                } else if (shouldHighlight) {
+                    valueClass = 'changed';
+                    icon = '<span class="change-icon" title="変更前: ' + (change.before || '(空白)') + '&#10;変更後: ' + (change.after || '(空白)') + '">✎</span>';
+                }
+
+                const valueSpan = document.createElement('span');
+                valueSpan.className = valueClass;
+                valueSpan.innerHTML = displayValue + icon;
+
+                cellDiv.appendChild(valueSpan);
+                td.appendChild(cellDiv);
+
+                // 義務者宛名番号の場合は、減少資産でも取り消し線を引かない
+                if (data._status.isDeleted && isAddressNumber) {
+                    td.style.textDecoration = 'none';
+                    td.style.color = 'inherit';
+                }
+
+                tr.appendChild(td);
+            });
+
+            // メモカラム（減少資産でも有効）
+            const tdMemo = document.createElement('td');
+            const memoInput = document.createElement('input');
+            memoInput.type = 'text';
+            memoInput.className = 'memo';
+            memoInput.placeholder = '備考入力...';
+            memoInput.value = memoStates.get(index) || '';
+
+            // メモ変更時に保存
+            memoInput.addEventListener('input', (e) => {
+                memoStates.set(index, e.target.value);
+                // localStorageに保存
+                saveToLocalStorage();
+            });
+
+            tdMemo.appendChild(memoInput);
+            tr.appendChild(tdMemo);
+
+            return tr;
+        }
+
+        // UI制御
+        function showLoading(text) {
+            loadingText.textContent = text;
+            loadingContainer.classList.remove('hidden');
+            uploadArea.classList.add('hidden');
+        }
+
+        function hideLoading() {
+            loadingContainer.classList.add('hidden');
+        }
+
+        function showResults() {
+            statsContainer.classList.remove('hidden');
+            tableContainer.classList.remove('hidden');
+        }
+
+        function updateProgress(percent) {
+            progressFill.style.width = percent + '%';
+        }
+
+        function showError(message) {
+            errorContainer.innerHTML = `<div class="error">${message}</div>`;
+            errorContainer.classList.remove('hidden');
+        }
+
+        function hideError() {
+            errorContainer.classList.add('hidden');
+        }
+
+        // 疑義あり資産をExcel出力
+        function exportSuspiciousAssets() {
+            // 疑義あり（状態=2）のチェックがある資産を抽出
+            const suspiciousAssets = [];
+
+            filteredData.forEach((data, index) => {
+                const fields = ['義務者宛名番号', '償却種類CD', '資産の名称', '取得年月', '取得価額', '耐用年数'];
+                let hasSuspicious = false;
+                const suspiciousFields = [];
+
+                fields.forEach(field => {
+                    const checkKey = `${index}_${field}`;
+                    const state = checkStates.get(checkKey);
+                    if (state === 2) {
+                        hasSuspicious = true;
+                        suspiciousFields.push(field);
+                    }
+                });
+
+                if (hasSuspicious) {
+                    suspiciousAssets.push({
+                        data: data,
+                        index: index,
+                        suspiciousFields: suspiciousFields,
+                        memo: memoStates.get(index) || ''
+                    });
+                }
+            });
+
+            if (suspiciousAssets.length === 0) {
+                alert('疑義ありの資産がありません。\n\nチェックボックスを2回クリックして⚠マークを付けてください。');
+                return;
+            }
+
+            // CSV生成
+            let csv = '\uFEFF'; // BOM for Excel
+            csv += '状態,義務者宛名番号,償却種類CD,資産の名称,取得年月,取得価額,耐用年数,疑義項目,メモ\n';
+
+            suspiciousAssets.forEach(item => {
+                const d = item.data;
+                const status = d._status.isNew ? '新規' : d._status.isDeleted ? '減少' : '修正';
+
+                // 取得価額のフォーマット
+                let price = d.取得価額 || '';
+                const numericValue = price.replace(/[^\d]/g, '');
+                if (numericValue) {
+                    price = parseInt(numericValue).toLocaleString();
+                }
+
+                const row = [
+                    status,
+                    d.義務者宛名番号 || '',
+                    d.償却種類CD || '',
+                    d.資産の名称 || '',
+                    d.取得年月 || '',
+                    price,
+                    d.耐用年数 || '',
+                    item.suspiciousFields.join('・'),
+                    item.memo
+                ];
+
+                csv += row.map(field => `"${String(field).replace(/"/g, '""')}"`).join(',') + '\n';
+            });
+
+            // ダウンロード
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+
+            const now = new Date();
+            const filename = `疑義あり資産_${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}_${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}.csv`;
+
+            link.setAttribute('href', url);
+            link.setAttribute('download', filename);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            alert(`${suspiciousAssets.length}件の疑義あり資産をエクスポートしました。`);
+        }
+    </script>
+</body>
+
+</html>

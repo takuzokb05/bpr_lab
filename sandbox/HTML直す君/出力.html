@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>Strategic Dashboard Sample</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- interact.js (drag & resize) -->
+  <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+
+  <style>
+    body {
+      background-color: #f8fafc;
+    }
+    .widget {
+      background: white;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      padding: 1rem;
+      cursor: move;
+    }
+    .resize-handle {
+      position: absolute;
+      right: 6px;
+      bottom: 6px;
+      width: 12px;
+      height: 12px;
+      background: #cbd5e1;
+      border-radius: 2px;
+      cursor: se-resize;
+    }
+  </style>
+</head>
+
+<body class="p-6 space-y-6">
+
+  <!-- ===================== -->
+  <!-- section-summary -->
+  <!-- ===================== -->
+  <section id="section-summary" class="grid grid-cols-3 gap-4">
+
+    <!-- decision-kpi -->
+    <div class="widget relative col-span-1"
+      data-id="kpi-001"
+      data-type="decision-kpi"
+      data-editable="true"
+      data-importance="high"
+      data-status="normal">
+
+      <h3 class="text-sm text-gray-500">申告率（ノーススター）</h3>
+      <div class="text-4xl font-bold text-blue-600 mt-2">92.4%</div>
+      <div class="text-sm text-gray-500 mt-1">
+        前年比 <span class="text-green-600">+2.1pt</span>
+      </div>
+
+      <div class="resize-handle"></div>
+    </div>
+
+    <!-- summary-text -->
+    <div class="widget relative col-span-2"
+      data-id="summary-001"
+      data-type="summary-text"
+      data-editable="true"
+      data-importance="high"
+      data-status="normal">
+
+      <h3 class="text-sm text-gray-500 mb-2">戦略サマリー</h3>
+      <p class="text-gray-800 leading-relaxed">
+        全体の申告率は前年を上回って推移しており、特に中小事業者層での改善が顕著。
+        一方で一部業種では依然として未申告率が高く、重点的な対応が必要。
+      </p>
+
+      <div class="resize-handle"></div>
+    </div>
+
+  </section>
+
+  <!-- ===================== -->
+  <!-- section-action -->
+  <!-- ===================== -->
+  <section id="section-action" class="grid grid-cols-3 gap-4">
+
+    <!-- decision-action -->
+    <div class="widget relative col-span-2"
+      data-id="action-001"
+      data-type="decision-action"
+      data-editable="true"
+      data-importance="high"
+      data-status="warn">
+
+      <h3 class="text-sm text-gray-500 mb-2">次の一手</h3>
+      <ul class="text-gray-800 space-y-1">
+        <li>・未申告率が高い業種への個別通知を強化</li>
+        <li>・電話催告リソースの再配分</li>
+      </ul>
+
+      <div class="mt-3 text-sm text-gray-500">
+        判断期限：<span class="font-medium">2026-03-31</span><br/>
+        担当：<span class="font-medium">資産税課</span>
+      </div>
+
+      <div class="resize-handle"></div>
+    </div>
+
+    <!-- decision-status -->
+    <div class="widget relative col-span-1"
+      data-id="status-001"
+      data-type="decision-status"
+      data-editable="true"
+      data-importance="medium"
+      data-status="warn">
+
+      <h3 class="text-sm text-gray-500 mb-2">全体判断</h3>
+      <div class="flex items-center space-x-2">
+        <span class="text-yellow-500 text-2xl">⚠</span>
+        <span class="font-bold text-yellow-600">WARN</span>
+      </div>
+      <p class="text-sm text-gray-700 mt-2">
+        改善傾向だが、対策未実施領域あり
+      </p>
+
+      <div class="resize-handle"></div>
+    </div>
+
+  </section>
+
+  <!-- ===================== -->
+  <!-- section-main -->
+  <!-- ===================== -->
+  <section id="section-main" class="grid grid-cols-2 gap-4">
+
+    <!-- chart -->
+    <div class="widget relative col-span-1"
+      data-id="chart-001"
+      data-type="chart"
+      data-chart-type="line"
+      data-editable="true"
+      data-importance="medium"
+      data-status="normal">
+
+      <h3 class="text-sm text-gray-500 mb-2">申告率 推移</h3>
+      <canvas id="lineChart" height="180"></canvas>
+
+      <div class="resize-handle"></div>
+    </div>
+
+    <!-- insight-box -->
+    <div class="widget relative col-span-1 border-l-4 border-red-500"
+      data-id="insight-001"
+      data-type="insight-box"
+      data-editable="true"
+      data-importance="high"
+      data-status="alert">
+
+      <h3 class="text-sm text-red-600 mb-2">リスク示唆</h3>
+      <p class="text-gray-800">
+        建設業・運輸業において未申告率が横ばいで推移しており、
+        対応が遅れると全体改善が頭打ちになる可能性。
+      </p>
+
+      <div class="resize-handle"></div>
+    </div>
+
+  </section>
+
+  <!-- ===================== -->
+  <!-- section-sub -->
+  <!-- ===================== -->
+  <section id="section-sub">
+
+    <!-- detail-list -->
+    <div class="widget relative"
+      data-id="detail-001"
+      data-type="detail-list"
+      data-editable="true"
+      data-importance="low"
+      data-status="normal">
+
+      <h3 class="text-sm text-gray-500 mb-2">業種別申告率（上位）</h3>
+      <table class="w-full text-sm">
+        <thead class="text-gray-500">
+          <tr>
+            <th class="text-left">業種</th>
+            <th class="text-right">申告率</th>
+          </tr>
+        </thead>
+        <tbody class="text-gray-800">
+          <tr><td>製造業</td><td class="text-right">98.1%</td></tr>
+          <tr><td>情報通信</td><td class="text-right">96.7%</td></tr>
+          <tr><td>小売業</td><td class="text-right">94.3%</td></tr>
+        </tbody>
+      </table>
+
+      <div class="resize-handle"></div>
+    </div>
+
+  </section>
+
+  <!-- ===================== -->
+  <!-- section-footer -->
+  <!-- ===================== -->
+  <section id="section-footer">
+
+    <!-- footer-meta -->
+    <div class="widget"
+      data-id="footer-001"
+      data-type="footer-meta"
+      data-editable="false"
+      data-importance="low"
+      data-status="normal">
+
+      <p class="text-xs text-gray-500">
+        データ期間：2025年度 / 出典：償却資産申告データ<br/>
+        更新日時：2026-02-03
+      </p>
+    </div>
+
+  </section>
+
+  <!-- ===================== -->
+  <!-- Scripts -->
+  <!-- ===================== -->
+  <script>
+    // Chart.js 初期化
+    const ctx = document.getElementById('lineChart');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['4月','6月','8月','10月','12月','2月'],
+        datasets: [{
+          label: '申告率',
+          data: [88, 89, 90, 91, 92, 92.4],
+          borderWidth: 2,
+          tension: 0.3
+        }]
+      },
+      options: {
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { min: 80, max: 100 }
+        }
+      }
+    });
+
+    // Drag & Resize 共通設定
+    interact('.widget')
+      .draggable({
+        listeners: {
+          move (event) {
+            const target = event.target;
+            const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
+            const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+            target.style.transform = `translate(${x}px, ${y}px)`;
+            target.setAttribute('data-x', x);
+            target.setAttribute('data-y', y);
+          }
+        }
+      })
+      .resizable({
+        edges: { right: true, bottom: true },
+        listeners: {
+          move (event) {
+            let { x, y } = event.target.dataset;
+            x = parseFloat(x) || 0;
+            y = parseFloat(y) || 0;
+
+            Object.assign(event.target.style, {
+              width: `${event.rect.width}px`,
+              height: `${event.rect.height}px`,
+              transform: `translate(${x}px, ${y}px)`
+            });
+          }
+        }
+      });
+  </script>
+
+</body>
+</html>

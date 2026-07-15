@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>導入ロードマップ — 償却資産税RAG提案</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700;800;900&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================
+   CSS CUSTOM PROPERTIES — SWISS MODERN THEME
+   roadmap.html: 縦スクロールドキュメント形式
+   ============================================ */
+:root {
+    --bg-primary: #ffffff;
+    --text-primary: #1a1a1a;
+    --text-secondary: #444;
+    --text-muted: #777;
+    --accent: #ff3300;
+    --accent-light: rgba(255, 51, 0, 0.06);
+    --accent-bg: rgba(255, 51, 0, 0.08);
+    --border: #e0e0e0;
+    --border-light: #f0f0f0;
+    --bg-card: #fafafa;
+
+    --font-display: 'Archivo', sans-serif;
+    --font-body: 'Nunito', sans-serif;
+
+    --body-size: 1rem;
+    --small-size: 0.875rem;
+}
+
+/* ============================================
+   リセット・ベース
+   ============================================ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+    font-family: var(--font-body);
+    font-size: var(--body-size);
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================
+   レイアウト
+   ============================================ */
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* ============================================
+   ヘッダー
+   ============================================ */
+.page-header {
+    padding: 4rem 0 3rem;
+    border-bottom: 3px solid var(--accent);
+}
+.page-header h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: var(--text-primary);
+}
+.page-header .subtitle {
+    margin-top: 0.5rem;
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+/* ============================================
+   セクション見出し
+   ============================================ */
+.section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 3vw, 1.8rem);
+    font-weight: 800;
+    margin: 3rem 0 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border);
+    letter-spacing: -0.01em;
+}
+
+/* ============================================
+   フェーズ概要カード（横3枚）
+   ============================================ */
+.phase-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin: 1.5rem 0 2rem;
+}
+.phase-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+.phase-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--accent);
+}
+.phase-card .phase-label {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 0.25rem;
+}
+.phase-card h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+}
+.phase-card .period {
+    display: inline-block;
+    font-size: var(--small-size);
+    font-weight: 600;
+    color: var(--text-secondary);
+    background: var(--accent-light);
+    padding: 0.15rem 0.6rem;
+    border-radius: 4px;
+    margin-bottom: 0.75rem;
+}
+.phase-card p {
+    font-size: var(--small-size);
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+}
+.phase-card .go-nogo {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent);
+    border-top: 1px solid var(--border-light);
+    padding-top: 0.75rem;
+    margin-top: 0.75rem;
+}
+.phase-card .go-nogo::before {
+    content: 'Go/No-Go: ';
+    font-weight: 700;
+}
+
+/* レスポンシブ: 狭い画面は縦積み */
+@media (max-width: 720px) {
+    .phase-cards { grid-template-columns: 1fr; }
+}
+
+/* ============================================
+   フォールバック注記
+   ============================================ */
+.fallback-note {
+    background: var(--bg-card);
+    border-left: 3px solid var(--text-muted);
+    padding: 0.75rem 1rem;
+    font-size: var(--small-size);
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+/* ============================================
+   月別タイムライン
+   ============================================ */
+.timeline {
+    position: relative;
+    margin: 1.5rem 0 3rem;
+    padding-left: 2.5rem;
+}
+/* 縦線 */
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.75rem;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--border);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 2.5rem;
+}
+.timeline-item:last-child { margin-bottom: 0; }
+
+/* 丸ドット */
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -1.85rem;
+    top: 0.3rem;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg-primary);
+    box-shadow: 0 0 0 2px var(--accent);
+    z-index: 1;
+}
+
+.timeline-item .month-label {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.timeline-item .tasks {
+    list-style: none;
+    margin-bottom: 0.75rem;
+}
+.timeline-item .tasks li {
+    position: relative;
+    padding-left: 1.2rem;
+    margin-bottom: 0.35rem;
+    font-size: var(--body-size);
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+.timeline-item .tasks li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--text-muted);
+}
+
+/* 成果物・判断ポイントのハイライト */
+.timeline-item .outcome {
+    background: var(--accent-light);
+    border-left: 3px solid var(--accent);
+    padding: 0.6rem 1rem;
+    font-size: var(--small-size);
+    font-weight: 600;
+    color: var(--text-primary);
+    border-radius: 0 6px 6px 0;
+    line-height: 1.6;
+}
+.timeline-item .outcome::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+    border-radius: 2px;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+}
+
+/* Go/No-Goゲートの強調 */
+.timeline-item.gate::before {
+    width: 16px;
+    height: 16px;
+    left: -1.95rem;
+    top: 0.2rem;
+    background: var(--bg-primary);
+    border: 3px solid var(--accent);
+    box-shadow: 0 0 0 3px rgba(255, 51, 0, 0.2);
+}
+.timeline-item.gate .month-label {
+    color: var(--accent);
+}
+.timeline-item.gate .outcome {
+    background: rgba(255, 51, 0, 0.12);
+    border-left: 4px solid var(--accent);
+    font-weight: 700;
+}
+
+/* M専任職ヒアリングバー */
+.hearing-bar {
+    margin: 1rem 0 2rem;
+    padding-left: 2.5rem;
+}
+.hearing-bar-inner {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+.hearing-bar-label {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--small-size);
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+.hearing-bar-track {
+    flex: 1;
+    height: 8px;
+    background: var(--border-light);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+}
+.hearing-bar-fill {
+    position: absolute;
+    /* 5月と6月 = 4月起点で 1/6 〜 3/6 の位置 */
+    left: 16.7%;
+    width: 33.3%;
+    height: 100%;
+    background: var(--accent);
+    border-radius: 4px;
+    opacity: 0.7;
+}
+.hearing-bar-months {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+    padding: 0 0;
+}
+.hearing-bar-months span {
+    flex: 1;
+    text-align: center;
+}
+
+/* ============================================
+   Tipsセクション
+   ============================================ */
+.tips-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    margin: 1.5rem 0 2rem;
+}
+@media (max-width: 720px) {
+    .tips-grid { grid-template-columns: 1fr; }
+}
+.tip-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+.tip-card h3 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+}
+.tip-card ul {
+    list-style: none;
+    padding: 0;
+}
+.tip-card ul li {
+    position: relative;
+    padding-left: 1.2rem;
+    margin-bottom: 0.4rem;
+    font-size: var(--small-size);
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+.tip-card ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+}
+
+/* ============================================
+   フッター
+   ============================================ */
+.page-footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 0;
+    margin-top: 3rem;
+    text-align: center;
+    font-size: var(--small-size);
+    color: var(--text-muted);
+}
+
+/* ============================================
+   印刷対応
+   ============================================ */
+@media print {
+    body { font-size: 10pt; }
+    .container { max-width: 100%; padding: 0 1cm; }
+    .page-header { padding: 1cm 0 0.5cm; border-bottom-width: 2px; }
+    .phase-cards { grid-template-columns: repeat(3, 1fr); gap: 0.5cm; }
+    .phase-card { break-inside: avoid; border: 1px solid #ccc; }
+    .timeline-item { break-inside: avoid; }
+    .tips-grid { grid-template-columns: repeat(2, 1fr); }
+    .tip-card { break-inside: avoid; }
+    .page-footer { margin-top: 1cm; }
+
+    /* 印刷時に色を確実に出す */
+    .phase-card::before,
+    .timeline-item::before,
+    .hearing-bar-fill {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================
+     ヘッダー
+     ============================================ -->
+<header class="page-header">
+    <div class="container">
+        <h1>導入ロードマップ</h1>
+        <p class="subtitle">2026年4月〜 Phase別アクションプラン</p>
+    </div>
+</header>
+
+<main class="container">
+
+    <!-- ============================================
+         フェーズ概要
+         ============================================ -->
+    <h2 class="section-title">フェーズ概要</h2>
+    <div class="phase-cards">
+        <!-- Phase 1 -->
+        <div class="phase-card">
+            <div class="phase-label">Phase 1</div>
+            <h3>NotebookLMでPoC（UC-2）</h3>
+            <span class="period">1〜2ヶ月</span>
+            <p>申告データ疑義抽出をNotebookLMで検証。匿名化済みCSV+評価要領PDFをアップロードし、既知の疑義事例で精度を計測する。</p>
+            <div class="go-nogo">疑義検出率80%以上</div>
+        </div>
+        <!-- Phase 2 -->
+        <div class="phase-card">
+            <div class="phase-label">Phase 2</div>
+            <h3>デジ統括と本格RAG構築（UC-1, UC-2）</h3>
+            <span class="period">3〜6ヶ月</span>
+            <p>デジタル統括本部の支援を受け、見積精査AI（UC-1）と疑義抽出AI（UC-2）を本格構築する。</p>
+            <div class="go-nogo">Phase 1基準達成</div>
+        </div>
+        <!-- Phase 3 -->
+        <div class="phase-card">
+            <div class="phase-label">Phase 3</div>
+            <h3>チャットボット追加・エコシステム確立（UC-3）</h3>
+            <span class="period">6ヶ月〜</span>
+            <p>事業者向けチャットボット（UC-3）を追加し、3つのUCが共通ナレッジベースで循環する知識更新エコシステムを確立する。</p>
+            <div class="go-nogo">Phase 2安定運用</div>
+        </div>
+    </div>
+
+    <div class="fallback-note">
+        Phase 1不調時の選択肢: SaaS切替（kopo等）、スコープ縮小、中止。UC-3（チャットボット）は既製品SaaS活用で構築負荷を抑える。
+    </div>
+
+    <!-- ============================================
+         月別タイムライン
+         ============================================ -->
+    <h2 class="section-title">月別アクションプラン（2026年4月〜9月）</h2>
+    <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">後任が着任してからPoC完了までの段取り。<strong>読んだらすぐ動ける</strong>ことを目指す。</p>
+
+    <!-- M専任職ヒアリング期間バー -->
+    <div class="hearing-bar">
+        <div class="hearing-bar-inner">
+            <span class="hearing-bar-label">M専任職ヒアリング</span>
+            <div style="flex:1;">
+                <div class="hearing-bar-track">
+                    <div class="hearing-bar-fill"></div>
+                </div>
+                <div class="hearing-bar-months">
+                    <span>4月</span>
+                    <span>5月</span>
+                    <span>6月</span>
+                    <span>7月</span>
+                    <span>8月</span>
+                    <span>9月</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="timeline">
+        <!-- 4月 -->
+        <div class="timeline-item">
+            <div class="month-label">4月</div>
+            <ul class="tasks">
+                <li>本提案書・RAG入門ガイドを読む</li>
+                <li>A専任職に構想を共有し、協力を取り付ける</li>
+                <li>NotebookLMのライセンス状況を確認（庁内Workspace契約で使えるか、IT担当に確認）</li>
+            </ul>
+            <div class="outcome">A専任職の協力合意、ライセンス可否の結論</div>
+        </div>
+
+        <!-- 5月 -->
+        <div class="timeline-item">
+            <div class="month-label">5月</div>
+            <ul class="tasks">
+                <li>M専任職へのヒアリング開始（月2回×1時間、過去の評価案件をベースに知見を聞き取り）</li>
+                <li>A専任職に同席・記録を依頼</li>
+                <li>デジタル統括本部（機構改革後の窓口）に非公式打診 — 「償却資産でRAGを試したい。手上げ制の準備を進めていいか」</li>
+            </ul>
+            <div class="outcome">ヒアリング記録2回分、デジ統括の反応</div>
+        </div>
+
+        <!-- 6月 -->
+        <div class="timeline-item">
+            <div class="month-label">6月</div>
+            <ul class="tasks">
+                <li>M専任職ヒアリング継続（月2回）</li>
+                <li>PoC用データの準備 — 申告データCSVの匿名化、評価要領PDFの収集</li>
+                <li>既知の疑義事例を10〜20件リストアップ（正解データ）</li>
+            </ul>
+            <div class="outcome">匿名化済みCSV、評価要領PDF、正解データセット</div>
+        </div>
+
+        <!-- 7月 -->
+        <div class="timeline-item">
+            <div class="month-label">7月</div>
+            <ul class="tasks">
+                <li>NotebookLMにソースをアップロード</li>
+                <li>PoC実施（第15章の手順）</li>
+                <li>結果記録・精度計測</li>
+            </ul>
+            <div class="outcome">PoC結果レポート</div>
+        </div>
+
+        <!-- 8月 — Go/No-Goゲート -->
+        <div class="timeline-item gate">
+            <div class="month-label">8月 — Go/No-Go判定</div>
+            <ul class="tasks">
+                <li>Go/No-Go判定（疑義検出率80%以上が基準）</li>
+                <li>結果を課長に報告</li>
+                <li>手上げ制が公開されていれば応募書類作成</li>
+            </ul>
+            <div class="outcome">Go/No-Go判定結果、課長承認</div>
+        </div>
+
+        <!-- 9月 -->
+        <div class="timeline-item">
+            <div class="month-label">9月</div>
+            <ul class="tasks">
+                <li>Go判定の場合 → 手上げ制に応募（本提案書をベースに申請資料作成）</li>
+                <li>No-Go判定の場合 → SaaS検討または原因分析・再試行</li>
+            </ul>
+            <div class="outcome">応募完了 or 方針転換の判断</div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         コツセクション
+         ============================================ -->
+    <h2 class="section-title">実行のコツ</h2>
+    <div class="tips-grid">
+        <!-- デジ統括打診のコツ -->
+        <div class="tip-card">
+            <h3>デジタル統括本部への打診</h3>
+            <ul>
+                <li>2026年度は機構改革で組織が変わる可能性あり。窓口が確定する前でも、非公式に打診しておくことで制度開始時に先行者利益を得られる</li>
+                <li>伝え方: 「償却資産で評価要領をNotebookLMに入れて試したい。手上げ制の準備として進めていいか」— 具体的なツール名を出すと話が早い</li>
+                <li>前任（久保）のデジタル統括本部との人脈は引継ぎ時に口頭で共有する</li>
+            </ul>
+        </div>
+        <!-- M専任職ヒアリングの進め方 -->
+        <div class="tip-card">
+            <h3>M専任職ヒアリングの進め方</h3>
+            <ul>
+                <li><strong>ゴール</strong>: 見積精査の判断ポイント・過去のつまずき事例をドキュメント化する</li>
+                <li><strong>方法</strong>: 過去の評価案件（3〜5件）を題材に「ここはどう判断したか」を聞く（抽象的な質問より、具体案件ベースの方が引き出しやすい）</li>
+                <li><strong>記録</strong>: A専任職に同席してもらい、技術者目線で「これはルール化できる/できない」を整理</li>
+                <li><strong>頻度</strong>: 月2回×1時間。無理のないペースで、5〜6月に集中実施</li>
+                <li><strong>退職時期</strong>: M専任職の退職予定月を確認し、逆算してヒアリング回数を確定させる</li>
+            </ul>
+        </div>
+    </div>
+</main>
+
+<!-- ============================================
+     フッター
+     ============================================ -->
+<footer class="page-footer">
+    <div class="container">
+        本資料は proposal.md 第10.3章・第13章に基づく
+    </div>
+</footer>
+
+</body>
+</html>

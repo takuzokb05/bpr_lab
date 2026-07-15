@@ -1,0 +1,2206 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Neuro Matrix Task OS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined:FILL@0..1" rel="stylesheet">
+<style>
+/* =========================================================
+   Neuro Matrix Task OS — Dual-Persona Normal (Curator)
+   - Tokens: surface階層 + quadrant accent + status palette
+   - Fonts: system stack + Noto Sans JP, numbers in mono
+   ========================================================= */
+:root {
+  /* Surfaces */
+  --surface-0: #eef2f6;       /* 象限が浮くよう body は少し濃いグレー */
+  --surface-1: #ffffff;       /* card, header */
+  --surface-2: #f1f5f9;
+  --surface-3: #e2e8f0;
+  --line:      #e2e8f0;
+
+  /* Ink */
+  --ink-0: #1e293b;
+  --ink-1: #475569;
+  --ink-2: #64748b;
+  --ink-3: #94a3b8;
+
+  /* Quadrant — Kanban 方式: 濃色ヘッダ + 薄色 body + 純白カード */
+  --q1-bg: #fee2e2;  --q1: #dc2626;  --q1-deep: #991b1b;  --q1-border: #b91c1c;  /* 重要・緊急 赤 */
+  --q2-bg: #dcfce7;  --q2: #16a34a;  --q2-deep: #166534;  --q2-border: #15803d;  /* 重要・非緊急 緑 */
+  --q3-bg: #fef3c7;  --q3: #ca8a04;  --q3-deep: #854d0e;  --q3-border: #a16207;  /* 非重要・緊急 黄 */
+  --q4-bg: #e2e8f0;  --q4: #475569;  --q4-deep: #1e293b;  --q4-border: #334155;  /* UNSORTED 灰 */
+
+  /* Status */
+  --accent: #2563eb;
+  --danger: #dc2626;
+  --warn:   #f59e0b;
+  --info:   #3b82f6;
+  --success: #16a34a;
+  --error-container:       #fecaca;
+  --on-error-container:    #7f1d1d;
+  --tertiary-container:    #fed7aa;
+  --on-tertiary-container: #7c2d12;
+
+  /* Survival (Operator) */
+  --panic-bg:   #050505;
+  --panic-text: #e8e8e8;
+  --neon-red:    #ff2d4a;
+  --neon-yellow: #ffe347;
+  --neon-cyan:   #3df0ff;
+  --scan-line: rgba(255, 255, 255, 0.04);
+
+  --shadow-xs: 0 1px 2px rgba(31, 36, 32, 0.04);
+  --shadow-sm: 0 2px 8px rgba(31, 36, 32, 0.06);
+  --shadow-md: 0 8px 24px -4px rgba(31, 36, 32, 0.1);
+  --shadow-lg: 0 16px 40px -8px rgba(31, 36, 32, 0.14);
+  --radius:   14px;
+  --radius-sm: 10px;
+  --radius-pill: 999px;
+
+  --font-body: 'Inter', 'Noto Sans JP', system-ui, -apple-system, 'Segoe UI', 'Hiragino Sans', 'Yu Gothic', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', 'Menlo', 'Consolas', monospace;
+  --font-cyber: 'Orbitron', 'JetBrains Mono', ui-monospace, monospace;
+}
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
+  user-select: none;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: var(--surface-0);
+  color: var(--ink-0);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+button, input, textarea, select { font: inherit; color: inherit; }
+button { border: none; border-radius: var(--radius-pill); padding: 10px 16px; cursor: pointer; font-weight: 600; letter-spacing: .01em; transition: background .15s ease, transform .1s ease; }
+button:disabled { opacity: .5; cursor: not-allowed; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+/* ---------- Header ---------- */
+header {
+  padding: 10px 20px;
+  background: var(--surface-1);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 1px 3px rgba(15,23,42,.04);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  z-index: 20;
+  flex-shrink: 0;
+}
+header .title-wrap { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1 1 auto; }
+h1 {
+  font-size: 1.1rem;
+  margin: 0;
+  letter-spacing: -0.015em;
+  font-weight: 800;
+  color: var(--ink-0);
+  white-space: nowrap;
+}
+h1 .brand-accent { color: var(--q1); font-weight: 900; }
+.subtitle {
+  font-size: .76rem;
+  color: var(--ink-2);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.header-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  flex-shrink: 0;
+  align-items: center;
+}
+.header-actions button {
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  font-weight: 700;
+  font-size: .86rem;
+  letter-spacing: .01em;
+  border-radius: var(--radius-pill);
+}
+.header-actions button .material-symbols-outlined { font-size: 18px; }
+.btn-add       { background: var(--ink-0); color: #fff; box-shadow: var(--shadow-xs); }
+.btn-add:hover { background: #000; box-shadow: var(--shadow-sm); transform: translateY(-1px); }
+.btn-completed { background: var(--surface-2); color: var(--ink-0); }
+.btn-completed:hover { background: var(--surface-3); }
+.btn-survival  {
+  background: var(--q1);
+  color: #fff;
+  box-shadow: 0 2px 12px rgba(220,38,38,.28);
+}
+.btn-survival:hover { background: #b91c1c; box-shadow: 0 4px 20px rgba(220,38,38,.38); transform: translateY(-1px); }
+
+/* ---------- Matrix + Axis Labels ---------- */
+#matrix-wrap {
+  flex: 1;
+  position: relative;
+  padding: 20px 14px 14px 38px;
+  overflow: hidden;
+  min-height: 0;
+}
+.axis-x {
+  position: absolute;
+  top: 2px;
+  left: 38px;
+  right: 14px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: .66rem;
+  color: var(--ink-2);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  pointer-events: none;
+  font-weight: 600;
+  padding: 4px 0;
+}
+.axis-y {
+  position: absolute;
+  top: 20px;
+  bottom: 14px;
+  left: 6px;
+  width: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.axis-y-label {
+  font-family: var(--font-mono);
+  font-size: .66rem;
+  color: var(--ink-2);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  transform: rotate(-90deg);
+  transform-origin: center;
+  white-space: nowrap;
+  font-weight: 600;
+}
+#matrix {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 14px;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* ---------- Quadrants ----------
+   Kanban 路線: はっきり色分けされた tint 背景 + 濃色 6px 上ボーダー。
+   識別パターン（solid/double/dashed/dotted）で色覚冗長化。 */
+/* Kanban 方式: 濃色ヘッダが上に乗り、下に薄色 body でカードが並ぶ。
+   カードは純白なので、象限（彩度中）→ カード（無彩度白）で色味が確実に違う。 */
+.quadrant {
+  border-radius: var(--radius);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  min-height: 0;
+  box-shadow: 0 1px 3px rgba(15,23,42,.08), 0 8px 24px -4px rgba(15,23,42,.08);
+}
+#q1 { background: var(--q1-bg); }
+#q2 { background: var(--q2-bg); }
+#q3 { background: var(--q3-bg); }
+#q4 { background: var(--q4-bg); }
+
+.q-title {
+  font-size: .95rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #ffffff;
+  flex-shrink: 0;
+  z-index: 2;
+}
+#q1 .q-title { background: linear-gradient(135deg, var(--q1) 0%, var(--q1-deep) 100%); }
+#q2 .q-title { background: linear-gradient(135deg, var(--q2) 0%, var(--q2-deep) 100%); }
+#q3 .q-title { background: linear-gradient(135deg, var(--q3) 0%, var(--q3-deep) 100%); }
+#q4 .q-title { background: linear-gradient(135deg, var(--q4) 0%, var(--q4-deep) 100%); }
+.q-title .q-icon {
+  font-size: 1.1rem;
+  line-height: 1;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,.3));
+}
+.q-title .q-label {
+  flex: 1;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-shadow: 0 1px 2px rgba(0,0,0,.15);
+}
+.q-count {
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  font-weight: 800;
+  letter-spacing: .08em;
+  color: #fff;
+  background: rgba(0,0,0,.28);
+  border: 1px solid rgba(255,255,255,.25);
+}
+
+/* 象限 body — カードが並ぶエリア。q-title とは別枠にして overflow: auto はここで。 */
+.quadrant::after { content: ''; display: none; } /* 予備 */
+.quadrant > *:not(.q-title) {
+  margin: 0 !important;
+}
+/* 既存 JS は .quadrant 直下に card と empty-hint を append するため、
+   q-title の後に padding 付きコンテナが欲しいが、構造変更はコストがかかるので
+   子要素に個別余白を付ける */
+.quadrant { padding-bottom: 0; }
+#q1, #q2, #q3, #q4 {
+  overflow-y: auto;
+  gap: 0;
+}
+.card, .empty-hint {
+  margin: 12px 16px 0;
+}
+.card:last-child, .empty-hint:last-child {
+  margin-bottom: 16px;
+}
+.empty-hint {
+  padding: 20px 16px;
+  border: 1.5px dashed rgba(0,0,0,.12);
+  border-radius: var(--radius);
+  color: var(--ink-2);
+  font-size: .82rem;
+  text-align: center;
+  background: rgba(255,255,255,.55);
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+/* ---------- Cards ----------
+   白カード + 強シャドウ + hover で浮き上がる（ツール感）。
+   左 6px 象限色 + パターンで色覚冗長化。疑似要素でドラッグハンドル。 */
+.card {
+  background: var(--surface-1);
+  border-radius: 16px;
+  box-shadow: 0 1px 2px rgba(15,23,42,.04), 0 4px 16px -2px rgba(15,23,42,.08), 0 12px 32px -8px rgba(15,23,42,.06);
+  padding: 16px 18px 14px 22px;
+  cursor: grab;
+  position: relative;
+  user-select: none;
+  touch-action: none;
+  transition: box-shadow .2s ease, transform .2s ease;
+  border-left: 6px solid var(--ink-3);
+}
+.card:hover {
+  box-shadow: 0 2px 4px rgba(15,23,42,.06), 0 12px 28px -4px rgba(15,23,42,.14), 0 20px 48px -12px rgba(15,23,42,.12);
+  transform: translateY(-3px);
+}
+.card:active { cursor: grabbing; transform: translateY(-1px); }
+
+/* Drag handle (疑似要素、Material Symbols) — hover で濃く */
+.card::before {
+  content: 'drag_indicator';
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 18px;
+  line-height: 1;
+  font-variation-settings: 'FILL' 0, 'wght' 400;
+  position: absolute;
+  top: 14px;
+  right: 10px;
+  color: var(--ink-3);
+  opacity: 0;
+  transition: opacity .15s ease, color .15s ease;
+  pointer-events: none;
+}
+.card:hover::before { opacity: 1; color: var(--ink-2); }
+
+#q1 .card { border-left: 6px solid var(--q1-border); }
+#q2 .card { border-left: 6px double var(--q2-border); padding-left: 24px; }
+#q3 .card { border-left: 6px dashed var(--q3-border); }
+#q4 .card { border-left: 6px dotted var(--q4-border); }
+#survival-picker .card { border-left: 5px solid var(--ink-2); }
+#slot-must .card   { border-left: 5px solid var(--neon-red);    background: #2a0610; color: #fff; }
+#slot-should .card { border-left: 5px solid var(--neon-yellow); background: #2a2408; color: #fff; }
+#slot-must .card .card-title,
+#slot-should .card .card-title,
+#slot-must .card .detail textarea,
+#slot-must .card .detail input,
+#slot-should .card .detail textarea,
+#slot-should .card .detail input,
+#slot-must .card .history,
+#slot-should .card .history { color: inherit; }
+
+.card.dragging {
+  position: fixed;
+  width: 320px;
+  z-index: 9999;
+  transform: rotate(2deg) scale(1.02);
+  box-shadow: 0 24px 48px -12px rgba(46, 52, 48, .22);
+  opacity: .96;
+  pointer-events: none;
+}
+.card-header { display: flex; align-items: flex-start; gap: 8px; padding-right: 22px; }
+.card-title {
+  flex: 1;
+  resize: none;
+  border: none;
+  background: transparent;
+  color: var(--ink-0);
+  font-size: 1rem;
+  font-weight: 700;
+  outline: none;
+  line-height: 1.45;
+  letter-spacing: -.005em;
+  min-height: 24px;
+  max-height: 200px;
+  padding: 0;
+}
+.card-title::placeholder { color: var(--ink-3); font-weight: 500; }
+.card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(0,0,0,.05);
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity .2s ease, transform .2s ease;
+}
+.card:hover .card-actions,
+.card.expanded .card-actions { opacity: 1; transform: none; }
+.icon-btn {
+  background: var(--surface-2);
+  color: var(--ink-1);
+  padding: 7px 14px;
+  border-radius: var(--radius-pill);
+  font-size: .76rem;
+  font-weight: 700;
+  min-height: 34px;
+  letter-spacing: .01em;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: background .15s ease, color .15s ease;
+}
+.icon-btn:hover     { background: var(--surface-3); color: var(--ink-0); }
+.icon-btn.complete  { background: rgba(43,122,75,.10); color: var(--accent); }
+.icon-btn.complete:hover { background: rgba(43,122,75,.18); }
+.icon-btn.note      { background: rgba(46,52,48,.06); color: var(--ink-0); }
+.icon-btn.delete    { background: rgba(181,39,43,.08); color: var(--danger); }
+.icon-btn.delete:hover { background: rgba(181,39,43,.15); }
+.icon-btn.restore   { background: rgba(43,122,75,.10); color: var(--accent); }
+.icon-btn.secondary { background: var(--surface-2); color: var(--ink-1); }
+
+.card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.badges { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.badge {
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  font-size: .72rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  letter-spacing: .04em;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.badge.due      { background: rgba(26,109,63,.12);  color: var(--q2); }
+.badge.today    { background: var(--tertiary-container); color: var(--on-tertiary-container); }
+.badge.overdue  { background: var(--error-container);   color: var(--on-error-container); box-shadow: 0 2px 6px rgba(181,39,43,.2); }
+.badge.none     { background: var(--surface-2); color: var(--ink-2); }
+.badge.note     { background: rgba(46,52,48,.06); color: var(--ink-1); font-family: var(--font-body); letter-spacing: 0; }
+.meta-time { font-size: .7rem; color: var(--ink-2); font-family: var(--font-mono); }
+
+.detail {
+  margin-top: 12px;
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+  display: none;
+  gap: 10px;
+  flex-direction: column;
+}
+.card.expanded .detail { display: flex; }
+.detail label { font-size: .72rem; color: var(--ink-2); font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+.detail input[type="date"],
+.detail textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  background: var(--surface-0);
+  outline: none;
+  transition: border-color .15s ease;
+}
+.detail input[type="date"]:focus,
+.detail textarea:focus { border-color: var(--accent); }
+.detail textarea { min-height: 76px; resize: vertical; }
+.timestamps {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  font-size: .72rem;
+  color: var(--ink-2);
+  font-family: var(--font-mono);
+}
+.history {
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+  font-size: .72rem;
+  color: var(--ink-2);
+  max-height: 120px;
+  overflow-y: auto;
+  font-family: var(--font-mono);
+}
+.history ul { padding-left: 18px; margin: 6px 0 0; }
+.history li { margin-bottom: 4px; }
+.card-placeholder {
+  height: 84px;
+  border: 1.5px dashed var(--ink-3);
+  border-radius: var(--radius);
+  background: rgba(255,255,255,.32);
+}
+.drop-hover { outline: 2px solid var(--accent); outline-offset: -4px; }
+
+/* ---------- Completed panel ---------- */
+.completed-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: min(440px, 100vw);
+  height: 100%;
+  background: var(--surface-1);
+  border-left: 1px solid var(--line);
+  box-shadow: -18px 0 48px rgba(46, 52, 48, .08);
+  z-index: 1100;
+  transform: translateX(100%);
+  transition: transform .25s ease;
+  display: flex;
+  flex-direction: column;
+}
+.completed-panel.open { transform: translateX(0); }
+.panel-header {
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.panel-title { font-weight: 800; font-size: 1rem; }
+.panel-sub { color: var(--ink-2); font-size: .78rem; }
+.panel-body { padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+.completed-card {
+  background: var(--surface-0);
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 14px;
+}
+.completed-card .title { font-weight: 700; line-height: 1.4; margin-bottom: 8px; font-size: .92rem; }
+.completed-meta { display: flex; flex-wrap: wrap; gap: 8px; font-size: .72rem; color: var(--ink-2); font-family: var(--font-mono); }
+.completed-note {
+  margin-top: 10px;
+  font-size: .84rem;
+  color: var(--ink-1);
+  background: var(--surface-1);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  white-space: pre-wrap;
+}
+
+/* ---------- Undo toast ---------- */
+#undo-toast {
+  position: fixed;
+  left: 50%;
+  bottom: -90px;
+  transform: translateX(-50%);
+  background: var(--ink-0);
+  color: var(--surface-1);
+  padding: 12px 16px 12px 20px;
+  border-radius: var(--radius-pill);
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  z-index: 2000;
+  transition: bottom .28s ease;
+  box-shadow: 0 12px 32px rgba(0,0,0,.22);
+  font-size: .86rem;
+  font-weight: 500;
+}
+#undo-toast.visible { bottom: 24px; }
+#undo-btn {
+  background: var(--surface-1);
+  color: var(--ink-0);
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  font-size: .78rem;
+  font-weight: 700;
+}
+
+/* ---------- Survival Mode (Operator) ---------- */
+#survival-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--panic-bg);
+  background-image: linear-gradient(var(--scan-line) 1px, transparent 1px);
+  background-size: 100% 4px;
+  z-index: 1000;
+  display: none;
+  flex-direction: column;
+  padding: 12px;
+  color: var(--panic-text);
+  font-family: var(--font-body);
+}
+#survival-overlay.active { display: flex; }
+.hazard-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-bottom: 2px solid var(--neon-red);
+  padding: 14px 0;
+  margin-bottom: 18px;
+  background: repeating-linear-gradient(45deg, #000, #000 10px, #1a0505 10px, #1a0505 20px);
+}
+.mode-label {
+  color: var(--neon-red);
+  font-weight: 900;
+  letter-spacing: .2em;
+  font-size: 1.05rem;
+  margin-top: 4px;
+  text-shadow: 0 0 12px var(--neon-red);
+  text-transform: uppercase;
+}
+.timer-display {
+  font-family: var(--font-cyber);
+  font-weight: 900;
+  font-size: min(18vw, 140px);
+  line-height: .95;
+  color: #fff;
+  margin: 10px 0;
+  text-shadow: 0 0 16px rgba(255,255,255,.3), 0 0 32px rgba(255,255,255,.1);
+  letter-spacing: -.01em;
+}
+.timer-display.critical { color: var(--neon-red); text-shadow: 0 0 18px var(--neon-red); animation: pulse 1.2s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .75; } }
+.survival-slots {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto 18px;
+}
+.survival-slot {
+  background: rgba(20,20,20,.84);
+  border: 1.5px solid #333;
+  min-height: 108px;
+  padding: 16px;
+  position: relative;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+#slot-must { border-color: var(--neon-red); box-shadow: 0 0 16px rgba(255,45,74,.18); }
+#slot-should { border-color: var(--neon-yellow); box-shadow: 0 0 16px rgba(255,227,71,.14); }
+#slot-must::before, #slot-should::before {
+  position: absolute;
+  top: -11px;
+  left: 14px;
+  padding: 2px 10px;
+  font-weight: 900;
+  border-radius: 3px;
+  font-size: .72rem;
+  letter-spacing: .1em;
+  font-family: var(--font-mono);
+}
+#slot-must::before   { content: 'MUST (絶対やる)'; background: var(--neon-red); color: #000; }
+#slot-should::before { content: 'SHOULD (できれば)'; background: var(--neon-yellow); color: #000; }
+#survival-picker {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 760px;
+  width: 100%;
+  margin: 0 auto;
+  padding-bottom: 24px;
+}
+.footer-controls {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 0 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.time-input {
+  background: #000;
+  color: var(--neon-red);
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 10px 14px;
+  min-width: 140px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+.btn-escape {
+  background: transparent;
+  color: var(--panic-text);
+  border: 1px solid #444;
+  border-radius: 4px;
+  padding: 10px 18px;
+  font-size: .82rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+.btn-escape:hover { background: rgba(255,255,255,.08); }
+.overlay-note {
+  text-align: center;
+  color: #8a8a8a;
+  font-size: .78rem;
+  margin-bottom: 10px;
+  font-family: var(--font-mono);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.survival-zone .card .icon-btn { background: rgba(255,255,255,.1); color: #fff; }
+.survival-zone .card .icon-btn:hover { background: rgba(255,255,255,.18); }
+.survival-zone .card .detail input,
+.survival-zone .card .detail textarea { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.14); color: #fff; }
+.survival-zone .card .timestamps { background: rgba(255,255,255,.06); color: rgba(255,255,255,.55); }
+.survival-zone .card .history { color: rgba(255,255,255,.5); border-top-color: rgba(255,255,255,.1); }
+
+.hidden { display: none !important; }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+  #matrix-wrap { padding: 0 10px 10px; }
+}
+@media (max-width: 880px) {
+  #matrix-wrap {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+  .axis-x { display: none; }
+  .axis-y { display: none; }
+  #matrix {
+    grid-column: 1;
+    grid-row: 2;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, minmax(180px, 1fr));
+  }
+}
+@media (max-width: 640px) {
+  header {
+    padding: 10px 14px;
+    flex-wrap: wrap;
+  }
+  .header-actions { justify-content: stretch; width: 100%; }
+  .header-actions button { flex: 1; min-height: 44px; }
+  .completed-panel { width: 100vw; }
+  .icon-btn { min-height: 44px; padding: 10px 14px; }
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+button, input, textarea, select {
+  font: inherit;
+}
+button {
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-weight: 700;
+}
+button:disabled { opacity: .5; cursor: not-allowed; }
+header {
+  padding: 10px 16px;
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(12px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 64px;
+  gap: 12px;
+  border-bottom: 1px solid rgba(0,0,0,.08);
+  z-index: 20;
+}
+header .title-wrap { display: flex; flex-direction: column; gap: 2px; }
+h1 { font-size: 1.1rem; margin: 0; letter-spacing: -0.2px; }
+.subtitle { font-size: .78rem; color: var(--subtle); }
+.header-actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+.btn-add { background: var(--primary); color: #fff; }
+.btn-completed { background: #e5eefc; color: #1746a2; }
+.btn-survival { background: var(--neon-red); color: #fff; box-shadow: 0 4px 14px rgba(255,0,60,.25); }
+#matrix {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 4px;
+  background: #cbd5e1;
+  overflow: hidden;
+}
+.quadrant {
+  background: #fff;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+}
+#q1 { background: var(--q1-bg); border-top: 6px solid var(--q1-border); }
+#q2 { background: var(--q2-bg); border-top: 6px solid var(--q2-border); }
+#q3 { background: var(--q3-bg); border-top: 6px solid var(--q3-border); }
+#q4 { background: var(--q4-bg); border-top: 6px solid var(--q4-border); }
+.q-title {
+  font-size: .82rem;
+  font-weight: 900;
+  opacity: .68;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  position: sticky;
+  top: 0;
+  background: inherit;
+  padding-bottom: 4px;
+  z-index: 2;
+}
+.q-count { font-size: .72rem; color: var(--subtle); margin-left: 8px; font-weight: 600; }
+.empty-hint {
+  padding: 14px;
+  border: 2px dashed rgba(0,0,0,.12);
+  border-radius: 14px;
+  color: var(--subtle);
+  font-size: .86rem;
+  text-align: center;
+  background: rgba(255,255,255,.45);
+}
+.card {
+  background: var(--card);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  border-left: 5px solid #cbd5e1;
+  padding: 12px;
+  cursor: grab;
+  position: relative;
+  user-select: none;
+  touch-action: none;
+}
+#q1 .card { border-left-color: var(--q1-border); }
+#q2 .card { border-left-color: var(--q2-border); }
+#q3 .card { border-left-color: var(--q3-border); }
+#q4 .card { border-left-color: var(--q4-border); }
+#survival-picker .card { border-left-color: #666; }
+#slot-must .card { border-left-color: var(--neon-red); background: #300; color: #fff; }
+#slot-should .card { border-left-color: var(--neon-yellow); background: #332b00; color: #fff; }
+#slot-must .card .card-title,
+#slot-should .card .card-title,
+#slot-must .card .detail textarea,
+#slot-must .card .detail input,
+#slot-should .card .detail textarea,
+#slot-should .card .detail input,
+#slot-must .card .history,
+#slot-should .card .history { color: inherit; }
+.card.dragging {
+  position: fixed;
+  width: 280px;
+  z-index: 9999;
+  transform: rotate(4deg) scale(1.03);
+  box-shadow: 0 18px 32px rgba(0,0,0,.28);
+  opacity: .96;
+  pointer-events: none;
+}
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.card-title {
+  flex: 1;
+  resize: none;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  outline: none;
+  line-height: 1.35;
+  min-height: 28px;
+  max-height: 180px;
+}
+.card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-top: 10px;
+}
+.icon-btn {
+  background: #f1f5f9;
+  color: #334155;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: .78rem;
+  font-weight: 800;
+}
+.icon-btn.complete { background: #e8f7ee; color: #156f43; }
+.icon-btn.note { background: #eef2ff; color: #3730a3; }
+.icon-btn.delete { background: #fee2e2; color: #991b1b; }
+.icon-btn.restore { background: #e0f2fe; color: #075985; }
+.icon-btn.secondary { background: #f8fafc; color: #334155; }
+.card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.badges { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.badge {
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: .72rem;
+  font-weight: 800;
+}
+.badge.due { background: #eef2ff; color: #3730a3; }
+.badge.today { background: #fff7ed; color: #c2410c; }
+.badge.overdue { background: #fee2e2; color: #b91c1c; }
+.badge.none { background: #f1f5f9; color: #64748b; }
+.badge.note { background: #ecfccb; color: #3f6212; }
+.meta-time { font-size: .72rem; color: var(--subtle); }
+.detail {
+  margin-top: 10px;
+  border-top: 1px dashed rgba(0,0,0,.12);
+  padding-top: 10px;
+  display: none;
+  gap: 10px;
+  flex-direction: column;
+}
+.card.expanded .detail { display: flex; }
+.detail label { font-size: .78rem; color: var(--subtle); font-weight: 700; }
+.detail input[type="date"],
+.detail textarea {
+  width: 100%;
+  border: 1px solid rgba(0,0,0,.12);
+  border-radius: 10px;
+  padding: 10px;
+  background: rgba(255,255,255,.82);
+  outline: none;
+}
+.detail textarea { min-height: 76px; resize: vertical; }
+.timestamps {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+  padding: 10px;
+  border-radius: 12px;
+  background: rgba(148,163,184,.1);
+  font-size: .74rem;
+  color: var(--subtle);
+}
+.history {
+  border-top: 1px dashed rgba(0,0,0,.12);
+  padding-top: 8px;
+  font-size: .74rem;
+  color: var(--subtle);
+  max-height: 120px;
+  overflow-y: auto;
+}
+.history ul { padding-left: 18px; margin: 6px 0 0; }
+.history li { margin-bottom: 4px; }
+.card-placeholder {
+  height: 84px;
+  border: 2px dashed rgba(0,0,0,.25);
+  border-radius: 14px;
+  background: rgba(255,255,255,.32);
+}
+.drop-hover { outline: 2px solid rgba(37,99,235,.35); outline-offset: -4px; }
+.completed-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: min(440px, 100vw);
+  height: 100%;
+  background: rgba(255,255,255,.98);
+  border-left: 1px solid rgba(0,0,0,.08);
+  box-shadow: -18px 0 36px rgba(0,0,0,.18);
+  z-index: 1100;
+  transform: translateX(100%);
+  transition: transform .25s ease;
+  display: flex;
+  flex-direction: column;
+}
+.completed-panel.open { transform: translateX(0); }
+.panel-header {
+  padding: 16px;
+  border-bottom: 1px solid rgba(0,0,0,.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.panel-title { font-weight: 900; }
+.panel-sub { color: var(--subtle); font-size: .78rem; }
+.panel-body { padding: 14px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+.completed-card {
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.08);
+  border-left: 5px solid var(--success);
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: var(--shadow);
+}
+.completed-card .title { font-weight: 800; line-height: 1.4; margin-bottom: 8px; }
+.completed-meta { display: flex; flex-wrap: wrap; gap: 8px; font-size: .78rem; color: var(--subtle); }
+.completed-note {
+  margin-top: 10px;
+  font-size: .85rem;
+  color: #334155;
+  background: #f8fafc;
+  border-radius: 10px;
+  padding: 10px;
+  white-space: pre-wrap;
+}
+#undo-toast {
+  position: fixed;
+  left: 50%;
+  bottom: -90px;
+  transform: translateX(-50%);
+  background: #111827;
+  color: #fff;
+  padding: 14px 16px;
+  border-radius: 999px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  z-index: 2000;
+  transition: bottom .28s ease;
+  box-shadow: 0 12px 30px rgba(0,0,0,.28);
+}
+#undo-toast.visible { bottom: 20px; }
+#undo-btn { background: #fff; color: #111827; padding: 6px 14px; border-radius: 999px; }
+#survival-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--panic-bg);
+  background-image: linear-gradient(var(--scan-line) 1px, transparent 1px);
+  background-size: 100% 4px;
+  z-index: 1000;
+  display: none;
+  flex-direction: column;
+  padding: 10px;
+  color: var(--panic-text);
+}
+#survival-overlay.active { display: flex; }
+.hazard-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-bottom: 2px solid var(--neon-red);
+  padding-bottom: 10px;
+  margin-bottom: 18px;
+  background: repeating-linear-gradient(45deg, #000, #000 10px, #1a0505 10px, #1a0505 20px);
+}
+.mode-label {
+  color: var(--neon-red);
+  font-weight: 900;
+  letter-spacing: 2px;
+  margin-top: 8px;
+  text-shadow: 0 0 10px var(--neon-red);
+}
+.timer-display {
+  font-family: 'Courier New', monospace;
+  font-size: min(18vw, 120px);
+  font-weight: 900;
+  line-height: .95;
+  color: #fff;
+  margin: 10px 0;
+  text-shadow: 0 0 20px rgba(255,255,255,.35);
+}
+.timer-display.critical { color: var(--neon-red); }
+.survival-slots {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto 18px;
+}
+.survival-slot {
+  background: rgba(20,20,20,.84);
+  border: 2px solid #333;
+  min-height: 108px;
+  padding: 14px;
+  position: relative;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+#slot-must { border-color: var(--neon-red); }
+#slot-should { border-color: var(--neon-yellow); }
+#slot-must::before, #slot-should::before {
+  position: absolute;
+  top: -12px;
+  left: 12px;
+  padding: 2px 8px;
+  font-weight: 900;
+  border-radius: 6px;
+  color: #000;
+}
+#slot-must::before { content: 'MUST (絶対やる)'; background: var(--neon-red); }
+#slot-should::before { content: 'SHOULD (できれば)'; background: var(--neon-yellow); }
+#survival-picker {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 760px;
+  width: 100%;
+  margin: 0 auto;
+  padding-bottom: 24px;
+}
+.footer-controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 0 8px;
+  flex-wrap: wrap;
+}
+.time-input {
+  background: #000;
+  color: var(--neon-red);
+  border: 1px solid #333;
+  border-radius: 10px;
+  padding: 10px 12px;
+  min-width: 130px;
+}
+.btn-escape { background: #333; color: #ddd; }
+.overlay-note { text-align: center; color: #64748b; font-size: .82rem; margin-bottom: 10px; }
+.survival-zone .card .icon-btn { background: rgba(255,255,255,.12); color: #fff; }
+.survival-zone .card .detail input, .survival-zone .card .detail textarea { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.15); }
+.hidden { display: none !important; }
+@media (max-width: 880px) {
+  #matrix { grid-template-columns: 1fr; grid-template-rows: repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  header { flex-direction: column; align-items: stretch; }
+  .header-actions { justify-content: stretch; }
+  .header-actions button { flex: 1; }
+  .completed-panel { width: 100vw; }
+}
+</style>
+</head>
+<body>
+  <header>
+    <div class="title-wrap">
+      <h1>NEURO<span class="brand-accent">.MATRIX</span> TASK OS</h1>
+      <div class="subtitle">完了履歴・メモ・締切を記録。削除と完了を別扱いにしています</div>
+    </div>
+    <div class="header-actions">
+      <button class="btn-add" id="add-btn" aria-label="新規タスク追加">
+        <span class="material-symbols-outlined" aria-hidden="true">add</span>
+        <span>新規タスク</span>
+      </button>
+      <button class="btn-completed" id="completed-toggle" aria-label="完了一覧を開閉">
+        <span class="material-symbols-outlined" aria-hidden="true">done_all</span>
+        <span>完了一覧</span>
+      </button>
+      <button class="btn-survival" id="survival-btn" aria-label="サバイバルモード切替">
+        <span class="material-symbols-outlined" aria-hidden="true">bolt</span>
+        <span>サバイバル</span>
+      </button>
+    </div>
+  </header>
+
+  <div id="matrix-wrap" role="group" aria-label="4象限タスクマトリクス">
+    <div class="axis-x" aria-hidden="true">← 緊急度 →</div>
+    <div class="axis-y" aria-hidden="true"><span class="axis-y-label">← 重要度 →</span></div>
+    <div id="matrix">
+      <section class="quadrant" id="q1" aria-label="重要・緊急">
+        <div class="q-title" id="q1-title">
+          <span class="q-icon" aria-hidden="true">🔥</span>
+          <span class="q-label">重要・緊急</span>
+          <span class="q-count" data-count-for="q1" aria-live="polite"></span>
+        </div>
+      </section>
+      <section class="quadrant" id="q2" aria-label="重要・非緊急">
+        <div class="q-title" id="q2-title">
+          <span class="q-icon" aria-hidden="true">✨</span>
+          <span class="q-label">重要・非緊急</span>
+          <span class="q-count" data-count-for="q2" aria-live="polite"></span>
+        </div>
+      </section>
+      <section class="quadrant" id="q3" aria-label="非重要・緊急">
+        <div class="q-title" id="q3-title">
+          <span class="q-icon" aria-hidden="true">💨</span>
+          <span class="q-label">非重要・緊急</span>
+          <span class="q-count" data-count-for="q3" aria-live="polite"></span>
+        </div>
+      </section>
+      <section class="quadrant" id="q4" aria-label="UNSORTED（未仕分け）">
+        <div class="q-title" id="q4-title">
+          <span class="q-icon" aria-hidden="true">📥</span>
+          <span class="q-label">UNSORTED（未仕分け）</span>
+          <span class="q-count" data-count-for="q4" aria-live="polite"></span>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <aside id="completed-panel" class="completed-panel" aria-hidden="true" aria-label="完了済みタスク一覧">
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">完了済みタスク</div>
+        <div class="panel-sub">何を、いつ終えたかを見返せる一覧</div>
+      </div>
+      <button class="icon-btn secondary" id="close-completed" aria-label="完了一覧を閉じる">閉じる</button>
+    </div>
+    <div class="panel-body" id="completed-list"></div>
+  </aside>
+
+  <div id="survival-overlay" role="dialog" aria-modal="true" aria-labelledby="survival-title" aria-hidden="true">
+    <div class="hazard-header">
+      <div class="mode-label" id="survival-title">緊急モード起動中</div>
+      <div class="timer-display" id="countdown" aria-live="polite" aria-atomic="true">00:00</div>
+      <div style="font-size:.76rem;color:#8a8a8a;letter-spacing:.06em;">締切までの残り時間</div>
+    </div>
+    <div class="survival-slots survival-zone">
+      <div class="survival-slot" id="slot-must" aria-label="MUST：絶対やるタスク"></div>
+      <div class="survival-slot" id="slot-should" aria-label="SHOULD：できればやるタスク"></div>
+    </div>
+    <div class="overlay-note">未割り当て — ドラッグしてスロットへ</div>
+    <div id="survival-picker" class="survival-zone"></div>
+    <div class="footer-controls">
+      <label class="sr-only" for="target-time">目標時刻</label>
+      <input type="time" id="target-time" class="time-input" value="17:30" />
+      <button class="btn-escape" id="exit-survival" aria-label="通常モードに戻す">通常モードに戻す</button>
+    </div>
+  </div>
+
+  <div id="undo-toast" role="status" aria-live="polite" aria-atomic="true">
+    <span id="undo-message">タスクを削除しました</span>
+    <button id="undo-btn" aria-label="削除を取り消す">元に戻す</button>
+  </div>
+
+<script>
+(() => {
+  const KEY_DATA = 'neuro_matrix_v6_data';
+  const KEY_STATE = 'neuro_matrix_v6_state';
+  const LEGACY_DATA = 'neuro_matrix_v5_data';
+  const LEGACY_STATE = 'neuro_matrix_v5_state';
+
+  const ACTIVE_ZONES = ['q1','q2','q3','q4','survival-picker','slot-must','slot-should'];
+  const NORMAL_ZONES = ['q1','q2','q3','q4'];
+  const SURVIVAL_SLOTS = ['survival-picker', 'slot-must', 'slot-should'];
+  let tasks = [];
+  let uiState = {
+    isSurvival: false,
+    targetTime: '17:30',
+    completedPanelOpen: false,
+    // { taskId: 'survival-picker' | 'slot-must' | 'slot-should' } — Survival中のスロット割当を記憶。ABORT 後も維持し、再 enter 時に復元する。
+    survivalSlots: {}
+  };
+
+  let dragState = {
+    taskId: null,
+    card: null,
+    placeholder: null,
+    offsetX: 0,
+    offsetY: 0,
+    pointerId: null,
+  };
+
+  const UNDO_STACK_MAX = 5;
+  const UNDO_TOAST_MS = 5000;
+  let deletedStack = [];
+  let undoTimer = null;
+  let timerInterval = null;
+
+  const matrix = document.getElementById('matrix');
+  const completedPanel = document.getElementById('completed-panel');
+  const completedList = document.getElementById('completed-list');
+  const survivalOverlay = document.getElementById('survival-overlay');
+  const targetTimeInput = document.getElementById('target-time');
+  const undoToast = document.getElementById('undo-toast');
+  const undoMessage = document.getElementById('undo-message');
+  const countdown = document.getElementById('countdown');
+
+  function nowIso() {
+    return new Date().toISOString();
+  }
+
+  const INPUT_DEBOUNCE_MS = 300;
+  // 連打入力の保存・履歴追記を集約する。flush/cancel で blur/IME に対応。
+  function debounce(fn, delay) {
+    let timerId = null;
+    let lastArgs = null;
+    let lastThis = null;
+    const debounced = function(...args) {
+      lastArgs = args;
+      lastThis = this;
+      if (timerId) clearTimeout(timerId);
+      timerId = setTimeout(() => {
+        timerId = null;
+        fn.apply(lastThis, lastArgs);
+      }, delay);
+    };
+    debounced.flush = function() {
+      if (timerId) {
+        clearTimeout(timerId);
+        timerId = null;
+        fn.apply(lastThis, lastArgs || []);
+      }
+    };
+    debounced.cancel = function() {
+      if (timerId) { clearTimeout(timerId); timerId = null; }
+    };
+    return debounced;
+  }
+
+  function safeParse(json, fallback) {
+    try { return JSON.parse(json) || fallback; } catch(e) { return fallback; }
+  }
+
+  // 壊れた JSON を退避して通知する。退避に失敗しても元データを残すため、上書き保存は呼び出し側でブロックする。
+  let dataCorrupted = false;
+  function backupCorrupted(key, rawValue, reason) {
+    const backupKey = `neuroMatrix.legacy_backup.${key}.${Date.now()}`;
+    try {
+      localStorage.setItem(backupKey, rawValue);
+      console.warn(`[neuro-matrix] 壊れた ${key} を ${backupKey} に退避しました:`, reason);
+    } catch (e) {
+      console.error('[neuro-matrix] 退避にも失敗:', e);
+    }
+    dataCorrupted = true;
+    try {
+      window.setTimeout(() => {
+        alert(`[Neuro Matrix] 保存データ(${key})の読み込みに失敗したで。\n元のデータは "${backupKey}" に退避してあるから、DevTools → Application → LocalStorage から救出できる。\nこのまま触ると空状態で上書きされるから、先に救出してな。`);
+      }, 0);
+    } catch (_) { /* alert 不能環境は無視 */ }
+  }
+
+  // localStorage から安全に読む。空/未登録なら fallback、パース失敗なら退避して fallback。
+  function readPersisted(key, fallback) {
+    const raw = localStorage.getItem(key);
+    if (raw === null || raw === '') return fallback;
+    try {
+      const parsed = JSON.parse(raw);
+      return parsed === null || parsed === undefined ? fallback : parsed;
+    } catch (e) {
+      backupCorrupted(key, raw, e && e.message);
+      return fallback;
+    }
+  }
+
+  function formatDateTime(value) {
+    if (!value) return '—';
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return '—';
+    return new Intl.DateTimeFormat('ja-JP', {
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit'
+    }).format(date);
+  }
+
+  function formatDueDate(value) {
+    if (!value) return null;
+    const d = new Date(value + 'T00:00:00');
+    if (Number.isNaN(d.getTime())) return null;
+    return new Intl.DateTimeFormat('ja-JP', { month: '2-digit', day: '2-digit', weekday: 'short' }).format(d);
+  }
+
+  function todayString() {
+    const d = new Date();
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+  }
+
+  function dueBadge(task) {
+    if (!task.dueDate) return { label: '締切なし', className: 'none' };
+    const today = todayString();
+    if (task.dueDate < today) return { label: `期限超過 ${formatDueDate(task.dueDate) || task.dueDate}`, className: 'overdue' };
+    if (task.dueDate === today) return { label: `今日 ${formatDueDate(task.dueDate) || task.dueDate}`, className: 'today' };
+    return { label: `締切 ${formatDueDate(task.dueDate) || task.dueDate}`, className: 'due' };
+  }
+
+  function autoGrow(textarea) {
+    textarea.style.height = 'auto';
+    textarea.style.height = Math.min(textarea.scrollHeight, 200) + 'px';
+  }
+
+  function logEvent(task, type, detail = {}) {
+    const dictionary = {
+      created: '作成',
+      updated: '更新',
+      note_updated: 'メモ更新',
+      due_updated: '締切更新',
+      moved: '移動',
+      completed: '完了',
+      reopened: '完了取り消し',
+      deleted: '削除',
+      restored: '削除取り消し'
+    };
+    const entry = { type, at: nowIso(), detail };
+    task.activityLog = Array.isArray(task.activityLog) ? task.activityLog : [];
+    task.activityLog.unshift(entry);
+    task.activityLog = task.activityLog.slice(0, 30);
+    task.updatedAt = entry.at;
+    return dictionary[type] || type;
+  }
+
+  const CURRENT_SCHEMA_VERSION = 6;
+  function baseTask(overrides = {}) {
+    const createdAt = nowIso();
+    return {
+      schemaVersion: Number.isInteger(overrides.schemaVersion) ? overrides.schemaVersion : CURRENT_SCHEMA_VERSION,
+      id: overrides.id || `card-${Date.now()}-${Math.random().toString(16).slice(2,7)}`,
+      title: overrides.title || '',
+      note: overrides.note || '',
+      zone: overrides.zone && ACTIVE_ZONES.includes(overrides.zone) ? overrides.zone : 'q4',
+      normalZone: overrides.normalZone && NORMAL_ZONES.includes(overrides.normalZone) ? overrides.normalZone : (NORMAL_ZONES.includes(overrides.zone) ? overrides.zone : 'q4'),
+      status: overrides.status === 'completed' ? 'completed' : 'active',
+      dueDate: overrides.dueDate || '',
+      createdAt: overrides.createdAt || createdAt,
+      updatedAt: overrides.updatedAt || overrides.createdAt || createdAt,
+      completedAt: overrides.completedAt || '',
+      activityLog: Array.isArray(overrides.activityLog) ? overrides.activityLog : []
+    };
+  }
+
+  function migrateLegacyIfNeeded() {
+    const existing = localStorage.getItem(KEY_DATA);
+    if (existing) return;
+
+    const legacyDataJson = localStorage.getItem(LEGACY_DATA);
+    const legacyStateJson = localStorage.getItem(LEGACY_STATE);
+    if (!legacyDataJson) return;
+
+    const legacyItems = readPersisted(LEGACY_DATA, []);
+    const legacyState = readPersisted(LEGACY_STATE, {});
+    // レガシーが壊れていた場合は退避済み。移行を中止して空状態で saveAll しないようここで打ち切る。
+    if (dataCorrupted) return;
+    const migrated = legacyItems.map(item => {
+      const zone = ACTIVE_ZONES.includes(item.zone) ? item.zone : 'q4';
+      const normalZone = NORMAL_ZONES.includes(zone) ? zone : 'q4';
+      const task = baseTask({
+        id: item.id,
+        title: item.text || '',
+        zone,
+        normalZone,
+      });
+      task.activityLog = [{ type: 'created', at: task.createdAt, detail: { migrated: true } }];
+      return task;
+    });
+    tasks = migrated;
+    uiState = {
+      isSurvival: !!legacyState.isSurvival,
+      targetTime: legacyState.targetTime || '17:30',
+      completedPanelOpen: false
+    };
+    saveAll();
+  }
+
+  function loadAll() {
+    migrateLegacyIfNeeded();
+    const rawTasks = readPersisted(KEY_DATA, []);
+    tasks = Array.isArray(rawTasks) ? rawTasks.map(item => baseTask(item)) : [];
+    const state = readPersisted(KEY_STATE, null);
+    if (state) {
+      const rawSlots = state.survivalSlots && typeof state.survivalSlots === 'object' ? state.survivalSlots : {};
+      const slots = {};
+      Object.keys(rawSlots).forEach(taskId => {
+        const slot = rawSlots[taskId];
+        if (SURVIVAL_SLOTS.includes(slot)) slots[taskId] = slot;
+      });
+      uiState = {
+        isSurvival: !!state.isSurvival,
+        targetTime: state.targetTime || '17:30',
+        completedPanelOpen: !!state.completedPanelOpen,
+        survivalSlots: slots
+      };
+    }
+    targetTimeInput.value = uiState.targetTime || '17:30';
+    if (uiState.isSurvival) {
+      survivalOverlay.classList.add('active');
+      survivalOverlay.setAttribute('aria-hidden', 'false');
+      startTimer();
+    }
+    completedPanel.classList.toggle('open', !!uiState.completedPanelOpen);
+    completedPanel.setAttribute('aria-hidden', String(!uiState.completedPanelOpen));
+    renderAll();
+  }
+
+  function saveData() {
+    // 壊れた既存データを救出する前に空配列を書き込まない。
+    if (dataCorrupted) return;
+    localStorage.setItem(KEY_DATA, JSON.stringify(tasks));
+  }
+
+  function saveState() {
+    if (dataCorrupted) return;
+    uiState.targetTime = targetTimeInput.value || '17:30';
+    localStorage.setItem(KEY_STATE, JSON.stringify(uiState));
+  }
+
+  function saveAll() {
+    saveData();
+    saveState();
+  }
+
+  function getTask(taskId) {
+    return tasks.find(t => t.id === taskId);
+  }
+
+  function sortTasks(activeTasks) {
+    return [...activeTasks].sort((a,b) => {
+      const aDue = a.dueDate || '9999-99-99';
+      const bDue = b.dueDate || '9999-99-99';
+      if (aDue !== bDue) return aDue.localeCompare(bDue);
+      return new Date(b.updatedAt) - new Date(a.updatedAt);
+    });
+  }
+
+  function createEmptyHint(text) {
+    const div = document.createElement('div');
+    div.className = 'empty-hint';
+    div.textContent = text;
+    return div;
+  }
+
+  function renderCounts() {
+    ['q1','q2','q3','q4'].forEach(zone => {
+      const count = tasks.filter(t => t.status === 'active' && t.zone === zone).length;
+      const target = document.querySelector(`[data-count-for="${zone}"]`);
+      if (target) target.textContent = `${count}件`;
+    });
+  }
+
+  function createHistoryNode(task) {
+    const wrap = document.createElement('div');
+    wrap.className = 'history';
+    const label = document.createElement('div');
+    label.textContent = '履歴';
+    label.style.fontWeight = '800';
+    wrap.appendChild(label);
+    const ul = document.createElement('ul');
+    if (!task.activityLog || task.activityLog.length === 0) {
+      const li = document.createElement('li');
+      li.textContent = '履歴なし';
+      ul.appendChild(li);
+    } else {
+      task.activityLog.forEach(log => {
+        const li = document.createElement('li');
+        let text = '';
+        switch(log.type) {
+          case 'moved':
+            text = `${formatDateTime(log.at)} / 移動 (${log.detail?.from || '?'} → ${log.detail?.to || '?'})`;
+            break;
+          case 'due_updated':
+            text = `${formatDateTime(log.at)} / 締切更新 (${log.detail?.from || 'なし'} → ${log.detail?.to || 'なし'})`;
+            break;
+          case 'completed':
+            text = `${formatDateTime(log.at)} / 完了`;
+            break;
+          case 'reopened':
+            text = `${formatDateTime(log.at)} / 完了取り消し`;
+            break;
+          case 'note_updated':
+            text = `${formatDateTime(log.at)} / メモ更新`;
+            break;
+          case 'deleted':
+            text = `${formatDateTime(log.at)} / 削除`;
+            break;
+          case 'restored':
+            text = `${formatDateTime(log.at)} / 削除取り消し`;
+            break;
+          case 'updated':
+            text = `${formatDateTime(log.at)} / 更新`;
+            break;
+          default:
+            text = `${formatDateTime(log.at)} / ${log.type}`;
+        }
+        li.textContent = text;
+        ul.appendChild(li);
+      });
+    }
+    wrap.appendChild(ul);
+    return wrap;
+  }
+
+  function createTaskCard(task) {
+    const card = document.createElement('article');
+    card.className = 'card';
+    card.dataset.taskId = task.id;
+
+    const header = document.createElement('div');
+    header.className = 'card-header';
+
+    const title = document.createElement('textarea');
+    title.className = 'card-title';
+    title.rows = 1;
+    title.placeholder = 'タスク名を入力...';
+    title.value = task.title || '';
+    let titleComposing = false;
+    // 保存 + 履歴追記 + メタ表示更新を debounce で集約。task.title への即時反映は避け、persist 時にまとめて適用する。
+    const persistTitle = debounce(() => {
+      const next = title.value;
+      if (task.title === next) return;
+      task.title = next;
+      logEvent(task, 'updated');
+      saveAll();
+      refreshMeta(card, task);
+    }, INPUT_DEBOUNCE_MS);
+    title.addEventListener('input', () => {
+      autoGrow(title);
+      if (titleComposing) return;
+      persistTitle();
+    });
+    title.addEventListener('compositionstart', () => { titleComposing = true; persistTitle.cancel(); });
+    title.addEventListener('compositionend', () => { titleComposing = false; persistTitle(); });
+    title.addEventListener('blur', () => persistTitle.flush());
+    title.addEventListener('pointerdown', e => e.stopPropagation());
+    setTimeout(() => autoGrow(title), 0);
+
+    header.appendChild(title);
+    card.appendChild(header);
+
+    const meta = document.createElement('div');
+    meta.className = 'card-meta';
+    meta.innerHTML = `
+      <div class="badges"></div>
+      <div class="meta-time"></div>
+    `;
+    card.appendChild(meta);
+
+    const actions = document.createElement('div');
+    actions.className = 'card-actions';
+
+    const completeBtn = document.createElement('button');
+    completeBtn.className = 'icon-btn complete';
+    completeBtn.textContent = '✓ 完了';
+    completeBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      completeTask(task.id);
+    });
+
+    const detailBtn = document.createElement('button');
+    detailBtn.className = 'icon-btn note';
+    detailBtn.textContent = '📝 詳細';
+    detailBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      card.classList.toggle('expanded');
+    });
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.className = 'icon-btn delete';
+    deleteBtn.textContent = '🗑 削除';
+    deleteBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      deleteTask(task.id);
+    });
+
+    actions.appendChild(completeBtn);
+    actions.appendChild(detailBtn);
+    actions.appendChild(deleteBtn);
+    card.appendChild(actions);
+
+    const detail = document.createElement('div');
+    detail.className = 'detail';
+
+    const dueWrap = document.createElement('div');
+    dueWrap.innerHTML = '<label>締切日</label>';
+    const dueInput = document.createElement('input');
+    dueInput.type = 'date';
+    dueInput.value = task.dueDate || '';
+    dueInput.addEventListener('pointerdown', e => e.stopPropagation());
+    dueInput.addEventListener('change', () => {
+      const before = task.dueDate || '';
+      task.dueDate = dueInput.value || '';
+      logEvent(task, 'due_updated', { from: before || 'なし', to: task.dueDate || 'なし' });
+      saveAll();
+      renderAll();
+    });
+    dueWrap.appendChild(dueInput);
+
+    const noteWrap = document.createElement('div');
+    noteWrap.innerHTML = '<label>メモ</label>';
+    const noteInput = document.createElement('textarea');
+    noteInput.placeholder = 'タスクの背景・注意点・次の一手をメモしておくと、振り返りで役に立ちます';
+    noteInput.value = task.note || '';
+    let noteComposing = false;
+    const persistNote = debounce(() => {
+      const next = noteInput.value;
+      if (task.note === next) return;
+      task.note = next;
+      logEvent(task, 'note_updated');
+      saveAll();
+      refreshMeta(card, task);
+    }, INPUT_DEBOUNCE_MS);
+    noteInput.addEventListener('pointerdown', e => e.stopPropagation());
+    noteInput.addEventListener('input', () => {
+      if (noteComposing) return;
+      persistNote();
+    });
+    noteInput.addEventListener('compositionstart', () => { noteComposing = true; persistNote.cancel(); });
+    noteInput.addEventListener('compositionend', () => { noteComposing = false; persistNote(); });
+    noteInput.addEventListener('blur', () => persistNote.flush());
+    noteWrap.appendChild(noteInput);
+
+    const stamps = document.createElement('div');
+    stamps.className = 'timestamps';
+    stamps.innerHTML = `
+      <div>作成: <span data-ts="created">${formatDateTime(task.createdAt)}</span></div>
+      <div>更新: <span data-ts="updated">${formatDateTime(task.updatedAt)}</span></div>
+      <div>完了: <span data-ts="completed">${formatDateTime(task.completedAt)}</span></div>
+    `;
+
+    detail.appendChild(dueWrap);
+    detail.appendChild(noteWrap);
+    detail.appendChild(stamps);
+    detail.appendChild(createHistoryNode(task));
+    card.appendChild(detail);
+
+    card.addEventListener('pointerdown', startDrag);
+    card.addEventListener('click', e => {
+      if (e.target.closest('button, textarea, input')) return;
+      card.classList.toggle('expanded');
+    });
+
+    refreshMeta(card, task);
+    return card;
+  }
+
+  function refreshMeta(card, task) {
+    const badgeRow = card.querySelector('.badges');
+    const timeNode = card.querySelector('.meta-time');
+    const due = dueBadge(task);
+    badgeRow.innerHTML = '';
+
+    const dueEl = document.createElement('span');
+    dueEl.className = `badge ${due.className}`;
+    dueEl.textContent = due.label;
+    badgeRow.appendChild(dueEl);
+
+    if (task.note && task.note.trim()) {
+      const noteEl = document.createElement('span');
+      noteEl.className = 'badge note';
+      noteEl.textContent = 'メモあり';
+      badgeRow.appendChild(noteEl);
+    }
+
+    timeNode.textContent = `更新 ${formatDateTime(task.updatedAt)}`;
+
+    const created = card.querySelector('[data-ts="created"]');
+    const updated = card.querySelector('[data-ts="updated"]');
+    const completed = card.querySelector('[data-ts="completed"]');
+    if (created) created.textContent = formatDateTime(task.createdAt);
+    if (updated) updated.textContent = formatDateTime(task.updatedAt);
+    if (completed) completed.textContent = formatDateTime(task.completedAt);
+
+    const history = card.querySelector('.history');
+    if (history) {
+      const replacement = createHistoryNode(task);
+      history.replaceWith(replacement);
+    }
+  }
+
+  function renderActiveZones() {
+    ['q1','q2','q3','q4','survival-picker','slot-must','slot-should'].forEach(zone => {
+      const container = document.getElementById(zone);
+      if (!container) return;
+      [...container.querySelectorAll('.card, .empty-hint, .card-placeholder')].forEach(node => node.remove());
+    });
+
+    const activeTasks = tasks.filter(t => t.status === 'active');
+    const zonesToRender = uiState.isSurvival ? ['survival-picker','slot-must','slot-should'] : ['q1','q2','q3','q4'];
+    zonesToRender.forEach(zone => {
+      const container = document.getElementById(zone);
+      const zoneTasks = sortTasks(activeTasks.filter(t => t.zone === zone));
+      if (zoneTasks.length === 0) {
+        let hint = 'まだタスクはありません。＋ボタンか他象限からドラッグで追加';
+        if (zone === 'survival-picker') hint = '未割り当てのタスク置き場';
+        if (zone === 'slot-must') hint = '絶対やるタスクを1〜2件だけ置きます';
+        if (zone === 'slot-should') hint = 'できればやる候補を置きます';
+        container.appendChild(createEmptyHint(hint));
+      } else {
+        zoneTasks.forEach(task => container.appendChild(createTaskCard(task)));
+      }
+    });
+
+    if (!uiState.isSurvival) {
+      // When not in survival, keep survival zones visually clean.
+      ['survival-picker','slot-must','slot-should'].forEach(zone => {
+        const container = document.getElementById(zone);
+        [...container.querySelectorAll('.card, .empty-hint, .card-placeholder')].forEach(node => node.remove());
+      });
+    }
+  }
+
+  function renderCompleted() {
+    completedList.innerHTML = '';
+    const completedTasks = [...tasks.filter(t => t.status === 'completed')]
+      .sort((a,b) => new Date(b.completedAt || 0) - new Date(a.completedAt || 0));
+
+    if (completedTasks.length === 0) {
+      completedList.appendChild(createEmptyHint('まだ完了タスクはありません。タスクを完了すると、ここに履歴が残ります。'));
+      return;
+    }
+
+    completedTasks.forEach(task => {
+      const card = document.createElement('article');
+      card.className = 'completed-card';
+
+      const title = document.createElement('div');
+      title.className = 'title';
+      title.textContent = task.title || '(無題タスク)';
+      card.appendChild(title);
+
+      const meta = document.createElement('div');
+      meta.className = 'completed-meta';
+      const due = dueBadge(task);
+      meta.innerHTML = `
+        <span>完了: ${formatDateTime(task.completedAt)}</span>
+        <span>作成: ${formatDateTime(task.createdAt)}</span>
+        <span>元の場所: ${task.normalZone || task.zone}</span>
+        <span>${due.label}</span>
+      `;
+      card.appendChild(meta);
+
+      if (task.note && task.note.trim()) {
+        const note = document.createElement('div');
+        note.className = 'completed-note';
+        note.textContent = task.note;
+        card.appendChild(note);
+      }
+
+      const actions = document.createElement('div');
+      actions.className = 'card-actions';
+      actions.style.marginTop = '10px';
+
+      const reopenBtn = document.createElement('button');
+      reopenBtn.className = 'icon-btn restore';
+      reopenBtn.textContent = '↩ 未完了に戻す';
+      reopenBtn.addEventListener('click', () => reopenTask(task.id));
+
+      const deleteBtn = document.createElement('button');
+      deleteBtn.className = 'icon-btn delete';
+      deleteBtn.textContent = '🗑 削除';
+      deleteBtn.addEventListener('click', () => deleteTask(task.id));
+
+      actions.appendChild(reopenBtn);
+      actions.appendChild(deleteBtn);
+      card.appendChild(actions);
+
+      const history = createHistoryNode(task);
+      card.appendChild(history);
+      completedList.appendChild(card);
+    });
+  }
+
+  function renderAll() {
+    renderActiveZones();
+    renderCounts();
+    renderCompleted();
+    completedPanel.classList.toggle('open', !!uiState.completedPanelOpen);
+    completedPanel.setAttribute('aria-hidden', String(!uiState.completedPanelOpen));
+  }
+
+  function addTask(zone) {
+    const targetZone = zone || (uiState.isSurvival ? 'survival-picker' : 'q4');
+    const task = baseTask({
+      zone: targetZone,
+      normalZone: NORMAL_ZONES.includes(targetZone) ? targetZone : 'q4'
+    });
+    logEvent(task, 'created');
+    tasks.unshift(task);
+    saveAll();
+    renderAll();
+    setTimeout(() => {
+      const el = document.querySelector(`.card[data-task-id="${task.id}"] .card-title`);
+      if (el) {
+        el.focus();
+        autoGrow(el);
+      }
+    }, 0);
+    if (navigator.vibrate) navigator.vibrate(10);
+  }
+
+  function completeTask(taskId) {
+    const task = getTask(taskId);
+    if (!task) return;
+    if (NORMAL_ZONES.includes(task.zone)) task.normalZone = task.zone;
+    task.status = 'completed';
+    task.completedAt = nowIso();
+    logEvent(task, 'completed');
+    if (uiState.survivalSlots) delete uiState.survivalSlots[taskId];
+    saveAll();
+    renderAll();
+    if (navigator.vibrate) navigator.vibrate([20, 20, 20]);
+  }
+
+  function reopenTask(taskId) {
+    const task = getTask(taskId);
+    if (!task) return;
+    task.status = 'active';
+    task.completedAt = '';
+    task.zone = task.normalZone && NORMAL_ZONES.includes(task.normalZone) ? task.normalZone : 'q4';
+    logEvent(task, 'reopened');
+    saveAll();
+    renderAll();
+    if (navigator.vibrate) navigator.vibrate(20);
+  }
+
+  function cloneTask(task) {
+    return JSON.parse(JSON.stringify(task));
+  }
+
+  function undoToastLabel() {
+    if (deletedStack.length <= 1) return 'タスクを削除しました';
+    return `タスクを削除しました (残り ${deletedStack.length} 件戻せる)`;
+  }
+
+  function scheduleUndoHide() {
+    if (undoTimer) clearTimeout(undoTimer);
+    undoTimer = setTimeout(() => {
+      undoToast.classList.remove('visible');
+      // タイムアウトでトーストを隠すが、スタックは保持せずクリア（復元の混乱を防ぐ）。
+      deletedStack = [];
+    }, UNDO_TOAST_MS);
+  }
+
+  function showUndo(taskSnapshot) {
+    deletedStack.unshift(taskSnapshot);
+    if (deletedStack.length > UNDO_STACK_MAX) deletedStack.length = UNDO_STACK_MAX;
+    undoMessage.textContent = undoToastLabel();
+    undoToast.classList.add('visible');
+    scheduleUndoHide();
+  }
+
+  function deleteTask(taskId) {
+    const task = getTask(taskId);
+    if (!task) return;
+    logEvent(task, 'deleted');
+    const snapshot = cloneTask(task);
+    tasks = tasks.filter(t => t.id !== taskId);
+    if (uiState.survivalSlots) delete uiState.survivalSlots[taskId];
+    saveAll();
+    renderAll();
+    showUndo(snapshot);
+    if (navigator.vibrate) navigator.vibrate(30);
+  }
+
+  function undoDelete() {
+    const snapshot = deletedStack.shift();
+    if (!snapshot) return;
+    const restored = baseTask(snapshot);
+    logEvent(restored, 'restored');
+    tasks.unshift(restored);
+    if (deletedStack.length === 0) {
+      undoToast.classList.remove('visible');
+      if (undoTimer) { clearTimeout(undoTimer); undoTimer = null; }
+    } else {
+      undoMessage.textContent = undoToastLabel();
+      scheduleUndoHide();
+    }
+    saveAll();
+    renderAll();
+    if (navigator.vibrate) navigator.vibrate(20);
+  }
+
+  function moveTask(taskId, targetZone) {
+    const task = getTask(taskId);
+    if (!task || !ACTIVE_ZONES.includes(targetZone) || task.status !== 'active') return;
+    const from = task.zone;
+    task.zone = targetZone;
+    if (NORMAL_ZONES.includes(targetZone)) task.normalZone = targetZone;
+    if (uiState.isSurvival && SURVIVAL_SLOTS.includes(targetZone)) {
+      if (!uiState.survivalSlots) uiState.survivalSlots = {};
+      uiState.survivalSlots[taskId] = targetZone;
+    }
+    if (from !== targetZone) logEvent(task, 'moved', { from, to: targetZone });
+    saveAll();
+    renderAll();
+  }
+
+  function startDrag(e) {
+    if (e.button !== undefined && e.button !== 0) return;
+    const interactive = e.target.closest('textarea, button, input, label');
+    if (interactive) return;
+    const card = e.currentTarget;
+    const taskId = card.dataset.taskId;
+    const task = getTask(taskId);
+    if (!task || task.status !== 'active') return;
+
+    e.preventDefault();
+    dragState.taskId = taskId;
+    dragState.card = card;
+    dragState.pointerId = e.pointerId;
+
+    const rect = card.getBoundingClientRect();
+    dragState.offsetX = e.clientX - rect.left;
+    dragState.offsetY = e.clientY - rect.top;
+
+    const placeholder = document.createElement('div');
+    placeholder.className = 'card-placeholder';
+    placeholder.style.height = rect.height + 'px';
+    dragState.placeholder = placeholder;
+    card.parentNode.insertBefore(placeholder, card);
+
+    card.classList.add('dragging');
+    card.style.width = rect.width + 'px';
+    card.style.left = (e.clientX - dragState.offsetX) + 'px';
+    card.style.top = (e.clientY - dragState.offsetY) + 'px';
+    document.body.appendChild(card);
+
+    card.setPointerCapture(e.pointerId);
+    card.addEventListener('pointermove', onDrag);
+    card.addEventListener('pointerup', endDrag);
+    card.addEventListener('pointercancel', endDrag);
+  }
+
+  function activeDroppableSelectors() {
+    return uiState.isSurvival ? ['#survival-picker', '#slot-must', '#slot-should'] : ['#q1', '#q2', '#q3', '#q4'];
+  }
+
+  function onDrag(e) {
+    const card = dragState.card;
+    if (!card) return;
+    card.style.left = (e.clientX - dragState.offsetX) + 'px';
+    card.style.top = (e.clientY - dragState.offsetY) + 'px';
+    card.style.visibility = 'hidden';
+    const below = document.elementFromPoint(e.clientX, e.clientY);
+    card.style.visibility = 'visible';
+
+    document.querySelectorAll('.drop-hover').forEach(el => el.classList.remove('drop-hover'));
+    if (!below) return;
+    const droppable = below.closest(activeDroppableSelectors().join(','));
+    if (droppable) droppable.classList.add('drop-hover');
+  }
+
+  function endDrag(e) {
+    const card = dragState.card;
+    const placeholder = dragState.placeholder;
+    if (!card) return;
+
+    card.style.visibility = 'hidden';
+    const below = document.elementFromPoint(e.clientX, e.clientY);
+    card.style.visibility = 'visible';
+    const droppable = below ? below.closest(activeDroppableSelectors().join(',')) : null;
+
+    if (droppable) {
+      // ドロップ成功: renderAll が象限内の DOM を再生成するので、body 直下に浮いたドラッグカードを先に捨ててから moveTask。
+      const movedTaskId = dragState.taskId;
+      const targetZone = droppable.id;
+      discardDragNodes();
+      moveTask(movedTaskId, targetZone);
+    } else if (placeholder && placeholder.parentNode) {
+      placeholder.parentNode.insertBefore(card, placeholder);
+      cleanupDrag();
+    } else {
+      cleanupDrag();
+    }
+  }
+
+  // ドロップ成功時用: 現在のドラッグカード/プレースホルダを DOM から除去してリスナを外し、dragState をリセットする。
+  function discardDragNodes() {
+    const card = dragState.card;
+    const placeholder = dragState.placeholder;
+    if (card) {
+      card.removeEventListener('pointermove', onDrag);
+      card.removeEventListener('pointerup', endDrag);
+      card.removeEventListener('pointercancel', endDrag);
+      if (dragState.pointerId !== null && typeof card.releasePointerCapture === 'function') {
+        try { card.releasePointerCapture(dragState.pointerId); } catch (_) { /* 既に解放済みなら無視 */ }
+      }
+      card.remove();
+    }
+    if (placeholder) placeholder.remove();
+    document.querySelectorAll('.drop-hover').forEach(el => el.classList.remove('drop-hover'));
+    dragState = { taskId: null, card: null, placeholder: null, offsetX: 0, offsetY: 0, pointerId: null };
+  }
+
+  function cleanupDrag() {
+    const card = dragState.card;
+    const placeholder = dragState.placeholder;
+    if (card) {
+      card.classList.remove('dragging');
+      card.style.width = '';
+      card.style.left = '';
+      card.style.top = '';
+      card.style.visibility = '';
+      card.removeEventListener('pointermove', onDrag);
+      card.removeEventListener('pointerup', endDrag);
+      card.removeEventListener('pointercancel', endDrag);
+      if (placeholder && placeholder.parentNode) placeholder.parentNode.insertBefore(card, placeholder);
+    }
+    if (placeholder) placeholder.remove();
+    document.querySelectorAll('.drop-hover').forEach(el => el.classList.remove('drop-hover'));
+    dragState = { taskId: null, card: null, placeholder: null, offsetX: 0, offsetY: 0, pointerId: null };
+  }
+
+  function toggleCompletedPanel(force) {
+    uiState.completedPanelOpen = typeof force === 'boolean' ? force : !uiState.completedPanelOpen;
+    saveState();
+    renderAll();
+  }
+
+  function enterSurvival() {
+    uiState.isSurvival = true;
+    const slots = uiState.survivalSlots || {};
+    // 現存タスクのみスロット復元対象にする。ゾーン未登録・削除済みの id は自然に消す。
+    const nextSlots = {};
+    tasks.forEach(task => {
+      if (task.status !== 'active') return;
+      if (NORMAL_ZONES.includes(task.zone)) task.normalZone = task.zone;
+      const previous = slots[task.id];
+      const restored = (previous === 'slot-must' || previous === 'slot-should') ? previous : 'survival-picker';
+      task.zone = restored;
+      nextSlots[task.id] = restored;
+    });
+    uiState.survivalSlots = nextSlots;
+    survivalOverlay.classList.add('active');
+    survivalOverlay.setAttribute('aria-hidden', 'false');
+    startTimer();
+    saveAll();
+    renderAll();
+  }
+
+  function exitSurvival() {
+    uiState.isSurvival = false;
+    tasks.forEach(task => {
+      if (task.status !== 'active') return;
+      task.zone = task.normalZone && NORMAL_ZONES.includes(task.normalZone) ? task.normalZone : 'q4';
+    });
+    survivalOverlay.classList.remove('active');
+    survivalOverlay.setAttribute('aria-hidden', 'true');
+    if (timerInterval) clearInterval(timerInterval);
+    saveAll();
+    renderAll();
+  }
+
+  function toggleSurvival() {
+    if (uiState.isSurvival) exitSurvival();
+    else enterSurvival();
+  }
+
+  function startTimer() {
+    if (timerInterval) clearInterval(timerInterval);
+    function update() {
+      const targetVal = targetTimeInput.value || '17:30';
+      const [hh, mm] = targetVal.split(':');
+      const now = new Date();
+      const target = new Date();
+      target.setHours(Number(hh), Number(mm), 0, 0);
+      let diff = target.getTime() - now.getTime();
+      if (diff < 0) {
+        countdown.textContent = '00:00';
+        countdown.classList.add('critical');
+        countdown.style.color = 'var(--neon-red)';
+        return;
+      }
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      if (hours === 0) {
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        countdown.textContent = `${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
+        if (minutes < 15) {
+          countdown.classList.add('critical');
+          countdown.style.color = 'var(--neon-red)';
+        } else if (minutes < 30) {
+          countdown.classList.remove('critical');
+          countdown.style.color = 'var(--neon-yellow)';
+        } else {
+          countdown.classList.remove('critical');
+          countdown.style.color = '#fff';
+        }
+      } else {
+        countdown.textContent = `${hours}H ${minutes}M`;
+        countdown.classList.remove('critical');
+        countdown.style.color = '#fff';
+      }
+    }
+    update();
+    timerInterval = setInterval(update, 1000);
+  }
+
+  document.getElementById('add-btn').addEventListener('click', () => addTask());
+  document.getElementById('completed-toggle').addEventListener('click', () => toggleCompletedPanel());
+  document.getElementById('close-completed').addEventListener('click', () => toggleCompletedPanel(false));
+  document.getElementById('survival-btn').addEventListener('click', toggleSurvival);
+  document.getElementById('exit-survival').addEventListener('click', exitSurvival);
+  document.getElementById('undo-btn').addEventListener('click', undoDelete);
+  targetTimeInput.addEventListener('change', () => { saveState(); if (uiState.isSurvival) startTimer(); });
+
+  loadAll();
+
+  window.neuroMatrixDebug = {
+    export: () => JSON.stringify(tasks, null, 2),
+    import: json => { tasks = safeParse(json, []); saveAll(); renderAll(); }
+  };
+})();
+</script>
+</body>
+</html>

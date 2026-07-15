@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Style A: Swiss Modern</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;800&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #ffffff; overflow: hidden; height: 100vh; height: 100dvh; }
+.slide {
+  height: 100vh; height: 100dvh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr auto;
+  padding: clamp(24px, 4vw, 60px);
+  position: relative;
+  overflow: hidden;
+}
+/* 赤アクセント縦線 */
+.accent-line {
+  position: absolute;
+  left: 50%;
+  top: 10%;
+  height: 80%;
+  width: 4px;
+  background: #ff3300;
+  transform: translateX(-50%);
+  animation: lineGrow 1s ease-out forwards;
+}
+@keyframes lineGrow { from { height: 0; top: 50%; } to { height: 80%; top: 10%; } }
+/* グリッドオーバーレイ */
+.grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+  background-size: clamp(30px, 5vw, 60px) clamp(30px, 5vw, 60px);
+  pointer-events: none;
+}
+.tag {
+  grid-column: 1 / -1;
+  font-family: 'Archivo', sans-serif;
+  font-size: clamp(0.6rem, 1.2vw, 0.8rem);
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #ff3300;
+  animation: fadeIn 0.8s ease-out 0.3s both;
+}
+.left-content {
+  grid-column: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-right: clamp(20px, 3vw, 40px);
+}
+.right-content {
+  grid-column: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: clamp(20px, 3vw, 40px);
+}
+h1 {
+  font-family: 'Archivo', sans-serif;
+  font-weight: 800;
+  font-size: clamp(2rem, 4.5vw, 4rem);
+  line-height: 1.05;
+  color: #1a1a1a;
+  animation: slideUp 0.8s ease-out 0.5s both;
+}
+.subtitle {
+  font-family: 'Nunito', sans-serif;
+  font-size: clamp(0.9rem, 1.4vw, 1.1rem);
+  color: #555;
+  margin-top: clamp(12px, 2vh, 24px);
+  line-height: 1.6;
+  animation: slideUp 0.8s ease-out 0.7s both;
+}
+.stats {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 2vh, 28px);
+}
+.stat-item {
+  animation: slideUp 0.6s ease-out both;
+}
+.stat-item:nth-child(1) { animation-delay: 0.9s; }
+.stat-item:nth-child(2) { animation-delay: 1.1s; }
+.stat-item:nth-child(3) { animation-delay: 1.3s; }
+.stat-number {
+  font-family: 'Archivo', sans-serif;
+  font-weight: 800;
+  font-size: clamp(2rem, 3.5vw, 3.5rem);
+  color: #1a1a1a;
+}
+.stat-label {
+  font-family: 'Nunito', sans-serif;
+  font-size: clamp(0.75rem, 1.1vw, 0.9rem);
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.footer-bar {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Nunito', sans-serif;
+  font-size: clamp(0.6rem, 0.9vw, 0.75rem);
+  color: #aaa;
+  border-top: 1px solid #eee;
+  padding-top: clamp(8px, 1vh, 16px);
+  animation: fadeIn 0.8s ease-out 1.5s both;
+}
+@keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="grid-overlay"></div>
+  <div class="accent-line"></div>
+  <div class="tag">RAG PROPOSAL 2026</div>
+  <div class="left-content">
+    <h1>償却資産税業務への<br>RAG導入提案</h1>
+    <p class="subtitle">新システムにデータはある。<br>活用する知恵がRAG。</p>
+  </div>
+  <div class="right-content">
+    <div class="stats">
+      <div class="stat-item">
+        <div class="stat-number">3 UC</div>
+        <div class="stat-label">見積精査 / 疑義抽出 / チャットボット</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">Phase 1</div>
+        <div class="stat-label">NotebookLMで実質無料PoC</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">∞</div>
+        <div class="stat-label">異動のたびに知識が強くなるエコシステム</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bar">
+    <span>STYLE A: SWISS MODERN</span>
+    <span>Arrow keys to navigate</span>
+  </div>
+</div>
+</body>
+</html>

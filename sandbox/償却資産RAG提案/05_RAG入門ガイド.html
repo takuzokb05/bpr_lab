@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAGのしくみ — やさしく解説</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700;800;900&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #ffffff;
+    --text-primary: #1a1a1a;
+    --text-secondary: #444;
+    --accent: #ff3300;
+    --accent-light: rgba(255, 51, 0, 0.06);
+    --border: #e0e0e0;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Nunito', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── ヘッダー ── */
+  .site-header {
+    border-bottom: 3px solid var(--accent);
+    padding: 2.5rem 1.5rem 2rem;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .site-header .label {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .site-header h1 {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 900;
+    font-size: 2rem;
+    line-height: 1.25;
+    color: var(--text-primary);
+  }
+
+  .site-header .subtitle {
+    margin-top: 0.75rem;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+  }
+
+  .reading-time {
+    display: inline-block;
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent);
+    border: 1.5px solid var(--accent);
+    border-radius: 3px;
+    padding: 0.15rem 0.6rem;
+  }
+
+  /* ── メインコンテンツ ── */
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 1.5rem 5rem;
+  }
+
+  /* ── セクション ── */
+  .section {
+    padding: 3rem 0 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section:last-child {
+    border-bottom: none;
+  }
+
+  .section-number {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 900;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+
+  h2 {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: 1.45rem;
+    line-height: 1.3;
+    margin-bottom: 1.2rem;
+    color: var(--text-primary);
+  }
+
+  h3 {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-top: 1.8rem;
+    margin-bottom: 0.6rem;
+    color: var(--text-primary);
+  }
+
+  p {
+    margin-bottom: 1rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+  }
+
+  /* ── 図解ボックス ── */
+  .diagram {
+    background: var(--accent-light);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    padding: 1.5rem 1.5rem;
+    margin: 1.5rem 0;
+    font-size: 0.9rem;
+  }
+
+  .diagram .diagram-title {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.8rem;
+  }
+
+  .flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Archivo', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+  }
+
+  .flow-step {
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    padding: 0.45rem 0.8rem;
+    white-space: nowrap;
+  }
+
+  .flow-step.active {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .flow-arrow {
+    color: var(--accent);
+    font-size: 1.1rem;
+    font-weight: 800;
+  }
+
+  /* ── 補足 ── */
+  .note {
+    background: #f8f8f8;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1rem 1.2rem;
+    margin: 1.2rem 0;
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+  }
+
+  .note strong {
+    color: var(--text-primary);
+  }
+
+  /* ── 用語説明 ── */
+  .term {
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .term-plain {
+    font-weight: 400;
+    color: var(--accent);
+    font-size: 0.88rem;
+  }
+
+  /* ── 比較表 ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.2rem 0;
+    font-size: 0.88rem;
+  }
+
+  th {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 700;
+    text-align: left;
+    padding: 0.6rem 0.8rem;
+    border-bottom: 2px solid var(--text-primary);
+    color: var(--text-primary);
+    font-size: 0.82rem;
+    letter-spacing: 0.03em;
+  }
+
+  td {
+    padding: 0.6rem 0.8rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+    vertical-align: top;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  /* ── チェックリスト ── */
+  .checklist {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+  }
+
+  .checklist li {
+    position: relative;
+    padding-left: 1.6rem;
+    margin-bottom: 0.6rem;
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+  }
+
+  .checklist li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.45rem;
+    width: 10px;
+    height: 10px;
+    border: 2px solid var(--accent);
+    border-radius: 2px;
+  }
+
+  /* ── NG/OK対比 ── */
+  .compare-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.2rem 0;
+  }
+
+  .compare-box {
+    border-radius: 6px;
+    padding: 1rem;
+    font-size: 0.88rem;
+  }
+
+  .compare-box.ng {
+    background: #fff5f3;
+    border: 1px solid #ffcccc;
+  }
+
+  .compare-box.ok {
+    background: #f3faf3;
+    border: 1px solid #c3e6c3;
+  }
+
+  .compare-box .compare-label {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.4rem;
+  }
+
+  .compare-box.ng .compare-label { color: #cc3300; }
+  .compare-box.ok .compare-label { color: #338833; }
+
+  /* ── フッター ── */
+  .site-footer {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.78rem;
+    color: #999;
+    text-align: center;
+  }
+
+  /* ── レスポンシブ ── */
+  @media (max-width: 600px) {
+    .site-header h1 { font-size: 1.5rem; }
+    h2 { font-size: 1.2rem; }
+    .compare-row { grid-template-columns: 1fr; }
+    .flow { font-size: 0.78rem; }
+    .flow-step { padding: 0.35rem 0.6rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="label">Supplementary Material</div>
+  <h1>RAGのしくみ<br>やさしく解説</h1>
+  <p class="subtitle">NotebookLMの裏側で何が起きているのか。<br>PoCの精度を上げるために知っておきたい基礎知識。</p>
+  <span class="reading-time">約 15 分で読めます</span>
+</header>
+
+<main>
+
+  <!-- ==============================
+       1. NotebookLMの裏側
+  ================================ -->
+  <section class="section">
+    <div class="section-number">Section 01</div>
+    <h2>NotebookLMの裏側で何が起きているか</h2>
+
+    <p>NotebookLMにPDFを入れて質問すると、答えが返ってきます。<br>
+    あの一連の流れの中で、実は3つのステップが自動で動いています。</p>
+
+    <div class="diagram">
+      <div class="diagram-title">NotebookLMの処理フロー</div>
+      <div class="flow">
+        <span class="flow-step">PDF をアップロード</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-step active">文書を小さく分割して保存</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-step active">質問に近い部分だけ探す</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-step active">見つけた部分をもとにAIが回答</span>
+      </div>
+    </div>
+
+    <p>この「分割 → 検索 → 回答生成」の仕組みを、技術用語で
+    <span class="term">RAG</span>
+    <span class="term-plain">（Retrieval-Augmented Generation = 検索で補強した文章生成）</span>
+    と呼びます。</p>
+
+    <p>つまり、AIが「全部のPDFを丸ごと暗記している」のではなく、<strong>質問のたびに関連しそうな箇所を探し出して、その部分だけを読んで答えている</strong>のです。</p>
+
+    <div class="note">
+      <strong>たとえるなら：</strong>百科事典を丸暗記した人ではなく、「質問を聞いて、索引を引いて、該当ページを開いてから答える人」です。索引の引き方や、ページの切り分け方で、答えの質が変わります。
+    </div>
+  </section>
+
+  <!-- ==============================
+       2. チャンク分割
+  ================================ -->
+  <section class="section">
+    <div class="section-number">Section 02</div>
+    <h2>チャンク分割とは</h2>
+
+    <p>RAGの最初のステップが
+    <span class="term">チャンク分割</span>
+    <span class="term-plain">（文書を小さなかたまりに切ること）</span>
+    です。</p>
+
+    <p>たとえば100ページのPDFがあるとき、まるごと1つのかたまりとして扱うと、検索で見つけたい箇所がぼやけてしまいます。逆に1文ずつバラバラにすると、文脈がなくなって意味が通じません。</p>
+
+    <div class="diagram">
+      <div class="diagram-title">チャンクのイメージ</div>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; margin-top: 0.5rem;">
+        <div style="background: #fff; border: 1.5px solid var(--border); border-radius: 4px; padding: 0.7rem; text-align: center; font-size: 0.82rem;">
+          <div style="font-family: Archivo; font-weight: 700; color: var(--accent); margin-bottom: 0.3rem;">大きすぎ</div>
+          <div style="background: var(--accent-light); border-radius: 3px; padding: 0.5rem; min-height: 60px; display: flex; align-items: center; justify-content: center; color: var(--text-secondary);">PDF全体で1つ</div>
+          <div style="margin-top: 0.4rem; color: #999; font-size: 0.78rem;">検索がぼやける</div>
+        </div>
+        <div style="background: #fff; border: 1.5px solid var(--accent); border-radius: 4px; padding: 0.7rem; text-align: center; font-size: 0.82rem;">
+          <div style="font-family: Archivo; font-weight: 700; color: var(--accent); margin-bottom: 0.3rem;">ちょうどよい</div>
+          <div style="display: grid; grid-template-rows: repeat(3, 1fr); gap: 3px;">
+            <div style="background: var(--accent-light); border-radius: 3px; padding: 0.3rem; color: var(--text-secondary);">段落A</div>
+            <div style="background: var(--accent-light); border-radius: 3px; padding: 0.3rem; color: var(--text-secondary);">段落B</div>
+            <div style="background: var(--accent-light); border-radius: 3px; padding: 0.3rem; color: var(--text-secondary);">段落C</div>
+          </div>
+          <div style="margin-top: 0.4rem; color: var(--accent); font-size: 0.78rem; font-weight: 600;">ピンポイントで検索</div>
+        </div>
+        <div style="background: #fff; border: 1.5px solid var(--border); border-radius: 4px; padding: 0.7rem; text-align: center; font-size: 0.82rem;">
+          <div style="font-family: Archivo; font-weight: 700; color: var(--accent); margin-bottom: 0.3rem;">小さすぎ</div>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 2px;">
+            <div style="background: var(--accent-light); border-radius: 2px; padding: 0.15rem; font-size: 0.65rem; color: #999;">一文</div>
+            <div style="background: var(--accent-light); border-radius: 2px; padding: 0.15rem; font-size: 0.65rem; color: #999;">一文</div>
+            <div style="background: var(--accent-light); border-radius: 2px; padding: 0.15rem; font-size: 0.65rem; color: #999;">一文</div>
+            <div style="background: var(--accent-light); border-radius: 2px; padding: 0.15rem; font-size: 0.65rem; color: #999;">一文</div>
+            <div style="background: var(--accent-light); border-radius: 2px; padding: 0.15rem; font-size: 0.65rem; color: #999;">一文</div>
+            <div style="background: var(--accent-light); border-radius: 2px; padding: 0.15rem; font-size: 0.65rem; color: #999;">一文</div>
+            <div style="background: var(--accent-light); border-radius: 2px; padding: 0.15rem; font-size: 0.65rem; color: #999;">一文</div>
+            <div style="background: var(--accent-light); border-radius: 2px; padding: 0.15rem; font-size: 0.65rem; color: #999;">一文</div>
+            <div style="background: var(--accent-light); border-radius: 2px; padding: 0.15rem; font-size: 0.65rem; color: #999;">一文</div>
+          </div>
+          <div style="margin-top: 0.4rem; color: #999; font-size: 0.78rem;">文脈がなくなる</div>
+        </div>
+      </div>
+    </div>
+
+    <p><strong>切り方で精度が変わる</strong>というのが大事なポイントです。NotebookLMではこの分割を自動でやってくれますが、自分たちでRAGシステムを組む場合は「どう切るか」を設計する必要があります。</p>
+
+    <div class="note">
+      <strong>NotebookLMの場合：</strong>アップロード時に自動でチャンク分割されます。私たちは意識しなくて済みますが、裏では必ずこの処理が走っています。
+    </div>
+  </section>
+
+  <!-- ==============================
+       3. ベクトル検索
+  ================================ -->
+  <section class="section">
+    <div class="section-number">Section 03</div>
+    <h2>ベクトル検索（埋め込み）とは</h2>
+
+    <p>チャンクに分割したあと、次は「質問に近いチャンクを探す」ステップです。<br>
+    ここで使われるのが
+    <span class="term">ベクトル検索</span>
+    <span class="term-plain">（意味の近さで探す検索）</span>
+    です。</p>
+
+    <h3>普通の検索との違い</h3>
+
+    <div class="compare-row">
+      <div class="compare-box ng">
+        <div class="compare-label">キーワード検索（従来型）</div>
+        <p style="margin-bottom: 0.5rem;">「償却資産」で検索 → 「償却資産」という文字列が含まれる箇所だけヒット</p>
+        <p style="margin-bottom: 0; color: #cc3300;">「固定資産の減価」「設備の価値減少」など、同じ意味でも別の言葉で書かれていると見逃す</p>
+      </div>
+      <div class="compare-box ok">
+        <div class="compare-label">ベクトル検索（意味ベース）</div>
+        <p style="margin-bottom: 0.5rem;">「償却資産」で検索 → 意味が近い箇所をまとめてヒット</p>
+        <p style="margin-bottom: 0; color: #338833;">「固定資産の減価」「設備の価値減少」も意味が近いので見つかる</p>
+      </div>
+    </div>
+
+    <h3>なぜ「意味」で探せるのか</h3>
+
+    <p>文章を数百個の数字の列（これを<span class="term">ベクトル</span><span class="term-plain"> = 数字の羅列</span>）に変換します。意味が近い文章は、似た数字の列になります。</p>
+
+    <div class="diagram">
+      <div class="diagram-title">ベクトル化のイメージ</div>
+      <div style="font-family: 'Archivo', sans-serif; font-size: 0.85rem; line-height: 2;">
+        <div>「償却資産の申告」 &rarr; <span style="color: var(--accent); font-weight: 700;">[0.82, 0.15, 0.91, ...]</span></div>
+        <div>「固定資産の届出」 &rarr; <span style="color: var(--accent); font-weight: 700;">[0.80, 0.17, 0.89, ...]</span> &larr; 数字が近い = 意味が近い</div>
+        <div>「今日の天気予報」 &rarr; <span style="color: #999;">[0.12, 0.95, 0.03, ...]</span> &larr; 数字が遠い = 意味が遠い</div>
+      </div>
+    </div>
+
+    <p>質問文もベクトルに変換して、数字の列が一番近いチャンクを上位から取り出します。これがベクトル検索です。</p>
+
+    <div class="note">
+      <strong>イメージ：</strong>図書館で本を探すとき、タイトルの完全一致で探すのがキーワード検索。「この本に近い内容の本はどれ？」と司書さんに聞くのがベクトル検索です。
+    </div>
+  </section>
+
+  <!-- ==============================
+       4. なぜ精度が出ないか
+  ================================ -->
+  <section class="section">
+    <div class="section-number">Section 04</div>
+    <h2>なぜ精度が出ないことがあるか</h2>
+
+    <p>NotebookLMやRAGシステムで「ちゃんと答えてくれない」ことがあります。<br>
+    原因はだいたい3つに分かれます。</p>
+
+    <h3>原因 1：チャンクの切り方が合っていない</h3>
+    <p>重要な情報が2つのチャンクにまたがって切れていると、どちらのチャンクにも中途半端な情報しかなく、正しい回答が作れません。</p>
+
+    <div class="diagram">
+      <div class="diagram-title">チャンクまたぎの例</div>
+      <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.5rem; align-items: center; font-size: 0.85rem;">
+        <div style="background: #fff; border: 1.5px solid var(--border); border-radius: 4px; padding: 0.6rem; color: var(--text-secondary);">
+          「償却資産の申告期限は...」
+        </div>
+        <div style="color: var(--accent); font-weight: 800; font-family: Archivo;">ここで切れる</div>
+        <div style="background: #fff; border: 1.5px solid var(--border); border-radius: 4px; padding: 0.6rem; color: var(--text-secondary);">
+          「...毎年1月31日です。」
+        </div>
+      </div>
+      <p style="margin-top: 0.6rem; margin-bottom: 0; color: var(--text-secondary);">「申告期限はいつ？」と聞いても、どちらのチャンクにも完全な答えがない</p>
+    </div>
+
+    <h3>原因 2：質問の仕方があいまい</h3>
+    <p>質問があいまいだと、ベクトル検索で的外れなチャンクを拾ってしまいます。</p>
+
+    <div class="compare-row">
+      <div class="compare-box ng">
+        <div class="compare-label">あいまいな質問</div>
+        <p style="margin-bottom: 0;">「資産の申告ってどうやるの？」</p>
+      </div>
+      <div class="compare-box ok">
+        <div class="compare-label">具体的な質問</div>
+        <p style="margin-bottom: 0;">「償却資産の1月申告の対象となる資産の種類は？」</p>
+      </div>
+    </div>
+
+    <h3>原因 3：ソース文書の品質が低い</h3>
+    <p>元のPDFがスキャン画像だけでテキストがない、表がレイアウト崩れしている、同じ内容が複数のファイルにバラバラに書かれている、といった問題があると精度が下がります。</p>
+
+    <div class="note">
+      <strong>覚えておきたいこと：</strong>RAGの精度は「AIの賢さ」だけでは決まりません。<strong>ソースの品質 × 分割の適切さ × 質問の明確さ</strong>の掛け算です。どれか1つが低いと、全体の精度が落ちます。
+    </div>
+  </section>
+
+  <!-- ==============================
+       5. PoCで気をつけること
+  ================================ -->
+  <section class="section">
+    <div class="section-number">Section 05</div>
+    <h2>PoCで気をつけること</h2>
+
+    <h3>ソースの前処理</h3>
+    <ul class="checklist">
+      <li>スキャンPDFはOCR（文字認識）を通してテキスト化する</li>
+      <li>表形式のデータは、表だとわかるように整形しておく</li>
+      <li>複数の文書に同じ内容がある場合は、最新版に統一する</li>
+      <li>不要なヘッダー・フッター・ページ番号などのノイズを除去する</li>
+    </ul>
+
+    <h3>質問のコツ</h3>
+    <ul class="checklist">
+      <li>具体的に聞く（「いつ」「何を」「どの条件で」を明示する）</li>
+      <li>1つの質問に1つのテーマ（複合的な質問は分ける）</li>
+      <li>回答に使われたソース（引用元）を確認する癖をつける</li>
+    </ul>
+
+    <h3>精度の測り方</h3>
+    <p>「なんとなく良い」「なんとなくダメ」では改善できません。以下の手順で定量的に測ります。</p>
+
+    <div class="diagram">
+      <div class="diagram-title">精度検証の手順</div>
+      <div class="flow" style="flex-direction: column; align-items: flex-start; gap: 0.6rem;">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <span style="font-family: Archivo; font-weight: 900; color: var(--accent); width: 1.2rem;">1</span>
+          <span class="flow-step">あらかじめ「正解」がわかっている質問を20〜30個用意する</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <span style="font-family: Archivo; font-weight: 900; color: var(--accent); width: 1.2rem;">2</span>
+          <span class="flow-step">RAGに質問して、回答を記録する</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <span style="font-family: Archivo; font-weight: 900; color: var(--accent); width: 1.2rem;">3</span>
+          <span class="flow-step">正解と照らし合わせて、正答率を出す</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <span style="font-family: Archivo; font-weight: 900; color: var(--accent); width: 1.2rem;">4</span>
+          <span class="flow-step">間違いのパターンを分析して改善する</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>よくある落とし穴：</strong>PoCで「答えが出た」ことに満足してしまい、「その答えは正しいか」の検証を飛ばすケースがあります。RAGは自信満々に間違える（<span class="term">ハルシネーション</span><span class="term-plain"> = AIのもっともらしい嘘</span>）ことがあるので、必ず正解との照合が必要です。
+    </div>
+  </section>
+
+  <!-- ==============================
+       6. NotebookLMとGeminiの使い分け
+  ================================ -->
+  <section class="section">
+    <div class="section-number">Section 06</div>
+    <h2>NotebookLMとGeminiの使い分け</h2>
+
+    <p>どちらもGoogleのAIですが、得意なことが違います。</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>NotebookLM</th>
+          <th>Gemini</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>しくみ</strong></td>
+          <td>アップロードした文書の中だけを検索して回答（RAG）</td>
+          <td>学習済みの一般知識 + ネット検索で回答</td>
+        </tr>
+        <tr>
+          <td><strong>得意なこと</strong></td>
+          <td>「この文書に何が書いてある？」<br>= <strong>知識ベース</strong>として使う</td>
+          <td>「文章を要約して」「表を作って」<br>= <strong>タスク実行</strong>に使う</td>
+        </tr>
+        <tr>
+          <td><strong>回答の根拠</strong></td>
+          <td>アップロードした文書（出典が明確）</td>
+          <td>一般知識（出典があいまいなことも）</td>
+        </tr>
+        <tr>
+          <td><strong>向いている場面</strong></td>
+          <td>法令・規程・マニュアルへの問い合わせ</td>
+          <td>下書き作成、ブレスト、一般的な調査</td>
+        </tr>
+        <tr>
+          <td><strong>注意点</strong></td>
+          <td>文書にない情報は答えられない</td>
+          <td>古い情報や不正確な情報が混じることがある</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="diagram">
+      <div class="diagram-title">使い分けの判断フロー</div>
+      <div class="flow" style="flex-direction: column; align-items: flex-start; gap: 0.4rem; font-size: 0.85rem;">
+        <div>「<strong>この資料の中</strong>から情報を探したい」 &rarr; <strong style="color: var(--accent);">NotebookLM</strong></div>
+        <div>「<strong>一般的な知識</strong>をもとに作業してほしい」 &rarr; <strong style="color: var(--accent);">Gemini</strong></div>
+        <div>「資料の内容を踏まえて<strong>文章を作成</strong>してほしい」 &rarr; <strong style="color: var(--accent);">NotebookLM で情報抽出 → Gemini で文章作成</strong></div>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>PoCとの関係：</strong>償却資産の問い合わせ対応にRAGを使うなら、NotebookLMのようなしくみが基本になります。Geminiは一般知識で答えるので、自治体固有の規程やルールには対応できません。「自分たちの文書をもとに、正確に答える」にはRAGが必要です。
+    </div>
+  </section>
+
+  <!-- ===========================================
+       セクション 7: デジタル統括本部との会話で使う用語集
+       =========================================== -->
+  <section>
+    <div class="section-tag">GLOSSARY</div>
+    <h2>7. デジタル統括本部との打ち合わせで出てくる用語</h2>
+
+    <p>デジタル統括本部のメンバーはデジタル職が多く、以下の用語を当たり前に使います。全部覚える必要はありませんが、<strong>打ち合わせで出てきた時に「何の話をしているか」がわかる</strong>ことが大事です。</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 22%;">用語</th>
+          <th style="width: 38%;">意味</th>
+          <th style="width: 40%;">打ち合わせでの使われ方</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>PoC</strong><br><span style="color: var(--accent); font-size: 0.8em;">ピーオーシー</span></td>
+          <td>Proof of Concept。「本当にうまくいくか」を小さく試す実験のこと。</td>
+          <td>「まずPoCで精度を見ましょう」「PoC期間は1〜2ヶ月で」</td>
+        </tr>
+        <tr>
+          <td><strong>SaaS</strong><br><span style="color: var(--accent); font-size: 0.8em;">サース</span></td>
+          <td>Software as a Service。インターネット経由で使える既製サービス（例: NotebookLM、kopo）。</td>
+          <td>「SaaSでいくか自前構築か」「SaaSなら運用が楽」</td>
+        </tr>
+        <tr>
+          <td><strong>オンプレ</strong><br><span style="color: var(--accent); font-size: 0.8em;">オンプレミス</span></td>
+          <td>庁内のサーバーにシステムを置いて動かす方式。クラウドの反対。</td>
+          <td>「セキュリティ的にオンプレですか？」「オンプレだとコスト上がります」</td>
+        </tr>
+        <tr>
+          <td><strong>エンベディング</strong><br><span style="color: var(--accent); font-size: 0.8em;">埋め込み表現</span></td>
+          <td>文章を数値（ベクトル）に変換すること。セクション3で解説した「意味で検索する」ための前処理。</td>
+          <td>「エンベディングモデル何使います？」「エンベディングの精度が鍵」</td>
+        </tr>
+        <tr>
+          <td><strong>ハルシネーション</strong><br><span style="color: var(--accent); font-size: 0.8em;">幻覚</span></td>
+          <td>AIがもっともらしいウソをつくこと。ソースにない情報をでっち上げてしまう現象。</td>
+          <td>「ハルシネーション対策どうします？」「免責表示で対応」</td>
+        </tr>
+        <tr>
+          <td><strong>プロンプト</strong></td>
+          <td>AIへの質問文・指示文のこと。聞き方で回答の質が大きく変わる。</td>
+          <td>「プロンプトを工夫すれば精度上がるかも」「プロンプトテンプレート作りましょう」</td>
+        </tr>
+        <tr>
+          <td><strong>トークン</strong></td>
+          <td>AIが文章を処理する最小単位（だいたい日本語1文字＝1〜2トークン）。量が多いと処理が遅く・高くなる。</td>
+          <td>「トークン数の上限に引っかかってますね」「コストはトークン単価×量です」</td>
+        </tr>
+        <tr>
+          <td><strong>API</strong><br><span style="color: var(--accent); font-size: 0.8em;">エーピーアイ</span></td>
+          <td>プログラムからサービスを呼び出す窓口。GeminiのAPIを使えば、画面を触らずに大量処理できる。</td>
+          <td>「API経由で自動化できます」「APIキーの管理が必要」</td>
+        </tr>
+        <tr>
+          <td><strong>RAG</strong><br><span style="color: var(--accent); font-size: 0.8em;">ラグ</span></td>
+          <td>Retrieval-Augmented Generation。自分たちの資料を検索してからAIが回答する仕組み（本ガイドの主題）。</td>
+          <td>「RAGで評価要領を検索させましょう」「RAGの精度はソースの質次第」</td>
+        </tr>
+        <tr>
+          <td><strong>ファインチューニング</strong></td>
+          <td>AIモデル自体を自分たちのデータで追加学習させること。RAGとは別のアプローチで、コストが高い。</td>
+          <td>「ファインチューニングは不要、RAGで十分です」（この回答ができれば上出来）</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="note">
+      <strong>コツ：</strong>全部覚えようとしなくて大丈夫です。わからない用語が出たら「それは○○のことですか？」と聞き返せばOK。デジタル職の方も、業務側の用語（評価要領、家屋疑義、宛名番号等）はわからないので、お互い様です。
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  償却資産RAG PoC 補助資料 / 2026年3月作成
+</footer>
+
+</body>
+</html>

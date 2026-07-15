@@ -1,0 +1,9 @@
+API_KEY.txt
+progress.json
+output.md
+temp_pages/
+logs/
+__pycache__/
+*.pyc
+.env
+*.pdf

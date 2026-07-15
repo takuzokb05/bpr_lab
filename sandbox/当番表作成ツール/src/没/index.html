@@ -1,0 +1,2506 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>当番表作成ツール</title>
+<style>
+/* === リセット・基本 === */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Meiryo', 'Hiragino Kaku Gothic ProN', sans-serif;
+  background: #F3F4F6; color: #1F2937; font-size: 14px; line-height: 1.6;
+}
+
+/* === レイアウト === */
+.app-header {
+  background: #1E3A5F; color: #fff; padding: 12px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.app-header h1 { font-size: 18px; font-weight: 600; }
+.app-main { max-width: 1200px; margin: 0 auto; padding: 16px; }
+
+/* === セクション === */
+.section { background: #fff; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,.1); margin-bottom: 16px; overflow: hidden; }
+.section-header {
+  background: #EFF6FF; padding: 10px 16px; cursor: pointer; display: flex;
+  align-items: center; justify-content: space-between; user-select: none;
+  border-bottom: 1px solid #DBEAFE;
+}
+.section-header:hover { background: #DBEAFE; }
+.section-header h2 { font-size: 15px; color: #1E3A5F; }
+.section-toggle { font-size: 12px; color: #6B7280; transition: transform .2s; }
+.section-toggle.collapsed { transform: rotate(-90deg); }
+.section-body { padding: 16px; }
+.section-body.collapsed { display: none; }
+
+/* === タブ === */
+.tabs { display: flex; gap: 0; border-bottom: 2px solid #E5E7EB; margin-bottom: 16px; }
+.tab {
+  padding: 8px 20px; cursor: pointer; border: none; background: none;
+  font-size: 14px; color: #6B7280; border-bottom: 2px solid transparent;
+  margin-bottom: -2px; transition: all .15s;
+}
+.tab:hover { color: #1E3A5F; }
+.tab.active { color: #2563EB; border-bottom-color: #2563EB; font-weight: 600; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* === フォーム部品 === */
+.form-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+.form-label { font-size: 13px; color: #374151; min-width: 80px; font-weight: 500; }
+.form-input, .form-select {
+  padding: 6px 10px; border: 1px solid #D1D5DB; border-radius: 4px;
+  font-size: 14px; font-family: inherit; outline: none;
+}
+.form-input:focus, .form-select:focus { border-color: #2563EB; box-shadow: 0 0 0 2px rgba(37,99,235,.15); }
+.form-input-sm { width: 100px; }
+.form-input-md { width: 160px; }
+.form-input-lg { width: 240px; }
+
+/* === ボタン === */
+.btn {
+  padding: 6px 14px; border: none; border-radius: 4px; cursor: pointer;
+  font-size: 13px; font-family: inherit; font-weight: 500; transition: all .15s;
+  display: inline-flex; align-items: center; gap: 4px;
+}
+.btn-primary { background: #2563EB; color: #fff; }
+.btn-primary:hover { background: #1D4ED8; }
+.btn-success { background: #16A34A; color: #fff; }
+.btn-success:hover { background: #15803D; }
+.btn-danger { background: #DC2626; color: #fff; }
+.btn-danger:hover { background: #B91C1C; }
+.btn-outline { background: #fff; color: #374151; border: 1px solid #D1D5DB; }
+.btn-outline:hover { background: #F9FAFB; }
+.btn-sm { padding: 4px 8px; font-size: 12px; }
+.btn-lg { padding: 8px 20px; font-size: 15px; }
+
+/* === カード === */
+.card {
+  border: 1px solid #E5E7EB; border-radius: 6px; padding: 10px 14px;
+  margin-bottom: 8px; background: #FAFAFA; transition: box-shadow .15s;
+}
+.card:hover { box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+.card-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.card-title { font-weight: 500; font-size: 14px; }
+.card-actions { display: flex; gap: 4px; }
+.card-body { margin-top: 8px; }
+
+/* === タグバッジ === */
+.tag-badge {
+  display: inline-block; padding: 2px 8px; border-radius: 10px;
+  font-size: 11px; font-weight: 500; color: #fff; margin: 1px 2px;
+}
+.tag-selector { display: flex; gap: 4px; flex-wrap: wrap; align-items: center; }
+.tag-chip {
+  display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px;
+  border-radius: 10px; font-size: 11px; cursor: pointer; border: 1px solid #D1D5DB;
+  background: #fff; transition: all .15s;
+}
+.tag-chip.selected { border-color: transparent; color: #fff; }
+.tag-chip-remove { cursor: pointer; font-size: 14px; line-height: 1; opacity: .7; }
+.tag-chip-remove:hover { opacity: 1; }
+
+/* === ステータスバッジ === */
+.status-badges { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 4px; }
+.status-badge {
+  display: inline-block; padding: 1px 6px; border-radius: 3px;
+  font-size: 11px; background: #E5E7EB; color: #374151;
+}
+.status-badge.short-time { background: #FEF3C7; color: #92400E; }
+.status-badge.fixed-day { background: #DBEAFE; color: #1E40AF; }
+.status-badge.day-off { background: #FCE7F3; color: #9D174D; }
+.status-badge.unavailable { background: #FEE2E2; color: #991B1B; }
+.status-badge.training { background: #D1FAE5; color: #065F46; }
+.status-badge.exempt { background: #E5E7EB; color: #6B7280; }
+
+/* === ミニカレンダー === */
+.mini-cal { border-collapse: collapse; margin: 8px 0; }
+.mini-cal th { padding: 4px 6px; font-size: 12px; color: #6B7280; font-weight: 500; text-align: center; }
+.mini-cal td {
+  padding: 4px; text-align: center; cursor: pointer; border-radius: 4px;
+  font-size: 13px; width: 36px; height: 32px; transition: background .1s;
+}
+.mini-cal td:hover { background: #EFF6FF; }
+.mini-cal td.empty { cursor: default; }
+.mini-cal td.weekend { color: #9CA3AF; background: #F9FAFB; }
+.mini-cal td.holiday { background: #FEE2E2; color: #DC2626; font-weight: 600; }
+.mini-cal td.workday-override { background: #D1FAE5; color: #059669; font-weight: 600; }
+.mini-cal td.today { outline: 2px solid #2563EB; }
+
+/* === 当番表グリッド === */
+.grid-toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+.grid-toolbar h2 { font-size: 16px; color: #1E3A5F; }
+.grid-table-wrap { overflow-x: auto; }
+.grid-table { border-collapse: collapse; width: 100%; min-width: 500px; font-size: 13px; }
+.grid-table th {
+  padding: 6px 10px; background: #1E3A5F; color: #fff; font-weight: 500;
+  text-align: center; white-space: nowrap; position: sticky; top: 0; z-index: 1;
+}
+.grid-table td {
+  padding: 6px 10px; border: 1px solid #E5E7EB; text-align: center;
+  vertical-align: middle; min-width: 100px;
+}
+.grid-table tr.weekend td { background: #F9FAFB; color: #9CA3AF; }
+.grid-table tr.holiday td { background: #FFF7ED; color: #C2410C; }
+.grid-table td.day-col { min-width: 36px; font-weight: 600; }
+.grid-table td.weekday-col { min-width: 30px; }
+.grid-table td.slot-cell { cursor: pointer; min-height: 28px; }
+.grid-table td.slot-cell:hover { background: #EFF6FF; }
+.grid-table td.weekend-label { background: #F3F4F6; color: #9CA3AF; font-size: 12px; }
+
+/* === チェックボックス付きステータス === */
+.status-option { margin-bottom: 10px; }
+.status-option-header { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+.status-option-header input[type="checkbox"] { cursor: pointer; }
+.status-option-detail { margin: 6px 0 0 24px; padding: 8px 12px; background: #F9FAFB; border-radius: 4px; border-left: 3px solid #2563EB; }
+.weekday-checks { display: flex; gap: 2px; }
+.weekday-check {
+  width: 32px; height: 28px; display: flex; align-items: center; justify-content: center;
+  border: 1px solid #D1D5DB; border-radius: 4px; cursor: pointer; font-size: 12px;
+  background: #fff; transition: all .15s; user-select: none;
+}
+.weekday-check.selected { background: #2563EB; color: #fff; border-color: #2563EB; }
+
+/* === モーダル === */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 100;
+  display: flex; align-items: center; justify-content: center;
+}
+.modal-overlay.hidden { display: none; }
+.modal {
+  background: #fff; border-radius: 8px; box-shadow: 0 8px 32px rgba(0,0,0,.2);
+  width: 90%; max-width: 560px; max-height: 85vh; display: flex; flex-direction: column;
+}
+.modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px; border-bottom: 1px solid #E5E7EB;
+}
+.modal-header h3 { font-size: 16px; }
+.modal-close { background: none; border: none; font-size: 20px; cursor: pointer; color: #6B7280; padding: 4px; }
+.modal-close:hover { color: #1F2937; }
+.modal-body { padding: 20px; overflow-y: auto; flex: 1; }
+.modal-footer { padding: 14px 20px; border-top: 1px solid #E5E7EB; display: flex; justify-content: flex-end; gap: 8px; }
+
+/* === 固定エントリーリスト === */
+.fixed-entry { display: flex; align-items: center; gap: 6px; margin-top: 4px; padding: 4px 8px; background: #EFF6FF; border-radius: 4px; font-size: 12px; }
+.unavail-date-entry { display: flex; align-items: center; gap: 6px; margin-top: 4px; padding: 4px 8px; background: #FEF2F2; border-radius: 4px; font-size: 12px; }
+
+/* === 出力エリア === */
+.output-section { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* === 検索ボックス === */
+.search-box { position: relative; margin-bottom: 12px; }
+.search-input { width: 100%; padding: 8px 12px 8px 32px; border: 1px solid #D1D5DB; border-radius: 6px; font-size: 14px; outline: none; }
+.search-input:focus { border-color: #2563EB; box-shadow: 0 0 0 2px rgba(37,99,235,.15); }
+.search-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: #9CA3AF; font-size: 14px; }
+.staff-count { font-size: 12px; color: #6B7280; margin-bottom: 8px; }
+
+/* === 通知 === */
+.toast {
+  position: fixed; bottom: 20px; right: 20px; padding: 10px 20px;
+  background: #1F2937; color: #fff; border-radius: 6px; font-size: 13px;
+  z-index: 200; opacity: 0; transition: opacity .3s; pointer-events: none;
+}
+.toast.show { opacity: 1; }
+
+/* === 印刷 === */
+@media print {
+  .app-header, #settings-panel, #output-section, .grid-toolbar .btn, .toast { display: none !important; }
+  .app-main { max-width: none; padding: 0; }
+  .section { box-shadow: none; border: none; }
+  .grid-table { font-size: 11px; }
+  .grid-table th { background: #333 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  @page { size: A4 portrait; margin: 10mm; }
+}
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <h1>当番表作成ツール</h1>
+</header>
+
+<main class="app-main">
+  <div id="settings-panel" class="section">
+    <div class="section-header" id="settings-toggle">
+      <h2>設定</h2>
+      <span class="section-toggle" id="settings-toggle-icon">&#9660;</span>
+    </div>
+    <div class="section-body" id="settings-body">
+      <div id="settings-tabs" class="tabs"></div>
+      <div id="settings-content"></div>
+    </div>
+  </div>
+
+  <div id="grid-section" class="section">
+    <div class="section-body">
+      <div class="grid-toolbar" id="grid-toolbar"></div>
+      <div class="grid-table-wrap" id="grid-container"></div>
+    </div>
+  </div>
+
+  <div id="output-section" class="section">
+    <div class="section-body output-section" id="output-area"></div>
+  </div>
+</main>
+
+<div id="modal-overlay" class="modal-overlay hidden"></div>
+<div id="toast" class="toast"></div>
+
+<script>
+(() => {
+  'use strict';
+
+  // ==========================================================
+  // 定数
+  // ==========================================================
+  const STORAGE_KEY = 'toban_tool_data';
+  const WEEKDAY_NAMES = ['日', '月', '火', '水', '木', '金', '土'];
+  const TOAST_DURATION_MS = 2000;
+  const MAX_REQUIRED_COUNT = 10;
+  const SEARCH_BOX_THRESHOLD = 5;
+  const STORAGE_WARNING_BYTES = 3 * 1024 * 1024; // 3MB で容量警告
+  const MAX_UNDO_HISTORY = 5;
+  const DEFAULT_TAG_COLORS = [
+    '#2563EB', '#16A34A', '#DC2626', '#D97706', '#7C3AED',
+    '#0891B2', '#BE185D', '#4F46E5', '#059669', '#EA580C',
+  ];
+  const SETTINGS_TABS = [
+    { id: 'calendar', label: 'カレンダー' },
+    { id: 'slots', label: '当番枠' },
+    { id: 'tags', label: 'タグ' },
+    { id: 'staff', label: '職員' },
+    { id: 'neo', label: 'NEO連携' },
+  ];
+
+  // ==========================================================
+  // ユーティリティ
+  // ==========================================================
+  function generateId() {
+    if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+      return crypto.randomUUID();
+    }
+    return Date.now().toString(36) + Math.random().toString(36).slice(2, 9);
+  }
+
+  function getDaysInMonth(year, month) {
+    return new Date(year, month, 0).getDate();
+  }
+
+  function getDayOfWeek(year, month, day) {
+    return new Date(year, month - 1, day).getDay();
+  }
+
+  function isWeekend(dayOfWeek) {
+    return dayOfWeek === 0 || dayOfWeek === 6;
+  }
+
+  function formatDate(year, month, day) {
+    const m = String(month).padStart(2, '0');
+    const d = String(day).padStart(2, '0');
+    return `${year}-${m}-${d}`;
+  }
+
+  function showToast(message) {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), TOAST_DURATION_MS);
+  }
+
+  // ==========================================================
+  // データモデル
+  // ==========================================================
+  function createDefaultData() {
+    const now = new Date();
+    return {
+      calendar: {
+        year: now.getFullYear(),
+        month: now.getMonth() + 1,
+        holidays: [],       // 祝日として追加した日（day番号）
+        workdayOverrides: [], // 土日だが勤務日にした日（day番号）
+        dayTimeSettings: {}, // { day: 'full'|'am'|'pm' } デフォルトは'full'
+      },
+      slots: [
+        { id: generateId(), name: '当番', startTime: '09:00', endTime: '17:00', requiredCount: 1 },
+      ],
+      tags: [],
+      staff: [],
+      assignments: {},
+      neoIds: {},
+    };
+  }
+
+  // ==========================================================
+  // ストレージ
+  // ==========================================================
+  function loadData() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const data = JSON.parse(raw);
+        // 後方互換: 新しいフィールドが無い場合のフォールバック
+        const defaults = createDefaultData();
+        return {
+          calendar: { ...defaults.calendar, ...(data.calendar || {}) },
+          slots: data.slots || defaults.slots,
+          tags: data.tags || defaults.tags,
+          staff: data.staff || defaults.staff,
+          assignments: data.assignments || defaults.assignments,
+          neoIds: data.neoIds || defaults.neoIds,
+        };
+      }
+    } catch (e) {
+      console.error('データの読み込みに失敗しました。初期データを使用します:', e);
+    }
+    return createDefaultData();
+  }
+
+  function saveData() {
+    try {
+      const json = JSON.stringify(state);
+      localStorage.setItem(STORAGE_KEY, json);
+      // 容量警告
+      if (json.length > STORAGE_WARNING_BYTES) {
+        console.warn(`データサイズ: ${(json.length / 1024).toFixed(0)}KB — 上限に近づいています`);
+        showToast(`データサイズが ${(json.length / 1024 / 1024).toFixed(1)}MB です。JSONエクスポートでバックアップを推奨します`);
+      }
+    } catch (e) {
+      console.error('データの保存に失敗しました:', e);
+      showToast('保存に失敗しました。JSONエクスポートでデータを退避してください');
+    }
+  }
+
+  /** Undo用にスナップショットを保存 */
+  function pushUndo() {
+    undoHistory.push(JSON.stringify(state.assignments));
+    if (undoHistory.length > MAX_UNDO_HISTORY) undoHistory.shift();
+  }
+
+  // ==========================================================
+  // 状態
+  // ==========================================================
+  let state = loadData();
+  let activeTab = 'calendar';
+  let staffSearchQuery = '';
+  let undoHistory = [];
+
+  // ==========================================================
+  // DOM ヘルパー
+  // ==========================================================
+  function clearElement(el) {
+    while (el.firstChild) el.removeChild(el.firstChild);
+  }
+
+  function el(tag, className) {
+    const element = document.createElement(tag);
+    if (className) element.className = className;
+    return element;
+  }
+
+  function textEl(tag, className, text) {
+    const element = el(tag, className);
+    element.textContent = text;
+    return element;
+  }
+
+  function createButton(text, className, onClick) {
+    const btn = textEl('button', 'btn ' + (className || ''), text);
+    btn.addEventListener('click', onClick);
+    return btn;
+  }
+
+  function createInput(type, value, className, placeholder) {
+    const input = el('input', className || '');
+    input.type = type;
+    if (value !== undefined && value !== null) input.value = value;
+    if (placeholder) input.placeholder = placeholder;
+    return input;
+  }
+
+  function createSelect(options, selectedValue, className) {
+    const select = el('select', 'form-select ' + (className || ''));
+    for (const opt of options) {
+      const option = textEl('option', '', opt.label);
+      option.value = opt.value;
+      if (String(opt.value) === String(selectedValue)) option.selected = true;
+      select.appendChild(option);
+    }
+    return select;
+  }
+
+  function appendChildren(parent, children) {
+    for (const child of children) {
+      if (child) parent.appendChild(child);
+    }
+  }
+
+  // ==========================================================
+  // タブ管理
+  // ==========================================================
+  function renderTabs() {
+    const tabsContainer = document.getElementById('settings-tabs');
+    clearElement(tabsContainer);
+
+    for (const tab of SETTINGS_TABS) {
+      const btn = textEl('button', 'tab' + (tab.id === activeTab ? ' active' : ''), tab.label);
+      btn.addEventListener('click', () => {
+        activeTab = tab.id;
+        renderTabs();
+        renderActiveTab();
+      });
+      tabsContainer.appendChild(btn);
+    }
+  }
+
+  function renderActiveTab() {
+    const container = document.getElementById('settings-content');
+    clearElement(container);
+
+    const tabContent = el('div', 'tab-content active');
+    switch (activeTab) {
+      case 'calendar': renderCalendarTab(tabContent); break;
+      case 'slots': renderSlotsTab(tabContent); break;
+      case 'tags': renderTagsTab(tabContent); break;
+      case 'staff': renderStaffTab(tabContent); break;
+      case 'neo': renderNeoTab(tabContent); break;
+    }
+    container.appendChild(tabContent);
+  }
+
+  // ==========================================================
+  // カレンダー設定タブ
+  // ==========================================================
+  function renderCalendarTab(container) {
+    // 年月選択
+    const row = el('div', 'form-row');
+    row.appendChild(textEl('span', 'form-label', '対象年月'));
+
+    const yearOptions = [];
+    const currentYear = new Date().getFullYear();
+    for (let y = currentYear - 1; y <= currentYear + 2; y++) {
+      yearOptions.push({ value: y, label: y + '年' });
+    }
+    const yearSelect = createSelect(yearOptions, state.calendar.year);
+    yearSelect.addEventListener('change', () => {
+      state.calendar.year = parseInt(yearSelect.value, 10);
+      state.calendar.holidays = [];
+      state.calendar.workdayOverrides = [];
+      saveData();
+      renderCalendarTab(container.parentNode.querySelector('.tab-content') || container);
+      renderGrid();
+    });
+    row.appendChild(yearSelect);
+
+    const monthOptions = [];
+    for (let m = 1; m <= 12; m++) {
+      monthOptions.push({ value: m, label: m + '月' });
+    }
+    const monthSelect = createSelect(monthOptions, state.calendar.month);
+    monthSelect.addEventListener('change', () => {
+      state.calendar.month = parseInt(monthSelect.value, 10);
+      state.calendar.holidays = [];
+      state.calendar.workdayOverrides = [];
+      saveData();
+      renderActiveTab();
+      renderGrid();
+    });
+    row.appendChild(monthSelect);
+    container.appendChild(row);
+
+    // 説明
+    const hint = textEl('p', '', '日付をクリックして祝日・勤務日を切り替えられます。赤=祝日、緑=勤務日に変更、灰色=土日休み');
+    hint.style.fontSize = '12px';
+    hint.style.color = '#6B7280';
+    hint.style.margin = '8px 0';
+    container.appendChild(hint);
+
+    // ミニカレンダー
+    const cal = renderMiniCalendar();
+    container.appendChild(cal);
+
+    // 祝日リスト表示
+    if (state.calendar.holidays.length > 0) {
+      const holidaySection = el('div');
+      holidaySection.style.marginTop = '12px';
+      holidaySection.appendChild(textEl('h3', '', '設定済みの祝日'));
+      const sortedHolidays = [...state.calendar.holidays].sort((a, b) => a - b);
+      for (const day of sortedHolidays) {
+        const dow = getDayOfWeek(state.calendar.year, state.calendar.month, day);
+        const entry = el('div', 'fixed-entry');
+        entry.appendChild(textEl('span', '', `${state.calendar.month}/${day}（${WEEKDAY_NAMES[dow]}）`));
+        const removeBtn = createButton('取消', 'btn-sm btn-outline', () => {
+          state.calendar.holidays = state.calendar.holidays.filter(d => d !== day);
+          saveData();
+          renderActiveTab();
+          renderGrid();
+        });
+        entry.appendChild(removeBtn);
+        holidaySection.appendChild(entry);
+      }
+      container.appendChild(holidaySection);
+    }
+
+    if (state.calendar.workdayOverrides.length > 0) {
+      const workdaySection = el('div');
+      workdaySection.style.marginTop = '12px';
+      workdaySection.appendChild(textEl('h3', '', '勤務日に変更した日'));
+      const sorted = [...state.calendar.workdayOverrides].sort((a, b) => a - b);
+      for (const day of sorted) {
+        const dow = getDayOfWeek(state.calendar.year, state.calendar.month, day);
+        const entry = el('div', 'fixed-entry');
+        entry.appendChild(textEl('span', '', `${state.calendar.month}/${day}（${WEEKDAY_NAMES[dow]}）`));
+        const removeBtn = createButton('取消', 'btn-sm btn-outline', () => {
+          state.calendar.workdayOverrides = state.calendar.workdayOverrides.filter(d => d !== day);
+          saveData();
+          renderActiveTab();
+          renderGrid();
+        });
+        entry.appendChild(removeBtn);
+        workdaySection.appendChild(entry);
+      }
+      container.appendChild(workdaySection);
+    }
+  }
+
+  function renderMiniCalendar() {
+    const { year, month, holidays, workdayOverrides } = state.calendar;
+    const daysInMonth = getDaysInMonth(year, month);
+    const firstDow = getDayOfWeek(year, month, 1);
+    const today = new Date();
+
+    const table = el('table', 'mini-cal');
+    const thead = el('thead');
+    const headRow = el('tr');
+    for (const name of WEEKDAY_NAMES) {
+      headRow.appendChild(textEl('th', '', name));
+    }
+    thead.appendChild(headRow);
+    table.appendChild(thead);
+
+    const tbody = el('tbody');
+    let dayNum = 1;
+    const totalCells = Math.ceil((daysInMonth + firstDow) / 7) * 7;
+
+    let row;
+    for (let i = 0; i < totalCells; i++) {
+      if (i % 7 === 0) {
+        row = el('tr');
+      }
+
+      const td = el('td');
+      if (i < firstDow || dayNum > daysInMonth) {
+        td.className = 'empty';
+      } else {
+        const currentDay = dayNum;
+        const dow = getDayOfWeek(year, month, currentDay);
+        td.textContent = String(currentDay);
+
+        if (holidays.includes(currentDay)) {
+          td.className = 'holiday';
+          td.title = '祝日（クリックで解除）';
+        } else if (workdayOverrides.includes(currentDay)) {
+          td.className = 'workday-override';
+          td.title = '勤務日に変更済み（クリックで解除）';
+        } else if (isWeekend(dow)) {
+          td.className = 'weekend';
+          td.title = '土日（クリックで勤務日に変更）';
+        }
+
+        // 今日の日付をハイライト
+        if (year === today.getFullYear() && month === today.getMonth() + 1 && currentDay === today.getDate()) {
+          td.classList.add('today');
+        }
+
+        td.addEventListener('click', () => {
+          toggleDayStatus(currentDay, dow);
+        });
+
+        dayNum++;
+      }
+
+      row.appendChild(td);
+      if (i % 7 === 6) {
+        tbody.appendChild(row);
+      }
+    }
+    table.appendChild(tbody);
+    return table;
+  }
+
+  function toggleDayStatus(day, dow) {
+    const { holidays, workdayOverrides } = state.calendar;
+
+    if (holidays.includes(day)) {
+      // 祝日 → 解除（通常に戻す）
+      state.calendar.holidays = holidays.filter(d => d !== day);
+    } else if (workdayOverrides.includes(day)) {
+      // 勤務日変更 → 解除（土日に戻す）
+      state.calendar.workdayOverrides = workdayOverrides.filter(d => d !== day);
+    } else if (isWeekend(dow)) {
+      // 土日 → 勤務日に変更
+      state.calendar.workdayOverrides.push(day);
+    } else {
+      // 平日 → 祝日に設定
+      state.calendar.holidays.push(day);
+    }
+
+    saveData();
+    renderActiveTab();
+    renderGrid();
+  }
+
+  /** 指定日が休日（当番なし）かどうか */
+  function isDayOff(day) {
+    const dow = getDayOfWeek(state.calendar.year, state.calendar.month, day);
+    if (state.calendar.holidays.includes(day)) return true;
+    if (state.calendar.workdayOverrides.includes(day)) return false;
+    return isWeekend(dow);
+  }
+
+  /** 日の時間帯設定を取得（'full', 'am', 'pm'） */
+  function getDayTimeSetting(day) {
+    const settings = state.calendar.dayTimeSettings || {};
+    return settings[day] || 'full';
+  }
+
+  /** スロットが日の時間帯設定と重なるか */
+  function isSlotActiveForDay(slot, day) {
+    const setting = getDayTimeSetting(day);
+    if (setting === 'full') return true;
+    const AM_END = '12:00';
+    const PM_START = '12:00';
+    if (setting === 'am') return isTimeOverlap(slot.startTime, slot.endTime, '00:00', AM_END);
+    if (setting === 'pm') return isTimeOverlap(slot.startTime, slot.endTime, PM_START, '23:59');
+    return true;
+  }
+
+  // ==========================================================
+  // 当番枠設定タブ
+  // ==========================================================
+  function renderSlotsTab(container) {
+    const header = el('div', 'form-row');
+    header.appendChild(textEl('span', '', `登録枠数: ${state.slots.length}`));
+    header.appendChild(createButton('+ 枠を追加', 'btn-primary btn-sm', () => {
+      state.slots.push({
+        id: generateId(),
+        name: '当番' + (state.slots.length + 1),
+        startTime: '09:00',
+        endTime: '17:00',
+        requiredCount: 1,
+      });
+      saveData();
+      renderActiveTab();
+      renderGrid();
+    }));
+    container.appendChild(header);
+
+    if (state.slots.length === 0) {
+      container.appendChild(textEl('p', '', '当番枠がありません。「枠を追加」で作成してください。'));
+      return;
+    }
+
+    for (const slot of state.slots) {
+      container.appendChild(renderSlotCard(slot));
+    }
+  }
+
+  function renderSlotCard(slot) {
+    const card = el('div', 'card');
+    const cardHeader = el('div', 'card-header');
+
+    // 枠名入力
+    const nameInput = createInput('text', slot.name, 'form-input form-input-md');
+    nameInput.addEventListener('change', () => {
+      slot.name = nameInput.value.trim() || '当番';
+      saveData();
+      renderGrid();
+    });
+    cardHeader.appendChild(nameInput);
+
+    // 削除ボタン
+    const actions = el('div', 'card-actions');
+    actions.appendChild(createButton('削除', 'btn-sm btn-danger', () => {
+      if (state.slots.length <= 1) {
+        showToast('最低1つの枠が必要です');
+        return;
+      }
+      state.slots = state.slots.filter(s => s.id !== slot.id);
+      saveData();
+      renderActiveTab();
+      renderGrid();
+    }));
+    cardHeader.appendChild(actions);
+    card.appendChild(cardHeader);
+
+    // 詳細設定
+    const body = el('div', 'card-body');
+    const timeRow = el('div', 'form-row');
+    timeRow.appendChild(textEl('span', 'form-label', '時間'));
+
+    const startInput = createInput('time', slot.startTime, 'form-input form-input-sm');
+    startInput.addEventListener('change', () => {
+      slot.startTime = startInput.value;
+      saveData();
+    });
+    timeRow.appendChild(startInput);
+
+    timeRow.appendChild(textEl('span', '', '〜'));
+
+    const endInput = createInput('time', slot.endTime, 'form-input form-input-sm');
+    endInput.addEventListener('change', () => {
+      slot.endTime = endInput.value;
+      saveData();
+    });
+    timeRow.appendChild(endInput);
+    body.appendChild(timeRow);
+
+    const countRow = el('div', 'form-row');
+    countRow.appendChild(textEl('span', 'form-label', '必要人数'));
+    const countInput = createInput('number', slot.requiredCount, 'form-input form-input-sm');
+    countInput.min = '1';
+    countInput.max = String(MAX_REQUIRED_COUNT);
+    countInput.addEventListener('change', () => {
+      slot.requiredCount = Math.max(1, parseInt(countInput.value, 10) || 1);
+      countInput.value = slot.requiredCount;
+      saveData();
+      renderGrid();
+    });
+    countRow.appendChild(countInput);
+    countRow.appendChild(textEl('span', '', '人'));
+    body.appendChild(countRow);
+
+    card.appendChild(body);
+    return card;
+  }
+
+  // ==========================================================
+  // タグ管理タブ
+  // ==========================================================
+  function renderTagsTab(container) {
+    const header = el('div', 'form-row');
+    header.appendChild(textEl('span', '', `登録タグ数: ${state.tags.length}`));
+    header.appendChild(createButton('+ タグを追加', 'btn-primary btn-sm', () => {
+      const colorIndex = state.tags.length % DEFAULT_TAG_COLORS.length;
+      state.tags.push({
+        id: generateId(),
+        name: '新しいタグ',
+        color: DEFAULT_TAG_COLORS[colorIndex],
+      });
+      saveData();
+      renderActiveTab();
+    }));
+    container.appendChild(header);
+
+    if (state.tags.length === 0) {
+      const hint = textEl('p', '', 'タグで職員を分類できます（例：A班、B班、管理職）。自動割り当てには影響しません。');
+      hint.style.color = '#6B7280';
+      hint.style.fontSize = '13px';
+      container.appendChild(hint);
+      return;
+    }
+
+    for (const tag of state.tags) {
+      container.appendChild(renderTagCard(tag));
+    }
+  }
+
+  function renderTagCard(tag) {
+    const card = el('div', 'card');
+    const row = el('div', 'form-row');
+
+    // 色選択
+    const colorInput = createInput('color', tag.color, '');
+    colorInput.style.width = '36px';
+    colorInput.style.height = '30px';
+    colorInput.style.border = 'none';
+    colorInput.style.cursor = 'pointer';
+    colorInput.style.padding = '0';
+    colorInput.addEventListener('change', () => {
+      tag.color = colorInput.value;
+      saveData();
+      renderActiveTab();
+    });
+    row.appendChild(colorInput);
+
+    // 名前入力
+    const nameInput = createInput('text', tag.name, 'form-input form-input-md');
+    nameInput.addEventListener('change', () => {
+      tag.name = nameInput.value.trim() || 'タグ';
+      saveData();
+    });
+    row.appendChild(nameInput);
+
+    // プレビュー
+    const preview = textEl('span', 'tag-badge', tag.name);
+    preview.style.backgroundColor = tag.color;
+    row.appendChild(preview);
+
+    // 削除
+    row.appendChild(createButton('削除', 'btn-sm btn-danger', () => {
+      // タグを職員から除去
+      for (const s of state.staff) {
+        s.tags = (s.tags || []).filter(t => t !== tag.id);
+      }
+      state.tags = state.tags.filter(t => t.id !== tag.id);
+      saveData();
+      renderActiveTab();
+    }));
+
+    card.appendChild(row);
+    return card;
+  }
+
+  // ==========================================================
+  // 職員管理タブ
+  // ==========================================================
+  function renderStaffTab(container) {
+    // ヘッダー（人数 + 追加ボタン + 一括登録ボタン）
+    const header = el('div', 'form-row');
+    header.appendChild(textEl('span', '', `登録職員数: ${state.staff.length}人`));
+    header.appendChild(createButton('+ 職員を追加', 'btn-primary btn-sm', () => {
+      openStaffModal(null);
+    }));
+    header.appendChild(createButton('一括登録', 'btn-outline btn-sm', () => {
+      openBulkStaffModal();
+    }));
+    container.appendChild(header);
+
+    // 検索ボックス
+    if (state.staff.length > SEARCH_BOX_THRESHOLD) {
+      const searchBox = el('div', 'search-box');
+      const searchIcon = textEl('span', 'search-icon', '\u2315');
+      searchBox.appendChild(searchIcon);
+      const searchInput = createInput('text', staffSearchQuery, 'search-input', '名前またはタグで検索...');
+      searchInput.addEventListener('input', () => {
+        staffSearchQuery = searchInput.value;
+        renderStaffList(listContainer);
+      });
+      searchBox.appendChild(searchInput);
+      container.appendChild(searchBox);
+    }
+
+    // 職員リスト
+    const listContainer = el('div');
+    renderStaffList(listContainer);
+    container.appendChild(listContainer);
+  }
+
+  function renderStaffList(container) {
+    clearElement(container);
+
+    let filtered = state.staff;
+    if (staffSearchQuery) {
+      const q = staffSearchQuery.toLowerCase();
+      filtered = state.staff.filter(s => {
+        if (s.name.toLowerCase().includes(q)) return true;
+        const staffTags = (s.tags || []).map(tid => {
+          const t = state.tags.find(tag => tag.id === tid);
+          return t ? t.name.toLowerCase() : '';
+        });
+        return staffTags.some(name => name.includes(q));
+      });
+    }
+
+    if (filtered.length === 0 && state.staff.length > 0) {
+      container.appendChild(textEl('p', 'staff-count', '該当する職員が見つかりません'));
+      return;
+    }
+    if (state.staff.length === 0) {
+      const hint = textEl('p', '', '「職員を追加」から職員を登録してください。');
+      hint.style.color = '#6B7280';
+      container.appendChild(hint);
+      return;
+    }
+
+    container.appendChild(textEl('p', 'staff-count', `表示: ${filtered.length}/${state.staff.length}人`));
+
+    for (const s of filtered) {
+      container.appendChild(renderStaffCard(s));
+    }
+  }
+
+  function renderStaffCard(staff) {
+    const card = el('div', 'card');
+    const cardHeader = el('div', 'card-header');
+
+    // 名前
+    const nameArea = el('div');
+    nameArea.appendChild(textEl('span', 'card-title', staff.name));
+
+    // タグバッジ
+    const tagsArea = el('span');
+    for (const tid of (staff.tags || [])) {
+      const tag = state.tags.find(t => t.id === tid);
+      if (tag) {
+        const badge = textEl('span', 'tag-badge', tag.name);
+        badge.style.backgroundColor = tag.color;
+        tagsArea.appendChild(badge);
+      }
+    }
+    nameArea.appendChild(tagsArea);
+    cardHeader.appendChild(nameArea);
+
+    // アクション
+    const actions = el('div', 'card-actions');
+    actions.appendChild(createButton('編集', 'btn-sm btn-outline', () => openStaffModal(staff)));
+    actions.appendChild(createButton('削除', 'btn-sm btn-danger', () => {
+      state.staff = state.staff.filter(s => s.id !== staff.id);
+      // ペア参照を解除
+      for (const s of state.staff) {
+        if (s.trainingPairId === staff.id) s.trainingPairId = null;
+      }
+      saveData();
+      renderActiveTab();
+      renderGrid();
+    }));
+    cardHeader.appendChild(actions);
+    card.appendChild(cardHeader);
+
+    // ステータスバッジ
+    const badges = el('div', 'status-badges');
+    const statuses = getStaffStatusSummary(staff);
+    if (statuses.length === 0) {
+      badges.appendChild(textEl('span', 'status-badge', '通常'));
+    }
+    for (const s of statuses) {
+      badges.appendChild(textEl('span', 'status-badge ' + s.className, s.label));
+    }
+    card.appendChild(badges);
+
+    return card;
+  }
+
+  function getStaffStatusSummary(staff) {
+    const result = [];
+    if (staff.shortTime) {
+      result.push({ label: `時短（${staff.shortTime.start}〜${staff.shortTime.end}）`, className: 'short-time' });
+    }
+    if (staff.fixedDays && staff.fixedDays.length > 0) {
+      for (const fd of staff.fixedDays) {
+        const slotObj = state.slots.find(s => s.id === fd.slotId);
+        const slotName = slotObj ? slotObj.name : '?';
+        const days = fd.weekdays.map(d => WEEKDAY_NAMES[d]).join('');
+        result.push({ label: `固定: ${slotName}・${days}`, className: 'fixed-day' });
+      }
+    }
+    if (staff.dayOffWeekdays && staff.dayOffWeekdays.length > 0) {
+      const days = staff.dayOffWeekdays.map(d => WEEKDAY_NAMES[d]).join('');
+      result.push({ label: `公休: ${days}`, className: 'day-off' });
+    }
+    if (staff.unavailableDates && staff.unavailableDates.length > 0) {
+      result.push({ label: `不可日: ${staff.unavailableDates.length}日`, className: 'unavailable' });
+    }
+    if (staff.trainingPairId) {
+      const pair = state.staff.find(s => s.id === staff.trainingPairId);
+      const pairName = pair ? pair.name : '?';
+      result.push({ label: `研修ペア: ${pairName}`, className: 'training' });
+    }
+    if (staff.exemptFromDate) {
+      result.push({ label: `対象外: ${staff.exemptFromDate}〜`, className: 'exempt' });
+    }
+    return result;
+  }
+
+  // ==========================================================
+  // 職員一括登録モーダル
+  // ==========================================================
+  function openBulkStaffModal() {
+    const overlay = document.getElementById('modal-overlay');
+    overlay.classList.remove('hidden');
+    clearElement(overlay);
+
+    const modal = el('div', 'modal');
+
+    // ヘッダー
+    const header = el('div', 'modal-header');
+    header.appendChild(textEl('h3', '', '職員の一括登録'));
+    const closeBtn = textEl('button', 'modal-close', '\u00d7');
+    closeBtn.addEventListener('click', closeModal);
+    header.appendChild(closeBtn);
+    modal.appendChild(header);
+
+    // ボディ
+    const body = el('div', 'modal-body');
+
+    const hint = textEl('p', '', '職員名を1行に1人ずつ入力してください。Excelからの貼り付けにも対応しています。');
+    hint.style.fontSize = '13px';
+    hint.style.color = '#6B7280';
+    hint.style.marginBottom = '8px';
+    body.appendChild(hint);
+
+    const textarea = el('textarea', 'form-input');
+    textarea.style.width = '100%';
+    textarea.style.height = '200px';
+    textarea.style.resize = 'vertical';
+    textarea.style.fontFamily = 'inherit';
+    textarea.style.fontSize = '14px';
+    textarea.placeholder = '山田太郎\n佐藤花子\n鈴木一郎\n...';
+    body.appendChild(textarea);
+
+    // 既存職員との重複チェック表示用
+    const previewArea = el('div');
+    previewArea.style.marginTop = '8px';
+    body.appendChild(previewArea);
+
+    // 入力時にプレビュー更新
+    textarea.addEventListener('input', () => {
+      clearElement(previewArea);
+      const names = parseBulkNames(textarea.value);
+      if (names.length === 0) return;
+
+      const existingNames = new Set(state.staff.map(s => s.name));
+      const duplicates = names.filter(n => existingNames.has(n));
+      const newNames = names.filter(n => !existingNames.has(n));
+
+      const info = textEl('p', '', `新規: ${newNames.length}人`);
+      info.style.fontSize = '13px';
+      info.style.color = '#059669';
+      previewArea.appendChild(info);
+
+      if (duplicates.length > 0) {
+        const warn = textEl('p', '', `既に登録済み（スキップ）: ${duplicates.length}人（${duplicates.join('、')}）`);
+        warn.style.fontSize = '12px';
+        warn.style.color = '#D97706';
+        previewArea.appendChild(warn);
+      }
+    });
+
+    modal.appendChild(body);
+
+    // フッター
+    const footer = el('div', 'modal-footer');
+    footer.appendChild(createButton('キャンセル', 'btn-outline', closeModal));
+    footer.appendChild(createButton('登録', 'btn-primary', () => {
+      const names = parseBulkNames(textarea.value);
+      if (names.length === 0) {
+        showToast('名前を入力してください');
+        return;
+      }
+
+      const existingNames = new Set(state.staff.map(s => s.name));
+      let addedCount = 0;
+      for (const name of names) {
+        if (existingNames.has(name)) continue; // 重複スキップ
+        state.staff.push({
+          id: generateId(),
+          name: name,
+          shortTime: null,
+          fixedDays: [],
+          dayOffWeekdays: [],
+          unavailableDates: [],
+          trainingPairId: null,
+          exemptFromDate: null,
+          tags: [],
+        });
+        existingNames.add(name);
+        addedCount++;
+      }
+
+      saveData();
+      closeModal();
+      renderActiveTab();
+      renderGrid();
+      showToast(`${addedCount}人を登録しました`);
+    }));
+    modal.appendChild(footer);
+
+    overlay.appendChild(modal);
+  }
+
+  /** テキストから職員名リストをパース（空行・空白除去、重複除去） */
+  function parseBulkNames(text) {
+    return [...new Set(
+      text.split(/[\n\r]+/)
+        .map(line => line.trim())
+        .filter(line => line.length > 0)
+    )];
+  }
+
+  // ==========================================================
+  // 職員編集モーダル
+  // ==========================================================
+  function openStaffModal(existingStaff) {
+    const isNew = !existingStaff;
+    const draft = existingStaff
+      ? JSON.parse(JSON.stringify(existingStaff))
+      : {
+          id: generateId(),
+          name: '',
+          shortTime: null,
+          fixedDays: [],
+          dayOffWeekdays: [],
+          unavailableDates: [],
+          trainingPairId: null,
+          exemptFromDate: null,
+          tags: [],
+        };
+
+    const overlay = document.getElementById('modal-overlay');
+    overlay.classList.remove('hidden');
+    clearElement(overlay);
+
+    const modal = el('div', 'modal');
+
+    // ヘッダー
+    const header = el('div', 'modal-header');
+    header.appendChild(textEl('h3', '', isNew ? '職員の追加' : '職員の編集'));
+    const closeBtn = textEl('button', 'modal-close', '\u00d7');
+    closeBtn.addEventListener('click', closeModal);
+    header.appendChild(closeBtn);
+    modal.appendChild(header);
+
+    // ボディ
+    const body = el('div', 'modal-body');
+    renderStaffForm(body, draft);
+    modal.appendChild(body);
+
+    // フッター
+    const footer = el('div', 'modal-footer');
+    footer.appendChild(createButton('キャンセル', 'btn-outline', closeModal));
+    footer.appendChild(createButton(isNew ? '追加' : '保存', 'btn-primary', () => {
+      if (!draft.name.trim()) {
+        showToast('名前を入力してください');
+        return;
+      }
+      draft.name = draft.name.trim();
+
+      if (isNew) {
+        state.staff.push(draft);
+      } else {
+        const idx = state.staff.findIndex(s => s.id === draft.id);
+        if (idx >= 0) state.staff[idx] = draft;
+      }
+
+      // ペアの双方向整合性を保証
+      syncTrainingPair(draft);
+
+      saveData();
+      closeModal();
+      renderActiveTab();
+      renderGrid();
+    }));
+    modal.appendChild(footer);
+
+    overlay.appendChild(modal);
+  }
+
+  /** ペア設定の双方向整合性を保証する */
+  function syncTrainingPair(staff) {
+    // 旧ペア相手のリンクを解除
+    for (const s of state.staff) {
+      if (s.id !== staff.id && s.trainingPairId === staff.id) {
+        if (staff.trainingPairId !== s.id) {
+          s.trainingPairId = null;
+        }
+      }
+    }
+    // 新ペア相手に逆リンクを設定
+    if (staff.trainingPairId) {
+      const pair = state.staff.find(s => s.id === staff.trainingPairId);
+      if (pair) {
+        pair.trainingPairId = staff.id;
+      }
+    }
+  }
+
+  function closeModal() {
+    const overlay = document.getElementById('modal-overlay');
+    overlay.classList.add('hidden');
+    clearElement(overlay);
+  }
+
+  function renderStaffForm(container, draft) {
+    // 名前
+    const nameRow = el('div', 'form-row');
+    nameRow.appendChild(textEl('span', 'form-label', '名前'));
+    const nameInput = createInput('text', draft.name, 'form-input form-input-lg', '例：山田太郎');
+    nameInput.addEventListener('input', () => { draft.name = nameInput.value; });
+    nameRow.appendChild(nameInput);
+    container.appendChild(nameRow);
+
+    container.appendChild(textEl('h4', '', 'ステータス設定'));
+    const statusHint = textEl('p', '', '該当するものにチェックを入れてください。複数選択できます。');
+    statusHint.style.fontSize = '12px';
+    statusHint.style.color = '#6B7280';
+    statusHint.style.marginBottom = '8px';
+    container.appendChild(statusHint);
+
+    // 時短勤務
+    renderShortTimeOption(container, draft);
+    // 曜日固定
+    renderFixedDayOption(container, draft);
+    // 公休日
+    renderDayOffOption(container, draft);
+    // 不可日
+    renderUnavailableOption(container, draft);
+    // 研修ペア
+    renderTrainingOption(container, draft);
+    // 対象外
+    renderExemptOption(container, draft);
+
+    // タグ
+    if (state.tags.length > 0) {
+      container.appendChild(textEl('h4', '', 'タグ'));
+      const tagSelector = el('div', 'tag-selector');
+      for (const tag of state.tags) {
+        const isSelected = (draft.tags || []).includes(tag.id);
+        const chip = textEl('span', 'tag-chip' + (isSelected ? ' selected' : ''), tag.name);
+        if (isSelected) {
+          chip.style.backgroundColor = tag.color;
+          chip.style.borderColor = tag.color;
+        }
+        chip.addEventListener('click', () => {
+          if (!draft.tags) draft.tags = [];
+          if (draft.tags.includes(tag.id)) {
+            draft.tags = draft.tags.filter(t => t !== tag.id);
+          } else {
+            draft.tags.push(tag.id);
+          }
+          // 再描画
+          clearElement(container);
+          renderStaffForm(container, draft);
+        });
+        tagSelector.appendChild(chip);
+      }
+      container.appendChild(tagSelector);
+    }
+  }
+
+  function renderShortTimeOption(container, draft) {
+    const option = el('div', 'status-option');
+    const header = el('label', 'status-option-header');
+    const cb = createInput('checkbox', null, '');
+    cb.checked = !!draft.shortTime;
+    header.appendChild(cb);
+    header.appendChild(textEl('span', '', '時短勤務（勤務時間帯を指定）'));
+    option.appendChild(header);
+
+    if (draft.shortTime) {
+      const detail = el('div', 'status-option-detail');
+      const row = el('div', 'form-row');
+      row.appendChild(textEl('span', '', '勤務時間'));
+
+      const startInput = createInput('time', draft.shortTime.start, 'form-input form-input-sm');
+      startInput.addEventListener('change', () => { draft.shortTime.start = startInput.value; });
+      row.appendChild(startInput);
+
+      row.appendChild(textEl('span', '', '〜'));
+
+      const endInput = createInput('time', draft.shortTime.end, 'form-input form-input-sm');
+      endInput.addEventListener('change', () => { draft.shortTime.end = endInput.value; });
+      row.appendChild(endInput);
+
+      detail.appendChild(row);
+      option.appendChild(detail);
+    }
+
+    cb.addEventListener('change', () => {
+      draft.shortTime = cb.checked ? { start: '09:00', end: '13:00' } : null;
+      clearElement(container);
+      renderStaffForm(container, draft);
+    });
+
+    container.appendChild(option);
+  }
+
+  function renderFixedDayOption(container, draft) {
+    const option = el('div', 'status-option');
+    const header = el('label', 'status-option-header');
+    const hasFixed = draft.fixedDays && draft.fixedDays.length > 0;
+    const cb = createInput('checkbox', null, '');
+    cb.checked = hasFixed;
+    header.appendChild(cb);
+    header.appendChild(textEl('span', '', '曜日固定（指定した枠×曜日に確定）'));
+    option.appendChild(header);
+
+    if (hasFixed) {
+      const detail = el('div', 'status-option-detail');
+
+      // 既存エントリー表示
+      for (let i = 0; i < draft.fixedDays.length; i++) {
+        const fd = draft.fixedDays[i];
+        const entry = el('div', 'fixed-entry');
+        const slotObj = state.slots.find(s => s.id === fd.slotId);
+        const slotName = slotObj ? slotObj.name : '（削除された枠）';
+        const days = fd.weekdays.map(d => WEEKDAY_NAMES[d]).join('・');
+        entry.appendChild(textEl('span', '', `${slotName} ― ${days}`));
+        const idx = i;
+        entry.appendChild(createButton('削除', 'btn-sm btn-danger', () => {
+          draft.fixedDays.splice(idx, 1);
+          clearElement(container);
+          renderStaffForm(container, draft);
+        }));
+        detail.appendChild(entry);
+      }
+
+      // 新規追加フォーム
+      const addRow = el('div', 'form-row');
+      addRow.style.marginTop = '8px';
+
+      const slotOptions = state.slots.map(s => ({ value: s.id, label: s.name }));
+      const slotSelect = createSelect(slotOptions, slotOptions[0]?.value || '');
+      addRow.appendChild(slotSelect);
+
+      const weekdayState = [false, false, false, false, false, false, false];
+      const weekdayChecks = el('div', 'weekday-checks');
+      for (let d = 1; d <= 5; d++) { // 月〜金のみ
+        const check = textEl('span', 'weekday-check', WEEKDAY_NAMES[d]);
+        const dayIdx = d;
+        check.addEventListener('click', () => {
+          weekdayState[dayIdx] = !weekdayState[dayIdx];
+          check.classList.toggle('selected');
+        });
+        weekdayChecks.appendChild(check);
+      }
+      addRow.appendChild(weekdayChecks);
+
+      addRow.appendChild(createButton('追加', 'btn-sm btn-primary', () => {
+        const selectedDays = weekdayState.reduce((acc, v, i) => { if (v) acc.push(i); return acc; }, []);
+        if (selectedDays.length === 0) {
+          showToast('曜日を選択してください');
+          return;
+        }
+        draft.fixedDays.push({ slotId: slotSelect.value, weekdays: selectedDays });
+        clearElement(container);
+        renderStaffForm(container, draft);
+      }));
+
+      detail.appendChild(addRow);
+      option.appendChild(detail);
+    }
+
+    cb.addEventListener('change', () => {
+      if (!cb.checked) {
+        draft.fixedDays = [];
+      }
+      clearElement(container);
+      renderStaffForm(container, draft);
+    });
+
+    container.appendChild(option);
+  }
+
+  function renderDayOffOption(container, draft) {
+    const option = el('div', 'status-option');
+    const header = el('label', 'status-option-header');
+    const hasDayOff = draft.dayOffWeekdays && draft.dayOffWeekdays.length > 0;
+    const cb = createInput('checkbox', null, '');
+    cb.checked = hasDayOff;
+    header.appendChild(cb);
+    header.appendChild(textEl('span', '', '公休日あり（毎週の公休曜日を指定）'));
+    option.appendChild(header);
+
+    if (hasDayOff || cb.checked) {
+      const detail = el('div', 'status-option-detail');
+      const row = el('div', 'form-row');
+      row.appendChild(textEl('span', '', '公休曜日'));
+      const weekdayChecks = el('div', 'weekday-checks');
+      for (let d = 0; d < 7; d++) {
+        const check = textEl('span', 'weekday-check' + ((draft.dayOffWeekdays || []).includes(d) ? ' selected' : ''), WEEKDAY_NAMES[d]);
+        const dayIdx = d;
+        check.addEventListener('click', () => {
+          if (!draft.dayOffWeekdays) draft.dayOffWeekdays = [];
+          if (draft.dayOffWeekdays.includes(dayIdx)) {
+            draft.dayOffWeekdays = draft.dayOffWeekdays.filter(x => x !== dayIdx);
+          } else {
+            draft.dayOffWeekdays.push(dayIdx);
+          }
+          check.classList.toggle('selected');
+        });
+        weekdayChecks.appendChild(check);
+      }
+      row.appendChild(weekdayChecks);
+      detail.appendChild(row);
+      option.appendChild(detail);
+    }
+
+    cb.addEventListener('change', () => {
+      if (!cb.checked) {
+        draft.dayOffWeekdays = [];
+      }
+      clearElement(container);
+      renderStaffForm(container, draft);
+    });
+
+    container.appendChild(option);
+  }
+
+  function renderUnavailableOption(container, draft) {
+    const option = el('div', 'status-option');
+    const header = el('label', 'status-option-header');
+    const hasUnavail = draft.unavailableDates && draft.unavailableDates.length > 0;
+    const cb = createInput('checkbox', null, '');
+    cb.checked = hasUnavail;
+    header.appendChild(cb);
+    header.appendChild(textEl('span', '', '不可日指定（特定の日を対象外に）'));
+    option.appendChild(header);
+
+    if (hasUnavail || cb.checked) {
+      const detail = el('div', 'status-option-detail');
+
+      // 日付追加
+      const addRow = el('div', 'form-row');
+      const dateInput = createInput('date', '', 'form-input');
+      addRow.appendChild(dateInput);
+      addRow.appendChild(createButton('追加', 'btn-sm btn-primary', () => {
+        if (!dateInput.value) return;
+        if (!draft.unavailableDates) draft.unavailableDates = [];
+        if (!draft.unavailableDates.includes(dateInput.value)) {
+          draft.unavailableDates.push(dateInput.value);
+          draft.unavailableDates.sort();
+          clearElement(container);
+          renderStaffForm(container, draft);
+        }
+      }));
+      detail.appendChild(addRow);
+
+      // 既存日付表示
+      for (const date of (draft.unavailableDates || [])) {
+        const entry = el('div', 'unavail-date-entry');
+        entry.appendChild(textEl('span', '', date));
+        entry.appendChild(createButton('削除', 'btn-sm btn-danger', () => {
+          draft.unavailableDates = draft.unavailableDates.filter(d => d !== date);
+          clearElement(container);
+          renderStaffForm(container, draft);
+        }));
+        detail.appendChild(entry);
+      }
+
+      option.appendChild(detail);
+    }
+
+    cb.addEventListener('change', () => {
+      if (!cb.checked) {
+        draft.unavailableDates = [];
+      }
+      clearElement(container);
+      renderStaffForm(container, draft);
+    });
+
+    container.appendChild(option);
+  }
+
+  function renderTrainingOption(container, draft) {
+    const option = el('div', 'status-option');
+    const header = el('label', 'status-option-header');
+    const cb = createInput('checkbox', null, '');
+    cb.checked = !!draft.trainingPairId;
+    header.appendChild(cb);
+    header.appendChild(textEl('span', '', '研修中（ペア）― 別の職員とセットで割り当て'));
+    option.appendChild(header);
+
+    if (draft.trainingPairId || cb.checked) {
+      const detail = el('div', 'status-option-detail');
+      const row = el('div', 'form-row');
+      row.appendChild(textEl('span', '', 'ペア相手'));
+
+      const otherStaff = state.staff.filter(s => s.id !== draft.id);
+      const options = [{ value: '', label: '-- 選択 --' }, ...otherStaff.map(s => ({ value: s.id, label: s.name }))];
+      const pairSelect = createSelect(options, draft.trainingPairId || '');
+      pairSelect.addEventListener('change', () => {
+        draft.trainingPairId = pairSelect.value || null;
+      });
+      row.appendChild(pairSelect);
+      detail.appendChild(row);
+      option.appendChild(detail);
+    }
+
+    cb.addEventListener('change', () => {
+      if (!cb.checked) {
+        draft.trainingPairId = null;
+      }
+      clearElement(container);
+      renderStaffForm(container, draft);
+    });
+
+    container.appendChild(option);
+  }
+
+  function renderExemptOption(container, draft) {
+    const option = el('div', 'status-option');
+    const header = el('label', 'status-option-header');
+    const cb = createInput('checkbox', null, '');
+    cb.checked = !!draft.exemptFromDate;
+    header.appendChild(cb);
+    header.appendChild(textEl('span', '', '対象外（免除）― 指定日以降を当番対象外に'));
+    option.appendChild(header);
+
+    if (draft.exemptFromDate || cb.checked) {
+      const detail = el('div', 'status-option-detail');
+      const row = el('div', 'form-row');
+      row.appendChild(textEl('span', '', '開始日'));
+      const dateInput = createInput('date', draft.exemptFromDate || '', 'form-input');
+      dateInput.addEventListener('change', () => {
+        draft.exemptFromDate = dateInput.value || null;
+      });
+      row.appendChild(dateInput);
+      detail.appendChild(row);
+      option.appendChild(detail);
+    }
+
+    cb.addEventListener('change', () => {
+      if (!cb.checked) {
+        draft.exemptFromDate = null;
+      }
+      clearElement(container);
+      renderStaffForm(container, draft);
+    });
+
+    container.appendChild(option);
+  }
+
+  // ==========================================================
+  // 当番表グリッド
+  // ==========================================================
+  function renderGrid() {
+    const toolbar = document.getElementById('grid-toolbar');
+    clearElement(toolbar);
+
+    const title = textEl('h2', '', `${state.calendar.year}年${state.calendar.month}月の当番表`);
+    toolbar.appendChild(title);
+
+    const btnGroup = el('div', 'form-row');
+    btnGroup.appendChild(createButton('自動割り当て', 'btn-success btn-lg', () => {
+      runAutoAssign();
+    }));
+    btnGroup.appendChild(createButton('割り当てをクリア', 'btn-outline btn-sm', () => {
+      state.assignments = {};
+      saveData();
+      renderGrid();
+      showToast('割り当てをクリアしました');
+    }));
+    toolbar.appendChild(btnGroup);
+
+    const container = document.getElementById('grid-container');
+    clearElement(container);
+
+    if (state.slots.length === 0) {
+      container.appendChild(textEl('p', '', '当番枠を設定してください。'));
+      return;
+    }
+
+    const table = el('table', 'grid-table');
+
+    // ヘッダー行
+    const thead = el('thead');
+    const headRow = el('tr');
+    headRow.appendChild(textEl('th', '', '日'));
+    headRow.appendChild(textEl('th', '', '曜'));
+
+    for (const slot of state.slots) {
+      const th = el('th');
+      const slotLabel = `${slot.name}`;
+      const timeLabel = `${slot.startTime}〜${slot.endTime}`;
+      th.appendChild(textEl('div', '', slotLabel));
+      const timeSub = textEl('div', '', timeLabel);
+      timeSub.style.fontSize = '10px';
+      timeSub.style.fontWeight = '400';
+      timeSub.style.opacity = '0.8';
+      th.appendChild(timeSub);
+
+      if (slot.requiredCount > 1) {
+        const countSub = textEl('div', '', `${slot.requiredCount}人`);
+        countSub.style.fontSize = '10px';
+        countSub.style.fontWeight = '400';
+        th.appendChild(countSub);
+      }
+      headRow.appendChild(th);
+    }
+    thead.appendChild(headRow);
+    table.appendChild(thead);
+
+    // データ行
+    const tbody = el('tbody');
+    const daysInMonth = getDaysInMonth(state.calendar.year, state.calendar.month);
+    const monthKey = `${state.calendar.year}-${String(state.calendar.month).padStart(2, '0')}`;
+
+    for (let day = 1; day <= daysInMonth; day++) {
+      const dow = getDayOfWeek(state.calendar.year, state.calendar.month, day);
+      const dayOff = isDayOff(day);
+      const dateKey = formatDate(state.calendar.year, state.calendar.month, day);
+      const isHoliday = state.calendar.holidays.includes(day);
+
+      const row = el('tr');
+      if (dayOff) {
+        if (isHoliday) {
+          row.className = 'holiday';
+        } else {
+          row.className = 'weekend';
+        }
+      }
+
+      // 日付列
+      const dayCell = textEl('td', 'day-col', String(day));
+      row.appendChild(dayCell);
+
+      // 曜日列（ダブルクリックで時間帯切替）
+      const timeSetting = getDayTimeSetting(day);
+      const dowLabel = WEEKDAY_NAMES[dow] + (timeSetting === 'am' ? ' 午前' : timeSetting === 'pm' ? ' 午後' : '');
+      const dowCell = textEl('td', 'weekday-col', dowLabel);
+      if (dow === 0) dowCell.style.color = '#DC2626';
+      if (dow === 6) dowCell.style.color = '#2563EB';
+      if (timeSetting !== 'full') {
+        dowCell.style.backgroundColor = '#FEF3C7';
+        dowCell.style.fontSize = '11px';
+      }
+      if (!dayOff) {
+        dowCell.title = 'ダブルクリックで時間帯切替（全日→午前→午後→全日）';
+        dowCell.style.cursor = 'pointer';
+        const currentDay = day;
+        dowCell.addEventListener('dblclick', () => {
+          if (!state.calendar.dayTimeSettings) state.calendar.dayTimeSettings = {};
+          const current = state.calendar.dayTimeSettings[currentDay] || 'full';
+          const next = current === 'full' ? 'am' : current === 'am' ? 'pm' : 'full';
+          if (next === 'full') {
+            delete state.calendar.dayTimeSettings[currentDay];
+          } else {
+            state.calendar.dayTimeSettings[currentDay] = next;
+          }
+          saveData();
+          renderGrid();
+        });
+      }
+      row.appendChild(dowCell);
+
+      // 各枠のセル
+      for (const slot of state.slots) {
+        const td = el('td', 'slot-cell');
+
+        if (dayOff) {
+          td.className = 'weekend-label';
+          td.textContent = isHoliday ? '祝日' : '休';
+        } else if (!isSlotActiveForDay(slot, day)) {
+          // 日の時間帯設定でこの枠は対象外
+          td.className = 'weekend-label';
+          td.textContent = '-';
+        } else {
+          // 割り当て済みの職員を表示
+          const assignments = getAssignmentsForCell(dateKey, slot.id);
+          if (assignments.length > 0) {
+            for (const staffId of assignments) {
+              const staffObj = state.staff.find(s => s.id === staffId);
+              if (staffObj) {
+                const nameSpan = textEl('div', '', staffObj.name);
+                nameSpan.style.fontSize = '12px';
+                // タグ色の小さなドット
+                for (const tid of (staffObj.tags || [])) {
+                  const tag = state.tags.find(t => t.id === tid);
+                  if (tag) {
+                    const dot = el('span');
+                    dot.style.display = 'inline-block';
+                    dot.style.width = '8px';
+                    dot.style.height = '8px';
+                    dot.style.borderRadius = '50%';
+                    dot.style.backgroundColor = tag.color;
+                    dot.style.marginLeft = '3px';
+                    dot.style.verticalAlign = 'middle';
+                    nameSpan.appendChild(dot);
+                  }
+                }
+                td.appendChild(nameSpan);
+              }
+            }
+          }
+
+          // セルクリックで手動編集（Phase 2で本格実装、ここでは簡易版）
+          const currentDay = day;
+          const currentSlotId = slot.id;
+          td.addEventListener('click', () => {
+            openCellEditModal(dateKey, currentSlotId, currentDay);
+          });
+        }
+
+        row.appendChild(td);
+      }
+
+      tbody.appendChild(row);
+    }
+    table.appendChild(tbody);
+    container.appendChild(table);
+  }
+
+  function getAssignmentsForCell(dateKey, slotId) {
+    if (!state.assignments[dateKey]) return [];
+    return state.assignments[dateKey][slotId] || [];
+  }
+
+  /** 職員の制約違反を検出して警告メッセージ配列を返す */
+  function getStaffWarnings(staff, dateKey, day, dow, slot) {
+    const warnings = [];
+    if (isStaffUnavailable(staff, dateKey, day, dow)) {
+      if (staff.exemptFromDate && dateKey >= staff.exemptFromDate) warnings.push('対象外');
+      else if (staff.dayOffWeekdays && staff.dayOffWeekdays.includes(dow)) warnings.push('公休日');
+      else if (staff.unavailableDates && staff.unavailableDates.includes(dateKey)) warnings.push('不可日');
+    }
+    if (staff.shortTime && !isTimeOverlap(staff.shortTime.start, staff.shortTime.end, slot.startTime, slot.endTime)) {
+      warnings.push(`時短(${staff.shortTime.start}-${staff.shortTime.end})`);
+    }
+    return warnings;
+  }
+
+  // ==========================================================
+  // セル編集モーダル（手動割り当て）
+  // ==========================================================
+  function openCellEditModal(dateKey, slotId, day) {
+    const slot = state.slots.find(s => s.id === slotId);
+    if (!slot) return;
+
+    const overlay = document.getElementById('modal-overlay');
+    overlay.classList.remove('hidden');
+    clearElement(overlay);
+
+    const modal = el('div', 'modal');
+
+    // ヘッダー
+    const header = el('div', 'modal-header');
+    const dow = getDayOfWeek(state.calendar.year, state.calendar.month, day);
+    header.appendChild(textEl('h3', '', `${state.calendar.month}/${day}（${WEEKDAY_NAMES[dow]}）${slot.name}`));
+    const closeBtn = textEl('button', 'modal-close', '\u00d7');
+    closeBtn.addEventListener('click', closeModal);
+    header.appendChild(closeBtn);
+    modal.appendChild(header);
+
+    // ボディ
+    const body = el('div', 'modal-body');
+    const currentAssigned = getAssignmentsForCell(dateKey, slotId);
+
+    body.appendChild(textEl('p', '', `必要人数: ${slot.requiredCount}人　現在: ${currentAssigned.length}人`));
+
+    // 職員リスト（チェックボックスで選択 + 制約違反警告）
+    body.appendChild(textEl('h4', '', '職員を選択'));
+    const staffList = el('div');
+
+    // この日に他枠で既に割り当てられた職員を取得
+    const assignedOtherSlots = new Set();
+    if (state.assignments[dateKey]) {
+      for (const [sid, arr] of Object.entries(state.assignments[dateKey])) {
+        if (sid !== slotId) {
+          for (const id of arr) assignedOtherSlots.add(id);
+        }
+      }
+    }
+
+    for (const s of state.staff) {
+      const row = el('div', 'form-row');
+
+      // 制約違反チェック
+      const warnings = getStaffWarnings(s, dateKey, day, dow, slot);
+      const isDuplicate = assignedOtherSlots.has(s.id);
+
+      const cb = createInput('checkbox', null, '');
+      cb.checked = currentAssigned.includes(s.id);
+      const staffId = s.id;
+      cb.addEventListener('change', () => {
+        pushUndo();
+        if (!state.assignments[dateKey]) state.assignments[dateKey] = {};
+        if (!state.assignments[dateKey][slotId]) state.assignments[dateKey][slotId] = [];
+        const arr = state.assignments[dateKey][slotId];
+        if (cb.checked) {
+          if (!arr.includes(staffId)) arr.push(staffId);
+        } else {
+          state.assignments[dateKey][slotId] = arr.filter(id => id !== staffId);
+        }
+        saveData();
+      });
+      const label = el('label', 'form-row');
+      label.style.cursor = 'pointer';
+      label.style.gap = '6px';
+      label.appendChild(cb);
+
+      const nameSpan = textEl('span', '', s.name);
+      if (warnings.length > 0 || isDuplicate) {
+        nameSpan.style.color = '#DC2626';
+      }
+      label.appendChild(nameSpan);
+
+      // タグバッジ
+      for (const tid of (s.tags || [])) {
+        const tag = state.tags.find(t => t.id === tid);
+        if (tag) {
+          const badge = textEl('span', 'tag-badge', tag.name);
+          badge.style.backgroundColor = tag.color;
+          badge.style.fontSize = '10px';
+          label.appendChild(badge);
+        }
+      }
+
+      // 警告表示
+      if (isDuplicate) {
+        const warn = textEl('span', 'status-badge unavailable', '同日重複');
+        warn.style.marginLeft = '4px';
+        label.appendChild(warn);
+      }
+      for (const w of warnings) {
+        const warn = textEl('span', 'status-badge unavailable', w);
+        warn.style.marginLeft = '4px';
+        label.appendChild(warn);
+      }
+
+      row.appendChild(label);
+      staffList.appendChild(row);
+    }
+    body.appendChild(staffList);
+    modal.appendChild(body);
+
+    // フッター
+    const footer = el('div', 'modal-footer');
+    footer.appendChild(createButton('閉じる', 'btn-primary', () => {
+      closeModal();
+      renderGrid();
+    }));
+    modal.appendChild(footer);
+
+    overlay.appendChild(modal);
+  }
+
+  // ==========================================================
+  // 自動割り当て（Phase 2用スタブ）
+  // ==========================================================
+  function runAutoAssign() {
+    if (state.staff.length === 0) {
+      showToast('職員が登録されていません');
+      return;
+    }
+    if (state.slots.length === 0) {
+      showToast('当番枠が設定されていません');
+      return;
+    }
+
+    pushUndo();
+
+    const { year, month } = state.calendar;
+    const daysInMonth = getDaysInMonth(year, month);
+    const assignments = {};
+
+    // 各職員の割り当て回数カウンター（全体 + 枠別）
+    const assignCount = {};
+    const slotAssignCount = {}; // { slotId: { staffId: count } }
+    for (const s of state.staff) assignCount[s.id] = 0;
+    for (const slot of state.slots) {
+      slotAssignCount[slot.id] = {};
+      for (const s of state.staff) slotAssignCount[slot.id][s.id] = 0;
+    }
+
+    for (let day = 1; day <= daysInMonth; day++) {
+      if (isDayOff(day)) continue;
+
+      const dateKey = formatDate(year, month, day);
+      const dow = getDayOfWeek(year, month, day);
+      assignments[dateKey] = {};
+
+      // この日に割り当て済みの職員（同日重複禁止用）
+      const assignedToday = new Set();
+
+      for (const slot of state.slots) {
+        assignments[dateKey][slot.id] = [];
+
+        // 日の時間帯設定でこのスロットが対象外なら飛ばす
+        if (!isSlotActiveForDay(slot, day)) continue;
+
+        const needed = slot.requiredCount;
+
+        // Step 1: 曜日固定のアサインを確定
+        const fixedStaff = [];
+        for (const s of state.staff) {
+          if (!s.fixedDays) continue;
+          for (const fd of s.fixedDays) {
+            if (fd.slotId === slot.id && fd.weekdays.includes(dow)) {
+              if (!isStaffUnavailable(s, dateKey, day, dow)) {
+                fixedStaff.push(s.id);
+              }
+            }
+          }
+        }
+
+        for (const staffId of fixedStaff) {
+          if (assignments[dateKey][slot.id].length < needed && !assignedToday.has(staffId)) {
+            assignments[dateKey][slot.id].push(staffId);
+            assignedToday.add(staffId);
+            assignCount[staffId]++;
+            slotAssignCount[slot.id][staffId] = (slotAssignCount[slot.id][staffId] || 0) + 1;
+
+            // ペア処理
+            const staffObj = state.staff.find(s => s.id === staffId);
+            if (staffObj && staffObj.trainingPairId) {
+              const pairId = staffObj.trainingPairId;
+              if (!assignments[dateKey][slot.id].includes(pairId) && !assignedToday.has(pairId)) {
+                assignments[dateKey][slot.id].push(pairId);
+                assignedToday.add(pairId);
+                assignCount[pairId] = (assignCount[pairId] || 0) + 1;
+                slotAssignCount[slot.id][pairId] = (slotAssignCount[slot.id][pairId] || 0) + 1;
+              }
+            }
+          }
+        }
+
+        // Step 2: 残りの枠を埋める
+        const remaining = needed - assignments[dateKey][slot.id].length;
+        if (remaining <= 0) continue;
+
+        // 割り当て候補を取得
+        const candidates = getEligibleStaff(slot, dateKey, day, dow, assignedToday, assignments);
+
+        // Fisher-Yatesシャッフルで同回数内のランダム性を担保
+        for (let i = candidates.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [candidates[i], candidates[j]] = [candidates[j], candidates[i]];
+        }
+        // 回数が少ない順に安定ソート（同回数なら枠別回数が少ない方を優先）
+        // 偶数人で午前午後が固定化するのを防ぐ
+        const sc = slotAssignCount[slot.id] || {};
+        candidates.sort((a, b) => {
+          const totalDiff = (assignCount[a] || 0) - (assignCount[b] || 0);
+          if (totalDiff !== 0) return totalDiff;
+          return (sc[a] || 0) - (sc[b] || 0);
+        });
+
+        // 連続回避: 前日に割り当てられた職員を後回しに
+        const prevDateKey = formatDate(year, month, day - 1);
+        const prevAssigned = new Set();
+        if (day > 1 && assignments[prevDateKey]) {
+          for (const sId of Object.values(assignments[prevDateKey]).flat()) {
+            prevAssigned.add(sId);
+          }
+        }
+
+        // 連続でない候補を優先
+        const nonConsecutive = candidates.filter(id => !prevAssigned.has(id));
+        const consecutive = candidates.filter(id => prevAssigned.has(id));
+        const sorted = [...nonConsecutive, ...consecutive];
+
+        for (const staffId of sorted) {
+          if (assignments[dateKey][slot.id].length >= needed) break;
+          if (assignedToday.has(staffId)) continue;
+
+          // ペアの相手が既に別枠に入っている場合はスキップ（ペア分離防止）
+          const staffObj = state.staff.find(s => s.id === staffId);
+          if (staffObj && staffObj.trainingPairId && assignedToday.has(staffObj.trainingPairId)) {
+            continue;
+          }
+
+          assignments[dateKey][slot.id].push(staffId);
+          assignedToday.add(staffId);
+          assignCount[staffId] = (assignCount[staffId] || 0) + 1;
+          slotAssignCount[slot.id][staffId] = (slotAssignCount[slot.id][staffId] || 0) + 1;
+
+          // ペア処理: 相手も同じ枠に入れる
+          if (staffObj && staffObj.trainingPairId) {
+            const pairId = staffObj.trainingPairId;
+            if (!assignments[dateKey][slot.id].includes(pairId) && !assignedToday.has(pairId)) {
+              assignments[dateKey][slot.id].push(pairId);
+              assignedToday.add(pairId);
+              assignCount[pairId] = (assignCount[pairId] || 0) + 1;
+              slotAssignCount[slot.id][pairId] = (slotAssignCount[slot.id][pairId] || 0) + 1;
+            }
+          }
+        }
+      }
+    }
+
+    // === 2パス目: 連続回避のスワップ ===
+    const workDays = [];
+    for (let day = 1; day <= daysInMonth; day++) {
+      if (!isDayOff(day)) workDays.push(day);
+    }
+    for (let wi = 0; wi < workDays.length - 1; wi++) {
+      const dayA = workDays[wi];
+      const dayB = workDays[wi + 1];
+      const keyA = formatDate(year, month, dayA);
+      const keyB = formatDate(year, month, dayB);
+      if (!assignments[keyA] || !assignments[keyB]) continue;
+
+      for (const slot of state.slots) {
+        const arrA = assignments[keyA][slot.id] || [];
+        const arrB = assignments[keyB][slot.id] || [];
+        // 連続している職員を検出
+        for (const staffId of [...arrA]) {
+          if (!arrB.includes(staffId)) continue;
+
+          // ペアメンバーはスワップしない
+          const sObj = state.staff.find(s => s.id === staffId);
+          if (sObj && sObj.trainingPairId) continue;
+
+          // dayBのその日の全割り当て済み職員を取得（重複防止）
+          const dayBAllAssigned = new Set(Object.values(assignments[keyB]).flat());
+
+          const dowB = getDayOfWeek(year, month, dayB);
+          const keyPrev = wi > 0 ? formatDate(year, month, workDays[wi - 1]) : null;
+          const prevAll = keyPrev && assignments[keyPrev] ? new Set(Object.values(assignments[keyPrev]).flat()) : new Set();
+
+          // スワップ候補: dayBの他枠に未割り当て + dayAにもいない + 前日にもいない
+          const swapCandidates = getEligibleStaff(slot, keyB, dayB, dowB, dayBAllAssigned, assignments)
+            .filter(cid => !arrA.includes(cid) && !prevAll.has(cid));
+
+          if (swapCandidates.length > 0) {
+            const swapWith = swapCandidates[0];
+            const idx = arrB.indexOf(staffId);
+            if (idx >= 0) {
+              arrB[idx] = swapWith;
+              assignCount[staffId]--;
+              assignCount[swapWith] = (assignCount[swapWith] || 0) + 1;
+              if (slotAssignCount[slot.id]) {
+                slotAssignCount[slot.id][staffId] = (slotAssignCount[slot.id][staffId] || 1) - 1;
+                slotAssignCount[slot.id][swapWith] = (slotAssignCount[slot.id][swapWith] || 0) + 1;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    state.assignments = assignments;
+    saveData();
+    renderGrid();
+    showAssignmentStats(assignCount);
+  }
+
+  /** 割り当て結果の統計表示 */
+  function showAssignmentStats(assignCount) {
+    const overlay = document.getElementById('modal-overlay');
+    overlay.classList.remove('hidden');
+    clearElement(overlay);
+
+    const modal = el('div', 'modal');
+
+    const header = el('div', 'modal-header');
+    header.appendChild(textEl('h3', '', '割り当て結果'));
+    const closeBtn = textEl('button', 'modal-close', '\u00d7');
+    closeBtn.addEventListener('click', closeModal);
+    header.appendChild(closeBtn);
+    modal.appendChild(header);
+
+    const body = el('div', 'modal-body');
+
+    // 集計
+    const counts = state.staff.map(s => ({ name: s.name, count: assignCount[s.id] || 0, tags: s.tags || [] }));
+    const total = counts.reduce((sum, c) => sum + c.count, 0);
+    const avg = counts.length > 0 ? (total / counts.length).toFixed(1) : 0;
+    counts.sort((a, b) => b.count - a.count);
+
+    body.appendChild(textEl('p', '', `合計: ${total}件　平均: ${avg}回/人`));
+
+    const table = el('table', 'grid-table');
+    table.style.minWidth = 'auto';
+    const thead = el('thead');
+    const headRow = el('tr');
+    headRow.appendChild(textEl('th', '', '職員名'));
+    headRow.appendChild(textEl('th', '', '回数'));
+    headRow.appendChild(textEl('th', '', '偏差'));
+    thead.appendChild(headRow);
+    table.appendChild(thead);
+
+    const tbody = el('tbody');
+    for (const c of counts) {
+      const row = el('tr');
+      const nameCell = el('td');
+      nameCell.appendChild(textEl('span', '', c.name));
+      for (const tid of c.tags) {
+        const tag = state.tags.find(t => t.id === tid);
+        if (tag) {
+          const badge = textEl('span', 'tag-badge', tag.name);
+          badge.style.backgroundColor = tag.color;
+          badge.style.fontSize = '10px';
+          badge.style.marginLeft = '4px';
+          nameCell.appendChild(badge);
+        }
+      }
+      row.appendChild(nameCell);
+      row.appendChild(textEl('td', '', String(c.count)));
+      const diff = (c.count - parseFloat(avg)).toFixed(1);
+      const diffCell = textEl('td', '', (diff >= 0 ? '+' : '') + diff);
+      if (Math.abs(parseFloat(diff)) > 2) diffCell.style.color = '#DC2626';
+      row.appendChild(diffCell);
+      tbody.appendChild(row);
+    }
+    table.appendChild(tbody);
+    body.appendChild(table);
+    modal.appendChild(body);
+
+    const footer = el('div', 'modal-footer');
+    footer.appendChild(createButton('閉じる', 'btn-primary', closeModal));
+    modal.appendChild(footer);
+
+    overlay.appendChild(modal);
+  }
+
+  /** 職員がその日・その枠に割り当て可能かチェック */
+  function getEligibleStaff(slot, dateKey, day, dow, assignedToday, assignments) {
+    const eligible = [];
+
+    for (const s of state.staff) {
+      // 既にこの日に割り当て済み
+      if (assignedToday.has(s.id)) continue;
+
+      // 利用不可チェック
+      if (isStaffUnavailable(s, dateKey, day, dow)) continue;
+
+      // 時短チェック: 勤務時間帯が枠と重なるか
+      if (s.shortTime) {
+        if (!isTimeOverlap(s.shortTime.start, s.shortTime.end, slot.startTime, slot.endTime)) {
+          continue;
+        }
+      }
+
+      // 曜日固定の職員は、固定枠に既に割り当て済みなら他枠にはは入れない（同日重複禁止で処理）
+      // ただし固定枠が満員で入れなかった場合は他枠の候補になる
+      if (s.fixedDays && s.fixedDays.length > 0) {
+        const fixedForThisDay = s.fixedDays.filter(fd => fd.weekdays.includes(dow));
+        if (fixedForThisDay.length > 0) {
+          // この職員が固定枠に既に入っているか確認
+          const alreadyFixed = fixedForThisDay.some(fd => {
+            const slotAssign = assignments[dateKey] && assignments[dateKey][fd.slotId];
+            return slotAssign && slotAssign.includes(s.id);
+          });
+          if (alreadyFixed) continue; // 固定枠に入っている→他枠には入れない
+          // 固定枠に入れなかった→他枠の候補になる（超過分の救済）
+        }
+      }
+
+      // ペア相手がこの枠に入れるかチェック（ペア分離防止）
+      if (s.trainingPairId) {
+        const pair = state.staff.find(p => p.id === s.trainingPairId);
+        if (pair) {
+          // ペア相手が利用不可 or 時短で枠に合わない場合、本人もスキップ
+          if (isStaffUnavailable(pair, dateKey, day, dow)) continue;
+          if (pair.shortTime && !isTimeOverlap(pair.shortTime.start, pair.shortTime.end, slot.startTime, slot.endTime)) continue;
+        }
+      }
+
+      eligible.push(s.id);
+    }
+
+    return eligible;
+  }
+
+  /** 職員がその日に割り当て不可かどうか */
+  function isStaffUnavailable(staff, dateKey, day, dow) {
+    // 対象外（免除）
+    if (staff.exemptFromDate && dateKey >= staff.exemptFromDate) return true;
+
+    // 公休日
+    if (staff.dayOffWeekdays && staff.dayOffWeekdays.includes(dow)) return true;
+
+    // 不可日
+    if (staff.unavailableDates && staff.unavailableDates.includes(dateKey)) return true;
+
+    return false;
+  }
+
+  /** 時間帯の重なり判定 */
+  function isTimeOverlap(startA, endA, startB, endB) {
+    // HH:MM形式を分に変換
+    const toMin = (t) => {
+      const [h, m] = t.split(':').map(Number);
+      return h * 60 + m;
+    };
+    const a0 = toMin(startA), a1 = toMin(endA);
+    const b0 = toMin(startB), b1 = toMin(endB);
+    return a0 < b1 && b0 < a1;
+  }
+
+  // ==========================================================
+  // NEO連携タブ
+  // ==========================================================
+  function renderNeoTab(container) {
+    const hint = textEl('p', '', 'デスクネッツNEOにCSVインポートするには、各職員のNEOシステムIDを設定してください。初回のみ設定が必要です。');
+    hint.style.fontSize = '13px';
+    hint.style.color = '#6B7280';
+    hint.style.marginBottom = '12px';
+    container.appendChild(hint);
+
+    if (state.staff.length === 0) {
+      container.appendChild(textEl('p', '', '職員が登録されていません。「職員」タブから登録してください。'));
+      return;
+    }
+
+    // NEO ID一覧テーブル
+    const table = el('table', 'grid-table');
+    table.style.minWidth = 'auto';
+    const thead = el('thead');
+    const headRow = el('tr');
+    headRow.appendChild(textEl('th', '', '職員名'));
+    headRow.appendChild(textEl('th', '', 'NEOシステムID'));
+    thead.appendChild(headRow);
+    table.appendChild(thead);
+
+    const tbody = el('tbody');
+    for (const staff of state.staff) {
+      const row = el('tr');
+      row.appendChild(textEl('td', '', staff.name));
+
+      const idCell = el('td');
+      const idInput = createInput('text', state.neoIds[staff.id] || '', 'form-input form-input-md', '例: 12345');
+      const staffId = staff.id;
+      idInput.addEventListener('change', () => {
+        state.neoIds[staffId] = idInput.value.trim();
+        saveData();
+      });
+      idCell.appendChild(idInput);
+      row.appendChild(idCell);
+      tbody.appendChild(row);
+    }
+    table.appendChild(tbody);
+    container.appendChild(table);
+  }
+
+  // ==========================================================
+  // 出力エリア
+  // ==========================================================
+  function renderOutputArea() {
+    const area = document.getElementById('output-area');
+    clearElement(area);
+
+    area.appendChild(createButton('Excelにコピー', 'btn-primary btn-lg', copyToClipboard));
+    area.appendChild(createButton('印刷', 'btn-outline btn-lg', () => window.print()));
+    area.appendChild(createButton('NEO用CSVダウンロード', 'btn-outline btn-lg', downloadNEOCsv));
+    area.appendChild(createButton('JSONエクスポート', 'btn-outline', exportJSON));
+    area.appendChild(createButton('JSONインポート', 'btn-outline', importJSON));
+    const undoBtn = createButton('元に戻す', 'btn-outline btn-sm', undoAssignment);
+    area.appendChild(undoBtn);
+  }
+
+  function exportJSON() {
+    const json = JSON.stringify(state, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    const { year, month } = state.calendar;
+    a.download = `当番表データ_${year}年${month}月.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    showToast('JSONをエクスポートしました');
+  }
+
+  function importJSON() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    input.addEventListener('change', () => {
+      const file = input.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.addEventListener('load', () => {
+        try {
+          const data = JSON.parse(reader.result);
+          // 最低限のバリデーション
+          if (!data.calendar || !data.slots || !data.staff) {
+            showToast('無効なデータ形式です');
+            return;
+          }
+          const defaults = createDefaultData();
+          state = {
+            calendar: { ...defaults.calendar, ...(data.calendar || {}) },
+            slots: data.slots || defaults.slots,
+            tags: data.tags || defaults.tags,
+            staff: data.staff || defaults.staff,
+            assignments: data.assignments || defaults.assignments,
+            neoIds: data.neoIds || defaults.neoIds,
+          };
+          saveData();
+          renderTabs();
+          renderActiveTab();
+          renderGrid();
+          showToast(`インポート完了（職員${state.staff.length}人）`);
+        } catch (e) {
+          showToast('JSONの読み込みに失敗しました');
+          console.error('インポートエラー:', e);
+        }
+      });
+      reader.readAsText(file);
+    });
+    input.click();
+  }
+
+  function undoAssignment() {
+    if (undoHistory.length === 0) {
+      showToast('元に戻す履歴がありません');
+      return;
+    }
+    state.assignments = JSON.parse(undoHistory.pop());
+    saveData();
+    renderGrid();
+    showToast('割り当てを1手戻しました');
+  }
+
+  function copyToClipboard() {
+    const { year, month } = state.calendar;
+    const daysInMonth = getDaysInMonth(year, month);
+    const lines = [];
+
+    // ヘッダー行
+    const header = ['日付', '曜日', ...state.slots.map(s => s.name)];
+    lines.push(header.join('\t'));
+
+    for (let day = 1; day <= daysInMonth; day++) {
+      const dow = getDayOfWeek(year, month, day);
+      const dateStr = `${month}/${day}`;
+      const dowStr = WEEKDAY_NAMES[dow];
+      const dateKey = formatDate(year, month, day);
+
+      const cells = [dateStr, dowStr];
+      for (const slot of state.slots) {
+        const assigned = getAssignmentsForCell(dateKey, slot.id);
+        const names = assigned.map(id => {
+          const s = state.staff.find(x => x.id === id);
+          return s ? s.name : '';
+        });
+        cells.push(names.join(', '));
+      }
+      lines.push(cells.join('\t'));
+    }
+
+    const text = lines.join('\n');
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('クリップボードにコピーしました。Excelに貼り付けてください。');
+      }).catch(() => {
+        fallbackCopyToClipboard(text);
+      });
+    } else {
+      fallbackCopyToClipboard(text);
+    }
+  }
+
+  function fallbackCopyToClipboard(text) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+      document.execCommand('copy');
+      showToast('クリップボードにコピーしました。Excelに貼り付けてください。');
+    } catch (e) {
+      showToast('コピーに失敗しました。手動でコピーしてください。');
+      console.error('クリップボードコピー失敗:', e);
+    } finally {
+      document.body.removeChild(textarea);
+    }
+  }
+
+  function downloadNEOCsv() {
+    const { year, month } = state.calendar;
+    const daysInMonth = getDaysInMonth(year, month);
+
+    // NEO CSVヘッダー
+    const neoHeaders = [
+      'ユーザー/グループシステムID', '氏名/グループ名', 'ID（システムID）',
+      '開始日', '開始時刻', '終了日', '終了時刻',
+      '予定', '予定詳細', '場所', '場所詳細', '内容',
+      '情報公開レベル', '外出区分', '重要度', '予約種別',
+      '帯状', 'フラグ', 'アイコン番号', '承認依頼', '確認通知メール',
+      '所有者ID', '所有者名',
+    ];
+
+    const rows = [neoHeaders.join(',')];
+
+    for (let day = 1; day <= daysInMonth; day++) {
+      if (isDayOff(day)) continue;
+      const dateKey = formatDate(year, month, day);
+      const dateStr = `${year}/${String(month).padStart(2, '0')}/${String(day).padStart(2, '0')}`;
+
+      for (const slot of state.slots) {
+        const assigned = getAssignmentsForCell(dateKey, slot.id);
+        for (const staffId of assigned) {
+          const staffObj = state.staff.find(s => s.id === staffId);
+          if (!staffObj) continue;
+
+          const neoId = state.neoIds[staffId] || '';
+          const row = [
+            neoId,                    // ユーザーシステムID
+            staffObj.name,            // 氏名
+            '',                       // ID
+            dateStr,                  // 開始日
+            slot.startTime,           // 開始時刻
+            dateStr,                  // 終了日
+            slot.endTime,             // 終了時刻
+            slot.name,                // 予定
+            '',                       // 予定詳細
+            '',                       // 場所
+            '',                       // 場所詳細
+            '',                       // 内容
+            '全員に公開',              // 情報公開レベル
+            '社内',                    // 外出区分
+            '普通',                    // 重要度
+            '予定あり',                // 予約種別
+            '0',                      // 帯状
+            '0',                      // フラグ
+            '0',                      // アイコン番号
+            '0',                      // 承認依頼
+            '0',                      // 確認通知メール
+            '',                       // 所有者ID
+            '',                       // 所有者名
+          ];
+
+          // CSVエスケープ
+          const escaped = row.map(v => {
+            const s = String(v);
+            if (s.includes(',') || s.includes('"') || s.includes('\n')) {
+              return '"' + s.replace(/"/g, '""') + '"';
+            }
+            return s;
+          });
+          rows.push(escaped.join(','));
+        }
+      }
+    }
+
+    const csvContent = '\uFEFF' + rows.join('\r\n'); // BOM付きUTF-8
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `当番表_${year}年${month}月_NEO.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    showToast('CSVをダウンロードしました');
+  }
+
+  // ==========================================================
+  // 設定パネル折りたたみ
+  // ==========================================================
+  function setupSettingsToggle() {
+    const toggleHeader = document.getElementById('settings-toggle');
+    const toggleIcon = document.getElementById('settings-toggle-icon');
+    const body = document.getElementById('settings-body');
+
+    toggleHeader.addEventListener('click', () => {
+      const isCollapsed = body.classList.toggle('collapsed');
+      toggleIcon.classList.toggle('collapsed', isCollapsed);
+    });
+  }
+
+  // ==========================================================
+  // 初期化
+  // ==========================================================
+  function init() {
+    setupSettingsToggle();
+
+    // モーダルオーバーレイのクリックイベントを一度だけ登録（リスナー累積防止）
+    const overlay = document.getElementById('modal-overlay');
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        closeModal();
+        renderGrid();
+      }
+    });
+
+    renderTabs();
+    renderActiveTab();
+    renderGrid();
+    renderOutputArea();
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+})();
+</script>
+</body>
+</html>

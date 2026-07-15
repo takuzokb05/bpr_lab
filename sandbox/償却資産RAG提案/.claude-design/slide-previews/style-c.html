@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Style C: Notebook Tabs</title>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #2d2d2d; overflow: hidden; height: 100vh; height: 100dvh; display: flex; align-items: center; justify-content: center; }
+.slide {
+  height: 100vh; height: 100dvh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 3vw, 40px);
+  position: relative;
+  overflow: hidden;
+}
+/* ノートブック風カード */
+.page {
+  background: #f8f6f1;
+  border-radius: 4px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.3), 0 2px 8px rgba(0,0,0,0.2);
+  width: min(92%, 960px);
+  height: min(88vh, 680px);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(28px, 4vw, 56px);
+  padding-left: clamp(48px, 6vw, 80px);
+  animation: cardIn 0.6s ease-out both;
+}
+@keyframes cardIn { from { opacity: 0; transform: translateY(20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+/* バインダー穴 */
+.binder-holes {
+  position: absolute;
+  left: clamp(16px, 2vw, 28px);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 4vh, 48px);
+}
+.hole {
+  width: clamp(10px, 1.2vw, 14px);
+  height: clamp(10px, 1.2vw, 14px);
+  border-radius: 50%;
+  border: 2px solid #d0cbc4;
+}
+/* タブ */
+.tabs {
+  position: absolute;
+  right: calc(-1 * clamp(28px, 3.5vw, 44px));
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(4px, 0.6vh, 8px);
+}
+.tab {
+  width: clamp(28px, 3.5vw, 44px);
+  border-radius: 0 6px 6px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  writing-mode: vertical-rl;
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(0.5rem, 1vh, 0.7rem);
+  font-weight: 600;
+  color: #2d2d2d;
+  letter-spacing: 0.05em;
+  animation: tabSlide 0.4s ease-out both;
+}
+.tab:nth-child(1) { height: clamp(60px, 10vh, 90px); background: #98d4bb; animation-delay: 0.7s; }
+.tab:nth-child(2) { height: clamp(50px, 8vh, 75px); background: #c7b8ea; animation-delay: 0.85s; }
+.tab:nth-child(3) { height: clamp(70px, 12vh, 100px); background: #f4b8c5; animation-delay: 1s; }
+.tab:nth-child(4) { height: clamp(55px, 9vh, 80px); background: #a8d8ea; animation-delay: 1.15s; }
+.tab:nth-child(5) { height: clamp(45px, 7vh, 65px); background: #ffe6a7; animation-delay: 1.3s; }
+@keyframes tabSlide { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+/* コンテンツ */
+.page-tag {
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(0.6rem, 0.9vw, 0.75rem);
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #98d4bb;
+  margin-bottom: clamp(8px, 1.5vh, 16px);
+  animation: fadeIn 0.6s ease-out 0.4s both;
+}
+h1 {
+  font-family: 'Bodoni Moda', serif;
+  font-weight: 700;
+  font-size: clamp(1.8rem, 4vw, 3.2rem);
+  line-height: 1.15;
+  color: #1a1a1a;
+  margin-bottom: clamp(12px, 2vh, 24px);
+  animation: slideUp 0.7s ease-out 0.5s both;
+}
+.divider {
+  width: clamp(40px, 6vw, 80px);
+  height: 3px;
+  background: #f4b8c5;
+  margin-bottom: clamp(12px, 2vh, 20px);
+  animation: slideUp 0.6s ease-out 0.65s both;
+}
+.body-text {
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(0.85rem, 1.2vw, 1rem);
+  color: #555;
+  line-height: 1.7;
+  max-width: 55ch;
+  animation: slideUp 0.6s ease-out 0.75s both;
+}
+.key-points {
+  display: flex;
+  gap: clamp(16px, 2.5vw, 32px);
+  margin-top: auto;
+  padding-top: clamp(16px, 2vh, 28px);
+}
+.point {
+  flex: 1;
+  padding: clamp(12px, 1.5vw, 20px);
+  border-radius: 8px;
+  animation: slideUp 0.5s ease-out both;
+}
+.point:nth-child(1) { background: rgba(152,212,187,0.2); animation-delay: 0.9s; }
+.point:nth-child(2) { background: rgba(199,184,234,0.2); animation-delay: 1.05s; }
+.point:nth-child(3) { background: rgba(244,184,197,0.2); animation-delay: 1.2s; }
+.point-title {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  font-size: clamp(0.75rem, 1vw, 0.9rem);
+  color: #1a1a1a;
+  margin-bottom: 4px;
+}
+.point-desc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(0.65rem, 0.85vw, 0.78rem);
+  color: #777;
+  line-height: 1.5;
+}
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="page">
+    <div class="binder-holes">
+      <div class="hole"></div>
+      <div class="hole"></div>
+      <div class="hole"></div>
+    </div>
+    <div class="tabs">
+      <div class="tab">背景</div>
+      <div class="tab">UC</div>
+      <div class="tab">設計</div>
+      <div class="tab">導入</div>
+      <div class="tab">展開</div>
+    </div>
+    <div class="page-tag">RAG Proposal 2026</div>
+    <h1>償却資産税業務への<br>RAG導入提案</h1>
+    <div class="divider"></div>
+    <p class="body-text">新システムにデータはある。活用する知恵がRAG。<br>調査・審査・事業者対応をAIで効率化し、人が替わっても知識が育ち続ける仕組みを作る。</p>
+    <div class="key-points">
+      <div class="point">
+        <div class="point-title">見積精査AI</div>
+        <div class="point-desc">評価要領+ノウハウで精査ポイントを自動提示</div>
+      </div>
+      <div class="point">
+        <div class="point-title">疑義抽出AI</div>
+        <div class="point-desc">申告データCSVの全件スクリーニング</div>
+      </div>
+      <div class="point">
+        <div class="point-title">チャットボット</div>
+        <div class="point-desc">事業者問い合わせの一次対応を自動化</div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

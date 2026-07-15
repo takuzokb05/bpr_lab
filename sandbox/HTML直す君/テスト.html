@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>Udemyもくもく会 ダッシュボード（初回ベースライン）</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* シンプルなドラッグ＆リサイズの補助スタイル */
+    .draggable-card {
+      position: relative;
+      user-select: none;
+    }
+    .resize-handle {
+      position: absolute;
+      right: 4px;
+      bottom: 4px;
+      width: 12px;
+      height: 12px;
+      cursor: se-resize;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-900">
+  <div class="min-h-screen p-4 md:p-6 lg:p-8">
+    <div class="max-w-7xl mx-auto space-y-6">
+
+      <!-- タイトル＆リード -->
+      <header
+        class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between"
+        data-id="header"
+        data-type="summary-text"
+        data-editable="true"
+        data-importance="high"
+        data-status="normal"
+      >
+        <div>
+          <h1 class="text-2xl md:text-3xl font-bold text-slate-900">
+            Udemyもくもく会 ダッシュボード（初回ベースライン）
+          </h1>
+          <p class="text-sm md:text-base text-slate-600 mt-1">
+            初回アンケート結果から、<span class="font-semibold">集中度・継続意向・学習意欲</span>を可視化し、
+            「もくもく会を継続するべきか？」を部長レベルで判断しやすくするためのダッシュボードです。
+          </p>
+        </div>
+        <div class="text-xs md:text-sm text-slate-500 mt-2 md:mt-0">
+          <p>対象：運営担当（係長・職員） → 部長説明用</p>
+          <p>スタンス：<span class="font-semibold text-emerald-700">推進型（継続前提）</span></p>
+        </div>
+      </header>
+
+      <!-- ====================== section-summary ====================== -->
+      <section
+        id="section-summary"
+        class="grid grid-cols-1 lg:grid-cols-3 gap-4"
+        data-id="section-summary"
+        data-type="section-summary"
+        data-editable="true"
+        data-importance="high"
+        data-status="normal"
+      >
+        <!-- decision-kpi: ノーススター指標（集中度） -->
+        <div
+          class="draggable-card bg-white rounded-xl shadow-sm hover:shadow-lg transition transform hover:-translate-y-0.5 p-4 flex flex-col justify-between"
+          data-id="kpi-concentration"
+          data-type="decision-kpi"
+          data-editable="true"
+          data-importance="high"
+          data-status="normal"
+          data-draggable="true"
+        >
+          <div class="flex items-start justify-between gap-2" data-role="drag-handle">
+            <div>
+              <h2 class="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                初回もくもく会：集中度ベースライン
+              </h2>
+              <p class="mt-1 text-sm text-slate-700">
+                「非常に集中できた」＋「まぁ集中できた」の割合（初回）
+              </p>
+            </div>
+            <!-- 状態アイコン（二重符号化：色＋形） -->
+            <div
+              class="flex items-center justify-center w-10 h-10 rounded-full bg-emerald-100 text-emerald-700"
+              aria-label="良好"
+            >
+              <!-- シンプルな◎アイコン -->
+              <span class="text-lg font-bold">◎</span>
+            </div>
+          </div>
+
+          <div class="mt-4 space-y-2">
+            <div class="flex items-baseline gap-2">
+              <!-- 実数値は必要に応じて編集してください -->
+              <span class="text-3xl font-bold text-slate-900" id="kpiConcentrationValue">
+                87%
+              </span>
+              <span class="text-xs text-slate-500">
+                目標（仮）：80%
+              </span>
+            </div>
+            <!-- 進捗バー（目標との比較 / Goal Gradient） -->
+            <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
+              <div
+                id="kpiConcentrationProgress"
+                class="h-3 rounded-full bg-gradient-to-r from-emerald-400 to-emerald-600"
+                style="width: 87%;"
+              ></div>
+            </div>
+            <p class="text-xs text-slate-500 mt-1">
+              ※ 初回アンケート結果をベースラインとし、今後の回との比較基準とします。
+            </p>
+          </div>
+
+          <!-- insight-box -->
+          <div
+            class="mt-4 p-3 rounded-lg bg-emerald-50 border border-emerald-100 text-xs text-emerald-900"
+            data-id="insight-concentration"
+            data-type="insight-box"
+            data-editable="true"
+            data-importance="medium"
+            data-status="normal"
+          >
+            <p class="font-semibold mb-1">示唆：</p>
+            <ul class="list-disc list-inside space-y-1">
+              <li>初回から高い集中度が得られており、「形式」としての手応えは十分。</li>
+              <li>この水準を「維持・強化」するために、会場確保と定期開催が鍵。</li>
+            </ul>
+          </div>
+
+          <div
+            class="resize-handle bg-slate-300 hover:bg-slate-400"
+            data-role="resize-handle"
+          ></div>
+        </div>
+
+        <!-- decision-action: 次の一手 -->
+        <div
+          class="draggable-card bg-white rounded-xl shadow-sm hover:shadow-lg transition transform hover:-translate-y-0.5 p-4 flex flex-col justify-between"
+          data-id="action-next-steps"
+          data-type="decision-action"
+          data-editable="true"
+          data-importance="high"
+          data-status="normal"
+          data-draggable="true"
+        >
+          <div class="flex items-start justify-between gap-2" data-role="drag-handle">
+            <div>
+              <h2 class="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                推奨アクション
+              </h2>
+              <p class="mt-1 text-sm text-slate-700">
+                次回以降も継続すべき：<span class="font-semibold">会場開催を中心に月1実施</span>を推奨
+              </p>
+            </div>
+            <div
+              class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-100 text-blue-700"
+              aria-label="アクション"
+            >
+              <!-- ▶ アイコン -->
+              <span class="text-lg font-bold">▶</span>
+            </div>
+          </div>
+
+          <div class="mt-4 space-y-3 text-xs">
+            <div class="flex items-center justify-between">
+              <span class="font-semibold text-slate-600">判断者</span>
+              <span class="text-slate-800">部長</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="font-semibold text-slate-600">提案</span>
+              <span class="text-slate-800">
+                年度内は月1回のペースで試行継続し、次年度方針に反映
+              </span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="font-semibold text-slate-600">判断期限</span>
+              <span class="text-slate-800">（例）〇月末の管理職会議まで</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="font-semibold text-slate-600">主な根拠</span>
+              <span class="text-slate-800">
+                高い集中度・継続意向・資格/AIへの学習意欲
+              </span>
+            </div>
+          </div>
+
+          <div
+            class="resize-handle bg-slate-300 hover:bg-slate-400"
+            data-role="resize-handle"
+          ></div>
+        </div>
+
+        <!-- decision-status: 全体状態 -->
+        <div
+          class="draggable-card bg-white rounded-xl shadow-sm hover:shadow-lg transition transform hover:-translate-y-0.5 p-4 flex flex-col justify-between"
+          data-id="overall-status"
+          data-type="decision-status"
+          data-editable="true"
+          data-importance="medium"
+          data-status="normal"
+          data-draggable="true"
+        >
+          <div class="flex items-start justify-between gap-2" data-role="drag-handle">
+            <div>
+              <h2 class="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                全体状態
+              </h2>
+              <p class="mt-1 text-sm text-slate-700">
+                初回の手応え：<span class="font-semibold text-emerald-700">GOOD（継続推奨）</span>
+              </p>
+            </div>
+            <!-- 二重符号化：色＋形状の異なるアイコン -->
+            <div
+              class="flex items-center justify-center w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-500"
+              aria-label="良好"
+            >
+              <!-- ✔ アイコン -->
+              <span class="text-lg font-bold">✔</span>
+            </div>
+          </div>
+
+          <div class="mt-4 text-xs text-slate-600 space-y-2">
+            <p class="font-semibold text-slate-700 mb-1">評価のポイント：</p>
+            <ul class="list-disc list-inside space-y-1">
+              <li>集中度・継続意向ともに高く、初回として成功。</li>
+              <li>「職場を離れた会場での学習」が特に好評。</li>
+              <li>学習時間の確保やUdemy選定など、次回以降の改善余地も見えた。</li>
+            </ul>
+          </div>
+
+          <div
+            class="resize-handle bg-slate-300 hover:bg-slate-400"
+            data-role="resize-handle"
+          ></div>
+        </div>
+      </section>
+
+      <!-- ====================== section-action ====================== -->
+      <section
+        id="section-action"
+        class="grid grid-cols-1 lg:grid-cols-2 gap-4"
+        data-id="section-action"
+        data-type="section-action"
+        data-editable="true"
+        data-importance="medium"
+        data-status="normal"
+      >
+        <!-- summary-text: 戦略要約 -->
+        <div
+          class="draggable-card bg-white rounded-xl shadow-sm hover:shadow-lg transition transform hover:-translate-y-0.5 p-4"
+          data-id="summary-strategy"
+          data-type="summary-text"
+          data-editable="true"
+          data-importance="medium"
+          data-status="normal"
+          data-draggable="true"
+        >
+          <div class="flex items-center justify-between" data-role="drag-handle">
+            <h2 class="text-sm font-semibold text-slate-800">
+              戦略要約（部長向け 3行サマリ）
+            </h2>
+          </div>
+          <div class="mt-3 text-sm text-slate-700 space-y-2">
+            <p>
+              1. 初回から<strong>高い集中度</strong>と<strong>継続意向</strong>が得られており、「もくもく会」という形式の有効性が確認できました。
+            </p>
+            <p>
+              2. 特に、<strong>職場を離れた会場での学習環境</strong>が集中を生み、DXに前向きな職員のモチベーション向上に寄与しています。
+            </p>
+            <p>
+              3. 一方で、「学習時間の確保」「Udemy動画の選択」「PC環境」などの課題も見えたため、<strong>継続しながら改善</strong>するアプローチが最適と考えます。
+            </p>
+          </div>
+
+          <div
+            class="resize-handle bg-slate-300 hover:bg-slate-400"
+            data-role="resize-handle"
+          ></div>
+        </div>
+
+        <!-- insight-box: 継続に向けた論点 -->
+        <div
+          class="draggable-card bg-white rounded-xl shadow-sm hover:shadow-lg transition transform hover:-translate-y-0.5 p-4"
+          data-id="insight-arguments"
+          data-type="insight-box"
+          data-editable="true"
+          data-importance="medium"
+          data-status="normal"
+          data-draggable="true"
+        >
+          <div class="flex items-center justify-between" data-role="drag-handle">
+            <h2 class="text-sm font-semibold text-slate-800">
+              部長決裁に向けた論点（継続のメリット）
+            </h2>
+          </div>
+          <div class="mt-3 text-xs text-slate-700 space-y-2">
+            <p class="font-semibold">継続することで得られるメリット：</p>
+            <ul class="list-disc list-inside space-y-1">
+              <li>DX・AIに前向きな職員を横断的に可視化し、つながりを作れる。</li>
+              <li>資格取得（ITパス・情セキ・生成AI系）への具体的なアクションが生まれている。</li>
+              <li>「学習時間を確保できない」現場に対して、強制的に時間を確保する仕組みとなる。</li>
+              <li>AIエージェント活用等、今後のDX施策の受け皿となる学びのコミュニティを形成できる。</li>
+            </ul>
+            <p class="font-semibold mt-2">今後の検討ポイント：</p>
+            <ul class="list-disc list-inside space-y-1">
+              <li>会場枠とオンライン枠の最適なバランス（会場優位を維持しつつオンラインも補完）。</li>
+              <li>ラーニングパス・おすすめUdemy講座の事前提示による迷いの軽減。</li>
+              <li>学習成果や業務活用事例を共有するライトニングトーク・報告会の位置づけ。</li>
+            </ul>
+          </div>
+
+          <div
+            class="resize-handle bg-slate-300 hover:bg-slate-400"
+            data-role="resize-handle"
+          ></div>
+        </div>
+      </section>
+
+      <!-- ====================== section-main ====================== -->
+      <section
+        id="section-main"
+        class="grid grid-cols-1 lg:grid-cols-2 gap-4"
+        data-id="section-main"
+        data-type="section-main"
+        data-editable="true"
+        data-importance="high"
+        data-status="normal"
+      >
+        <!-- chart: 集中度の分布 -->
+        <div
+          class="draggable-card bg-white rounded-xl shadow-sm hover:shadow-lg transition transform hover:-translate-y-0.5 p-4 flex flex-col"
+          data-id="chart-concentration-overall"
+          data-type="chart"
+          data-editable="true"
+          data-importance="high"
+          data-status="normal"
+          data-chart-kind="bar"
+          data-draggable="true"
+        >
+          <div class="flex items-center justify-between mb-2" data-role="drag-handle">
+            <h2 class="text-sm font-semibold text-slate-800">
+              集中度の分布（全参加者）
+            </h2>
+          </div>
+          <div class="h-56">
+            <canvas id="chartConcentrationOverall" aria-label="集中度の分布"></canvas>
+          </div>
+          <!-- insight-box -->
+          <div
+            class="mt-3 p-3 rounded-lg bg-slate-50 border border-slate-100 text-xs text-slate-700"
+            data-id="insight-concentration-overall"
+            data-type="insight-box"
+            data-editable="true"
+            data-importance="medium"
+            data-status="normal"
+          >
+            <p class="font-semibold mb-1">観察ポイント：</p>
+            <ul class="list-disc list-inside space-y-1">
+              <li>
+                「非常に集中できた」が多数派であり、「集中できなかった」層はほぼ見られません。
+              </li>
+              <li>
+                初回からこの分布であれば、<strong>形式そのものは成功</strong>と評価できます。
+              </li>
+            </ul>
+          </div>
+
+          <div
+            class="resize-handle bg-slate-300 hover:bg-slate-400"
+            data-role="resize-handle"
+          ></div>
+        </div>
+
+        <!-- chart: 会場 vs オンライン比較 -->
+        <div
+          class="draggable-card bg-white rounded-xl shadow-sm hover:shadow-lg transition transform hover:-translate-y-0.5 p-4 flex flex-col"
+          data-id="chart-concentration-by-mode"
+          data-type="chart"
+          data-editable="true"
+          data-importance="high"
+          data-status="normal"
+          data-chart-kind="bar"
+          data-draggable="true"
+        >
+          <div class="flex items-center justify-between mb-2" data-role="drag-handle">
+            <h2 class="text-sm font-semibold text-slate-800">
+              会場参加 vs オンライン参加：集中度比較
+            </h2>
+          </div>
+          <div class="h-56">
+            <canvas id="chartConcentrationByMode" aria-label="会場とオンラインの集中度比較"></canvas>
+          </div>
+          <!-- insight-box -->
+          <div
+            class="mt-3 p-3 rounded-lg bg-slate-50 border border-slate-100 text-xs text-slate-700"
+            data-id="insight-concentration-by-mode"
+            data-type="insight-box"
+            data-editable="true"
+            data-importance="medium"
+            data-status="normal"
+          >
+            <p class="font-semibold mb-1">観察ポイント：</p>
+            <ul class="list-disc list-inside space-y-1">
+              <li>会場参加の方が「非常に集中できた」の比率が高い傾向があります。</li>
+              <li>オンライン参加では、窓口・電話対応等による中断が集中を妨げている可能性があります。</li>
+              <li>
+                <strong>会場枠の確保・拡大</strong>が、集中度をさらに高めるレバーになりえます。
+              </li>
+            </ul>
+          </div>
+
+          <div
+            class="resize-handle bg-slate-300 hover:bg-slate-400"
+            data-role="resize-handle"
+          ></div>
+        </div>
+
+        <!-- chart: 次回参加意向 -->
+        <div
+          class="draggable-card bg-white rounded-xl shadow-sm hover:shadow-lg transition transform hover:-translate-y-0.5 p-4 flex flex-col"
+          data-id="chart-next-intent"
+          data-type="chart"
+          data-editable="true"
+          data-importance="high"
+          data-status="normal"
+          data-chart-kind="donut"
+          data-draggable="true"
+        >
+          <div class="flex items-center justify-between mb-2" data-role="drag-handle">
+            <h2 class="text-sm font-semibold text-slate-800">
+              次回参加意向
+            </h2>
+          </div>
+          <div class="h-56">
+            <canvas id="chartNextIntent" aria-label="次回参加意向"></canvas>
+          </div>
+          <!-- insight-box -->
+          <div
+            class="mt-3 p-3 rounded-lg bg-slate-50 border border-slate-100 text-xs text-slate-700"
+            data-id="insight-next-intent"
+            data-type="insight-box"
+            data-editable="true"
+            data-importance="medium"
+            data-status="normal"
+          >
+            <p class="font-semibold mb-1">観察ポイント：</p>
+            <ul class="list-disc list-inside space-y-1">
+              <li>「ぜひ参加したい」「都合が合えば参加したい」が大半を占めています。</li>
+              <li>初回でこれだけの継続意向があるため、「一度きり」で終わらせるのは機会損失です。</li>
+            </ul>
+          </div>
+
+          <div
+            class="resize-handle bg-slate-300 hover:bg-slate-400"
+            data-role="resize-handle"
+          ></div>
+        </div>
+
+        <!-- chart: 学習の壁（複数回答をイメージ） -->
+        <div
+          class="draggable-card bg-white rounded-xl shadow-sm hover:shadow-lg transition transform hover:-translate-y-0.5 p-4 flex flex-col"
+          data-id="chart-learning-barriers"
+          data-type="chart"
+          data-editable="true"
+          data-importance="medium"
+          data-status="normal"
+          data-chart-kind="bar"
+          data-draggable="true"
+        >
+          <div class="flex items-center justify-between mb-2" data-role="drag-handle">
+            <h2 class="text-sm font-semibold text-slate-800">
+              学習を継続する上での「壁」
+            </h2>
+          </div>
+          <div class="h-56">
+            <canvas id="chartBarriers" aria-label="学習の壁"></canvas>
+          </div>
+          <!-- insight-box -->
+          <div
+            class="mt-3 p-3 rounded-lg bg-amber-50 border border-amber-100 text-xs text-amber-900"
+            data-id="insight-learning-barriers"
+            data-type="insight-box"
+            data-editable="true"
+            data-importance="medium"
+            data-status="warn"
+          >
+            <p class="font-semibold mb-1">観察ポイント（要改善）：</p>
+            <ul class="list-disc list-inside space-y-1">
+              <li>
+                「学習のための時間の確保」が最大の壁となっており、業務の中で時間を確保する仕組みづくりが重要です。
+              </li>
+              <li>
+                Udemy動画が多く「何から見ればよいか分からない」という声もあり、
+                <strong>おすすめ講座リスト</strong>やラーニングパスの提示が有効です。
+              </li>
+            </ul>
+          </div>
+
+          <div
+            class="resize-handle bg-slate-300 hover:bg-slate-400"
+            data-role="resize-handle"
+          ></div>
+        </div>
+      </section>
+
+      <!-- ====================== section-sub ====================== -->
+      <section
+        id="section-sub"
+        class="grid grid-cols-1 lg:grid-cols-3 gap-4"
+        data-id="section-sub"
+        data-type="section-sub"
+        data-editable="true"
+        data-importance="medium"
+        data-status="normal"
+      >
+        <!-- detail-list: 資格ランキング -->
+        <div
+          class="draggable-card bg-white rounded-xl shadow-sm hover:shadow-lg transition transform hover:-translate-y-0.5 p-4 flex flex-col"
+          data-id="detail-cert-ranking"
+          data-type="detail-list"
+          data-editable="true"
+          data-importance="medium"
+          data-status="normal"
+          data-draggable="true"
+        >
+          <div class="flex items-center justify-between mb-2" data-role="drag-handle">
+            <h2 class="text-sm font-semibold text-slate-800">
+              挑戦したい資格ランキング（例）
+            </h2>
+          </div>
+          <p class="text-xs text-slate-600 mb-2">
+            ※ 実データに合わせて数値を編集してください（ここではイメージ値を設定）。
+          </p>
+          <ul class="mt-1 text-sm text-slate-700 space-y-1">
+            <li class="flex items-center justify-between">
+              <span>1. ITパスポート</span>
+              <span class="text-xs text-slate-500">約 10 名</span>
+            </li>
+            <li class="flex items-center justify-between">
+              <span>2. 情報セキュリティマネジメント</span>
+              <span class="text-xs text-slate-500">約 8 名</span>
+            </li>
+            <li class="flex items-center justify-between">
+              <span>3. 生成AIパスポート</span>
+              <span class="text-xs text-slate-500">約 6 名</span>
+            </li>
+            <li class="flex items-center justify-between">
+              <span>4. G検定</span>
+              <span class="text-xs text-slate-500">約 4 名</span>
+            </li>
+          </ul>
+
+          <div
+            class="resize-handle bg-slate-300 hover:bg-slate-400"
+            data-role="resize-handle"
+          ></div>
+        </div>
+
+        <!-- chart: AIエージェントへの理解・意欲 -->
+        <div
+          class="draggable-card bg-white rounded-xl shadow-sm hover:shadow-lg transition transform hover:-translate-y-0.5 p-4 flex flex-col"
+          data-id="chart-ai-interest"
+          data-type="chart"
+          data-editable="true"
+          data-importance="medium"
+          data-status="normal"
+          data-chart-kind="bar"
+          data-draggable="true"
+        >
+          <div class="flex items-center justify-between mb-2" data-role="drag-handle">
+            <h2 class="text-sm font-semibold text-slate-800">
+              「AIエージェント活用」理解度・意欲
+            </h2>
+          </div>
+          <div class="h-56">
+            <canvas id="chartAIInterest" aria-label="AIエージェントへの理解・意欲"></canvas>
+          </div>
+          <!-- insight-box -->
+          <div
+            class="mt-3 p-3 rounded-lg bg-slate-50 border border-slate-100 text-xs text-slate-700"
+            data-id="insight-ai-interest"
+            data-type="insight-box"
+            data-editable="true"
+            data-importance="medium"
+            data-status="normal"
+          >
+            <p class="font-semibold mb-1">観察ポイント：</p>
+            <ul class="list-disc list-inside space-y-1">
+              <li>AIエージェントに「興味・作成意欲」を持った参加者が多数派です。</li>
+              <li>今後、AIエージェント作成ハンズオンや事例共有の場を設けることで、DX推進の起点となります。</li>
+            </ul>
+          </div>
+
+          <div
+            class="resize-handle bg-slate-300 hover:bg-slate-400"
+            data-role="resize-handle"
+          ></div>
+        </div>
+
+        <!-- detail-list: ポジティブコメント抜粋 -->
+        <div
+          class="draggable-card bg-white rounded-xl shadow-sm hover:shadow-lg transition transform hover:-translate-y-0.5 p-4 flex flex-col"
+          data-id="detail-positive-comments"
+          data-type="detail-list"
+          data-editable="true"
+          data-importance="medium"
+          data-status="normal"
+          data-draggable="true"
+        >
+          <div class="flex items-center justify-between mb-2" data-role="drag-handle">
+            <h2 class="text-sm font-semibold text-slate-800">
+              参加者の声（ポジティブ抜粋）
+            </h2>
+          </div>
+          <p class="text-xs text-slate-600 mb-2">
+            ※ 実際のコメントから要旨を抜粋して記載してください（以下は例）。
+          </p>
+          <ul class="mt-1 text-xs text-slate-700 space-y-2">
+            <li class="border-l-4 border-emerald-400 pl-2">
+              「職場から離れて集中できた。周りの人の熱量に刺激を受けた。」
+            </li>
+            <li class="border-l-4 border-emerald-400 pl-2">
+              「決まった時間を確保できることで、普段できないUdemy学習が進んだ。」
+            </li>
+            <li class="border-l-4 border-emerald-400 pl-2">
+              「DXに前向きな職員がこれだけいると知り、自分も頑張ろうと思えた。」
+            </li>
+            <li class="border-l-4 border-emerald-400 pl-2">
+              「AIエージェントや生成AIに関する講義・ワークショップをもっと聞きたい。」
+            </li>
+          </ul>
+
+          <div
+            class="resize-handle bg-slate-300 hover:bg-slate-400"
+            data-role="resize-handle"
+          ></div>
+        </div>
+      </section>
+
+      <!-- ====================== section-footer ====================== -->
+      <section
+        id="section-footer"
+        class="mt-4"
+        data-id="section-footer"
+        data-type="section-footer"
+        data-editable="false"
+        data-importance="low"
+        data-status="normal"
+        data-lock="true"
+      >
+        <div
+          class="draggable-card bg-slate-900 text-slate-100 rounded-xl shadow-sm p-4 text-xs flex flex-col md:flex-row md:items-center md:justify-between gap-2"
+          data-id="footer-meta"
+          data-type="footer-meta"
+          data-editable="true"
+          data-importance="low"
+          data-status="normal"
+          data-draggable="true"
+        >
+          <div data-role="drag-handle" class="cursor-move">
+            <span class="font-semibold">メタ情報</span>
+          </div>
+          <div class="space-y-1 md:space-y-0 md:flex md:items-center md:gap-4">
+            <p>データ：Udemyもくもく会 初回アンケート（1〜30件）</p>
+            <p>位置づけ：今回結果は <span class="font-semibold">初回ベースライン</span> として扱う</p>
+            <p>更新日：手動で編集してください</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ====================== JS: Drag & Resize + Charts ====================== -->
+  <script>
+    // --------- Drag & Resize ----------
+    (function () {
+      const cards = document.querySelectorAll('[data-draggable="true"]');
+      let activeCard = null;
+      let startX, startY, startWidth, startHeight, startLeft, startTop;
+      let isResizing = false;
+      let isDragging = false;
+
+      cards.forEach((card) => {
+        card.classList.add('relative');
+
+        const dragHandle = card.querySelector('[data-role="drag-handle"]') || card;
+        const resizeHandle = card.querySelector('[data-role="resize-handle"]');
+
+        // Drag
+        dragHandle.style.cursor = 'move';
+        dragHandle.addEventListener('mousedown', (e) => {
+          // Chart上のクリックなどを避けるため、左クリックのみ
+          if (e.button !== 0) return;
+          isDragging = true;
+          activeCard = card;
+
+          const rect = card.getBoundingClientRect();
+          startX = e.clientX;
+          startY = e.clientY;
+          startLeft = rect.left + window.scrollX;
+          startTop = rect.top + window.scrollY;
+
+          card.style.position = 'absolute';
+          card.style.zIndex = 50;
+          card.style.left = startLeft + 'px';
+          card.style.top = startTop + 'px';
+
+          document.addEventListener('mousemove', handleDragMove);
+          document.addEventListener('mouseup', handleDragEnd);
+        });
+
+        // Resize
+        if (resizeHandle) {
+          resizeHandle.addEventListener('mousedown', (e) => {
+            if (e.button !== 0) return;
+            e.stopPropagation();
+            isResizing = true;
+            activeCard = card;
+
+            const rect = card.getBoundingClientRect();
+            startX = e.clientX;
+            startY = e.clientY;
+            startWidth = rect.width;
+            startHeight = rect.height;
+
+            document.addEventListener('mousemove', handleResizeMove);
+            document.addEventListener('mouseup', handleResizeEnd);
+          });
+        }
+      });
+
+      function handleDragMove(e) {
+        if (!isDragging || !activeCard) return;
+        const deltaX = e.clientX - startX;
+        const deltaY = e.clientY - startY;
+        activeCard.style.left = startLeft + deltaX + 'px';
+        activeCard.style.top = startTop + deltaY + 'px';
+      }
+
+      function handleDragEnd() {
+        isDragging = false;
+        activeCard = null;
+        document.removeEventListener('mousemove', handleDragMove);
+        document.removeEventListener('mouseup', handleDragEnd);
+      }
+
+      function handleResizeMove(e) {
+        if (!isResizing || !activeCard) return;
+        const deltaX = e.clientX - startX;
+        const deltaY = e.clientY - startY;
+        const newWidth = Math.max(220, startWidth + deltaX);
+        const newHeight = Math.max(160, startHeight + deltaY);
+        activeCard.style.width = newWidth + 'px';
+        activeCard.style.height = newHeight + 'px';
+      }
+
+      function handleResizeEnd() {
+        isResizing = false;
+        activeCard = null;
+        document.removeEventListener('mousemove', handleResizeMove);
+        document.removeEventListener('mouseup', handleResizeEnd);
+      }
+    })();
+
+    // --------- Charts ----------
+    document.addEventListener('DOMContentLoaded', function () {
+      // Chart 共通オプション
+      const baseOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            labels: {
+              font: { size: 11 }
+            }
+          },
+          tooltip: {
+            bodyFont: { size: 11 },
+            titleFont: { size: 12 }
+          }
+        },
+        scales: {
+          x: {
+            ticks: { font: { size: 10 } }
+          },
+          y: {
+            ticks: { font: { size: 10 } },
+            beginAtZero: true
+          }
+        }
+      };
+
+      // 1) 集中度の分布（全体） - 仮データ
+      const ctxConcentrationOverall = document.getElementById('chartConcentrationOverall');
+      if (ctxConcentrationOverall) {
+        new Chart(ctxConcentrationOverall, {
+          type: 'bar',
+          data: {
+            labels: ['非常に集中できた', 'まぁ集中できた', 'どちらとも言えない', '集中できなかった'],
+            datasets: [
+              {
+                label: '人数（例）',
+                data: [20, 6, 4, 0], // ★必要に応じて編集
+                backgroundColor: [
+                  'rgba(16, 185, 129, 0.8)',
+                  'rgba(52, 211, 153, 0.8)',
+                  'rgba(148, 163, 184, 0.8)',
+                  'rgba(248, 113, 113, 0.8)'
+                ],
+                borderRadius: 6,
+                maxBarThickness: 40
+              }
+            ]
+          },
+          options: {
+            ...baseOptions,
+            plugins: {
+              ...baseOptions.plugins,
+              legend: { display: false }
+            }
+          }
+        });
+      }
+
+      // 2) 会場 vs オンライン集中度比較 - 仮データ
+      const ctxConcentrationByMode = document.getElementById('chartConcentrationByMode');
+      if (ctxConcentrationByMode) {
+        new Chart(ctxConcentrationByMode, {
+          type: 'bar',
+          data: {
+            labels: ['非常に集中', 'まぁ集中', 'どちらとも'],
+            datasets: [
+              {
+                label: '会場参加（例）',
+                data: [15, 3, 1], // ★編集可
+                backgroundColor: 'rgba(59, 130, 246, 0.8)'
+              },
+              {
+                label: 'オンライン参加（例）',
+                data: [5, 3, 3], // ★編集可
+                backgroundColor: 'rgba(96, 165, 250, 0.8)'
+              }
+            ]
+          },
+          options: {
+            ...baseOptions,
+            scales: {
+              ...baseOptions.scales,
+              y: {
+                ...baseOptions.scales.y,
+                suggestedMax: 15
+              }
+            }
+          }
+        });
+      }
+
+      // 3) 次回参加意向 - 仮データ
+      const ctxNextIntent = document.getElementById('chartNextIntent');
+      if (ctxNextIntent) {
+        new Chart(ctxNextIntent, {
+          type: 'doughnut',
+          data: {
+            labels: ['ぜひ参加したい', '都合が合えば参加したい', 'あまり参加したくない'],
+            datasets: [
+              {
+                data: [18, 10, 2], // ★編集可
+                backgroundColor: [
+                  'rgba(16, 185, 129, 0.85)',
+                  'rgba(59, 130, 246, 0.85)',
+                  'rgba(148, 163, 184, 0.85)'
+                ],
+                borderWidth: 1
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: 'bottom',
+                labels: { font: { size: 11 } }
+              }
+            },
+            cutout: '55%'
+          }
+        });
+      }
+
+      // 4) 学習の壁 - 仮データ
+      const ctxBarriers = document.getElementById('chartBarriers');
+      if (ctxBarriers) {
+        new Chart(ctxBarriers, {
+          type: 'bar',
+          data: {
+            labels: [
+              '学習時間の確保',
+              'モチベーション',
+              'PC等のデバイス環境',
+              '学習内容の難易度',
+              '動画が多く選べない'
+            ],
+            datasets: [
+              {
+                label: '該当人数（例）',
+                data: [18, 8, 6, 7, 5], // ★編集可
+                backgroundColor: 'rgba(251, 191, 36, 0.85)',
+                borderRadius: 6,
+                maxBarThickness: 32
+              }
+            ]
+          },
+          options: {
+            ...baseOptions,
+            plugins: {
+              ...baseOptions.plugins,
+              legend: { display: false }
+            },
+            scales: {
+              x: {
+                ticks: {
+                  font: { size: 9 },
+                  maxRotation: 45,
+                  minRotation: 0
+                }
+              },
+              y: {
+                ...baseOptions.scales.y,
+                suggestedMax: 20
+              }
+            }
+          }
+        });
+      }
+
+      // 5) AIエージェント理解・意欲 - 仮データ
+      const ctxAIInterest = document.getElementById('chartAIInterest');
+      if (ctxAIInterest) {
+        new Chart(ctxAIInterest, {
+          type: 'bar',
+          data: {
+            labels: ['よくわかった＋興味・意欲あり', '意義は理解した', 'ちょっと分からない'],
+            datasets: [
+              {
+                label: '人数（例）',
+                data: [16, 8, 3], // ★編集可
+                backgroundColor: [
+                  'rgba(59, 130, 246, 0.85)',
+                  'rgba(129, 140, 248, 0.85)',
+                  'rgba(148, 163, 184, 0.85)'
+                ],
+                borderRadius: 6,
+                maxBarThickness: 40
+              }
+            ]
+          },
+          options: {
+            ...baseOptions,
+            plugins: {
+              ...baseOptions.plugins,
+              legend: { display: false }
+            }
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
+``

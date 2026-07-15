@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Style B: Electric Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;800&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #0a0a0a; overflow: hidden; height: 100vh; height: 100dvh; }
+.slide {
+  height: 100vh; height: 100dvh;
+  display: grid;
+  grid-template-rows: 55% 45%;
+  position: relative;
+  overflow: hidden;
+}
+/* 上パネル: 白 */
+.panel-top {
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: clamp(24px, 4vw, 60px);
+  padding-bottom: clamp(20px, 3vh, 40px);
+  position: relative;
+}
+/* 下パネル: 青 */
+.panel-bottom {
+  background: #4361ee;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(24px, 4vw, 60px);
+  position: relative;
+}
+/* アクセントバー */
+.panel-bottom::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: #0a0a0a;
+}
+.corner-mark {
+  position: absolute;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: clamp(0.55rem, 0.9vw, 0.7rem);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  animation: fadeIn 1s ease-out 0.3s both;
+}
+.corner-tl { top: clamp(16px, 2vh, 28px); left: clamp(24px, 4vw, 60px); color: #aaa; }
+.corner-tr { top: clamp(16px, 2vh, 28px); right: clamp(24px, 4vw, 60px); color: #aaa; }
+h1 {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.2rem, 5vw, 4.5rem);
+  line-height: 1.05;
+  color: #0a0a0a;
+  animation: slideUp 0.7s ease-out 0.4s both;
+}
+h1 span.accent { color: #4361ee; }
+.tagline {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 500;
+  font-size: clamp(0.85rem, 1.3vw, 1.1rem);
+  color: rgba(255,255,255,0.85);
+  line-height: 1.7;
+  max-width: 70ch;
+  animation: slideUp 0.7s ease-out 0.8s both;
+}
+.bottom-row {
+  display: flex;
+  gap: clamp(24px, 4vw, 60px);
+  margin-top: clamp(16px, 2vh, 28px);
+}
+.metric {
+  animation: slideUp 0.6s ease-out both;
+}
+.metric:nth-child(1) { animation-delay: 1s; }
+.metric:nth-child(2) { animation-delay: 1.15s; }
+.metric:nth-child(3) { animation-delay: 1.3s; }
+.metric-value {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+  color: #ffffff;
+}
+.metric-label {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 400;
+  font-size: clamp(0.65rem, 0.9vw, 0.8rem);
+  color: rgba(255,255,255,0.6);
+  margin-top: 4px;
+}
+@keyframes slideUp { from { opacity: 0; transform: translateY(25px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="panel-top">
+    <span class="corner-mark corner-tl">RAG Proposal</span>
+    <span class="corner-mark corner-tr">2026.03</span>
+    <h1>償却資産税に<br><span class="accent">RAG</span>を導入する</h1>
+  </div>
+  <div class="panel-bottom">
+    <p class="tagline">新システムにデータはある。活用する知恵がRAG。<br>調査・審査・事業者対応の3業務をAIで効率化し、人が替わっても知識が育ち続ける仕組みを作る。</p>
+    <div class="bottom-row">
+      <div class="metric">
+        <div class="metric-value">3 UC</div>
+        <div class="metric-label">ユースケース</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">無料</div>
+        <div class="metric-label">Phase 1 PoC</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">横展開</div>
+        <div class="metric-label">土地・家屋・他税目</div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

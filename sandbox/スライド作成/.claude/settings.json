@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": ["WebSearch", "WebFetch"]
+  },
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "WebFetch|WebSearch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"decision\":\"allow\"}'",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "TaskCompleted": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python -c \"import sys,json,datetime as dt;d=json.loads(sys.stdin.read().strip() or '{}');open('.claude/team-activity.log','a',encoding='utf-8',errors='replace').write('['+dt.datetime.now().strftime('%H:%M')+'] '+d.get('task_subject','task')+' completed\\n')\" 2>/dev/null || true",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google研修レポート — 20%ルールを調べたら、もっと面白いものが見つかった</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+@page {
+  size: A4;
+  margin: 15mm 18mm;
+}
+
+:root {
+  --text-0: hsl(220, 25%, 14%);
+  --text-1: hsl(220, 12%, 35%);
+  --text-2: hsl(220, 8%, 52%);
+  --accent: hsl(12, 68%, 45%);
+  --accent-subtle: hsl(12, 68%, 45%, 0.08);
+  --accent-light: hsl(12, 68%, 45%, 0.15);
+  --secondary: hsl(175, 35%, 38%);
+  --surface-0: hsl(38, 25%, 97%);
+  --surface-1: hsl(38, 20%, 93%);
+  --border: hsl(0, 0%, 0%, 0.1);
+  --font-body: 'Noto Sans JP', sans-serif;
+  --font-display: 'Noto Serif JP', serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 10.5pt; }
+
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.75;
+  color: var(--text-0);
+  background: white;
+}
+
+/* ========== Page Structure ========== */
+.page {
+  width: 210mm;
+  min-height: 297mm;
+  padding: 15mm 18mm;
+  margin: 0 auto;
+  background: white;
+  page-break-after: always;
+  position: relative;
+}
+
+.page:last-child { page-break-after: auto; }
+
+.page-num {
+  position: absolute;
+  bottom: 10mm;
+  right: 18mm;
+  font-size: 8pt;
+  color: var(--text-2);
+}
+
+/* ========== Typography ========== */
+h1 {
+  font-family: var(--font-display);
+  font-size: 18pt;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--text-0);
+  margin-bottom: 4mm;
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-size: 13pt;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--accent);
+  margin-top: 6mm;
+  margin-bottom: 3mm;
+  padding-bottom: 1.5mm;
+  border-bottom: 0.5pt solid var(--accent-light);
+}
+
+h3 {
+  font-size: 10.5pt;
+  font-weight: 700;
+  color: var(--text-0);
+  margin-top: 4mm;
+  margin-bottom: 1.5mm;
+}
+
+p { margin-bottom: 2.5mm; }
+
+strong { font-weight: 700; }
+
+/* ========== Header ========== */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 3mm;
+  border-bottom: 1pt solid var(--text-0);
+  margin-bottom: 5mm;
+}
+
+.header-title {
+  font-family: var(--font-display);
+  font-size: 8pt;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.header-meta {
+  font-size: 8pt;
+  color: var(--text-2);
+}
+
+/* ========== Lead ========== */
+.lead {
+  font-size: 11pt;
+  font-weight: 300;
+  color: var(--text-1);
+  margin-bottom: 5mm;
+  line-height: 1.6;
+}
+
+/* ========== Big Number ========== */
+.big-num-row {
+  display: flex;
+  gap: 6mm;
+  margin: 4mm 0;
+}
+
+.big-num-item {
+  flex: 1;
+  background: var(--surface-1);
+  border-radius: 3mm;
+  padding: 3mm 4mm;
+  text-align: center;
+}
+
+.big-num-value {
+  font-family: var(--font-display);
+  font-size: 22pt;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--accent);
+}
+
+.big-num-label {
+  font-size: 7.5pt;
+  color: var(--text-2);
+  margin-top: 1mm;
+}
+
+/* ========== Comparison Table ========== */
+.cmp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 9pt;
+  margin: 3mm 0;
+}
+
+.cmp-table th {
+  text-align: left;
+  font-weight: 500;
+  font-size: 7.5pt;
+  letter-spacing: 0.05em;
+  color: var(--text-2);
+  padding: 1.5mm 2mm;
+  border-bottom: 1pt solid var(--border);
+}
+
+.cmp-table td {
+  padding: 1.5mm 2mm;
+  border-bottom: 0.5pt solid var(--border);
+  vertical-align: top;
+}
+
+.cmp-table .hl { background: var(--accent-subtle); font-weight: 500; }
+
+/* ========== Two Column ========== */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5mm;
+  margin: 3mm 0;
+}
+
+/* ========== Insight Box ========== */
+.insight-box {
+  background: var(--accent-subtle);
+  border-left: 3pt solid var(--accent);
+  padding: 3mm 4mm;
+  margin: 4mm 0;
+  border-radius: 0 2mm 2mm 0;
+}
+
+.insight-box p { margin-bottom: 0; }
+
+/* ========== Blockquote ========== */
+blockquote {
+  border-left: 2pt solid var(--accent-light);
+  padding: 1.5mm 3mm;
+  margin: 2.5mm 0;
+  font-style: italic;
+  color: var(--text-1);
+  font-size: 9.5pt;
+}
+
+blockquote cite {
+  display: block;
+  font-size: 7.5pt;
+  font-style: normal;
+  color: var(--text-2);
+  margin-top: 1mm;
+}
+
+/* ========== Phase Card ========== */
+.phase-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4mm;
+  margin: 3mm 0;
+}
+
+.phase-card {
+  background: var(--surface-1);
+  border-radius: 2mm;
+  padding: 3mm 4mm;
+}
+
+.phase-num {
+  font-family: var(--font-display);
+  font-size: 16pt;
+  color: var(--accent-light);
+  line-height: 1;
+}
+
+.phase-title {
+  font-weight: 700;
+  font-size: 10pt;
+  margin: 1mm 0;
+}
+
+.phase-card p { font-size: 9pt; margin-bottom: 0; }
+
+/* ========== Kit Items ========== */
+.kit-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 3mm;
+  margin: 3mm 0;
+}
+
+.kit-item {
+  background: var(--surface-1);
+  border-radius: 2mm;
+  padding: 2.5mm 3mm;
+  text-align: center;
+  font-size: 9pt;
+}
+
+.kit-item strong { display: block; margin-bottom: 1mm; }
+
+/* ========== Timeline ========== */
+.timeline-compact {
+  position: relative;
+  padding-left: 14mm;
+  margin: 3mm 0;
+}
+
+.timeline-compact::before {
+  content: '';
+  position: absolute;
+  left: 4mm;
+  top: 2mm;
+  bottom: 2mm;
+  width: 1pt;
+  background: var(--border);
+}
+
+.tl-item {
+  position: relative;
+  margin-bottom: 3mm;
+}
+
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: -11.5mm;
+  top: 2mm;
+  width: 5pt;
+  height: 5pt;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.tl-label {
+  font-weight: 700;
+  font-size: 9pt;
+  color: var(--accent);
+}
+
+.tl-item p { font-size: 9pt; margin-bottom: 0; }
+
+/* ========== Footer ========== */
+.page-footer {
+  font-size: 7.5pt;
+  color: var(--text-2);
+  border-top: 0.5pt solid var(--border);
+  padding-top: 2mm;
+  margin-top: auto;
+}
+
+/* ========== Screen ========== */
+@media screen {
+  body { background: hsl(220, 10%, 90%); padding: 10mm 0; }
+  .page { box-shadow: 0 1mm 6mm rgba(0,0,0,0.15); margin-bottom: 10mm; }
+}
+
+/* ========== Print ========== */
+@media print {
+  body { background: white; }
+  .page { padding: 0; min-height: auto; box-shadow: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ==================== PAGE 1 ==================== -->
+<div class="page">
+  <div class="header">
+    <span class="header-title">Google研修レポート</span>
+    <span class="header-meta">2026年3月12日実施 ／ 財政局償却資産課　久保拓海</span>
+  </div>
+
+  <h1>20%ルールを調べたら、<br>もっと面白いものが見つかった。</h1>
+
+  <p class="lead">3月12日、渋谷のGoogleオフィスで研修を受けた。GWSもGeminiも文句なしにすごかった。でも帰ってから「横浜市版20%ルール」について調べてみたら、全然違う景色が見えてきた。</p>
+
+  <h2>20%ルールの真実</h2>
+
+  <p>Googleの20%ルールは<strong>制度として存在したことが一度もない。</strong>社員ハンドブックにも人事規程にも記載されていない。2004年のIPO書簡で「encourage（奨励する）」と書かれた文化規範だった。元人事責任者ラズロ・ボックは「利用率は約10%。20%タイムはその実態よりもアイデアとしての方が重要だ」と述べている。</p>
+
+  <div class="big-num-row">
+    <div class="big-num-item">
+      <div class="big-num-value">12年間</div>
+      <div class="big-num-label">最後の成果物（2014年）から<br>新しい製品はゼロ</div>
+    </div>
+    <div class="big-num-item">
+      <div class="big-num-value">1.1%</div>
+      <div class="big-num-label">Atlassianが同様の仕組みを<br>試した結果の実利用率</div>
+    </div>
+    <div class="big-num-item">
+      <div class="big-num-value">75年</div>
+      <div class="big-num-label">3Mの15%ルールが<br>続いている期間</div>
+    </div>
+  </div>
+
+  <h3>何が違うのか</h3>
+
+  <table class="cmp-table">
+    <thead>
+      <tr><th>企業</th><th>仕組み</th><th>結果</th><th>なぜ？</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Google</strong></td><td>20%ルール（文化規範）</td><td class="hl">12年間成果ゼロ</td><td>制度にしなかった</td></tr>
+      <tr><td><strong>Atlassian</strong></td><td>20%タイム実験</td><td class="hl">利用率1.1%</td><td>本業に追加する設計</td></tr>
+      <tr><td><strong>3M</strong></td><td>15%ルール（1948年〜）</td><td>75年以上存続</td><td>「利益の30%は新製品から」で補強</td></tr>
+      <tr><td><strong>KDDI</strong></td><td>社内副業（業務時間20%）</td><td>419名参加</td><td>正式な業務として位置づけ</td></tr>
+    </tbody>
+  </table>
+
+  <div class="insight-box">
+    <p><strong>文化だけでは消える。追加負荷では使われない。制度で支えれば続く。</strong>技術は触ればわかる。でも制度やスキームは、調べないと怖い。Googleの仕組みが全部立派とは限らない。</p>
+  </div>
+
+  <h2>じゃあGoogleのイノベーションの源泉は何か</h2>
+
+  <p>20%ルールは死んだ。でもGoogleのイノベーション自体は死んでいない。研修で見たのは、カフェテリア、マイクロキッチン、階段の幅を狭くするレイアウト、火水木の出社。<strong>人と人が偶然出会う仕組みのデザイン</strong>だった。</p>
+
+  <div class="two-col">
+    <div>
+      <h3>偶発的交流の科学</h3>
+      <p>MITのAllen教授が1977年に発見。<strong>50メートル離れると、人は週に一度も技術的な会話をしなくなる。</strong>メール時代でも変わらない（2007年再検証）。Googleは全社員が互いに2分半以内の距離に配置され、世界70拠点に1,500カ所のマイクロキッチンを設置。MITメディアラボの計測で、偶発的交流は<strong>生産性を最大25%向上</strong>させた。</p>
+    </div>
+    <div>
+      <h3>心理的安全性の実装</h3>
+      <p>Project Aristotle（180チーム、250変数を分析）は、チーム効果性の第1因子が<strong>心理的安全性</strong>であることを実証。効果的と評価される確率が2倍。Googleは「Blameless Postmortem」——障害が起きたとき<strong>「誰が悪い」ではなく「なぜ情報が不完全だったか」</strong>を分析する文化——を全社で実践している。</p>
+    </div>
+  </div>
+
+  <span class="page-num">1 / 3</span>
+</div>
+
+<!-- ==================== PAGE 2 ==================== -->
+<div class="page">
+  <div class="header">
+    <span class="header-title">Google研修レポート</span>
+    <span class="header-meta">2026年3月 ／ 財政局償却資産課　久保拓海</span>
+  </div>
+
+  <h2>ワークショップで見えた横浜市の現実</h2>
+
+  <p>午後のワークショップでは、各部署の参加者が課題を共有した。</p>
+
+  <div class="two-col">
+    <div>
+      <blockquote>
+        「新システムの進捗率25%。職員が全然習熟してない」
+        <cite>— 償却資産課（筆者）</cite>
+      </blockquote>
+      <blockquote>
+        「担当100世帯以上。端末は2〜3人に1台。電話が多くて進まない」
+        <cite>— 生活保護ケースワーカー</cite>
+      </blockquote>
+    </div>
+    <div>
+      <blockquote>
+        「救急車の出動が毎年5%増。軽症が4割。1件4万円」
+        <cite>— 消防</cite>
+      </blockquote>
+      <blockquote>
+        「やった人が評価されない。無関心層のボトムアップが必要」
+        <cite>— DX・人材育成担当</cite>
+      </blockquote>
+    </div>
+  </div>
+
+  <p><strong>課題は山ほどある。でも誰も「隣の部署を助けに行こう」とは言わなかった。</strong>みんな自分の部署で精一杯だった。</p>
+
+  <h2>「ホーム実践者」と「アウェイ」の壁</h2>
+
+  <p>自分の場合、AIを使って税務データの照合ツールを自作した。課税データは外部に送れないので、ブラウザ内で完結する設計にした。業務は劇的に変わった。でも、<strong>これを隣の部署でやれと言われたらたぶんできない。</strong>自部署では業務の文脈も関係者の信頼もある。他部署ではそれが全部ゼロから。</p>
+
+  <table class="cmp-table">
+    <thead>
+      <tr><th></th><th>ホーム（自部署）</th><th>アウェイ（他部署）</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>業務文脈</strong></td><td>わかっている</td><td>ゼロから</td></tr>
+      <tr><td><strong>関係者</strong></td><td>信頼関係あり</td><td>初対面</td></tr>
+      <tr><td><strong>AI活用</strong></td><td>何を食わせるかわかる</td><td>何が課題かわからない</td></tr>
+      <tr><td><strong>失敗のコスト</strong></td><td>自分でリカバリーできる</td><td>相手の業務に影響する</td></tr>
+    </tbody>
+  </table>
+
+  <p>DXアセスメントでも面白いことがわかった。自分は「データ・AIの戦略的活用」が低く出ているが、実際にはAIでツールを自作している。<strong>アセスメントが測る力と、現場で課題を解く力は別物</strong>だ。</p>
+
+  <h2>1人で全部はできない — ペアで補完する</h2>
+
+  <p>AI実装力が高い「ホーム実践者」と、課題言語化やステークホルダー調整に長けた「アウェイ実践者」。<strong>この2人がペアになって初めて、部署を越えたDX支援が成立する。</strong>「助けてください」ではなく「一緒にやらない？」という関係。</p>
+
+  <div class="phase-row">
+    <div class="phase-card">
+      <span class="phase-num">1</span>
+      <p class="phase-title">DXリーダー × DXリーダー</p>
+      <p>受け入れ側にもDXリーダーがいる部署同士で組む。文脈の翻訳コストが低く、「よそ者拒否」が起きにくい。作った人が異動しても保守の引き継ぎ先がいる。</p>
+    </div>
+    <div class="phase-card">
+      <span class="phase-num">2</span>
+      <p class="phase-title">DXリーダー × 業務担当者</p>
+      <p>Phase 1で「アウェイ経験」を積んだDXリーダーが、DXリーダーがいない部署に出ていく。業務担当者が自分でできるようになることがゴール。</p>
+    </div>
+  </div>
+
+  <h2>「作る」だけじゃ足りない — 保守キット</h2>
+
+  <p>かつて「謎にマクロが得意な人」が各部署にいた。便利だったが、本人が異動した今、誰も直せないレガシーになっている。同じ轍を踏まないために、成果物には<strong>保守キット</strong>をセットにする。</p>
+
+  <div class="kit-row">
+    <div class="kit-item"><strong>ツール本体</strong>作ったもの</div>
+    <div class="kit-item"><strong>直し方（A4一枚）</strong>壊れたら誰が何をするか</div>
+    <div class="kit-item"><strong>AIプロンプト集</strong>AIに直してもらう聞き方</div>
+  </div>
+
+  <p><strong>完了条件は「ツールが動く」ではなく「受け入れ側が自分で直せる」。</strong></p>
+
+  <span class="page-num">2 / 3</span>
+</div>
+
+<!-- ==================== PAGE 3 ==================== -->
+<div class="page">
+  <div class="header">
+    <span class="header-title">Google研修レポート</span>
+    <span class="header-meta">2026年3月 ／ 財政局償却資産課　久保拓海</span>
+  </div>
+
+  <h2>横浜市で今日から始められること</h2>
+
+  <p>20%ルールは制度にしなかったから死んだ。でもGoogleのイノベーションの本当の源泉——<strong>偶発的交流の場と、失敗を安全に語れる場</strong>——は、予算ゼロ・制度変更ゼロで始められる。</p>
+
+  <div class="two-col">
+    <div>
+      <h3>偶発的交流を設計する</h3>
+      <p>Allen Curveが示す通り、50m離れると人は会話しなくなる。部署を越えた交流は、待っていても起きない。<strong>意図的に「近づける」場のデザインが要る。</strong>Googleはマイクロキッチン1,500カ所でそれをやった。横浜市なら、部署横断の少人数グループやランチ会で同じことができる。</p>
+    </div>
+    <div>
+      <h3>失敗を安全に語る</h3>
+      <p>GoogleのBlameless Postmortemは「誰が悪い」ではなく「なぜ情報が不完全だったか」だけを話す。<strong>行政組織は公的説明責任の圧力が強く、失敗を語りにくい。だからこそ構造化された形式が効く。</strong>月1回、「うまくいかなかったDX施策」を共有する場を設けるだけでいい。</p>
+    </div>
+  </div>
+
+  <h2>私がこれからやること</h2>
+
+  <div class="timeline-compact">
+    <div class="tl-item">
+      <span class="tl-label">すぐに</span>
+      <p>DXリーダー5〜6人の少人数グループを作る。成功報告ではなく「今ハマってること」から始める。まず自分が弱みを見せる。</p>
+    </div>
+    <div class="tl-item">
+      <span class="tl-label">1か月後</span>
+      <p>グループ内で「一緒にやらない？」が生まれたら、1件ペアでやってみる。保守キット付きで。</p>
+    </div>
+    <div class="tl-item">
+      <span class="tl-label">3か月後</span>
+      <p>やったことを共有する。うまくいったことも、いかなかったことも。</p>
+    </div>
+  </div>
+
+  <h2>研修で気づいたこと</h2>
+
+  <p>AIを使いこなせるようになって、「すごいな」と言われる機会が増えた。でも、答えを出すだけでは相手のスキルは変わらない。自分が答えを持っている側に立ち続けようとするほど、周りとの距離が開いていく気がしていた。</p>
+
+  <p>研修で改めて思ったのは、<strong>Googleがすごいのは技術ではなく「一緒にやる」仕組みのデザインだ</strong>ということ。ピアボーナス、Blameless Postmortem、マイクロキッチン——全部「個人の成果」ではなく「チームの相互作用」を最大化する設計だった。</p>
+
+  <p><strong>答えを出す人ではなく、一緒に考える人になりたい。</strong>まずは小さく、1件から。</p>
+
+  <div class="page-footer" style="position: absolute; bottom: 15mm; left: 18mm; right: 18mm;">
+    <p>本レポートの事実・数値は一次ソース（SEC提出書類、Google re:Work、Gallup、MIT、各社公式発表、各自治体公式資料）で検証済みです。</p>
+  </div>
+
+  <span class="page-num">3 / 3</span>
+</div>
+
+</body>
+</html>

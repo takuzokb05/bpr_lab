@@ -1,0 +1,437 @@
+/* UI Overlay Styles */
+
+/* 範囲選択オーバーレイ */
+#kindle-screenshot-range-selector {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999998;
+  cursor: crosshair;
+}
+
+#kindle-screenshot-selection-box {
+  position: absolute;
+  border: 2px dashed #00ff00;
+  background: rgba(0, 255, 0, 0.1);
+  pointer-events: none;
+}
+
+/* 進捗オーバーレイ */
+#kindle-screenshot-progress {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 20px 24px;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  z-index: 999999;
+  font-family: -apple-system, BlinkMacSystemFont, 'Seguro UI', sans-serif;
+  min-width: 280px;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+#kindle-screenshot-progress-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#kindle-screenshot-progress-text {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+
+#kindle-screenshot-progress-bar-container {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+#kindle-screenshot-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #00ff88, #00d4ff);
+  border-radius: 4px;
+  transition: width 0.3s ease-out;
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+#kindle-screenshot-progress-controls {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.kindle-screenshot-btn {
+  flex: 1;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.kindle-screenshot-btn-pause {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.kindle-screenshot-btn-pause:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.kindle-screenshot-btn-cancel {
+  background: rgba(255, 59, 48, 0.9);
+  color: white;
+}
+
+.kindle-screenshot-btn-cancel:hover {
+  background: rgba(255, 59, 48, 1);
+}
+
+/* サムネイルスタック */
+#kindle-screenshot-thumbnails {
+  margin-top: 12px;
+  max-height: 120px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.kindle-screenshot-thumbnail {
+  width: 100%;
+  height: 40px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.1);
+  animation: thumbnailPop 0.3s ease-out;
+}
+
+@keyframes thumbnailPop {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* 拡張機能の共通ボタン属性 */
+.kindle-screenshot-main-btn {
+  position: fixed;
+  right: 20px;
+  z-index: 999997;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 180px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.kindle-screenshot-main-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+/* 各ボタン固有の色と位置 */
+#kindle-screenshot-start-btn {
+  top: 60px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+#kindle-screenshot-resume-btn {
+  top: 60px;
+  /* 未完了時は再開が一番上 */
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+#kindle-screenshot-new-start-btn {
+  top: 115px;
+  /* 再開の下に配置 */
+  background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+}
+
+/* 完了モーダル */
+#kindle-screenshot-complete-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+#kindle-screenshot-complete-content {
+  background: white;
+  padding: 40px;
+  border-radius: 16px;
+  text-align: center;
+  max-width: 500px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: scaleIn 0.3s ease-out;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+#kindle-screenshot-complete-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 16px;
+}
+
+#kindle-screenshot-complete-message {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+#kindle-screenshot-complete-download-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+  transition: all 0.2s;
+}
+
+#kindle-screenshot-complete-download-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+
+/* 範囲選択ヘルプテキスト */
+#kindle-screenshot-range-help {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 24px 32px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  z-index: 999999;
+  pointer-events: none;
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* 範囲確認モーダル */
+#kindle-screenshot-confirm-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000001;
+  backdrop-filter: blur(4px);
+}
+
+#kindle-screenshot-confirm-content {
+  background: #1a1a1a;
+  color: white;
+  padding: 30px;
+  border-radius: 16px;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  border: 1px solid #333;
+}
+
+#kindle-screenshot-confirm-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+#kindle-screenshot-confirm-message {
+  font-size: 14px;
+  color: #aaa;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+#kindle-screenshot-confirm-preview-container {
+  overflow: auto;
+  background: #000;
+  border-radius: 8px;
+  border: 1px solid #444;
+  margin-bottom: 24px;
+  max-height: 60vh;
+}
+
+#kindle-screenshot-confirm-preview {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+#kindle-screenshot-direction-selector {
+  margin-bottom: 24px;
+  background: #252525;
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid #333;
+}
+
+#kindle-screenshot-direction-selector p {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  color: #fff;
+  font-weight: 600;
+}
+
+.kindle-screenshot-direction-options {
+  display: flex;
+  gap: 12px;
+}
+
+.kindle-screenshot-direction-label {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #333;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 2px solid transparent;
+}
+
+.kindle-screenshot-direction-label:hover {
+  background: #444;
+}
+
+.kindle-screenshot-direction-label:has(input:checked) {
+  border-color: #28a745;
+  background: rgba(40, 167, 69, 0.1);
+}
+
+.kindle-screenshot-direction-label span {
+  font-size: 13px;
+  line-height: 1.4;
+  color: #aaa;
+}
+
+.kindle-screenshot-direction-label input:checked~span {
+  color: #fff;
+}
+
+.kindle-screenshot-direction-label small {
+  display: block;
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+#kindle-screenshot-confirm-controls {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+#kindle-screenshot-confirm-btn-ok {
+  background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+#kindle-screenshot-confirm-btn-retry {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid #444;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+#kindle-screenshot-confirm-btn-ok:hover,
+#kindle-screenshot-confirm-btn-retry:hover {
+  transform: translateY(-2px);
+}

@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ — 償却資産税RAG導入提案</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700;800;900&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ── CSS変数 — Swiss Modernテーマ ── */
+  :root {
+    --bg-primary: #ffffff;
+    --text-primary: #1a1a1a;
+    --text-secondary: #444;
+    --text-muted: #777;
+    --accent: #ff3300;
+    --accent-light: rgba(255, 51, 0, 0.06);
+    --border: #e0e0e0;
+    --border-light: #f0f0f0;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Nunito', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── ヘッダー ── */
+  .site-header {
+    border-bottom: 3px solid var(--accent);
+    padding: 2.5rem 1.5rem 2rem;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .site-header .label {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .site-header h1 {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 900;
+    font-size: 2rem;
+    line-height: 1.25;
+    color: var(--text-primary);
+  }
+
+  .site-header .subtitle {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+  }
+
+  /* ── カテゴリジャンプナビ ── */
+  .jump-nav {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 1.5rem 1.5rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .jump-nav a {
+    font-family: 'Archivo', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    color: var(--accent);
+    border: 1.5px solid var(--accent);
+    border-radius: 3px;
+    padding: 0.3rem 0.7rem;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .jump-nav a:hover {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  /* ── メインコンテンツ ── */
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  /* ── カテゴリ見出し ── */
+  .category {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--text-primary);
+  }
+
+  .category h2 {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: 1.3rem;
+    line-height: 1.3;
+  }
+
+  .category-num {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  /* ── アコーディオン（details/summary） ── */
+  details {
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  summary {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.6;
+    padding: 1rem 2rem 1rem 0;
+    cursor: pointer;
+    list-style: none;
+    position: relative;
+    color: var(--text-primary);
+  }
+
+  /* カスタム開閉矢印 */
+  summary::-webkit-details-marker { display: none; }
+  summary::marker { display: none; content: ""; }
+
+  summary::after {
+    content: "+";
+    font-family: 'Archivo', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--accent);
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.25s ease;
+  }
+
+  details[open] > summary::after {
+    content: "\2212"; /* マイナス記号 */
+  }
+
+  summary:hover {
+    color: var(--accent);
+  }
+
+  /* 回答本文 */
+  .answer {
+    padding: 0 0 1.25rem 0;
+    font-size: 0.93rem;
+    line-height: 1.85;
+    color: var(--text-secondary);
+  }
+
+  .answer p {
+    margin-bottom: 0.75rem;
+  }
+
+  .answer p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* 提案書クロスリファレンス */
+  .ref {
+    display: inline-block;
+    font-family: 'Archivo', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 0.15rem 0.5rem;
+    border-radius: 2px;
+    margin-top: 0.25rem;
+  }
+
+  /* ── フッター ── */
+  .site-footer {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-align: center;
+  }
+
+  /* ── 印刷対応 ── */
+  @media print {
+    body {
+      font-size: 11pt;
+      line-height: 1.7;
+      color: #000;
+    }
+
+    .jump-nav { display: none; }
+
+    .site-header {
+      border-bottom-width: 2px;
+      padding: 1rem 0;
+    }
+
+    main {
+      padding: 1rem 0;
+    }
+
+    details {
+      break-inside: avoid;
+    }
+
+    /* 印刷時は全て開いた状態 */
+    details > .answer {
+      display: block !important;
+    }
+
+    summary::after { display: none; }
+
+    summary {
+      padding: 0.5rem 0;
+    }
+
+    .answer {
+      padding-bottom: 0.75rem;
+    }
+
+    .ref {
+      background: none;
+      border: 1px solid #999;
+    }
+
+    .site-footer { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── ヘッダー ── -->
+<header class="site-header">
+  <p class="label">FAQ</p>
+  <h1>償却資産税RAG導入提案<br>よくある質問</h1>
+  <p class="subtitle">課長・他部署・後任から想定される質問と回答</p>
+</header>
+
+<!-- ── カテゴリジャンプナビ ── -->
+<nav class="jump-nav">
+  <a href="#cost">コスト・予算</a>
+  <a href="#security">セキュリティ・個人情報</a>
+  <a href="#accuracy">精度・信頼性</a>
+  <a href="#workload">業務負荷</a>
+  <a href="#tech">技術・運用</a>
+  <a href="#org">組織・制度</a>
+  <a href="#exit">撤退・失敗時</a>
+</nav>
+
+<main>
+
+<!-- ================================================================
+     1. コスト・予算
+     ================================================================ -->
+<div class="category" id="cost">
+  <span class="category-num">01</span>
+  <h2>コスト・予算</h2>
+</div>
+
+<details>
+  <summary>いくらかかるの？</summary>
+  <div class="answer">
+    <p>導入方式により幅があります。提案書ではハイブリッド方式（C案）を推奨しており、年間ランニングコストは150〜400万円の範囲です。SaaSで済む部分はSaaSを使い、自前構築が必要な部分（申告データ疑義抽出）のみデジタル統括本部と構築する考え方です。</p>
+    <p>ただし、デジタル統括本部の支援範囲（技術のみか、インフラ・予算も含むか）により大幅に変動します。正確な見積りはPhase 1 PoC完了後に算出します。</p>
+    <span class="ref">提案書 第8章 コスト概算</span>
+  </div>
+</details>
+
+<details>
+  <summary>無料で始められるって本当？</summary>
+  <div class="answer">
+    <p>Phase 1（PoC）はNotebookLMを使うため、実質無料で着手できます。NotebookLMはGoogle Workspaceの契約範囲で利用できる見込みです（庁内のライセンス状況は要確認）。必要なのは申告データCSV100件程度と評価要領PDFで、特別な購入は不要です。</p>
+    <p>費用が発生するのはPhase 2（本格構築）以降です。まずは無料で効果を確認し、Go/No-Go判定の結果を見てから予算の議論に入ります。</p>
+    <span class="ref">提案書 第10章 段階的導入 / 第15章 PoC実施手順</span>
+  </div>
+</details>
+
+<details>
+  <summary>ランニングコストはどのくらい？</summary>
+  <div class="answer">
+    <p>方式別の年間ランニングコスト概算は以下の通りです。</p>
+    <p>A案（SaaS中心）: 200〜600万円/年。B案（自前構築中心）: 50〜150万円/年。C案（ハイブリッド・推奨）: 150〜400万円/年。</p>
+    <p>一方、効果としては年間約395時間・約119万円相当（保守的試算）の直接的な時間削減が見込まれます。総務省ベースの人件費単価で計算すると年間198〜277万円相当です。ランニングコストが年120万円以下なら初年度から回収可能という逆算ロジックです。</p>
+    <span class="ref">提案書 第8章 コスト概算（8.3 費用対効果）</span>
+  </div>
+</details>
+
+<details>
+  <summary>費用対効果はどう計算してるの？</summary>
+  <div class="answer">
+    <p>3つのユースケース合計で年間約395時間の削減を見込んでいます。内訳は、見積精査の短縮（年60時間）、疑義チェックの全件化（年140時間）、定型問い合わせの自動化（年195時間）です。人件費単価3,000円/時で約119万円、総務省ベース5,000〜7,000円/時で約198〜277万円相当です。</p>
+    <p>なお、これは直接的な時間削減のみの試算です。課税漏れの防止や知見の永続化といった定性的効果は含んでいません。正確な費用対効果はPoC完了後に算出します。</p>
+    <span class="ref">提案書 第8章 コスト概算（8.3 費用対効果）</span>
+  </div>
+</details>
+
+<!-- ================================================================
+     2. セキュリティ・個人情報
+     ================================================================ -->
+<div class="category" id="security">
+  <span class="category-num">02</span>
+  <h2>セキュリティ・個人情報</h2>
+</div>
+
+<details>
+  <summary>税データをAIに入れて大丈夫？</summary>
+  <div class="answer">
+    <p>申告データCSVには宛名番号が含まれますが、宛名番号単体では個人を特定できません。さらに本市のセキュリティルールに準拠し、匿名化してからアップロードします。具体的には、宛名番号を連番に置換し、義務者名・住所などの個人特定可能な列を削除します。</p>
+    <p>評価要領や判定基準は公開情報・庁内規程のため、匿名化不要でそのまま利用可能です。本格導入時はデジタル統括本部のセキュリティ基準に準拠します。</p>
+    <span class="ref">提案書 第14章 データ匿名化の手順</span>
+  </div>
+</details>
+
+<details>
+  <summary>個人情報の扱いは具体的にどうなる？</summary>
+  <div class="answer">
+    <p>Excelで一括処理する明確な手順が定められています。宛名番号は連番（1, 2, 3...）に置換、義務者名・住所は削除、その他個人・法人を特定できる列も削除します。処理済みCSVは別名保存し、元データはそのまま残します。</p>
+    <p>過去の評価資料についても、義務者名・住所を黒塗りまたは削除し、物件を特定できる地番等も削除します。残すのは構造・面積・評価額・精査ポイントといったノウハウの本体部分だけです。Pythonなどの特別なツールは不要で、Excelの置換機能で対応できます。</p>
+    <span class="ref">提案書 第14章 データ匿名化の手順（14.1〜14.3）</span>
+  </div>
+</details>
+
+<details>
+  <summary>NotebookLMにアップしたデータはどこに保存されるの？</summary>
+  <div class="answer">
+    <p>NotebookLMはGoogle Workspaceの製品であり、庁内Workspace契約の範囲で利用する想定です。データの保管場所や取扱いについては、Phase 1開始前にIT担当に確認し、本市のセキュリティポリシーとの整合を取ります。</p>
+    <p>いずれにしても、アップロードするデータは匿名化済みのものに限定するため、万一の漏洩時にも個人特定のリスクは低いです。</p>
+    <span class="ref">提案書 第14章 データ匿名化の手順 / 第15章 PoC実施手順</span>
+  </div>
+</details>
+
+<!-- ================================================================
+     3. 精度・信頼性
+     ================================================================ -->
+<div class="category" id="accuracy">
+  <span class="category-num">03</span>
+  <h2>精度・信頼性</h2>
+</div>
+
+<details>
+  <summary>AIが間違えたらどうするの？</summary>
+  <div class="answer">
+    <p>大原則として、AI出力は必ず職員が最終確認します。RAGは「補助ツール」であり、最終判断は人間です。</p>
+    <p>UC-1（見積精査）とUC-2（疑義抽出）は職員の最終確認が前提のため、AI誤出力の責任は生じません。従来の手作業と同じ責任構造です。UC-3（チャットボット）には「本回答は参考情報です。正式な判断は窓口にお問い合わせください」という免責表示を全回答に付与します。さらに、運用開始前に法務担当（総務局法制課等）への事前相談を必須としています。</p>
+    <span class="ref">提案書 第9章 精度保証と運用ルール（9.1〜9.3）</span>
+  </div>
+</details>
+
+<details>
+  <summary>精度はどのくらいなの？</summary>
+  <div class="answer">
+    <p>正確な精度はPhase 1のPoCで検証します。Go/No-Go判定の基準は、既知の疑義事例の80%以上を検出できるかどうかです。偽陽性（疑義なしを疑義ありと判定）は許容しますが、偽陰性（見逃し）を最小化する方針です。</p>
+    <p>PoCでは過去に実際に発見した疑義事例10〜20件を正解データとして用意し、AIの検出率を計測します。検出率、偽陽性の件数、判定理由の妥当性をA専任職に評価してもらう計画です。</p>
+    <span class="ref">提案書 第9章 精度保証と運用ルール（9.4）/ 第15章 PoC実施手順</span>
+  </div>
+</details>
+
+<details>
+  <summary>課税に影響しないの？</summary>
+  <div class="answer">
+    <p>AIが直接課税額を決定することはありません。UC-1（見積精査）ではAIは精査ポイントの「候補」を提示するだけで、職員が独立に精査した上で追加チェックとして活用します。UC-2（疑義抽出）もAIが抽出したリストを職員が確認する運用です。AIが「問題なし」としたものも抜き打ちで検証します。</p>
+    <p>つまり、従来の手作業にAIの補助を加える形であり、課税の判断プロセス自体は変わりません。</p>
+    <span class="ref">提案書 第9章 精度保証と運用ルール（9.1〜9.2）</span>
+  </div>
+</details>
+
+<!-- ================================================================
+     4. 業務負荷
+     ================================================================ -->
+<div class="category" id="workload">
+  <span class="category-num">04</span>
+  <h2>業務負荷</h2>
+</div>
+
+<details>
+  <summary>忙しいのにさらに仕事が増えるのでは？</summary>
+  <div class="answer">
+    <p>Phase 1（PoC）の想定工数は5〜10人日です。7〜9月の閑散期に集中実施する計画で、繁忙期の通常業務に影響を与えない段取りになっています。</p>
+    <p>むしろ、新システムの安定化で想定以上に忙しいからこそ、調査系業務の効率化が必要という背景があります。PoC完了後は年間約395時間の削減が見込まれ、中長期的には業務負荷の軽減につながります。</p>
+    <span class="ref">提案書 第12章 リスクと対策 / 第13章 月別アクションプラン</span>
+  </div>
+</details>
+
+<details>
+  <summary>誰がやるの？</summary>
+  <div class="answer">
+    <p>後任担当者が中心となり、A専任職（元SE）が技術面でサポートする体制です。M専任職からは業務知見のヒアリングを行います。月別アクションプランでは、4月にA専任職の協力を取り付け、5〜6月にM専任職へのヒアリング（月2回×1時間）、7月にPoC実施という段取りです。</p>
+    <p>Phase 2以降はデジタル統括本部の技術支援を受けるため、部署単独での技術力は必須ではありません。</p>
+    <span class="ref">提案書 第10章 実現可能性（10.2 人材面）/ 第13章 月別アクションプラン</span>
+  </div>
+</details>
+
+<details>
+  <summary>ナレッジの更新って大変じゃない？</summary>
+  <div class="answer">
+    <p>エコシステム設計により、日常業務の副産物としてナレッジが育つ仕組みです。年1回の大改訂ではなく、気づいた時に1件ずつ追加する方針です。具体的な運用負荷は、ナレッジ追加の承認が月5〜10件（1件あたり10〜15分）、定期棚卸しが年1回（2〜3人日）、法改正対応が年1〜2回（1〜2人日/回）です。</p>
+    <p>更新が3ヶ月滞った場合はデジタル統括本部に運用支援を要請するフォールバック策もあります。最悪のケースでも法改正がなければナレッジは1年程度は有効です。</p>
+    <span class="ref">提案書 第4章 知識更新エコシステム / 第10章 実現可能性（10.4）</span>
+  </div>
+</details>
+
+<!-- ================================================================
+     5. 技術・運用
+     ================================================================ -->
+<div class="category" id="tech">
+  <span class="category-num">05</span>
+  <h2>技術・運用</h2>
+</div>
+
+<details>
+  <summary>Pythonとかプログラミングが必要？</summary>
+  <div class="answer">
+    <p>Phase 1（PoC）ではプログラミングは不要です。NotebookLMにPDFやCSVをアップロードして質問するだけです。データの匿名化もExcelの置換機能で対応でき、Pythonは使いません。</p>
+    <p>Phase 2以降でUC-2（疑義抽出）の自前構築を行う場合はプログラミングが必要ですが、デジタル統括本部の技術支援を受ける前提です。部署の担当者がコードを書く必要はありません。</p>
+    <span class="ref">提案書 第14章 データ匿名化の手順 / 第15章 PoC実施手順</span>
+  </div>
+</details>
+
+<details>
+  <summary>NotebookLMって何？</summary>
+  <div class="answer">
+    <p>GoogleがGoogle Workspace向けに提供しているAIツールです。PDF、スプレッドシート、Webページなどのソースをアップロードすると、それらの内容に基づいて質問に回答してくれます。ソースに書かれていないことは「情報が見つかりません」と返すため、AIの勝手な創作（ハルシネーション）が起きにくい特徴があります。</p>
+    <p>後任担当者はNotebookLMの利用経験があるため、技術的なハードルは低い想定です。庁内Workspace契約で使えるかどうかは4月にIT担当に確認します。</p>
+    <span class="ref">提案書 第10章 実現可能性（10.2 人材面）/ 第13章 月別アクションプラン</span>
+  </div>
+</details>
+
+<details>
+  <summary>誰がメンテするの？</summary>
+  <div class="answer">
+    <p>ナレッジの追加・承認は担当者が行います。管理画面からドキュメントを追加するだけで、専門スキルは不要です。引継ぎコストも最小化されており、知識はシステムに蓄積済みなので、引き継ぐのは「承認フロー」だけです。</p>
+    <p>システム自体のメンテナンスはPhase 2以降デジタル統括本部の支援範囲です。SaaSを利用する部分はベンダーがメンテナンスを行います。</p>
+    <span class="ref">提案書 第4章 知識更新エコシステム（4.2 運用原則）</span>
+  </div>
+</details>
+
+<details>
+  <summary>CSVデータのクリーニングって面倒じゃない？</summary>
+  <div class="answer">
+    <p>申告データCSVをそのまま投入すると、非申告資産の混在や表記揺れがノイズになります。提案書では「まず100件でPoC → ノイズパターン洗い出し → クリーニングルール確立 → 全件投入」という段階的アプローチを推奨しています。</p>
+    <p>初回は100件程度なのでExcelフィルタで明らかな非申告資産を除外する程度で済みます。全件投入は本格構築フェーズの話です。</p>
+    <span class="ref">提案書 第6章 着手に必要なデータ（6.3 CSVデータのクリーニング）</span>
+  </div>
+</details>
+
+<!-- ================================================================
+     6. 組織・制度
+     ================================================================ -->
+<div class="category" id="org">
+  <span class="category-num">06</span>
+  <h2>組織・制度</h2>
+</div>
+
+<details>
+  <summary>手上げ制って何？</summary>
+  <div class="answer">
+    <p>デジタル統括本部が来年度から開始予定のRAG導入支援制度です。各部署が自ら手を挙げて応募し、採択されると技術支援を受けられます。トップダウンではなくボトムアップの仕組みで、やる気のある部署を優先的に支援する設計です。</p>
+    <p>制度の詳細はまだ未確定の部分もあるため、2026年度の機構改革後の窓口に非公式に打診しておくことを推奨しています。具体的なツール名（NotebookLM）を出して「準備を進めていいか」と伝えると話が早いです。</p>
+    <span class="ref">提案書 第1章 要旨 / 第13章 月別アクションプラン（13.1）</span>
+  </div>
+</details>
+
+<details>
+  <summary>デジ統括の支援って具体的に何をしてくれるの？</summary>
+  <div class="answer">
+    <p>提案書では「デジタル統括本部に確認すべき事項」として以下を挙げています。技術支援の範囲（構築のみか、運用保守も含むか）、インフラ費用の負担者（デジ統括か各部署か）、SaaS調達の可否（共同調達できるか）、セキュリティ要件（オンプレ必須かクラウド可か）です。</p>
+    <p>支援範囲次第でコストや構成が大きく変わるため、早期の確認が重要です。なお、本市では選挙管理でRAG実証実験の実績があり、庁内にノウハウが蓄積されています。</p>
+    <span class="ref">提案書 第8章 コスト概算（8.4）/ 第10章 実現可能性</span>
+  </div>
+</details>
+
+<details>
+  <summary>他自治体でやってるところはあるの？</summary>
+  <div class="answer">
+    <p>複数の事例があります。草津市は固定資産税DXポータル「kopo」を導入し、検索時間の大幅短縮と職員の知識差縮小を実現しています。神戸市は生成AIボイスボットで税の電話対応の65%以上を自動回答しています。善通寺市は衛星画像とAIで土地・家屋の変化を抽出し、4人体制でも業務を維持しています。</p>
+    <p>国レベルでも、国税庁がAI調査選定を本格化（2026年〜）し、総務省は自治体AI活用ガイドブック第4版（2025年12月）を発行して自治体のAI導入を後押ししています。</p>
+    <span class="ref">提案書 第7章 他自治体・国の前例</span>
+  </div>
+</details>
+
+<!-- ================================================================
+     7. 撤退・失敗時
+     ================================================================ -->
+<div class="category" id="exit">
+  <span class="category-num">07</span>
+  <h2>撤退・失敗時</h2>
+</div>
+
+<details>
+  <summary>やってダメだったらどうなるの？</summary>
+  <div class="answer">
+    <p>Phase 1（PoC）は実質無料のNotebookLMで実施するため、金銭的なリスクはありません。工数も5〜10人日です。Phase 1不調時の選択肢として、SaaS切替（kopo等の既製品に乗り換え）、スコープ縮小（UC-2のみに集中）、中止の3つが用意されています。</p>
+    <p>さらに、PoCの過程そのものが「知識の棚卸し」です。AIの精度が期待値に達しなくても、専任職の暗黙知が言語化される過程で得られた知見はそのまま組織の資産になります。やって無駄になることはありません。</p>
+    <span class="ref">提案書 第9章 精度保証と運用ルール（9.5）/ 第10章 実現可能性（10.3）</span>
+  </div>
+</details>
+
+<details>
+  <summary>Go/No-Go判定って具体的にどうやるの？</summary>
+  <div class="answer">
+    <p>Phase 1のPoCで以下3指標を計測し、判定します。(1) UC-2の疑義検出率が既知の疑義事例の80%以上か、(2) 偽陽性率が職員の確認負荷を現状より増やさないか、(3) PoC工数が想定の1.5倍以内で完了するか、です。</p>
+    <p>判定結果は3段階です。Go（基準達成）ならPhase 2へ。Conditional Go（一部未達）ならスコープを縮小して継続。No-Go（全指標未達）ならSaaS切替を検討するか中止します。判定は後任が行い、結果を課長に報告します。</p>
+    <span class="ref">提案書 第9章 精度保証と運用ルール（9.4）/ 第15章 PoC実施手順（15.4）</span>
+  </div>
+</details>
+
+<details>
+  <summary>コストが想定を超えたらどうする？</summary>
+  <div class="answer">
+    <p>ハイブリッド方式（C案）により、SaaS/自前構築を最適に配分してコストを抑えます。SaaSで済む部分（UC-1の評価要領検索、UC-3のチャットボット）はSaaSを使い、自前構築はUC-2（疑義抽出）の本当に必要な部分に絞ります。</p>
+    <p>また、Phase 1は実質無料であり、本格的な費用が発生するPhase 2に進む前にGo/No-Go判定を行います。段階的に進めることで、想定外のコスト膨張を防ぐ構造です。</p>
+    <span class="ref">提案書 第8章 コスト概算（8.2 推奨: ハイブリッド方式）/ 第12章 リスクと対策</span>
+  </div>
+</details>
+
+<details>
+  <summary>後任がAIに乗り気じゃなかったら？</summary>
+  <div class="answer">
+    <p>引継ぎ時にNotebookLMのデモを実施します（30分程度）。後任はNotebookLMの利用経験があるため、基本的な操作は問題ない想定です。</p>
+    <p>仮にAIを使わなくても従来業務に支障はありません。RAGは業務を効率化する補助ツールであり、従来の手作業を置き換えるものではないためです。ただし、M専任職の退職という期限があるため、知見のヒアリングだけは早期に着手することが重要です。</p>
+    <span class="ref">提案書 第12章 リスクと対策 / 第2章 背景と課題（2.3）</span>
+  </div>
+</details>
+
+</main>
+
+<footer class="site-footer">
+  本FAQは「償却資産税業務へのRAG導入提案書」に基づき作成。詳細は提案書各章を参照してください。
+</footer>
+
+</body>
+</html>

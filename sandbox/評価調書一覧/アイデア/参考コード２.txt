@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tax Audit Recon Dashboard</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1b7898",
+                        "background-light": "#f9fafa",
+                        "background-dark": "#22252a",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #d1e0e5;
+            border-radius: 10px;
+        }
+        .highlight-row {
+            background-color: rgba(255, 212, 0, 0.12);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#0f171a] dark:text-white min-h-screen flex flex-col">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 bg-white dark:bg-[#1a1d21] border-b border-[#e8f0f2] dark:border-gray-700 px-6 py-3 flex items-center justify-between">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3">
+<div class="bg-primary p-1.5 rounded-lg text-white">
+<span class="material-symbols-outlined block text-xl">account_balance</span>
+</div>
+<h1 class="text-lg font-bold tracking-tight">Tax Audit Recon Tool <span class="text-xs font-normal text-primary ml-2 px-2 py-0.5 bg-primary/10 rounded uppercase tracking-widest">v2.1</span></h1>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-sm font-semibold border-b-2 border-primary pb-1" href="#">Dashboard</a>
+<a class="text-sm font-medium text-[#538393] hover:text-primary transition-colors" href="#">History</a>
+<a class="text-sm font-medium text-[#538393] hover:text-primary transition-colors" href="#">Reports</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#538393] text-lg">search</span>
+<input class="bg-[#e8f0f2] dark:bg-gray-800 border-none rounded-lg pl-10 pr-4 py-2 text-sm w-64 focus:ring-2 focus:ring-primary" placeholder="Search taxpayers..." type="text"/>
+</div>
+<div class="flex gap-2">
+<button class="p-2 rounded-lg bg-[#e8f0f2] dark:bg-gray-800 text-[#0f171a] dark:text-gray-300">
+<span class="material-symbols-outlined block">notifications</span>
+</button>
+<button class="p-2 rounded-lg bg-primary text-white">
+<span class="material-symbols-outlined block">person</span>
+</button>
+</div>
+</div>
+</header>
+<div class="flex-1 flex overflow-hidden">
+<!-- Sidebar Navigation & Filters -->
+<aside class="w-72 bg-white dark:bg-[#1a1d21] border-r border-[#e8f0f2] dark:border-gray-700 flex flex-col p-6 overflow-y-auto custom-scrollbar">
+<div class="mb-8">
+<h3 class="text-xs font-bold text-[#538393] uppercase tracking-wider mb-4">Navigation</h3>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary font-semibold" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm">Overview</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 text-[#538393] font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="text-sm">All Records</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 text-[#538393] font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">error</span>
+<span class="text-sm">Discrepancies</span>
+</a>
+</div>
+</div>
+<div class="space-y-6">
+<h3 class="text-xs font-bold text-[#538393] uppercase tracking-wider">Filters</h3>
+<div>
+<label class="text-xs font-semibold mb-2 block">District (地区)</label>
+<select class="w-full text-sm rounded-lg border-[#e8f0f2] dark:border-gray-700 dark:bg-gray-800 focus:ring-primary focus:border-primary">
+<option>All Districts</option>
+<option>鶴見区 (Tsurumi-ku)</option>
+<option>神奈川区 (Kanagawa-ku)</option>
+<option>西区 (Nishi-ku)</option>
+<option>中区 (Naka-ku)</option>
+</select>
+</div>
+<div>
+<label class="text-xs font-semibold mb-2 block">Discrepancy Threshold</label>
+<div class="flex items-center gap-2 mb-2">
+<input checked="" class="rounded text-primary focus:ring-primary" id="threshold" type="checkbox"/>
+<label class="text-sm font-medium" for="threshold">&gt; 2,000円</label>
+</div>
+<div class="flex items-center gap-2">
+<input class="rounded text-primary focus:ring-primary" id="negatives" type="checkbox"/>
+<label class="text-sm font-medium text-[#538393]" for="negatives">Show Negatives</label>
+</div>
+</div>
+<div>
+<label class="text-xs font-semibold mb-2 block">Processing Status</label>
+<div class="space-y-2">
+<label class="flex items-center justify-between p-2 rounded border border-[#e8f0f2] dark:border-gray-700 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800">
+<span class="flex items-center gap-2 text-xs font-medium">
+<span class="w-2 h-2 rounded-full bg-red-500"></span> Discrepancy
+                            </span>
+<input checked="" class="rounded text-primary focus:ring-primary" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between p-2 rounded border border-[#e8f0f2] dark:border-gray-700 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800">
+<span class="flex items-center gap-2 text-xs font-medium">
+<span class="w-2 h-2 rounded-full bg-green-500"></span> Verified
+                            </span>
+<input checked="" class="rounded text-primary focus:ring-primary" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between p-2 rounded border border-[#e8f0f2] dark:border-gray-700 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800">
+<span class="flex items-center gap-2 text-xs font-medium">
+<span class="w-2 h-2 rounded-full bg-gray-400"></span> Pending
+                            </span>
+<input class="rounded text-primary focus:ring-primary" type="checkbox"/>
+</label>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto p-8 custom-scrollbar">
+<!-- Upload Area -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+<div class="bg-white dark:bg-[#1a1d21] p-6 rounded-xl border border-[#e8f0f2] dark:border-gray-700 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">upload_file</span>
+<div>
+<h4 class="text-sm font-bold">Current Data CSV</h4>
+<p class="text-xs text-[#538393]">Upload 2024 Records</p>
+</div>
+</div>
+<span class="text-[10px] font-bold px-2 py-1 rounded bg-green-100 text-green-700 uppercase">Ready</span>
+</div>
+<div class="bg-gray-50 dark:bg-gray-800 border-2 border-dashed border-[#d1e0e5] dark:border-gray-700 rounded-lg p-6 text-center cursor-pointer hover:border-primary transition-all">
+<div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg mb-3" data-alt="Abstract spreadsheet icon pattern" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAFp8ikr5FtAsXsP-OI5tJQeUTzMDJ-6BfRun7N5j4cYCRLEDPlvNrWCc41BzKd9Vu1wxK0l0P2Wqr5EzfzOM7qiolpLorFtgW2faS56D32oT3lsj620wNkdjPChJsET-VhSJP3Qh2TVz4ziAS56svW3nX196ga514-9utKRBUdut4dFUP2h4qy64yykBY3m8UI1AuovN5HgYeFrIVPz1mjnjBGt1WCAlY0aCQxsjNn94woWhMNi2eiF16gotQ6_lvfCHvaEvUTCYdx");'></div>
+<p class="text-sm font-medium">FY2024_Master_V2.csv</p>
+<p class="text-xs text-[#538393]">12,400 records • 4.2 MB</p>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a1d21] p-6 rounded-xl border border-[#e8f0f2] dark:border-gray-700 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">history</span>
+<div>
+<h4 class="text-sm font-bold">Previous List CSV</h4>
+<p class="text-xs text-[#538393]">Historical Reference (2023)</p>
+</div>
+</div>
+<span class="text-[10px] font-bold px-2 py-1 rounded bg-amber-100 text-amber-700 uppercase">Processing</span>
+</div>
+<div class="bg-gray-50 dark:bg-gray-800 border-2 border-dashed border-primary/30 rounded-lg p-6">
+<div class="flex flex-col gap-4">
+<div class="flex gap-4 items-end">
+<div class="w-16 h-16 bg-primary/10 rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-3xl">sync</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between mb-1">
+<p class="text-xs font-bold">Comparing records...</p>
+<p class="text-xs font-bold text-primary">85%</p>
+</div>
+<div class="h-2 rounded bg-gray-200 dark:bg-gray-700 overflow-hidden">
+<div class="h-full bg-primary rounded" style="width: 85%;"></div>
+</div>
+</div>
+</div>
+<p class="text-xs text-[#538393] text-center">Indexing 10,540 / 12,400 tax entities...</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Data Grid Section Header -->
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-xl font-bold tracking-tight">Reconciliation Records (宛名一覧)</h2>
+<div class="flex gap-2">
+<button class="flex items-center gap-2 px-3 py-1.5 text-xs font-bold border border-[#e8f0f2] rounded-lg hover:bg-white transition-colors">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+                        Sort by Delta
+                    </button>
+<button class="flex items-center gap-2 px-3 py-1.5 text-xs font-bold bg-primary text-white rounded-lg shadow-sm hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-sm">download</span>
+                        Export Report
+                    </button>
+</div>
+</div>
+<!-- Table Container -->
+<div class="bg-white dark:bg-[#1a1d21] rounded-xl border border-[#e8f0f2] dark:border-gray-700 overflow-hidden shadow-sm">
+<table class="w-full text-left border-collapse">
+<thead class="bg-gray-50 dark:bg-[#252a30] border-b border-[#e8f0f2] dark:border-gray-700">
+<tr>
+<th class="px-6 py-4 text-[11px] font-bold text-[#538393] uppercase tracking-wider">Taxpayer Name (宛名)</th>
+<th class="px-6 py-4 text-[11px] font-bold text-[#538393] uppercase tracking-wider">Property ID</th>
+<th class="px-6 py-4 text-[11px] font-bold text-[#538393] uppercase tracking-wider text-right">Current Tax</th>
+<th class="px-6 py-4 text-[11px] font-bold text-[#538393] uppercase tracking-wider text-right">Previous Tax</th>
+<th class="px-6 py-4 text-[11px] font-bold text-[#538393] uppercase tracking-wider text-right">Difference (Δ)</th>
+<th class="px-6 py-4 text-[11px] font-bold text-[#538393] uppercase tracking-wider">Status</th>
+<th class="px-6 py-4"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#e8f0f2] dark:divide-gray-700">
+<!-- Discrepancy Row High-Alert -->
+<tr class="highlight-row border-l-4 border-amber-400 group cursor-pointer hover:bg-amber-100 transition-colors">
+<td class="px-6 py-4">
+<div class="font-bold text-sm">株式会社 横浜貿易 (Yokohama Trade)</div>
+<div class="text-[10px] text-[#538393]">鶴見区中央 2-10-5</div>
+</td>
+<td class="px-6 py-4 font-mono text-xs">P-990-2348-XX</td>
+<td class="px-6 py-4 text-sm font-bold text-right">¥452,000</td>
+<td class="px-6 py-4 text-sm font-medium text-right text-[#538393]">¥448,500</td>
+<td class="px-6 py-4 text-sm font-bold text-right text-red-600">+¥3,500</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 rounded-full text-[10px] font-bold bg-red-100 text-red-700 uppercase">Discrepancy</span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="material-symbols-outlined text-gray-400 group-hover:text-primary transition-colors">expand_more</span>
+</td>
+</tr>
+<!-- Expanded Detail View (Comparison Card) -->
+<tr class="bg-gray-50 dark:bg-[#1a1d21]">
+<td class="px-6 py-6" colspan="7">
+<div class="bg-white dark:bg-gray-900 border border-[#d1e0e5] dark:border-gray-700 rounded-xl p-6 shadow-md max-w-5xl mx-auto">
+<div class="flex items-center justify-between mb-6">
+<h5 class="font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">analytics</span>
+                                            Comparison Card Detail
+                                        </h5>
+<div class="flex gap-2">
+<button class="text-xs font-bold text-primary px-3 py-1 bg-primary/5 rounded border border-primary/20">Mark as Resolved</button>
+<button class="text-xs font-bold text-gray-500 px-3 py-1 border border-gray-200 rounded hover:bg-gray-50">Flag for Review</button>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<!-- Master Data View (Horizontal) -->
+<div>
+<h6 class="text-[10px] font-bold text-[#538393] uppercase mb-3 px-1">Master Data (Current Year)</h6>
+<div class="space-y-2">
+<div class="flex justify-between p-2 bg-gray-50 dark:bg-gray-800 rounded">
+<span class="text-xs font-medium">Land Assessment</span>
+<span class="text-xs font-bold">¥23,400,000</span>
+</div>
+<div class="flex justify-between p-2 bg-gray-50 dark:bg-gray-800 rounded">
+<span class="text-xs font-medium">Building Value</span>
+<span class="text-xs font-bold">¥12,800,000</span>
+</div>
+<div class="flex justify-between p-2 bg-primary/10 rounded border-l-2 border-primary">
+<span class="text-xs font-bold text-primary">Depreciation Adj.</span>
+<span class="text-xs font-black text-primary">-¥15,000</span>
+</div>
+<div class="flex justify-between p-2 bg-gray-50 dark:bg-gray-800 rounded">
+<span class="text-xs font-medium">Standard Rate</span>
+<span class="text-xs font-bold">1.4%</span>
+</div>
+</div>
+</div>
+<!-- Report Format View (Vertical) -->
+<div class="border-l border-dashed border-[#d1e0e5] dark:border-gray-700 pl-8">
+<h6 class="text-[10px] font-bold text-[#538393] uppercase mb-3 px-1">Internal Report (Previous List)</h6>
+<div class="grid grid-cols-2 gap-4">
+<div class="p-3 border rounded-lg bg-gray-50 dark:bg-gray-800">
+<p class="text-[10px] text-[#538393] mb-1">Total Taxable</p>
+<p class="text-sm font-bold">¥36,200,000</p>
+</div>
+<div class="p-3 border rounded-lg bg-red-50 dark:bg-red-900/20 border-red-200">
+<p class="text-[10px] text-red-600 font-bold mb-1">Calc. Mismatch</p>
+<p class="text-sm font-bold text-red-700">DETECTED</p>
+</div>
+<div class="col-span-2 p-3 border rounded-lg bg-gray-50 dark:bg-gray-800">
+<p class="text-[10px] text-[#538393] mb-1">Notes</p>
+<p class="text-xs leading-relaxed italic">Discrepancy likely due to late depreciation filing from Q4 2023. Manual override suggested.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</td>
+</tr>
+<!-- Normal Row -->
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors cursor-pointer group">
+<td class="px-6 py-4">
+<div class="font-bold text-sm">佐藤 健二 (Kenji Sato)</div>
+<div class="text-[10px] text-[#538393]">西区みなとみらい 1-1-1</div>
+</td>
+<td class="px-6 py-4 font-mono text-xs">P-882-1102-ZZ</td>
+<td class="px-6 py-4 text-sm font-bold text-right">¥125,500</td>
+<td class="px-6 py-4 text-sm font-medium text-right text-[#538393]">¥125,500</td>
+<td class="px-6 py-4 text-sm font-bold text-right text-gray-400">¥0</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 rounded-full text-[10px] font-bold bg-green-100 text-green-700 uppercase">Verified</span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="material-symbols-outlined text-gray-300 group-hover:text-primary transition-colors">chevron_right</span>
+</td>
+</tr>
+<!-- Another Alert Row -->
+<tr class="highlight-row border-l-4 border-amber-400 group cursor-pointer hover:bg-amber-100 transition-colors">
+<td class="px-6 py-4">
+<div class="font-bold text-sm">ポートサイド開発 (Portside Dev)</div>
+<div class="text-[10px] text-[#538393]">神奈川区栄町 5-2</div>
+</td>
+<td class="px-6 py-4 font-mono text-xs">P-450-9981-AC</td>
+<td class="px-6 py-4 text-sm font-bold text-right">¥2,104,000</td>
+<td class="px-6 py-4 text-sm font-medium text-right text-[#538393]">¥2,101,200</td>
+<td class="px-6 py-4 text-sm font-bold text-right text-red-600">+¥2,800</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 rounded-full text-[10px] font-bold bg-red-100 text-red-700 uppercase">Discrepancy</span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="material-symbols-outlined text-gray-400 group-hover:text-primary transition-colors">chevron_right</span>
+</td>
+</tr>
+<!-- Pending Row -->
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors cursor-pointer group">
+<td class="px-6 py-4">
+<div class="font-bold text-sm">田中 不動産 (Tanaka Real Estate)</div>
+<div class="text-[10px] text-[#538393]">中区元町 4-12</div>
+</td>
+<td class="px-6 py-4 font-mono text-xs">P-331-5522-OP</td>
+<td class="px-6 py-4 text-sm font-bold text-right">¥68,200</td>
+<td class="px-6 py-4 text-sm font-medium text-right text-[#538393]">--</td>
+<td class="px-6 py-4 text-sm font-bold text-right text-amber-600">NEW</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 rounded-full text-[10px] font-bold bg-gray-100 text-gray-600 uppercase">Pending</span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="material-symbols-outlined text-gray-300 group-hover:text-primary transition-colors">chevron_right</span>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="px-6 py-4 bg-gray-50 dark:bg-[#252a30] flex items-center justify-between border-t border-[#e8f0f2] dark:border-gray-700">
+<p class="text-xs font-medium text-[#538393]">Showing 1-4 of 1,240 results (Page 1 of 310)</p>
+<div class="flex gap-2">
+<button class="p-1.5 rounded border bg-white text-[#538393] disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined block text-sm">chevron_left</span>
+</button>
+<button class="p-1.5 rounded border bg-white text-[#0f171a] hover:bg-gray-50">
+<span class="material-symbols-outlined block text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

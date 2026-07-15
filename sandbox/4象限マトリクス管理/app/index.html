@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neuro Matrix Task OS</title>
+
+  <!-- Theme (FOUC 防止のため最初に) -->
+  <script src="assets/theme.js"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,300..700,0..1,-50..200" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class', /* Survival mode 用に保持 */
+      theme: {
+        extend: {
+          colors: {
+            bg:             'var(--bg)',
+            surface:        'var(--surface)',
+            'surface-hover':'var(--surface-hover)',
+            'surface-2':    'var(--surface-2)',
+            'surface-3':    'var(--surface-3)',
+            border:         'var(--border)',
+            'border-muted': 'var(--border-muted)',
+            'text-0':       'var(--text-0)',
+            'text-1':       'var(--text-1)',
+            'text-2':       'var(--text-2)',
+            'text-3':       'var(--text-3)',
+            q1: 'var(--q1)',
+            q2: 'var(--q2)',
+            q3: 'var(--q3)',
+            q4: 'var(--q4)',
+            accent: 'var(--accent)',
+          },
+          fontFamily: {
+            sans: ['Inter', 'Noto Sans JP', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
+            cyber: ['Orbitron', 'monospace'],
+          },
+          borderRadius: {
+            DEFAULT: '6px',
+            md: '8px',
+            lg: '10px',
+            xl: '12px',
+            '2xl': '16px',
+          },
+          boxShadow: {
+            'card':       '0 1px 2px rgba(15,23,42,0.04), 0 4px 12px rgba(15,23,42,0.06), 0 12px 32px -8px rgba(15,23,42,0.06)',
+            'card-hover': '0 2px 4px rgba(15,23,42,0.06), 0 12px 28px rgba(15,23,42,0.10), 0 24px 48px -8px rgba(15,23,42,0.10)',
+            'elevated':   '0 1px 3px rgba(15,23,42,0.05), 0 8px 24px rgba(15,23,42,0.08)',
+          },
+        }
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+
+<body class="bg-bg text-text-0 font-sans antialiased h-screen overflow-hidden">
+
+<div class="h-screen flex flex-col">
+
+  <!-- ════════ TopBar ════════ -->
+  <header class="app-topbar h-12 flex-shrink-0 flex items-center gap-3 px-4 z-30">
+    <!-- Brand -->
+    <a href="index.html" class="flex items-center gap-2 pr-4 border-r border-border-muted mr-1 no-underline">
+      <span class="material-symbols-outlined text-q1" style="font-variation-settings: 'FILL' 1, 'wght' 600;">change_history</span>
+      <span class="font-bold tracking-tight text-text-0">NEURO<span class="text-q1">.</span>MATRIX</span>
+    </a>
+
+    <!-- Quick add (実装予定 — 静的モックでは tooltip 表示のみ) -->
+    <button id="quick-add-btn" class="group flex items-center gap-2 px-3 h-8 bg-surface-2 hover:bg-surface-3 rounded-md text-text-1 hover:text-text-0 transition-colors" title="キーボード N で新規タスク追加（実装予定）">
+      <span class="material-symbols-outlined text-base">add</span>
+      <span class="text-sm font-medium">新規タスク</span>
+      <kbd class="ml-2 px-1.5 py-0.5 rounded bg-bg/60 border border-border-muted text-[10px] font-mono text-text-3 group-hover:text-text-2">N</kbd>
+    </button>
+
+    <!-- Spacer -->
+    <div class="flex-1"></div>
+
+    <!-- Theme toggle -->
+    <a href="pages/settings.html#appearance" class="w-8 h-8 flex items-center justify-center rounded-md hover:bg-surface-2 text-text-2 hover:text-text-0 transition-colors no-underline" aria-label="テーマ設定" title="設定で変更">
+      <span class="material-symbols-outlined text-lg">dark_mode</span>
+    </a>
+
+    <!-- Survival CTA -->
+    <a href="pages/survival.html" id="survival-btn" class="flex items-center gap-1.5 h-8 px-3 rounded-md bg-q1/10 hover:bg-q1/20 text-q1 border border-q1/30 hover:border-q1/50 transition-all no-underline">
+      <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">bolt</span>
+      <span class="text-sm font-semibold tracking-wide">SURVIVAL</span>
+    </a>
+
+    <!-- Profile placeholder (抑制: 単色、アクセント縁のみ) -->
+    <div class="w-8 h-8 rounded-full bg-surface-2 border border-border text-text-1 flex items-center justify-center text-xs font-bold ml-1">T</div>
+  </header>
+
+
+  <div class="flex-1 flex overflow-hidden min-h-0">
+
+    <!-- ════════ Sidebar ════════ -->
+    <aside class="app-sidebar w-60 flex-shrink-0 flex flex-col">
+
+      <nav class="flex-1 px-2 py-3 space-y-0.5 overflow-y-auto">
+        <!-- Primary -->
+        <div class="px-2 pb-1.5 text-[10px] font-semibold tracking-widest text-text-3 uppercase">Workspace</div>
+
+        <a href="index.html" class="nav-item active" data-view="matrix">
+          <span class="material-symbols-outlined text-[20px]">dashboard</span>
+          <span>ダッシュボード</span>
+        </a>
+        <a href="pages/survival.html" class="nav-item text-q1" data-view="survival">
+          <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
+          <span>サバイバル</span>
+        </a>
+        <a href="pages/completed.html" class="nav-item" data-view="completed">
+          <span class="material-symbols-outlined text-[20px]">done_all</span>
+          <span>完了一覧</span>
+          <span class="ml-auto text-[11px] font-mono text-text-3" data-sidebar-count="completed">0</span>
+        </a>
+
+        <div class="pt-4 px-2 pb-1.5 text-[10px] font-semibold tracking-widest text-text-3 uppercase">Views</div>
+
+        <a href="pages/today.html" class="nav-item" data-view="today">
+          <span class="material-symbols-outlined text-[20px]">today</span>
+          <span>今日</span>
+          <span class="ml-auto text-[11px] font-mono text-text-3" data-sidebar-count="today">0</span>
+        </a>
+        <a href="pages/overdue.html" class="nav-item" data-view="overdue">
+          <span class="material-symbols-outlined text-[20px]">event_busy</span>
+          <span>期限超過</span>
+          <span class="ml-auto text-[11px] font-mono text-text-3" data-sidebar-count="overdue">0</span>
+        </a>
+
+      </nav>
+
+      <!-- Bottom bar -->
+      <div class="border-t border-border-muted p-2 space-y-0.5">
+        <a href="pages/settings.html#export" class="nav-item">
+          <span class="material-symbols-outlined text-[20px]">download</span>
+          <span>JSON書出</span>
+        </a>
+        <a href="pages/settings.html#import" class="nav-item">
+          <span class="material-symbols-outlined text-[20px]">upload</span>
+          <span>JSON取込</span>
+        </a>
+        <a href="pages/settings.html" class="nav-item">
+          <span class="material-symbols-outlined text-[20px]">settings</span>
+          <span>設定</span>
+        </a>
+      </div>
+    </aside>
+
+
+    <!-- ════════ Matrix Main ════════ -->
+    <main class="flex-1 overflow-hidden relative bg-bg">
+
+      <!-- Matrix grid (軸ラベルは削除済み。象限ヘッダで軸情報は十分伝わる) -->
+      <div class="h-full grid grid-cols-2 grid-rows-2 gap-3 p-4">
+
+        <!-- ── Q1 ── -->
+        <section id="q1" class="quadrant q1-quadrant" aria-label="重要・緊急">
+          <div class="q-accent"></div>
+          <header class="q-head">
+            <span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+            <h2 class="q-title">重要・緊急</h2>
+            <span class="q-subtitle">DO FIRST</span>
+            <span class="q-count" data-count-for="q1">0</span>
+          </header>
+          <div class="q-body" data-zone-body="q1"></div>
+        </section>
+
+        <!-- ── Q2 ── -->
+        <section id="q2" class="quadrant q2-quadrant" aria-label="重要・非緊急">
+          <div class="q-accent"></div>
+          <header class="q-head">
+            <span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">target</span>
+            <h2 class="q-title">重要・非緊急</h2>
+            <span class="q-subtitle">SCHEDULE</span>
+            <span class="q-count" data-count-for="q2">0</span>
+          </header>
+          <div class="q-body" data-zone-body="q2"></div>
+        </section>
+
+        <!-- ── Q3 ── -->
+        <section id="q3" class="quadrant q3-quadrant" aria-label="非重要・緊急">
+          <div class="q-accent"></div>
+          <header class="q-head">
+            <span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">campaign</span>
+            <h2 class="q-title">非重要・緊急</h2>
+            <span class="q-subtitle">DELEGATE</span>
+            <span class="q-count" data-count-for="q3">0</span>
+          </header>
+          <div class="q-body" data-zone-body="q3"></div>
+        </section>
+
+        <!-- ── Q4 ── -->
+        <section id="q4" class="quadrant q4-quadrant" aria-label="あとで（未仕分け）">
+          <div class="q-accent"></div>
+          <header class="q-head">
+            <span class="material-symbols-outlined text-xl">inbox</span>
+            <h2 class="q-title">あとで（未仕分け）</h2>
+            <span class="q-subtitle">LATER</span>
+            <span class="q-count" data-count-for="q4">0</span>
+          </header>
+          <div class="q-body" data-zone-body="q4"></div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+
+  <!-- ════════ StatusBar ════════ -->
+  <footer class="app-statusbar h-7 flex-shrink-0 px-4 flex items-center justify-between text-[11px] font-mono">
+    <div class="flex items-center gap-4">
+      <span class="flex items-center gap-1.5">
+        <span class="w-1.5 h-1.5 rounded-full bg-q2"></span>
+        0 件 進行中
+      </span>
+      <span>·</span>
+      <span>0 件 完了</span>
+    </div>
+    <div class="flex items-center gap-4">
+      <span>オフラインモード</span>
+      <kbd class="px-1 rounded bg-surface-2 border border-border-muted text-text-2">?</kbd>
+      <span>shortcuts</span>
+    </div>
+  </footer>
+
+</div>
+
+<!-- ════════ New Task Modal ════════ -->
+<div id="task-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="task-modal-title">
+  <div class="modal-panel">
+    <header class="modal-header">
+      <div class="flex items-center gap-2">
+        <span id="task-modal-icon" class="material-symbols-outlined text-text-2 text-[20px]">add_task</span>
+        <h2 id="task-modal-title" class="text-base font-bold text-text-0">新規タスクを追加</h2>
+      </div>
+      <button id="task-modal-close" class="w-7 h-7 flex items-center justify-center rounded-md hover:bg-surface-2 text-text-2" aria-label="閉じる">
+        <span class="material-symbols-outlined text-[18px]">close</span>
+      </button>
+    </header>
+
+    <form id="task-form" class="modal-body">
+      <div>
+        <label class="modal-label" for="task-title-input">タスク名 <span class="text-q1">*</span></label>
+        <input id="task-title-input" type="text" required autofocus
+          class="modal-input" placeholder="例: 提案書レビュー、買い出し" maxlength="200">
+      </div>
+
+      <div>
+        <label class="modal-label">象限</label>
+        <div id="quadrant-picker" class="quadrant-picker">
+          <button type="button" class="q-pick" data-zone="q1" data-selected="false">
+            <span class="q-pick-dot bg-q1"></span>
+            <div class="q-pick-body">
+              <div class="q-pick-title">Q1 重要・緊急</div>
+              <div class="q-pick-sub">DO FIRST</div>
+            </div>
+          </button>
+          <button type="button" class="q-pick" data-zone="q2" data-selected="false">
+            <span class="q-pick-dot bg-q2"></span>
+            <div class="q-pick-body">
+              <div class="q-pick-title">Q2 重要・非緊急</div>
+              <div class="q-pick-sub">SCHEDULE</div>
+            </div>
+          </button>
+          <button type="button" class="q-pick" data-zone="q3" data-selected="false">
+            <span class="q-pick-dot bg-q3"></span>
+            <div class="q-pick-body">
+              <div class="q-pick-title">Q3 非重要・緊急</div>
+              <div class="q-pick-sub">DELEGATE</div>
+            </div>
+          </button>
+          <button type="button" class="q-pick" data-zone="q4" data-selected="true">
+            <span class="q-pick-dot bg-q4"></span>
+            <div class="q-pick-body">
+              <div class="q-pick-title">Q4 あとで</div>
+              <div class="q-pick-sub">LATER</div>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <label class="modal-label" for="task-due-input">締切日 <span class="text-text-3 font-normal">(任意)</span></label>
+        <input id="task-due-input" type="date" class="modal-input" style="max-width: 220px;">
+      </div>
+      <div>
+        <label class="modal-label" for="task-note-input">メモ <span class="text-text-3 font-normal">(任意・複数行可)</span></label>
+        <textarea id="task-note-input" class="modal-input modal-textarea" placeholder="背景・次の一手・参考リンクなど" maxlength="1000" rows="4"></textarea>
+      </div>
+
+      <div class="modal-footer">
+        <div class="text-[11px] text-text-3 font-mono flex items-center gap-1.5">
+          <kbd class="kbd">Esc</kbd> <span>取消</span>
+          <span class="mx-1">·</span>
+          <kbd class="kbd">⌘</kbd><kbd class="kbd">Enter</kbd> <span>保存</span>
+        </div>
+        <div class="flex gap-2">
+          <button type="button" id="task-modal-cancel" class="btn-ghost">キャンセル</button>
+          <button type="submit" id="task-modal-submit" class="btn-primary">
+            <span class="material-symbols-outlined text-[18px]">check</span>
+            <span data-submit-label>追加</span>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ════════ Undo Toast ════════ -->
+<div id="undo-toast" class="undo-toast" role="status" aria-live="polite" aria-atomic="true">
+  <span id="undo-message">タスクを削除しました</span>
+  <button id="undo-btn" class="undo-btn" aria-label="削除を取り消す">元に戻す</button>
+</div>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

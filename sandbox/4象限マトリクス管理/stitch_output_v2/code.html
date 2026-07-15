@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html lang="ja"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Neuro Matrix Task OS</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary-container": "#fa5956",
+            "on-error-container": "#752121",
+            "primary-fixed": "#e5e2e1",
+            "on-primary-fixed-variant": "#5c5b5b",
+            "error": "#9f403d",
+            "on-secondary-fixed-variant": "#15693c",
+            "surface-dim": "#d4dcd5",
+            "error-dim": "#4e0309",
+            "on-tertiary-fixed": "#000000",
+            "on-primary": "#faf7f6",
+            "primary-dim": "#535252",
+            "surface-bright": "#f9f9f6",
+            "on-tertiary-container": "#290002",
+            "inverse-on-surface": "#9c9d9b",
+            "on-background": "#2e3430",
+            "primary-fixed-dim": "#d7d4d3",
+            "tertiary-fixed-dim": "#e84d4b",
+            "outline": "#767c77",
+            "inverse-surface": "#0d0f0d",
+            "secondary-fixed": "#a4f4ba",
+            "on-surface": "#2e3430",
+            "secondary-container": "#a4f4ba",
+            "surface-container-high": "#e5e9e4",
+            "on-secondary-fixed": "#004a26",
+            "on-secondary": "#e8ffea",
+            "surface-container": "#ecefea",
+            "on-primary-fixed": "#403f3f",
+            "on-secondary-container": "#015f33",
+            "primary-container": "#e5e2e1",
+            "primary": "#5f5e5e",
+            "surface-container-highest": "#dee4de",
+            "background": "#f9f9f6",
+            "surface-variant": "#dee4de",
+            "tertiary-fixed": "#fa5956",
+            "on-surface-variant": "#5a615c",
+            "error-container": "#fe8983",
+            "surface-container-lowest": "#ffffff",
+            "secondary": "#1a6d3f",
+            "on-primary-container": "#525151",
+            "secondary-dim": "#046034",
+            "surface": "#f9f9f6",
+            "outline-variant": "#adb4ae",
+            "on-tertiary-fixed-variant": "#420004",
+            "on-error": "#fff7f6",
+            "secondary-fixed-dim": "#96e6ad",
+            "inverse-primary": "#ffffff",
+            "on-tertiary": "#fff7f6",
+            "tertiary": "#b5272b",
+            "surface-container-low": "#f3f4f0",
+            "tertiary-dim": "#a41920",
+            "surface-tint": "#5f5e5e"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {},
+          "fontFamily": {
+            "headline": ["Manrope", "sans-serif"],
+            "body": ["Inter", "sans-serif"],
+            "label": ["Space Grotesk", "monospace"]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    /* Plain CSS Fallbacks per strict requirements */
+    body { background-color: #f9f9f6; color: #2e3430; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
+    .matrix-grid { display: grid; grid-template-columns: 1fr; gap: 16px; padding: 16px; }
+    @media (min-width: 881px) {
+      .matrix-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; height: calc(100vh - 140px); overflow: hidden; gap: 24px; padding: 24px 32px 32px 56px; position: relative;}
+      .axis-x { position: absolute; top: 0; left: 56px; right: 32px; text-align: center; font-size: 0.75rem; letter-spacing: 0.1em; color: #767c77; padding-top: 4px; }
+      .axis-y { position: absolute; top: 24px; bottom: 32px; left: 16px; writing-mode: vertical-rl; text-align: center; font-size: 0.75rem; letter-spacing: 0.1em; color: #767c77; transform: rotate(180deg); }
+    }
+    @media (max-width: 880px) {
+      .axis-x, .axis-y { display: none; }
+    }
+    
+    .q-container { background-color: #f3f4f0; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 16px; overflow-y: auto; }
+    
+    .q1-border { border: 2px solid #b5272b; }
+    .q2-border { border: 4px double #1a6d3f; }
+    .q3-border { border: 2px dashed #9f403d; } /* Using error color for ochre proxy in theme */
+    .q4-border { border: 2px dotted #5f5e5e; }
+    
+    .card { background-color: #ffffff; border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0px 4px 12px rgba(46, 52, 48, 0.03); transition: transform 0.2s, box-shadow 0.2s; }
+    .card:hover { transform: translateY(-2px); box-shadow: 0px 8px 24px rgba(46, 52, 48, 0.06); }
+    
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #dee4de; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #adb4ae; }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body h-screen flex flex-col antialiased">
+<!-- TopNavBar Shared Component -->
+<header class="fixed top-0 w-full z-50 bg-[#f9f9f6] no-border tonal-shift-surface-container-low flat no shadows flex justify-between items-center px-6 py-4 w-full max-w-full">
+<div class="flex items-center gap-4">
+<span class="text-xl font-black tracking-tighter text-[#5f5e5e] font-headline">Neuro Matrix</span>
+</div>
+<!-- Desktop Nav Links -->
+<nav class="hidden md:flex gap-8 items-center">
+<!-- Active intent: App UI -->
+<a class="text-[#5f5e5e] hover:opacity-80 transition-opacity font-headline font-bold tracking-tight text-sm" href="#">Add</a>
+<a class="text-[#5f5e5e] hover:opacity-80 transition-opacity font-headline font-bold tracking-tight text-sm" href="#">Completed</a>
+<a class="text-[#5f5e5e] hover:opacity-80 transition-opacity font-headline font-bold tracking-tight text-sm" href="#">Survival</a>
+</nav>
+<div class="flex gap-4">
+<button class="text-[#5f5e5e] hover:opacity-80 transition-opacity scale-95 active:duration-150 flex items-center justify-center p-2 rounded-full bg-surface-container-highest" id="add-btn">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">add</span>
+<span class="sr-only">＋ 新規タスク</span>
+</button>
+<button class="text-[#5f5e5e] hover:opacity-80 transition-opacity scale-95 active:duration-150 flex items-center justify-center p-2 rounded-full bg-surface-container-highest" id="completed-toggle">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">done_all</span>
+</button>
+<button class="text-tertiary bg-tertiary/10 hover:opacity-80 transition-opacity scale-95 active:duration-150 flex items-center justify-center px-4 py-2 rounded-full font-label text-xs uppercase tracking-widest font-bold" id="survival-btn">
+<span class="material-symbols-outlined text-sm mr-2" style="font-variation-settings: 'FILL' 1;">bolt</span>
+        ⚠️ サバイバル
+      </button>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 mt-[72px] lg:pl-64 flex flex-col relative pb-20 lg:pb-0">
+<!-- SideNavBar Shared Component (Desktop only) -->
+<aside class="hidden lg:flex flex-col h-screen p-4 bg-[#f3f4f0] h-full w-64 border-r-0 tonal-layering-surface-container-low flat fixed left-0 top-0 pt-[88px] z-40">
+<div class="mb-8 px-4">
+<h2 class="font-headline text-sm font-bold text-on-surface tracking-tight">Task Matrix</h2>
+<p class="font-body text-xs text-outline mt-1">The Kinetic Archive</p>
+</div>
+<nav class="flex flex-col gap-2 flex-1">
+<!-- Q1 Active based on intent -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#1a6d3f] font-bold font-['Inter'] text-sm hover:bg-[#ffffff] transition-colors duration-200 bg-surface-container-highest" href="#q1">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">priority_high</span>
+<span>Q1: 必須</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#5f5e5e] font-['Inter'] text-sm hover:bg-[#ffffff] transition-colors duration-200" href="#q2">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">trending_up</span>
+<span>Q2: 成長</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#5f5e5e] font-['Inter'] text-sm hover:bg-[#ffffff] transition-colors duration-200" href="#q3">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">groups</span>
+<span>Q3: 委任</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#5f5e5e] font-['Inter'] text-sm hover:bg-[#ffffff] transition-colors duration-200" href="#q4">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">delete_sweep</span>
+<span>Q4: 削除</span>
+</a>
+</nav>
+</aside>
+<!-- Matrix Canvas -->
+<div class="matrix-grid flex-1 relative" id="matrix">
+<div class="axis-x font-label uppercase">← 緊急度 →</div>
+<div class="axis-y font-label uppercase">← 重要度 →</div>
+<!-- Q1 -->
+<section class="q-container q1-border" id="q1">
+<header class="flex justify-between items-center mb-2">
+<h3 class="font-headline text-tertiary font-bold tracking-tight text-lg flex items-center gap-2">
+<span class="text-xl">◈</span> 🔥 重要・緊急
+          </h3>
+<span class="font-label text-xs text-outline">Q1</span>
+</header>
+<article class="card">
+<div class="flex justify-between items-start">
+<h4 class="font-body font-semibold text-on-surface text-sm leading-snug">サーバー障害の緊急対応と<br/>暫定復旧パッチの適用</h4>
+<span class="bg-error-container text-on-error-container font-label text-[10px] px-2 py-1 rounded-full whitespace-nowrap font-bold">TODAY 15:00</span>
+</div>
+<div class="flex justify-between items-end mt-2">
+<span class="font-label text-[10px] text-outline">UPDATED 10m AGO</span>
+<div class="flex gap-2">
+<button class="text-outline hover:text-secondary transition-colors" title="✓ 完了"><span class="material-symbols-outlined text-[18px]">check_circle</span></button>
+<button class="text-outline hover:text-primary transition-colors" title="📝 詳細"><span class="material-symbols-outlined text-[18px]">edit_document</span></button>
+<button class="text-outline hover:text-tertiary transition-colors" title="🗑 削除"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+</div>
+</article>
+<article class="card">
+<div class="flex justify-between items-start">
+<h4 class="font-body font-semibold text-on-surface text-sm leading-snug">役員向け月次報告書の<br/>最終確認と提出</h4>
+<span class="bg-error-container text-on-error-container font-label text-[10px] px-2 py-1 rounded-full whitespace-nowrap font-bold">TODAY 17:00</span>
+</div>
+<div class="flex justify-between items-end mt-2">
+<span class="font-label text-[10px] text-outline">UPDATED 1h AGO</span>
+<div class="flex gap-2">
+<button class="text-outline hover:text-secondary transition-colors"><span class="material-symbols-outlined text-[18px]">check_circle</span></button>
+<button class="text-outline hover:text-primary transition-colors"><span class="material-symbols-outlined text-[18px]">edit_document</span></button>
+<button class="text-outline hover:text-tertiary transition-colors"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+</div>
+</article>
+</section>
+<!-- Q2 -->
+<section class="q-container q2-border" id="q2">
+<header class="flex justify-between items-center mb-2">
+<h3 class="font-headline text-secondary font-bold tracking-tight text-lg flex items-center gap-2">
+<span class="text-xl">⬡</span> 🌱 重要・非緊急
+          </h3>
+<span class="font-label text-xs text-outline">Q2</span>
+</header>
+<article class="card">
+<div class="flex justify-between items-start">
+<h4 class="font-body font-semibold text-on-surface text-sm leading-snug">次期プロダクトのアーキテクチャ<br/>設計案の策定</h4>
+<span class="bg-surface-variant text-on-surface-variant font-label text-[10px] px-2 py-1 rounded-full whitespace-nowrap">NEXT WEEK</span>
+</div>
+<div class="flex justify-between items-end mt-2">
+<span class="font-label text-[10px] text-outline">UPDATED YESTERDAY</span>
+<div class="flex gap-2">
+<button class="text-outline hover:text-secondary transition-colors"><span class="material-symbols-outlined text-[18px]">check_circle</span></button>
+<button class="text-outline hover:text-primary transition-colors"><span class="material-symbols-outlined text-[18px]">edit_document</span></button>
+<button class="text-outline hover:text-tertiary transition-colors"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+</div>
+</article>
+<article class="card">
+<div class="flex justify-between items-start">
+<h4 class="font-body font-semibold text-on-surface text-sm leading-snug">英語学習と<br/>専門書の読書</h4>
+<span class="bg-surface-variant text-on-surface-variant font-label text-[10px] px-2 py-1 rounded-full whitespace-nowrap">ROUTINE</span>
+</div>
+<div class="flex justify-between items-end mt-2">
+<span class="font-label text-[10px] text-outline">UPDATED 3d AGO</span>
+<div class="flex gap-2">
+<button class="text-outline hover:text-secondary transition-colors"><span class="material-symbols-outlined text-[18px]">check_circle</span></button>
+<button class="text-outline hover:text-primary transition-colors"><span class="material-symbols-outlined text-[18px]">edit_document</span></button>
+<button class="text-outline hover:text-tertiary transition-colors"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+</div>
+</article>
+</section>
+<!-- Q3 -->
+<section class="q-container q3-border" id="q3">
+<header class="flex justify-between items-center mb-2">
+<h3 class="font-headline text-error font-bold tracking-tight text-lg flex items-center gap-2">
+<span class="text-xl">◬</span> 📢 非重要・緊急
+          </h3>
+<span class="font-label text-xs text-outline">Q3</span>
+</header>
+<article class="card">
+<div class="flex justify-between items-start">
+<h4 class="font-body font-semibold text-on-surface text-sm leading-snug">定例ミーティングの<br/>議事録作成と共有</h4>
+<span class="bg-surface-variant text-on-surface-variant font-label text-[10px] px-2 py-1 rounded-full whitespace-nowrap">TODAY</span>
+</div>
+<div class="flex justify-between items-end mt-2">
+<span class="font-label text-[10px] text-outline">UPDATED 2h AGO</span>
+<div class="flex gap-2">
+<button class="text-outline hover:text-secondary transition-colors"><span class="material-symbols-outlined text-[18px]">check_circle</span></button>
+<button class="text-outline hover:text-primary transition-colors"><span class="material-symbols-outlined text-[18px]">edit_document</span></button>
+<button class="text-outline hover:text-tertiary transition-colors"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+</div>
+</article>
+</section>
+<!-- Q4 -->
+<section class="q-container q4-border" id="q4">
+<header class="flex justify-between items-center mb-2">
+<h3 class="font-headline text-primary font-bold tracking-tight text-lg flex items-center gap-2">
+<span class="text-xl">◇</span> 🗑 非重要・非緊急
+          </h3>
+<span class="font-label text-xs text-outline">Q4</span>
+</header>
+<article class="card opacity-70">
+<div class="flex justify-between items-start">
+<h4 class="font-body font-semibold text-on-surface text-sm leading-snug">スパムメールの整理と<br/>メルマガ解除</h4>
+<span class="bg-surface-variant text-on-surface-variant font-label text-[10px] px-2 py-1 rounded-full whitespace-nowrap">SOMETIME</span>
+</div>
+<div class="flex justify-between items-end mt-2">
+<span class="font-label text-[10px] text-outline">UPDATED 1w AGO</span>
+<div class="flex gap-2">
+<button class="text-outline hover:text-secondary transition-colors"><span class="material-symbols-outlined text-[18px]">check_circle</span></button>
+<button class="text-outline hover:text-primary transition-colors"><span class="material-symbols-outlined text-[18px]">edit_document</span></button>
+<button class="text-outline hover:text-tertiary transition-colors"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+</div>
+</article>
+</section>
+</div>
+<!-- Hidden Completed Panel -->
+<div class="hidden absolute top-0 right-0 h-full w-80 bg-surface-container shadow-2xl border-l border-outline/10 z-30 p-6 overflow-y-auto" id="completed-panel">
+<h2 class="font-headline text-lg font-bold mb-4">Completed Tasks</h2>
+<!-- Tasks would go here -->
+</div>
+</main>
+<!-- Undo Toast -->
+<div class="hidden fixed bottom-24 left-1/2 transform -translate-x-1/2 bg-inverse-surface text-inverse-on-surface px-6 py-3 rounded-full font-body text-sm shadow-2xl z-50 flex items-center gap-4" id="undo-toast">
+    Task archived. <button class="text-secondary font-bold uppercase tracking-wide">Undo</button>
+</div>
+<!-- BottomNavBar Shared Component (Mobile only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-[#f9f9f6]/90 backdrop-blur-md fixed bottom-0 w-full z-50 rounded-t-2xl border-t border-[#f3f4f0] shadow-[0px_-4px_12px_rgba(0,0,0,0.03)]">
+<!-- Active Q1 -->
+<a class="flex flex-col items-center justify-center text-[#1a6d3f] scale-110 tap-highlight-transparent transition-transform duration-300" href="#q1">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">emergency</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest">Q1 急務</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#5f5e5e] tap-highlight-transparent transition-transform duration-300 hover:text-[#1a6d3f]" href="#q2">
+<span class="material-symbols-outlined mb-1">event_note</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest">Q2 計画</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#5f5e5e] tap-highlight-transparent transition-transform duration-300 hover:text-[#1a6d3f]" href="#q3">
+<span class="material-symbols-outlined mb-1">message</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest">Q3 雑務</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#5f5e5e] tap-highlight-transparent transition-transform duration-300 hover:text-[#1a6d3f]" href="#q4">
+<span class="material-symbols-outlined mb-1">inventory_2</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest">Q4 整理</span>
+</a>
+</nav>
+</body></html>

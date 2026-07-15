@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html class="dark" lang="ja">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Gemini OCR Studio</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13a4ec",
+                        "primary-hover": "#0f8cc9",
+                        "background-dark": "#0f172a",
+                        "surface-dark": "#1e293b",
+                        "surface-darker": "#111827",
+                        "border-dark": "#334155",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"],
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+
+        @keyframes shimmer {
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-background-dark text-slate-100 font-display overflow-hidden h-screen flex flex-col">
+    <!-- Header -->
+    <header
+        class="flex-none h-16 border-b border-border-dark bg-surface-dark px-6 flex items-center justify-between z-20 shadow-sm">
+        <div class="flex items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div
+                    class="bg-gradient-to-br from-primary to-blue-600 size-8 rounded flex items-center justify-center text-white shadow-lg shadow-primary/20">
+                    <span class="material-symbols-outlined text-xl">view_in_ar</span>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg tracking-tight leading-none">Gemini OCR Studio</h1>
+                    <p class="text-[10px] text-slate-400 font-medium uppercase tracking-wider mt-0.5">Enterprise Edition
+                    </p>
+                </div>
+            </div>
+            <div class="h-6 w-px bg-border-dark mx-2"></div>
+            <div id="connection-status"
+                class="flex items-center gap-2 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">
+                <span class="relative flex h-2 w-2">
+                    <span
+                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <span class="text-xs font-semibold text-emerald-400">接続済み</span>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <button class="p-2 text-slate-400 hover:text-primary transition-colors rounded-lg hover:bg-slate-800">
+                <span class="material-symbols-outlined">help</span>
+            </button>
+            <button class="p-2 text-slate-400 hover:text-primary transition-colors rounded-lg hover:bg-slate-800">
+                <span class="material-symbols-outlined">settings</span>
+            </button>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-[#162032] border-r border-border-dark flex flex-col flex-none">
+            <div class="p-4 border-b border-border-dark">
+                <nav class="space-y-1">
+                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary font-medium"
+                        href="#">
+                        <span class="material-symbols-outlined text-[20px]">folder_open</span>
+                        <span class="text-sm">プロジェクトファイル</span>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition-colors"
+                        href="#">
+                        <span class="material-symbols-outlined text-[20px]">history</span>
+                        <span class="text-sm">履歴</span>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition-colors"
+                        href="#">
+                        <span class="material-symbols-outlined text-[20px]">tune</span>
+                        <span class="text-sm">設定</span>
+                    </a>
+                </nav>
+            </div>
+            <div class="px-4 py-3 flex items-center justify-between">
+                <div>
+                    <h3 id="temp-dir-label"
+                        class="text-xs font-semibold text-slate-400 uppercase tracking-wider font-mono">temp_pages/</h3>
+                    <p id="file-count" class="text-[10px] text-slate-500 mt-0.5">0 ファイル読込済</p>
+                </div>
+                <button onclick="refreshFileList()" class="text-slate-400 hover:text-primary">
+                    <span class="material-symbols-outlined text-[18px]">refresh</span>
+                </button>
+            </div>
+            <div id="file-list" class="flex-1 overflow-y-auto custom-scrollbar p-3 space-y-2">
+                <!-- ファイルリストがここに動的に追加されます -->
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col min-w-0 overflow-y-auto custom-scrollbar relative">
+            <!-- PDF Upload Area (shown when no PDF is loaded) -->
+            <div id="upload-area" class="p-8">
+                <div id="drop-zone"
+                    class="border-2 border-dashed border-border-dark hover:border-primary rounded-xl p-12 text-center transition-all bg-surface-dark/50 hover:bg-surface-dark cursor-pointer group">
+                    <div class="flex flex-col items-center gap-4">
+                        <div class="bg-primary/10 p-6 rounded-full group-hover:bg-primary/20 transition-colors">
+                            <span class="material-symbols-outlined text-6xl text-primary">upload_file</span>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-white mb-2">PDFファイルをドロップ</h3>
+                            <p class="text-slate-400 mb-4">または、クリックしてファイルを選択</p>
+                            <div class="flex items-center justify-center gap-4 text-xs text-slate-500">
+                                <span class="flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-[14px]">check_circle</span>
+                                    .pdf ファイルのみ対応
+                                </span>
+                                <span class="flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-[14px]">check_circle</span>
+                                    最大 500MB
+                                </span>
+                            </div>
+                        </div>
+                        <input type="file" id="pdf-input" accept=".pdf" class="hidden">
+                    </div>
+                </div>
+
+                <!-- Upload Progress -->
+                <div id="upload-progress" class="hidden mt-6 bg-surface-dark rounded-xl p-6 border border-border-dark">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="animate-spin">
+                            <span class="material-symbols-outlined text-3xl text-primary">sync</span>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-white mb-1">PDFを処理中...</h4>
+                            <p id="upload-status" class="text-sm text-slate-400">ページ画像を生成しています...</p>
+                        </div>
+                    </div>
+                    <div class="relative h-2 bg-slate-700/50 rounded-full overflow-hidden">
+                        <div id="upload-progress-bar"
+                            class="absolute top-0 left-0 h-full bg-gradient-to-r from-blue-600 to-primary w-[0%] rounded-full transition-all duration-300">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Header (hidden initially) -->
+            <div id="progress-header" class="hidden p-8 pb-4 bg-surface-darker/50 border-b border-border-dark">
+                <div class="flex flex-wrap items-end justify-between gap-4 mb-4">
+                    <div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <span id="job-status-badge"
+                                class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-500/20 text-slate-400 uppercase tracking-wide border border-slate-500/20">待機中</span>
+                        </div>
+                        <h2 id="pdf-filename" class="text-3xl font-bold text-white tracking-tight">PDFファイルを選択してください</h2>
+                        <p class="text-slate-400 text-sm mt-1">ステートフル・スライディングウィンドウ OCRシステム</p>
+                    </div>
+                    <div class="text-right">
+                        <div class="flex flex-col items-end">
+                            <p class="text-3xl font-bold font-mono text-primary">
+                                <span id="processed-pages">0</span><span class="text-slate-500 text-lg">/<span
+                                        id="total-pages">0</span></span>
+                            </p>
+                            <p class="text-xs text-slate-400 uppercase tracking-wider font-medium">処理済みページ</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative h-6 bg-slate-700/50 rounded-full overflow-hidden shadow-inner ring-1 ring-white/5">
+                    <div id="progress-bar"
+                        class="absolute top-0 left-0 h-full bg-gradient-to-r from-blue-600 to-primary w-[0%] rounded-full shadow-lg shadow-primary/25 relative overflow-hidden flex items-center justify-end px-3 transition-all duration-500">
+                        <span id="progress-percent" class="text-[10px] font-bold text-white drop-shadow-md">0%</span>
+                        <div
+                            class="absolute inset-0 bg-white/20 skew-x-12 -translate-x-full animate-[shimmer_2s_infinite]">
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="flex justify-between mt-3 text-xs font-medium text-slate-400 bg-white/5 rounded-lg p-2 px-4 border border-white/5">
+                    <div class="flex gap-6">
+                        <span id="start-time">開始時刻: --:--</span>
+                        <span id="elapsed-time">経過時間: 00:00:00</span>
+                    </div>
+                    <div class="flex gap-2 items-center">
+                        <span class="material-symbols-outlined text-[14px] text-primary">timer</span>
+                        <span id="estimated-time" class="text-primary">推定残り時間: --</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="px-8 py-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div
+                    class="bg-surface-dark border border-border-dark rounded-xl p-5 shadow-sm flex flex-col gap-3 group hover:border-primary/50 transition-colors">
+                    <div class="flex items-center gap-2 text-slate-400">
+                        <span class="material-symbols-outlined text-[20px]">bookmark</span>
+                        <span class="text-xs font-semibold uppercase tracking-wider">現在の章</span>
+                    </div>
+                    <div class="flex-1">
+                        <p id="current-chapter"
+                            class="text-xl font-bold text-white group-hover:text-primary transition-colors">--</p>
+                        <p class="text-xs text-slate-400 mt-1 line-clamp-1">セクション: --</p>
+                    </div>
+                </div>
+                <div
+                    class="bg-surface-dark border border-border-dark rounded-xl p-5 shadow-sm flex flex-col gap-3 group hover:border-primary/50 transition-colors">
+                    <div class="flex items-center gap-2 text-slate-400">
+                        <span class="material-symbols-outlined text-[20px]">grid_view</span>
+                        <span class="text-xs font-semibold uppercase tracking-wider">ウィンドウサイズ</span>
+                    </div>
+                    <div class="flex-1">
+                        <p id="window-size" class="text-xl font-bold font-mono text-white">10 ページ</p>
+                        <p id="overlap-size" class="text-xs text-slate-400 mt-1">スライディング重複: 1 ページ</p>
+                    </div>
+                </div>
+                <div
+                    class="bg-surface-dark border border-border-dark rounded-xl p-5 shadow-sm flex flex-col gap-3 group hover:border-primary/50 transition-colors">
+                    <div class="flex items-center gap-2 text-slate-400">
+                        <span class="material-symbols-outlined text-[20px]">text_fields</span>
+                        <span class="text-xs font-semibold uppercase tracking-wider">前回の末尾テキスト</span>
+                    </div>
+                    <div class="flex-1">
+                        <p id="last-tail-text"
+                            class="text-sm font-mono text-emerald-400 bg-emerald-900/20 p-2 rounded border border-emerald-500/20 truncate">
+                            --</p>
+                        <p id="confidence-score" class="text-xs text-slate-400 mt-1">信頼度スコア: --</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Log Viewer -->
+            <div class="flex-1 px-8 pb-32 min-h-[300px] flex flex-col">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-sm font-bold text-slate-200 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[18px]">terminal</span>
+                        リアルタイム実行ログ
+                    </h3>
+                    <div class="flex gap-2">
+                        <span class="px-2 py-0.5 rounded text-[10px] bg-slate-700 text-slate-400 font-mono">自動スクロール:
+                            オン</span>
+                    </div>
+                </div>
+                <div id="log-container"
+                    class="flex-1 bg-surface-darker rounded-xl border border-border-dark p-4 overflow-y-auto custom-scrollbar font-mono text-xs leading-relaxed shadow-inner">
+                    <div id="log-content" class="flex flex-col gap-1 text-slate-300">
+                        <!-- ログがここに追加されます -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Control Bar -->
+            <div
+                class="absolute bottom-0 left-0 right-0 bg-surface-dark/95 backdrop-blur-md border-t border-border-dark p-4 px-8 flex items-center justify-between z-10 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
+                <div class="flex items-center gap-8 w-full">
+                    <div class="flex flex-col">
+                        <button id="pause-btn" onclick="pauseProcessing()"
+                            class="flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover text-white px-8 py-3 rounded-lg font-bold text-sm shadow-lg shadow-primary/20 transition-all active:scale-95 w-48"
+                            disabled>
+                            <span class="material-symbols-outlined text-[20px]">pause</span>
+                            OCR一時停止
+                        </button>
+                        <span class="text-[10px] text-slate-500 mt-1.5 text-center">※進捗は保存され、いつでも再開できます</span>
+                    </div>
+                    <div class="flex-1"></div>
+                    <div class="flex items-center gap-4">
+                        <div class="text-right hidden sm:block mr-4 border-r border-slate-600 pr-6">
+                            <p class="text-xs font-semibold text-white">出力ファイル</p>
+                            <p id="output-filename" class="text-[10px] text-slate-500 font-mono">./output/output.md</p>
+                        </div>
+                        <button onclick="openOutput()"
+                            class="flex items-center justify-center gap-2 bg-slate-700 hover:bg-slate-600 text-white px-5 py-2.5 rounded-lg font-medium text-sm transition-all shadow-md">
+                            <span class="material-symbols-outlined text-[20px]">description</span>
+                            output.md を開く
+                        </button>
+                        <div class="h-8 w-px bg-slate-700 mx-2"></div>
+                        <button onclick="stopProcessing()"
+                            class="group flex items-center justify-center gap-2 bg-transparent border border-red-500/30 hover:border-red-500 hover:bg-red-500/10 text-red-500 hover:text-red-400 px-5 py-2.5 rounded-lg font-medium text-sm transition-all active:scale-95"
+                            title="現在のプロセスを完全に終了します">
+                            <span
+                                class="material-symbols-outlined text-[20px] group-hover:animate-bounce">warning</span>
+                            処理を完全に停止
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // グローバル変数
+        let ws = null;
+        let startTime = null;
+        let timerInterval = null;
+
+        // ファイルアップロード処理
+        function setupFileUpload() {
+            const dropZone = document.getElementById('drop-zone');
+            const fileInput = document.getElementById('pdf-input');
+
+            // クリックでファイル選択
+            dropZone.addEventListener('click', () => {
+                fileInput.click();
+            });
+
+            // ファイル選択時
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    handleFile(e.target.files[0]);
+                }
+            });
+
+            // ドラッグオーバー
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.classList.add('border-primary', 'bg-primary/5');
+            });
+
+            // ドラッグリーブ
+            dropZone.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('border-primary', 'bg-primary/5');
+            });
+
+            // ドロップ
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('border-primary', 'bg-primary/5');
+
+                if (e.dataTransfer.files.length > 0) {
+                    const file = e.dataTransfer.files[0];
+                    if (file.type === 'application/pdf') {
+                        handleFile(file);
+                    } else {
+                        alert('PDFファイルのみアップロード可能です');
+                    }
+                }
+            });
+        }
+
+        // ファイル処理
+        async function handleFile(file) {
+            // アップロードエリアを隠す
+            document.getElementById('upload-area').classList.add('hidden');
+            document.getElementById('upload-progress').classList.remove('hidden');
+
+            addLog('INFO', `PDFファイル: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`);
+
+            // ファイルをサーバーに送信
+            const formData = new FormData();
+            formData.append('pdf', file);
+
+            try {
+                updateUploadProgress(10, 'PDFをアップロード中...');
+
+                // WebSocket経由でファイル情報を送信
+                if (ws && ws.readyState === WebSocket.OPEN) {
+                    // ファイルをBase64エンコード
+                    const reader = new FileReader();
+                    reader.onload = async (e) => {
+                        updateUploadProgress(30, 'PDFを変換中...');
+
+                        ws.send(JSON.stringify({
+                            command: 'upload_pdf',
+                            filename: file.name,
+                            data: e.target.result.split(',')[1] // Base64部分のみ
+                        }));
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    throw new Error('WebSocket接続がありません');
+                }
+
+            } catch (error) {
+                addLog('ERROR', `アップロードエラー: ${error.message}`);
+                document.getElementById('upload-area').classList.remove('hidden');
+                document.getElementById('upload-progress').classList.add('hidden');
+            }
+        }
+
+        // アップロード進捗更新
+        function updateUploadProgress(percent, status) {
+            document.getElementById('upload-progress-bar').style.width = `${percent}%`;
+            document.getElementById('upload-status').textContent = status;
+        }
+
+        // アップロード完了
+        function onUploadComplete() {
+            document.getElementById('upload-progress').classList.add('hidden');
+            document.getElementById('progress-header').classList.remove('hidden');
+            addLog('SUCCESS', 'PDF変換完了。OCR処理を開始します...');
+        }
+
+        // WebSocket接続
+        function connectWebSocket() {
+            ws = new WebSocket('ws://localhost:8765');
+
+            ws.onopen = () => {
+                addLog('SUCCESS', 'WebSocket接続確立');
+                updateConnectionStatus(true);
+            };
+
+            ws.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                handleMessage(data);
+            };
+
+            ws.onerror = (error) => {
+                addLog('ERROR', 'WebSocket接続エラー');
+                updateConnectionStatus(false);
+            };
+
+            ws.onclose = () => {
+                addLog('WARN', 'WebSocket接続切断');
+                updateConnectionStatus(false);
+                // 再接続を試みる
+                setTimeout(connectWebSocket, 5000);
+            };
+        }
+
+        // メッセージハンドラ
+        function handleMessage(data) {
+            switch (data.type) {
+                case 'log':
+                    addLog(data.level, data.message);
+                    break;
+                case 'progress':
+                    updateProgress(data.processed, data.total);
+                    break;
+                case 'status':
+                    updateStatus(data);
+                    break;
+                case 'file_list':
+                    updateFileList(data.files);
+                    break;
+                case 'upload_progress':
+                    updateUploadProgress(data.percent, data.status);
+                    break;
+                case 'upload_complete':
+                    onUploadComplete();
+                    updateProgress(0, data.total_pages);
+                    break;
+                case 'upload_error':
+                    document.getElementById('upload-area').classList.remove('hidden');
+                    document.getElementById('upload-progress').classList.add('hidden');
+                    addLog('ERROR', `アップロードエラー: ${data.error}`);
+                    break;
+            }
+        }
+
+        // ログ追加
+        function addLog(level, message) {
+            const timestamp = new Date().toLocaleTimeString('ja-JP', { hour12: false });
+            const logContent = document.getElementById('log-content');
+
+            const colors = {
+                'INFO': 'text-blue-400',
+                'SUCCESS': 'text-green-400',
+                'ERROR': 'text-red-400',
+                'WARN': 'text-yellow-400',
+                'DEBUG': 'text-purple-400'
+            };
+
+            const logEntry = document.createElement('div');
+            logEntry.innerHTML = `<span class="text-slate-500">[${timestamp}]</span> <span class="${colors[level] || 'text-slate-400'}">${level}</span> ${message}`;
+
+            logContent.appendChild(logEntry);
+
+            // 自動スクロール
+            const container = document.getElementById('log-container');
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // 進捗更新
+        function updateProgress(processed, total) {
+            const percent = total > 0 ? Math.round((processed / total) * 100) : 0;
+
+            document.getElementById('processed-pages').textContent = processed;
+            document.getElementById('total-pages').textContent = total;
+            document.getElementById('progress-bar').style.width = `${percent}%`;
+            document.getElementById('progress-percent').textContent = `${percent}%`;
+        }
+
+        // ステータス更新
+        function updateStatus(status) {
+            if (status.filename) {
+                document.getElementById('pdf-filename').textContent = status.filename;
+            }
+            if (status.chapter) {
+                document.getElementById('current-chapter').textContent = status.chapter;
+            }
+            if (status.last_tail) {
+                document.getElementById('last-tail-text').textContent = status.last_tail;
+            }
+            if (status.job_status) {
+                const badge = document.getElementById('job-status-badge');
+                badge.textContent = status.job_status;
+                badge.className = status.job_status === '処理中ジョブ'
+                    ? 'px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/20 text-blue-400 uppercase tracking-wide border border-blue-500/20'
+                    : 'px-2 py-0.5 rounded text-[10px] font-bold bg-slate-500/20 text-slate-400 uppercase tracking-wide border border-slate-500/20';
+            }
+        }
+
+        // ファイルリスト更新
+        function updateFileList(files) {
+            const fileList = document.getElementById('file-list');
+            const fileCount = document.getElementById('file-count');
+
+            fileCount.textContent = `${files.length} ファイル読込済`;
+            fileList.innerHTML = '';
+
+            files.forEach((file, index) => {
+                const fileItem = document.createElement('div');
+                fileItem.className = file.processing
+                    ? 'group flex gap-3 p-2 rounded-lg bg-surface-dark border border-primary shadow-sm cursor-pointer relative overflow-hidden'
+                    : 'group flex gap-3 p-2 rounded-lg border border-transparent hover:bg-slate-800/50 cursor-pointer transition-colors';
+
+                fileItem.innerHTML = `
+                    ${file.processing ? '<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>' : ''}
+                    <div class="h-12 w-10 bg-slate-700 rounded overflow-hidden flex-none relative">
+                        <div class="w-full h-full bg-slate-600 ${file.processing ? 'opacity-80' : 'opacity-50 grayscale'}"></div>
+                        ${file.processing ? '<div class="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-[1px]"><span class="material-symbols-outlined text-white animate-spin text-lg">sync</span></div>' : '<div class="absolute inset-0 flex items-center justify-center bg-black/20"><span class="material-symbols-outlined text-white text-[16px]">hourglass_empty</span></div>'}
+                    </div>
+                    <div class="flex flex-col justify-center min-w-0">
+                        <p class="text-xs font-medium ${file.processing ? 'text-white' : 'text-slate-400'} truncate font-mono">${file.name}</p>
+                        <p class="text-[10px] ${file.processing ? 'text-primary font-medium animate-pulse' : 'text-slate-400'}">${file.status}</p>
+                    </div>
+                `;
+
+                fileList.appendChild(fileItem);
+            });
+        }
+
+        // 接続ステータス更新
+        function updateConnectionStatus(connected) {
+            const status = document.getElementById('connection-status');
+            if (connected) {
+                status.innerHTML = `
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    </span>
+                    <span class="text-xs font-semibold text-emerald-400">接続済み</span>
+                `;
+            } else {
+                status.innerHTML = `
+                    <span class="relative flex h-2 w-2">
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                    </span>
+                    <span class="text-xs font-semibold text-red-400">切断</span>
+                `;
+            }
+        }
+
+        // タイマー開始
+        function startTimer() {
+            startTime = new Date();
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        // タイマー更新
+        function updateTimer() {
+            if (!startTime) return;
+
+            const now = new Date();
+            const elapsed = Math.floor((now - startTime) / 1000);
+
+            const hours = Math.floor(elapsed / 3600);
+            const minutes = Math.floor((elapsed % 3600) / 60);
+            const seconds = elapsed % 60;
+
+            document.getElementById('elapsed-time').textContent =
+                `経過時間: ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        // 初期化
+        window.addEventListener('DOMContentLoaded', () => {
+            setupFileUpload();
+            addLog('INFO', 'Gemini OCR Studio 起動');
+            addLog('INFO', 'WebSocket接続を試行中...');
+            connectWebSocket();
+        });
+
+        // ボタンハンドラ
+        function pauseProcessing() {
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                ws.send(JSON.stringify({ command: 'pause' }));
+            }
+        }
+
+        function stopProcessing() {
+            if (confirm('処理を完全に停止しますか？進捗は保存されます。')) {
+                if (ws && ws.readyState === WebSocket.OPEN) {
+                    ws.send(JSON.stringify({ command: 'stop' }));
+                }
+            }
+        }
+
+        function refreshFileList() {
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                ws.send(JSON.stringify({ command: 'refresh_files' }));
+            }
+        }
+
+        function openOutput() {
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                ws.send(JSON.stringify({ command: 'open_output' }));
+            }
+        }
+    </script>
+</body>
+
+</html>

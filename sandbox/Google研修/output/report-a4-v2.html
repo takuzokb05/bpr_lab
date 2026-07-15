@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google研修レポート — 10x思考で気づいたこと</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+@page {
+  size: A4;
+  margin: 15mm 18mm;
+}
+
+:root {
+  /* Google-inspired palette */
+  --g-blue: #4285F4;
+  --g-red: #EA4335;
+  --g-yellow: #FBBC04;
+  --g-green: #34A853;
+  --text-0: #202124;
+  --text-1: #5F6368;
+  --text-2: #9AA0A6;
+  --accent: var(--g-blue);
+  --accent-subtle: rgba(66, 133, 244, 0.06);
+  --accent-light: rgba(66, 133, 244, 0.12);
+  --secondary: var(--g-green);
+  --secondary-subtle: rgba(52, 168, 83, 0.06);
+  --surface-0: #FFFFFF;
+  --surface-1: #F8F9FA;
+  --border: #DADCE0;
+  --font-body: 'Outfit', 'Noto Sans JP', sans-serif;
+  --font-display: 'Outfit', 'Noto Sans JP', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 10.5pt; }
+
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.75;
+  color: var(--text-0);
+  background: white;
+}
+
+.page {
+  width: 210mm;
+  min-height: 297mm;
+  padding: 15mm 18mm;
+  margin: 0 auto;
+  background: white;
+  page-break-after: always;
+  position: relative;
+}
+
+.page:last-child { page-break-after: auto; }
+
+.page-num {
+  position: absolute;
+  bottom: 10mm;
+  right: 18mm;
+  font-size: 8pt;
+  color: var(--text-2);
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-size: 18pt;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--text-0);
+  margin-bottom: 4mm;
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-size: 12.5pt;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--text-0);
+  margin-top: 6mm;
+  margin-bottom: 3mm;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+h2::before {
+  content: '';
+  display: inline-block;
+  width: 3pt;
+  height: 12pt;
+  background: var(--g-blue);
+  border-radius: 2pt;
+  margin-right: 2.5mm;
+  vertical-align: -1pt;
+}
+
+h3 {
+  font-size: 10.5pt;
+  font-weight: 600;
+  color: var(--text-1);
+  margin-top: 4mm;
+  margin-bottom: 1.5mm;
+}
+
+p { margin-bottom: 2.5mm; }
+strong { font-weight: 700; }
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 3mm;
+  border-bottom: 1pt solid var(--border);
+  margin-bottom: 5mm;
+}
+
+.header-title {
+  font-family: var(--font-display);
+  font-size: 8pt;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--g-blue);
+  display: flex;
+  align-items: center;
+  gap: 2mm;
+}
+
+.header-title::before {
+  content: '';
+  display: inline-block;
+  width: 4pt;
+  height: 4pt;
+  border-radius: 50%;
+  background: var(--g-blue);
+}
+
+.header-title::after {
+  content: '';
+  display: inline-block;
+  width: 4pt;
+  height: 4pt;
+  border-radius: 50%;
+  background: var(--g-red);
+}
+
+.header-meta {
+  font-size: 8pt;
+  color: var(--text-2);
+}
+
+.lead {
+  font-size: 11pt;
+  font-weight: 300;
+  color: var(--text-1);
+  margin-bottom: 5mm;
+  line-height: 1.6;
+}
+
+blockquote {
+  border-left: 3pt solid var(--g-blue);
+  padding: 2mm 4mm;
+  margin: 2.5mm 0;
+  font-style: normal;
+  color: var(--text-1);
+  font-size: 9.5pt;
+  background: var(--surface-1);
+  border-radius: 0 4pt 4pt 0;
+}
+
+blockquote cite {
+  display: block;
+  font-size: 7.5pt;
+  font-style: normal;
+  color: var(--text-2);
+  margin-top: 1mm;
+}
+
+.insight-box {
+  background: var(--surface-1);
+  border: 1pt solid var(--border);
+  border-radius: 8pt;
+  padding: 3.5mm 4mm;
+  margin: 4mm 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.insight-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3pt;
+  background: linear-gradient(90deg, var(--g-blue), var(--g-red), var(--g-yellow), var(--g-green));
+}
+
+.insight-box p { margin-bottom: 0; }
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5mm;
+  margin: 3mm 0;
+}
+
+.compare-box {
+  padding: 3mm 4mm;
+  border-radius: 2mm;
+  font-size: 9.5pt;
+}
+
+.compare-box.ai {
+  background: rgba(66, 133, 244, 0.04);
+  border: 1pt solid rgba(66, 133, 244, 0.15);
+  border-radius: 8pt;
+}
+
+.compare-box.human {
+  background: rgba(52, 168, 83, 0.04);
+  border: 1pt solid rgba(52, 168, 83, 0.15);
+  border-radius: 8pt;
+}
+
+.compare-label {
+  font-size: 7.5pt;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 1.5mm;
+}
+
+.compare-box.ai .compare-label { color: var(--g-blue); }
+.compare-box.human .compare-label { color: var(--g-green); }
+
+.big-num-row {
+  display: flex;
+  gap: 5mm;
+  margin: 4mm 0;
+}
+
+.big-num-item {
+  flex: 1;
+  background: var(--surface-1);
+  border: 1pt solid var(--border);
+  border-radius: 8pt;
+  padding: 3mm 4mm;
+  text-align: center;
+}
+
+.big-num-value {
+  font-family: var(--font-display);
+  font-size: 20pt;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--g-blue);
+}
+
+.big-num-label {
+  font-size: 7.5pt;
+  color: var(--text-2);
+  margin-top: 1mm;
+}
+
+.cmp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 9pt;
+  margin: 3mm 0;
+}
+
+.cmp-table th {
+  text-align: left;
+  font-weight: 500;
+  font-size: 7.5pt;
+  letter-spacing: 0.05em;
+  color: var(--text-2);
+  padding: 2mm 2.5mm;
+  border-bottom: 2pt solid var(--g-blue);
+}
+
+.cmp-table td {
+  padding: 2mm 2.5mm;
+  border-bottom: 0.5pt solid var(--border);
+  vertical-align: top;
+}
+
+.cmp-table .hl { background: rgba(234, 67, 53, 0.06); font-weight: 500; }
+
+.timeline-compact {
+  position: relative;
+  padding-left: 14mm;
+  margin: 3mm 0;
+}
+
+.timeline-compact::before {
+  content: '';
+  position: absolute;
+  left: 4mm;
+  top: 2mm;
+  bottom: 2mm;
+  width: 1pt;
+  background: var(--border);
+}
+
+.tl-item {
+  position: relative;
+  margin-bottom: 3mm;
+}
+
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: -11.5mm;
+  top: 2mm;
+  width: 6pt;
+  height: 6pt;
+  border-radius: 50%;
+  background: var(--g-blue);
+}
+
+.tl-item:nth-child(2)::before { background: var(--g-green); }
+.tl-item:nth-child(3)::before { background: var(--g-yellow); }
+
+.tl-label {
+  font-weight: 600;
+  font-size: 9pt;
+  color: var(--g-blue);
+}
+
+.tl-item p { font-size: 9pt; margin-bottom: 0; }
+
+.page-footer {
+  font-size: 7.5pt;
+  color: var(--text-2);
+  border-top: 0.5pt solid var(--border);
+  padding-top: 2mm;
+}
+
+@media screen {
+  body { background: #E8EAED; padding: 10mm 0; }
+  .page { box-shadow: 0 1px 3px rgba(60,64,67,0.15), 0 4px 8px rgba(60,64,67,0.1); margin-bottom: 10mm; border-radius: 8pt; }
+}
+
+@media print {
+  body { background: white; }
+  .page { padding: 0; min-height: auto; box-shadow: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ==================== PAGE 1: AIで個人は10倍速くなる。でもそれは想定の範囲内。 ==================== -->
+<div class="page">
+  <div class="header">
+    <span class="header-title">Google研修レポート</span>
+    <span class="header-meta">2026年3月12日実施 ／ 財政局償却資産課　久保拓海</span>
+  </div>
+
+  <h1>AIは答えを速くする。<br>人は問いを変える。</h1>
+
+  <p class="lead">Google研修で学んだ「10x思考」。10%の改善ではなく10倍の飛躍を考える発想法です。AIとツールがあれば個人で10倍は余裕だと思っていました。でも研修で、違う景色が見えてきました。</p>
+
+  <h2>AIで確かに10倍速くなった</h2>
+
+  <p>自分の場合、AIで税務データの照合ツールを自作しました。数日かかっていた作業が数時間で終わります。GWSもすごかったです。Gemini、Gems、Deep Research、NotebookLM——技術は触ればわかります。</p>
+
+  <p>でも、ふと気づいたことがあります。<strong>AIで10倍速くなった体験は増えましたが、最初から10倍を目指したことはなかった。</strong>AIに「クリティカルシンキングで分析して」「空雨傘で整理して」と指示すると、その枠の中で最適解が返ってきます。速いし正確です。でも<strong>枠そのものは自分が決めています。</strong></p>
+
+  <p>つまり、自分の発想の範囲内で10倍速になっているだけだったんです。</p>
+
+  <h2>研修で、違う「10x」に出会った</h2>
+
+  <p>午後のワークショップで、各部署の参加者が課題を共有しました。</p>
+
+  <div class="two-col">
+    <div>
+      <blockquote>
+        「担当100世帯以上。端末は2〜3人に1台。電話が多くて進まない」
+        <cite>— 生活保護ケースワーカー</cite>
+      </blockquote>
+    </div>
+    <div>
+      <blockquote>
+        「救急車の出動が毎年5%増。軽症が4割。1件4万円」
+        <cite>— 消防</cite>
+      </blockquote>
+    </div>
+  </div>
+
+  <p>「端末が2〜3人に1台」——この一言は、どんなプロンプトを書いても出てきません。隣に座った人の現実だから聞けたんです。人と話すと、自分では想定しなかった角度の意見が来ます。<strong>発想の範囲自体が広がります。</strong></p>
+
+  <div class="insight-box">
+    <p><strong>AIは「速度の10x」——同じ方向に速く走れる。人との対話は「方向の10x」——走る方向自体が増える。</strong>10x思考の本質は、個人が速くなることではなく、異なるバックグラウンドの掛け算で飛躍することでした。</p>
+  </div>
+
+  <span class="page-num">1 / 3</span>
+</div>
+
+<!-- ==================== PAGE 2: 人と話すとゴール自体が変わる ==================== -->
+<div class="page">
+  <div class="header">
+    <span class="header-title">Google研修レポート</span>
+    <span class="header-meta">2026年3月 ／ 財政局償却資産課　久保拓海</span>
+  </div>
+
+  <h2>Googleがデザインしていたのは「人と人の交差点」だった</h2>
+
+  <p>研修で一番印象に残ったのは、実は技術ではなくオフィスの設計でした。カフェテリア、マイクロキッチン、階段の幅を狭くするレイアウト、火水木の出社。</p>
+
+  <blockquote>
+    「テック企業だから無機質だと思ってたけど、コミュニケーションをすごく大事にしていて、実はすごく有機的だった」
+    <cite>— 研修参加者</cite>
+  </blockquote>
+
+  <p>MITのAllen教授の研究によると、<strong>50メートル離れると人は週に一度も技術的な会話をしなくなります。</strong>メールの時代でも変わりません。Googleは世界70拠点に1,500カ所のマイクロキッチンを設置し、全社員を2分半以内の距離に配置しています。偶発的な交流は<strong>生産性を最大25%向上</strong>させるというデータもあります。</p>
+
+  <p>Googleが求めていたのは、個人を強くすることではなく、<strong>異なる人が交わる「場」を設計すること</strong>でした。</p>
+
+  <h2>GROWモデルで考えると、AIと人の使い分けが見える</h2>
+
+  <p>研修ではGROWモデル（Goal → Reality → Options → Will）を使ったワークショップも行いました。このフレームワークにAIと人を当てはめると、それぞれの得意領域がはっきりします。</p>
+
+  <table class="cmp-table">
+    <thead>
+      <tr><th>GROW</th><th>AIが得意なこと</th><th>人が得意なこと</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Goal</strong><br>目標</td>
+        <td>目標の構造化・言語化</td>
+        <td><strong>「そもそもそのゴールでいいの？」</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Reality</strong><br>現状</td>
+        <td>データ・事例の網羅的収集</td>
+        <td><strong>「端末2-3人に1台」という体感の現実</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Options</strong><br>選択肢</td>
+        <td>網羅的な選択肢の生成</td>
+        <td><strong>「それ、うちの部署だと政治的に無理」</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Will</strong><br>意志</td>
+        <td>アクションプランの整理</td>
+        <td><strong>「本当にやる気ある？」と問い返す</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>AIはGoalを速く言語化し、Realityのデータを集め、Optionsを網羅してくれます。でも<strong>ゴール自体を問い直す力、現場の肌感覚、「本当にやるのか」を問う力は人にしかありません。</strong></p>
+
+  <p>AIを思考の補助輪として使えば使うほど感じます。<strong>速くはなる。でも想定の範囲内。</strong>GROWのどのステップでも、人と話した瞬間に方向が変わる体験があります。</p>
+
+  <span class="page-num">2 / 3</span>
+</div>
+
+<!-- ==================== PAGE 3: 答えではなく、一緒に考える ==================== -->
+<div class="page">
+  <div class="header">
+    <span class="header-title">Google研修レポート</span>
+    <span class="header-meta">2026年3月 ／ 財政局償却資産課　久保拓海</span>
+  </div>
+
+  <h2>答えを持つことの落とし穴</h2>
+
+  <p>正直に書きます。AIを使いこなせるようになって、「すごいな」と言われることが増えました。即座に答えを出せる。資料もすぐ作れる。</p>
+
+  <p>でも、AIが出したそれっぽい答えと自分の肌感覚が揃うと、人と話すときに<strong>「一緒に考えよう」ではなく「これが答えだよ」になっていました。</strong>相手は「すごいね」で終わり。思考のプロセスを共有できていなかったんです。</p>
+
+  <p><strong>答えを持ってしまったことで、一緒に考える相手がいなくなっていました。</strong></p>
+
+  <h2>これから変えること</h2>
+
+  <p>AIは言語化の助けになります。これは間違いありません。でもそのアウトプットを「答え」として見せるのではなく、<strong>「たたき台」として一緒に考える素材にしたい</strong>と思っています。</p>
+
+  <p>「AIにこう聞いたらこう返ってきたんですけど、どう思います？」——この一言で、答えの押し付けが思考の共有に変わります。</p>
+
+  <p>作ったものを見せるだけでなく、<strong>作る過程を共有する。</strong>何に困って、何を試して、何が失敗したか。成果物ではなくプロセスを渡す。そうすることで、相手が「自分にもできるかも」と思えるようになるはずです。</p>
+
+  <p>Googleが「Project Aristotle」で180チームを分析した結論もこれに近いです。チームの成果を決めるのは「誰がいるか」ではなく<strong>「どう関わるか」</strong>。その最大の因子が心理的安全性——リスクを取っても罰されない安心感でした。</p>
+
+  <div class="insight-box">
+    <p>10x思考で一番大事だと感じたのは、<strong>「これは自分一人で考えても行きつかなかった」という体験そのもの</strong>でした。AIは速くしてくれます。でも方向を変えてくれるのは人です。技術を使って個人が強くなるのは前提として、その先にある「人との掛け算」にこそ10倍の可能性があると思います。まずは小さく、同じ目線で。</p>
+  </div>
+
+  <div class="page-footer" style="position: absolute; bottom: 15mm; left: 18mm; right: 18mm;">
+    <p>本レポートの事実・数値は一次ソース（Google re:Work、MIT Allen Curve研究、各社公式発表）で検証済みです。</p>
+  </div>
+
+  <span class="page-num">3 / 3</span>
+</div>
+
+</body>
+</html>

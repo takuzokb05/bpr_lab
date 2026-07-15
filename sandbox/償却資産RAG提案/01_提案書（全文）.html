@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>償却資産税業務へのRAG導入提案書</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700;800;900&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ── CSS変数 ── */
+  :root {
+    --bg-primary: #ffffff;
+    --text-primary: #1a1a1a;
+    --text-secondary: #444;
+    --accent: #ff3300;
+    --accent-light: rgba(255, 51, 0, 0.06);
+    --border: #e0e0e0;
+    --content-width: 860px;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Nunito', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── ヘッダー ── */
+  .site-header {
+    border-top: 3px solid var(--accent);
+    padding: 2.5rem 1.5rem 2rem;
+    max-width: var(--content-width);
+    margin: 0 auto;
+  }
+
+  .site-header .label {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .site-header h1 {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 900;
+    font-size: 2rem;
+    line-height: 1.25;
+    color: var(--text-primary);
+  }
+
+  /* ── 目次 ── */
+  .toc {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: 1.5rem 1.5rem 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .toc-title {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.8rem;
+  }
+
+  .toc ol {
+    list-style: none;
+    padding: 0;
+    columns: 2;
+    column-gap: 2rem;
+  }
+
+  .toc li {
+    margin-bottom: 0.35rem;
+    font-size: 0.88rem;
+    break-inside: avoid;
+  }
+
+  .toc a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+
+  .toc a:hover {
+    border-bottom-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .toc .toc-num {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 700;
+    color: var(--accent);
+    margin-right: 0.3rem;
+    display: inline-block;
+    min-width: 1.5em;
+  }
+
+  /* ── メインコンテンツ ── */
+  main {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: 0 1.5rem 5rem;
+  }
+
+  /* ── セクション ── */
+  .section {
+    padding: 2.5rem 0 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section:last-child {
+    border-bottom: none;
+  }
+
+  .section-number {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 900;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+
+  h2 {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: 1.45rem;
+    line-height: 1.3;
+    margin-bottom: 1.2rem;
+    color: var(--text-primary);
+  }
+
+  h3 {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-top: 1.8rem;
+    margin-bottom: 0.6rem;
+    color: var(--text-primary);
+  }
+
+  h4 {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-top: 1.4rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+  }
+
+  p {
+    margin-bottom: 1rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+  }
+
+  strong {
+    color: var(--text-primary);
+    font-weight: 700;
+  }
+
+  /* ── テーブル ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.2rem 0;
+    font-size: 0.88rem;
+  }
+
+  th {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 700;
+    text-align: left;
+    padding: 0.6rem 0.8rem;
+    border-bottom: 2px solid var(--text-primary);
+    color: var(--text-primary);
+    font-size: 0.82rem;
+    letter-spacing: 0.03em;
+    background: var(--accent-light);
+  }
+
+  td {
+    padding: 0.6rem 0.8rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+    vertical-align: top;
+  }
+
+  /* ストライプ行 */
+  tbody tr:nth-child(even) td {
+    background: #fafafa;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  /* ── リスト ── */
+  ul, ol {
+    margin: 0.8rem 0 1rem 1.5rem;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+  }
+
+  li {
+    margin-bottom: 0.35rem;
+  }
+
+  li strong {
+    color: var(--text-primary);
+  }
+
+  /* ── 補足・引用ボックス ── */
+  .callout {
+    background: var(--accent-light);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    padding: 1.2rem 1.5rem;
+    margin: 1.5rem 0;
+    font-size: 0.92rem;
+    color: var(--text-primary);
+  }
+
+  .callout p {
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .callout p:last-child {
+    margin-bottom: 0;
+  }
+
+  blockquote {
+    background: #f8f8f8;
+    border-left: 3px solid var(--border);
+    border-radius: 0 6px 6px 0;
+    padding: 1rem 1.2rem;
+    margin: 1.2rem 0;
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+  }
+
+  /* ── コードブロック ── */
+  pre {
+    background: #f5f5f5;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1rem 1.2rem;
+    margin: 1.2rem 0;
+    overflow-x: auto;
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+
+  code {
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 0.88rem;
+  }
+
+  /* ── 強調段落 ── */
+  .emphasis {
+    font-weight: 700;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+  }
+
+  /* ── フッター ── */
+  .site-footer {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.78rem;
+    color: #999;
+    text-align: center;
+  }
+
+  /* ── レスポンシブ ── */
+  @media (max-width: 600px) {
+    .site-header h1 { font-size: 1.5rem; }
+    h2 { font-size: 1.2rem; }
+    .toc ol { columns: 1; }
+    table { font-size: 0.8rem; }
+    th, td { padding: 0.4rem 0.5rem; }
+  }
+
+  /* ── 印刷対応 ── */
+  @media print {
+    html { font-size: 11pt; }
+    body { line-height: 1.6; }
+
+    .site-header {
+      border-top: 2px solid #000;
+      padding: 1rem 0 0.8rem;
+    }
+
+    .site-header .label { color: #000; }
+    .site-header h1 { font-size: 16pt; }
+
+    .toc {
+      padding: 0.8rem 0 1rem;
+      page-break-after: always;
+    }
+
+    .toc ol { columns: 2; }
+    .toc a { color: #333; }
+    .toc .toc-num { color: #333; }
+
+    main { padding: 0 0 2rem; }
+
+    .section {
+      padding: 1rem 0;
+      page-break-inside: avoid;
+    }
+
+    .section-number { color: #333; }
+
+    h2 { font-size: 13pt; page-break-after: avoid; }
+    h3 { font-size: 11pt; page-break-after: avoid; }
+    p { font-size: 10pt; }
+
+    table { font-size: 9pt; page-break-inside: avoid; }
+    th { background: #eee !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    tbody tr:nth-child(even) td { background: #f5f5f5 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+    .callout {
+      border-left: 2px solid #333;
+      background: #f5f5f5 !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    pre {
+      font-size: 9pt;
+      page-break-inside: avoid;
+    }
+
+    .site-footer {
+      border-top: 1px solid #ccc;
+      font-size: 8pt;
+      color: #666;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── ヘッダー ── -->
+<header class="site-header">
+  <div class="label">Proposal</div>
+  <h1>償却資産税業務へのRAG導入提案書</h1>
+</header>
+
+<!-- ── 目次 ── -->
+<nav class="toc">
+  <div class="toc-title">目次 — Contents</div>
+  <ol>
+    <li><span class="toc-num">1.</span><a href="#ch1">要旨</a></li>
+    <li><span class="toc-num">2.</span><a href="#ch2">背景と課題</a></li>
+    <li><span class="toc-num">3.</span><a href="#ch3">提案内容</a></li>
+    <li><span class="toc-num">4.</span><a href="#ch4">知識更新エコシステム — 異動に耐える仕組み</a></li>
+    <li><span class="toc-num">5.</span><a href="#ch5">新システムとの相乗効果</a></li>
+    <li><span class="toc-num">6.</span><a href="#ch6">着手に必要なデータ</a></li>
+    <li><span class="toc-num">7.</span><a href="#ch7">他自治体・国の前例</a></li>
+    <li><span class="toc-num">8.</span><a href="#ch8">コスト概算</a></li>
+    <li><span class="toc-num">9.</span><a href="#ch9">精度保証と運用ルール</a></li>
+    <li><span class="toc-num">10.</span><a href="#ch10">実現可能性</a></li>
+    <li><span class="toc-num">11.</span><a href="#ch11">展開可能性 — 税部門のファーストペンギン</a></li>
+    <li><span class="toc-num">12.</span><a href="#ch12">リスクと対策</a></li>
+    <li><span class="toc-num">13.</span><a href="#ch13">月別アクションプラン（2026年4月〜9月）</a></li>
+    <li><span class="toc-num">14.</span><a href="#ch14">データ匿名化の手順</a></li>
+    <li><span class="toc-num">15.</span><a href="#ch15">Phase 1 PoC 実施手順</a></li>
+    <li><span class="toc-num">16.</span><a href="#ch16">結論</a></li>
+  </ol>
+</nav>
+
+<main>
+
+  <!-- ── 第1章 要旨 ── -->
+  <section class="section" id="ch1">
+    <div class="section-number">Chapter 01</div>
+    <h2>1. 要旨</h2>
+    <p>償却資産税業務において、RAG（Retrieval-Augmented Generation: 検索拡張生成）技術を活用し、調査・審査・事業者対応の効率化と品質向上を実現することを提案する。デジタル統括本部が来年度より開始する手上げ制RAG導入支援に応募し、3つのユースケースで導入を目指す。さらに、担当者の異動に左右されず知識が育ち続けるエコシステムを構築し、組織としての知見を永続化する。</p>
+  </section>
+
+  <!-- ── 第2章 背景と課題 ── -->
+  <section class="section" id="ch2">
+    <div class="section-number">Chapter 02</div>
+    <h2>2. 背景と課題</h2>
+
+    <h3>2.1 業務環境の変化</h3>
+    <p>2025年度に新基幹システムを導入した。同システムは資産データを5年分遡及して保持し、過去の申告漏れを検出する機能を備えている。しかし、現状ではデータの保持にとどまり、蓄積データの高度な活用には至っていない。</p>
+    <p>加えて、新システムの安定化に想定以上の工数を要しており、2026年度以降も通常業務の負荷が高い状態が続く見込みである。</p>
+
+    <h3>2.2 構造的課題</h3>
+    <table>
+      <thead>
+        <tr><th>課題</th><th>影響</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>専任職の知見が属人化</td><td>異動により精査品質が低下</td></tr>
+        <tr><td>大量申告データの手動チェック</td><td>全件確認が不可能、課税漏れリスク</td></tr>
+        <tr><td>事業者からの問い合わせが電話に集中</td><td>繁忙期の対応負荷が過大、回答品質にばらつき</td></tr>
+        <tr><td>新システムの蓄積データが未活用</td><td>投資対効果が限定的</td></tr>
+        <tr><td>知識の更新が属人的</td><td>担当者異動のたびにリセットされるリスク</td></tr>
+      </tbody>
+    </table>
+
+    <h3>2.3 なぜ今か — 次年度がラストチャンス</h3>
+    <ul>
+      <li><strong>専任職のタイムリミット</strong>: A専任職（元SE、技術的に推進力がある）とM専任職（次年度で定年見込み）が在籍しているのは次年度まで。この2人がいるうちに知見をナレッジベースに移す必要がある</li>
+      <li>デジタル統括本部のRAG導入支援が来年度から開始される（手上げ制）</li>
+      <li><strong>本市にRAGの実績あり</strong>: 選挙管理でRAG実証実験を実施済み。庁内にノウハウが蓄積されており、ゼロからの立ち上げではない</li>
+      <li>他都市の事例も増加中（草津市・神戸市等、第7章参照）。自治体RAGの環境が整いつつある</li>
+      <li>新システムにより5年分のデータ基盤が整った</li>
+      <li><strong>通常業務が忙しいからこそ、調査系業務の効率化が不可欠</strong></li>
+    </ul>
+    <div class="callout">
+      <p><strong>次年度を逃すと、M専任職の定年退職により知見の一部が不可逆的に失われる。</strong></p>
+    </div>
+  </section>
+
+  <!-- ── 第3章 提案内容 ── -->
+  <section class="section" id="ch3">
+    <div class="section-number">Chapter 03</div>
+    <h2>3. 提案内容</h2>
+
+    <h3>3.1 ユースケース1: 大規模家屋 見積精査AI</h3>
+    <p><strong>対象業務:</strong> 1,000m2以上の事業用建物に対する大規模家屋調査の見積精査</p>
+
+    <h4>現状:</h4>
+    <ul>
+      <li>調査前に見積書・図面を精査し、評価額の目星をつける</li>
+      <li>評価要領の理解と専任職レベルの経験知が必要</li>
+      <li>精査に数時間を要し、経験の浅い職員は見落としリスクが高い</li>
+    </ul>
+
+    <h4>RAG導入後:</h4>
+    <ul>
+      <li>評価要領・専任職のノウハウ・過去事例をナレッジベース化</li>
+      <li>見積書・図面を入力すると、精査ポイントと概算評価を提示</li>
+      <li>初期精査時間の大幅短縮（数時間 → 30分〜1時間）</li>
+      <li>知見が異動に左右されず蓄積・継承される</li>
+    </ul>
+
+    <h3>3.2 ユースケース2: 申告データ疑義抽出AI</h3>
+    <p><strong>対象業務:</strong> 電子申告・紙申告データの疑義チェック（家屋疑義・自動車・申告不要資産の抽出）</p>
+
+    <h4>現状:</h4>
+    <ul>
+      <li>大量の義務者データから手作業で疑義を確認</li>
+      <li>全件目視チェックは現実的に不可能</li>
+      <li>見逃しは課税漏れ・過大課税につながる</li>
+    </ul>
+
+    <h4>RAG導入後:</h4>
+    <ul>
+      <li>申告データCSVを一括読み込み、判定基準に基づき自動分類</li>
+      <li>自動車・少額減価償却等の機械的判定はルールベース、家屋疑義等の専門判断が必要なものはRAGで判定基準を参照する2層構成</li>
+      <li>疑義フラグ・理由・優先度を付与したリストを出力</li>
+      <li>全件スクリーニングが可能となり、課税公平性が向上</li>
+      <li>新システムの5年遡及データと組み合わせ、過去の申告漏れも検出</li>
+    </ul>
+
+    <h3>3.3 ユースケース3: 事業者向け問い合わせチャットボット</h3>
+    <p><strong>対象業務:</strong> 事業者（申告義務者）からの問い合わせ対応</p>
+
+    <h4>現状:</h4>
+    <ul>
+      <li>電話がファーストコンタクトで、定型的な質問にも職員が直接対応</li>
+      <li>繁忙期（1〜3月）に問い合わせが集中し、対応負荷が跳ね上がる</li>
+      <li>回答品質が担当者の経験に依存</li>
+    </ul>
+
+    <h4>RAG導入後:</h4>
+    <ul>
+      <li>申告の手引き・FAQ・耐用年数表等をナレッジベース化</li>
+      <li>チャットボットが一次対応し、定型質問を自動回答</li>
+      <li>AIが判断できない質問は職員にエスカレーション</li>
+      <li>問い合わせログが自動蓄積され、FAQ改善の根拠になる</li>
+    </ul>
+
+    <p><strong>回答信頼度の3段階運用:</strong></p>
+    <table>
+      <thead>
+        <tr><th>段階</th><th>説明</th><th>対応</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>明確に回答可能</td><td>ナレッジに該当記載あり</td><td>AIが回答、ログ記録</td></tr>
+        <tr><td>判断が必要</td><td>類似記載はあるが完全一致しない</td><td>職員に確認を案内</td></tr>
+        <tr><td>回答不可</td><td>該当記載なし</td><td>窓口・電話への誘導</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ── 第4章 知識更新エコシステム ── -->
+  <section class="section" id="ch4">
+    <div class="section-number">Chapter 04</div>
+    <h2>4. 知識更新エコシステム — 異動に耐える仕組み</h2>
+
+    <p>RAG導入の最大のリスクは、ナレッジベースの陳腐化である。担当者の異動サイクル（通常3〜5年）を考えると、特定の人に依存しない更新の仕組みが不可欠である。</p>
+
+    <h3>4.1 設計思想: 業務の副産物としてナレッジが育つ</h3>
+    <p>3つのユースケースが共通のナレッジベースを利用し、日常業務の中で自然に知識が蓄積・更新される循環を構築する。</p>
+    <ul>
+      <li><strong>UC-1（見積精査）</strong>: 新たな精査ポイントの発見 → ナレッジに追加</li>
+      <li><strong>UC-2（疑義抽出）</strong>: 新たな疑義パターンの発見 → 判定基準に追加</li>
+      <li><strong>UC-3（チャットボット）</strong>: AIが回答できなかった質問 → 職員回答後にナレッジ追加</li>
+    </ul>
+
+    <h3>4.2 運用原則</h3>
+    <table>
+      <thead>
+        <tr><th>原則</th><th>内容</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>承認は必ず人が行う</td><td>AIの自動更新は禁止。職員が内容を確認してから反映</td></tr>
+        <tr><td>更新は小さく頻繁に</td><td>年1回の大改訂ではなく、気づいた時に1件ずつ追加</td></tr>
+        <tr><td>専門スキル不要</td><td>管理画面からドキュメント追加できるSaaSを選定</td></tr>
+        <tr><td>引継ぎコスト最小化</td><td>知識はシステムに蓄積済み。引継ぐのは「承認フロー」だけ</td></tr>
+      </tbody>
+    </table>
+
+    <h3>4.3 異動サイクルへの耐性</h3>
+    <p>従来は異動のたびに知識がリセットされていたが、エコシステムにより逆の効果が生まれる:</p>
+    <ul>
+      <li><strong>1年目（後任A）</strong>: 前任の知見 + 自分の知見 → ナレッジに蓄積</li>
+      <li><strong>2年目（後任B）</strong>: 蓄積済みナレッジで即戦力 → さらに追加</li>
+      <li><strong>3年目以降</strong>: 知識が組織に残り、異動のたびに強くなる</li>
+    </ul>
+  </section>
+
+  <!-- ── 第5章 新システムとの相乗効果 ── -->
+  <section class="section" id="ch5">
+    <div class="section-number">Chapter 05</div>
+    <h2>5. 新システムとの相乗効果</h2>
+
+    <p>新基幹システムへの投資を最大限に活かす観点からも、RAG導入は合理的である。</p>
+
+    <pre><code>新システムの価値 = データ保持（実現済み） × データ活用（← RAGが担う）</code></pre>
+
+    <table>
+      <thead>
+        <tr><th>観点</th><th>新システム単体</th><th>新システム + RAG</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>データ保持</td><td>5年分蓄積</td><td>同左</td></tr>
+        <tr><td>データ活用</td><td>手動確認のみ</td><td>自動スクリーニング・知見検索</td></tr>
+        <tr><td>投資回収</td><td>限定的</td><td>データ活用による業務効率化で回収</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ── 第6章 着手に必要なデータ ── -->
+  <section class="section" id="ch6">
+    <div class="section-number">Chapter 06</div>
+    <h2>6. 着手に必要なデータ</h2>
+
+    <h3>6.1 共通ナレッジ基盤</h3>
+    <p>3つのユースケースが共有する基盤データ:</p>
+    <table>
+      <thead>
+        <tr><th>データ</th><th>入手元</th><th>優先度</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>償却資産税評価要領</td><td>庁内</td><td>必須</td></tr>
+        <tr><td>家屋評価要領</td><td>庁内</td><td>必須（「家屋でなければ償却」の判定根拠）</td></tr>
+        <tr><td>固定資産評価基準（総務省告示）</td><td>総務省</td><td>必須</td></tr>
+        <tr><td>課税標準の特例一覧（最新）</td><td>庁内/総務省</td><td>必須（毎年改正あり）</td></tr>
+        <tr><td>関連条例・規則</td><td>例規集</td><td>必須</td></tr>
+        <tr><td>総務省通知・通達</td><td>庁内</td><td>高</td></tr>
+      </tbody>
+    </table>
+
+    <h3>6.2 ユースケース別データ</h3>
+
+    <h4>UC-1（見積精査）:</h4>
+    <ul>
+      <li>過去の評価資料（匿名化が必要）</li>
+      <li>専任職の精査ノウハウ（<strong>異動前の収集が急務</strong>）</li>
+      <li>見積書の構造パターン、耐用年数表</li>
+    </ul>
+
+    <h4>UC-2（疑義抽出）:</h4>
+    <ul>
+      <li>申告データCSV（<strong>要クリーニング</strong> — 非申告資産が混在するとノイズになる）</li>
+      <li>家屋疑義・自動車・少額減価償却の各判定基準</li>
+      <li>過去の疑義抽出・是正事例</li>
+    </ul>
+
+    <h4>UC-3（チャットボット）:</h4>
+    <ul>
+      <li>申告の手引き・記載例（事業者配布物）</li>
+      <li>FAQ（既存があればそのまま活用）</li>
+      <li>過去の問い合わせ対応記録</li>
+    </ul>
+
+    <h3>6.3 CSVデータのクリーニング</h3>
+    <p>申告データCSVをそのまま投入する際の注意:</p>
+    <table>
+      <thead>
+        <tr><th>ノイズ</th><th>対策</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>非申告資産の混在</td><td>事前フィルタリングまたはフラグ付与</td></tr>
+        <tr><td>過年度の重複</td><td>最新年度のみ or 年度カラムで管理</td></tr>
+        <tr><td>表記揺れ（エアコン/空調機/ルームエアコン等）</td><td>名寄せルール or LLMで正規化</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>推奨</strong>: まず義務者100件程度でPoC → ノイズパターン洗い出し → クリーニングルール確立 → 全件投入</p>
+  </section>
+
+  <!-- ── 第7章 他自治体・国の前例 ── -->
+  <section class="section" id="ch7">
+    <div class="section-number">Chapter 07</div>
+    <h2>7. 他自治体・国の前例</h2>
+
+    <table>
+      <thead>
+        <tr><th>団体</th><th>取組</th><th>効果</th><th>示唆</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>草津市</strong></td><td>固定資産税DXポータル kopo（R6〜）</td><td>検索時間大幅短縮、職員の知識差縮小</td><td>評価要領・通知類のRAG化は商用SaaSで実績あり</td></tr>
+        <tr><td><strong>神戸市</strong></td><td>生成AIボイスボットで税電話対応</td><td>定型問い合わせ65%以上を自動回答</td><td>税務の定型問い合わせはAI自動応答と高相性</td></tr>
+        <tr><td><strong>善通寺市</strong></td><td>衛星画像×AIで土地・家屋変化抽出</td><td>職員4人体制でも業務維持</td><td>少人数でもAI活用で回る実績</td></tr>
+        <tr><td><strong>国税庁</strong></td><td>KSK2移行、AI調査選定本格化（2026〜）</td><td>調査先選定をAI中心に</td><td>国税もデータ×AIに舵。地方税でも同方向が合理的</td></tr>
+        <tr><td><strong>総務省</strong></td><td>自治体AI活用ガイドブック第4版（2025.12）</td><td>—</td><td>国が自治体AI導入を後押し。提案の追い風</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ── 第8章 コスト概算 ── -->
+  <section class="section" id="ch8">
+    <div class="section-number">Chapter 08</div>
+    <h2>8. コスト概算</h2>
+
+    <h3>8.1 導入方式の比較</h3>
+    <table>
+      <thead>
+        <tr><th>項目</th><th>A: SaaS活用</th><th>B: デジ統括と自前構築</th><th>C: ハイブリッド</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>UC-1（見積精査）</td><td>kopo等の既製品</td><td>RAG自前構築</td><td>SaaS</td></tr>
+        <tr><td>UC-2（疑義抽出）</td><td>対応製品が少ない</td><td>RAG自前構築</td><td>自前構築</td></tr>
+        <tr><td>UC-3（チャットボット）</td><td>PKSHA等の既製品</td><td>RAG自前構築</td><td>SaaS</td></tr>
+        <tr><td>初期費用</td><td>低（数十万〜）</td><td>中〜高（200〜500万）</td><td>中</td></tr>
+        <tr><td>月額費用</td><td>中（15〜50万/月）</td><td>低（API利用料中心）</td><td>中</td></tr>
+        <tr><td>年間ランニング</td><td>200〜600万/年</td><td>50〜150万/年</td><td>150〜400万/年</td></tr>
+        <tr><td>構築負荷</td><td>低</td><td>高（デジ統括の支援前提）</td><td>中</td></tr>
+        <tr><td>カスタマイズ性</td><td>低〜中</td><td>高</td><td>中〜高</td></tr>
+      </tbody>
+    </table>
+
+    <p>※上記は一般的な市場相場に基づく概算。デジタル統括本部の支援範囲（技術のみか、インフラ・予算含むか）により大幅に変動する可能性あり</p>
+
+    <p><strong>参考相場（2025〜2026年時点）:</strong></p>
+    <ul>
+      <li>RAG構築（PoC〜本番）: 50〜200万（PoC）、300〜1,000万（本番導入）</li>
+      <li>自治体向けAIチャットボットSaaS: 初期20〜100万、月額15〜50万</li>
+      <li>LLM API利用料: 月額数千〜数万円（利用量による）</li>
+    </ul>
+
+    <h3>8.2 推奨: ハイブリッド方式（C案）</h3>
+    <p>UC-2（CSVの疑義抽出）は既製SaaSでは対応困難なため自前構築が必要。一方、UC-1（評価要領検索）はkopo等のSaaSで対応可能な領域、UC-3（チャットボット）も既製品の方が運用負荷が低い。</p>
+    <div class="callout">
+      <p><strong>SaaSで済む部分はSaaSを使い、自前構築は本当に必要な部分に絞る。</strong></p>
+    </div>
+
+    <h3>8.3 費用対効果（粗い試算）</h3>
+    <table>
+      <thead>
+        <tr><th>効果項目</th><th>試算根拠</th><th>推定削減時間/年</th><th>人件費換算（参考）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>見積精査の短縮（UC-1）</td><td>年20件×1件3時間短縮</td><td>約60時間</td><td>約18万円</td></tr>
+        <tr><td>疑義チェックの全件化（UC-2）</td><td>手作業チェック年200時間と仮定、70%自動化</td><td>約140時間</td><td>約42万円</td></tr>
+        <tr><td>定型問い合わせの自動化（UC-3）</td><td>神戸市実績65%自動回答を参考、問い合わせ対応年300時間と仮定</td><td>約195時間</td><td>約59万円</td></tr>
+        <tr><td><strong>合計</strong></td><td></td><td><strong>約395時間</strong></td><td><strong>約119万円</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>※人件費単価は3,000円/時で試算。総務省「地方公務員給与実態調査」ベースでは5,000〜7,000円/時程度となり、その場合は年間198〜277万円相当の効果となる。後任が実態に合わせて補正すること</p>
+    <p>※上記は直接的な時間削減のみ。課税漏れ防止・知見永続化等の定性的効果は含まない</p>
+
+    <p><strong>逆算ロジック</strong>: 年間120万円相当の効果が見込めるため、ランニングコストが年120万円以下であれば投資回収可能。デジ統括の支援によりコストが抑えられれば、初年度から効果が上回る可能性がある</p>
+
+    <p>※正確な費用対効果はPhase 1 PoC完了後に算出。現時点では「概算コストはデジ統括の支援次第で50〜400万/年の幅がある」という水準感を示す</p>
+
+    <h3>8.4 デジタル統括本部に確認すべき事項</h3>
+    <table>
+      <thead>
+        <tr><th>確認項目</th><th>影響</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>技術支援の範囲（構築のみか、運用保守も含むか）</td><td>自前構築の実現性</td></tr>
+        <tr><td>インフラ費用の負担者（デジ統括か、各部署か）</td><td>ランニングコスト</td></tr>
+        <tr><td>SaaS調達の可否（デジ統括経由で共同調達できるか）</td><td>SaaS案の費用</td></tr>
+        <tr><td>セキュリティ要件（オンプレ必須か、クラウド可か）</td><td>構成の選択肢</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ── 第9章 精度保証と運用ルール ── -->
+  <section class="section" id="ch9">
+    <div class="section-number">Chapter 09</div>
+    <h2>9. 精度保証と運用ルール</h2>
+
+    <h3>9.1 基本原則: AI出力は必ず職員が最終確認する</h3>
+    <p>RAGは「補助ツール」であり、最終判断は職員が行う。これは全UCに共通の大原則とする。</p>
+
+    <h3>9.2 UC別の精度基準と運用ルール</h3>
+    <table>
+      <thead>
+        <tr><th>UC</th><th>精度の考え方</th><th>運用ルール</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>UC-1（見積精査）</td><td>AIは精査ポイントの「候補」を提示。見落とし防止が目的であり、AIの概算をそのまま採用しない</td><td>職員が独立に精査した上で、AIの指摘を追加チェックとして活用</td></tr>
+        <tr><td>UC-2（疑義抽出）</td><td>全件スクリーニングが目的。偽陽性（疑義なしを疑義ありと判定）は許容、偽陰性（見逃し）を最小化</td><td>AIが抽出したリストを職員が確認。AIが「問題なし」としたものも抜き打ちで検証</td></tr>
+        <tr><td>UC-3（チャットボット）</td><td>回答信頼度3段階で運用。「明確に回答可能」のみ自動回答、それ以外は職員にエスカレーション</td><td>免責表示「本回答は参考情報です。正式な判断は窓口にお問い合わせください」を全回答に付与</td></tr>
+      </tbody>
+    </table>
+
+    <h3>9.3 誤回答時の対応</h3>
+    <ul>
+      <li>UC-1/UC-2: 職員の最終確認が前提のため、AI誤出力の責任は生じない（従来の手作業と同じ責任構造）</li>
+      <li>UC-3: 免責表示を付与。万一AIの誤回答により事業者が不利益を受けた場合に備え、<strong>Phase 3開始前に法務担当（総務局法制課等）への事前相談を必須とする</strong>。相談時には免責表示案・回答信頼度の3段階設計・誤回答時の対応フローを持参すること</li>
+    </ul>
+
+    <h3>9.4 Phase 1 PoCでの精度検証</h3>
+    <p>Phase 1で以下を計測し、Phase 2移行の判断材料とする:</p>
+    <table>
+      <thead>
+        <tr><th>指標</th><th>基準（Go/No-Go）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>UC-2の疑義検出率</td><td>既知の疑義事例の80%以上を検出できるか</td></tr>
+        <tr><td>UC-2の偽陽性率</td><td>職員の確認負荷が現状を上回らないか</td></tr>
+        <tr><td>PoC工数</td><td>想定の1.5倍以内で完了するか</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>Go</strong>: 基準達成 → Phase 2（本格構築）へ<br>
+    <strong>Conditional Go</strong>: 一部未達 → スコープ縮小して継続（UC-2のみに集中等）<br>
+    <strong>No-Go</strong>: 全指標未達 → SaaS切替を検討、または中止</p>
+
+    <h3>9.5 Phase 1の副次的効果 — PoCは「知識の棚卸し」でもある</h3>
+    <p>Phase 1の価値は精度検証だけではない。<strong>PoCの過程そのものが、属人化した知識を組織知に変える機会になる。</strong></p>
+    <ul>
+      <li>AIに評価要領を読ませて質問すると、「この回答は合っているか？」を専任職に確認する場面が必然的に生まれる。この会話自体が知識移転</li>
+      <li>AIが出した疑義リストを職員が確認する過程で、「なぜこれが疑義なのか」の判定基準が言語化される</li>
+      <li>AIが間違えたケースを議論すると、評価要領に書かれていない暗黙のルール（専任職の頭の中にしかないもの）が炙り出される</li>
+    </ul>
+    <div class="callout">
+      <p><strong>たとえAIの精度が期待値に達しなくても、棚卸しの過程で得られた知見はそのまま組織の資産になる</strong>。PoCに工数を割くリスクに対する保険でもある。</p>
+    </div>
+  </section>
+
+  <!-- ── 第10章 実現可能性 ── -->
+  <section class="section" id="ch10">
+    <div class="section-number">Chapter 10</div>
+    <h2>10. 実現可能性</h2>
+
+    <h3>10.1 技術面</h3>
+    <ul>
+      <li>評価要領・判定基準はPDF/Word形式 → RAGのドキュメントローダーで取り込み可能</li>
+      <li>申告データはCSV形式 → 構造化データとして即時利用可能</li>
+      <li>草津市のkopo等、固定資産税特化のSaaSも選択肢</li>
+      <li>デジタル統括本部の支援によりインフラ・セキュリティ面の課題をクリア可能</li>
+      <li><strong>本市は選挙管理でRAG実証実験の実績あり</strong> — 庁内にノウハウが蓄積されている</li>
+    </ul>
+
+    <h3>10.2 人材面</h3>
+    <ul>
+      <li><strong>A専任職は元SE（転職組）</strong> — 技術的な議論ができ、RAG導入の共同推進者として期待できる</li>
+      <li>後任担当者はNotebookLM（Google製AIツール）の利用経験あり</li>
+      <li>プロトタイプ検証をNotebookLMで実施し、効果を確認してから本格導入も可能</li>
+      <li>デジタル統括本部の技術支援を受けられる手上げ制のため、部署単独での技術力は必須ではない</li>
+    </ul>
+
+    <h3>10.3 段階的導入</h3>
+    <table>
+      <thead>
+        <tr><th>フェーズ</th><th>内容</th><th>期間目安</th><th>Go/No-Go基準</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Phase 1</td><td>NotebookLMでPoC（UC-2）</td><td>1〜2ヶ月</td><td>疑義検出率80%以上</td></tr>
+        <tr><td>Phase 2</td><td>デジ統括と本格RAG構築（UC-1, UC-2）</td><td>3〜6ヶ月</td><td>Phase 1基準達成</td></tr>
+        <tr><td>Phase 3</td><td>UC-3（チャットボット）追加・エコシステム確立</td><td>6ヶ月〜</td><td>Phase 2安定運用</td></tr>
+      </tbody>
+    </table>
+
+    <p>※Phase 1不調時の選択肢: SaaS切替（kopo等）、スコープ縮小、中止<br>
+    ※UC-3（チャットボット）は既製品SaaS活用で構築負荷を抑える</p>
+
+    <h3>10.4 エコシステムの運用負荷</h3>
+    <table>
+      <thead>
+        <tr><th>作業</th><th>頻度</th><th>想定工数</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>ナレッジ追加の承認</td><td>随時（月5〜10件想定）</td><td>1件あたり10〜15分</td></tr>
+        <tr><td>定期棚卸し（品質監査）</td><td>年1回</td><td>2〜3人日</td></tr>
+        <tr><td>法改正対応</td><td>年1〜2回</td><td>1〜2人日/回</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>フォールバック策</strong>: 更新が3ヶ月滞った場合、デジタル統括本部に運用支援を要請。最悪のケースでも法改正がなければナレッジは1年程度は有効（評価要領・判定基準は年度単位の改正）</p>
+  </section>
+
+  <!-- ── 第11章 展開可能性 ── -->
+  <section class="section" id="ch11">
+    <div class="section-number">Chapter 11</div>
+    <h2>11. 展開可能性 — 税部門のファーストペンギン</h2>
+
+    <h3>11.1 償却資産から固定資産税全体へ</h3>
+    <p>償却資産税でRAGの実績を作れば、同じ固定資産税の枠内で横展開が可能:</p>
+    <table>
+      <thead>
+        <tr><th>展開先</th><th>共有できるナレッジ</th><th>追加で必要なデータ</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>土地評価</strong></td><td>評価基準、条例規則、通知通達</td><td>路線価、地目認定基準、画地計算法</td></tr>
+        <tr><td><strong>家屋評価</strong></td><td>家屋評価要領（既にUC-1で整備済み）</td><td>再建築費評点基準表、経年減点補正</td></tr>
+        <tr><td><strong>納税者対応全般</strong></td><td>FAQ、チャットボット基盤（UC-3）</td><td>土地・家屋の問い合わせパターン</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <p><strong>共通ナレッジ基盤の投資が、償却だけでなく土地・家屋にも効く。</strong></p>
+    </div>
+
+    <h3>11.2 他税目・他部署への波及</h3>
+    <table>
+      <thead>
+        <tr><th>波及先</th><th>可能性</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>市民税（個人・法人）</td><td>問い合わせチャットボットの横展開</td></tr>
+        <tr><td>収納部門</td><td>滞納整理のナレッジベース化</td></tr>
+        <tr><td>他部署（福祉・建築等）</td><td>RAG/チャットボット基盤の共有利用</td></tr>
+      </tbody>
+    </table>
+
+    <h3>11.3 なぜ償却資産が最適な起点か</h3>
+    <ol>
+      <li><strong>データが構造化済み</strong>: 申告データCSVがそのまま使える（土地・家屋より着手しやすい）</li>
+      <li><strong>ナレッジの共有範囲が広い</strong>: 評価要領・家屋要領は土地・家屋と共通</li>
+      <li><strong>リスクが相対的に低い</strong>: 大規模家屋調査は件数が限定的でPoCに適している</li>
+      <li><strong>後任にAIリテラシーがある</strong>: NotebookLM経験者が着任予定</li>
+    </ol>
+
+    <div class="callout">
+      <p><strong>償却資産で成功すれば、そのナレッジ基盤・エコシステム・運用ノウハウがそのまま税部門全体のDXの礎になる。</strong></p>
+    </div>
+  </section>
+
+  <!-- ── 第12章 リスクと対策 ── -->
+  <section class="section" id="ch12">
+    <div class="section-number">Chapter 12</div>
+    <h2>12. リスクと対策</h2>
+
+    <table>
+      <thead>
+        <tr><th>リスク</th><th>対策</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>通常業務の負荷が高く着手できない</td><td>Phase 1はNotebookLMで小規模検証（想定工数: 5〜10人日）。7〜9月の閑散期に集中実施</td></tr>
+        <tr><td>精度が不十分</td><td>Phase 1でGo/No-Go判定（第9.4章）。税務はAI出力を必ず職員が最終確認（第9.1章）</td></tr>
+        <tr><td>AI誤回答で事業者が不利益を受ける</td><td>UC-3に免責表示を付与。運用開始前に法務担当に相談（第9.3章）</td></tr>
+        <tr><td>個人情報・税務情報の取扱い</td><td>申告データCSVは宛名番号のみで個人特定は不可能だが、本市ルールに準拠し匿名化してからアップロード（第14章参照）。過去評価資料は名前列を削除。本格導入時はデジタル統括本部のセキュリティ基準に準拠</td></tr>
+        <tr><td>ナレッジが陳腐化する</td><td>エコシステム設計（第4章）+ 定期棚卸し年1回 + 3ヶ月滞留でエスカレーション</td></tr>
+        <tr><td>コストが想定を超える</td><td>ハイブリッド方式でSaaS/自前を最適配分（第8.2章）。Phase 1は実質無料（NotebookLM）</td></tr>
+        <tr><td>手上げ制の詳細が未確定</td><td>2026年度にデジタル統括本部が機構改革予定。窓口が変わる可能性があるため、制度発表前でも非公式に「こういう取組を検討中」と打診しておく（第13章参照）</td></tr>
+        <tr><td>後任がAIに懐疑的/使えない</td><td>引継ぎ時にNotebookLMデモ実施（30分）。使わなくても従来業務に支障なし（フォールバック）</td></tr>
+        <tr><td>見積書・図面のOCR精度が不足する</td><td>新システムのOCRは申告書のみ対応。デジタル統括本部提供のOCRツールを活用。精度不足時は手動転記でフォールバック</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ── 第13章 月別アクションプラン ── -->
+  <section class="section" id="ch13">
+    <div class="section-number">Chapter 13</div>
+    <h2>13. 月別アクションプラン（2026年4月〜9月）</h2>
+
+    <p>後任が着任してからPoC完了までの段取り。<strong>読んだらすぐ動ける</strong>ことを目指す。</p>
+
+    <table>
+      <thead>
+        <tr><th>月</th><th>やること</th><th>成果物・判断ポイント</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>4月</strong></td>
+          <td>
+            <ol>
+              <li>本提案書・RAG入門ガイドを読む</li>
+              <li>A専任職に構想を共有し、協力を取り付ける</li>
+              <li>NotebookLMのライセンス状況を確認（庁内Workspace契約で使えるか、IT担当に確認）</li>
+            </ol>
+          </td>
+          <td>A専任職の協力合意、ライセンス可否の結論</td>
+        </tr>
+        <tr>
+          <td><strong>5月</strong></td>
+          <td>
+            <ol>
+              <li>M専任職へのヒアリング開始（月2回×1時間、過去の評価案件をベースに知見を聞き取り）</li>
+              <li>A専任職に同席・記録を依頼</li>
+              <li>デジタル統括本部（機構改革後の窓口）に非公式打診 — 「償却資産でRAGを試したい。手上げ制の準備を進めていいか」</li>
+            </ol>
+          </td>
+          <td>ヒアリング記録2回分、デジ統括の反応</td>
+        </tr>
+        <tr>
+          <td><strong>6月</strong></td>
+          <td>
+            <ol>
+              <li>M専任職ヒアリング継続（月2回）</li>
+              <li>PoC用データの準備 — 申告データCSVの匿名化（第14章の手順）、評価要領PDFの収集</li>
+              <li>既知の疑義事例を10〜20件リストアップ（正解データ）</li>
+            </ol>
+          </td>
+          <td>匿名化済みCSV、評価要領PDF、正解データセット</td>
+        </tr>
+        <tr>
+          <td><strong>7月</strong></td>
+          <td>
+            <ol>
+              <li>NotebookLMにソースをアップロード</li>
+              <li>PoC実施（第15章の手順）</li>
+              <li>結果記録・精度計測</li>
+            </ol>
+          </td>
+          <td>PoC結果レポート</td>
+        </tr>
+        <tr>
+          <td><strong>8月</strong></td>
+          <td>
+            <ol>
+              <li>Go/No-Go判定（第9.4章の基準）</li>
+              <li>結果を課長に報告</li>
+              <li>手上げ制が公開されていれば応募書類作成</li>
+            </ol>
+          </td>
+          <td>Go/No-Go判定結果、課長承認</td>
+        </tr>
+        <tr>
+          <td><strong>9月</strong></td>
+          <td>
+            <ol>
+              <li>Go判定の場合 → 手上げ制に応募（本提案書をベースに申請資料作成）</li>
+              <li>No-Go判定の場合 → SaaS検討または原因分析・再試行</li>
+            </ol>
+          </td>
+          <td>応募完了 or 方針転換の判断</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>13.1 デジタル統括本部への打診のコツ</h3>
+    <ul>
+      <li>2026年度は機構改革でデジタル統括本部の組織が変わる可能性あり。<strong>窓口が確定する前でも、非公式に打診しておく</strong>ことで制度開始時に先行者利益を得られる</li>
+      <li>打診時の伝え方: 「償却資産で評価要領をNotebookLMに入れて試したい。手上げ制の準備として進めていいか」— 具体的なツール名を出すと話が早い</li>
+      <li>前任（久保）のデジタル統括本部との人脈は引継ぎ時に口頭で共有する</li>
+    </ul>
+
+    <h3>13.2 M専任職ヒアリングの進め方</h3>
+    <ul>
+      <li><strong>ゴール</strong>: 見積精査の判断ポイント・過去のつまずき事例をドキュメント化する</li>
+      <li><strong>方法</strong>: 過去の評価案件（3〜5件）を題材に「ここはどう判断したか」を聞く（抽象的な質問より、具体案件ベースの方が引き出しやすい）</li>
+      <li><strong>記録</strong>: A専任職に同席してもらい、技術者目線で「これはルール化できる/できない」を整理</li>
+      <li><strong>頻度</strong>: 月2回×1時間。無理のないペースで、5〜6月に集中実施</li>
+      <li><strong>退職時期</strong>: M専任職の退職予定月を確認し、逆算してヒアリング回数を確定させる</li>
+    </ul>
+  </section>
+
+  <!-- ── 第14章 データ匿名化の手順 ── -->
+  <section class="section" id="ch14">
+    <div class="section-number">Chapter 14</div>
+    <h2>14. データ匿名化の手順</h2>
+
+    <h3>14.1 申告データCSV</h3>
+    <p>申告データCSVには宛名番号が含まれるが、宛名番号単体では個人を特定できない。ただし本市のセキュリティルールに準拠し、以下の匿名化を行ってからNotebookLMにアップロードする。</p>
+
+    <p><strong>Excelマクロで一括処理する手順:</strong></p>
+    <ol>
+      <li>CSVをExcelで開く</li>
+      <li>以下の列を処理:
+        <ul>
+          <li>宛名番号 → 連番（1, 2, 3, ...）に置換</li>
+          <li>義務者名（あれば） → 削除</li>
+          <li>住所（あれば） → 削除</li>
+          <li>その他、個人・法人を特定できる列 → 削除</li>
+        </ul>
+      </li>
+      <li>処理済みCSVを別名で保存（元データは残す）</li>
+    </ol>
+
+    <p>※Pythonは不要。Excelの置換機能またはVBAマクロで対応可能。マクロのテンプレートは必要に応じてデジタル統括本部に相談。</p>
+
+    <h3>14.2 過去の評価資料</h3>
+    <ul>
+      <li>義務者名・住所を黒塗りまたは削除</li>
+      <li>物件を特定できる情報（地番等）も削除が望ましい</li>
+      <li>残すべき情報: 構造・面積・評価額・精査ポイント（ノウハウの本体）</li>
+    </ul>
+
+    <h3>14.3 評価要領・判定基準</h3>
+    <ul>
+      <li>公開情報・庁内規程のため匿名化不要</li>
+      <li>そのままPDFとしてアップロード可能</li>
+    </ul>
+  </section>
+
+  <!-- ── 第15章 Phase 1 PoC 実施手順 ── -->
+  <section class="section" id="ch15">
+    <div class="section-number">Chapter 15</div>
+    <h2>15. Phase 1 PoC 実施手順</h2>
+
+    <h3>15.1 準備するもの</h3>
+    <table>
+      <thead>
+        <tr><th>#</th><th>データ</th><th>件数・量</th><th>準備方法</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>匿名化済み申告データCSV</td><td>まず100件程度</td><td>第14章の手順で匿名化</td></tr>
+        <tr><td>2</td><td>償却資産税評価要領（PDF）</td><td>全文</td><td>庁内サーバーからダウンロード</td></tr>
+        <tr><td>3</td><td>家屋評価要領（PDF）</td><td>全文</td><td>同上</td></tr>
+        <tr><td>4</td><td>既知の疑義事例リスト</td><td>10〜20件</td><td>過去に実際に発見した家屋疑義・自動車・申告不要資産をリストアップ</td></tr>
+      </tbody>
+    </table>
+
+    <h3>15.2 NotebookLMでの検証手順</h3>
+
+    <h4>Step 1: ノートブック作成</h4>
+    <ol>
+      <li>NotebookLMにアクセスし、新しいノートブックを作成</li>
+      <li>ソースとして評価要領PDF・家屋評価要領PDFをアップロード</li>
+      <li>匿名化済みCSVをGoogleスプレッドシートに変換してアップロード（CSVのまま直接アップロードも可）</li>
+    </ol>
+
+    <h4>Step 2: 基本動作の確認</h4>
+    <ol>
+      <li>まず評価要領に対して簡単な質問を投げる（例:「1,000m2以上の大規模家屋調査の手順は？」）</li>
+      <li>回答がソースに基づいているか確認（引用元が表示される）</li>
+      <li>この段階で精度に問題があればソースの品質を疑う（→ RAG入門ガイドのトラブルシューティング参照）</li>
+    </ol>
+
+    <h4>Step 3: 疑義抽出の検証</h4>
+    <ol>
+      <li>正解データに含まれる疑義事例のCSVをアップロード</li>
+      <li>質問例: 「このCSVの中で、家屋に該当する可能性がある資産はどれですか？判定理由も示してください」</li>
+      <li>AIの回答と正解データを突き合わせ、検出率を計測</li>
+    </ol>
+
+    <h4>Step 4: 結果の記録</h4>
+    <table>
+      <thead>
+        <tr><th>計測項目</th><th>記録方法</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>検出率（再現率）</td><td>正解20件中、AIが何件検出したか</td></tr>
+        <tr><td>偽陽性の件数</td><td>AIが疑義ありと判定したが実際は問題ない件数</td></tr>
+        <tr><td>回答の質</td><td>判定理由が妥当か（A専任職に評価してもらう）</td></tr>
+        <tr><td>所要時間</td><td>準備〜検証〜結果整理にかかった時間</td></tr>
+      </tbody>
+    </table>
+
+    <h3>15.3 注意事項</h3>
+    <ul>
+      <li><strong>NotebookLMはスプレッドシート2,000行程度で処理が遅くなる</strong>。まず100件で試し、問題なければ段階的に増やす</li>
+      <li>大量のCSVを一括で疑義判定させるのは苦手。<strong>バッチ分割（100件ずつ）</strong> で処理する</li>
+      <li>大量出力が必要な場合は<strong>Geminiとの連携を検討</strong>（NotebookLMを知識ベースとして参照し、Gemini側でタスク実行）</li>
+      <li>CSVに非申告資産が混在しているとノイズになる。事前にExcelフィルタで明らかな非申告資産を除外しておく</li>
+    </ul>
+
+    <h3>15.4 Go/No-Go判定</h3>
+    <p>第9.4章の基準で判定する。判定は後任が行い、結果を課長に報告する。</p>
+  </section>
+
+  <!-- ── 第16章 結論 ── -->
+  <section class="section" id="ch16">
+    <div class="section-number">Chapter 16</div>
+    <h2>16. 結論</h2>
+
+    <p>償却資産税業務へのRAG導入は、以下5点から推進すべきである:</p>
+
+    <ol>
+      <li><strong>知見の永続化</strong>: 専任職の経験知を組織資産として蓄積し、異動で失われない</li>
+      <li><strong>業務効率化</strong>: 調査系業務と事業者対応の負荷を軽減し、忙しい中でも回る体制に</li>
+      <li><strong>投資回収</strong>: 新システムの蓄積データをRAGで活用し、システム投資の効果を最大化</li>
+      <li><strong>持続可能性</strong>: 知識更新エコシステムにより、担当者が替わっても知識が育ち続ける</li>
+      <li><strong>展開可能性</strong>: 償却資産で築いた基盤は土地・家屋・他税目に横展開でき、税部門全体のDXの起点となる</li>
+    </ol>
+
+    <p>Phase 1（NotebookLMでのPoC）は実質無料で着手可能であり、閑散期の5〜10人日で実施できる。デジタル統括本部の手上げ制が開始され次第、速やかに応募することを推奨する。</p>
+
+    <div class="callout">
+      <p><strong>償却資産税が税畑のファーストペンギンとなり、固定資産税全体、そして税部門全体のDXの礎を築く。</strong></p>
+    </div>
+  </section>
+
+</main>
+
+<!-- ── フッター ── -->
+<footer class="site-footer">
+  作成日: 2026年4月
+</footer>
+
+</body>
+</html>

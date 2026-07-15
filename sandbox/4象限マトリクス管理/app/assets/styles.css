@@ -1,0 +1,940 @@
+/* =========================================================
+   Neuro Matrix Task OS — v2 styles
+   Normal モード: Light / Dark 両対応 (CSS 変数 + html.dark override)
+   Survival モード: 専用ダーク+ネオン (survival.html 内の <style>)
+   ========================================================= */
+
+/* ═════ Color tokens (Light = default) ═════ */
+:root {
+  --bg:             #f5f7fa;
+  --surface:        #ffffff;
+  --surface-hover:  #f1f3f6;
+  --surface-2:      #eef1f5;
+  --surface-3:      #e3e8ef;
+  --border:         #e5e7eb;
+  --border-muted:   #eef0f3;
+  --text-0:         #0f172a;
+  --text-1:         #334155;
+  --text-2:         #64748b;
+  --text-3:         #94a3b8;
+
+  --q1: #dc2626;
+  --q2: #059669;
+  --q3: #d97706;
+  --q4: #6b7280;
+  --accent: #2563eb;
+
+  --shadow-card: 0 1px 2px rgba(15,23,42,0.04), 0 2px 6px rgba(15,23,42,0.04);
+  --shadow-card-hover: 0 2px 4px rgba(15,23,42,0.06), 0 10px 24px rgba(15,23,42,0.10), 0 20px 40px -8px rgba(15,23,42,0.08);
+  --shadow-panel: 0 1px 3px rgba(15,23,42,0.05), 0 8px 24px rgba(15,23,42,0.08);
+  --backdrop: rgba(15, 23, 42, 0.5);
+}
+
+/* ═════ Dark theme override ═════ */
+html.dark {
+  --bg:             #0b0e13;
+  --surface:        #13181f;
+  --surface-hover:  #1a2029;
+  --surface-2:      #1f2630;
+  --surface-3:      #2a313c;
+  --border:         #2a313c;
+  --border-muted:   #1f2630;
+  --text-0:         #f1f5f9;
+  --text-1:         #cbd5e1;
+  --text-2:         #94a3b8;
+  --text-3:         #64748b;
+
+  --q1: #f87171;
+  --q2: #4ade80;
+  --q3: #fbbf24;
+  --q4: #94a3b8;
+  --accent: #60a5fa;
+
+  --shadow-card: 0 1px 2px rgba(0,0,0,0.25), 0 2px 6px rgba(0,0,0,0.25);
+  --shadow-card-hover: 0 2px 4px rgba(0,0,0,0.3), 0 12px 28px rgba(0,0,0,0.4), 0 24px 48px -8px rgba(0,0,0,0.35);
+  --shadow-panel: 0 1px 3px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.4);
+  --backdrop: rgba(0, 0, 0, 0.6);
+  color-scheme: dark;
+}
+
+/* Material Symbols base */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
+  user-select: none;
+  line-height: 1;
+}
+
+html { color-scheme: light; }
+body { font-feature-settings: 'cv11', 'ss01', 'ss03'; background: var(--bg); color: var(--text-0); transition: background-color .2s ease, color .2s ease; }
+
+/* Focus ring */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ═════ Navigation items ═════ */
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-1);
+  text-decoration: none;
+  transition: background-color .12s ease, color .12s ease;
+  position: relative;
+}
+.nav-item:hover {
+  background: var(--surface-hover);
+  color: var(--text-0);
+}
+.nav-item.active {
+  background: var(--surface-2);
+  color: var(--text-0);
+}
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+.nav-item .material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'opsz' 20;
+  color: var(--text-2);
+  flex-shrink: 0;
+}
+.nav-item:hover .material-symbols-outlined,
+.nav-item.active .material-symbols-outlined {
+  color: var(--text-1);
+}
+.nav-item.text-q1 .material-symbols-outlined { color: var(--q1); }
+.nav-item.text-q1 { color: var(--q1); }
+.nav-item.text-q1:hover {
+  background: rgba(220, 38, 38, 0.08);
+  color: var(--q1);
+}
+
+
+/* ═════ Quadrant containers ═════ */
+.quadrant {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  transition: border-color .15s ease, box-shadow .15s ease, background-color .2s ease;
+  box-shadow: var(--shadow-card);
+}
+.quadrant:hover {
+  border-color: var(--surface-3);
+  box-shadow: var(--shadow-panel);
+}
+
+/* 象限ヘッダは濃色ベタ（Kanban 風で識別性を強化） */
+.q-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  flex-shrink: 0;
+  color: #ffffff;
+  position: relative;
+}
+/* 彩度ダイエット — 単色塗りで落ち着かせ、下端1pxアクセントで識別 */
+.q1-quadrant .q-head { background: var(--q1); }
+.q2-quadrant .q-head { background: var(--q2); }
+.q3-quadrant .q-head { background: var(--q3); }
+/* Q4 は意図的に surface ベース + 灰文字で抑制 (未分類=動線の一時置き場) */
+.q4-quadrant .q-head {
+  background: var(--surface);
+  color: var(--text-1);
+  border-bottom: 1px solid var(--border);
+}
+.q4-quadrant .q-head::after { display: none; }
+.q4-quadrant .q-head .material-symbols-outlined,
+.q4-quadrant .q-head .q-title { color: var(--text-1) !important; text-shadow: none; filter: none; }
+.q4-quadrant .q-head .q-subtitle { color: var(--text-3); }
+.q4-quadrant .q-head .q-count {
+  color: var(--text-1) !important;
+  background: var(--surface-2) !important;
+  border: 1px solid var(--border) !important;
+}
+
+/* ヘッダ下端に微光ライン */
+.q-head::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: rgba(0,0,0,0.15);
+}
+
+.q-accent { display: none; } /* 前の accent bar は使わない */
+
+.q-head .material-symbols-outlined {
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.25));
+  color: #ffffff !important;
+}
+.q-title {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+}
+.q-subtitle {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+}
+.q-count {
+  margin-left: auto;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: #ffffff !important;
+  background: rgba(0, 0, 0, 0.22) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+}
+
+/* 象限 body = 各象限色の超薄 tint（カードが浮く土台） */
+.q-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #fcfcfd;
+}
+.q1-quadrant .q-body { background: linear-gradient(180deg, #fef2f2 0%, #fef6f6 100%); }
+.q2-quadrant .q-body { background: linear-gradient(180deg, #ecfdf5 0%, #f0fdf4 100%); }
+.q3-quadrant .q-body { background: linear-gradient(180deg, #fffbeb 0%, #fefce8 100%); }
+.q4-quadrant .q-body { background: linear-gradient(180deg, #f8fafc 0%, #f9fafb 100%); }
+
+.q-body::-webkit-scrollbar { width: 6px; }
+.q-body::-webkit-scrollbar-track { background: transparent; }
+.q-body::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+.q-body::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+
+
+/* ═════ Task Card ═════ */
+.task-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--text-3);
+  border-radius: 10px;
+  padding: 0;
+  position: relative;
+  display: flex;
+  cursor: grab;
+  transition:
+    background-color .15s ease,
+    border-color .15s ease,
+    transform .15s ease,
+    box-shadow .15s ease;
+  box-shadow: var(--shadow-card);
+}
+.task-card:hover {
+  border-color: var(--surface-3);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card-hover);
+}
+.task-card:active { cursor: grabbing; transform: translateY(-1px); }
+.task-card.is-dragging { opacity: 0.4; transform: scale(0.98) rotate(1deg); }
+
+/* 象限本体: ドラッグオーバー中のハイライト */
+.q-body.drop-target {
+  outline: 2px dashed var(--accent);
+  outline-offset: -6px;
+  background-color: rgba(37, 99, 235, 0.04);
+}
+html.dark .q-body.drop-target {
+  background-color: rgba(96, 165, 250, 0.06);
+}
+
+.q1-card { border-left-color: var(--q1); }
+.q2-card { border-left-color: var(--q2); }
+.q3-card { border-left-color: var(--q3); }
+.q4-card { border-left-color: var(--q4); }
+.task-card:hover { border-left-width: 4px; }
+
+.task-handle {
+  width: 24px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 14px;
+  color: var(--text-3);
+  opacity: 0.45;
+  transition: opacity .15s ease, color .15s ease;
+}
+.task-handle .material-symbols-outlined { font-size: 18px; }
+.task-card:hover .task-handle { opacity: 1; color: var(--text-2); }
+
+.task-body {
+  flex: 1;
+  padding: 12px 14px 12px 4px;
+  min-width: 0;
+}
+.task-title {
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--text-0);
+  margin: 0 0 8px;
+  letter-spacing: -0.005em;
+  word-break: break-word;
+}
+/* タスクメモ — タイトル直下に本文表示。長文は3行で省略 */
+.task-note {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--text-2);
+  margin: 0 0 8px;
+  padding: 6px 10px;
+  background: var(--surface-hover);
+  border-left: 2px solid var(--border);
+  border-radius: 4px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.task-card:hover .task-note {
+  -webkit-line-clamp: unset;
+  overflow: visible;
+}
+
+.task-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+.task-time {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  color: var(--text-3);
+  margin-left: auto;
+}
+.badge-dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--surface-3);
+}
+
+
+/* ═════ Badges ═════ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px 3px 6px;
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  border: 1px solid;
+  white-space: nowrap;
+}
+.badge .material-symbols-outlined { font-size: 14px; }
+
+.badge-overdue {
+  background: rgba(220, 38, 38, 0.1);
+  color: var(--q1);
+  border-color: rgba(220, 38, 38, 0.3);
+}
+.badge-today {
+  background: rgba(217, 119, 6, 0.1);
+  color: var(--q3);
+  border-color: rgba(217, 119, 6, 0.3);
+}
+.badge-due {
+  background: rgba(37, 99, 235, 0.08);
+  color: var(--accent);
+  border-color: rgba(37, 99, 235, 0.25);
+}
+.badge-none {
+  background: var(--surface-2);
+  color: var(--text-2);
+  border-color: var(--border);
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0;
+}
+.badge-note {
+  background: var(--surface-hover);
+  color: var(--text-2);
+  border-color: var(--border);
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0;
+}
+
+
+/* ═════ Task actions ═════ */
+.task-actions {
+  display: flex;
+  gap: 4px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-muted);
+  opacity: 0;
+  transform: translateY(-2px);
+  transition: opacity .18s ease, transform .18s ease;
+  max-height: 0;
+  overflow: hidden;
+}
+.task-card:hover .task-actions,
+.task-card:focus-within .task-actions {
+  opacity: 1;
+  transform: none;
+  max-height: 60px;
+}
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-1);
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background-color .12s ease, color .12s ease, border-color .12s ease;
+  min-height: 28px;
+}
+.action-btn:hover {
+  background: var(--surface-hover);
+  color: var(--text-0);
+  border-color: var(--border);
+}
+.action-complete:hover {
+  color: var(--q2);
+  border-color: rgba(5, 150, 105, 0.35);
+  background: rgba(5, 150, 105, 0.08);
+}
+.action-delete { margin-left: auto; }
+.action-delete:hover {
+  color: var(--q1);
+  border-color: rgba(220, 38, 38, 0.35);
+  background: rgba(220, 38, 38, 0.08);
+}
+.action-btn .material-symbols-outlined { font-size: 16px; }
+
+
+/* ═════ Top bar / Sidebar / StatusBar ═════ */
+.app-topbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 2px rgba(15,23,42,0.02);
+  transition: background-color .2s ease, border-color .2s ease;
+}
+.app-sidebar {
+  background: var(--surface);
+  border-right: 1px solid var(--border-muted);
+  transition: background-color .2s ease, border-color .2s ease;
+}
+.app-statusbar {
+  background: var(--surface);
+  border-top: 1px solid var(--border-muted);
+  color: var(--text-2);
+  transition: background-color .2s ease, border-color .2s ease;
+}
+.app-statusbar kbd {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text-2);
+  padding: 0 4px;
+  border-radius: 3px;
+}
+
+/* Survival ボタン: Normal モードでは「警告アクセント」として残す */
+#survival-btn {
+  background: rgba(220, 38, 38, 0.06);
+  color: var(--q1);
+  border: 1px solid rgba(220, 38, 38, 0.25);
+}
+#survival-btn:hover {
+  background: rgba(220, 38, 38, 0.12);
+  border-color: rgba(220, 38, 38, 0.45);
+}
+
+/* Quick-add button */
+#quick-add-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-1);
+}
+#quick-add-btn:hover {
+  background: var(--surface-hover);
+  border-color: var(--surface-3);
+  color: var(--text-0);
+}
+#quick-add-btn kbd {
+  background: var(--surface-2);
+  border-color: var(--border);
+  color: var(--text-2);
+}
+
+/* 軸ラベルは削除 — 象限ヘッダで十分伝わるため冗長だった */
+
+button { cursor: pointer; font-family: inherit; }
+kbd { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+
+/* ═════ Modal (new task) ═════ */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--backdrop);
+  backdrop-filter: blur(4px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: modal-fade .15s ease-out;
+}
+.modal-backdrop.hidden { display: none; }
+@keyframes modal-fade { from { opacity: 0; } to { opacity: 1; } }
+
+.modal-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px -10px rgba(0,0,0,0.3), 0 10px 24px rgba(0,0,0,0.2);
+  width: 100%;
+  max-width: 540px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: modal-rise .2s cubic-bezier(.16,1,.3,1);
+}
+@keyframes modal-rise {
+  from { transform: translateY(12px) scale(.98); opacity: 0; }
+  to   { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid var(--border-muted);
+}
+.modal-body {
+  padding: 18px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 6px;
+  gap: 12px;
+}
+
+.modal-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  margin-bottom: 6px;
+}
+
+.modal-input {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 12px;
+  background: var(--surface);
+  color: var(--text-0);
+  font-size: 14px;
+  outline: none;
+  transition: border-color .12s ease, box-shadow .12s ease;
+}
+.modal-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.2);
+}
+.modal-input::placeholder { color: var(--text-3); }
+
+.modal-textarea {
+  resize: vertical;
+  min-height: 88px;
+  max-height: 360px;
+  line-height: 1.55;
+  font-family: inherit;
+}
+
+.quadrant-picker {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.q-pick {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color .12s ease, background-color .12s ease;
+  color: var(--text-0);
+}
+.q-pick:hover { border-color: var(--surface-3); background: var(--surface-hover); }
+.q-pick[data-selected="true"] {
+  border-color: var(--accent);
+  background: rgba(37, 99, 235, 0.08);
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+}
+.q-pick-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.q-pick-body { flex: 1; min-width: 0; }
+.q-pick-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-0);
+  line-height: 1.3;
+}
+.q-pick-sub {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+/* ═════ Undo toast ═════ */
+.undo-toast {
+  position: fixed;
+  left: 50%;
+  bottom: -90px;
+  transform: translateX(-50%);
+  background: #0f172a;
+  color: #f8fafc;
+  padding: 10px 14px 10px 18px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 1500;
+  transition: bottom .28s cubic-bezier(.16,1,.3,1);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+  font-size: 13px;
+  font-weight: 500;
+}
+html.dark .undo-toast { background: #1f2630; border: 1px solid #2a313c; }
+.undo-toast.visible { bottom: 48px; }
+.undo-btn {
+  background: #ffffff;
+  color: #0f172a;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: background-color .12s ease;
+}
+.undo-btn:hover { background: #e2e8f0; }
+
+/* ═════ Empty hint v2 (for zones) ═════ */
+.empty-hint-v2 {
+  padding: 20px 14px;
+  border: 1.5px dashed var(--border);
+  border-radius: 10px;
+  color: var(--text-2);
+  font-size: 13px;
+  text-align: center;
+  background: var(--surface);
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+
+/* ═════ Completed page — 完了タスクカード ═════ */
+.completed-card {
+  display: flex;
+  gap: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease, background-color .2s ease;
+  box-shadow: var(--shadow-card);
+}
+.completed-card:hover {
+  border-color: var(--surface-3);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-panel);
+}
+.completed-check {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--q2);
+}
+.completed-check .material-symbols-outlined { font-size: 28px; }
+.completed-body { flex: 1; min-width: 0; }
+.completed-meta-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.completed-time {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-3);
+  letter-spacing: 0.02em;
+}
+.completed-origin {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--surface-2);
+  color: var(--text-1);
+}
+.q1-origin { background: rgba(220, 38, 38, 0.1);  color: var(--q1); }
+.q2-origin { background: rgba(5, 150, 105, 0.1);  color: var(--q2); }
+.q3-origin { background: rgba(217, 119, 6, 0.1);  color: var(--q3); }
+.q4-origin { background: var(--surface-2);        color: var(--text-1); }
+.completed-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-0);
+  margin: 0 0 4px;
+  line-height: 1.4;
+  letter-spacing: -0.005em;
+}
+.completed-note {
+  font-size: 12.5px;
+  color: var(--text-2);
+  margin: 4px 0 0;
+  line-height: 1.5;
+  padding: 6px 10px;
+  background: var(--surface-hover);
+  border-radius: 6px;
+  border-left: 2px solid var(--border);
+}
+.completed-actions {
+  display: flex;
+  gap: 4px;
+  margin-top: 10px;
+  opacity: 0;
+  transition: opacity .15s ease;
+}
+.completed-card:hover .completed-actions {
+  opacity: 1;
+}
+
+
+/* ═════ Settings page ═════ */
+.settings-section { scroll-margin-top: 20px; }
+.settings-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 20px;
+  box-shadow: var(--shadow-card);
+  transition: border-color .15s ease, background-color .2s ease;
+}
+.settings-card:hover { border-color: var(--surface-3); }
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: var(--text-0);
+  color: var(--surface);
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid var(--text-0);
+  cursor: pointer;
+  transition: background-color .15s ease, opacity .15s ease;
+}
+.btn-primary:hover { opacity: 0.85; }
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-1);
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: background-color .15s ease, border-color .15s ease;
+}
+.btn-ghost:hover { background: var(--surface-hover); border-color: var(--surface-3); color: var(--text-0); }
+
+.theme-opt {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-2);
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background-color .12s ease, color .12s ease;
+}
+.theme-opt:hover { color: var(--text-0); }
+.theme-opt-active {
+  background: var(--surface);
+  color: var(--text-0);
+  border-color: var(--border);
+  box-shadow: 0 1px 2px rgba(0,0,0,.06);
+}
+
+.input-time {
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-0);
+  background: var(--surface);
+  outline: none;
+}
+.input-time:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37,99,235,.2); }
+
+.step-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: var(--surface-2);
+  color: var(--text-1);
+  font-weight: 700;
+  border: 1px solid var(--border);
+  cursor: pointer;
+}
+.step-btn:hover { background: var(--surface-3); }
+
+/* iOS 風 switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 22px;
+}
+.switch input { opacity: 0; width: 0; height: 0; }
+.switch-slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: var(--surface-3);
+  transition: .2s;
+  border-radius: 22px;
+}
+.switch-slider::before {
+  position: absolute;
+  content: '';
+  height: 16px;
+  width: 16px;
+  left: 3px;
+  top: 3px;
+  background-color: #ffffff;
+  transition: .2s;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0,0,0,.15);
+}
+.switch input:checked + .switch-slider { background-color: var(--accent); }
+.switch input:checked + .switch-slider::before { transform: translateX(18px); }
+
+.kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 22px;
+  padding: 0 6px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+
+/* ═════ Responsive ═════ */
+@media (max-width: 1100px) {
+  aside { width: 56px; }
+  .nav-item span:not(.material-symbols-outlined):not(.w-2) { display: none; }
+  .nav-item > span.ml-auto { display: none; }
+  .nav-item .w-2 { display: none; }
+}
+@media (max-width: 880px) {
+  aside { display: none; }
+  main > div.grid { grid-template-columns: 1fr !important; grid-template-rows: repeat(4, minmax(180px, 1fr)) !important; }
+  .absolute.top-2, .absolute.left-2 { display: none; }
+  main > div.grid { padding: 12px !important; }
+}
+@media (max-width: 640px) {
+  header { padding: 0 10px; }
+  #quick-add-btn span:not(.material-symbols-outlined):not(kbd) { display: none; }
+  #quick-add-btn kbd { display: none; }
+  footer { display: none; }
+}

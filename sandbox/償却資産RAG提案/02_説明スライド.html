@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>償却資産税業務へのRAG導入提案</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700;800;900&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===========================================
+   CSS CUSTOM PROPERTIES — SWISS MODERN THEME
+   説明資料向け: 大きめのフォント、余裕のある余白
+   =========================================== */
+:root {
+    --bg-primary: #ffffff;
+    --bg-dark: #0a0a0a;
+    --text-primary: #1a1a1a;
+    --text-secondary: #444;
+    --text-muted: #777;
+    --accent: #ff3300;
+    --accent-light: rgba(255, 51, 0, 0.06);
+    --border: #e0e0e0;
+    --border-light: #f0f0f0;
+
+    --font-display: 'Archivo', sans-serif;
+    --font-body: 'Nunito', sans-serif;
+
+    /* 説明資料用: 全体的にフォントサイズを大きく */
+    --title-size: clamp(1.8rem, 4.5vw, 3.2rem);
+    --h2-size: clamp(1.5rem, 3.5vw, 2.5rem);
+    --h3-size: clamp(1.1rem, 2vw, 1.5rem);
+    --body-size: clamp(0.9rem, 1.6vw, 1.25rem);
+    --small-size: clamp(0.8rem, 1.3vw, 1.05rem);
+    --tag-size: clamp(0.6rem, 0.9vw, 0.75rem);
+
+    --slide-padding: clamp(1.5rem, 5vw, 5rem);
+    --content-gap: clamp(0.5rem, 2vw, 2rem);
+    --element-gap: clamp(0.25rem, 1vw, 1rem);
+
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --duration-normal: 0.6s;
+}
+
+/* ===========================================
+   VIEWPORT BASE — 全スライド共通
+   =========================================== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; overflow-x: hidden; }
+html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+
+.slide {
+    width: 100vw;
+    height: 100vh; height: 100dvh;
+    overflow: hidden;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background: var(--bg-primary);
+}
+
+/* space-between: 上にヘッダー、下にカードやポイントを分散配置 */
+.slide-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-height: 100%;
+    overflow: hidden;
+    padding: var(--slide-padding);
+    padding-top: clamp(48px, 8vh, 80px);
+    padding-bottom: clamp(40px, 6vh, 64px);
+}
+
+img, .image-container {
+    max-width: 100%;
+    max-height: min(50vh, 400px);
+    object-fit: contain;
+}
+
+/* レスポンシブブレークポイント */
+@media (max-height: 700px) {
+    :root {
+        --slide-padding: clamp(1rem, 3vw, 2.5rem);
+        --content-gap: clamp(0.4rem, 1.5vw, 1rem);
+        --title-size: clamp(1.4rem, 4vw, 2.2rem);
+        --h2-size: clamp(1.2rem, 3vw, 1.8rem);
+    }
+}
+@media (max-height: 600px) {
+    :root {
+        --slide-padding: clamp(0.75rem, 2.5vw, 1.5rem);
+        --title-size: clamp(1.2rem, 3.5vw, 1.8rem);
+        --body-size: clamp(0.8rem, 1.3vw, 1rem);
+    }
+    .nav-dots, .decorative { display: none; }
+}
+@media (max-height: 500px) {
+    :root {
+        --slide-padding: clamp(0.5rem, 2vw, 1rem);
+        --title-size: clamp(1rem, 3vw, 1.5rem);
+        --body-size: clamp(0.7rem, 1.1vw, 0.9rem);
+    }
+}
+@media (max-width: 600px) {
+    :root { --title-size: clamp(1.3rem, 7vw, 2.2rem); }
+    .two-col, .three-col { grid-template-columns: 1fr !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+    html { scroll-behavior: auto; }
+}
+
+/* ===========================================
+   グリッドオーバーレイ — Swiss Modern の特徴
+   =========================================== */
+.grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(0,0,0,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.02) 1px, transparent 1px);
+    background-size: clamp(30px, 5vw, 60px) clamp(30px, 5vw, 60px);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ===========================================
+   共通コンポーネント
+   =========================================== */
+.slide-tag {
+    font-family: var(--font-display);
+    font-size: var(--tag-size);
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: clamp(8px, 1.5vh, 16px);
+    position: relative;
+    z-index: 1;
+}
+.slide-number {
+    position: absolute;
+    top: var(--slide-padding);
+    right: var(--slide-padding);
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(3rem, 8vw, 7rem);
+    color: rgba(0,0,0,0.04);
+    line-height: 1;
+    z-index: 0;
+}
+h2 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: var(--h2-size);
+    line-height: 1.15;
+    color: var(--text-primary);
+    position: relative;
+    z-index: 1;
+}
+h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--h3-size);
+    color: var(--text-primary);
+}
+p, li {
+    font-family: var(--font-body);
+    font-size: var(--body-size);
+    color: var(--text-secondary);
+    line-height: 1.7;
+    position: relative;
+    z-index: 1;
+}
+.accent-line {
+    width: clamp(40px, 5vw, 60px);
+    height: 4px;
+    background: var(--accent);
+    margin: clamp(8px, 1.5vh, 16px) 0;
+}
+
+/* ===========================================
+   アニメーション
+   =========================================== */
+.reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity var(--duration-normal) var(--ease-out-expo),
+                transform var(--duration-normal) var(--ease-out-expo);
+}
+.slide.visible .reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+.reveal:nth-child(1) { transition-delay: 0.1s; }
+.reveal:nth-child(2) { transition-delay: 0.2s; }
+.reveal:nth-child(3) { transition-delay: 0.3s; }
+.reveal:nth-child(4) { transition-delay: 0.4s; }
+.reveal:nth-child(5) { transition-delay: 0.5s; }
+
+/* ===========================================
+   レイアウト
+   =========================================== */
+.two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(20px, 3vw, 48px);
+    position: relative;
+    z-index: 1;
+}
+.three-col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(16px, 2.5vw, 36px);
+    position: relative;
+    z-index: 1;
+}
+
+/* カード — 説明資料用に文字を大きく */
+.card {
+    padding: clamp(16px, 2.5vw, 32px);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    position: relative;
+    z-index: 1;
+}
+.card-accent { border-left: 4px solid var(--accent); }
+.card h3 {
+    font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+    margin-bottom: clamp(6px, 1vh, 12px);
+}
+.card p {
+    font-size: var(--small-size);
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* テーブル */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-body);
+    font-size: var(--small-size);
+    position: relative;
+    z-index: 1;
+}
+.data-table th {
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-align: left;
+    padding: clamp(8px, 1.2vh, 14px) clamp(10px, 1.5vw, 18px);
+    border-bottom: 2px solid var(--text-primary);
+    font-size: var(--small-size);
+}
+.data-table td {
+    padding: clamp(8px, 1.2vh, 14px) clamp(10px, 1.5vw, 18px);
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-secondary);
+}
+
+/* インパクト引用 */
+.impact-quote {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    color: var(--text-primary);
+    position: relative;
+    z-index: 1;
+    padding-left: clamp(16px, 2vw, 24px);
+    border-left: 4px solid var(--accent);
+}
+
+/* Before/After 比較 */
+.compare-col {
+    padding: clamp(16px, 2.5vw, 28px);
+}
+.compare-col h3 {
+    font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+    margin-bottom: clamp(8px, 1.2vh, 14px);
+    padding-bottom: clamp(6px, 0.8vh, 10px);
+    border-bottom: 2px solid var(--border);
+}
+.compare-col.highlight h3 { border-bottom-color: var(--accent); }
+.compare-col p {
+    font-size: var(--small-size);
+    line-height: 1.6;
+}
+
+/* プロセスステップ */
+.process-step {
+    position: relative;
+    padding: clamp(16px, 2vw, 28px);
+    border-top: 3px solid var(--border);
+}
+.process-step.active { border-top-color: var(--accent); }
+.step-number {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    color: rgba(0,0,0,0.06);
+    line-height: 1;
+}
+
+/* プログレスバー */
+.progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: var(--accent);
+    z-index: 9999;
+    transition: width 0.3s ease;
+}
+
+/* ナビゲーションドット */
+.nav-dots {
+    position: fixed;
+    right: clamp(12px, 2vw, 24px);
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 9998;
+}
+.nav-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    padding: 0;
+}
+.nav-dot.active {
+    background: var(--accent);
+    transform: scale(1.3);
+}
+
+/* ダークスライド */
+.slide.dark {
+    background: var(--bg-dark);
+}
+.slide.dark h2, .slide.dark h3, .slide.dark p, .slide.dark li,
+.slide.dark .impact-quote {
+    color: #f0f0f0;
+}
+.slide.dark .slide-tag { color: var(--accent); }
+.slide.dark .slide-number { color: rgba(255,255,255,0.05); }
+.slide.dark .grid-overlay {
+    background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+}
+.slide.dark .card {
+    border-color: rgba(255,255,255,0.1);
+}
+.slide.dark .card p { color: rgba(255,255,255,0.7); }
+
+/* タイトルスライド専用 */
+.title-slide .slide-content {
+    justify-content: center;
+    gap: clamp(8px, 1.5vh, 16px);
+}
+.title-slide h1 {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: var(--title-size);
+    line-height: 1.1;
+    color: var(--text-primary);
+    position: relative;
+    z-index: 1;
+}
+.title-slide .subtitle {
+    font-family: var(--font-body);
+    font-size: var(--body-size);
+    color: var(--text-secondary);
+    z-index: 1;
+    position: relative;
+}
+
+/* ヒーロースライド（一言で言うと） */
+.hero-center .slide-content {
+    justify-content: center;
+    align-items: flex-start;
+    gap: clamp(12px, 2vh, 24px);
+}
+
+/* インライン編集用 */
+.edit-toggle {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    width: 32px;
+    height: 32px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 14px;
+    cursor: pointer;
+    z-index: 10000;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.edit-toggle:hover, body:hover .edit-toggle { opacity: 0.7; }
+.edit-toggle.active { opacity: 1; background: #333; }
+body.edit-mode [contenteditable="true"] {
+    outline: 2px dashed var(--accent);
+    outline-offset: 4px;
+    cursor: text;
+}
+</style>
+</head>
+<body>
+
+<!-- プログレスバー -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- ナビゲーションドット -->
+<div class="nav-dots" id="navDots"></div>
+
+<!-- インライン編集ボタン -->
+<button class="edit-toggle" id="editToggle" title="編集モード (E)">&#9998;</button>
+
+<!-- ===========================================
+     スライド 1: タイトル
+     =========================================== -->
+<section class="slide title-slide" data-slide="0">
+    <div class="grid-overlay"></div>
+    <div class="slide-content">
+        <div class="reveal">
+            <div class="accent-line"></div>
+        </div>
+        <h1 class="reveal" contenteditable="true">償却資産税業務への<br>AI活用提案</h1>
+        <p class="subtitle reveal" contenteditable="true">デジタル統括本部「手上げ制」への応募に向けて</p>
+        <p class="subtitle reveal" contenteditable="true" style="color: var(--text-muted); font-size: var(--small-size); margin-top: clamp(16px, 3vh, 32px);">2026年3月｜○○課</p>
+    </div>
+</section>
+
+<!-- ===========================================
+     スライド 2: この提案を一言で
+     =========================================== -->
+<section class="slide hero-center" data-slide="1">
+    <div class="grid-overlay"></div>
+    <div class="slide-content">
+        <div>
+            <div class="slide-tag reveal">SUMMARY</div>
+            <div class="slide-number">02</div>
+            <h2 class="reveal" contenteditable="true">新システムにデータはある。<br>活用する知恵がAIだ。</h2>
+            <div class="accent-line reveal"></div>
+            <p class="reveal" contenteditable="true" style="max-width: 700px;">調査・審査・事業者対応の3つの業務をAIで効率化し、<br>担当者が替わっても知識が育ち続ける仕組みを作る。</p>
+        </div>
+    </div>
+</section>
+
+<!-- ===========================================
+     スライド 3: 今、何に困っているか
+     =========================================== -->
+<section class="slide" data-slide="2">
+    <div class="grid-overlay"></div>
+    <div class="slide-content">
+        <div>
+            <div class="slide-tag reveal">BACKGROUND</div>
+            <div class="slide-number">03</div>
+            <h2 class="reveal" contenteditable="true">今、何に困っているか</h2>
+        </div>
+        <div class="three-col reveal">
+            <div class="card card-accent">
+                <h3 contenteditable="true">知識が人につく</h3>
+                <p contenteditable="true">専任職の知見が属人化しており、異動のたびに失われるリスクがある。</p>
+            </div>
+            <div class="card card-accent">
+                <h3 contenteditable="true">全件チェックは不可能</h3>
+                <p contenteditable="true">大量の申告データを手作業で確認するには限界がある。見逃しのリスクも。</p>
+            </div>
+            <div class="card card-accent">
+                <h3 contenteditable="true">問い合わせが電話に集中</h3>
+                <p contenteditable="true">定型的な質問にも職員が直接対応。繁忙期の負荷が大きい。</p>
+            </div>
+        </div>
+        <p class="impact-quote reveal" contenteditable="true">忙しいからこそ、調査系を楽にする必要がある。</p>
+    </div>
+</section>
+
+<!-- ===========================================
+     スライド 4: 新システムの「もったいない」
+     =========================================== -->
+<section class="slide" data-slide="3">
+    <div class="grid-overlay"></div>
+    <div class="slide-content">
+        <div>
+            <div class="slide-tag reveal">OPPORTUNITY</div>
+            <div class="slide-number">04</div>
+            <h2 class="reveal" contenteditable="true">新システムの「もったいない」</h2>
+        </div>
+        <div class="two-col reveal">
+            <div class="compare-col">
+                <h3 contenteditable="true">今の使い方</h3>
+                <p contenteditable="true">5年分のデータを保持し、過去にさかのぼって確認できる。便利だが、結局は職員が手動で探して判断している。</p>
+            </div>
+            <div class="compare-col highlight">
+                <h3 contenteditable="true">AIを組み合わせると</h3>
+                <p contenteditable="true">蓄積データをAIが読み取り、疑義の候補を自動で抽出。職員は判断に集中できる。</p>
+            </div>
+        </div>
+        <p class="impact-quote reveal" contenteditable="true">データを保持するだけではもったいない。AIで活用してこそ投資回収。</p>
+    </div>
+</section>
+
+<!-- ===========================================
+     スライド 5: できること① 見積精査の効率化
+     =========================================== -->
+<section class="slide" data-slide="4">
+    <div class="grid-overlay"></div>
+    <div class="slide-content">
+        <div>
+            <div class="slide-tag reveal">USE CASE 1</div>
+            <div class="slide-number">05</div>
+            <h2 class="reveal" contenteditable="true">大規模家屋の見積精査を効率化</h2>
+        </div>
+        <div class="two-col reveal">
+            <div class="compare-col">
+                <h3 contenteditable="true">今の進め方</h3>
+                <p contenteditable="true">1,000㎡以上の事業用建物の調査で、見積書の精査に数時間かかる。経験豊富な職員でないと見落としやすい。</p>
+            </div>
+            <div class="compare-col highlight">
+                <h3 contenteditable="true">AIを使うと</h3>
+                <p contenteditable="true">評価要領と過去の事例をAIに学習させ、見積書の精査ポイントを自動で提示。ベテランの目を補助する。</p>
+            </div>
+        </div>
+        <p class="impact-quote reveal" contenteditable="true">精査時間の短縮と、知見の永続化を同時に実現。</p>
+    </div>
+</section>
+
+<!-- ===========================================
+     スライド 6: できること② 申告データの自動チェック
+     =========================================== -->
+<section class="slide" data-slide="5">
+    <div class="grid-overlay"></div>
+    <div class="slide-content">
+        <div>
+            <div class="slide-tag reveal">USE CASE 2</div>
+            <div class="slide-number">06</div>
+            <h2 class="reveal" contenteditable="true">申告データの疑義を自動で抽出</h2>
+        </div>
+        <div class="two-col reveal">
+            <div class="compare-col">
+                <h3 contenteditable="true">今の進め方</h3>
+                <p contenteditable="true">電子申告・紙申告のCSVデータを手作業でチェック。全件確認は不可能で、見逃しが生じるリスクがある。</p>
+            </div>
+            <div class="compare-col highlight">
+                <h3 contenteditable="true">AIを使うと</h3>
+                <p contenteditable="true">全件を自動でスクリーニング。家屋疑義・自動車・申告不要な資産を理由付きでリストアップ。</p>
+            </div>
+        </div>
+        <p class="impact-quote reveal" contenteditable="true">課税漏れの防止と、公平性の向上に直結する。</p>
+    </div>
+</section>
+
+<!-- ===========================================
+     スライド 7: できること③ 問い合わせ対応の自動化
+     =========================================== -->
+<section class="slide" data-slide="6">
+    <div class="grid-overlay"></div>
+    <div class="slide-content">
+        <div>
+            <div class="slide-tag reveal">USE CASE 3</div>
+            <div class="slide-number">07</div>
+            <h2 class="reveal" contenteditable="true">事業者からの問い合わせをAIが一次対応</h2>
+        </div>
+        <div class="three-col reveal">
+            <div class="card card-accent">
+                <h3 contenteditable="true">そのまま回答できる</h3>
+                <p contenteditable="true">マニュアルに明記されている内容は、AIがそのまま案内する。</p>
+            </div>
+            <div class="card card-accent">
+                <h3 contenteditable="true">判断が必要</h3>
+                <p contenteditable="true">類似の記載はあるが完全一致しない場合、AIが参考情報を出しつつ職員に確認を促す。</p>
+            </div>
+            <div class="card card-accent">
+                <h3 contenteditable="true">回答できない</h3>
+                <p contenteditable="true">該当する記載がない場合、AIが「職員にお問い合わせください」と案内する。</p>
+            </div>
+        </div>
+        <p class="impact-quote reveal" contenteditable="true">チャットボットが一次対応。職員は判断が必要な案件に集中できる。</p>
+    </div>
+</section>
+
+<!-- ===========================================
+     スライド 8: 1つ整備すれば3つに効く
+     =========================================== -->
+<section class="slide" data-slide="7">
+    <div class="grid-overlay"></div>
+    <div class="slide-content">
+        <div>
+            <div class="slide-tag reveal">SYNERGY</div>
+            <div class="slide-number">08</div>
+            <h2 class="reveal" contenteditable="true">1つの知識基盤で、3つの業務が改善される</h2>
+        </div>
+        <div class="two-col reveal">
+            <div>
+                <p contenteditable="true" style="margin-bottom: clamp(12px, 2vh, 20px);">評価要領・判定基準・過去事例・よくある質問を一度整備すれば、見積精査・疑義抽出・問い合わせ対応の3つに使える。</p>
+                <p contenteditable="true">しかも、業務で使うたびに質問ログが蓄積され、知識基盤が自然に育っていく。別途の更新作業は不要。</p>
+            </div>
+            <div>
+                <div class="card card-accent" style="margin-bottom: clamp(8px, 1.2vh, 14px);">
+                    <h3 contenteditable="true">AIが勝手に更新しない</h3>
+                    <p contenteditable="true">知識の追加・修正は必ず職員が確認・承認してから反映する。</p>
+                </div>
+                <div class="card card-accent">
+                    <h3 contenteditable="true">担当が替わっても止まらない</h3>
+                    <p contenteditable="true">知識がシステムに蓄積されるため、異動や引継ぎで失われない。</p>
+                </div>
+            </div>
+        </div>
+        <p class="impact-quote reveal" contenteditable="true">異動のたびに知識が失われる組織から、異動のたびに知識が強くなる組織へ。</p>
+    </div>
+</section>
+
+<!-- ===========================================
+     スライド 9: AIの仕組み（平易に）
+     =========================================== -->
+<section class="slide" data-slide="8">
+    <div class="grid-overlay"></div>
+    <div class="slide-content">
+        <div>
+            <div class="slide-tag reveal">TECHNOLOGY</div>
+            <div class="slide-number">09</div>
+            <h2 class="reveal" contenteditable="true">RAGとは — 「自分たちの資料を読んで答えるAI」</h2>
+        </div>
+        <div class="two-col reveal">
+            <div>
+                <p contenteditable="true" style="margin-bottom: clamp(12px, 2vh, 20px);">ChatGPTのような汎用AIは、一般的な知識で回答する。横浜市固有の評価要領や判定基準は知らない。</p>
+                <p contenteditable="true">RAGは「自分たちの資料を読み込ませたAI」。評価要領や通知を参照して、根拠付きで回答する。</p>
+            </div>
+            <div>
+                <div class="card card-accent">
+                    <h3 contenteditable="true">NotebookLMで体験できる</h3>
+                    <p contenteditable="true">Googleが提供するRAGサービス。PDFを読み込ませて質問すると、その資料に基づいて回答してくれる。まずはこれで試せる。</p>
+                </div>
+            </div>
+        </div>
+        <p class="impact-quote reveal" contenteditable="true">難しい技術ではない。「資料を読んで答えてくれるAI」と考えればよい。</p>
+    </div>
+</section>
+
+<!-- ===========================================
+     スライド 10: 費用と進め方
+     =========================================== -->
+<section class="slide" data-slide="9">
+    <div class="grid-overlay"></div>
+    <div class="slide-content">
+        <div>
+            <div class="slide-tag reveal">PLAN</div>
+            <div class="slide-number">10</div>
+            <h2 class="reveal" contenteditable="true">費用と進め方</h2>
+        </div>
+        <div class="three-col reveal">
+            <div class="process-step active">
+                <div class="step-number">01</div>
+                <h3 contenteditable="true">まず試す（1〜2ヶ月）</h3>
+                <p contenteditable="true">NotebookLMで申告データのチェックを試す。ライセンスがあれば実質無料。</p>
+            </div>
+            <div class="process-step">
+                <div class="step-number">02</div>
+                <h3 contenteditable="true">本格構築（3〜6ヶ月）</h3>
+                <p contenteditable="true">デジタル統括本部と連携し、見積精査と疑義抽出の仕組みを構築する。</p>
+            </div>
+            <div class="process-step">
+                <div class="step-number">03</div>
+                <h3 contenteditable="true">拡張（6ヶ月〜）</h3>
+                <p contenteditable="true">チャットボットを追加し、知識が育ち続けるエコシステムを確立する。</p>
+            </div>
+        </div>
+        <p class="impact-quote reveal" contenteditable="true">まずは無料で小さく試す。うまくいかなければ、やめられる。</p>
+    </div>
+</section>
+
+<!-- ===========================================
+     スライド 11: 試すこと自体に価値がある
+     =========================================== -->
+<section class="slide" data-slide="10">
+    <div class="grid-overlay"></div>
+    <div class="slide-content">
+        <div>
+            <div class="slide-tag reveal">SIDE EFFECT</div>
+            <div class="slide-number">11</div>
+            <h2 class="reveal" contenteditable="true">試すこと自体に価値がある</h2>
+        </div>
+        <div class="three-col reveal">
+            <div class="card card-accent">
+                <h3 contenteditable="true">AIに聞く → 専任職に確認する</h3>
+                <p contenteditable="true">「この回答は合っている？」と確認する会話そのものが、知識の移転になる。</p>
+            </div>
+            <div class="card card-accent">
+                <h3 contenteditable="true">AIが疑義を出す → 理由を議論する</h3>
+                <p contenteditable="true">「なぜこれが疑義なのか」を確認する過程で、暗黙のルールが言語化される。</p>
+            </div>
+            <div class="card card-accent">
+                <h3 contenteditable="true">AIが間違える → 知見が炙り出る</h3>
+                <p contenteditable="true">間違えた理由を探ると、評価要領に書かれていない判断基準が見つかる。</p>
+            </div>
+        </div>
+        <p class="impact-quote reveal" contenteditable="true">たとえAIの精度が出なくても、知識の棚卸しで得たものは組織の資産になる。</p>
+    </div>
+</section>
+
+<!-- ===========================================
+     スライド 12: 安全性の考え方
+     =========================================== -->
+<section class="slide" data-slide="11">
+    <div class="grid-overlay"></div>
+    <div class="slide-content">
+        <div>
+            <div class="slide-tag reveal">SAFETY</div>
+            <div class="slide-number">12</div>
+            <h2 class="reveal" contenteditable="true">安全性の考え方</h2>
+        </div>
+        <div class="three-col reveal">
+            <div class="card card-accent">
+                <h3 contenteditable="true">大原則</h3>
+                <p contenteditable="true">AIの出力は必ず職員が最終確認する。補助ツールであり、判断ツールではない。</p>
+            </div>
+            <div class="card card-accent">
+                <h3 contenteditable="true">問い合わせ対応</h3>
+                <p contenteditable="true">全回答に「参考情報」の免責表示。不確実な回答は職員にエスカレーション。</p>
+            </div>
+            <div class="card card-accent">
+                <h3 contenteditable="true">試行段階の判定基準</h3>
+                <p contenteditable="true">疑義の検出率80%未満なら、別の方法に切り替えるか中止する。</p>
+            </div>
+        </div>
+        <p class="impact-quote reveal" contenteditable="true">うまくいかなければ撤退する選択肢を、最初から用意しておく。</p>
+    </div>
+</section>
+
+<!-- ===========================================
+     スライド 13: リスクと対策
+     =========================================== -->
+<section class="slide" data-slide="12">
+    <div class="grid-overlay"></div>
+    <div class="slide-content">
+        <div>
+            <div class="slide-tag reveal">RISK</div>
+            <div class="slide-number">13</div>
+            <h2 class="reveal" contenteditable="true">想定されるリスクと対策</h2>
+        </div>
+        <table class="data-table reveal">
+            <thead>
+                <tr>
+                    <th contenteditable="true">リスク</th>
+                    <th contenteditable="true">対策</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td contenteditable="true">通常業務が忙しく手が回らない</td>
+                    <td contenteditable="true">試行は閑散期に5〜10人日。NotebookLMなので準備も軽い</td>
+                </tr>
+                <tr>
+                    <td contenteditable="true">AIの精度が出ない</td>
+                    <td contenteditable="true">試行段階で判定基準を設け、基準未達なら撤退できる</td>
+                </tr>
+                <tr>
+                    <td contenteditable="true">セキュリティの懸念</td>
+                    <td contenteditable="true">デジタル統括本部の基準に準拠。個人情報はAIに入力しない</td>
+                </tr>
+                <tr>
+                    <td contenteditable="true">導入後に更新されず陳腐化</td>
+                    <td contenteditable="true">業務利用の副産物として自然に育つ設計 + 年1回の棚卸し</td>
+                </tr>
+                <tr>
+                    <td contenteditable="true">費用がかかりすぎる</td>
+                    <td contenteditable="true">試行は無料。本格導入はデジタル統括本部の支援範囲次第</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- ===========================================
+     スライド 14: まとめ — 後任への引継ぎ
+     =========================================== -->
+<section class="slide dark" data-slide="13">
+    <div class="grid-overlay"></div>
+    <div class="slide-content">
+        <div>
+            <div class="slide-tag reveal">NEXT STEPS</div>
+            <div class="slide-number">14</div>
+            <h2 class="reveal" contenteditable="true">まとめ — 後任への引継ぎ事項</h2>
+            <div class="accent-line reveal"></div>
+        </div>
+        <div class="two-col reveal">
+            <div>
+                <div class="card card-accent" style="margin-bottom: clamp(10px, 1.5vh, 16px);">
+                    <h3 contenteditable="true">やること</h3>
+                    <p contenteditable="true">デジタル統括本部の手上げ制が発表されたら応募する。まずNotebookLMでCSVチェックを試す。</p>
+                </div>
+                <div class="card card-accent">
+                    <h3 contenteditable="true">相談先</h3>
+                    <p contenteditable="true">不明点はデジタル統括本部の担当者に相談。提案書（proposal.md）を申請資料のベースに使う。</p>
+                </div>
+            </div>
+            <div>
+                <div class="card card-accent" style="margin-bottom: clamp(10px, 1.5vh, 16px);">
+                    <h3 contenteditable="true">この提案の本質</h3>
+                    <p contenteditable="true">知識を「人」から「組織」に移す仕組みづくり。担当者が替わっても、知識は残り、育ち続ける。</p>
+                </div>
+                <div class="card card-accent">
+                    <h3 contenteditable="true">展開の可能性</h3>
+                    <p contenteditable="true">償却資産で成功すれば土地・家屋・他の税目にも横展開できる。税部門全体のデジタル化の起点になる。</p>
+                </div>
+            </div>
+        </div>
+        <p class="impact-quote reveal" contenteditable="true">償却資産から始める、税部門のデジタル化。</p>
+    </div>
+</section>
+
+<!-- ===========================================
+   JavaScript — ナビゲーション・アニメーション・編集
+   =========================================== -->
+<script>
+/* === スライドナビゲーション === */
+const slides = document.querySelectorAll('.slide');
+const navDotsContainer = document.getElementById('navDots');
+const progressBar = document.getElementById('progressBar');
+
+// ナビドット生成
+slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'nav-dot';
+    dot.addEventListener('click', () => slides[i].scrollIntoView({ behavior: 'smooth' }));
+    navDotsContainer.appendChild(dot);
+});
+
+const navDots = document.querySelectorAll('.nav-dot');
+
+// Intersection Observer でスライド表示を検出
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            const idx = parseInt(entry.target.dataset.slide);
+            navDots.forEach((d, i) => d.classList.toggle('active', i === idx));
+            progressBar.style.width = ((idx + 1) / slides.length * 100) + '%';
+        }
+    });
+}, { threshold: 0.5 });
+
+slides.forEach(s => observer.observe(s));
+
+// キーボードナビゲーション
+let currentSlide = 0;
+document.addEventListener('keydown', (e) => {
+    if (document.body.classList.contains('edit-mode') && e.key !== 'Escape' && e.key !== 'e') return;
+    if (e.key === 'ArrowDown' || e.key === ' ' || e.key === 'ArrowRight') {
+        e.preventDefault();
+        currentSlide = Math.min(currentSlide + 1, slides.length - 1);
+        slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+    } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+        e.preventDefault();
+        currentSlide = Math.max(currentSlide - 1, 0);
+        slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+    } else if (e.key === 'e' || e.key === 'E') {
+        toggleEdit();
+    }
+});
+
+// スクロール位置からcurrentSlideを更新
+document.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    const vh = window.innerHeight;
+    currentSlide = Math.round(scrollY / vh);
+});
+
+/* === インライン編集 === */
+const editToggle = document.getElementById('editToggle');
+function toggleEdit() {
+    document.body.classList.toggle('edit-mode');
+    editToggle.classList.toggle('active');
+}
+editToggle.addEventListener('click', toggleEdit);
+
+// Ctrl+S で localStorage に保存
+document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+        e.preventDefault();
+        if (document.body.classList.contains('edit-mode')) {
+            localStorage.setItem('presentation-backup', document.documentElement.outerHTML);
+            const msg = document.createElement('div');
+            msg.textContent = '保存しました';
+            msg.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:8px 20px;border-radius:4px;z-index:99999;font-family:sans-serif;font-size:14px;';
+            document.body.appendChild(msg);
+            setTimeout(() => msg.remove(), 2000);
+        }
+    }
+});
+</script>
+</body>
+</html>

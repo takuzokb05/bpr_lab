@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html class="dark" lang="ja"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gemini OCR Studio ダッシュボード (UX改善版)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13a4ec",
+                        "primary-hover": "#0f8cc9",
+                        "error": "#ef4444",
+                        "error-hover": "#dc2626",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#0f172a","surface-dark": "#1e293b","surface-darker": "#111827","border-dark": "#334155",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"],
+                    },
+                    borderRadius: {"DEFAULT": "0.375rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>.custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+        .blinking-cursor::after {
+            content: '|';
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+        .processing-ring::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 100%;
+            height: 100%;
+            border: 2px solid #13a4ec;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulse-ring 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display overflow-hidden h-screen flex flex-col">
+<header class="flex-none h-16 border-b border-gray-200 dark:border-border-dark bg-white dark:bg-surface-dark px-6 flex items-center justify-between z-20 shadow-sm">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-3">
+<div class="bg-gradient-to-br from-primary to-blue-600 size-8 rounded flex items-center justify-center text-white shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-xl">view_in_ar</span>
+</div>
+<div>
+<h1 class="font-bold text-lg tracking-tight leading-none">Gemini OCR Studio</h1>
+<p class="text-[10px] text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider mt-0.5">Enterprise Edition</p>
+</div>
+</div>
+<div class="h-6 w-px bg-gray-200 dark:bg-border-dark mx-2"></div>
+<div class="flex items-center gap-2 bg-emerald-500/10 dark:bg-emerald-500/20 px-2.5 py-1 rounded-full border border-emerald-500/20">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+</span>
+<span class="text-xs font-semibold text-emerald-700 dark:text-emerald-400">接続済み</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined">help</span>
+</button>
+<button class="p-2 text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-cover bg-center ring-2 ring-slate-200 dark:ring-slate-700" data-alt="User profile avatar showing a smiling person" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDBz5mtaO0uMBTGpxPhtgiARsraV_gGt4B7xlPPOXnteBH27Ar7hrUf4mLaisXi_UrVYstlTA4Cn1wTgCFm8k5Qbmg-rA41Q4EbsKoiRTS3asdFBXl8v1EoJ7QK3YXDJfhXWOQ849Stjcmx6NrF8G4cFvF9B2QxjGHHBeW3hOiyLrNkDxtZuD6DpbLICQ-bMYYdobfic7v5LDxTPoSQ28XAlWSRvEJLeKnBexlQUewnm9o8CadY_ayAxdPtDxqsHYkn3vRheJsJy50X');"></div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<aside class="w-64 bg-gray-50 dark:bg-[#162032] border-r border-gray-200 dark:border-border-dark flex flex-col flex-none">
+<div class="p-4 border-b border-gray-200 dark:border-border-dark">
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary font-medium" href="#">
+<span class="material-symbols-outlined text-[20px]">folder_open</span>
+<span class="text-sm">プロジェクトファイル</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200 transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">history</span>
+<span class="text-sm">履歴</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200 transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+<span class="text-sm">設定</span>
+</a>
+</nav>
+</div>
+<div class="px-4 py-3 flex items-center justify-between">
+<div>
+<h3 class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider font-mono">temp_pages/</h3>
+<p class="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">6 ファイル読込済</p>
+</div>
+<button class="text-slate-400 hover:text-primary">
+<span class="material-symbols-outlined text-[18px]">refresh</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto custom-scrollbar p-3 space-y-2">
+<div class="group flex gap-3 p-2 rounded-lg bg-white dark:bg-surface-dark border border-primary shadow-sm cursor-pointer relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<div class="h-12 w-10 bg-slate-200 dark:bg-slate-700 rounded overflow-hidden flex-none relative">
+<div class="w-full h-full bg-cover bg-top opacity-80" data-alt="Thumbnail preview of a document page" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD1tqaQFm3H6t4geYilPEGnp04xgOD8Ewo1t1JvdxVtqti152Iw9rXPEl6S5bHiBoKdVqsiJ3Ap8cuse9BjIfWBpKfJ3BcBoNlVBCsTE8SoOzEi-ooNn3WfQXic2p1JdfowFIH5EKwpcmbwOyr2xLNwD4-74PjCHWrml00dPzptaeV3ApJDsSc9sX-9DFdVCQayJBR0rTSIz72txOnYdYocRe_E3d9FlfNiSFTMvhFi1COsyG_ziL_2J2o6p8nu8v7r4ayj0v9PWquk')"></div>
+<div class="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-[1px]">
+<span class="material-symbols-outlined text-white animate-spin text-lg">sync</span>
+</div>
+</div>
+<div class="flex flex-col justify-center min-w-0">
+<p class="text-xs font-medium text-slate-900 dark:text-white truncate font-mono">page_045.pdf</p>
+<p class="text-[10px] text-primary font-medium animate-pulse">処理中...</p>
+</div>
+</div>
+<div class="group flex gap-3 p-2 rounded-lg border border-transparent hover:bg-slate-200 dark:hover:bg-slate-800/50 cursor-pointer transition-colors">
+<div class="h-12 w-10 bg-slate-200 dark:bg-slate-700 rounded overflow-hidden flex-none relative">
+<div class="w-full h-full bg-cover bg-top opacity-50 grayscale" data-alt="Thumbnail preview of a document page" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAB1-UO3NR7P_vBZyF1chziD9DV0e-YE8wdDGhCk01uR4Ha6phURgwg4xVzqAW7cNhP2bIfrT55Gf6Nl70x9xLGNZBD8lfq7N-AgW_a2NlzX8iTzj5gzNC-rcDDVasEI6SN4dQdx59nklT8G73zKoS6x3iXU_RyT63kyjXwZiA_TQbsKUl0sUIo-7tAY4ZkqzTjmX_xclxXW1CVkextFVQBDgYxvcqXiTW0Yjoj_eTYETG1WGnUSY_zY8NWd_inPAfaCJW0mwEu9G2I')"></div>
+<div class="absolute inset-0 flex items-center justify-center bg-black/20">
+<span class="material-symbols-outlined text-white text-[16px]">hourglass_empty</span>
+</div>
+</div>
+<div class="flex flex-col justify-center min-w-0">
+<p class="text-xs font-medium text-slate-600 dark:text-slate-400 truncate font-mono">page_046.pdf</p>
+<p class="text-[10px] text-slate-400">待機中</p>
+</div>
+</div>
+<div class="group flex gap-3 p-2 rounded-lg border border-transparent hover:bg-slate-200 dark:hover:bg-slate-800/50 cursor-pointer transition-colors">
+<div class="h-12 w-10 bg-slate-200 dark:bg-slate-700 rounded overflow-hidden flex-none relative">
+<div class="w-full h-full bg-cover bg-top opacity-50 grayscale" data-alt="Thumbnail preview of a document page" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBsof8nymSCScfCw0gDz2Mdnd6J-Ta79rU30YynyeJ26BE2bxsHxJsTJ_98ICFH3dUxlSWuW9bl0LnJIkpySrslpgI20pJJ8yAD2_Q8RQgvM1YLDdN6jyBUvNGjjANjUfbOZwXWN0Bewoqh6OYulbHT-G-PC1iMLzKG-bsFKhBzFfebwcRJrP9EEUttjHxHAXZ4_geo_d_cWIQAVHatpbp-UeEBXK5t4pfh0aNRZlZLe27LCaNvmgY4dQOK4hVAP-hcbW-5dO83UXCj')"></div>
+</div>
+<div class="flex flex-col justify-center min-w-0">
+<p class="text-xs font-medium text-slate-600 dark:text-slate-400 truncate font-mono">page_047.pdf</p>
+<p class="text-[10px] text-slate-400">待機中</p>
+</div>
+</div>
+<div class="group flex gap-3 p-2 rounded-lg border border-transparent hover:bg-slate-200 dark:hover:bg-slate-800/50 cursor-pointer transition-colors">
+<div class="h-12 w-10 bg-slate-200 dark:bg-slate-700 rounded overflow-hidden flex-none relative">
+<div class="w-full h-full bg-cover bg-top opacity-50 grayscale" data-alt="Thumbnail preview of a document page" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDaO0QseNMNYcQE9dLqgYZ116mjah_7cN2v63ACpFMNoMwiL6nGS44TShAqZsBNkxcLe1YNIpc6TiUtK5ehP3JitCBlgoy_V_TPs0rDsxqxrKzP7oIN1Wv3WupNAYaEY-D4d1yOMpcTPUMqCJRAKY02W5ziYOr_qI_x3exYnQWe5I2zb1Gdx4_Whpnlq10sRoAz9fL8RMMz2gSn0tPV2S7wpNsve_rECXFukywuL65TeiUL91mX_g4l1qfYrlBKFmoWLsE9EBZn2PRw')"></div>
+</div>
+<div class="flex flex-col justify-center min-w-0">
+<p class="text-xs font-medium text-slate-600 dark:text-slate-400 truncate font-mono">page_048.pdf</p>
+<p class="text-[10px] text-slate-400">待機中</p>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex-1 flex flex-col min-w-0 overflow-y-auto custom-scrollbar relative">
+<div class="p-8 pb-4 bg-surface-darker/50 border-b border-gray-200 dark:border-border-dark">
+<div class="flex flex-wrap items-end justify-between gap-4 mb-4">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/20 text-blue-400 uppercase tracking-wide border border-blue-500/20">処理中ジョブ</span>
+</div>
+<h2 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">manual_v2.pdf</h2>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-1">ステートフル・スライディングウィンドウ OCRシステム</p>
+</div>
+<div class="text-right">
+<div class="flex flex-col items-end">
+<p class="text-3xl font-bold font-mono text-primary">45<span class="text-slate-600 dark:text-slate-500 text-lg">/100</span></p>
+<p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-medium">処理済みページ</p>
+</div>
+</div>
+</div>
+<div class="relative h-6 bg-slate-200 dark:bg-slate-700/50 rounded-full overflow-hidden shadow-inner ring-1 ring-white/5">
+<div class="absolute top-0 left-0 h-full bg-gradient-to-r from-blue-600 to-primary w-[45%] rounded-full shadow-lg shadow-primary/25 relative overflow-hidden flex items-center justify-end px-3">
+<span class="text-[10px] font-bold text-white drop-shadow-md">45%</span>
+<div class="absolute inset-0 bg-white/20 skew-x-12 -translate-x-full animate-[shimmer_2s_infinite]"></div>
+</div>
+</div>
+<div class="flex justify-between mt-3 text-xs font-medium text-slate-500 dark:text-slate-400 bg-white/5 rounded-lg p-2 px-4 border border-white/5">
+<div class="flex gap-6">
+<span>開始時刻: 10:42 AM</span>
+<span>経過時間: 00:34:12</span>
+</div>
+<div class="flex gap-2 items-center">
+<span class="material-symbols-outlined text-[14px] text-primary">timer</span>
+<span class="text-primary animate-pulse">推定残り時間: 約12分</span>
+</div>
+</div>
+</div>
+<div class="px-8 py-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="bg-white dark:bg-surface-dark border border-gray-200 dark:border-border-dark rounded-xl p-5 shadow-sm flex flex-col gap-3 group hover:border-primary/50 transition-colors">
+<div class="flex items-center gap-2 text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-[20px]">bookmark</span>
+<span class="text-xs font-semibold uppercase tracking-wider">現在の章</span>
+</div>
+<div class="flex-1">
+<p class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">3.2 インストール</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-1">セクション: 環境構築</p>
+</div>
+</div>
+<div class="bg-white dark:bg-surface-dark border border-gray-200 dark:border-border-dark rounded-xl p-5 shadow-sm flex flex-col gap-3 group hover:border-primary/50 transition-colors">
+<div class="flex items-center gap-2 text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-[20px]">grid_view</span>
+<span class="text-xs font-semibold uppercase tracking-wider">ウィンドウサイズ</span>
+</div>
+<div class="flex-1">
+<p class="text-xl font-bold font-mono text-slate-900 dark:text-white">10 ページ</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">スライディング重複: 2 ページ</p>
+</div>
+</div>
+<div class="bg-white dark:bg-surface-dark border border-gray-200 dark:border-border-dark rounded-xl p-5 shadow-sm flex flex-col gap-3 group hover:border-primary/50 transition-colors">
+<div class="flex items-center gap-2 text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-[20px]">text_fields</span>
+<span class="text-xs font-semibold uppercase tracking-wider">前回の末尾テキスト</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-mono text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 p-2 rounded border border-emerald-100 dark:border-emerald-500/20 truncate">...config set to true</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">信頼度スコア: 98.5%</p>
+</div>
+</div>
+</div>
+<div class="flex-1 px-8 pb-32 min-h-[300px] flex flex-col">
+<div class="flex items-center justify-between mb-3">
+<h3 class="text-sm font-bold text-slate-700 dark:text-slate-200 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+                        リアルタイム実行ログ
+                    </h3>
+<div class="flex gap-2">
+<span class="px-2 py-0.5 rounded text-[10px] bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-400 font-mono">フィルタ: 全て</span>
+<span class="px-2 py-0.5 rounded text-[10px] bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-400 font-mono">自動スクロール: オン</span>
+</div>
+</div>
+<div class="flex-1 bg-surface-darker rounded-xl border border-border-dark p-4 overflow-y-auto custom-scrollbar font-mono text-xs leading-relaxed shadow-inner">
+<div class="flex flex-col gap-1 text-slate-300">
+<div class="opacity-50"><span class="text-slate-500">[10:42:01]</span> <span class="text-blue-400">INFO</span> Gemini 1.5 Pro API接続を初期化中...</div>
+<div class="opacity-60"><span class="text-slate-500">[10:42:05]</span> <span class="text-green-400">SUCCESS</span> 接続確立。トークン制限: 1M。</div>
+<div class="opacity-70"><span class="text-slate-500">[10:42:06]</span> <span class="text-blue-400">INFO</span> ジョブ読込完了: manual_v2.pdf (100 ページ)。</div>
+<div class="opacity-80"><span class="text-slate-500">[10:42:10]</span> <span class="text-purple-400">DEBUG</span> バッチ処理開始 P01-10。ウィンドウコンテキスト: なし。</div>
+<div><span class="text-slate-500">[10:45:22]</span> <span class="text-blue-400">INFO</span> バッチ処理中 P11-20。前回の末尾テキストを検出。</div>
+<div><span class="text-slate-500">[10:48:45]</span> <span class="text-yellow-400">WARN</span> p.14 の表構造に対する信頼度が低いです。再評価中...</div>
+<div><span class="text-slate-500">[10:49:01]</span> <span class="text-green-400">SUCCESS</span> 表構造の修正完了。</div>
+<div class="bg-white/5 -mx-4 px-4 py-1 border-l-2 border-primary"><span class="text-slate-500">[10:51:12]</span> <span class="text-blue-400">INFO</span> バッチ処理中 P31-40。 <span class="text-white font-bold">現在の末尾: "...config set to true"</span></div>
+<div class="blinking-cursor text-primary mt-1">&gt; バッチ完了を待機中...</div>
+</div>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 bg-white/90 dark:bg-surface-dark/95 backdrop-blur-md border-t border-gray-200 dark:border-border-dark p-4 px-8 flex items-center justify-between z-10 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
+<div class="flex items-center gap-8 w-full">
+<div class="flex flex-col">
+<button class="flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover text-white px-8 py-3 rounded-lg font-bold text-sm shadow-lg shadow-primary/20 transition-all active:scale-95 w-48">
+<span class="material-symbols-outlined text-[20px]">pause</span>
+                        OCR一時停止
+                    </button>
+<span class="text-[10px] text-slate-500 mt-1.5 text-center">※進捗は保存され、いつでも再開できます</span>
+</div>
+<div class="flex-1"></div>
+<div class="flex items-center gap-4">
+<div class="text-right hidden sm:block mr-4 border-r border-gray-600 pr-6">
+<p class="text-xs font-semibold text-slate-900 dark:text-white">出力ファイル</p>
+<p class="text-[10px] text-slate-500 font-mono">./output/manual_v2_ocr.md</p>
+</div>
+<button class="flex items-center justify-center gap-2 bg-slate-900 dark:bg-slate-700 hover:bg-slate-800 dark:hover:bg-slate-600 text-white px-5 py-2.5 rounded-lg font-medium text-sm transition-all shadow-md">
+<span class="material-symbols-outlined text-[20px]">description</span>
+                        output.md を開く
+                    </button>
+<div class="h-8 w-px bg-gray-300 dark:bg-slate-700 mx-2"></div>
+<button class="group flex items-center justify-center gap-2 bg-white dark:bg-transparent border border-error/30 hover:border-error hover:bg-error/10 text-error hover:text-error-hover px-5 py-2.5 rounded-lg font-medium text-sm transition-all active:scale-95" title="現在のプロセスを完全に終了します">
+<span class="material-symbols-outlined text-[20px] group-hover:animate-bounce">warning</span>
+                        処理を完全に停止
+                    </button>
+</div>
+</div>
+</div>
+</main>
+</div>
+<style>
+        @keyframes shimmer {
+            100% {
+                transform: translateX(100%);
+            }
+        }
+    </style>
+
+</body></html>

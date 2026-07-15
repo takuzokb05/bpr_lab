@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html class="light" lang="ja"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>横浜市 資産データ照合ダッシュボード</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#167b9c",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111d21",
+                        "audit-red": "#CC2F2F",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Sans JP", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #d1e1e6;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #167b9c;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#0e171b] dark:text-[#f8fbfb] min-h-screen flex flex-col">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#e8f0f3] dark:border-white/10 px-6 py-3 bg-white dark:bg-background-dark sticky top-0 z-30">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-primary">
+<div class="size-8 bg-primary/10 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined">account_balance</span>
+</div>
+<div class="flex flex-col">
+<h2 class="text-[#0e171b] dark:text-white text-lg font-bold leading-tight tracking-tight">横浜市役所 資産管理ツール</h2>
+<span class="text-[10px] font-normal opacity-50">資産データ照合システム v2.4.1</span>
+</div>
+</div>
+</div>
+<div class="flex flex-1 justify-end gap-4">
+<div class="flex items-center gap-6 mr-6 border-r border-[#e8f0f3] dark:border-white/10 pr-6">
+<a class="text-[#0e171b] dark:text-white/80 text-sm font-medium hover:text-primary transition-colors" href="#">ダッシュボード</a>
+<a class="text-[#0e171b] dark:text-white/80 text-sm font-medium hover:text-primary transition-colors" href="#">照合履歴</a>
+<a class="text-[#0e171b] dark:text-white/80 text-sm font-medium hover:text-primary transition-colors" href="#">設定</a>
+</div>
+<div class="flex gap-2">
+<button class="flex min-w-[120px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal">
+<span class="truncate text-xs">レポート出力</span>
+</button>
+<button class="flex min-w-[140px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-[#e8f0f3] dark:bg-white/5 text-[#0e171b] dark:text-white text-sm font-bold leading-normal">
+<span class="truncate text-xs">新規CSVインポート</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/20" data-alt="User profile avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAYAp02eF0utyplht3dBORtB3QykAlhyHdB0GQ_Ujqy3yph43NkpCMNyBNk2vKFKOkPMxrMQN3UbKcTW_WlXT-ejVmV0aRwds859aQLs9wsP8Y4DZWDmgVXEa_N-FzLjIIscpOoae2vtT2bSVKVQXwL2gxEFiWfcsUO_z-W4AGOEU6LXBvaXF_vNBbGxMYJH7JABIsoZIqKlKuhhrp-g1uBuVgYR6iVKu7kSgLOumW68DVCSzOA8q0lBZt3SxFWpXC2yAHy38jM0zMB");'></div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<aside class="w-64 border-r border-[#e8f0f3] dark:border-white/10 bg-white dark:bg-background-dark flex flex-col p-4">
+<div class="flex flex-col gap-6">
+<div class="flex flex-col gap-1">
+<p class="text-[10px] font-bold uppercase tracking-wider text-[#508495] dark:text-white/40 mb-2">ワークスペース</p>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary border border-primary/20">
+<span class="material-symbols-outlined text-[20px]">history</span>
+<p class="text-sm font-semibold">最近の照合</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-[#508495] dark:text-white/60 hover:bg-background-light dark:hover:bg-white/5 rounded-lg transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary">flag</span>
+<p class="text-sm font-medium group-hover:text-[#0e171b] dark:group-hover:text-white">要確認フラグ</p>
+<span class="ml-auto text-xs bg-audit-red text-white px-1.5 rounded-full">12</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-[#508495] dark:text-white/60 hover:bg-background-light dark:hover:bg-white/5 rounded-lg transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary">archive</span>
+<p class="text-sm font-medium group-hover:text-[#0e171b] dark:group-hover:text-white">アーカイブ</p>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<p class="text-[10px] font-bold uppercase tracking-wider text-[#508495] dark:text-white/40 mb-2">対象プロジェクト</p>
+<div class="flex items-center gap-3 px-3 py-2 text-[#508495] dark:text-white/60 hover:bg-background-light dark:hover:bg-white/5 rounded-lg cursor-pointer">
+<div class="size-2 rounded-full bg-green-500"></div>
+<p class="text-sm font-medium">令和5年度 償却資産</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-[#508495] dark:text-white/60 hover:bg-background-light dark:hover:bg-white/5 rounded-lg cursor-pointer">
+<div class="size-2 rounded-full bg-yellow-500"></div>
+<p class="text-sm font-medium">土地・建物台帳照合</p>
+</div>
+</div>
+</div>
+<div class="mt-auto pt-4 border-t border-[#e8f0f3] dark:border-white/10">
+<div class="bg-primary/5 p-3 rounded-lg border border-primary/10">
+<p class="text-xs font-bold text-primary mb-1">ストレージ使用量</p>
+<div class="w-full bg-[#d1e1e6] dark:bg-white/10 h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full" style="width: 45%;"></div>
+</div>
+<p class="text-[10px] text-[#508495] mt-2">10 GB 中 4.5 GB 使用済み</p>
+</div>
+</div>
+</aside>
+<main class="flex-1 flex flex-col overflow-hidden bg-background-light dark:bg-background-dark">
+<div class="p-6 flex flex-col gap-6">
+<div class="flex items-end justify-between">
+<div>
+<h1 class="text-2xl font-bold text-[#0e171b] dark:text-white">CSV差分確認: バッチ v2.4.1</h1>
+<p class="text-sm text-[#508495] dark:text-white/60">比較元: <span class="font-bold">更新前_Master</span> ｜ 比較先: <span class="font-bold">更新後_Review</span></p>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-xs font-medium text-[#508495] bg-[#e8f0f3] dark:bg-white/5 px-2 py-1 rounded">最終スキャン: 2分前</span>
+</div>
+</div>
+<div class="flex flex-wrap gap-4">
+<div class="flex min-w-[240px] flex-1 flex-col gap-3 rounded-xl p-6 border border-[#d1e1e6] dark:border-white/10 bg-white dark:bg-background-dark shadow-sm">
+<div class="flex justify-between items-start">
+<p class="text-[#508495] dark:text-white/60 text-sm font-medium">確認進捗</p>
+<span class="material-symbols-outlined text-primary">task_alt</span>
+</div>
+<div class="flex items-end gap-2">
+<p class="text-[#0e171b] dark:text-white tracking-tight text-3xl font-bold leading-tight">85%</p>
+<p class="text-green-600 text-sm font-bold mb-1">前回比 +5%</p>
+</div>
+<div class="w-full bg-[#d1e1e6] dark:bg-white/10 h-2 rounded-full">
+<div class="bg-primary h-full rounded-full" style="width: 85%;"></div>
+</div>
+</div>
+<div class="flex min-w-[240px] flex-1 flex-col gap-3 rounded-xl p-6 border border-[#d1e1e6] dark:border-white/10 bg-white dark:bg-background-dark shadow-sm border-l-4 border-l-audit-red">
+<div class="flex justify-between items-start">
+<p class="text-[#508495] dark:text-white/60 text-sm font-medium">検出された差分</p>
+<span class="material-symbols-outlined text-audit-red">emergency_home</span>
+</div>
+<div class="flex items-end gap-2">
+<p class="text-[#0e171b] dark:text-white tracking-tight text-3xl font-bold leading-tight">12 件</p>
+<p class="text-audit-red text-sm font-bold mb-1">重点確認が必要です</p>
+</div>
+<p class="text-xs text-[#508495] dark:text-white/40 italic">主要6項目を重点的に抽出</p>
+</div>
+<div class="flex min-w-[240px] flex-1 flex-col gap-3 rounded-xl p-6 border border-[#d1e1e6] dark:border-white/10 bg-white dark:bg-background-dark shadow-sm">
+<div class="flex justify-between items-start">
+<p class="text-[#508495] dark:text-white/60 text-sm font-medium">解析済み資産数</p>
+<span class="material-symbols-outlined text-primary">inventory_2</span>
+</div>
+<div class="flex items-end gap-2">
+<p class="text-[#0e171b] dark:text-white tracking-tight text-3xl font-bold leading-tight">1,248</p>
+<p class="text-[#508495] dark:text-white/60 text-sm mb-1">レコード読み込み完了</p>
+</div>
+<div class="flex -space-x-2">
+<div class="size-6 rounded-full border-2 border-white dark:border-background-dark bg-slate-200" data-alt="Reviewer avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAAofI9oqAGtY1qKpUYbQOYhHNrvLLnjzvcuz07RCeYWBJx5AFu2EFTAfcJf9YmPsmVKE_4JluhWYOZZfPMoHsSN-ERgSa_HZStxuKPTj1Kt8dZTl6fFHqS_YYPbv5CNFltXUg9aBcD0JOdPWVEx4eagMT9e-_OE8LXjzjEcVSis6Vu1oHjHmQX8nyETu6U4M2HMH3raTpxQKZFIQki5OlSRZuPsbCY32eu5pTJGY_7wNUObUmMvWoks_ipOeqwcPbdP5A49H3bSfNL')"></div>
+<div class="size-6 rounded-full border-2 border-white dark:border-background-dark bg-slate-200" data-alt="Reviewer avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD0BRXo7ZTJAjIiT77Shty4URx3M-Gxkrxx5M4V3B68HeSF5Z1Bwha6YbdWoAaUpx7OD9dWegrw3onjUjsqE8XDU7CicHEcdFjgLRF2ClkOOy7TVkgKsxPknBtzcQ1wfA4w-B5W-XCbVQPpBXCbl4YCG2rpkcyrhSbe7auj_KbFknPyioiOpnELJ5_y9DZCZKRwB4Wu__lVf5pJ0Gp632aasxbGUV2WaRac9ERuS14Cua9Hlux-QBqDG_9WYGtngf9hkOow8yGnDCdC')"></div>
+<div class="size-6 rounded-full border-2 border-white dark:border-background-dark flex items-center justify-center bg-primary text-[10px] text-white">+2</div>
+</div>
+</div>
+</div>
+</div>
+<div class="px-6 pb-6 flex-1 flex flex-col overflow-hidden">
+<div class="bg-white dark:bg-background-dark rounded-xl border border-[#d1e1e6] dark:border-white/10 shadow-sm flex flex-col overflow-hidden flex-1">
+<div class="p-4 border-b border-[#e8f0f3] dark:border-white/10 flex items-center justify-between gap-4">
+<div class="flex-1 max-w-md">
+<label class="flex flex-col">
+<div class="flex w-full items-stretch rounded-lg h-10 border border-[#d1e1e6] dark:border-white/10 overflow-hidden">
+<div class="text-[#508495] flex bg-background-light dark:bg-white/5 items-center justify-center pl-3">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="form-input flex w-full border-none bg-background-light dark:bg-white/5 text-[#0e171b] dark:text-white focus:ring-0 text-sm placeholder:text-[#508495]" placeholder="義務者宛名番号、資産の名称で検索..."/>
+</div>
+</label>
+</div>
+<div class="flex items-center gap-2">
+<button class="h-10 px-4 flex items-center gap-2 text-xs font-semibold border border-[#d1e1e6] dark:border-white/10 rounded-lg hover:bg-background-light dark:hover:bg-white/5">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+<span>差分のみ表示</span>
+</button>
+<button class="h-10 px-4 flex items-center gap-2 text-xs font-semibold border border-[#d1e1e6] dark:border-white/10 rounded-lg hover:bg-background-light dark:hover:bg-white/5">
+<span class="material-symbols-outlined text-[18px]">view_column</span>
+<span>表示項目の設定</span>
+</button>
+</div>
+</div>
+<div class="flex-1 overflow-auto custom-scrollbar">
+<table class="w-full text-left border-collapse min-w-[1400px]">
+<thead class="sticky top-0 bg-background-light dark:bg-[#1a2c33] z-10">
+<tr>
+<th class="px-3 py-3 text-[11px] font-bold uppercase tracking-wider text-[#508495] border-b border-[#e8f0f3] dark:border-white/10 w-16 text-center">判定</th>
+<th class="px-3 py-3 text-[11px] font-bold uppercase tracking-wider text-[#508495] border-b border-[#e8f0f3] dark:border-white/10">義務者宛名番号</th>
+<th class="px-3 py-3 text-[11px] font-bold uppercase tracking-wider text-[#508495] border-b border-[#e8f0f3] dark:border-white/10">償却種類CD</th>
+<th class="px-3 py-3 text-[11px] font-bold uppercase tracking-wider text-[#508495] border-b border-[#e8f0f3] dark:border-white/10">資産の名称</th>
+<th class="px-3 py-3 text-[11px] font-bold uppercase tracking-wider text-[#508495] border-b border-[#e8f0f3] dark:border-white/10">取得年月</th>
+<th class="px-3 py-3 text-[11px] font-bold uppercase tracking-wider text-[#508495] border-b border-[#e8f0f3] dark:border-white/10">取得価額</th>
+<th class="px-3 py-3 text-[11px] font-bold uppercase tracking-wider text-[#508495] border-b border-[#e8f0f3] dark:border-white/10">耐用年数</th>
+<th class="px-3 py-3 text-[11px] font-bold uppercase tracking-wider text-[#508495] border-b border-[#e8f0f3] dark:border-white/10">メモ</th>
+<th class="px-3 py-3 text-[11px] font-bold uppercase tracking-wider text-[#508495] border-b border-[#e8f0f3] dark:border-white/10 text-center">操作</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#e8f0f3] dark:divide-white/5">
+<tr class="hover:bg-primary/5 transition-colors group bg-audit-red/5">
+<td class="px-3 py-4 text-center">
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-audit-red text-white uppercase">要確認</span>
+</td>
+<td class="px-3 py-4 text-sm font-medium">
+<div class="flex items-center gap-2">
+<input class="form-checkbox h-3 w-3 text-primary border-gray-300 rounded focus:ring-0" type="checkbox"/>
+<span>TX-8829-01</span>
+</div>
+</td>
+<td class="px-3 py-4 text-sm">
+<div class="flex items-center gap-2">
+<input class="form-checkbox h-3 w-3 text-primary border-gray-300 rounded focus:ring-0" type="checkbox"/>
+<span>15</span>
+</div>
+</td>
+<td class="px-3 py-4 text-sm">
+<div class="flex items-center gap-2">
+<input class="form-checkbox h-3 w-3 text-primary border-gray-300 rounded focus:ring-0" type="checkbox"/>
+<span>産業用旋盤 G4型</span>
+</div>
+</td>
+<td class="px-3 py-4 text-sm">
+<div class="flex items-center gap-2">
+<input class="form-checkbox h-3 w-3 text-primary border-gray-300 rounded focus:ring-0" type="checkbox"/>
+<span>2023/11</span>
+</div>
+</td>
+<td class="px-3 py-4 text-sm font-bold text-audit-red">
+<div class="flex items-center gap-2">
+<input class="form-checkbox h-3 w-3 text-audit-red border-audit-red rounded focus:ring-0" type="checkbox"/>
+<div class="flex items-center gap-1">
+                                            ¥6,500,000 <span class="material-symbols-outlined text-[14px]">south</span>
+</div>
+</div>
+</td>
+<td class="px-3 py-4 text-sm">
+<div class="flex items-center gap-2">
+<input class="form-checkbox h-3 w-3 text-primary border-gray-300 rounded focus:ring-0" type="checkbox"/>
+<span>15</span>
+</div>
+</td>
+<td class="px-3 py-4">
+<input class="w-full text-[11px] border-none bg-transparent focus:ring-1 focus:ring-primary/20 rounded h-7 p-1 placeholder:text-gray-400" placeholder="備考入力..." type="text"/>
+</td>
+<td class="px-3 py-4 text-center">
+<button class="text-primary hover:underline text-xs font-bold">詳細確認</button>
+</td>
+</tr>
+<tr class="hover:bg-primary/5 transition-colors">
+<td class="px-3 py-4 text-center">
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-green-500 text-white uppercase">一致</span>
+</td>
+<td class="px-3 py-4 text-sm font-medium">
+<div class="flex items-center gap-2">
+<input class="form-checkbox h-3 w-3 text-primary border-gray-300 rounded focus:ring-0" type="checkbox"/>
+<span>TX-7741-92</span>
+</div>
+</td>
+<td class="px-3 py-4 text-sm">
+<div class="flex items-center gap-2">
+<input class="form-checkbox h-3 w-3 text-primary border-gray-300 rounded focus:ring-0" type="checkbox"/>
+<span>39</span>
+</div>
+</td>
+<td class="px-3 py-4 text-sm">
+<div class="flex items-center gap-2">
+<input class="form-checkbox h-3 w-3 text-primary border-gray-300 rounded focus:ring-0" type="checkbox"/>
+<span>中央空調システム</span>
+</div>
+</td>
+<td class="px-3 py-4 text-sm">
+<div class="flex items-center gap-2">
+<input class="form-checkbox h-3 w-3 text-primary border-gray-300 rounded focus:ring-0" type="checkbox"/>
+<span>2022/05</span>
+</div>
+</td>
+<td class="px-3 py-4 text-sm">
+<div class="flex items-center gap-2">
+<input class="form-checkbox h-3 w-3 text-primary border-gray-300 rounded focus:ring-0" type="checkbox"/>
+<span>¥12,000,000</span>
+</div>
+</td>
+<td class="px-3 py-4 text-sm">
+<div class="flex items-center gap-2">
+<input class="form-checkbox h-3 w-3 text-primary border-gray-300 rounded focus:ring-0" type="checkbox"/>
+<span>39</span>
+</div>
+</td>
+<td class="px-3 py-4 text-sm text-[#508495]">
+<input class="w-full text-[11px] border-none bg-transparent focus:ring-1 focus:ring-primary/20 rounded h-7 p-1" placeholder="-" type="text"/>
+</td>
+<td class="px-3 py-4 text-center">
+<button class="text-[#508495] hover:underline text-xs">詳細</button>
+</td>
+</tr>
+<tr class="hover:bg-primary/5 transition-colors">
+<td class="px-3 py-4 text-center">
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-audit-red text-white uppercase">要確認</span>
+</td>
+<td class="px-3 py-4 text-sm font-medium">
+<div class="flex items-center gap-2">
+<input class="form-checkbox h-3 w-3 text-primary border-gray-300 rounded focus:ring-0" type="checkbox"/>
+<span>TX-1029-45</span>
+</div>
+</td>
+<td class="px-3 py-4 text-sm">
+<div class="flex items-center gap-2">
+<input class="form-checkbox h-3 w-3 text-primary border-gray-300 rounded focus:ring-0" type="checkbox"/>
+<span>05</span>
+</div>
+</td>
+<td class="px-3 py-4 text-sm font-bold text-audit-red">
+<div class="flex items-center gap-2">
+<input class="form-checkbox h-3 w-3 text-audit-red border-audit-red rounded focus:ring-0" type="checkbox"/>
+<span>車両 #402 (名称変更)</span>
+</div>
+</td>
+<td class="px-3 py-4 text-sm">
+<div class="flex items-center gap-2">
+<input class="form-checkbox h-3 w-3 text-primary border-gray-300 rounded focus:ring-0" type="checkbox"/>
+<span>2024/01</span>
+</div>
+</td>
+<td class="px-3 py-4 text-sm text-right">
+<div class="flex items-center gap-2">
+<input class="form-checkbox h-3 w-3 text-primary border-gray-300 rounded focus:ring-0" type="checkbox"/>
+<span>¥3,250,000</span>
+</div>
+</td>
+<td class="px-3 py-4 text-sm">
+<div class="flex items-center gap-2">
+<input class="form-checkbox h-3 w-3 text-primary border-gray-300 rounded focus:ring-0" type="checkbox"/>
+<span>5</span>
+</div>
+</td>
+<td class="px-3 py-4">
+<input class="w-full text-[11px] border-none bg-transparent focus:ring-1 focus:ring-primary/20 rounded h-7 p-1" placeholder="名称の微修正を確認" type="text"/>
+</td>
+<td class="px-3 py-4 text-center">
+<button class="text-primary hover:underline text-xs font-bold">詳細確認</button>
+</td>
+</tr>
+<tr class="hover:bg-primary/5 transition-colors">
+<td class="px-3 py-4 text-center">
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-audit-red text-white uppercase">注意</span>
+</td>
+<td class="px-3 py-4 text-sm font-medium">
+<div class="flex items-center gap-2">
+<input class="form-checkbox h-3 w-3 text-primary border-gray-300 rounded focus:ring-0" type="checkbox"/>
+<span>TX-4491-09</span>
+</div>
+</td>
+<td class="px-3 py-4 text-sm">
+<div class="flex items-center gap-2">
+<input class="form-checkbox h-3 w-3 text-primary border-gray-300 rounded focus:ring-0" type="checkbox"/>
+<span>05</span>
+</div>
+</td>
+<td class="px-3 py-4 text-sm">
+<div class="flex items-center gap-2">
+<input class="form-checkbox h-3 w-3 text-primary border-gray-300 rounded focus:ring-0" type="checkbox"/>
+<span>サーバクラスタ X9</span>
+</div>
+</td>
+<td class="px-3 py-4 text-sm">
+<div class="flex items-center gap-2">
+<input class="form-checkbox h-3 w-3 text-primary border-gray-300 rounded focus:ring-0" type="checkbox"/>
+<span>2023/08</span>
+</div>
+</td>
+<td class="px-3 py-4 text-sm">
+<div class="flex items-center gap-2">
+<input class="form-checkbox h-3 w-3 text-primary border-gray-300 rounded focus:ring-0" type="checkbox"/>
+<span>¥8,840,000</span>
+</div>
+</td>
+<td class="px-3 py-4 text-sm font-bold text-audit-red">
+<div class="flex items-center gap-2">
+<input class="form-checkbox h-3 w-3 text-audit-red border-audit-red rounded focus:ring-0" type="checkbox"/>
+<div class="flex items-center gap-1">
+                                            3 <span class="material-symbols-outlined text-[14px]">north</span>
+</div>
+</div>
+</td>
+<td class="px-3 py-4">
+<input class="w-full text-[11px] border-none bg-transparent focus:ring-1 focus:ring-primary/20 rounded h-7 p-1" placeholder="税制改正による変更か" type="text"/>
+</td>
+<td class="px-3 py-4 text-center">
+<button class="text-primary hover:underline text-xs font-bold">詳細確認</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 border-t border-[#e8f0f3] dark:border-white/10 flex items-center justify-between text-sm">
+<div class="text-[#508495] dark:text-white/60">
+                        1,248 資産中 <span class="font-bold text-[#0e171b] dark:text-white">1 - 50</span> 件を表示
+                    </div>
+<div class="flex gap-2">
+<button class="p-2 border border-[#d1e1e6] dark:border-white/10 rounded-lg disabled:opacity-30">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="px-4 py-1.5 bg-primary text-white rounded-lg font-bold">1</button>
+<button class="px-4 py-1.5 border border-[#d1e1e6] dark:border-white/10 rounded-lg hover:bg-background-light dark:hover:bg-white/5 transition-colors">2</button>
+<button class="px-4 py-1.5 border border-[#d1e1e6] dark:border-white/10 rounded-lg hover:bg-background-light dark:hover:bg-white/5 transition-colors">3</button>
+<button class="p-2 border border-[#d1e1e6] dark:border-white/10 rounded-lg">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

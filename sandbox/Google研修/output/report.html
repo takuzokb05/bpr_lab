@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google研修で考えたこと — 20%ルールの真実と、100人で試す越境DX支援</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ========== Design Tokens ========== */
+:root {
+  /* Surface — warm off-white editorial palette */
+  --surface-0: hsl(38, 25%, 96%);
+  --surface-1: hsl(38, 20%, 92%);
+  --surface-2: hsl(38, 15%, 87%);
+  --surface-3: hsl(38, 12%, 82%);
+
+  /* Text */
+  --text-0: hsl(220, 25%, 14%);
+  --text-1: hsl(220, 12%, 35%);
+  --text-2: hsl(220, 8%, 52%);
+
+  /* Accent — deep terracotta (warm, authoritative, not corporate blue) */
+  --accent: hsl(12, 68%, 45%);
+  --accent-hover: hsl(12, 68%, 38%);
+  --accent-subtle: hsl(12, 68%, 45%, 0.08);
+  --accent-light: hsl(12, 68%, 45%, 0.15);
+
+  /* Secondary accent — muted teal for contrast */
+  --secondary: hsl(175, 35%, 38%);
+  --secondary-subtle: hsl(175, 35%, 38%, 0.08);
+
+  /* Borders */
+  --border-default: hsl(0, 0%, 0%, 0.06);
+  --border-strong: hsl(0, 0%, 0%, 0.12);
+
+  /* Spacing scale (8px base) */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-6: 1.5rem;
+  --sp-8: 2rem;
+  --sp-12: 3rem;
+  --sp-16: 4rem;
+  --sp-24: 6rem;
+  --sp-32: 8rem;
+
+  /* Typography */
+  --font-display: 'DM Serif Display', 'Noto Serif JP', serif;
+  --font-body: 'DM Sans', 'Noto Sans JP', sans-serif;
+  --font-size-base: 1.05rem;
+  --line-height-body: 1.85;
+  --line-height-heading: 1.05;
+  --letter-spacing-heading: -0.02em;
+
+  /* Layout */
+  --content-width: 42rem;
+  --wide-width: 56rem;
+}
+
+/* ========== Reset & Base ========== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  font-weight: 400;
+  line-height: var(--line-height-body);
+  color: var(--text-0);
+  background: var(--surface-0);
+  /* Subtle film grain texture */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+}
+
+/* ========== Typography ========== */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  line-height: var(--line-height-heading);
+  letter-spacing: var(--letter-spacing-heading);
+  color: var(--text-0);
+}
+
+h1 {
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  font-weight: 400;
+  margin-bottom: var(--sp-6);
+}
+
+h2 {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 400;
+  margin-top: var(--sp-24);
+  margin-bottom: var(--sp-8);
+  padding-bottom: var(--sp-3);
+  border-bottom: 1px solid var(--border-strong);
+}
+
+h3 {
+  font-size: 1.25rem;
+  font-weight: 400;
+  margin-top: var(--sp-12);
+  margin-bottom: var(--sp-4);
+  color: var(--accent);
+}
+
+p {
+  margin-bottom: var(--sp-6);
+}
+
+strong {
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+/* ========== Layout ========== */
+.container {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: var(--sp-8) var(--sp-6);
+}
+
+.wide {
+  max-width: var(--wide-width);
+}
+
+/* ========== Hero ========== */
+.hero {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--sp-24) var(--sp-6) var(--sp-16);
+  max-width: var(--content-width);
+  margin: 0 auto;
+  position: relative;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -20%;
+  right: -20%;
+  bottom: 0;
+  background:
+    radial-gradient(ellipse at 15% 30%, hsl(12, 68%, 45%, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 70%, hsl(175, 35%, 38%, 0.04) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.hero-meta {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--sp-4);
+}
+
+.hero h1 {
+  max-width: 20ch;
+}
+
+.hero-subtitle {
+  font-size: 1.15rem;
+  font-weight: 300;
+  color: var(--text-1);
+  max-width: 36ch;
+  line-height: 1.6;
+  margin-top: var(--sp-4);
+}
+
+.hero-author {
+  margin-top: var(--sp-8);
+  font-size: 0.85rem;
+  color: var(--text-2);
+}
+
+/* ========== Section Numbers ========== */
+.section-num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 4rem;
+  line-height: 1;
+  color: var(--accent-light);
+  margin-bottom: var(--sp-2);
+  letter-spacing: -0.04em;
+}
+
+/* ========== Blockquote ========== */
+blockquote {
+  border-left: 3px solid var(--accent);
+  padding: var(--sp-4) var(--sp-6);
+  margin: var(--sp-8) 0;
+  background: var(--accent-subtle);
+  border-radius: 0 6px 6px 0;
+  font-style: italic;
+  color: var(--text-1);
+}
+
+blockquote strong {
+  font-style: normal;
+  color: var(--text-0);
+}
+
+blockquote cite {
+  display: block;
+  margin-top: var(--sp-3);
+  font-size: 0.85rem;
+  font-style: normal;
+  color: var(--text-2);
+}
+
+/* ========== Key Insight Box ========== */
+.insight {
+  background: var(--surface-1);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  padding: var(--sp-6) var(--sp-8);
+  margin: var(--sp-8) 0;
+  position: relative;
+}
+
+.insight::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--accent);
+  border-radius: 8px 0 0 8px;
+}
+
+.insight-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--sp-3);
+}
+
+/* ========== Data Comparison Table ========== */
+.comparison {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: var(--sp-8) 0;
+  font-size: 0.92rem;
+}
+
+.comparison th {
+  text-align: left;
+  font-weight: 500;
+  color: var(--text-2);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: var(--sp-3) var(--sp-4);
+  border-bottom: 2px solid var(--border-strong);
+}
+
+.comparison td {
+  padding: var(--sp-3) var(--sp-4);
+  border-bottom: 1px solid var(--border-default);
+  vertical-align: top;
+}
+
+.comparison tr:last-child td {
+  border-bottom: none;
+}
+
+.comparison .highlight-cell {
+  background: var(--accent-subtle);
+  font-weight: 500;
+}
+
+/* ========== Timeline ========== */
+.timeline {
+  position: relative;
+  padding-left: var(--sp-8);
+  margin: var(--sp-8) 0;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border-strong);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: var(--sp-8);
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: calc(-1 * var(--sp-8) - 4px);
+  top: 0.5em;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.timeline-item.dead::before {
+  background: var(--text-2);
+}
+
+.timeline-year {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--accent);
+  display: block;
+  margin-bottom: var(--sp-1);
+}
+
+.timeline-item.dead .timeline-year {
+  color: var(--text-2);
+}
+
+/* ========== Phase Cards ========== */
+.phase-card {
+  background: var(--surface-1);
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  padding: var(--sp-6) var(--sp-8);
+  margin: var(--sp-6) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.phase-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40%;
+  height: 100%;
+  background: radial-gradient(ellipse at 100% 50%, var(--accent-subtle) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.phase-num {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  color: var(--accent-light);
+  line-height: 1;
+  margin-bottom: var(--sp-2);
+}
+
+.phase-title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  margin-bottom: var(--sp-4);
+}
+
+/* ========== Pair Diagram ========== */
+.pair-diagram {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: var(--sp-4);
+  align-items: center;
+  margin: var(--sp-8) 0;
+  padding: var(--sp-6);
+  background: var(--surface-1);
+  border-radius: 8px;
+}
+
+.pair-side {
+  padding: var(--sp-4);
+  border-radius: 6px;
+  text-align: center;
+}
+
+.pair-side.home {
+  background: var(--accent-subtle);
+  border: 1px solid var(--accent-light);
+}
+
+.pair-side.away {
+  background: var(--secondary-subtle);
+  border: 1px solid hsl(175, 35%, 38%, 0.15);
+}
+
+.pair-connector {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--text-2);
+}
+
+.pair-label {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  margin-bottom: var(--sp-2);
+}
+
+.pair-name {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  margin-bottom: var(--sp-2);
+}
+
+.pair-desc {
+  font-size: 0.85rem;
+  color: var(--text-1);
+}
+
+/* ========== Maintenance Kit ========== */
+.kit-items {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-4);
+  margin: var(--sp-8) 0;
+}
+
+.kit-item {
+  background: var(--surface-1);
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  padding: var(--sp-6);
+  text-align: center;
+}
+
+.kit-icon {
+  font-size: 2rem;
+  margin-bottom: var(--sp-3);
+}
+
+.kit-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  margin-bottom: var(--sp-2);
+}
+
+.kit-desc {
+  font-size: 0.82rem;
+  color: var(--text-1);
+}
+
+/* ========== CTA / Closing ========== */
+.closing {
+  margin-top: var(--sp-32);
+  padding: var(--sp-16) var(--sp-8);
+  text-align: center;
+  background: var(--surface-1);
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.closing::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 50%, hsl(12, 68%, 45%, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 50%, hsl(175, 35%, 38%, 0.04) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.closing h2 {
+  border: none;
+  margin-top: 0;
+  text-align: center;
+}
+
+.closing p {
+  max-width: 32ch;
+  margin-left: auto;
+  margin-right: auto;
+  color: var(--text-1);
+}
+
+/* ========== Footer ========== */
+.footer {
+  margin-top: var(--sp-16);
+  padding: var(--sp-8) 0;
+  border-top: 1px solid var(--border-default);
+  font-size: 0.82rem;
+  color: var(--text-2);
+  text-align: center;
+}
+
+/* ========== Annotations (source marks) ========== */
+.source {
+  font-size: 0.78rem;
+  color: var(--text-2);
+  display: block;
+  margin-top: var(--sp-1);
+}
+
+/* ========== Big Number ========== */
+.big-number {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-3);
+  margin: var(--sp-6) 0;
+}
+
+.big-number-value {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 5rem);
+  line-height: 1;
+  color: var(--accent);
+  letter-spacing: -0.04em;
+}
+
+.big-number-unit {
+  font-size: 1.1rem;
+  color: var(--text-2);
+  font-weight: 300;
+}
+
+/* ========== Responsive ========== */
+@media (max-width: 640px) {
+  .hero { min-height: 50vh; padding-top: var(--sp-16); }
+  .kit-items { grid-template-columns: 1fr; }
+  .pair-diagram { grid-template-columns: 1fr; text-align: center; }
+  .pair-connector { transform: rotate(90deg); }
+  h2 { margin-top: var(--sp-16); }
+}
+
+/* ========== Print ========== */
+@media print {
+  body { font-size: 10pt; }
+  .hero { min-height: auto; padding: 2em 0; }
+  h2 { break-before: page; }
+}
+
+/* ========== Animation (respects reduced-motion) ========== */
+@media (prefers-reduced-motion: no-preference) {
+  .fade-in {
+    opacity: 0;
+    transform: translateY(16px);
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+  @keyframes fadeIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.3s; }
+}
+</style>
+</head>
+<body>
+
+<!-- ==================== HERO ==================== -->
+<header class="hero">
+  <p class="hero-meta fade-in">Google研修レポート — 2026年3月</p>
+  <h1 class="fade-in delay-1">20%ルールは<br>12年間、何も<br>生んでいない。</h1>
+  <p class="hero-subtitle fade-in delay-2">Google研修で盛り上がった「横浜市版20%ルール」。<br>調べてみたら、全然違う景色が見えてきた。</p>
+  <p class="hero-author fade-in delay-3">財政局償却資産課　久保拓海</p>
+</header>
+
+<!-- ==================== SECTION 1 ==================== -->
+<main class="container">
+
+<section>
+  <span class="section-num">01</span>
+  <h2>Google研修で何が起きたか</h2>
+
+  <p>3月12日、渋谷のGoogleオフィスを訪問した。GWSのハンズオン、Geminiのデモ、オフィスツアー。技術は文句なしにすごかった。触ればわかる。使えばいい。</p>
+
+  <p>午後のワークショップでは、各部署の参加者が課題を共有した。</p>
+
+  <blockquote>
+    「今年から新システムが国の標準化で始まりまして……驚異の昨年比進捗率25%。職員が全然習熟してない」
+    <cite>— 償却資産課（筆者）</cite>
+  </blockquote>
+
+  <blockquote>
+    「担当100世帯以上。訪問端末は2〜3人に1台。電話の数が多くて進まない」
+    <cite>— 生活保護ケースワーカー</cite>
+  </blockquote>
+
+  <blockquote>
+    「救急車の出動が毎年5%ずつ増えている。軽症が4割。1件4万円」
+    <cite>— 消防</cite>
+  </blockquote>
+
+  <p><strong>課題は山ほどある。でも誰も「隣の部署を助けに行こう」とは言わなかった。</strong>みんな自分の部署で精一杯だった。</p>
+
+  <p>帰り道、堀江さんと飲みながら話した。「横浜市版20%ルールをやろう。DXスキルを持つ職員が部署を越えて支援に入る仕組みを作ろう」。盛り上がった。翌日、堀江さんがそのアイデアをDXリーダー全体のチャットに投げかけた。自分も思考を整理するために意見を返した。</p>
+
+  <p>でも、ふと思った。<strong>技術は触ればわかる。でも制度やスキームは、調べないと怖い。</strong>Google渋谷の絶景を見ながら意見を交わすと、何でも取り入れたくなる。GWSが優れているのは疑いない。でも、Googleの仕組みが全部立派かどうかは、調べないとわからない。</p>
+
+  <p>調べてみた。</p>
+
+  <h3>20%ルールの真実</h3>
+
+  <p>Googleの20%ルールは、<strong>制度として存在したことは一度もない。</strong>社員ハンドブックにも人事規程にも記載されていない。2004年のIPO書簡で創業者が「encourage（奨励する）」と書いた文化規範であり、正式なコミットメントではなかった。</p>
+
+  <p>元人事責任者ラズロ・ボックはこう述べている。</p>
+
+  <blockquote>
+    「オリエンテーションで20%タイムのパケットを渡される人はいない。最後に計測したとき、利用率は約10%だった。ある意味、<strong>20%タイムはその実態よりもアイデアとしての方が重要だ</strong>」
+    <cite>— Laszlo Bock, 『Work Rules!』(2015)</cite>
+  </blockquote>
+
+  <p>そして、20%ルールから最後に製品が生まれたのは<strong>2014年</strong>のGoogle Cardboard。それ自体も2021年に販売終了している。</p>
+
+  <div class="big-number">
+    <span class="big-number-value">12年間</span>
+    <span class="big-number-unit">成果物ゼロ</span>
+  </div>
+
+  <p>後継のインキュベーター「Area 120」も2023年に解散。現在のGoogleは750億ドルをAI投資に集中し、ボトムアップの実験は構造的に消滅した。</p>
+
+  <h3>制度にしないと死ぬ。でも制度だけでも死ぬ。</h3>
+
+  <table class="comparison">
+    <thead>
+      <tr>
+        <th>企業</th>
+        <th>仕組み</th>
+        <th>結果</th>
+        <th>なぜ？</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Google</strong></td>
+        <td>20%ルール（文化規範）</td>
+        <td class="highlight-cell">形骸化 → 12年間成果ゼロ</td>
+        <td>制度にしなかった。評価にも予算にも組み込まず放置</td>
+      </tr>
+      <tr>
+        <td><strong>Atlassian</strong></td>
+        <td>20%タイム実験（100万豪ドル）</td>
+        <td class="highlight-cell">利用率1.1%で終了</td>
+        <td>本業の量を減らさず「追加」として設計した</td>
+      </tr>
+      <tr>
+        <td><strong>3M</strong></td>
+        <td>15%ルール（1948年〜）</td>
+        <td>75年以上存続。Post-it Note等</td>
+        <td>「利益の30%は新製品から」ルールで制度的に補強</td>
+      </tr>
+      <tr>
+        <td><strong>KDDI</strong></td>
+        <td>社内副業制度（業務時間20%）</td>
+        <td>419名が参加（2023年度）</td>
+        <td>テレワーク前提・6か月間・正式な業務として位置づけ</td>
+      </tr>
+      <tr>
+        <td><strong>コクヨ</strong></td>
+        <td>20%チャレンジ</td>
+        <td>加点評価で定着</td>
+        <td>「適所適材」＝魅力的な案件を先に用意して人を集める</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="insight">
+    <p class="insight-label">ここまでのポイント</p>
+    <p style="margin-bottom:0"><strong>文化だけでは消える（Google）。追加負荷では使われない（Atlassian）。制度で支えれば続く（3M、KDDI）。</strong>横浜市が参考にすべきは、20%ルールの「精神」ではなく、それを制度として機能させた企業の「設計」だ。</p>
+  </div>
+</section>
+
+<!-- ==================== SECTION 2 ==================== -->
+<section>
+  <span class="section-num">02</span>
+  <h2>100人いるのに、越境が起きない理由</h2>
+
+  <p>横浜市にはDXアセスメントを修了したDXリーダーが約100人いる。研修も受けた。スキルもある程度ある。でも、部署を越えた支援は起きていない。</p>
+
+  <p><strong>それは制度がないからではなく、動く理由がないからかもしれない。</strong></p>
+
+  <p>正直に言えば、大半のDXリーダーは「なんとなくやれている」状態だと思う。Copilotで文書を作る。Formsでアンケートを取る。Teamsをそれなりに使う。自分の部署の仕事はそれで回っている。</p>
+
+  <p>自分の場合はもう少し踏み込んでいて、AIを使って税務データの照合ツールを自作した。課税データは外部サーバーに送れないので、ブラウザ内で完結する設計にした。年度間の差分を自動検出して、特例適用の漏れを見つけてくれる。業務は劇的に変わった。</p>
+
+  <p>でも、これを隣の部署でやれと言われたら、たぶんできない。</p>
+
+  <h3>ホームとアウェイの壁</h3>
+
+  <p>自部署では業務の文脈がわかっている。関係者との信頼関係がある。何をAIに食わせればいいか肌感覚でわかる。<strong>他部署ではこれが全部ゼロから。</strong>スキルは同じでも、文脈が変わると通用するか読めない。</p>
+
+  <p>DXアセスメントの結果を見ても面白いことがわかる。自分のスコアでは「データ・AIの戦略的活用」が低く出ている。でも実際にはAIとDBでツールを自作している。<strong>アセスメントが測っているのは「組織としてのAI戦略立案力」であり、「個人がAIで課題を解く力」とは別物</strong>なのだ。</p>
+
+  <p>つまり、DXスキルには少なくとも2つの軸がある。</p>
+
+  <table class="comparison">
+    <thead>
+      <tr>
+        <th></th>
+        <th>ホーム（自部署）</th>
+        <th>アウェイ（他部署）</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>業務文脈</strong></td>
+        <td>わかっている</td>
+        <td>ゼロから</td>
+      </tr>
+      <tr>
+        <td><strong>関係者</strong></td>
+        <td>信頼関係あり</td>
+        <td>初対面</td>
+      </tr>
+      <tr>
+        <td><strong>AI活用</strong></td>
+        <td>何を食わせるかわかる</td>
+        <td>何が課題かわからない</td>
+      </tr>
+      <tr>
+        <td><strong>失敗のコスト</strong></td>
+        <td>自分でリカバリーできる</td>
+        <td>相手の業務に影響する</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>ほとんどのDXリーダーは<strong>「ホーム実践者」</strong>だ。自部署ではそれなりにDXを回せている。でもアウェイに出たことがない。それは当然のことで、アウェイに出る必要がなかったのだから。</p>
+
+  <p>一方で、すでにアウェイで実践している人もいる。堀江さんは複数の区局から相談を受けて伴走支援の実績がある。でも本人はこう言っている。</p>
+
+  <blockquote>
+    「堀江だからできる、持続可能性がないと思われる」
+  </blockquote>
+
+  <p>堀江さんは制度化を求めている。所属が関与しないと正式に支援に入れない、評価制度が未整備——その課題認識は完全に正しい。でも、属人的な「アウェイ実践者」が1人いるだけでは、制度化の根拠にならない。</p>
+</section>
+
+<!-- ==================== SECTION 3 ==================== -->
+<section>
+  <span class="section-num">03</span>
+  <h2>1人で全部はできない</h2>
+
+  <p>ここで気づいたことがある。堀江さんと話していて、こう言われた。</p>
+
+  <blockquote>
+    「結局は<strong>AIを使いこなして、プロジェクトを前に進める力</strong>に集約される」
+  </blockquote>
+
+  <p>でも自分から見ると、堀江さんが持っている力は「AIを使いこなす力」だけじゃない。<strong>課題を言語化する力、ステークホルダーを調整する力、仮説を立てて検証する力</strong>——つまり「越境スキル」だ。</p>
+
+  <p>逆に、自分は個人のAI実装力はある。でも、それを他部署で使えるかは別問題。組織としてAIを使うことをあまり考えたことがなかった。</p>
+
+  <p><strong>1人で両方できる人はまずいない。</strong></p>
+
+  <div class="pair-diagram">
+    <div class="pair-side home">
+      <p class="pair-label">ホーム実践者</p>
+      <p class="pair-name">AI実装力が高い</p>
+      <p class="pair-desc">自部署ではAIで業務を回せる。<br>でも他部署の文脈がわからない。</p>
+    </div>
+    <div class="pair-connector">×</div>
+    <div class="pair-side away">
+      <p class="pair-label">アウェイ実践者</p>
+      <p class="pair-name">越境スキルが高い</p>
+      <p class="pair-desc">他部署の課題を言語化できる。<br>でも自分では実装しない。</p>
+    </div>
+  </div>
+
+  <p>この2人がペアになると、初めて「越境DX支援」が成立する。「助けてください」ではなく<strong>「一緒にやらない？」</strong>という関係。スキルの上下ではなく、持ち味の補完。</p>
+
+  <p>ワークショップで、こんな声があった。</p>
+
+  <blockquote>
+    「担当100世帯以上。訪問端末は2〜3人に1台。電話の数が多くて進まない」
+  </blockquote>
+
+  <p>課題はこれ以上ないほど具体的だ。でもDXでどう解けるかがわからない。こういう人に「越境しませんか」と言っても響かない。でも<strong>「その電話、AIで一次対応できるかもしれない。一緒に考えてみない？」</strong>なら話が変わる。</p>
+
+  <p><strong>「越境したい」需要はなくても、「知識が欲しい」「具体化したい」需要は確実にある。</strong>ペアモデルは、この需要に応える形で設計できる。</p>
+</section>
+
+<!-- ==================== SECTION 4 ==================== -->
+<section>
+  <span class="section-num">04</span>
+  <h2>段階的ペアモデル</h2>
+
+  <p>とはいえ、いきなり全庁で始めるのは非現実的だ。ここでも「スモールステップだけどクイックスタート」が大事。</p>
+
+  <div class="phase-card">
+    <span class="phase-num">1</span>
+    <p class="phase-title">DXリーダー × DXリーダー</p>
+    <p>まずは、受け入れ側にもDXリーダーがいる部署同士でペアを組む。なぜか。</p>
+    <ul style="margin-top: var(--sp-4); padding-left: var(--sp-6);">
+      <li style="margin-bottom: var(--sp-3)"><strong>文脈の翻訳コストが低い</strong>——相手もDXがわかるから、説明が通じやすい</li>
+      <li style="margin-bottom: var(--sp-3)"><strong>「よそ者拒否」が起きにくい</strong>——外部から支援が入ると「自分たちでは解決できなかった」と認めることになり、無意識に抵抗が生まれる（NIH症候群：Not Invented Here）。でも相手が同じDXリーダー仲間なら、「助けられる」ではなく「一緒にやる」になる</li>
+      <li style="margin-bottom: var(--sp-3)"><strong>保守の引き継ぎ先がいる</strong>——作った人が異動しても、受け入れ側のDXリーダーが残る</li>
+    </ul>
+    <p style="margin-top: var(--sp-4)">対象はDXリーダーがいる部署に限られるが、成功確率が最も高い組み合わせだ。</p>
+  </div>
+
+  <div class="phase-card">
+    <span class="phase-num">2</span>
+    <p class="phase-title">DXリーダー × 業務担当者</p>
+    <p>Phase 1で「アウェイ経験」を積んだDXリーダーが、今度はDXリーダーがいない部署に出ていく。この時にはもう「アウェイ実践者」になっている。業務担当者とペアを組み、担当者自身がDXを使えるようになることがゴール。</p>
+  </div>
+
+  <p>ポイントは、Phase 1が<strong>すぐに始められる</strong>こと。制度設計も人事部門の承認も不要。DXリーダー同士が「一緒にやらない？」と声をかけるだけでいい。</p>
+
+  <div class="insight">
+    <p class="insight-label">自治体でも動き始めている</p>
+    <p style="margin-bottom:0">神戸市は「DX推進チャレンジャー」として3年間で450人を育成中。愛媛県は20市町全てが参画する広域DX人材シェアリング「チーム愛媛」を運用している（ただし高度デジタル人材の確保困難という構造的課題に直面し、柔軟な体制に移行中）。広島県は月額5万円の手当付きでDX人材を共同採用する「DXShipひろしま」を展開。<strong>横浜市だけが止まっているわけではないが、横浜市はまだ「ホーム」の段階だ。</strong></p>
+  </div>
+</section>
+
+<!-- ==================== SECTION 5 ==================== -->
+<section>
+  <span class="section-num">05</span>
+  <h2>井戸を作るだけじゃダメだ</h2>
+
+  <p>ここで、自分自身の経験から一つ大きな懸念がある。</p>
+
+  <p>先ほど触れた税務照合ツール。業務は劇的に改善した。でも、<strong>自分が異動したら誰もメンテナンスできない。</strong>READMEを書いても「READMEって何？」の世界だ。AIがあるからできるでしょ、なんて雑に引き継げるものではない。</p>
+
+  <p>すごく悪い例えだけど、<strong>井戸を作っても、壊れたら井戸の金具を売られかねない。</strong></p>
+
+  <p>越境DX支援で「クイックウィン」を届けても、作った人がいなくなればツールは朽ちる。「やっぱりDXは一時的なもの」「どうせまた始まって、すぐ終わる」——行政特有のシニシズムが強化されるだけだ。</p>
+
+  <h3>保守キットという考え方</h3>
+
+  <p>だから、越境DX支援の成果物には<strong>「保守キット」を必ずセットにする</strong>。</p>
+
+  <div class="kit-items">
+    <div class="kit-item">
+      <div class="kit-icon">🔧</div>
+      <p class="kit-title">ツール本体</p>
+      <p class="kit-desc">作ったもの。Excel、アプリ、自動化スクリプト等</p>
+    </div>
+    <div class="kit-item">
+      <div class="kit-icon">📄</div>
+      <p class="kit-title">直し方（A4一枚）</p>
+      <p class="kit-desc">壊れたときに誰が何をすればいいか。READMEではなく「直し方」</p>
+    </div>
+    <div class="kit-item">
+      <div class="kit-icon">💬</div>
+      <p class="kit-title">AIプロンプト集</p>
+      <p class="kit-desc">「このツールをAIに直してもらうための聞き方」。受け入れ側が自力で保守できるようにする</p>
+    </div>
+  </div>
+
+  <p>もう一つ、正直に書いておきたいことがある。AIは動くコードを書いてくれるが、<strong>安全なコードを書いてくれるとは限らない。</strong>「動く」と「安全に動く」は別物だ。AIでそれっぽいものを量産できる時代だからこそ、品質を見極められる人間が関わる必要がある。これもペアモデルの意味の一つだ。</p>
+
+  <p>かつて「謎にマクロが得意な人」が各部署にいた。その人が作ったExcelマクロは当時は便利だったが、本人が異動した今、誰も直せないレガシーになっている。<strong>DXリーダーが同じ轍を踏まないためには、「作る力」だけでなく「渡す力」が要る。</strong>受け入れ側が次は自分でできるようになること。それが越境の本当の完了条件だ。</p>
+
+  <p><strong>越境DX支援の完了条件は「ツールが動く」ではなく「受け入れ側が自分で直せる」。</strong>ペアモデルのPhase 1でDXリーダー同士が組むのも、この保守問題への対策になっている。受け入れ側にDXリーダーがいれば、保守の引き継ぎ先がある。</p>
+</section>
+
+<!-- ==================== SECTION 6 ==================== -->
+<section>
+  <span class="section-num">06</span>
+  <h2>まず試してみないか</h2>
+
+  <p>ここまで書いてきたことは、制度提案ではない。<strong>実験の提案だ。</strong></p>
+
+  <p>自分は財政局償却資産課の一職員で、制度を作る権限はない。人事部門を動かす力もない。でも、DXリーダーの1人として問いかけることはできる。</p>
+
+  <h3>正直な反省から始める</h3>
+
+  <p>DXリーダー同士のTeamsチャットは既にある。でも、自分を含め、成功体験の共有が中心になっていて、「これ困ってるんだけど」という相談はあまり出てこない。</p>
+
+  <p><strong>自分自身、作ったものの報告ばかりで、逆に相談しにくい空気を作っていたかもしれない。</strong></p>
+
+  <p>100人のオープンな場で困りごとを出すのはハードルが高い。Googleの「Project Aristotle」は180チームを対象に250の変数を分析し、チーム効果性の第1因子が<strong>心理的安全性</strong>であることを実証した。心理的安全性の高いチームは、経営陣から効果的と評価される確率が2倍になる。100人の場で心理的安全性を確保するのは難しい。でも、5〜6人ならできる。</p>
+
+  <p>研修のワークショップで、ある参加者がこう言っていた。</p>
+
+  <blockquote>
+    「研修に来てる人はいるが、本当に届けるべき無関心層のボトムアップが必要。やった人が評価されない」
+  </blockquote>
+
+  <p>その通りだと思う。でも、評価制度が変わるのを待っていたら何も始まらない。</p>
+
+  <h3>20%ルールの代わりに、Googleから何を学ぶか</h3>
+
+  <p>20%ルールは死んだ。でもGoogleのイノベーション自体は死んでいない。研修で見たのは、カフェテリア、マイクロキッチン、階段の幅を狭くするレイアウト、火水木の出社。<strong>人と人が偶然出会う仕組みのデザイン</strong>だ。</p>
+
+  <p>MITのAllen教授は1977年に発見し、2007年に再検証した。<strong>50メートル離れると、人は週に一度も技術的な会話をしなくなる。</strong>メールの時代になっても変わらない。Googleは全社員が互いに2分半以内の距離に配置されるオフィスを設計し、世界70拠点に1,500カ所のマイクロキッチンを置いた。MITメディアラボのBen Waberがセンサーで計測した結果、この偶発的な交流は<strong>生産性を最大25%向上</strong>させた。</p>
+
+  <p>もう一つが、Project Aristotleが示した心理的安全性。そしてGoogleが社内で実践している<strong>「Blameless Postmortem（責めない振り返り）」</strong>——障害が起きたとき「誰が悪い」ではなく「なぜ情報が不完全だったか」を分析する文化だ。</p>
+
+  <p><strong>偶発的交流の場と、失敗を安全に語れる場。この2つは、DXリーダー100人で今日から始められる。</strong>予算ゼロ、制度変更ゼロ。必要なのは「場のデザイン」だけだ。</p>
+
+  <h3>堀江さんへの回答</h3>
+
+  <p>堀江さんが求めているのは制度化だ。所属が関与しないと正式に支援に入れない。評価制度が未整備。——その課題認識は完全に正しい。</p>
+
+  <p>でも、制度を作るには根拠が要る。堀江さん1人の実績だけでは「堀江だからできた」で終わる。<strong>実験は制度化の放棄ではなく、制度化への最短ルートだ。</strong>2人目、3人目が動いた実績があれば、人事部門にもデジタル統括本部にも「これは仕組みとして回る」と示せる。</p>
+
+  <h3>具体的に何から始めるか</h3>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <span class="timeline-year">今すぐ</span>
+      <p><strong>5〜6人の少人数グループを作る。</strong>100人のチャットではなく、「困ってる」を先に言える小さな場。成功報告ではなく「今月ハマってること」から始める。自分がまず弱みを見せる。月1回、Blameless形式で「うまくいかなかったDX施策」を共有する——「誰が悪い」ではなく「なぜそうなったか」だけを話す。</p>
+    </div>
+    <div class="timeline-item">
+      <span class="timeline-year">1か月後</span>
+      <p><strong>最初のペアを組んでみる。</strong>少人数グループから「一緒にやらない？」が生まれたら、DXリーダー同士で1件やってみる。保守キット付きで。成功しても失敗しても、そこから学ぶ。</p>
+    </div>
+    <div class="timeline-item">
+      <span class="timeline-year">3か月後</span>
+      <p><strong>やったことを100人に共有する。</strong>うまくいったこと、いかなかったこと、意外だったこと。この共有自体が次のペアを生む。少人数グループを2つ、3つと増やす。</p>
+    </div>
+    <div class="timeline-item">
+      <span class="timeline-year">その先 — 制度化へ</span>
+      <p><strong>実績ができたら、制度の話をする。</strong>堀江さんが求めている制度化——兼務発令の活用、評価制度への組み込み、i-share制度のDX版としての位置づけ——は、具体的な成功事例があれば説得力が段違いになる。人事部門への提案も、デジタル統括本部との連携も、「100人中10人が動いた」という事実が最強の根拠になる。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CLOSING ==================== -->
+<div class="closing">
+  <h2>問いかけ</h2>
+  <p style="font-size: 1.1rem;">Googleの20%ルールは死んだ。<br>でも、その精神——<br>「自分の専門性で、誰かの課題を解く」——は<br>横浜市の100人で試す価値がある。</p>
+  <p style="margin-top: var(--sp-8);">制度ができるのを待つか。<br><strong>まず1件、やってみるか。</strong></p>
+</div>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <p>本レポートの事実・数値は一次ソース（SEC提出書類、Google re:Work、Gallup、各社公式発表、各自治体公式資料）で検証済みです。目が疲れた。</p>
+  <p style="margin-top: var(--sp-2);">財政局償却資産課　久保拓海 — 2026年3月</p>
+</footer>
+
+</main>
+</body>
+</html>

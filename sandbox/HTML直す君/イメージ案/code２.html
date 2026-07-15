@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Strategic Dashboard Management Console</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Public Sans -->
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "status-warn": "#facc15",
+                        "status-alert": "#ef4444",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Public Sans", sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#0d121b] dark:text-gray-100 min-h-screen flex flex-col font-display">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-[#e7ebf3] dark:border-gray-800 bg-white dark:bg-[#1a2133] px-8 py-3 h-16">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-primary">
+<div class="size-6">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 18.4228L42 11.475V34.3663C42 34.7796 41.7457 35.1504 41.3601 35.2992L24 42V18.4228Z" fill="currentColor" fill-rule="evenodd"></path>
+<path clip-rule="evenodd" d="M24 8.18819L33.4123 11.574L24 15.2071L14.5877 11.574L24 8.18819ZM9 15.8487L21 20.4805V37.6263L9 32.9945V15.8487ZM27 37.6263V20.4805L39 15.8487V32.9945L27 37.6263ZM25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-[#0d121b] dark:text-white text-lg font-bold leading-tight tracking-tight">Strategic Console</h2>
+</div>
+<label class="flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-[#4c669a] flex border-none bg-[#e7ebf3] dark:bg-gray-800 items-center justify-center pl-4 rounded-l-lg" data-icon="search">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 rounded-lg text-[#0d121b] dark:text-white focus:outline-0 focus:ring-0 border-none bg-[#e7ebf3] dark:bg-gray-800 placeholder:text-[#4c669a] px-4 rounded-l-none pl-2 text-sm font-normal" placeholder="Search strategy assets..." value=""/>
+</div>
+</label>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<nav class="flex items-center gap-6 mr-4">
+<a class="text-[#4c669a] hover:text-primary dark:text-gray-400 dark:hover:text-white text-sm font-medium transition-colors" href="#">Dashboard Editor</a>
+<a class="text-[#4c669a] hover:text-primary dark:text-gray-400 dark:hover:text-white text-sm font-medium transition-colors" href="#">Assets</a>
+<a class="text-[#4c669a] hover:text-primary dark:text-gray-400 dark:hover:text-white text-sm font-medium transition-colors" href="#">Settings</a>
+</nav>
+<div class="flex gap-3">
+<button class="flex min-w-[100px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-[#e7ebf3] dark:bg-gray-800 text-[#0d121b] dark:text-white text-xs font-bold uppercase tracking-wider transition-all hover:bg-gray-200 dark:hover:bg-gray-700">
+<span>Generate New</span>
+</button>
+<button class="flex min-w-[140px] cursor-pointer items-center justify-center rounded-lg h-10 px-5 bg-primary text-white text-xs font-bold uppercase tracking-wider shadow-lg shadow-primary/20 hover:bg-blue-700 transition-all">
+<span>Download HTML</span>
+</button>
+</div>
+<div class="h-8 w-px bg-gray-200 dark:bg-gray-800 mx-2"></div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border border-gray-200 dark:border-gray-700" data-alt="User profile avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDeeyxgzMVqwyePOF-rN2z-wIBRd92zva0O-hKkciBQ11jccByJRM98m_fmwVJy-gkm4qZOChTNBg81hZio70wVpvdqaiModL61LqIa6Lv77zN1zvhsnb-l8wDIweT-9bit_4-UslDNkLm-MI3ZShT1pgUsuwavtQLf6iILH8FhGPz9AxMGD_NgyXDwaWi9JwUPtBqBR1dldHZU748gzGdfRqyWSwGsab9t4iRUUaWQXXAjV-wyAaeEH-A0kxvw6TW6TGmkhADKJNBe");'></div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- Sidebar Navigation (Project Explorer) -->
+<aside class="w-64 flex flex-col border-r border-[#e7ebf3] dark:border-gray-800 bg-white dark:bg-[#1a2133] p-6 gap-6">
+<div class="flex flex-col gap-1">
+<h1 class="text-[#0d121b] dark:text-white text-sm font-bold uppercase tracking-widest opacity-50">Project Explorer</h1>
+<p class="text-[#4c669a] text-xs">Management Workspace</p>
+</div>
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary group cursor-pointer">
+<span class="material-symbols-outlined text-[20px] fill-1">dashboard</span>
+<p class="text-sm font-semibold">Q4 Growth Strategy</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#4c669a] hover:bg-gray-50 dark:hover:bg-gray-800 group cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-[20px]">public</span>
+<p class="text-sm font-medium">Market Expansion</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#4c669a] hover:bg-gray-50 dark:hover:bg-gray-800 group cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-[20px]">rocket_launch</span>
+<p class="text-sm font-medium">Product Launch</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#4c669a] hover:bg-gray-50 dark:hover:bg-gray-800 group cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-[20px]">insights</span>
+<p class="text-sm font-medium">Efficiency Audit</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#4c669a] hover:bg-gray-50 dark:hover:bg-gray-800 group cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-[20px]">event_note</span>
+<p class="text-sm font-medium">Annual Review</p>
+</div>
+</div>
+<div class="mt-auto border-t border-[#e7ebf3] dark:border-gray-800 pt-6">
+<div class="flex items-center justify-between text-[#4c669a] px-3">
+<span class="text-xs font-medium">Cloud Sync</span>
+<span class="material-symbols-outlined text-green-500 text-sm">cloud_done</span>
+</div>
+<p class="text-[10px] text-[#4c669a] px-3 mt-1 italic">Last saved 2m ago</p>
+</div>
+</aside>
+<!-- Main Content Area (Live Workspace) -->
+<main class="flex-1 flex flex-col overflow-y-auto bg-background-light dark:bg-background-dark p-8">
+<!-- Breadcrumbs & Heading -->
+<div class="max-w-6xl mx-auto w-full mb-8">
+<div class="flex items-center gap-2 mb-4 text-[#4c669a] text-sm">
+<span class="hover:underline cursor-pointer">Dashboards</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-[#0d121b] dark:text-white font-medium">Q4 Growth Strategy</span>
+</div>
+<div class="flex justify-between items-end">
+<div>
+<h2 class="text-[#0d121b] dark:text-white text-3xl font-black tracking-tight mb-2">Live Workspace</h2>
+<p class="text-[#4c669a] dark:text-gray-400 text-base max-w-lg">Manage and arrange your tactical components. Changes reflect instantly in the target framework.</p>
+</div>
+<button class="flex items-center gap-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-2 text-sm font-bold shadow-sm hover:shadow-md transition-all">
+<span class="material-symbols-outlined text-lg">add_circle</span>
+<span>Add Component</span>
+</button>
+</div>
+</div>
+<!-- Dashboard Grid (The Workspace) -->
+<div class="max-w-6xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- KPI Card: Revenue (Normal State - Blue) -->
+<div class="bg-white dark:bg-[#1a2133] p-6 rounded-xl shadow-sm border-l-4 border-primary group relative hover:shadow-lg transition-all cursor-move">
+<div class="flex justify-between items-start mb-4">
+<p class="text-[#4c669a] dark:text-gray-400 text-xs font-bold uppercase tracking-wider">Gross Revenue</p>
+<span class="material-symbols-outlined text-primary text-xl">monetization_on</span>
+</div>
+<div class="flex items-baseline gap-2">
+<h3 class="text-3xl font-black text-[#0d121b] dark:text-white tracking-tight">$4.2M</h3>
+<span class="text-primary text-sm font-bold">+12.4%</span>
+</div>
+<div class="mt-6 h-12 w-full flex items-end gap-1 opacity-60">
+<div class="flex-1 bg-primary/20 rounded-t h-[40%]"></div>
+<div class="flex-1 bg-primary/20 rounded-t h-[60%]"></div>
+<div class="flex-1 bg-primary/20 rounded-t h-[45%]"></div>
+<div class="flex-1 bg-primary/20 rounded-t h-[75%]"></div>
+<div class="flex-1 bg-primary/20 rounded-t h-[90%]"></div>
+<div class="flex-1 bg-primary/20 rounded-t h-[100%]"></div>
+<div class="flex-1 bg-primary/20 rounded-t h-[80%]"></div>
+</div>
+<!-- Hover Actions -->
+<div class="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1 text-gray-400 hover:text-gray-600"><span class="material-symbols-outlined text-sm">settings</span></button>
+<button class="p-1 text-gray-400 hover:text-red-500"><span class="material-symbols-outlined text-sm">close</span></button>
+</div>
+</div>
+<!-- KPI Card: Churn (Warn State - Yellow) -->
+<div class="bg-white dark:bg-[#1a2133] p-6 rounded-xl shadow-sm border-l-4 border-status-warn group relative hover:shadow-lg transition-all cursor-move">
+<div class="flex justify-between items-start mb-4">
+<p class="text-[#4c669a] dark:text-gray-400 text-xs font-bold uppercase tracking-wider">Churn Rate</p>
+<span class="material-symbols-outlined text-status-warn text-xl">warning</span>
+</div>
+<div class="flex items-baseline gap-2">
+<h3 class="text-3xl font-black text-[#0d121b] dark:text-white tracking-tight">3.1%</h3>
+<span class="text-status-warn text-sm font-bold">+0.8%</span>
+</div>
+<div class="mt-6 h-12 w-full flex items-end gap-1 opacity-60">
+<div class="flex-1 bg-status-warn/20 rounded-t h-[20%]"></div>
+<div class="flex-1 bg-status-warn/20 rounded-t h-[25%]"></div>
+<div class="flex-1 bg-status-warn/20 rounded-t h-[40%]"></div>
+<div class="flex-1 bg-status-warn/20 rounded-t h-[55%]"></div>
+<div class="flex-1 bg-status-warn/20 rounded-t h-[70%]"></div>
+<div class="flex-1 bg-status-warn/20 rounded-t h-[65%]"></div>
+<div class="flex-1 bg-status-warn/20 rounded-t h-[85%]"></div>
+</div>
+</div>
+<!-- KPI Card: Penetration (Alert State - Red) -->
+<div class="bg-white dark:bg-[#1a2133] p-6 rounded-xl shadow-sm border-l-4 border-status-alert group relative hover:shadow-lg transition-all cursor-move">
+<div class="flex justify-between items-start mb-4">
+<p class="text-[#4c669a] dark:text-gray-400 text-xs font-bold uppercase tracking-wider">New Market Entry</p>
+<span class="material-symbols-outlined text-status-alert text-xl">dangerous</span>
+</div>
+<div class="flex items-baseline gap-2">
+<h3 class="text-3xl font-black text-[#0d121b] dark:text-white tracking-tight">1.2%</h3>
+<span class="text-status-alert text-sm font-bold">-4.5%</span>
+</div>
+<div class="mt-6 h-12 w-full flex items-end gap-1 opacity-60">
+<div class="flex-1 bg-status-alert/20 rounded-t h-[60%]"></div>
+<div class="flex-1 bg-status-alert/20 rounded-t h-[55%]"></div>
+<div class="flex-1 bg-status-alert/20 rounded-t h-[45%]"></div>
+<div class="flex-1 bg-status-alert/20 rounded-t h-[40%]"></div>
+<div class="flex-1 bg-status-alert/20 rounded-t h-[30%]"></div>
+<div class="flex-1 bg-status-alert/20 rounded-t h-[20%]"></div>
+<div class="flex-1 bg-status-alert/20 rounded-t h-[15%]"></div>
+</div>
+</div>
+<!-- Large Chart Component -->
+<div class="lg:col-span-3 bg-white dark:bg-[#1a2133] p-8 rounded-xl shadow-sm">
+<div class="flex items-center justify-between mb-8">
+<div>
+<p class="text-[#0d121b] dark:text-white text-base font-bold">Strategic Performance Trend</p>
+<p class="text-[#4c669a] text-xs">Composite performance score vs objective</p>
+</div>
+<div class="text-right">
+<p class="text-2xl font-black text-[#0d121b] dark:text-white">94.2%</p>
+<p class="text-primary text-xs font-bold uppercase tracking-wider">Target 90%</p>
+</div>
+</div>
+<div class="h-48 w-full">
+<svg fill="none" height="100%" preserveaspectratio="none" viewbox="0 0 478 150" width="100%" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25V149H326.769H0V109Z" fill="url(#paint0_linear)"></path>
+<path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25" stroke="#135bec" stroke-linecap="round" stroke-width="3"></path>
+<defs>
+<lineargradient gradientunits="userSpaceOnUse" id="paint0_linear" x1="236" x2="236" y1="1" y2="149">
+<stop stop-color="#135bec" stop-opacity="0.1"></stop>
+<stop offset="1" stop-color="#135bec" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+</svg>
+</div>
+<div class="flex justify-between mt-4 px-2">
+<span class="text-[#4c669a] text-[11px] font-bold uppercase">Week 01</span>
+<span class="text-[#4c669a] text-[11px] font-bold uppercase">Week 02</span>
+<span class="text-[#4c669a] text-[11px] font-bold uppercase">Week 03</span>
+<span class="text-[#4c669a] text-[11px] font-bold uppercase">Week 04</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Right Side Panel (Strategic Diagnosis) -->
+<aside class="w-80 flex flex-col border-l border-[#e7ebf3] dark:border-gray-800 bg-white dark:bg-[#1a2133] p-6">
+<div class="flex flex-col gap-1 mb-8">
+<h1 class="text-[#0d121b] dark:text-white text-sm font-bold uppercase tracking-widest opacity-50">Strategic Diagnosis</h1>
+<p class="text-[#4c669a] text-xs">Framework Context (Step 1)</p>
+</div>
+<div class="space-y-6">
+<!-- Diagnosis Item 1 -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-lg">track_changes</span>
+<span class="text-xs font-bold uppercase">Target Segment</span>
+</div>
+<div class="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-3 border border-gray-100 dark:border-gray-800">
+<p class="text-sm font-semibold text-[#0d121b] dark:text-white">Mid-Market Enterprise</p>
+<p class="text-xs text-[#4c669a] mt-1">SaaS vertical, $10M-$50M ARR range.</p>
+</div>
+</div>
+<!-- Diagnosis Item 2 -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-lg">flag</span>
+<span class="text-xs font-bold uppercase">Primary Goal</span>
+</div>
+<div class="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-3 border border-gray-100 dark:border-gray-800">
+<p class="text-sm font-semibold text-[#0d121b] dark:text-white">20% YoY Growth</p>
+<p class="text-xs text-[#4c669a] mt-1">Expansion within existing customer base by Q4 end.</p>
+</div>
+</div>
+<!-- Diagnosis Item 3 -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-lg">bolt</span>
+<span class="text-xs font-bold uppercase">Current Stance</span>
+</div>
+<div class="bg-blue-50 dark:bg-primary/5 rounded-lg p-3 border border-primary/20">
+<p class="text-sm font-semibold text-primary">Aggressive Expansion</p>
+<p class="text-xs text-[#4c669a] mt-1">High-velocity sales model with focus on market capture over LTV optimization.</p>
+</div>
+</div>
+</div>
+<div class="mt-auto bg-gray-50 dark:bg-gray-800/50 rounded-xl p-4">
+<p class="text-[11px] font-bold text-[#4c669a] uppercase mb-2">System Insight</p>
+<div class="flex gap-2">
+<div class="h-10 w-1 bg-status-alert rounded-full"></div>
+<p class="text-xs text-[#0d121b] dark:text-gray-300 leading-relaxed">
+<span class="font-bold">Alert:</span> Current stance is misaligned with "Churn Rate" component indicators. Consider pivoting to "Stability" focus.
+                    </p>
+</div>
+<button class="w-full mt-3 py-2 text-xs font-bold text-primary hover:bg-primary/10 rounded transition-colors uppercase tracking-tight">Modify Strategy</button>
+</div>
+</aside>
+</div>
+</body></html>

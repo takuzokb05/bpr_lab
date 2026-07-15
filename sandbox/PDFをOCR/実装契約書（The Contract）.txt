@@ -1,0 +1,48 @@
+# Goal: Stateful Sliding-Window OCR System
+
+数百ページのPDFをGemini 2.5 Flash/ProでOCRし、論理構造を維持したMarkdownを出力するPythonスクリプトを実装せよ。
+
+## 1. Environment & Architecture
+- **Language**: Python 3.10+
+- **API**: google-generativeai (Gemini 2.5)
+- **Pre-process**: PDFを1ページごとの画像（PNG/JPG）に分割し、`temp_pages/`ディレクトリに連番で保存する処理を必須とする。
+- **State Management**: `progress.json` で以下の状態を管理。
+  - `last_processed_page`: 最後に正常出力されたページ。
+  - `last_tail_text`: 直前バッチの末尾3行。
+  - `current_chapter`: 現在の章名（プロンプト注入用）。
+
+## 2. Dynamic Sliding Window Logic
+1. バッチ単位: 10ページごとに出力（例: P10-19）。
+2. 入力範囲（のりしろ）: 出力対象の前後1ページを含めてモデルに提示（例: P9-20を入力）。
+3. プロンプト注入:
+   - "前回の末尾は『{last_tail_text}』です。これに続くように、ページ{start}から{end}までをMarkdown化してください。"
+
+## 3. Prompt Structure (3-Layer)
+モデルに渡すプロンプトは以下の構造で連結せよ。
+
+### Layer 1: Context (Static)
+- 役割: シニア校正エディター。
+- 構造化ルール: 
+  - 数式は LaTeX ($)。
+  - 脚注は [^1] 形式、図表は > [図: 説明] で保持。
+  - 文脈に合わせた自然な日本語校正を抽出と同時に実行。
+
+### Layer 2: Task (Dynamic)
+- 対象範囲: {input_range}
+- 継続性情報: {last_tail_text}, {current_chapter}
+
+### Layer 3: Format (Few-Shot)
+- 例示: 「# 第1章... \n 本文... [^1]: 脚注...」のような理想的な1ページ分の出力サンプル。
+
+## 4. Error Handling & Guardrails
+- **Retry Strategy**: APIエラー時、指数バックオフで最大3回リトライ。失敗時は `progress.json` を保存して完全停止し、エラーログを出力。
+- **Miller's Law**: 1回の生成（10ページ分）がトークン上限（約8k）を超えないよう調整。
+- **UX Writing**: エラーログは「ページ番号：原因：再開コマンド」の形式で出力し、解決策を提示せよ。
+
+## 5. Directory Structure
+/project
+  ├── main.py
+  ├── progress.json
+  ├── output.md (Append mode)
+  ├── temp_pages/ (P1.png, P2.png...)
+  └── logs/

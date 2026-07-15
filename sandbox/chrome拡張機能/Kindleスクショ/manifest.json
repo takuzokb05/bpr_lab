@@ -1,0 +1,43 @@
+{
+  "manifest_version": 3,
+  "name": "Kindle Screenshot to PDF",
+  "version": "1.0.0",
+  "description": "Kindle Cloud Readerの全ページを自動撮影してPDF化",
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://read.amazon.co.jp/*",
+    "https://read.amazon.com/*"
+  ],
+  "background": {
+    "service_worker": "src/background/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://read.amazon.co.jp/*",
+        "https://read.amazon.com/*"
+      ],
+      "js": [
+        "src/utils/errorSuppressor.js",
+        "lib/dexie.min.js",
+        "lib/jspdf.min.js",
+        "lib/canvas-confetti.min.js",
+        "src/utils/shadowDomHelper.js",
+        "src/utils/pageDetector.js",
+        "src/utils/pageNavigator.js",
+        "src/utils/loadingDetector.js",
+        "src/storage/db.js",
+        "src/ui/overlay.js",
+        "src/content/content.js"
+      ],
+      "css": [
+        "src/ui/overlay.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}

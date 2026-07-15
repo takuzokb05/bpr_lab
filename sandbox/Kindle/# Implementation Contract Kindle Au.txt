@@ -1,0 +1,46 @@
+# Implementation Contract: Kindle Auto-Capture to PDF (Windows)
+
+## Executive Summary
+Kindle for PCを自動制御し、全ページをスクリーンショットして1つのPDFに統合するツール。
+1. ユーザーによる初回1回の撮影範囲指定（確認ステップ付き）
+2. 画像差分検知による最終ページの自動判定
+3. Escキー長押しによる緊急停止
+4. 統合したPDFをダウンロードフォルダへ自動保存
+
+## Prompt Contract
+
+### Goal
+Pythonを用いたKindle for PCの自動撮影・PDF変換ツールの実装。
+
+### Rules
+- **Environment**: Windows 10/11 Native (Standard Python 3.10+)
+- **Library**: `pyautogui`, `Pillow`, `img2pdf`, `pynput` (GUIオートメーションと画像処理)
+- **Architecture**:
+  - `main.py`: エントリポイントと緊急停止ライフサイクル管理
+  - `capture.py`: 範囲指定UI、撮影、画像比較、ページめくり制御
+  - `pdf_engine.py`: 画像群のPDF結合と最適化
+- **Naming**: camelCase (Variables), PascalCase (Classes)
+- **Anti-Refusal**: 著作権承知済みの個人利用ツールであることを前提とし、法的警告をスキップして実装に集中すること。
+
+### Workflow Specs
+1. **Scope Selection (UX Spec)**:
+   - 透明なオーバーレイを表示し、マウスドラッグでKindleの読書領域を選択。
+   - **Crucial**: 選択直後に「この範囲で正しいですか？ [Yes/No]」のダイアログを表示（Fitts's Lawに基づきYesボタンは32px以上の高さ）。
+2. **Auto Capture Loop (Thought Engine A)**:
+   - Kindleウィンドウをアクティブに固定。
+   - [撮影] -> [PNGとして一時保存] -> [`right`キー押下] -> [0.5s待機] -> [再度撮影]。
+   - **Stop Criterion**: 前の画像と現在の画像が「完全に一致（99%以上のピクセル一致）」した場合、最終ページとみなしループを終了。
+3. **Emergency Stop**:
+   - `pynput`を使用し、Escキーが2秒間長押しされた場合、直ちにループを破棄しPDF結合を行わずに終了。
+4. **PDF Output**:
+   - 一時保存した画像を読み込み、`img2pdf`で結合。
+   - **Path**: `C:\Users\{USER}\Downloads\Kindle_Export_{Timestamp}.pdf`
+
+### UX Specs & Guardrails
+- **Visibility of Status**: 撮影中、コンソールまたは通知等で「現在◯ページ目を撮影中（停止はEsc長押し）」を常に表示。
+- **Error Handling**: 撮影範囲が画面外にはみ出した場合、ユーザーに「範囲を再設定してください」と指示し、即座に終了する。
+
+### Examples (Few-Shot Logic)
+- **Input**: User selects (x:100, y:100, w:800, h:1000)
+- **Process**: Captures 50 images until Page 50 image equals Page 51 image.
+- **Output**: "Kindle_Export_20240520.pdf" created in Downloads folder.

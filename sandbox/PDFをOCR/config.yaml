@@ -1,0 +1,16 @@
+api:
+  model: "gemini-2.0-flash-exp"
+  fallback_model: "gemini-2.0-pro-exp"
+  max_retries: 3
+  timeout: 60
+
+processing:
+  batch_size: 10
+  overlap: 1
+  dpi: 300
+  image_format: "png"
+
+output:
+  markdown_file: "output.md"
+  log_dir: "logs"
+  temp_dir: "temp_pages"

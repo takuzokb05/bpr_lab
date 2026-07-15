@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "HMデータ分析スキーマ",
+  "type": "object",
+  "required": ["hm_name", "analysis_date", "aspects"],
+  "properties": {
+    "hm_name": { "type": "string", "description": "ハウスメーカー名" },
+    "analysis_date": { "type": "string", "format": "date", "description": "分析実施日" },
+    "aspects": {
+      "type": "object",
+      "description": "各評価カテゴリの状態",
+      "properties": {
+        "price": { "$ref": "#/definitions/aspect_status" },
+        "performance": { "$ref": "#/definitions/aspect_status" },
+        "warranty": { "$ref": "#/definitions/aspect_status" },
+        "specifications": { "$ref": "#/definitions/aspect_status" }
+      }
+    },
+    "logs": {
+      "type": "array",
+      "description": "インプットされた生のログ情報",
+      "items": {
+        "type": "object",
+        "properties": {
+          "source": { "type": "string", "description": "会話ログ、メール、パンフレット等" },
+          "content": { "type": "string" },
+          "date": { "type": "string" }
+        }
+      }
+    },
+    "missing_points": {
+      "type": "array",
+      "description": "未回答の懸念や未確認の論点",
+      "items": { "type": "string" }
+    }
+  },
+  "definitions": {
+    "aspect_status": {
+      "type": "object",
+      "properties": {
+        "level": { "enum": ["高", "中", "低", "未確認"], "description": "説明の解像度レベル" },
+        "summary": { "type": "string", "description": "現状の把握内容" },
+        "raw_claims": { "type": "array", "items": { "type": "string" }, "description": "営業側の主張" }
+      },
+      "required": ["level", "summary"]
+    }
+  }
+}

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Survival Mode</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@400;700&amp;family=Orbitron:wght@900&amp;family=JetBrains+Mono:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error-dim": "#4e0309",
+                        "surface-variant": "#dee4de",
+                        "on-tertiary-container": "#290002",
+                        "primary-dim": "#535252",
+                        "surface": "#f9f9f6",
+                        "inverse-surface": "#0d0f0d",
+                        "on-primary-container": "#525151",
+                        "on-secondary-fixed": "#004a26",
+                        "tertiary-container": "#fa5956",
+                        "primary-fixed-dim": "#d7d4d3",
+                        "on-secondary-fixed-variant": "#15693c",
+                        "primary": "#5f5e5e",
+                        "secondary-fixed": "#a4f4ba",
+                        "surface-bright": "#f9f9f6",
+                        "on-error-container": "#752121",
+                        "surface-container": "#ecefea",
+                        "on-tertiary-fixed-variant": "#420004",
+                        "secondary": "#1a6d3f",
+                        "inverse-primary": "#ffffff",
+                        "outline-variant": "#adb4ae",
+                        "on-tertiary-fixed": "#000000",
+                        "inverse-on-surface": "#9c9d9b",
+                        "on-secondary": "#e8ffea",
+                        "secondary-dim": "#046034",
+                        "error-container": "#fe8983",
+                        "on-secondary-container": "#015f33",
+                        "error": "#9f403d",
+                        "secondary-container": "#a4f4ba",
+                        "on-primary": "#faf7f6",
+                        "surface-tint": "#5f5e5e",
+                        "background": "#f9f9f6",
+                        "on-primary-fixed": "#403f3f",
+                        "tertiary-fixed": "#fa5956",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error": "#fff7f6",
+                        "tertiary-fixed-dim": "#e84d4b",
+                        "surface-container-highest": "#dee4de",
+                        "tertiary-dim": "#a41920",
+                        "surface-container-low": "#f3f4f0",
+                        "tertiary": "#b5272b",
+                        "primary-container": "#e5e2e1",
+                        "secondary-fixed-dim": "#96e6ad",
+                        "outline": "#767c77",
+                        "on-surface-variant": "#5a615c",
+                        "surface-dim": "#d4dcd5",
+                        "primary-fixed": "#e5e2e1",
+                        "on-primary-fixed-variant": "#5c5b5b",
+                        "on-tertiary": "#fff7f6",
+                        "on-background": "#2e3430",
+                        "surface-container-high": "#e5e9e4",
+                        "on-surface": "#2e3430"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {},
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Space Grotesk"],
+                        "mono": ["JetBrains Mono"],
+                        "cyber": ["Orbitron"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .scanlines {
+            background: linear-gradient(rgba(255, 255, 255, 0.05) 50%, transparent 50%);
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+        .text-glow-red {
+            text-shadow: 0 0 10px #ff2d4a, 0 0 20px #ff2d4a;
+        }
+        .text-glow-cyan {
+            text-shadow: 0 0 10px #3df0ff;
+        }
+        .border-glow-red {
+            box-shadow: 0 0 15px rgba(255, 45, 74, 0.3), inset 0 0 10px rgba(255, 45, 74, 0.2);
+            border-color: #ff2d4a;
+        }
+        .border-glow-yellow {
+            box-shadow: 0 0 15px rgba(255, 227, 71, 0.3), inset 0 0 10px rgba(255, 227, 71, 0.2);
+            border-color: #ffe347;
+        }
+        .slash-pattern {
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255, 45, 74, 0.1) 10px, rgba(255, 45, 74, 0.1) 20px);
+        }
+    </style>
+</head>
+<body class="bg-[#050505] text-[#f9f9f6] font-body h-screen w-screen overflow-hidden selection:bg-[#ff2d4a] selection:text-white" id="survival-overlay">
+<!-- Scanline Overlay -->
+<div class="fixed inset-0 scanlines z-50"></div>
+<!-- Main Container -->
+<div class="relative h-full flex flex-col z-10 backdrop-blur-[20px] bg-[#050505]/80">
+<!-- Header: Emergency Protocol -->
+<header class="flex items-center justify-between p-6 border-b border-[#ff2d4a]/30 slash-pattern relative">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#ff2d4a] text-4xl animate-pulse" style="font-variation-settings: 'FILL' 1;">warning</span>
+<h1 class="font-headline font-extrabold text-3xl tracking-tighter text-[#ff2d4a] uppercase text-glow-red">Emergency Protocol Active</h1>
+</div>
+<div class="font-mono text-[#3df0ff] text-sm tracking-widest text-glow-cyan">
+                SYS.REQ // OVERRIDE
+            </div>
+</header>
+<!-- Center: Countdown & Targets -->
+<main class="flex-1 flex flex-col lg:flex-row items-center justify-center p-8 gap-12 lg:gap-24">
+<!-- Countdown Area -->
+<div class="flex flex-col items-center justify-center relative">
+<div class="absolute -inset-10 bg-[#ff2d4a]/5 rounded-full blur-3xl"></div>
+<div class="text-[#3df0ff] font-mono mb-2 uppercase tracking-[0.2em] text-sm text-glow-cyan" id="target-time">Time Remaining</div>
+<div class="font-cyber text-[8rem] leading-none text-[#ff2d4a] text-glow-red tracking-tight" id="countdown">15:00</div>
+</div>
+<!-- Task Slots -->
+<div class="flex flex-col gap-6 w-full max-w-md">
+<!-- MUST Slot -->
+<div class="border-[1px] border-glow-red rounded-[4px] bg-black/50 p-6 relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-1 h-full bg-[#ff2d4a]"></div>
+<h2 class="font-label text-[#ff2d4a] uppercase tracking-widest text-xs mb-4 font-bold flex items-center justify-between">
+<span>[ MUST DO ]</span>
+<span class="text-[#ff2d4a]/50 font-mono">1/2</span>
+</h2>
+<!-- Assigned Task Example -->
+<div class="bg-[#ff2d4a]/10 border border-[#ff2d4a]/30 rounded-[4px] p-4 flex items-start gap-3 hover:bg-[#ff2d4a]/20 transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-[#ff2d4a]" style="font-variation-settings: 'FILL' 1;">priority_high</span>
+<div class="flex-1">
+<h3 class="font-headline font-bold text-white text-lg">Finalize Q3 Budget Report</h3>
+<p class="font-mono text-[#ff2d4a]/70 text-xs mt-1">ID: T-992</p>
+</div>
+</div>
+</div>
+<!-- SHOULD Slot -->
+<div class="border-[1px] border-glow-yellow rounded-[4px] bg-black/50 p-6 relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-[#ffe347]"></div>
+<h2 class="font-label text-[#ffe347] uppercase tracking-widest text-xs mb-4 font-bold flex items-center justify-between">
+<span>[ SHOULD DO ]</span>
+<span class="text-[#ffe347]/50 font-mono">0/3</span>
+</h2>
+<!-- Empty Slot Placeholder -->
+<div class="border border-dashed border-[#ffe347]/30 rounded-[4px] h-20 flex items-center justify-center text-[#ffe347]/40 font-mono text-sm uppercase">
+                        Drop Target Here
+                    </div>
+</div>
+</div>
+</main>
+<!-- Bottom: Picker & Exit -->
+<footer class="border-t border-[#3df0ff]/20 bg-black p-6 flex flex-col md:flex-row items-center justify-between gap-6 relative">
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#3df0ff]/30 to-transparent"></div>
+<!-- Task Picker Strip -->
+<div class="flex-1 overflow-x-auto pb-2 scrollbar-hide flex gap-4 w-full">
+<!-- Unassigned Card -->
+<div class="flex-shrink-0 w-64 bg-[#111] border border-[#3df0ff]/20 rounded-[4px] p-3 hover:border-[#3df0ff] transition-colors cursor-grab flex flex-col justify-between h-24">
+<h4 class="font-headline text-sm font-bold text-white truncate">Review Marketing Copy</h4>
+<div class="flex justify-between items-center mt-2">
+<span class="font-mono text-xs text-[#3df0ff]/60">T-841</span>
+<span class="material-symbols-outlined text-[#3df0ff]/40 text-sm">drag_indicator</span>
+</div>
+</div>
+<!-- Unassigned Card -->
+<div class="flex-shrink-0 w-64 bg-[#111] border border-[#3df0ff]/20 rounded-[4px] p-3 hover:border-[#3df0ff] transition-colors cursor-grab flex flex-col justify-between h-24">
+<h4 class="font-headline text-sm font-bold text-white truncate">Client Call: Zenith</h4>
+<div class="flex justify-between items-center mt-2">
+<span class="font-mono text-xs text-[#3df0ff]/60">T-842</span>
+<span class="material-symbols-outlined text-[#3df0ff]/40 text-sm">drag_indicator</span>
+</div>
+</div>
+<!-- Unassigned Card -->
+<div class="flex-shrink-0 w-64 bg-[#111] border border-[#3df0ff]/20 rounded-[4px] p-3 hover:border-[#3df0ff] transition-colors cursor-grab flex flex-col justify-between h-24 opacity-50">
+<h4 class="font-headline text-sm font-bold text-white line-through truncate">Weekly Sync</h4>
+<div class="flex justify-between items-center mt-2">
+<span class="font-mono text-xs text-[#3df0ff]/30">T-843</span>
+<span class="material-symbols-outlined text-[#3df0ff]/20 text-sm">drag_indicator</span>
+</div>
+</div>
+</div>
+<!-- Exit Button -->
+<button class="flex-shrink-0 bg-transparent border border-outline-variant/20 text-white font-label font-bold uppercase tracking-widest px-8 py-4 rounded-[4px] hover:bg-white/10 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">logout</span>
+                通常モードに戻す
+            </button>
+</footer>
+</div>
+</body></html>

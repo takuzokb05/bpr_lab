@@ -1,0 +1,7 @@
+.env
+.DS_Store
+Thumbs.db
+*.tmp
+.claude/team-activity.log
+__pycache__/
+*.pyc

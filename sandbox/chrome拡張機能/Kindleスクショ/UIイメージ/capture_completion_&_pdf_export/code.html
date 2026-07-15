@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Capture Completion &amp; PDF Export</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#137fec",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .confetti-overlay {
+            background-image: radial-gradient(circle, #137fec 1px, transparent 1px), radial-gradient(circle, #0bda5b 1px, transparent 1px), radial-gradient(circle, #ffcc00 1px, transparent 1px);
+            background-size: 40px 40px, 30px 30px, 50px 50px;
+            background-position: 0 0, 15px 15px, 25px 25px;
+            opacity: 0.15;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white min-h-screen">
+<!-- Top Navigation Bar -->
+<div class="relative flex h-auto w-full flex-col overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<div class="px-4 md:px-40 flex flex-1 justify-center py-5 border-b border-solid border-slate-200 dark:border-[#283039]">
+<div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+<header class="flex items-center justify-between whitespace-nowrap px-4 py-3">
+<div class="flex items-center gap-4">
+<div class="size-6 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-size: 32px;">auto_stories</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Kindle PDF Exporter</h2>
+</div>
+<div class="flex gap-2">
+<button class="flex size-10 cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-slate-200 dark:bg-[#283039] text-slate-900 dark:text-white">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="flex size-10 cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-slate-200 dark:bg-[#283039] text-slate-900 dark:text-white">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+</header>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<main class="flex flex-1 justify-center py-10 px-4 relative overflow-hidden">
+<!-- Subtle Confetti Background Decorative Element -->
+<div class="absolute inset-0 confetti-overlay pointer-events-none"></div>
+<div class="layout-content-container flex flex-col max-w-[800px] flex-1 relative z-10">
+<!-- Success Message -->
+<div class="flex flex-col items-center mb-8">
+<div class="bg-primary/20 p-4 rounded-full mb-4">
+<span class="material-symbols-outlined text-primary" style="font-size: 48px; font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h1 class="text-slate-900 dark:text-white tracking-light text-[32px] md:text-[40px] font-bold leading-tight px-4 text-center pb-2">
+                    Hooray! Your PDF is ready. 🎉
+                </h1>
+<p class="text-slate-500 dark:text-[#9dabb9] text-base font-normal leading-normal px-4 text-center">
+                    Successfully processed 240 pages in 2 minutes and 14 seconds.
+                </p>
+</div>
+<!-- Stats Grid -->
+<div class="flex flex-wrap gap-4 p-4 mb-6">
+<div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-xl p-6 border border-slate-200 dark:border-[#3b4754] bg-white/50 dark:bg-transparent backdrop-blur-sm">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium leading-normal uppercase tracking-wider">Pages Captured</p>
+<p class="text-slate-900 dark:text-white tracking-light text-2xl font-bold leading-tight">240</p>
+<p class="text-[#0bda5b] text-sm font-medium leading-normal flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">done_all</span> Complete
+                    </p>
+</div>
+<div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-xl p-6 border border-slate-200 dark:border-[#3b4754] bg-white/50 dark:bg-transparent backdrop-blur-sm">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium leading-normal uppercase tracking-wider">File Size</p>
+<p class="text-slate-900 dark:text-white tracking-light text-2xl font-bold leading-tight">45.2 MB</p>
+<p class="text-slate-500 dark:text-[#9dabb9] text-sm">Optimized PDF</p>
+</div>
+<div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-xl p-6 border border-slate-200 dark:border-[#3b4754] bg-white/50 dark:bg-transparent backdrop-blur-sm">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium leading-normal uppercase tracking-wider">Integrity</p>
+<p class="text-slate-900 dark:text-white tracking-light text-2xl font-bold leading-tight">High</p>
+<p class="text-primary text-sm font-medium leading-normal">OCR Ready</p>
+</div>
+</div>
+<!-- Preview Card -->
+<div class="p-4 @container mb-8">
+<div class="flex flex-col items-stretch justify-start rounded-xl @xl:flex-row @xl:items-start shadow-xl bg-white dark:bg-[#1c2127] border border-slate-200 dark:border-transparent overflow-hidden">
+<div class="w-full @xl:w-1/3 bg-slate-100 dark:bg-slate-800 bg-center bg-no-repeat aspect-[3/4] bg-cover relative group" data-alt="Digital book cover thumbnail preview" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDoVd5qQDmL2vCqsg9ClgPWMX4KMeOclTYYzRXWz8T4qvIeTK-QpxECCk9drdAjCEEH7Y3O0VjP4xkOFAwGBZSRSKGD9sUQJSydHzfJv3Hl1n8dJjkPHWWttpbRJ-M782_GjzpZviIMIXhCNh4QB-X8Y5TNolQC6-FPxqrN1rEBIqoUpLOE3PLr43zSMNRRRJJLa1BnUKSheozcVZV4tr4tTgoHnlnRhmwnUnIbOcQCjtmvfASKZw99xUAWjgA93ZKskBjOA-51f68");'>
+<div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-white text-4xl">zoom_in</span>
+</div>
+</div>
+<div class="flex w-full min-w-72 grow flex-col items-stretch justify-between gap-4 p-6">
+<div>
+<span class="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary mb-2">
+                                READY FOR EXPORT
+                            </span>
+<h3 class="text-slate-900 dark:text-white text-xl font-bold leading-tight tracking-[-0.015em] mb-1">Generated Document Preview</h3>
+<p class="text-slate-500 dark:text-[#9dabb9] text-base font-normal leading-normal italic">The_Great_Gatsby_Kindle_Export.pdf</p>
+</div>
+<div class="space-y-4">
+<button class="w-full flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-14 px-6 bg-primary text-white text-lg font-bold leading-normal transition-all hover:bg-primary/90 hover:scale-[1.01] active:scale-100 shadow-lg shadow-primary/25">
+<span class="material-symbols-outlined mr-2">download</span>
+<span class="truncate">Download PDF</span>
+</button>
+<button class="w-full flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-slate-100 dark:bg-[#283039] text-slate-900 dark:text-white text-sm font-medium leading-normal border border-slate-200 dark:border-transparent">
+<span class="material-symbols-outlined mr-2 text-sm">visibility</span>
+<span class="truncate">Preview Fullscreen</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Management Actions -->
+<div class="mt-8 px-4 border-t border-slate-200 dark:border-[#283039] pt-8">
+<div class="flex flex-col md:flex-row items-center justify-between gap-6 bg-amber-50 dark:bg-amber-900/10 p-6 rounded-xl border border-amber-200 dark:border-amber-900/30">
+<div class="flex-1 text-center md:text-left">
+<h4 class="text-amber-800 dark:text-amber-400 font-bold flex items-center justify-center md:justify-start gap-2 mb-1">
+<span class="material-symbols-outlined text-lg">database</span>
+                            Memory Management
+                        </h4>
+<p class="text-amber-700/80 dark:text-amber-400/80 text-sm leading-relaxed">
+                            Captured pages are taking up 512MB of local IndexedDB storage. We recommend clearing this data now that your export is complete to keep your browser fast.
+                        </p>
+</div>
+<button class="whitespace-nowrap flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-6 bg-amber-600 hover:bg-amber-700 text-white text-sm font-bold leading-normal transition-colors">
+<span class="material-symbols-outlined mr-2 text-sm">delete_sweep</span>
+                        Clear Storage &amp; Finish
+                    </button>
+</div>
+</div>
+<!-- Footer Meta -->
+<div class="py-10">
+<p class="text-[#9dabb9] text-xs font-normal leading-normal text-center uppercase tracking-widest opacity-60">
+                    Export ID: KXP-2023-90X-04B
+                </p>
+</div>
+</div>
+</main>
+</body></html>

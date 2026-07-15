@@ -1,0 +1,14 @@
+{
+    "name": "kindle-screenshot-pdf",
+    "version": "1.0.0",
+    "description": "Kindle Cloud Reader Screenshot to PDF Extension",
+    "scripts": {
+        "build": "node scripts/copy-libs.js"
+    },
+    "dependencies": {
+        "dexie": "^3.2.4",
+        "jspdf": "^2.5.1",
+        "canvas-confetti": "^1.6.0"
+    },
+    "devDependencies": {}
+}

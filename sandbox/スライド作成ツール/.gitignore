@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+*.pptx
+data/output/
+.DS_Store
+Thumbs.db
+.claude/team-activity.log

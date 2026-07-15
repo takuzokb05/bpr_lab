@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Udemyもくもく会 ダッシュボード（オンライン vs 会場）</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #e0f2fe 0, #f8fafc 55%, #e5e7eb 100%);
+      color: #0f172a;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow:
+        0 10px 25px rgba(15, 23, 42, 0.08),
+        0 1px 3px rgba(15, 23, 42, 0.06);
+    }
+  </style>
+</head>
+
+<body class="min-h-screen p-6 md:p-10">
+  <div class="max-w-6xl mx-auto space-y-6">
+    <!-- タイトル / 概要 -->
+    <section
+      class="widget glass rounded-2xl p-5 md:p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4"
+      data-id="header-summary" data-type="summary-text" data-importance="high" data-status="normal">
+      <div>
+        <h1 class="text-xl md:text-2xl font-bold tracking-tight text-slate-900">
+          Udemyもくもく会 ダッシュボード（オンライン vs 会場）
+        </h1>
+        <p class="mt-1 text-sm md:text-base text-slate-600">
+          「どれだけ集中できたか」「次も参加したいか」をオンラインと会場で比較し、
+          <span class="font-semibold">“次は会場で参加してみようかな”</span>と思える気づきをまとめました。
+        </p>
+      </div>
+      <div class="text-xs md:text-sm text-right text-slate-500">
+        <p>対象：もくもく会 参加者</p>
+        <p>視点：オンライン vs 会場（推進型）</p>
+      </div>
+    </section>
+
+    <!-- 上段：ノーススターKPI & 意思決定エリア -->
+    <div class="grid md:grid-cols-2 gap-4 md:gap-6">
+      <!-- ノーススターKPI：集中できた率 -->
+      <section class="widget glass rounded-2xl p-5 space-y-4" data-id="kpi-focus-by-mode" data-type="decision-kpi"
+        data-importance="high" data-status="normal">
+        <div class="flex items-center justify-between">
+          <h2 class="text-sm font-semibold text-sky-800 flex items-center gap-2">
+            <span
+              class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-sky-100 text-sky-700 text-xs font-bold">
+              KPI
+            </span>
+            集中できた率（オンライン vs 会場）
+          </h2>
+          <span class="text-[11px] text-slate-500">
+            ※「非常に集中できた」「まぁ集中できた」の割合（n=30）
+          </span>
+        </div>
+
+        <!-- 会場 / オンライン 比較カード -->
+        <div class="grid grid-cols-2 gap-4">
+          <!-- 会場 -->
+          <div class="rounded-xl border border-emerald-100 bg-emerald-50/60 p-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold text-emerald-800">会場参加</span>
+              <span class="inline-flex items-center gap-1 text-[11px] text-emerald-700">
+                <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                オフライン
+              </span>
+            </div>
+            <p class="mt-2 text-2xl md:text-3xl font-bold text-emerald-700">
+              100.0<span class="text-base">%</span>
+            </p>
+            <p class="mt-1 text-[11px] text-emerald-800">
+              集中できた人：23 / 23 名
+            </p>
+          </div>
+
+          <!-- オンライン -->
+          <div class="rounded-xl border border-sky-100 bg-sky-50/70 p-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold text-sky-800">オンライン参加</span>
+              <span class="inline-flex items-center gap-1 text-[11px] text-sky-700">
+                <span class="h-2 w-2 rounded-full bg-sky-500"></span>
+                オンライン
+              </span>
+            </div>
+            <p class="mt-2 text-2xl md:text-3xl font-bold text-sky-700">
+              71.4<span class="text-base">%</span>
+            </p>
+            <p class="mt-1 text-[11px] text-sky-800">
+              集中できた人：5 / 7 名
+            </p>
+          </div>
+        </div>
+
+        <p class="mt-2 text-xs text-slate-600 leading-relaxed">
+          職場から離れて会場に集まることで、
+          <span class="font-semibold">全員が「集中できた」と回答</span>しています。
+          オンラインでも7割の人は集中できていますが、
+          <span class="font-semibold">「中断されない環境」を確保しづらい人ほど、会場参加のメリットが大きい</span>と言えそうです。
+        </p>
+      </section>
+
+      <!-- 意思決定・推奨アクション -->
+      <section class="widget glass rounded-2xl p-5 space-y-4" data-id="decision-next-action" data-type="decision-status"
+        data-importance="high" data-status="normal">
+        <div class="flex items-center justify-between">
+          <h2 class="text-sm font-semibold text-violet-800 flex items-center gap-2">
+            <span
+              class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-violet-100 text-violet-700 text-xs font-bold">
+              ▶
+            </span>
+            次回参加意向 & メッセージ
+          </h2>
+          <span class="text-[11px] text-slate-500">「ぜひ参加したい」「都合が合えば参加したい」の割合</span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 text-xs">
+          <!-- 会場参加 -->
+          <div class="rounded-xl border border-slate-100 bg-slate-50/80 p-3">
+            <p class="text-[11px] font-semibold text-slate-700 mb-1">会場参加（n=23）</p>
+            <p class="text-slate-700">
+              「ぜひ参加したい」：<span class="font-semibold text-emerald-700">69.6%</span>
+            </p>
+            <p class="text-slate-700">
+              「都合が合えば参加したい」：<span class="font-semibold">30.4%</span>
+            </p>
+          </div>
+          <!-- オンライン参加 -->
+          <div class="rounded-xl border border-slate-100 bg-slate-50/80 p-3">
+            <p class="text-[11px] font-semibold text-slate-700 mb-1">オンライン参加（n=7）</p>
+            <p class="text-slate-700">
+              「ぜひ参加したい」：<span class="font-semibold text-sky-700">42.9%</span>
+            </p>
+            <p class="text-slate-700">
+              「都合が合えば参加したい」：<span class="font-semibold">57.1%</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-2 rounded-xl border border-violet-100 bg-violet-50/70 p-3 text-xs text-violet-900">
+          <p class="font-semibold mb-1 flex items-center gap-1">
+            <span
+              class="inline-flex h-4 w-4 items-center justify-center rounded-full bg-violet-600 text-white text-[10px]">i</span>
+            インサイト
+          </p>
+          <p class="leading-relaxed">
+            会場に来た人ほど、<span class="font-semibold">「次もぜひ参加したい」という強いファン</span>になっていることが分かります。
+            オンライン参加から始めた人も、<span class="font-semibold">次回は一度会場での参加を試してみる</span>ことで、
+            集中しやすさや仲間からの刺激をより実感できるかもしれません。
+          </p>
+        </div>
+      </section>
+    </div>
+
+    <!-- 中段：チャート群 -->
+    <div class="grid md:grid-cols-2 gap-4 md:gap-6">
+      <!-- 集中度＆参加意向のモード別比較チャート -->
+      <section class="widget glass rounded-2xl p-5 space-y-3" data-id="chart-focus-intent" data-type="chart"
+        data-importance="medium" data-status="normal">
+        <div class="flex items-center justify-between">
+          <h2 class="text-sm font-semibold text-slate-800">
+            集中度 & 次回参加意向（オンライン vs 会場）
+          </h2>
+          <span class="text-[11px] text-slate-500">割合で比較</span>
+        </div>
+        <div class="h-56">
+          <canvas id="chartFocusIntent"></canvas>
+        </div>
+        <p class="text-[11px] text-slate-500 mt-1">
+          会場参加の方が「集中できた率」も「ぜひ参加したい率」も高いことが視覚的に分かります。
+        </p>
+      </section>
+
+      <!-- 壁トップ3（オンライン vs 会場） -->
+      <section class="widget glass rounded-2xl p-5 space-y-3" data-id="chart-wall" data-type="chart"
+        data-importance="medium" data-status="normal">
+        <div class="flex items-center justify-between">
+          <h2 class="text-sm font-semibold text-slate-800">
+            学習継続の「壁」トップ3（オンライン vs 会場）
+          </h2>
+          <span class="text-[11px] text-slate-500">時間確保・難易度・モチベーション</span>
+        </div>
+        <div class="h-56">
+          <canvas id="chartWall"></canvas>
+        </div>
+        <p class="text-[11px] text-slate-500 mt-1">
+          どちらのモードでも<span class="font-semibold">「学習のための時間の確保」</span>が最大の壁です。
+          だからこそ、<span class="font-semibold">業務として時間を確保できる「もくもく会」という場</span>が価値になります。
+        </p>
+      </section>
+    </div>
+
+    <!-- 資格・AIテーマの興味 -->
+    <section class="widget glass rounded-2xl p-5 space-y-3" data-id="chart-qualification" data-type="chart"
+      data-importance="medium" data-status="normal">
+      <div class="flex items-center justify-between">
+        <h2 class="text-sm font-semibold text-slate-800">
+          挑戦したい資格・テーマ（オンライン vs 会場）
+        </h2>
+        <span class="text-[11px] text-slate-500">ITパス / 情報セキュリティ / G検定 / 生成AIパスポート</span>
+      </div>
+      <div class="h-60">
+        <canvas id="chartQualification"></canvas>
+      </div>
+      <p class="text-[11px] text-slate-500 mt-1">
+        ITパスポートは両モードで人気ですが、
+        <span class="font-semibold">G検定や生成AIパスポートのような一歩先の資格は会場参加者に多く</span>分布しています。
+        高い目標を持つ仲間とつながる場としても、会場の価値が見えてきます。
+      </p>
+    </section>
+
+    <!-- 下段：インサイト & 参加者の声 -->
+    <div class="grid md:grid-cols-2 gap-4 md:gap-6">
+      <!-- インサイトボックス -->
+      <section class="widget glass rounded-2xl p-5 space-y-3" data-id="insight-offline-benefits" data-type="insight-box"
+        data-importance="medium" data-status="normal">
+        <h2 class="text-sm font-semibold text-emerald-800 flex items-center gap-2">
+          <span
+            class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold">
+            ✓
+          </span>
+          会場参加のメリット（インサイト）
+        </h2>
+        <ul class="list-disc pl-5 text-xs text-slate-700 space-y-1 leading-relaxed">
+          <li>職場から離れた場所で、<span class="font-semibold">電話や窓口対応に中断されず集中できる</span>。</li>
+          <li><span class="font-semibold">周りのみんなが勉強している空気</span>があるので、「自分も頑張ろう」という気持ちになりやすい。</li>
+          <li>同じ局・他局のメンバーと直接話せることで、<span class="font-semibold">DXや資格勉強の悩みを共有できる</span>。</li>
+          <li>一人だと途中で止まりがちな長めのUdemy講座も、<span class="font-semibold">もくもく会の時間を区切りとして完走しやすい</span>。</li>
+        </ul>
+      </section>
+
+      <!-- 参加者の声リスト（匿名化） -->
+      <section class="widget glass rounded-2xl p-5 space-y-3" data-id="detail-comments" data-type="detail-list"
+        data-importance="low" data-status="normal">
+        <h2 class="text-sm font-semibold text-slate-800 flex items-center gap-2">
+          <span
+            class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-900 text-white text-xs font-bold">
+            ""
+          </span>
+          参加者の声（抜粋）
+        </h2>
+        <ul class="space-y-2 text-xs text-slate-700 leading-relaxed">
+          <li class="border-l-4 border-emerald-300 pl-3">
+            「職場の業務や環境から身を離れることで、より集中力が高まりました。
+            周りが勉強している姿を見ることで『私も頑張ろう』とモチベーションが高まりました。」
+          </li>
+          <li class="border-l-4 border-sky-300 pl-3">
+            「普段は窓口業務で常に人の動きを気にしていないといけない職場なので、
+            動画視聴だけの時間をいただけたことはとてもありがたかったです。」
+          </li>
+          <li class="border-l-4 border-violet-300 pl-3">
+            「皆さん高いモチベーションと好奇心で参加されていて、たくさんのことを学べました。
+            対面で交流することで、自分のやる気も改めて高めることができました。」
+          </li>
+        </ul>
+      </section>
+    </div>
+
+    <!-- フッターメタ -->
+    <footer class="widget text-[11px] text-slate-500 flex items-center justify-between pt-2" data-id="footer-meta"
+      data-type="footer-meta" data-importance="low">
+      <span>集計対象：Udemyを活用した「もくもく会」参加後アンケート（回答数 30件）</span>
+      <span>Udemyもくもく会 / オンライン vs 会場 ダッシュボード素案</span>
+    </footer>
+  </div>
+
+  <!-- Chart.js 初期化スクリプト（実データ埋め込み済み） -->
+  <script>
+    // 集中度 & 参加意向（オンライン vs 会場）
+    const ctxFocusIntent = document.getElementById('chartFocusIntent');
+    if (ctxFocusIntent) {
+      new Chart(ctxFocusIntent, {
+        type: 'bar',
+        data: {
+          labels: ['会場参加', 'オンライン参加'],
+          datasets: [
+            {
+              label: '集中できた率（%）',
+              data: [100.0, 71.4],
+              backgroundColor: 'rgba(16, 185, 129, 0.7)',
+              borderColor: 'rgb(5, 150, 105)',
+              borderWidth: 1,
+            },
+            {
+              label: '「ぜひ参加したい」率（%）',
+              data: [69.6, 42.9],
+              backgroundColor: 'rgba(59, 130, 246, 0.7)',
+              borderColor: 'rgb(37, 99, 235)',
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 100,
+              ticks: {
+                callback: (value) => value + '%',
+              },
+            },
+          },
+        },
+      });
+    }
+
+    // 壁トップ3（オンライン vs 会場）
+    const ctxWall = document.getElementById('chartWall');
+    if (ctxWall) {
+      new Chart(ctxWall, {
+        type: 'bar',
+        data: {
+          labels: ['学習のための時間の確保', '学習内容の難易度', 'モチベーション'],
+          datasets: [
+            {
+              label: '会場参加（件数）',
+              data: [15, 5, 6], // 時間, 難易度, モチベーション
+              backgroundColor: 'rgba(16, 185, 129, 0.7)',
+              borderColor: 'rgb(5, 150, 105)',
+              borderWidth: 1,
+            },
+            {
+              label: 'オンライン参加（件数）',
+              data: [6, 3, 2],
+              backgroundColor: 'rgba(59, 130, 246, 0.7)',
+              borderColor: 'rgb(37, 99, 235)',
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+    }
+
+    // 資格・テーマの興味（オンライン vs 会場）
+    const ctxQual = document.getElementById('chartQualification');
+    if (ctxQual) {
+      new Chart(ctxQual, {
+        type: 'bar',
+        data: {
+          labels: ['ITパスポート', '情報セキュリティマネジメント', 'G検定', '生成AIパスポート'],
+          datasets: [
+            {
+              label: '会場参加（件数）',
+              data: [3, 3, 3, 2],
+              backgroundColor: 'rgba(245, 158, 11, 0.8)',
+              borderColor: 'rgb(217, 119, 6)',
+              borderWidth: 1,
+            },
+            {
+              label: 'オンライン参加（件数）',
+              data: [3, 1, 0, 0],
+              backgroundColor: 'rgba(99, 102, 241, 0.8)',
+              borderColor: 'rgb(79, 70, 229)',
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+    }
+  </script>
+</body>
+
+</html>
