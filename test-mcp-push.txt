@@ -1,1 +1,0 @@
-test mcp push works
