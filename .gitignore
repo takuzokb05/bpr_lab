@@ -1,0 +1,33 @@
+
+# バイナリ・バックアップの混入禁止（グローバル規約: 書籍PDF 872MB事故の再発防止）
+*.zip
+*.bak
+
+# 依存・ビルド成果物（コミット禁止）
+node_modules/
+.next/
+__pycache__/
+*.pyc
+sandbox/ai-teams/web/out/
+
+# 環境変数・機密
+.env
+.env.*
+!.env.example
+
+# バンドル済みバイナリ配布物
+sandbox/PDFをOCR/poppler/
+*.exe
+*.dll
+
+# git worktree・ネストされた独立リポジトリ（親では管理しない）
+.worktrees/
+
+# APIキーが平文記載されているため除外（要サニタイズ後に解除）
+sandbox/住宅比較/概要.md
+sandbox/slack_ai_news/
+sandbox/よかちょ一覧/
+# 機密が平文記載のため除外（サニタイズ後に解除可）
+sandbox/タスクマネージャー/library/config/slack_webhook.txt
+sandbox/タスクマネージャー/library/config/slack_webhook_alerts.txt
+sandbox/PDFをOCR/GeminiVer.py
