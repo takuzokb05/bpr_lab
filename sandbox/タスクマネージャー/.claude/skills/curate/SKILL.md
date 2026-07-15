@@ -12,6 +12,8 @@ allowed-tools: Read, Edit, Write, Glob, Grep, Bash, WebFetch, WebSearch
 `library/inbox/` に溜まった生データ（ユーザー手動投入・X収集・Web収集）を精査し、
 `library/articles/` に記事ファイルとして保存、該当の `catalog*.md` を更新する。
 
+> **開始前に `/drop-pickup` を実行してスマホ投稿分（Gmail `[drop]` / Slack `#drop`）を回収する（MCPコネクタ接続時）。** 回収されたURLは drop.md に追記され、下記 Phase 1 で最優先処理される。
+
 ## ディレクトリ構造
 
 ```

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIGNAL Daily Digest — 2026-03-28</title>
+<style>
+  :root {
+    --bg: #fafaf9;
+    --fg: #1a1a1a;
+    --fg-muted: #666;
+    --border: #e0e0e0;
+    --card-bg: #fff;
+    --blue: #2563eb;
+    --blue-bg: #eff6ff;
+    --blue-border: #bfdbfe;
+    --green: #16a34a;
+    --green-bg: #f0fdf4;
+    --green-border: #bbf7d0;
+    --orange: #ea580c;
+    --orange-bg: #fff7ed;
+    --orange-border: #fed7aa;
+    --purple: #7c3aed;
+    --purple-bg: #f5f3ff;
+    --purple-border: #ddd6fe;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f0f0f;
+      --fg: #e4e4e4;
+      --fg-muted: #999;
+      --border: #2a2a2a;
+      --card-bg: #1a1a1a;
+      --blue: #60a5fa;
+      --blue-bg: #172033;
+      --blue-border: #1e3a5f;
+      --green: #4ade80;
+      --green-bg: #0d2818;
+      --green-border: #14532d;
+      --orange: #fb923c;
+      --orange-bg: #271a0c;
+      --orange-border: #431407;
+      --purple: #a78bfa;
+      --purple-bg: #1e1533;
+      --purple-border: #2e1065;
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Segoe UI", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    font-size: 16px;
+  }
+  .container {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+  header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.3rem;
+  }
+  header .date {
+    color: var(--fg-muted);
+    font-size: 0.9rem;
+  }
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 2.5rem 0 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--border);
+  }
+  h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin: 1.8rem 0 0.6rem;
+    padding-left: 0.7rem;
+  }
+  h3.domain-claude { border-left: 3px solid var(--blue); }
+  h3.domain-eco { border-left: 3px solid var(--green); }
+  h3.domain-trade { border-left: 3px solid var(--orange); }
+  h3.domain-news { border-left: 3px solid var(--purple); }
+
+  p { margin-bottom: 1rem; }
+  a { color: var(--blue); text-decoration: none; border-bottom: 1px solid transparent; }
+  a:hover { border-bottom-color: var(--blue); }
+
+  .tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 0.15rem 0.45rem;
+    border-radius: 3px;
+    vertical-align: middle;
+    margin-right: 0.3rem;
+  }
+  .tag-confirmed {
+    background: var(--green-bg);
+    color: var(--green);
+    border: 1px solid var(--green-border);
+  }
+  .tag-unverified {
+    background: var(--orange-bg);
+    color: var(--orange);
+    border: 1px solid var(--orange-border);
+  }
+
+  .footnote {
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.85rem;
+    color: var(--fg-muted);
+  }
+  .footnote p { margin-bottom: 0.5rem; }
+
+  ul { margin: 0 0 1rem 1.5rem; }
+  li { margin-bottom: 0.3rem; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>SIGNAL Daily Digest</h1>
+  <div class="date">2026年3月28日（土）</div>
+</header>
+
+<!-- ============================================================ -->
+<h2>今日の新しい話</h2>
+<!-- ============================================================ -->
+
+<h3 class="domain-news">Anthropic vs 国防総省 -- 連邦地裁が差止命令</h3>
+<p>
+3月26日、サンフランシスコ連邦地裁のRita F. Lin判事が、国防総省によるAnthropicの「サプライチェーンリスク」指定を差し止める仮処分を認めた。<span class="tag tag-confirmed">confirmed</span>
+発端は、Dario Amodei CEOが自律兵器システムへのClaude利用を拒否したこと。これに対し国防長官Pete Hegsethが、通常はHuawei等の外国企業に対して使われる「サプライチェーンリスク」指定をAnthropicに適用し、Amazon・Microsoft・Palantirを含む防衛企業でのClaude利用を禁止した。判事は「<a href="https://www.cnbc.com/2026/03/26/anthropic-pentagon-dod-claude-court-ruling.html">修正第1条に基づく報復であり、政府の立場はオーウェル的</a>」と断じている。判決は7日後に発効し、政府は<a href="https://breakingdefense.com/2026/03/judge-grants-anthropic-preliminary-injunction-but-pentagon-cto-says-ban-still-stands/">第9巡回区控訴裁に上訴する構え</a>を示している。
+AI企業が自社技術の軍事利用に倫理的制約を設ける権利と、政府の調達権限が正面からぶつかった先例的な事件だ。
+</p>
+
+<h3 class="domain-news">OpenAI Sora、提供終了を正式発表</h3>
+<p>
+OpenAIが動画生成AI「Sora」の<a href="https://www.cnbc.com/2026/03/24/openai-shutters-short-form-video-app-sora-as-company-reels-in-costs.html">サービス終了</a>を発表した。<span class="tag tag-confirmed">confirmed</span>
+アプリ版は4月26日、APIは9月24日にそれぞれ停止する。報道によると、推論コストが1日約1,500万ドルに達する一方、累計売上はわずか210万ドル。計算資源をコーディング・推論・テキスト生成に再配分する戦略的撤退で、<a href="https://variety.com/2026/digital/news/openai-shutting-down-sora-video-disney-1236698277/">Disneyとの提携計画も消滅</a>している。
+「何でもできるAI企業」から「勝てる領域に集中する」への転換を象徴する出来事だ。
+</p>
+
+<h3 class="domain-news">Google Stitch「Vibe Design」発表、Figma株8%急落</h3>
+<p>
+GoogleがUI自動生成ツール「Stitch」を大幅アップデートし、自然言語と音声でUIを生成する<a href="https://www.cnbc.com/2026/03/19/figma-stock-drops-11percent-after-google-releases-vibe-design-product-stitch.html">「Vibe Design」を発表</a>した。<span class="tag tag-confirmed">confirmed</span>
+無料で提供されており、発表直後にFigmaの株価が8%超下落。Figmaは年初来35%下落している。
+デザインツール領域でも「AIが無料で代替する」構図が本格化しつつある。
+</p>
+
+<h3 class="domain-news">Atlassian、全社員10%削減でAI投資に再配分</h3>
+<p>
+<a href="https://www.cnbc.com/2026/03/11/atlassian-slashes-10percent-of-workforce-to-self-fund-investments-in-ai.html">Atlassianが約1,600名（10%）を削減</a>し、2億3,600万ドルをAI開発と法人営業に再投資する。<span class="tag tag-confirmed">confirmed</span>
+CTOを2名体制に再編し、AI専任のCTO of Teamworkを新設。Jira・Confluenceの基盤にAIを組み込む方針を明確にした。AI Rovo機能は月間500万ユーザーに到達している。
+</p>
+
+<h3 class="domain-news">日本政府、AIエージェントに「人の判断必須」指針を策定へ</h3>
+<p>
+日本政府が3月策定予定のAI指針案で、AIエージェントとロボット制御AIに<a href="https://www.nikkei.com/article/DGXZQOUA136YP0T10C26A2000000/">「人間の判断を必須とする仕組み」</a>を開発企業に要求する方針が<a href="https://aisaaswriter.com/japan-ai-regulation-news-2026/">報道</a>された。<span class="tag tag-confirmed">confirmed</span>
+「Agentic Liability Framework」として、責任帰属は「最後の人間の指示」に従い、開発者のガードレール欠陥が原因の場合は行政指導の対象となる。UiPathの調査では、日本企業の<a href="https://enterprisezine.jp/article/detail/23596">72%がセキュリティ懸念</a>をAIエージェント導入の障壁として挙げている。
+</p>
+
+<h3 class="domain-news">Harvey（法律AI）、評価額110億ドルで2億ドル調達</h3>
+<p>
+<a href="https://www.cnbc.com/2026/03/25/legal-ai-startup-harvey-raises-200-million-at-11-billion-valuation.html">法律AIスタートアップHarveyがSequoia・GIC主導で2億ドルを調達</a>し、評価額が110億ドルに達した。<span class="tag tag-confirmed">confirmed</span>
+米国上位100法律事務所の大半、500以上の企業法務チームが顧客で、売上は1.9億ドルに倍増。VCの投資先が基盤モデル企業から「垂直特化AI」へシフトしていることを示す典型例だ。
+</p>
+
+<h3 class="domain-news">SoftBank、400億ドルローンでOpenAI IPOに布石</h3>
+<p>
+<a href="https://techcrunch.com/2026/03/27/why-softbanks-new-40b-loan-points-to-a-2026-openai-ipo/">SoftBankがJPMorgan・Goldman Sachs等から400億ドルの無担保短期ローン</a>を取得した。<span class="tag tag-confirmed">confirmed</span>
+OpenAIへの300億ドル出資の原資で、12ヶ月の短期設定は貸し手がOpenAI IPO（2026年後半）での返済を見込んでいる証拠と分析されている。OpenAIの現在の評価額は8,400億ドル、週間アクティブユーザー9億人。
+</p>
+
+<h3 class="domain-claude">Claude Code Skills: MLOps1日1,000実験の事例が登場</h3>
+<p>
+Sionic AIがHugging Face Blogで、<a href="https://huggingface.co/blog/sionic-ai/claude-code-skills-training">Claude Code Skillsを使って1日1,000件以上のML実験を自動実行している事例</a>を公開した。GPU割り当て・訓練ジョブ起動・結果収集・比較レポート生成をスキルパイプラインで自動化し、worktreeとスキルの組み合わせでコンテキスト分離を実現している。
+「スキルはコーディング補助」という認識を超え、MLOpsパイプラインの自動化基盤として機能することを示した初の大規模事例だ。
+</p>
+
+<h3 class="domain-claude">TVer技術ブログ: 前提知識ゼロで大規模PJを回す</h3>
+<p>
+動画配信サービスTVerのエンジニアチームが、<a href="https://techblog.tver.co.jp/entry/claude-code-use">大規模リポジトリでのClaude Code本番活用事例</a>を公開。GitHub IssueをClaude Codeに渡すだけで、リポジトリ横断探索から実装・PR作成まで自律実行され、前提知識ゼロの状態で70%以上のIssueが自律解決されたという。「AIに投げる前の準備（Issue記述の品質）がアウトプットに最も影響する」という運用知見も含まれている。
+</p>
+
+<h3 class="domain-claude">Classmethod: 「Claude Codeにスキルを作らせる」メタワークフロー</h3>
+<p>
+<a href="https://dev.classmethod.jp/articles/lets-have-claude-code-create-skills-itself/">Classmethodが「今やった作業をスキルにして」というプロンプト一言でSKILL.mdを自動生成させる手法</a>を紹介。スキル作成の心理的ハードルをゼロにするアプローチで、スキルエコシステムの普及加速につながる発想だ。
+</p>
+
+<h3 class="domain-eco">MCP 2026ロードマップ: 4つの優先領域</h3>
+<p>
+<a href="http://blog.modelcontextprotocol.io/posts/2026-mcp-roadmap/">MCP公式ブログが2026年ロードマップ</a>を公開した。Streamable HTTP Transport（ステートレスな水平スケール対応）、<code>.well-known</code> Capability Discovery（接続前のサーバー機能問い合わせ）、Tasks Primitive（長時間タスクのライフサイクル管理）、Enterprise Extensions（監査ログ・SSO統合）の4領域を優先する。MCPはLinux Foundation AAIF傘下で標準化が進行中だ。
+</p>
+
+<h3 class="domain-eco">Cloudflare、MCP サーバー13種を一斉公開</h3>
+<p>
+<a href="https://blog.cloudflare.com/thirteen-new-mcp-servers-from-cloudflare/">Cloudflareが13種のMCPサーバーをリリース</a>した。<span class="tag tag-confirmed">confirmed</span>
+D1（SQLite）・R2（オブジェクトストレージ）・KV Bindingsに加え、注目はContainer MCP。claude.ai等の実行環境を持たないクライアントに対してサンドボックス化された実行環境を提供し、Claudeがリアルタイムでコマンド実行・仮説検証が可能になる。
+</p>
+
+<h3 class="domain-eco">Anthropic旧モデル廃止: Haiku 3は4月19日まで</h3>
+<p>
+<a href="https://platform.claude.com/docs/en/about-claude/model-deprecations">Anthropic公式がモデル廃止スケジュール</a>を更新。Claude Opus 3は2026年1月5日に廃止済み、<strong>Claude Haiku 3は4月19日に廃止予定</strong>。<span class="tag tag-confirmed">confirmed</span>
+Haiku 3を使用しているコードベースはHaiku 4.5へ移行が必要だ。モデルID文字列の変更のみで機能互換。
+</p>
+
+<h3 class="domain-trade">日経: 個人投資家にヘッジファンド級AI取引システムが開放</h3>
+<p>
+<a href="https://www.nikkei.com/article/DGXZQOUB2431X0U5A420C2000000/">日本経済新聞が、TradeWorks子会社がヘッジファンド級のAI取引システムを証券会社経由で個人投資家に提供</a>していると報道。機関投資家専用だったアルゴリズム売買が個人市場に浸透しつつある。
+</p>
+
+<h3 class="domain-trade">LLMをエントリーフィルターとして使うMT5ボットの実装記</h3>
+<p>
+<a href="https://note.com/yo_hide/n/n26938b9a54c3">FX Prime Bot</a>の実装記事がnoteに公開された。Python + Node.jsのMT5ハイブリッドボットで、60秒間隔でGemini APIを呼び出し「強気/弱気/中立」のセンチメントを取得、テクニカル指標シグナルのフィルターとして使う構成。「LLMに完全自律判断させるのではなくフィルターとして使う」という現実的なアプローチの具体例として参考になる。
+</p>
+
+
+<!-- ============================================================ -->
+<h2>継続トレンド更新</h2>
+<!-- ============================================================ -->
+
+<h3 class="domain-claude">Claude Code活用ノウハウの爆発的増加（3/27からの差分）</h3>
+<p>
+3/27に既にClaude Codeのチュートリアル・ベストプラクティス記事が大量に登場していたが、3/28はさらに深化した。特に注目すべき差分は以下の通り。
+</p>
+<p>
+<strong>CLAUDE.mdの設計論が成熟段階に。</strong>
+Builder.ioが<a href="https://www.builder.io/blog/claude-md-guide">150~200命令を超えると全命令の遵守率が一様に低下するという実測データ</a>を公開。CLAUDE.mdを「設定ファイル」ではなく「コンテキスト効率を最大化するインデックス」として設計するProgressive Disclosureパターンを提唱している。<a href="https://zenn.dev/farstep/articles/how-to-write-a-great-claude-md">Zennの記事</a>は「禁止ルールには必ず理由を付記すると遵守率が向上する」という知見を共有。<a href="https://dev.to/cleverhoods/claudemd-best-practices-from-basic-to-adaptive-9lm">DEV Communityの段階的ガイド</a>はソロからチームへのスケール時の設計指針を提示した。
+</p>
+<p>
+<strong>スキルの発動信頼性の定量化。</strong>
+Scott Spenceが<a href="https://scottspence.com/posts/how-to-make-claude-code-skills-activate-reliably">スキルの自動発動率がデフォルトで約50%</a>であり、descriptionにトリガーキーワードを明示することで80-84%まで向上するという実測データを公開した。<a href="https://www.playpark.co.jp/blog/claude-code-skills-design">playparkの記事</a>はSKILL.md設計の包括的ガイドで、400行のCLAUDE.mdをSkillsに分離して51行（87%削減）にした具体手順を示している。
+</p>
+<p>
+<strong>Hooksの本番運用パターンが出揃い始めた。</strong>
+<a href="https://blakecrosley.com/blog/claude-code-hooks-tutorial">Blake Crosley</a>・<a href="https://www.datacamp.com/tutorial/claude-code-hooks">DataCamp</a>・<a href="https://github.com/disler/claude-code-hooks-mastery">GitHub/disler</a>がそれぞれ本番運用可能なフックの具体実装を公開。重要な技術知見として、ブロッキングフックには<code>exit 1</code>ではなく<strong><code>exit 2</code></strong>が必要（<code>exit 1</code>は非ブロッキング警告扱い）という仕様が複数記事で強調されている。
+</p>
+
+<h3 class="domain-eco">Claude Agent SDK / MCP エコシステムの拡大</h3>
+<p>
+3/27にもMCP・SDKの記事は存在したが、3/28は<a href="https://platform.claude.com/docs/en/agent-sdk/overview">Claude Agent SDK（旧Claude Code SDK）の公式ドキュメント</a>が参照元として複数記事に登場し、SDK独立製品としての位置づけが明確化された。<a href="https://www.kdnuggets.com/getting-started-with-the-claude-agent-sdk">KDnuggets</a>と<a href="https://www.datacamp.com/tutorial/how-to-use-claude-agent-sdk">DataCamp</a>がそれぞれ入門チュートリアルを公開。DataCampの記事では<strong>セッション再開機能</strong>（長時間タスクの中断・再開）が本番運用に不可欠な機能として取り上げられている。
+</p>
+<p>
+MCPサーバーのエコシステムは<a href="https://zenn.dev/imohuke/articles/mcp-servers-2026">2024年11月の約100から2026年2月で8,600+サーバーに急拡大</a>（2月単月で301追加）。<a href="https://kotrotsos.medium.com/claude-code-internals-part-10-mcp-integration-713baf4e4e68">Claude Code内部実装の解析シリーズ</a>では、ToolSearch機能によるコンテキスト使用量46.9%削減の実測データが公開された。
+</p>
+
+<h3 class="domain-trade">AIトレーディング: 研究フレームワークの充実</h3>
+<p>
+3/27に引き続き、AIトレーディング関連の記事が多数登場。3/28の差分として、<a href="https://github.com/HKUDS/AI-Trader">香港大学HKUDSのライブ取引ベンチマーク</a>（バックテストではなくライブ環境での検証）、<a href="https://github.com/Open-Finance-Lab/AgenticTrading">Open Finance LabのAgenticTradingフレームワーク</a>（5層垂直アーキテクチャ、LangGraphベース）が新たに登場。<a href="https://www.flowhunt.io/blog/llm-trading-bots-comparison/">FlowHuntの比較記事</a>は、LLMの推論時間（200-2000ms）のためHFTには不適でスイング~ポジショントレードが現実的と結論づけている。
+</p>
+
+<h3 class="domain-news">モデルリリース競争とAI業界再編</h3>
+<p>
+3/27にも報道されていたモデルリリースラッシュの続報。<a href="https://www.buildfastwithai.com/blogs/ai-models-march-2026-releases">Meta Llama 4</a>（MoE採用、1000万トークンコンテキスト）、<a href="https://llm-stats.com/ai-news">OpenAI GPT-5.4</a>（105万トークンコンテキスト）が相次いでリリース。<a href="https://orchestrai.eu/blog/best-ai-agent-frameworks-2026">MicrosoftはAutoGenとSemantic KernelをAgent Frameworkに統合</a>し、フレームワーク乱立から収束へ。<a href="https://blog.google/innovation-and-ai/products/gemini-app/gemini-drop-updates-march-2026/">Google Gemini March Drop</a>では、他AIプロバイダーからの会話履歴インポート機能を追加し、乗り換えコスト削減で囲い込み競争を仕掛けている。
+</p>
+<p>
+国内では<a href="https://global.rakuten.com/corp/news/press/2026/0317_01.html">楽天「Rakuten AI 3.0」</a>（700Bパラメータ、Apache 2.0ライセンス）が正式公開。<span class="tag tag-confirmed">confirmed</span> NTTデータは2026年度中にITシステム開発の大半をAIで自動化する方針を表明している。
+</p>
+
+
+<!-- ============================================================ -->
+<div class="footnote">
+  <p><strong>ファクトチェック凡例:</strong> <span class="tag tag-confirmed">confirmed</span> = 一次ソースで裏付けあり / <span class="tag tag-unverified">unverified</span> = 裏取り未完了</p>
+  <p>ソース: library/articles/2026-03-28_113 ~ 2026-03-28_178 (66記事)。3/27の112記事を継続トレンド判定の比較対象として使用。</p>
+  <p>生成: Claude Opus 4.6 / SIGNAL Daily Digest pipeline</p>
+</div>
+
+</div>
+</body>
+</html>

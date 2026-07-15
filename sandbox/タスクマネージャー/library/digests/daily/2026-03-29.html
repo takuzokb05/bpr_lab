@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIGNAL Daily Digest — 2026-03-29</title>
+<style>
+  :root {
+    --bg: #fafaf9;
+    --fg: #1a1a1a;
+    --fg-muted: #666;
+    --border: #e0e0e0;
+    --card-bg: #fff;
+    --blue: #2563eb;
+    --blue-bg: #eff6ff;
+    --blue-border: #bfdbfe;
+    --green: #16a34a;
+    --green-bg: #f0fdf4;
+    --green-border: #bbf7d0;
+    --orange: #ea580c;
+    --orange-bg: #fff7ed;
+    --orange-border: #fed7aa;
+    --purple: #7c3aed;
+    --purple-bg: #f5f3ff;
+    --purple-border: #ddd6fe;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f0f0f;
+      --fg: #e4e4e4;
+      --fg-muted: #999;
+      --border: #2a2a2a;
+      --card-bg: #1a1a1a;
+      --blue: #60a5fa;
+      --blue-bg: #172033;
+      --blue-border: #1e3a5f;
+      --green: #4ade80;
+      --green-bg: #0d2818;
+      --green-border: #14532d;
+      --orange: #fb923c;
+      --orange-bg: #271a0c;
+      --orange-border: #431407;
+      --purple: #a78bfa;
+      --purple-bg: #1e1533;
+      --purple-border: #2e1065;
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Segoe UI", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.8;
+    font-size: 16px;
+  }
+  .container {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+  header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.3rem;
+  }
+  header .date {
+    color: var(--fg-muted);
+    font-size: 0.9rem;
+  }
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 2.5rem 0 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--border);
+  }
+  h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin: 1.8rem 0 0.6rem;
+    padding-left: 0.7rem;
+  }
+  h3.domain-claude { border-left: 3px solid var(--blue); }
+  h3.domain-eco { border-left: 3px solid var(--green); }
+  h3.domain-trade { border-left: 3px solid var(--orange); }
+  h3.domain-news { border-left: 3px solid var(--purple); }
+
+  p { margin-bottom: 1rem; }
+  a { color: var(--blue); text-decoration: none; border-bottom: 1px solid transparent; }
+  a:hover { border-bottom-color: var(--blue); }
+
+  .tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 0.15rem 0.45rem;
+    border-radius: 3px;
+    vertical-align: middle;
+    margin-right: 0.3rem;
+  }
+  .tag-confirmed {
+    background: var(--green-bg);
+    color: var(--green);
+    border: 1px solid var(--green-border);
+  }
+  .tag-unverified {
+    background: var(--orange-bg);
+    color: var(--orange);
+    border: 1px solid var(--orange-border);
+  }
+
+  .footnote {
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.85rem;
+    color: var(--fg-muted);
+  }
+  .footnote p { margin-bottom: 0.5rem; }
+
+  ul { margin: 0 0 1rem 1.5rem; }
+  li { margin-bottom: 0.3rem; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>SIGNAL Daily Digest</h1>
+  <div class="date">2026年3月29日（日）</div>
+</header>
+
+<!-- ============================================================ -->
+<h2>今日の新しい話</h2>
+<!-- ============================================================ -->
+
+<h3 class="domain-claude">Claude Code v2.1.86: セッションID公開とHooksの条件分岐</h3>
+<p>
+<a href="https://x.com/ClaudeCodeLog/status/2037653369305628847">Claude Code v2.1.86がリリース</a>された。<span class="tag tag-confirmed">confirmed</span>
+CLI変更26件、システムプロンプト変更5件。目玉はAPIリクエストに<code>X-Claude-Code-Session-Id</code>ヘッダーが付与されるようになった点で、プロキシやログ基盤がリクエスト本文を解析せずにセッション単位で集約できるようになった。また、<a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">--resumeコマンドの不具合修正</a>やWindows環境でのスキル呼び出し時の設定ファイル破損問題が修正されている。
+</p>
+<p>
+さらに同バージョンで、<a href="https://x.com/jarredsumner/status/2037675111172743184">Hooksに<code>"if"</code>条件分岐が追加</a>された。<span class="tag tag-confirmed">confirmed</span>
+フック実行前にコマンドがパターンに合致するかチェックし、不一致ならスキップする。長時間セッションで複数のフックを使い分けるプロジェクトにとっては数分単位の節約になる。フックをヘビーに使っている環境ほど恩恵が大きい。
+</p>
+
+<h3 class="domain-claude">Auto Mode設計の内部解説: Anthropicエンジニアリングブログ</h3>
+<p>
+<a href="https://www.anthropic.com/engineering/claude-code-auto-mode">Anthropicがエンジニアリングブログで、Auto Modeの設計思想を公開</a>した。<span class="tag tag-confirmed">confirmed</span>
+2段階分類器の構成で、第1段階は高速なyes/no判定、フラグが立った場合のみ第2段階でChain-of-Thought推論に入る。重要な設計方針として、分類器にはClaudeの中間推論を見せない。エージェントが「この操作は安全です」と説得的な理由を生成しても、分類器はそれを無視する。内部テストでは誤検出率0.4%、合成データでのすり抜け率5.7%。「全部許可」と「毎回確認」の間の現実的な中間地点を、データ付きで示した点に価値がある。
+</p>
+
+<h3 class="domain-claude">PowerShellネイティブ対応、Auto Dream、acp spawn</h3>
+<p>
+<a href="https://x.com/felixrieseberg/status/2037591709765545985">Claude CodeがPowerShellをネイティブ実行可能に</a>なった（v2.1.84、オプトイン・プレビュー）。<span class="tag tag-confirmed">confirmed</span>
+Windows開発者がWSLやGit Bashを経由せずにPowerShellスクリプトを直接実行できる。VPSでWindows Serverを使ってFX自動取引を動かしている環境では、PowerShellタスク操作のワークフロー改善に直結する。
+</p>
+<p>
+<a href="https://x.com/minchoi/status/2037581064080646545">Auto Dream</a>はメモリの自動整理機能で、セッションが長期化してもコンテキストが劣化しにくくなる仕組みだ。また<a href="https://x.com/steipete/status/2037725493315707290">acp spawn</a>という新機能の予告も出ており、<code>/acp spawn codex --bind here</code>で現在のセッションをCodex等の別エージェントに引き渡せるようになる。エージェント間連携のプリミティブが次々と追加されている。
+</p>
+
+<h3 class="domain-claude">Letta「claude-subconscious」: セッション横断メモリ層</h3>
+<p>
+<a href="https://github.com/letta-ai/claude-subconscious">Lettaがclaude-subconsciousをオープンソース公開</a>した。<span class="tag tag-confirmed">confirmed</span>
+バックグラウンドエージェントが全セッションを監視し、作業パターン・未完了タスク・プロジェクト横断の文脈を学習して、次のプロンプトに自動注入する。初回は完全なメモリブロックを注入、以降は差分のみ送信してトークン膨張を防ぐ設計。複数の並列セッションでメモリを共有できる点が特徴で、2コマンドでインストール可能。
+</p>
+
+<h3 class="domain-claude">Boris Chernyの「CLAUDE.mdテンプレート」が拡散</h3>
+<p>
+Claude Code作者のBoris Chernyが<a href="https://x.com/Suryanshti777/status/2037558286137143591">CLAUDE.mdのテンプレートを公開</a>し、急速に拡散している。Plan Mode Default、Subagent Strategy、Self-Improvement Loop、Verification Before Done、Demand Elegance、Autonomous Bug Fixingの6原則で構成される。「AIが犯したバグは永久ルールになる」「サブエージェントを頻繁に使ってメインコンテキストを清潔に保つ」など、3/28に登場したCLAUDE.md設計論の「公式見解」としての位置づけだ。
+</p>
+
+<h3 class="domain-eco">Cline Kanban: 複数CLIエージェントの並列実行基盤</h3>
+<p>
+<a href="https://x.com/testingcatalog/status/2037188884925190497">Clineが「Kanban」をリリース</a>した。無料・オープンソースのローカルWebアプリで、gitリポジトリ上で複数のCLIエージェント（Claude Code、Codex、Cline CLI）を並列実行する。各タスクカードに専用ターミナルと分離されたworktreeが割り当てられ、エージェント同士が競合しない。<a href="https://x.com/eng_khairallah1/status/2036156107412869236">ComposioのAgent Orchestrator</a>（30エージェント並列、CI連携付き）も同日公開されており、「エージェントのオーケストレーション」がプロダクトカテゴリとして確立しつつある。
+</p>
+
+<h3 class="domain-eco">Sierra Ghostwriter: 会話だけでカスタマーサポートエージェントを構築</h3>
+<p>
+<a href="https://sierra.ai/blog/agents-as-a-service">Sierra（元Salesforce CEO Bret Taylor創業）が「Ghostwriter」を発表</a>した。<span class="tag tag-confirmed">confirmed</span>
+自然言語で会話するだけで、チャット・電話・30言語以上対応のカスタマーサポートエージェントを構築できる。SOPや通話記録、ホワイトボード写真を入力に受け付け、実際の顧客対話を分析して改善をサンドボックスで検証し自動デプロイする継続的改善ループを内蔵している。「エージェントを作るエージェント」というメタ構造が商用プロダクトとして登場した。
+</p>
+
+<h3 class="domain-eco">Mistral Voxtral TTS: オープンウェイトの音声合成モデル</h3>
+<p>
+<a href="https://mistral.ai/news/voxtral-tts">MistralがVoxtral TTSをリリース</a>した。<span class="tag tag-confirmed">confirmed</span>
+4Bパラメータのオープンウェイトモデルで、9言語対応、3秒の音声サンプルからボイスクローンが可能。推論レイテンシは70ms（10秒の音声に対して）。ElevenLabsを上回るとMistralは主張しており、Hugging FaceでCC BY NC 4.0ライセンスで公開されている。ローカル実行可能なTTSモデルとして、エージェントの音声インタフェース構築への応用が見込まれる。
+</p>
+
+<h3 class="domain-eco">NVIDIA ProRL Agent: エージェント訓練インフラの構造的欠陥を指摘</h3>
+<p>
+<a href="https://www.marktechpost.com/2026/03/27/nvidia-ai-unveils-prorl-agent-a-decoupled-rollout-as-a-service-infrastructure-for-reinforcement-learning-of-multi-turn-llm-agents-at-scale/">NVIDIAがProRL Agentを発表</a>した。<span class="tag tag-confirmed">confirmed</span>
+主要なエージェントRL訓練フレームワーク（SkyRL、VeRL-Tool、Agent Lightning、rLLM、GEM）を監査し、全てがロールアウト（I/O集中）と訓練（GPU集中）を同一プロセスで実行している構造的欠陥を発見。ProRL Agentはロールアウトを独立HTTPサービスとして分離し、Qwen 8BのSWE-Benchスコアを9.6%から18.0%へほぼ倍増させた。「モデル能力の問題と思われていたものが、実はインフラ設計の問題だった」という発見は、エージェント開発全体の方向性に影響する。
+</p>
+
+<h3 class="domain-eco">ARC-AGI-3: 最先端AIが1%未満、人間は100%</h3>
+<p>
+<a href="https://arcprize.org/arc-agi/3">ARC-AGI-3ベンチマーク</a>が3月25日に公開された。<span class="tag tag-confirmed">confirmed</span>
+静的パズルを廃止し、ビデオゲーム的なインタラクティブ環境でAIエージェントがルール発見・目標設定・問題解決を行う形式に全面刷新。結果はGemini 3.1 Pro 0.37%、GPT-5.4 0.26%、Claude Opus 4.6 0.25%、Grok-4.20 0.00%。人間は指示なしで100%解答。興味深いのは、単純なCNN+グラフ探索アプローチが12.58%に達しており、LLMのスケーリングではなく新しいアルゴリズム的アイデアが鍵であることを示唆している。
+</p>
+
+<h3 class="domain-trade">AIトレーディングの市場インフラ整備が加速</h3>
+<p>
+<a href="https://www.pymnts.com/news/regulation/2026/cftc-launches-task-force-to-facilitate-innovation-in-derivatives-markets/">CFTCがAI取引・暗号資産デリバティブ・予測市場に特化したイノベーション・タスクフォースを設置</a>した。<span class="tag tag-confirmed">confirmed</span>
+3月24日発表で、「問題を訴追する」姿勢から「産業として規制する」姿勢への明確な転換を示す。3/27に報じた米財務省FS AI RMF、ESMAのMiFID IIブリーフィング、日銀のAI取引法的責任論文に加え、米国の商品先物規制当局も動き出した。
+</p>
+<p>
+プラットフォーム側の動きも活発だ。<a href="https://x.com/unusual_whales/status/2037597520361066522">Unusual WhalesがMCPサーバー経由でオプション・株式・予測市場のライブデータをAIに提供</a>開始。<a href="https://x.com/SuhailKakar/status/2037180287655043104">Polymarketも公式にCLI・MCP・Agent Skillsのフルスイートを構築</a>し、Claudeが「Bloomberg端末」的なターミナルをワンショットで生成するデモを公開している。<a href="https://x.com/Tradesdontlie/status/2036201854661427251">ClaudeがTradingViewチャートを自動で開いて分析レポートを生成</a>する事例も登場した。AIエージェントが直接金融データにアクセスするインフラが急速に整いつつある。
+</p>
+
+<h3 class="domain-trade">ADX最適化の実体験: 20年の経験をAIが1回で超えた話</h3>
+<p>
+<a href="https://x.com/onlybreakouts/status/2035567002929246318">20年以上ADXパラメータを調整してきたトレーダーが、AIにフィルター改善を依頼</a>した結果、純利益が$87Kから$200K超へ、ドローダウンが$23Kから$13Kへ改善した体験記。興味深いのは「AIの提案は自分のロジックより単純だった」という点だ。ADXが本来捉えようとしていた測定を、より直接的な方法で置き換えたという。本人はオーバーフィッティングの検証と複数市場でのアウトオブサンプルテストを実施済みとしている。個人の一次情報であり再現検証は読者に委ねられるが、ADXフィルターを実装中の当方にとっては参考になる事例だ。
+</p>
+
+<h3 class="domain-news">Anthropic著作権訴訟が決着: 15億ドル、書籍1冊あたり約3,000ドル</h3>
+<p>
+<a href="https://www.anthropiccopyrightsettlement.com">Anthropicと作家間の著作権訴訟（Bartz v. Anthropic）が和解</a>に達した。<span class="tag tag-confirmed">confirmed</span>
+和解金は15億ドル（約2,400億円）で、著作権訴訟としては過去最大規模。約50万冊の書籍に対し1冊あたり約3,000ドルが支払われる。裁判所は「合法的に取得した書籍のAI学習利用はフェアユース」と認めつつ、「海賊版サイトからのダウンロードと保持はフェアユースではない」と判断した。請求期限は3月30日。同日、<a href="https://x.com/heynavtoor/status/2037638554374099409">Stony Brook大学とコロンビア大学法科大学院の研究チームが、GPT-4o・Gemini 2.5 Pro・DeepSeek V3.1から著作権書籍を最大90%まで逐語的に抽出</a>できることを実証した論文も話題となっている。
+</p>
+
+<h3 class="domain-news">Google、Anthropicデータセンターに50億ドル融資</h3>
+<p>
+<a href="https://seekingalpha.com/news/4569914-google-to-finance-data-center-project-leased-to-anthropic">GoogleがAnthropicのテキサス州Nexusデータセンター（50億ドル規模）の建設融資</a>を提供する。<span class="tag tag-confirmed">confirmed</span>
+2026年後半に500MW、最終的に7.7GWまで拡大予定。Anthropicは<a href="https://www.anthropic.com/news/expanding-our-use-of-google-cloud-tpus-and-services">Google Cloud TPUを最大100万基に拡大する計画</a>で、Claude 5の訓練にTPUが使用される見込みだ。<a href="https://x.com/cryptopunk7213/status/2037672055764635782">Googleの持株比率は17%から20%超へ上昇</a>する見通し。Googleにとっては「Geminiが負けてもAnthropicの株主」「Anthropicが払うTPU利用料がGeminiの研究開発費を補助」という戦略的な両面ヘッジだ。
+</p>
+
+<h3 class="domain-news">Mythos続報: サイバーセキュリティ株に145億ドルの影響</h3>
+<p>
+3/27にFortuneがスクープした<a href="https://fortune.com/2026/03/26/anthropic-says-testing-mythos-powerful-new-ai-model-after-data-leak-reveals-its-existence-step-change-in-capabilities/">Claude Mythos</a>のリーク情報が市場を動かした。<a href="https://www.investing.com/news/stock-market-news/cybersecurity-stocks-plunge-as-anthropics-claude-mythos-leak-sparks-ai-fear-4584897">CrowdStrike -7%（55億ドル消失）、Palo Alto Networks -6%（75億ドル消失）、Zscaler -4.5%</a>。<span class="tag tag-confirmed">confirmed</span>
+リーク文書によると、Mythosは「サイバー能力において他のあらゆるAIモデルを大きく上回る」とされ、「防御者の対応能力を超える速度で脆弱性を悪用できるモデルの波を引き起こす」と警告している。<a href="https://x.com/mattshumer_/status/2037608433961033882">Matt Shumer（OctoAI）は「Opusが既にどれほど優秀かを考えると、それを劇的に上回るモデルが何を達成できるか想像できるか」</a>とコメントしている。
+</p>
+
+<h3 class="domain-news">xAI Grok料金体系公開、Apple Siri全面刷新へ</h3>
+<p>
+<a href="https://x.com/tetsuoai/status/2037614683646206037">xAIがGrokの料金体系を公開</a>した。無料版（Grok 4.20、10プロンプト/10時間）からSuperGrok Heavy（月額300ドル、16エージェント並列、最大コンテキスト）まで4段階。エージェント数・コンテキスト長・生成ボリューム・計算優先度で段階的に課金する構成で、トークン従量制とは異なるアプローチだ。
+</p>
+<p>
+<a href="https://x.com/kimmonismus/status/2036518353951506612">AppleはiOS 27でSiriを全面刷新</a>する計画が報じられた。音声アシスタントからシステム全体のAIエージェントへの転換で、チャットUI、ファイルアップロード、アプリ内操作、Web閲覧を備え、Apple Foundation Models + Google Geminiで駆動する。Spotlightを統合AI検索に置き換える構想だが、先進機能の多くは2026年後半以降の段階的展開となる見込み。
+</p>
+
+<h3 class="domain-news">Perplexity: ゼロモデルで評価200億ドル企業が示すAIの構造変化</h3>
+<p>
+<a href="https://x.com/aakashgupta/status/2037639922417578246">Perplexityの現在の姿</a>が詳細に紹介された。19のモデル（Claude、Gemini、GPT-5.4、Grok、Nano Banana等）をルーティングし、プロンプト1つで最適なモデル組み合わせを選択、サブエージェントを並列起動してクラウドサンドボックスで実行する。400以上のアプリコネクタ（Gmail、GitHub、Snowflake、Salesforce等）に読み書きアクセス。2025年1月にはエンタープライズタスクの90%が2モデルで処理されていたが、12月には単一モデルの占有率が25%以下に。「ルーティング層」としての価値がモデル自体の価値を上回る時代に入りつつある。
+</p>
+
+<!-- ============================================================ -->
+<h2>継続トレンド更新</h2>
+<!-- ============================================================ -->
+
+<h3 class="domain-claude">Skills・CLAUDE.md・サブエージェントのエコシステム深化</h3>
+<p>
+3/27-28に爆発的に登場したClaude Code活用ノウハウの流れが、3/29はさらに拡散フェーズに入った。GitHubの<a href="https://x.com/sharbel/status/2037505418272841833">週間成長リポジトリTop 10</a>のうち7つがAIエージェント関連で、1位のeverything-claude-codeが+22.8Kスター、2位のsuperpowersが+17.0Kスター。<a href="https://x.com/shawn_pana/status/2037760543029686452">smux</a>はターミナルを共有インタフェースとしてClaude CodeとCodexをAPI無しで会話させるツールで、エージェント間連携の実験が個人レベルでも活発化している。
+</p>
+<p>
+<a href="https://x.com/Shimayus/status/2037369168274571325">Anthropicの1週間を振り返る投稿</a>が注目を集めた。Computer Use、Auto Dream、Auto Mode、Channels（Telegram/Discord操作）、Projects in Coworkの全てがこの1週間に集中してリリースされた一方、使用制限問題が爆発し公式声明に追い込まれた。「新機能を猛スピードで出しながらインフラが追いついていない。成長痛か構造的問題か」という問いかけが共感を呼んでいる。
+</p>
+
+<h3 class="domain-claude">Anthropicの自己批判論文: AIコーディングツールで概念理解が17%低下</h3>
+<p>
+<a href="https://x.com/Shimayus/status/2036692267935633765">Anthropicが自社製品の副作用を自ら公表した論文</a>が話題になっている。AIコーディングツールを使うと概念理解が17%低下し、速度向上はゼロだったという結果。自社のClaude Codeを提供する企業が自らリスクを公表する姿勢は注目に値するが、投稿者が指摘するように「これを読んでもClaude Codeをやめる人はいない」のが現実だ。
+</p>
+
+<h3 class="domain-eco">Hermes Agent v0.4.0とモデルリリースの競争</h3>
+<p>
+3/28のダイジェストで取り上げたモデルリリース競争の続報。<a href="https://x.com/Teknium/status/2036473305025356023">NousResearchのHermes Agent v0.4.0</a>は週300 PR統合という大型リリースで、バックグラウンドの自己改善機能、OpenAI Responses APIエンドポイント、MCP管理機能を追加。<a href="https://x.com/TheAhmadOsman/status/2037712643528482905">Qwen 3.5 27B（Dense）がHermes Agentと組み合わせて高評価</a>を得ており、小型の高品質密結合モデルとエージェントフレームワークの組み合わせが実用的な選択肢として定着しつつある。
+</p>
+
+<h3 class="domain-trade">TradingAgentsフレームワークの拡散が継続</h3>
+<p>
+3/27の初報から始まったTradingAgentsの話題は3/29も衰えず、<a href="https://x.com/eng_khairallah1/status/2035989795827077448">複数の投稿者が独立にフレームワークの紹介記事を投稿</a>している。GitHubスターは29.9Kに到達し、<a href="https://x.com/sharbel/status/2037505418272841833">週間成長リポジトリ6位</a>にランクイン（+9.2K）。ファンダメンタル・センチメント・テクニカルのアナリスト＋ブル/ベアの議論＋リスク管理という6層構造が、GPT・Claude・Gemini・Grok・Ollamaローカルモデルのいずれでも動作する点が支持されている。
+</p>
+
+<h3 class="domain-news">Sora終了後の余波と著作権問題の拡大</h3>
+<p>
+3/28に報じたSora終了の話題は3/29も<a href="https://x.com/livedoornews/status/2036589125693006250">日本の大手メディアで広く報道</a>が続いている（livedoorニュースで12,818いいね）。著作権侵害コンテンツがSNSに出回った問題が終了の一因として指摘されている。推論コスト1日1,500万ドル、累計売上わずか210万ドルというコスト構造の非対称性は、動画生成AIの商用化の困難さを端的に示している。後継モデル「Spud」については詳細未公表。
+</p>
+
+<!-- ============================================================ -->
+<div class="footnote">
+  <p><strong>ファクトチェック凡例:</strong> <span class="tag tag-confirmed">confirmed</span> = 一次ソースで裏付けあり / <span class="tag tag-unverified">unverified</span> = 裏取り未完了</p>
+  <p>ソース: library/articles/2026-03-29_179 ~ 2026-03-29_481 (303記事)。3/27の112記事 + 3/28の66記事を継続トレンド判定の比較対象として使用。ファクトチェック: 13件実施（全件confirmed）。</p>
+  <p>生成: Claude Opus 4.6 / SIGNAL Daily Digest pipeline</p>
+</div>
+
+</div>
+</body>
+</html>

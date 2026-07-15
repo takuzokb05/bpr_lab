@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIGNAL Daily Digest - 2026-03-27</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --bg-card: #ffffff;
+    --text: #1a1a1a;
+    --text-secondary: #555;
+    --text-tertiary: #888;
+    --border: #e0e0e0;
+    --blue: #2563eb;
+    --blue-bg: #eff6ff;
+    --blue-border: #bfdbfe;
+    --green: #16a34a;
+    --green-bg: #f0fdf4;
+    --green-border: #bbf7d0;
+    --orange: #d97706;
+    --orange-bg: #fffbeb;
+    --orange-border: #fde68a;
+    --purple: #7c3aed;
+    --purple-bg: #f5f3ff;
+    --purple-border: #ddd6fe;
+    --tag-confirmed: #16a34a;
+    --tag-unverified: #d97706;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #111111;
+      --bg-card: #1a1a1a;
+      --text: #e5e5e5;
+      --text-secondary: #aaa;
+      --text-tertiary: #777;
+      --border: #333;
+      --blue-bg: #172035;
+      --blue-border: #1e3a5f;
+      --green-bg: #0f2618;
+      --green-border: #1a4028;
+      --orange-bg: #261e0a;
+      --orange-border: #3d3010;
+      --purple-bg: #1a1530;
+      --purple-border: #2d2450;
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    font-size: 16px;
+  }
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+  header {
+    margin-bottom: 48px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  header .date {
+    color: var(--text-secondary);
+    font-size: 15px;
+  }
+  header .summary {
+    margin-top: 20px;
+    color: var(--text-secondary);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .domain-section {
+    margin-bottom: 48px;
+  }
+  .domain-label {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+  }
+  .domain-label.claude-code { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue-border); }
+  .domain-label.ecosystem { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+  .domain-label.trading { background: var(--orange-bg); color: var(--orange); border: 1px solid var(--orange-border); }
+  .domain-label.news { background: var(--purple-bg); color: var(--purple); border: 1px solid var(--purple-border); }
+
+  .domain-section h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+  }
+  .domain-section h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 28px;
+    margin-bottom: 10px;
+  }
+  .domain-section p {
+    margin-bottom: 14px;
+    color: var(--text);
+  }
+  a {
+    color: var(--blue);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.15s;
+  }
+  a:hover {
+    border-bottom-color: var(--blue);
+  }
+  .fact-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 3px;
+    vertical-align: middle;
+    margin-left: 4px;
+  }
+  .fact-tag.confirmed {
+    background: var(--green-bg);
+    color: var(--tag-confirmed);
+    border: 1px solid var(--green-border);
+  }
+  .fact-tag.unverified {
+    background: var(--orange-bg);
+    color: var(--tag-unverified);
+    border: 1px solid var(--orange-border);
+  }
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 48px 0;
+  }
+  footer {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    color: var(--text-tertiary);
+    font-size: 13px;
+  }
+  footer p { margin-bottom: 6px; }
+  .article-count {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin-bottom: 32px;
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+  .article-count span {
+    font-weight: 700;
+    color: var(--text);
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>SIGNAL Daily Digest</h1>
+  <div class="date">2026年3月27日 (木)</div>
+  <div class="summary">
+    この日は大きく4つの潮流が交差した。Anthropicの次世代モデル「Mythos」のリーク、Claude Codeの急成長に伴うインフラ逼迫、AIトレーディングの学術・規制・実装が同時進行で動いたこと、そしてAI業界全体のIPOレースの加速。以下、ドメイン別に統合して報告する。
+  </div>
+</header>
+
+<div class="article-count">
+  本日の処理記事数: <span>110件</span> / ファクトチェック: <span>8件実施</span>（confirmed 8 / unverified 0）
+</div>
+
+<!-- ===== Claude Code ===== -->
+<section class="domain-section">
+  <div class="domain-label claude-code">Claude Code</div>
+  <h2>Computer Useの正式プレビューと、成長痛としてのレート制限問題</h2>
+
+  <h3>Computer Use: AIがデスクトップを操作する時代へ</h3>
+  <p>
+    3月23日、AnthropicはClaude CodeとClaude Coworkに<a href="https://www.engadget.com/ai/claude-code-and-cowork-can-now-use-your-computer-210000126.html">Computer Use機能をリサーチプレビューとして公開</a>した。<span class="fact-tag confirmed">confirmed</span>
+    ClaudeがmacOS上でファイルを開き、ブラウザを操作し、開発ツールを起動する。まずPro/Maxサブスクライバー向けに限定提供で、<a href="https://www.cnbc.com/2026/03/24/anthropic-claude-ai-agent-use-computer-finish-tasks.html">CNBCが報じたデモ</a>ではPDFエクスポートからカレンダー添付まで自律的にタスクを完了する様子が紹介された。<a href="https://www.gizmodo.jp/2026/03/claude_computer_use_feature.html">Gizmodo Japan</a>も「スマホから指示してPCを操作させる」という切り口で報道している。Windows対応は予定されているが具体的な日程は未発表。
+  </p>
+
+  <h3>Auto Mode: 自律実行とセーフティの綱引き</h3>
+  <p>
+    Computer Useと並行して、<a href="https://techcrunch.com/2026/03/24/anthropic-hands-claude-code-more-control-but-keeps-it-on-a-leash/">TechCrunchはAuto Mode（Research Preview）のローンチ</a>をバランスよく報じた。<span class="fact-tag confirmed">confirmed</span>
+    内部AIセーフティ分類器が各アクションを実行前に安全性確認し、安全なものを自動承認、危険なものをブロックする。Anthropicは「サンドボックス環境での使用を強く推奨」としており、長時間自律実行に伴うリスクへの慎重な姿勢が見える。
+  </p>
+
+  <h3>v2.1.74〜v2.1.84: 3月のアップデートラッシュ</h3>
+  <p>
+    3月だけでバージョンが2.1.63から2.1.84へと急速にイテレーションされた。<a href="https://qiita.com/kotaro_ai_lab/items/aa2fe480b062720d3b60">Qiitaのまとめ記事</a>によると、主な新機能はRemote Control、MCP Elicitation、<code>/copy N</code>コマンド、そして前述のComputer Use正式対応。<a href="https://pasqualepillitteri.it/en/news/381/claude-code-march-2026-updates">英語圏の包括的まとめ</a>では、Voice Mode（スペースキーで音声入力・20言語対応）、<code>/loop</code>スケジュールタスク、<code>/effort</code>コマンド（3段階の努力レベル設定）、Auto Memoryも紹介されている。
+  </p>
+
+  <h3>レート制限問題: 需要がインフラを超えた</h3>
+  <p>
+    3月23日頃から、<a href="https://www.macrumors.com/2026/03/26/claude-code-users-rapid-rate-limit-drain-bug/">MacRumors</a>が報じたようにClaude Codeユーザーから「5時間枠が1〜2時間で枯渇する」という報告が殺到した。<span class="fact-tag confirmed">confirmed</span>
+    <a href="https://github.com/anthropics/claude-code/issues/38335">GitHub Issue #38335</a>にはMax 5xユーザーが90分で上限到達、Max 20xユーザーが1プロンプトで21%から100%に跳んだという報告もある。<a href="https://www.theregister.com/2026/03/26/anthropic_tweaks_usage_limits/">The Register</a>によると、AnthropicはFreeからMax 20xまで全プランで一時的にサービス提供量を削減した。Anthropicのシヒパー氏は「増大する需要に対応するためピーク時の制限を調整している」と声明を出している。裏を返せば、Claude Codeの成長速度がインフラ拡張を上回っている証左だ。
+  </p>
+
+  <h3>実務活用: 月400PR、サブエージェント自動テスト、楽天のHooks活用</h3>
+  <p>
+    日本の開発者コミュニティからも充実した実践事例が出てきた。<a href="https://zenn.dev/knowledgework/articles/20260125-create-400-prs-with-claude-code">KnowledgeWork社は月400件超のPR</a>を一人チームで生産するワークフローを公開。<a href="https://zenn.dev/smartshopping/articles/cfd3bd069133ee">スマートショッピングはサブエージェントによるテスト自動修正</a>を、<a href="https://zenn.dev/rakuten_tech/articles/claude-code-spinnerverbs-hooks">楽天テックはスピナーテキストのカスタマイズ</a>でGitHubリリース情報を作業中に流し読みする仕組みを公開した。Agent Teamsを使った<a href="https://zenn.dev/canly/articles/76e2106de80380">並列作業</a>や、<a href="https://note.com/kakeyang/n/n6eaa19f765eb">Claude Code ActionによるGitHub CI/CD統合</a>も解説されている。
+  </p>
+  <p>
+    Claude Code作者<a href="https://mindwiredai.com/2026/03/25/claude-code-creator-workflow-claudemd/">Boris Chernyのワークフロー</a>も深掘りされた。「10〜15の並列セッションを同時実行」「Plan Modeから必ず開始」「CLAUDE.mdを100行以内に維持」が彼の原則だという。
+  </p>
+
+  <h3>開発ツール競争の現在地</h3>
+  <p>
+    <a href="https://blog.logrocket.com/ai-dev-tool-power-rankings/">LogRocketのAI開発ツールパワーランキング（3月版）</a>ではWindsurfが総合1位、Claude 4.6 OpusがSWE-bench 75.6%でモデル1位。GoogleがGemini Code Assistを個人開発者向けに完全無料化した動きも注目される。<a href="https://www.technologyreview.com/2026/01/12/1130027/generative-coding-ai-software-2026-breakthrough-technology/">MITテクノロジーレビュー</a>は「生成的コーディング」を2026年の10大ブレークスルー技術に選定しており、MicrosoftのコードのうちAI生成が30%、Googleも25%超に到達したと報告している。
+  </p>
+</section>
+
+<hr class="divider">
+
+<!-- ===== Trading ===== -->
+<section class="domain-section">
+  <div class="domain-label trading">AI Trading</div>
+  <h2>学術・規制・実装が三位一体で進むAIトレーディング</h2>
+
+  <h3>学術: TradingAgentsとStockBench</h3>
+  <p>
+    <a href="https://arxiv.org/abs/2412.20138">TradingAgents（ArXiv）</a>は、実際のトレーディング会社の組織構造をLLMマルチエージェントで再現するフレームワークだ。ファンダメンタル・センチメント・テクニカルの各アナリスト、ブル/ベアのリサーチャー、リスクマネージャーが議論を通じて意思決定する。累積リターン・シャープレシオ・最大ドローダウンでベースラインを有意に上回る結果を実証した。
+  </p>
+  <p>
+    <a href="https://arxiv.org/html/2510.02209v1">StockBench</a>は実市場でのLLMエージェントの取引能力を評価したベンチマーク研究で、テスト対象の大部分がバイ・アンド・ホールドを上回る成績を示した一方、推論チューニングモデルが命令チューニングモデルに対して一貫した優位性を持つわけではないという興味深い結果が出ている。
+  </p>
+
+  <h3>規制の同時進行: 米財務省・ESMA・日銀</h3>
+  <p>
+    規制側も急速に動いている。<a href="https://home.treasury.gov/news/press-releases/sb0401">米財務省はFS AI RMF（金融サービスAIリスク管理フレームワーク）</a>を公表した。<span class="fact-tag confirmed">confirmed</span>
+    NIST AI RMFを金融向けにアレンジした230のコントロール目標を含む実務的なガイダンスで、現時点では法的拘束力はないが、監査基準への影響が見込まれる。
+  </p>
+  <p>
+    欧州では<a href="https://www.hoganlovells.com/en/publications/esma-publishes-supervisory-briefing-on-algorithmic-trading-under-mifid-ii-what-firms-need-to-know">ESMAがMiFID II下のアルゴリズム取引監督ブリーフィング</a>を2月26日付で公表し、ストレステスト要件・事前取引コントロール・AI利用規制を明確化した。日本では<a href="https://www.imes.boj.or.jp/research/papers/japanese/kk38-2-1.pdf">日本銀行金融研究所がAI取引の法的責任に関する論文</a>を公開し、投資判断でAIを利用して損失が生じた場合の責任の所在を分析している。米・欧・日の三極で規制議論が同時進行している状況だ。
+  </p>
+  <p>
+    <a href="https://fmsb.com/wp-content/uploads/2026/02/FMSB-AI-in-Trading_Final_12.02.26_FINAL.pdf">FMSB（金融市場標準委員会）</a>も2月の実務報告書で、AI取引モデルへの明確な人間責任者の設置を求めている。
+  </p>
+
+  <h3>実装最前線: LLMを実弾で動かす人たち</h3>
+  <p>
+    <a href="https://scriptedalchemy.medium.com/from-20k-to-400k-in-a-year-my-llm-options-trading-experiment-1f9d6cecc719">Zack JacksonはLLMオプション取引で$20kを$400kに</a>増やした実験を公開した（Medium、2026年1月）。LLMが約2週間のポジション保有サイクルを特定し、モメンタムベースのプレミアム獲得戦略を自動実行した記録だ。個人の一次情報だが、再現性の検証は読者に委ねられている。
+  </p>
+  <p>
+    日本国内では<a href="https://qiita.com/bakuchiku/items/4dcb7c27c053b28543b4">Google GeminiをAI判断エンジンにしたETH/JPY自動売買ボット</a>の実装記事（Qiita）が出ており、毎分マーケットデータを収集してGeminiがENTER_LONG/SHORT/HOLD/EXITをJSON返却する仕組み。<a href="https://coin.z.com/jp/column/gpt-trade/">GMOコインはGPT-Tradeとの連携</a>で生成AI自動売買サービスを商用提供しており、国内のLLMトレーディング商用化が進んでいる。
+  </p>
+  <p>
+    企業間連携では、<a href="https://www.preferred.jp/ja/industries/finance/696">三井物産とPreferred Networksが商品先物市場向けAIモデル</a>を共同開発。Kaggle等で集めた計算モデルを自動選択・配分するシステムを構築している。
+  </p>
+</section>
+
+<hr class="divider">
+
+<!-- ===== Ecosystem ===== -->
+<section class="domain-section">
+  <div class="domain-label ecosystem">Ecosystem</div>
+  <h2>エージェント基盤の商用化とマルチエージェントの標準化</h2>
+
+  <h3>ソフトバンク「AGENTIC STAR」: 国内エージェント商用化の象徴</h3>
+  <p>
+    <a href="https://www.softbank.jp/sbnews/entry/20260327_02">ソフトバンクが3月27日に法人向け自律型AIエージェントプラットフォーム「AGENTIC STAR」を発表</a>した。<span class="fact-tag confirmed">confirmed</span>
+    特定ベンダーに依存せず複数のAIモデルをオーケストレーションできる設計で、タスクに応じてテキスト・画像・動画の最適モデルを動的選択する。SaaS形式でブラウザからアクセス可能。日本の大手通信キャリアが「コパイロット」ではなく「自律実行エージェント」を前面に出したことは、市場の成熟を示唆している。
+  </p>
+
+  <h3>NVIDIA・ガートナー: エージェントが産業構造の前提に</h3>
+  <p>
+    <a href="https://nvidianews.nvidia.com/news/ai-agents">NVIDIAはLangChainと統合したオープンなエージェント開発プラットフォーム</a>を発表。LangChainはGitHub Stars 126k超・10億回超のダウンロードを持つ業界標準ツールであり、NVIDIAがここと組んだことでエンタープライズエージェント開発の基盤が固まりつつある。
+  </p>
+  <p>
+    <a href="https://www.cio.com/article/4106859/">ガートナージャパンの2026年戦略的テクノロジートレンド</a>では「マルチエージェント・システム」が主要トレンドとして挙がり、A2A（Agent-to-Agent）とMCPプロトコルの重要性が強調された。2030年までに80%の組織がAIネイティブ開発プラットフォームを採用するとの予測も出ている。
+  </p>
+
+  <h3>日本のAIエージェント実態: 理想と現実のギャップ</h3>
+  <p>
+    <a href="https://www.dir.co.jp/report/column/20260122_012374.html">大和総研のレポート</a>は冷静だ。2025年を「AIエージェント元年」と振り返りつつ、62%の企業が試験導入したものの本格スケールできたのはわずか23%。<a href="https://cloud.google.com/blog/ja/products/ai-machine-learning/120-case-studies-on-the-latest-generative-ai-applications-released">Google Cloudが国内120社の生成AI導入事例を公開</a>した一方で、現実には「がっかりしない導入手法」を模索するフェーズにある。
+  </p>
+
+  <h3>デジタル庁「源内」: 国産LLM 7件を選定</h3>
+  <p>
+    <a href="https://www.watch.impress.co.jp/docs/news/2091358.html">デジタル庁がガバメントAI「源内」用の国産LLMを選定</a>した。<span class="fact-tag confirmed">confirmed</span>
+    NTTデータ「tsuzumi 2」、KDDI/ELYZAの「Llama-3.1-ELYZA-JP-70B」、Preferred Networks「PLaMo 2.0 Prime」、ソフトバンク「Sarashina2 mini」、日本電気「cotomi v3」、富士通「Takane 32B」、カスタマークラウド「CC Gov-LLM」の7件。5月頃に約18万人の政府職員向け大規模実証を開始し、2027年4月から正式な政府調達に移行する予定。
+  </p>
+</section>
+
+<hr class="divider">
+
+<!-- ===== News ===== -->
+<section class="domain-section">
+  <div class="domain-label news">Industry News</div>
+  <h2>Mythos リーク、IPOレース、TurboQuantショック</h2>
+
+  <h3>Anthropic「Mythos」: データリークが明かした次世代モデル</h3>
+  <p>
+    3月26日、<a href="https://fortune.com/2026/03/26/anthropic-says-testing-mythos-powerful-new-ai-model-after-data-leak-reveals-its-existence-step-change-in-capabilities/">Fortuneがスクープ</a>した。<span class="fact-tag confirmed">confirmed</span>
+    Anthropicのコンテンツ管理システムの設定ミスにより、コードネーム「Mythos」（新モデル階層名は「Capybara」）の存在がリークされた。Anthropicは「これまで開発した中で最も強力」「能力の段階的飛躍」と評し、ソフトウェアコーディング・学術推論・サイバーセキュリティの各テストでClaude Opus 4.6を「劇的に上回るスコア」を記録したとされる。同時に<a href="https://fortune.com/2026/03/27/anthropic-leaked-ai-mythos-cybersecurity-risk/">リークされた内部文書はサイバーセキュリティリスクの急増</a>を警告しており、能力と安全性の緊張がより先鋭化している。
+  </p>
+
+  <h3>IPOレース: AnthropicとOpenAIの上場競争</h3>
+  <p>
+    <a href="https://www.bloomberg.com/news/articles/2026-03-27/claude-ai-maker-anthropic-said-to-weigh-ipo-as-soon-as-october">Bloombergは3月27日付で</a>、Anthropicが2026年10月にもIPOを実施する方向でGoldman Sachs、JPMorgan、Morgan Stanleyと協議中と報じた。<span class="fact-tag confirmed">confirmed</span>
+    調達額は$60B超との報道もあり、2月に確保した$30B（評価額$380B）に続く動きだ。一方<a href="https://www.cnbc.com/2026/03/17/openai-preps-for-ipo-in-2026-says-chatgpt-must-be-productivity-tool.html">OpenAIも2026年Q4以降のIPOを準備</a>しており、$850B+の評価額を正当化するためチャットボット路線から「生産性ツール」への転換を図っている。AI業界の二大巨頭が上場レースに入ったことで、業界構造の転換期に入った感がある。
+  </p>
+
+  <h3>GoogleのTurboQuant: メモリ圧縮の衝撃波</h3>
+  <p>
+    <a href="https://www.cnbc.com/2026/03/26/google-ai-turboquant-memory-chip-stocks-samsung-micron.html">Googleが3月25日に発表した「TurboQuant」</a>は、LLMのKey-Valueキャッシュメモリを最大6倍削減し、NVIDIA H100上で最大8倍の高速化を達成する圧縮アルゴリズムだ。<span class="fact-tag confirmed">confirmed</span>
+    ICLR 2026で発表予定。精度を損なわず3ビットまで圧縮でき、モデルの再トレーニングも不要。SK Hynix株が6%下落、Samsung株も5%近く下落するほどのインパクトがあり、Cloudflare CEOが「GoogleのDeepSeek」と評した。AI推論コストの構造を変える可能性がある。
+  </p>
+
+  <h3>AI資金調達: 史上最大の月を記録</h3>
+  <p>
+    <a href="https://siliconangle.com/2026/03/13/ai-startups-funding-frenzy-aws-goes-next-whats-coming-nvidias-gtc-event/">SiliconANGLEの報道</a>によると、2026年2月はスタートアップ資金調達で史上最大の月次記録（$189B）を達成した。OpenAI($110B)、Anthropic($30B)、Waymo($16B)の3社が牽引。<a href="https://techcrunch.com/2026/02/17/here-are-the-17-us-based-ai-companies-that-have-raised-100m-or-more-in-2026/">TechCrunchのトラッカー</a>は2026年最初の7週間で$100M以上調達した米国AIスタートアップを17社リストアップしており、xAI($20B)、ElevenLabs($500M)、SkildAI($1.4B)なども名を連ねる。2026年Q1時点で2025年全体の50%超の資金が既に調達済みという異常なペースだ。
+  </p>
+</section>
+
+<hr class="divider">
+
+<footer>
+  <p>生成日: 2026-03-29 / ソース記事: 110件 / ファクトチェック: 8件（全件一次ソース確認済み）</p>
+  <p>このダイジェストはlibrary/articles/2026-03-27_* を元に生成されました。</p>
+</footer>
+
+</div>
+</body>
+</html>
