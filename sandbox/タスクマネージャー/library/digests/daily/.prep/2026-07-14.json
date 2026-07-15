@@ -1,0 +1,202 @@
+{
+  "date": "2026-07-14",
+  "generated_at": "2026-07-15T23:15:59.787415Z",
+  "article_count": 12,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-07-14_879_DevelopersIO-Claude-Code-v2-1-207-auto-mode-default-bedrock-vertex-foundry.md",
+      "title": "Claude Code v2.1.207: Auto Mode Default on Bedrock/Vertex AI/Foundry + Security Fixes",
+      "url": "https://dev.classmethod.jp/en/articles/20260711-cc-updates-v2-1-207/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Claude Code v2.1.207（2026年7月11日リリース）の主要変更点をDevelopersIOが解説。最大の変更：Bedrock・Vertex AI・Foundryでauto modeがデフォルト有効化（`CLAUDE_CODE_ENABLE_AUTO_MODE`環境変数不要に）。同環境でのデフォルトモデルがClaude Opus 4.8に変更。デスクトップアプリに内蔵ブラウザ追加。セキュリティ修正として非対話実行でコンセントダイアログをバイパスできた重大バグを修正、プラグインフックで`${user_config.*}`記法を拒否しシェルインジェクション防止。ターミナルフリーズ（長いコードブロック・テーブルのストリーミング時）・AWS SSO認証繰り返し（60秒タイムアウトガード追加）・エージェントクラッシュループを修正。クラウド基盤経由利用の組織への影響大。",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "[正確] v2.1.207が2026年7月11日リリース・Bedrock/Vertex/FoundryでのAuto Modeデフォルト化・CLAUDE_CODE_ENABLE_AUTO_MODE環境変数不要化・デフォルトモデルOpus 4.8変更・コンセントダイアログバイパスのセキュリティ修正はGitHub公式リリースノートおよび複数技術メディアで確認。"
+    },
+    {
+      "file": "2026-07-14_880_HelpNetSecurity-Claude-Code-weekly-limits-50pct-extended-July19.md",
+      "title": "Claude Code週次利用制限50%増プロモーション、7月19日まで延長",
+      "url": "https://www.helpnetsecurity.com/2026/07/13/claude-code-weekly-limits-promotion-extended/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Anthropicが2026年7月13日に発表。Claude Codeの週次利用制限50%増プロモーションを7月19日（PT 23:59）まで延長。対象プラン：Pro・Max・Team・旧来のEnterprise席。非対象：無料プラン・従量課金型Enterpriseシート。適用範囲：Claude Code（CLI・IDE拡張・デスクトップ・Web）のみ。他Claudeプロダクトや5時間上限には影響なし。手続き不要・自動適用。期限後は標準レベルに自動復帰で課金変更なし。この制限延長と並行して、Fable 5アクセスも同期限まで延長されている。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-14_881_SecurityWeek-MCP-2026-07-28-3-new-attack-surfaces.md",
+      "title": "MCP 2026-07-28 RC：エンタープライズ対応で開く3つの新攻撃面",
+      "url": "https://www.securityweek.com/new-enterprise-ready-mcp-specification-brings-new-security-challenges/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "SecurityWeekがMCP 2026-07-28 RCのセキュリティリスクを実証的に解説。新たに特定された4種の攻撃面：(1)ステートトラッキング攻撃：予測可能なトラッキングIDと状態オブジェクトでワークフローハイジャック・クロステナントデータアクセス・不正クロスアクションが可能に。(2)HTTPヘッダー脆弱性：新設MCP-Method/MCP-Nameヘッダーでプロトコル混乱・デシンクロ攻撃。`x-mcp-header`でAPIキー・トークン・PII等がLB・プロキシ・ログシステムに全露出。(3)XSS：MCP Appsプロトコル拡張が従来型ストアドXSSを導入。(4)DoS via長時間タスク：Tasks extensionで単一リクエストから高コスト処理（CPU・メモリ・DB）が起動でき、送信後即時切断可能。旧バージョンは2026年7月28日で廃止指定（12ヶ月移行期間）。CVE番号なし。セキュリティ責任はプロトコルから開発者実装に移行。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-14_882_Fmind-MCP-2026-07-28-stateless-ID-JAG-SDK-betas.md",
+      "title": "MCP 2026-07-28: ステートレスコア・ID-JAG認可・SDK Beta詳解（Fmind）",
+      "url": "https://fmind.medium.com/mcp-2026-07-28-stateless-core-enterprise-authorization-and-sdk-betas-2646a980d594",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Fmind（ML Engineer）によるMCP 2026-07-28 RCの技術深掘り解説。主要変更：(1)ステートレスコア：initialize/initializedハンドシェイク廃止。クライアント情報・バージョン・ケイパビリティが全リクエストの_metaフィールドに埋め込まれ自己記述型に。ラウンドロビンLBがセッションアフィニティなしで動作可能。(2)新HTTPヘッダー：Mcp-Protocol-Version・Mcp-Method・Mcp-Nameでルーティング最適化。(3)多ターンツール：InputRequiredResult + opaque `requestState`トークンで複数ラウンドトリップが可能。(4)エンタープライズ認可：RFC 8693 Token ExchangeによるID-JAG（Identity Assertion JWT Authorization Grant）実装でSSO連携・インタラクティブ同意不要。SDK Beta状況：Python `mcp[cli]==2.0.0b1`・TypeScript `@modelcontextprotocol/server@beta`・Go `v1.7.0-pre.1`・C# prerelease。廃止宣言：Roots・Sampling・Loggingを12ヶ月移行期間付きで廃止。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-14_883_TheDecoder-Grok45-Fable5-GPT56-price-benchmark-analysis.md",
+      "title": "Grok 4.5の低価格がFable 5・GPT-5.5/5.6との差を縮める：価格対性能分析",
+      "url": "https://the-decoder.com/grok-4-5-is-so-cheap-compared-to-fable-5-and-gpt-5-5-that-benchmark-gaps-may-not-matter-much/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "The Decoderによる2026年7月時点フロンティアモデルの価格対性能詳細比較。価格（入力/出力 per Mtok）：Grok 4.5 $2/$6 vs Fable 5 $10/$50 vs GPT-5.5/5.6 $5/$30。ベンチマーク：Terminal Bench 2.1 → Grok 83.3%・GPT 83.4%・Fable 84.3%（1pt差以内）、DeepSWE 1.1 → Fable 70%・GPT 67%・Grok 53%（コーディング複雑タスクで17pt差）。Grokのコスト優位性：タスクあたり平均1.9Mトークン（Fable 7.2M比で75%少ない）でコスト効率が圧倒的。Grok 4.5の欠点：ハルシネーション率54%（高信頼度の誤出力）・EU未提供（7月中旬目標）。速度：Grok 80トークン/秒でSonnet 5比40〜60%高速、コーディングタスクで60秒対Sonnet 70秒。要点：汎用タスク・大量生成用途ではGrok 4.5のコスト優位性が品質差を上回る可能性。",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "[概ね正確] Grok 4.5のTerminal Bench 2.1スコア83.3%・DeepSWE 1.1スコア53%・価格$2/$6は複数ソース（BenchLM.ai, DataCamp）で確認。Fable 5のDeepSWE 70%・Terminal Bench 84.3%は直接確認できず（The Decoder元記事の数値を引用している可能性）。Grokのハルシネーション率54%の数値は一次ソースから確認できず。"
+    },
+    {
+      "file": "2026-07-14_884_Qiita-Claude-Code-weekly-July11-v2-1-202-207-JA.md",
+      "title": "【JA】Claude Code週次アップデート（2026/07/11週）v2.1.202〜207：Artifacts Pro/Max開放・/review刷新・/doctor強化",
+      "url": "https://qiita.com/saitoko/items/992631068d62dfef46b0",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "Qiita（saitoko）による2026年7月11日週のClaude Code v2.1.202〜207週次まとめ。(1)Artifacts機能がPro/Maxプランに解放（v2.1.202）：従来Team/Enterprise限定だったArtifacts機能が個人共有限定でPro/Maxでも利用可能に。(2)/reviewコマンド体系刷新：`/review <pr>`は高速確認専用に戻り、詳細マルチエージェントレビューは`/code-review <level> <pr#>`に分離。Dynamic Workflowの規模を4段階から選択可能。(3)/doctorの強化（v2.1.206）：CLAUDE.mdの簡素化を自動提案する新チェックを追加。(4)/cdにディレクトリパス候補表示機能追加。(5)v2.1.207でBedrock/Vertex/FoundryのautoモードがデフォルトON・OPUS 4.8がデフォルトモデルに変更。クラウド基盤経由利用者への影響大・個人Pro/Maxユーザーへの影響は限定的。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-14_885_YougearsLab-Claude-all-updates-July1-8-2026-JA.md",
+      "title": "【JA】Claudeアップデート週次まとめ 2026年7月1〜8日：Fable 5復帰・Cowork・M365書き込み・Chrome GA",
+      "url": "https://yougears-lab.com/claude-update-20260708/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "yougears-labによる2026年7月1〜8日のClaude全体アップデート週次まとめ。主要5項目：(1)Fable 5・Mythos 5が6月12日輸出規制停止から復帰（7月1日）。Fable 5はPro/Max/Teamで追加料金なし。Mythos 5はUS政府承認機関のみ。(2)Claude Cowork Web/Mobileがベータ開始：Claude.ai・iOS/Android対応、Maxプランから先行展開、セッション・ファイルのデバイス間クラウド同期。(3)Microsoft 365コネクタに書き込みツール追加：メール・カレンダー・OneDrive・SharePointファイル作成可能（TeamsはRead-only維持）、全プラン対応・Entra管理者許可必須。(4)Claude in Chromeがv2.1.198でGA（7月1日）、有料プラン全員に永続提供。(5)Claude Code v2.1.198〜202：サブエージェントがデフォルトでバックグラウンド実行・デフォルトパーミッションがManualに変更・Dynamic workflow sizeオプション追加。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-14_886_DigitalApplied-Claude-Code-auto-mode-Bedrock-governance-gap-analysis.md",
+      "title": "Claude Code Auto ModeがBedrock/Vertex AI/Foundryでデフォルト化：ガバナンスギャップと設定詳細",
+      "url": "https://www.digitalapplied.com/blog/claude-code-auto-mode-bedrock-vertex-foundry-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "DigitalAppliedによるv2.1.207 auto mode展開の実務的詳細分析（2026年7月13日）。実装詳細：`CLAUDE_CODE_ENABLE_AUTO_MODE`環境変数が不要に変更、対応モデルはSonnet 5・Opus 4.7・4.8の3種（エイリアス「sonnet」はBedrock/VertexでSonnet 4.5を指すため非対応が落とし穴）。重大ガバナンスギャップ：Anthropic管理コンソールの`disableAutoMode`設定がBedrock/Vertex/Foundryには届かない（管理コントロールの盲点）。無効化にはself-hostedゲートウェイかMDM/Windowsレジストリが必要。設定の落とし穴：`autoMode.environment`で`\"$defaults\"`を省略するとAnthropicデフォルト保護が全消去される。セキュリティクラシファイア：2段階評価（高速フィルタ→CoT推論）、連続3ブロックまたはセッション20ブロムで自動停止（閾値変更不可）。コンプライアンス基盤を理由に規制クラウドを選んだ組織にとって中央ポリシー制御が届かない逆説的状況が発生。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-14_887_CoinEdition-LLM-trading-2026-outperform-humans-analysis.md",
+      "title": "LLM取引2026：AIエージェントは人間を上回れるか？混在する実績と主要リスク",
+      "url": "https://coinedition.com/llm-trading-in-2026-can-ai-agents-actually-outperform-humans/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "CoinEditionによるLLM取引2026年の実態総合分析。使用モデル：GPT-5・Claude 4/Opus 4.8・Gemini・Qwen・Kimi等。実績：第1週で$1,000から15%損失の報告と数ヶ月で大幅利益の報告が共存し、一貫した人間超越の証拠なし。Robinhoodが2026年5月に直接エージェント接続機能発表（感情バイアス除去・ポートフォリオ最適化目的）。主要リスク3点：(1)ハルシネーション：確信を持った誤判断が誤取引を招く、(2)混雑取引：複数エージェントが同一AI推論を参照することでシステミックリスク増大の可能性、(3)不透明な意思決定：推論プロセスの不可視性でポジション管理が困難。実用的結論：LLMは情報収集・フィルタリング・アラート生成に有効。執行はリスクパラメータ付きルールベース自動化が現実的。完全自律の一貫した優位性は現時点で実証されていない。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-14_888_Bitsgap-AI-trading-agents-vs-bots-smarter-not-safer-2026.md",
+      "title": "AIトレーディングエージェント vs 従来型Bot 2026：賢さは安全性ではない",
+      "url": "https://bitsgap.com/blog/ai-trading-agents-vs-trading-bots-in-2026-why-smarter-isnt-safer",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "Bitsgapによるエージェント型AI取引と従来型Botの安全性・有効性詳細比較。Bot優位点：決定論的実行・バックテスト可能・透明な意思決定プロセス・実行不整合の除去。エージェントの4大リスク：(1)不透明な意思決定でポジション管理困難、(2)マルチ取引所データ断片化で誤情報が誤取引を誘発、(3)ウォレット権限が攻撃面を拡大（2025年にChainalysisが158,000ウォレット侵害記録）、(4)文脈依存の動作変化でバックテスト信頼性低下。業界数値：2025年に暗号スキャムで$170億損失・AI活用詐欺は従来比4.5倍収益・AI-agentトークンセクターは2026年前半で$250〜280億規模。推奨：「AI for context, trader for judgment, bot for execution」のハイブリッドワークフロー。AIリサーチ→ルールベース戦略定義→バックテスト→デモ→スモールポジション展開という5段階アプローチ。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-14_889_Warokai-China-AI-regulation-2026-local-LLM-impact-JA.md",
+      "title": "【JA】中国AI規制2026：ローカルLLMへの影響とQwen・DeepSeek対策5選",
+      "url": "https://warokai.com/2026/07/08/china-ai-regulation-2026-local-llm-guide/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "ai-news",
+      "summary": "warokai.comが2026年7月7日Reuters報告をもとに解説。中国当局が海外からの先進AIモデルアクセス規制を強化する方針を発表。制限対象：Qwen（Alibaba、日本語対応強・Qwen2.5/3）・DeepSeek（MoEアーキテクチャ・推論タスク向け）・Baichuan・Yiシリーズ。制限手段：HuggingFace・ModelScope経由のモデルファイルダウンロード制限またはIPブロックの可能性。不透明点：APIサービス限定か配布ファイルまで含むか未確定。3つの実害：モデル多様性の損失・日本語処理オプション減少・競争圧力消失による技術進化遅延。対策5選：(1)GGUFファイルを事前ローカルバックアップ、(2)DeepSeek APIデッドライン（7月24日）前に代替モデルリサーチ、(3)ミラーサイト活用（ファイル整合性確認必須）、(4)量子化最適化（Q4_K_M・INT4形式）、(5)オープンソースコミュニティへの参加で最新情報収集。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-14_890_InformedClearly-EU-AI-Act-August2-2026-compliance-deadline.md",
+      "title": "EU AI Act 2026年8月2日施行：3つの罰則メカニズムと企業対応要件",
+      "url": "https://informedclearly.com/en/ai/55795/eu-ai-act-compliance-deadline-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "Informed Clearlyによる2026年8月2日施行のEU AI Act詳細解説。3つの施行メカニズムが同時発動：(1)汎用AIモデル（GPAI）罰則権：欧州委員会が透明性・著作権規則違反に最大€1,500万または全世界年間売上3%の罰則権を取得。(2)第50条・透明性義務：チャットボット・感情検出・合成コンテンツ（ディープフェイク）へのAI使用開示が完全施行。ユーザーへのAI交流通知が義務化。(3)市場監視権限：EU27ヶ国の国家当局が非準拠AIシステムへの調査・検査・制裁権を取得。罰則上限：禁止AI行為→€3,500万または7%、高リスクシステム・GPAI違反→€1,500万または3%、誤情報提供→€750万または1%。重要な延期：高リスクAI（Annex III）の義務はDigital Omnibusにより2027年12月まで16ヶ月猶予（まだ正式採択待ち）。企業対応5要件：リスク分類・管轄当局特定・リスク管理文書化・適合性評価・GPAI透明性対応。",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "[正確] 2026年8月2日がGPAI（汎用AIモデル）への欧州委員会の監督・執行権限発動日であることをEC公式サイトおよびartificialintelligenceact.euで確認。罰則上限（€1,500万または全世界売上3%）も確認。ただし厳密には「新たな義務の開始」ではなく「2025年8月から課されていた義務への執行権限が有効化」するタイミング。記事の表現は若干不正確だが事実として誤りではない。"
+    }
+  ],
+  "fact_checks": [
+    {
+      "file": "2026-07-14_883_TheDecoder-Grok45-Fable5-GPT56-price-benchmark-analysis.md",
+      "checked": true,
+      "verdict": "概ね正確",
+      "note": "Grok 4.5のTerminal Bench 2.1スコア83.3%・DeepSWE 1.1スコア53%・価格$2/$6は複数ソース（BenchLM.ai, DataCamp）で確認。Fable 5のDeepSWE 70%・Terminal Bench 84.3%は直接確認できず（The Decoder元記事の数値を引用している可能性）。Grokのハルシネーション率54%の数値は一次ソースから確認できず。",
+      "sources": [
+        "https://benchlm.ai/models/grok-4-5",
+        "https://the-decoder.com/grok-4-5-is-so-cheap-compared-to-fable-5-and-gpt-5-5-that-benchmark-gaps-may-not-matter-much/"
+      ]
+    },
+    {
+      "file": "2026-07-14_890_InformedClearly-EU-AI-Act-August2-2026-compliance-deadline.md",
+      "checked": true,
+      "verdict": "正確",
+      "note": "2026年8月2日がGPAI（汎用AIモデル）への欧州委員会の監督・執行権限発動日であることをEC公式サイトおよびartificialintelligenceact.euで確認。罰則上限（€1,500万または全世界売上3%）も確認。ただし厳密には「新たな義務の開始」ではなく「2025年8月から課されていた義務への執行権限が有効化」するタイミング。記事の表現は若干不正確だが事実として誤りではない。",
+      "sources": [
+        "https://ai-act-service-desk.ec.europa.eu/en/ai-act/timeline/timeline-implementation-eu-ai-act",
+        "https://artificialintelligenceact.eu/implementation-timeline/"
+      ]
+    },
+    {
+      "file": "2026-07-14_879_DevelopersIO-Claude-Code-v2-1-207-auto-mode-default-bedrock-vertex-foundry.md",
+      "checked": true,
+      "verdict": "正確",
+      "note": "v2.1.207が2026年7月11日リリース・Bedrock/Vertex/FoundryでのAuto Modeデフォルト化・CLAUDE_CODE_ENABLE_AUTO_MODE環境変数不要化・デフォルトモデルOpus 4.8変更・コンセントダイアログバイパスのセキュリティ修正はGitHub公式リリースノートおよび複数技術メディアで確認。",
+      "sources": [
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.207",
+        "https://dev.classmethod.jp/en/articles/20260711-cc-updates-v2-1-207/"
+      ]
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-07-13": 11,
+      "2026-07-12": 11,
+      "2026-07-11": 13,
+      "2026-07-10": 4,
+      "2026-07-09": 13,
+      "2026-07-08": 15,
+      "2026-07-07": 12
+    },
+    "recurring_themes": [
+      "claude",
+      "agent",
+      "mcp",
+      "trading",
+      "llm"
+    ]
+  }
+}
