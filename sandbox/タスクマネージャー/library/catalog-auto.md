@@ -1,3 +1,8 @@
+# 自動収集カタログ（旧ルート library/catalog.md、2026-05-27〜2026-07-15 収集分）
+
+> 2026-07-16 統合: 日次収集ルーチンが誤ってリポジトリルートに蓄積していた期間のカタログ。
+> 記事本体は articles/ に統合済み。テーマ別の正カタログは catalog.md / catalog-trading.md / catalog-news.md。
+
 # Library Catalog
 
 最終更新: 2026-07-15: 日次収集+キュレーション 2026-07-15（収集8件 → SIGNAL 4件）
