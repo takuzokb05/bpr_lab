@@ -727,3 +727,10 @@
 | 701 | Most AI builders still mix these up:  «p… | en | 未読 | #x-signal #ecosystem | articles/2026-05-26_2972_RoyAmal_Most_AI_builders_still_mix_these_up_p.md |
 | 702 | Big AI updates dropping 🧵 🔌 Anthropic la… | ja | 未読 | #x-signal #mcp #ecosystem | articles/2026-05-26_2973_Deepvalueagent_Big_AI_updates_dropping_Anthropic_la.md |
 | 703 | MCP与A2A：AI Agent互联互通协议标准之战加速  2026年，AI A… | ja | 未読 | #x-signal #mcp #ecosystem | articles/2026-05-26_2974_MacroNorthStar_MCP与A2AAI_Agent互联互通协议标准之战加速_2026年AI_A.md |
+| 704 | codex/claude codeでhtmlレポートをリッチにするプラグイン公開 | ja | 未読 | #drop | articles/2026-07-16_2987_X_u1_reviewable-html-workbenchプラグイン公開.md |
+| 705 | 【Claude Fable 5】無料期間で構築する自己改善型AIエージェント構築ガイド | ja | 未読 | #drop #skills #ecosystem | articles/2026-07-16_2988_X_claudecode84_Fable5で自己改善型AIエージェント構築ガイド.md |
+| 706 | Claude Fable 5が「いるうち」に頭の中を全部抜き取っておく方法 | ja | 未読 | #drop #claude-md | articles/2026-07-16_2989_X_noel_ai_lab_優秀なAIがいるうちに引き継ぎ書を作る方法.md |
+| 707 | Claude Codeのトークン消費を67%削減する裏ワザ（作業の重さでモデル使い分け） | ja | 未読 | #drop | articles/2026-07-16_2990_X_beku_AI_Claude_Codeトークン67%削減モデル使い分け.md |
+| 708 | Getting started with loops（Claude Codeのループ設計入門） | en | 未読 | #drop #routines | articles/2026-07-16_2991_X_ClaudeDevs_Getting_started_with_loops.md |
+| 709 | Fable 5を「advisor（助言役）」として使うパターン | en | 未読 | #drop #ecosystem | articles/2026-07-16_2992_X_ClaudeDevs_Fable5_as_an_advisor_pattern.md |
+| 710 | Claude CodeのAgent Skillsが全てオープンソース化（Web制作特化75スキル） | ja | 未読 | #drop #skills | articles/2026-07-16_2993_X_claudecode84_Agent_Skills_75個オープンソース化.md |
