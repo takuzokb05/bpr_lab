@@ -1,0 +1,44 @@
+name: drop-fetch
+
+# drop.md の X 投稿を adhx から取得し inbox/drop-fetched/ に JSON 保存して main へ commit する。
+# クラウドセッションは egress プロキシで adhx が 403 になるため、ネット取得工程だけを Actions に逃がす。
+# 取得済み JSON は /curate の Phase 1 がローカル読みして記事化する（ネット不要）。
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 2時間ごと（UTC）。drop は低頻度なので変更があった時だけ commit される。
+    - cron: "0 */2 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: drop-fetch
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Fetch dropped tweets via adhx
+        run: python3 "sandbox/タスクマネージャー/tools/drop_fetch.py"
+
+      - name: Commit fetched JSON (if any)
+        run: |
+          set -e
+          FETCHED_DIR="sandbox/タスクマネージャー/library/inbox/drop-fetched"
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$FETCHED_DIR"
+          if git diff --cached --quiet; then
+            echo "新規取得なし。commit をスキップ。"
+            exit 0
+          fi
+          git commit -m "chore(drop): adhx取得分を drop-fetched/ に追加 [skip ci]"
+          # 競合回避: 念のため main を rebase してから push
+          git pull --rebase origin main
+          git push origin HEAD:main
