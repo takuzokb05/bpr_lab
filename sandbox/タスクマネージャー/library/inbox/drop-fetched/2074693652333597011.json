@@ -1,0 +1,40 @@
+{
+  "id": "2074693652333597011",
+  "url": "https://x.com/claudecode84/status/2074693652333597011",
+  "text": "Claude Code責任者のAgent Skillsが\n全てオープンソース化されてる‼️\nこれで「Fable 5」を組み合わせたら\n1つの企業レベルを個人の手元で動かせる\n👇\nCodex、Claude Code、Cursorなどの\nAIエージェントで使える75個のスキルが\nまとめられていた　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　\n\n内容は主に、\n\n・Webデザイン \n・LP制作 \n・モーション設計 \n・WebGL表現 \n・UIスタイル \n・アセット生成\nに特化しています。\n\n特に気に入っているスキルはこれです\n「Video to Super Prompt」\nデザインやLP、アニメーションの\n画面録画を読み込みCodexがそのまま\nHTML実装できるレベルの詳細\nプロンプトに変換します。\n\n「HTML to Interaction Prompts」\n既存のHTMLページを解析し\nセクション構成、ボタン\nアニメーション、WebGLエフェクト\nインタラクション指示まで抽出\n\n「Stitched Full Page Capture」\nヒーロー部分だけでなく\nLP全体をキャプチャし\nページ全体をデザイン参考として\n使えるようにします。\n\n「Daily UI Inspiration」\nエージェントがWeb上の優れたLPを巡回し\nキャプチャし、詳細なプロンプトパックへ\n変換する自動ループ👇",
+  "author": {
+    "name": "Claude code研究ラボ",
+    "username": "claudecode84",
+    "avatarUrl": "https://pbs.twimg.com/profile_images/2065676637761654785/gdEU98GF_200x200.jpg"
+  },
+  "createdAt": "Wed Jul 08 03:14:47 +0000 2026",
+  "engagement": {
+    "replies": 14,
+    "retweets": 63,
+    "likes": 667,
+    "views": 138625
+  },
+  "media": {
+    "photos": [],
+    "videos": [
+      {
+        "url": "https://video.twimg.com/amplify_video/2074692254510497792/vid/avc1/2880x2160/suS5VWvX-elFhCQG.mp4?tag=28",
+        "thumbnailUrl": "https://pbs.twimg.com/amplify_video_thumb/2074692254510497792/img/n47KPNuMq_C1RngX.jpg",
+        "width": 2880,
+        "height": 2160,
+        "duration": 28.066
+      }
+    ]
+  },
+  "quoteTweet": {
+    "id": "2072546601789428152",
+    "url": "https://x.com/claudecode84/status/2072546601789428152",
+    "text": "",
+    "author": {
+      "name": "Claude code研究ラボ",
+      "username": "claudecode84",
+      "avatarUrl": "https://pbs.twimg.com/profile_images/2065676637761654785/gdEU98GF_200x200.jpg"
+    },
+    "createdAt": "Thu Jul 02 05:03:10 +0000 2026"
+  }
+}

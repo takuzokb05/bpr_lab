@@ -1,0 +1,34 @@
+{
+  "id": "2065832522198761650",
+  "url": "https://x.com/u1/status/2065832522198761650",
+  "text": "codex/claude codeでhtmlレポート作成をリッチにするプラグインを公開しました｡notionみたいにコメントを入れてそれをAIが読んで直すというワークフローをローカルで実現出来ます\n\nhttps://github.com/u-ichi/reviewable-html-workbench",
+  "author": {
+    "name": "Yuichi Uemura",
+    "username": "u1",
+    "avatarUrl": "https://pbs.twimg.com/profile_images/2064373249296007168/IAFv2qP2_200x200.jpg"
+  },
+  "createdAt": "Sat Jun 13 16:23:49 +0000 2026",
+  "engagement": {
+    "replies": 5,
+    "retweets": 74,
+    "likes": 852,
+    "views": 230764
+  },
+  "media": {
+    "photos": [
+      {
+        "url": "https://pbs.twimg.com/media/HKtPuRdaoAAVKjL.jpg?name=orig",
+        "width": 2800,
+        "height": 2400
+      }
+    ],
+    "videos": []
+  },
+  "externalLink": {
+    "url": "https://github.com/u-ichi/reviewable-html-workbench",
+    "displayUrl": "github.com",
+    "title": "GitHub - u-ichi/reviewable-html-workbench: Claude Code / Codex CLI plugin for generating reviewable HTML documents with preview, inline review comments, and agent feedback ingestion.",
+    "description": "Claude Code / Codex CLI plugin for generating reviewable HTML documents with preview, inline review comments, and agent feedback ingestion. - u-ichi/reviewable-html-workbench",
+    "thumbnailUrl": "https://opengraph.githubassets.com/75082b16be93f1139fef704abbaaed77f7841e290bef5cc163f186bbdc2e480e/u-ichi/reviewable-html-workbench"
+  }
+}
