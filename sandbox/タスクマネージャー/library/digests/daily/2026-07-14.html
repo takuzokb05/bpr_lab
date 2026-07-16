@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-07-14</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-07-14 | 12件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-07-14</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>Claude Code v2.1.207がBedrock・Vertex AI・Foundryでの「auto modeデフォルト化」という企業利用の転換点を迎えた。同時に、MCPの次世代仕様（2026-07-28 RC）がステートレス化・エンタープライズ認可を実装する一方、セキュリティ研究者から4種の新攻撃面が指摘された。規制面ではEU AI Actのうち汎用AI（GPAI）への執行権限が8月2日に発動し、グローバルなコンプライアンス対応が本格化する。モデル価格競争ではGrok 4.5が主要ベンチマーク上位陣と1pt以内の性能差でコストは5分の1以下という構図が鮮明になった。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>v2.1.207：企業向けの地殻変動（一次ソース確認済み）</h3>
+
+<p>7月11日リリースのClaude Code v2.1.207は、クラウド基盤経由の利用者にとって静かな破壊的変更だった。Bedrock・Vertex AI・Azure Foundryで`auto mode`がデフォルト有効化され、これまで必要だった`CLAUDE_CODE_ENABLE_AUTO_MODE`環境変数の設定が不要になった。デフォルトモデルはClaude Opus 4.8に変更。</p>
+
+<p>DigitalAppliedの詳細分析が指摘した重大な盲点がある――Anthropic管理コンソールの`disableAutoMode`設定がBedrock/Vertex/Foundry環境には<strong>届かない</strong>。コンプライアンス基盤を理由にクラウド基盤を選んだ組織が、中央ポリシー制御が及ばない状態に置かれるという逆説だ。無効化にはself-hostedゲートウェイかMDM/Windowsレジストリが必要になる。設定の落とし穴として`autoMode.environment`で`&quot;$defaults&quot;`を省略するとAnthropicのデフォルト保護が全消去されることも注意が必要だ。</p>
+
+<p>セキュリティ修正として、非対話実行でコンセントダイアログをバイパスできた重大バグとプラグインフックでのシェルインジェクション問題も同時修正されている。</p>
+<p>（参照: <a href="https://dev.classmethod.jp/en/articles/20260711-cc-updates-v2-1-207/" target="_blank">DevelopersIO</a>・<a href="https://www.digitalapplied.com/blog/claude-code-auto-mode-bedrock-vertex-foundry-2026" target="_blank">DigitalApplied</a>）</p>
+
+<h3>7月11日週の機能アップデート群</h3>
+
+<p>個人Pro/Maxユーザー向けの変化として、<strong>Artifacts機能がPro/Maxプランに解放</strong>された（v2.1.202、従来Team/Enterprise限定）。`/review`コマンドは高速確認専用に戻り、詳細なマルチエージェントレビューは`/code-review &lt;level&gt; &lt;pr#&gt;`に分離された。`/doctor`がCLAUDE.mdの簡素化を自動提案する新チェックを追加、`/cd`にディレクトリパス候補表示も追加されている。<strong>週次利用制限50%増プロモーションは7月19日PT 23:59まで延長</strong>中で手続き不要・自動適用。</p>
+<p>（参照: <a href="https://qiita.com/saitoko/items/992631068d62dfef46b0" target="_blank">Qiita</a>・<a href="https://www.helpnetsecurity.com/2026/07/13/claude-code-weekly-limits-promotion-extended/" target="_blank">HelpNetSecurity</a>）</p>
+
+<p>7月1〜8日の振り返りとして、<strong>Fable 5が輸出規制停止から復帰</strong>しPro/Max/Teamで追加料金なし提供が再開、<strong>Claude Cowork</strong>（デバイス間クラウド同期）がMaxプランでベータ開始、<strong>Microsoft 365コネクタに書き込みツール追加</strong>でメール・カレンダー・OneDrive操作が可能になった。</p>
+<p>（参照: <a href="https://yougears-lab.com/claude-update-20260708/" target="_blank">yougears-lab</a>）</p>
+
+<h3>MCP 2026-07-28 RC：進化とリスクの同時到来</h3>
+
+<p>次世代MCP仕様（2026-07-28 RC）の中心的変更は<strong>ステートレスコア化</strong>だ。従来のinitialize/initializedハンドシェイクが廃止され、クライアント情報が全リクエストの`_meta`フィールドに埋め込まれる自己記述型になる。これによりラウンドロビンLBがセッションアフィニティなしで動作可能になり、企業向けスケーラビリティが向上する。<strong>ID-JAG</strong>（RFC 8693 Token Exchangeベースのエンタープライズ認可）でSSO連携・インタラクティブ同意不要な認証フローも実現する。</p>
+
+<p>しかしSecurityWeekが4種の攻撃面を実証的に報告した。予測可能なトラッキングIDによるワークフローハイジャック、新設HTTPヘッダー経由のAPIキー漏洩、MCP Appsプロトコル拡張が導入するXSS、そしてTasks extensionを介したDoS（単一リクエストから高コスト処理を起動し即時切断可能）だ。旧バージョンは2026年7月28日で廃止指定（12ヶ月移行期間）。SDK BetaはPython `mcp[cli]==2.0.0b1`・TypeScript `@modelcontextprotocol/server@beta`で提供中。</p>
+<p>（参照: <a href="https://fmind.medium.com/mcp-2026-07-28-stateless-core-enterprise-authorization-and-sdk-betas-2646a980d594" target="_blank">Fmind</a>・<a href="https://www.securityweek.com/new-enterprise-ready-mcp-specification-brings-new-security-challenges/" target="_blank">SecurityWeek</a>）</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>フロンティアモデルの価格競争：Grok 4.5の衝撃（概ね確認済み）</h3>
+
+<p>2026年7月時点のモデル価格対性能比較で構図が明確になった。価格（入力/出力 per Mtok）はGrok 4.5が$2/$6なのに対し、Fable 5は$10/$50、GPT-5.5/5.6は$5/$30。Terminal Bench 2.1では3モデルが83〜84%台に収束（1pt差以内）で性能差はほぼなくなっている。</p>
+
+<p>ただしコーディングの複雑タスク（DeepSWE 1.1）ではFable 5 70%・GPT 67%・Grok 53%と17pt差があり、得意不得意は残る。加えてGrokはEU未提供（7月中旬目標）でハルシネーション率が高い（54%との報告）という制約もある。汎用タスクや大量生成用途ではGrok 4.5のコスト優位性が品質差を上回る可能性が高まっている。</p>
+<p>（参照: <a href="https://the-decoder.com/grok-4-5-is-so-cheap-compared-to-fable-5-and-gpt-5-5-that-benchmark-gaps-may-not-matter-much/" target="_blank">The Decoder</a>）</p>
+
+<h3>EU AI Act：8月2日に執行権限が発動（一次ソース確認済み）</h3>
+
+<p>2026年8月2日、EU AI ActのGPAI（汎用AIモデル）に対する欧州委員会の監督・執行権限が発動する。これは「新たな義務の開始」ではなく「2025年8月から課されていた義務への執行権限が有効化」されるタイミング。罰則上限は最大€1,500万または全世界年間売上3%。チャットボット・感情検出・合成コンテンツへのAI使用開示（第50条・透明性義務）も完全施行となる。高リスクAI（Annex III）はDigital Omnibusにより2027年12月まで猶予が続く見込み（正式採択待ち）。</p>
+<p>（参照: <a href="https://informedclearly.com/en/ai/55795/eu-ai-act-compliance-deadline-2026" target="_blank">InformedClearly</a>）</p>
+
+<h3>中国AI規制：ローカルモデルへの影響</h3>
+
+<p>中国当局が海外からの先進AIモデルアクセス規制強化を発表。Qwen・DeepSeek・Baichuan・Yiシリーズが対象で、HuggingFace・ModelScope経由のダウンロード制限またはIPブロックの可能性がある。DeepSeek APIのデッドラインは7月24日とされており、代替モデルリサーチと事前のGGUF形式ローカルバックアップが実務的な対策として挙げられている。</p>
+<p>（参照: <a href="https://warokai.com/2026/07/08/china-ai-regulation-2026-local-llm-guide/" target="_blank">warokai</a>）</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #ea580c; padding-left: 12px;">AIトレーディング</h2>
+
+<p>LLMによる自動取引の実態について、2本の記事が異なる角度から論じた。実績面では「第1週で$1,000から15%損失」「数ヶ月で大幅利益」と報告が混在し、一貫した人間超越の証拠はまだない。Robinhoodが2026年5月に直接エージェント接続機能を発表したことは象徴的だが、実用的結論は「LLMは情報収集・フィルタリング・アラート生成に有効、執行はルールベース自動化」というハイブリッド構成が現実解とされている。</p>
+
+<p>Bitsgapが強調したのはセキュリティリスクで、2025年に暗号スキャムで$170億損失・AI活用詐欺は従来比4.5倍収益という数字が背景にある。AIエージェントへのウォレット権限付与が攻撃面を拡大させる問題は、FX自動取引への応用を検討する際も参考になる。推奨ワークフローは「AIリサーチ→ルールベース戦略定義→バックテスト→デモ→スモールポジション展開」の5段階。</p>
+<p>（参照: <a href="https://coinedition.com/llm-trading-in-2026-can-ai-agents-actually-outperform-humans/" target="_blank">CoinEdition</a>・<a href="https://bitsgap.com/blog/ai-trading-agents-vs-trading-bots-in-2026-why-smarter-isnt-safer" target="_blank">Bitsgap</a>）</p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>過去7日の記事数推移：7/7（12件）→ 7/8（15件）→ 7/9（13件）→ 7/10（4件）→ 7/11（13件）→ 7/12（11件）→ 7/13（11件）→ 7/14（12件）。7/10の落ち込みは週末収集の谷で、週明けから安定した流量に戻っている。</p>
+
+<p>継続しているテーマは`claude`・`agent`・`mcp`・`trading`・`llm`の5つ。今日の特筆点は<strong>MCPとセキュリティの交点が具体化</strong>したこと――仕様のエンタープライズ成熟と並行して攻撃面の詳細報告が同日に出た構図は、MCPが「実験的プロトコル」から「本番インフラ」へ移行しつつあることの証左といえる。トレーディングテーマは引き続き「実績の混在」フェーズが続いており、突破口となる事例報告が待たれる。</p>
+
+</body>
+</html>
