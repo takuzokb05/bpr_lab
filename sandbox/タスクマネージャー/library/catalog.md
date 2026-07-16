@@ -734,3 +734,8 @@
 | 708 | Getting started with loops（Claude Codeのループ設計入門） | en | 未読 | #drop #routines | articles/2026-07-16_2991_X_ClaudeDevs_Getting_started_with_loops.md |
 | 709 | Fable 5を「advisor（助言役）」として使うパターン | en | 未読 | #drop #ecosystem | articles/2026-07-16_2992_X_ClaudeDevs_Fable5_as_an_advisor_pattern.md |
 | 710 | Claude CodeのAgent Skillsが全てオープンソース化（Web制作特化75スキル） | ja | 未読 | #drop #skills | articles/2026-07-16_2993_X_claudecode84_Agent_Skills_75個オープンソース化.md |
+| 711 | Hooks and MCP for Claude Code — Why This Matters（GoPenAI） | en | 未読 | #hooks #mcp #web-signal | articles/2026-07-16_2994_WEB_Hooks-and-MCP-for-Claude-Code-GoPenAI.md |
+| 712 | 非エンジニア55%の時代 — Claude SkillsでAIが業務を覚える（Hexabase） | ja | 未読 | #skills #web-signal | articles/2026-07-16_2995_WEB_Claude-Skills-Non-Engineer-55percent-Hexabase-JA.md |
+| 713 | Claude Code活用事例10選 — 非エンジニアでも業務が10倍速（2026年7月） | ja | 未読 | #skills #web-signal | articles/2026-07-16_2996_WEB_Claude-Code-Business-10Cases-Non-Engineer-JA.md |
+| 714 | MCPサーバー一覧・おすすめ比較 国内最大113選（2026年最新） | ja | 未読 | #mcp #ecosystem #web-signal | articles/2026-07-16_2997_WEB_MCP-Server-Japan-113-Directory-AIAgentNavi-JA.md |
+| 715 | Claude Code活用事例7選 — 非エンジニアの業務自動化（AI革命） | ja | 未読 | #skills #web-signal | articles/2026-07-16_3002_WEB_Claude-Code-Non-Engineer-7Cases-AIRevolution-JA.md |

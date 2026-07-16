@@ -242,3 +242,6 @@
 | 220 | ローマ教皇がＡＩ時代の「教義上の指針」発表、兵器への利用に警鐘…「不平等や支配な… | ja | 未読 | #x-signal #regulation | articles/2026-05-26_2983_Yomiuri_Online_ローマ教皇がＡＩ時代の教義上の指針発表兵器への利用に警鐘不平等や支配な.md |
 | 221 | 世界中の10代に人気のメタバース「Roblox」が、ゲーム開発のあり方そのものを… | ja | 未読 | #x-signal #ai-agent | articles/2026-05-26_2984_miky_e_世界中の10代に人気のメタバースRobloxがゲーム開発のあり方そのものを.md |
 | 222 | 【フィジカルAI実装の先進地へ】  5/25(月)、井上貴博内閣総理大臣補佐官を… | ja | 未読 | #x-signal | articles/2026-05-26_2985_city_kitakyushu_フィジカルAI実装の先進地へ_525月井上貴博内閣総理大臣補佐官を.md |
+| 223 | Warner AI AGENT Act — 連邦認定レジストリでAIエージェント市場を安全化 | en | 未読 | #regulation #ai-agent #web-signal | articles/2026-07-16_3003_WEB_Warner-AI-AGENT-Act-Federal-Registry-Senate.md |
+| 224 | EU理事会がAIルール簡素化・合理化に最終承認（2026年6月29日） | en | 未読 | #regulation #web-signal | articles/2026-07-16_3004_WEB_EU-Council-AI-Rules-Simplify-June2026.md |
+| 225 | 主要AIモデル早わかり一覧 — 用途別おすすめと現ステータス（2026年7月最新） | ja | 未読 | #llm-news #web-signal | articles/2026-07-16_3005_WEB_AI-Model-Overview-July2026-Uravation-JA.md |

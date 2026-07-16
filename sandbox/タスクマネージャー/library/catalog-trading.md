@@ -291,3 +291,7 @@
 
 | 263 | TradingAgents: Multi-Agent LLM Financial… | en | 未読 | #web-signal #multi-agent #llm-trading | articles/2026-05-26_2931_TradingAgents_MultiAgent_LLM_Framework_IntellectyxAI.md |
 | 264 | 今週末公開予定 EA Agent Studioです。 今回はアプリ上からバックテ… | ja | 未読 | #x-signal #fx | articles/2026-05-26_2986_FXtradersAI_今週末公開予定_EA_Agent_Studioです_今回はアプリ上からバックテ.md |
+| 265 | オープンソースLLM取引ボット — フルバックテスト付きリリース（GoPenAI） | en | 未読 | #llm-trading #implementation #web-signal | articles/2026-07-16_2998_WEB_Open-Source-LLM-Trading-Bot-Backtesting-GoPenAI.md |
+| 266 | LLMトレーディングエージェントのメモリ制御ベンチマーク（arxiv 2605.28359） | en | 未読 | #llm-trading #research #web-signal | articles/2026-07-16_2999_WEB_LLM-Trading-Memory-Benchmark-arxiv-2605-28359.md |
+| 267 | MetaTrader 5 Beta Build 5955 — MCP・AIエージェントのネイティブサポート開始 | en | 未読 | #fx #mcp #llm-trading #web-signal | articles/2026-07-16_3000_WEB_MetaTrader5-Beta-Build5955-MCP-AI-Agent-mql5.md |
+| 268 | ブローカーがMCPでAIエージェントに取引インフラを開放する競争（LeapRate） | en | 未読 | #fx #mcp #llm-trading #web-signal | articles/2026-07-16_3001_WEB_Brokers-MCP-AI-Trading-Infrastructure-Race-LeapRate.md |
