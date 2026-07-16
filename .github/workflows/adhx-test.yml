@@ -1,0 +1,31 @@
+name: adhx-reachability-test
+
+# GitHub Actions から adhx.com API が叩けるか（データセンターIPが弾かれないか）を判定するテスト。
+# 手動実行専用。判定が済んだらこのワークフローは削除してよい。
+
+on:
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe adhx API
+        run: |
+          set +e
+          # 実際に drop された投稿の1件でテスト
+          URL="https://adhx.com/api/share/tweet/u1/2065832522198761650"
+          echo "### GET $URL"
+          CODE=$(curl -sS -o body.json -w "%{http_code}" -A "Mozilla/5.0 (compatible; drop-fetch/1.0)" "$URL")
+          echo "HTTP_STATUS=$CODE"
+          echo "### body (先頭1000字):"
+          head -c 1000 body.json
+          echo ""
+          echo "### body byte size:"
+          wc -c < body.json
+          echo "### 判定:"
+          if [ "$CODE" = "200" ]; then
+            echo "OK: Actions から adhx 取得できる（本命構成が成立）"
+          else
+            echo "NG: HTTP $CODE — Actions IP が弾かれている可能性。VPS 案に切替検討"
+          fi
