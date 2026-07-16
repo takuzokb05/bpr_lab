@@ -41,9 +41,16 @@ library/
 1. `library/inbox/drop.md` を Read で読み込む
 2. テンプレート部分（ヘッダー・コメント）以外にURLが貼られているか確認
 3. URLごとに以下を実行:
-   - **x.com / twitter.com のリンク**: adhx スキル相当の処理で投稿内容を取得
-     - `GET https://adhx.com/api/share/tweet/{username}/{statusId}` を WebFetch で呼ぶ
+   - **x.com / twitter.com のリンク**: 投稿内容を取得
+     - **まず `inbox/drop-fetched/{statusId}.json` を確認**（GitHub Actions の drop-fetch が
+       事前取得したもの）。あれば Read してそれを adhx レスポンスとして使う（**ネット不要**）。
+       - クラウドセッションは egress プロキシで adhx が 403 になるため、この事前取得分を最優先で使う。
+     - 事前取得が無い場合のみ、adhx を直接呼ぶ（PC 等ネット可の環境向けフォールバック）:
+       `GET https://adhx.com/api/share/tweet/{username}/{statusId}` を WebFetch で呼ぶ。
+       - クラウドで事前取得も無く adhx も 403 なら、そのURLはスキップし drop.md に残す
+         （次回 drop-fetch が取得 → 次回 curate で処理）。
      - `article` フィールドがあれば長文記事として扱う
+     - 記事化に使った `drop-fetched/{statusId}.json` は `drop-fetched/archive/` へ移動（任意）
    - **それ以外のURL**: WebFetch で内容を取得
 4. 取得した内容を要約し、`library/articles/` に記事ファイルを生成（フォーマットは後述）
 5. 該当の `catalog*.md` に追加（更新ルールは後述）
