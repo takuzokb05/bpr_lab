@@ -1,0 +1,274 @@
+{
+  "date": "2026-07-16",
+  "generated_at": "2026-07-17T00:03:55.200778Z",
+  "article_count": 19,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-07-16_2987_X_u1_reviewable-html-workbenchプラグイン公開.md",
+      "title": "codex/claude codeでhtmlレポート作成をリッチにするプラグインを公開",
+      "url": "https://x.com/u1/status/2065832522198761650",
+      "source": "drop",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "Claude Code / Codex CLI 向けの OSS プラグイン。AIが生成したHTMLレポート／ドキュメントに対し、①プレビュー表示、②Notion風のインラインレビューコメント付与、③そのコメントをエージェントが取り込んで修正、というレビュー駆動のローカルワークフローを提供する。「AIに一発生成させて終わり」ではなく、人間のレビューコメントを構造化してエージェントにフィードバックする点が要点で、成果物の反復改善をローカル完結でできる。ドキュメント生成を業務で回す用途に直結する実用ツール。\n\n判定理由: 具体的なOSSツールの一次情報（作者本人の公開告知＋GitHubリポジトリ）。Claude Code/Codexのレビュー駆動ワークフローという実装パターンを含みSIGNAL。",
+      "body_excerpt": "codex/claude codeでhtmlレポート作成をリッチにするプラグイン「reviewable-html-workbench」を公開。Notionのように成果物のHTMLへインラインでコメントを入れ、それをAIが読んで直す（レビュー→修正）ワークフローをローカルで実現できる。\nリポジトリ: https://github.com/u-ichi/reviewable-html-workbench\n（説明: Claude Code / Codex CLI plugin for generating reviewable HTML documents with preview, inline review comments, and agent feedback ingestion）",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-16_2988_X_claudecode84_Fable5で自己改善型AIエージェント構築ガイド.md",
+      "title": "【Claude Fable 5】無料期間で構築する自己改善型AIエージェントシステム 2026年版実践完全ガイド",
+      "url": "https://x.com/claudecode84/status/2072546601789428152",
+      "source": "drop",
+      "lang": "ja",
+      "theme": "claude-ecosystem",
+      "summary": "自己改善型AIエージェントの実践設計ガイド。核は「STATE.md による状態の永続化（中断・再開）」「検証ループでエラーを学習資産化」「有効パターンをスキルとして自動蓄積し再利用」の3点で、Claude Code の CLAUDE.md / Skills / Verification と同じ思想を体系化している。自己改善を4レベル（プロンプト修正→ツール選択→ワークフロー並列化→スキル自律生成）で段階整理している点が実装の指針として有用。※記事は「Fable 5」をフレームワーク的に扱うが、実体は Claude 5世代モデル(claude-fable-5)を使ったエージェント設計論として読むのが妥当。\n\n判定理由: エージェント・アーキテクチャの設計思想を具体的コンポーネント（STATE.md/検証ループ/Skills蓄積）と4レベルの改善モデルで体系化した実践解説。自リポジトリのCLAUDE.md/Skills運用に転用できる知見でSIGNAL。",
+      "body_excerpt": "X Article（長文）。「動くAI」から「賢くなり続けるAI」への移行を主題に、自己改善型エージェントの設計思想・アーキテクチャ・実装を解説。\n- 自己改善の4レベル: ①プロンプト自己修正 ②ツール選択最適化 ③ワークフロー再構成（直列→並列化）④新スキルの自律生成（パターンをスキルとして抽象化・保存）\n- コア: STATE.md を中心に状態共有し中断→再開を可能にする状態管理／Verification Engine がエラーパターンを記録し次回の事前回避に使う／Skills 自動蓄積\n- 設計原則: 観測可能性、失敗を資産化、漸進的改善、Human-in-the-Loop（コスト閾値超過・未知状況で人間へエスカレーション）\n- 背景の課題: モデル乱立での最適選択、長時間実行の不安定性、品質の定量化困難、知識の揮発（コスト/品質/速度の3圧力）",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-16_2989_X_noel_ai_lab_優秀なAIがいるうちに引き継ぎ書を作る方法.md",
+      "title": "Claude Fable 5が「いるうち」に、頭の中を全部抜き取っておく方法",
+      "url": "https://x.com/noel_ai_lab/status/2073039341992194336",
+      "source": "drop",
+      "lang": "ja",
+      "theme": "claude-ecosystem",
+      "summary": "「賢いモデルに依存した暗黙知の揮発」への対策論。モデル性能そのものは残せないが、会話の中で確立した手順・方針・型は\"情報\"なのでファイル化して次のAIに渡せる、という切り分けが要点。特に「散らかった長い会話を読んで正しく整理する」作業こそ賢いモデルの得意分野であり、引き継ぎ書の作成自体を今の高性能モデルにやらせるべき、という主張は実務的。CLAUDE.md / 手順ファイル / Skills として暗黙知を明文化・永続化する運用の動機付けとして有用。\n\n判定理由: モデル移行期の実践知見（暗黙知の明文化・永続化）。技術ではなく運用の落とし穴と対策を具体的手順で示しておりSIGNAL。",
+      "body_excerpt": "X Article（長文）。高性能モデルが使える「今のうち」に、モデルの賢さに依存した暗黙知をファイル化して次のAIへ引き継ぐ方法を解説。\n- 賢さは2種類: ①その場の賢さ（＝モデル性能。期間終了で失われる）②残る賢さ（＝会話で確立した仕事の進め方・方針・成果物・「こう頼めばこう返る」型＝情報なのでファイル化できる）\n- 罠: 優秀なAIほど指示の行間を察するため、こちらの指示が雑になり、暗黙のルール（文体の癖・NGライン・合格ライン・資料の場所）が言語化されないまま溜まる\n- やるべき4つ: ①チャットにしか無い成果物を回収する ②「察してくれていたこと」を引き継ぎ書としてAI自身に書かせる ③引き継ぎのリハーサル ④以後の仕事が自動で残る2つのルールを入れる\n- 実例: チャット内にしか無かった手順書を数分でAIに1ファイル化させて消失を回避",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-16_2990_X_beku_AI_Claude_Codeトークン67%削減モデル使い分け.md",
+      "title": "Claude Codeのトークン消費を67%削減する裏ワザ（作業の重さでモデルを使い分ける）",
+      "url": "https://x.com/beku_ai/status/2073731796819464256",
+      "source": "drop",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "Claude Code のコスト最適化テクニック。Haiku（確認・検索）→Sonnet（実装）→Opus（判断・ライティング）→Fable（失敗コストの高い設計判断のみ）という「作業の重さ」ベースのモデル振り分けと、最初に作業表を出して自動でサブエージェントへ振り分けるプロンプト運用を提案。前掲の ClaudeDevs「advisor パターン（executor が上位モデルを助言役に呼ぶ）」と同じコスト思想を、個人の実運用レベルの振り分けルールに落とし込んだもの。宣伝混じりだが、モデル選択の指針としては具体的で実用的。\n\n判定理由: モデル使い分けによる具体的コスト削減手法＋振り分けプロンプトという実践知見。アフィリ宣伝を含むが技術的中身が実質的なのでSIGNAL。",
+      "body_excerpt": "X Article（長文）。賢いモデルばかり使うとコスト・待ち時間が膨らむため、「賢さ」ではなく「作業の重さ」でモデルを選ぶという考え方と、サブエージェント振り分け用プロンプトを紹介。\n- 4モデルの役割分担: Haiku=ファイル確認/検索/差分/フォーマット確認などの軽作業／Sonnet=方針確定後の実装・修正・置換／Opus=文章ブラッシュアップ・プロンプト調整・レビュー・構成整理など判断作業／Fable=全体設計・後戻りしにくい方針決定・複数ファイル横断判断・最終チェックなど失敗コストが高い作業\"だけ\"\n- 原則: 軽い作業は軽いモデル、重い判断は重いモデル。迷ったら下位モデルから試し、足りなければ一段上げる\n- 落とし穴: 迷った瞬間に反射的にFableへ逃げる（＝結局高性能モデル任せと同じ）／重要な設計判断を軽いモデルで済ませ手戻りを招く\n- ※記事内にアフィリエイト系セミナーの宣伝を含む",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-16_2991_X_ClaudeDevs_Getting_started_with_loops.md",
+      "title": "Getting started with loops（Claude Code のループ設計入門）",
+      "url": "https://x.com/claudedevs/status/2074208949205881033",
+      "source": "drop",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Claude Code 公式による「ループ設計」の定義と使い分け。ループ=停止条件を満たすまで作業サイクルを繰り返すエージェント、として3種を整理: ①Turn-based（対話1往復・SKILL.md で自己検証強化）②Goal-based /goal（evaluatorが決定的な終了条件を判定し差し戻す）③Time-based /loop・/schedule（定期/イベント駆動、PRマージ等で終了）。停止条件を定量的・決定的にするほど早期終了や暴走を防げるのが一貫した原則。1.4万いいねの公式一次情報で、当リポジトリのリモートトリガー/スケジュール運用の設計指針に直結する。\n\n判定理由: Claude Code チーム公式のループ設計解説（一次情報・14449いいね）。/goal・/loop・/schedule と SKILL.md 検証の具体的使い分けを提示しSIGNAL。",
+      "body_excerpt": "X Article（長文・Claude Code チーム公式）。「プロンプトする」のではなく「ループを設計する」という考え方を、ループの分類軸（起動方法／停止条件／使用する Claude Code プリミティブ／適したタスク）で整理。\n- Turn-based loop: ユーザーのプロンプトで起動、Claudeが完了/追加コンテキスト要と判断で停止。短い単発タスク向け。検証を SKILL.md に符号化し自己検証を強化するとターン数を削減できる（検証は定量的なほど良い）\n- Goal-based loop（/goal）: 手動起動、ゴール達成 or 最大ターン到達で停止。検証可能な終了条件を持つタスク向け。evaluatorモデルが条件を満たすまで差し戻す。テスト通過数やスコア閾値など決定的基準が有効\n- Time-based loop（/loop・/schedule）: 時間間隔で起動、キャンセル/完了（PRマージ・キュー空）で停止。定期業務や外部システム連携向け。間隔を長めに/時間ではなくイベント駆動にして消費管理\n- 「すべてのタスクに複雑なループが要るわけではない。最もシンプルな解から始め選択的に使う」",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-16_2992_X_ClaudeDevs_Fable5_as_an_advisor_pattern.md",
+      "title": "Fable 5 を「advisor（助言役）」として使うパターン",
+      "url": "https://x.com/claudedevs/status/2074606058128224365",
+      "source": "drop",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Claude Code 公式が挙げるコスト効率パターン。実行役（executor）に安価な Sonnet 5 を据え、判断に迷う要所だけ最上位の Fable 5 を\"助言役\"としてスポット呼び出しする2層構成。これによりトークンの大部分を低単価な executor レートで消化しつつ、重要判断の質は上位モデルで担保できる。beku_AI の「作業の重さでモデルを使い分け、Fableは失敗コストの高い判断だけ」という個人向け運用と完全に同じ思想で、その公式版・最小形。エージェントのモデル・オーケストレーション設計の基本形として押さえる価値がある。\n\n判定理由: 公式による具体的なモデル・オーケストレーション/コスト最適化パターン（executor+advisor）。1.7万いいねの一次情報でSIGNAL。",
+      "body_excerpt": "Fable 5 の頻出活用パターンの1つ:\n「Fable 5 を \"advisor（助言役)\" として使う。executor（Sonnet 5）が Fable 5 をガイダンスのために呼び出す。トークンの大半は安価な executor レートで課金される。」",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-16_2993_X_claudecode84_Agent_Skills_75個オープンソース化.md",
+      "title": "Claude CodeのAgent Skillsが全てオープンソース化（Web制作特化の75スキル）",
+      "url": "https://x.com/claudecode84/status/2074693652333597011",
+      "source": "drop",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "Web制作（デザイン/LP/モーション/WebGL/UI/アセット）に特化した75個の Agent Skills 群がOSS化されているという紹介。Claude Code だけでなく Codex・Cursor でも使える横断的なスキル集で、特に「画面録画→実装可能な超詳細プロンプト」「既存HTML→インタラクション指示抽出」「LP巡回→プロンプトパック自動生成ループ」など、視覚成果物をエージェントの入力プロンプトに変換する系が充実。Skills を\"自作する\"だけでなく\"既製の高品質スキルを輸入する\"供給源として、当リポジトリの skills 運用の参考になる。\n\n判定理由: 実在のOSSスキル集（75個）の紹介で、具体的スキル名と機能を列挙。Skills輸入元の候補となる実質情報でSIGNAL。",
+      "body_excerpt": "Agent Skills が全てオープンソース化され、Codex・Claude Code・Cursor などのAIエージェントで使える75個のスキルがまとめられていた、という紹介。内容は Webデザイン / LP制作 / モーション設計 / WebGL表現 / UIスタイル / アセット生成 に特化。\n- 「Video to Super Prompt」: デザイン/LP/アニメの画面録画を読み込み、Codexがそのまま実装できるレベルの詳細プロンプトへ変換\n- 「HTML to Interaction Prompts」: 既存HTMLを解析しセクション構成・ボタン・アニメ・WebGL・インタラクション指示まで抽出\n- 「Stitched Full Page Capture」: ヒーローだけでなくLP全体をキャプチャしデザイン参考に\n- 「Daily UI Inspiration」: 優れたLPを巡回・キャプチャし詳細プロンプトパックへ変換する自動ループ",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-16_2994_WEB_Hooks-and-MCP-for-Claude-Code-GoPenAI.md",
+      "title": "Hooks and MCP for Claude Code — Why This Matters（GoPenAI）",
+      "url": "https://blog.gopenai.com/hooks-and-mcp-for-claude-code-7c535374cdf7",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Claude CodeのHooksとMCPは別システム。MCPはClaudeが到達できる外部ツールを拡張し、HooksはそのMCP callを含む全ライフサイクルイベントでClaudeの動作を制御（許可・拒否・ログ）する。Hook発火点：セッション開始・ツール使用・プロンプト送信・コンパクション。2026年プロダクション基準は「固定ソース＋制限的Hooks＋プロジェクト別サンドボックス」の3層。Skills・Hooks・Subagentsの3プリミティブがClaudeカスタマイズの全体像。安全なエージェント実装に必要な設計パターンを提示。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-16_2995_WEB_Claude-Skills-Non-Engineer-55percent-Hexabase-JA.md",
+      "title": "非エンジニア55%の時代 — Claude SkillsでAIが業務を覚える（Hexabase）",
+      "url": "https://www.hexabase.com/column/ai-learns-business-claude-skills",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "日本企業55.2%がAIを業務活用する現状で、Claude Skillsを業務知識の「教え込み」に使う方法を解説。Skillsは~/.claude/skills/または.claude/skills/に配置するフォルダベース命令パック。ノーコードで業務フローを習得させる実装例（マーケ・経理・人事・営業）。事例：請求書確認4.5時間→35分、会議議事録からお礼メール自動生成。「最終成果物を日本語で指示できればよく、コーディング知識不要」という非エンジニア向けの敷居の低さを強調。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-16_2996_WEB_Claude-Code-Business-10Cases-Non-Engineer-JA.md",
+      "title": "Claude Code活用事例10選 — 非エンジニアでも業務が10倍速（2026年7月最新）",
+      "url": "https://genai-ai.co.jp/ai-kanri/blog/cc-yt-business-use-cases-10/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "非エンジニア向けClaude Code業務活用事例10選（genai-ai.co.jp、2026年7月）。定量成果：請求書照合4.5h→35分、営業資料60分→8分、採用書類スクリーニング1日→2時間。マーケター・経理・営業・人事の職種別ユースケースを網羅。必要スキルはフォルダ作成・CSVを開く程度のPCスキルと日本語指示力のみ。Claude Code Proは月$20で中小企業でも導入しやすい。使用コマンドも記載（/plan、カスタムSkills）。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-16_2997_WEB_MCP-Server-Japan-113-Directory-AIAgentNavi-JA.md",
+      "title": "MCPサーバー一覧・おすすめ比較 国内最大113選（2026年最新）",
+      "url": "https://aiagent-navi.com/special/mcp-directory/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-ecosystem",
+      "summary": "AIエージェントナビによる国内最大規模のMCPサーバーカタログ113選。用途別分類（開発・業務・データ・コミュニケーション・クリエイティブ）。2026年5月時点でPulseMCPに14,000超のサーバー登録、SDK累積ダウンロード9700万超。日本企業（楽楽精算・freee・kintone・サイボウズ）のMCP対応が2026年に本格化。注目：Playwright MCP（30,000スター）、Cloudflare製13本リモートMCP、Anthropic製9本クリエイティブコネクター。セキュリティ注意：2026年4月にOX SecurityがstdioトランスポートのRCE脆弱性を開示（全言語SDK対象）。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-16_2998_WEB_Open-Source-LLM-Trading-Bot-Backtesting-GoPenAI.md",
+      "title": "オープンソースLLM取引ボット — フルバックテスト付きリリース（GoPenAI）",
+      "url": "https://blog.gopenai.com/i-just-released-an-open-source-llm-trading-bot-with-full-backtesting-e0e9b12e2155",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "GoPenAI（Medium）がバックテスト機能付きオープンソースLLM取引ボットを公開。マルチエージェント構成、LLMバリアント・ローカルバリアントのオプション設計で柔軟なデプロイが可能。機能：リアルタイム市場データ取得、LLMセンチメント分析、テクニカル指標との組み合わせ判断、ポジション管理。GPT-4o・Claude Sonnet 4・Gemini等複数バックエンド対応。バックテスト期間・パラメータはカスタマイズ可能。研究・学習目的の実装として公開（本番資金への適用は非推奨と明記）。GitHubリポジトリ公開済み。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-16_2999_WEB_LLM-Trading-Memory-Benchmark-arxiv-2605-28359.md",
+      "title": "LLMトレーディングエージェントのメモリ制御ベンチマーク（arxiv 2605.28359）",
+      "url": "https://arxiv.org/abs/2605.28359",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "2026年5月arxiv論文。From Knowing to Doing（KTD）：LLMが市場知識を持っていても実際の取引判断に変換できない「遂行ギャップ」を定量化するメモリ制御ベンチマーク。GPT-4o・Claude Sonnet・Gemini等をCSI300銘柄で評価。結果：累積リターンは受動的な市場・スタイル露出で大部分が説明でき、株式選択アルファの持続的証拠は限定的。マルチエージェントフレームワークはアナリティクス精度を改善するが、「完全自律の意思決定者ではなく監督下のリサーチアシスタント」として捉えるべきとの結論。FX自動取引へのLLM適用の期待値を合理的に設定する上で重要な研究。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-16_3000_WEB_MetaTrader5-Beta-Build5955-MCP-AI-Agent-mql5.md",
+      "title": "MetaTrader 5 Beta Build 5955 — MCP・AIエージェントのネイティブサポート開始",
+      "url": "https://www.mql5.com/en/forum/511825",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "2026年7月16日（本日）、MetaQuotesがMT5新ベータビルド5955を公開。最大の新機能はModel Context Protocol（MCP）とAIエージェントのビルトインサポート。クライアントターミナルとMetaEditor両方で利用可能。AIエージェントが自然言語でMT5に接続し、マーケットデータ取得・注文発注・ポジション管理・テクニカル分析が可能に。従来はコミュニティ製MCP Serverでの回避策が必要だったが公式実装で信頼性向上。Webull・Deriv・IG・eToro等の主要ブローカーに続きMetaQuotesが追随。FX自動取引にLLMを組み込む実験の敷居が大幅低下。パブリックベータ参加推奨。本日リリースの一次情報。",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "CONFIRMED: mql5.com公式フォーラムで確認。クライアントターミナルとMetaEditor両方で利用可能。MetaQuotes-Demoサーバー経由でパブリックベータ参加可能。YouTube解説動画も存在し、ユーザーがClaudeをMT5に接続成功している報告あり。"
+    },
+    {
+      "file": "2026-07-16_3001_WEB_Brokers-MCP-AI-Trading-Infrastructure-Race-LeapRate.md",
+      "title": "ブローカーがMCPでAIエージェントに取引インフラを開放する競争（LeapRate）",
+      "url": "https://www.leaprate.com/technology/broker-mcp-ai-agent-trading-infrastructure-race-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "LeapRate（2026年）。Webull・Deriv・IG・ThinkMarkets・eToro等がAIエージェント向けMCP対応APIを公開する競争が加速。2026年5月Robinhoodが証券口座へのAIエージェント直接接続を発表（CEO「agentic financeの始まり」）。先行組はエージェントが自動リサーチ・ニュース解析・テクニカル分析・注文執行を統合するワークフローを構築中。リスク：認証・権限設計なしのエージェント接続は不正アクセスや意図しない大量注文の危険。MT5 Build 5955のMCP公式対応により小規模システムトレーダーの参入障壁も低下。業界全体のMCP統合トレンドを俯瞰する重要記事。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-16_3002_WEB_Claude-Code-Non-Engineer-7Cases-AIRevolution-JA.md",
+      "title": "Claude Code活用事例7選 — 非エンジニアの業務自動化パターン（2026年最新）",
+      "url": "https://ai-revolution.co.jp/media/claude-code-use-cases/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "AI革命株式会社（2026年）。非エンジニアのClaude Code業務自動化7事例：①月次レポート自動化（Excel→グラフ・前年比）、②採用書類スクリーニング（JD条件照合）、③顧客メール下書き自動生成、④在庫管理CSV異常検知、⑤契約書リスク条項抽出、⑥請求書突合自動化、⑦社内WikiからのQA生成。共通前提：日本語で指示できればよい、コーディング不要。月$20のProプランで十分対応可能。Skillsを使った業務メモリ化を推奨。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-16_3003_WEB_Warner-AI-AGENT-Act-Federal-Registry-Senate.md",
+      "title": "Warner AI AGENT Act — 連邦認定レジストリでAIエージェント市場を安全化",
+      "url": "https://www.warner.senate.gov/newsroom/press-releases/warner-unveils-discussion-draft-of-legislation-to-create-innovative-market-for-secure-artificial-intelligence-agents/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "上院議員Mark Warner（VA）がAI AGENT Act草案を公表。Artificial Intelligence Access, Gatekeeper Exchange, and Nondiscriminatory Transfer Act。主要条項：①FTCによる「信頼・安全なAIエージェント」連邦認定レジストリ作成・公開、②認定外エージェントによる消費者被害への責任規定、③プラットフォームによる認定エージェントのアクセス差別を禁止、④プライバシー・セキュリティ・市場公正性の3軸規制。金融・医療・法律でAIエージェントが消費者代理で決定を行う「エージェント経済」を前提に設計。現在ディスカッションドラフト段階で業界フィードバック収集中。米国のエージェント規制の先行事例として注目。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-16_3004_WEB_EU-Council-AI-Rules-Simplify-June2026.md",
+      "title": "EU理事会がAIルール簡素化・合理化に最終承認（2026年6月29日）",
+      "url": "https://www.consilium.europa.eu/en/press/press-releases/2026/06/29/artificial-intelligence-council-gives-final-green-light-to-simplify-and-streamline-rules/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "EU理事会が2026年6月29日、AI規制の簡素化・合理化を最終承認（公式プレスリリース）。EU AI Act（2024年8月施行開始）の高リスクAIシステム適用日程を延期：スタンドアローン型は2027年12月2日、製品組み込み型は2028年8月2日。適合性評価・登録・監視の義務を簡略化。背景：EU産業界・スタートアップからの「規制コストが競争力を損なう」との訴えを受け欧州委員会が現実化路線に転換。EU AI Actの高リスク義務（当初2026年8月予定）が事実上2年延期となる重要変更。AIビジネスのEU展開戦略に直接影響する一次情報。",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "CONFIRMED: consilium.europa.eu公式プレスリリースで確認。EU議会は2026年6月16日承認、理事会は6月29日最終承認。日程は記事の通り正確（2027-12-02 / 2028-08-02）。Morgan Lewis・Gibson Dunn等の法律事務所も同内容を解説。"
+    },
+    {
+      "file": "2026-07-16_3005_WEB_AI-Model-Overview-July2026-Uravation-JA.md",
+      "title": "主要AIモデル早わかり一覧 — 用途別おすすめと現ステータス（2026年7月最新）",
+      "url": "https://uravation.com/media/ai-model-overview-hub-2026-june/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "ai-news",
+      "summary": "Uravation（2026年7月最新）が主要AIモデルを用途別に整理したハブ記事。Claude系：Fable 5（最高知性・エージェント向け、$10/$50 per M tokens）、Sonnet 5（最もエージェント特化、$3/$15、8月末割引）、Opus 4.8（SWE-bench 88.6%）、Haiku 4.5（低コスト）。OpenAI系：GPT-5.6（Luna/Terra/Sol 3サイズ、$1〜$5/M、コンテキスト100万トークン）。Google系：Gemini 3.5 Flash（高速プロダクション向け）。その他：Alibaba Happy Horse 1.0・Meta Muse Sparkがマルチモーダル強化。平均3日に1本の新モデルリリースペース。選択基準として「コスト対性能」と「エージェント対話型か否か」の2軸を推奨。",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "CONFIRMED: Vellum・TrueFoundry・複数ベンチマークサイトで確認。SWE-bench Verified（500問）でOpus 4.8は88.6%（Opus 4.7比+1.0%）。SWE-bench Proでは69.2%。2026年5月28日リリース。"
+    }
+  ],
+  "fact_checks": [
+    {
+      "article_file": "2026-07-16_3000_WEB_MetaTrader5-Beta-Build5955-MCP-AI-Agent-mql5.md",
+      "claim": "MT5 Beta Build 5955でMCP・AIエージェントのネイティブサポートが開始",
+      "verdict": "CONFIRMED",
+      "note": "mql5.com公式フォーラムで確認。クライアントターミナルとMetaEditor両方で利用可能。MetaQuotes-Demoサーバー経由でパブリックベータ参加可能。YouTube解説動画も存在し、ユーザーがClaudeをMT5に接続成功している報告あり。"
+    },
+    {
+      "article_file": "2026-07-16_3004_WEB_EU-Council-AI-Rules-Simplify-June2026.md",
+      "claim": "EU理事会が2026年6月29日にAI規制簡素化を最終承認。高リスクAI延期：スタンドアローン型→2027年12月2日、組み込み型→2028年8月2日",
+      "verdict": "CONFIRMED",
+      "note": "consilium.europa.eu公式プレスリリースで確認。EU議会は2026年6月16日承認、理事会は6月29日最終承認。日程は記事の通り正確（2027-12-02 / 2028-08-02）。Morgan Lewis・Gibson Dunn等の法律事務所も同内容を解説。"
+    },
+    {
+      "article_file": "2026-07-16_3005_WEB_AI-Model-Overview-July2026-Uravation-JA.md",
+      "claim": "Opus 4.8のSWE-bench Verified スコア 88.6%",
+      "verdict": "CONFIRMED",
+      "note": "Vellum・TrueFoundry・複数ベンチマークサイトで確認。SWE-bench Verified（500問）でOpus 4.8は88.6%（Opus 4.7比+1.0%）。SWE-bench Proでは69.2%。2026年5月28日リリース。"
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-07-15": 4,
+      "2026-07-14": 12,
+      "2026-07-13": 11,
+      "2026-07-12": 11,
+      "2026-07-11": 13,
+      "2026-07-10": 4,
+      "2026-07-09": 13
+    },
+    "recurring_themes": [
+      "claude",
+      "agent",
+      "mcp",
+      "llm",
+      "trading"
+    ]
+  }
+}
