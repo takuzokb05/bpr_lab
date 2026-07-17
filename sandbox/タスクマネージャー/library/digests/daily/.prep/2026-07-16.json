@@ -1,6 +1,6 @@
 {
   "date": "2026-07-16",
-  "generated_at": "2026-07-17T00:03:55.200778Z",
+  "generated_at": "2026-07-17T23:15:50.958744Z",
   "article_count": 19,
   "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
   "articles": [
@@ -170,7 +170,7 @@
       "summary": "2026年7月16日（本日）、MetaQuotesがMT5新ベータビルド5955を公開。最大の新機能はModel Context Protocol（MCP）とAIエージェントのビルトインサポート。クライアントターミナルとMetaEditor両方で利用可能。AIエージェントが自然言語でMT5に接続し、マーケットデータ取得・注文発注・ポジション管理・テクニカル分析が可能に。従来はコミュニティ製MCP Serverでの回避策が必要だったが公式実装で信頼性向上。Webull・Deriv・IG・eToro等の主要ブローカーに続きMetaQuotesが追随。FX自動取引にLLMを組み込む実験の敷居が大幅低下。パブリックベータ参加推奨。本日リリースの一次情報。",
       "body_excerpt": "",
       "fact_checked": true,
-      "fact_check_note": "CONFIRMED: mql5.com公式フォーラムで確認。クライアントターミナルとMetaEditor両方で利用可能。MetaQuotes-Demoサーバー経由でパブリックベータ参加可能。YouTube解説動画も存在し、ユーザーがClaudeをMT5に接続成功している報告あり。"
+      "fact_check_note": "確認済み（mql5.com公式フォーラム）。Build 5955でMCP+AIエージェントネイティブサポートが追加されベータ公開。さらにBuild 6030（2026-07-16リリース）でAI統合が拡張されており、最新状況も整合。"
     },
     {
       "file": "2026-07-16_3001_WEB_Brokers-MCP-AI-Trading-Infrastructure-Race-LeapRate.md",
@@ -205,8 +205,8 @@
       "theme": "ai-news",
       "summary": "上院議員Mark Warner（VA）がAI AGENT Act草案を公表。Artificial Intelligence Access, Gatekeeper Exchange, and Nondiscriminatory Transfer Act。主要条項：①FTCによる「信頼・安全なAIエージェント」連邦認定レジストリ作成・公開、②認定外エージェントによる消費者被害への責任規定、③プラットフォームによる認定エージェントのアクセス差別を禁止、④プライバシー・セキュリティ・市場公正性の3軸規制。金融・医療・法律でAIエージェントが消費者代理で決定を行う「エージェント経済」を前提に設計。現在ディスカッションドラフト段階で業界フィードバック収集中。米国のエージェント規制の先行事例として注目。",
       "body_excerpt": "",
-      "fact_checked": false,
-      "fact_check_note": ""
+      "fact_checked": true,
+      "fact_check_note": "確認済み。Warner上院議員が2026-06-29に討議草案を公開。FTCが運営するAIエージェント認定レジストリを創設する内容。現在は正式法案ではなく討議草案段階（フィードバック募集中）。記事の要点は正確。"
     },
     {
       "file": "2026-07-16_3004_WEB_EU-Council-AI-Rules-Simplify-June2026.md",
@@ -218,7 +218,7 @@
       "summary": "EU理事会が2026年6月29日、AI規制の簡素化・合理化を最終承認（公式プレスリリース）。EU AI Act（2024年8月施行開始）の高リスクAIシステム適用日程を延期：スタンドアローン型は2027年12月2日、製品組み込み型は2028年8月2日。適合性評価・登録・監視の義務を簡略化。背景：EU産業界・スタートアップからの「規制コストが競争力を損なう」との訴えを受け欧州委員会が現実化路線に転換。EU AI Actの高リスク義務（当初2026年8月予定）が事実上2年延期となる重要変更。AIビジネスのEU展開戦略に直接影響する一次情報。",
       "body_excerpt": "",
       "fact_checked": true,
-      "fact_check_note": "CONFIRMED: consilium.europa.eu公式プレスリリースで確認。EU議会は2026年6月16日承認、理事会は6月29日最終承認。日程は記事の通り正確（2027-12-02 / 2028-08-02）。Morgan Lewis・Gibson Dunn等の法律事務所も同内容を解説。"
+      "fact_check_note": "確認済み。EU理事会が2026-06-29にAI規則簡素化（Omnibus VII）に最終承認。高リスクAIシステムの義務適用期限を2027年12月・2028年8月に延期。日付・内容ともに正確。"
     },
     {
       "file": "2026-07-16_3005_WEB_AI-Model-Overview-July2026-Uravation-JA.md",
@@ -229,28 +229,28 @@
       "theme": "ai-news",
       "summary": "Uravation（2026年7月最新）が主要AIモデルを用途別に整理したハブ記事。Claude系：Fable 5（最高知性・エージェント向け、$10/$50 per M tokens）、Sonnet 5（最もエージェント特化、$3/$15、8月末割引）、Opus 4.8（SWE-bench 88.6%）、Haiku 4.5（低コスト）。OpenAI系：GPT-5.6（Luna/Terra/Sol 3サイズ、$1〜$5/M、コンテキスト100万トークン）。Google系：Gemini 3.5 Flash（高速プロダクション向け）。その他：Alibaba Happy Horse 1.0・Meta Muse Sparkがマルチモーダル強化。平均3日に1本の新モデルリリースペース。選択基準として「コスト対性能」と「エージェント対話型か否か」の2軸を推奨。",
       "body_excerpt": "",
-      "fact_checked": true,
-      "fact_check_note": "CONFIRMED: Vellum・TrueFoundry・複数ベンチマークサイトで確認。SWE-bench Verified（500問）でOpus 4.8は88.6%（Opus 4.7比+1.0%）。SWE-bench Proでは69.2%。2026年5月28日リリース。"
+      "fact_checked": false,
+      "fact_check_note": ""
     }
   ],
   "fact_checks": [
     {
       "article_file": "2026-07-16_3000_WEB_MetaTrader5-Beta-Build5955-MCP-AI-Agent-mql5.md",
-      "claim": "MT5 Beta Build 5955でMCP・AIエージェントのネイティブサポートが開始",
-      "verdict": "CONFIRMED",
-      "note": "mql5.com公式フォーラムで確認。クライアントターミナルとMetaEditor両方で利用可能。MetaQuotes-Demoサーバー経由でパブリックベータ参加可能。YouTube解説動画も存在し、ユーザーがClaudeをMT5に接続成功している報告あり。"
+      "title": "MetaTrader 5 Beta Build 5955 — MCP・AIエージェントのネイティブサポート開始",
+      "result": "confirmed",
+      "note": "確認済み（mql5.com公式フォーラム）。Build 5955でMCP+AIエージェントネイティブサポートが追加されベータ公開。さらにBuild 6030（2026-07-16リリース）でAI統合が拡張されており、最新状況も整合。"
+    },
+    {
+      "article_file": "2026-07-16_3003_WEB_Warner-AI-AGENT-Act-Federal-Registry-Senate.md",
+      "title": "Warner AI AGENT Act — 連邦認定レジストリでAIエージェント市場を安全化",
+      "result": "confirmed",
+      "note": "確認済み。Warner上院議員が2026-06-29に討議草案を公開。FTCが運営するAIエージェント認定レジストリを創設する内容。現在は正式法案ではなく討議草案段階（フィードバック募集中）。記事の要点は正確。"
     },
     {
       "article_file": "2026-07-16_3004_WEB_EU-Council-AI-Rules-Simplify-June2026.md",
-      "claim": "EU理事会が2026年6月29日にAI規制簡素化を最終承認。高リスクAI延期：スタンドアローン型→2027年12月2日、組み込み型→2028年8月2日",
-      "verdict": "CONFIRMED",
-      "note": "consilium.europa.eu公式プレスリリースで確認。EU議会は2026年6月16日承認、理事会は6月29日最終承認。日程は記事の通り正確（2027-12-02 / 2028-08-02）。Morgan Lewis・Gibson Dunn等の法律事務所も同内容を解説。"
-    },
-    {
-      "article_file": "2026-07-16_3005_WEB_AI-Model-Overview-July2026-Uravation-JA.md",
-      "claim": "Opus 4.8のSWE-bench Verified スコア 88.6%",
-      "verdict": "CONFIRMED",
-      "note": "Vellum・TrueFoundry・複数ベンチマークサイトで確認。SWE-bench Verified（500問）でOpus 4.8は88.6%（Opus 4.7比+1.0%）。SWE-bench Proでは69.2%。2026年5月28日リリース。"
+      "title": "EU理事会がAIルール簡素化・合理化に最終承認（2026年6月29日）",
+      "result": "confirmed",
+      "note": "確認済み。EU理事会が2026-06-29にAI規則簡素化（Omnibus VII）に最終承認。高リスクAIシステムの義務適用期限を2027年12月・2028年8月に延期。日付・内容ともに正確。"
     }
   ],
   "trend_context": {
