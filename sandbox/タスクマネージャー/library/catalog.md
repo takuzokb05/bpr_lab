@@ -739,3 +739,10 @@
 | 713 | Claude Code活用事例10選 — 非エンジニアでも業務が10倍速（2026年7月） | ja | 未読 | #skills #web-signal | articles/2026-07-16_2996_WEB_Claude-Code-Business-10Cases-Non-Engineer-JA.md |
 | 714 | MCPサーバー一覧・おすすめ比較 国内最大113選（2026年最新） | ja | 未読 | #mcp #ecosystem #web-signal | articles/2026-07-16_2997_WEB_MCP-Server-Japan-113-Directory-AIAgentNavi-JA.md |
 | 715 | Claude Code活用事例7選 — 非エンジニアの業務自動化（AI革命） | ja | 未読 | #skills #web-signal | articles/2026-07-16_3002_WEB_Claude-Code-Non-Engineer-7Cases-AIRevolution-JA.md |
+| 716 | MCP 2026-07-28 仕様RC：ステートレス化・拡張フレームワーク導入 | en | 未読 | #mcp #ecosystem #web-signal | articles/2026-07-18_3006_WEB_MCP-2026-07-28-Spec-RC-Stateless-Protocol.md |
+| 717 | Claude Code Week 29：Artifacts β・3段ネスト・/cd・Voice Mode | en | 未読 | #model-update #ecosystem #web-signal | articles/2026-07-18_3007_WEB_Claude-Code-Week29-Artifacts-Beta-Hierarchical-Agents.md |
+| 718 | X（旧Twitter）公式MCPサーバー提供開始：AI統合の業界標準化が加速 | en | 未読 | #mcp #ecosystem #web-signal | articles/2026-07-18_3008_WEB_X-MCP-Server-Official-Launch-TechCrunch.md |
+| 719 | Claude Agent SDK課金変更（6/15）・API大幅強化 | en | 未読 | #ecosystem #web-signal | articles/2026-07-18_3014_WEB_Claude-Agent-SDK-June15-Billing-Change.md |
+| 720 | 【2026年6月】Claude Code新機能6選の業務活用完全ガイド（Uravation） | ja | 未読 | #skills #hooks #mcp #web-signal | articles/2026-07-18_3015_WEB_Claude-Code-June2026-6-Features-Business-JA.md |
+| 721 | 【2026年最新】Claude Code業務自動化10事例｜実装プロンプト全公開 | ja | 未読 | #skills #routines #web-signal | articles/2026-07-18_3016_WEB_Claude-Code-Automation-10Cases-JA.md |
+| 722 | Claude Code 2026完全チートシート：コマンド・MCP・Hooks・スキル使い分け | en | 未読 | #hooks #mcp #skills #web-signal | articles/2026-07-18_3018_WEB_Claude-Code-2026-Cheat-Sheet-Complete.md |
