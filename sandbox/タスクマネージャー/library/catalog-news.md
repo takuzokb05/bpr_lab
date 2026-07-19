@@ -250,3 +250,9 @@
 | 228 | Kimi K3（Moonshot AI）：中国発モデルが米国トップLLMに匹敵と評価 | en | 未読 | #llm-news #web-signal | articles/2026-07-18_3011_WEB_Kimi-K3-Moonshot-AI-Rivals-US-Labs.md |
 | 229 | Thinking Machines Lab「Inkling」：Mira Muratiの新ラボがオープンウェイトモデル初リリース | en | 未読 | #llm-news #open-source #web-signal | articles/2026-07-18_3012_WEB_Thinking-Machines-Inkling-Mira-Murati-Open-Weight.md |
 | 230 | AI規制動向 2026年7月：FTC・イリノイ州・中国・UN・EU AI Actが同時進行 | en | 未読 | #regulation #ai-agent #web-signal | articles/2026-07-18_3013_WEB_AI-Regulation-July2026-FTC-Illinois-China-UN.md |
+| 231 | 生成AIニュースまとめ 週次【2026年7月6〜12日】— GPT-5.6・Cowork拡大・Grok 4.5 | ja | 未読 | #llm-news #web-signal | articles/2026-07-19_3019_WEB_GenAI-Weekly-News-Jul6-12-2026-TechNoisy-JA.md |
+| 232 | 生成AIニュース日次【2026年7月15日】— Fable 5展開・Kimi K3週（TECH NOISY） | ja | 未読 | #llm-news #web-signal | articles/2026-07-19_3020_WEB_GenAI-Daily-News-Jul15-2026-TechNoisy-JA.md |
+| 233 | 生成AIニュース日次【2026年7月16日】— 中国AIエージェント規制7/15施行（TECH NOISY） | ja | 未読 | #llm-news #regulation #web-signal | articles/2026-07-19_3021_WEB_GenAI-Daily-News-Jul16-2026-TechNoisy-JA.md |
+| 234 | 生成AI関連ニュース ベスト5（2026年7月3〜10日）（GAIS） | ja | 未読 | #llm-news #web-signal | articles/2026-07-19_3022_WEB_GAIS-GenAI-News-Best5-Jul3-10-2026-JA.md |
+| 235 | U.S. Tech Legislative & Regulatory Update – Q2 2026（InsideGlobalTech） | en | 未読 | #regulation #web-signal | articles/2026-07-19_3023_WEB_InsideGlobalTech-US-Tech-Q2-2026-Regulatory.md |
+| 236 | FTC Policy Statement: AIシステムの精度抑制に関するポリシー（Federal Register） | en | 未読 | #regulation #web-signal | articles/2026-07-19_3031_WEB_FTC-FederalRegister-AI-Accuracy-Policy-Jul2026.md |

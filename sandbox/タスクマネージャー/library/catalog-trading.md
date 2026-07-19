@@ -296,3 +296,4 @@
 | 267 | MetaTrader 5 Beta Build 5955 — MCP・AIエージェントのネイティブサポート開始 | en | 未読 | #fx #mcp #llm-trading #web-signal | articles/2026-07-16_3000_WEB_MetaTrader5-Beta-Build5955-MCP-AI-Agent-mql5.md |
 | 268 | ブローカーがMCPでAIエージェントに取引インフラを開放する競争（LeapRate） | en | 未読 | #fx #mcp #llm-trading #web-signal | articles/2026-07-16_3001_WEB_Brokers-MCP-AI-Trading-Infrastructure-Race-LeapRate.md |
 | 269 | LLMトレーディングBot比較：マルチエージェント手法・結果・リスク（FlowHunt） | en | 未読 | #llm-trading #comparison #web-signal | articles/2026-07-18_3017_WEB_LLM-Trading-Bot-Comparison-FlowHunt.md |
+| 270 | FXが絶望的に下手だったのでAIにチャートを学ばせて自動売買させた話（Zenn nezness） | ja | 未読 | #fx #llm-trading #implementation #web-signal | articles/2026-07-19_3026_WEB_Zenn-nezness-FX-AI-Chart-Learning-AutoTrade-JA.md |

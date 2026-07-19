@@ -3858,3 +3858,29 @@ FX自動売買の構成（P-014の4層アーキテクチャ）において、Gem
 1. TradingAgents v0.2.4をsandbox/FX自動取引/ の検証環境に導入し、Claude Sonnet 4.6でのFXシグナル生成（テクニカル+センチメント分析）をバックテストで評価
 2. Sharpe Ratio 1.94の報告元記事を特定し、バックテスト期間・データソース・スリッページ設定等の条件を確認
 3. TradingAgentsのマルチエージェント構成（基礎/センチメント/テクニカル/リスク管理/トレーダー）とP-167（MT5 MCP公式統合）を組み合わせた将来アーキテクチャをSTATUS.mdに追記
+
+---
+
+## 2026-07-19 提案
+
+### P-173: MCP 2026-07-28 最終仕様リリース直前確認（P-170の続報）
+
+**根拠記事**: 3027 (InfoQ-MCP EMA Stable)、3028 (HackerNoon-MCP Stateless Scaling)
+**取得日**: 2026-07-19
+**詳細**: MCP 2026-07-28最終仕様が9日後（2026-07-28）にリリース予定。P-170（2026-07-18提案）で挙げたステートレス化対応に加え、Enterprise-Managed Authorisation（EMA）のStable昇格が確認された。自作MCPサーバー利用者は10週間の移行ウィンドウ内で対応が必要。特にsandbox/タスクマネージャー/.claude/ の.mcp.json設定とsandbox/FX自動取引/のMT5 MCP連携が影響を受ける可能性がある。
+
+**提案アクション**:
+1. 2026-07-28以降に公式MCPドキュメント（blog.modelcontextprotocol.io）を確認し、Breaking Changes一覧をdocs/に記録
+2. EMAを利用しない個人開発用途では影響が少ないが、ステートレス化による既存MCPツールの動作変化を確認（特にmcp__github__等のMCPツール）
+3. HackerNoon記事（3028）のBreaking Changes解説をFX自動取引/docs/に参照保存
+
+### P-174: Claude Code 日本語活用の定量データを CLAUDE.md に反映
+
+**根拠記事**: 3024 (ClaudeDojo Japan Cases)、3029 (GenAI-co-jp Japanese Guide)
+**取得日**: 2026-07-19
+**詳細**: 日本企業20社の事例で、Claude Code活用による生産性改善が定量化された（手順書見直し3倍速、サポート業務67%削減、チャーン率1.4→2.3%改善など）。Claude Sonnet 4.6・Opus 4.6の日本語ビジネス文書品質が特に高く評価されている。bpr_lab各プロジェクトのCLAUDE.mdに「想定モデル: Claude Sonnet 4.6（日本語業務文書）」を明記することで、セッション初期のモデル選択を最適化できる。
+
+**提案アクション**:
+1. sandbox/タスクマネージャー/CLAUDE.md の「モデル使い分け」セクションに、日本語文書生成にSonnet 4.6を推奨する記述を追加
+2. 日次収集ルーチンの要約生成ステップで明示的に Sonnet 4.6 を指定（現在は継承モデルに依存）
+3. sandbox/FX自動取引/ のシグナルレポート日本語生成にSonnet 4.6を採用することを評価

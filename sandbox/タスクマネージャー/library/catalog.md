@@ -746,3 +746,9 @@
 | 720 | 【2026年6月】Claude Code新機能6選の業務活用完全ガイド（Uravation） | ja | 未読 | #skills #hooks #mcp #web-signal | articles/2026-07-18_3015_WEB_Claude-Code-June2026-6-Features-Business-JA.md |
 | 721 | 【2026年最新】Claude Code業務自動化10事例｜実装プロンプト全公開 | ja | 未読 | #skills #routines #web-signal | articles/2026-07-18_3016_WEB_Claude-Code-Automation-10Cases-JA.md |
 | 722 | Claude Code 2026完全チートシート：コマンド・MCP・Hooks・スキル使い分け | en | 未読 | #hooks #mcp #skills #web-signal | articles/2026-07-18_3018_WEB_Claude-Code-2026-Cheat-Sheet-Complete.md |
+| 723 | Claude Codeを使っている日本企業・活用事例まとめ2026【業種別20社】 | ja | 未読 | #web-signal | articles/2026-07-19_3024_WEB_ClaudeDojo-ClaudeCode-Japan-20Companies-Cases-2026.md |
+| 724 | Claude AI Gets Yet Another Boost in VS Code 1.128 | en | 未読 | #web-signal | articles/2026-07-19_3025_WEB_VSMag-Claude-AI-VSCode-1128-Enhancement.md |
+| 725 | MCP Enterprise-Managed Authorisation（EMA）がStableに昇格（InfoQ） | en | 未読 | #mcp #ecosystem #web-signal | articles/2026-07-19_3027_WEB_InfoQ-MCP-EMA-Enterprise-Auth-Stable-Jul2026.md |
+| 726 | MCP 2026ステートレス化でリモートサーバーのスケールが容易に（HackerNoon） | en | 未読 | #mcp #ecosystem #web-signal | articles/2026-07-19_3028_WEB_HackerNoon-MCP-2026-Stateless-Remote-Scale.md |
+| 727 | 【2026年7月最新】Claude Codeは日本語で使える？設定・文字化け対処 | ja | 未読 | #web-signal | articles/2026-07-19_3029_WEB_ClaudeCode-Japanese-Guide-July2026-GenAI-co-jp.md |
+| 728 | 【2026年最新】Claude Code始め方｜5分インストール・初心者ガイド（Uravation） | ja | 未読 | #web-signal | articles/2026-07-19_3030_WEB_Uravation-ClaudeCode-Beginner-Guide-2026-JA.md |
