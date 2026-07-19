@@ -1,0 +1,202 @@
+{
+  "date": "2026-07-18",
+  "generated_at": "2026-07-19T23:15:54.586767Z",
+  "article_count": 13,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-07-18_3006_WEB_MCP-2026-07-28-Spec-RC-Stateless-Protocol.md",
+      "title": "MCP 2026-07-28 仕様RC：ステートレス化・拡張フレームワーク導入",
+      "url": "https://blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "MCPプロトコル最大の改訂RCが公開（最終版7/28）。最大変更はステートレス化：セッションIDとハンドシェイクを廃止し、LB構成が大幅簡素化。拡張フレームワーク・Tasks拡張・分散トレーシング対応も追加。14,000以上サーバー・9,700万DLのエコシステムにとって重要な移行作業が必要。Claude CodeのMCPサーバー開発者は10週間の移行ウィンドウ内での対応が推奨される。",
+      "body_excerpt": "Model Context Protocolの2026年最大の仕様改定リリース候補（RC）が公開。最終版は7月28日にリリース予定。「プロトコル開始以来最大の改訂」と銘打たれる。\n\n主要変更点：\n- **ステートレス化**（SEP-2575/SEP-2567）：initialize/initializedハンドシェイクとMcp-Session-Idヘッダを廃止。スティッキーセッション・共有セッションストアなしでラウンドロビンLBで動作可能に\n- **拡張フレームワーク**（SEP-2133）：リバースDNS識別子・extensions mapによる独立バージョニング",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-18_3007_WEB_Claude-Code-Week29-Artifacts-Beta-Hierarchical-Agents.md",
+      "title": "Claude Code Week 29：Artifacts β・3段ネスト・/cd・Voice Mode",
+      "url": "https://releasebot.io/updates/anthropic/claude-code",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Week 29の目玉はArtifacts β（成果物のライブ共有ページ化）と3段階ネストの階層型エージェントスポーン。/cdコマンドでキャッシュ維持のままディレクトリ変更可能になりワークフローが柔軟化。Voice Modeも段階的ロールアウト中。Opus 4.8がMax/Enterprise向けデフォルトとなり、複雑なエージェントタスクの標準品質が向上。",
+      "body_excerpt": "Claude Code 2026年7月13-17日（Week 29）の主要アップデート：\n\n1. **Artifacts βリリース**：セッション成果物をclaude.aiのライブ共有ページとして公開・インプレース更新\n2. **階層型エージェントスポーン**：親エージェントが最大3段階ネストで子エージェントを生成。複数モジュール横断タスクの分解に対応\n3. **/cd コマンド**：会話中に作業ディレクトリを変更してもプロンプトキャッシュを維持",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-18_3008_WEB_X-MCP-Server-Official-Launch-TechCrunch.md",
+      "title": "X（旧Twitter）公式MCPサーバー提供開始：AI統合の業界標準化が加速",
+      "url": "https://techcrunch.com/2026/06/30/x-now-offers-an-mcp-server-to-make-its-platform-easier-for-ai-tools-to-use/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "X公式MCPサーバー開始（6/30）はMCPが事実上の業界標準になったことを示すマイルストーン。Claude Code/AIエージェントからX APIへのネイティブアクセスが容易に。2026年は「エンタープライズMCP元年」として主要プラットフォーム・SaaSのMCP対応が急速に進んでいる。MCP 2026-07-28仕様改定（#3006）と合わせ、MCPエコシステムが成熟期に入りつつある。",
+      "body_excerpt": "X（旧Twitter）が2026年6月30日、公式MCPサーバーの提供を開始（TechCrunch報道）。AIツールからXプラットフォームを利用しやすくすることが目的。Claude CodeなどのAIエージェントからXのデータ・投稿・検索機能にMCPプロトコル経由でアクセス可能になる。OpenAI・Google・Microsoft・AnthropicがMCPを採用した流れを受け、主要プラットフォームのMCP対応が急加速。MCPエコシステムは2026年5月時点で14,000以上のサーバー、SDKは9,700万以上の累積ダウンロード数（PulseMCP）。Insta360のGoogle Cloud AI動画編集エージェントや国産SaaS（楽楽精算・freee・kintone）のMCP対応など、エンタープライズ採用も本格化。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-18_3009_WEB_OpenAI-GPT56-Luna-Terra-Sol-1M-Context.md",
+      "title": "OpenAI GPT-5.6（Luna/Terra/Sol）：1Mトークン・$1-5/Mトークン価格でFable 5と競合",
+      "url": "https://llm-stats.com/ai-news",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "GPT-5.6は1Mトークンコンテキストと$1-5/Mの価格帯で、Fable 5との直接競合モデル。エージェントベンチマークでFable 5超えと報告されており、LLMの性能競争が最高潮。Sonnet 4.6（現Claude Code標準）はコスト効率に優れるが、エージェント品質重視ならFable 5/GPT-5.6 Solの比較が必要になってくる。",
+      "body_excerpt": "OpenAIがGPT-5.6モデルファミリーを3サイズ（Luna/Terra/Sol）でリリース。価格：入力トークン100万あたり$1〜$5。スペック：コンテキストウィンドウ100万トークン、知識カットオフ2026年2月。長時間エージェントベンチマークでClaude Fable 5を上回ると報告。新API機能：プログラマティックツールコール・マルチエージェントオーケストレーション・プロンプトキャッシュブレークポイント。AI業界では平均4日に1つ新モデルが登場ペース、2026年累計331以上のモデルリリース。同週にはKimi K3（Moonshot AI、7/16）・Inkling（Thinking Machines、7/15）・Fable 5（Anthropic）も登場。",
+      "fact_checked": true,
+      "fact_check_note": "概ね正確・一部修正：価格は入力トークンのみ：Luna $1、Terra $2.50、Sol $5（出力はLuna $6、Terra $15、Sol $30）。コンテキスト1Mトークン・知識カットオフ2026年2月は確認。ベンチマークは複雑：Terminal-Bench 2.1でSol(91.9%) > Fable 5(88.0%)、Agents' Last ExamでSol(53.6) > Fable 5(40.5)でエージェント系は上回る。ただしSWE-Bench ProではSol(64.6%)がClaude Mythos 5(80.3%)に大差で敗北。「Fable 5を全面的に超える」は誤り、タスク依存。GA日は7月9日。"
+    },
+    {
+      "file": "2026-07-18_3010_WEB_Claude-Fable5-Anthropic-Mythos-Class-Frontier.md",
+      "title": "Claude Fable 5（Mythosクラス）：Anthropic最高峰モデル・公開LLM最強を標榜",
+      "url": "https://llm-stats.com/llm-updates",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "AnthropicのFable 5はMythosクラスの最高峰モデル。Claude Code運用者にとってはコスト比で2倍かかるが、難度の高い推論・エージェントタスクに最適。GPT-5.6との競争が激化しており、ユースケース別の使い分けが重要。Sonnet 4.6（現デフォルト）・Opus 4.8（Week 29でMax向けデフォルト化）・Fable 5という3段構成のモデル選択が確立。",
+      "body_excerpt": "AnthropicがClaude Fable 5をリリース。「Mythosクラス」フロンティアモデルで「公開されているLLMの中で最もスマート」と評される。ベンチマークで大幅な性能向上を達成。コストはOpusモデルの約2倍。GPT-5.6 Solとの比較では長時間エージェントベンチマークで競り負けとの報告もあるが、特定タスクでは優位。Anthropicは並行してClaude Science（科学者向け作業環境、断片化ツール・データセット統合・図表生成）も発表。Claude Code上の標準モデルはSonnet/Opus系が継続。Fable 5はClaude Codeの`fable`モデルIDで利用可能（カレントの最高性能推論タスク向け）。",
+      "fact_checked": true,
+      "fact_check_note": "正確：リリース日2026年6月9日確認。Mythosクラス正式名はClaude Mythos 5/Fable 5。SWE-Bench Pro 80.3%（GPT-5.5の58.6%を上回る）など主要ベンチマーク首位を多数確認。ただし7/9のGPT-5.6 Sol登場後はTerminal-Bench・Agents Last Examでは逆転されたため「公開LLM最強」はリリース時点での記述として正確。価格は$10/$50 per 1M tokens（入力/出力）。"
+    },
+    {
+      "file": "2026-07-18_3011_WEB_Kimi-K3-Moonshot-AI-Rivals-US-Labs.md",
+      "title": "Kimi K3（Moonshot AI）：中国発モデルが米国トップLLMに匹敵と評価",
+      "url": "https://lmmarketcap.com/new-ai-models",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "Kimi K3は2026年7月16日リリース。米国主要LLMと競合水準と専門家評価。AIの米中競争においてMoonshot AIがDeepSeekと並ぶ中国の主要プレーヤーとして台頭。週内に4つの主要モデルがリリースされた激戦期を象徴する一本。FX自動取引等での将来的な検討候補として、コスト・多言語対応・APIアクセシビリティの確認が必要。",
+      "body_excerpt": "中国スタートアップMoonshot AIが2026年7月16日にKimi K3をリリース。専門家から「米国主要ラボの先進モデルに匹敵する可能性がある」と評価を受け、中国テック産業の技術力を示す事例として注目。2026年7月のLLMリリースラッシュ（GPT-5.6・Fable 5・Inkling）に加わる形でリリース。DeepSeek V4以降も中国勢の高性能モデル投入が継続。日本語・多言語対応の詳細は未確認、国際市場向けAPIも提供予定。開発者・研究者から初期評価が集まっている段階で、ベンチマーク詳細は近日公開予定。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-18_3012_WEB_Thinking-Machines-Inkling-Mira-Murati-Open-Weight.md",
+      "title": "Thinking Machines Lab「Inkling」：Mira Muratiの新ラボがオープンウェイトモデル初リリース",
+      "url": "https://aiflashreport.com/model-releases.html",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "Inkling（Thinking Machines Lab）はMira Murati率いる新興ラボの初フラッグシップ。オープンウェイト提供でローカルデプロイ・自前ファインチューニングが可能。FX自動取引等での利用可能性も検討余地あり。2026年7月のモデルラッシュの中で「オープンウェイト×フロンティア品質」という差別化ポジションを確立しようとしている。",
+      "body_excerpt": "OpenAI元CTO Mira Muratiが設立したThinking Machines Labが2026年7月15日頃、初のフラッグシップモデル「Inkling」を公開。特徴：オープンウェイト（重みダウンロード可）、リファレンス推論スタック公開、企業向けホストAPIも提供。汎用推論・コーディングモデルとして主流クローズドモデルとの競合を標榜。Meta Llama系に続くフロンティアレベルのオープンウェイトモデルとして業界内の注目度高し。詳細ベンチマークは近日公開予定でGPT-5.6・Fable 5との比較が控えている。オープンウェイトと企業向けAPIのデュアル提供戦略が特徴的。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-18_3013_WEB_AI-Regulation-July2026-FTC-Illinois-China-UN.md",
+      "title": "AI規制動向 2026年7月：FTC・イリノイ州・中国・UN・EU AI Actが同時進行",
+      "url": "https://aigovernance.com/news/ai-governance-weekly-july-16-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "2026年7月は規制の多極化が鮮明：米連邦（FTC）・米州（イリノイ）・中国・EU・国連が独自フレームワークで同時進行。米国内でも連邦vs州の法的緊張が生じている。FX自動取引AIの運用者にとっては特に中国規制と米国州法動向が要注視。全体として規制強度は高まる方向で、特にフロンティアモデル開発者への義務化が先行する傾向。",
+      "body_excerpt": "2026年7月の主要AI規制動向（AI Governance Weekly 7/16号より）：\n\n1. **FTC AIアキュラシーポリシー**：AIの正確な出力を抑制する州法への連邦レベル対応声明、パブリックコメント7/31締切\n2. **イリノイ州フロンティアAI安全監査法**：米国初、売上$500M超のフロンティアモデル開発者に年次独立安全計画監査を義務化\n3. **中国AIエージェント実施意見施行**（7/15）：インテリジェントエージェントに関する法的枠組みが発効",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-18_3014_WEB_Claude-Agent-SDK-June15-Billing-Change.md",
+      "title": "Claude Agent SDK課金変更（6/15）・API大幅強化：独立クレジット制・全言語コード実行対応",
+      "url": "https://releasebot.io/updates/anthropic/claude-developer-platform",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Claude Agent SDKは独立課金化されたことで本格的なプロダクト扱いに格上げ。APIレートリミット統一・コード実行ツール全言語対応・企業向け管理API追加など、エンタープライズ採用を加速させる変更が重なった。Claude Codeのスキル/フックでコード実行を呼ぶ場合は最新SDK・code_execution_20260120への更新が必要。",
+      "body_excerpt": "2026年6月15日からClaude Agent SDK（旧Claude Code SDK、2026年初頭に改名）が独立した月次エージェントSDKクレジットから課金開始。SDK需要は「claude agent sdk」月次検索で2025年5月の50件→2026年4月の14,800件（約50,000%増）。同時期のAPI強化：(1) SonnetとHaikuのレートリミットをOpus水準に統一（3ティア：Start/Build/Scale）、(2) APIキー有効期限設定（作成時にプリセット/カスタム/Never選択）、(3) コード実行ツール（code_execution_20260120：REPLステート永続化、プログラマティックツールコール最小バージョン）をPython/TS/Go/Java/Ruby/PHP/C#全SDK対応、(4) Enterprise向け管理者API：メンバー管理・ロール変更・グループ管理をAPI経由で可能に。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-18_3015_WEB_Claude-Code-June2026-6-Features-Business-JA.md",
+      "title": "【2026年6月】Claude Code新機能6選の業務活用完全ガイド（Uravation）",
+      "url": "https://uravation.com/media/claude-code-june-2026-new-features-business-guide/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "2026年6月のClaude Code新機能を業務視点で解説した日本語ガイド。会話の巻き戻し・MCP認証・並列オーケストレーションは特に実務でのエラー回復・セキュリティ・処理速度向上に直結。Cron自動化実例は非エンジニアにも参考になる。Week 29のArtifacts β（#3007）と組み合わせると成果物共有の活用幅がさらに広がる。",
+      "body_excerpt": "株式会社UravationによるClaude Code 2026年6月新機能6選の業務活用ガイド（JA）。対象：(1) **チームとの成果物共有**（Artifacts共有・リアルタイム共同閲覧）、(2) **MCP認証**（OAuth/API Key対応のエンタープライズMCP）、(3) **会話の巻き戻し**（任意ポイントへリセット）、(4) **コマンド応答の自動化**（/コマンドへの自動応答設定）、(5) **複数段階のエージェント連鎖**（タスク分解マルチエージェントパイプライン）、(6) **大規模タスクの並列オーケストレーション**（並列サブエージェント処理）。Claude Code v2.1.101（Sonnet 4.6統合・Cowork GA・Agent Teams強化済み）での実践ガイド。Cron議事録自動化実例（文字起こし→議事録→メール下書き→Slack通知）も収録。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-18_3016_WEB_Claude-Code-Automation-10Cases-JA.md",
+      "title": "【2026年最新】Claude Code業務自動化10事例｜実装プロンプト全公開",
+      "url": "https://uravation.com/media/claude-code-automation-case-studies-2026/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "Claude Codeの業務自動化実装例をプロンプト付きで公開した実践ガイド（JA）。/team-onboardingコマンドはチームインフラとして特に価値が高い。Cron+Claudeの組み合わせによる定期レポート・通知自動化は即日導入できる実用パターン。タスクマネージャー内でも応用できるアイデアが多数含まれる。",
+      "body_excerpt": "UravationによるClaude Code業務自動化10事例集（実装プロンプト付き公開）。Claude Code v2.1.101（Sonnet 4.6統合・Cowork GA・Agent Teams強化済み）での実践ガイド。主な自動化パターン：(1) 定型CRUD処理・APIクライアントコード自動生成、(2) 画面コンポーネントテンプレート作成・バリデーションロジック生成、(3) /team-onboardingコマンド（プロジェクト分析→新規参加者向け環境構築手順自動生成）、(4) Cron定期実行による議事録自動化（文字起こし→議事録→メール下書き→Slack通知）、(5) レポート自動集計・送信。非エンジニアも含め「パターン化された実装」をClaude Codeに完全委任することで、開発者はより本質的な設計・仕様検討に集中できる。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-18_3017_WEB_LLM-Trading-Bot-Comparison-FlowHunt.md",
+      "title": "LLMトレーディングBot比較：マルチエージェント手法・結果・リスク（FlowHunt）",
+      "url": "https://www.flowhunt.io/blog/llm-trading-bots-comparison/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "LLMトレーディングエージェントの2026年現状比較。TradingAgentsがマルチプロバイダ対応でデファクト化しつつあるが、ライブ取引への適用は引き続き自前実装が必要。Claude Sonnet 4.6での487%リターン報告は魅力的だが単一実験で検証未済。FX自動取引プロジェクトとの統合を検討する場合、VPS上での独立運用・MT5ブリッジの構築が必要な点は変わらない。",
+      "body_excerpt": "FlowHuntによるLLMベーストレーディングBot総合比較（2026年）。研究者はいまや「トレーディングbot」ではなく「トレーディングエージェント」と呼ぶ。主要フレームワーク比較：TradingAgents v0.2.4（Tauric Research、arXiv 2412.20138、多プロバイダ対応：GPT-5.x/Gemini 3.x/Claude 4.x/Grok 4.x）が標準。マルチエージェント構成：基礎分析・センチメント・テクニカル・リスク管理・トレーダーエージェントの専門化が標準化。Claude Sonnet 4.6でSharpe Ratio 1.94・487%リターンという報告あり（要検証）。実績は混在：最初の1週間で15%超損失の例・数ヶ月で大幅利益の例が混在。バックテスト成功≠本番成功。ライブ取引はTradingAgentsが明示的に「解決しない問題」として除外しており、MT5等との統合は別途実装が必要。",
+      "fact_checked": true,
+      "fact_check_note": "確認・但し文脈注意：Claude Sonnet 4.6での487%リターン・Sharpe Ratio 1.94の数値はquantlabsnet.comの8モデル比較テスト（バックテスト）から。TradingAgents論文自体の数値（AAPL/GOOGL/AMZN 年率24.9%、Sharpe 5.60）とは別の出典。いずれも短期バックテストであり実運用実績ではない点は記事が明記しており正確な文脈で紹介されている。TradingAgents v0.2.4（記事）は実際にはv0.2.2が最新確認（2026年3月時点）。"
+    },
+    {
+      "file": "2026-07-18_3018_WEB_Claude-Code-2026-Cheat-Sheet-Complete.md",
+      "title": "Claude Code 2026完全チートシート：コマンド・MCP・Hooks・スキル使い分け",
+      "url": "https://techbytes.app/posts/claude-code-2026-cheat-sheet-hooks-mcp-commands/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Claude Code 2026年の設定・拡張を一枚でまとめたリファレンス。Hook 4種の使い分けが整理されており実装判断に役立つ。最小構成の考え方は過剰設定防止に有用。タスクマネージャーのスキル設計・CLAUDE.md最適化の参考として即活用できる。",
+      "body_excerpt": "TechBytesによるClaude Code 2026年版完全チートシート（スラッシュコマンド・MCP・Hooks・ショートカット網羅）。4種のHook：(1) HTTPフック（JSON POST送信）、(2) MCPツールフック（接続済みMCPサーバーのツール呼び出し）、(3) プロンプトフック（Claude単一ターン評価）、(4) エージェントフック（ツール使えるサブエージェント起動）。使い分け原則：スラッシュコマンド=プロンプトテンプレート、スキル=ドメインロジック＋ヘルパーファイル、フック=コードでルール強制。最小構成推奨：短CLAUDE.md・スコープ済み.mcp.json・安全フック・再利用スキル各1個。Week 29新機能もカバー：/voice（スペースバーpush-to-talk）・/cd（ディレクトリ変更・キャッシュ維持）・--safe-mode（全カスタマイズ無効化）。CLAUDE.md：200行以下推奨、HTML commentはトークン消費なし。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    }
+  ],
+  "fact_checks": [
+    {
+      "file": "2026-07-18_3009_WEB_OpenAI-GPT56-Luna-Terra-Sol-1M-Context.md",
+      "verdict": "概ね正確・一部修正",
+      "detail": "価格は入力トークンのみ：Luna $1、Terra $2.50、Sol $5（出力はLuna $6、Terra $15、Sol $30）。コンテキスト1Mトークン・知識カットオフ2026年2月は確認。ベンチマークは複雑：Terminal-Bench 2.1でSol(91.9%) > Fable 5(88.0%)、Agents' Last ExamでSol(53.6) > Fable 5(40.5)でエージェント系は上回る。ただしSWE-Bench ProではSol(64.6%)がClaude Mythos 5(80.3%)に大差で敗北。「Fable 5を全面的に超える」は誤り、タスク依存。GA日は7月9日。",
+      "source": "openai.com, qcode.cc, edenai.co"
+    },
+    {
+      "file": "2026-07-18_3010_WEB_Claude-Fable5-Anthropic-Mythos-Class-Frontier.md",
+      "verdict": "正確",
+      "detail": "リリース日2026年6月9日確認。Mythosクラス正式名はClaude Mythos 5/Fable 5。SWE-Bench Pro 80.3%（GPT-5.5の58.6%を上回る）など主要ベンチマーク首位を多数確認。ただし7/9のGPT-5.6 Sol登場後はTerminal-Bench・Agents Last Examでは逆転されたため「公開LLM最強」はリリース時点での記述として正確。価格は$10/$50 per 1M tokens（入力/出力）。",
+      "source": "anthropic.com, vellum.ai, benchlm.ai"
+    },
+    {
+      "file": "2026-07-18_3017_WEB_LLM-Trading-Bot-Comparison-FlowHunt.md",
+      "verdict": "確認・但し文脈注意",
+      "detail": "Claude Sonnet 4.6での487%リターン・Sharpe Ratio 1.94の数値はquantlabsnet.comの8モデル比較テスト（バックテスト）から。TradingAgents論文自体の数値（AAPL/GOOGL/AMZN 年率24.9%、Sharpe 5.60）とは別の出典。いずれも短期バックテストであり実運用実績ではない点は記事が明記しており正確な文脈で紹介されている。TradingAgents v0.2.4（記事）は実際にはv0.2.2が最新確認（2026年3月時点）。",
+      "source": "quantlabsnet.com, tauricresearch.github.io, beginnersinai.org"
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-07-17": 0,
+      "2026-07-16": 19,
+      "2026-07-15": 4,
+      "2026-07-14": 12,
+      "2026-07-13": 11,
+      "2026-07-12": 11,
+      "2026-07-11": 13
+    },
+    "recurring_themes": [
+      "claude",
+      "agent",
+      "mcp",
+      "trading",
+      "llm"
+    ]
+  }
+}
