@@ -1,0 +1,199 @@
+{
+  "date": "2026-07-19",
+  "generated_at": "2026-07-20T23:15:40.429031Z",
+  "article_count": 13,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-07-19_3019_WEB_GenAI-Weekly-News-Jul6-12-2026-TechNoisy-JA.md",
+      "title": "生成AIニュースまとめ 先週【2026年7月6日〜12日】— GPT-5.6・Cowork拡大・Grok 4.5",
+      "url": "https://tech-noisy.com/2026/07/13/ai-weekly-news-2026-07-06-2026-07-12/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "ai-news",
+      "summary": "TECH NOISYによる2026年7月6〜12日の週間AIニュースまとめ（公式発表ベース）。主なトピック: OpenAIがGPT-5.6を一般公開、AnthropicがClaude CoworkをiOS/Androidに拡大（スマートフォンからの作業委任が可能に）、Grok 4.5がリリース。GitHubがCodeQL 2.26.0でAIプロンプトインジェクション攻撃をコード生成段階で静的検出する機能を追加。AnthropicがK-12教員向け「Claude for Teachers」を無料提供（Claude Code/Cowork含む）。NVIDIAがロボット向けエッジAI「Cosmos 3 Edge」と日本政府・経済産業省との国家物理AIインフラ構築を発表。AnthropicとBlackstoneが企業向けAI実装企業「Ode with Anthropic」を15億ドル規模で正式設立。この週は複数社から同時に重要発表が続き、AIの商用・教育・国防・インフラ各領域での進展が顕著。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-19_3020_WEB_GenAI-Daily-News-Jul15-2026-TechNoisy-JA.md",
+      "title": "生成AIニュース 昨日【2026年7月15日（水）】のAI公式発表を3分でチェック",
+      "url": "https://tech-noisy.com/2026/07/16/ai-daily-news-2026-07-15/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "ai-news",
+      "summary": "TECH NOISYによる2026年7月15日のAI公式発表日次まとめ。Kimi K3（Moonshot AI、7/16リリース）やInkling（Thinking Machines、7/15頃リリース）などのモデルラッシュ週の情報を整理。Anthropic Claude Fable 5がMax/Team Premiumプランへ7月20日から50%制限付きで提供開始予定との情報も含む。日本語で公式発表ベースの一次情報を速報形式で整理するシリーズ。AIニュースを網羅的に追う上での参照メディア。",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "確認済: 7月20日からMax/Team PremiumにFable 5が50%制限付きで提供開始。@claudeaiの公式X投稿・複数メディアで裏付け取れ。記事の記述は正確。"
+    },
+    {
+      "file": "2026-07-19_3021_WEB_GenAI-Daily-News-Jul16-2026-TechNoisy-JA.md",
+      "title": "生成AIニュース 昨日【2026年7月16日（木）】のAI公式発表を3分でチェック",
+      "url": "https://tech-noisy.com/2026/07/17/ai-daily-news-2026-07-16/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "ai-news",
+      "summary": "TECH NOISYによる2026年7月16日のAI公式発表日次まとめ。注目トピック: 中国の「知能エージェントに関する実施意見」が7月15日から施行開始（世界初のAIエージェント専用規制カテゴリ）。Anthropic Claude Fable 5の7月20日展開、ByteDance UniVR-34B-Planning（7/13リリース）など直近モデル動向も整理。公式発表ベースの速報として日本語AI情報源の中で信頼性が高い。AIエージェント規制の先例が中国で形成されたことは、今後の国際規制動向に大きく影響する可能性がある。",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "確認済: 7月20日からMax/Team PremiumにFable 5が50%制限付きで提供開始。@claudeaiの公式X投稿・複数メディアで裏付け取れ。記事の記述は正確。"
+    },
+    {
+      "file": "2026-07-19_3022_WEB_GAIS-GenAI-News-Best5-Jul3-10-2026-JA.md",
+      "title": "生成AI関連ニュース ベスト5（2026年7月3日〜10日）",
+      "url": "https://gais.jp/news-2026-07-10/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "ai-news",
+      "summary": "GAISによる2026年7月3〜10日の生成AI関連ニュース週次ベスト5。OpenAI GPT-5.6 Luna/Terra/Sol（7/9リリース）、Meta Muse Spark 1.1（7/9リリース）、ByteDance UniVR-34B-Planning（7/13リリース）などモデルリリースラッシュが続く期間の整理に有用。前週（gais.jp/news-2026-07-03/）と対になるシリーズで、週次の生成AI動向を俯瞰するのに適した日本語情報源。平均4日に1回新AIモデルが登場するペースでの市場動向を把握するための週次整理。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-19_3023_WEB_InsideGlobalTech-US-Tech-Q2-2026-Regulatory.md",
+      "title": "U.S. Tech Legislative & Regulatory Update – Second Quarter 2026",
+      "url": "https://www.insideglobaltech.com/2026/07/13/u-s-tech-legislative-regulatory-update-second-quarter-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "Inside Global Techによる2026年Q2（4〜6月）の米国テック規制動向まとめ（2026年7月13日公開）。AI関連主要トピック: (1)イリノイ州が年間売上5億ドル超のフロンティアモデル開発者に独立安全計画の年次監査を義務付ける米国初の州法を制定。(2)アラバマ・ジョージア両州が医療保険のAI活用による不利益決定に十分な人間レビューを義務付ける法律を制定。(3)少なくとも35本以上のAI関連法案が成立。焦点はフロンティアモデル監督・医療AI・ヘルスケアデータの3分野に集中。(4)中国の知能エージェント規制（7/15施行）・欧州AI法透明性規則（8月施行予定）も概説。AI法制化が急速に進む2026年Q2を俯瞰する法律事務所系の一次情報源。FX自動売買システムを含むAIエージェント開発者が把握すべき規制リスク情報。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-19_3024_WEB_ClaudeDojo-ClaudeCode-Japan-20Companies-Cases-2026.md",
+      "title": "Claude Codeを使っている日本企業・活用事例まとめ2026【業種別20社の取り組み】",
+      "url": "https://claudedojo.com/blog/claude-code-japan-cases",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "Claude Code道場による日本企業20社のClaude Code活用事例を業種別にまとめたカタログ（2026年版）。主な定量事例: (1)工場作業手順書・安全衛生マニュアル約200件の見直しが従来比3倍速に、新人習熟期間が2週間→10日に短縮。(2)カスタマーサクセス部門でサポートチケット返信作成を週10時間→3時間に削減、チャーン率が月2.3%→1.4%に改善。(3)TVerのiOSエンジニアが前提知識ゼロからClaude Codeスキル機能でバグ修正フェーズを効率的に乗り切り。(4)週数十本のブログ記事（1本15,000字以上）や月次レポートをClaude Sonnet 4.6で日本語生成。業種別（製造・IT・マーケ・金融・サービス等）に20社の具体的取り組みを整理。非エンジニアへの普及を示す定量データが充実。Claude Code導入の費用対効果検討の参考資料として活用可能。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-19_3025_WEB_VSMag-Claude-AI-VSCode-1128-Enhancement.md",
+      "title": "Claude AI Gets Yet Another Boost in VS Code 1.128",
+      "url": "https://visualstudiomagazine.com/articles/2026/07/08/claude-ai-gets-yet-another-boost-in-vs-code-1-128.aspx",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Visual Studio Magazineによる2026年7月8日付けVS Code 1.128でのClaude AI機能強化レポート。Claude CodeのVS Code拡張機能のアップデート内容を詳報。Microsoft・Anthropicの連携によりVS Code内でのClaude Code体験が継続的に改善。VS Code 1.128での具体的な統合改善（エディタ操作、コンテキスト認識、サイドパネル等）を解説。「yet another boost」とタイトルに付くほど頻繁なアップデートが続いており、VS CodeがClaude Code利用の主要経路として定着していることを示す。IDE統合でのClaude Code活用を検討する開発者向けの参照情報。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-19_3026_WEB_Zenn-nezness-FX-AI-Chart-Learning-AutoTrade-JA.md",
+      "title": "FXが絶望的に下手だったので、AIにチャートを学ばせて自動売買させた話",
+      "url": "https://zenn.dev/nezness/articles/cae1e1380a3aaf",
+      "source": "web",
+      "lang": "ja",
+      "theme": "ai-trading",
+      "summary": "Zennの個人開発者記事。FXトレードが苦手だった著者が、AIにチャートパターンを学習させてFX自動売買システムを構築した実践記録。ML/LLMを活用したFX自動売買の実装プロセスを詳述。MT5との連携、Python実装、バックテスト結果など実際のコードベース事例を含む。過学習・パラメータ調整など実装上の課題についても率直に言及。「絶望的に下手だった」という出発点から始まる個人開発者の試行錯誤と学びのプロセスが具体的に記述されており、FX自動取引システム開発の参考事例として実践的。非専門家視点でのAI×FX自動売買の取り組みを知る日本語一次情報。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-19_3027_WEB_InfoQ-MCP-EMA-Enterprise-Auth-Stable-Jul2026.md",
+      "title": "AI Model Context Protocol Adds Centralised Auth for Enterprise",
+      "url": "https://www.infoq.com/news/2026/07/mcp-ema-enterprise-auth/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "InfoQによるMCP（Model Context Protocol）の企業向け集中認証（Enterprise-Managed Authorisation, EMA）Stableリリース報告（2026年7月）。2026-07-28 MCP仕様RC候補でEMAがStableに昇格。EMAはIDプロバイダー経由でMCPサーバーへのアクセスを組織が一元管理できる認証拡張で、OAuthとOpenID Connectとの整合性を強化。組織のAIエージェントデプロイ時のアクセス制御・監査要件（特に大企業・規制産業）を満たすための重要機能。MCP活用を企業環境に本格展開する上でのセキュリティ基盤として位置付けられる。FX自動取引システムをMCP連携する場合のアクセス管理にも関連。InfoQはエンタープライズ技術の一次情報源として信頼性が高い。",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "要注意: EMAがStableになったのは2026年6月18日（June 18, 2026）の模様。記事の「2026-07-28 MCP仕様RC候補でStable昇格」という日付記述は誤りの可能性あり。EMA自体の内容（企業向け集中認証、IdP経由一元管理、Okta/Anthropic/Microsoft採用）は正確。"
+    },
+    {
+      "file": "2026-07-19_3028_WEB_HackerNoon-MCP-2026-Stateless-Remote-Scale.md",
+      "title": "MCP's 2026 Update Makes Remote Servers Easier to Scale",
+      "url": "https://hackernoon.com/mcps-2026-update-makes-remote-servers-easier-to-scale",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "HackerNoonによるMCP 2026-07-28仕様変更の実践的技術解説。最大の変更点「ステートレス化」の詳細: Mcp-Session-Idヘッダとプロトコルレベルのセッション管理が廃止され、任意のMCPリクエストをどのサーバーインスタンスにもルーティング可能に（スティッキールーティング・共有セッションストアが不要）。Streamable HTTPトランスポートにMcp-MethodとMcp-Nameヘッダが追加され、ロードバランサー・ゲートウェイがボディ解析なしにルーティング可能。List/リソース結果にttlMsとcacheScopeが追加（HTTP Cache-Control準拠）。普通のHTTPインフラでMCPサーバーをスケールできるようになったことで、AWS ALB・CloudflareなどのPaaS上での展開が容易になる。既存のMCP実装に対するBreaking Changesも解説。MCP 2026-07-28仕様の実装者・利用者向けの実践解説として有用。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-19_3029_WEB_ClaudeCode-Japanese-Guide-July2026-GenAI-co-jp.md",
+      "title": "【2026年7月最新】Claude Codeは日本語で使える？設定方法・文字化け対処・非エンジニア向け解説",
+      "url": "https://genai-ai.co.jp/ai-kanri/blog/cc-claude-japanese/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "genai-ai.co.jpによるClaude Codeの日本語利用完全ガイド（2026年7月最新版）。主な内容: Claude Sonnet 4.6・Opus 4.6は日本語ビジネス文書の品質が非常に高く、週数十本のブログ記事（1本15,000字以上）・月次レポート・顧客向け提案書を日本語生成できる。日本語設定方法（言語設定、入力メソッド対応）、文字化け対処法、敬語・丁寧語の使い分け対応方法、日本語特有の文章リズム処理について詳説。非エンジニア向けの実用的な設定手順が充実。2026年7月時点での最新対応状況を反映しており、日本語でClaude Codeを活用するユーザーに直結する情報。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-19_3030_WEB_Uravation-ClaudeCode-Beginner-Guide-2026-JA.md",
+      "title": "【2026年最新】Claude Code始め方｜5分インストール・初心者ガイド",
+      "url": "https://uravation.com/media/claude-code-beginners-guide-2026/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "株式会社Uravationによるクロードコード2026年最新版初心者ガイド。5分でインストールできる手順、CLAUDE.md設定方法、Plan Modeの使い方、スキル機能の概要、料金体系を包括的に解説。2026年中盤時点でのUI変更・新機能を反映した最新版。非エンジニアでも即利用開始できる構成で、日本語Claude Code入門資料の中でも整理が行き届いている。Uravationは他にもClaude Code活用事例10選（uravation.com/media/claude-code-use-cases-10-by-department-industry-2026/、既収録）・CLAUDE.md書き方ガイド（既収録）など良質なClaude Codeコンテンツを継続的に公開しており、信頼性の高い日本語情報源として位置付けられる。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-19_3031_WEB_FTC-FederalRegister-AI-Accuracy-Policy-Jul2026.md",
+      "title": "FTC Policy Statement: Suppression of Accuracy in AI Systems — パブコメ募集",
+      "url": "https://www.federalregister.gov/documents/2026/07/07/2026-13628/policy-statement-concerning-the-suppression-of-accuracy-in-artificial-intelligence-systems",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "米国連邦公報（Federal Register）掲載のFTCによるAI精度に関するポリシーステートメント（2026年7月7日付、文書番号2026-13628）。Trumpの12月大統領令に基づき、AIモデルの「truthful outputs（真実の出力）」を変更することを要求する州法についての法的見解を公表。州AI規制とAI企業の自由な出力表現との法的緊張関係（連邦プリエンプションの可能性）を示す重要一次情報。パブリックコメント締め切りは2026年7月31日。AI企業・AIエージェント開発者・規制遵守担当者が把握すべき米国AI規制の最前線。合計35本以上の州AI法が成立する中で、FTCが連邦レベルの基準を設定しようとする動き。FX自動売買AIなどのAIシステム開発における規制リスクの観点でも参照価値あり。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    }
+  ],
+  "fact_checks": [
+    {
+      "target": "記事3020/3021: Claude Fable 5 Max/Team Premium 7月20日展開",
+      "verdict": "CONFIRMED",
+      "note": "公式X投稿(@claudeai)・AndroidAuthority・GIGAZINE等で裏付け確認。50%制限付き・Pro/Team StandardはUsage Credits継続が正確。"
+    },
+    {
+      "target": "記事3021: 中国AIエージェント規制7月15日施行",
+      "verdict": "CONFIRMED_WITH_NOTE",
+      "note": "施行日確認済。ただし規制対象は「人型AI対話（AIコンパニオン）」に特化しており「全AIエージェント専用規制」とは異なる。Doubao/Qwen停止・14,000件以上の非準拠エージェント削除は確認済。"
+    },
+    {
+      "target": "記事3027: MCP EMA Stableリリース 2026-07-28仕様",
+      "verdict": "DATE_CORRECTION",
+      "note": "EMA Stable昇格は2026年6月18日（記事の2026-07-28という日付は誤り）。EMA機能内容（企業向け集中認証・Okta/Anthropic/Microsoft/Asana/Figma等が採用）は正確。InfoQ記事の日付記述に誤りある可能性。"
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-07-18": 13,
+      "2026-07-17": 0,
+      "2026-07-16": 19,
+      "2026-07-15": 4,
+      "2026-07-14": 12,
+      "2026-07-13": 11,
+      "2026-07-12": 11
+    },
+    "recurring_themes": [
+      "claude",
+      "agent",
+      "mcp",
+      "trading",
+      "llm"
+    ]
+  }
+}
