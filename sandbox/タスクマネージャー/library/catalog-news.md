@@ -256,3 +256,5 @@
 | 234 | 生成AI関連ニュース ベスト5（2026年7月3〜10日）（GAIS） | ja | 未読 | #llm-news #web-signal | articles/2026-07-19_3022_WEB_GAIS-GenAI-News-Best5-Jul3-10-2026-JA.md |
 | 235 | U.S. Tech Legislative & Regulatory Update – Q2 2026（InsideGlobalTech） | en | 未読 | #regulation #web-signal | articles/2026-07-19_3023_WEB_InsideGlobalTech-US-Tech-Q2-2026-Regulatory.md |
 | 236 | FTC Policy Statement: AIシステムの精度抑制に関するポリシー（Federal Register） | en | 未読 | #regulation #web-signal | articles/2026-07-19_3031_WEB_FTC-FederalRegister-AI-Accuracy-Policy-Jul2026.md |
+| 237 | EU委員会がAI法透明性義務ガイドライン正式公表（2026年7月20日） | en | 未読 | #regulation #eu-ai-act #web-signal | articles/2026-07-20_3034_WEB_EU-AI-Act-Transparency-Guidelines-Official-July20.md |
+| 238 | AI Regulation News July 2026 — Startup Edition（mean.ceo） | en | 未読 | #regulation #web-signal | articles/2026-07-20_3035_WEB_MeanCEO-AI-Regulation-July2026-Startup-Edition.md |

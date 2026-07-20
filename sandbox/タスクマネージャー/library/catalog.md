@@ -752,3 +752,6 @@
 | 726 | MCP 2026ステートレス化でリモートサーバーのスケールが容易に（HackerNoon） | en | 未読 | #mcp #ecosystem #web-signal | articles/2026-07-19_3028_WEB_HackerNoon-MCP-2026-Stateless-Remote-Scale.md |
 | 727 | 【2026年7月最新】Claude Codeは日本語で使える？設定・文字化け対処 | ja | 未読 | #web-signal | articles/2026-07-19_3029_WEB_ClaudeCode-Japanese-Guide-July2026-GenAI-co-jp.md |
 | 728 | 【2026年最新】Claude Code始め方｜5分インストール・初心者ガイド（Uravation） | ja | 未読 | #web-signal | articles/2026-07-19_3030_WEB_Uravation-ClaudeCode-Beginner-Guide-2026-JA.md |
+| 729 | StackQL Anthropic API Providers Update — July 2026 | en | 未読 | #ecosystem #web-signal | articles/2026-07-20_3032_WEB_StackQL-Anthropic-API-Providers-Update-July2026.md |
+| 730 | Claude Code v2.1.214-215：パーミッションバイパス修正・自動スキル実行廃止（Week 30） | en | 未読 | #model-update #security #web-signal | articles/2026-07-20_3033_WEB_Claude-Code-v2-1-214-215-Security-Fixes-Jul18-19-2026.md |
+| 731 | Anthropic Memory API beta（agent-memory-2026-07-22）& HIPAA自己設定機能 | en | 未読 | #ecosystem #web-signal | articles/2026-07-20_3036_WEB_Anthropic-Memory-API-Beta-HIPAA-Config-July2026.md |
