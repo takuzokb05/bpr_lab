@@ -1,0 +1,557 @@
+<title>AI Weekly Digest 2026-07-19</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --bg-card: #ffffff;
+    --text: #1a1a1a;
+    --text-secondary: #555;
+    --border: #e0e0e0;
+    --accent-claude: #2563eb;
+    --accent-eco: #059669;
+    --accent-trade: #d97706;
+    --accent-reg: #7c3aed;
+    --accent-news: #6b7280;
+    --tag-claude-bg: #dbeafe;
+    --tag-eco-bg: #d1fae5;
+    --tag-trade-bg: #fef3c7;
+    --tag-reg-bg: #ede9fe;
+    --tag-news-bg: #f3f4f6;
+    --highlight: #fef9c3;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #111111;
+      --bg-card: #1a1a1a;
+      --text: #e5e5e5;
+      --text-secondary: #999;
+      --border: #2a2a2a;
+      --tag-claude-bg: #1e3a5f;
+      --tag-eco-bg: #14332a;
+      --tag-trade-bg: #3d2e0a;
+      --tag-reg-bg: #2d1f4e;
+      --tag-news-bg: #252525;
+      --highlight: #3d3510;
+      --shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #111111;
+    --bg-card: #1a1a1a;
+    --text: #e5e5e5;
+    --text-secondary: #999;
+    --border: #2a2a2a;
+    --tag-claude-bg: #1e3a5f;
+    --tag-eco-bg: #14332a;
+    --tag-trade-bg: #3d2e0a;
+    --tag-reg-bg: #2d1f4e;
+    --tag-news-bg: #252525;
+    --highlight: #3d3510;
+    --shadow: 0 1px 3px rgba(0,0,0,0.3);
+  }
+  :root[data-theme="light"] {
+    --bg: #fafafa;
+    --bg-card: #ffffff;
+    --text: #1a1a1a;
+    --text-secondary: #555;
+    --border: #e0e0e0;
+    --tag-claude-bg: #dbeafe;
+    --tag-eco-bg: #d1fae5;
+    --tag-trade-bg: #fef3c7;
+    --tag-reg-bg: #ede9fe;
+    --tag-news-bg: #f3f4f6;
+    --highlight: #fef9c3;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    font-size: 16px;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+  h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.02em;
+  }
+  .subtitle {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 2.5rem 0 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid var(--border);
+  }
+  h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 1.5rem 0 0.5rem;
+  }
+  p { margin-bottom: 0.8rem; }
+  .summary-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow);
+  }
+  .summary-box p { margin-bottom: 0.5rem; }
+  .summary-box p:last-child { margin-bottom: 0; }
+  .tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+  .tag-claude { background: var(--tag-claude-bg); color: var(--accent-claude); }
+  .tag-eco { background: var(--tag-eco-bg); color: var(--accent-eco); }
+  .tag-trade { background: var(--tag-trade-bg); color: var(--accent-trade); }
+  .tag-reg { background: var(--tag-reg-bg); color: var(--accent-reg); }
+  .tag-news { background: var(--tag-news-bg); color: var(--accent-news); }
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow);
+  }
+  .card h4 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+  .card p {
+    font-size: 0.92rem;
+    margin-bottom: 0.4rem;
+  }
+  .card p:last-child { margin-bottom: 0; }
+  .highlight {
+    background: var(--highlight);
+    border-radius: 3px;
+    padding: 0 4px;
+  }
+  .border-claude { border-left: 3px solid var(--accent-claude); }
+  .border-eco { border-left: 3px solid var(--accent-eco); }
+  .border-trade { border-left: 3px solid var(--accent-trade); }
+  .border-reg { border-left: 3px solid var(--accent-reg); }
+  .border-news { border-left: 3px solid var(--accent-news); }
+  .action-list {
+    list-style: none;
+    padding: 0;
+    counter-reset: action;
+  }
+  .action-list li {
+    position: relative;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    margin-bottom: 0.5rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.92rem;
+    counter-increment: action;
+  }
+  .action-list li::before {
+    content: counter(action);
+    position: absolute;
+    left: 0.75rem;
+    top: 0.75rem;
+    width: 1.4rem;
+    height: 1.4rem;
+    background: var(--accent-claude);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+  .action-list .priority {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 3px;
+    margin-right: 4px;
+  }
+  .p-high { background: #fecaca; color: #991b1b; }
+  .p-mid { background: #fef3c7; color: #92400e; }
+  .p-low { background: #d1fae5; color: #065f46; }
+  @media (prefers-color-scheme: dark) {
+    .p-high { background: #4a1515; color: #fca5a5; }
+    .p-mid { background: #3d2e0a; color: #fcd34d; }
+    .p-low { background: #14332a; color: #6ee7b7; }
+  }
+  :root[data-theme="dark"] .p-high { background: #4a1515; color: #fca5a5; }
+  :root[data-theme="dark"] .p-mid { background: #3d2e0a; color: #fcd34d; }
+  :root[data-theme="dark"] .p-low { background: #14332a; color: #6ee7b7; }
+  :root[data-theme="light"] .p-high { background: #fecaca; color: #991b1b; }
+  :root[data-theme="light"] .p-mid { background: #fef3c7; color: #92400e; }
+  :root[data-theme="light"] .p-low { background: #d1fae5; color: #065f46; }
+  .trend-timeline {
+    border-left: 2px solid var(--border);
+    padding-left: 1.25rem;
+    margin: 1rem 0;
+  }
+  .trend-timeline .day {
+    position: relative;
+    margin-bottom: 0.75rem;
+  }
+  .trend-timeline .day::before {
+    content: '';
+    position: absolute;
+    left: -1.6rem;
+    top: 0.55rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent-claude);
+  }
+  .trend-timeline .day-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+  }
+  .trend-timeline .day p {
+    font-size: 0.92rem;
+    margin-bottom: 0.2rem;
+  }
+  .cross-domain {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    margin: 1rem 0;
+  }
+  .stats-row {
+    display: flex;
+    gap: 0.75rem;
+    margin: 1rem 0;
+    flex-wrap: wrap;
+  }
+  .stat {
+    flex: 1;
+    min-width: 120px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    text-align: center;
+  }
+  .stat .num {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent-claude);
+    line-height: 1.2;
+  }
+  .stat .label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+  }
+  .watch-list {
+    list-style: none;
+    padding: 0;
+  }
+  .watch-list li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.92rem;
+  }
+  .watch-list li:last-child { border-bottom: none; }
+  .watch-keyword {
+    display: inline-block;
+    background: var(--tag-claude-bg);
+    color: var(--accent-claude);
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: 3px;
+    margin-right: 4px;
+  }
+  footer {
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    text-align: center;
+  }
+</style>
+
+<h1>AI Weekly Digest</h1>
+<div class="subtitle">2026-07-13 &mdash; 2026-07-19 / 59記事を統合 / 自動生成</div>
+
+<div class="stats-row">
+  <div class="stat"><div class="num">59</div><div class="label">収集記事</div></div>
+  <div class="stat"><div class="num">5</div><div class="label">ドメイン</div></div>
+  <div class="stat"><div class="num">3</div><div class="label">Frontier新モデル</div></div>
+  <div class="stat"><div class="num">4</div><div class="label">規制動向国・地域</div></div>
+</div>
+
+<h2>1. 今週のサマリー</h2>
+
+<div class="summary-box">
+  <p>今週は<strong>フロンティアモデルの三つ巴</strong>が決定的になった週だった。GPT-5.6 Sol、Fable 5、Grok 4.5がTerminal Benchで1.1ポイント差に収束し、性能差がほぼ消滅した一方、価格は最大5倍の開きがある。「どのモデルが最強か」から「どう使い分けるか」へ、問いの質が変わった。</p>
+  <p>MCPプロトコルは<strong>ステートレス化</strong>という大転換を迎え、同時にセキュリティ研究者から4件の新たな攻撃面が報告された。成熟と脆弱性の発見が同時進行するフェーズに入っている。MetaTrader 5がMCPをネイティブサポートしたことで、FX取引とAIエージェントの統合障壁が劇的に下がった。</p>
+  <p>規制面では、<strong>モデルからエージェントへ</strong>の焦点移動が明確化。米Warner議員のAI AGENT Act、日本のエージェント向けガイドライン更新、EU AI ActのGPAI執行開始（8月2日）が同時に動いている。規制が「AIとは何か」ではなく「AIエージェントが何をしてよいか」を問い始めた。</p>
+</div>
+
+<h2>2. 今週ずっと話題だったもの</h2>
+
+<h3><span class="tag tag-news">Models</span> フロンティア価格戦争 &mdash; 性能収束と価格分散</h3>
+<div class="trend-timeline">
+  <div class="day">
+    <div class="day-label">7/13 (Sun)</div>
+    <p>GPT-5.6とGrok 4.5が7月9日に同日リリースされたことの余波を複数メディアが報じた。GPT-5.6 Sol 84.3%、Fable 5 84.1%、Grok 4.5 83.2%とTerminal Bench 2.1の差はわずか1.1ポイント。しかし価格はGrok $2/$6、GPT $5/$30、Fable $10/$50と最大5倍差。Gemini 3.5 Proが4Mコンテキストで参戦し、Apple-OpenAI提携でSiriへのGPT-5.5統合が発表された。</p>
+  </div>
+  <div class="day">
+    <div class="day-label">7/14 (Mon)</div>
+    <p>TheDecoderが詳細なベンチマーク比較を公開。DeepSWE 1.1（複雑なコーディング）ではFable 5が70%で17ポイントのリードを維持。Grok 4.5は安いがハルシネーション率54%という弱点も浮上。「安くて速い」と「深くて正確」の二極化が鮮明になった。</p>
+  </div>
+  <div class="day">
+    <div class="day-label">7/15 (Tue)</div>
+    <p>日本語の総合比較記事が登場。「コスト対性能」と「エージェント対インタラクティブ」の2軸選択フレームワークが提示された。平均3日に1つの新フロンティアモデルがリリースされるペースであることが数値で示された。</p>
+  </div>
+  <div class="day">
+    <div class="day-label">7/16 (Wed)</div>
+    <p>Claude Code公式アカウントが「Fable 5 Advisor Pattern」を投稿し17,000いいね。安価なSonnet 5で大量処理し、判断の分岐点だけFable 5を呼ぶ2層構成。価格差を逆手に取ったコスト最適化パターンとして定着の兆し。</p>
+  </div>
+  <div class="day">
+    <div class="day-label">7/18 (Fri)</div>
+    <p>中国Moonshot AIのKimi K3（2Mコンテキスト、$1/$4）とMira MuratiのInkling（70B、Apache 2.0、オープンウェイト）が登場。クローズドモデルの価格支配に挑む動きが東西から同時発生。</p>
+  </div>
+</div>
+
+<h3><span class="tag tag-eco">MCP</span> ステートレス化と同時進行するセキュリティ発見</h3>
+<div class="trend-timeline">
+  <div class="day">
+    <div class="day-label">7/13 (Sun)</div>
+    <p>ShareUHackがMCPサーバーの人気ランキングとセキュリティリスクを同時報告。Playwright MCPが30,000+ GitHubスターでトップ。OX Securityが4月に開示したstdioトランスポートのRCE脆弱性が全SDKに影響することが改めて強調された。</p>
+  </div>
+  <div class="day">
+    <div class="day-label">7/14 (Mon)</div>
+    <p>MCP 2026-07-28 RCの技術詳細が2方向から報じられた。Fmindがステートレスコア（initialize/initializedハンドシェイク廃止、_metaでリクエスト毎にクライアント情報送信）とID-JAG（SSO統合）を解説。同日、SecurityWeekが4つの新攻撃面（追跡IDハイジャック、HTTPヘッダーAPIキー漏洩、MCP Apps XSS、TasksのDoS）を報告。</p>
+  </div>
+  <div class="day">
+    <div class="day-label">7/16 (Wed)</div>
+    <p>日本語MCPサーバーカタログが113サーバーを収録。MCPエコシステムの実用的な広がりが可視化された。</p>
+  </div>
+  <div class="day">
+    <div class="day-label">7/18 (Fri)</div>
+    <p>X（旧Twitter）がMCPサーバーを正式ローンチ。OAuth 2.0認証でタイムライン読み取り、投稿、検索、トレンド分析をMCP経由で提供。Slack、GitHub、Google Driveに続くメジャープラットフォームのMCPネイティブ対応として、エコシステムの拡大を示した。同日、MCP 2026-07-28 RCの詳細技術分析も公開され、12ヶ月の移行期間と既存実装への破壊的変更のカタログが示された。</p>
+  </div>
+</div>
+
+<h3><span class="tag tag-reg">Regulation</span> エージェント規制の世界同時進行</h3>
+<div class="trend-timeline">
+  <div class="day">
+    <div class="day-label">7/13 (Sun)</div>
+    <p>日本AIガイドラインがエージェント向けに更新。「意味のある人間の監視」を要求し、情報提供型（低）・意思決定支援型（中）・自律型（高）の3段階分類を導入。金融セクターのエージェントには監査証跡とリアルタイム人間介入を求める。非拘束だが公共調達基準に影響する見込み。</p>
+  </div>
+  <div class="day">
+    <div class="day-label">7/14 (Mon)</div>
+    <p>EU AI ActのGPAI執行権限が8月2日に発動することが確認された。罰金は最大1,500万ユーロまたは年間売上の3%。同時にOmnibus VIIでハイリスクAIの期限延長（2027年12月）が承認され、「執行は始めるが期限は延ばす」という二面的な動きに。</p>
+  </div>
+  <div class="day">
+    <div class="day-label">7/16 (Wed)</div>
+    <p>米Warner議員のAI AGENT Actが公開。FTCが「信頼されたAIエージェント」の連邦登録簿を作成し、未認証エージェントには消費者被害の責任規定を適用。金融・医療・法律での「エージェント経済」を直接規制する初の米国連邦法案。EU Omnibus VII最終承認も同日報じられた。</p>
+  </div>
+  <div class="day">
+    <div class="day-label">7/18 (Fri)</div>
+    <p>FTCがAIエージェント透明性のガイドラインを発出、イリノイ州がAI雇用決定法を可決（2027年1月施行）、国連AI諮問機関が自律AIの暫定ガバナンスフレームワークを公表。規制がモデルレベルからエージェントレベルへ移行する潮流が確定的になった。</p>
+  </div>
+</div>
+
+<h2>3. 今週の重要トピック</h2>
+
+<h3><span class="tag tag-claude">Claude Code</span> エコシステムの成熟 &mdash; 実用パターンの確立</h3>
+
+<div class="card border-claude">
+  <h4>v2.1.207: 企業向けAuto Mode標準化とセキュリティ修正</h4>
+  <p>Bedrock、Vertex AI、Azure FoundryでAuto Modeがデフォルト化し、環境変数設定が不要に。デフォルトモデルもOpus 4.8に更新された。ただしDigitalAppliedの分析により、Anthropicの<code>disableAutoMode</code>設定がクラウドプロバイダー環境には適用されないガバナンスギャップが発覚。中央ポリシー管理を前提とした組織は、プロキシレベルの制御が必要になる。</p>
+  <p>セキュリティ面では非インタラクティブ同意ダイアログのバイパスとプラグインHookのシェルインジェクションが修正された。</p>
+</div>
+
+<div class="card border-claude">
+  <h4>公式パターン集: Loops、Advisor Pattern、75 Skills OSS化</h4>
+  <p>Claude Code公式アカウントが今週2つの重要パターンを発信した。<strong>Loops入門</strong>はターンベース・ゴールベース・タイムベースの3種ループを体系化し、SKILL.mdの検証ロジックでターン数を削減する設計を示した。<strong>Fable 5 Advisor Pattern</strong>は安価なSonnet 5を実行者、高価なFable 5をスポットアドバイザーとする2層構成で、コストを抑えつつ判断品質を維持する。17,000いいねを獲得し、コスト最適化の定番パターンとして急速に浸透している。</p>
+  <p>コミュニティ側では75個のプロダクションレディなSkillsがOSS化された。コードレビュー、テスト、デプロイ、ドキュメント生成、データ処理のカテゴリを網羅し、SKILL.md形式で検証ロジックが組み込まれている。</p>
+</div>
+
+<div class="card border-claude">
+  <h4>非エンジニア活用の加速</h4>
+  <p>日本語圏から非エンジニア活用事例が集中的に報じられた。Hexabaseの事例ではClaude Skillsユーザーの55%が非エンジニア。請求書マッチング（4.5時間→35分）、営業資料作成（60分→8分）など、具体的な時間短縮が定量化されている。成功要因は「日本語でタスクを明確に記述すること」であり、コーディング能力ではない。ただし複雑なマルチステップワークフローは初期セットアップに技術者が必要という制約も報告されている。</p>
+</div>
+
+<div class="card border-claude">
+  <h4>Artifacts Beta開放、Agent SDK進化</h4>
+  <p>ArtifactsがPro/Maxプランに開放された（従来はTeam/Enterpriseのみ）。Week 29では階層的エージェントオーケストレーション機能も追加され、親エージェントが子エージェントを生成・調整できるようになった。Agent SDK 0.4.0プレビューではエージェント間通信がネイティブサポートされる。</p>
+  <p>Agent SDKの課金モデルも6月15日にトークン単位から実行時間単位に変更。Sonnet $0.02/分、Opus $0.08/分、Fable $0.15/分。短時間タスクはトークン課金、長時間エージェントは時間課金のハイブリッド選択が可能になった。</p>
+</div>
+
+<h3><span class="tag tag-eco">Ecosystem</span> MCPの転換点 &mdash; プロトコル革新とプラットフォーム拡大</h3>
+
+<div class="card border-eco">
+  <h4>MCP 2026-07-28 RC: ステートレスコアへの大転換</h4>
+  <p>MCPプロトコルの最大の構造変更が発表された。initialize/initializedハンドシェイクが廃止され、クライアント情報は<code>_meta</code>フィールドで毎リクエスト送信される自己記述型に。これによりセッションアフィニティなしのラウンドロビンロードバランシングが可能になり、エンタープライズ展開の障壁が大きく下がる。</p>
+  <p>ID-JAG（RFC 8693トークン交換）によるSSO統合も導入され、インタラクティブな同意なしでのSSOが実現する。旧仕様は7月28日に非推奨化され、12ヶ月の移行期間が設定される。Python SDK <code>mcp[cli]==2.0.0b1</code>、TypeScript SDK <code>@modelcontextprotocol/server@beta</code>が利用可能。</p>
+</div>
+
+<div class="card border-eco">
+  <h4>セキュリティ: 4つの新攻撃面</h4>
+  <p>SecurityWeekが2026-07-28 RC仕様の4つの攻撃面を報告した。予測可能な追跡IDによるワークフローハイジャック、新HTTPヘッダーを通じたAPIキー漏洩、MCP Apps拡張のXSS、Tasks拡張のDoS（高コスト処理を要求して即切断）。ステートレス化による利便性向上とセキュリティリスクのトレードオフが明確になった。実運用では、MCP Serverバージョンのピン留め、ツールパーミッションの監査、許可リストベースのフィルタリングが必須となる。</p>
+</div>
+
+<div class="card border-eco">
+  <h4>X公式MCPサーバー &mdash; メジャープラットフォームの参入</h4>
+  <p>X（旧Twitter）がMCPサーバーを正式ローンチした。OAuth 2.0認証で、タイムライン読み取り・投稿・検索・トレンド分析をAIエージェントからMCP経由で実行できる。標準ティアでは毎時1,000リード・100ライトのレート制限。Slack、GitHub、Google Driveに続くMCPネイティブ対応で、MCPが「実験プロトコル」から「標準インフラ」へ移行したことを象徴するマイルストーンとなった。</p>
+</div>
+
+<h3><span class="tag tag-trade">Trading</span> MT5のMCPネイティブ化 &mdash; FX×AIの統合元年</h3>
+
+<div class="card border-trade">
+  <h4>MetaTrader 5 Build 5955: MCP・AIエージェント公式サポート</h4>
+  <p>MetaQuotesがMT5にMCPとAIエージェントのネイティブサポートを追加した。クライアントターミナルとMetaEditorの両方で利用でき、AIエージェントが自然言語でマーケットデータアクセス、注文発注、ポジション管理、テクニカル分析を実行できる。これまでコミュニティが作成したMCPサーバーのワークアラウンドに頼っていた統合が、公式実装に置き換わる。FX自動取引とLLMの統合実験の参入障壁が劇的に低下した。</p>
+</div>
+
+<div class="card border-trade">
+  <h4>ブローカーのMCP対応競争</h4>
+  <p>Webull、Deriv、IG、eToroがAIエージェント互換のMCP APIを構築中。Robinhoodは5月に直接エージェント接続機能を発表し、CEOが「エージェンティック・ファイナンスの始まり」と宣言した。リサーチ→ニュース分析→テクニカル分析→注文実行の統合ワークフローを構築する早期導入者が出現している。ただし認証・認可不備によるフラウドとランナウェイ注文のリスクも同時に指摘されている。</p>
+</div>
+
+<div class="card border-trade">
+  <h4>学術的コンセンサス: 「監督付きリサーチアシスタント」の位置づけ</h4>
+  <p>今週のトレーディング関連記事は一貫したメッセージを発している。arxiv 2605.28359はLLMが市場知識を持ちながらも実効的なトレード決定に変換できない「実行ギャップ」を定量化し、累積リターンの大部分がマーケット/スタイルへのエクスポージャーで説明されると結論。CoinEditionの分析も一貫した優位性の証拠がないと報告。FlowHuntのボット比較では方向精度60-70%だがスリッページと手数料でエッジが侵食される。</p>
+  <p><strong>今週の結論</strong>: LLMの最適ポジションは「自律的意思決定者」ではなく「監督付きリサーチアシスタント」。LLMリサーチ + ルールベース実行のハイブリッド構成が現時点のベストプラクティス。</p>
+</div>
+
+<h3><span class="tag tag-reg">Regulation</span> エージェント規制の国際的収束</h3>
+
+<div class="card border-reg">
+  <h4>米国: Warner AI AGENT Act</h4>
+  <p>Warner議員が6月29日に公開した法案は、FTCに「信頼され安全なAIエージェント」の連邦登録簿の作成・維持を義務付ける。未認証エージェントには消費者被害の責任規定が適用され、認証済みエージェントへのプラットフォームによるアクセスブロックは反差別条項で禁止される。金融・医療・法律での「エージェント経済」を直接対象とする初の米国連邦法案として注目される。</p>
+</div>
+
+<div class="card border-reg">
+  <h4>EU: GPAI執行8月2日、ハイリスク期限延長</h4>
+  <p>EU AI ActのGPAI（汎用AI）に対する監督・執行権限が8月2日に発動する。既存ルールの執行であり新義務ではないが、罰金は最大1,500万ユーロまたは全球年間売上の3%。一方、Omnibus VIIでスタンドアロン型ハイリスクAIの義務期限は2027年12月、製品組み込み型は2028年8月に延長。「競争力への悪影響」を理由とする産業界の主張が通った形。SME向け追加猶予期間も拡大された。</p>
+</div>
+
+<div class="card border-reg">
+  <h4>中国: モデル輸出規制とDeepSeek期限</h4>
+  <p>中国がDeepSeek、Qwen、Baichuan、Yiなどのモデル輸出規制を強化。HuggingFace/ModelScopeへのダウンロード制限やIPブロックの可能性が報じられている。<span class="highlight">DeepSeek APIの期限は7月24日</span>。GGUF形式での事前ダウンロードによるローカルバックアップが推奨されている。</p>
+</div>
+
+<h3><span class="tag tag-news">Models</span> 新モデルの注目動向</h3>
+
+<div class="card border-news">
+  <h4>Kimi K3とInkling &mdash; クローズドモデル支配への挑戦</h4>
+  <p>Moonshot AIのKimi K3は2Mトークンコンテキスト（商用モデル最大級）でGPT-5.6 Solの5%以内のベンチマーク性能を持ちながら$1/$4の超低価格。グローバルに利用可能で、CJK言語に特に強い。Mira MuratiのThinking Machinesが公開したInklingは70BパラメータでGPT-5.5レベルの推論性能をApache 2.0ライセンスで提供。セルフホスティングにより計算コストのみで運用でき、クローズドモデルの価格設定に構造的な挑戦を仕掛けている。</p>
+</div>
+
+<h2>4. ドメイン横断分析</h2>
+
+<div class="cross-domain">
+  <div class="card">
+    <h4>MCPが全ドメインを貫通する統合レイヤーになった</h4>
+    <p>今週最も印象的なメタトレンドは、MCPがClaude Codeのツール統合だけでなく、MT5の取引実行、X/Twitterのソーシャルデータ、ブローカーのAPI基盤にまで浸透し始めたことだ。7月13日にはMCPサーバーセキュリティの報告、14日にプロトコルのステートレス化、16日にMT5ネイティブ対応とブローカー競争、18日にX公式サーバー。1週間でMCPは「開発者向けプロトコル」から「AIエージェントの標準通信基盤」へと実質的にフェーズが変わった。</p>
+    <p>この流れは、Claude Code（エージェント）→ MCP（プロトコル）→ MT5/ブローカー（取引執行）→ 規制（エージェント法）という一つの因果連鎖としても読める。エージェントが実世界のアクションを取れるインフラが整うほど、規制の焦点はモデルからエージェントに移る。</p>
+  </div>
+
+  <div class="card">
+    <h4>コスト最適化が「技術」から「運用設計」へ</h4>
+    <p>フロンティアモデルの価格差5倍、Claude Codeのトークン67%削減事例、Agent SDKの課金モデル変更、Fable 5 Advisor Pattern。今週のコスト関連トピックに共通するのは、「安いモデルを選ぶ」という単純な話ではなく「タスクの性質に応じて適切なモデル・課金モデルを選択する運用設計」が求められているということだ。Haiku（軽タスク）→ Sonnet（実装）→ Opus（改良）→ Fable（重要判断）の4段階ルーティングは、組織のAI運用コストを構造的に削減する。</p>
+  </div>
+
+  <div class="card">
+    <h4>非エンジニアAI活用の日本的展開</h4>
+    <p>Hexabase事例（55%非エンジニア）、業務活用10事例、ROI 10倍の実現方法と、日本語圏から非エンジニア向けClaude Code活用記事が今週集中的に発信された。共通するパターンは「日本語で作業を記述すればコーディング不要」という参入障壁の低さと、「請求書マッチング4.5時間→35分」のような具体的なROI定量化。長期介護保険の行政業務においても、定型的な書類処理・データ抽出・レポート整形で同様の効率化が期待できる。</p>
+  </div>
+</div>
+
+<h2>5. アクション提案</h2>
+
+<ol class="action-list">
+  <li>
+    <span class="priority p-high">緊急</span>
+    <strong>DeepSeek APIバックアップ（期限: 7月24日）</strong><br>
+    中国のモデル輸出規制強化により、DeepSeek APIが7月24日に制限される可能性がある。ローカルで利用しているモデルがあれば、GGUF形式で事前ダウンロードしておく。HuggingFace/ModelScopeからのダウンロード制限やIPブロックも想定し、代替モデルの調査も並行して行う。
+    <br><span style="font-size:0.82rem;color:var(--text-secondary)">根拠: Warokai記事 + AIToolsRecap 7/13報告</span>
+  </li>
+  <li>
+    <span class="priority p-high">高</span>
+    <strong>MT5 MCP統合の検証開始</strong><br>
+    MetaTrader 5 Build 5955以降でMCP/AIエージェントがネイティブサポートされた。現在のFX自動取引環境にMCP経由でLLM分析を統合する実験を開始する好機。まずはリードオンリーでマーケットデータ取得→LLM分析→シグナル表示のパイプラインを試す。注文実行との接続はバックテスト完了後。
+    <br><span style="font-size:0.82rem;color:var(--text-secondary)">根拠: MetaTrader 5 Build 5955報告 + ブローカーMCP対応競争 + arxiv「監督付きアシスタント」結論</span>
+  </li>
+  <li>
+    <span class="priority p-mid">中</span>
+    <strong>Fable 5 Advisor Patternの適用</strong><br>
+    本リポジトリのClaude Code運用にFable 5 Advisor Patternを導入する。日常的なファイル操作・検索はSonnet/Opusで処理し、アーキテクチャ判断・複雑なデバッグのみFableにエスカレーションする構成。トークン67%削減の事例を参考に、モデルルーティングのルールをCLAUDE.mdに記載する。
+    <br><span style="font-size:0.82rem;color:var(--text-secondary)">根拠: Claude Code公式 Fable 5 Advisor Pattern（17Kいいね）+ @beku_AI 67%削減事例</span>
+  </li>
+  <li>
+    <span class="priority p-mid">中</span>
+    <strong>MCP 2026-07-28 RC移行準備</strong><br>
+    ステートレス化によるbreaking changesのカタログを確認し、利用中のMCPサーバーへの影響を事前評価する。セキュリティ4件（特にHTTPヘッダー経由のAPIキー漏洩）の該当有無をチェック。12ヶ月の移行期間があるが、新SDK beta（Python <code>mcp[cli]==2.0.0b1</code>）でのテストは早めに開始すべき。
+    <br><span style="font-size:0.82rem;color:var(--text-secondary)">根拠: SecurityWeek 4攻撃面報告 + Fmind技術分析 + MCP仕様RC</span>
+  </li>
+  <li>
+    <span class="priority p-low">低</span>
+    <strong>エージェント規制動向のウォッチリスト整備</strong><br>
+    日本のエージェントガイドライン（3段階分類）は長期介護保険業務でのAI活用に直接影響し得る。非拘束ながら公共調達基準に反映される見込みのため、「情報提供型」「意思決定支援型」のどちらに自部門のAI活用が分類されるかを事前整理しておく。Warner AI AGENT Act、EU GPAI執行（8/2）も継続ウォッチ。
+    <br><span style="font-size:0.82rem;color:var(--text-secondary)">根拠: Miraina 日本AIガイドライン + Warner AI AGENT Act + EU GPAI 8/2執行</span>
+  </li>
+</ol>
+
+<h2>6. 来週の注目ポイント</h2>
+
+<div class="card">
+  <ul class="watch-list">
+    <li>
+      <span class="watch-keyword">7/24</span>
+      <strong>中国DeepSeek API制限期限</strong> &mdash; 実際にアクセス制限が発動されるか、代替手段の状況。ローカルモデル運用者への影響度合い。
+    </li>
+    <li>
+      <span class="watch-keyword">7/28</span>
+      <strong>MCP 2026-07-28 正式リリース</strong> &mdash; RCから正式版への変更点。ステートレス移行ガイドの公開有無。SDK安定版のリリース日程。
+    </li>
+    <li>
+      <span class="watch-keyword">8/2</span>
+      <strong>EU AI Act GPAI執行開始</strong> &mdash; 欧州委員会の最初の執行アクション。GPAI提供者（OpenAI、Google、Anthropic）の対応状況。Grok 4.5のEU展開タイミング。
+    </li>
+    <li>
+      <span class="watch-keyword">Claude Code</span>
+      <strong>Weekly Limits Promotion終了（7/19）</strong> &mdash; 50%増量の終了後、次のプロモーション発表があるか。利用パターンの変化。
+    </li>
+    <li>
+      <span class="watch-keyword">MT5 + MCP</span>
+      <strong>FX × AIエージェント統合の実践報告</strong> &mdash; Build 5955以降を使った統合事例が出始めるか。コミュニティのフィードバック。
+    </li>
+    <li>
+      <span class="watch-keyword">Agent SDK</span>
+      <strong>0.4.0正式リリース</strong> &mdash; エージェント間通信のGA化。Managed Agents永続メモリの正式リリース有無。
+    </li>
+  </ul>
+</div>
+
+<footer>
+  AI Weekly Digest 2026-07-19 &mdash; 59記事を統合 &mdash; 自動生成
+</footer>

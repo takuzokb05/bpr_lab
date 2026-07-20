@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-07-18</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-07-18 | 13件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-07-18</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>MCP最大仕様改定RC公開・Claude Code Week 29・フロンティアモデル競争激化という三本柱の一日。MCPのステートレス化は14,000以上のサーバーに影響する業界的な転換点で、Claude Codeヘビーユーザーは10週間の移行ウィンドウを意識する必要がある。AIトレーディング分野ではClaude Sonnet 4.6でSharpe 1.94の報告もあるが、いずれもバックテストであり実運用文脈では慎重な解釈が必要。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>MCPがインフラ層へ：ステートレス化とエンタープライズ化</h3>
+
+<p>MCPエコシステムは2026年後半に入り、成熟の段階へ移行しつつある。7月28日最終版リリース予定の仕様RC（SEP-2575/SEP-2567）における最大変更は<strong>ステートレス化</strong>だ。従来のinitialize/initializedハンドシェイクとMcp-Session-Idヘッダが廃止され、スティッキーセッション不要でラウンドロビンLBが動作可能になる。14,000以上のサーバー・SDK累計9,700万DLを抱えるエコシステムには10週間の移行ウィンドウが設定されており、Claude CodeのMCPサーバー開発者は早期対応を推奨される。（<a href="https://blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate/" target="_blank">MCP 2026-07-28 RC</a>）</p>
+
+<p>この仕様改定と並走する形で、エンタープライズ採用も加速している。X（旧Twitter）が6月30日に公式MCPサーバーを開始したことはMCPが事実上の業界標準となったことを示すマイルストーンであり、OpenAI・Google・Microsoft・Anthropicを横断してMCPが採用される構図が固まった。国産SaaS（楽楽精算・freee・kintone）の対応も進んでいる。（<a href="https://techcrunch.com/2026/06/30/x-now-offers-an-mcp-server-to-make-its-platform-easier-for-ai-tools-to-use/" target="_blank">TechCrunch</a>）</p>
+
+<p>Claude Agent SDK（旧Claude Code SDK）は6月15日から独立した月次クレジット課金に移行し、プロダクトとして本格格上げ。コード実行ツールが全言語対応（Python/TS/Go/Java/Ruby/PHP/C#）となり、Enterprise向け管理者APIも追加された。月次検索ボリュームが1年で50→14,800件（約300倍）と急増しており、開発者コミュニティの裾野が急速に広がっている。（<a href="https://releasebot.io/updates/anthropic/claude-developer-platform" target="_blank">releasebot.io</a>）</p>
+
+<h3>Claude Code Week 29：エージェント実用化が加速</h3>
+
+<p>Week 29の目玉は<strong>Artifacts β</strong>と<strong>3段階ネスト</strong>の2つだ。Artifactsはセッション成果物をclaude.aiのライブ共有ページとして公開・インプレース更新できる機能で、チーム内での成果物共有フローが変わる。3段階ネストの階層型エージェントスポーンにより、複数モジュール横断タスクを親→子→孫の構造で分解できるようになった。Opus 4.8がMax/Enterprise向けデフォルトとなり、複雑なエージェントタスクの標準品質が底上げされた。（<a href="https://releasebot.io/updates/anthropic/claude-code" target="_blank">releasebot.io</a>）</p>
+
+<p>実務活用という観点では、日本語ガイドとチートシートが今週まとめて公開された。Uravationによる2本（6月新機能活用ガイド・業務自動化10事例）は、Cron+Claudeによる議事録自動化パイプラインの実例と実装プロンプトを公開しており、即日導入できる内容だ。TechBytesのチートシートはHook 4種の使い分け（HTTP/MCPツール/プロンプト/エージェント）を整理しており、タスクマネージャーのスキル設計判断の参考になる。CLAUDE.md 200行以下推奨・HTML commentはトークン消費なしという設計指針も明記されている。（<a href="https://uravation.com/media/claude-code-june-2026-new-features-business-guide/" target="_blank">Uravation</a> / <a href="https://techbytes.app/posts/claude-code-2026-cheat-sheet-hooks-mcp-commands/" target="_blank">TechBytes</a>）</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>1週間で4モデルが集結：フロンティア競争の現在地</h3>
+
+<p>7月9〜16日の1週間に、フロンティアレベルのモデルが4本リリースされた。GPT-5.6（Luna/Terra/Sol、7/9）・Fable 5（6/9リリース）・Kimi K3（7/16）・Inkling（7/15）が同時期に並ぶ構図は2026年型の競争の激しさを象徴している。</p>
+
+<p><strong>一次ソース確認済み</strong>：GPT-5.6 Sol（$5/1Mトークン入力）はTerminal-Bench 2.1（91.9% vs 88.0%）・Agents&#x27; Last Exam（53.6 vs 40.5）でFable 5を上回る一方、SWE-Bench ProではSol 64.6%に対しClaude Mythos 5が80.3%と大差をつける。「Fable 5を全面的に超える」という見出しは誤りで、タスク依存が正確な理解だ。コンテキスト1Mトークン・知識カットオフ2026年2月は確認済み。（<a href="https://llm-stats.com/ai-news" target="_blank">llm-stats.com</a>）</p>
+
+<p><strong>一次ソース確認済み</strong>：Fable 5は価格$10/$50 per 1Mトークン（入力/出力）でSWE-Bench Pro 80.3%と多数のベンチマーク首位を確認。「公開LLM最強」はリリース時点（6/9）での表記として正確だが、GPT-5.6 Sol登場後はエージェント系ベンチマークでは逆転されている。（<a href="https://llm-stats.com/llm-updates" target="_blank">llm-stats.com</a>）</p>
+
+<p>Kimi K3（Moonshot AI）は「米国主要ラボに匹敵」と専門家が評価し、DeepSeek V4以降の中国勢モデル投入の継続を示す。Inkling（Thinking Machines Lab）はOpenAI元CTO Mira Murati率いる新興ラボの初フラッグシップで、オープンウェイト提供と企業向けAPIのデュアル戦略が特徴的だ。両モデルともベンチマーク詳細は近日公開予定。</p>
+
+<h3>AI規制の多極化：連邦・州・中国・EU・UN同時進行</h3>
+
+<p>2026年7月は規制の多極化が鮮明になった月だ。米連邦FTCのAIアキュラシーポリシー（パブリックコメント7/31締切）・イリノイ州のフロンティアAI安全監査法（売上$500M超の開発者に年次独立監査義務化）・中国AIエージェント実施意見（7/15施行）が同時進行している。FX自動取引AIの運用にとっては中国規制と米国州法の動向が特に要注視で、規制強度は全体として高まる方向にある。（<a href="https://aigovernance.com/news/ai-governance-weekly-july-16-2026" target="_blank">aigovernance.com</a>）</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #ea580c; padding-left: 12px;">AIトレーディング</h2>
+
+<p><strong>一次ソース確認済み（文脈注意）</strong>：LLMトレーディングエージェントの現状比較では、TradingAgents（Tauric Research）がマルチプロバイダ対応（GPT-5.x/Gemini 3.x/Claude 4.x/Grok 4.x）でデファクトフレームワーク化しつつある。Claude Sonnet 4.6でSharpe Ratio 1.94・487%リターンという数値はquantlabsnet.comのバックテストから引用されており、TradingAgents論文の数値（AAPL/GOOGL/AMZN 年率24.9%・Sharpe 5.60）とは別出典だ。いずれも短期バックテストであり実運用実績ではない点は記事が明記している。ライブ取引はTradingAgentsが明示的に「解決しない問題」として除外しており、MT5等との統合は別途実装が必要——現在進行中のFX自動取引プロジェクトとのアーキテクチャ上の距離は今も変わらない。（<a href="https://www.flowhunt.io/blog/llm-trading-bots-comparison/" target="_blank">FlowHunt</a>）</p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>過去7日間の収集件数は7/16が19件でピーク、7/17は0件（収集なし）、7/14-7/16の波は13本で今回の13本と同水準だ。recurring_themesは「claude・agent・mcp・trading・llm」の5テーマが継続している。</p>
+
+<p>今週の差分として特筆すべき点：<strong>MCPが「ツール連携」から「インフラ層」へ</strong>の移行が仕様改定で明示された。これまでの週は個別サーバー・個別ユースケースの話が中心だったが、ステートレス化でLB構成が変わるということは、MCPを本番インフラとして扱う段階に入ったことを意味する。Claude Codeエコシステムとして、スキル・フック設計の前提がこの移行期に変わりうる点は継続監視が必要。</p>
+
+</body>
+</html>
