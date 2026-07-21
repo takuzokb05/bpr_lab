@@ -258,3 +258,9 @@
 | 236 | FTC Policy Statement: AIシステムの精度抑制に関するポリシー（Federal Register） | en | 未読 | #regulation #web-signal | articles/2026-07-19_3031_WEB_FTC-FederalRegister-AI-Accuracy-Policy-Jul2026.md |
 | 237 | EU委員会がAI法透明性義務ガイドライン正式公表（2026年7月20日） | en | 未読 | #regulation #eu-ai-act #web-signal | articles/2026-07-20_3034_WEB_EU-AI-Act-Transparency-Guidelines-Official-July20.md |
 | 238 | AI Regulation News July 2026 — Startup Edition（mean.ceo） | en | 未読 | #regulation #web-signal | articles/2026-07-20_3035_WEB_MeanCEO-AI-Regulation-July2026-Startup-Edition.md |
+| 239 | Kimi K3 Released: Beats Claude Fable, GLM 5.2, GPT 5.6-Sol | en | 未読 | #llm-news #model-release #web-signal | articles/2026-07-21_3044_WEB_DataSciencePocket-KimiK3-Beats-Fable-GPT.md |
+| 240 | China's Moonshot AI unveils Kimi K3 that rivals OpenAI, Anthropic（CNBC） | en | 未読 | #llm-news #model-release #web-signal | articles/2026-07-21_3045_WEB_CNBC-MoonshotAI-KimiK3-July2026.md |
+| 241 | 週刊生成AIニュース 2026年7月13日週（iret DX事業部） | ja | 未読 | #llm-news #web-signal | articles/2026-07-21_3046_WEB_iret-GenAI-Weekly-Jul13-2026-JA.md |
+| 242 | Illinois Signs Landmark AI Safety Measures Act (July 6, 2026) | en | 未読 | #regulation #web-signal | articles/2026-07-21_3047_WEB_WTTW-Illinois-AI-Safety-Measures-Act.md |
+| 243 | 2026 AI Laws Update: Key Regulations and Practical Guidance（Gunderson Dettmer） | en | 未読 | #regulation #web-signal | articles/2026-07-21_3048_WEB_Gunder-AI-Laws-2026-Key-Regulations-Guidance.md |
+| 244 | Where State AI Legislation Stands Half Way Into 2026（TechPolicy.Press） | en | 未読 | #regulation #web-signal | articles/2026-07-21_3049_WEB_TechPolicy-State-AI-Legislation-HalfYear-2026.md |

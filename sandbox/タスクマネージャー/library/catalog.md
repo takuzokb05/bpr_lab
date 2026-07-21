@@ -755,3 +755,18 @@
 | 729 | StackQL Anthropic API Providers Update — July 2026 | en | 未読 | #ecosystem #web-signal | articles/2026-07-20_3032_WEB_StackQL-Anthropic-API-Providers-Update-July2026.md |
 | 730 | Claude Code v2.1.214-215：パーミッションバイパス修正・自動スキル実行廃止（Week 30） | en | 未読 | #model-update #security #web-signal | articles/2026-07-20_3033_WEB_Claude-Code-v2-1-214-215-Security-Fixes-Jul18-19-2026.md |
 | 731 | Anthropic Memory API beta（agent-memory-2026-07-22）& HIPAA自己設定機能 | en | 未読 | #ecosystem #web-signal | articles/2026-07-20_3036_WEB_Anthropic-Memory-API-Beta-HIPAA-Config-July2026.md |
+| 732 | Claude Code Guide 2026: 25 Features with Examples + Demo（MarkTechPost） | en | 未読 | #skills #mcp #hooks #web-signal | articles/2026-07-21_3037_WEB_MarkTechPost-Claude-Code-Guide-25Features-2026.md |
+| 733 | The Complete Claude Code Setup for 2026: Every Skill, Plugin, and Config | en | 未読 | #skills #mcp #hooks #web-signal | articles/2026-07-21_3038_WEB_ReactJSBD-Complete-Claude-Code-Setup-2026.md |
+| 734 | MCP Goes Stateless July 28: What Breaks, What Gets Cheaper（DigitalApplied） | en | 未読 | #mcp #ecosystem #web-signal | articles/2026-07-21_3039_WEB_DigitalApplied-MCP-Stateless-Migration-Guide-Jul28.md |
+| 735 | MCP 2026-07-28 spec: what changed, what breaks（Stacktree） | en | 未読 | #mcp #ecosystem #web-signal | articles/2026-07-21_3040_WEB_Stacktree-MCP-2026-Spec-Breaking-Changes.md |
+| 736 | Claude Agent SDK 2026: Deep Dive Guide（o-mega.ai） | en | 未読 | #ecosystem #web-signal | articles/2026-07-21_3041_WEB_OmegaAI-Claude-Agent-SDK-2026-Deep-Dive.md |
+| 737 | Claude Multi-Agent Orchestration: Build Parallel AI Pipelines (2026 Tutorial) | en | 未読 | #ecosystem #multi-agent #web-signal | articles/2026-07-21_3042_WEB_AIforAnything-Claude-MultiAgent-Orchestration-2026.md |
+| 738 | AI-Agentic Autonomous Trading Layers 2026: Complete Review（BrokerAnalysis） | en | 未読 | #llm-trading #web-signal | articles/2026-07-21_3043_WEB_BrokerAnalysis-AI-Agentic-Trading-Layers-2026.md |
+| 739 | Kimi K3 Released: Beats Claude Fable, GLM 5.2, GPT 5.6-Sol | en | 未読 | #llm-news #model-release #web-signal | articles/2026-07-21_3044_WEB_DataSciencePocket-KimiK3-Beats-Fable-GPT.md |
+| 740 | China's Moonshot AI unveils Kimi K3 that rivals OpenAI, Anthropic（CNBC） | en | 未読 | #llm-news #model-release #web-signal | articles/2026-07-21_3045_WEB_CNBC-MoonshotAI-KimiK3-July2026.md |
+| 741 | 週刊生成AIニュース 2026年7月13日週（iret DX事業部） | ja | 未読 | #llm-news #web-signal | articles/2026-07-21_3046_WEB_iret-GenAI-Weekly-Jul13-2026-JA.md |
+| 742 | Illinois Signs Landmark AI Safety Measures Act (July 6, 2026) | en | 未読 | #regulation #web-signal | articles/2026-07-21_3047_WEB_WTTW-Illinois-AI-Safety-Measures-Act.md |
+| 743 | 2026 AI Laws Update: Key Regulations and Practical Guidance（Gunderson Dettmer） | en | 未読 | #regulation #web-signal | articles/2026-07-21_3048_WEB_Gunder-AI-Laws-2026-Key-Regulations-Guidance.md |
+| 744 | Where State AI Legislation Stands Half Way Into 2026（TechPolicy.Press） | en | 未読 | #regulation #web-signal | articles/2026-07-21_3049_WEB_TechPolicy-State-AI-Legislation-HalfYear-2026.md |
+| 745 | Claude Code Changelog - July 2026（Gradually.ai） | en | 未読 | #model-update #web-signal | articles/2026-07-21_3050_WEB_Gradually-Claude-Code-Changelog-July2026.md |
+| 746 | Claude Code for Non-Engineers: Safe Workflows, Prompts, Permissions | en | 未読 | #skills #web-signal | articles/2026-07-21_3051_WEB_ClaudeCodeLab-Non-Engineers-Safe-Workflows.md |

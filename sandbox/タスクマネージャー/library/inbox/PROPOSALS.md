@@ -3922,3 +3922,42 @@ FX自動売買の構成（P-014の4層アーキテクチャ）において、Gem
 1. digital-strategy.ec.europa.eu の公表ガイドラインを読み、自身の用途（ai-teams / FX自動取引）が対象に含まれるか確認
 2. 対象になる場合、AI生成コンテンツのラベリング方針をdocs/に記録
 3. 今後EU向けサービスを開発する際には、透明性義務を設計段階で組み込む
+
+---
+
+### P-178: MCP 2026-07-28 ステートレス仕様移行 — 7月28日前に既存MCPサーバーの影響調査
+
+**根拠記事**: 3039 (DigitalApplied-MCP-Stateless-Migration), 3040 (Stacktree-MCP-2026-Spec-Changes)
+**取得日**: 2026-07-21
+**詳細**: MCP 2026-07-28仕様RCが7月28日に正式リリース予定。最大の変更はステートレスコアへの移行（セッション管理API廃止、旧認証フロー廃止、JSON Schema 2020-12による厳密なパラメータ検証）。タスクマネージャーのスキル群やFX自動取引で利用中のMCPサーバー（MetaTrader MCP等）が影響を受ける可能性がある。7月27日までに確認・対応が必要。
+
+**提案アクション**:
+1. `sandbox/タスクマネージャー/.claude/` および `sandbox/FX自動取引/` 配下のMCP設定を確認し、セッション管理に依存している箇所を洗い出す
+2. blog.modelcontextprotocol.io の正式移行ガイドを参照し、breaking changesへの対応方針を決定
+3. 影響があれば7/28前にMCPサーバー側コードを更新し、JSON Schema対応を確認
+
+---
+
+### P-179: Kimi K3（2.8兆パラメータ・オープンウェイト）をFX自動取引エージェントの代替LLMとして検討
+
+**根拠記事**: 3044 (KimiK3-Beats-Fable-GPT), 3045 (CNBC-MoonshotAI-KimiK3)
+**取得日**: 2026-07-21
+**詳細**: Moonshot AIのKimi K3がFrontierSWEスコア77.8（世界1位）を達成し、GPT-5.6 Sol・Claude Fable 5を上回るSWEベンチマークを示した。価格はGPT-5.6 Solの約1/3で、1Mトークンコンテキストウィンドウを持つ。FX自動取引エージェントのLLM推論コスト削減のため、分析・判断レイヤーにKimi K3 APIを試験導入する価値がある。フルウェイト公開は7月27日予定。
+
+**提案アクション**:
+1. Kimi K3 APIの料金体系と利用上限を確認（platform.moonshot.cn）
+2. sandbox/FX自動取引/ の推論LLM設定を確認し、Kimi K3に切り替えるA/Bテスト設計を検討
+3. MT5のシグナル分析（マルチタイムフレーム・OHLCV解析）にKimi K3のネイティブビジョンを活用する実験を計画
+
+---
+
+### P-180: 米国AI規制加速（Illinois AI Safety Act + CISA Agentic AI Guidelines）— FX取引AIへの影響確認
+
+**根拠記事**: 3047 (WTTW-Illinois-AI-Safety), 3048 (Gunder-AI-Laws-2026), 3049 (TechPolicy-State-AI-Legislation)
+**取得日**: 2026-07-21
+**詳細**: イリノイ州が2026年7月6日にAI Safety Measures Act（米国最包括的水準）に署名。同時期にDHS-CISAがアジェンティックAI向けプロンプトインジェクション対策義務化・ヒューマンオーバーライド文書化を提言。FX自動取引システムは「critical infrastructure」の金融セクターにあたる可能性があり、特にヒューマンオーバーライド機能（手動停止・介入ログ）の実装状況を確認すべき。
+
+**提案アクション**:
+1. sandbox/FX自動取引/ のシステム設計を確認し、緊急停止・手動介入・オーバーライドログの実装状況を文書化（docs/compliance.md）
+2. プロンプトインジェクション対策（入力バリデーション・サニタイズ）の実装状況をセキュリティレビュー
+3. 米国向けサービス展開を計画する場合、Gunderson Dettmerのコンプライアンスチェックリスト（P-180根拠記事）を参照
