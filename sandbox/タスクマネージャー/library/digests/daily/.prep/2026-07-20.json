@@ -1,0 +1,112 @@
+{
+  "date": "2026-07-20",
+  "generated_at": "2026-07-21T23:15:42.915258Z",
+  "article_count": 5,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-07-20_3032_WEB_StackQL-Anthropic-API-Providers-Update-July2026.md",
+      "title": "StackQL Anthropic API Providers Update — July 2026",
+      "url": "https://stackql.io/blog/anthropic-providers-update-july-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "StackQLがAnthropicプラットフォームのIaCプロバイダーを更新。`anthropic`プロバイダー（Claude API面：11サービス・26リソース・103オペレーション）と新設の`anthropic_admin`プロバイダー（Admin API面）に。同時発表のClaudeプラットフォーム変更：APIキー有効期限設定（Claude Console上でカスタム期間・プリセット・無期限を選択、7日以上で期限前メール通知）、SonnetとHaikuのレートリミットをOpus水準に統一、使用ティアをStart/Build/Scaleの3段階に集約。エンタープライズチームによるAnthropicインフラのIaCライフサイクル管理が可能になる。開発者向けの実用的な変更で、大規模API利用の利便性が向上。",
+      "body_excerpt": "StackQL released an update to Anthropic platform providers, including the `anthropic` provider exposing the Claude API surface with messages, models, batches, files, agents, deployments, environments, sessions, skills, memory stores, and vaults (11 services, 26 resources, 103 operations), and a new `anthropic_admin` provider for the Admin API surface. Concurrently, Anthropic added API key expiration settings in the Claude Console (presets, custom durations, or never; email reminders before expiration for keys ≥7 days), raised rate limits across the Claude API (Claude Sonnet and Claude Haiku now match Claude Opus at every usage tier), and consolidated usage tiers into three: Start, Build, and Scale.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-20_3033_WEB_Claude-Code-v2-1-214-215-Security-Fixes-Jul18-19-2026.md",
+      "title": "Claude Code v2.1.214-215：パーミッションバイパス修正・自動スキル実行廃止",
+      "url": "https://releasebot.io/updates/anthropic/claude-code",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Claude Code Week 30（7月18〜19日）のリリース内容。v2.1.215（7/19）：`/verify`・`/code-review`スキルが自動実行されなくなった（明示呼び出しのみ）。v2.1.214（7/18）：重要なセキュリティ修正4件 — (1) `Edit(src/**)` のような単一セグメント許可ルールが任意のネストdirへの書き込みを誤って承認するバグ修正 (2) Windows PowerShell 5.1でのパーミッションチェックバイパス修正 (3) Bashのファイルディスクリプタリダイレクト形式の誤判定修正 (4) 10,000文字超コマンドの誤判定修正（超過時は常にプロンプト）。v2.1.211（7/15）：`--forward-subagent-text`フラグ追加。パーミッション関連の重要バグ修正のため、エンタープライズ・セキュリティを重視する環境では早期アップグレードが推奨される。",
+      "body_excerpt": "Claude Code Week 30 (July 18-19, 2026) release highlights.\n\n**v2.1.215 (July 19):** Claude no longer runs the /verify and /code-review skills on its own; invoke them with /verify or /code-review when you want them.\n\n**v2.1.214 (July 18):**",
+      "fact_checked": true,
+      "fact_check_note": "確認済み。v2.1.214はセキュリティ修正9件を含む47件の変更（単一セグメントDir/**バグ、Windows PowerShell 5.1バイパス、FDリダイレクト誤判定、10000字超コマンド誤判定）。v2.1.215はskill自動実行廃止。複数独立ソース（code.claude.com/changelog, DevelopersIO, releasebot）で一致。"
+    },
+    {
+      "file": "2026-07-20_3034_WEB_EU-AI-Act-Transparency-Guidelines-Official-July20.md",
+      "title": "EU委員会がAI法透明性義務ガイドライン正式公表（2026年7月20日）",
+      "url": "https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "欧州委員会が2026年7月20日（本日）、EU AI Act第50条に基づく透明性義務ガイドラインを正式公表。特定のAIシステムのプロバイダー・デプロイヤー向けの透明性要件に関する運用指針。同日「サイバーセキュリティ・AIアクションプラン」も発表。背景：6月29日にEU理事会がAIルール簡素化・合理化規制を最終承認済み。AI Actの主要条項（高リスクAI分類・適合性評価・GPAI義務）は2026年8月に完全施行予定。このガイドラインは施行直前の最終実務指針として位置づけられる。生成AIモデルを含む対象システムの事業者が8月施行に向けて文書化・開示義務を履行する際の具体的根拠となる。EU域外（日本企業含む）でEUユーザーにサービス提供する事業者も適用対象になり得る。",
+      "body_excerpt": "On July 20, 2026, the European Commission published guidelines on transparency obligations for providers and deployers of certain AI systems (under Article 50 of the EU AI Act). On the same day, the Commission presented an EU Action Plan on Cybersecurity and Artificial Intelligence. The EU Council gave final green light on June 29, 2026, to a new regulation aiming to streamline and simplify certain AI rules. The AI Act's major provisions (high-risk AI classification, conformity assessments, GPAI obligations) are set for full effect in August 2026.",
+      "fact_checked": true,
+      "fact_check_note": "確認済み。欧州委員会が2026-07-20にAI法第50条透明性義務ガイドラインを公式サイト(digital-strategy.ec.europa.eu)で正式公表。施行日は2026-08-02（記事の「8月」は正確）。違反時の罰則：€1500万または年間売上3%の高い方。"
+    },
+    {
+      "file": "2026-07-20_3035_WEB_MeanCEO-AI-Regulation-July2026-Startup-Edition.md",
+      "title": "AI Regulation News July 2026 — Startup Edition",
+      "url": "https://blog.mean.ceo/ai-regulation-news-july-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "mean.ceoによる2026年7月のAI規制動向スタートアップ向けまとめ。主要トピック5件：(1) UN Geneva AI Governance Dialogue（7/6-7） (2) EU透明性義務ガイドライン公表（7/20） (3) FTC AIシステム精度ポリシーへのパブコメ募集（締切7/31） (4) 連邦議会でAIチャットボット・デジタルレプリカ・非合意AIコンテンツ等の超党派法案提出 (5) 米国州レベルで35以上のAI関連法が成立（ヘルスケアAI規制・ニューヨーク州5法）。AIスタートアップへの直接的含意：監査証跡・GPAI透明性・HIPAA対応の3点が2026年Q3の急務。特に医療・コンテンツ・教育領域の事業者は具体的リスク対応が必要な段階に入った。",
+      "body_excerpt": "AI law now affects how you build, sell, document, and review your product, not just what your lawyer does later. Key July 2026 developments: (1) UN Global Dialogue on AI Governance in Geneva (July 6-7); (2) EU Commission published transparency guidelines (July 20); (3) FTC seeking public comment on AI accuracy policy statement (comments due July 31); (4) Multiple bipartisan AI bills in Congress (chatbots, digital replicas, nonconsensual AI imagery, AI standards); (5) At least 35 AI-related state laws enacted — Alabama & Georgia prohibit health insurer AI adverse decisions without human review; New York passed 5 AI laws (kids chatbot safety, training data transparency, FAIR News Act, data center moratorium, AI surveillance pricing ban).",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-20_3036_WEB_Anthropic-Memory-API-Beta-HIPAA-Config-July2026.md",
+      "title": "Anthropic Memory API beta（agent-memory-2026-07-22）& HIPAA自己設定機能",
+      "url": "https://releasebot.io/updates/anthropic/claude-developer-platform",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "AnthropicのClaude Developer Platformに2つの新機能追加。(1) **Memory API betaヘッダ（agent-memory-2026-07-22）**：メモリ一覧をサーバー定義の安定した順序で返すよう変更、depthパラメータを0・1・省略のみ許可、path_prefixに`/`終端・全パスセグメント一致を必須化。エージェントメモリ一覧取得挙動の一貫性向上で、複数エージェントのメモリ管理が安定化。(2) **HIPAA自己設定**：Enterprise/API組織の管理者がBAA確認→実装ガイドDL→HIPAA有効化を単一フローで完結。医療・ヘルスケア向けClaude本番利用の導入ハードルが大幅低下。エンタープライズ展開加速を示す機能セットで、特に医療AIエージェント構築者にとって重要な変更。Memory APIのbetaヘッダは既存統合で動作が変わる可能性があるため要確認。",
+      "body_excerpt": "Two new developer platform features from Anthropic in July 2026.\n\n**Memory API Beta Header (agent-memory-2026-07-22):** Changes memory listing behavior to return results in a stable server-defined order, restricts depth parameters to only 0, 1, or being omitted, and requires path_prefix to end with / and match whole path segments.\n\n**Self-serve HIPAA Configuration:** Allows eligible Enterprise and API organization admins to review the Business Associate Agreement, download the implementation guide, and enable HIPAA configuration in a single flow — without going through sales.",
+      "fact_checked": true,
+      "fact_check_note": "確認済み。agent-memory-2026-07-22ベータヘッダーはAnthropic公式ドキュメント(platform.claude.com/docs)で確認。SDK複数言語(Python 0.116.0, TypeScript 0.110.0等)が同ヘッダーに移行。HIPAA自己設定フローも公式リリースノートで確認。"
+    }
+  ],
+  "fact_checks": [
+    {
+      "target_file": "2026-07-20_3033_WEB_Claude-Code-v2-1-214-215-Security-Fixes-Jul18-19-2026.md",
+      "verdict": "CONFIRMED",
+      "sources": [
+        "https://code.claude.com/docs/en/changelog",
+        "https://releasebot.io/updates/anthropic/claude-code",
+        "https://dev.classmethod.jp/en/articles/20260718-cc-updates-v2-1-214/"
+      ]
+    },
+    {
+      "target_file": "2026-07-20_3034_WEB_EU-AI-Act-Transparency-Guidelines-Official-July20.md",
+      "verdict": "CONFIRMED",
+      "sources": [
+        "https://digital-strategy.ec.europa.eu/en/library/guidelines-transparency-obligations-providers-and-deployers-ai-systems"
+      ]
+    },
+    {
+      "target_file": "2026-07-20_3036_WEB_Anthropic-Memory-API-Beta-HIPAA-Config-July2026.md",
+      "verdict": "CONFIRMED",
+      "sources": [
+        "https://platform.claude.com/docs/en/managed-agents/memory",
+        "https://docs.anthropic.com/en/release-notes/api"
+      ]
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-07-19": 13,
+      "2026-07-18": 13,
+      "2026-07-17": 0,
+      "2026-07-16": 19,
+      "2026-07-15": 4,
+      "2026-07-14": 12,
+      "2026-07-13": 11
+    },
+    "recurring_themes": [
+      "claude",
+      "agent",
+      "mcp",
+      "trading",
+      "llm"
+    ]
+  }
+}
