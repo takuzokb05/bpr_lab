@@ -3961,3 +3961,55 @@ FX自動売買の構成（P-014の4層アーキテクチャ）において、Gem
 1. sandbox/FX自動取引/ のシステム設計を確認し、緊急停止・手動介入・オーバーライドログの実装状況を文書化（docs/compliance.md）
 2. プロンプトインジェクション対策（入力バリデーション・サニタイズ）の実装状況をセキュリティレビュー
 3. 米国向けサービス展開を計画する場合、Gunderson Dettmerのコンプライアンスチェックリスト（P-180根拠記事）を参照
+
+---
+
+### P-181: Verification Loops with Skills — bpr_lab 収集ルーティンの品質検証スキル追加
+
+**根拠記事**: 3053 (ClaudeCode-Verification-Loops-Skills-Official-Blog)
+**取得日**: 2026-07-22
+**詳細**: Anthropic公式ブログ（7/22）がVerification Loop as Skillパターンを公開。4パターン（スタンドアロン・埋め込み・チェーン・PR全体）のうち、bpr_labの日次収集ルーティンに「埋め込み型」検証スキルを追加することで、収集→キュレーション→コミットの品質を自動チェックできる。例：「重複URL検出 → 存在すれば除外」「catalog更新漏れ検知」「articles/ファイル形式の整合性チェック」等。
+
+**提案アクション**:
+1. `sandbox/タスクマネージャー/.claude/skills/` に `verify-library-integrity.md` スキルを作成
+2. 日次収集ルーティンのStep 4に埋め込んでカタログ整合性を自動検証
+3. 既存スキル（curate, digest等）にこのVerification Loopを組み込んでチェーン化
+
+---
+
+### P-182: Anthropic AI-native SDL セキュリティ実践 → CLAUDE.md・スキルへのセキュリティガイダンス埋め込み
+
+**根拠記事**: 3057 (Anthropic-AI-Native-SDL-Security-Practices)
+**取得日**: 2026-07-22
+**詳細**: Anthropic Deputy CISO が、Claudeがコードの80%を生成する環境でのSDLCセキュリティ実践を公開。特に「CLAUDE.md・スキルへのセキュリティガイダンス埋め込み」「/security-reviewコマンドの統合」「egress制限リモートVM」等が実践可能。FX自動取引や他のbpr_labプロジェクトにも応用できる。
+
+**提案アクション**:
+1. `sandbox/FX自動取引/.claude/CLAUDE.md` にセキュリティガイダンスセクションを追加（API keyの扱い・外部通信先ホワイトリスト・ログ記録ルール）
+2. `/security-review` スキルをタスクマネージャーの `.claude/skills/` に作成して attacker-controllable input の検出を自動化
+3. MITRE ATT&CK ベースのリスク分類をFX自動取引のシステム設計レビューに導入
+
+---
+
+### P-183: Claude Cowork「Record a Skill」→ FX自動取引操作ルーティンのスキル化
+
+**根拠記事**: 3054 (Claude-Cowork-Record-Skill-Screen-Recording)
+**取得日**: 2026-07-22
+**詳細**: Anthropicが7/21リリースした「Record a Skill」機能で、画面録画＋音声ナレーション一度で繰り返しタスクをスキルに変換可能。FX自動取引の MT5操作（レポート確認・ポジション手動調整・VPS設定変更等）をスキル化することで、次回から音声指示だけで実行できる可能性がある。
+
+**提案アクション**:
+1. Claude Cowork（Pro/Max/Team）がアクセスできる環境で「Record a Skill」機能を試用
+2. MT5 VPS上の定期確認作業（ポジション確認・ログ確認・パラメータ更新）を録画してスキル化を検討
+3. bpr_labの日常的な繰り返し作業（STATUS.md更新・特定フォルダ構造確認等）をスキルとして記録
+
+---
+
+### P-184: Gemini 3.6 Flash（$1.50/$7.50/M）→ FX自動取引の低コスト推論層として検討
+
+**根拠記事**: 3052 (Google-Gemini-3-6-Flash-Launch-July21), 3055 (BuildFastWithAI-AI-News-July22)
+**取得日**: 2026-07-22
+**詳細**: Google Gemini 3.6 Flashが$1.50/$7.50/Mトークンで、出力コスト17%削減・DeepSWEコーディングスコア+32%・知識カットオフ2026年3月。FX自動取引のシグナル分析（日次・週次サマリーを小さなコンテキストで処理する場面）への適用で推論コストを削減できる可能性がある。Claude Fable 5（$10/$50）との価格差は6〜7倍。
+
+**提案アクション**:
+1. sandbox/FX自動取引/ の推論コスト計測（現在どのモデルを何トークン使っているか）
+2. サマリー生成・日次判断等のルーティンタスクをGemini 3.6 Flash APIで試験実行してコスト比較
+3. Gemini API キー取得と既存Anthropic SDK呼び出しの抽象化レイヤー確認

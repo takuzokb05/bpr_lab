@@ -264,3 +264,7 @@
 | 242 | Illinois Signs Landmark AI Safety Measures Act (July 6, 2026) | en | 未読 | #regulation #web-signal | articles/2026-07-21_3047_WEB_WTTW-Illinois-AI-Safety-Measures-Act.md |
 | 243 | 2026 AI Laws Update: Key Regulations and Practical Guidance（Gunderson Dettmer） | en | 未読 | #regulation #web-signal | articles/2026-07-21_3048_WEB_Gunder-AI-Laws-2026-Key-Regulations-Guidance.md |
 | 244 | Where State AI Legislation Stands Half Way Into 2026（TechPolicy.Press） | en | 未読 | #regulation #web-signal | articles/2026-07-21_3049_WEB_TechPolicy-State-AI-Legislation-HalfYear-2026.md |
+| 245 | Gemini 3.6 Flash・3.5 Flash-Lite・3.5 Flash Cyber 同時リリース（Google Blog） | en | 未読 | #llm-news #model-release #web-signal | articles/2026-07-22_3052_WEB_Google-Gemini-3-6-Flash-Launch-July21.md |
+| 246 | AI News Today July 22 2026: 16 Biggest Stories（BuildFastWithAI） | en | 未読 | #llm-news #daily-roundup #web-signal | articles/2026-07-22_3055_WEB_BuildFastWithAI-AI-News-July22-2026.md |
+| 247 | 【2026-07-22】世界のAI最新ニュース：AIエージェント安全性・インフラ競争・EU AI Act透明性規制 | ja | 未読 | #llm-news #regulation #web-signal | articles/2026-07-22_3056_WEB_Eguweb-AI-News-July22-2026-JA.md |
+| 248 | AI News July 22: Gemini 3.6 Flash / Nadella Criticizes Fable / South Korea Sovereign AI | en | 未読 | #llm-news #regulation #web-signal | articles/2026-07-22_3059_WEB_AIToolsRecap-AI-News-July22-Gemini-Nadella-Korea.md |

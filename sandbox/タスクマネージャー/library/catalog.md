@@ -770,3 +770,7 @@
 | 744 | Where State AI Legislation Stands Half Way Into 2026（TechPolicy.Press） | en | 未読 | #regulation #web-signal | articles/2026-07-21_3049_WEB_TechPolicy-State-AI-Legislation-HalfYear-2026.md |
 | 745 | Claude Code Changelog - July 2026（Gradually.ai） | en | 未読 | #model-update #web-signal | articles/2026-07-21_3050_WEB_Gradually-Claude-Code-Changelog-July2026.md |
 | 746 | Claude Code for Non-Engineers: Safe Workflows, Prompts, Permissions | en | 未読 | #skills #web-signal | articles/2026-07-21_3051_WEB_ClaudeCodeLab-Non-Engineers-Safe-Workflows.md |
+| 747 | Building verification loops in Claude Code with skills（Anthropic Blog） | en | 未読 | #skills #verification #web-signal | articles/2026-07-22_3053_WEB_ClaudeCode-Verification-Loops-Skills-Official-Blog.md |
+| 748 | Claude Cowork: Record a Skill — 画面録画でAIスキル自動生成 | en | 未読 | #cowork #skills #web-signal | articles/2026-07-22_3054_WEB_Claude-Cowork-Record-Skill-Screen-Recording.md |
+| 749 | How Anthropic secures its AI-native software development lifecycle（Deputy CISO） | en | 未読 | #security #sdlc #web-signal | articles/2026-07-22_3057_WEB_Anthropic-AI-Native-SDL-Security-Practices.md |
+| 750 | How Datadog built "Temper": deterministic kernel for Claude Code formal verification | en | 未読 | #claude-code #formal-verification #web-signal | articles/2026-07-22_3058_WEB_Datadog-Temper-Universal-Machine-Tool-ClaudeCode.md |
