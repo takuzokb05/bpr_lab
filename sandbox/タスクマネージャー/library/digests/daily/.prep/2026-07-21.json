@@ -1,0 +1,226 @@
+{
+  "date": "2026-07-21",
+  "generated_at": "2026-07-22T23:15:41.371922Z",
+  "article_count": 15,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-07-21_3037_WEB_MarkTechPost-Claude-Code-Guide-25Features-2026.md",
+      "title": "Claude Code Guide 2026: 25 Features with Examples + Demo",
+      "url": "https://www.marktechpost.com/2026/06/14/claude-code-guide-2026-25-features-with-examples-demo/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "MarkTechPostが2026年版Claude Code 25機能を実例・デモつきで解説した包括ガイド。CLAUDE.md設定のベストプラクティス、MCP・Hooks・Skillsの3層アーキテクチャ、Agent Teamsによる並列サブエージェント、Auto Modeの動作原理を網羅。各機能に実際の入出力例を付記しており、初めてClaude Codeを業務導入する開発者・非エンジニア双方に価値ある内容。2026年6月14日公開で最新機能を反映。エコシステム全体像の把握に有用な一次情報。",
+      "body_excerpt": "MarkTechPost's comprehensive guide to Claude Code in 2026, covering 25 features with code examples and demos. Topics include CLAUDE.md configuration best practices, the three-layer architecture of MCP/Hooks/Skills, Agent Teams for parallel subagent workflows, and Auto Mode behavior. Each feature includes real input/output examples making it accessible to both developers and non-engineers seeking to integrate Claude Code into their workflows.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-21_3038_WEB_ReactJSBD-Complete-Claude-Code-Setup-2026.md",
+      "title": "The Complete Claude Code Setup for 2026: Every Skill, Plugin, and Config Worth Installing",
+      "url": "https://medium.com/@reactjsbd/the-complete-claude-code-setup-for-2026-every-skill-plugin-and-config-worth-installing-eaa32659df2d",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "2026年版Claude Codeのセットアップ完全ガイド（Medium）。CLAUDE.md・MCPサーバー・スキル・フック・サブエージェントの5層構成を具体的プラグインリストとインストールコマンド付きで解説。コードレビュー・セキュリティチェック等チーム固有領域は自作スキル、ドキュメント生成・ブラウザ自動化等汎用作業は公式スキルの使い分けを推奨。2026年7月公開で現行エコシステムに対応。実際にClaude Codeを職場導入する際のチェックリストとして活用可能。",
+      "body_excerpt": "Practical Medium guide covering everything worth installing in Claude Code for 2026. Organizes setup into five layers: CLAUDE.md for project rules, MCP servers for external tools/data, skills for reusable workflows, hooks for automation/safety checks, and subagents for isolated research/review. Recommends custom skills for team-specific domains (code review, security checks), and official skills for generic tasks (doc generation, browser automation). Includes specific plugin lists with install commands.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-21_3039_WEB_DigitalApplied-MCP-Stateless-Migration-Guide-Jul28.md",
+      "title": "MCP Goes Stateless July 28: What Breaks, What Gets Cheaper",
+      "url": "https://www.digitalapplied.com/blog/mcp-2026-07-28-spec-stateless-migration-guide",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "2026-07-28 MCP仕様RC対応の移行ガイド。最大の変更はステートレスコアへの移行：スティッキーセッション・共有セッションストア・ゲートウェイDPI不要になりラウンドロビンLB対応可能に。セッション管理コードの削除方法、Tasks/MCP Apps拡張の組み込み方、OAuth/OIDCに準拠した新認証への移行手順を具体的に解説。ステートレス化によるスケーリングコスト削減効果も定量化。本番MCPサーバーを運用している開発者が7/28前に確認必須の実践的ガイド。",
+      "body_excerpt": "Migration guide for the MCP 2026-07-28 specification release candidate. The biggest change is the stateless core: remote MCP servers no longer need sticky sessions, shared session stores, or deep packet inspection at the gateway—they can run behind plain round-robin load balancers. Covers: how to remove session management code, how to integrate new extensions (Tasks, MCP Apps), and how to migrate to the new OAuth/OIDC-aligned authorization. Also explains cost reduction from stateless architecture.",
+      "fact_checked": true,
+      "fact_check_note": "[CONFIRMED] 公式MCPブログ・4sysops・Microsoft Community Hub等で確認。RCは2026年5月21日公開、10週間検証ウィンドウ（〜7/28）。ステートレスアーキテクチャ（initialize handshake廃止・セッション廃止）、Tasks拡張、MCP Apps（HTML UI）、認証強化が主要変更点。Python/TypeScript/Go/C# SDK betaも公開済み。"
+    },
+    {
+      "file": "2026-07-21_3040_WEB_Stacktree-MCP-2026-Spec-Breaking-Changes.md",
+      "title": "MCP 2026-07-28 spec: what changed, what breaks",
+      "url": "https://stacktr.ee/blog/mcp-2026-spec-changes",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Stacktreeによるモデルコンテキストプロトコル2026-07-28仕様の差分リファレンス。追加：ステートレスコア・MCP Apps（HTML UI）・Tasks拡張・W3C Trace Context・JSON Schema 2020-12・キャッシュコントロールヒント。廃止：セッション管理API・旧認証フロー。JSON Schema対応でツールパラメータ検証が厳密化（既存統合への影響要確認）。LinuxFoundationへのガバナンス移管も反映。MCP開発者向け即座に参照すべき変更点一覧。Claude Codeの外部ツール接続基盤を把握する上でも重要。",
+      "body_excerpt": "Technical reference for changes in the MCP 2026-07-28 specification. New features: stateless core, MCP Apps (sandboxed HTML-based user interfaces), Tasks extension, W3C Trace Context propagation for OpenTelemetry, JSON Schema 2020-12 full support, cache-control hints (ttlMs and cacheScope). Breaking changes: removal of session management APIs, deprecation of legacy auth flows, stricter parameter validation via JSON Schema. Linux Foundation governance migration also reflected.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-21_3041_WEB_OmegaAI-Claude-Agent-SDK-2026-Deep-Dive.md",
+      "title": "Claude Agent SDK 2026: Deep Dive Guide",
+      "url": "https://o-mega.ai/articles/claude-agent-sdk-the-2026-deep-dive",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "O-mega.aiによるClaude Agent SDK 2026年版ディープダイブ。40ツール・フックシステム・パーミッションモード・マルチエージェントアーキテクチャを詳解。2025年末にClaude Code SDKから改名された背景（汎用エージェントランタイムへの進化）も解説。2026年6月出荷のヒエラルキカルサブエージェント生成のAPIの使い方、本番コスト最適化手法を網羅。エージェント構築者向け一次情報として信頼性高い。FX自動取引等のエージェント設計にも応用可能なアーキテクチャパターンを含む。",
+      "body_excerpt": "Deep dive into the Claude Agent SDK for 2026, covering 40 tools, the hook system, permission modes, and multi-agent architecture for production use. Explains why the SDK was renamed from Claude Code SDK to Claude Agent SDK in late 2025—it evolved into a general-purpose agent runtime beyond just coding assistance. Covers hierarchical subagent spawning (shipped June 2026), API usage patterns, and production cost optimization techniques. Published May 2026.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-21_3042_WEB_AIforAnything-Claude-MultiAgent-Orchestration-2026.md",
+      "title": "Claude Multi-Agent Orchestration: Build Parallel AI Pipelines (2026 Tutorial)",
+      "url": "https://aiforanything.io/blog/claude-multi-agent-orchestration-tutorial-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Claude Agent SDKを使ったマルチエージェントパイプライン構築チュートリアル（2026年版）。オーケストレーター–サブエージェントパターンのコード付き実装ガイド。並列4エージェントで最大3倍の速度向上、git worktreeを使った並列ファイル編集、プログレスハートビートによる長時間タスク管理を解説。コードレビュー並列化・大規模リファクタリングの実世界事例と費用試算も掲載。2026年版Agent SDK APIに対応した最新チュートリアル。FX自動取引エージェントの並列化設計にも応用可能。",
+      "body_excerpt": "Step-by-step tutorial for building multi-agent AI pipelines using the Claude Agent SDK (2026). Covers the orchestrator-subagent pattern with real code examples. Key topics: parallel execution reducing costs (4 parallel agents vs sequential up to 3x faster), git worktree-based parallel file editing, long-running task management with progress heartbeats. Includes real-world use cases (parallel code review, large-scale refactoring) and cost estimates. Updated for 2026 Agent SDK APIs.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-21_3043_WEB_BrokerAnalysis-AI-Agentic-Trading-Layers-2026.md",
+      "title": "AI-Agentic Autonomous Trading Layers 2026: Complete Review",
+      "url": "https://brokeranalysis.com/blog/ai-agentic-autonomous-trading-layers-2026-complete-review/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "BrokerAnalysisによるAIエージェント自律取引レイヤー2026年総合レビュー。データ分析・リスク管理・執行等の各機能を担う複数AIエージェントが相互通信しながら人間介入なく取引するアーキテクチャを詳解。Robinhoodの2026年5月「agentic finance」発表（AIがユーザー代理で投資戦略管理）との接続も議論。バックテストと本番の乖離（取引コスト・スリッページ・レジーム変化）を定量的に示す実践的洞察。LLMをルールベースの代わりに推論エンジンとして使う設計哲学はFX自動取引システム設計に直接応用可能。",
+      "body_excerpt": "BrokerAnalysis review of AI-Agentic Autonomous Trading Layers in 2026. Architecture overview: multiple AI agents each assigned specific functions (data analysis, risk management, execution, etc.) communicate with each other and external data sources to make and execute trading decisions without continuous human intervention. Notes Robinhood's May 2026 \"agentic finance\" announcement (AI managing investment strategies on behalf of users). Quantifies the gap between backtesting and live trading performance due to transaction costs, slippage, and market regime changes. Key insight: LLMs act as reasoning engines replacing hardcoded rules.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-21_3044_WEB_DataSciencePocket-KimiK3-Beats-Fable-GPT.md",
+      "title": "Kimi K3 Released: Beats Claude Fable, GLM 5.2, GPT 5.6-Sol",
+      "url": "https://medium.com/data-science-in-your-pocket/kimi-k3-released-beats-claude-fable-glm-5-2-gpt-5-6-sol-2e6f9c90c72c",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "Moonshot AIが2026年7月16日にKimi K3をリリース。2.8兆パラメータ・1Mトークンコンテキスト・ネイティブビジョンを備えたオープンウェイト（フルウェイト7月27日公開予定）フロンティアモデル。FrontierSWE（ソフトウェアエンジニアリングBM）でスコア77.8と世界首位（GPT-5.6 Sol 77.6、Fable 5 76.8を上回る）。Artificial Analysis世界4位。価格はGPT-5.6 Solの約1/3とコスト効率も高い。中国AI勢の「超低価格」路線の終焉を示唆しつつフロンティアに参入した重要な転換点。Claude Fableの競合動向として注目すべき情報。",
+      "body_excerpt": "Moonshot AI released Kimi K3 on July 16, 2026. Specs: 2.8 trillion parameters, 1M token context window, native vision capability, first open-weight model at 2.8T scale (full weights scheduled July 27, API-only until then). Benchmarks: FrontierSWE score 77.8 (1st globally), beating GPT-5.6 Sol (77.6) and Fable 5 (76.8). Artificial Analysis leaderboard rank: #4 globally. Pricing roughly 1/3 of GPT-5.6 Sol. Signals end of \"cheap Chinese AI\" era while raising the bar.",
+      "fact_checked": true,
+      "fact_check_note": "[PARTIAL] 公式ブログではKimiCodeハーネス使用時の「81.2 FrontierSWE dominance score」を報告。記事の77.8という数値は確認できず別評価環境のもの可能性。BetterStackやTom's Hardware等は「Fable 5・GPT-5.6 Solと拮抗またはわずかに下回る場合もある」と報告しており、明確な「首位」は過大主張の可能性あり。モデルリリース日（7/16）・重量公開予定（7/27）・パラメータ数（2.8T）は複数ソース一致で確認済み。"
+    },
+    {
+      "file": "2026-07-21_3045_WEB_CNBC-MoonshotAI-KimiK3-July2026.md",
+      "title": "China's Moonshot AI unveils Kimi K3 that rivals OpenAI, Anthropic",
+      "url": "https://www.cnbc.com/2026/07/17/moonshot-ai-kimi-k3-model-openai-anthropic-china.html",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "CNBCによるKimi K3リリース報道（2026年7月17日）。Moonshot AIが2.8兆パラメータ・100万トークンコンテキストのKimi K3をリリースし、Claude Fable 5・GPT-5.6 Solに並ぶフロンティアレベルを達成したことを一次メディアとして報道。オープンウェイト超大規模モデルの初事例として歴史的意義を強調。中国AI勢の本格的グローバルフロンティア参入を象徴するニュースとしてAnthropicのビジネス競争圧力の観点でも重要。CNBC発の一次情報として信頼性高い。",
+      "body_excerpt": "CNBC report on Kimi K3 launch (July 17, 2026). Moonshot AI's Kimi K3 is a 2.8T-parameter multimodal frontier model with 1M token context, positioned as the first open-weight model to reach frontier scale. Rivals Claude Fable 5 and OpenAI GPT-5.6 Sol in overall performance. CNBC coverage positions this as China's serious entry into the global AI frontier race, creating competitive pressure on Anthropic and OpenAI.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-21_3046_WEB_iret-GenAI-Weekly-Jul13-2026-JA.md",
+      "title": "週刊生成AIニュース 2026年7月13日週（iret DX事業部）",
+      "url": "https://iret.media/202877",
+      "source": "web",
+      "lang": "ja",
+      "theme": "ai-news",
+      "summary": "iret DX事業部による2026年7月13日週の週次生成AIニュースダイジェスト（日本語）。Anthropic・OpenAI・Google等の主要モデル動向を横断的にカバーしつつ、NTTデータ×NIKKEI KAI提携（AI調査・経営判断支援）、ソフトバンク「Patching as a Service」（AI駆動型サイバーセキュリティ）等の国内エンタープライズ動向を収録。日本語圏での生成AI導入動向を把握する上で価値ある週次定点観測記事。企業AI活用が「実験」から「収益化」フェーズに移行していることを報告。",
+      "body_excerpt": "iret DX開発事業部による2026年7月13日週の生成AIニュースまとめ。主要内容：Anthropic Claude関連最新動向、OpenAI GPT-5.6ファミリー（Luna/Terra/Sol）、Google Gemini最新動向、Kimi K3リリース、国内企業の生成AI活用事例。NTTデータとNIKKEI KAI（日経生成AIサービス）の販売契約、ソフトバンクのAIサイバーセキュリティサービス「Patching as a Service」発表等の国内固有情報を含む。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-21_3047_WEB_WTTW-Illinois-AI-Safety-Measures-Act.md",
+      "title": "Illinois Signs Landmark AI Safety Measures Act (July 6, 2026)",
+      "url": "https://news.wttw.com/2026/07/06/pritzker-signs-landmark-ai-regulation-bill-aims-mitigate-risks",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "イリノイ州知事Pritzkerが2026年7月6日にAI Safety Measures Actに署名。カリフォルニア・ニューヨーク州の法律を参考にした米国最包括的水準のAI規制法。直近四半期で35以上の州AI関連法が成立し、医療AI（アラバマ・ジョージア）、メンタルヘルスAI（コロラド・ネブラスカ）等の産業別州規制が加速。連邦統一法の不在により州ごとのパッチワーク規制が複雑化する転換点。AI取引・業務自動化システムのコンプライアンスに直結する一次情報。DHS-CISAのプロンプトインジェクション対策義務化提言とあわせて注目。",
+      "body_excerpt": "Illinois Governor JB Pritzker signed the Artificial Intelligence Safety Measures Act on July 6, 2026. Modeled after similar bills in California and New York, it sets some of the most comprehensive AI requirements in the country for developers of large-scale AI tools. Alongside Alabama/Georgia (health insurer AI restrictions), Colorado/Nebraska (mental healthcare AI restrictions). At least 35 AI-related state laws enacted in recent quarter, accelerating the state-level patchwork of US AI regulation.",
+      "fact_checked": true,
+      "fact_check_note": "[CONFIRMED] WTTW・NPR Illinois・Capitol News Illinois・Chicago Sun-Times等複数ソースで確認。署名日7月6日、法案番号SB 315、強制年次監査（第三者）・収益$500M超FMへの適用・内部告発者保護を含む最包括的AI法。要件発効は2028年1月1日。"
+    },
+    {
+      "file": "2026-07-21_3048_WEB_Gunder-AI-Laws-2026-Key-Regulations-Guidance.md",
+      "title": "2026 AI Laws Update: Key Regulations and Practical Guidance",
+      "url": "https://www.gunder.com/en/news-insights/insights/2026-ai-laws-update-key-regulations-and-practical-guidance",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "Gunderson Dettmer（大手法律事務所）による2026年AI法律・規制の実務ガイド。米国連邦・州レベルおよびEU AI Actを法律専門家の視点で横断比較。医療AI・メンタルヘルスAI・一般AI開発者向け規制を整理。DHS-CISAのアジェンティックAIへのプロンプトインジェクション対策義務化提言とヒューマンオーバーライド文書化要件を含む。コンプライアンスチェックリスト形式で実務に即使える内容。AI取引・業務自動化企業が遵守すべき規制の法律事務所発一次情報として信頼性高い。",
+      "body_excerpt": "Gunderson Dettmer legal firm's practical guide to 2026 AI laws and regulations. Cross-comparison of US federal, state-level, and EU AI Act developments. Covers Alabama/Georgia healthcare AI restrictions, Colorado/Nebraska mental health AI restrictions, Illinois AI Safety Measures Act. Includes DHS-CISA analysis urging mandatory prompt injection protections and human-override documentation for agentic AI in critical infrastructure. Provides compliance checklist format for AI deployment organizations.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-21_3049_WEB_TechPolicy-State-AI-Legislation-HalfYear-2026.md",
+      "title": "Where State AI Legislation Stands Half Way Into 2026",
+      "url": "https://www.techpolicy.press/where-state-ai-legislation-stands-half-way-into-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "TechPolicy.Pressによる2026年上半期の米国州AI立法中間報告。35以上の州AI関連法が直近四半期に成立し、医療・雇用・金融・コンテンツ認証等産業別規制が主流。連邦統一法の不在で州パッチワーク規制の複雑性が増大。EU AI Act透明性義務（2026年8月2日施行）との国際比較も含む。AI開発者・デプロイヤーが半年毎のコンプライアンス更新を要する根拠を示す中間レポート。金融・FX取引AIへの規制影響を把握する文脈で重要。米国AI規制動向の定点観測として価値ある分析。",
+      "body_excerpt": "TechPolicy.Press mid-year report on US state AI legislation as of mid-2026. Key findings: 35+ state AI laws enacted in recent quarter, sectoral regulations (healthcare, employment, finance, content auth) dominate over horizontal AI acts, federal uniformity absent causing state-level patchwork. Compares with EU AI Act transparency obligations (effective August 2, 2026). Argues AI developers/deployers must update compliance status semi-annually.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-21_3050_WEB_Gradually-Claude-Code-Changelog-July2026.md",
+      "title": "Claude Code Changelog - July 2026 (Gradually.ai Aggregation)",
+      "url": "https://www.gradually.ai/en/changelogs/claude-code/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Gradually.aiによるClaude Code 2026年7月変更ログ集約。主要アップデート：①Artifactへのライブ MCPコネクタデータ対応、②スクリーンリーダーモード、③Team/Enterprise向け共有・コラボ機能、④サブエージェント・バックグラウンド・権限・デフォルトモデル改善、⑤OAuthトークンローテーション後フラグ失効バグ修正、⑥EndConversationツール追加、⑦長時間タスク向けプログレスハートビート、⑧Auto Modeのプラットフォーム拡張（v2.1.207）、⑨7月15日時点最新版v2.1.211。公式変更の追跡に有用な集約リソース。",
+      "body_excerpt": "Gradually.ai's aggregated changelog for Claude Code, July 2026. Major updates tracked: (1) Live MCP connector data for published artifacts, (2) Screen reader mode for accessible sessions, (3) Sharing and collaboration options for Team/Enterprise, (4) Subagent workflow, background handling, permissions, and default model improvements, (5) Bug fix: feature flags going stale in long-running sessions after OAuth token rotation, (6) EndConversation tool addition, (7) Progress heartbeats for long-running tasks, (8) Auto mode expansion to more platforms (v2.1.207), (9) Latest version v2.1.211 as of July 15, 2026.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-21_3051_WEB_ClaudeCodeLab-Non-Engineers-Safe-Workflows.md",
+      "title": "Claude Code for Non-Engineers: Safe Workflows, Prompts, Permissions, and Daily Use",
+      "url": "https://claudecode-lab.com/en/blog/claude-code-for-non-engineers/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "ClaudeCodeLabによる非エンジニア向けClaude Code安全利用ガイド。権限モード（Auto/Manual/Plan）の使い分け、ファイル操作時の安全確認ルーチン、CLAUDE.mdの最小構成を解説。2026年初頭から日本の一般事務・マーケティング職でClaude Code活用が急増（総務担当が月4時間のルーティン作業を1命令で実行等）した背景を踏まえた内容。dangerouslySkipPermissionsの危険性と適切な権限設定の具体例を含む。非エンジニアユーザーへのClaude Code展開を検討している管理者にも有用。",
+      "body_excerpt": "ClaudeCodeLab guide for non-engineers on safely using Claude Code. Covers permission modes (Auto/Manual/Plan) and when to use each, safety check routines for file operations, and minimal CLAUDE.md configuration for non-technical users. Background: since early 2026, non-technical users in Japan (general affairs, marketing staff) have rapidly adopted Claude Code. Example: accounting staff completed a 4-hour monthly routine task with a single instruction. Warns against dangerouslySkipPermissions misuse, with concrete examples of appropriate permission settings.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    }
+  ],
+  "fact_checks": [
+    {
+      "article_file": "2026-07-21_3044_WEB_DataSciencePocket-KimiK3-Beats-Fable-GPT.md",
+      "claim": "FrontierSWE score 77.8 (世界首位), GPT-5.6 Sol (77.6), Fable 5 (76.8) を上回る",
+      "verdict": "PARTIAL",
+      "note": "公式ブログではKimiCodeハーネス使用時の「81.2 FrontierSWE dominance score」を報告。記事の77.8という数値は確認できず別評価環境のもの可能性。BetterStackやTom's Hardware等は「Fable 5・GPT-5.6 Solと拮抗またはわずかに下回る場合もある」と報告しており、明確な「首位」は過大主張の可能性あり。モデルリリース日（7/16）・重量公開予定（7/27）・パラメータ数（2.8T）は複数ソース一致で確認済み。"
+    },
+    {
+      "article_file": "2026-07-21_3047_WEB_WTTW-Illinois-AI-Safety-Measures-Act.md",
+      "claim": "イリノイ州知事PritzkerがAI Safety Measures Actに2026年7月6日署名",
+      "verdict": "CONFIRMED",
+      "note": "WTTW・NPR Illinois・Capitol News Illinois・Chicago Sun-Times等複数ソースで確認。署名日7月6日、法案番号SB 315、強制年次監査（第三者）・収益$500M超FMへの適用・内部告発者保護を含む最包括的AI法。要件発効は2028年1月1日。"
+    },
+    {
+      "article_file": "2026-07-21_3039_WEB_DigitalApplied-MCP-Stateless-Migration-Guide-Jul28.md",
+      "claim": "MCP 2026-07-28仕様でステートレスコアへ移行",
+      "verdict": "CONFIRMED",
+      "note": "公式MCPブログ・4sysops・Microsoft Community Hub等で確認。RCは2026年5月21日公開、10週間検証ウィンドウ（〜7/28）。ステートレスアーキテクチャ（initialize handshake廃止・セッション廃止）、Tasks拡張、MCP Apps（HTML UI）、認証強化が主要変更点。Python/TypeScript/Go/C# SDK betaも公開済み。"
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-07-20": 5,
+      "2026-07-19": 13,
+      "2026-07-18": 13,
+      "2026-07-17": 0,
+      "2026-07-16": 19,
+      "2026-07-15": 4,
+      "2026-07-14": 12
+    },
+    "recurring_themes": [
+      "claude",
+      "mcp",
+      "agent",
+      "trading",
+      "llm"
+    ]
+  }
+}
