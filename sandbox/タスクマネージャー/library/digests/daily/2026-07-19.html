@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-07-19</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-07-19 | 13件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-07-19</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>Claude Fable 5が本日（7/20）よりMax/Team Premiumプランに展開開始（一次ソース確認済）。MCPはステートレス化でスケールが容易になり、企業認証（EMA）も整備されつつあることで、エージェント基盤としての成熟が加速。国内ではClaude Codeが非エンジニア職場にも本格浸透し、定量的な業務改善事例が蓄積。規制面では中国AIエージェント専用規制の施行と米国FTC・州法の動きが同時進行しており、FX自動売買を含むAIエージェント開発者は把握必須。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>非エンジニア職場への浸透——定量事例が語る現実</h3>
+
+<p>Claude Code道場がまとめた日本企業20社の活用事例は、エンジニア以外への浸透を裏付ける定量データが揃っている。工場の作業手順書・安全衛生マニュアル約200件の見直しが従来比3倍速、新人習熟期間が2週間から10日に短縮。カスタマーサクセス部門ではサポートチケット返信作成が週10時間→3時間に減り、チャーン率が月2.3%→1.4%に改善した事例も報告されている。週数十本・1本15,000字以上のブログ記事生成や月次レポート自動化など、業種を問わず「書く作業」の変革が進んでいる。</p>
+
+<p>IDE連携でも進化は止まらない。VS Code 1.128での強化（Visual Studio Magazine報告）は「yet another boost」と表現されるほど更新頻度が高く、VS CodeがClaude Code利用の主要経路として事実上定着していることを示している。</p>
+
+<p>日本語対応については、2026年7月時点でSonnet 4.6・Opus 4.6ともにビジネス文書品質が高く、文字化け対処・敬語設定などの実用ガイドも充実してきた（genai-ai.co.jp・Uravation各社が更新版を公開）。5分インストールガイドも整備され、入門コストは大きく下がっている。</p>
+
+<h3>MCPエコシステムの構造転換——ステートレス化と企業認証</h3>
+
+<p>MCP 2026-07-28仕様変更の最大のポイントはステートレス化だ。従来のMcp-Session-Idヘッダとプロトコルレベルのセッション管理が廃止されることで、任意のMCPリクエストをどのサーバーインスタンスにもルーティングできるようになる。スティッキールーティングや共有セッションストアが不要になり、AWS ALB・CloudflareなどのPaaSで普通のHTTPインフラそのままMCPサーバーをスケールできる（HackerNoon詳報）。</p>
+
+<p>企業認証（EMA: Enterprise-Managed Authorisation）はStableに昇格済みで、Okta・Microsoft・Asana・Figmaなどが採用。IDプロバイダー経由でMCPサーバーへのアクセスを一元管理できる。<strong>日付注意</strong>: InfoQ記事では「2026-07-28仕様でStable昇格」と書かれているが、ファクトチェックによりEMA Stable昇格は実際には2026年6月18日の模様（EMA機能内容は正確）。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>Claude Fable 5展開と7月のモデルラッシュ</h3>
+
+<p><strong>一次ソース確認済み</strong>: Claude Fable 5が本日7月20日よりMax/Team Premiumプランへ50%制限付きで展開開始。Pro/Team Standardは引き続きUsage Creditsで利用継続。Anthropic公式X（@claudeai）および複数メディアで裏付け済み。</p>
+
+<p>7月上旬からのモデルリリースラッシュも続いている。GPT-5.6（OpenAI、7/9リリース）、Kimi K3（Moonshot AI）、Inkling（Thinking Machines）、ByteDance UniVR-34B-Planning（7/13）など、平均4日に1回新モデルが登場するペース。Anthropic・Blackstoneが企業向けAI実装企業「Ode with Anthropic」を15億ドル規模で設立、AnthropicがK-12教員向け「Claude for Teachers」を無料提供（Claude Code/Cowork含む）など、コマーシャル展開も加速している。</p>
+
+<h3>規制の二正面作戦——中国の施行と米国の立法ラッシュ</h3>
+
+<p><strong>一次ソース確認済み（注記あり）</strong>: 中国の「知能エージェントに関する実施意見」が7月15日から施行開始。ただし規制対象は「人型AI対話（AIコンパニオン）」に特化しており、「全AIエージェント専用規制」という表現は正確ではない。Doubao/Qwen停止・14,000件以上の非準拠エージェント削除は確認済み。</p>
+
+<p>米国では2026年Q2だけで35本以上のAI関連法が成立（Inside Global Tech報告）。イリノイ州が年間売上5億ドル超のフロンティアモデル開発者に独立安全計画の年次監査を義務付ける米国初の州法を制定。医療保険のAI活用に人間レビューを義務付ける法律もアラバマ・ジョージア両州で成立。FTCはAIモデルの「truthful outputs」を変更させる州法についてのポリシーステートメントを公表し、パブコメを2026年7月31日まで募集中（Federal Register掲載）。FX自動売買など実運用AIシステム開発者が把握すべき規制リスクが急速に具体化している。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #ea580c; padding-left: 12px;">AIトレーディング</h2>
+
+<p>FX自動売買への個人開発者参入事例がZennに掲載。「FXが絶望的に下手だった」という出発点から、AIにチャートパターンを学習させてMT5連携の自動売買システムを構築した実践記録。ML/LLM活用、Pythonによるバックテスト、過学習対策など実装上の課題を率直に記述しており、同様の構成で開発中の場合に参照価値がある（Zenn: nezness氏）。</p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>過去7日の収集状況: 7/12=11件、7/13=11件、7/14=12件、7/15=4件、7/16=19件、7/17=0件、7/18=13件、7/19=13件。7/17のゼロは収集スキップと見られる。全体として1日10〜19件のペースで安定収集が続いている。</p>
+
+<p>recurring themes（claude・agent・mcp・trading・llm）は変わらず継続。本日の大きな変化は<strong>MCPのステートレス化</strong>が具体的な仕様として浮上した点と、<strong>Fable 5展開開始</strong>が現実になった点。Claude Coworkのスマートフォン展開（iOS/Android）も7/6-12週に正式拡大しており、エージェント実行経路の多様化が加速フェーズに入った。</p>
+
+</body>
+</html>
