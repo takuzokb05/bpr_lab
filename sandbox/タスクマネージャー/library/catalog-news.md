@@ -268,3 +268,5 @@
 | 246 | AI News Today July 22 2026: 16 Biggest Stories（BuildFastWithAI） | en | 未読 | #llm-news #daily-roundup #web-signal | articles/2026-07-22_3055_WEB_BuildFastWithAI-AI-News-July22-2026.md |
 | 247 | 【2026-07-22】世界のAI最新ニュース：AIエージェント安全性・インフラ競争・EU AI Act透明性規制 | ja | 未読 | #llm-news #regulation #web-signal | articles/2026-07-22_3056_WEB_Eguweb-AI-News-July22-2026-JA.md |
 | 248 | AI News July 22: Gemini 3.6 Flash / Nadella Criticizes Fable / South Korea Sovereign AI | en | 未読 | #llm-news #regulation #web-signal | articles/2026-07-22_3059_WEB_AIToolsRecap-AI-News-July22-Gemini-Nadella-Korea.md |
+| 249 | AI Regulation July 2026: EU August 2 Deadline, US Preemption & 15 Countries（Cubbbix） | en | 未読 | #regulation #eu-ai-act #web-signal | articles/2026-07-23_3061_WEB_Cubbbix-AI-Regulation-July2026-EU-August-15Countries.md |
+| 250 | China AI Agent Regulations Enforceable July 15, 2026: 世界初AIエージェント専用法（MachineBrief） | en | 未読 | #regulation #ai-agent #web-signal | articles/2026-07-23_3062_WEB_MachineBrief-China-AI-Agent-Regs-July15-3Tier-Framework.md |

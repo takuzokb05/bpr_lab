@@ -774,3 +774,4 @@
 | 748 | Claude Cowork: Record a Skill — 画面録画でAIスキル自動生成 | en | 未読 | #cowork #skills #web-signal | articles/2026-07-22_3054_WEB_Claude-Cowork-Record-Skill-Screen-Recording.md |
 | 749 | How Anthropic secures its AI-native software development lifecycle（Deputy CISO） | en | 未読 | #security #sdlc #web-signal | articles/2026-07-22_3057_WEB_Anthropic-AI-Native-SDL-Security-Practices.md |
 | 750 | How Datadog built "Temper": deterministic kernel for Claude Code formal verification | en | 未読 | #claude-code #formal-verification #web-signal | articles/2026-07-22_3058_WEB_Datadog-Temper-Universal-Machine-Tool-ClaudeCode.md |
+| 751 | Claude Agent SDK Framework Review 2026 — 独立評価・価格変更詳細（Agentlas） | en | 未読 | #ecosystem #sdk #web-signal | articles/2026-07-23_3063_WEB_Agentlas-Claude-Agent-SDK-Framework-Review-2026.md |

@@ -298,3 +298,4 @@
 | 269 | LLMトレーディングBot比較：マルチエージェント手法・結果・リスク（FlowHunt） | en | 未読 | #llm-trading #comparison #web-signal | articles/2026-07-18_3017_WEB_LLM-Trading-Bot-Comparison-FlowHunt.md |
 | 270 | FXが絶望的に下手だったのでAIにチャートを学ばせて自動売買させた話（Zenn nezness） | ja | 未読 | #fx #llm-trading #implementation #web-signal | articles/2026-07-19_3026_WEB_Zenn-nezness-FX-AI-Chart-Learning-AutoTrade-JA.md |
 | 271 | AI-Agentic Autonomous Trading Layers 2026: Complete Review（BrokerAnalysis） | en | 未読 | #llm-trading #web-signal | articles/2026-07-21_3043_WEB_BrokerAnalysis-AI-Agentic-Trading-Layers-2026.md |
+| 272 | Claude + MT5 via MCP: Advanced AI Trading Setup Guide（FXNX） | en | 未読 | #fx #mcp #llm-trading #implementation #web-signal | articles/2026-07-23_3060_WEB_FXNX-Claude-MT5-via-MCP-Advanced-AI-Trading-Setup.md |
