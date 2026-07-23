@@ -1,0 +1,154 @@
+{
+  "date": "2026-07-22",
+  "generated_at": "2026-07-23T23:15:53.376128Z",
+  "article_count": 8,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-07-22_3052_WEB_Google-Gemini-3-6-Flash-Launch-July21.md",
+      "title": "Introducing Gemini 3.6 Flash, 3.5 Flash-Lite, and 3.5 Flash Cyber — Google",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-6-flash-3-5-flash-lite-3-5-flash-cyber/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "Google が7月21日に3モデル同時リリース。Gemini 3.6 Flash（$1.50/$7.50/M）は出力コスト17%削減、DeepSWE 37→49%、知識カットオフ2026年3月に更新、コンピュータ操作精度83%に向上。3.5 Flash-Lite（$0.30/$2.50/M）は最安帯で350トークン/秒の高速処理。3.5 Flash Cyberは政府・認定パートナー限定のセキュリティ特化モデル。Gemini 4のプレトレーニング開始を公式発表。3.5 Proは遅延継続。フラッシュモデル帯でClaude・GPT-5.6 Luna・Grok 4.5との競争が本格化。",
+      "body_excerpt": "Google released three new Gemini models on July 21, 2026. Gemini 3.6 Flash is priced at $1.50/$7.50 per million tokens with 17% fewer output tokens than 3.5 Flash, DeepSWE coding benchmark up from 37% to 49%, knowledge cutoff advanced from January 2025 to March 2026. OSWorld-Verified computer use improved from 78.4% to 83.0%. Gemini 3.5 Flash-Lite ($0.30/$2.50 per M tokens) is the fastest in the series at 350 output tokens/second, achieving 54% on Terminal-Bench 2.1 and 74.0% on OSWorld-Verified. Gemini 3.5 Flash Cyber is a restricted security-focused model for governments and trusted partners via the CodeMender pilot program. Google confirmed it has begun pretraining for Gemini 4. Gemini 3.5 Pro remains unshipped after multiple missed deadlines.",
+      "fact_checked": true,
+      "fact_check_note": "CONFIRMED: MarkTechPost・VentureBeat・9to5Google等複数ソースが7月21日リリースを確認。DeepSWE 37%→49%確認。価格$1.50/$7.50確認。なお「17%出力削減」はタスク条件依存で、長期エンジニアリングタスクでは最大65%削減との報告あり（VentureBeat）。OSWorld 83%は未独立確認だが全体的に記事内容は正確。"
+    },
+    {
+      "file": "2026-07-22_3053_WEB_ClaudeCode-Verification-Loops-Skills-Official-Blog.md",
+      "title": "Building verification loops in Claude Code with skills — Anthropic Blog",
+      "url": "https://claude.com/blog/building-verification-loops-in-claude-code-with-skills",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Anthropic公式ブログ（7月22日）。Claude Codeのスキルを使ってVerification Loopを自動化する手法を解説。スキルは .claude/skills/ 配下の Markdownファイルで定義し、フロントマター（名前・説明・許可ツール）と手順を記述するだけ。4パターン（スタンドアロン・埋め込み・チェーン・PR全体）で柔軟に活用可能。汎用リンターが検出できないビジネスルール（「backfillなしのカラムdropは拒否」等）をスキルとして実装する実践例を紹介。チームで使えば1人の節約が全員の節約になる。Claude Code自律化の鍵となるパターン。",
+      "body_excerpt": "Official Anthropic blog post (July 22, 2026) on automating verification loops using Claude Code skills. The core concept: most agentic coding sessions follow a loop of gather-context → act → verify → loop. By encoding recurring manual checks as skills (markdown files in .claude/skills/), Claude can close these feedback loops autonomously. Four deployment patterns: Standalone (manually invoked: security scans, accessibility audits), Embedded (built into other skills to auto-run), Chained (one skill triggers another sequentially), PR-wide (enforced on every pull request team-wide). Skills can encode business logic generic linters can't catch: e.g. \"Reject any migration that drops a column without a backfill step.\" Toolchain integrations include linters, type checkers, GitHub Actions, and custom rubrics for grading outcomes. Efficiency compounds: \"The check you wrote down to save yourself two minutes a week is now saving everyone two minutes a week, on every change.\"",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-22_3054_WEB_Claude-Cowork-Record-Skill-Screen-Recording.md",
+      "title": "Claude Cowork: Record a Skill — Screen Recording to Reusable AI Skill",
+      "url": "https://dataconomy.com/2026/07/22/anthropic-teach-claude-screen-recording-feature/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Anthropicが7月21日に Claude Cowork の「Record a Skill」機能をリリース。画面を録画しながら一度タスクを実行するだけで、Claude がスクリーン操作・クリック・音声ナレーションを解析して再利用可能なスキル定義を自動生成。プロンプトエンジニアリング不要で「やってみせるだけ」でAI自動化ルーティンを学習。Claude デスクトップアプリの「+」メニューから利用可能（Pro・Max・Team プラン）。ノーコードでデジタル自動化を民主化する機能で、非エンジニアにもClaude Codeのスキル作成を開放する重要な進化。",
+      "body_excerpt": "Anthropic shipped \"Record a Skill\" inside Claude Cowork on July 21, 2026. This feature allows Pro, Max, and Team users to screen-record themselves performing a task once, and Claude automatically converts that into a reusable, rerunnable skill. The system captures screen activity, mouse clicks, keystrokes, and voice commentary, then processes the demonstration into a structured skill definition that Claude can execute autonomously. No prompt engineering required — users just demonstrate the workflow and Claude figures out the automation. The feature is accessible via the \"+\" menu in the Claude desktop app by selecting \"Record a skill.\" This democratizes digital automation by eliminating the need for complex prompt writing, replacing it with visual demonstration. Available to Pro, Max, and Team subscribers.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-22_3055_WEB_BuildFastWithAI-AI-News-July22-2026.md",
+      "title": "AI News Today July 22 2026: 16 Biggest Stories — BuildFastWithAI",
+      "url": "https://www.buildfastwithai.com/blogs/ai-news-today-july-22-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "7月22日のAIニュース16件包括まとめ。Google Gemini 3.6 Flash 系3モデル同時リリース（3.5 Flash-Lite $0.30/$2.50が最安値帯）。AIロビー費用が記録更新（Anthropic Q2 $1.97M +26%、Meta $5.99M）。Claude Cowork が画面録画→スキル変換機能「Record a Skill」追加。AIベンチャー資金調達H1 2026で$510B（70%以上がAI企業、Anthropic＋OpenAI $217B）。DeepSeek V4は7月24日リリース、Kimi K3オープンウェイトは7月27日予定。White House フロンティアAIフレームワーク8月1日前に発表予定。Block（Jack Dorsey）がAIエージェントを第一級参加者として扱うBuzzチームワークツールをローンチ。",
+      "body_excerpt": "Comprehensive daily AI news roundup for July 22, 2026, covering 16 major stories. Google launched Gemini 3.6 Flash, 3.5 Flash-Lite, and 3.5 Flash Cyber on July 21, with Flash-Lite emerging as the cheapest option ($0.30/$2.50). AI lobbying spending hit records: Meta $5.99M Q2, Anthropic $1.97M (+26% QoQ), OpenAI $1.2M (+18%), combined AI-lab spend $3.17M (+23% from Q1). Claude Cowork added \"Record a Skill\" — screen-record a task with voice narration, converted into a reusable skill, no coding required. Flash tier is now the primary competitive battleground vs GPT-5.6 Luna and Grok 4.5. Global AI venture funding hit $510B in H1 2026, with 70%+ going to AI companies; OpenAI and Anthropic captured $217B combined. DeepSeek V4 stable release July 24. Kimi K3 free weights arrive July 27. White House frontier AI framework expected before August 1. Meta claims AI moderation makes 13% fewer errors than humans with 10% more policy violation detection.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-22_3056_WEB_Eguweb-AI-News-July22-2026-JA.md",
+      "title": "【2026-07-22】世界のAI最新ニュース：AIエージェント安全性、AIインフラ、企業導入、透明性規制",
+      "url": "https://eguweb.jp/ai/81223/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "ai-news",
+      "summary": "eguweb による7月22日の国際AIニュース日本語まとめ。5テーマ：①エージェント安全性（OpenAI/HuggingFaceインシデント、行動連鎖全体の監視が必要）②中小企業AI導入の実務化③インフラ競争の主軸がGPU性能→トークン単価・電力効率へ④エージェント開発の統合設計が主流化⑤EU AI Act透明性義務8月施行。日本語圏のビジネスパーソン向けに具体的な実務確認リストも提供。",
+      "body_excerpt": "2026年7月22日のAIニュース日本語解説記事（eguweb）。AIが「回答ツール」から「業務を動かす基盤」へ移行している観点から、5つのテーマを横断分析。①エージェント安全性：OpenAIとHugging Faceがセキュリティインシデントを共同公表（単発操作でなく「行動の連鎖全体」の監視が必要）。②中小企業導入：ChatGPT for Small Business Programで会計・マーケティング・ECの実務実装が進む。③インフラ競争の軸足転換：GPU性能から「トークン単価」と「電力効率」へ、NVIDIAとMicrosoftが新プラットフォーム発表。④エージェント開発の統合設計：構築から展開・統制・評価までの一体化、Google CloudがGemini Enterprise Agent Platform実装例公開。⑤EU AI Act対応：2026年8月に透明性ルール効力化、AI生成コンテンツの表示義務が実務課題に。実務確認リスト：ツール接続権限管理・外部送信データのログ・推論コスト見積り・AI生成コンテンツの透明性表示義務。",
+      "fact_checked": true,
+      "fact_check_note": "CONFIRMED_WITH_DETAIL: 正確な施行日は2026年8月2日（Article 50）。AI生成コンテンツの透明性表示義務が対象。ただし施行前に市場投入済みのシステムはArticle 50(2)のウォーターマーク要件に4ヶ月猶予期間あり（2026-12-02まで）。8月2日以降に市場投入する新システムは即日適用。"
+    },
+    {
+      "file": "2026-07-22_3057_WEB_Anthropic-AI-Native-SDL-Security-Practices.md",
+      "title": "How Anthropic secures its AI-native software development lifecycle — Anthropic Blog",
+      "url": "https://claude.com/blog/how-anthropic-secures-its-ai-native-software-development-lifecycle",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Anthropic Deputy CISO Jason Clintonが、Claudeがコードの~80%を生成する環境でのAIネイティブSDLCセキュリティ実践を公開（7月21日）。5段階：①計画：Claude Opus駆動のPSRがMITRE ATT&CKで設計書を自動分析②コード生成：CLAUDE.md＋スキルにセキュリティガイダンス埋め込み、/security-reviewコマンド、egress制限リモートVM③テスト：複数専門エージェントがPoV（脆弱性証明）を書いてからコメント投稿、SAST＋エージェントスキャン併用④デプロイ：ステージングでのAIパワードDASTと外部ペンテスト⑤モニタリング：単一目的アラートエージェント、全承認をSIEMに記録。Claudeコード生成80%環境での実際のセキュリティ知見として価値が高い。",
+      "body_excerpt": "Anthropic's Deputy CISO Jason Clinton publicly details security practices for a development lifecycle where Claude authors ~80% of merged code (published July 21, 2026). Five SDLC stages: (1) Planning — automated Claude Opus-powered PSR analyzes design docs against MITRE ATT&CK; low-risk projects can self-approve. (2) Code generation — security guidance in CLAUDE.md files and org-wide skills; /security-review command integrated into Claude Code; security guidance plugin provides real-time suggestions; developers work on remote VMs with restricted egress allowlisting. (3) Testing/CI — multiple specialized review agents with narrow focus areas, each writing proofs validating findings before posting comments; risk-tiered codebase; SAST combined with agentic scanning. (4) Deployment — continuous AI-powered DAST in staging; external pentesting for major launches; bug bounty and red teaming. (5) Monitoring — single-purpose alert triage agent with limited permissions; separate agents as checks on each other via shared channels; all agent actions routed to SIEM for auditability. Governance: every approval logged with signals and reasoning.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-22_3058_WEB_Datadog-Temper-Universal-Machine-Tool-ClaudeCode.md",
+      "title": "How Datadog built a \"universal machine tool\" for Claude Code — Anthropic Blog",
+      "url": "https://claude.com/blog/how-datadog-built-a-universal-machine-tool-for-claude-code",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Anthropic公式ブログ（7月21日）。DatadogがClaude Code上に構築した決定論的カーネル「Temper」の事例紹介。エージェントがアプリコードを直接生成する代わりに形式仕様を生成し、Temperが3つの契約（振る舞い・データ・認可）を強制した上で4層独立検証（シンボリック推論・網羅的状態探索・決定論シミュレーション・ランダムプロパティテスト）を実施。小規模仕様の全検証が1秒以内で完了。検証済みアーティファクトをそのまま本番実行するためドリフトなし。エージェントの高速コード生成と本番品質保証を両立した重要ユースケース。",
+      "body_excerpt": "Anthropic official blog (July 21, 2026) on Datadog's \"Temper\" — a deterministic kernel built on top of Claude Code. Rather than AI agents generating application code directly, they produce formal specifications that Temper verifies and executes. This solves the growing bottleneck between fast agent-generated code and verified, production-ready software. Temper enforces three contracts per capability: (1) Behavior contract: states, transitions, preconditions, safety properties. (2) Data contract: entity types and APIs in machine-readable form. (3) Authorization: default-deny, scope-based approval with human hot-loading. Specifications pass four independent verification layers: symbolic reasoning, exhaustive state exploration, deterministic simulation with fault injection, and randomized property testing (~1,000 action sequences). Full verification cascade completes in under one second for small specs. The proven specification is the same artifact that runs in production — eliminating drift between verified and deployed code. Quote from Datadog VP Engineering Sesh Nalla: \"Agents can produce code faster than any team can review by hand, but they can make mistakes.\"",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-22_3059_WEB_AIToolsRecap-AI-News-July22-Gemini-Nadella-Korea.md",
+      "title": "AI News July 22 2026: Gemini 3.6 Flash, Nadella Criticizes Fable, South Korea Sovereign AI — AIToolsRecap",
+      "url": "https://aitoolsrecap.com/Blog/ai-news-july-22-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "7月22日の重要AIニュース3件：①Google Gemini 3.6 Flash($1.50/$7.50/M)他2モデルリリース、Gemini 4プレトレーニング開始②Microsoft CEO NadellaがFable 5のコンテンツ制限を社内批判「これほど編集者主導の創作ツールはあったか」($50億投資にもかかわらず競合意識明確化）③韓国が2026年に無料国産AIチャットボットの国家基盤として提供計画（ChatGPT・Claude依存脱却）。緊急：DeepSeek APIマイグレーション期限7月24日15:59 UTC（レガシーエイリアスが廃止されV4系への移行必須）。",
+      "body_excerpt": "Three major AI news stories for July 22, 2026. (1) Google Gemini 3.6 Flash: $1.50/$7.50 per M tokens, 17% output reduction, three new models (3.6 Flash, 3.5 Flash-Lite, 3.5 Flash Cyber), Gemini 4 pretraining announced. (2) Microsoft CEO Satya Nadella criticized Anthropic's Fable 5 content restrictions internally: \"When was the last time you had a creation tool that was so editorially controlled?\" — notable given Microsoft's $5B investment in Anthropic; signals AI market concentration concerns. (3) South Korea announced plans for a free domestic AI chatbot service in 2026 as national infrastructure to reduce dependency on ChatGPT and Claude, part of a broader trend of governments treating AI as sovereign infrastructure. Urgent alert: DeepSeek API migration deadline July 24 15:59 UTC — legacy aliases (deepseek-chat, deepseek-reasoner) will break; must migrate to V4 variants.",
+      "fact_checked": true,
+      "fact_check_note": "CONFIRMED: DEV Community・WaveSpeed・Enterprise DNA等複数ソースが2026-07-24 15:59 UTCの期限を確認。deepseek-chat/deepseek-reasonerエイリアスはV4系（deepseek-v4-pro/deepseek-v4-flash）への移行が必要。【緊急】明日（07-24）が期限。"
+    }
+  ],
+  "fact_checks": [
+    {
+      "article_file": "2026-07-22_3052_WEB_Google-Gemini-3-6-Flash-Launch-July21.md",
+      "claim": "Gemini 3.6 Flash リリース: DeepSWE 37→49%、価格 $1.50/$7.50/M、出力コスト17%削減",
+      "verdict": "CONFIRMED",
+      "note": "MarkTechPost・VentureBeat・9to5Google等複数ソースが7月21日リリースを確認。DeepSWE 37%→49%確認。価格$1.50/$7.50確認。なお「17%出力削減」はタスク条件依存で、長期エンジニアリングタスクでは最大65%削減との報告あり（VentureBeat）。OSWorld 83%は未独立確認だが全体的に記事内容は正確。",
+      "sources": [
+        "https://www.marktechpost.com/2026/07/21/google-releases-gemini-3-6-flash-3-5-flash-lite-and-3-5-flash-cyber-a-cheaper-more-token-efficient-flash-tier-built-for-agentic-workloads/",
+        "https://venturebeat.com/technology/googles-gemini-3-6-flash-model-cuts-ai-agent-token-costs-by-up-to-65-on-long-horizon-engineering-tasks-and-3-5-pro-is-on-the-way"
+      ]
+    },
+    {
+      "article_file": "2026-07-22_3059_WEB_AIToolsRecap-AI-News-July22-Gemini-Nadella-Korea.md",
+      "claim": "DeepSeek APIマイグレーション期限 2026-07-24 15:59 UTC（レガシーエイリアス廃止）",
+      "verdict": "CONFIRMED",
+      "note": "DEV Community・WaveSpeed・Enterprise DNA等複数ソースが2026-07-24 15:59 UTCの期限を確認。deepseek-chat/deepseek-reasonerエイリアスはV4系（deepseek-v4-pro/deepseek-v4-flash）への移行が必要。【緊急】明日（07-24）が期限。",
+      "sources": [
+        "https://dev.to/agdex_ai/deepseek-v4-api-migration-guide-everything-before-the-july-24-2026-deadline-4m30",
+        "https://byteiota.com/deepseek-api-migration-july-2026/"
+      ]
+    },
+    {
+      "article_file": "2026-07-22_3056_WEB_Eguweb-AI-News-July22-2026-JA.md",
+      "claim": "EU AI Act 透明性義務 2026年8月施行",
+      "verdict": "CONFIRMED_WITH_DETAIL",
+      "note": "正確な施行日は2026年8月2日（Article 50）。AI生成コンテンツの透明性表示義務が対象。ただし施行前に市場投入済みのシステムはArticle 50(2)のウォーターマーク要件に4ヶ月猶予期間あり（2026-12-02まで）。8月2日以降に市場投入する新システムは即日適用。",
+      "sources": [
+        "https://www.dastra.eu/en/blog/ai-act-transparency-rules-what-changes-august-2-2026/60164",
+        "https://artificialintelligenceact.eu/transparency-rules-article-50/"
+      ]
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-07-21": 15,
+      "2026-07-20": 5,
+      "2026-07-19": 13,
+      "2026-07-18": 13,
+      "2026-07-17": 0,
+      "2026-07-16": 19,
+      "2026-07-15": 4
+    },
+    "recurring_themes": [
+      "claude",
+      "agent",
+      "mcp",
+      "trading",
+      "llm"
+    ]
+  }
+}
