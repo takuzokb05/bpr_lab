@@ -1,0 +1,91 @@
+{
+  "date": "2026-07-23",
+  "generated_at": "2026-07-24T23:15:59.443703Z",
+  "article_count": 4,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-07-23_3060_WEB_FXNX-Claude-MT5-via-MCP-Advanced-AI-Trading-Setup.md",
+      "title": "Claude + MT5 via MCP: Advanced AI Trading Setup Guide",
+      "url": "https://fxnx.com/en/blog/claude-mt5-via-mcp-your-advanced-ai-trading-setup",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "FXNXがClaude API + MT5 + MCP（MetaTrader Connect Proxy）の3層アーキテクチャを解説した実践ガイド。MT5にEAとして組み込むMCPサーバーがClaude APIとの通信を仲介し、Pythonスクリプトがデータ取得→LLM判断→注文実行のパイプラインを自動化。APIレイテンシ特性からH1以上のタイムフレームが適切。安全策としてポジションサイジング上限のハードコード・デモ口座バックテスト・ロギングを強調。既存のMQL5ベースEAを超えて、リアルタイムニュースセンチメント・テクニカル・ファンダメンタル分析を一括処理できるのが最大の価値。FX自動取引プロジェクトのClaude統合において直接参照できる設計パターン。",
+      "body_excerpt": "ClaudeのAPI推論能力とMetaTrader 5をMCP（MetaTrader Connect Proxy）で接続するアーキテクチャガイド。3コンポーネント構成：ClaudeがMarketデータを分析し取引判断を生成、MCPがClaude⇔MT5間のセキュアな変換レイヤーとして機能、MT5が実際の注文を執行。セットアップはMT5にEAとしてMCPサーバーコンポーネントをインストールし、Pythonクライアントライブラリ経由でMCP→Claude API→MT5コマンドのパイプラインを構築。APIレイテンシの問題からH1/H4/日足での使用を推奨。ポジションサイジング上限のハードコード、デモ口座での徹底的なバックテスト、全プロンプト・レスポンスのロギングが必須安全策。ニュースセンチメント・テクニカル指標・ファンダメンタル分析の同時統合が可能な点がルールベースEAとの本質的差分。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-23_3061_WEB_Cubbbix-AI-Regulation-July2026-EU-August-15Countries.md",
+      "title": "AI Regulation July 2026: EU August 2 Deadline, US Preemption & 15 Countries Update",
+      "url": "https://cubbbix.com/blog/ai-regulation-july-2026-global-update/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "Cubbbixによる2026年7月AI規制の15カ国包括レポート。最重要日程はEU AI Actの**2026年8月2日**完全施行（ハイリスクAIの透明性・文書化義務）。米連邦法（Great American AI Act）は州法優先条項付きで上院通過、下院審議次第で州別規制マップが一夜で変わる可能性。中国のAIエージェント規制（7月15日施行）と並び、8月は規制分岐点として業界全体に影響。日本企業はEUビジネスのハイリスクAI登録義務（8月2日）への準拠が急務。世界15か国の法制化状況を横断把握するのに有用な一次情報集約記事。",
+      "body_excerpt": "2026年7月の世界AI規制動向15カ国総まとめ。EU AI Act完全施行が2026年8月2日（ハイリスクシステムへの透明性・文書化要件適用開始、17加盟国が国内監督機関設置済み）。米国：「Great American Artificial Intelligence Act」連邦優先条項付きで上院可決、州法への影響懸念。中国：コンパニオンAIルールが7月15日施行（AI対話の明示開示義務）。インド：严格責任条項含むDigital India Act草案公表。韓国：正式コンプライアンスレビュー開始。ブラジル：AI Bill 2338/2023が開発者厳格責任削除修正案付きで委員会通過。英国：AI Regulation and Safety Billがフロンティアモデルの法定要件に向け前進。任意枠組みから強制力ある法的義務への移行が世界規模で加速。",
+      "fact_checked": true,
+      "fact_check_note": "要注意: 2026年6月16日にEU議会がDigital Omnibus修正を可決し、ハイリスクAIの文書化・透明性義務の多くが2027年12月～2028年8月に延期。8月2日に実際に施行されるのはArticle 50（チャットボット開示・AIコンテンツ標示・ディープフェイクラベリング）とGPAI執行権限のみ。記事の「ハイリスクAI透明性義務」表現は誤解を招く可能性あり。"
+    },
+    {
+      "file": "2026-07-23_3062_WEB_MachineBrief-China-AI-Agent-Regs-July15-3Tier-Framework.md",
+      "title": "China AI Agent Regulations Enforceable July 15, 2026: World's First AI Agent Law",
+      "url": "https://www.machinebrief.com/news/china-ai-agent-regulations-enforceable-july-15-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "MachineBriefによる中国AIエージェント規制（2026年7月15日施行）のレポート。世界初のAIエージェント専用法的カテゴリーとして歴史的な意義を持つ。3層フレームワーク（自律可/人間承認必要/禁止）により、商用AIエージェントの用途分類・デプロイメント審査・定期報告が義務化。域外適用（中国ユーザー・データへの影響があれば海外企業も対象）が実務上の重要課題。EUのAI Act(8月2日)と並び、2026年後半のAIエージェント商用化に大きく影響する規制の一次情報。FX自動取引エージェント開発においても将来的な規制リスクとして把握必須。",
+      "body_excerpt": "2026年7月15日、中国が「AIエージェントに関する実施意見」を施行——世界初のAIエージェント専用規制フレームワーク。3層の意思決定認可構造：Level 1=スケジューリング等の日常業務は自律操作可、Level 2=契約・価格設定等の重要決定は人間承認必須、Level 3=法律・財務・安全事項はエージェント判断禁止。Level 2・3は事前デプロイメントレビューと四半期報告書が義務。中国ユーザー・データに影響を与える全組織（物理的所在地不問）に適用。EU・米国での類似基準導入の先例となる見込み。",
+      "fact_checked": true,
+      "fact_check_note": "確認済: 中国AIエージェント規制（実施意見）は2026年7月15日に施行。3層フレームワークも確認。ただしAIコンパニオン規制も同日施行され、ByteDance Doubao・Alibaba QwenのAIコンパニオン機能が停止（記事では言及なし）。域外適用の範囲については現時点で確定的な情報なし。"
+    },
+    {
+      "file": "2026-07-23_3063_WEB_Agentlas-Claude-Agent-SDK-Framework-Review-2026.md",
+      "title": "Claude Agent SDK — AI Agent Framework Review 2026 | Agentlas",
+      "url": "https://agentlas.pro/frameworks/claude-agent-sdk/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Agentlasの独立レビューによるClaude Agent SDK評価。強み：本番実績（Claude Code自体が動作）・豊富な組み込みツール・hooks・MCP統合の深さ。弱み：LangChain/LlamaIndexに比べサードパーティエコシステムと事例が少ない、Claudeモデル専用でマルチプロバイダー不可。2026年6月からAgent SDK利用が従来のインタラクティブ枠から独立した月次クレジット枠に移行（Pro=$20、Max 20x=$200）という価格変更が重要情報。コーディング・自動化特化用途ではベストクラスだが、汎用エージェントフレームワークとしてはエコシステム成熟度で他に劣る。",
+      "body_excerpt": "Agentlasによるクロード・エージェントSDKの独立フレームワークレビュー。Python・TypeScript対応、OSS（Claude API費用別途）。特徴：ファイル操作・bash実行・Web検索・MCP統合のリッチな組み込みツール群、エージェント動作の細粒度制御を可能にするhooksシステム、Claude Codeの実動作を支えている本番実績。LangChainとの比較：マルチプロバイダー対応なし、サードパーティエコシステムが小さい点が弱点。コーディングエージェントと自動化用途では最強クラスの組み込みツールが優位点。2026年6月15日の価格変更：Agent SDK利用・非インタラクティブclaude -pのクレジット消費がサブスクリプション別枠（Pro: $20/月、Max 5x: $100/月、Max 20x: $200/月）。",
+      "fact_checked": true,
+      "fact_check_note": "要訂正: 記事は「6月15日に価格変更が実施された」と読めるが実際は逆。Anthropicは5月に別枠クレジット制（Pro $20/月・Max 20x $200/月）を発表したが、6月15日に当該変更を撤回・一時停止。現在もPro/Max/Teamのサブスク枠内で従来通りAgent SDK利用可。「変更を告知→撤回」の経緯を注記すべき。"
+    }
+  ],
+  "fact_checks": [
+    {
+      "article": "3061_EU-AI-Act",
+      "result": "PARTIAL_CORRECTION",
+      "detail": "August 2施行はArticle 50のみ。ハイリスクAI義務は2027-2028年に延期済み（EU議会2026-06-16承認）"
+    },
+    {
+      "article": "3062_China-AI-Agent",
+      "result": "CONFIRMED",
+      "detail": "7月15日施行・3層フレームワーク確認。AIコンパニオン機能停止の追加影響あり"
+    },
+    {
+      "article": "3063_Claude-Agent-SDK",
+      "result": "CORRECTION_NEEDED",
+      "detail": "価格変更は発表後キャンセル。June 15時点で変更は実施されず、従来の課金体系継続"
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-07-22": 8,
+      "2026-07-21": 15,
+      "2026-07-20": 5,
+      "2026-07-19": 13,
+      "2026-07-18": 13,
+      "2026-07-17": 0,
+      "2026-07-16": 19
+    },
+    "recurring_themes": [
+      "claude",
+      "mcp",
+      "agent",
+      "trading",
+      "regulation"
+    ]
+  }
+}
