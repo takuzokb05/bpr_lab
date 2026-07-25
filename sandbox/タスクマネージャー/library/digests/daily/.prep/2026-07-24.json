@@ -1,0 +1,130 @@
+{
+  "date": "2026-07-24",
+  "generated_at": "2026-07-25T23:15:34.014505Z",
+  "article_count": 7,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-07-24_3064_WEB_EmergingAI-Claude-Changed-July2026-Way.md",
+      "title": "Claude Changed: The July 2026 Way to Use It",
+      "url": "https://emergingai.substack.com/p/claude-changed-the-july-2026-way",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "2026年7月時点のClaude活用の変容を論じた実践的な移行ガイド。主要な変化点: (1)マルチチャットセッション（並列ブランチ・アプローチ比較）が標準的ワークフローに、(2)バックグラウンドエージェントによる自律タスク実行が実用段階に、(3)スキルとフックの組み合わせで「再現可能な自律エージェント」の構築が非エンジニアにも開放。Agent Teamsの強化によりチームや個人が1セッションで複数の専門エージェントを並列運用するパターンが一般化。2026年前半のAnthropicアップデートをエンジニア・非エンジニア双方の視点から整理した有用な記事。claude-codeの使い方が根本的に進化していることを示す一次情報としてSIGNAL。",
+      "body_excerpt": "EmergingAI Substackによる2026年7月時点のClaude活用法の包括レビュー記事。マルチチャットセッション・バックグラウンドエージェント・スクリーンリーダーモードなど新機能の実践的活用法を紹介。Claudeのコーディング能力・ワークフロー統合・MCP活用が進化し、単なるチャットボットから「自律エージェント」としての運用が主流化しつつあることを論じる。Anthropicが2026年前半に行った多数のアップデートをまとめ、エンジニアと非エンジニア双方に向けた移行ガイドとして機能する内容。Agent Teamsやスキル・フック機能の組み合わせで、1人で複数エージェントを動かす運用が一般化してきたと分析している。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-24_3065_WEB_Eshimi-Note-Google-3Models-July22-2026-JA.md",
+      "title": "Google 3つのAIモデル発表、他2026年7月22日AIニュースまとめ",
+      "url": "https://note.com/eshimi/n/nb20e6fb0a29e",
+      "source": "web",
+      "lang": "ja",
+      "theme": "ai-news",
+      "summary": "2026年7月22日のAIニュースまとめ。注目点: (1)GoogleがGemini 3.5 Flash + Flash Lite（同日リリース）を発表、エージェントワークロードの効率・速度・コスト最適化に注力、(2)OpenAI AIエージェントが利用者1000万人突破、(3)各社MCP対応加速。7月後半は主要プレイヤー全社が同期的にリリースを行っており、AI開発が「消費者向け」から「インフラ・エージェント軸」へシフトしていることを示す。日本語AI情報キャッチアップ用途にSIGNAL。",
+      "body_excerpt": "2026年7月22日のAIニュースをまとめたnote記事。Googleが同日に3つのAIモデル（Gemini 3.5 Flash、Gemini 3.5 Flash Lite等）を同時発表。AIエージェント向けに効率・速度・コストが強化されており、OpenAI・Anthropicへの対抗を意識した動き。OpenAIのAIエージェント利用者が1000万人に達した件、Microsoftとの提携進展も収録。国内AIニュースとして各社のMCP対応や、AIエージェント普及率の統計も掲載。",
+      "fact_checked": true,
+      "fact_check_note": "【要注意】7/21リリースはGemini 3.5 Flashではなく「Gemini 3.6 Flash + 3.5 Flash-Lite + 3.5 Flash Cyber」の3モデル。Gemini 3.5 Flash自体は2026年5月19日Google I/Oで既リリース済み。記事のモデル名に誤りあり（ソース: TechCrunch, Google公式ブログ）。"
+    },
+    {
+      "file": "2026-07-24_3066_WEB_Kimi-Blog-K3-Open-Frontier-Intelligence.md",
+      "title": "Kimi K3 Tech Blog: Open Frontier Intelligence",
+      "url": "https://www.kimi.com/blog/kimi-k3",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "Moonshot AIによるKimi K3公式発表。重要スペック: 2.8Tパラメータ（フロンティアスケール）、1Mトークンコンテキスト、ネイティブビジョン、KDAアーキテクチャ（ハイブリッド線形アテンション）、MXFP4量子化。リリース: 7/16 API提供開始、7/27 オープンウェイト（Modified MIT）公開予定。グローバルベンチマーク4位（Claude Sonnet 5・GPT-5系・Gemini 3と競合）。2026年最大規模のオープンウェイトリリースとして業界注目。Claude Codeでの利活用（代替LLMとしての検討）にも関連する重要情報。",
+      "body_excerpt": "Moonshot AIによるKimi K3の公式テックブログ。2.8兆パラメータのフロンティアスケールLLMで、1Mトークンコンテキスト・ネイティブビジョン対応・Modified MITライセンスでのオープンウェイト公開を発表。7月16日にAPI/アプリ経由で提供開始し、7月27日にHugging FaceとGitHubで重みを公開予定。アーキテクチャはKimi Delta Attention（KDA）ハイブリッド線形アテンション機構とAttention Residualsを採用。Artificial Analysisリーダーボードでグローバル4位を記録。MXFP4量子化により一般的なGPU環境での実行を可能にした。",
+      "fact_checked": true,
+      "fact_check_note": "確認済: 2.8Tパラメータ・7/27オープンウェイト公開は正確。Artificial Analysis Intelligence Indexで4位（189モデル中）・コードアリーナ1位も確認。競合比較の軽微な差異あり（Claude Fable 5, GPT-5.6 Solが上位）。"
+    },
+    {
+      "file": "2026-07-24_3067_WEB_Interconnects-Kimi-K3-Open-Weights-Escalation.md",
+      "title": "Kimi K3: The Open-Weights Escalation",
+      "url": "https://www.interconnects.ai/p/kimi-k3-the-open-weights-escalation",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "Nathan Lambert（Interconnects.ai）によるKimi K3分析。論点: (1)2.8Tパラメータでオープンウェイト規模の新標準を確立、(2)コーディング・数学・マルチモーダル推論でLlama 4・Qwen3を凌駕、(3)中国AI企業が連続してフロンティア級オープンウェイトを公開する「エスカレーション」がOpenAI/Anthropicの商用モデルに価格圧力を形成、(4)「クローズド vs オープン」の競争軸が2026年後半に主要テーマ化。AI競争の構造変化を論じた一次分析としてSIGNAL。",
+      "body_excerpt": "Nathan Lambertによるオープンウェイト競争の文脈でKimi K3を分析した深掘り記事。2.8Tパラメータという規模がオープンウェイトの新しいベンチマークを設定したと論じる。Meta Llama 4 Scout/Maverick・Qwen3・Mistral Large等の先行オープンモデルと比較し、Kimi K3がコーディング・数学・マルチモーダル推論で優位な点を検証。オープンウェイト公開がOpenAI・Anthropicの商用モデルへの価格圧力となる「エスカレーション」と分析。中国企業（Moonshot AI、Alibaba、ByteDance）が連続してフロンティア級オープンウェイトを公開することで、AI開発の覇権競争が「クローズド vs オープン」の新次元に移行しつつあると指摘。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-24_3068_WEB_Judicio-Legal-AI-News-July2026-EU-China-Singapore.md",
+      "title": "Legal AI News: July 2026 Roundup — EU August Deadline, China Agents, Singapore",
+      "url": "https://judicio.ai/blogs/legal-ai-news-july-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "2026年7月のAI規制三大イベント: (1)EU AI Act完全施行8月2日 — 高リスクAIシステムに対してリスク管理・データガバナンス・技術文書・人間監視・サイバーセキュリティが義務化（違反時最大€35M/売上7%）、(2)中国AIエージェント規制7月15日施行 — 世界初のAIエージェント専用規制カテゴリ、3段階承認フレームワーク・必須人間オーバーライド、(3)シンガポールAI Verify v2.0 — マルチステップタスクテスト要件追加。AI規制が「理念」から「強制力ある枠組み」へ移行する重要な月として一次情報を整理した有用記事。",
+      "body_excerpt": "法律・AI規制専門メディアJudicioによる2026年7月のAI法務ニュースまとめ。主要トピック: EU AI Act 8月2日施行（高リスクAIシステムへのコンプライアンス義務完全適用）、中国AIエージェント規制7月15日施行（3段階意思決定承認フレームワーク・人間オーバーライド義務）、シンガポールIMDAがAI Verify Foundation Framework v2.0を7月8日公開（マルチステップタスクテスト要件追加）。EUが7月20日にAI透明性ガイドライン発行。法務・コンプライアンス担当者向けに各規制の一次情報へのリンクと対応期限を整理。",
+      "fact_checked": true,
+      "fact_check_note": "【要注意】「完全施行」は不正確。欧州議会が2026年6月16日に修正案を可決し、Annex III高リスクAI義務の大半を2027年12月〜2028年8月に延期。8/2に有効なのはArticle 50透明性義務（チャットボット開示・ディープフェイクラベリング）とGPAI執行権限のみ（ソース: Holland & Knight, RAIL）。"
+    },
+    {
+      "file": "2026-07-24_3069_WEB_HectorPincheira-TechRadar-July2026-AI-Gov-Late.md",
+      "title": "Technological Radar July 2026: The AI Agent Government Arrived Late to Its Own Party",
+      "url": "https://www.hectorpincheira.com/en/news/technology-radar-july-2026-the-ai-agent-government-is-late-to-its-own-party/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "AI規制と技術進展の非対称性を分析したテクノロジーレーダー。主要ポイント: (1)中国・EU・米国・シンガポールの規制対応が出揃いつつあるが、実際のAIエージェント活用はすでに先行、(2)Robinhoodが証券口座への直接エージェント接続を発表 — 「アジェンティックファイナンス」の実用開始、(3)Kimi K3等オープンウェイトの普及が規制外への流出リスクを高める、(4)規制の実効的執行は2027年以降までスキップされる可能性を示唆。AI政策とビジネス戦略を横断した分析としてSIGNAL。",
+      "body_excerpt": "Hector Pincheiraによるテクノロジーレーダー2026年7月号。AIエージェント規制が技術の進展に遅れている現状を「パーティに遅刻した政府」に例えて批評。中国・EU・米国・シンガポールの規制対応が出揃いつつある中、実際の技術（autonomous agents、multi-agent systems）はすでに数段階先に進んでいると指摘。Robinhoodのアジェンティックファイナンス（AIエージェントが直接証券口座に接続）、Claude/OpenAI等のエージェントが企業インフラ深部に浸透している現状を取り上げる。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-24_3070_WEB_AIfor1pct-Claude-Code-Best-Practices-2026-What-Works.md",
+      "title": "Claude Code Best Practices in 2026: What Actually Works",
+      "url": "https://aiforthe1.com/blog/claude-code-best-practices-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Claude Code実践ガイド2026年版のハイライト: (1)Anthropic内部テスト成功率33% → 差は「事前構造設計」にある、(2)CLAUDE.md: 300行以内、pointer-heavyで3-tier memory対応可（Tier1=CLAUDE.md自体、短く・pointer式）、(3)Plan Mode必須（Shift+Tab×2）→ 実行前にイテレーション、(4)スキルフォルダ = dotfilesとして管理（opinionated・version-controlled・常に縮小傾向）、(5)git push --force / git reset --hard には明示的承認ガードレール設定を徹底。「ガイダンスなし33%」という数値は今後のCLAUDE.md設計の根拠として引用可能な重要データ。",
+      "body_excerpt": "AI for the 1%によるClaude Code実践ベストプラクティス2026年版。Anthropicの内部テストでは「ガイダンスなし」の試行成功率約33%であり、高出力エンジニアとの差はプロンプト品質ではなく「実行前に構築する構造」にあると論じる。推奨プラクティス: CLAUDE.md記憶ファイル（300行以内）でセッション毎にスタック・コマンド・スタイルルールをアンカリング、Plan Modeで実行前に計画、スコープを絞ったコンテキスト管理、検証手段（テスト・ビルド）の提供、Hooksでルールをコードで強制。スキルはdotfilesリポジトリのように管理することを推奨。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    }
+  ],
+  "fact_checks": [
+    {
+      "article": "2026-07-24_3066_WEB_Kimi-Blog-K3-Open-Frontier-Intelligence.md",
+      "type": "new_model_specs",
+      "verdict": "confirmed",
+      "note": "Kimi K3 2.8Tパラメータ・7/27オープンウェイト・AA Index 4位を確認。"
+    },
+    {
+      "article": "2026-07-24_3065_WEB_Eshimi-Note-Google-3Models-July22-2026-JA.md",
+      "type": "new_model_release",
+      "verdict": "partial_error",
+      "note": "7/21リリースはGemini 3.6 Flash + 3.5 Flash-Lite + 3.5 Flash Cyber。記事の「Gemini 3.5 Flash」という記述は誤り。"
+    },
+    {
+      "article": "2026-07-24_3068_WEB_Judicio-Legal-AI-News-July2026-EU-China-Singapore.md",
+      "type": "regulation_change",
+      "verdict": "partial_error",
+      "note": "8/2は完全施行ではなく透明性義務・GPAI執行のみ。高リスクAI義務は2027-28年に延期済み。"
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-07-23": 4,
+      "2026-07-22": 8,
+      "2026-07-21": 15,
+      "2026-07-20": 5,
+      "2026-07-19": 13,
+      "2026-07-18": 13,
+      "2026-07-17": 0
+    },
+    "recurring_themes": [
+      "claude",
+      "mcp",
+      "agent",
+      "regulation",
+      "trading"
+    ]
+  }
+}
