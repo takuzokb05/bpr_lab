@@ -775,3 +775,15 @@
 | 749 | How Anthropic secures its AI-native software development lifecycle（Deputy CISO） | en | 未読 | #security #sdlc #web-signal | articles/2026-07-22_3057_WEB_Anthropic-AI-Native-SDL-Security-Practices.md |
 | 750 | How Datadog built "Temper": deterministic kernel for Claude Code formal verification | en | 未読 | #claude-code #formal-verification #web-signal | articles/2026-07-22_3058_WEB_Datadog-Temper-Universal-Machine-Tool-ClaudeCode.md |
 | 751 | Claude Agent SDK Framework Review 2026 — 独立評価・価格変更詳細（Agentlas） | en | 未読 | #ecosystem #sdk #web-signal | articles/2026-07-23_3063_WEB_Agentlas-Claude-Agent-SDK-Framework-Review-2026.md |
+
+| 752 | Claude Code June 2026: 10 New Features — 階層型エージェント・ファイルシステム分離・/fork（SitePoint） | en | 未読 | #model-update #web-signal | articles/2026-07-25_3071_WEB_SitePoint-Claude-Code-June2026-10-New-Features.md |
+| 753 | Claude Code Advanced Best Practices 11 Techniques: Hooks・Subagents・Context 2026（SmartScope） | en | 未読 | #hooks #claude-md #web-signal | articles/2026-07-25_3072_WEB_SmartScope-Claude-Code-Advanced-Best-Practices-11-Techniques.md |
+| 754 | Claude Code Skills 2026: Complete Guide vs Hooks, Subagents, and MCP（Totalum） | en | 未読 | #skills #hooks #mcp #web-signal | articles/2026-07-25_3073_WEB_Totalum-Claude-Code-Skills-vs-Hooks-vs-Subagents-vs-MCP.md |
+| 755 | Claude Code News July 2026 Monthly Roundup — /fork・/subtask・スポーン深度変更（mean.ceo） | en | 未読 | #model-update #web-signal | articles/2026-07-25_3074_WEB_MeanCEO-Claude-Code-News-July2026.md |
+| 756 | CLAUDE.md Best Practices: The Complete 2026 Guide — 200行以下・Context Rot・HTMLコメント（DEV） | en | 未読 | #claude-md #web-signal | articles/2026-07-25_3075_WEB_DEV-Nishil-CLAUDE-md-Best-Practices-Complete-2026-Guide.md |
+| 757 | 【2026年7月最新】Claude Codeは日本語で使える？設定方法・文字化け対処・非エンジニア活用（genai-ai.co.jp） | ja | 未読 | #skills #web-signal | articles/2026-07-25_3076_WEB_GenaiAI-Claude-Code-Japanese-Support-2026.md |
+| 758 | Claude Codeの生産性を劇的に高める「必須スキル11選」完全活用ガイド（note/keito） | ja | 未読 | #skills #web-signal | articles/2026-07-25_3077_WEB_Note-Keito-Claude-Code-Essential-Skills-11-JA.md |
+| 759 | Dive into Claude Code: Systematic Analysis for AI Agent Systems（VILA-Lab GitHub） | en | 未読 | #ecosystem #web-signal | articles/2026-07-25_3078_WEB_VILA-Lab-GitHub-Dive-into-Claude-Code-Systematic-Analysis.md |
+| 760 | Anthropic API Release Notes 2026: Changes That Reach Claude Code Users（fazm.ai） | en | 未読 | #ecosystem #model-update #web-signal | articles/2026-07-25_3079_WEB_Fazm-Anthropic-API-Release-Notes-2026-Claude-Code.md |
+| 761 | Claude Agent SDK 2026: What It Is, When To Use It, and How To Ship It（Totalum） | en | 未読 | #ecosystem #sdk #web-signal | articles/2026-07-25_3080_WEB_Totalum-Claude-Agent-SDK-2026-When-To-Use-How-To-Ship.md |
+| 762 | MCP Servers for Developers: The Complete 2026 Guide（Fungies.io） | en | 未読 | #mcp #ecosystem #web-signal | articles/2026-07-25_3081_WEB_Fungies-MCP-Servers-Developers-Complete-2026-Guide.md |

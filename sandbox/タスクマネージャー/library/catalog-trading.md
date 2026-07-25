@@ -299,3 +299,7 @@
 | 270 | FXが絶望的に下手だったのでAIにチャートを学ばせて自動売買させた話（Zenn nezness） | ja | 未読 | #fx #llm-trading #implementation #web-signal | articles/2026-07-19_3026_WEB_Zenn-nezness-FX-AI-Chart-Learning-AutoTrade-JA.md |
 | 271 | AI-Agentic Autonomous Trading Layers 2026: Complete Review（BrokerAnalysis） | en | 未読 | #llm-trading #web-signal | articles/2026-07-21_3043_WEB_BrokerAnalysis-AI-Agentic-Trading-Layers-2026.md |
 | 272 | Claude + MT5 via MCP: Advanced AI Trading Setup Guide（FXNX） | en | 未読 | #fx #mcp #llm-trading #implementation #web-signal | articles/2026-07-23_3060_WEB_FXNX-Claude-MT5-via-MCP-Advanced-AI-Trading-Setup.md |
+
+| 273 | LLM Trading in 2026: Can AI Agents Actually Outperform Humans?（CoinEdition） | en | 未読 | #llm-trading #web-signal | articles/2026-07-25_3082_WEB_CoinEdition-LLM-Trading-2026-Can-AI-Agents-Outperform-Humans.md |
+| 274 | Best Open Source AI Trading Agents on GitHub 2026 — TradingAgents 80K stars・v0.3.1（GPTrader） | en | 未読 | #llm-trading #multi-agent #open-source #web-signal | articles/2026-07-25_3083_WEB_GPTrader-Best-Open-Source-AI-Trading-Agents-GitHub-2026.md |
+| 275 | Build a Multi-Agent AI Trading System with TradingAgents 2026（PickMyTrade） | en | 未読 | #llm-trading #multi-agent #implementation #web-signal | articles/2026-07-25_3084_WEB_PickMyTrade-Build-MultiAgent-Trading-System-TradingAgents-2026.md |

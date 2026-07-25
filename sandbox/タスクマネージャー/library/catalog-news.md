@@ -270,3 +270,7 @@
 | 248 | AI News July 22: Gemini 3.6 Flash / Nadella Criticizes Fable / South Korea Sovereign AI | en | 未読 | #llm-news #regulation #web-signal | articles/2026-07-22_3059_WEB_AIToolsRecap-AI-News-July22-Gemini-Nadella-Korea.md |
 | 249 | AI Regulation July 2026: EU August 2 Deadline, US Preemption & 15 Countries（Cubbbix） | en | 未読 | #regulation #eu-ai-act #web-signal | articles/2026-07-23_3061_WEB_Cubbbix-AI-Regulation-July2026-EU-August-15Countries.md |
 | 250 | China AI Agent Regulations Enforceable July 15, 2026: 世界初AIエージェント専用法（MachineBrief） | en | 未読 | #regulation #ai-agent #web-signal | articles/2026-07-23_3062_WEB_MachineBrief-China-AI-Agent-Regs-July15-3Tier-Framework.md |
+
+| 251 | New AI Models in July 2026: Every Major Launch Tracked — GPT-5.6・Grok 4.5・Kimi K3・Sonnet 5（Skycrumbs） | en | 未読 | #llm-news #model-release #web-signal | articles/2026-07-25_3086_WEB_Skycrumbs-New-AI-Models-July2026-Every-Major-Launch-Tracked.md |
+| 252 | EU AI Act Delays July 2026: 8月2日適用開始・透明性義務・罰金最大€1,500万（Lumenova） | en | 未読 | #regulation #eu-ai-act #web-signal | articles/2026-07-25_3087_WEB_Lumenova-EU-AI-Act-Delays-July2026.md |
+| 253 | 生成AIニュースまとめ（2026-07-06〜07-12）— 政府「源内」に国産LLM導入・Kimi K3注目（フォロー） | ja | 未読 | #llm-news #regulation #web-signal | articles/2026-07-25_3088_WEB_FollowNext-GenAI-News-Weekly-July6-12-2026-JA.md |

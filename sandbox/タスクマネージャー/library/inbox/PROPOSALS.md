@@ -4078,3 +4078,29 @@ FX自動売買の構成（P-014の4層アーキテクチャ）において、Gem
 1. FX自動取引・ai-teams のユーザー対象地域確認（EU居住者向けかどうか）
 2. 高リスクAI分類の自己評価（金融判断補助ツールはAnnex III対象の可能性あり）
 3. 必要であれば技術文書・人間監視手順書の最低限ドラフトを作成
+
+---
+
+### P-190: TradingAgents v0.3.1 Claude Sonnet 5対応 → FX自動取引LLMバックエンドのアップグレード検討
+
+**根拠記事**: 3083 (GPTrader-Best-Open-Source-AI-Trading-Agents-GitHub-2026), 3084 (PickMyTrade-Build-MultiAgent-Trading-System-TradingAgents-2026)
+**取得日**: 2026-07-25
+**詳細**: TradingAgents（GitHub 80K stars、Apache 2.0）の最新版v0.3.1（2026年7月リリース）がClaude Sonnet 5をサポート。従来のClaude Sonnet 4.x系より推論能力・コーディング精度が向上したClaude Sonnet 5を取引判断層に適用することで、マルチエージェント取引システムの意思決定品質が改善できる可能性。bpr_lab/sandbox/FX自動取引のLLMバックエンド設定を確認し、Sonnet 5への移行を検討すること。
+
+**提案アクション**:
+1. `sandbox/FX自動取引/src/` のモデルID設定を確認（`claude-sonnet-4` → `claude-sonnet-5`）
+2. TradingAgents v0.3.1のリリースノートで破壊的変更がないか確認
+3. ConoHa VPS上のテスト環境でSonnet 5への切り替えをバックテストで検証
+
+---
+
+### P-191: Claude Code サブエージェントスポーン深度のデフォルト変更 → 日次収集タスク設定確認
+
+**根拠記事**: 3071 (SitePoint-Claude-Code-June2026-10-New-Features), 3074 (MeanCEO-Claude-Code-News-July2026)
+**取得日**: 2026-07-25
+**詳細**: Claude Code July 2026（7/20リリース）より、サブエージェントがデフォルトで入れ子サブエージェントを生成しなくなった。深いネストが必要な場合は `CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH` 環境変数を設定する必要がある。bpr_lab/sandbox/タスクマネージャーの日次収集スケジュールタスクや、curate スキルがサブエージェントを使う設計になっている場合、この変更の影響を受ける可能性がある。
+
+**提案アクション**:
+1. `.claude/settings.json` に `CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH=3`（または必要な深度）を追加
+2. 日次収集スケジュールタスクが正常に動作しているか次回実行後にログ確認
+3. curate / daily-collect-and-curate スキルのサブエージェント呼び出し箇所を確認
