@@ -4104,3 +4104,38 @@ FX自動売買の構成（P-014の4層アーキテクチャ）において、Gem
 1. `.claude/settings.json` に `CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH=3`（または必要な深度）を追加
 2. 日次収集スケジュールタスクが正常に動作しているか次回実行後にログ確認
 3. curate / daily-collect-and-curate スキルのサブエージェント呼び出し箇所を確認
+
+---
+
+## 2026-07-26 収集分
+
+### 1. FX自動取引 MCPサーバー緊急移行提案
+
+**出典:** articles/2026-07-26_3089_WEB_MCP-2026-07-28-RC-Official-Blog-Stateless-Final.md / articles/2026-07-26_3091_WEB_LukeOliff-MCP-Goes-Stateless-Monday-Break-Fix.md
+
+**緊急度: 高（2026-07-28 = 2日後に仕様変更発効）**
+
+**提案内容:**
+MCP 2026-07-28仕様でプロトコルがステートレス化される。`sandbox/FX自動取引/` の MCPサーバー連携コード（Claude+MT5 via MCP）が影響を受ける可能性がある。
+
+具体的な変更点:
+- `initialize` ハンドシェイクと `Mcp-Session-Id` ヘッダーが削除
+- 各リクエストに `_meta.protocolVersion` と `_meta.clientInfo` フィールドが必要に
+- エラーコード -32002 → -32602 に変更
+
+**提案アクション:**
+1. `sandbox/FX自動取引/src/` のMCP関連コードを確認し、initialize ハンドシェイクに依存している箇所を特定
+2. Anthropic SDK（Python版）が2026-07-28以降のアップデートを出したらすぐに適用
+3. MT5 MCP Serverのバージョン（GitHub: ariadng/metatrader-mcp-server）が新仕様対応しているか確認
+4. 移行コードサンプルは articles/2026-07-26_3091_WEB_LukeOliff-MCP-Goes-Stateless-Monday-Break-Fix.md 参照
+
+### 2. Claude Code スキル見直し提案
+
+**出典:** articles/2026-07-26_3093_WEB_Libecity-Claude-Code-Recommended-Skills-10-JA.md
+
+**提案内容:**
+2026年7月時点のスキルランキングとして Context7（最新ドキュメント参照）・Code Review（PR自動化）・Code Simplifier が上位推奨。タスクマネージャーの `.claude/skills/` に不足しているものがあれば追加検討する。
+
+**提案アクション:**
+1. `sandbox/タスクマネージャー/.claude/skills/` の現在のスキル一覧と上記推奨10選を比較
+2. Context7 プラグインが実務で有用か検討（最新ライブラリドキュメントのリアルタイム参照）

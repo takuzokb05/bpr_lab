@@ -787,3 +787,9 @@
 | 760 | Anthropic API Release Notes 2026: Changes That Reach Claude Code Users（fazm.ai） | en | 未読 | #ecosystem #model-update #web-signal | articles/2026-07-25_3079_WEB_Fazm-Anthropic-API-Release-Notes-2026-Claude-Code.md |
 | 761 | Claude Agent SDK 2026: What It Is, When To Use It, and How To Ship It（Totalum） | en | 未読 | #ecosystem #sdk #web-signal | articles/2026-07-25_3080_WEB_Totalum-Claude-Agent-SDK-2026-When-To-Use-How-To-Ship.md |
 | 762 | MCP Servers for Developers: The Complete 2026 Guide（Fungies.io） | en | 未読 | #mcp #ecosystem #web-signal | articles/2026-07-25_3081_WEB_Fungies-MCP-Servers-Developers-Complete-2026-Guide.md |
+| 763 | The 2026-07-28 MCP Specification Release Candidate — ステートレス化・拡張機能体制・OAuth 2.0対応（MCP公式ブログ） | en | 未読 | #mcp #ecosystem #web-signal | articles/2026-07-26_3089_WEB_MCP-2026-07-28-RC-Official-Blog-Stateless-Final.md |
+| 764 | MCP Just Went Stateless — Azure App Service での 2026 Spec スケーリング変更（Microsoft Community Hub） | en | 未読 | #mcp #ecosystem #web-signal | articles/2026-07-26_3090_WEB_Microsoft-MCP-Stateless-Scaling-Azure-App-Service.md |
+| 765 | MCP Goes Stateless on Monday: What Breaks and What to Do — 移行コード付き実践ガイド（Luke Oliff） | en | 未読 | #mcp #ecosystem #web-signal | articles/2026-07-26_3091_WEB_LukeOliff-MCP-Goes-Stateless-Monday-Break-Fix.md |
+| 766 | Migrate Your MCP Server to the 2026-07-28 Spec — TypeScript/Python コードサンプル付き（MCP Playground Online） | en | 未読 | #mcp #ecosystem #web-signal | articles/2026-07-26_3092_WEB_MCPPlayground-Migrate-MCP-Server-2026-07-28.md |
+| 767 | Claude Codeのおすすめスキル10選【2026年7月最新版】— Context7・Code Review・Superpowers 等（Libecity） | ja | 未読 | #skills #web-signal | articles/2026-07-26_3093_WEB_Libecity-Claude-Code-Recommended-Skills-10-JA.md |
+| 768 | Claude Code活用事例10選｜非エンジニアでも業務10倍速 — YouTube全自動化・スキル化実践（genai-ai.co.jp） | ja | 未読 | #skills #web-signal | articles/2026-07-26_3094_WEB_GenaiAI-Claude-Code-Business-Use-Cases-10-JA.md |

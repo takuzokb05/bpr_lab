@@ -274,3 +274,5 @@
 | 251 | New AI Models in July 2026: Every Major Launch Tracked — GPT-5.6・Grok 4.5・Kimi K3・Sonnet 5（Skycrumbs） | en | 未読 | #llm-news #model-release #web-signal | articles/2026-07-25_3086_WEB_Skycrumbs-New-AI-Models-July2026-Every-Major-Launch-Tracked.md |
 | 252 | EU AI Act Delays July 2026: 8月2日適用開始・透明性義務・罰金最大€1,500万（Lumenova） | en | 未読 | #regulation #eu-ai-act #web-signal | articles/2026-07-25_3087_WEB_Lumenova-EU-AI-Act-Delays-July2026.md |
 | 253 | 生成AIニュースまとめ（2026-07-06〜07-12）— 政府「源内」に国産LLM導入・Kimi K3注目（フォロー） | ja | 未読 | #llm-news #regulation #web-signal | articles/2026-07-25_3088_WEB_FollowNext-GenAI-News-Weekly-July6-12-2026-JA.md |
+| 254 | AI Agents News — Week of July 25, 2026: MCP ステートレス化・Opus 5 デフォルト・Claude マルチチャット等（AIAgentStore） | en | 未読 | #llm-news #daily-roundup #web-signal | articles/2026-07-26_3097_WEB_AIAgentStore-AI-Agents-News-Week-July25-2026.md |
+| 255 | Neural Network - July 2026: EU AI Act 8/2 適用開始・中国AIエージェント規制施行・英国立法進行（Stephenson Harwood） | en | 未読 | #regulation #eu-ai-act #web-signal | articles/2026-07-26_3098_WEB_StephensonHarwood-Neural-Network-AI-Legal-July2026.md |
