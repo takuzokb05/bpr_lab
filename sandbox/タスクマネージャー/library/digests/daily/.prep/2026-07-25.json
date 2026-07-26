@@ -1,0 +1,250 @@
+{
+  "date": "2026-07-25",
+  "generated_at": "2026-07-26T23:16:09.908778Z",
+  "article_count": 17,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-07-25_3071_WEB_SitePoint-Claude-Code-June2026-10-New-Features.md",
+      "title": "Claude Code June 2026: 10 New Features Devs Need to Know",
+      "url": "https://www.sitepoint.com/claude-code-june-2026-10-new-features-devs-need-to-know/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "- Claude Codeが2026年6月に追加した10の主要機能を詳解。最大の注目点は「階層型エージェントスポーン」で、親エージェントが子エージェントを生成し、最大3階層まで深くネスト可能になった\n- 大規模なコードベース移行などで、トップレベルエージェントがモジュール単位のエージェントに委任し、さらに関数レベルエージェントに再委任するという構成が可能\n- 各エージェントノードは独自のロール・モデル・制約セット・コンテキストウィンドウを持つ\n- ファイルシステム分離（7月に追加）: `sandbox.filesystem.disabled`設定でファイルシステム分離をスキップしつつネットワーク出口制御を維持可能\n- `/fork`コマンド（7/16追加）: 現在の会話を新バックグラウンドセッションにコピーしながら作業を継続できる\n- `/subtask`コマンドがインセッションのサブエージェント機能を置き換え\n- セッション全体でのWebSearchツールコール数制限とサブエージェントスポーン上限が追加（暴走ループ防止）\n- スクリーンリーダーモードの追加（プレーンテキストレンダリング）\n- 長時間MCPツールコールの自動バックグラウンド移行によりセッションの応答性を維持\n- Claude Code 5.xシリーズへの進化を示す技術記事として価値が高い",
+      "body_excerpt": "SitePointによるClaude Code June 2026の主要新機能10件の解説記事。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-25_3072_WEB_SmartScope-Claude-Code-Advanced-Best-Practices-11-Techniques.md",
+      "title": "Claude Code Advanced Best Practices: 11 Practical Techniques 2026",
+      "url": "https://smartscope.blog/en/generative-ai/claude/claude-code-best-practices-advanced-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "- Hooks・サブエージェント・コンテキスト管理の3軸で11の実践技法を解説\n- 「ルールを強制するならHooks/パーミッション、文脈的知識ならSkills、委任境界ならSubagents、常時プロジェクトガイダンスならCLAUDE.md（短く）」という原則\n- プランニングの重要性: 個別判断の正答率80%・20決定点の場合、全て正解の確率は約1%。プランモードで各決定を事前レビューすれば各々100%に近づく\n- コンテキスト管理: リポジトリ全体を流し込むのではなく、スコープを絞る\n- gh (GitHub CLI)のインストールにより、Claude CodeがPR作成・Issue対応・CIログ読み込みを直接実行できる\n- サブエージェントをgit worktreeで並列化するパターンを推奨\n- Hooksをガードレールとして使い、検証ループでハルシネーションを撃滅する手法\n- 2026年の実務に即した具体的なアドバイスが豊富で、中〜上級者向けの参考資料として有用",
+      "body_excerpt": "SmartScopeによるClaude Codeの高度なベストプラクティス11手法の解説（Hooks・サブエージェント・コンテキスト管理）。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-25_3073_WEB_Totalum-Claude-Code-Skills-vs-Hooks-vs-Subagents-vs-MCP.md",
+      "title": "Claude Code Skills 2026: Complete Guide vs Hooks, Subagents, and MCP",
+      "url": "https://www.totalum.app/blog/claude-code-skills-totalum",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "- Skills・Hooks・Subagents・MCPの4拡張手段の違いと使い分けを体系的に解説\n- Skillsはメタデータのみ常時ロードされるため、多数のスキルを共存させながらコンテキスト消費を抑えられる\n- 「Skills = 知識パック（on-demand instruction sets）」「Hooks = 決定論的な自動化」「Subagents = 委任境界」「MCP = 外部ツール・データ統合」という明確な役割分担\n- Pluginsの概念: Skills + Subagents + MCP設定 + Hooksをひとつのインストール可能なパッケージに束ねたもの\n- 2026年時点でのMCP公式レジストリには9,400以上のサーバーが登録されており、Claude Code・Cursor・Windsurf・VS Codeなど主要IDEで利用可能\n- 実際のプロジェクトへの適用決定木（decision tree）形式で解説されており、どの手段を選ぶかの判断基準が明確\n- Totalumはこれらの拡張機能を統合管理するプラットフォームとして2026年に登場したツール",
+      "body_excerpt": "TotalumによるClaude Code Skillsの完全ガイド。Skills vs Hooks vs Subagents vs MCPの使い分けを詳解。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-25_3074_WEB_MeanCEO-Claude-Code-News-July2026.md",
+      "title": "Claude Code News July 2026 - Monthly Roundup",
+      "url": "https://blog.mean.ceo/claude-code-news-july-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "- 7月の主要変更: `/fork`コマンド（7/16）でバックグラウンドセッション分岐が可能に。`/subtask`がインセッションサブエージェントを置き換え\n- セッション全体でのWebSearchコール数制限とサブエージェントスポーン上限が追加（暴走ループ防止）\n- ファイルシステム分離コントロール強化（7/20リリース）: `sandbox.filesystem.disabled`設定を追加\n- サブエージェントのデフォルトスポーン深度が変更（デフォルトで入れ子サブエージェントを生成しなくなった。`CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH`環境変数で制御）\n- 長時間MCPツールコールの自動バックグラウンド移行、スクリーンリーダーモード追加\n- `/resume`コマンドに過去セッション（削除済み含む）の一覧ピッカー機能が追加\n- Claude Codeは「ターミナルベースの業務レイヤー」として進化中 — バグ修正・ファイル編集・テスト・git操作を開発フロー内で処理\n- July 2026時点でのClaude Codeの最前線をキャッチアップするのに最適なサマリー記事",
+      "body_excerpt": "mean.ceoによるClaude Code 2026年7月ニュースのまとめ記事。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-25_3075_WEB_DEV-Nishil-CLAUDE-md-Best-Practices-Complete-2026-Guide.md",
+      "title": "CLAUDE.md Best Practices: The Complete 2026 Guide",
+      "url": "https://dev.to/nishilbhave/claudemd-best-practices-the-complete-2026-guide-435j",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "- CLAUDE.mdはClaude Codeが毎セッション開始時に自動ロードするmarkdownファイルで、コマンド・アーキテクチャ・規約などのプロジェクト永続記憶を持たせる仕組み\n- 「200行以下に保つ」原則: フロンティアモデルは約150〜200個の指示を確実に従える。Claude Codeのシステムプロンプトが既に約50命令を使用しているため実質的な上限はさらに低い\n- コンテキスト劣化（Context Rot）の実証データ: Chromaの2025年ベンチマークで、テストした18種の全フロンティアモデル（Claude Opus 4含む）が入力が増えるにつれ精度が低下（95%→60%以下）\n- 「なぜ（Why）を書く」重要性: WHYは単なる補足ではなくClaudeがエッジケースを決定する根拠。理由のあるルールは類似状況に汎化し、理由のないルールはコンテキストが変わると無視される\n- HTMLコメント（`<!-- -->`）はコンテキストに届く前に除去されるためトークンコスト0で人間向けメモを書ける\n- 2026年のモデル品質向上により、「プロンプトの巧妙さ」より「タスクの周辺構造（コンテキストエンジニアリング）」が最大のレバーになっている\n- 10セクション構成テンプレート等を提供する実践的なリファレンス",
+      "body_excerpt": "DEV CommunityのNishil BhaveによるCLAUDE.md完全ガイド2026年版。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-25_3076_WEB_GenaiAI-Claude-Code-Japanese-Support-2026.md",
+      "title": "【2026年7月最新】Claude Codeは日本語で使える？完全解説",
+      "url": "https://genai-ai.co.jp/ai-kanri/blog/cc-claude-japanese/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "- 2026年7月時点の日本語対応状況：「モデルは完全対応、デフォルト設定は英語優先」\n- Claude Sonnet 4.6・Opus 4.6ともに日本語の読解・生成能力は世界トップクラス\n- 日本語で指示するだけでファイル操作・集計・レポート生成が可能（コーディング以外の業務自動化も）\n- 文字化け対処法：Python実行時の`sys.stdout.reconfigure(encoding='utf-8')`設定など具体的な手順を解説\n- 非エンジニア向けの具体的な業務活用例（CSV集計・レポート作成・データ分析）を多数掲載\n- Claude.mdやスキルファイルを日本語で書くベストプラクティスも言及\n- CLAUDE.md日本語テンプレートや具体的なプロンプト例が豊富で、日本語ユーザーの入門資料として有用",
+      "body_excerpt": "genai-ai.co.jpによる、Claude Codeの日本語対応状況・設定方法・文字化け対処・非エンジニア活用の完全解説（2026年7月最新版）。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-25_3077_WEB_Note-Keito-Claude-Code-Essential-Skills-11-JA.md",
+      "title": "Claude Codeの生産性を劇的に高める「必須スキル11選」完全活用ガイド",
+      "url": "https://note.com/keito_12kk2/n/n02fa151f551b",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "- Claude Codeを「AI相談相手」から「実務完遂AIエージェント」に進化させるためのスキル11選を厳選解説\n- スキルはSKILL.mdファイルと補助スクリプト・アセットで構成されるフォルダベースの指示パックで、on-demandでロードされる\n- メタデータのみ常時読み込まれるためコンテキスト消費を抑えつつ多数のスキルを共存可能\n- 日本人AIディレクターの視点から、非エンジニアにも適用しやすい業務自動化スキルを重点的に紹介\n- 具体的なSKILL.md記述例・ディレクトリ構成・スキル起動方法を実例付きで解説\n- 情報収集・レポート作成・コードレビュー・テスト自動化などの実務スキルテンプレートを提供\n- 秋霜堂の記事と合わせて読むと、日本語環境でのClaude Code Skills活用の全体像が掴める",
+      "body_excerpt": "note.comのAIディレクター KEITOによる、Claude Code必須スキル11選の完全活用ガイド。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-25_3078_WEB_VILA-Lab-GitHub-Dive-into-Claude-Code-Systematic-Analysis.md",
+      "title": "Dive into Claude Code: Systematic Analysis for AI Agent Systems",
+      "url": "https://github.com/VILA-Lab/Dive-into-Claude-Code",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "- 研究機関VILA-Labによる学術的なClaude Code体系分析リポジトリ\n- Claude Codeを「AIエージェントシステム設計のリファレンス」として位置づけ、今日および将来のシステム設計への示唆を導出\n- Claude Code の設計原則（Tools/Skills/Hooks/MCP/Subagents/Sessions）を体系的に整理・比較\n- 実装パターンの分類・評価と、各パターンがどのユースケースに適しているかの分析\n- 研究論文・実装事例・ベンチマーク結果の収集と整理\n- AIエージェントフレームワークの設計において、Claude Codeのアーキテクチャが参考モデルとして機能している現状を示す\n- エンジニアや研究者がClaude Codeを深く理解するための二次資料として価値が高い",
+      "body_excerpt": "VILA-Lab（Video and Image Learning Analysis Lab）によるClaude Codeの体系的分析。今日のおよび将来のAIエージェントシステム設計のためのGitHubリポジトリ。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-25_3079_WEB_Fazm-Anthropic-API-Release-Notes-2026-Claude-Code.md",
+      "title": "Anthropic API Release Notes 2026: Changes That Reach Claude Code Users",
+      "url": "https://fazm.ai/t/anthropic-latest-api-release-notes-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "- Claude Opus 4.7（4/16）→ Claude Opus 4.8（5/28、APIデフォルト、$5/$25/M tokens、effortパラメータデフォルトがhigh）→ Claude Fable 5（6/9）→ Claude Opus 5（最新デフォルト、1Mコンテキスト、$10/$50/M tokens）という2026年のモデル進化を整理\n- Managed AgentsとAnt CLIが4/8に同時リリース\n- Python・TypeScript・Go・Java・Ruby・PHP・C# SDKへのコード実行サポート追加（REPLステート永続化）\n- 7月のAPIレート制限引き上げ: Claude Sonnet・Haiku がすべての使用ティアで Opus と同等に\n- 会話中のツール変更ベータ機能: ターン間でツールを追加/削除しながらプロンプトキャッシュを維持\n- Fast mode for Claude Opus 4.7の非推奨（2026/7/24廃止。`speed: \"fast\"`リクエストはエラーを返す）\n- Claude Code wrapperやAPIシステム構築者が把握すべき変更点を網羅した実践的サマリー",
+      "body_excerpt": "fazm.aiによるAnthropic API 2026年リリースノートのまとめ。Claude Codeユーザー視点での変更点解説。",
+      "fact_checked": true,
+      "fact_check_note": "Opus 5 の価格記述に誤り。記事は「$10/$50/M tokens」と記載しているが、実際は $5/$25/M tokens（Opus 4.8 と同価格）。$10/$50 は Fable 5 の価格。Opus 5 リリース日（7/24）・Fast mode 廃止（7/24）は正確。"
+    },
+    {
+      "file": "2026-07-25_3080_WEB_Totalum-Claude-Agent-SDK-2026-When-To-Use-How-To-Ship.md",
+      "title": "Claude Agent SDK in 2026: What It Is, When To Use It, and How To Ship It",
+      "url": "https://www.totalum.app/blog/claude-agent-sdk-totalum-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "- Claude Agent SDKはClaude Code自体を動かすのと同じハーネスの上にプロダクションAIエージェントを構築するためのAnthropic公式ライブラリ\n- Python・TypeScriptの2フレーバーで提供。バンドルされたCLIバイナリ・サブエージェント・セッション・MCPサポート・ホステッド実行モデルを同梱\n- 2026年時点でAgent SDKはAnthropic Managed Agentsの下位層に位置し、Managed Agentsにはスケジューラ・ドリーミングパス・ルーブリックベースの成果評価機能が追加されている\n- CLAUDE.md・Skills・Subagents・スラッシュコマンド・Hooks・MCPサーバーという同一プリミティブをプログラマティックに操作可能\n- 利用シナリオの明確化: 繰り返し実行・バッチ処理・外部イベントトリガー・複数並列エージェントなどでCLIより適切\n- TotalumはAgent SDKをSaaSプロダクトに統合する際のパターンとベストプラクティスを実例で提示\n- 2026年のエージェント構築スタックの全体像を把握するのに有用な技術解説",
+      "body_excerpt": "TotalumによるClaude Agent SDK 2026年版の解説。何か・いつ使うか・どうシップするかを実践的に解説。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-25_3081_WEB_Fungies-MCP-Servers-Developers-Complete-2026-Guide.md",
+      "title": "MCP Servers for Developers: The Complete 2026 Guide",
+      "url": "https://fungies.io/mcp-servers-developers-guide-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "- MCP（Model Context Protocol）は Anthropic が公開したオープン・ベンダー中立の標準規格。JSON-RPC 2.0でAIモデルと外部ツール・データベース・APIを接続する\n- 2026年3月時点で月間9,700万SDKダウンロード・81,000+ GitHubスター。公式レジストリに9,400以上のサーバー。全主要AIベンダー（Anthropic・OpenAI・Google・Microsoft・AWS）が対応\n- MCPが定義する3つのプリミティブ: ①Tools（モデルが呼び出す関数）②Resources（モデルが読むデータ）③Prompt Templates\n- Claude Code・Cursor・Windsurf・VS Code・Clineなど主要IDEで利用可能\n- 公式MCP Inspector（`npx @modelcontextprotocol/inspector`）でUI付きのツールテスト・JSON-RPC トラフィック検査が可能\n- サーバー構築はTypeScript/JavaScript・PythonのSDKで実施。認証はOAuth 2.1対応\n- エンタープライズ向けのMCPサーバー選定・セキュリティ考慮・スケール時の注意点も解説",
+      "body_excerpt": "Fungies.ioによるMCPサーバーの開発者向け完全ガイド2026年版。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-25_3082_WEB_CoinEdition-LLM-Trading-2026-Can-AI-Agents-Outperform-Humans.md",
+      "title": "LLM Trading in 2026: Can AI Agents Actually Outperform Humans?",
+      "url": "https://coinedition.com/llm-trading-in-2026-can-ai-agents-actually-outperform-humans/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "- LLMトレーディングは「実験的なアイデア」から「金融界で最も注目された話題のひとつ」へと成長（2026年時点）\n- AI トレーディングエージェントはリアルタイム推論が可能: 決算報告書・ニュース・SNS・価格データを読み込んで市場の意味を解釈し、ポジションを動的に調整\n- 従来の取引ボットとの違い: 固定ルールを実行するのではなく、文脈を解釈し代替案を比較し適応する\n- 2026年5月、Robinhoodが顧客のブローカーアカウントにAIエージェントを直接接続できると発表。CEOは「エージェント型ファイナンスの始まり」と表現\n- 機関投資家のメインストリームは「クオンツ-AIハイブリッドシステム」：古典的統計モデルとAI層を組み合わせ、AI がポジションサイジングとエッジケース処理を担当\n- 完全自律型エージェントの限界: 異常な市場イベント（フラッシュクラッシュ等）での誤動作リスクは依然として課題\n- 個人投資家向けには、バックテストとリスク管理が依然として必須という実務的アドバイスも含む",
+      "body_excerpt": "CoinEditionによるLLMトレーディング2026年の分析。AI エージェントが人間を上回れるか？という問いへの実証的な回答。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-25_3083_WEB_GPTrader-Best-Open-Source-AI-Trading-Agents-GitHub-2026.md",
+      "title": "Best Open Source AI Trading Agents on GitHub 2026",
+      "url": "https://gptrader.app/ai-trading/best-open-source-ai-trading-agents-github-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "- 2026年時点でGitHub上のオープンソースAIトレーディングエージェントのランキングと各フレームワークの特徴解説\n- TradingAgents（TauricResearch）: GitHub最多スター80,000+・フォーク15,500+。Bull/Bear Researcher + Risk Manager + Trader の7エージェント構成。Apache 2.0ライセンス。7月にv0.3.1リリース（Claude Sonnet 5対応）\n- フレームワーク選定基準: LLMバックエンドの対応範囲・バックテスト能力・リアルタイムデータ統合・リスク管理機能\n- GPT・Claude・Gemini・Grokをバックエンドとして利用可能なマルチLLMフレームワークが主流\n- Robinhood が2026年5月に「AI エージェントとブローカーアカウントの直接接続」を発表したことで、オープンソース実装の需要が急増\n- 各フレームワークのアーキテクチャ図・利用手順・パフォーマンス結果を比較\n- 個人投資家がFX・株式・暗号資産向けにLLM取引エージェントを構築する際の出発点として有用",
+      "body_excerpt": "GPTraderによる2026年GitHubベストオープンソースAIトレーディングエージェントのランキングと解説。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-25_3084_WEB_PickMyTrade-Build-MultiAgent-Trading-System-TradingAgents-2026.md",
+      "title": "Build a Multi-Agent AI Trading System with TradingAgents 2026",
+      "url": "https://blog.pickmytrade.io/build-a-multi-agent-ai-trading-system-with-trading-agents-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "- TradingAgents（Apache 2.0、TauricResearch）を使ったマルチエージェント取引システムの実装チュートリアル\n- 7エージェント構成: 4つのアナリストエージェント（並列実行・構造化レポート生成）→ Bull/Bear Researcher（対立論拠の構築）→ Risk Manager（エビデンス評価・ポジションサイジング）→ Trader（最終実行）\n- LLMバックエンドとしてGPT・Claude・Gemini・Grokを選択可能。7月時点のv0.3.1ではClaude Sonnet 5をサポート\n- 決算報告書・ニュース・SNSデータ・価格データを並列アナリストが処理し、上位エージェントに集約する設計\n- リスク管理の組み込み方: Risk Managerエージェントへのシステムプロンプト設計とポジションサイジングロジック\n- バックテスト環境の構築と、本番移行前の検証プロセスについても解説\n- MT5や証券APIとの統合パターンについて言及あり（直接統合より中間APIレイヤーを推奨）",
+      "body_excerpt": "PickMyTradeによるTradingAgentsフレームワークを使ったマルチエージェントAI取引システムの構築チュートリアル（2026年版）。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-25_3086_WEB_Skycrumbs-New-AI-Models-July2026-Every-Major-Launch-Tracked.md",
+      "title": "New AI Models in July 2026: Every Major Launch Tracked",
+      "url": "https://skycrumbs.com/blog/ai-models-july-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "- 2026年7月の主要モデルリリースを一覧化（日付・提供元・特徴付き）\n- Claude Sonnet 5（Anthropic、6/30リリース）: 長文コンテキスト書き込み・推論・コーディング・ビジネスワークフロー（サポート・調査・内部エージェント）に優れる\n- GPT-5.6 Luna・Terra・Sol（OpenAI、7/9リリース）\n- Grok 4.5（xAI、7/8リリース）\n- Muse Spark 1.1（Meta、7/9リリース）\n- Kimi K3（Moonshot AI、7/16リリース）: オープンウェイト、Claude Fable・GPT-5.6 Sol等と競合\n- Qwen-Audio-3.0-TTS Plus（Alibaba、7/20リリース）\n- Runway Gen-4 Turbo: 動画生成時間を約60%短縮しつつ同等品質を維持\n- Gemini 3.5 Flash（Google）: 速度・低コストが強み\n- フロンティアモデルの多様化・多極化が2026年7月の最大トレンドとして描写されている",
+      "body_excerpt": "Skycrumbsによる2026年7月の主要AI/LLMモデルリリースの網羅的トラッキング記事。",
+      "fact_checked": true,
+      "fact_check_note": "主要モデルリリース日付はすべて確認済み。Claude Sonnet 5（6/30）・GPT-5.6（7/9）・Grok 4.5（7/8）・Muse Spark 1.1（7/9）・Kimi K3（7/16）。Runway Gen-4 Turbo の「約60%短縮」は未確認。"
+    },
+    {
+      "file": "2026-07-25_3087_WEB_Lumenova-EU-AI-Act-Delays-July2026.md",
+      "title": "EU AI Act News 2026: New Deadlines & Business Impact",
+      "url": "https://www.lumenova.ai/blog/eu-ai-act-delays-july-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "- EU AI Omnibus規則の最終テキストが2026年7月に発効。**2026年8月2日**がAI規制史上最も重要な日付として設定\n- 8月2日以降: EU域内で稼働する大多数のAIシステムにEU AI Actのコア義務が適用\n- 透明性義務（即時施行）: 企業はAIチャットボットを使用している旨をユーザーに通知する義務。不遵守は最大1,500万ユーロまたは全世界年間売上高3%の罰金\n- EU AI Omnibus改定: 欧州委員会が規則の変更と期限延長を決議\n- EU Cloud・AI開発法が2026年7月15日にEU官報に掲載\n- 7月の欧州委員会によるサイバーセキュリティ行動計画: 「規制の立案」から「安全なEU環境でのAI実運用テスト」へのシフト\n- 法的遵守の文脈: 製品の構築・販売・文書化・レビュー方法全てに影響する時代が到来\n- 日本企業がEU市場にAIサービスを提供する際に確認必須の規制アップデート",
+      "body_excerpt": "LumenovaによるEU AI Act 2026年7月の最新状況と企業への影響解説。",
+      "fact_checked": true,
+      "fact_check_note": "8月2日の施行期限は正確。ただし罰金の説明に誤り: 「最大1,500万ユーロまたは3%」はAnnex III高リスク違反の罰金。禁止行為違反は最大€35M or 7%、情報虚偽提供は€7.5M or 1%と段階的体系。透明性義務（チャットボット通知）違反も高リスク体系と同列ではない。"
+    },
+    {
+      "file": "2026-07-25_3088_WEB_FollowNext-GenAI-News-Weekly-July6-12-2026-JA.md",
+      "title": "生成AIニュースまとめ（2026-07-06〜2026-07-12）",
+      "url": "https://follow-next.com/%E7%94%9F%E6%88%90ai/%E7%94%9F%E6%88%90ai%E3%83%8B%E3%83%A5%E3%83%BC%E3%82%B9%E3%81%BE%E3%81%A8%E3%82%81%EF%BC%882026-07-06%E3%80%9C2026-07-12%EF%BC%89/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "ai-news",
+      "summary": "- 2026年7月6〜12日の国内外生成AI重要ニュースを日本語でまとめた週次ダイジェスト\n- 日本政府の国産AI導入方針：松本尚デジタル相が7月10日、行政向け生成AI基盤「源内」へ国産LLMを導入する方針を発表。NTTデータ・富士通・プリファードネットワークスなど計5社が試用参加\n- 経営層のAI活用と企業競争力：AIを活用する経営者と非活用経営者の間で企業業績に顕著な差が生じているという調査結果\n- 水冷技術によるデータセンターの電力コスト削減事例\n- 教育現場でのAI活用に関する政策動向\n- Kimi K3（Moonshot AI）がClaude Fable・GPT-5.6 Solと競合するオープンウェイトモデルとして注目\n- 日本のAI政策・産業動向を週次でキャッチアップするのに適した日本語一次情報ソース",
+      "body_excerpt": "株式会社フォローによる2026年7月6〜12日の生成AI週次ニュースまとめ（日本語）。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    }
+  ],
+  "fact_checks": [
+    {
+      "file": "2026-07-25_3079_WEB_Fazm-Anthropic-API-Release-Notes-2026-Claude-Code.md",
+      "checked": true,
+      "result": "PARTIAL_ERROR",
+      "note": "Opus 5 の価格記述に誤り。記事は「$10/$50/M tokens」と記載しているが、実際は $5/$25/M tokens（Opus 4.8 と同価格）。$10/$50 は Fable 5 の価格。Opus 5 リリース日（7/24）・Fast mode 廃止（7/24）は正確。"
+    },
+    {
+      "file": "2026-07-25_3086_WEB_Skycrumbs-New-AI-Models-July2026-Every-Major-Launch-Tracked.md",
+      "checked": true,
+      "result": "CONFIRMED",
+      "note": "主要モデルリリース日付はすべて確認済み。Claude Sonnet 5（6/30）・GPT-5.6（7/9）・Grok 4.5（7/8）・Muse Spark 1.1（7/9）・Kimi K3（7/16）。Runway Gen-4 Turbo の「約60%短縮」は未確認。"
+    },
+    {
+      "file": "2026-07-25_3087_WEB_Lumenova-EU-AI-Act-Delays-July2026.md",
+      "checked": true,
+      "result": "PARTIAL_ERROR",
+      "note": "8月2日の施行期限は正確。ただし罰金の説明に誤り: 「最大1,500万ユーロまたは3%」はAnnex III高リスク違反の罰金。禁止行為違反は最大€35M or 7%、情報虚偽提供は€7.5M or 1%と段階的体系。透明性義務（チャットボット通知）違反も高リスク体系と同列ではない。"
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-07-24": 7,
+      "2026-07-23": 4,
+      "2026-07-22": 8,
+      "2026-07-21": 15,
+      "2026-07-20": 5,
+      "2026-07-19": 13,
+      "2026-07-18": 13
+    },
+    "recurring_themes": [
+      "claude",
+      "mcp",
+      "agent",
+      "regulation",
+      "trading"
+    ]
+  }
+}
