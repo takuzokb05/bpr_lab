@@ -4139,3 +4139,50 @@ MCP 2026-07-28仕様でプロトコルがステートレス化される。`sandb
 **提案アクション:**
 1. `sandbox/タスクマネージャー/.claude/skills/` の現在のスキル一覧と上記推奨10選を比較
 2. Context7 プラグインが実務で有用か検討（最新ライブラリドキュメントのリアルタイム参照）
+
+---
+
+## 2026-07-27 収集分
+
+### 1. 【明日発効】MCP 2026-07-28 ステートレス化 最終確認
+
+**出典:** articles/2026-07-27_3100_WEB_TechCrunch-MCP-Easier-Stateless-July20-2026.md / articles/2026-07-27_3101_WEB_TheRegister-MCP-Stateless-Break-Past-July23-2026.md
+
+**緊急度: 最高（2026-07-28 = 明日に仕様変更発効）**
+
+**提案内容:**
+2026-07-26収集分で提案済みのMCP移行対応が「明日」に迫った。
+The Register（7/23）の技術分析によると、移行で注意が必要な破壊的変更:
+- Completions/Roots/Sampling の3プリミティブが非推奨化（deprecated、削除ではないが将来削除される）
+- エラーコード -32002 → -32602 変更（クライアント側のパターンマッチコードが壊れる）
+- TypeScript/Python公式SDKはすでにRC対応版をリリース済み
+
+**今日中に確認すべきアクション:**
+1. `sandbox/FX自動取引/` のMCP連携コードが `Completions`/`Roots` を使っていないか確認
+2. Anthropic Python SDKのバージョンを最新に更新（`pip install --upgrade anthropic`）
+3. 移行後も問題なければ対応完了
+
+### 2. Anthropic API レート制限 3段階統一（Start/Build/Scale）への対応
+
+**出典:** articles/2026-07-27_3103_WEB_Anthropic-API-Rate-Limits-Unified-Start-Build-Scale-June2026.md
+
+**緊急度: 低（対応不要だが把握しておく）**
+
+**提案内容:**
+2026年6月26日から、AnthropicのAPIレート制限が4→3段階（Start・Build・Scale）に再編され、全モデルのレート制限が統一された。特に入力トークン/分が約16倍増（30,000→500,000）。FX自動取引のAPIコールがボトルネックだった場合は大幅改善が期待できる。
+
+**提案アクション:**
+1. Claude Consoleで現在のティア確認（Start/Build/Scaleのどれか）
+2. FX自動取引のAPI使用量ログを確認し、429エラーが発生していた場合は再テスト
+3. Fast mode for Opus 4.7は7/24に廃止済み → `claude-opus-4-7` + `speed: "fast"` を使っているコードがあれば修正必要
+
+### 3. CLAUDE.md プロジェクト規模別設計パターン導入検討
+
+**出典:** articles/2026-07-27_3099_WEB_Start-Link-CLAUDE-md-Design-Patterns-Scale-Guide-JA.md
+
+**提案内容:**
+bpr_labのCLAUDE.mdは現在単一ファイル構成。プロジェクト数が30個以上に達したため、`@import`や`.claude/rules/`を活用したサブプロジェクト別設計への移行を検討する。現状でも「sandbox/タスクマネージャー」「sandbox/FX自動取引」各CLAUDE.mdは機能しているが、ルートCLAUDE.mdが肥大化しやすい構造になっている。
+
+**提案アクション:**
+1. ルートCLAUDE.mdの行数を確認（200行超なら分割検討）
+2. 高頻度使用ルールと低頻度ルールを分離し、`.claude/rules/`での条件付き読み込みを試験導入

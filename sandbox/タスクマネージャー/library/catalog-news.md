@@ -276,3 +276,4 @@
 | 253 | 生成AIニュースまとめ（2026-07-06〜07-12）— 政府「源内」に国産LLM導入・Kimi K3注目（フォロー） | ja | 未読 | #llm-news #regulation #web-signal | articles/2026-07-25_3088_WEB_FollowNext-GenAI-News-Weekly-July6-12-2026-JA.md |
 | 254 | AI Agents News — Week of July 25, 2026: MCP ステートレス化・Opus 5 デフォルト・Claude マルチチャット等（AIAgentStore） | en | 未読 | #llm-news #daily-roundup #web-signal | articles/2026-07-26_3097_WEB_AIAgentStore-AI-Agents-News-Week-July25-2026.md |
 | 255 | Neural Network - July 2026: EU AI Act 8/2 適用開始・中国AIエージェント規制施行・英国立法進行（Stephenson Harwood） | en | 未読 | #regulation #eu-ai-act #web-signal | articles/2026-07-26_3098_WEB_StephensonHarwood-Neural-Network-AI-Legal-July2026.md |
+| 256 | 日本における生成AI規制状況2026年7月最新｜世界の動向と企業が整えるべき社内ルール（genai-ai.co.jp） | ja | 未読 | #regulation #llm-news #web-signal | articles/2026-07-27_3104_WEB_Japan-GenAI-Regulation-2026-Global-Comparison-Enterprise-JA.md |

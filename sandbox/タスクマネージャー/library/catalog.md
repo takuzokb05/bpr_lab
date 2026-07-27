@@ -793,3 +793,8 @@
 | 766 | Migrate Your MCP Server to the 2026-07-28 Spec — TypeScript/Python コードサンプル付き（MCP Playground Online） | en | 未読 | #mcp #ecosystem #web-signal | articles/2026-07-26_3092_WEB_MCPPlayground-Migrate-MCP-Server-2026-07-28.md |
 | 767 | Claude Codeのおすすめスキル10選【2026年7月最新版】— Context7・Code Review・Superpowers 等（Libecity） | ja | 未読 | #skills #web-signal | articles/2026-07-26_3093_WEB_Libecity-Claude-Code-Recommended-Skills-10-JA.md |
 | 768 | Claude Code活用事例10選｜非エンジニアでも業務10倍速 — YouTube全自動化・スキル化実践（genai-ai.co.jp） | ja | 未読 | #skills #web-signal | articles/2026-07-26_3094_WEB_GenaiAI-Claude-Code-Business-Use-Cases-10-JA.md |
+| 769 | CLAUDE.md設計パターン集｜プロジェクト規模別ベストプラクティスと実例（Start Link） | ja | 未読 | #claude-md #web-signal | articles/2026-07-27_3099_WEB_Start-Link-CLAUDE-md-Design-Patterns-Scale-Guide-JA.md |
+| 770 | AI's most important protocol is getting easier to use — MCP Stateless July 20（TechCrunch） | en | 未読 | #mcp #ecosystem #web-signal | articles/2026-07-27_3100_WEB_TechCrunch-MCP-Easier-Stateless-July20-2026.md |
+| 771 | The Register: MCP prepares to break with its stateful past（July 23, 2026） | en | 未読 | #mcp #ecosystem #web-signal | articles/2026-07-27_3101_WEB_TheRegister-MCP-Stateless-Break-Past-July23-2026.md |
+| 772 | MCP Goes Stateless to Make Scaling Simpler — CIO Enterprise Perspective | en | 未読 | #mcp #ecosystem #web-signal | articles/2026-07-27_3102_WEB_CIO-MCP-Stateless-Scaling-Simpler-Enterprise-July2026.md |
+| 773 | Anthropic API Rate Limits Unified: Start/Build/Scale 3-Tier System（ChatForest） | en | 未読 | #ecosystem #model-update #web-signal | articles/2026-07-27_3103_WEB_Anthropic-API-Rate-Limits-Unified-Start-Build-Scale-June2026.md |
