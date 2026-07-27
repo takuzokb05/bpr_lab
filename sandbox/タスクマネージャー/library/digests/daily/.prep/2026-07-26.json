@@ -1,0 +1,166 @@
+{
+  "date": "2026-07-26",
+  "generated_at": "2026-07-27T23:16:00.707114Z",
+  "article_count": 10,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-07-26_3089_WEB_MCP-2026-07-28-RC-Official-Blog-Stateless-Final.md",
+      "title": "The 2026-07-28 MCP Specification Release Candidate（MCP公式ブログ）",
+      "url": "https://blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "- 最大の変更点はプロトコルのステートレス化：initialize ハンドシェイクと Mcp-Session-Id ヘッダーを全廃し、各リクエストの _meta フィールドにプロトコルバージョン・クライアント情報を付与する設計に移行\n- これにより リモートMCPサーバーが普通のラウンドロビン型ロードバランサーで動作可能になり、エンタープライズ導入の障壁が大幅に低下\n- Rootsサンプリング・ロギングは非推奨化（12ヶ月の移行期間保証付き）\n- MCP Tasks機能はコアプロトコルから拡張機能（Extension）に移動。MCP Apps・MCP Tasksの2拡張がコアと並行して公式サポート\n- セキュリティ: 6つのセキュリティ提案によりOAuth 2.0とOpenID Connectに準拠し、企業セキュリティレビューを大幅に簡略化\n- エラーコード「リソース未見つかり」が -32002 から標準の -32602 に変更\n- Anthropic Tier 1 SDK（Python・TypeScript等）は検証ウィンドウ内でサポートを出荷予定\n- 月間9700万DL・1万以上のパブリックMCPサーバーという規模のエコシステムに対する最大規模の改訂",
+      "body_excerpt": "MCP公式ブログによる2026-07-28 Release Candidate発表。プロトコルのステートレス化、拡張機能体制への移行、セキュリティ強化（OAuth 2.0/OIDC対応）の3本柱で構成される最大規模のMCP改訂。",
+      "fact_checked": true,
+      "fact_check_note": "[CONFIRMED] 公式ブログ含む複数ソースで確認。RC は5/21公開、10週間の検証ウィンドウを経て7/28に正式リリース。ステートレス化・MCP Tasks拡張移動・OAuth 2.1準拠など記事の主張はすべて正確。"
+    },
+    {
+      "file": "2026-07-26_3090_WEB_Microsoft-MCP-Stateless-Scaling-Azure-App-Service.md",
+      "title": "MCP Just Went Stateless — What the 2026 Spec Changes About Scaling on Azure App Service",
+      "url": "https://techcommunity.microsoft.com/blog/appsonazureblog/mcp-just-went-stateless-%E2%80%94-what-the-2026-spec-changes-about-scaling-on-app-servic/4530222",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "- 従来のリモートMCPサーバーに必要だったスティッキーセッション・共有セッションストア・ディープパケットインスペクションが不要になる\n- Mcp-Method ヘッダーでトラフィックルーティングが可能になり、普通のロードバランサー構成で運用できる\n- tools/list レスポンスをクライアントサイドでキャッシュできるようになるため、リクエスト数が削減されコスト低下\n- Azure App Serviceの具体的な移行手順と注意点を提供（Auto Scalingとの相性、セッション削除後のエラーハンドリング等）\n- ステートレス化により水平スケールが容易になり、エンタープライズレベルのMCP展開が実現可能に\n- 既存のステートフル MCPサーバーからの移行パスも解説（段階的移行・Feature Flagの活用）\n- AzureでのMCP本番運用を検討している開発者・アーキテクト向けの一次資料として価値が高い",
+      "body_excerpt": "MicrosoftがAzure App ServiceにおけるMCPステートレス化の実務的影響を解説。Azure上でのMCPサーバー運用パターンが根本から変わることを示した公式解説。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-26_3091_WEB_LukeOliff-MCP-Goes-Stateless-Monday-Break-Fix.md",
+      "title": "MCP Goes Stateless on Monday. Here's What Breaks and What to Do About It",
+      "url": "https://lukeocodes.dev/mcp-goes-stateless",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "- initialize ハンドシェイクと Mcp-Session-Id ヘッダーが削除されるため、既存のセッション管理コードはすべて修正が必要\n- 各リクエストに _meta.protocolVersion と _meta.clientInfo を付与する新パターンを before/after コードで解説\n- tools/list をクライアント側でキャッシュする実装例を TypeScript で提示\n- ステートを保持する必要があるサーバーは MCP Tasks 拡張を使って長時間実行タスクを管理する代替アーキテクチャを採用\n- エラーコード変更（-32002→-32602）に対応するエラーハンドリングの修正も必要\n- 「7月28日に使えるmigrationチェックリスト」形式で実用的\n- 既存MCPサーバー保守者向けの実践的な移行手順書として価値が高い",
+      "body_excerpt": "開発者Luke Olifによる実践的なMCPステートレス移行ガイド。7月28日に何が壊れるかをコードレベルで示し、before/after の修正例を提供。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-26_3092_WEB_MCPPlayground-Migrate-MCP-Server-2026-07-28.md",
+      "title": "Migrate Your MCP Server to the 2026-07-28 Spec",
+      "url": "https://mcpplaygroundonline.com/blog/migrate-mcp-server-2026-07-28-stateless",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "- 主な対応箇所4点：initialize ハンドシェイク削除・セッションレス化・_meta フィールド追加・エラーコード変更（-32002→-32602）\n- TypeScript・Python双方のコードサンプルでbefore/afterを比較提示\n- ステートレス化によりユニットテストの書きやすさが向上（各リクエストが独立するため）\n- MCP Tasks拡張を使ってステートフルな長時間実行タスクを代替する方法を解説\n- 段階的な移行パス（Feature Flagによる旧仕様との並行サポート）を提供\n- Roots・Sampling・Logging非推奨化への対応（12ヶ月の移行期間があるため急ぎ不要）\n- MCP Playground Online での新仕様テスト方法も紹介（ローカル不要で即テスト可能）",
+      "body_excerpt": "MCP Playground OnlineによるMCPサーバー2026-07-28仕様移行ガイド。TypeScriptとPythonのコードサンプル付きで実践的な移行手順を解説。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-26_3093_WEB_Libecity-Claude-Code-Recommended-Skills-10-JA.md",
+      "title": "Claude Codeのおすすめスキル10選【2026年7月最新版】",
+      "url": "https://library.libecity.com/articles/01KMN9PXE880GNH7WF6HFYAFJF",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "- Context7（最新ドキュメント参照）：ライブラリの最新APIドキュメントをリアルタイム取得し、古い情報でのコード生成を防ぐ\n- Code Review（PRレビュー自動化）：コードレビューをスキル化し品質チェックを標準化\n- Code Simplifier（コード整理）：最近変更したコードを可読性高く整理\n- Superpowers（開発プロセス全体底上げ）：タスク管理・ドキュメント生成など複合的な補助\n- スキルのインストール方法・SKILL.mdの基本構造・トリガー設定のベストプラクティスを解説\n- コーディング補助系・ドキュメント管理系・プロジェクト管理系の3カテゴリで10選を紹介\n- 2026年7月のプラグインエコシステム対応（スキルとプラグインの違いも整理）\n- 初心者から中級者向けの実践的入門ガイドとして有用",
+      "body_excerpt": "2026年7月時点でのClaude Codeスキルおすすめ10選。スキル一覧とその効果・使い方を実践的に解説した日本語記事。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-26_3094_WEB_GenaiAI-Claude-Code-Business-Use-Cases-10-JA.md",
+      "title": "【2026年7月最新】Claude Code活用事例10選｜非エンジニアでも業務が10倍速になる実践テクニック",
+      "url": "https://genai-ai.co.jp/ai-kanri/blog/cc-yt-business-use-cases-10/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "- YouTube動画文字起こしをClaude Codeに読み込ませ、記事構成設計→本文執筆→画像配置→WordPress投稿→Rank Math SEO設定まで全自動化する事例を詳述\n- メール処理自動化（受信トリアージ・定型返信ドラフト生成）の実装パターン\n- データ集計・レポート生成の自動化（月次KPIレポートをスケジュール実行）\n- スキル化で「同じ品質の作業が何度でも再現できる」という実践的観点を強調\n- CLAUDE.mdとスキルを組み合わせることで非エンジニアでも複雑な自動化が可能であることを示す\n- 業務時間短縮の定量データ（特定タスクで1/10に短縮など）を含む複数の事例掲載\n- 2026年7月時点の最新機能（マルチチャット・スクリーン録画スキル等）を踏まえた構成\n- 非エンジニアのClaude Code導入ガイドとして価値が高い",
+      "body_excerpt": "Claude Codeを非エンジニア業務に活用している実践事例10選。YouTube動画文字起こし→記事化→SEO設定まで全自動化などの具体的なユースケースを紹介した日本語ガイド。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-26_3095_WEB_Pinggy-Best-AI-Trading-Agents-2026-Make-Money.md",
+      "title": "Best AI Trading Agents in 2026: Do They Actually Make Money?",
+      "url": "https://pinggy.io/blog/best_ai_trading_agents/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "- LLMが収益報告書・ニュース・SNS・価格データを読んで近期方向性を推論するアーキテクチャの仕組みを解説\n- 「AIトレーディングエージェントは従来の取引ボットと異なり、コンテキストを解釈して代替案を検討し、適応する」という本質的な違いを整理\n- 2026年5月Robinhoodの「アジェンティックファイナンス」発表（AIがユーザー代わりに投資判断・実行）など業界動向を網羅\n- 機関投資家の主流がハイブリッドQuant+AI構成であることを説明（定量ファイナンスの厳密性+AI柔軟性）\n- 米国小売投資家のAIツール利用が前年比75%増という市場データを引用\n- オープンソースエージェント（TradingAgents等）と商用エージェントの比較評価表付き\n- リスク管理・実運用上の注意点（過学習・市場体制変化・ハルシネーション）を定量的に評価",
+      "body_excerpt": "Pinggy Blogによる2026年のAIトレーディングエージェント包括評価。「実際に稼げるのか？」という実用的な問いに対し、主要エージェントを比較レビューしたガイド。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-26_3096_WEB_AssetWhisper-AI-Trading-Agents-2026-Complete-Guide.md",
+      "title": "AI Trading Agents in 2026: The Complete Guide to Autonomous Investing",
+      "url": "https://assetwhisper.com/ai-trading-agents-in-2026-the-complete-guide-to-autonomous-investing/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "- 従来の取引ボット（固定ルール実行）とAIエージェント（コンテキスト解釈・適応的判断）の本質的な違いを明確に整理\n- マルチエージェント構成：情報収集エージェント・リスク評価エージェント・執行エージェントが相互通信しながら人間介入なしで動作する構造を解説\n- 人間の継続的介入なしに投資判断を行う「自律型AIトレーディングレイヤー」の2026年時点での実現度を評価\n- 機械学習モデル・リアルタイム市場データ・ゴール志向推論を組み合わせたアーキテクチャの技術詳細\n- 主要プラットフォーム比較（パフォーマンス・コスト・API対応・透明性）\n- リスク管理手法：ポジションサイジング・ドローダウン制限・分散投資ルールの組み込み方\n- 法規制の現状（米国・EU各国の自律型トレーディングに関する規制動向）\n- 自動売買AIシステムを構築・運用したいエンジニア/トレーダー向けの決定版ガイド",
+      "body_excerpt": "AssetWhisperによるAI自律投資エージェントの2026年版完全ガイド。従来ボットとの違いからマルチエージェント構成の実装まで包括的に解説。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-26_3097_WEB_AIAgentStore-AI-Agents-News-Week-July25-2026.md",
+      "title": "AI Agents News — Week of July 25, 2026 (Daily Updates)",
+      "url": "https://aiagentstore.ai/ai-agent-news/this-week",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "- 今週最重要：MCP 2026-07-28仕様の最終リリース準備完了（ステートレス化・新拡張機能体制）。既存MCPサーバーの緊急移行が必要\n- Claude Code: Opus 5のデフォルトモデル採用、マルチチャットセッション対応（並列アプローチ比較・分岐機能）、サブエージェントネスト深度デフォルト3に拡張\n- Claude Codeに画面録画スキル自動生成機能（Cowork Record a Skill）追加\n- AIモデル動向：GPT-5.6 Luna/Terra/Sol（OpenAI 7/9）、Grok 4.5（xAI 7/8）、Kimi K3（Moonshot 7/16）の評価比較継続\n- フレームワーク：Google ADK 2.0アップデート、Microsoft Agent Frameworkのセキュリティ強化版、Pydantic AI V2リリース\n- 規制：EU AI Act 8月2日透明性義務適用、中国AIエージェント規制7月15日施行開始\n- AIエージェント領域をウォッチする実用的な週次ダイジェストとして価値が高い",
+      "body_excerpt": "AIAgentStore.aiによる2026年7月25日週のAIエージェント最新ニュースデイリーまとめ。週次でAIエージェント領域のトレンドを追跡する継続シリーズ。",
+      "fact_checked": true,
+      "fact_check_note": "[PARTIALLY_CONFIRMED] Opus 5は7/24リリース済み（API id: claude-opus-5）。Max/Team Premium/Enterprise/APIではデフォルトに採用されたが、Pro/Team StandardはデフォルトがSonnet 5のまま。「全面デフォルト採用」は不正確だが主要プランではデフォルト化は事実。マルチチャット機能（ターン間でツールを変更可能）も確認。"
+    },
+    {
+      "file": "2026-07-26_3098_WEB_StephensonHarwood-Neural-Network-AI-Legal-July2026.md",
+      "title": "Neural Network - July 2026（Stephenson Harwood AI法務ニュースレター）",
+      "url": "https://www.stephensonharwood.com/insights/neural-network-july-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "- EU AI Act 8月2日の透明性義務（Article 50）適用開始に向けた最終確認ポイントを詳解：AI生成コンテンツへのラベリング義務・ディープフェイク表示要件・チャットボット開示要件\n- EU AI Omnibus規制（6月29日EU理事会最終承認）による旧EU AI Act修正内容と施行タイムライン変更を整理\n- 米国動向：イリノイ州AI安全措置法（7月6日署名）・カリフォルニア州AI透明性法（8月2日施行）・連邦レベルは包括立法なし（州法主体のままの状況）\n- 英国：AI規制・安全法案が7月3日に貴族院第2読会を通過、立法プロセス進行中\n- 中国：AIエージェント専用規制が7月15日から施行開始（世界初の専用法）\n- 韓国・シンガポール等の施行状況も含む15カ国の規制動向一覧\n- コンプライアンス実務者向けのアクションリスト（8月2日以前に確認すべき項目）付き\n- 企業の法務・AI担当者向けの月次一次情報まとめとして価値が高い",
+      "body_excerpt": "法律事務所Stephenson HarwoodによるAI規制月次ニュースレター「Neural Network」2026年7月号。企業法務・コンプライアンス担当者向けに主要AI規制の動向を一次情報から整理。",
+      "fact_checked": true,
+      "fact_check_note": "[CONFIRMED] EUデジタル戦略公式サイト・Sidley等複数一次ソースで確認。8/2から透明性義務（AIシステムであることの開示・AI生成コンテンツへのマーキング）が強制適用。違反は最大€15M または全世界売上の3%。高リスクAI規定は2027-2028に延期されたが透明性義務は予定通り。"
+    }
+  ],
+  "fact_checks": [
+    {
+      "file": "2026-07-26_3089_WEB_MCP-2026-07-28-RC-Official-Blog-Stateless-Final.md",
+      "claim": "MCP 2026-07-28 RCでプロトコルのステートレス化（initialize廃止・Mcp-Session-Id廃止）",
+      "verdict": "CONFIRMED",
+      "note": "公式ブログ含む複数ソースで確認。RC は5/21公開、10週間の検証ウィンドウを経て7/28に正式リリース。ステートレス化・MCP Tasks拡張移動・OAuth 2.1準拠など記事の主張はすべて正確。"
+    },
+    {
+      "file": "2026-07-26_3097_WEB_AIAgentStore-AI-Agents-News-Week-July25-2026.md",
+      "claim": "Claude CodeがOpus 5をデフォルトモデルに採用",
+      "verdict": "PARTIALLY_CONFIRMED",
+      "note": "Opus 5は7/24リリース済み（API id: claude-opus-5）。Max/Team Premium/Enterprise/APIではデフォルトに採用されたが、Pro/Team StandardはデフォルトがSonnet 5のまま。「全面デフォルト採用」は不正確だが主要プランではデフォルト化は事実。マルチチャット機能（ターン間でツールを変更可能）も確認。"
+    },
+    {
+      "file": "2026-07-26_3098_WEB_StephensonHarwood-Neural-Network-AI-Legal-July2026.md",
+      "claim": "EU AI Act Article 50（透明性義務）が2026年8月2日に適用開始",
+      "verdict": "CONFIRMED",
+      "note": "EUデジタル戦略公式サイト・Sidley等複数一次ソースで確認。8/2から透明性義務（AIシステムであることの開示・AI生成コンテンツへのマーキング）が強制適用。違反は最大€15M または全世界売上の3%。高リスクAI規定は2027-2028に延期されたが透明性義務は予定通り。"
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-07-25": 17,
+      "2026-07-24": 7,
+      "2026-07-23": 4,
+      "2026-07-22": 8,
+      "2026-07-21": 15,
+      "2026-07-20": 5,
+      "2026-07-19": 13
+    },
+    "recurring_themes": [
+      "claude",
+      "agent",
+      "mcp",
+      "trading",
+      "regulation"
+    ]
+  }
+}
