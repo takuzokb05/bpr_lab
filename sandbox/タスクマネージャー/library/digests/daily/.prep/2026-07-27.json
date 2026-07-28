@@ -1,0 +1,118 @@
+{
+  "date": "2026-07-27",
+  "generated_at": "2026-07-28T23:16:02.128923Z",
+  "article_count": 6,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-07-27_3099_WEB_Start-Link-CLAUDE-md-Design-Patterns-Scale-Guide-JA.md",
+      "title": "CLAUDE.md設計パターン集｜プロジェクト規模別ベストプラクティスと実例",
+      "url": "https://start-link.jp/hubspot-ai/ai/claude-code-practice/claude-code-claudemd-patterns",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "プロジェクト規模（小規模・中規模・大規模）ごとにCLAUDE.mdを設計するパターン集。単一ファイル詰め込みはプロジェクト規模が大きくなると破綻するため、`@import`や`.claude/rules/`のpaths指定で分割設計することを推奨。スモールプロジェクトはシンプルな単一CLAUDE.mdで十分だが、チーム規模・モノレポになると役割別/機能別のルールファイル分割が必要。具体的なテンプレートとアンチパターン（過度に詳細な実装手順の記述、更新されない古いルール、200行超え）を実例付きで解説。月1回のCLAUDE.mdメンテナンスサイクルも提案。2026年7月時点でプロジェクト規模別の設計方針を体系的に日本語で解説した貴重なガイド。",
+      "body_excerpt": "プロジェクト規模別にCLAUDE.mdを設計するパターン集。スモール・ミドル・ラージ規模に応じた構成例と実テンプレートを提供。アンチパターン（過度な詳細・200行超え・古くなったルール）も解説。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-27_3100_WEB_TechCrunch-MCP-Easier-Stateless-July20-2026.md",
+      "title": "AI's most important protocol is getting easier to use (MCP Stateless)",
+      "url": "https://techcrunch.com/2026/07/20/ais-most-important-protocol-is-getting-a-little-bit-easier-to-use/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "TechCrunch（2026年7月20日）によるMCP 2026-07-28仕様変更の一般向け解説。MCPはAIモデルが外部データソース・サービスに安全にアクセスするための「配管」（plumbing）として説明される。今回の大型アップデートはエンドユーザーには見えないが生態系の発展に大きく影響。最大の変更点はセッションIDの扱いを変えるステートレス化で、スタンダードなHTTPインフラ（ラウンドロビンロードバランサー）上での展開が可能になる。スティッキーセッション・共有セッションストアが不要に。Anthropicが打ち出したMCPが生成AIエコシステムのデファクトスタンダードになりつつあることをTechCrunchが認めた記事として重要。MCP以前はAIアシスタントが接続できるデータソースが数十件規模だったが、今後は数百万件規模のドキュメントへのアクセスが現実的になる見通し。",
+      "body_excerpt": "TechCrunch coverage of MCP's upcoming July 28 specification update, explaining what stateless architecture means and why it matters for the AI ecosystem.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-27_3101_WEB_TheRegister-MCP-Stateless-Break-Past-July23-2026.md",
+      "title": "The Register: MCP prepares to break with its stateful past (July 23)",
+      "url": "https://www.theregister.com/devops/2026/07/23/model-context-protocol-prepares-to-break-with-its-stateful-past/5276722",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "The Register（2026年7月23日）によるMCP 2026-07-28 RCの技術的分析。「ステートフルな過去と訣別」と題し批評的・技術的視点から分析。MCPが元々はローカルツールとして設計されたが重要な分散プロトコルになった経緯を解説。主な破壊的変更: ①セッション層の完全廃止（クライアントメタデータは全リクエストの`_meta`フィールドで送付）、②2つの必須HTTPヘッダー追加（`Mcp-Method`含む）、③エラーコード変更（クライアントコードがパターンマッチするコード変更）、④Completions/Roots/Sampling 3プリミティブの非推奨化。Anthropicの戦略的判断としてMCPをOpenAI Agents SDK・Google ADKと差別化する「デファクト標準」として押し上げようとしていると分析。Tier 1 SDK（TypeScript・Python）は4-6週間でサポート予定。The Registerらしい批評的かつ深度の高い技術解説記事。",
+      "body_excerpt": "The Register's in-depth technical analysis of MCP's 2026-07-28 specification rewrite, covering breaking changes and strategic implications for the protocol ecosystem.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-27_3102_WEB_CIO-MCP-Stateless-Scaling-Simpler-Enterprise-July2026.md",
+      "title": "MCP Goes Stateless to Make Scaling Simpler — CIO Enterprise Perspective",
+      "url": "https://www.cio.com/article/4201258/model-context-protocol-is-going-stateless-to-make-scaling-simpler-2.html",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "CIO.com（2026年7月）によるMCPステートレス化のエンタープライズ向け解説。以前は必要だったスティッキーセッション・共有セッションストア・ゲートウェイでのディープパケットインスペクションが不要になり、既存のラウンドロビン型ロードバランサーをそのまま活用可能。インフラコストと複雑性の削減が直接のビジネス効果。クライアント側の`tools/list`レスポンスキャッシュ（`ttlMs`制御）による帯域削減も言及。実際のユースケースとして金融機関・医療機関でのコンプライアンス対応RAGを例示。InfoWorldと同時掲載で、エンタープライズ意思決定者向けの実践的内容。MCPのステートレス化はAIエージェントをクラウドネイティブインフラに乗せやすくする点でエンタープライズ採用加速が期待される。",
+      "body_excerpt": "CIO.com analysis of MCP stateless transition from a CIO and enterprise architect perspective, highlighting infrastructure cost and complexity reduction.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-27_3103_WEB_Anthropic-API-Rate-Limits-Unified-Start-Build-Scale-June2026.md",
+      "title": "Anthropic API Rate Limits Unified: Start/Build/Scale 3-Tier System (June 2026)",
+      "url": "https://chatforest.com/builders-log/anthropic-rate-limits-start-build-scale-sonnet-haiku-opus-unified-june-2026-builder-guide/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "2026年6月26日にAnthropicが発表したAPIレート制限の大幅改定をビルダー向けに解説。4段階→3段階（Start・Build・Scale）に再編、かつ全モデル間でレート制限を統一（Sonnet・Haiku・OpusがRPM/ITPM/OTPMで同一制限に）。具体的数値: Startで月上限$500、Build $1,000、Scale $200,000。Tier 1でのInput tokens/minute: 旧30,000→新500,000（約16倍増）。既存ユーザーの制限引き下げなし（全員が同等以上のティアへ移行）。APIビルダーが直面していたエージェント・バッチジョブ・コード自動化パイプラインでのボトルネックが解消される見込み。Claude Console上でティア確認可能。関連: 7月24日にFast mode for Opus 4.7廃止（`claude-opus-4-7`+`speed: \"fast\"`はエラー返却）、中間会話ツール変更がFable 5・Mythos 5・Opus 4.8・Opus 5でベータ提供開始。開発者向け実践情報として重要度高。",
+      "body_excerpt": "Builder-focused guide to Anthropic's June 26, 2026 API rate limit overhaul: 4 tiers simplified to 3 (Start/Build/Scale), all models now have equal limits.",
+      "fact_checked": true,
+      "fact_check_note": "CONFIRMED: 2026年6月26日のTier統合は複数の開発者向けメディア（chatforest.com, mindstudio.ai, knightli.com）が報告。3段階への再編・全モデル均等化は確認。具体"
+    },
+    {
+      "file": "2026-07-27_3104_WEB_Japan-GenAI-Regulation-2026-Global-Comparison-Enterprise-JA.md",
+      "title": "日本における生成AI規制状況2026年7月最新｜世界の動向と企業が整えるべき社内ルール",
+      "url": "https://genai-ai.co.jp/ai-kanri/blog/cc-genai-regulation-japan/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "ai-news",
+      "summary": "2026年7月時点の日本における生成AI規制の最新動向を企業向けに解説した総合ガイド。日本にはEUのような包括的AI規制法はなく個人情報保護法・著作権法・不正競争防止法の既存法枠組みで対応。2025年5月成立の「AI推進法」は規制より促進が目的。グローバル動向: EUは2026年8月2日にAI法コア義務発効（高リスクAIは2027年8月まで猶予）、米国では「Great American AI Act」が連邦議会で審議中（州法の上書き条項が争点、NY州では2026年6月に5つのAI関連法成立）、中国では2026年7月15日からコンパニオンAI・感情サポートAI規制施行。企業が今すぐ取り組むべきこと: ①著作権クリアランスフロー構築、②ウォーターマーク義務化への準備、③生成AI利用ポリシーの文書化、④AI監査ログの整備。日本企業視点でのグローバル規制比較として2026年7月時点の一次的参照資料として価値高い。",
+      "body_excerpt": "2026年7月時点の日本および世界の生成AI規制動向を企業向けに総合解説。日本・EU・米国・中国の比較と、企業が今すぐ取り組むべき社内対応策。",
+      "fact_checked": true,
+      "fact_check_note": "PARTIALLY_INCORRECT: 2026年8月2日発効は透明性義務（Article 50: チャットボット開示・合成コンテンツマーキング）が正確。しかし高リスクAIの猶予期限が誤り: Digital Omnibus on AI（20"
+    }
+  ],
+  "fact_checks": [
+    {
+      "article": "2026-07-27_3103_WEB_Anthropic-API-Rate-Limits-Unified-Start-Build-Scale-June2026.md",
+      "claim": "AnthropicがAPIレート制限を4段階→3段階（Start/Build/Scale）に再編、全モデル間でレート制限を統一（2026年6月26日）",
+      "verdict": "CONFIRMED",
+      "note": "2026年6月26日のTier統合は複数の開発者向けメディア（chatforest.com, mindstudio.ai, knightli.com）が報告。3段階への再編・全モデル均等化は確認。具体的な月額上限（Start$500等）は検索では直接確認できなかったが、全体の構造は正確。"
+    },
+    {
+      "article": "2026-07-27_3100_WEB_TechCrunch-MCP-Stateless-Break-Past-July23-2026.md",
+      "claim": "MCP 2026-07-28仕様でセッション層廃止・ステートレス化・Mcp-Session-Idヘッダー削除",
+      "verdict": "CONFIRMED",
+      "note": "MCP公式ブログ(modelcontextprotocol.io)・TechTimes・StackTree・Microsoft Tech Community等が一致して確認。セッション廃止、_metaフィールドによるケーパビリティ伝達、ラウンドロビンLBサポートは正確。"
+    },
+    {
+      "article": "2026-07-27_3104_WEB_Japan-GenAI-Regulation-2026-Global-Comparison-Enterprise-JA.md",
+      "claim": "EUは2026年8月2日にAI法コア義務発効（高リスクAIは2027年8月まで猶予）",
+      "verdict": "PARTIALLY_INCORRECT",
+      "note": "2026年8月2日発効は透明性義務（Article 50: チャットボット開示・合成コンテンツマーキング）が正確。しかし高リスクAIの猶予期限が誤り: Digital Omnibus on AI（2026年7月8日署名）によりAnnex III独立型システムは2027年12月2日まで、Annex I規制製品組込みAIは2028年8月2日まで延長（記事は「2027年8月」と誤記）。出典: legiscope.com, responsibleailabs.ai, technology.org（2026年7月17日付記事）"
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-07-26": 10,
+      "2026-07-25": 17,
+      "2026-07-24": 7,
+      "2026-07-23": 4,
+      "2026-07-22": 8,
+      "2026-07-21": 15,
+      "2026-07-20": 5
+    },
+    "recurring_themes": [
+      "claude",
+      "agent",
+      "mcp",
+      "trading",
+      "regulation"
+    ]
+  }
+}
