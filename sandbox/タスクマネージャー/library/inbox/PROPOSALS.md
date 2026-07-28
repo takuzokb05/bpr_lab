@@ -4186,3 +4186,20 @@ bpr_labのCLAUDE.mdは現在単一ファイル構成。プロジェクト数が3
 **提案アクション:**
 1. ルートCLAUDE.mdの行数を確認（200行超なら分割検討）
 2. 高頻度使用ルールと低頻度ルールを分離し、`.claude/rules/`での条件付き読み込みを試験導入
+
+---
+
+### 2026-07-28: MCP 2026-07-28仕様 破壊的変更への対応
+
+**出典:** articles/2026-07-28_3107_WEB_MCP-2026-07-28-Spec-Final-Bringing-Stateless-to-Claude.md / articles/2026-07-28_3108_WEB_MCP-Beta-SDKs-2026-07-28-Python-TS-Go-Csharp.md
+
+**緊急度: 高（本日付けで仕様が正式リリース・Claudeが新仕様を採用）**
+
+**提案内容:**
+MCP 2026-07-28仕様が本日正式リリース。Claude Codeは本日付けで新仕様をサポート開始。主な破壊的変更：①ステートレスコア（initializeハンドシェイク廃止・Mcp-Session-Id廃止）②tasks/list削除③エラーコード-32002→-32602変更④Roots/Sampling/Logging非推奨。既存のMCPサーバー実装は新仕様に非互換。
+
+**提案アクション:**
+1. sandbox/FX自動取引 でMCPサーバーを使用しているか確認（MT5 MCP連携の実装状況）
+2. sandbox/タスクマネージャー の `.claude/` に登録されたMCPサーバーが旧仕様の場合は更新が必要
+3. Python/TypeScript SDK ベータを確認し、既存コードのマイグレーション対象ファイルを特定
+4. Claude Code のMCP設定ファイル（`.claude/settings.json` 等）でMcp-Session-Idを使用している場合は削除

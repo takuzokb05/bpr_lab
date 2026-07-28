@@ -798,3 +798,8 @@
 | 771 | The Register: MCP prepares to break with its stateful past（July 23, 2026） | en | 未読 | #mcp #ecosystem #web-signal | articles/2026-07-27_3101_WEB_TheRegister-MCP-Stateless-Break-Past-July23-2026.md |
 | 772 | MCP Goes Stateless to Make Scaling Simpler — CIO Enterprise Perspective | en | 未読 | #mcp #ecosystem #web-signal | articles/2026-07-27_3102_WEB_CIO-MCP-Stateless-Scaling-Simpler-Enterprise-July2026.md |
 | 773 | Anthropic API Rate Limits Unified: Start/Build/Scale 3-Tier System（ChatForest） | en | 未読 | #ecosystem #model-update #web-signal | articles/2026-07-27_3103_WEB_Anthropic-API-Rate-Limits-Unified-Start-Build-Scale-June2026.md |
+| 774 | Claude Opus 5: Release July 24 — Benchmarks, Pricing $5/$25, 1M Context（Coursiv） | en | 未読 | #model-update #ecosystem #web-signal | articles/2026-07-28_3105_WEB_Anthropic-Claude-Opus5-Release-July24-Benchmarks.md |
+| 775 | Claude for Government Desktop — Public Beta, FedRAMP High, Tamper-Proof Audit Logs | en | 未読 | #ecosystem #security #web-signal | articles/2026-07-28_3106_WEB_Claude-for-Government-Desktop-Public-Beta-FedRAMP.md |
+| 776 | MCP 2026-07-28 仕様正式リリース — Bringing Stateless MCP to Claude（Anthropic公式） | en | 未読 | #mcp #ecosystem #web-signal | articles/2026-07-28_3107_WEB_MCP-2026-07-28-Spec-Final-Bringing-Stateless-to-Claude.md |
+| 777 | Beta SDKs for MCP 2026-07-28 Spec — Python, TypeScript, Go, C# 公開 | en | 未読 | #mcp #ecosystem #web-signal | articles/2026-07-28_3108_WEB_MCP-Beta-SDKs-2026-07-28-Python-TS-Go-Csharp.md |
+| 778 | Claude Code Nested Subagents: 4-Day Evolution v2.1.217→219 深度3復活 | en | 未読 | #subagents #model-update #web-signal | articles/2026-07-28_3109_WEB_Claude-Code-Nested-Subagents-Depth3-Reinstated-v2-1-217-219.md |

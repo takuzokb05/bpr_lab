@@ -305,3 +305,4 @@
 | 275 | Build a Multi-Agent AI Trading System with TradingAgents 2026（PickMyTrade） | en | 未読 | #llm-trading #multi-agent #implementation #web-signal | articles/2026-07-25_3084_WEB_PickMyTrade-Build-MultiAgent-Trading-System-TradingAgents-2026.md |
 | 276 | Best AI Trading Agents in 2026: Do They Actually Make Money? — Robinhood・ハイブリッドQuant+AI比較（Pinggy） | en | 未読 | #llm-trading #comparison #web-signal | articles/2026-07-26_3095_WEB_Pinggy-Best-AI-Trading-Agents-2026-Make-Money.md |
 | 277 | AI Trading Agents in 2026: The Complete Guide to Autonomous Investing — マルチエージェント構成・リスク管理詳解（AssetWhisper） | en | 未読 | #llm-trading #multi-agent #web-signal | articles/2026-07-26_3096_WEB_AssetWhisper-AI-Trading-Agents-2026-Complete-Guide.md |
+| 278 | How to Evaluate LLMs for Forex Trading 2026 — Tested, Ranked, Hybrid Architecture（FXNX） | en | 未読 | #llm-trading #evaluation #fx #web-signal | articles/2026-07-28_3111_WEB_FXNX-LLM-Forex-Trading-Evaluation-Framework-2026.md |
