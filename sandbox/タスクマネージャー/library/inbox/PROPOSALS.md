@@ -4203,3 +4203,32 @@ MCP 2026-07-28仕様が本日正式リリース。Claude Codeは本日付けで�
 2. sandbox/タスクマネージャー の `.claude/` に登録されたMCPサーバーが旧仕様の場合は更新が必要
 3. Python/TypeScript SDK ベータを確認し、既存コードのマイグレーション対象ファイルを特定
 4. Claude Code のMCP設定ファイル（`.claude/settings.json` 等）でMcp-Session-Idを使用している場合は削除
+
+---
+
+### 2026-07-29: CLAUDE.md 200行制限の定量的根拠（モデル精度低下データ）
+
+**出典:** articles/2026-07-29_3112_WEB_OpenHands-Claude-Code-Best-Practices-Agentic-Coding-2026.md
+
+**提案内容:**
+OpenHandsの実測で「18種類のフロンティアモデルを検証した結果、CLAUDE.md等の入力が一定行数を超えると精度が95%→60%に低下するモデルが存在する」ことが確認された。200行以内に収めることの根拠として定量データが得られた。
+
+**提案アクション:**
+1. bpr_lab ルート CLAUDE.md の現在の行数確認（`wc -l CLAUDE.md`）
+2. sandbox/タスクマネージャー/CLAUDE.md の行数確認
+3. 200行超の場合は `.claude/rules/` への分割を検討（2026-07-27提案と合わせて優先対応）
+
+---
+
+### 2026-07-29: Claude Cowork Dispatch機能（サーバーサイド継続実行）の活用検討
+
+**出典:** articles/2026-07-29_3114_WEB_FelloAI-Claude-Cowork-Guide-Pricing-Setup-Dispatch-2026.md
+
+**提案内容:**
+2026年7月7日からCoworkが「Dispatchモード」に対応。Maxプランユーザーはラップトップを閉じた状態でもAnthropicサーバー上でCoworkセッションを継続実行できる。現在の日次収集ルーチンはスケジュールタスクで動作しているが、Cowork Dispatchを使うとさらに柔軟なスケジュール管理が可能になる可能性がある。
+
+**提案アクション:**
+1. 現在のMaxプランの有無を確認
+2. Cowork Dispatchベータへのアクセス申請（MaxユーザーはMax→順次展開）
+3. 日次収集ルーチンとの統合の可否を評価
+
