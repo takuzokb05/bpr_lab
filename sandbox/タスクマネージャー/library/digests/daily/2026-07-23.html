@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-07-23</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-07-23 | 4件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-07-23</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>本日は4記事。AIエージェント規制が世界規模で加速する週で、中国が7月15日に世界初のAIエージェント専用法を施行し（一次ソース確認済み）、EU AI Actの8月2日施行も目前に迫る。Claude Agent SDKの独立評価レビューでは、価格変更を巡る「告知→撤回」の経緯が明らかに。FX方面ではClaude + MT5 + MCPの3層アーキテクチャ実践ガイドが登場し、現在運用中のFX自動取引プロジェクトに直接参照できる設計パターンが整理されている。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<p><strong>Claude Agent SDK：強みと価格変更の誤報</strong></p>
+
+<p>Agentlasによる独立フレームワークレビューが公開された（<a href="https://agentlas.pro/frameworks/claude-agent-sdk/" target="_blank">agentlas.pro</a>）。評価ポイントは「Claude Code自体がAgent SDK上で本番動作している」という実績で、ファイル操作・Bash実行・MCP統合を備えた組み込みツール群とhooksシステムの完成度が高いと評価された。コーディング・自動化特化用途ではベストクラスとする一方、LangChainに比べてマルチプロバイダー対応がなく、サードパーティエコシステムの小ささが弱点として挙げられた。</p>
+
+<p>ただし記事内の価格情報には<strong>要訂正あり</strong>。「6月15日にAgent SDK利用が別枠クレジット制（Pro: $20/月、Max 20x: $200/月）に移行した」と読める表現があるが、実際はAnthropicが5月に別枠制を発表後、<strong>6月15日に撤回・一時停止</strong>した経緯がある。現時点でもPro/Max/Teamのサブスク枠内で従来通りAgent SDK利用可能。Claude Codeヘビーユーザーとして課金体系は把握しておく価値がある情報。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<p><strong>中国AIエージェント規制が7月15日施行——世界初の法的カテゴリー</strong>（一次ソース確認済み）</p>
+
+<p>MachineBriefのレポート（<a href="https://www.machinebrief.com/news/china-ai-agent-regulations-enforceable-july-15-2026" target="_blank">machinebrief.com</a>）によると、中国が「AIエージェントに関する実施意見」を7月15日に施行した。これは世界初のAIエージェント専用規制フレームワークとして歴史的位置づけにある。3層フレームワークで運用される：Level 1（スケジューリング等の日常業務）は自律操作可、Level 2（契約・価格設定等の重要決定）は人間承認必須、Level 3（法律・財務・安全事項）はエージェント判断禁止。Level 2・3には事前デプロイメントレビューと四半期報告書の提出が義務化された。</p>
+
+<p>域外適用が実務上の重要課題で、中国ユーザーやデータに影響を与える組織は物理的所在地を問わず対象となる可能性がある（ただし確定的な適用範囲は現時点では未確定）。ByteDance Doubao・Alibaba QwenのAIコンパニオン機能がこれに合わせて停止されたことも確認されており、規制の実効性は高い。FX自動取引エージェント開発においても、将来的な規制リスクの参照先として把握しておく価値がある。</p>
+
+<p><strong>EU AI Act 8月2日施行——何が変わり、何が変わらないか</strong>（一次ソース確認済み・要注意）</p>
+
+<p>Cubbbixの15カ国AI規制包括レポート（<a href="https://cubbbix.com/blog/ai-regulation-july-2026-global-update/" target="_blank">cubbbix.com</a>）では2026年8月2日を規制の分岐点として位置づけている。ただし<strong>内容に誤解を招く表現あり</strong>。同記事が「ハイリスクAIの透明性・文書化義務が8月2日から適用開始」と述べているが、EU議会が2026年6月16日に「Digital Omnibus」修正を可決しており、ハイリスクAI文書化・透明性義務の多くは<strong>2027年12月～2028年8月に延期</strong>されている。8月2日に実際に施行されるのはArticle 50（チャットボットの開示義務・AIコンテンツ標示・ディープフェイクラベリング）とGPAI執行権限のみ。</p>
+
+<p>中国の規制と合わせると、2026年後半はAIエージェント・AIコンテンツに対する規制の実装フェーズが本格化する節目として捉えられる。米国でも「Great American Artificial Intelligence Act」が州法優先条項付きで上院通過しており、州別規制マップが一夜で変わる可能性が残っている。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #ea580c; padding-left: 12px;">AIトレーディング</h2>
+
+<p><strong>Claude + MT5 + MCPの3層アーキテクチャ実践ガイド</strong></p>
+
+<p>FXNXのガイド（<a href="https://fxnx.com/en/blog/claude-mt5-via-mcp-your-advanced-ai-trading-setup" target="_blank">fxnx.com</a>）がClaude API・MT5・MCP（MetaTrader Connect Proxy）を組み合わせた実践的なアーキテクチャを解説した。MT5にEAとしてMCPサーバーを組み込み、PythonスクリプトがデータをMCP経由でClaude APIに渡し、判断結果をMT5の注文として実行するパイプラインを構築する構成だ。</p>
+
+<p>APIレイテンシの特性からH1以上のタイムフレームでの使用を推奨しており、短期スキャルピングには適さない。安全策として「ポジションサイジング上限のハードコード」「デモ口座での徹底バックテスト」「全プロンプト・レスポンスのロギング」が強調されている点は、既存のFX自動取引プロジェクトに移植できる設計原則。ニュースセンチメント・テクニカル指標・ファンダメンタル分析を一括処理できることが、従来のルールベースEAとの本質的差分として整理されている。</p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>過去7日間の収集件数は 19→0→13→13→5→15→8→（本日4）と推移。今週は全体的に減少傾向で、本日4件は直近最低水準。</p>
+
+<p>繰り返し登場するテーマ（claude / mcp / agent / trading / regulation）は今回の4記事すべてに網羅されており、テーマ自体の一貫性は高い。特に<strong>agent + regulation</strong>の組み合わせが先週から継続的に強化されており、中国規制の施行を経て「AIエージェントをどう安全に運用するか」という問いが具体性を帯びてきた。Claude Agent SDKの評価記事も増えつつあり、Claude CodeをSDKとして活用する外部視点のインプットが蓄積されてきている。</p>
+
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-07-21</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-07-21 | 15件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-07-21</h1>
+
+<h2>今日のハイライト</h2>
+
+<p><strong>MCP 2026-07-28仕様（一次ソース確認済み）</strong>がいよいよ1週間後に迫り、ステートレス移行の具体的手順が出揃った。同時にClaude Code自体のガイドが複数出版され、非エンジニア活用まで広がりを見せた。AI競合では中国・Moonshot AIのKimi K3がフロンティア級を主張してベンチマーク議論が沸騰。米国ではイリノイ州AI安全法（一次ソース確認済み）が成立し、州ごとのパッチワーク規制が加速している。記事15本。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>MCPがステートレスへ：7/28まであと1週間</h3>
+
+<p>MCP 2026-07-28仕様への移行は<strong>一次ソース確認済み</strong>の確定事項だ。DigitalAppliedの移行ガイドとStacktreeの差分リファレンスを合わせ読むと全容が見えてくる。</p>
+
+<p>最大の変化はステートレスコアへの移行。`initialize` ハンドシェイクとセッション管理APIが廃止され、リモートMCPサーバーはスティッキーセッションも共有セッションストアも不要になる。ラウンドロビンLBをそのまま使えるため、スケーリングコストが大幅に下がる。新機能として<strong>MCP Apps</strong>（サンドボックス化されたHTMLベースUI）、<strong>Tasks拡張</strong>（長時間非同期処理）、W3C Trace ContextによるOpenTelemetry連携、JSON Schema 2020-12への厳密化が加わる。Python/TypeScript/Go/C# SDK betaも公開済みで、既存統合を持つ開発者は7/28前の動作確認が必須。</p>
+
+<ul>
+<li>移行ガイド: &lt;https://www.digitalapplied.com/blog/mcp-2026-07-28-spec-stateless-migration-guide&gt;</li>
+<li>変更点リファレンス: &lt;https://stacktr.ee/blog/mcp-2026-spec-changes&gt;</li>
+</ul>
+
+<h3>Claude Agent SDKとマルチエージェントの現在地</h3>
+
+<p>Claude Codeから改名された<strong>Claude Agent SDK</strong>（2025年末）は、今や汎用エージェントランタイムとして40ツール・ヒエラルキカルサブエージェント生成（2026年6月出荷）を備える。O-mega.aiのディープダイブによれば、40ツール・フックシステム・パーミッションモードに加え、本番コスト最適化のパターンが充実してきた。</p>
+
+<p>並列サブエージェント活用チュートリアル（aiforanything.io）によれば、4エージェント並列で逐次比最大3倍高速化が得られる。git worktreeを使った並列ファイル編集、プログレスハートビートによる長時間タスク管理など、FX自動取引エージェントの設計にそのまま転用できるアーキテクチャパターンが具体的コード付きで解説されている。</p>
+
+<ul>
+<li>Agent SDK詳解: &lt;https://o-mega.ai/articles/claude-agent-sdk-the-2026-deep-dive&gt;</li>
+<li>マルチエージェントチュートリアル: &lt;https://aiforanything.io/blog/claude-multi-agent-orchestration-tutorial-2026&gt;</li>
+</ul>
+
+<h3>Claude Codeガイド群：25機能解説から非エンジニア活用まで</h3>
+
+<p>2026年版Claude Codeの包括的なガイドが相次いで公開された。MarkTechPostの25機能ガイドはCLAUDE.md設定のベストプラクティスからMCP/Hooks/Skillsの3層アーキテクチャまで実入出力例付きで整理されており、社内展開時の教材として使いやすい。Medium（ReactJSBD）のセットアップガイドは「チーム固有領域は自作スキル、汎用作業は公式スキル」という棲み分けを具体的プラグインリスト付きで推奨する。</p>
+
+<p>ClaudeCodeLabの非エンジニア向けガイドは、2026年初頭から日本の一般事務・マーケティング職での活用が急増していると指摘する。月4時間のルーティン作業を1命令で完了させた事例を紹介しつつ、`dangerouslySkipPermissions` の危険性と権限モード（Auto/Manual/Plan）の使い分けを丁寧に解説している。公務員向けに社内展開を考えるなら参考になる観点だ。</p>
+
+<p>Gradually.aiの変更ログ集約では、7月時点の最新版v2.1.211が確認でき、ArtifactへのライブMCPコネクタデータ対応・Team/Enterprise向け共有機能・EndConversationツール追加・OAuthトークンローテーション後フラグ失効バグ修正が主要アップデートとして記録されている。</p>
+
+<ul>
+<li>25機能ガイド: &lt;https://www.marktechpost.com/2026/06/14/claude-code-guide-2026-25-features-with-examples-demo/&gt;</li>
+<li>セットアップ完全ガイド: &lt;https://medium.com/@reactjsbd/the-complete-claude-code-setup-for-2026-every-skill-plugin-and-config-worth-installing-eaa32659df2d&gt;</li>
+<li>非エンジニア向け: &lt;https://claudecode-lab.com/en/blog/claude-code-for-non-engineers/&gt;</li>
+<li>変更ログ集約: &lt;https://www.gradually.ai/en/changelogs/claude-code/&gt;</li>
+</ul>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>Kimi K3：フロンティア参入の本命か、ベンチマーク誇張か</h3>
+
+<p>Moonshot AIが7月16日に発表したKimi K3は2.8兆パラメータ・100万トークンコンテキスト・ネイティブビジョンを備えた初のオープンウェイト超大規模モデルだ（フルウェイト公開は7/27予定、現在API限定）。CNBCも報じるなど一次メディアでの露出は大きく、中国AIの本格的グローバルフロンティア参入を象徴するニュースとして扱われている。</p>
+
+<p>ただしベンチマーク数値は<strong>精査が必要（一次ソース確認：PARTIAL）</strong>。一部記事が主張する「FrontierSWE 77.8点で世界首位」は確認できず、公式ブログはKimiCodeハーネスでの「81.2 dominance score」を報告。BetterStack・Tom&#x27;s Hardwareは「Fable 5・GPT-5.6 Solと拮抗またはわずかに下回る場合もある」と報告しており、明確な首位は過大主張の可能性がある。価格はGPT-5.6 Solの約1/3というコスト効率は複数ソースで一致しており、「安くて強い」という方向性自体は本物と見ていい。</p>
+
+<ul>
+<li>CNBC報道: &lt;https://www.cnbc.com/2026/07/17/moonshot-ai-kimi-k3-model-openai-anthropic-china.html&gt;</li>
+<li>ベンチマーク詳細（要注意）: &lt;https://medium.com/data-science-in-your-pocket/kimi-k3-released-beats-claude-fable-glm-5-2-gpt-5-6-sol-2e6f9c90c72c&gt;</li>
+</ul>
+
+<h3>米国AI規制：イリノイ州法成立で35州以上が乱立局面へ</h3>
+
+<p>イリノイ州知事Pritzkerが7月6日にAI Safety Measures Act（SB 315）に署名した（<strong>一次ソース確認済み</strong>）。第三者による強制年次監査、収益$500M超のフロンティアモデル開発者への適用、内部告発者保護を含む米国最包括的水準の法律で、要件発効は2028年1月1日。</p>
+
+<p>Gunderson Dettmer（法律事務所）とTechPolicy.Pressの分析が重なる形で示すのは、直近四半期に35以上の州AI関連法が成立し、医療・雇用・金融など産業別の州規制が乱立しているという現実だ。EU AI Act透明性義務の2026年8月2日施行も重なり、AIシステムの国際コンプライアンス管理が半年単位での更新を要する複雑さになりつつある。DHS-CISAはアジェンティックAIへのプロンプトインジェクション対策義務化とヒューマンオーバーライド文書化要件を提言しており、FX自動取引のような重要インフラ隣接領域は注視が必要だ。</p>
+
+<p>iret DX事業部の週次日本語ダイジェストでは、NTTデータ×NIKKEI KAI提携（AI調査・経営判断支援）、ソフトバンク「Patching as a Service」（AI駆動型サイバーセキュリティ）など国内エンタープライズの「実験→収益化」移行が報告されている。</p>
+
+<ul>
+<li>イリノイ州AI法: &lt;https://news.wttw.com/2026/07/06/pritzker-signs-landmark-ai-regulation-bill-aims-mitigate-risks&gt;</li>
+<li>2026年AI法律実務ガイド: &lt;https://www.gunder.com/en/news-insights/insights/2026-ai-laws-update-key-regulations-and-practical-guidance&gt;</li>
+<li>州立法中間報告: &lt;https://www.techpolicy.press/where-state-ai-legislation-stands-half-way-into-2026/&gt;</li>
+<li>週刊生成AIニュース（日本語）: &lt;https://iret.media/202877&gt;</li>
+</ul>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #ea580c; padding-left: 12px;">AIトレーディング</h2>
+
+<p>BrokerAnalysisが2026年版AIエージェント自律取引レイヤーの総合レビューを公開した。データ分析・リスク管理・執行を担う専門エージェント群が相互通信しながら人間介入なく動く設計を詳解しており、LLMをルールベースの代わりに推論エンジンとして使う設計哲学は自前のFX自動取引システムと直接比較できる内容だ。Robinhoodの「agentic finance」発表（AIがユーザー代理で投資戦略管理）との接続も議論されている。バックテストと本番の乖離（取引コスト・スリッページ・レジーム変化）を定量化している点が実践的で、現在運用中のシステムの評価軸として参考になる。</p>
+
+<ul>
+<li>詳細: &lt;https://brokeranalysis.com/blog/ai-agentic-autonomous-trading-layers-2026-complete-review/&gt;</li>
+</ul>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>過去7日間の記事数推移：07-14（12）→07-15（4）→07-16（19）→07-17（0）→07-18（13）→07-19（13）→07-20（5）→<strong>07-21（15）</strong>。</p>
+
+<p>07-16の19本ピークはKimi K3発表日（7/16）と重なっており、翌日（7/17）の0本はデータ取得の空白と思われる。07-21の15本は週次でみて標準的な水準に戻った。</p>
+
+<p>テーマ別では <strong>claude・mcp・agent・trading・llm</strong> の5テーマが7日間を通じて継続している。今週の差分として特筆されるのは：①MCPステートレス移行が「概念解説」から「移行手順書」フェーズに移行したこと、②Kimi K3という具体的競合の出現でフロンティアモデル比較議論が活発化したこと、③AI規制が州別の具体的法律として出てき始めたこと。いずれも先週から始まったトレンドが「実装・施行」フェーズに進んでいる構図だ。</p>
+
+</body>
+</html>

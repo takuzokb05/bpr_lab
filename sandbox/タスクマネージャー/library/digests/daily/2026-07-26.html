@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-07-26</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-07-26 | 10件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-07-26</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>MCP 2026-07-28仕様が7月28日の正式リリースを前に最大の焦点となっている。</p>
+<p>プロトコルのステートレス化という根本的な設計変更は、既存MCPサーバー保守者に即応を迫る。</p>
+<p>Claude CodeのOpus 5デフォルト採用（主要プランで確認済み）や非エンジニア向け活用事例の広がりも続く。</p>
+<p>EU AI Act透明性義務の8月2日適用も1週間を切り、コンプライアンス対応が急務に入った。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>MCPステートレス化：7月28日が分岐点</h3>
+
+<p>MCP公式ブログが発表した2026-07-28 Release Candidantは、MCPの歴史上最大規模の改訂だ（一次ソース確認済み）。最大の変更は<strong>プロトコルのステートレス化</strong>——`initialize`ハンドシェイクとセッション管理用の`Mcp-Session-Id`ヘッダーが全廃され、各リクエストの`_meta`フィールドにプロトコルバージョンとクライアント情報を付与する設計へ移行する。月間9700万DL・1万以上のパブリックMCPサーバーを抱えるエコシステムへの影響は広範だ。[^1]</p>
+
+<p>このステートレス化が意味するのは「普通のロードバランサーで動く」ことだ。従来はスティッキーセッションや共有セッションストアが不可欠だったが、Azure App Serviceを例にMicrosoftが解説するとおり、標準的な水平スケール構成がそのまま使えるようになる。エンタープライズ導入の障壁だったインフラ複雑性が一気に解消される。[^2]</p>
+
+<p>既存サーバーの保守者には7月28日までの対応が必要だ。修正箇所は主に4点：initialize削除・セッション管理コードの撤去・`_meta`フィールド追加・エラーコード変更（`-32002`→`-32602`）。TypeScript/Pythonのbefore/afterコードを示した実践的な移行ガイドが複数公開されており、Luke OlifやMCP Playground Onlineのガイドが参考になる。ステートを保持する必要があるサーバーは、MCP Tasksがコアからコア拡張に移されたことで、代替アーキテクチャの実装が求められる。[^3][^4]</p>
+
+<p>セキュリティ面ではOAuth 2.0/OpenID Connect準拠の強化（6つのセキュリティ提案採用）により、企業のセキュリティレビューが大幅に簡略化される見込みだ。AnthropicのTier 1 SDK（Python・TypeScript等）は検証ウィンドウ内でサポートを出荷予定。</p>
+
+<h3>Claude Codeの活用フロンティア</h3>
+
+<p>7月時点のClaude Codeスキル推薦として、Context7（最新APIドキュメントのリアルタイム取得）・Code Review・Code Simplifierを軸にした10選が日本語でまとめられている。SKILL.mdの基本構造やトリガー設定のベストプラクティスも解説されており、スキル構築の参考になる。[^5]</p>
+
+<p>非エンジニア向けの活用事例としては、YouTube動画文字起こし→記事構成設計→本文執筆→WordPress投稿→SEO設定を全自動化するユースケースが注目だ。CLAUDE.mdとスキルを組み合わせることで「同じ品質の作業が何度でも再現できる」という実績が積み上がりつつある。公務員業務への応用——定型文書処理・月次レポート自動生成——と親和性が高い方向性だ。[^6]</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>モデルと規制の2ライン</h3>
+
+<p>AIエージェント動向週次まとめ（一次ソース一部確認済み）によれば、Claude CodeがOpus 5をデフォルトモデルに採用した。正確には<strong>Max/Team Premium/Enterprise/API</strong>でデフォルト化されており、Pro/Team StandardはSonnet 5がデフォルトのまま。全面採用とする報道は不正確だが、主要プランでのデフォルト化は事実だ。また、マルチチャットセッション対応（並列アプローチの比較・分岐）とサブエージェントのネスト深度デフォルト3への拡張も確認されている。[^7]</p>
+
+<p>規制面では、<strong>EU AI Act Article 50（透明性義務）が2026年8月2日から強制適用</strong>される（一次ソース確認済み）。違反は最大€15Mまたは全世界売上の3%という重いペナルティ。適用される義務は3点：AIシステムであることの開示・AI生成コンテンツへのマーキング・チャットボットの開示要件。高リスクAI規定は2027-2028に延期されたが透明性義務は予定通り。企業の法務・AI担当者は7月末までに対応確認を終えておく必要がある。中国のAIエージェント専用規制も7月15日から施行開始済みだ。[^8]</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #ea580c; padding-left: 12px;">AIトレーディング</h2>
+
+<p>FX自動取引を運用する観点から、AIトレーディングエージェントの現状評価が出揃いつつある。従来の「固定ルール実行ボット」から「コンテキスト解釈・適応的判断エージェント」への移行が2026年の実用レベルに達したとする評価が複数登場した。</p>
+
+<p>マルチエージェント構成——情報収集・リスク評価・執行の各エージェントが相互通信して人間介入なしに動作——が機関投資家の主流（ハイブリッドQuant+AI構成）として定着しつつある。米国小売投資家のAIツール利用は前年比75%増。Robinhoodが「アジェンティックファイナンス」を発表（AIがユーザー代わりに投資判断・実行）するなど、業界動向が加速している。リスク管理上の課題（過学習・市場体制変化・ハルシネーション）と法規制の現状整理も含まれており、自動売買AIの構築・運用検討の参照資料として使える。[^9][^10]</p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>過去7日の記事数推移：07-19(13)→07-20(5)→07-21(15)→07-22(8)→07-23(4)→07-24(7)→07-25(17)→<strong>07-26(10)</strong>。繰り返し登場するテーマはclaude・agent・mcp・trading・regulationの5つで、変化なし。</p>
+
+<p>07-25に17件と急増したのはMCP 7/28リリース直前の駆け込み情報集積と見られ、本日10件はその収束フェーズ。MCPステートレス化は「移行指南」から「実装実験」フェーズに移行しつつある。規制（EU AI Act 8/2）はカウントダウンに入っており、来週以降は適用後の影響報告が増える見込み。</p>
+
+<p>---</p>
+
+<p>[^1]: https://blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate/</p>
+<p>[^2]: https://techcommunity.microsoft.com/blog/appsonazureblog/mcp-just-went-stateless-%E2%80%94-what-the-2026-spec-changes-about-scaling-on-app-servic/4530222</p>
+<p>[^3]: https://lukeocodes.dev/mcp-goes-stateless</p>
+<p>[^4]: https://mcpplaygroundonline.com/blog/migrate-mcp-server-2026-07-28-stateless</p>
+<p>[^5]: https://library.libecity.com/articles/01KMN9PXE880GNH7WF6HFYAFJF</p>
+<p>[^6]: https://genai-ai.co.jp/ai-kanri/blog/cc-yt-business-use-cases-10/</p>
+<p>[^7]: https://aiagentstore.ai/ai-agent-news/this-week</p>
+<p>[^8]: https://www.stephensonharwood.com/insights/neural-network-july-2026/</p>
+<p>[^9]: https://pinggy.io/blog/best_ai_trading_agents/</p>
+<p>[^10]: https://assetwhisper.com/ai-trading-agents-in-2026-the-complete-guide-to-autonomous-investing/</p>
+
+</body>
+</html>
