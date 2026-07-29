@@ -1,0 +1,127 @@
+{
+  "date": "2026-07-28",
+  "generated_at": "2026-07-29T23:16:01.557401Z",
+  "article_count": 7,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-07-28_3105_WEB_Anthropic-Claude-Opus5-Release-July24-Benchmarks.md",
+      "title": "Claude Opus 5: Release July 24 — Benchmarks, Pricing $5/$25, 1M Context",
+      "url": "https://coursiv.io/blog/claude-opus-5",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "2026年7月24日にClaude Opus 5正式リリース。価格は入力$5/出力$25（100万トークン）でコンテキスト1Mトークン・最大出力128Kトークン。Frontier-Bench v0.1でOpus 4.8の2倍超スコアを達成しFable 5水準に迫る。ARC-AGI 3では次点モデルの3倍スコア、OSWorld 2.0ではFable 5を上回りコストは1/3。Fastモードは約2.5倍速で価格2倍。同日Opus 4.7 Fastモードは廃止（リクエストエラーに）。Claude Sonnet 5（6月30日）はコスト重視の繰り返しタスク向け、Opus 5は複雑エージェントタスク・長コンテキスト・本番ワークロードに最適。",
+      "body_excerpt": "Anthropic released Claude Opus 5 on July 24, 2026. Pricing: $5 input / $25 output per million tokens. Context window: 1M tokens, max output 128K tokens. Performance: on Frontier-Bench v0.1, Opus 5 more than doubles Opus 4.8 and surpasses all other models. On ARC-AGI 3, Opus 5 scores 3x the next-best model. On OSWorld 2.0, surpasses Fable 5 at 1/3 the cost. Fast mode: ~2.5x default speed at 2x base price. Claude Opus 4.7 fast mode deprecated same day. Sonnet 5 (June 30): better for cost-sensitive repetitive tasks; Opus 5: complex agents, long context, production workloads where cost is secondary.",
+      "fact_checked": true,
+      "fact_check_note": "確認済み。価格$5/$25、ARC-AGI 3スコア30.2%（次点の3倍）、Frontier-Bench 43.3%は複数ソースで一致。Fast mode価格2倍・速度2.5倍も正確。"
+    },
+    {
+      "file": "2026-07-28_3106_WEB_Claude-for-Government-Desktop-Public-Beta-FedRAMP.md",
+      "title": "Claude for Government Desktop — Public Beta, FedRAMP High, Tamper-Proof Audit Logs",
+      "url": "https://claude.com/blog/bringing-claude-code-and-claude-cowork-to-government",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Anthropicが2026年7月7日、Claude CodeとClaude CoworkをClaude for Government Desktopとして政府機関向けに公開ベータ提供開始。FedRAMP High認定環境で動作。全管理者アクションをハッシュチェーン式の改ざん検出可能な監査ログに記録、Anthropic側の機密操作は二者承認制。ATO（Authorization to Operate）サポート文書完備。政府機関がAIコーディング支援（Claude Code）とデスクトップ業務自動化（Claude Cowork）を政府グレードのセキュリティ要件で利用可能に。",
+      "body_excerpt": "Anthropic announced on July 7, 2026 that Claude Code and Claude Cowork are available in public beta through Claude for Government Desktop, delivered in a FedRAMP High authorized environment. Every administrative action is recorded in a hash-chained audit log that organization administrators can review directly in the product. Sensitive operations on Anthropic's side require two-person approval. Security teams and authorizing officials get tamper-evident audit logs and documentation that supports the agency ATO (Authorization to Operate) process. Combines Claude Code (software development) and Claude Cowork (desktop file workflows) with robust governance and compliance features.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-28_3107_WEB_MCP-2026-07-28-Spec-Final-Bringing-Stateless-to-Claude.md",
+      "title": "MCP 2026-07-28 仕様正式リリース — Bringing Stateless MCP to Claude（Anthropic公式）",
+      "url": "https://claude.com/blog/bringing-mcp-2026-07-28-to-claude",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "本日（2026-07-28）MCP最大改訂仕様が正式リリース。①ステートレスコア：プロトコル層がリクエスト/レスポンス型に移行、ラウンドロビンLBでリモートMCPサーバーが動作可能 ②initializeハンドシェイクとMcp-Session-Idヘッダーを廃止 ③Extensionsフレームワーク（SEP-2133）：MCP Apps・ステートレスTasksが公式拡張に昇格 ④Enterprise認可拡張（stable）+ Python/TS/Go/C# SDK ベータ。破壊的変更：tasks/list削除、Roots/Sampling/Logging非推奨。AnthropicはClaudeへの適用を本日発表。既存MCPサーバーの移行が必要。",
+      "body_excerpt": "The final MCP 2026-07-28 specification shipped today, July 28, 2026. Key changes: stateless protocol core (request/response model), eliminates initialize handshake and Mcp-Session-Id header. Extensions framework (SEP-2133) with reverse-DNS IDs and independent versioning. MCP Apps (sandboxed HTML UI) and stateless Tasks promoted to first-class official Extensions. Enterprise managed authorization extension (stable) + beta SDKs in Python, TypeScript, Go, C#. Breaking changes: tasks/list removed, Roots/Sampling/Logging deprecated, error code -32002 → -32602. Old and new implementations do not silently interoperate. Anthropic is bringing this to all Claude clients as of today.",
+      "fact_checked": true,
+      "fact_check_note": "確認済み。ステートレスコア移行、initializeハンドシェイク廃止、Mcp-Session-Id廃止、ExtensionsフレームワークはAnthropicブログ・MCPブログ双方で確認。"
+    },
+    {
+      "file": "2026-07-28_3108_WEB_MCP-Beta-SDKs-2026-07-28-Python-TS-Go-Csharp.md",
+      "title": "Beta SDKs for MCP 2026-07-28 Spec — Python, TypeScript, Go, C# 公開",
+      "url": "https://blog.modelcontextprotocol.io/posts/sdk-betas-2026-07-28/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "MCP 2026-07-28仕様のベータSDKが本日公開。対応言語：Python、TypeScript、Go、C#。ステートレスコア・Extensionsフレームワーク・OAuth/OIDC認可強化に対応。サーバー側のセッション状態管理が不要になり、クライアントがtools/listをキャッシュ可能に。各言語のマイグレーションガイドも同時公開。既存MCPサーバーは更新が必要。Claude Codeは本日付けで新仕様をサポート。",
+      "body_excerpt": "Beta SDKs for the MCP 2026-07-28 specification are now available for Python, TypeScript, Go, and C#. Implements the stateless core, Extensions framework, and hardened OAuth/OIDC authorization from the new spec. The ten-week validation window closes today as the final spec ships. Stateless model means no session state management needed server-side, and clients can cache tools/list responses. Migration guides included for each language SDK. Breaking changes from the old spec require updates to existing MCP server implementations.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-28_3109_WEB_Claude-Code-Nested-Subagents-Depth3-Reinstated-v2-1-217-219.md",
+      "title": "Claude Code Nested Subagents: 4-Day Evolution — v2.1.217→219 深度3復活",
+      "url": "https://dev.classmethod.jp/en/articles/20260722-cc-updates-v2-1-217/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "2026年7月21〜24日にClaude Codeのサブエージェント制御が急展開。v2.1.172（6/10）で深度5のネスト許可→v2.1.217（7/21）で同時実行上限20・ネスト完全禁止→v2.1.219（7/24）でデフォルト深度3で再実装。設定変数：CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH・CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS（デフォルト20）。Anthropicはコスト爆発・過負荷への対応としてガードレールを導入。深度3で実用上のほぼ全ユースケースに対応可能と説明。追加変更：サブエージェントのツール呼び出しが親の承認キューから除外（UX改善）、トークン使用量が親予算から分離。",
+      "body_excerpt": "Between July 21-24, 2026, Claude Code underwent a rapid four-day evolution on nested subagents. v2.1.172 (June 10): nested subagents allowed up to depth 5. v2.1.217 (July 21): concurrent subagent cap set to 20, nested subagent spawning disabled entirely. v2.1.219 (July 24): nesting reinstated at default depth 3. Configuration: CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH (override depth limit), CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS (default 20). Anthropic cited cost explosions and overload as reasons for restrictions, then found depth 3 sufficient for virtually all real use cases. Additional v2.1.217 changes: subagent tool calls no longer appear in parent's approval queue (UX improvement), subagent token usage explicitly separated from parent budget.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-28_3110_WEB_EU-AI-Act-What-Actually-Applies-August2-2026.md",
+      "title": "EU AI Act: What Actually Applies on 2 August 2026 — 第50条透明性義務・罰金詳細",
+      "url": "https://www.technology.org/2026/07/17/eu-ai-act-what-actually-applies-on-2-august-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "2026年8月2日（本日から5日後）、EU AI法の中核義務が大多数のAIシステムに適用開始。第50条透明性義務の具体内容：AIコンテンツのウォーターマーキング、AIとのインタラクション開示、ディープフェイクラベリング。違反罰金：世界年間売上の3%または1,500万ユーロの高い方。AI Omnibus規制（6月29日欧州理事会最終承認）で一部期限が延長、中小企業向け特例あり。高リスクシステム（採用・信用・教育AI）の完全義務は2027年まで猶予。EU市場向けAI製品・サービスを持つ日本企業は即時対応が必要。",
+      "body_excerpt": "August 2, 2026 is the most consequential date in AI regulation history. Article 50's general transparency requirements apply from 2 August 2026 to any AI system placed on the EU market. Requirements: watermarking of AI-generated content, disclosure of AI interactions, labeling of deepfakes. Fines: up to €15 million or 3% of total worldwide annual turnover, whichever is higher. The AI Omnibus Regulation (final approval June 29, 2026 by Council of EU) postponed some compliance deadlines and added SME provisions. High-risk AI systems (employment, credit, education) have until 2027. The July 2026 Cybersecurity and AI Action Plan coordinates EU-wide AI resilience.",
+      "fact_checked": true,
+      "fact_check_note": "確認済み。第50条透明性義務が2026年8月2日適用開始、罰金上限€1500万または世界年間売上3%は欧州委員会公式サイト含む複数ソースで一致。"
+    },
+    {
+      "file": "2026-07-28_3111_WEB_FXNX-LLM-Forex-Trading-Evaluation-Framework-2026.md",
+      "title": "How to Evaluate LLMs for Forex Trading 2026 — Tested, Ranked, Hybrid Architecture",
+      "url": "https://fxnx.com/en/blog/best-llm-forex-2026-tested-ranked",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "FXNXが実データによるLLMのFXトレーディング適性評価フレームワーク2026版を公開。評価軸：①シグナル精度②コスト対効果③レイテンシ④リスク説明能力。結論：LLM単体のシグナル生成は2年バックテストで単純ベースラインに勝てず、手数料後に損失するケースが大半。有効な用途：センチメント分析・EA/戦略コード生成・リスク文書化。最効果的アーキテクチャはハイブリッド型（価格+オーダーブック+LLMシグナルのアンサンブル）。Claude+MCP経由のMT5連携が最低レイテンシを記録。AI取引市場は2026年278.5億ドル→2030年457.4億ドルへ成長予測。",
+      "body_excerpt": "FXNX published a 2026 framework for evaluating LLMs for forex trading with real data. Evaluation axes: 1) Signal accuracy (backtest vs live divergence rate), 2) Cost efficiency (API cost÷win rate), 3) Latency (can it maintain time-advantage in forex), 4) Risk explanation ability (pre-warning of drawdowns). Conclusion: LLM standalone signal generation fails to beat simple baselines in 2-year backtests. Most LLM trading strategies lose money after fees. However, LLMs genuinely help in: sentiment analysis on news/earnings, code generation (EA/strategy code), risk documentation. Most effective architecture is hybrid: ensemble of price data + order book + LLM signals. Claude+MCP via MT5 records lowest latency in their testing. AI trading market: $27.85B in 2026, growing to $45.74B by 2030.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    }
+  ],
+  "fact_checks": [
+    {
+      "article_file": "2026-07-28_3105_WEB_Anthropic-Claude-Opus5-Release-July24-Benchmarks.md",
+      "result": "confirmed",
+      "note": "ARC-AGI 3: 30.2%（次点の3倍）、Frontier-Bench: 43.3%、価格$5/$25 — 複数の独立ソースで確認"
+    },
+    {
+      "article_file": "2026-07-28_3107_WEB_MCP-2026-07-28-Spec-Final-Bringing-Stateless-to-Claude.md",
+      "result": "confirmed",
+      "note": "ステートレスコア・Extensions・initialize廃止はAnthropicブログ・MCPブログで確認"
+    },
+    {
+      "article_file": "2026-07-28_3110_WEB_EU-AI-Act-What-Actually-Applies-August2-2026.md",
+      "result": "confirmed",
+      "note": "2026-08-02適用・第50条・罰金3%/€1500万は欧州委員会公式・複数法律ブログで確認"
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-07-27": 6,
+      "2026-07-26": 10,
+      "2026-07-25": 17,
+      "2026-07-24": 7,
+      "2026-07-23": 4,
+      "2026-07-22": 8,
+      "2026-07-21": 15
+    },
+    "recurring_themes": [
+      "claude",
+      "agent",
+      "mcp",
+      "trading",
+      "regulation"
+    ]
+  }
+}
