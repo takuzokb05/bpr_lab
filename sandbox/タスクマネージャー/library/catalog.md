@@ -816,3 +816,12 @@
 | 789 | Why Kimi K3 Signals A Convergence Toward Open-Weight Models — 2.8T公開・収束分析（Forbes） | en | 未読 | #ai-news #llm-news #model-release #web-signal | articles/2026-07-29_3120_WEB_Forbes-Kimi-K3-OpenWeight-Convergence-Analysis.md |
 | 790 | Kimi K3 Open Weights: 2.8T Params, Day-0 Hosting — 技術詳細・MoE・MXFP4（ExplainAI） | en | 未読 | #ai-news #llm-news #model-release #web-signal | articles/2026-07-29_3121_WEB_ExplainAI-Kimi-K3-OpenWeights-2-8T-Day0-Hosting.md |
 | 791 | Industry Leaders Join Open Secure AI Alliance for AI Safety — NOOA・HPE・HF・IBM・MS（NVIDIA公式） | en | 未読 | #ai-news #security #web-signal | articles/2026-07-29_3122_WEB_NVIDIA-Blog-OpenSecureAI-Alliance-NOOA-Official.md |
+| 792 | Claude Opus 5 debuts with effort-toggle: cost vs. capability on demand（Fortune） | en | 未読 | #model-update #ecosystem #web-signal | articles/2026-07-30_3123_WEB_Fortune-ClaudeOpus5-EffortToggle-Release.md |
+| 793 | Claude Opus 5 now available in GitHub Copilot — Anthropic×GitHub 協調リリース一次情報 | en | 未読 | #model-update #ecosystem #web-signal | articles/2026-07-30_3124_WEB_GitHub-ClaudeOpus5-Copilot-Official.md |
+| 794 | The Federal AI AGENT Act: Consumer Protection in AI Clothing?（Davis Wright Tremaine 法律解析） | en | 未読 | #regulation #ai-agent #web-signal | articles/2026-07-30_3125_WEB_DWT-Federal-AI-AGENT-Act-Legal.md |
+| 795 | EU Pledges €10B Public Funding for 7 AI Gigafactories — 2026年7月30日本日発表（Bloomberg） | en | 未読 | #regulation #ai-news #web-signal | articles/2026-07-30_3126_WEB_Bloomberg-EU-AI-Gigafactories-10B-July30.md |
+| 796 | AI News Today July 29, 2026: EU Gigafactories・Google Gemini App Artifacts・Perplexity Brain（BuildFastWithAI） | en | 未読 | #ai-news #daily-roundup #web-signal | articles/2026-07-30_3127_WEB_BuildFastWithAI-News-July29-2026.md |
+| 797 | 【2026-07-21】世界AI最新ニュース：長時間エージェント安全運用・生成AI実行プラットフォーム化（eguweb） | ja | 未読 | #ai-news #ai-agent #web-signal | articles/2026-07-30_3128_WEB_Eguweb-AI-News-July21-2026-LongAgent.md |
+| 798 | 【2026-07-25】世界AI最新ニュース：本番エージェント・主権AI・透明性規制・AIインフラ（eguweb） | ja | 未読 | #ai-news #regulation #web-signal | articles/2026-07-30_3129_WEB_Eguweb-AI-News-July25-2026-ProdAgent.md |
+| 799 | 【2026-07-27】世界AI最新ニュース：長時間エージェント・透明性規制・AIインフラ・安全設計（eguweb） | ja | 未読 | #ai-news #regulation #web-signal | articles/2026-07-30_3130_WEB_Eguweb-AI-News-July27-2026-SafeAgent.md |
+| 800 | Warner bill: FTC vetted list for secure AI agents, CUA fiduciary duties（CyberScoop） | en | 未読 | #regulation #ai-agent #web-signal | articles/2026-07-30_3131_WEB_CyberScoop-AI-AGENT-Act-WarnerBill.md |
