@@ -1,0 +1,178 @@
+{
+  "date": "2026-07-29",
+  "generated_at": "2026-07-30T23:15:56.828966Z",
+  "article_count": 11,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-07-29_3112_WEB_OpenHands-Claude-Code-Best-Practices-Agentic-Coding-2026.md",
+      "title": "Claude Code Best Practices for Agentic Coding 2026 — OpenHands",
+      "url": "https://www.openhands.dev/blog/claude-code-best-practices-agentic-coding",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "OpenHandsが2026年7月に公開した10のベストプラクティス。「探索→計画→コーディング」ワークフローが要。CLAUDE.mdは200行以内必須（超過するとモデル精度が95%→60%に低下する実測値あり）。Shift+TabでのPlanモード活用、gitワークツリーでの並列エージェント実行、ツール選択の設計原則（Hooks=強制ルール、Skills=文脈知識、Subagents=委任境界）を明確化。チームMakefileで全員が1コマンドで実行できる環境を構築することを推奨。",
+      "body_excerpt": "OpenHands (Jul 02, 2026): \"10 Claude Code Best Practices for Agentic Coding\"\n\nThe workflow Anthropic recommends is explore, then plan, then code. Claude Code works best when it has a clear context, disciplined planning, and structure built around it before execution begins.",
+      "fact_checked": true,
+      "fact_check_note": "[要注意（出典の拡大解釈）] 200行推奨は複数ベストプラクティスで確認済み。95%→60%低下はChroma 2025ベンチマーク（長文コンテキスト全般の「lost in the middle」効果）からの数字で、CLAUDE.md200行超過に特化した実測ではない。長文コンテキスト劣化の実測値を特定条件（CLAUDE.md長さ）に帰属させている拡大解釈の可能性あり。"
+    },
+    {
+      "file": "2026-07-29_3113_WEB_Qiita-Claude-Agent-SDK-Python-Jisso-2026.md",
+      "title": "Claude Agent SDKでカスタムAIエージェントを自作する実装手順とハマりどころ【2026】",
+      "url": "https://qiita.com/yureki_lab/items/d64230d1302b4bb30660",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-ecosystem",
+      "summary": "Claude Agent SDKのPython実装実践記事。@toolデコレータ+create_sdk_mcp_serverでローカルMCPサーバーを起動、GitHub/Slack/DB連携エージェントを自作する手順を解説。automation用途ではpermission_modeの明示設定が必須というハマりポイントを共有。Python版v0.1.75・TypeScript版v0.2.121に達し、hooks・サブエージェント・MCP・セッション継続が実装済みの成熟したSDK。",
+      "body_excerpt": "Qiita (yureki_lab, 2026): Claude Agent SDK（旧Claude Code SDK）でPythonエージェントを自作する実装記事。\n\n主要内容：\n- Claude Agent SDKは2026年に\"Claude Code SDK\"から改称",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-29_3114_WEB_FelloAI-Claude-Cowork-Guide-Pricing-Setup-Dispatch-2026.md",
+      "title": "Claude Cowork Guide 2026: Pricing, Setup & Dispatch",
+      "url": "https://felloai.com/claude-cowork-guide/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Claude Coworkの包括的ガイド。2026年1月ローンチ、設定の幅が最も広いClaude UI。10分でセットアップ完了（グローバル指示・フォルダ・プラグイン・コネクター）。Anthropic公式11プラグイン（Productivity/Sales/CS/PM/Marketing/Legal/Finance/Data/Enterprise Search/Bio Research/Plugin管理）を網羅。7月7日から「Dispatchモード」でAnthropicサーバー上でセッション実行（ラップトップ閉じても継続可）がMaxプランから展開。",
+      "body_excerpt": "FelloAI (2026): Comprehensive guide to Claude Cowork setup, pricing, and Dispatch feature.\n\nKey information:\n- Cowork launched in January 2026 and has more configuration surface than any other Claude interface",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-29_3115_WEB_GenAI-Claude-Code-25-Features-July2026-JA.md",
+      "title": "【2026年7月最新】Claude Codeでできること25機能｜業務自動化・MCP連携まで完全解説",
+      "url": "https://genai-ai.co.jp/ai-kanri/blog/cc-code-features-25/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "genai-ai.co.jpによるClaude Code 25機能解説（2026年7月版）。エージェントチーム並列実行・スキル12,868件・YouTube全自動記事化など具体的事例が豊富。業務時間の30%削減という定量データ。スキルはSKILL.mdだけで構築可能で非エンジニアにも実用的。機能カテゴリ別整理で参照性が高い。",
+      "body_excerpt": "genai-ai.co.jp（2026年7月最新版）：Claude Codeでできること25機能の完全解説。\n\n主な内容：\n- エージェントチーム機能（複数AIの並列実行）が「最も便利な機能」として紹介",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-29_3116_WEB_GenAI-Claude-Code-Complete-Guide-30-July2026-JA.md",
+      "title": "【2026年7月最新】Claude Codeとは？普通のAIとの決定的な違い｜導入から料金・実運用まで完全解説",
+      "url": "https://genai-ai.co.jp/ai-kanri/blog/cc-yt-claude-code-complete-guide-30/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "genai-ai.co.jpのClaude Code完全ガイド（2026年7月、30ポイント超）。v2.1.101対応、xhigh effort・ネイティブバイナリ高速化・エージェントチーム・Cowork連携・MCP統合まで日本語で網羅。入門から実運用まで一本で把握できる。料金体系比較やセキュリティ設定も含む実践的な内容。",
+      "body_excerpt": "genai-ai.co.jp（2026年7月）：Claude Code完全ガイド（30ポイント超）。\n\n対象読者：Claude Code入門者〜中級者\nカバー内容：",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-29_3117_WEB_Eguweb-AI-News-July29-2026-Production-Agents-Security-JA.md",
+      "title": "【2026-07-29】世界のAI最新ニュース：本番エージェント・AIセキュリティ・透明性規制・推論基盤",
+      "url": "https://eguweb.jp/ai/81253/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "ai-news",
+      "summary": "eguweb.jpの2026年7月29日版AI日次まとめ。本番エージェント移行設計・NVIDIA OSAIA発足・EU透明性規制実装・MCP 2026-07-28最終版リリースをカバー。日本語での規制動向把握に有用。中国のAIエージェント専用規制（7月15日施行）がグローバル企業にも影響を及ぼすことを指摘。",
+      "body_excerpt": "eguweb.jp（2026年7月29日付）：世界AI最新ニュース日次まとめ。\n\n主要4テーマ：",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-29_3118_WEB_TechNoisy-AI-Daily-July27-2026-NVIDIA-KimiK3-MCP-JA.md",
+      "title": "生成AIニュース【2026年7月27日】NVIDIA OSAIA・Kimi K3公開・MCP最終スペック",
+      "url": "https://tech-noisy.com/2026/07/28/ai-daily-news-2026-07-27/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "ai-news",
+      "summary": "TECH NOISYの2026年7月27日AIニュース日次まとめ。NVIDIA OSAIA設立・Kimi K3オープンウェイト（2.8T）・MCP 2026-07-28最終スペック公開という3大ニュースを日本語で整理。公式発表ベースの一次情報まとめとして信頼性が高い。",
+      "body_excerpt": "TECH NOISY（2026年7月28日公開）：2026年7月27日（月）のAI公式発表まとめ。\n\n**NVIDIAとOpen Secure AI Alliance**\n- NVIDIAが40社超と「Open Secure AI Alliance」（OSAIA）を発足",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-29_3119_WEB_HackerNews-NVIDIA-37Member-OpenSecureAI-NOOA-Framework.md",
+      "title": "NVIDIA Forms 37-Member Open Secure AI Alliance and Open-Sources NOOA Framework",
+      "url": "https://thehackernews.com/2026/07/nvidia-forms-37-member-open-secure-ai.html",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "The Hacker NewsによるNVIDIA主導OSAIA（37組織）設立報道。NOOAフレームワーク（Apache 2.0、エージェント行動のテスト・トレース・監査）をGitHub公開。HPE（ゼロトラスト認証）・Hugging Face（Safetensors）・IBM/Red Hat（Lightwell）・Microsoft（MDASH）が技術提供。動機：HuggingFaceの7月インシデントでクローズドAIが不十分だったことを教訓に、オープンなAIセキュリティエコシステムの必要性が認識された。AI agent security領域での初の大規模OSS連合。",
+      "body_excerpt": "The Hacker News (July 2026): NVIDIA and 36 organizations form Open Secure AI Alliance (OSAIA) to develop and share open technologies for securing AI agents.\n\n**NOOA Framework**\n- NVIDIA's first contribution: NOOA (No-Operations Open Agents), an Apache 2.0 research framework",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-29_3120_WEB_Forbes-Kimi-K3-OpenWeight-Convergence-Analysis.md",
+      "title": "Why Kimi K3 Signals A Convergence Toward Open-Weight Models (Forbes)",
+      "url": "https://www.forbes.com/sites/geruiwang/2026/07/27/why-kimi-k3-signals-a-convergence-toward-open-weight-models/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "ForbesによるKimi K3の業界インパクト分析。クローズドとオープンの性能差縮小・業界のオープンウェイト収束加速を指摘。2.8Tパラメータ・1Mコンテキスト・Day-0ホスティング（Together AI/Modal）という実力を評価しつつ、APIリスク（中国インフラ経由データフロー）回避としてのセルフホスティング価値を提示。プロプライエタリモデルの差別化が純粋な性能以外の要素に移行していると結論。",
+      "body_excerpt": "Forbes (Jul 27, 2026, Gerui Wang): Analysis of why Kimi K3's open-weight release signals industry convergence.\n\n**Model Details**\n- Moonshot AI released Kimi K3 open weights on July 26, 2026 (~7:30 PM EDT, one day ahead of July 27 target)",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-07-29_3121_WEB_ExplainAI-Kimi-K3-OpenWeights-2-8T-Day0-Hosting.md",
+      "title": "Kimi K3 Open Weights: 2.8T Parameters, Day-0 Hosting — Technical Deep Dive",
+      "url": "https://explainx.ai/blog/kimi-k3-open-weights-2-8-trillion-parameters-july-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "ExplainAIによるKimi K3技術詳細。2.8T（MoE: 896専門家中16が発火、実効50B）・1Mコンテキスト・MXFP4 1.4TB。Stable LatentMoE+KDA+QATで2.8T規模を経済的運用可能に。Day-0ホスティング（Together AI/Modal）あり。セルフホスティングにより中国系インフラへのデータ流出を防ぐプライバシー利点を評価。フロンティア級ベンチマーク性能で無償利用可能。",
+      "body_excerpt": "ExplainAI (July 2026): Technical overview of Kimi K3 open-weight model release.\n\n**Release Details**\n- Released: July 26, 2026 (early ahead of July 27 announcement)",
+      "fact_checked": true,
+      "fact_check_note": "[概ね確認済み（一部注意）] 2.8Tパラメータ・1Mコンテキスト・MoEアーキテクチャは複数ソースで確認。ただし実効パラメータは「50B」ではなく「104B active per token」と記載されるケースあり（MoE構成の計算方法の差異）。リリース日はJuly 26夜（予定の1日前）で事実確認済み。"
+    },
+    {
+      "file": "2026-07-29_3122_WEB_NVIDIA-Blog-OpenSecureAI-Alliance-NOOA-Official.md",
+      "title": "Industry Leaders Join Open Secure AI Alliance for AI Safety and Security (NVIDIA Official)",
+      "url": "https://blogs.nvidia.com/blog/open-secure-ai-alliance/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "NVIDIA公式ブログによるOSAIA設立発表。37組織でAIエージェントセキュリティのOSS技術を共有。NVIDIA貢献：NOOAフレームワーク（Agent行動のテスト・監査・ガバナンス、Apache 2.0）。HPE/HF/IBM/Microsoftが各社技術を提供。7月インシデントでのHugging Face対応（GLM 5.2で17,000アクション分析、クローズドAI不十分）が設立動機。AI agent security領域でのOSS連合という業界初の動き。",
+      "body_excerpt": "NVIDIA Official Blog (July 2026): Announcement of Open Secure AI Alliance (OSAIA) formation.\n\n**Alliance Overview**\n- 37 organizations joining forces for AI agent security",
+      "fact_checked": true,
+      "fact_check_note": "[確認済み] 37メンバー・NOOA Apache 2.0リリースともに複数独立ソース（The Hacker News、CoinDesk、NVIDIA公式）で確認。OpenAI・Anthropic・Googleはメンバー不参加も確認済み。HuggingFaceセキュリティインシデントが設立動機という記述も一致。"
+    }
+  ],
+  "fact_checks": [
+    {
+      "article_file": "2026-07-29_3121_WEB_ExplainAI-Kimi-K3-OpenWeights-2-8T-Day0-Hosting.md",
+      "claim": "2.8T（MoE: 896専門家中16が発火、実効50B）・1Mコンテキスト",
+      "verdict": "概ね確認済み（一部注意）",
+      "note": "2.8Tパラメータ・1Mコンテキスト・MoEアーキテクチャは複数ソースで確認。ただし実効パラメータは「50B」ではなく「104B active per token」と記載されるケースあり（MoE構成の計算方法の差異）。リリース日はJuly 26夜（予定の1日前）で事実確認済み。"
+    },
+    {
+      "article_file": "2026-07-29_3122_WEB_NVIDIA-Blog-OpenSecureAI-Alliance-NOOA-Official.md",
+      "claim": "NVIDIA主導OSAIA（37組織）・NOOAフレームワーク（Apache 2.0）",
+      "verdict": "確認済み",
+      "note": "37メンバー・NOOA Apache 2.0リリースともに複数独立ソース（The Hacker News、CoinDesk、NVIDIA公式）で確認。OpenAI・Anthropic・Googleはメンバー不参加も確認済み。HuggingFaceセキュリティインシデントが設立動機という記述も一致。"
+    },
+    {
+      "article_file": "2026-07-29_3112_WEB_OpenHands-Claude-Code-Best-Practices-Agentic-Coding-2026.md",
+      "claim": "CLAUDE.mdは200行以内必須（超過するとモデル精度が95%→60%に低下する実測値あり）",
+      "verdict": "要注意（出典の拡大解釈）",
+      "note": "200行推奨は複数ベストプラクティスで確認済み。95%→60%低下はChroma 2025ベンチマーク（長文コンテキスト全般の「lost in the middle」効果）からの数字で、CLAUDE.md200行超過に特化した実測ではない。長文コンテキスト劣化の実測値を特定条件（CLAUDE.md長さ）に帰属させている拡大解釈の可能性あり。"
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-07-28": 7,
+      "2026-07-27": 6,
+      "2026-07-26": 10,
+      "2026-07-25": 17,
+      "2026-07-24": 7,
+      "2026-07-23": 4,
+      "2026-07-22": 8
+    },
+    "recurring_themes": [
+      "claude",
+      "mcp",
+      "agent",
+      "trading",
+      "llm"
+    ]
+  }
+}
