@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-07-28</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-07-28 | 7件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-07-28</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>本日はAnthropicエコシステムが同時多発的に動いた1日だった。MCP仕様の史上最大の改訂版が正式リリースされ、Claude CodeのサブエージェントはAI深度3で落ち着いた。Opus 5のスペックが改めて整理されており、EU AI法の第50条が5日後（8/2）に迫っている。FX自動取引でLLMをシグナル生成に使うのは現時点では非推奨と評価結果が出た。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>Claude Opus 5 の実力整理（一次ソース確認済み）</h3>
+
+<p>7月24日にリリースされたClaude Opus 5の詳細が出そろった。価格は入力$5・出力$25（100万トークン）、コンテキスト1Mトークン・最大出力128Kトークンという仕様だ。ベンチマーク面では、Frontier-Bench v0.1でOpus 4.8の2倍超のスコアを叩き出し、ARC-AGI 3では次点モデルの3倍となる30.2%を記録している。OSWorld 2.0ではFable 5を上回りながらコストは1/3という結果で、複雑なエージェントタスク・長コンテキスト・本番ワークロードでの採用が推奨される。Fastモードは約2.5倍速で価格2倍、同日にOpus 4.7 Fastモードは廃止された。</p>
+
+<p>なお Claude Sonnet 5（6月30日リリース）はコスト重視の繰り返しタスク向けに位置づけられており、用途に応じてOpus 5とSonnet 5を使い分けるのが基本戦略になる。</p>
+
+<p>*参照: &lt;https://coursiv.io/blog/claude-opus-5&gt;*</p>
+
+<h3>MCP 2026-07-28 仕様が本日正式リリース（一次ソース確認済み）</h3>
+
+<p>MCP（Model Context Protocol）の史上最大の改訂版が本日付けで正式リリースされた。最大の変更は<strong>プロトコル層のステートレス化</strong>だ。これまでのセッション管理モデルから脱却し、リクエスト/レスポンス型に移行することでロードバランサー経由のスケールアウトが可能になった。`initialize`ハンドシェイクと`Mcp-Session-Id`ヘッダーは廃止される。</p>
+
+<p>あわせてExtensionsフレームワーク（SEP-2133）が正式化され、MCP Apps（サンドボックスHTML UI）とステートレスTasksが公式拡張として昇格した。Enterprise向け認可拡張もStableに。ベータSDKはPython・TypeScript・Go・C#の4言語で同日公開されており、サーバー側のセッション状態管理が不要になる恩恵を受けられる。</p>
+
+<p><strong>既存のMCPサーバーは移行が必要</strong>。`tasks/list`削除、Roots/Sampling/Logging非推奨、エラーコード-32002→-32602の破壊的変更がある。旧実装と新実装はサイレントに相互運用されない点に注意。Claudeへの適用は本日付け。</p>
+
+<p>*参照: &lt;https://claude.com/blog/bringing-mcp-2026-07-28-to-claude&gt; / &lt;https://blog.modelcontextprotocol.io/posts/sdk-betas-2026-07-28/&gt;*</p>
+
+<h3>Claude Codeサブエージェント: 4日間の乱高下を経て深度3で安定</h3>
+
+<p>7月21〜24日のわずか4日間で、Claude Codeのサブエージェント制御方針が激しく揺れた。v2.1.217（7/21）で深度5→ネスト完全禁止に急ブレーキがかかったが、v2.1.219（7/24）でデフォルト深度3として再実装された。Anthropicはコスト爆発と過負荷への対応として一度禁止し、深度3で実用上のほぼ全ユースケースをカバーできると判断して落ち着かせた形だ。</p>
+
+<p>設定変数は `CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH`（深度上限）と `CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS`（デフォルト20）。UX面でも改善があり、サブエージェントのツール呼び出しが親の承認キューから除外され、トークン使用量が親予算から分離された。</p>
+
+<p>*参照: &lt;https://dev.classmethod.jp/en/articles/20260722-cc-updates-v2-1-217/&gt;*</p>
+
+<h3>Claude for Government Desktop: 公務員向けには要注目</h3>
+
+<p>政府機関向けの動きとして、7月7日にClaude CodeとClaude CoworkがFedRAMP High認定環境で公開ベータ提供開始された。全管理者アクションはハッシュチェーン式の改ざん検出可能な監査ログに記録され、Anthropic側の機密操作は二者承認制という厳格な構成だ。ATO（Authorization to Operate）サポート文書も整備されている。</p>
+
+<p>日本の公務員環境への直接適用は難しいが、「政府グレードのセキュリティ要件でのAI活用」という先行事例として参照価値がある。</p>
+
+<p>*参照: &lt;https://claude.com/blog/bringing-claude-code-and-claude-cowork-to-government&gt;*</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>EU AI法 第50条：8月2日まであと5日（一次ソース確認済み）</h3>
+
+<p>2026年8月2日、EU AI法の第50条（透明性義務）がEU市場に関わる実質すべてのAIシステムに適用開始される。具体的にはAI生成コンテンツのウォーターマーキング、AIとのインタラクション開示、ディープフェイクのラベリングが義務化される。違反罰金は世界年間売上の3%または1,500万ユーロの高い方だ。</p>
+
+<p>採用・信用・教育といった高リスクAIシステムの完全義務化は2027年まで猶予されており、AI Omnibus規制（6月29日最終承認）で一部期限が延長・中小企業特例も追加された。EU市場向けのサービスや製品を持つ組織は即時対応が求められる。</p>
+
+<p>*参照: &lt;https://www.technology.org/2026/07/17/eu-ai-act-what-actually-applies-on-2-august-2026/&gt;*</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #ea580c; padding-left: 12px;">AIトレーディング</h2>
+
+<h3>LLMのFXシグナル生成は現時点では非推奨</h3>
+
+<p>FXNXが実データを用いたLLMのFXトレーディング適性評価を公開した。結論は明快で、<strong>LLM単体のシグナル生成は2年バックテストで単純ベースラインに勝てず、手数料後に損失するケースが大半</strong>だという。</p>
+
+<p>有効な用途は限られており、①ニュース/決算のセンチメント分析、②EA/戦略コード生成、③リスク文書化の3点が現実的な使いどころとされた。最も効果的なアーキテクチャは価格データ・オーダーブック・LLMシグナルを組み合わせたハイブリッド型であり、テストではClaude+MCP経由のMT5連携が最低レイテンシを記録している。</p>
+
+<p>現在FX自動取引を運用中であれば、LLMをシグナル生成の主役に据えるよりも、コード生成やセンチメント補助として活用する構成が実績に基づく推奨だ。</p>
+
+<p>*参照: &lt;https://fxnx.com/en/blog/best-llm-forex-2026-tested-ranked&gt;*</p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>過去7日の記事数推移は07-21: 15件 → 07-22: 8件 → 07-23: 4件 → 07-24: 7件 → 07-25: 17件 → 07-26: 10件 → 07-27: 6件 → 07-28: 7件。流量としては平均的な水準に戻っている。</p>
+
+<p>再帰テーマ（claude / agent / mcp / trading / regulation）は7日間を通じて変わっていないが、本日は特に<strong>MCP</strong>と<strong>regulation</strong>が同時に大型イベントを迎えた点が際立つ。MCP仕様の破壊的変更とEU AI法の適用開始が重なったタイミングであり、エコシステム全体が再構築フェーズに入っている。来週にかけてはMCP移行対応の記事増加が見込まれる。</p>
+
+</body>
+</html>
