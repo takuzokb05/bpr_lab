@@ -278,3 +278,21 @@
 | 255 | Neural Network - July 2026: EU AI Act 8/2 適用開始・中国AIエージェント規制施行・英国立法進行（Stephenson Harwood） | en | 未読 | #regulation #eu-ai-act #web-signal | articles/2026-07-26_3098_WEB_StephensonHarwood-Neural-Network-AI-Legal-July2026.md |
 | 256 | 日本における生成AI規制状況2026年7月最新｜世界の動向と企業が整えるべき社内ルール（genai-ai.co.jp） | ja | 未読 | #regulation #llm-news #web-signal | articles/2026-07-27_3104_WEB_Japan-GenAI-Regulation-2026-Global-Comparison-Enterprise-JA.md |
 | 257 | EU AI Act: What Actually Applies on 2 August 2026 — 第50条透明性義務・罰金詳細（technology.org） | en | 未読 | #regulation #eu-ai-act #web-signal | articles/2026-07-28_3110_WEB_EU-AI-Act-What-Actually-Applies-August2-2026.md |
+| 258 | 生成AIニュース日次【2026年7月29日】— プロダクションエージェント・AIセキュリティ（Eguweb） | ja | 未読 | #llm-news #ai-agent #web-signal | articles/2026-07-29_3117_WEB_Eguweb-AI-News-July29-2026-Production-Agents-Security-JA.md |
+| 259 | 生成AIニュース日次【2026年7月27日】— NVIDIA OpenSecureAI・Kimi K3・MCP（TECH NOISY） | ja | 未読 | #llm-news #model-release #web-signal | articles/2026-07-29_3118_WEB_TechNoisy-AI-Daily-July27-2026-NVIDIA-KimiK3-MCP-JA.md |
+| 260 | NVIDIA主導「Open Secure AI Alliance」(NOOA) 37社結成 — AIセキュリティ標準策定（Hacker News） | en | 未読 | #ai-agent #regulation #web-signal | articles/2026-07-29_3119_WEB_HackerNews-NVIDIA-37Member-OpenSecureAI-NOOA-Framework.md |
+| 261 | Kimi K3 Open-Weight公開: 収束仮説の実証、Fable 5クラス性能・Day0ホスティング（Forbes） | en | 未読 | #llm-news #model-release #open-source #web-signal | articles/2026-07-29_3120_WEB_Forbes-Kimi-K3-OpenWeight-Convergence-Analysis.md |
+| 262 | Kimi K3 Open-Weights技術詳細: 2.8Tパラメータ・Day0 Hostingエコシステム（ExplainAI） | en | 未読 | #llm-news #model-release #open-source #web-signal | articles/2026-07-29_3121_WEB_ExplainAI-Kimi-K3-OpenWeights-2-8T-Day0-Hosting.md |
+| 263 | NVIDIA公式: Open Secure AI Alliance (NOOA) 発足 — AIセキュリティのオープン標準化推進 | en | 未読 | #regulation #ai-agent #web-signal | articles/2026-07-29_3122_WEB_NVIDIA-Blog-OpenSecureAI-Alliance-NOOA-Official.md |
+| 264 | DWT: Federal AI AGENT Act法律分析 — エージェントAI規制の5つの核心要件（米国連邦） | en | 未読 | #regulation #ai-agent #web-signal | articles/2026-07-30_3125_WEB_DWT-Federal-AI-AGENT-Act-Legal.md |
+| 265 | Bloomberg: EU AI Gigafactories — 100億ユーロ投資・政府主導AIインフラ整備計画（7月30日） | en | 未読 | #regulation #llm-news #web-signal | articles/2026-07-30_3126_WEB_Bloomberg-EU-AI-Gigafactories-10B-July30.md |
+| 266 | AI News Today July 29 2026: 16 Biggest Stories（BuildFastWithAI） | en | 未読 | #llm-news #daily-roundup #web-signal | articles/2026-07-30_3127_WEB_BuildFastWithAI-News-July29-2026.md |
+| 267 | 【2026-07-21】Eguweb AI News: LongAgentフレームワーク・長期コンテキスト管理の最前線 | ja | 未読 | #ai-agent #llm-news #web-signal | articles/2026-07-30_3128_WEB_Eguweb-AI-News-July21-2026-LongAgent.md |
+| 268 | 【2026-07-25】Eguweb AI News: プロダクションエージェント展開・信頼性設計パターン | ja | 未読 | #ai-agent #llm-news #web-signal | articles/2026-07-30_3129_WEB_Eguweb-AI-News-July25-2026-ProdAgent.md |
+| 269 | 【2026-07-27】Eguweb AI News: セーフエージェント設計・リスク管理・ガバナンス | ja | 未読 | #ai-agent #regulation #web-signal | articles/2026-07-30_3130_WEB_Eguweb-AI-News-July27-2026-SafeAgent.md |
+| 270 | CyberScoop: Warner上院議員 AI AGENT Act提出 — エージェントAI連邦規制の立法動向分析 | en | 未読 | #regulation #ai-agent #web-signal | articles/2026-07-30_3131_WEB_CyberScoop-AI-AGENT-Act-WarnerBill.md |
+| 271 | Anthropic公式研究: Claude Mythos Preview が HAWK-256ポスト量子暗号の脆弱性を60時間で発見 — NISTプロセスから撤退 | en | 未読 | #ai-security #llm-news #web-signal | articles/2026-07-31_3132_WEB_Anthropic-Claude-Mythos-HAWK-PostQuantum-Cryptographic-Weakness.md |
+| 272 | The Hacker News: Claude AIがHAWK-256を解読・7ラウンドAES攻撃200〜800倍高速化 — AI暗号解析の新地平 | en | 未読 | #ai-security #llm-news #web-signal | articles/2026-07-31_3133_WEB_TheHackerNews-Claude-AI-Cracked-PostQuantum-HAWK-AES.md |
+| 273 | Google DeepMind公式: Gemini Robotics 2 — 全身制御・5本指巧緻性・マルチロボット協調 (Apollo 2実証) | en | 未読 | #llm-news #model-release #web-signal | articles/2026-07-31_3134_WEB_Google-DeepMind-Gemini-Robotics-2-WholeBody-Intelligence.md |
+| 274 | VentureBeat: OpenAI GPT-5.6 Luna 80%値下げ — AI価格戦争激化・中国モデルが米国企業トークン使用量46%占有 | en | 未読 | #llm-news #model-release #web-signal | articles/2026-07-31_3135_WEB_VentureBeat-OpenAI-GPT56-Luna-80pct-Price-War.md |
+| 275 | AI News Today July 31 2026: 16 Biggest Stories — HAWK破壊・Gemini Robotics 2・Luna値下げ・Claude障害（BuildFastWithAI） | en | 未読 | #llm-news #daily-roundup #web-signal | articles/2026-07-31_3136_WEB_BuildFastWithAI-AI-News-Today-July31-2026.md |

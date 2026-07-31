@@ -1591,6 +1591,60 @@ drop.md: URLなし（処理対象なし）
 
 ---
 
+## 2026-07-29 収集分（11件収集 → SIGNAL 5件 claude-code/ecosystem）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 895 | [2026-07-29_3112](articles/2026-07-29_3112_WEB_OpenHands-Claude-Code-Best-Practices-Agentic-Coding-2026.md) | OpenHands: Claude Codeアジェンティックコーディング10のベストプラクティス2026 — CLAUDE.md設計・Planモード・並列Worktree・Hook設計 | claude-code | 未読 | #web-signal |
+| 896 | [2026-07-29_3113](articles/2026-07-29_3113_WEB_Qiita-Claude-Agent-SDK-Python-Jisso-2026.md) | Qiita: Claude Agent SDK Python実装 — @toolデコレータ・create_sdk_mcp_server・ハマりどころ2026 | claude-ecosystem | 未読 | #web-signal |
+| 897 | [2026-07-29_3114](articles/2026-07-29_3114_WEB_FelloAI-Claude-Cowork-Guide-Pricing-Setup-Dispatch-2026.md) | FelloAI: Claude Cowork完全ガイド2026 — 料金体系・セットアップ・Dispatch機能・チーム活用 | claude-ecosystem | 未読 | #web-signal |
+| 898 | [2026-07-29_3115](articles/2026-07-29_3115_WEB_GenAI-Claude-Code-25-Features-July2026-JA.md) | 【JA】Claude Codeできること25選2026年7月版 — 機能別業務活用一覧（Uravation） | claude-code | 未読 | #web-signal |
+| 899 | [2026-07-29_3116](articles/2026-07-29_3116_WEB_GenAI-Claude-Code-Complete-Guide-30-July2026-JA.md) | 【JA】Claude Code完全ガイド30項目2026年7月 — CLAUDE.md・Skills・サブエージェント・MCP初心者向け | claude-code | 未読 | #web-signal |
+
+### NOISEとして除外（2026-07-29）
+| 候補 | 理由 |
+|---|---|
+| Eguweb AI News July29 JA | ai-news系 → catalog-news.md管理 |
+| TechNoisy AI Daily July27 JA | ai-news系 → catalog-news.md管理 |
+| HackerNews NVIDIA OpenSecureAI | ai-news系 → catalog-news.md管理 |
+| Forbes/ExplainAI/NVIDIA Kimi K3 | ai-news系 → catalog-news.md管理 |
+
+---
+
+## 2026-07-30 収集分（9件収集 → SIGNAL 2件 claude-ecosystem）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 900 | [2026-07-30_3123](articles/2026-07-30_3123_WEB_Fortune-ClaudeOpus5-EffortToggle-Release.md) | Fortune: Claude Opus 5リリース — 1Mコンテキスト・thinking enabled by default・Effort Toggle機能詳細 | claude-ecosystem | 未読 | #web-signal |
+| 901 | [2026-07-30_3124](articles/2026-07-30_3124_WEB_GitHub-ClaudeOpus5-Copilot-Official.md) | GitHub公式: Claude Opus 5がGitHub Copilotに統合 — 設定方法・利用条件・パフォーマンス比較 | claude-ecosystem | 未読 | #web-signal |
+
+### NOISEとして除外（2026-07-30）
+| 候補 | 理由 |
+|---|---|
+| Eguweb AI News July21/25/27 JA | ai-news系 → catalog-news.md管理 |
+| DWT Federal AI AGENT Act | ai-news/regulation系 → catalog-news.md管理 |
+| Bloomberg EU AI Gigafactories | ai-news系 → catalog-news.md管理 |
+| BuildFastWithAI News July29 | ai-news系 → catalog-news.md管理 |
+| CyberScoop AI AGENT Act | ai-news系 → catalog-news.md管理 |
+
+---
+
+## 2026-07-31 収集分（6件収集 → SIGNAL 1件 claude-ecosystem）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 902 | [2026-07-31_3137](articles/2026-07-31_3137_WEB_Explainx-Claude-Outage-July29-30-NetworkFailures-Recovery.md) | Claude大規模障害 2026-07-29〜30: 2段階ネットワーク障害・全サービス影響・復旧経緯・スケジュールタスク運用者向けフォールバック設計指針 | claude-ecosystem | 未読 | #web-signal |
+
+### NOISEとして除外（2026-07-31）
+| 候補 | 理由 |
+|---|---|
+| Anthropic HAWK/THN | ai-news系（AI安全研究）→ catalog-news.md管理 |
+| Google Gemini Robotics 2 | ai-news系 → catalog-news.md管理 |
+| VentureBeat OpenAI Price War | ai-news系 → catalog-news.md管理 |
+| BuildFastWithAI July31 | ai-news系 → catalog-news.md管理 |
+
+---
+
 ## ドメイン別統計（累計）
 
 | ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 2026-06-07 | 2026-06-08 | 2026-06-09 | 2026-06-10 | 2026-06-11 | 2026-06-12 | 2026-06-13 | 2026-06-14 | 2026-06-16 | 2026-06-17 | 2026-06-18 | 2026-06-19 | 2026-06-20 | 2026-06-21 | 2026-06-22 | 2026-06-23 | 2026-06-24 | 2026-06-25 | 2026-06-26 | 2026-06-27 | 2026-06-28 | 2026-06-29 | 2026-06-30 | 2026-07-01 | 2026-07-02 | 2026-07-03 | 2026-07-04 | 2026-07-05 | 2026-07-06 | 2026-07-07 | 2026-07-08 | 2026-07-09 | 2026-07-10 | 2026-07-11 | 2026-07-12 | 2026-07-13 | 2026-07-14 | 2026-07-15 | 累計 |

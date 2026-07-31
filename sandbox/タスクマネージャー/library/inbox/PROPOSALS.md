@@ -4263,3 +4263,33 @@ Eguweb の分析によると、2026年7月時点で長時間エージェント�
 3. 重要取引（ロット設定・ポジション転換）にヒューマン承認フロー検討
 4. 4要素フレームワーク（データ・オペレーション・コスト・出力）をシステム設計ドキュメントに明記
 
+
+---
+
+### 2026-07-31: OpenAI GPT-5.6 Luna 80%値下げ — FX自動取引コスト試算の更新
+
+**出典:** articles/2026-07-31_3135_WEB_VentureBeat-OpenAI-GPT56-Luna-80pct-Price-War.md
+
+**提案内容:**
+OpenAI が GPT-5.6 Luna を $0.20/$1.20 per M tokens に値下げ（旧 $1/$6）。FX自動取引でのsentiment分析・ニュース解析用途で月次コストが大幅低下する可能性がある。Claude Sonnet 5 プロモ価格 $2/$10 と比較してInputが10倍安い。
+
+**提案アクション:**
+1. FX自動取引の月次API費用試算をLuna前提で再計算
+2. Sentiment分析（ニュース分類）などlatency許容タスクをLunaに切り替え検討
+3. Claude Sonnet 5 vs GPT-5.6 Luna の質・速度・コストトレードオフを実測比較
+4. Anthropic Claude Sonnet 5 ($2/$10) vs Luna ($0.20/$1.20): Inputコスト差は10倍。高精度が必要なエントリー判断はSonnet 5、量的スクリーニングはLunaの二層構成を検討
+
+---
+
+### 2026-07-31: Claude大規模障害 — スケジュールタスクのフォールバック設計
+
+**出典:** articles/2026-07-31_3137_WEB_Explainx-Claude-Outage-July29-30-NetworkFailures-Recovery.md
+
+**提案内容:**
+2026-07-29〜30のAnthropicサービス障害により、Claude Codeスケジュールタスク（日次収集ルーチン等）が影響を受けた可能性がある。スケジュールタスク運用者として信頼性設計が必要。
+
+**提案アクション:**
+1. 日次ルーチンに障害時の通知機能を追加（PushNotificationで「本日のルーチン未実行: Anthropicサービス障害」を送信）
+2. status.anthropic.com を monitoring に追加（もしくは RSS/webhook で変更通知を受け取る）
+3. 重要ルーチン（FX自動取引サービスモニタリング）にリトライロジック実装: 失敗時に6時間後に再実行
+4. Claude障害時の代替フロー検討: Anthropic API のみでなくローカル処理の部分的フォールバックを定義
