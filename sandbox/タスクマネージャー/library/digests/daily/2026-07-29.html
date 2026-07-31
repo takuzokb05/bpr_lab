@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-07-29</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-07-29 | 11件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-07-29</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>Claude Codeのベストプラクティスが複数角度から整理され、CLAUDE.md 200行制限の実態と「探索→計画→コーディング」ワークフローの重要性が改めて可視化された。</p>
+<p>AI業界ではNVIDIA主導のOSAIA（37組織）が発足、AIエージェントセキュリティのOSSエコシステム構築が本格始動した。</p>
+<p>Moonshot AIがKimi K3（2.8Tパラメータ）をオープンウェイト公開し、プロプライエタリとオープンウェイトの性能差縮小が加速している。</p>
+<p>MCP最終スペック（2026-07-28版）リリース・EU透明性規制実装・中国AIエージェント規制の3つの規制動向が同時に進行した。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>ベストプラクティスの収束：「探索→計画→コーディング」が標準ワークフローに</h3>
+
+<p>OpenHandsが7月に公開した10のベストプラクティス（一次ソース確認済み）は、Claude Codeをチームで使う上での設計原則を整理している。核心は「CLAUDE.mdは200行以内」という制約だ。記事では「95%→60%の精度低下」という数値が引用されているが、<strong>これは要注意</strong>：実際にはChroma 2025ベンチマークで示された長文コンテキスト全般の「lost in the middle」効果からの数字であり、CLAUDE.md超過に特化した実測値ではない。ただし200行制限自体は複数ベストプラクティスで一致しており、実用上は有効な指針として扱える。</p>
+
+<p>ツール選択の設計原則として「Hooks=強制ルール、Skills=文脈知識、Subagents=委任境界」を明確化している点は、大規模エージェント設計をしている身には直接使えるフレームワーク。また、gitワークツリーを使った並列エージェント実行と、チームMakefileで「1コマンド実行」環境を揃える推奨も実践的。</p>
+<p><a href="https://www.openhands.dev/blog/claude-code-best-practices-agentic-coding" target="_blank">OpenHands: Claude Code Best Practices for Agentic Coding 2026</a></p>
+
+<p>genai-ai.co.jpの7月版解説（25機能・30ポイント完全ガイド）は、v2.1.101対応でxhigh effort・エージェントチーム・Cowork連携まで網羅する日本語記事として参照価値が高い。業務時間30%削減という定量データも記載されており、組織内への説明材料として使いやすい構成になっている。入門から実運用まで1本で把握できる点も○。</p>
+<p><a href="https://genai-ai.co.jp/ai-kanri/blog/cc-code-features-25/" target="_blank">25機能解説</a> / <a href="https://genai-ai.co.jp/ai-kanri/blog/cc-yt-claude-code-complete-guide-30/" target="_blank">完全ガイド30+</a></p>
+
+<h3>Claude Agent SDK・Cowork：エコシステムの成熟</h3>
+
+<p>Claude Agent SDK（Python実装）の実践記事が登場。`@tool`デコレータ＋`create_sdk_mcp_server`でローカルMCPサーバーを起動し、GitHub/Slack/DB連携エージェントを自作する手順を解説している。v0.1.75（Python）・v0.2.121（TypeScript）に達し、hooks・サブエージェント・MCP・セッション継続が揃った成熟段階に入ったという評価は、SDK自体の安定性を示している。<strong>ハマりポイント：automation用途では`permission_mode`の明示設定が必須</strong>。</p>
+<p><a href="https://qiita.com/yureki_lab/items/d64230d1302b4bb30660" target="_blank">Qiita: Claude Agent SDK Python実装手順</a></p>
+
+<p>Claude Coworkは7月7日から「Dispatchモード」を展開開始。Anthropicサーバー上でセッション実行するため、ラップトップを閉じても継続できる。MaxプランからのロールアウトでAnthropicの公式11プラグイン群（Productivity/Sales/CS/PM等）と組み合わせることで、スケジュール運用の幅が広がる。</p>
+<p><a href="https://felloai.com/claude-cowork-guide/" target="_blank">FelloAI: Claude Cowork Guide 2026</a></p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>NVIDIA OSAIA：AIエージェントセキュリティのOSS連合が始動</h3>
+
+<p>NVIDIA主導で37組織が「Open Secure AI Alliance（OSAIA）」を設立した（一次ソース確認済み）。直接のきっかけは7月のHugging Faceセキュリティインシデントで、クローズドAIによる対応が不十分だったことを教訓にオープンなセキュリティエコシステムの必要性が認識された結果だ。</p>
+
+<p>NVIDIAの初期貢献はNOOAフレームワーク（Apache 2.0）。エージェント行動のテスト・トレース・監査機能をOSSで提供する。HPEがゼロトラスト認証、Hugging FaceがSafetensors、IBM/Red HatがLightwell、MicrosoftがMDASHを技術提供。注目点はOpenAI・Anthropic・Googleがいずれもメンバー不参加な点で、Big Threeを除くプレイヤーによるOSSセキュリティ連合という構図になっている。</p>
+<p><a href="https://blogs.nvidia.com/blog/open-secure-ai-alliance/" target="_blank">NVIDIA Official</a> / <a href="https://thehackernews.com/2026/07/nvidia-forms-37-member-open-secure-ai.html" target="_blank">The Hacker News</a></p>
+
+<h3>Kimi K3：オープンウェイト収束の加速</h3>
+
+<p>Moonshot AIがKimi K3（2.8Tパラメータ、MoE構成）を7月26日夜にオープンウェイトで公開した（一次ソース確認済み）。MoEの実効パラメータは記事によって「50B」「104B active per token」と記述が異なるが、これはMoE構成の計算方法の差異によるもの。1Mコンテキスト・Day-0ホスティング（Together AI/Modal）対応で、実質的にフロンティア級の性能が無償で使える状態になった。</p>
+
+<p>Forbesの分析が指摘する通り、クローズドとオープンウェイトの性能差は急速に縮まっており、プロプライエタリモデルの差別化軸が純粋な性能以外（サポート・エコシステム・コンプライアンス）に移行しつつある。中国インフラ経由のデータフローを懸念する場合はセルフホスティングが有効な回避策として評価されている。</p>
+<p><a href="https://www.forbes.com/sites/geruiwang/2026/07/27/why-kimi-k3-signals-a-convergence-toward-open-weight-models/" target="_blank">Forbes分析</a> / <a href="https://explainx.ai/blog/kimi-k3-open-weights-2-8-trillion-parameters-july-2026" target="_blank">ExplainAI技術詳細</a></p>
+
+<h3>規制・業界動向の同時進行</h3>
+
+<p>eguweb.jp・TECH NOISYの日次まとめによると、7月29日時点で3本の規制軸が同時に動いている：①MCP最終スペック（2026-07-28版）リリース、②EU透明性規制の実装フェーズ移行、③中国のAIエージェント専用規制（7月15日施行）がグローバル企業にも及ぶ範囲の確認。このうちMCP最終版は開発ツール選定に直接影響するため、SDK実装を進めている場合はスペック確認を優先したい。</p>
+<p><a href="https://eguweb.jp/ai/81253/" target="_blank">eguweb.jp 7/29まとめ</a> / <a href="https://tech-noisy.com/2026/07/28/ai-daily-news-2026-07-27/" target="_blank">TECH NOISY 7/27まとめ</a></p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>過去7日の記事数推移：7/22（8件）→7/23（4件）→7/24（7件）→7/25（17件）→7/26（10件）→7/27（6件）→7/28（7件）→今日（11件）。7/25の17件ピークは一過性で、その後は6〜11件の安定域に戻っている。</p>
+
+<p>recurring_themes（claude/mcp/agent/trading/llm）のうち、本日は<strong>trading</strong>関連の記事がゼロ。FX自動取引運用に直結する情報は今日は入っていない。一方でagent・mcp・claudeの3軸は引き続き高密度で継続しており、MCPの最終スペック確定とClaude Agent SDKの成熟が同時進行しているタイミングとして、エコシステム全体が実用フェーズに入ったことを示している。</p>
+
+<p>claude-codeとclaudeエコシステムの記事が今日も過半数を占めており、「使い方の最適化」フェーズから「チーム・組織での標準化」フェーズへの移行が情報量として可視化されている週といえる。</p>
+
+</body>
+</html>
