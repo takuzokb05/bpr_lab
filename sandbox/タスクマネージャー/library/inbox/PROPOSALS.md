@@ -4293,3 +4293,46 @@ OpenAI が GPT-5.6 Luna を $0.20/$1.20 per M tokens に値下げ（旧 $1/$6）
 2. status.anthropic.com を monitoring に追加（もしくは RSS/webhook で変更通知を受け取る）
 3. 重要ルーチン（FX自動取引サービスモニタリング）にリトライロジック実装: 失敗時に6時間後に再実行
 4. Claude障害時の代替フロー検討: Anthropic API のみでなくローカル処理の部分的フォールバックを定義
+
+---
+
+### 2026-08-01: MCP仕様RC ステートレス化 — MCPサーバー展開アーキテクチャの見直し
+
+**出典:** articles/2026-08-01_3138_WEB_MCP-Spec-2026-07-28-Stateless-Protocol-RC.md
+
+**提案内容:**
+MCP 2026-07-28 RCでプロトコルがステートレス化。`initialize`ハンドシェイクとセッションIDが廃止され、通常のラウンドロビンLBで展開可能に。現在タスクマネージャーで運用中のMCPサーバー（Gmail等）がある場合、スティッキーセッション不要になることで展開コストが低下。
+
+**提案アクション:**
+1. 最終仕様（2026-07-28公開）をReleaseNotesで確認し、使用中MCP serverの更新タイミングを検討
+2. Roots・Sampling・Logging featureを使用しているMCPサーバーがあれば、12ヶ月以内に代替実装を検討
+3. Extensions framework（逆DNS識別子）に対応したMCPサーバーの作成を検討（MCP Apps Extensionでダッシュボード表示等）
+
+---
+
+### 2026-08-01: Claude Code v2.1.215 — /verify・/code-review 自動呼び出し廃止への対応
+
+**出典:** articles/2026-08-01_3139_WEB_ClaudeCode-v2-1-219-Opus5-Depth3-Subagents-July2026.md
+
+**提案内容:**
+v2.1.215で`/verify`と`/code-review`の自動呼び出しが廃止。日次収集ルーチン等でこれらのコマンドに依存するworkflowは明示的な呼び出しが必要になった。
+
+**提案アクション:**
+1. セッションレビュースキル（session-review等）のスクリプトで`/verify`が自動実行されていた場合は明示的コマンドを追加
+2. GitHub Actions/CIパイプラインでClaudeにコードレビューさせる場合は`/code-review`コマンドを明示的に含める
+
+---
+
+### 2026-08-01: FX自動取引 — TradingAgents Claude対応・Bull/Bear対立構造の採用検討
+
+**出典:** articles/2026-08-01_3141_WEB_TradingAgents-7-Agent-Architecture-BullBear-2026.md
+
+**提案内容:**
+TradingAgents v0.3.1がClaude Sonnet 5に正式対応。7エージェント対立構造（Bull/Bear Researcher + Risk Manager）はFX自動取引の判断品質向上に応用可能。AAPL バックテストでSharpe 8.21・MaxDD 0.91%という結果。
+
+**提案アクション:**
+1. 現在のFX自動取引システムにBull/Bear対立構造を試験的に実装（Claude Sonnet 5をバックエンドに使用）
+2. pip install tradingagents でローカル環境にインストールし、FX通貨ペアでのバックテストを実施
+3. 注意事項：APIコスト$0.10-0.50/シグナル・幻覚リスク・過学習問題のため必ずペーパートレードから開始
+4. MT5直接統合は非対応のためPython←→MT5ブリッジ層が必要
+

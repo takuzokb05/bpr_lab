@@ -296,3 +296,4 @@
 | 273 | Google DeepMind公式: Gemini Robotics 2 — 全身制御・5本指巧緻性・マルチロボット協調 (Apollo 2実証) | en | 未読 | #llm-news #model-release #web-signal | articles/2026-07-31_3134_WEB_Google-DeepMind-Gemini-Robotics-2-WholeBody-Intelligence.md |
 | 274 | VentureBeat: OpenAI GPT-5.6 Luna 80%値下げ — AI価格戦争激化・中国モデルが米国企業トークン使用量46%占有 | en | 未読 | #llm-news #model-release #web-signal | articles/2026-07-31_3135_WEB_VentureBeat-OpenAI-GPT56-Luna-80pct-Price-War.md |
 | 275 | AI News Today July 31 2026: 16 Biggest Stories — HAWK破壊・Gemini Robotics 2・Luna値下げ・Claude障害（BuildFastWithAI） | en | 未読 | #llm-news #daily-roundup #web-signal | articles/2026-07-31_3136_WEB_BuildFastWithAI-AI-News-Today-July31-2026.md |
+| 276 | 米国AI規制 2026年8月 — California AI透明性法8/2発効・FTC精度ポリシー・OMB M-26-16（Vorp Labs） | en | 未読 | #regulation #web-signal | articles/2026-08-01_3140_WEB_US-AI-Regulation-Aug2026-California-FTC-OMB.md |

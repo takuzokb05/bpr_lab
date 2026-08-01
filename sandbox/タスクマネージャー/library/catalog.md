@@ -825,3 +825,10 @@
 | 798 | 【2026-07-25】世界AI最新ニュース：本番エージェント・主権AI・透明性規制・AIインフラ（eguweb） | ja | 未読 | #ai-news #regulation #web-signal | articles/2026-07-30_3129_WEB_Eguweb-AI-News-July25-2026-ProdAgent.md |
 | 799 | 【2026-07-27】世界AI最新ニュース：長時間エージェント・透明性規制・AIインフラ・安全設計（eguweb） | ja | 未読 | #ai-news #regulation #web-signal | articles/2026-07-30_3130_WEB_Eguweb-AI-News-July27-2026-SafeAgent.md |
 | 800 | Warner bill: FTC vetted list for secure AI agents, CUA fiduciary duties（CyberScoop） | en | 未読 | #regulation #ai-agent #web-signal | articles/2026-07-30_3131_WEB_CyberScoop-AI-AGENT-Act-WarnerBill.md |
+| 801 | MCP 2026-07-28 仕様RC — ステートレスプロトコル・Extensions正式化・Roots/Sampling非推奨（MCP公式ブログ） | en | 未読 | #mcp #ecosystem #web-signal | articles/2026-08-01_3138_WEB_MCP-Spec-2026-07-28-Stateless-Protocol-RC.md |
+| 802 | Claude Code v2.1.219 July 2026 — Opus 5デフォルト・深度3ネストサブエージェント・ネットワーク制御（Releasebot） | en | 未読 | #claude-code #model-update #web-signal | articles/2026-08-01_3139_WEB_ClaudeCode-v2-1-219-Opus5-Depth3-Subagents-July2026.md |
+| 803 | Claude Code できること25選【2026年7月】SWE-bench 79.6%・Cowork GA・Ultraplan・1時間キャッシュ（Uravation） | ja | 未読 | #claude-code #web-signal | articles/2026-08-01_3142_WEB_ClaudeCode-25Features-July2026-SWE79pct-Cowork-JA.md |
+| 804 | Claude Code June 2026 新機能6選 — /rewind・Artifacts Beta・Dynamic Workflows・5段ネスト（Uravation） | ja | 未読 | #claude-code #web-signal | articles/2026-08-01_3143_WEB_ClaudeCode-June2026-Rewind-Artifacts-DynamicWorkflow-JA.md |
+| 805 | Claude Agent SDK完全ガイド — Messages API対比・MCP3層統合・本番セーフガード（hidekazu-konishi） | ja | 未読 | #ecosystem #sdk #web-signal | articles/2026-08-01_3144_WEB_ClaudeAgentSDK-Guide-MessagesAPI-MCP-Production-JA.md |
+| 806 | MCPサーバー16種活用事例 2026年7月 — 週次レポート2h→5min・全社インフラ化（genai-ai.co.jp） | ja | 未読 | #mcp #web-signal | articles/2026-08-01_3145_WEB_MCP-Server-16-Cases-WeeklyReport-2h-to-5min-JA.md |
+| 807 | Claude Code エージェントコーディング10 BP — 計画→検証ループ・コンテキスト管理（OpenHands 2026-07-02） | en | 未読 | #claude-code #web-signal | articles/2026-08-01_3146_WEB_ClaudeCode-10BP-Agentic-Plan-Verify-Loop-OpenHands.md |
