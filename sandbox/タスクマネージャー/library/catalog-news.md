@@ -297,3 +297,9 @@
 | 274 | VentureBeat: OpenAI GPT-5.6 Luna 80%値下げ — AI価格戦争激化・中国モデルが米国企業トークン使用量46%占有 | en | 未読 | #llm-news #model-release #web-signal | articles/2026-07-31_3135_WEB_VentureBeat-OpenAI-GPT56-Luna-80pct-Price-War.md |
 | 275 | AI News Today July 31 2026: 16 Biggest Stories — HAWK破壊・Gemini Robotics 2・Luna値下げ・Claude障害（BuildFastWithAI） | en | 未読 | #llm-news #daily-roundup #web-signal | articles/2026-07-31_3136_WEB_BuildFastWithAI-AI-News-Today-July31-2026.md |
 | 276 | 米国AI規制 2026年8月 — California AI透明性法8/2発効・FTC精度ポリシー・OMB M-26-16（Vorp Labs） | en | 未読 | #regulation #web-signal | articles/2026-08-01_3140_WEB_US-AI-Regulation-Aug2026-California-FTC-OMB.md |
+| 277 | Anthropic 全製品リリースノート 2026年7月 — Opus 5・SDK更新・agent-memory beta・モデル退役タイムライン | en | 未読 | #llm-news #model-release #web-signal | articles/2026-08-02_3152_WEB_Anthropic-All-Products-Release-Notes-July2026.md |
+| 278 | Claude Sonnet 5 vs Opus 5 比較 — SWE-bench 72.7% vs Frontier-Bench首位・価格・Fast mode詳解 | en | 未読 | #llm-news #model-release #web-signal | articles/2026-08-02_3159_WEB_ClaudeSonnet5-vs-Opus5-Benchmarks-Pricing-July2026.md |
+| 279 | Claude Agent SDK クレジット課金変更 2026年6月15日 — Pro $20/Max 5x $100/Max 20x $200月次上限 | en | 未読 | #llm-news #web-signal | articles/2026-08-02_3153_WEB_ClaudeAgentSDK-Credits-Billing-Change-June15-2026.md |
+| 280 | MCP 2026年公式ロードマップ — ステートレス化・Extensions・Tasks・MCP Apps・月間DL 9700万 | en | 未読 | #ai-agent #ecosystem #web-signal | articles/2026-08-02_3154_WEB_MCP-2026-Official-Roadmap-Stateless-Extensions-Apps.md |
+| 281 | 2026年8月 AIモデルリリース — DeepSeek V4 Flash・GPT-5.6 Luna 80%値下げ・Astra構想（mean.ceo） | en | 未読 | #llm-news #model-release #web-signal | articles/2026-08-02_3160_WEB_AI-Model-Releases-August-2026-Startup-Edition.md |
+| 282 | EU AI法 2026年8月2日 GPAI執行開始 — 高リスクAI延期・カリフォルニアSB 53・日本企業対応（sei-san-sei） | ja | 未読 | #regulation #web-signal | articles/2026-08-02_3161_WEB_EU-AI-Act-Aug2-2026-GPAI-Enforcement-Japan.md |

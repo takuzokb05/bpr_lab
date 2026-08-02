@@ -832,3 +832,18 @@
 | 805 | Claude Agent SDK完全ガイド — Messages API対比・MCP3層統合・本番セーフガード（hidekazu-konishi） | ja | 未読 | #ecosystem #sdk #web-signal | articles/2026-08-01_3144_WEB_ClaudeAgentSDK-Guide-MessagesAPI-MCP-Production-JA.md |
 | 806 | MCPサーバー16種活用事例 2026年7月 — 週次レポート2h→5min・全社インフラ化（genai-ai.co.jp） | ja | 未読 | #mcp #web-signal | articles/2026-08-01_3145_WEB_MCP-Server-16-Cases-WeeklyReport-2h-to-5min-JA.md |
 | 807 | Claude Code エージェントコーディング10 BP — 計画→検証ループ・コンテキスト管理（OpenHands 2026-07-02） | en | 未読 | #claude-code #web-signal | articles/2026-08-01_3146_WEB_ClaudeCode-10BP-Agentic-Plan-Verify-Loop-OpenHands.md |
+| 808 | Codex vs Claude Code 2026年7月 — Agent Controls機能比較・/fork・/doctor・BroadcastAutoMode（Developers Digest） | en | 未読 | #claude-code #model-update #web-signal | articles/2026-08-02_3147_WEB_Codex-vs-ClaudeCode-July2026-Agent-Controls.md |
+| 809 | Claude Code CLI 完全ガイド — Hooks 17イベント・MCP統合・Skills設計パターン（Blake Crosley 2026年7月） | en | 未読 | #claude-code #reference #web-signal | articles/2026-08-02_3148_WEB_ClaudeCode-CLI-Complete-Guide-Hooks-MCP-Skills.md |
+| 810 | Claude Code 67機能リファレンス 2026 — 全サーフェス・組み込みツール42種・Coworkリモートbeta | en | 未読 | #claude-code #reference #web-signal | articles/2026-08-02_3149_WEB_ClaudeCode-Features-67-Capabilities-Reference.md |
+| 811 | Claude Codeおすすめスキル10選【2026年7月最新版】 — 導入順・選定軸・トラブルシューティング（Libecity） | ja | 未読 | #claude-code #skills #web-signal | articles/2026-08-02_3150_WEB_ClaudeCode-Skills-Top10-Recommend-July2026-JA.md |
+| 812 | Claude Code ベストプラクティス15選 — 6プロジェクトから導出した実践知見（aiorg.dev 2026） | en | 未読 | #claude-code #best-practices #web-signal | articles/2026-08-02_3151_WEB_ClaudeCode-Best-Practices-15-Tips-6-Projects.md |
+| 813 | Anthropic 全製品リリースノート 2026年7月 — Opus 5・SDK更新・agent-memory beta（Releasebot） | en | 未読 | #ecosystem #model-update #web-signal | articles/2026-08-02_3152_WEB_Anthropic-All-Products-Release-Notes-July2026.md |
+| 814 | Claude Agent SDK クレジット課金変更 2026年6月15日 — Pro/Max別月次クレジット上限詳解（Totalum） | en | 未読 | #ecosystem #sdk #web-signal | articles/2026-08-02_3153_WEB_ClaudeAgentSDK-Credits-Billing-Change-June15-2026.md |
+| 815 | MCP 2026年公式ロードマップ — ステートレス化・Extensions・Tasks・MCP Apps・認証強化（MCP公式ブログ） | en | 未読 | #mcp #ecosystem #web-signal | articles/2026-08-02_3154_WEB_MCP-2026-Official-Roadmap-Stateless-Extensions-Apps.md |
+| 816 | Claude Agent SDK 本番ガイド 2026 — 階層サブエージェント・Managed Agents・コスト最適化（Totalum） | en | 未読 | #ecosystem #sdk #web-signal | articles/2026-08-02_3155_WEB_ClaudeAgentSDK-Plans-Production-Complete-Guide-2026.md |
+| 817 | AI Trading Agents vs Bots 2026 — リスク・ワークフロー実態比較（Bitsgap） | en | 未読 | #ai-trading #comparison #web-signal | articles/2026-08-02_3156_WEB_AI-Trading-Agents-vs-Bots-2026-Risks-Workflow.md |
+| 818 | LLMトレーディング 2026 — AIエージェントは人間を凌駕できるか？実験データ検証（CoinEdition） | en | 未読 | #ai-trading #llm-trading #web-signal | articles/2026-08-02_3157_WEB_LLM-Trading-2026-Can-AI-Outperform-Humans.md |
+| 819 | MT5 AI Expert Advisors 完全ガイド 2026 — LLM統合・強化学習EA・市場規模（MQL5公式） | en | 未読 | #ai-trading #mt5 #web-signal | articles/2026-08-02_3158_WEB_Algorithmic-Trading-AI-MT5-EAs-Complete-Guide-2026.md |
+| 820 | Claude Sonnet 5 vs Opus 5 比較 2026年7月 — ベンチマーク・価格・用途分け（Coursiv） | en | 未読 | #ecosystem #model-update #web-signal | articles/2026-08-02_3159_WEB_ClaudeSonnet5-vs-Opus5-Benchmarks-Pricing-July2026.md |
+| 821 | 2026年8月 AIモデルリリーストラッカー — DeepSeek V4 Flash・GPT-5.6 Luna・Astra構想（mean.ceo） | en | 未読 | #ai-news #llm-news #web-signal | articles/2026-08-02_3160_WEB_AI-Model-Releases-August-2026-Startup-Edition.md |
+| 822 | EU AI法 2026年8月2日 GPAI執行開始 — 日本企業への影響・高リスクAI適用延期の現状（sei-san-sei） | ja | 未読 | #ai-news #regulation #web-signal | articles/2026-08-02_3161_WEB_EU-AI-Act-Aug2-2026-GPAI-Enforcement-Japan.md |

@@ -307,3 +307,6 @@
 | 277 | AI Trading Agents in 2026: The Complete Guide to Autonomous Investing — マルチエージェント構成・リスク管理詳解（AssetWhisper） | en | 未読 | #llm-trading #multi-agent #web-signal | articles/2026-07-26_3096_WEB_AssetWhisper-AI-Trading-Agents-2026-Complete-Guide.md |
 | 278 | How to Evaluate LLMs for Forex Trading 2026 — Tested, Ranked, Hybrid Architecture（FXNX） | en | 未読 | #llm-trading #evaluation #fx #web-signal | articles/2026-07-28_3111_WEB_FXNX-LLM-Forex-Trading-Evaluation-Framework-2026.md |
 | 279 | TradingAgents 2026 構築実践ガイド — 7エージェント対立構造・AAPL +26.62%・Claude対応（PickMyTrade） | en | 未読 | #llm-trading #multi-agent #implementation #web-signal | articles/2026-08-01_3141_WEB_TradingAgents-7-Agent-Architecture-BullBear-2026.md |
+| 280 | AI Trading Agents vs Bots 2026 — 賢い≠安全・リスク実態分析・半自律ワークフロー推奨（Bitsgap） | en | 未読 | #llm-trading #comparison #web-signal | articles/2026-08-02_3156_WEB_AI-Trading-Agents-vs-Bots-2026-Risks-Workflow.md |
+| 281 | LLMトレーディング 2026 — AIは人間をアウトパフォームできるか？6ヶ月実験データ検証（CoinEdition） | en | 未読 | #llm-trading #evaluation #web-signal | articles/2026-08-02_3157_WEB_LLM-Trading-2026-Can-AI-Outperform-Humans.md |
+| 282 | MT5 AI Expert Advisors 完全ガイド 2026 — LLM認知エンジン統合・強化学習・市場$43.3B予測（MQL5） | en | 未読 | #algorithmic-trading #mt5 #web-signal | articles/2026-08-02_3158_WEB_Algorithmic-Trading-AI-MT5-EAs-Complete-Guide-2026.md |
