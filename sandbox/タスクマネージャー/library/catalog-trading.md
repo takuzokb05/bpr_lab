@@ -310,3 +310,29 @@
 | 280 | AI Trading Agents vs Bots 2026 — 賢い≠安全・リスク実態分析・半自律ワークフロー推奨（Bitsgap） | en | 未読 | #llm-trading #comparison #web-signal | articles/2026-08-02_3156_WEB_AI-Trading-Agents-vs-Bots-2026-Risks-Workflow.md |
 | 281 | LLMトレーディング 2026 — AIは人間をアウトパフォームできるか？6ヶ月実験データ検証（CoinEdition） | en | 未読 | #llm-trading #evaluation #web-signal | articles/2026-08-02_3157_WEB_LLM-Trading-2026-Can-AI-Outperform-Humans.md |
 | 282 | MT5 AI Expert Advisors 完全ガイド 2026 — LLM認知エンジン統合・強化学習・市場$43.3B予測（MQL5） | en | 未読 | #algorithmic-trading #mt5 #web-signal | articles/2026-08-02_3158_WEB_Algorithmic-Trading-AI-MT5-EAs-Complete-Guide-2026.md |
+
+| 283 | @ArchiveExplorer — DeepSeek+MT5ライブ2週: 44%勝率1:2 R:R $0.65 | ja | 未読 | #ai-trading #mt5 #x-signal | articles/2026-08-03_3245_X_ArchiveExplorer_DeepSeek_MT5ライブ2週_44_勝率1_2_R_R_0_65.md |
+| 284 | @Alacritic_Super — MetaTrader MCPサーバー: LLM+MCP+MT5 API | ja | 未読 | #ai-trading #mt5 #x-signal | articles/2026-08-03_3246_X_Alacritic_Super_MetaTrader_MCPサーバー_LLM_MCP_MT5_API.md |
+| 285 | @pythontrending — metatrader-mcp-server GitHub: AI LLMs×MT5 | en | 未読 | #ai-trading #mt5 #x-signal | articles/2026-08-03_3247_X_pythontrending_metatrader_mcp_server_GitHub_AI_LLMs_MT5.md |
+| 286 | @buenostrades — NinjaTrader+MT MCP連携, Codex+openclaw統合 | ja | 未読 | #ai-trading #x-signal | articles/2026-08-03_3248_X_buenostrades_NinjaTrader_MT_MCP連携_Codex_openclaw統合.md |
+| 287 | @fxkimiDomestic — 3ボット並走日次P&L: GateGrid/BoundSniper/LLM | ja | 未読 | #ai-trading #x-signal | articles/2026-08-03_3249_X_fxkimiDomestic_3ボット並走日次P_L_GateGrid_BoundSniper_LLM.md |
+| 288 | @GitHubGPT — TradingAgents OSS LLM取引プラットフォーム 81K stars | ja | 未読 | #ai-trading #x-signal | articles/2026-08-03_3250_X_GitHubGPT_TradingAgents_OSS_LLM取引プラットフォーム_81K_stars.md |
+| 289 | @fxkimiDomestic — CatBoost GBPJPY 15分足スコアリング閾値エントリー | ja | 未読 | #ai-trading #x-signal | articles/2026-08-03_3251_X_fxkimiDomestic_CatBoost_GBPJPY_15分足スコアリング閾値エントリー.md |
+| 290 | @fxkimiDomestic — ルール型+393¥ vs ML+LLM -913¥ 比較結果 | ja | 未読 | #ai-trading #x-signal | articles/2026-08-03_3252_X_fxkimiDomestic_ルール型_393_vs_ML_LLM_913_比較結果.md |
+| 291 | @uv — LLM資産管理: 意外決定に報酬、エキゾチックリスク評価 | ja | 未読 | #ai-trading #x-signal | articles/2026-08-03_3253_X_uv_LLM資産管理_意外決定に報酬_エキゾチックリスク評価.md |
+| 292 | @LimitlesDoxa_XL — TrainFlow Jarvis: 音声→戦略作成→MT5デプロイ | ja | 未読 | #ai-trading #mt5 #x-signal | articles/2026-08-03_3254_X_LimitlesDoxa_XL_TrainFlow_Jarvis_音声_戦略作成_MT5デプロイ.md |
+| 293 | @StockCuppa — AI Python pipeline vs TV手動BT→MT5移行 | ja | 未読 | #ai-trading #mt5 #x-signal | articles/2026-08-03_3255_X_StockCuppa_AI_Python_pipeline_vs_TV手動BT_MT5移行.md |
+| 294 | @TokyoSystems — Python ML/stats→MT5実行; API実装ガイド | ja | 未読 | #ai-trading #mt5 #x-signal | articles/2026-08-03_3256_X_TokyoSystems_Python_ML_stats_MT5実行_API実装ガイド.md |
+| 295 | @houdeinotomsoya — Alpaca CLI+AIエージェント自動取引、新アルゴ発見 | ja | 未読 | #ai-trading #x-signal | articles/2026-08-03_3257_X_houdeinotomsoya_Alpaca_CLI_AIエージェント自動取引_新アルゴ発見.md |
+| 296 | @yug1224 — Vibe-Trading GitHub: AI戦略構築×BT自動化 | ja | 未読 | #ai-trading #x-signal | articles/2026-08-03_3258_X_yug1224_Vibe_Trading_GitHub_AI戦略構築_BT自動化.md |
+| 297 | @lonniev — Optionality: AI審判オプション取引ゲーム、Black-Scholes | ja | 未読 | #ai-trading #x-signal | articles/2026-08-03_3259_X_lonniev_Optionality_AI審判オプション取引ゲーム_Black_Scholes.md |
+| 298 | @ReggyStev — Bittensor SN8(マイナー) vs SN88(AUM製品) 比較 | ja | 未読 | #ai-trading #x-signal | articles/2026-08-03_3260_X_ReggyStev_Bittensor_SN8_マイナー_vs_SN88_AUM製品_比較.md |
+| 299 | @xzinft — AI取引: 14銘柄確信スコア、VIX/IV監視、自律実行+$151 | ja | 未読 | #ai-trading #x-signal | articles/2026-08-03_3261_X_xzinft_AI取引_14銘柄確信スコア_VIX_IV監視_自律実行_151.md |
+| 300 | @Foxeriel — Claudeボット: $304K→+$218K 64日, 52%勝率 31取引/時 | ja | 未読 | #ai-trading #x-signal | articles/2026-08-03_3262_X_Foxeriel_Claudeボット_304K_218K_64日_52_勝率_31取引_時.md |
+| 301 | @antpalkin — minmax_one: 12:1 P/R, Sharpe 2.18, +147%, 50B行 | ja | 未読 | #ai-trading #x-signal | articles/2026-08-03_3263_X_antpalkin_minmax_one_12_1_P_R_Sharpe_2_18_147_50B行.md |
+| 302 | @StockCuppa — Claude×MT5 EA: 非堅牢発見→マルチ相場対応に再構築 | ja | 未読 | #ai-trading #mt5 #x-signal | articles/2026-08-03_3264_X_StockCuppa_Claude_MT5_EA_非堅牢発見_マルチ相場対応に再構築.md |
+| 303 | @CoinSh0t — Claude+MT5 XAUUSD: EMA/RSI/ATR, MQL5 EA反復改善 | ja | 未読 | #ai-trading #mt5 #x-signal | articles/2026-08-03_3265_X_CoinSh0t_Claude_MT5_XAUUSD_EMA_RSI_ATR_MQL5_EA反復改善.md |
+| 304 | @bregmafund — $ORLY AIシグナル: 85%出現率, +7.75%目標, 68%的中 | ja | 未読 | #ai-trading #x-signal | articles/2026-08-03_3266_X_bregmafund_ORLY_AIシグナル_85_出現率_7_75_目標_68_的中.md |
+| 305 | @binance — Binance AI Pro: AIモデル×Skills、分析・監視・実行 | ja | 未読 | #ai-trading #x-signal | articles/2026-08-03_3267_X_binance_Binance_AI_Pro_AIモデル_Skills_分析・監視・実行.md |
+| 306 | @fulldecent — Polymarket ML取引講座: BT+モデリング+ライブ運用 | ja | 未読 | #ai-trading #x-signal | articles/2026-08-03_3268_X_fulldecent_Polymarket_ML取引講座_BT_モデリング_ライブ運用.md |
+| 307 | @DicksonLau2 — 全自動: TradingView→指標→EA→MT5回測→最適化 | ja | 未読 | #ai-trading #mt5 #x-signal | articles/2026-08-03_3269_X_DicksonLau2_全自動_TradingView_指標_EA_MT5回測_最適化.md |

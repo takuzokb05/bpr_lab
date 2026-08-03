@@ -1,0 +1,499 @@
+[
+  {
+    "idx": 6,
+    "handle": "@theinformation",
+    "text_summary": "AnthropicはOpenAIより35%多い収益を生成、AIコーディングと企業向けツール需要が牽引",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/theinformation/status/2059741481267589291"
+  },
+  {
+    "idx": 13,
+    "handle": "@KeiiUemura",
+    "text_summary": "日本3メガバンク（MUFG・SMBC・みずほ）が財務省経由でClaude Mythosアクセス権を取得",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/KeiiUemura/status/2059738031301746778"
+  },
+  {
+    "idx": 18,
+    "handle": "@monjiro2014",
+    "text_summary": "富士通とAnthropicが戦略的提携を締結、OpenAIとは「連携」レベルの差",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/monjiro2014/status/2059728927019684019"
+  },
+  {
+    "idx": 19,
+    "handle": "@BalsaLANCER",
+    "text_summary": "Claude Mythosが1万件以上の脆弱性を発見、修正が追いつかずとAnthropicが報告",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/BalsaLANCER/status/2059725918780981514"
+  },
+  {
+    "idx": 22,
+    "handle": "@immeivise",
+    "text_summary": "Claude Code向けsecurity-guidanceプラグイン正式リリース：3段階・25パターン検出、コメント30-40%削減",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/immeivise/status/2059711636781633960"
+  },
+  {
+    "idx": 25,
+    "handle": "@Follower_co_jp",
+    "text_summary": "富士通とAnthropicが戦略的提携締結、AI開発基盤「Takane」エージェントにClaude統合",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/Follower_co_jp/status/2059701334480396550"
+  },
+  {
+    "idx": 26,
+    "handle": "@MorganVonDruitt",
+    "text_summary": "MCP SDKの月間DLが3月に9700万件、12月にLinux Foundationグループへ移管済み",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/MorganVonDruitt/status/2059737163659653434"
+  },
+  {
+    "idx": 27,
+    "handle": "@BluechipsAI",
+    "text_summary": "RobinhoodがClaude・ChatGPT・CodexをMCP経由でプラットフォームに開放",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/BluechipsAI/status/2059694618753601925"
+  },
+  {
+    "idx": 38,
+    "handle": "@uwillc",
+    "text_summary": "Anthropicが約3億ドルでStainless（SDK/MCPサーバーツーリング会社）を買収",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/uwillc/status/2059230246092558722"
+  },
+  {
+    "idx": 40,
+    "handle": "@Agos_Labs",
+    "text_summary": "AnthropicがStainless（全SDK/MCPサーバー基盤プラットフォーム）を買収",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/Agos_Labs/status/2059160386792767495"
+  },
+  {
+    "idx": 42,
+    "handle": "@_devJNS",
+    "text_summary": "Claude Opus 4.8リリース済み。Mythos・OpenAI GPT-5.6は数週間以内に予定",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/_devJNS/status/2060105041944420470"
+  },
+  {
+    "idx": 45,
+    "handle": "@CCG_traders",
+    "text_summary": "AnthropicがClaude Codeに「Dynamic Workflows」をリサーチプレビューとして導入",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/CCG_traders/status/2060104983798804903"
+  },
+  {
+    "idx": 50,
+    "handle": "@UnforcedAG",
+    "text_summary": "Anthropicのグロスマージン40%、run rateとマージンが月次拡大中",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/UnforcedAG/status/2060104868942250260"
+  },
+  {
+    "idx": 63,
+    "handle": "@gazooblog",
+    "text_summary": "Anthropic Series H $65B調達、Micron・Samsung・SK hynixが戦略インフラパートナーに",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/gazooblog/status/2060103824711569760"
+  },
+  {
+    "idx": 66,
+    "handle": "@tmiyatake1",
+    "text_summary": "Anthropicが$965B時価総額で$65B調達、ARRが$47B突破",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/tmiyatake1/status/2060101976369885653"
+  },
+  {
+    "idx": 67,
+    "handle": "@se_yakiimosan",
+    "text_summary": "Opus 4.8：SWE-Bench Pro 69.2%（旧64.3%）、Fast Mode 2.5倍速、価格据え置き",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/se_yakiimosan/status/2060101837269979297"
+  },
+  {
+    "idx": 77,
+    "handle": "@VatsSShah",
+    "text_summary": "MCP Dev SummitでAnthropicのDen Delimarsky「APIを丸ごとツール化するな」と警告",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/VatsSShah/status/2059996344539029829"
+  },
+  {
+    "idx": 79,
+    "handle": "@obataka123",
+    "text_summary": "AWS MCP Server GA（一般提供開始）、Claude Code 6倍成長",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/obataka123/status/2059979746109485459"
+  },
+  {
+    "idx": 92,
+    "handle": "@thenewstack",
+    "text_summary": "AnthropicがBun（JSランタイム）買収後、一部開発者が成熟度の問題を懸念",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/thenewstack/status/2060466387370283077"
+  },
+  {
+    "idx": 104,
+    "handle": "@akichan_jpn",
+    "text_summary": "Opus 4.8 + 100万トークン + Managed Agents webhooks + multi-agent + self-hosted sandboxes同時公開",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/akichan_jpn/status/2060459702618915165"
+  },
+  {
+    "idx": 109,
+    "handle": "@ai_kairos_jp",
+    "text_summary": "Opus 4.8 + Dynamic workflows確認。OpenAI GPT-5.5 Instantで誤情報52.5%削減も同日",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/ai_kairos_jp/status/2060453921131581642"
+  },
+  {
+    "idx": 136,
+    "handle": "@iejirok",
+    "text_summary": "Microsoft 365 Copilot（Frontier）でClaude Opus 4.8が本日提供開始、Copilot Chatにも順次展開",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/iejirok/status/2060801385701249043"
+  },
+  {
+    "idx": 141,
+    "handle": "@mititarou_takeo",
+    "text_summary": "AnthropicのClaude外部ツール制限直後にOpenAIが月$100プランを投入、重課金ユーザー取り込み戦略",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/mititarou_takeo/status/2060792246191157631"
+  },
+  {
+    "idx": 144,
+    "handle": "@seclink",
+    "text_summary": "大手差旅管理BCD TravelがTripsourceプラットフォーム全体にMCPを展開（エンタープライズ導入事例）",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/seclink/status/2060581774988636518"
+  },
+  {
+    "idx": 167,
+    "handle": "@koushunyujob6",
+    "text_summary": "NEC・日立・富士通3社がAnthropicと一斉協業、各社幹部コメントをITmediaがまとめ",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/koushunyujob6/status/2061553537264599427"
+  },
+  {
+    "idx": 174,
+    "handle": "@Takahiro0309",
+    "text_summary": "Anthropic IPO：SEC機密S-1提出、ARR $47B（昨年末$9Bから急成長）、評価額$965B、10月上場視野",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/Takahiro0309/status/2061549200962453611"
+  },
+  {
+    "idx": 177,
+    "handle": "@mititarou_takeo",
+    "text_summary": "Anthropic-Amazon契約：最大5GW AWS計算資源、10年で$100B超コミット、Trainiumチップ利用",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/mititarou_takeo/status/2061543844114764055"
+  },
+  {
+    "idx": 194,
+    "handle": "@brada",
+    "text_summary": "Claude API新機能：advisorツールにmax_tokensを設定可能、stop_reason:'max_tokens'でコスト予測化",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/brada/status/2061916252361396237"
+  },
+  {
+    "idx": 196,
+    "handle": "@YahooFinance",
+    "text_summary": "Anthropic、Mythos級モデルの一般公開は6〜12か月後の見通しと表明",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/YahooFinance/status/2061916036715139154"
+  },
+  {
+    "idx": 204,
+    "handle": "@TheRabbitPy",
+    "text_summary": "AnthropicがClaude Mythosを15か国以上の重要インフラに展開",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/TheRabbitPy/status/2061915760427962650"
+  },
+  {
+    "idx": 208,
+    "handle": "@ComicGo50",
+    "text_summary": "トランプAI大統領令：事前ライセンス制を明示禁止、政府機関に最先端AI導入を指示",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/ComicGo50/status/2061915662365393278"
+  },
+  {
+    "idx": 214,
+    "handle": "@got",
+    "text_summary": "トランプ大統領令：公開前に政府が最大30日確認できる自主的枠組み、OpenAI/Anthropic/Google対象",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/got/status/2061912809458589777"
+  },
+  {
+    "idx": 216,
+    "handle": "@barron62822174",
+    "text_summary": "SBIグループが日本金融機関初としてAnthropicとAIトランスフォーメーション全面推進（6/2適時開示）",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/barron62822174/status/2061911628954894839"
+  },
+  {
+    "idx": 230,
+    "handle": "@vc_corner",
+    "text_summary": "Anthropicが民主主義へのAI影響を研究する専門チームを創設",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/vc_corner/status/2062279035523154405"
+  },
+  {
+    "idx": 251,
+    "handle": "@shimesaba_type0",
+    "text_summary": "Anthropicが2025年3月〜2026年3月の悪意あるサイバーアカウント832件を分析・公表",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/shimesaba_type0/status/2062269129026052454"
+  },
+  {
+    "idx": 267,
+    "handle": "@INFOFLOWfx",
+    "text_summary": "AnthropicがAI開発の世界的一時停止を提唱、再帰的自己改善への接近を警告",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/INFOFLOWfx/status/2062641197567332734"
+  },
+  {
+    "idx": 269,
+    "handle": "@kevocs",
+    "text_summary": "AnthropicがOSS「Defending Code Reference Harness」フレームワークをリリース",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/kevocs/status/2062641005346910435"
+  },
+  {
+    "idx": 282,
+    "handle": "@concha_blogger",
+    "text_summary": "AnthropicがAdobe・Blender・Ableton・Canva・Autodesk・SketchUp等とのMCPコネクタをリリース",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/concha_blogger/status/2062640556891845010"
+  },
+  {
+    "idx": 284,
+    "handle": "@taka_start_up",
+    "text_summary": "Mythos Previewがコード最適化52倍速を達成（1年前のClaude Opus 4は3倍止まり）",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/taka_start_up/status/2062638410444251646"
+  },
+  {
+    "idx": 306,
+    "handle": "@AAbcdefghabc",
+    "text_summary": "AnthropicとGoogleがSpaceXに合計月額$21.7億を支払い（年間ARR $260億）",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/AAbcdefghabc/status/2063003897208184844"
+  },
+  {
+    "idx": 308,
+    "handle": "@CoryTV",
+    "text_summary": "SpaceXがIPO申請から初値まで$150億ARRを追加、主にAnthropicからの計算契約分",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/CoryTV/status/2063003849284264114"
+  },
+  {
+    "idx": 311,
+    "handle": "@MilkRoad",
+    "text_summary": "S&P500・NASDAQ・Russellが3社（SpaceX/OpenAI/Anthropic）のために12か月シーズニングルールを変更",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/MilkRoad/status/2063003737220866520"
+  },
+  {
+    "idx": 318,
+    "handle": "@Samuelai_Qauntu",
+    "text_summary": "Colossus II：550k B200のうち325kをAnthropicに、110kをGoogleに貸出しのGPU詳細",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/Samuelai_Qauntu/status/2063003374094610887"
+  },
+  {
+    "idx": 320,
+    "handle": "@techfeedapp",
+    "text_summary": "ClaudeがAnthropicのコードの80%を自ら記述していることが判明",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/techfeedapp/status/2063002797574873229"
+  },
+  {
+    "idx": 337,
+    "handle": "@huxley_sft",
+    "text_summary": "Claude for Small Businessリリース：15ワークフロー・15スキル、QuickBooks/PayPal/HubSpot/Canva/Docusign連携",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/huxley_sft/status/2062700940336263576"
+  },
+  {
+    "idx": 350,
+    "handle": "@ootsuka_techs",
+    "text_summary": "Claude、Anthropic本番コードの80%超を担当。エンジニアは2024年比で1日8倍のコードをマージ",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/ootsuka_techs/status/2063365311567470769"
+  },
+  {
+    "idx": 375,
+    "handle": "@Tech_Echelon",
+    "text_summary": "MicrosoftがGitHub CopilotをPer-token課金に移行、AI費用持続可能性の議論が加速",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/Tech_Echelon/status/2063729121155330345"
+  },
+  {
+    "idx": 385,
+    "handle": "@BlatzSystems",
+    "text_summary": "Anthropicが4月に既存ファイルを読み込んでブランドシステムを自動構築するデザインツールをリリース",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/BlatzSystems/status/2063727707570192698"
+  },
+  {
+    "idx": 399,
+    "handle": "@ivy432hz",
+    "text_summary": "Claude Code新環境変数：CLAUDE_CODE_ENABLE_AUTO_MODE（set 1でBedrock/Vertex/Foundryの自動モード）",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/ivy432hz/status/2063500184269762813"
+  },
+  {
+    "idx": 419,
+    "handle": "@Mx_Issue",
+    "text_summary": "AnthropicからMythos級の未発表モデル「oceanus」がリーク、企業向け高額モデルか",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/Mx_Issue/status/2064090628259250607"
+  },
+  {
+    "idx": 444,
+    "handle": "@brbcatonfire",
+    "text_summary": "Anthropicでエンタープライズや3rdパーティプランでもデータ共有オプトアウトが不可に",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/brbcatonfire/status/2064453620339515549"
+  },
+  {
+    "idx": 452,
+    "handle": "@techzine",
+    "text_summary": "Claude Fable 5リリース：Mythos Previewの一般公開版、サイバーセキュリティ機能を制限付きで提供",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/techzine/status/2064454137727848871"
+  },
+  {
+    "idx": 458,
+    "handle": "@tossact",
+    "text_summary": "Claude Mythos PreviewがN-dayから数時間で攻撃開発可能「N-day→N-hour」とAnthropicが指摘",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/tossact/status/2064452123430117709"
+  },
+  {
+    "idx": 460,
+    "handle": "@gota_bara",
+    "text_summary": "Fable 5/Mythos 5：ZDR設定エンタープライズでも全トラフィックを30日間保持（ポリシー変更注意）",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/gota_bara/status/2064451215921197372"
+  },
+  {
+    "idx": 487,
+    "handle": "@devops_chat",
+    "text_summary": "Anthropicが隠れたAI制限を開発者の反発を受けて撤回",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/devops_chat/status/2065177826589114781"
+  },
+  {
+    "idx": 492,
+    "handle": "@daruyanagi",
+    "text_summary": "Fable 5課金仕様：出力前ブロック→Opus料金のみ、出力後→Fable 5料金も。API利用は挙動が異なる",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/daruyanagi/status/2065177862194213321"
+  },
+  {
+    "idx": 504,
+    "handle": "@gryhkn",
+    "text_summary": "AnthropicのOSS公開実績一覧：contextual retrieval・MCP・agent skills・petri等",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/gryhkn/status/2065080764748726540"
+  },
+  {
+    "idx": 508,
+    "handle": "@_vmlops",
+    "text_summary": "AnthropicがClaudeのスキル学習システムをOSS化（markdownフォルダを動的ロードして専門タスクを習得）",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/_vmlops/status/2065003209169781158"
+  },
+  {
+    "idx": 543,
+    "handle": "@ThePyCoach",
+    "text_summary": "Anthropic Academyが17コース無料Claude講座を公開（Claudeを作るチームが直接構築）",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/ThePyCoach/status/2065422670049468858"
+  },
+  {
+    "idx": 562,
+    "handle": "@MichaelHutu",
+    "text_summary": "米輸出規制でClaude Fable 5とMythos 5が全外国アカウントから一夜にして削除",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/MichaelHutu/status/2066265230594707621"
+  },
+  {
+    "idx": 571,
+    "handle": "@ZJF0XJJzwZZ",
+    "text_summary": "AIモデルへの輸出管理規則（EAR）初適用。Polymarketで予測市場が開設（8.9万ドル超）",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/ZJF0XJJzwZZ/status/2066264825827918052"
+  },
+  {
+    "idx": 572,
+    "handle": "@KAIZENnemon",
+    "text_summary": "Claude Fable 5がリリース4日後に米政府命令で利用停止。Geminiが値下げ攻勢で対抗",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/KAIZENnemon/status/2066264607459533039"
+  },
+  {
+    "idx": 578,
+    "handle": "@kenebeii",
+    "text_summary": "米輸出規制・国家安全保障指示でFable 5/Mythos 5の外国籍アクセスが停止",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/kenebeii/status/2066258232855949800"
+  },
+  {
+    "idx": 583,
+    "handle": "@aikangarooking",
+    "text_summary": "Fable 5システムプロンプト漏洩（187KB/3826行）。Fable 5＝Mythos 5同一モデル、双用途制限あり/なしの2層構造",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/aikangarooking/status/2066099141265305970"
+  },
+  {
+    "idx": 590,
+    "handle": "@FedotOff90",
+    "text_summary": "Claude Opus 4.8詳細：コーディング・エージェントタスクでOpus 4.7超え、1Mトークンコンテキスト",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/FedotOff90/status/2065796161903161350"
+  },
+  {
+    "idx": 596,
+    "handle": "@alex_verem",
+    "text_summary": "米輸出規制でFable 5とMythos 5が全ユーザーから一夜で削除、LLM単一依存リスクを露呈",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/alex_verem/status/2066627898208059474"
+  },
+  {
+    "idx": 599,
+    "handle": "@FinancialReview",
+    "text_summary": "トランプのAnthropicモデル輸出禁止でオーストラリアが国家的過依存を露呈、テックリーダーが警鐘",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/FinancialReview/status/2066627704993026420"
+  },
+  {
+    "idx": 608,
+    "handle": "@tukiyomiiori",
+    "text_summary": "大方針転換：claude -p等のSDK利用がサブスク枠維持、3rdパーティのサブスク利用も許可",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/tukiyomiiori/status/2066628497188196684"
+  },
+  {
+    "idx": 609,
+    "handle": "@tetumemo",
+    "text_summary": "AnthropicがプライバシーポリシーにID本人確認（7/8〜）を追加予定",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/tetumemo/status/2066627818663117190"
+  },
+  {
+    "idx": 616,
+    "handle": "@ikenyal",
+    "text_summary": "Anthropic公式通知：6/15予定のAgent SDK/claude -p課金変更（サブスク→API）を見送り",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/ikenyal/status/2066617387366142072"
+  },
+  {
+    "idx": 618,
+    "handle": "@hyuki",
+    "text_summary": "Anthropic公式メールで「claude -pのサブスク→API課金変更」撤回と3rdパーティ許可を確認",
+    "theme": "claude-ecosystem",
+    "url": "https://x.com/hyuki/status/2066614924886090166"
+  }
+]

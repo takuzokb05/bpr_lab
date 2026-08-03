@@ -858,3 +858,75 @@
 | 831 | Claude 2026年全アップデートタイムライン — Opus4.7→4.8→Fable5→Opus5・API beta蓄積・Bun買収（go9x） | en | 未読 | #ecosystem #model-update #web-signal | articles/2026-08-03_3171_WEB_Claude-All-Updates-2026-Timeline-Opus5-SDK-API-go9x.md |
 | 832 | Anthropic Bun買収 $1B達成・$300B IPO分析 — Wilson Sonsini・垂直統合戦略・コミュニティリスク（EntrepreneurLoop） | en | 未読 | #ecosystem #web-signal | articles/2026-08-03_3172_WEB_Anthropic-Bun-1B-IPO-300B-Analysis-EntrepreneurLoop.md |
 | 833 | 今さら聞けないCLAUDE.mdの書き方とVSCode超入門 — 初心者向け配置・書き方・アンチパターン（note.com） | ja | 未読 | #claude-md #web-signal | articles/2026-08-03_3173_WEB_CLAUDE-md-Basics-VSCode-Beginner-hobbydevelop-note.md |
+
+| 834 | @theinformation — AnthropicはOpenAIより35%多い収益を生成、AIコーディングと企業向けツール需要が牽引 | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3174_X_theinformation_AnthropicはOpenAIより35_多い収益を生成_AIコーディングと企業向けツール.md |
+| 835 | @KeiiUemura — 日本3メガバンク（MUFG・SMBC・みずほ）が財務省経由でClaude Mythosアクセス権を取得 | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3175_X_KeiiUemura_日本3メガバンク_MUFG・SMBC・みずほ_が財務省経由でClaude_Mythosアク.md |
+| 836 | @monjiro2014 — 富士通とAnthropicが戦略的提携を締結、OpenAIとは「連携」レベルの差 | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3176_X_monjiro2014_富士通とAnthropicが戦略的提携を締結_OpenAIとは_連携_レベルの差.md |
+| 837 | @BalsaLANCER — Claude Mythosが1万件以上の脆弱性を発見、修正が追いつかずとAnthropicが報告 | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3177_X_BalsaLANCER_Claude_Mythosが1万件以上の脆弱性を発見_修正が追いつかずとAnthropic.md |
+| 838 | @immeivise — Claude Code向けsecurity-guidanceプラグイン正式リリース：3段階・25パターン検出、... | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3178_X_immeivise_Claude_Code向けsecurity_guidanceプラグイン正式リリース_3段階.md |
+| 839 | @Follower_co_jp — 富士通とAnthropicが戦略的提携締結、AI開発基盤「Takane」エージェントにClaude統合 | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3179_X_Follower_co_jp_富士通とAnthropicが戦略的提携締結_AI開発基盤_Takane_エージェントにCl.md |
+| 840 | @MorganVonDruitt — MCP SDKの月間DLが3月に9700万件、12月にLinux Foundationグループへ移管済み | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3180_X_MorganVonDruitt_MCP_SDKの月間DLが3月に9700万件_12月にLinux_Foundationグル.md |
+| 841 | @BluechipsAI — RobinhoodがClaude・ChatGPT・CodexをMCP経由でプラットフォームに開放 | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3181_X_BluechipsAI_RobinhoodがClaude・ChatGPT・CodexをMCP経由でプラットフォーム.md |
+| 842 | @uwillc — Anthropicが約3億ドルでStainless（SDK/MCPサーバーツーリング会社）を買収 | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3182_X_uwillc_Anthropicが約3億ドルでStainless_SDK_MCPサーバーツーリング会社_.md |
+| 843 | @Agos_Labs — AnthropicがStainless（全SDK/MCPサーバー基盤プラットフォーム）を買収 | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3183_X_Agos_Labs_AnthropicがStainless_全SDK_MCPサーバー基盤プラットフォーム_を買.md |
+| 844 | @_devJNS — Claude Opus 4.8リリース済み。Mythos・OpenAI GPT-5.6は数週間以内に予定 | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3184_X__devJNS_Claude_Opus_4_8リリース済み_Mythos・OpenAI_GPT_5_6は数.md |
+| 845 | @CCG_traders — AnthropicがClaude Codeに「Dynamic Workflows」をリサーチプレビューとして導... | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3185_X_CCG_traders_AnthropicがClaude_Codeに_Dynamic_Workflows_をリサー.md |
+| 846 | @UnforcedAG — Anthropicのグロスマージン40%、run rateとマージンが月次拡大中 | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3186_X_UnforcedAG_Anthropicのグロスマージン40_run_rateとマージンが月次拡大中.md |
+| 847 | @gazooblog — Anthropic Series H $65B調達、Micron・Samsung・SK hynixが戦略インフ... | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3187_X_gazooblog_Anthropic_Series_H_65B調達_Micron・Samsung・SK_hy.md |
+| 848 | @tmiyatake1 — Anthropicが$965B時価総額で$65B調達、ARRが$47B突破 | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3188_X_tmiyatake1_Anthropicが_965B時価総額で_65B調達_ARRが_47B突破.md |
+| 849 | @se_yakiimosan — Opus 4.8：SWE-Bench Pro 69.2%（旧64.3%）、Fast Mode 2.5倍速、価格... | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3189_X_se_yakiimosan_Opus_4_8_SWE_Bench_Pro_69_2_旧64_3_Fast_Mode_2.md |
+| 850 | @VatsSShah — MCP Dev SummitでAnthropicのDen Delimarsky「APIを丸ごとツール化するな」... | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3190_X_VatsSShah_MCP_Dev_SummitでAnthropicのDen_Delimarsky_APIを丸.md |
+| 851 | @obataka123 — AWS MCP Server GA（一般提供開始）、Claude Code 6倍成長 | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3191_X_obataka123_AWS_MCP_Server_GA_一般提供開始_Claude_Code_6倍成長.md |
+| 852 | @thenewstack — AnthropicがBun（JSランタイム）買収後、一部開発者が成熟度の問題を懸念 | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3192_X_thenewstack_AnthropicがBun_JSランタイム_買収後_一部開発者が成熟度の問題を懸念.md |
+| 853 | @akichan_jpn — Opus 4.8 + 100万トークン + Managed Agents webhooks + multi-a... | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3193_X_akichan_jpn_Opus_4_8_100万トークン_Managed_Agents_webhooks_mul.md |
+| 854 | @ai_kairos_jp — Opus 4.8 + Dynamic workflows確認。OpenAI GPT-5.5 Instantで誤... | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3194_X_ai_kairos_jp_Opus_4_8_Dynamic_workflows確認_OpenAI_GPT_5_5_I.md |
+| 855 | @iejirok — Microsoft 365 Copilot（Frontier）でClaude Opus 4.8が本日提供開始、... | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3195_X_iejirok_Microsoft_365_Copilot_Frontier_でClaude_Opus_4.md |
+| 856 | @mititarou_takeo — AnthropicのClaude外部ツール制限直後にOpenAIが月$100プランを投入、重課金ユーザー取り込... | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3196_X_mititarou_takeo_AnthropicのClaude外部ツール制限直後にOpenAIが月_100プランを投入_.md |
+| 857 | @seclink — 大手差旅管理BCD TravelがTripsourceプラットフォーム全体にMCPを展開（エンタープライズ導入... | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3197_X_seclink_大手差旅管理BCD_TravelがTripsourceプラットフォーム全体にMCPを展開_.md |
+| 858 | @koushunyujob6 — NEC・日立・富士通3社がAnthropicと一斉協業、各社幹部コメントをITmediaがまとめ | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3198_X_koushunyujob6_NEC・日立・富士通3社がAnthropicと一斉協業_各社幹部コメントをITmediaが.md |
+| 859 | @Takahiro0309 — Anthropic IPO：SEC機密S-1提出、ARR $47B（昨年末$9Bから急成長）、評価額$965B... | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3199_X_Takahiro0309_Anthropic_IPO_SEC機密S_1提出_ARR_47B_昨年末_9Bから急成長_.md |
+| 860 | @mititarou_takeo — Anthropic-Amazon契約：最大5GW AWS計算資源、10年で$100B超コミット、Trainiu... | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3200_X_mititarou_takeo_Anthropic_Amazon契約_最大5GW_AWS計算資源_10年で_100B超コミ.md |
+| 861 | @brada — Claude API新機能：advisorツールにmax_tokensを設定可能、stop_reason:'m... | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3201_X_brada_Claude_API新機能_advisorツールにmax_tokensを設定可能_stop.md |
+| 862 | @YahooFinance — Anthropic、Mythos級モデルの一般公開は6〜12か月後の見通しと表明 | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3202_X_YahooFinance_Anthropic_Mythos級モデルの一般公開は6_12か月後の見通しと表明.md |
+| 863 | @TheRabbitPy — AnthropicがClaude Mythosを15か国以上の重要インフラに展開 | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3203_X_TheRabbitPy_AnthropicがClaude_Mythosを15か国以上の重要インフラに展開.md |
+| 864 | @ComicGo50 — トランプAI大統領令：事前ライセンス制を明示禁止、政府機関に最先端AI導入を指示 | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3204_X_ComicGo50_トランプAI大統領令_事前ライセンス制を明示禁止_政府機関に最先端AI導入を指示.md |
+| 865 | @got — トランプ大統領令：公開前に政府が最大30日確認できる自主的枠組み、OpenAI/Anthropic/Googl... | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3205_X_got_トランプ大統領令_公開前に政府が最大30日確認できる自主的枠組み_OpenAI_Anthr.md |
+| 866 | @barron62822174 — SBIグループが日本金融機関初としてAnthropicとAIトランスフォーメーション全面推進（6/2適時開示） | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3206_X_barron62822174_SBIグループが日本金融機関初としてAnthropicとAIトランスフォーメーション全面推.md |
+| 867 | @vc_corner — Anthropicが民主主義へのAI影響を研究する専門チームを創設 | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3207_X_vc_corner_Anthropicが民主主義へのAI影響を研究する専門チームを創設.md |
+| 868 | @shimesaba_type0 — Anthropicが2025年3月〜2026年3月の悪意あるサイバーアカウント832件を分析・公表 | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3208_X_shimesaba_type0_Anthropicが2025年3月_2026年3月の悪意あるサイバーアカウント832件を分.md |
+| 869 | @INFOFLOWfx — AnthropicがAI開発の世界的一時停止を提唱、再帰的自己改善への接近を警告 | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3209_X_INFOFLOWfx_AnthropicがAI開発の世界的一時停止を提唱_再帰的自己改善への接近を警告.md |
+| 870 | @kevocs — AnthropicがOSS「Defending Code Reference Harness」フレームワークを... | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3210_X_kevocs_AnthropicがOSS_Defending_Code_Reference_Harnes.md |
+| 871 | @concha_blogger — AnthropicがAdobe・Blender・Ableton・Canva・Autodesk・SketchUp... | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3211_X_concha_blogger_AnthropicがAdobe・Blender・Ableton・Canva・Autodes.md |
+| 872 | @taka_start_up — Mythos Previewがコード最適化52倍速を達成（1年前のClaude Opus 4は3倍止まり） | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3212_X_taka_start_up_Mythos_Previewがコード最適化52倍速を達成_1年前のClaude_Opus_.md |
+| 873 | @AAbcdefghabc — AnthropicとGoogleがSpaceXに合計月額$21.7億を支払い（年間ARR $260億） | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3213_X_AAbcdefghabc_AnthropicとGoogleがSpaceXに合計月額_21_7億を支払い_年間ARR_.md |
+| 874 | @CoryTV — SpaceXがIPO申請から初値まで$150億ARRを追加、主にAnthropicからの計算契約分 | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3214_X_CoryTV_SpaceXがIPO申請から初値まで_150億ARRを追加_主にAnthropicからの計.md |
+| 875 | @MilkRoad — S&P500・NASDAQ・Russellが3社（SpaceX/OpenAI/Anthropic）のために12... | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3215_X_MilkRoad_S_P500・NASDAQ・Russellが3社_SpaceX_OpenAI_Anthro.md |
+| 876 | @Samuelai_Qauntu — Colossus II：550k B200のうち325kをAnthropicに、110kをGoogleに貸出し... | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3216_X_Samuelai_Qauntu_Colossus_II_550k_B200のうち325kをAnthropicに_110kを.md |
+| 877 | @techfeedapp — ClaudeがAnthropicのコードの80%を自ら記述していることが判明 | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3217_X_techfeedapp_ClaudeがAnthropicのコードの80_を自ら記述していることが判明.md |
+| 878 | @huxley_sft — Claude for Small Businessリリース：15ワークフロー・15スキル、QuickBooks... | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3218_X_huxley_sft_Claude_for_Small_Businessリリース_15ワークフロー・15スキル_.md |
+| 879 | @ootsuka_techs — Claude、Anthropic本番コードの80%超を担当。エンジニアは2024年比で1日8倍のコードをマージ | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3219_X_ootsuka_techs_Claude_Anthropic本番コードの80_超を担当_エンジニアは2024年比で1日.md |
+| 880 | @Tech_Echelon — MicrosoftがGitHub CopilotをPer-token課金に移行、AI費用持続可能性の議論が加速 | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3220_X_Tech_Echelon_MicrosoftがGitHub_CopilotをPer_token課金に移行_AI費用持.md |
+| 881 | @BlatzSystems — Anthropicが4月に既存ファイルを読み込んでブランドシステムを自動構築するデザインツールをリリース | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3221_X_BlatzSystems_Anthropicが4月に既存ファイルを読み込んでブランドシステムを自動構築するデザインツ.md |
+| 882 | @ivy432hz — Claude Code新環境変数：CLAUDE_CODE_ENABLE_AUTO_MODE（set 1でBed... | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3222_X_ivy432hz_Claude_Code新環境変数_CLAUDE_CODE_ENABLE_AUTO_MODE.md |
+| 883 | @Mx_Issue — AnthropicからMythos級の未発表モデル「oceanus」がリーク、企業向け高額モデルか | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3223_X_Mx_Issue_AnthropicからMythos級の未発表モデル_oceanus_がリーク_企業向け高額.md |
+| 884 | @brbcatonfire — Anthropicでエンタープライズや3rdパーティプランでもデータ共有オプトアウトが不可に | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3224_X_brbcatonfire_Anthropicでエンタープライズや3rdパーティプランでもデータ共有オプトアウトが不可.md |
+| 885 | @techzine — Claude Fable 5リリース：Mythos Previewの一般公開版、サイバーセキュリティ機能を制限... | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3225_X_techzine_Claude_Fable_5リリース_Mythos_Previewの一般公開版_サイバーセ.md |
+| 886 | @tossact — Claude Mythos PreviewがN-dayから数時間で攻撃開発可能「N-day→N-hour」とA... | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3226_X_tossact_Claude_Mythos_PreviewがN_dayから数時間で攻撃開発可能_N_day.md |
+| 887 | @gota_bara — Fable 5/Mythos 5：ZDR設定エンタープライズでも全トラフィックを30日間保持（ポリシー変更注意... | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3227_X_gota_bara_Fable_5_Mythos_5_ZDR設定エンタープライズでも全トラフィックを30日間保.md |
+| 888 | @devops_chat — Anthropicが隠れたAI制限を開発者の反発を受けて撤回 | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3228_X_devops_chat_Anthropicが隠れたAI制限を開発者の反発を受けて撤回.md |
+| 889 | @daruyanagi — Fable 5課金仕様：出力前ブロック→Opus料金のみ、出力後→Fable 5料金も。API利用は挙動が異な... | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3229_X_daruyanagi_Fable_5課金仕様_出力前ブロック_Opus料金のみ_出力後_Fable_5料金も_A.md |
+| 890 | @gryhkn — AnthropicのOSS公開実績一覧：contextual retrieval・MCP・agent skil... | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3230_X_gryhkn_AnthropicのOSS公開実績一覧_contextual_retrieval・MCP・.md |
+| 891 | @_vmlops — AnthropicがClaudeのスキル学習システムをOSS化（markdownフォルダを動的ロードして専門タ... | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3231_X__vmlops_AnthropicがClaudeのスキル学習システムをOSS化_markdownフォルダを.md |
+| 892 | @ThePyCoach — Anthropic Academyが17コース無料Claude講座を公開（Claudeを作るチームが直接構築） | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3232_X_ThePyCoach_Anthropic_Academyが17コース無料Claude講座を公開_Claudeを作.md |
+| 893 | @MichaelHutu — 米輸出規制でClaude Fable 5とMythos 5が全外国アカウントから一夜にして削除 | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3233_X_MichaelHutu_米輸出規制でClaude_Fable_5とMythos_5が全外国アカウントから一夜にして.md |
+| 894 | @ZJF0XJJzwZZ — AIモデルへの輸出管理規則（EAR）初適用。Polymarketで予測市場が開設（8.9万ドル超） | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3234_X_ZJF0XJJzwZZ_AIモデルへの輸出管理規則_EAR_初適用_Polymarketで予測市場が開設_8_9万.md |
+| 895 | @KAIZENnemon — Claude Fable 5がリリース4日後に米政府命令で利用停止。Geminiが値下げ攻勢で対抗 | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3235_X_KAIZENnemon_Claude_Fable_5がリリース4日後に米政府命令で利用停止_Geminiが値下げ攻.md |
+| 896 | @kenebeii — 米輸出規制・国家安全保障指示でFable 5/Mythos 5の外国籍アクセスが停止 | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3236_X_kenebeii_米輸出規制・国家安全保障指示でFable_5_Mythos_5の外国籍アクセスが停止.md |
+| 897 | @aikangarooking — Fable 5システムプロンプト漏洩（187KB/3826行）。Fable 5＝Mythos 5同一モデル、双... | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3237_X_aikangarooking_Fable_5システムプロンプト漏洩_187KB_3826行_Fable_5_Mythos.md |
+| 898 | @FedotOff90 — Claude Opus 4.8詳細：コーディング・エージェントタスクでOpus 4.7超え、1Mトークンコンテ... | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3238_X_FedotOff90_Claude_Opus_4_8詳細_コーディング・エージェントタスクでOpus_4_7超え.md |
+| 899 | @alex_verem — 米輸出規制でFable 5とMythos 5が全ユーザーから一夜で削除、LLM単一依存リスクを露呈 | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3239_X_alex_verem_米輸出規制でFable_5とMythos_5が全ユーザーから一夜で削除_LLM単一依存リス.md |
+| 900 | @FinancialReview — トランプのAnthropicモデル輸出禁止でオーストラリアが国家的過依存を露呈、テックリーダーが警鐘 | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3240_X_FinancialReview_トランプのAnthropicモデル輸出禁止でオーストラリアが国家的過依存を露呈_テックリー.md |
+| 901 | @tukiyomiiori — 大方針転換：claude -p等のSDK利用がサブスク枠維持、3rdパーティのサブスク利用も許可 | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3241_X_tukiyomiiori_大方針転換_claude_p等のSDK利用がサブスク枠維持_3rdパーティのサブスク利用も.md |
+| 902 | @tetumemo — AnthropicがプライバシーポリシーにID本人確認（7/8〜）を追加予定 | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3242_X_tetumemo_AnthropicがプライバシーポリシーにID本人確認_7_8_を追加予定.md |
+| 903 | @ikenyal — Anthropic公式通知：6/15予定のAgent SDK/claude -p課金変更（サブスク→API）を... | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3243_X_ikenyal_Anthropic公式通知_6_15予定のAgent_SDK_claude_p課金変更_サ.md |
+| 904 | @hyuki — Anthropic公式メールで「claude -pのサブスク→API課金変更」撤回と3rdパーティ許可を確認 | ja | 未読 | #ecosystem #x-signal | articles/2026-08-03_3244_X_hyuki_Anthropic公式メールで_claude_pのサブスク_API課金変更_撤回と3rdパ.md |

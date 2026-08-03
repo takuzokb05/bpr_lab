@@ -304,3 +304,94 @@
 | 281 | 2026年8月 AIモデルリリース — DeepSeek V4 Flash・GPT-5.6 Luna 80%値下げ・Astra構想（mean.ceo） | en | 未読 | #llm-news #model-release #web-signal | articles/2026-08-02_3160_WEB_AI-Model-Releases-August-2026-Startup-Edition.md |
 | 282 | EU AI法 2026年8月2日 GPAI執行開始 — 高リスクAI延期・カリフォルニアSB 53・日本企業対応（sei-san-sei） | ja | 未読 | #regulation #web-signal | articles/2026-08-02_3161_WEB_EU-AI-Act-Aug2-2026-GPAI-Enforcement-Japan.md |
 | 283 | 世界のAI最新ニュース 2026-08-02 — EU AI Act透明性執行開始・本番運用フェーズ移行・Bun垂直統合（Eguweb） | ja | 未読 | #regulation #llm-news #web-signal | articles/2026-08-03_3170_WEB_AI-News-Aug02-2026-EU-AI-Act-Enforcement-Bun-Acquisition-Eguweb.md |
+
+| 284 | @IGN — YouTubeがAI生成コンテンツへのラベル表示を強化・自動検出も導入すると発表 | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3270_X_IGN_YouTubeがAI生成コンテンツへのラベル表示を強化・自動検出も導入すると発表.md |
+| 285 | @Variety — Amazon MGM Studios、GenAI Creators' Fundを創設しAIツールを映像製作者に... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3271_X_Variety_Amazon_MGM_Studios_GenAI_Creators_Fundを創設しAIツ.md |
+| 286 | @Firebase — FirebaseがGoogle AI Studioと提携、Firebase バックエンド搭載モバイルアプリをリ... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3272_X_Firebase_FirebaseがGoogle_AI_Studioと提携_Firebase_バックエンド搭.md |
+| 287 | @wallstengine — Robinhoodが株式・クレジットカード向けAIエージェントを発表。自律的な購入・取引を実現 | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3273_X_wallstengine_Robinhoodが株式・クレジットカード向けAIエージェントを発表_自律的な購入・取引を.md |
+| 288 | @globepolitics — カナダのCarney首相、来週AI戦略を発表すると表明 | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3274_X_globepolitics_カナダのCarney首相_来週AI戦略を発表すると表明.md |
+| 289 | @mameyama_kun — 富士通がAnthropicおよびOpenAIと同日に提携発表。サイバーセキュリティ・金融インフラでAI活用 | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3275_X_mameyama_kun_富士通がAnthropicおよびOpenAIと同日に提携発表_サイバーセキュリティ・金融イ.md |
+| 290 | @MTSlive — 大手クラウドのCapexがGPT-4以来4倍増、Epoch AI試算で2026年7700億ドル・2027年1兆... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3276_X_MTSlive_大手クラウドのCapexがGPT_4以来4倍増_Epoch_AI試算で2026年7700億.md |
+| 291 | @FirstSquawk — AnthropicがSeries Hで650億ドル調達、評価額9650億ドル。Altimeter・Sequoi... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3277_X_FirstSquawk_AnthropicがSeries_Hで650億ドル調達_評価額9650億ドル_Altime.md |
+| 292 | @HedgieMarkets — RumbleがNorthern Data（NVIDIA GPU 2.2万枚、250MW）を8億ドルで買収しAI... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3278_X_HedgieMarkets_RumbleがNorthern_Data_NVIDIA_GPU_2_2万枚_250MW_を.md |
+| 293 | @coinbureau — AnthropicがClaude Mythosを数週間内に一般公開予定と発表。Opus 4.8も同時リリース | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3279_X_coinbureau_AnthropicがClaude_Mythosを数週間内に一般公開予定と発表_Opus_4.md |
+| 294 | @business — AppleがiOS 27でSiriを大幅刷新、AI機能を統合した「Siri AI」搭載の予定（Gurman報道... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3280_X_business_AppleがiOS_27でSiriを大幅刷新_AI機能を統合した_Siri_AI_搭載の予.md |
+| 295 | @miku919191 — SnowflakeがAWSと5年600億ドルの大型提携発表。AI向けデータ需要急拡大を背景に株価急騰 | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3281_X_miku919191_SnowflakeがAWSと5年600億ドルの大型提携発表_AI向けデータ需要急拡大を背景.md |
+| 296 | @Kamada3 — MetaがAIチャットボットの有料サブスク「Meta One Plus」7.99ドル・「Meta One Pr... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3282_X_Kamada3_MetaがAIチャットボットの有料サブスク_Meta_One_Plus_7_99ドル・_M.md |
+| 297 | @naonao19920225 — 日立がNVIDIA・OpenAI・Anthropicと個別に戦略的パートナーシップを締結。Lumada 3.0... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3283_X_naonao19920225_日立がNVIDIA・OpenAI・Anthropicと個別に戦略的パートナーシップを締結_.md |
+| 298 | @yousukezan — GoogleがAIを使った自律型サイバー攻撃対策「Google AI Threat Defense」を発表 | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3284_X_yousukezan_GoogleがAIを使った自律型サイバー攻撃対策_Google_AI_Threat_Def.md |
+| 299 | @ayana_motoyama — 富士通・NEC・日立の3社が立て続けにAI企業と提携。AnthropicはNECが国内初のグローバルパートナー | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3285_X_ayana_motoyama_富士通・NEC・日立の3社が立て続けにAI企業と提携_AnthropicはNECが国内初の.md |
+| 300 | @michaeljburry — ApolloがAnthropicのためにGoogleのTPU調達で380億ドルの債務調達を実施 | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3286_X_michaeljburry_ApolloがAnthropicのためにGoogleのTPU調達で380億ドルの債務調達を.md |
+| 301 | @thetripathi58 — AlibabaがQwen Conference 2026でQwen3.7-Maxを正式発表。トップクラスのモデ... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3287_X_thetripathi58_AlibabaがQwen_Conference_2026でQwen3_7_Maxを正式発表.md |
+| 302 | @Jamie_Shotton — Wayve AIがEmbodied AI専門のフロンティア研究ユニット「Wayve Labs」を設立・発表 | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3288_X_Jamie_Shotton_Wayve_AIがEmbodied_AI専門のフロンティア研究ユニット_Wayve_Lab.md |
+| 303 | @LCSeekers — NVIDIA DGX Sparkが2,999ドルで発売。128GB統合メモリ・1ペタフロップAI性能・70Bモ... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3289_X_LCSeekers_NVIDIA_DGX_Sparkが2_999ドルで発売_128GB統合メモリ・1ペタフロッ.md |
+| 304 | @Siege4570 — インドのNetrasemi社がA2000 Edge AIチップ（12nm）を今年発売予定。インド初の自国製Ed... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3290_X_Siege4570_インドのNetrasemi社がA2000_Edge_AIチップ_12nm_を今年発売予定_.md |
+| 305 | @Coinvo — MetaがAIペンダント（ウェアラブルデバイス）の発表を計画していると報道 | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3291_X_Coinvo_MetaがAIペンダント_ウェアラブルデバイス_の発表を計画していると報道.md |
+| 306 | @semivision_tw — NVIDIA+MediaTek+Arm+Microsoft+TSMC統合の「N1X」プラットフォーム：AI P... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3292_X_semivision_tw_NVIDIA_MediaTek_Arm_Microsoft_TSMC統合の_N1X_プラッ.md |
+| 307 | @jyoti_mann1 — MetaがAIペンダントのテスト計画と、スマートグラス「Modelo」を来月発売すると内部資料が示す | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3293_X_jyoti_mann1_MetaがAIペンダントのテスト計画と_スマートグラス_Modelo_を来月発売すると内部.md |
+| 308 | @StockMKTNewz — Google、AIインフラ構築のために800億ドルを調達。Berkshire Hathawayが100億ドルを... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3294_X_StockMKTNewz_Google_AIインフラ構築のために800億ドルを調達_Berkshire_Hathaw.md |
+| 309 | @CoreWeave — NVIDIAがComputexでVera Rubin NVL72を発表。CoreWeaveが世界初のデプロイク... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3295_X_CoreWeave_NVIDIAがComputexでVera_Rubin_NVL72を発表_CoreWeave.md |
+| 310 | @Polymarket — CMEとICEがAI計算能力に連動した先物契約を上場する予定 | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3296_X_Polymarket_CMEとICEがAI計算能力に連動した先物契約を上場する予定.md |
+| 311 | @_philschmid — Gemini APIに「Managed Agents」機能を追加。シングルAPI呼び出しでコード実行・ファイル... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3297_X__philschmid_Gemini_APIに_Managed_Agents_機能を追加_シングルAPI呼び出しで.md |
+| 312 | @BrianRoemmele — NVIDIAが「RTX Spark」Windows on Arm PCチップを発表。BlackwellGPU+... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3298_X_BrianRoemmele_NVIDIAが_RTX_Spark_Windows_on_Arm_PCチップを発表_Bla.md |
+| 313 | @CoreWeave — CoreWeaveがVera Rubin NVL72を世界初デプロイ。Blackwellより推論効率10倍、コ... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3299_X_CoreWeave_CoreWeaveがVera_Rubin_NVL72を世界初デプロイ_Blackwellよ.md |
+| 314 | @nv_pavlichenko — JetBrainsがMellum2（12B MoE、RLVRで訓練）を公開。base/SFT/RLチェックポイ... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3300_X_nv_pavlichenko_JetBrainsがMellum2_12B_MoE_RLVRで訓練_を公開_base_SF.md |
+| 315 | @nhk_news — AIスタートアップAnthropicが新規株式公開（IPO）申請を発表 | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3301_X_nhk_news_AIスタートアップAnthropicが新規株式公開_IPO_申請を発表.md |
+| 316 | @Microsoft — MicrosoftがMS Buildで次世代トポロジカル量子チップ「Majorana 2」を発表。AIを活用し... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3302_X_Microsoft_MicrosoftがMS_Buildで次世代トポロジカル量子チップ_Majorana_2_.md |
+| 317 | @bindureddy — MicrosoftがMS BuildでMAIとMai-Flashの2つの基盤モデルを発表。早期ベンチマークは良... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3303_X_bindureddy_MicrosoftがMS_BuildでMAIとMai_Flashの2つの基盤モデルを発表_.md |
+| 318 | @altryne — Microsoft「MAI-Thinking-1」と「MAI-Code-1-Flash」発表。MAI-Thin... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3304_X_altryne_Microsoft_MAI_Thinking_1_と_MAI_Code_1_Flash_発.md |
+| 319 | @Cryptic_Web3 — IntelがデータセンターでNVIDIA・AMDと競合する新AI半導体「Crescent Island」を今年... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3305_X_Cryptic_Web3_IntelがデータセンターでNVIDIA・AMDと競合する新AI半導体_Crescent_.md |
+| 320 | @StockSavvyShay — Microsoft Build：Cobalt 200チップ・Surface RTX Spark Dev Box... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3306_X_StockSavvyShay_Microsoft_Build_Cobalt_200チップ・Surface_RTX_Spa.md |
+| 321 | @NBCNews — Trumpがリリース前の強力なAIモデルへの早期アクセスを求める大統領令に署名 | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3307_X_NBCNews_Trumpがリリース前の強力なAIモデルへの早期アクセスを求める大統領令に署名.md |
+| 322 | @jijicom — AnthropicがClaude Mythosのアクセス権を新たに約150社・組織に付与すると発表 | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3308_X_jijicom_AnthropicがClaude_Mythosのアクセス権を新たに約150社・組織に付与す.md |
+| 323 | @mameyama_kun — SBIホールディングスがAnthropicと提携。日本の金融グループ初としてClaudeを全社導入し「AI金融... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3309_X_mameyama_kun_SBIホールディングスがAnthropicと提携_日本の金融グループ初としてClaudeを.md |
+| 324 | @wallstengine — Broadcom Q2決算：AI半導体売上108億ドル（前年比+143%）。Q3ガイダンスは160億ドル（+2... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3310_X_wallstengine_Broadcom_Q2決算_AI半導体売上108億ドル_前年比_143_Q3ガイダンスは1.md |
+| 325 | @SeanZCai — Harvey・Ramp・Sierra・DecagonなどAIアプリ企業がフロンティアモデル依存から脱却し独自モ... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3311_X_SeanZCai_Harvey・Ramp・Sierra・DecagonなどAIアプリ企業がフロンティアモデル.md |
+| 326 | @SkyNews — 英国労働党議員がGrokで性的画像を生成されたとして、xAIに対する法的請求を開始 | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3312_X_SkyNews_英国労働党議員がGrokで性的画像を生成されたとして_xAIに対する法的請求を開始.md |
+| 327 | @susujinkou — 英国がGoogleのAI検索向けに「世界初」の規制を導入。報道機関がAI要約での自社記事利用を拒否可能に | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3313_X_susujinkou_英国がGoogleのAI検索向けに_世界初_の規制を導入_報道機関がAI要約での自社記事利.md |
+| 328 | @theallinpod — Coatueのトーマス・ラフォン氏がSpaceX・Anthropic・OpenAIのIPO波による4兆ドル流動... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3314_X_theallinpod_Coatueのトーマス・ラフォン氏がSpaceX・Anthropic・OpenAIのIPO.md |
+| 329 | @martypartymusic — 米国と日本がAI・量子・核融合・バイオ分野で5年間10億ドルの共同パートナーシップ「Genesis Missi... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3315_X_martypartymusic_米国と日本がAI・量子・核融合・バイオ分野で5年間10億ドルの共同パートナーシップ_Gen.md |
+| 330 | @AnthropicAI — 【公式】Mythos Preview、コード高速化テストで～52倍達成（人間は4倍、Claude Opus 4... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3316_X_AnthropicAI_公式_Mythos_Preview_コード高速化テストで_52倍達成_人間は4倍_Clau.md |
+| 331 | @SOU_BTC — 米日が量子コンピューティング・AI・核融合・バイオで10億ドル規模の共同パートナーシップを発表 | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3317_X_SOU_BTC_米日が量子コンピューティング・AI・核融合・バイオで10億ドル規模の共同パートナーシップを.md |
+| 332 | @takahiroanno — OpenAI・Anthropic・DeepMindのCEOらが合成核酸への規制強化を求める共同書簡を米議会に発... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3318_X_takahiroanno_OpenAI・Anthropic・DeepMindのCEOらが合成核酸への規制強化を求める.md |
+| 333 | @joho_no_todai — SF作家テッド・チャンがAnthropicのClaude「憲法」を批判するエッセイを発表。LLMは文継続に過ぎ... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3319_X_joho_no_todai_SF作家テッド・チャンがAnthropicのClaude_憲法_を批判するエッセイを発表_.md |
+| 334 | @kimmonismus — Google DeepMindがGemma 4 QATモデルを公開。Quantization-Aware Tr... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3320_X_kimmonismus_Google_DeepMindがGemma_4_QATモデルを公開_Quantizatio.md |
+| 335 | @BraydenWilmoth — Cloudflareがxai（Grok）と提携・OpenAI Sitesを採用・VoidZeroを買収・AI ... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3321_X_BraydenWilmoth_Cloudflareがxai_Grok_と提携・OpenAI_Sitesを採用・VoidZ.md |
+| 336 | @NewsFromGoogle — Google 5月AI総括：Gemini 3.5ローンチ、Gemini Omni、AI Search更新、Go... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3322_X_NewsFromGoogle_Google_5月AI総括_Gemini_3_5ローンチ_Gemini_Omni_AI_S.md |
+| 337 | @ImAI_Eruel — AnthropicのRSI文書：AIがこなせるタスクの長さが以前の7ヶ月毎から約4ヶ月毎に倍増するペースに加速 | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3323_X_ImAI_Eruel_AnthropicのRSI文書_AIがこなせるタスクの長さが以前の7ヶ月毎から約4ヶ月毎に.md |
+| 338 | @ssomurice_local — 6月15日のG7共同声明でAI含む経済安全保障分野から中国を排除する方針を発表する見通し | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3324_X_ssomurice_local_6月15日のG7共同声明でAI含む経済安全保障分野から中国を排除する方針を発表する見通し.md |
+| 339 | @LipBuTan1 — IntelがHitachiと提携。エネルギーグリッド・鉄道・スマート工場などのフィジカルインフラにAIを統合 | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3325_X_LipBuTan1_IntelがHitachiと提携_エネルギーグリッド・鉄道・スマート工場などのフィジカルイ.md |
+| 340 | @CryptooIndia — Anthropicが「Project Glasswing」でAWS・Apple・Google・Microsof... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3326_X_CryptooIndia_Anthropicが_Project_Glasswing_でAWS・Apple・Googl.md |
+| 341 | @shmidtqq — Nemotron 3 Ultra（550B）が公開。オープンウェイト・100万トークンコンテキスト・真実性78... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3327_X_shmidtqq_Nemotron_3_Ultra_550B_が公開_オープンウェイト・100万トークンコン.md |
+| 342 | @GavinSBaker — Nemotron 3 UltraはAmerican open-source AIとしてここ最近で最も重要なリリ... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3328_X_GavinSBaker_Nemotron_3_UltraはAmerican_open_source_AIとしてここ.md |
+| 343 | @Rapt_plusalpha — 英CMAがGoogle AI検索に規制。Gemini AI要約で報道機関記事を無断利用しないよう機能導入を命令 | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3329_X_Rapt_plusalpha_英CMAがGoogle_AI検索に規制_Gemini_AI要約で報道機関記事を無断利用しな.md |
+| 344 | @birdabo — OpenAIがGPT 5.6を間もなくリリース、ChatGPT「スーパーアプリ」改装も数週間内に開始。「チャッ... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3330_X_birdabo_OpenAIがGPT_5_6を間もなくリリース_ChatGPT_スーパーアプリ_改装も数週.md |
+| 345 | @kimmonismus — OpenAI ChatGPTスーパーアプリ詳細：Codex・エージェント・画像生成・外部パートナーアプリへの誘... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3331_X_kimmonismus_OpenAI_ChatGPTスーパーアプリ詳細_Codex・エージェント・画像生成・外部パ.md |
+| 346 | @markgurman — Siri刷新の3つのストーリー：Cookの最後のランチ、FederighiがAIリーダーに、Rockwellが... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3332_X_markgurman_Siri刷新の3つのストーリー_Cookの最後のランチ_FederighiがAIリーダーに.md |
+| 347 | @kimmonismus — AppleがSiri AIをEUで提供しないと表明。DMAがライバルAIアシスタントにデータアクセスを要求する... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3333_X_kimmonismus_AppleがSiri_AIをEUで提供しないと表明_DMAがライバルAIアシスタントにデー.md |
+| 348 | @BullTheoryio — WWDC 2026：Apple Siri AIがGoogleのGeminiモデルで動作。Apple株は$210... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3334_X_BullTheoryio_WWDC_2026_Apple_Siri_AIがGoogleのGeminiモデルで動作_A.md |
+| 349 | @kimmonismus — WWDC 2026総括：TimCookの最後の基調講演。Siri AIをGeminiで刷新、EU遅延あり | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3335_X_kimmonismus_WWDC_2026総括_TimCookの最後の基調講演_Siri_AIをGeminiで刷新.md |
+| 350 | @testingcatalog — WWDC：Apple IntelligenceがGemini搭載のSiri AIに刷新。会話型Siri・画像編... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3336_X_testingcatalog_WWDC_Apple_IntelligenceがGemini搭載のSiri_AIに刷新_会.md |
+| 351 | @testingcatalog — WWDC：Apple Siri AIが発表。カスタマイズ可能な音声・画面理解・専用アプリ・VisionOS対応 | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3337_X_testingcatalog_WWDC_Apple_Siri_AIが発表_カスタマイズ可能な音声・画面理解・専用アプリ・.md |
+| 352 | @KobeissiLetter — ChatGPT登場以来、米IT雇用が11%減（33.2万人減）。一方で医療・教育分野は増加という歴史的乖離 | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3338_X_KobeissiLetter_ChatGPT登場以来_米IT雇用が11_減_33_2万人減_一方で医療・教育分野は増加と.md |
+| 353 | @hamu_3nd — Apple新Siri AI詳細：Geminiアーキテクチャ採用・Dynamic Islandから起動・専用アプ... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3339_X_hamu_3nd_Apple新Siri_AI詳細_Geminiアーキテクチャ採用・Dynamic_Islan.md |
+| 354 | @akshay_pachaar — AppleがCore AIフレームワークを発表。Qwen・Mistral・SAM3がiPhone/iPad/M... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3340_X_akshay_pachaar_AppleがCore_AIフレームワークを発表_Qwen・Mistral・SAM3がiPh.md |
+| 355 | @BullTheoryio — AnthropicがClaude Fable 5（Mythos-classの一般公開版）をリリース。ガードレー... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3341_X_BullTheoryio_AnthropicがClaude_Fable_5_Mythos_classの一般公開版_を.md |
+| 356 | @0xIlyy — Claude Fable 5：サイバーセキュリティ機能が意図的に無効化。6月22日以降は超過使用のみに制限 | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3342_X_0xIlyy_Claude_Fable_5_サイバーセキュリティ機能が意図的に無効化_6月22日以降は超.md |
+| 357 | @BloombergJapan — AnthropicがMythos級の新AI「Claude Fable 5」を一般公開。サイバー分野の機能は制限... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3343_X_BloombergJapan_AnthropicがMythos級の新AI_Claude_Fable_5_を一般公開_サイ.md |
+| 358 | @taishiyade — SpaceXがAI衛星「AI1」を発表。宇宙初のAIデータセンター、最大150kW計算ペイロード・太陽光発電で... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3344_X_taishiyade_SpaceXがAI衛星_AI1_を発表_宇宙初のAIデータセンター_最大150kW計算ペイ.md |
+| 359 | @publickey — CloudflareがAI Gatewayで従業員・アプリごとにAI利用上限額を設定できる新機能を発表 | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3345_X_publickey_CloudflareがAI_Gatewayで従業員・アプリごとにAI利用上限額を設定できる.md |
+| 360 | @koziii — NVIDIAとLGグループがロボット・自動運転・AIデータセンター・GPUクラウドを含む「AIファクトリー」構... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3346_X_koziii_NVIDIAとLGグループがロボット・自動運転・AIデータセンター・GPUクラウドを含む_.md |
+| 361 | @Designarena — Claude Fable 5がDesign ArenaでElo 1365で総合1位。Claude Opus 4... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3347_X_Designarena_Claude_Fable_5がDesign_ArenaでElo_1365で総合1位_Cla.md |
+| 362 | @dawnsongtweets — AIエージェントの実務対応力を測る新ベンチマーク「Agents' Last Exam（ALE）」を開発・発表 | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3348_X_dawnsongtweets_AIエージェントの実務対応力を測る新ベンチマーク_Agents_Last_Exam_ALE.md |
+| 363 | @SuzukiTaka — JASRACがAI生成音楽の著作権登録ガイドラインを発表。Spotify・Apple Music・YouTub... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3349_X_SuzukiTaka_JASRACがAI生成音楽の著作権登録ガイドラインを発表_Spotify・Apple_Mu.md |
+| 364 | @The_Cyber_News — GoogleがGemini AIを悪用したサイバー攻撃で中国拠点のサイバー犯罪ネットワーク「Outsider ... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3350_X_The_Cyber_News_GoogleがGemini_AIを悪用したサイバー攻撃で中国拠点のサイバー犯罪ネットワーク.md |
+| 365 | @Defencematrix1 — インド・フランス首脳会談：AIワーキンググループを創設、「Innovation Roadmap 2030」を採... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3351_X_Defencematrix1_インド・フランス首脳会談_AIワーキンググループを創設_Innovation_Roadma.md |
+| 366 | @Jeremybtc — 2025年末からのAIコーディング支援リリース以降、オンチェーン上でのexploit被害総額が推計150億ドル... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3352_X_Jeremybtc_2025年末からのAIコーディング支援リリース以降_オンチェーン上でのexploit被害総.md |
+| 367 | @vismoglie — 日英首脳会談：GCAP加速、半導体・AI協力強化。英への日本企業の約90億ポンド投資も発表 | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3353_X_vismoglie_日英首脳会談_GCAP加速_半導体・AI協力強化_英への日本企業の約90億ポンド投資も発表.md |
+| 368 | @masahirochaen — Fable 5公開から24時間でトランプ政権が輸出規制発動した経緯：Amazon CEO報告→Bessent調... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3354_X_masahirochaen_Fable_5公開から24時間でトランプ政権が輸出規制発動した経緯_Amazon_CEO報.md |
+| 369 | @m_goes_distance — Chai Discovery、AIネイティブ生物学で34億ドル評価で4億ドル調達。AI創薬がフロンティアAI並... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3355_X_m_goes_distance_Chai_Discovery_AIネイティブ生物学で34億ドル評価で4億ドル調達_AI創薬.md |
+| 370 | @StockMKTNewz — AmazonがミズーリへのAIデータセンター建設に数十億ドルの投資を発表 | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3356_X_StockMKTNewz_AmazonがミズーリへのAIデータセンター建設に数十億ドルの投資を発表.md |
+| 371 | @momoblog0214 — AMDがAIメモリ最適化のMEXTを買収。フラッシュをDRAM的に使う技術でデータセンター向け製品を強化 | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3357_X_momoblog0214_AMDがAIメモリ最適化のMEXTを買収_フラッシュをDRAM的に使う技術でデータセンター.md |
+| 372 | @MLBear2 — Anthropic幹部がFable 5停止問題で米政権と協議。Sakana AIが自律型リサーチアシスタント「... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3358_X_MLBear2_Anthropic幹部がFable_5停止問題で米政権と協議_Sakana_AIが自律型リ.md |
+| 373 | @HimazinProducer — Fable 5公開72時間後に政府が輸出管理命令でアクセス全停止。翌日OpenRouterが「Fusion A... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3359_X_HimazinProducer_Fable_5公開72時間後に政府が輸出管理命令でアクセス全停止_翌日OpenRouter.md |
