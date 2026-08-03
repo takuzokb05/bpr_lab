@@ -1,0 +1,1073 @@
+[
+  {
+    "idx": 4,
+    "handle": "@nukonuko",
+    "text_summary": "Claude Codeアップデート: /tui改善、think/toolcallストリーミング、Compaction高速化、MCP修正、クラッシュ自動回復",
+    "theme": "claude-code",
+    "url": "https://x.com/nukonuko/status/2059739954314666303"
+  },
+  {
+    "idx": 14,
+    "handle": "@tetumemo",
+    "text_summary": "無料セキュリティプラグイン公開でPRレビュー指摘30-40%削減",
+    "theme": "claude-code",
+    "url": "https://x.com/tetumemo/status/2059717686847050220"
+  },
+  {
+    "idx": 37,
+    "handle": "@trevin",
+    "text_summary": "Orca /orchestrateスキル: Claude CodeがCodexを同一worktreeで起動しセカンドオピニオン取得",
+    "theme": "claude-code",
+    "url": "https://x.com/trevin/status/2059723418908672392"
+  },
+  {
+    "idx": 38,
+    "handle": "@7h3h4ckv157",
+    "text_summary": "Claude Code向け自律バグバウンティフレームワーク: 50エージェント・26コマンド・11スキル・2MCPサーバー",
+    "theme": "claude-code",
+    "url": "https://x.com/7h3h4ckv157/status/2059722691704496288"
+  },
+  {
+    "idx": 40,
+    "handle": "@bettercallsalva",
+    "text_summary": "MCPをClaude Codeでローカル実行: stdioトランスポート+コマンド指定、CLIセッションとは別デーモン、複数エージェント並列可",
+    "theme": "claude-code",
+    "url": "https://x.com/bettercallsalva/status/2059718194915356925"
+  },
+  {
+    "idx": 41,
+    "handle": "@Yerocode0",
+    "text_summary": "Anthropic公式Frontend Designスキル、GitHub 136K星",
+    "theme": "claude-code",
+    "url": "https://x.com/Yerocode0/status/2059717841319051639"
+  },
+  {
+    "idx": 43,
+    "handle": "@sigure1216",
+    "text_summary": "/usageの詳細がskills/subagents/plugins/MCPまで可視化されるようになった（公式Changelog）",
+    "theme": "claude-code",
+    "url": "https://x.com/sigure1216/status/2060104727233519671"
+  },
+  {
+    "idx": 46,
+    "handle": "@hanimaru_draix",
+    "text_summary": "Claude Code出力を別次元にするプロンプト5選: ultrathink(31999トークン思考)/CLAUDE.md/Before-After/Subagent並列(最大10タスク)/検証ループ",
+    "theme": "claude-code",
+    "url": "https://x.com/hanimaru_draix/status/2060103916533256317"
+  },
+  {
+    "idx": 47,
+    "handle": "@hanimaru_draix",
+    "text_summary": "Subagent並列処理: 1セッションで最大10タスク同時実行、@reviewer @researcherで分担",
+    "theme": "claude-code",
+    "url": "https://x.com/hanimaru_draix/status/2060103892793483476"
+  },
+  {
+    "idx": 48,
+    "handle": "@hanimaru_draix",
+    "text_summary": "CLAUDE.mdメモリパターン: プロジェクト名・技術スタック・絶対ルールを記述しセッション記憶を永続化",
+    "theme": "claude-code",
+    "url": "https://x.com/hanimaru_draix/status/2060103869489877070"
+  },
+  {
+    "idx": 49,
+    "handle": "@hanimaru_draix",
+    "text_summary": "ultrathinkで31,999トークンの思考予算が解放される",
+    "theme": "claude-code",
+    "url": "https://x.com/hanimaru_draix/status/2060103857590665547"
+  },
+  {
+    "idx": 54,
+    "handle": "@masahirochaen",
+    "text_summary": "Fast mode: Opus 4.8を2.5倍速・従来比3倍安で実行。Claude Codeは/fastで即オン",
+    "theme": "claude-code",
+    "url": "https://x.com/masahirochaen/status/2060099840894513433"
+  },
+  {
+    "idx": 64,
+    "handle": "@VaibhavSisinty",
+    "text_summary": "Dynamic workflows: 大タスクを計画→数百サブエージェント並列実行→自己検証→報告。コードベース全体マイグレーション向け",
+    "theme": "claude-code",
+    "url": "https://x.com/VaibhavSisinty/status/2060103854453395727"
+  },
+  {
+    "idx": 65,
+    "handle": "@mrluiscalderon",
+    "text_summary": ".claude/フォルダ構造: CLAUDE.md/Skills/Agents/Commands/Hooks/MCPサーバー。エージェントをソフトウェアとして設定管理",
+    "theme": "claude-code",
+    "url": "https://x.com/mrluiscalderon/status/2060103823146836462"
+  },
+  {
+    "idx": 72,
+    "handle": "@aditiitwt",
+    "text_summary": "スキルチェーン: /build-a-brand → /app-store（App Storeクリエイティブ自動生成）→ /app-sizzle（シネマティック動画生成）",
+    "theme": "claude-code",
+    "url": "https://x.com/aditiitwt/status/2060102191185375574"
+  },
+  {
+    "idx": 75,
+    "handle": "@stevekrouse",
+    "text_summary": "Val TownのClaude Codeプラグイン: MCPサーバー+スキルをセット導入。コンテキストに関連スキルを逐次ロード",
+    "theme": "claude-code",
+    "url": "https://x.com/stevekrouse/status/2060094698694259175"
+  },
+  {
+    "idx": 77,
+    "handle": "@ajdduggan",
+    "text_summary": "Venice MCP: チャット/画像/動画/音声/音楽/Web検索の31ツール。Claude Code・Cursor・Codexで動作",
+    "theme": "claude-code",
+    "url": "https://x.com/ajdduggan/status/2060088730002600141"
+  },
+  {
+    "idx": 78,
+    "handle": "@chenzeling4",
+    "text_summary": "Manus AIのコアワークフローをリバースエンジニアリング→Claude Codeスキル化: Planning with Files（永続Markdownプランでエージェント管理）",
+    "theme": "claude-code",
+    "url": "https://x.com/chenzeling4/status/2060088474381045892"
+  },
+  {
+    "idx": 81,
+    "handle": "@mikeunplugged",
+    "text_summary": "環境比較: claude.ai（会話型）/ Claude CoWork（ブラウザ内エージェント・サンドボックス）/ Claude Code（ローカル全アクセス・シェル・無サンドボックス）",
+    "theme": "claude-code",
+    "url": "https://x.com/mikeunplugged/status/2060081001544503337"
+  },
+  {
+    "idx": 91,
+    "handle": "@asukahaox",
+    "text_summary": "新プラグインがプロジェクトをスキャンしMCPサーバー/フック/サブエージェント/スキル/自動化を推奨・段階的に設定",
+    "theme": "claude-code",
+    "url": "https://x.com/asukahaox/status/2060460206342259056"
+  },
+  {
+    "idx": 100,
+    "handle": "@Distroux",
+    "text_summary": "Dynamic workflow実践: エージェント毎スクラッチパッド・変更ファイル・テスト実行・禁止ファイルを確認する設計が重要",
+    "theme": "claude-code",
+    "url": "https://x.com/Distroux/status/2060466879567712340"
+  },
+  {
+    "idx": 105,
+    "handle": "@Daniel_Farinax",
+    "text_summary": "速度ベンチマーク: Claude最速(384行・14KB)・Codex遅いが充実・Grok Buildは巨大生成",
+    "theme": "claude-code",
+    "url": "https://x.com/Daniel_Farinax/status/2060465926701461767"
+  },
+  {
+    "idx": 107,
+    "handle": "@MohamedDewidar_",
+    "text_summary": "Auto Mode: Sonnetが各ツールコールを個別評価。安全→自動承認、危険→ユーザー確認。--dangerously-skip-permissionsの代替",
+    "theme": "claude-code",
+    "url": "https://x.com/MohamedDewidar_/status/2060465592923296019"
+  },
+  {
+    "idx": 109,
+    "handle": "@kevinnbass",
+    "text_summary": "disable_parallel_tool_useがClaude Code設定で非公開（APIのみ）。Windows書き込み多用セッションで10%失敗",
+    "theme": "claude-code",
+    "url": "https://x.com/kevinnbass/status/2060465488170193115"
+  },
+  {
+    "idx": 114,
+    "handle": "@fmontes",
+    "text_summary": "DotCMS MCP経由でアクセシビリティ問題をClaude Codeが自律スキャン・修正。Opus 4.8のtool calling+bashが非常に高度",
+    "theme": "claude-code",
+    "url": "https://x.com/fmontes/status/2060448877929451582"
+  },
+  {
+    "idx": 116,
+    "handle": "@QuantumTransf",
+    "text_summary": "Claude Codeはすべての会話/サブエージェント/ワークフローをJSONLで保存。JSでSQLiteを検索して履歴取得可能",
+    "theme": "claude-code",
+    "url": "https://x.com/QuantumTransf/status/2060447803374207099"
+  },
+  {
+    "idx": 117,
+    "handle": "@KayvonJafar",
+    "text_summary": "公式セットアッププラグイン: /plugin install claude-code-setup@claude-plugins-officialでフック/スキル/MCP/サブエージェント/自動化を自動設定",
+    "theme": "claude-code",
+    "url": "https://x.com/KayvonJafar/status/2060447333347922345"
+  },
+  {
+    "idx": 119,
+    "handle": "@GithubProjects",
+    "text_summary": "Mercury Skills: Claude Code/Codex/Cursor/Gemini CLI対応のSKILL.mdオープンエコシステム",
+    "theme": "claude-code",
+    "url": "https://x.com/GithubProjects/status/2060442409558036735"
+  },
+  {
+    "idx": 138,
+    "handle": "@lliu54827",
+    "text_summary": "並列Claude Code運用: エージェント数よりcontext受け渡し設計が効く。worktree自動化でも引き継ぎが弱いとゴミが蓄積",
+    "theme": "claude-code",
+    "url": "https://x.com/lliu54827/status/2060818366647124337"
+  },
+  {
+    "idx": 156,
+    "handle": "@filicroval",
+    "text_summary": "コード検索MCP性能: インデックス約250ms・クエリ1.5ms・CPU実行・APIキー不要。Claude Codeで動作するMCPサーバー",
+    "theme": "claude-code",
+    "url": "https://x.com/filicroval/status/2060823231678873757"
+  },
+  {
+    "idx": 161,
+    "handle": "@arshadkazmi42",
+    "text_summary": "Opus 4.8 + ultracode + MCP構成で自律バグハンティング数時間放置→成果確認",
+    "theme": "claude-code",
+    "url": "https://x.com/arshadkazmi42/status/2060804442480357541"
+  },
+  {
+    "idx": 166,
+    "handle": "@GPT_kuro2",
+    "text_summary": "利用上限緩和: 5時間制限2倍・週間制限+50%（7/13まで）。対象はClaude Code開発者向けが主",
+    "theme": "claude-code",
+    "url": "https://x.com/GPT_kuro2/status/2061541802143007135"
+  },
+  {
+    "idx": 172,
+    "handle": "@masahirochaen",
+    "text_summary": "Claude_in_Chromeブラウザ拡張でAPIなしサイト操作: 1600件イベントから趣味・履歴・事業を考慮しスケジュール自動組成・申込まで実行",
+    "theme": "claude-code",
+    "url": "https://x.com/masahirochaen/status/2061539079058333982"
+  },
+  {
+    "idx": 177,
+    "handle": "@kanta13jp1",
+    "text_summary": "AnthropicがPro/Maxレートリミットをリセット。過剰サブエージェント生成バグも修正済み",
+    "theme": "claude-code",
+    "url": "https://x.com/kanta13jp1/status/2061529386290200816"
+  },
+  {
+    "idx": 181,
+    "handle": "@cryptodiaries",
+    "text_summary": "バグ: Claude Code公式サイトのnpmパッケージ名が誤り。@anthropic/claude-cliではなく@anthropic/claude-code",
+    "theme": "claude-code",
+    "url": "https://x.com/cryptodiaries/status/2061546583217394176"
+  },
+  {
+    "idx": 186,
+    "handle": "@dkare1009",
+    "text_summary": "Claude Code 12の機能リスト: CLAUDE.md/Plan Mode/Subagents/Dynamic Workflows//goal/MCPツール/Skills/Hooks/Auto Mode//schedule//loop//context",
+    "theme": "claude-code",
+    "url": "https://x.com/dkare1009/status/2061545864846291280"
+  },
+  {
+    "idx": 187,
+    "handle": "@jazzyalex",
+    "text_summary": "Agent Sessions: ローカルのClaude Code履歴（~/.claude/projects）をプロジェクト別にビジュアル検索するツール",
+    "theme": "claude-code",
+    "url": "https://x.com/jazzyalex/status/2061545319113101383"
+  },
+  {
+    "idx": 193,
+    "handle": "@GitHubGPT",
+    "text_summary": "Harnessプラグイン: ユーザー定義ドメインからエージェントチームとスキルを自動生成。5,083星・686フォーク",
+    "theme": "claude-code",
+    "url": "https://x.com/GitHubGPT/status/2061544665581842827"
+  },
+  {
+    "idx": 196,
+    "handle": "@MattPenny99",
+    "text_summary": "Uberが5,000人のエンジニアにClaude Codeを展開。AI使用量ランキングを構築。COOはROIを証明できないと認める",
+    "theme": "claude-code",
+    "url": "https://x.com/MattPenny99/status/2061543808555499527"
+  },
+  {
+    "idx": 200,
+    "handle": "@madarco",
+    "text_summary": "Agentbox v0.12.0: /agentboxスキルがプランをテレポート、GitHubのPRコメントを見て返信、-iオプションでリポジトリ更新",
+    "theme": "claude-code",
+    "url": "https://x.com/madarco/status/2061531998561460628"
+  },
+  {
+    "idx": 201,
+    "handle": "@SocialtyPro",
+    "text_summary": "Claude Codeスキルの公式コース: SKILL.mdワークフロー構築・自動トリガーのタイミングを解説",
+    "theme": "claude-code",
+    "url": "https://x.com/SocialtyPro/status/2061531000275153080"
+  },
+  {
+    "idx": 203,
+    "handle": "@evan123liu",
+    "text_summary": "/goal + Chrome Extension MCPで並列エージェントが全UI機能・ボタン・フロントエンドルートを全画面サイズでテスト",
+    "theme": "claude-code",
+    "url": "https://x.com/evan123liu/status/2061524567802495451"
+  },
+  {
+    "idx": 208,
+    "handle": "@_itsjustshubh",
+    "text_summary": "プラグイン開発パターン: 自分の課題→MCP構築→自分で使う。ドッグフーディングが製品戦略",
+    "theme": "claude-code",
+    "url": "https://x.com/_itsjustshubh/status/2061513853221937438"
+  },
+  {
+    "idx": 209,
+    "handle": "@RodmanAi",
+    "text_summary": "公式セットアッププラグインがClaude Codeプロジェクトをスキャンし推奨: MCPサーバー・サブエージェント・スキル・フック・自動化",
+    "theme": "claude-code",
+    "url": "https://x.com/RodmanAi/status/2061513772435718581"
+  },
+  {
+    "idx": 211,
+    "handle": "@socialwithaayan",
+    "text_summary": "Harness by revfactory: 一文からエージェントチームを構築するスキルが他スキルを書くスキル。3.6K星・539フォーク",
+    "theme": "claude-code",
+    "url": "https://x.com/socialwithaayan/status/2061512481093345349"
+  },
+  {
+    "idx": 217,
+    "handle": "@mittooney",
+    "text_summary": "Dynamic Workflows解説: 調査・検証・反証・実行・まとめを専用エージェントに分担。複雑なコードレビュー・バグ分析に有効",
+    "theme": "claude-code",
+    "url": "https://x.com/mittooney/status/2061914215452115318"
+  },
+  {
+    "idx": 230,
+    "handle": "@CLIhub",
+    "text_summary": "Claude Code v2.1.160: grep後に即Edit可能（Readステップ不要）・シェル設定の不正編集をブロックする安全プロンプト追加",
+    "theme": "claude-code",
+    "url": "https://x.com/CLIhub/status/2061916119049388484"
+  },
+  {
+    "idx": 233,
+    "handle": "@MCGlive",
+    "text_summary": "EVOフレームワーク適用後、Claude Codeの精度が5/20→11/20に改善（50-60回の実験後）",
+    "theme": "claude-code",
+    "url": "https://x.com/MCGlive/status/2061915762558918982"
+  },
+  {
+    "idx": 238,
+    "handle": "@coder_blvck",
+    "text_summary": "agent-session-resume v1.0.0: Claude CodeとCodexのセッション再開を確定的・証拠付きで実現",
+    "theme": "claude-code",
+    "url": "https://x.com/coder_blvck/status/2061914916999618621"
+  },
+  {
+    "idx": 245,
+    "handle": "@zeuuss_01",
+    "text_summary": "Obsidian vault内でClaude Code → /plugin install skill-creator → /doc-ingestionスキルで20本のPDFをNotebookLMブリーフに変換",
+    "theme": "claude-code",
+    "url": "https://x.com/zeuuss_01/status/2061908683509170594"
+  },
+  {
+    "idx": 247,
+    "handle": "@nurijanian",
+    "text_summary": "Dynamic workflows技術詳細: 最大1,000エージェント・同時16実行・JavaScriptスクリプトでオーケストレーション",
+    "theme": "claude-code",
+    "url": "https://x.com/nurijanian/status/2061900672103305621"
+  },
+  {
+    "idx": 251,
+    "handle": "@shintaro_campon",
+    "text_summary": "CLAUDE.md運用ベスト: 60行以内・知識はSkillsへ外部化・auto memoryオフ。劣化の原因は「コンテキストの渋滞」",
+    "theme": "claude-code",
+    "url": "https://x.com/shintaro_campon/status/2062278997321637960"
+  },
+  {
+    "idx": 256,
+    "handle": "@Karte_ai",
+    "text_summary": "'workflow'という言葉ではDynamic Workflowsが自動起動しなくなった。明示的に起動するには'ultracode'と伝える必要あり",
+    "theme": "claude-code",
+    "url": "https://x.com/Karte_ai/status/2062272648856650027"
+  },
+  {
+    "idx": 263,
+    "handle": "@MalwareBibleJP",
+    "text_summary": "Anthropicがサイバー攻撃AI悪用1年分を分析: 832アカウント凍結・MITRE ATT&CKマッピング・高リスク攻撃者33%→56%に増加",
+    "theme": "claude-code",
+    "url": "https://x.com/MalwareBibleJP/status/2062256837781840007"
+  },
+  {
+    "idx": 284,
+    "handle": "@cathrynlavery",
+    "text_summary": "ボイスメモ文字起こしスキル: 全メモを検索・ローカル無料文字起こし・内容から自動命名。8年分のアーカイブ整理に活用",
+    "theme": "claude-code",
+    "url": "https://x.com/cathrynlavery/status/2062258351761711324"
+  },
+  {
+    "idx": 285,
+    "handle": "@productschool",
+    "text_summary": "ポッドキャスト: AnthropicのClaude Code Head of Design Meaghan Choi、ProductCon New Yorkに登壇（公式一次情報）",
+    "theme": "claude-code",
+    "url": "https://x.com/productschool/status/2062256253737279845"
+  },
+  {
+    "idx": 296,
+    "handle": "@minimalistneko",
+    "text_summary": "/remote-control（/rc）コマンド: v2.1.53以上・Pro/Maxプラン・claude.aiログイン済みで利用可。セッションURLとQRコードでスマホ接続",
+    "theme": "claude-code",
+    "url": "https://x.com/minimalistneko/status/2062633702384152965"
+  },
+  {
+    "idx": 298,
+    "handle": "@minimalistneko",
+    "text_summary": "Tailscale + /rcコマンドでスマホからClaude Codeへのモバイルアクセス手順: --dangerously-skip-permissionsで起動後/rcを入力",
+    "theme": "claude-code",
+    "url": "https://x.com/minimalistneko/status/2062627811689644177"
+  },
+  {
+    "idx": 309,
+    "handle": "@k1rallik",
+    "text_summary": "Boris Cherny（Claude Code作者）は6ヶ月間コードを書いておらず、今は「ループを書く（オーケストレーション）」仕事をしている",
+    "theme": "claude-code",
+    "url": "https://x.com/k1rallik/status/2062639320503374034"
+  },
+  {
+    "idx": 317,
+    "handle": "@WomanCorn",
+    "text_summary": "GitLab/JiraのCLIツールをインストール→Claude Codeにスキルを学習・記述させる→課題番号指定でPR自動作成",
+    "theme": "claude-code",
+    "url": "https://x.com/WomanCorn/status/2062635296181583897"
+  },
+  {
+    "idx": 325,
+    "handle": "@ModernGrindTech",
+    "text_summary": "ハックデバッグ: セッションボードが4並列稼働中に1表示。修正: catch-all pretooluse hook + 60秒クールダウンゲート。99%が10ms以内で終了",
+    "theme": "claude-code",
+    "url": "https://x.com/ModernGrindTech/status/2062623973003628797"
+  },
+  {
+    "idx": 328,
+    "handle": "@YShimogawara",
+    "text_summary": "AnthropicのAIネイティブ開発組織講演: 6ヶ月ロードマップ→just-in-time planning・Claudeがバグ検出・PMがコード記述・フラット組織化",
+    "theme": "claude-code",
+    "url": "https://x.com/YShimogawara/status/2063003677984706692"
+  },
+  {
+    "idx": 331,
+    "handle": "@tenso_ai_med",
+    "text_summary": "Superset = Claude CodeとCodexをGUIで操作できるAIエディター（ターミナル不要）",
+    "theme": "claude-code",
+    "url": "https://x.com/tenso_ai_med/status/2063000935375491570"
+  },
+  {
+    "idx": 332,
+    "handle": "@tetumemo",
+    "text_summary": "Anthropicが自社コードの80%をClaudeが執筆するRSIデータを公開・IPO申請。6/15よりClaude CodeサブスクAPI等価クレジット制限導入",
+    "theme": "claude-code",
+    "url": "https://x.com/tetumemo/status/2062998412119994566"
+  },
+  {
+    "idx": 335,
+    "handle": "@mohritaroh",
+    "text_summary": "公式ブログ: 'Lessons from building Claude Code: How we use skills'（Anthropic公式スキル活用法）",
+    "theme": "claude-code",
+    "url": "https://x.com/mohritaroh/status/2062992041684930748"
+  },
+  {
+    "idx": 343,
+    "handle": "@chenzeling4",
+    "text_summary": "Claude Code向けAnthropicリーガルプラグイン: 契約レビュー・コンプライアンス確認・特権スクリーニング・規制分析。引用追跡付き",
+    "theme": "claude-code",
+    "url": "https://x.com/chenzeling4/status/2063003935556915691"
+  },
+  {
+    "idx": 351,
+    "handle": "@crack3nnn",
+    "text_summary": "Skillsはskillsフォルダに置くだけで自動ロード。1コマンドで新スキルをスキャフォールド。手動設定不要に",
+    "theme": "claude-code",
+    "url": "https://x.com/crack3nnn/status/2063002926558126302"
+  },
+  {
+    "idx": 354,
+    "handle": "@kylemathews",
+    "text_summary": "個人ベンチマーク: build123dで3D印刷部品設計。9月は失敗、今週は非自明な2部品を設計成功。Claude Codeの能力向上を確認",
+    "theme": "claude-code",
+    "url": "https://x.com/kylemathews/status/2063002746001981925"
+  },
+  {
+    "idx": 357,
+    "handle": "@arceyul",
+    "text_summary": "シニアエンジニアのClaude Codeワークフロー: 1タスクを5エージェントに分割するプラグイン使用。時間をプロンプト改善・計画・レビューへシフト",
+    "theme": "claude-code",
+    "url": "https://x.com/arceyul/status/2063001244914831372"
+  },
+  {
+    "idx": 358,
+    "handle": "@_shadowintel_",
+    "text_summary": "Anthropicがquietlyリリース: 'defending-code-reference-harness'リポジトリ（Claude Code上で動く脆弱性発見パイプライン）",
+    "theme": "claude-code",
+    "url": "https://x.com/_shadowintel_/status/2063001188686029095"
+  },
+  {
+    "idx": 362,
+    "handle": "@jonathans_blog",
+    "text_summary": "mcp-builder Claude Codeスキル: specを読まずに本番品質のMCPサーバーを完全生成",
+    "theme": "claude-code",
+    "url": "https://x.com/jonathans_blog/status/2062988332267647340"
+  },
+  {
+    "idx": 364,
+    "handle": "@fedecarg",
+    "text_summary": "UXパターン: 短命インストールコマンド（Integrations → Claude → Generate）でセットアップドキュメント削減",
+    "theme": "claude-code",
+    "url": "https://x.com/fedecarg/status/2062983291829969371"
+  },
+  {
+    "idx": 368,
+    "handle": "@iam_elias1",
+    "text_summary": "BrowserbaseのClaude Codeスキル: 理想顧客を定義→企業サイト自動読込・資格確認・見込み客リスト作成を自動化",
+    "theme": "claude-code",
+    "url": "https://x.com/iam_elias1/status/2062975012991353066"
+  },
+  {
+    "idx": 380,
+    "handle": "@cursorvers",
+    "text_summary": "Claude Codeアプリが最大6ウィンドウ分割に対応",
+    "theme": "claude-code",
+    "url": "https://x.com/cursorvers/status/2063355001280553277"
+  },
+  {
+    "idx": 385,
+    "handle": "@chenzeling4",
+    "text_summary": "CodeBurn: Claude Code・Cursor・Codexなど25ツールのトークン消費をタスク/モデル/プロジェクト/プロバイダー別に追跡",
+    "theme": "claude-code",
+    "url": "https://x.com/chenzeling4/status/2063366323888087218"
+  },
+  {
+    "idx": 389,
+    "handle": "@alokbishoyi97",
+    "text_summary": "EVO: Claude CodeにEVOのリポジトリを読ませるだけで分析力が上がる。EVOを使わなくても効果あり",
+    "theme": "claude-code",
+    "url": "https://x.com/alokbishoyi97/status/2063365858446258219"
+  },
+  {
+    "idx": 399,
+    "handle": "@kurtbuhler",
+    "text_summary": "自律セッション設計: 新コミットを監視するオーケストレーターがレビューをdevオーケストレーターのコンテキストに追加。週末放置で動作",
+    "theme": "claude-code",
+    "url": "https://x.com/kurtbuhler/status/2063358516048384186"
+  },
+  {
+    "idx": 401,
+    "handle": "@MattHProgrammer",
+    "text_summary": "Claude Codeが高度ツールの機会を検知したら提案するスキル: /workflows・/goal・/loop・/scheduleの使い方を示唆",
+    "theme": "claude-code",
+    "url": "https://x.com/MattHProgrammer/status/2063358227413168483"
+  },
+  {
+    "idx": 402,
+    "handle": "@MaryamMiradi",
+    "text_summary": "Claude Codeで本番AIエージェントを構築する9ステップ: BMADプランニング → /evals-create-suite",
+    "theme": "claude-code",
+    "url": "https://x.com/MaryamMiradi/status/2063351573690872005"
+  },
+  {
+    "idx": 404,
+    "handle": "@rocklambros",
+    "text_summary": "Claudeスキル = モデルが適用判断するための説明文を持つ単一Markdownファイル。インストール後は自動参照",
+    "theme": "claude-code",
+    "url": "https://x.com/rocklambros/status/2063350232516272404"
+  },
+  {
+    "idx": 410,
+    "handle": "@shintaro_campon",
+    "text_summary": "AIに渡す「文脈の構造化」が重要に。明確な型定義1つが曖昧な日本語指示より有効。推論精度が30%向上",
+    "theme": "claude-code",
+    "url": "https://x.com/shintaro_campon/status/2063728450024960253"
+  },
+  {
+    "idx": 432,
+    "handle": "@w1nklerr",
+    "text_summary": "Boris Cherny（Claude Code作者）が11月以降コードを書いていない。仕事の性質が根本変化。24分トーク",
+    "theme": "claude-code",
+    "url": "https://x.com/w1nklerr/status/2063727283139920166"
+  },
+  {
+    "idx": 440,
+    "handle": "@_bannzai_",
+    "text_summary": "Plan Modeを明示的に使わなくても、大きなタスクはClaude Codeが自動でプランファイルを作成するようになった",
+    "theme": "claude-code",
+    "url": "https://x.com/_bannzai_/status/2063725010968367183"
+  },
+  {
+    "idx": 445,
+    "handle": "@izhongyuting",
+    "text_summary": "スキルが管理画面の役割を代替しつつある。Claude Code・Codex・Cursorへのクロスランタイムインストールが1スクリプトで完結",
+    "theme": "claude-code",
+    "url": "https://x.com/izhongyuting/status/2063715034224812299"
+  },
+  {
+    "idx": 448,
+    "handle": "@brocmayo",
+    "text_summary": "Claude Code活用マップ: Claude Code vs Projects vs Chat vs API の使い分け・Plan Mode・サブエージェント・スキル・フックを体系的に整理",
+    "theme": "claude-code",
+    "url": "https://x.com/brocmayo/status/2063711200282832969"
+  },
+  {
+    "idx": 453,
+    "handle": "@1005Alok85200",
+    "text_summary": "Claude Code向けGitHubリポジトリTOP: Claude Mem（セッション間永続メモリ）・UI UX Pro Max（50+スタイルパターン）など",
+    "theme": "claude-code",
+    "url": "https://x.com/1005Alok85200/status/2063700720898216152"
+  },
+  {
+    "idx": 455,
+    "handle": "@sora19ai",
+    "text_summary": "text-to-lottie OSSスキル（Claude Code/Codex対応）: SVG/データ→lottie.json自動生成・ブラウザプレビュー",
+    "theme": "claude-code",
+    "url": "https://x.com/sora19ai/status/2064090961391898997"
+  },
+  {
+    "idx": 457,
+    "handle": "@shintaro_campon",
+    "text_summary": "Claude Code v2.1.152: /code-review --fixフラグでレビューから修正まで1コマンドで完結",
+    "theme": "claude-code",
+    "url": "https://x.com/shintaro_campon/status/2064090543131619470"
+  },
+  {
+    "idx": 466,
+    "handle": "@oikon48",
+    "text_summary": "【一次情報】Boris Cherny + Cat Wu（製品責任者）がClaude Code 1周年を振り返る動画を公開（Slackでのデモから企業展開まで）",
+    "theme": "claude-code",
+    "url": "https://x.com/oikon48/status/2064084007726579790"
+  },
+  {
+    "idx": 469,
+    "handle": "@mohritaroh",
+    "text_summary": "ZOZO TECH BLOGの記事: Claude Code + Codex で設計からテストまでを2コマンドで組織標準化",
+    "theme": "claude-code",
+    "url": "https://x.com/mohritaroh/status/2064081623767724097"
+  },
+  {
+    "idx": 475,
+    "handle": "@orca_build",
+    "text_summary": "Orca Mobile Emulator: AIエージェントがモバイルアプリをworktree内で操作・テスト・デバッグ（Claude Code対応）",
+    "theme": "claude-code",
+    "url": "https://x.com/orca_build/status/2064091161980268976"
+  },
+  {
+    "idx": 479,
+    "handle": "@noisyb0y1",
+    "text_summary": "Claude Code作者: '以前はプロンプトの書き方が必要、次にコンテキスト管理が必要、今は最低限渡せばモデルが自分で解決する'",
+    "theme": "claude-code",
+    "url": "https://x.com/noisyb0y1/status/2064090607677563028"
+  },
+  {
+    "idx": 480,
+    "handle": "@kuberdenis",
+    "text_summary": "ループ = cronjobを組んだheadlessのClaude Code/Codexコール。「ループ」はただのcronjobされた命令",
+    "theme": "claude-code",
+    "url": "https://x.com/kuberdenis/status/2064090331323240795"
+  },
+  {
+    "idx": 481,
+    "handle": "@crack3nnn",
+    "text_summary": "Claude Codeがコマンド名を変更: 以前は「バックグラウンドエージェントに分割するよう依頼」→ 今はClaude Codeが自律的にタスク規模を判断",
+    "theme": "claude-code",
+    "url": "https://x.com/crack3nnn/status/2064090090490458596"
+  },
+  {
+    "idx": 483,
+    "handle": "@daniel_mac8",
+    "text_summary": "/loopコマンドがClaude Codeに内蔵されていることを確認（ドキュメントリンクあり）",
+    "theme": "claude-code",
+    "url": "https://x.com/daniel_mac8/status/2064089849833869389"
+  },
+  {
+    "idx": 484,
+    "handle": "@nym0_speaks",
+    "text_summary": "Opus 4.8自律4時間セッション: 67トークン/秒（キャッシュ除く・ツールコール時間除く）",
+    "theme": "claude-code",
+    "url": "https://x.com/nym0_speaks/status/2064089724948455811"
+  },
+  {
+    "idx": 485,
+    "handle": "@sugumaran___",
+    "text_summary": "Claude Code終了時の孤立プロセスバグ修正: /proc/ppid/statusで祖父プロセスPIDを追跡。10行のfix、上流にフィリング済み",
+    "theme": "claude-code",
+    "url": "https://x.com/sugumaran___/status/2064089521835139373"
+  },
+  {
+    "idx": 488,
+    "handle": "@sugumaran___",
+    "text_summary": "Claude Code Telegramプラグインが7つのゾンビプロセス生成（各173 CPU分・ロードアベレージ9）。Linuxプロセス管理バグの詳細スレッド",
+    "theme": "claude-code",
+    "url": "https://x.com/sugumaran___/status/2064089505913614767"
+  },
+  {
+    "idx": 490,
+    "handle": "@rhnfzl",
+    "text_summary": "スキル/ルール/フック/MCP設定をまとめたリポジトリ。make installでClaude Code・Cursor・Codexに一括適用",
+    "theme": "claude-code",
+    "url": "https://x.com/rhnfzl/status/2064089243312341313"
+  },
+  {
+    "idx": 491,
+    "handle": "@davidvgilmore",
+    "text_summary": "Rayline: Claude Code専用モデルルーター。Claude Code APIはサブスク比8-10倍高価。サブエージェントを安価モデルに自動ルーティング",
+    "theme": "claude-code",
+    "url": "https://x.com/davidvgilmore/status/2064088697084010596"
+  },
+  {
+    "idx": 495,
+    "handle": "@aiedge_",
+    "text_summary": "/no-mistakesスキル: バグ削減・修正改善。Claude Code & Codexで動作",
+    "theme": "claude-code",
+    "url": "https://x.com/aiedge_/status/2064075000358064414"
+  },
+  {
+    "idx": 501,
+    "handle": "@CyPenguinTech",
+    "text_summary": "ニュース: Codex Sites（自然言語→インタラクティブアプリ）・Claude Codeサブスクのクレジット補助6/15終了",
+    "theme": "claude-code",
+    "url": "https://x.com/CyPenguinTech/status/2064453058147537253"
+  },
+  {
+    "idx": 503,
+    "handle": "@f_uto",
+    "text_summary": "バグ: claude codeアドバイザー機能がFable 5使用時に破損。エラー: 'claude-opus-4-8はclaude-fable-5のアドバイザーとして使用不可'",
+    "theme": "claude-code",
+    "url": "https://x.com/f_uto/status/2064451508046118925"
+  },
+  {
+    "idx": 506,
+    "handle": "@kei31",
+    "text_summary": "Claude CodeでFableモデルが使用可能になったことを確認",
+    "theme": "claude-code",
+    "url": "https://x.com/kei31/status/2064448952154603875"
+  },
+  {
+    "idx": 507,
+    "handle": "@AI_masaou",
+    "text_summary": "Fable 5がClaude Codeチームの働き方を変えた: 細かい確認不要・長時間タスク・自律テスト・監督から委任へ",
+    "theme": "claude-code",
+    "url": "https://x.com/AI_masaou/status/2064448218038223206"
+  },
+  {
+    "idx": 510,
+    "handle": "@Karte_ai",
+    "text_summary": "Claude Fable 5発表(6/9): Mythosクラスの最上位モデルが一般公開。サイバーセキュリティ能力が高い",
+    "theme": "claude-code",
+    "url": "https://x.com/Karte_ai/status/2064447960604438878"
+  },
+  {
+    "idx": 514,
+    "handle": "@ClaudeDevs",
+    "text_summary": "【公式】Claude Fable 5 Build Day、サンフランシスコ6/13開催。賞金プール$150K分Claudeクレジット。@ClaudeDevs主催",
+    "theme": "claude-code",
+    "url": "https://x.com/ClaudeDevs/status/2064453497005978031"
+  },
+  {
+    "idx": 515,
+    "handle": "@taiwansu",
+    "text_summary": "バグ: Claude Code CLIが無限バックグラウンドリトライループに入り、Discord APIトークンが1000+リクエスト/秒でBANされ、Max 20xクォータが枯渇",
+    "theme": "claude-code",
+    "url": "https://x.com/taiwansu/status/2064453488453763272"
+  },
+  {
+    "idx": 518,
+    "handle": "@automatedmarktr",
+    "text_summary": "Claude Code向けリポジトリ6選: Superpowers（177K星）・Everything Claude Code（140K星）・Rooflow（スウォーム）等",
+    "theme": "claude-code",
+    "url": "https://x.com/automatedmarktr/status/2064452872784212106"
+  },
+  {
+    "idx": 519,
+    "handle": "@DanKornas",
+    "text_summary": "Claude Code Thinking Skills: デバッグ・アーキテクチャ・リスク分析・戦略向けの39のメンタルモデルスキルライブラリ",
+    "theme": "claude-code",
+    "url": "https://x.com/DanKornas/status/2064452712436048140"
+  },
+  {
+    "idx": 525,
+    "handle": "@alliekmiller",
+    "text_summary": "Fable 5早期アクセスレビュー: '週末の過ごし方が変わった'。Mythosクラスが一般公開された体感報告",
+    "theme": "claude-code",
+    "url": "https://x.com/alliekmiller/status/2064451731325415446"
+  },
+  {
+    "idx": 528,
+    "handle": "@PodcastAlphaX",
+    "text_summary": "Anthropicの年間収益成長速度がOpenAIを上回る（PAN CEO Arora + David Sacksが独立して同週証言）",
+    "theme": "claude-code",
+    "url": "https://x.com/PodcastAlphaX/status/2064453984467697669"
+  },
+  {
+    "idx": 529,
+    "handle": "@polsia",
+    "text_summary": "Claude Code向けオープンディレクトリ: スキル・MCPサーバー・ルール2000件以上を星数ランキング順に収録",
+    "theme": "claude-code",
+    "url": "https://x.com/polsia/status/2064450681856200753"
+  },
+  {
+    "idx": 530,
+    "handle": "@mikefutia",
+    "text_summary": "Claude CodeプラグインでMeta広告ワークフロー5スキル: 競合調査・カテゴリマッピング・コピー作成・広告グレーディング・アカウント監査",
+    "theme": "claude-code",
+    "url": "https://x.com/mikefutia/status/2064446547505602605"
+  },
+  {
+    "idx": 531,
+    "handle": "@alphabatcher",
+    "text_summary": "Boris Cherny の5日間CLAUDE.md設定プラン: Day1=CLAUDE.md（スタック/テスト/スタイル/ルール/注意点）+settings.json（許可シェルコマンド）",
+    "theme": "claude-code",
+    "url": "https://x.com/alphabatcher/status/2064441748974383439"
+  },
+  {
+    "idx": 534,
+    "handle": "@MasterDotDev",
+    "text_summary": "Claudeスキルの詳細制御: 特定モデルをスキルにピン留め・モデル呼び出し無効化・引数インライン渡し・非ユーザー呼び出し化（自動のみ）",
+    "theme": "claude-code",
+    "url": "https://x.com/MasterDotDev/status/2064437468145852720"
+  },
+  {
+    "idx": 538,
+    "handle": "@kan_otani",
+    "text_summary": "FableでClaude Code・Codexが生成した既存スキル/スクリプト/コードを評価・高速・高度にアップデート",
+    "theme": "claude-code",
+    "url": "https://x.com/kan_otani/status/2065177577682301365"
+  },
+  {
+    "idx": 546,
+    "handle": "@hatsunetsu7",
+    "text_summary": "Claude CodeがCUIグラフでstats表示。GUIより作成コスト低いCUIをエージェントが選んだことに注目",
+    "theme": "claude-code",
+    "url": "https://x.com/hatsunetsu7/status/2065172906477547902"
+  },
+  {
+    "idx": 551,
+    "handle": "@milunpetit",
+    "text_summary": "Code with Claude Tokyo現地レポート: Boris Cherny「Fable 5は自分以上に信頼している」",
+    "theme": "claude-code",
+    "url": "https://x.com/milunpetit/status/2065167288861663566"
+  },
+  {
+    "idx": 553,
+    "handle": "@TxoriAGI",
+    "text_summary": "Fable 5のClaude Code normalモードはGPT 5.5より遥かに遅い。/fastモードは有用だがトークンが高価",
+    "theme": "claude-code",
+    "url": "https://x.com/TxoriAGI/status/2065178459400237502"
+  },
+  {
+    "idx": 557,
+    "handle": "@kr0der",
+    "text_summary": "Claude Codeには15回/日の無料ルーティン実行があり、タスクサイズの上限が明記されていない",
+    "theme": "claude-code",
+    "url": "https://x.com/kr0der/status/2065177759689957786"
+  },
+  {
+    "idx": 569,
+    "handle": "@the_osps",
+    "text_summary": "Cavemanスキル: 技術的正確性を保ちながらCavenman語で話すことでoutputトークンを最大65%削減",
+    "theme": "claude-code",
+    "url": "https://x.com/the_osps/status/2065169203326603669"
+  },
+  {
+    "idx": 573,
+    "handle": "@siddaniagi",
+    "text_summary": "Claude Code 60+スラッシュコマンド紹介: /rewind（コードと会話をチェックポイントに巻き戻し）・/context（コンテキスト消費量表示）・/goal（セッション間で持続する目標登録）",
+    "theme": "claude-code",
+    "url": "https://x.com/siddaniagi/status/2065161542941991036"
+  },
+  {
+    "idx": 575,
+    "handle": "@RamSingh_369",
+    "text_summary": "Anthropicが証明書付きの13の無料AIコースを公開（Coursera等）",
+    "theme": "claude-code",
+    "url": "https://x.com/RamSingh_369/status/2065157779673993238"
+  },
+  {
+    "idx": 577,
+    "handle": "@_yuheiy",
+    "text_summary": "Claude Code向けTDDスキル: テスト駆動開発をスキル化",
+    "theme": "claude-code",
+    "url": "https://x.com/_yuheiy/status/2065155921064726562"
+  },
+  {
+    "idx": 583,
+    "handle": "@PnktsN",
+    "text_summary": "XiaomiがMiMo Codeをオープンソース公開。ブラインドテストでClaude Codeに勝利",
+    "theme": "claude-code",
+    "url": "https://x.com/PnktsN/status/2065537100091400691"
+  },
+  {
+    "idx": 589,
+    "handle": "@monokano",
+    "text_summary": "Claude CodeでFableを使用: Opusより全面的に優れ、コンテキストウィンドウ消費も明らかに少ない",
+    "theme": "claude-code",
+    "url": "https://x.com/monokano/status/2065529507340222587"
+  },
+  {
+    "idx": 600,
+    "handle": "@goodalexander",
+    "text_summary": "マルチモデル並列ループ: Fable(Nazgûl)がTmuxでオーケストレーター、GPT-5.5 xhigh fast(Orc)を2枚目のTmuxペインで実行、Codex+Composer2.5追加",
+    "theme": "claude-code",
+    "url": "https://x.com/goodalexander/status/2065539391846547635"
+  },
+  {
+    "idx": 602,
+    "handle": "@rduffyuk",
+    "text_summary": "コスト警告: Fable 5 + 32サブエージェントの4時間セッション = $50/MTok出力・必須extended thinking・316K出力トークン",
+    "theme": "claude-code",
+    "url": "https://x.com/rduffyuk/status/2065539245914169716"
+  },
+  {
+    "idx": 614,
+    "handle": "@rsproule",
+    "text_summary": "警告: 新しいClaude Codeがサブエージェント再帰をサポート。1つのClaudeが1,235サブエージェントを生成し月$1,350万ペースでトークン消費",
+    "theme": "claude-code",
+    "url": "https://x.com/rsproule/status/2065522491666178452"
+  },
+  {
+    "idx": 615,
+    "handle": "@bxsck_",
+    "text_summary": "Fable 5 + workflow使用戦略: 数百サブエージェントを同時生成せず、計画・ブレインストーミングにFableを活用してトークン価値を最大化",
+    "theme": "claude-code",
+    "url": "https://x.com/bxsck_/status/2065521405798850953"
+  },
+  {
+    "idx": 617,
+    "handle": "@Jomolos",
+    "text_summary": "Oh My Coder (中国製): Claude Codeに対するオープンソース・無料のマルチエージェントAIコーディングツール",
+    "theme": "claude-code",
+    "url": "https://x.com/Jomolos/status/2065518639487275358"
+  },
+  {
+    "idx": 620,
+    "handle": "@undefinedKi",
+    "text_summary": "Claude Codeのoutputトークンを最大90%削減するOSSツール（Headroom）。Fable 5は2倍コストなので特に重要。git status 1回=2000トークン",
+    "theme": "claude-code",
+    "url": "https://x.com/undefinedKi/status/2065508270618341760"
+  },
+  {
+    "idx": 625,
+    "handle": "@dansyu_callenge",
+    "text_summary": "Claude Code 4段階習熟度フレームワーク Tier S: 朝にAIでタスク整理・Claude+Claude Code+Obsidianを外部脳として連携・ノウハウを発信・サービス化",
+    "theme": "claude-code",
+    "url": "https://x.com/dansyu_callenge/status/2066262680294547899"
+  },
+  {
+    "idx": 629,
+    "handle": "@dansyu_callenge",
+    "text_summary": "Tier B（基本戦力）: CLAUDE.mdにルール記述・Claudeで設計/Claude Codeで作業を分離・1タスク1セッション",
+    "theme": "claude-code",
+    "url": "https://x.com/dansyu_callenge/status/2066262226768658448"
+  },
+  {
+    "idx": 640,
+    "handle": "@DevLeaderCa",
+    "text_summary": "Claude CodeによるRed-Greenテスト: 失敗するテストを書かせてからコードを修正、テスト通過を証明させるTDDパターン",
+    "theme": "claude-code",
+    "url": "https://x.com/DevLeaderCa/status/2066264647750078829"
+  },
+  {
+    "idx": 646,
+    "handle": "@tom_doerr",
+    "text_summary": "Claude Codeワークフロー最適化の45の実践的ヒント（GitHubリンクあり）",
+    "theme": "claude-code",
+    "url": "https://x.com/tom_doerr/status/2066264020395479510"
+  },
+  {
+    "idx": 648,
+    "handle": "@chenzeling4",
+    "text_summary": "コンテキスト劣化問題: 最初の30分は良質、1時間後は品質低下。gsd-coreスペック駆動開発フレームワークが解決策",
+    "theme": "claude-code",
+    "url": "https://x.com/chenzeling4/status/2066263663967875439"
+  },
+  {
+    "idx": 650,
+    "handle": "@ds_jessica_",
+    "text_summary": "Anthropic公式CourseraコースClaude Code（3時間）: MCPサーバー・GitHub連携・フック・SDK",
+    "theme": "claude-code",
+    "url": "https://x.com/ds_jessica_/status/2066263406936506410"
+  },
+  {
+    "idx": 652,
+    "handle": "@Shelpid_WI3M",
+    "text_summary": "AMD Ryzen AI Max+ 395ミニPC: 128GB統合メモリで235Bモデルをローカル実行・約$1,800。月額$400クラウドサブスクの代替",
+    "theme": "claude-code",
+    "url": "https://x.com/Shelpid_WI3M/status/2066262828994932776"
+  },
+  {
+    "idx": 656,
+    "handle": "@ryoppippi",
+    "text_summary": "Codexサブエージェント比較: Codexは明示指示なしでは動かないが速い。Claude Codeは自動で50並列稼働。Codexはメインエージェントがボトルネック",
+    "theme": "claude-code",
+    "url": "https://x.com/ryoppippi/status/2066248906317451288"
+  },
+  {
+    "idx": 657,
+    "handle": "@hasantoxr",
+    "text_summary": "Headroom (Netflixエンジニア製): LLMに到達前の入力を圧縮するコンテキスト圧縮ツール",
+    "theme": "claude-code",
+    "url": "https://x.com/hasantoxr/status/2066247422502957197"
+  },
+  {
+    "idx": 658,
+    "handle": "@IntCyberDigest",
+    "text_summary": "セキュリティ研究: 適切な設定があれば最先端モデルでなくても現在のモデルで大規模脆弱性発見・悪用が可能（Claude Code活用）",
+    "theme": "claude-code",
+    "url": "https://x.com/IntCyberDigest/status/2066245626162040855"
+  },
+  {
+    "idx": 663,
+    "handle": "@TSUYOSHI197802",
+    "text_summary": "Anthropic課金変更(6/15): claude -p・Agent SDK・GitHub Actions連携等の自動処理が定額から従量課金に移行",
+    "theme": "claude-code",
+    "url": "https://x.com/TSUYOSHI197802/status/2066627684525084912"
+  },
+  {
+    "idx": 667,
+    "handle": "@arafatoali822",
+    "text_summary": "Claude Code 6つのコアコンポーネントを公式仕様から解剖: Agent Loop・Memory・Skills・Subagents・MCP・Hooks・設定ファイルの場所・フック発火順序",
+    "theme": "claude-code",
+    "url": "https://x.com/arafatoali822/status/2066622162535162152"
+  },
+  {
+    "idx": 672,
+    "handle": "@iq3mode",
+    "text_summary": "/rc（remote-control）コマンドが/dispatchより大幅にシンプルにアプリ連携できることを発見",
+    "theme": "claude-code",
+    "url": "https://x.com/iq3mode/status/2066613373597548841"
+  },
+  {
+    "idx": 684,
+    "handle": "@CodeChap",
+    "text_summary": "AnthropicがAgent SDKのクレジット変更を一時停止。Claude Code・claude -p・Agent SDK・サードパーティアプリは既存制限継続",
+    "theme": "claude-code",
+    "url": "https://x.com/CodeChap/status/2066626105692365071"
+  },
+  {
+    "idx": 685,
+    "handle": "@kenrickbeckett",
+    "text_summary": "AnthropicがClaude Codeサブスクの自動処理クレジット変更を撤回（公式確認）",
+    "theme": "claude-code",
+    "url": "https://x.com/kenrickbeckett/status/2066625869851115610"
+  },
+  {
+    "idx": 688,
+    "handle": "@AetherWave_ai",
+    "text_summary": "Claude Codeが本番問題を診断: サインアップが45件/日→2件/日に急落。Cloudflare IPをデータセンタートラフィックと誤判定するGeo-IPサービスが原因をログから特定",
+    "theme": "claude-code",
+    "url": "https://x.com/AetherWave_ai/status/2066625192424767979"
+  },
+  {
+    "idx": 689,
+    "handle": "@nosp321",
+    "text_summary": "コスト比較: $1800のミニPC（128GB RAM）vs 月$400クラウドサブスク（Claude Code Max + ChatGPT Pro）。200Bパラメータモデルをローカル実行",
+    "theme": "claude-code",
+    "url": "https://x.com/nosp321/status/2066625183562297378"
+  },
+  {
+    "idx": 692,
+    "handle": "@Kuzzat_Altay",
+    "text_summary": "発見: Claude Codeのサブエージェントが指定したOpus 4.7ではなく、より安価なSonnetモデルを密かに使用。Anthropicによるバグか仕様か不明",
+    "theme": "claude-code",
+    "url": "https://x.com/Kuzzat_Altay/status/2066615060114334087"
+  },
+  {
+    "idx": 693,
+    "handle": "@NeoteoCom",
+    "text_summary": "複数Claude Codeインスタンス間のリアルタイムメッセージング用MCPサーバー（長パイプラインのコンテキスト受け渡しに有用）",
+    "theme": "claude-code",
+    "url": "https://x.com/NeoteoCom/status/2066613261840359916"
+  },
+  {
+    "idx": 697,
+    "handle": "@NagdyWP",
+    "text_summary": "codex-delegateスキル: Claude CodeからCodexに境界タスクを委任→クリーンなdiff+構造化レポートで返却→ユーザーがレビュー・コミット",
+    "theme": "claude-code",
+    "url": "https://x.com/NagdyWP/status/2066610976040890756"
+  }
+]
