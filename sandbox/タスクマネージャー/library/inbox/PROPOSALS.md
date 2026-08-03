@@ -4378,3 +4378,71 @@ MCPの2026-07-28 RC仕様でステートレスプロトコルコアが確定。�
 1. sandbox/タスクマネージャー/.claude/settings.json の mcpServers 設定を棚卸しし、ステートレス対応可否を評価
 2. MCPのExtensionsフレームワーク（サードパーティ拡張）が安定したら、collect-x-articles等のカスタムスキルをMCPサーバー化する選択肢を検討
 3. RC → 安定版リリース時にMCP公式ブログ（blog.modelcontextprotocol.io）を確認してアップデート
+
+---
+
+## 2026-08-03 収集分
+
+### 1. Claude Code 運用 — Auto Mode廃止への対応
+
+**出典:** articles/2026-08-03_3162_WEB_ClaudeCode-Weekly-Update-0802-Opus5-AutoMode-Removed.md
+
+**提案内容:**
+/verify・/code-review・/deep-researchのAuto Mode（自律実行）がv2.1.213〜220で段階的廃止。ユーザーが明示的にトリガーする設計に移行。
+
+**提案アクション:**
+1. sandbox/タスクマネージャーの定期ルーティン（daily-collect-and-curate等）で/verifyや/code-reviewを自動呼び出しているケースを確認・修正
+2. /code-reviewがバックグラウンドサブエージェント化されたことを活用 → PRレビューをバッチ処理するワークフローの設計を検討
+
+---
+
+### 2. Claude Code — Sonnet 5プロモーション価格期限（2026年8月31日）
+
+**出典:** articles/2026-08-03_3165_WEB_ClaudeCode-August2026-Review-Sonnet5-Depth3-OmidSaffari.md
+
+**提案内容:**
+Claude Sonnet 5のプロモーション価格（$2/$10/Mトークン）は2026年8月31日まで。9月1日から$3/$15に変更。また50%週間使用量ブーストも2026年8月19日まで。
+
+**提案アクション:**
+1. 2026年8月中に集中的な開発・バッチ処理タスクを実施（FX自動取引の大規模リファクタリング、flash-studyの機能追加等）
+2. 9月以降のコスト想定を予算に反映（FX自動取引でClaude API直接呼び出しを行う場合）
+
+---
+
+### 3. Claude Code — Subagents Depth 3対応・活用拡張
+
+**出典:** articles/2026-08-03_3165_WEB_ClaudeCode-August2026-Review-Sonnet5-Depth3-OmidSaffari.md
+
+**提案内容:**
+SubagentsがデフォルトでDepth 3まで入れ子可能になった（従来はDepth 1）。日次収集ルーチンの並列エージェント設計を強化できる。
+
+**提案アクション:**
+1. 日次収集ルーチンのX投稿分類フェーズで、ドメイン別サブエージェント → ツイート別検証エージェント（Depth 2）という2層構造を実験
+2. FX自動取引でアナリスト群エージェント（TradingAgentsパターン）の実装時にDepth 3を活用
+
+---
+
+### 4. MCP — 2026-07-28正式仕様確定・移行必須
+
+**出典:** articles/2026-08-03_3168_WEB_MCP-2026-07-28-Breaking-Changes-Migration-DevelopersDigest.md / articles/2026-08-03_3169_WEB_MCP-2026-07-28-Stateless-Normal-Websites-AI-Ready-TalentCloud.md
+
+**提案内容:**
+MCP 2026-07-28仕様が正式確定。breaking changesとして initialize/initializedハンドシェイク削除・セッションID廃止が確定。現行MCPサーバーの移行が必要。
+
+**提案アクション:**
+1. sandbox/タスクマネージャーのMCP設定（settings.json、.mcp.json等）を棚卸しし、ステートフル前提の設定がないか確認
+2. 国産SaaS（freee・kintone等）のMCP対応が2026年中に進む予測 → FX自動取引の決済・証拠金管理SaaS連携時のMCP活用を計画段階から想定
+
+---
+
+### 5. AI規制 — EU AI Act 2026年8月2日施行済み・コンプライアンス確認
+
+**出典:** articles/2026-08-03_3170_WEB_AI-News-Aug02-2026-EU-AI-Act-Enforcement-Bun-Acquisition-Eguweb.md
+
+**提案内容:**
+EU AI Actの透明性義務が2026年8月2日に施行。チャットボット・AI生成コンテンツへの情報開示義務が生じた。
+
+**提案アクション:**
+1. 業務でAI生成コンテンツを外部公開している場合、開示要件を確認（個人利用は基本対象外だが、業務文書・外部公開資料は要注意）
+2. FX自動取引を将来的に他者に提供する場合、EU圏ユーザー向けにはAI利用の開示が必要
+

@@ -303,3 +303,4 @@
 | 280 | MCP 2026年公式ロードマップ — ステートレス化・Extensions・Tasks・MCP Apps・月間DL 9700万 | en | 未読 | #ai-agent #ecosystem #web-signal | articles/2026-08-02_3154_WEB_MCP-2026-Official-Roadmap-Stateless-Extensions-Apps.md |
 | 281 | 2026年8月 AIモデルリリース — DeepSeek V4 Flash・GPT-5.6 Luna 80%値下げ・Astra構想（mean.ceo） | en | 未読 | #llm-news #model-release #web-signal | articles/2026-08-02_3160_WEB_AI-Model-Releases-August-2026-Startup-Edition.md |
 | 282 | EU AI法 2026年8月2日 GPAI執行開始 — 高リスクAI延期・カリフォルニアSB 53・日本企業対応（sei-san-sei） | ja | 未読 | #regulation #web-signal | articles/2026-08-02_3161_WEB_EU-AI-Act-Aug2-2026-GPAI-Enforcement-Japan.md |
+| 283 | 世界のAI最新ニュース 2026-08-02 — EU AI Act透明性執行開始・本番運用フェーズ移行・Bun垂直統合（Eguweb） | ja | 未読 | #regulation #llm-news #web-signal | articles/2026-08-03_3170_WEB_AI-News-Aug02-2026-EU-AI-Act-Enforcement-Bun-Acquisition-Eguweb.md |
