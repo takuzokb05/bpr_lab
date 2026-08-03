@@ -1,0 +1,238 @@
+{
+  "date": "2026-08-02",
+  "generated_at": "2026-08-03T23:16:01.637873Z",
+  "article_count": 15,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-08-02_3147_WEB_Codex-vs-ClaudeCode-July2026-Agent-Controls.md",
+      "title": "Codex vs Claude Code 2026年7月 — Agent Controls機能比較とJulyアップデート総括",
+      "url": "https://www.developersdigest.tech/blog/codex-claude-code-july-agent-controls",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "2026年7月にCodexとClaude Code両ツールで追加されたAgent Controls機能を比較分析した記事。Claude CodeのJulyアップデート主要項目: /fork（セッション分岐・実験的変更を安全に試せるブランチ機能）、/doctor（環境診断コマンド）、公開アーティファクト共有、アーティファクトへのMCPコネクタアクセス、エディタロール（チーム内権限分離）、BroadcastAutoMode（Bedrock・Google Cloud Agent Platform・Microsoft Foundry対応拡大）。モデル更新: Claude Sonnet 5がデフォルト（SWE-bench 72.7%、Terminal-bench 76.1%、$2/$10 per Mtok促販〜8/31）、Claude Opus 5（7/23リリース）がFrontier-Bench v0.1で全モデル首位・Fable 5と0.5%差でHalf price。CoworkがWebとモバイルに拡大し、リモートセッション（ファイル・セッション状態をアカウント保存・デバイス間同期）がベータ提供開始。Agent Controlsは権限の許可・拒否・信頼スコープをAPI/CLI/UIの各レベルで設定でき、チーム環境での安全なエージェント運用の基盤となる機能。Codexとの比較ではCoworkによるリモート継続実行が最大の差別化ポイント。",
+      "body_excerpt": "Developers DigestがCodexとClaude Code両ツールのJuly 2026アップデートを比較分析。Claude CodeはJuly updateで/fork・/doctor・公開アーティファクト共有・エディタロール・BroadcastAutoModeを追加。Claude Sonnet 5が新デフォルトモデル（SWE-bench 72.7%）、Opus 5が7/23リリースでFrontier-Benchトップ達成。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-02_3148_WEB_ClaudeCode-CLI-Complete-Guide-Hooks-MCP-Skills.md",
+      "title": "Claude Code CLI 完全ガイド 2026 — Hooks 17イベント・MCP統合・Skills設計パターン",
+      "url": "https://blakecrosley.com/guides/claude-code",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Blake Crosleyが2026年7月に更新したClaude Code CLIの包括リファレンス。構成: MCPサーバーで外部ツール（Web検索・スクレイピング・DB）と接続する方法、Hooks全17イベント・4タイプの詳細・3本の本番用サンプルフック、Skillsのフォルダ構造とオンデマンドロードの仕組み。Hooks分類: PreToolUse（ツール実行前ガード）・PostToolUse（結果確認）・Notification（イベント通知）・Stop（セッション終了処理）の4タイプ。実装済みサンプル: gitコミット前のテスト強制実行、rm -rfブロックフック、セッション開始時の環境チェック。Skillsパターン: .claude/skills/[name]/SKILL.md にfrontmatterとマークダウン指示を置くだけでオンデマンドロード可能、プロジェクト特化ドメイン知識をカプセル化。最小構成推奨: CLAUDE.md 1枚・必要なMCPのみの.mcp.json・安全フック1本・再利用スキル1本・サブエージェントは必要時のみ。2026年7月時点の42種組み込みツール（File/Code系 Read/Write/Edit/Glob/Grep/LSP、Shell/Process系 Bash/PowerShell/Monitor）の完全リスト付き。",
+      "body_excerpt": "Blake CrosleyによるClaude Code CLIの包括的リファレンスガイド（2026年7月更新）。MCP・Hooks・Skillsの3レイヤーを統合的に解説し、最小構成からプロダクション運用まで段階的に構築する方法を提示。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-02_3149_WEB_ClaudeCode-Features-67-Capabilities-Reference.md",
+      "title": "Claude Code 67機能リファレンス 2026 — 全サーフェス・組み込みツール42種・Coworkリモート",
+      "url": "https://toolsbase.dev/en/reference/claude-code-features",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "2026年7月時点のClaude Code全67機能を体系化したリファレンス。サーフェス展開: Chat・Desktop・Browser・Terminal・IDE・API の6面で利用可能。新機能3本柱: （1）Cowork — WebとモバイルにGA拡大、ファイル・セッション状態をClaudeアカウントに保存しデバイス間同期、リモートセッションbeta（ラップトップを閉じても継続）。（2）インブラウジング — セッション内でのブラウザ操作統合（フォーム入力・スクリーンショット・ページスクレイピング）。（3）/fork コマンド — セッションのブランチ作成で実験的変更をメインコンテキストから分離。組み込みツール42種の完全分類: File/Code系（Read・Write・Edit・MultiEdit・Glob・Grep・LS・NotebookRead/Edit・LSP Diagnostics/Hover/References等）、Shell/Process系（Bash・PowerShell・Monitor・TaskCreate/Update/Get/Output/Stop）。Agent Controls: allowlist/denylist設定・スコープ別信頼設定（project/user/session）・tool approval policy。Artifacts: 公開共有URL発行・閲覧者のMCPコネクタアクセス機能。/doctor: 環境・MCP接続・権限の自動診断。エディタロール: チーム内で読み取り専用・提案のみ・フル制御の権限分離。",
+      "body_excerpt": "toolsbase.devによるClaude Code 67機能の体系的リファレンス（2026年7月時点）。6サーフェス（Chat/Desktop/Browser/Terminal/IDE/API）での利用可否マトリクスと、Agent Controls・Cowork・in-app browsingの詳細を含む。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-02_3150_WEB_ClaudeCode-Skills-Top10-Recommend-July2026-JA.md",
+      "title": "Claude Codeおすすめスキル10選【2026年7月最新版】 — 導入順・選定軸・トラブルシューティング",
+      "url": "https://library.libecity.com/articles/01KMN9PXE880GNH7WF6HFYAFJF",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "2026年7月版のClaude Codeスキル推奨10選ガイド。主な推奨スキル: Context7（最新ドキュメント参照・LLMの古い知識/幻覚を補完、API使用コード生成精度が大きく向上）、Code Review（PRレビューの自動化・レビュー観点の標準化）、Code Simplifier（複雑度削減・リファクタリング自動化）、Superpowers（開発プロセス全体の底上げ、CLAUDE.md・.claude/rules/の自動最適化）。選定判断軸として「用途（コーディング/文書/業務自動化）・チームサイズ・既存ワークフローとの干渉リスク」の3軸を明示。導入後の確認手順: CLIで `claude skills list` を実行してスキルが認識されているか確認、SKILL.md形式（frontmatterのname/description必須）の検証。「効かない」ときのチェックリスト: パスが .claude/skills/[name]/SKILL.md か・セッション再起動の要否・別スキルとのプロンプト競合。非エンジニア向けに用途別の「まず入れるべき1個」として Context7を筆頭推奨。2026年のスキルエコシステム: claudeskills.info等の厳選カタログが整備されており品質ばらつきは縮小傾向。",
+      "body_excerpt": "Libecity libraryが2026年7月時点のClaude Codeスキル推奨10選を、導入優先順位・選定判断軸・トラブルシューティングチェックリスト付きで紹介。非エンジニアでも導入可能な手順を重視。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-02_3151_WEB_ClaudeCode-Best-Practices-15-Tips-6-Projects.md",
+      "title": "Claude Code ベストプラクティス15選 — 6プロジェクトから導出した実践知見（2026年版）",
+      "url": "https://aiorg.dev/blog/claude-code-best-practices",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "6プロジェクトの実践から導出した15のClaude Codeベストプラクティス（2026版）。CLAUDE.md設計: 200行以下・具体的命令・最新に保つ、HTMLコメント（<!-- -->）はコンテキスト消費ゼロで人向けメモ用途に活用可。Plan mode活用: Shift+Tabで切り替え、読み取り専用モードでコードベース探索後プランをエディタで微調整してから承認。並列実行: サブエージェントをgit worktreeで独立実行（コンフリクト防止）、複数機能の同時開発で2〜3倍のスループット向上事例あり。Hooks実装: コミット前のテスト自動実行・危険コマンドブロック・セキュリティスキャン強制の3フックが必須セット。コンテキスト管理: /compact で長セッションの圧縮、/clear で汚染されたコンテキストのリセット、サブエージェントに研究タスクを委譲してメインコンテキストを保護。検証ループ: 変更後に自動テスト・型チェック・lintを連続実行するhook設定が「サイレントな誤答」防止に最も効果的。チームスケール: 企業権限管理（allow/deny policy）・監査証跡が必須。5〜10倍の開発スピード向上を報告するプロジェクトはこれらを全て実践している。",
+      "body_excerpt": "aiorg.devが6つの実プロジェクトを通じて検証したClaude Code 15のベストプラクティスを整理。CLAUDE.md設計・Plan mode活用・並列サブエージェント・Hooks・コンテキスト管理を中心に、チーム規模での運用まで含む。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-02_3152_WEB_Anthropic-All-Products-Release-Notes-July2026.md",
+      "title": "Anthropic 全製品リリースノート 2026年7月 — Opus 5・SDK更新・agent-memory beta（Releasebot）",
+      "url": "https://releasebot.io/updates/anthropic",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Anthropic全製品の2026年7月リリースノートトラッカー。モデルタイムライン: Claude Sonnet 5（6/30リリース、SWE-bench 72.7%）がClaude Codeデフォルト移行・Claude Opus 5（7/23リリース）がFrontier-Bench v0.1で全モデル首位達成・Fable 5と0.5%差でHalf price・Fast mode（約2.5倍速・価格2倍）提供。退役モデル: Haiku 3（4/20）、Sonnet 4・Opus 4（6/15）退役済み。Developer Platform新機能: agent-memory-2026-07-22 betaヘッダー（Agent SDKがメモリストアを管理する機能）でSDKが全メモリストアコールにデフォルトで新ヘッダーを送信。インフラ追加: Managed Agents・ant CLI（4/8）、Claude Platform on AWS（5/11）、各言語SDK最新版（Python 0.116.0 / TypeScript 0.110.0 / Go 1.56.0 / Java 2.48.0）。Claude Code July更新: /fork・/doctor・公開アーティファクト共有・BroadcastAutoMode（Bedrock/GCP/Microsoft Foundry）。ベータ機能: サーバーサイドコンパクション・Task Budgets・セッション中途システムメッセージ・キャッシュ診断。",
+      "body_excerpt": "Releasebot.ioによるAnthropic全製品（Claude・Claude Code・Developer Platform）の2026年7月リリースノートまとめ。モデル更新・SDK版更新・Developer Platform新機能を時系列で整理。",
+      "fact_checked": true,
+      "fact_check_note": "Opus 5のFrontier-Bench v0.1首位（43.3%）を複数ソースで確認。記事内「Opus 5（7/23リリース）」は検索結果では7/24リリースと複数ソースが記録しており日付に1日の差異。Sonnet 5のSWE-bench 72.7%・Terminal-bench 76.1%は確認済み。SDK版・ベータ機能の記述は確認対象外。"
+    },
+    {
+      "file": "2026-08-02_3153_WEB_ClaudeAgentSDK-Credits-Billing-Change-June15-2026.md",
+      "title": "Claude Agent SDK クレジット課金変更 2026年6月15日 — Pro/Max別月次クレジット上限詳解",
+      "url": "https://www.totalum.app/blog/claude-agent-sdk-credits-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Claude Agent SDKの課金体系変更（2026/6/15施行）の完全解説。背景: 2026年初頭にClaude Code SDKをClaude Agent SDKに改名（コード以上のエージェント構築の野心を反映）。変更内容: サブスクリプションプランでのAgent SDK利用・非インタラクティブ実行は、インタラクティブ会話制限とは別の月次Agent SDKクレジットプールから消費。プラン別クレジット: Pro $20/月、Max 5x $100/月、Max 20x $200/月。影響を受ける実行: `claude -p` フラグでの非インタラクティブ起動、CI/CDパイプライン内でのスクリプト実行、バックグラウンドエージェント、Managed Agents経由のタスク。影響を受けない実行: API直接呼び出し（引き続きトークン単価課金）、インタラクティブなターミナルセッション。対策推奨: CI/CDでの実行頻度を計測→月次クレジット消費量の試算→超過リスクのあるジョブはAPI直接呼び出しに切り替え。スケジュールされた自動実行タスク（日次収集ルーチン等）は特にクレジット消費量の事前確認が必要。",
+      "body_excerpt": "2026年6月15日施行のClaude Agent SDK（旧Claude Code SDK）料金体系変更を解説。サブスクリプションプランでの非インタラクティブ実行がインタラクティブ制限とは別の月次クレジットから消費される仕組みの詳細。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-02_3154_WEB_MCP-2026-Official-Roadmap-Stateless-Extensions-Apps.md",
+      "title": "MCP 2026年公式ロードマップ — ステートレス化・Extensions・Tasks・MCP Apps・認証強化",
+      "url": "https://blog.modelcontextprotocol.io/posts/2026-mcp-roadmap/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "MCPの2026年公式ロードマップ（RCの背景ロードマップ）。最重点課題はステートレス化: 現行MCPサーバーはセッション状態維持が必須でロードバランサー背後の水平スケーリングに本質的な限界があり、新仕様でセッション作成・再開・マイグレーションをプロトコルレベルで標準化することでサーバー再起動・スケールアウトをクライアントに完全透過化。採用規模（2026/3時点）: 月間SDK DL 9700万・GitHub Stars 8.1万・公式レジストリ9,400以上のサーバー・Anthropic/OpenAI/Google/Microsoft/AWS全メジャーベンダー対応。追加機能ロードマップ: Extensionsフレームワーク（サードパーティ拡張の標準化・プラグイン型配布）、Tasks（長時間実行ジョブ管理・進捗通知・中断/再開）、MCP Apps（エンドユーザー向けUIとMCPサーバーの統合テンプレート）、認証強化（OAuth 2.1完全適用・スコープ管理強化）、廃止ポリシー策定（Roots/Sampling等の非推奨機能の移行スケジュール明確化）。2026-07-28のRC仕様（既収集3138番）がこのロードマップの第一弾実装に当たる。",
+      "body_excerpt": "Model Context Protocol公式ブログが公開した2026年のMCPロードマップ。現行仕様の制限（ステートフル必須→水平スケーリング困難）を解消するアーキテクチャ刷新と、Extensionsフレームワーク・Tasks・MCP Apps等の新機能追加計画。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-02_3155_WEB_ClaudeAgentSDK-Plans-Production-Complete-Guide-2026.md",
+      "title": "Claude Agent SDK 本番ガイド 2026 — 階層サブエージェント・Managed Agents・コスト最適化",
+      "url": "https://www.totalum.app/blog/claude-agent-sdk-totalum-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Claude Agent SDK 2026年本番デプロイの包括ガイド。SDKアーキテクチャ: Python 3.10以上必須、最新版7/25リリース（pypi claude-agent-sdk）、マルチ言語対応（Python/TypeScript/Go/Java）。主要機能: 階層サブエージェント生成（6月追加の深度3まで子エージェント生成、タスク分解の深さが大幅拡大）、Managed Agentsとant CLI（4/8出荷）でサーバーホスト型エージェント管理。プラットフォーム統合: AWS Claude Platform（5/11ローンチ）・GitHub Actions CI/CD連携パターン・Webhook コールバック受信。コスト最適化: APIトークン課金（直接利用）vs サブスクリプションクレジット（Pro $20/Max 5x $100/Max 20x $200）の使い分け指針、ロングランニングエージェントはAPIが有利、短時間バースト実行はサブスクリプション有利。非同期実行: バックグラウンドタスク・タイムアウト設定（デフォルト120秒、長期タスクは600秒まで）・エラー処理パターン（指数バックオフリトライ）。メモリ管理: agent-memory-2026-07-22 betaヘッダーを活用したセッション跨ぎ記憶保持。",
+      "body_excerpt": "Claude Agent SDKの本番デプロイ包括ガイド（2026年版）。Python 3.10以上必須・7/25最新版、サブエージェント階層生成（深度3）・Managed Agents・CI/CD統合・コスト最適化戦略を体系化。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-02_3156_WEB_AI-Trading-Agents-vs-Bots-2026-Risks-Workflow.md",
+      "title": "AI Trading Agents vs Bots 2026 — リスク・ワークフロー実態比較（Bitsgap）",
+      "url": "https://bitsgap.com/blog/ai-trading-agents-vs-trading-bots-in-2026-why-smarter-isnt-safer",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "2026年版AI Trading AgentとTrading Botの実践的差異分析。核心的区別: Botは定義済みルールを確定的実行（バックテスト可能・予測可能・説明容易）、Agentは情報解釈→プラン形成→自律決定（柔軟だがバックテスト困難・動作説明困難・制御不確実）。市場状況: 米国リテール投資家のAIツール利用が前年比75%増（eToro Retail Investor Beat調査）、オープンソースAIトレーディングエコシステムは技術的に成熟段階に到達。実際の収益: 完全に混在しており、$1,000開始で最初の週に15%超損失の事例から数ヶ月で大幅利益の報告まで両極端。実際に収益を上げているシステムは情報優位（オルタナティブデータ・超低遅延）か好調市場窓の恩恵であり一般開発者が再現できる条件ではないと明示。主要リスク4点: 情報優位なしでの過信・ブラックボックスの説明困難性・制御困難な動的意思決定・予測不能な市場への不適切な適応。推奨ワークフロー: 全自律運用より「一貫性・タイミング・規律の向上目的」の半自律活用、人間の監視ループを維持することが現実的リスク管理。",
+      "body_excerpt": "BitsgapがAI Trading AgentとTrading Botの根本的差異を実践視点で分析（2026年）。「賢い≠安全」の観点から、エージェント化によるリスクと現実的なワークフロー設計を提言。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-02_3157_WEB_LLM-Trading-2026-Can-AI-Outperform-Humans.md",
+      "title": "LLMトレーディング 2026 — AIエージェントは人間を凌駕できるか？実験データ検証",
+      "url": "https://coinedition.com/llm-trading-in-2026-can-ai-agents-actually-outperform-humans/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "2026年のLLMトレーディング実力検証記事。技術的達成レベル: LLMエージェントが決算報告・ニュース・SNS・経済トレンドを複合的にレビューし投資アイデア生成→ポジション動的調整できる段階に到達。実験データ（オープンソースLLMエージェント6ヶ月ライブテスト）: 株式・仮想通貨での複数実験でSharpe ratioがベンチマーク以下のケースが多数。優位性が確認された唯一の領域: センチメント分析＋高頻度ニュースフィルタリングの組み合わせによる短期イベントドリブン戦略。長期バイアンドホールドではLLMエージェントの優位性は確認されず。収益を出しているシステムの共通点: 情報優位（プロ機関レベルのオルタナデータ）または好調な市場窓。一般開発者が再現可能な条件ではないと明示。評価コスト視点: API費用・インフラ維持コストと期待リターンのバランス分析が必須。最も体系的なOSSアーキテクチャとしてTradingAgents framework（v0.2.0、マルチプロバイダー対応）を評価。現実的推奨: 全自律トレーディングより「仮説生成・シグナル補助」目的での活用が現状の最善。",
+      "body_excerpt": "CoinEditionがLLMトレーディングエージェントの2026年時点での実力を研究データ・実験結果で検証。人間アウトパフォームの主張に対する現実的評価を提示。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-02_3158_WEB_Algorithmic-Trading-AI-MT5-EAs-Complete-Guide-2026.md",
+      "title": "MT5 AI Expert Advisors 完全ガイド 2026 — LLM統合・強化学習EA・アルゴ取引市場規模",
+      "url": "https://www.mql5.com/en/blogs/post/772143",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "MQL5公式ブログによる2026年アルゴリズムトレーディング完全ガイド（7/1公開）。現状の技術水準: ミリ秒精度の注文執行EA・ライブ市場条件に適応する強化学習エージェント・複数資産を同時管理するマルチアセットAIアーキテクチャが全MT5アカウントユーザーに利用可能な段階に到達。LLM統合パターン: （1）MT5 LLMインテグレーション — MetaTrader 5をLLMの「認知的判断エンジン」として機能させる構成（MT5でシグナル生成→LLMで意思決定→MT5で執行）。（2）センチメント分析での活用 — ニュースヘッドライン・経済指標発表へのリアルタイム対応。（3）EA＋MLハイブリッド — 固定ルールEAにML予測モジュールを組み込むアーキテクチャ。実装技術: MQL5でのEA開発（イベント駆動アーキテクチャ）、VPSでの24時間稼働設定（レイテンシ100ms以下を推奨）、Strategy Testerでのバックテスト環境構築。市場規模予測: グローバルアルゴリズムトレーディング市場は2025年$25.3億→2034年$43.3億（CAGR 6%）。核心メッセージ: 完全自動利益追求より「一貫性・タイミング・規律の改善」目的での自動化が2026年の合意的推奨。",
+      "body_excerpt": "MQL5公式ブログの2026年7月アルゴリズムトレーディング完全ガイド。MT5でのEAと次世代AI統合（LLM認知エンジン・強化学習・マルチアセット協調）の実装パターンを詳解。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-02_3159_WEB_ClaudeSonnet5-vs-Opus5-Benchmarks-Pricing-July2026.md",
+      "title": "Claude Sonnet 5 vs Opus 5 比較 2026年7月 — ベンチマーク・価格・用途分け判断基準",
+      "url": "https://coursiv.io/blog/claude-opus-5-vs-sonnet-5",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "2026年7月時点のClaude Sonnet 5 vs Opus 5詳細比較。リリース日: Sonnet 5（6/30）・Opus 5（7/24）。Sonnet 5ベンチマーク: SWE-bench Verified 72.7%（Sonnet 4.6の62.3%から+10.4pt、Opus 4.8の79.4%には届かないが大幅向上）、Terminal-bench 76.1%（Sonnet 4.6の55.4%から+20.7pt）、CursorBench 57%（Sonnet 4.6の49%から+8pt）。Opus 5ベンチマーク: Frontier-Bench v0.1でOpus 4.8の2倍超スコア達成し全モデル首位、CursorBench 3.2でFable 5と0.5%差（Fable 5の半額）。価格: Sonnet 5 $2/$10 per Mtok（8/31まで促販価格）、Opus 5はOpus 4.8と同等。Fast mode（Opus 5のみ）: デフォルト速度の約2.5倍・価格2倍。Claude Code内での切り替え: /modelコマンドで即時変更可能。用途分け推奨: 日常コーディング・PRレビュー・中速タスク→Sonnet 5（コスパ最優先）、最難度推論・長期自律エージェントタスク・Frontier-Bench相当の問題→Opus 5。Claude Codeのデフォルトモデルは2026/7時点でSonnet 5に移行済み。",
+      "body_excerpt": "CoursivによるClaude Sonnet 5（6/30リリース）とOpus 5（7/24リリース）の詳細比較。ベンチマーク数値・価格・Fast mode・実用的な用途分け判断基準を整理。",
+      "fact_checked": true,
+      "fact_check_note": "Sonnet 5 SWE-bench 72.7%・Terminal-bench 76.1%は複数ソース（Vellum・Codersera・buildfastwithai）で確認済み。Opus 5 Frontier-Bench v0.1は43.3%で首位確認（Fable 5は33.7%、約10pt差）。記事内「CursorBench 3.2でFable 5と0.5%差」はCursorBenchスコアの記述として整合。Opus 5リリース日は公式発表7/24（本文記載の7/24と一致）。"
+    },
+    {
+      "file": "2026-08-02_3160_WEB_AI-Model-Releases-August-2026-Startup-Edition.md",
+      "title": "2026年8月 AIモデルリリーストラッカー — DeepSeek V4 Flash・GPT-5.6 Luna・Astra構想",
+      "url": "https://blog.mean.ceo/new-ai-model-releases-news-august-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "2026年8月のAIモデルリリース状況（スタートアップ向けトラッカー）。注目リリース: DeepSeek-V4-Flash-0731（V4-Pro/V4-Flash 2ティア、速度重視の推論モデル）、GPT-5.6 Luna（OpenAI、80%値下げを実施し価格競争が激化）、Meta Muse Spark 1.1（マルチモーダル更新版）、Thinking Machines Inkling（新興スタートアップ参入）。業界トレンド: モデルはソフトウェアパッチのように週次〜月次で出荷される状況が定着。主要傾向3点: （1）推論モデル（速度vs精度トレードオフ）が主流化、（2）マルチモーダルがフロンティアモデルで標準、（3）GPT-4レベル性能を大幅低コストで提供する効率改善競争が激化。OpenAIの「Astra」構想: 複数エージェントが数時間〜数日かけて複雑問題を協調解決する新モデルファミリーが開発中。スタートアップへの示唆: 個別リリースへの過熱より「タスク特化性能・API単価・スイッチングコスト」の実用評価軸での継続的モニタリングが鍵。評価リソース: llm-stats.com・pricepertoken.com・lmmarketcap.comが定量比較に有用。",
+      "body_excerpt": "mean.ceo blogによる2026年8月のAIモデルリリーストラッカー。OpenAI・Meta・xAI・DeepSeek等の新着モデルを整理し、スタートアップ視点での実用評価観点を提示。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-02_3161_WEB_EU-AI-Act-Aug2-2026-GPAI-Enforcement-Japan.md",
+      "title": "EU AI法 2026年8月2日 GPAI執行開始 — 日本企業への影響・高リスクAI適用延期の現状",
+      "url": "https://www.sei-san-sei.com/blog/blog-0470.html",
+      "source": "web",
+      "lang": "ja",
+      "theme": "ai-news",
+      "summary": "EU AI法の2026年8月2日適用状況の詳細解説。確定適用事項（8/2予定通り開始）: 生成AIの透明性義務（GPAI）適用・汎用AIモデルへの市場サーベイランス/執行権限開始。GPAIプロバイダーへの具体的義務: 技術文書の作成・著作権ポリシー公開・訓練データ概要公開。延期事項: 独立型高リスクAIへの主要義務（2026/8→2027/12）、規制製品組込み高リスクAI（2027/8→2028/8）— EU理事会が「Digital Omnibus」最終文書で正式採択。ただし「Digital Omnibus」はEU理事会・欧州議会両院の審議を経て初めて成立するため、法的には8/2スケジュールが依然有効。日本企業の対応優先順位: EU向けサービス提供企業はGPAI義務（8/2確定）の即時対応が必要、高リスクAI対応はDigital Omnibus成立を確認後に実施可能。並行対応すべき規制: カリフォルニアSB 53（フロンティアモデルのリスクフレームワーク公開義務・重大インシデント報告・内部告発者保護、年収$5億超企業は違反1件$100万ペナルティ）。米国連邦レベルでは2025/12のTrump大統領令でAI監督の連邦統一化方針が示され、州の規制パッチワークへの対抗が進む。",
+      "body_excerpt": "2026年8月2日に予定されるEU AI法の適用範囲と企業対応を解説。GPAI（汎用AIモデル）への執行開始は予定通り、高リスクAI適用は「Digital Omnibus」で延期、日本企業への実務的影響を整理。",
+      "fact_checked": true,
+      "fact_check_note": "EU AI法 2026年8月2日のGPAI執行開始は確認済み（beam.ai・artificialintelligenceact.eu・Debevoise）。補足：GPAIプロバイダーへの義務自体は2025年8月2日から既に適用済みで、2026年8月2日はEU委員会・AIオフィスの執行権限（罰則：年間グローバル売上3%またはユーロ1,500万以上）が発動する日。高リスクAI延期については「Digital Omnibus」の法的プロセスが係属中。記事の内容は概ね正確。"
+    }
+  ],
+  "fact_checks": [
+    {
+      "article_file": "2026-08-02_3159_WEB_ClaudeSonnet5-vs-Opus5-Benchmarks-Pricing-July2026.md",
+      "claim": "Claude Sonnet 5 SWE-bench 72.7%・Terminal-bench 76.1%、Opus 5 Frontier-Bench v0.1首位",
+      "result": "CONFIRMED",
+      "sources": [
+        "https://www.vellum.ai/blog/claude-sonnet-5-benchmarks-explained",
+        "https://codingfleet.com/blog/frontierbench-v01-leaderboard-2026/"
+      ],
+      "note": "SWE-bench 72.7%・Terminal-bench 76.1%は複数ソースで確認。Opus 5は43.3%（Fable 5は33.7%）で首位。"
+    },
+    {
+      "article_file": "2026-08-02_3161_WEB_EU-AI-Act-Aug2-2026-GPAI-Enforcement-Japan.md",
+      "claim": "EU AI法 GPAI執行開始 2026年8月2日",
+      "result": "CONFIRMED with clarification",
+      "sources": [
+        "https://beam.ai/agentic-insights/eu-ai-act-enforcement-august-2-2026-gpai-fines",
+        "https://compliancehub.wiki/eu-ai-act-gpai-enforcement-august-2026-readiness/"
+      ],
+      "note": "GPAI義務自体は2025/8/2から適用済み。2026/8/2は罰則・執行権限（最大3%/€1500万）の発動日。記事は正確。"
+    },
+    {
+      "article_file": "2026-08-02_3152_WEB_Anthropic-All-Products-Release-Notes-July2026.md",
+      "claim": "Claude Opus 5 7/23リリース・Frontier-Bench首位",
+      "result": "MOSTLY CONFIRMED",
+      "sources": [
+        "https://www.marktechpost.com/2026/07/24/meet-the-new-claude-opus-5-frontier-class-agentic-coding-and-computer-use-at-unchanged-opus-pricing/",
+        "https://llm-stats.com/benchmarks/frontier-bench-v0.1"
+      ],
+      "note": "Frontier-Bench首位確認。リリース日は複数ソースで7/24（記事は7/23と記載、1日差の可能性）。"
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-08-01": 9,
+      "2026-07-31": 6,
+      "2026-07-30": 9,
+      "2026-07-29": 11,
+      "2026-07-28": 7,
+      "2026-07-27": 6,
+      "2026-07-26": 10
+    },
+    "recurring_themes": [
+      "claude",
+      "agent",
+      "mcp",
+      "trading",
+      "regulation"
+    ]
+  }
+}
