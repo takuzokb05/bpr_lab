@@ -4446,3 +4446,43 @@ EU AI Actの透明性義務が2026年8月2日に施行。チャットボット�
 1. 業務でAI生成コンテンツを外部公開している場合、開示要件を確認（個人利用は基本対象外だが、業務文書・外部公開資料は要注意）
 2. FX自動取引を将来的に他者に提供する場合、EU圏ユーザー向けにはAI利用の開示が必要
 
+
+---
+
+### 6. Anthropic API August 2026 — Mid-Conversation Tool Changes Beta
+
+**出典:** articles/2026-08-04_3520_WEB_Anthropic-API-August-2026-MidConv-Tool-Changes-Fallbacks-Beta.md
+
+**提案内容:**
+Fable 5・Mythos 5・Opus 4.8・Opus 5で「会話途中でのツール変更（mid-conversation tool changes）」がベータ公開。ヘッダー `mid-conversation-tool-changes-2026-07-01` で有効化。プロンプトキャッシュを保持しながらツールセットを動的に切り替え可能。
+
+**提案アクション:**
+1. FX自動取引エージェントの設計で、分析フェーズ→執行フェーズでツールセットを動的切り替え（情報取得ツール → 取引実行ツール）するアーキテクチャを検討
+2. Fallbacksの "default" モードを活用して、拒否カテゴリ別のフォールバックモデルを自動適用する設定を検討
+
+---
+
+### 7. Claude Code Skills セキュリティリスク — 36.8%に脆弱性
+
+**出典:** articles/2026-08-04_3523_WEB_ClaudeCode-Skills-Guide-2026-Security-Risk-36pct-Snyk.md
+
+**提案内容:**
+Snyk社の調査で、公開Claude Code Skills全体の36.8%にセキュリティ問題（Prompt Injection・権限昇格・機密漏洩リスク）が存在。
+
+**提案アクション:**
+1. sandbox/タスクマネージャー/.claude/skills/ 配下の全SKILLファイルを棚卸しし、外部スキル（自作以外）のコードレビューを実施
+2. 新規スキルインストール時は、公式リポジトリまたは著名開発者のものを優先し、SKILL.md内容を必ずレビューするルールをCLAUDE.mdに追記
+
+---
+
+### 8. Sakana AI Namazu — 国産日本語特化LLM APIサービス開始
+
+**出典:** articles/2026-08-04_3522_WEB_Sakana-Namazu-Japanese-LLM-API-Launch-August-3-2026.md
+
+**提案内容:**
+Sakana AIが日本語特化LLM「Namazu」のAPIサービスを2026年8月3日に開始。日本語ベンチマーク最高水準を主張。
+
+**提案アクション:**
+1. FX関連の日本語文書（目論見書・有価証券報告書・ニュース）の分析タスクでNamazuの性能評価を実施（Claude/GPTとの比較）
+2. 日次情報収集の日本語記事要約フェーズへの採用可否を検討
+

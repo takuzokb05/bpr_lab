@@ -1084,3 +1084,9 @@
 | 1055 | @Kuzzat_Altay — 発見: Claude Codeのサブエージェントが指定したOpus 4.7ではなく、より安価なSonnetモデルを密かに... | ja | 未読 | #claude-code #x-signal | articles/2026-08-03_3510_X_Kuzzat_Altay_発見_Claude_Codeのサブエージェントが指定したOpus_4_7ではなく_より安価.md |
 | 1056 | @NeoteoCom — 複数Claude Codeインスタンス間のリアルタイムメッセージング用MCPサーバー（長パイプラインのコンテキスト受け渡... | ja | 未読 | #claude-code #x-signal | articles/2026-08-03_3511_X_NeoteoCom_複数Claude_Codeインスタンス間のリアルタイムメッセージング用MCPサーバー_長パ.md |
 | 1057 | @NagdyWP — codex-delegateスキル: Claude CodeからCodexに境界タスクを委任→クリーンなdiff+構造化... | ja | 未読 | #claude-code #x-signal | articles/2026-08-03_3512_X_NagdyWP_codex_delegateスキル_Claude_CodeからCodexに境界タスクを委任.md |
+| 1058 | Anthropic Claude News August 2026: Sonnet 5価格改定・Opus 4.7 Fast mode廃止・Workbench API退役 | en | 未読 | #claude-ecosystem #web-signal | articles/2026-08-04_3517_WEB_Anthropic-Claude-News-August-2026-Sonnet5-Pricing-Model-Deprecations.md |
+| 1059 | What's the Next Claude Model? Anthropic Roadmap August 2026: Sonnet 5.5候補・Memory API統合方向性 | en | 未読 | #claude-ecosystem #web-signal | articles/2026-08-04_3519_WEB_Whats-Next-Claude-Model-Anthropic-Roadmap-August-2026.md |
+| 1060 | Anthropic API August 2026: Mid-Conversation Tool Changes Beta・Fallbacksデフォルトモード追加 | en | 未読 | #claude-ecosystem #web-signal | articles/2026-08-04_3520_WEB_Anthropic-API-August-2026-MidConv-Tool-Changes-Fallbacks-Beta.md |
+| 1061 | Claude Code Skills Guide 2026: Snyk調査で36.8%にセキュリティ問題・安全な活用基準と推奨10選 | ja | 未読 | #claude-code #web-signal | articles/2026-08-04_3523_WEB_ClaudeCode-Skills-Guide-2026-Security-Risk-36pct-Snyk.md |
+| 1062 | Claude Code for Data Engineers: Skills/MCPs/Hooks でデータスタック（BigQuery/dbt/Airflow）と統合 | en | 未読 | #claude-code #web-signal | articles/2026-08-04_3524_WEB_ClaudeCode-Data-Engineers-Skills-MCPs-Hooks-Practical.md |
+| 1063 | AI Coding Workflow 2026: Claude Code + Cursor ハイブリッド戦略・使い分け基準・コスト試算 | en | 未読 | #claude-code #web-signal | articles/2026-08-04_3525_WEB_AI-Coding-Workflow-2026-ClaudeCode-Cursor-Hybrid-Strategy.md |

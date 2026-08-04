@@ -395,3 +395,10 @@
 | 371 | @momoblog0214 — AMDがAIメモリ最適化のMEXTを買収。フラッシュをDRAM的に使う技術でデータセンター向け製品を強化 | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3357_X_momoblog0214_AMDがAIメモリ最適化のMEXTを買収_フラッシュをDRAM的に使う技術でデータセンター.md |
 | 372 | @MLBear2 — Anthropic幹部がFable 5停止問題で米政権と協議。Sakana AIが自律型リサーチアシスタント「... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3358_X_MLBear2_Anthropic幹部がFable_5停止問題で米政権と協議_Sakana_AIが自律型リ.md |
 | 373 | @HimazinProducer — Fable 5公開72時間後に政府が輸出管理命令でアクセス全停止。翌日OpenRouterが「Fusion A... | ja | 未読 | #ai-news #x-signal | articles/2026-08-03_3359_X_HimazinProducer_Fable_5公開72時間後に政府が輸出管理命令でアクセス全停止_翌日OpenRouter.md |
+| 374 | EU AI Act: Commission Starts Enforcing Transparency Rules from 2 August 2026（EU公式発表） | en | 未読 | #ai-news #web-signal | articles/2026-08-04_3513_WEB_EU-AI-Act-Official-Enforcement-Starts-August-2-2026.md |
+| 375 | AI Regulation August 2026: Global Enforcement Era Begins - US Gridlock / China Fines / UK Bill | en | 未読 | #ai-news #web-signal | articles/2026-08-04_3514_WEB_AI-Regulation-August-2026-Global-Enforcement-Era-Cubbbix.md |
+| 376 | EU AI法8月2日施行：高リスク規制は延期・透明性義務のみ開始・日本企業の実際の義務 | ja | 未読 | #ai-news #web-signal | articles/2026-08-04_3515_WEB_EU-AI-Act-August-2026-Japan-Companies-Transparency-Obligation.md |
+| 377 | EU AI規制8月施行：罰金7%の域外適用リスク・日本企業が今すぐ対応すべき内容 | ja | 未読 | #ai-news #web-signal | articles/2026-08-04_3516_WEB_EU-AI-Act-August-7pct-Fine-Japan-Companies-AIFriends.md |
+| 378 | Microsoft Agent Framework Harness & Hosted Agents GA到達（InfoQ 2026年8月）: v1.13.0詳細 | en | 未読 | #ai-news #web-signal | articles/2026-08-04_3518_WEB_Microsoft-Agent-Framework-Harness-GA-August-2026-InfoQ.md |
+| 379 | 今日のAIニュース7選 2026年8月4日：Qwen3.8 Max / Namazu / EU AI Act施行 / UK AI Bill | ja | 未読 | #ai-news #web-signal | articles/2026-08-04_3521_WEB_AI-News-Japan-August-4-2026-Qwen38Max-Namazu-EU-AIAct.md |
+| 380 | Sakana AI「Namazu」LLM API提供開始（2026年8月3日）・EU AI Act透明性義務施行・Anthropic Slack廃止 | ja | 未読 | #ai-news #web-signal | articles/2026-08-04_3522_WEB_Sakana-Namazu-Japanese-LLM-API-Launch-August-3-2026.md |
