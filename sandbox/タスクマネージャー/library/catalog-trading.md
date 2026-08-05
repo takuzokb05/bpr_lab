@@ -336,3 +336,4 @@
 | 305 | @binance — Binance AI Pro: AIモデル×Skills、分析・監視・実行 | ja | 未読 | #ai-trading #x-signal | articles/2026-08-03_3267_X_binance_Binance_AI_Pro_AIモデル_Skills_分析・監視・実行.md |
 | 306 | @fulldecent — Polymarket ML取引講座: BT+モデリング+ライブ運用 | ja | 未読 | #ai-trading #x-signal | articles/2026-08-03_3268_X_fulldecent_Polymarket_ML取引講座_BT_モデリング_ライブ運用.md |
 | 307 | @DicksonLau2 — 全自動: TradingView→指標→EA→MT5回測→最適化 | ja | 未読 | #ai-trading #mt5 #x-signal | articles/2026-08-03_3269_X_DicksonLau2_全自動_TradingView_指標_EA_MT5回測_最適化.md |
+| 308 | TradingAgents: Multi-Agents LLM Financial Trading Framework 公式ページ（Stars 80K超・v0.2.4・Claude/GPT/Gemini対応） | en | 未読 | #ai-trading #web-signal | articles/2026-08-05_3533_WEB_TradingAgents-Official-Multi-Agent-LLM-Trading-Framework.md |

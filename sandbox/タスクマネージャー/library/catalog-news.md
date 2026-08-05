@@ -402,3 +402,8 @@
 | 378 | Microsoft Agent Framework Harness & Hosted Agents GA到達（InfoQ 2026年8月）: v1.13.0詳細 | en | 未読 | #ai-news #web-signal | articles/2026-08-04_3518_WEB_Microsoft-Agent-Framework-Harness-GA-August-2026-InfoQ.md |
 | 379 | 今日のAIニュース7選 2026年8月4日：Qwen3.8 Max / Namazu / EU AI Act施行 / UK AI Bill | ja | 未読 | #ai-news #web-signal | articles/2026-08-04_3521_WEB_AI-News-Japan-August-4-2026-Qwen38Max-Namazu-EU-AIAct.md |
 | 380 | Sakana AI「Namazu」LLM API提供開始（2026年8月3日）・EU AI Act透明性義務施行・Anthropic Slack廃止 | ja | 未読 | #ai-news #web-signal | articles/2026-08-04_3522_WEB_Sakana-Namazu-Japanese-LLM-API-Launch-August-3-2026.md |
+| 381 | LLM 0.32リリース: リーズニングトレース・OpenAI Responses API・サーバーサイドツール・新ログシステム（Simon Willison） | en | 未読 | #ai-news #web-signal | articles/2026-08-05_3534_WEB_LLM-0-32-Release-Reasoning-Traces-OpenAI-Responses-Aug4.md |
+| 382 | 生成AIニュース【2026年8月4日】: LLM 0.32・Claude Opus 5評価・Anthropic Slack廃止・OpenAI 10億ユーザー | ja | 未読 | #ai-news #web-signal | articles/2026-08-05_3535_WEB_Daily-AI-News-August-4-2026-LLM032-Opus5-GPT56-TechNoisy.md |
+| 383 | 米国：フロンティアAIモデルの自主的連邦規制フレームワーク合意（2026年8月4日・Anthropic/OpenAI/Google/Meta参加） | en | 未読 | #ai-news #ai-regulation #web-signal | articles/2026-08-05_3536_WEB_US-Voluntary-Federal-AI-Regulation-Framework-August-2026.md |
+| 384 | AI Regulation in 2026: What Just Changed - EU AI Act・中国エージェント規制・米国自主規制の3本柱とAIチームへの影響 | en | 未読 | #ai-news #ai-regulation #web-signal | articles/2026-08-05_3537_WEB_AI-Regulation-2026-What-Changed-EU-US-China-Analysis.md |
+| 385 | AI Governance Framework 2026: Rules Companies Must Follow（EU/米国/中国/日本・ガバナンス最低限セット） | en | 未読 | #ai-news #ai-regulation #web-signal | articles/2026-08-05_3538_WEB_AI-Governance-Framework-2026-Company-Compliance-Rules.md |

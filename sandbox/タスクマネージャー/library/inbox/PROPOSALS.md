@@ -4486,3 +4486,45 @@ Sakana AIが日本語特化LLM「Namazu」のAPIサービスを2026年8月3日�
 1. FX関連の日本語文書（目論見書・有価証券報告書・ニュース）の分析タスクでNamazuの性能評価を実施（Claude/GPTとの比較）
 2. 日次情報収集の日本語記事要約フェーズへの採用可否を検討
 
+
+---
+
+## 2026-08-05 収集分
+
+### 1. MCP 2026-07-28仕様対応 — ステートレスコアへの移行確認
+
+**出典:** articles/2026-08-05_3530_WEB_MCP-2026-07-28-Official-Spec-Stateless-OAuth-Extensions.md / articles/2026-08-05_3531_WEB_MCP-2026-07-28-Stateless-Extensible-Breakdown-MCPServers.md
+
+**提案内容:**
+MCP 2026-07-28仕様が正式リリース。ステートレスコア・OAuth強化・Apps/Tasks拡張が追加。非推奨化：Roots・Sampling・Logging機能（次期v2026-11-05で削除予定）。
+
+**提案アクション:**
+1. sandbox/タスクマネージャー/.claude/settings.json内のMCPサーバー設定が新仕様に対応しているか確認
+2. タスクマネージャーのCLAUDE.mdに「MCP 2026-07-28以降はステートレス設計前提」と注記を追加
+3. 使用中のMCPサーバー（Github MCP等）の新仕様対応状況を確認
+
+---
+
+### 2. TradingAgents フレームワーク — FX自動取引への参照アーキテクチャ活用
+
+**出典:** articles/2026-08-05_3533_WEB_TradingAgents-Official-Multi-Agent-LLM-Trading-Framework.md
+
+**提案内容:**
+TradingAgents（GitHub Stars 80K超、UCLA+MIT研究）がClaude Codeと同じClaudeシリーズをサポート。強気/弱気リサーチャーが反論し合う「議論型意思決定」がリスク管理に有効。v0.2.4でLangGraphチェックポイント再開・永続決定ログを追加。
+
+**提案アクション:**
+1. sandbox/FX自動取引/STATUS.mdにTradingAgentsを「参照アーキテクチャ候補」として追記
+2. TradingAgentsのリスクマネージャーエージェント実装（ドローダウン上限・ポジションサイジング）をFX自動取引システムの参考設計として調査
+
+---
+
+### 3. CLAUDE.md設計 — 「4点の背骨」と200行制限の標準化
+
+**出典:** articles/2026-08-05_3526_WEB_CLAUDE-md-CopyPaste-Templates-Design-Patterns-Qiita.md / articles/2026-08-05_3527_WEB_CLAUDE-md-Best-Practices-Real-Config-Examples-2026.md
+
+**提案内容:**
+CLAUDE.mdの最効構成として「①目的とゴール②絶対守るルール③環境情報の在り処④品質基準と完了条件」の4点が独立して確認。禁止事項は命令形（〜を禁止）で書くと遵守率向上。200行が分割閾値。
+
+**提案アクション:**
+1. bpr_lab/CLAUDE.md を4点の背骨フォーマットで整理・見直し
+2. 各サブプロジェクト（FX自動取引・タスクマネージャー）のCLAUDE.mdが4点を含んでいるか確認し、不足項目を補完

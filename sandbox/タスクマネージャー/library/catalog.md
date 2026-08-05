@@ -1090,3 +1090,10 @@
 | 1061 | Claude Code Skills Guide 2026: Snyk調査で36.8%にセキュリティ問題・安全な活用基準と推奨10選 | ja | 未読 | #claude-code #web-signal | articles/2026-08-04_3523_WEB_ClaudeCode-Skills-Guide-2026-Security-Risk-36pct-Snyk.md |
 | 1062 | Claude Code for Data Engineers: Skills/MCPs/Hooks でデータスタック（BigQuery/dbt/Airflow）と統合 | en | 未読 | #claude-code #web-signal | articles/2026-08-04_3524_WEB_ClaudeCode-Data-Engineers-Skills-MCPs-Hooks-Practical.md |
 | 1063 | AI Coding Workflow 2026: Claude Code + Cursor ハイブリッド戦略・使い分け基準・コスト試算 | en | 未読 | #claude-code #web-signal | articles/2026-08-04_3525_WEB_AI-Coding-Workflow-2026-ClaudeCode-Cursor-Hybrid-Strategy.md |
+| 1064 | CLAUDE.mdの書き方 - コピペで使えるテンプレートと設計パターン（Qiita/Pythonista0328） | ja | 未読 | #claude-md #claude-code #web-signal | articles/2026-08-05_3526_WEB_CLAUDE-md-CopyPaste-Templates-Design-Patterns-Qiita.md |
+| 1065 | CLAUDE.mdの書き方ベストプラクティス｜実運用の構成例つき【2026年】（ノーコードでソウゾウメディア） | ja | 未読 | #claude-md #claude-code #web-signal | articles/2026-08-05_3527_WEB_CLAUDE-md-Best-Practices-Real-Config-Examples-2026.md |
+| 1066 | Claude Agent SDK: Build Production Agents (2026 Complete Guide) | en | 未読 | #claude-code #agent-sdk #web-signal | articles/2026-08-05_3528_WEB_Claude-Agent-SDK-Build-Production-Agents-Guide-2026.md |
+| 1067 | Best Claude Code MCP Servers in 2026: Setup and Top 10 | en | 未読 | #claude-code #mcp #web-signal | articles/2026-08-05_3529_WEB_Best-Claude-Code-MCP-Servers-2026-Top10-Setup.md |
+| 1068 | The 2026-07-28 MCP Specification — Official Release（ステートレス・OAuth・Apps・Tasks拡張） | en | 未読 | #claude-ecosystem #mcp #web-signal | articles/2026-08-05_3530_WEB_MCP-2026-07-28-Official-Spec-Stateless-OAuth-Extensions.md |
+| 1069 | The 2026-07-28 MCP Specification: A Stateless, Extensible Future（技術詳細・移行ガイド） | en | 未読 | #claude-ecosystem #mcp #web-signal | articles/2026-08-05_3531_WEB_MCP-2026-07-28-Stateless-Extensible-Breakdown-MCPServers.md |
+| 1070 | Anthropic Claude SDK with MCP: Enterprise Deployment Guide for AI Agents（200+エージェント規模） | en | 未読 | #claude-ecosystem #mcp #agent-sdk #web-signal | articles/2026-08-05_3532_WEB_Enterprise-AI-Agents-Claude-SDK-MCP-Production-MintMCP.md |
