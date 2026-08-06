@@ -1,0 +1,214 @@
+{
+  "date": "2026-08-05",
+  "generated_at": "2026-08-06T23:17:03.678663Z",
+  "article_count": 13,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-08-05_3526_WEB_CLAUDE-md-CopyPaste-Templates-Design-Patterns-Qiita.md",
+      "title": "CLAUDE.mdの書き方 - コピペで使えるテンプレートと設計パターン",
+      "url": "https://qiita.com/pythonista0328/items/7864c2728c5af628c0a0",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "QiitaのPythonista0328氏によるCLAUDE.md実践ガイド。Claude Codeはセッション開始毎にCLAUDE.mdを自動読み込みするため、「前も言ったのに」という手戻りがなくなる。書くべきはClaudeがコードから推測できない「プロジェクト固有のルール」のみ。禁止事項は「〜を直接呼び出すことは禁止」という命令・禁止形式で記述するとClaudeの遵守率が向上することを実証的に示している。200行を目安に、超えたら別ファイルに分離してCLAUDE.mdからimportする構成を推奨。5種類のテンプレートを提供：個人プロジェクト・チーム開発・API連携・フロントエンド・バックエンド。ディレクトリ別ルールの分割パターン（`src/CLAUDE.md`・`tests/CLAUDE.md`）も具体例付きで解説。即時に使える実践的内容。",
+      "body_excerpt": "Qiitaの実践ガイド。CLAUDE.mdに書くべき「プロジェクト固有のルール」の見極め方と、コピペで使える5種類のテンプレートを公開。禁止事項は命令形で書くとClaudeの遵守率が上がる。200行目安でファイル分割。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-05_3527_WEB_CLAUDE-md-Best-Practices-Real-Config-Examples-2026.md",
+      "title": "CLAUDE.mdの書き方ベストプラクティス｜実運用の構成例つき【2026年】",
+      "url": "https://media.souzoh-official.com/claude-md/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "ノーコードでソウゾウメディアによる2026年版CLAUDE.md実践ガイド。CLAUDE.mdの4つの核：①プロジェクトの目的とゴール、②絶対に守るルール、③環境情報の在り処、④品質基準と完了条件。この4点を記述するだけで手戻り回数が目に見えて変わる実証事例を紹介。実際の運用構成例：単一CLAUDE.md（小規模）→ディレクトリ別分割（中規模）→ルール種別ごとのファイル分離＋hooksとの連携（大規模）。`/init`コマンドで自動生成→不要な部分を削除→段階的に育てるアプローチを推奨。チームで共有したCLAUDE.mdにより「Claudeが変なライブラリを提案してくる」苦情がゼロになったケース・コードレビューの指摘が半減したケース等の事例も掲載。2026年の最新機能（Skills連携・routinesとの組み合わせ）にも対応。",
+      "body_excerpt": "2026年版CLAUDE.md運用ガイド。実際の運用構成例（ファイル分割・ディレクトリ別・hooks連携）と4点の背骨を解説。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-05_3528_WEB_Claude-Agent-SDK-Build-Production-Agents-Guide-2026.md",
+      "title": "Claude Agent SDK: Build Production Agents (2026 Complete Guide)",
+      "url": "https://alloq.digital/en/blog/claude-agent-sdk/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "alloq.digitalによるClaude Agent SDK完全ガイド2026年版。Claude Agent SDKはClaude Codeと同じハーネスを使って自律AIエージェントを構築するAnthropicの公式ライブラリ。ファイル読み書き・シェルコマンド・Web検索・コード編集・MCP呼び出しに対応。2026年の主要アップデート：サブエージェントが深さ3までネスト可能（旧1）・コード実行ツール`code_execution_20260120`でREPL状態を永続化・ワークロードID連携（WIF）による認証。構築→テスト→デプロイの3段階ロードマップを解説。よくある落とし穴：①settings.jsonのJSON構文エラー、②コマンドパス解決失敗、③サーバー起動失敗への具体的な対処法。セキュリティ原則：MCPサーバーを特権拡張として扱い、信頼できるベンダーまたは読んだコードのみ使用。プロダクション環境でのコスト管理・レート制限・監視設定も詳述。",
+      "body_excerpt": "Claude Agent SDK 2026年版完全ガイド。PoC→プロダクション移行のロードマップ、MCP統合、認証・セキュリティ設定を詳述。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-05_3529_WEB_Best-Claude-Code-MCP-Servers-2026-Top10-Setup.md",
+      "title": "Best Claude Code MCP Servers in 2026: Setup and Top 10",
+      "url": "https://www.totalum.app/blog/claude-code-mcp-servers-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "TotalumブログによるClaude Code用MCPサーバーTop 10ガイド2026年版。MCPはカスタムツール実装なしで外部ツール・データソースに接続できるModel Context Protocolで、Claude Agent SDKをプロダクション化する上で最重要技術。カスタムMCPサーバーの構築は最小実装で約40行TypeScript。設定の3大障害と解決法を提示。2026-07-28新仕様（ステートレスコア・認証強化）への対応状況別にサーバーを評価。セキュリティ原則：インストール前にベンダー信頼性またはソースコードの確認を徹底。人気カテゴリ：データベース・ファイルシステム・Web・Git・コード実行・観測・ブラウザ自動化。各サーバーの設定例（settings.json snippet）とトラブルシューティング手順を掲載。2026年のMCPエコシステム動向（公式マーケットプレース・enterprise managed serverのプレビュー）も言及。",
+      "body_excerpt": "Claude Code用MCPサーバーTop 10（2026年版）。選定基準・設定手順・2026-07-28仕様対応状況・セキュリティ原則を解説。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-05_3530_WEB_MCP-2026-07-28-Official-Spec-Stateless-OAuth-Extensions.md",
+      "title": "The 2026-07-28 MCP Specification — Official Release",
+      "url": "https://blog.modelcontextprotocol.io/posts/2026-07-28/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Model Context Protocol公式ブログによる2026-07-28仕様の最終リリース発表。2026年5月21日にRC確定後、7月28日に最終版として出荷。MCPローンチ以来最大の仕様改訂。主要変更7点：①ステートレスプロトコルコア（通常HTTPインフラで動作・スティッキーセッション不要・ラウンドロビンLB対応）、②Multi Round-Trip Requests、③ヘッダーベースルーティング、④キャッシュ可能なlistレスポンス、⑤認証強化（OAuth 2.1/OIDC準拠・WIF対応）、⑥正式な拡張フレームワーク（MCP Apps：サーバーレンダリングUI、Tasks：長時間非同期処理）、⑦Tier 1 SDK更新（Python・TypeScript・Go・Rust・C#）。非推奨化：Roots・Sampling・Logging機能（次期仕様v2026-11-05で削除予定）。Anthropic Claude・OpenAI・Google Gemini等主要クライアントが採用予定。",
+      "body_excerpt": "MCP公式ブログの2026-07-28仕様リリースアナウンス。ステートレスコア・OAuth強化・拡張フレームワーク（Apps・Tasks）を正式発表。",
+      "fact_checked": true,
+      "fact_check_note": "CONFIRMED: 公式MCPブログ (blog.modelcontextprotocol.io/posts/2026-07-28/) と Google Developers Blog・Anthropic等の複数ソースで確認。ステートレスプロトコルへの転換（i..."
+    },
+    {
+      "file": "2026-08-05_3531_WEB_MCP-2026-07-28-Stateless-Extensible-Breakdown-MCPServers.md",
+      "title": "The 2026-07-28 MCP Specification: A Stateless, Extensible Future",
+      "url": "https://blog.mcpservers.org/posts/mcp-spec-2026-07-28",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "MCPServers.orgブログによる2026-07-28 MCP仕様の詳細技術解説。ステートレスコアへの移行により、従来は必須だったスティッキーセッション・共有セッションストア・ゲートウェイでのディープパケットインスペクションが不要になり、クラウドスケールの標準HTTPインフラで動作可能になった。MCP Apps拡張：サーバーがクライアントUIにレンダリング済みコンポーネントを埋め込む仕組みで、コンテキスト切り替えなしにツール操作が可能。Tasks拡張：非同期で長時間実行される処理（バッチ・ファイル処理等）をMCPワーカーに委譲。OAuth/OIDC強化の実装パターン（WIF・JWTベアラートークン・エンタープライズ管理認証）を詳説。既存ステートフルサーバーからの移行チェックリスト（セッション管理削除→ステートレスハンドラー書き換え→LBテスト）も提供。v2026-11-05（次期仕様）のロードマップ概要も言及。",
+      "body_excerpt": "MCPServers.orgによる2026-07-28仕様の技術的深掘り解説。ステートレス移行の意義・移行ガイド・次期仕様へのロードマップを掲載。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-05_3532_WEB_Enterprise-AI-Agents-Claude-SDK-MCP-Production-MintMCP.md",
+      "title": "Anthropic Claude SDK with MCP: Enterprise Deployment Guide for AI Agents",
+      "url": "https://www.mintmcp.com/blog/enterprise-development-guide-ai-agents",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "MintMCPによるエンタープライズ向けAIエージェント構築の実践ガイド。Claude Agent SDK + MCP統合でPoC→プロダクション移行時に必要な要素を網羅。認証：Workload Identity Federation（WIF）を使ったサービスアカウントなしの安全な認証、workspace:manage_tunnelsスコープなどMCPトンネルの権限管理。MCPトンネル（2026-06-22仕様）：管理APIが`/v1/organizations/tunnels`から`/v1/tunnels`（Claude API）へ移動・`anthropic-beta: mcp-tunnels-2026-06-22`ヘッダー必要。エンタープライズ管理認証（Enterprise-managed auth）の設定フロー。可観測性：エージェントごとのコスト帰属・レイテンシ追跡・エラー分類。200+エージェント規模でのデプロイパターン（キュー駆動・イベント駆動・マイクロサービス統合）。プライベートネットワークトンネルを使った社内システム（Salesforce・SAP・社内CRM）との安全な接続方法も解説。",
+      "body_excerpt": "MintMCPによるエンタープライズ向けClaude SDK + MCP統合ガイド。200+エージェント規模での認証・監視・コスト管理・セキュリティを詳述。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-05_3533_WEB_TradingAgents-Official-Multi-Agent-LLM-Trading-Framework.md",
+      "title": "TradingAgents: Multi-Agents LLM Financial Trading Framework（公式）",
+      "url": "https://tauricresearch.github.io/TradingAgents/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "TauricResearch（UCLA+MIT研究チーム）によるTradingAgents公式ページ。GitHub Stars 80,000超・Forks 15,500超でオープンソースAI取引フレームワーク最多スター数を維持。7つの専門LLMエージェントが実際の取引会社を模倣して協働：ファンダメンタル分析・センチメント分析・ニュース分析・テクニカル分析（4種類のオシレーター・モメンタム指標）・強気/弱気リサーチャー（反対意見で相互検証）・トレーダー・リスクマネージャー・ファンドマネージャー。対応プロバイダー：OpenAI（GPT-4o以降）・Anthropic Claude（全系列）・Google Gemini・Grok（2026年4月時点）。v0.2.4（2026年4月リリース）追加機能：LangGraphチェックポイント再開・永続的意思決定ログ・DeepSeek/Qwen/GLM/Azure対応・構造化出力エージェント。バックテスト実績：AAPL累積リターン+26.62% vs Buy-and-hold -5.23%（Jun-Nov 2024）。注意事項：ライブ取引実績なし・バックテスト期間は1四半期のみ・本番運用前に十分な検証が必要。",
+      "body_excerpt": "TauricResearchによるTradingAgents公式ページ。GitHub Stars 80K超、UCLA+MIT研究起源のマルチエージェントLLM取引フレームワーク。v0.2.4の最新機能を掲載。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-05_3534_WEB_LLM-0-32-Release-Reasoning-Traces-OpenAI-Responses-Aug4.md",
+      "title": "LLM 0.32リリース: リーズニングトレース・OpenAI Responses API・サーバーサイドツール対応",
+      "url": "https://simonwillison.net/2026/Aug/4/new-release-of-llm/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "Simon Willison（Django共同創設者・AI開発者）によるオープンソースLLMツール「LLM」バージョン0.32のリリース発表（2026年8月4日）。LLM初期ローンチ以来最も重要なリリースと位置づける。主要新機能4つ：①可視化されたリーズニングトレース（Claude Sonnet/Opus、o3等の内部思考プロセスをCLIで表示可能）、②OpenAI Responses APIサポート（GPT-5.6ファミリーとサーバーサイドツールに対応するための新API形式）、③サーバーサイドプロバイダーツール（Web検索・コード実行をプロバイダー側で処理してクライアント複雑性を削減）、④再設計されたコンテンツアドレス可能SQLiteログ（セッション跨ぎでの検索・照合が大幅改善）。デフォルトモデル変更：GPT-5.6 Luna（$0.20/$1.20/Mトークン）に。`pip install -U llm`でアップグレード。LLMはClaude・GPT・Gemini・Mistral等多数のプロバイダーをCLIから統一インターフェースで利用できるツールで、AI開発者・研究者に広く使われている。",
+      "body_excerpt": "Simon WillisonによるLLM 0.32公式リリース発表（2026年8月4日）。初期リリース以来最重要アップデートと位置づけ。主要4機能と新デフォルトモデルGPT-5.6 Lunaを紹介。",
+      "fact_checked": true,
+      "fact_check_note": "CONFIRMED: simonwillison.net公式ブログ・MastodonおよびX投稿で確認。リリース日（8月4日）・GPT-5.6 Lunaがデフォルトモデルになったこと・主要4機能（リーズニングトレース・OpenAI Responses API・サ..."
+    },
+    {
+      "file": "2026-08-05_3535_WEB_Daily-AI-News-August-4-2026-LLM032-Opus5-GPT56-TechNoisy.md",
+      "title": "生成AIニュース 昨日【2026年8月4日（火）】のAI公式発表を3分でチェック",
+      "url": "https://tech-noisy.com/2026/08/05/ai-daily-news-2026-08-04/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "ai-news",
+      "summary": "TECH NOISYが毎日更新する公式AI発表ダイジェスト（2026年8月4日版）。当日の主要動向：①LLM 0.32リリース（リーズニングトレース・OpenAI Responses API・サーバーサイドツール・新ログシステム・デフォルトモデルGPT-5.6 Luna $0.20/$1.20/M）、②Claude Opus 5（7月24日リリース）の詳細評価：Opus 4.8比でディープリーズニングと長期エージェント作業で大幅向上、価格$5/$25/Mのまま・Fable 5の約半額・コスト効率が大きく改善、③Anthropic旧Slackアプリを完全廃止しClaude Tag（claude.ai/tag）に全面移行（8月4日完了）、④OpenAI：アクティブユーザー10億人超・導入企業200万社超を公表、⑤Qwen3.8 Max（Alibaba、8月2日リリース）がLLM Gatewayに追加（入力$0.14/M・出力$0.57/M）。GPT-5.6 Lunaの80%値下げ（7月30日）は既存モデルの大幅コスト削減の流れを示す。",
+      "body_excerpt": "TECH NOISYによる2026年8月4日のAI公式発表まとめ。LLM 0.32・Claude Opus 5詳細・Anthropic Slack廃止・OpenAI規模・GPT-5.6 Luna値下げを整理。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-05_3536_WEB_US-Voluntary-Federal-AI-Regulation-Framework-August-2026.md",
+      "title": "米国：フロンティアAIモデルの自主的連邦規制フレームワーク合意（2026年8月4日）",
+      "url": "https://ny1.com/nyc/all-boroughs/politics/2026/08/04/source--voluntary-federal-regulatory-framework-for-advanced-ai-models-finalized",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "NY1の報道（2026年8月4日）。Anthropic・OpenAI・Google・Metaを含む約12社のAI企業代表がホワイトハウス関係者との会議でフロンティアモデルの自主的連邦規制フレームワークの合意を最終確認。法的拘束力なし・自主的な枠組みで、企業が連邦政府と協力して高度AIモデルを自主規制する内容。背景：「Great American AI Act」が州法（カリフォルニア・コロラド）との連邦優越条項をめぐる対立で議会で停滞しており、業界主導の自主規制で先行。タイミング：EU AI Act透明性義務が8月2日から施行された翌々日で、米国の対照的なアプローチが国際的に注目される。中国（エージェントAI規制7月15日施行）・EU（AI Act 8月2日施行）・米国（自主規制8月4日合意）という2026年夏の国際AI規制の3ウェーブの一角。",
+      "body_excerpt": "NY1が報じる米国のAI自主規制フレームワーク合意。Anthropic・OpenAI・Google・Meta等12社とホワイトハウスが合意。強制力なし・EU AI Act施行翌日のタイミングに注目。",
+      "fact_checked": true,
+      "fact_check_note": "CONFIRMED (要補足): NY1等複数メディアで確認。ただし記事には書かれていない重要詳細：Trumpが6月に出したEOに基づく枠組みで、AI企業はリリース前30日間、連邦政府にフロンティアモデルへの早期アクセスを提供することが主要内容。強制力なし（許可制・ライセン..."
+    },
+    {
+      "file": "2026-08-05_3537_WEB_AI-Regulation-2026-What-Changed-EU-US-China-Analysis.md",
+      "title": "AI Regulation in 2026: What Just Changed - and What It Means for Every AI Team",
+      "url": "https://eveaicore.com/blog/ai-regulation-2026-what-changed",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "EveAICoreによる2026年AI規制変化の包括分析。3大規制フレームワークを解説：①EU AI Act（8月2日施行）：高リスクAIシステム（医療・採用・信用評価等）に対してリスク管理システム・ログ&トレーサビリティ・人間監視・品質管理が義務化。GPAI（汎用AI）プロバイダーは透明性要件・著作権遵守・能力評価が必要。②中国AIエージェント規制（7月15日施行）：エージェントが下せる判断を権限ティアに分類し事前届出が必要。意思決定の影響度・可逆性・金額規模でティア1-3を設定。世界初のAIエージェント専用国家フレームワーク。③米国：「Great American AI Act」停滞・州法（CA/CO）が先行執行・連邦自主規制フレームワーク（8月4日合意）で業界主導対応。AIチームへの即時アクション：ログ保存期間の設定（EU：最低3年）・人間承認ゲートの実装・AI生成コンテンツへの透明性表示・インベントリ管理システムの整備。",
+      "body_excerpt": "EveAICoreによるAI規制2026年包括分析。EU AI Act・米国自主規制・中国エージェントAI規制の3本柱を横断整理し、AIチームへの実践的インパクトを提示。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-05_3538_WEB_AI-Governance-Framework-2026-Company-Compliance-Rules.md",
+      "title": "AI Governance Framework 2026: Rules Companies Must Follow",
+      "url": "https://www.dualmedia.com/ai-governance-framework-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "DualMediaによる企業向けAIガバナンス実務ガイド2026年版。主要地域の規制義務を企業目線で整理：EU AI Act（高リスクAI：技術文書・コンフォーミティアセスメント・EU AIデータベース登録）、NIST AI RMF（米国連邦機関向けリスク管理フレームワーク、民間も参照推奨）、中国AIエージェント規制（権限ティア分類・意思決定トレーサビリティ・定期監査）、日本経産省AIガバナンスガイドライン（2026年改定版、リスクベースアプローチを採用）。企業が即時導入すべき「ガバナンス最低限セット」4点：①AIシステムインベントリ管理（用途・リスク分類・所有者の記録）、②リスクスコアリング（影響度×可逆性×自律度）、③監査ログ（3年以上保存・改ざん防止）、④インシデント対応プロセス（AI特有の意図しない挙動への対処フロー）。スタートアップ向けの軽量版チェックリストも提供。グローバル展開企業向けのジュリスディクション別対応マトリクスが実用的。",
+      "body_excerpt": "DualMediaによる2026年AIガバナンスフレームワーク企業対応ガイド。EU・米国・中国・日本の主要規制義務を整理し「ガバナンス最低限セット」を提示。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    }
+  ],
+  "fact_checks": [
+    {
+      "article_file": "2026-08-05_3530_WEB_MCP-2026-07-28-Official-Spec-Stateless-OAuth-Extensions.md",
+      "claim": "MCP 2026-07-28仕様が7月28日に最終版として出荷。ステートレスコア・OAuth強化・拡張フレームワーク（Apps・Tasks）を発表",
+      "result": "CONFIRMED",
+      "note": "公式MCPブログ (blog.modelcontextprotocol.io/posts/2026-07-28/) と Google Developers Blog・Anthropic等の複数ソースで確認。ステートレスプロトコルへの転換（initializeハンドシェイク廃止・Mcp-Session-Id廃止・requestごとにcapabilitiesを送信）、ラウンドロビンLB対応、サーバーレス/エッジ展開可能化が確認済み。記事内容は正確。",
+      "sources": [
+        "https://blog.modelcontextprotocol.io/posts/2026-07-28/",
+        "https://modelcontextprotocol.io/specification/2026-07-28/changelog"
+      ]
+    },
+    {
+      "article_file": "2026-08-05_3536_WEB_US-Voluntary-Federal-AI-Regulation-Framework-August-2026.md",
+      "claim": "米国でAI企業12社（Anthropic・OpenAI・Google・Meta等）とホワイトハウスが自主的連邦規制フレームワークに合意",
+      "result": "CONFIRMED (要補足)",
+      "note": "NY1等複数メディアで確認。ただし記事には書かれていない重要詳細：Trumpが6月に出したEOに基づく枠組みで、AI企業はリリース前30日間、連邦政府にフロンティアモデルへの早期アクセスを提供することが主要内容。強制力なし（許可制・ライセンス制ではない）は正確。「12社・ホワイトハウスとの会合」「Anthropic・OpenAI・Google・Meta参加」は確認済み。",
+      "sources": [
+        "https://ny1.com/nyc/all-boroughs/politics/2026/08/04/source--voluntary-federal-regulatory-framework-for-advanced-ai-models-finalized",
+        "https://www.crowell.com/en/insights/client-alerts/executive-order-creates-voluntary-regulatory-regime-of-frontier-ai-models"
+      ]
+    },
+    {
+      "article_file": "2026-08-05_3534_WEB_LLM-0-32-Release-Reasoning-Traces-OpenAI-Responses-Aug4.md",
+      "claim": "LLM 0.32がSimon Willisonにより2026年8月4日リリース。デフォルトモデルはGPT-5.6 Luna ($0.20/$1.20/Mトークン)",
+      "result": "CONFIRMED",
+      "note": "simonwillison.net公式ブログ・MastodonおよびX投稿で確認。リリース日（8月4日）・GPT-5.6 Lunaがデフォルトモデルになったこと・主要4機能（リーズニングトレース・OpenAI Responses API・サーバーサイドツール・SQLiteログ再設計）すべて正確。Claude系モデルにはWebSearch・WebFetch・CodeExecution・AnthropicMCPがサーバーサイドツールとして提供されることも確認。",
+      "sources": [
+        "https://simonwillison.net/2026/Aug/4/new-release-of-llm/",
+        "https://fedi.simonwillison.net/@simon/117039969641535860"
+      ]
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-08-04": 13,
+      "2026-08-03": 351,
+      "2026-08-02": 15,
+      "2026-08-01": 9,
+      "2026-07-31": 6,
+      "2026-07-30": 9,
+      "2026-07-29": 11
+    },
+    "recurring_themes": [
+      "claude",
+      "claude_code",
+      "mcp",
+      "agent",
+      "llm"
+    ]
+  }
+}
