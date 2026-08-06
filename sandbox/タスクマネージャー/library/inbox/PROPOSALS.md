@@ -4528,3 +4528,62 @@ CLAUDE.mdの最効構成として「①目的とゴール②絶対守るルー�
 **提案アクション:**
 1. bpr_lab/CLAUDE.md を4点の背骨フォーマットで整理・見直し
 2. 各サブプロジェクト（FX自動取引・タスクマネージャー）のCLAUDE.mdが4点を含んでいるか確認し、不足項目を補完
+
+---
+
+## 2026-08-06 収集分
+
+### 1. skills-registry への反映提案
+
+#### 1-1. gstack スキルセットの参照・取り込み検討
+**出典:** articles/2026-08-06_3546_WEB_Claude-Code-Skills-17-gstack-Best-Practices-Elcamy.md
+
+**提案内容:**
+Y Combinator CEO Garry Tan が公開した gstack（GitHub 113K stars）は CEO・デザイナー・PM・QA 等のロールペルソナで動作する 23 スキル以上を提供。bpr_lab のスキルは curate/digest/reading など「情報処理系」に偏っているため、開発フロー系スキル（code-review・simplify）に加え、gstack の `release-manager` や `qa` ペルソナ系スキルを参照して bpr_lab 用にカスタマイズすることを検討。
+
+**優先度:** 低（参照用途、即時変更不要）
+
+#### 1-2. ultraplan 廃止への対応
+**出典:** articles/2026-08-06_3539_WEB_Claude-Code-Updates-August-2026-Releasebot.md
+
+**提案内容:**
+Claude Code の最新アップデートで ultraplan が廃止された。bpr_lab の daily-collect スキルや他スキルが ultraplan に依存している場合は削除・修正が必要。各 SKILL.md・CLAUDE.md で `/ultraplan` コマンド参照がないか確認し、代替フローに更新する。
+
+**優先度:** 高（機能廃止のため要確認）
+
+### 2. CLAUDE.md への反映提案
+
+#### 2-1. CLAUDE.md サイズ最適化
+**出典:** articles/2026-08-06_3543_WEB_12-Best-CLAUDE-md-Examples-Real-Repos-2026-Ayautomate.md
+
+**提案内容:**
+2026年のベストプラクティス：CLAUDE.md は 100〜400 行が最適。100行以下は不十分、400行超は過剰。コードスタイルルール（linter に任せるべき）やペーストされたコード・タスク固有の指示は削除対象。bpr_lab の各 CLAUDE.md（特に タスクマネージャー/CLAUDE.md）を棚卸しして不要な記述を整理することを検討。
+
+**優先度:** 中
+
+### 3. FX自動取引への反映提案
+
+#### 3-1. TradingAgents の Claude バックエンド採用検討
+**出典:** articles/2026-08-06_3552_WEB_Build-Multi-Agent-AI-Trading-System-TradingAgents-2026.md / articles/2026-08-06_3550_WEB_Best-AI-Trading-Agents-2026-Comprehensive-Review-Pinggy.md
+
+**提案内容:**
+TradingAgents（GitHub 51K stars）は Claude・GPT・Gemini・Grok をバックエンドとして選択可能で、Bull Researcher + Bear Researcher が対立議論してから取引判断する設計が有効とされる。bpr_lab の FX 自動取引システムに対立型マルチエージェント分析（強気エージェント vs 弱気エージェント）を組み込む設計を検討。AAPL での 26.62% 実績（vs 買い持ち -5.23%）は参考値として記録。
+
+**優先度:** 中（FX自動取引の次フェーズ設計時に参照）
+
+#### 3-2. AI トレーディングエージェントの実態理解
+**出典:** articles/2026-08-06_3551_WEB_LLM-Trading-2026-Can-AI-Outperform-Humans-CoinEdition.md
+
+**提案内容:**
+バックテスト結果と本番運用の乖離（取引コスト・スリッページ・市場体制変化）を FX 自動取引の設計上リスクとして明示的に文書化する。「AI = 儲かる」の誤認を避けるため、bpr_lab/FX自動取引/STATUS.md にリスク記載を追加することを推奨。
+
+**優先度:** 低（リスク文書化）
+
+### 4. Claude Agent SDK 課金設計への注意
+**出典:** articles/2026-08-06_3547_WEB_Claude-Agent-SDK-Plans-Credits-Production-2026-Totalum.md
+
+**提案内容:**
+2026年6月15日より Agent SDK クレジットが会話用クレジットと分離。daily-collect ルーチン（このスケジュールタスク）は Agent SDK 枠を消費するため、Max 5x（$100/月）または Max 20x（$200/月）プランが必要か確認する。Pro プラン（$20/月 SDK クレジット）では不足する可能性がある。
+
+**優先度:** 高（課金に直結）
+

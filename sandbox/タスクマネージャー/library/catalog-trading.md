@@ -337,3 +337,6 @@
 | 306 | @fulldecent — Polymarket ML取引講座: BT+モデリング+ライブ運用 | ja | 未読 | #ai-trading #x-signal | articles/2026-08-03_3268_X_fulldecent_Polymarket_ML取引講座_BT_モデリング_ライブ運用.md |
 | 307 | @DicksonLau2 — 全自動: TradingView→指標→EA→MT5回測→最適化 | ja | 未読 | #ai-trading #mt5 #x-signal | articles/2026-08-03_3269_X_DicksonLau2_全自動_TradingView_指標_EA_MT5回測_最適化.md |
 | 308 | TradingAgents: Multi-Agents LLM Financial Trading Framework 公式ページ（Stars 80K超・v0.2.4・Claude/GPT/Gemini対応） | en | 未読 | #ai-trading #web-signal | articles/2026-08-05_3533_WEB_TradingAgents-Official-Multi-Agent-LLM-Trading-Framework.md |
+| 309 | Best AI Trading Agents in 2026: LLM推論エンジン型・Robinhood「agentic finance」開始・バックテストvs実績乖離 | en | 未読 | #ai-trading #web-signal | articles/2026-08-06_3550_WEB_Best-AI-Trading-Agents-2026-Comprehensive-Review-Pinggy.md |
+| 310 | LLM Trading 2026: AI vs 人間——マルチエージェント構造が有望、agentic AI市場$28.4B（前年比242%増） | en | 未読 | #ai-trading #web-signal | articles/2026-08-06_3551_WEB_LLM-Trading-2026-Can-AI-Outperform-Humans-CoinEdition.md |
+| 311 | Build Multi-Agent AI Trading System with TradingAgents (2026): Bull/Bear Researcher対立設計・AAPL +26.62% | en | 未読 | #ai-trading #web-signal | articles/2026-08-06_3552_WEB_Build-Multi-Agent-AI-Trading-System-TradingAgents-2026.md |
