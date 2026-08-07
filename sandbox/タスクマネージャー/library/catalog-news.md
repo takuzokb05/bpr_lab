@@ -411,3 +411,5 @@
 | 387 | Top Agentic Frameworks 2026 (JetBrains): LangChain 134K stars・LangGraph 34.5M DL・Microsoft Agent Framework 1.0 GA | en | 未読 | #ai-news #web-signal | articles/2026-08-06_3554_WEB_Top-Agentic-Frameworks-Applications-2026-JetBrains.md |
 | 388 | Microsoft Agent Framework at BUILD 2026: Agent Harness・Hosted Agents・CodeAct発表（公式ブログ） | en | 未読 | #ai-news #web-signal | articles/2026-08-06_3555_WEB_Microsoft-Agent-Framework-BUILD-2026-Official-Announcement.md |
 | 389 | New AI Model Releases August 2026: Muse Spark 1.2・Qwen3.8 Max・DeepSeek-V4・GPT-5.6 Luna（Startup Edition） | en | 未読 | #ai-news #web-signal | articles/2026-08-06_3556_WEB_New-AI-Model-Releases-August-2026-Startup-Edition.md |
+| 390 | EU AI Act 執行開始 2026-08-02: チャットボット開示義務・€15M罰則・OpenAI/Anthropicへの高リスク規制精査 | en | 未読 | #ai-news #ai-regulation #web-signal | articles/2026-08-07_3567_WEB_EU-AI-Act-Enforcement-August-2-2026-HelpNetSecurity.md |
+| 391 | Monthly LLM News August 2026 (Augusto Digital): Qwen3.8 Max・GPT-5.6 Luna・DeepSeek-V4・MCP stateless化・推論コスト40〜60%減 | en | 未読 | #ai-news #web-signal | articles/2026-08-07_3569_WEB_Monthly-LLM-News-August-2026-Augusto-Digital.md |

@@ -4587,3 +4587,32 @@ TradingAgents（GitHub 51K stars）は Claude・GPT・Gemini・Grok をバック
 
 **優先度:** 高（課金に直結）
 
+
+---
+
+## 2026-08-07 収集分の提案
+
+### 5. Claude Code 自己ホスト環境（Self-Hosted Environments）の活用
+**出典:** articles/2026-08-07_3557_WEB_ClaudeCode-v2-1-224-SelfHosted-CrossSession-Messaging.md / articles/2026-08-07_3558_WEB_ClaudeCode-SelfHosted-Official-Blog-SessionsOnYourCompute.md
+
+**提案内容:**
+Claude Code v2.1.224（2026-08-06 公開β）で自己ホスト環境が利用可能になった。FX 自動取引スクリプトの MT5 API キーや証券会社認証情報を Anthropic インフラに送らずに Claude Code エージェントを使えるようになる。Claude Team/Enterprise プラン加入が前提だが、機密データを扱う場合は検討価値が高い。CLAUDE.md に「機密データを含むタスクは Self-Hosted 環境で実行」という記載を追加することを推奨。
+
+**優先度:** 中（プラン昇格時に要検討）
+
+### 6. Dreaming パターンの alter-ego.md 自動更新への応用
+**出典:** articles/2026-08-07_3561_WEB_ClaudeManagedAgents-Dreaming-Outcomes-Multiagent-Official.md / articles/2026-08-07_3562_WEB_Anthropic-Dreaming-Managed-Agents-Self-Improving-May2026-LetsDataScience.md
+
+**提案内容:**
+Anthropic の Dreaming 機能（エージェントが過去セッションのトランスクリプトを読み記憶を自律整理）を参考に、タスクマネージャーの alter-ego.md を自動更新するスキルを作成することを提案。週次または月次で、過去の収集記事・PROPOSALS.md・ユーザーフィードバックを分析し、alter-ego.md に「ユーザーの興味・関心の変化」を差分反映するスキル（`alter-ego-update`）。Harvey 社は同種アプローチでタスク完了率 6 倍改善を報告。
+
+**優先度:** 中
+
+### 7. セッション間メッセージング（Cross-Session Messaging）の活用検討
+**出典:** articles/2026-08-07_3557_WEB_ClaudeCode-v2-1-224-SelfHosted-CrossSession-Messaging.md
+
+**提案内容:**
+v2.1.224 で追加された Cross-Session SendMessage 機能により、複数 Claude Code セッション間でメッセージを送受信できる。日次収集ルーチンの長時間タスクをセッション分割して並列処理する設計が可能になる。具体的には「収集セッション（Step 1-3）」と「キュレーションセッション（Step 4）」を分離し、SendMessage で成果物を受け渡す設計を検討する。
+
+**優先度:** 低（現状は単一セッションで十分）
+

@@ -340,3 +340,4 @@
 | 309 | Best AI Trading Agents in 2026: LLM推論エンジン型・Robinhood「agentic finance」開始・バックテストvs実績乖離 | en | 未読 | #ai-trading #web-signal | articles/2026-08-06_3550_WEB_Best-AI-Trading-Agents-2026-Comprehensive-Review-Pinggy.md |
 | 310 | LLM Trading 2026: AI vs 人間——マルチエージェント構造が有望、agentic AI市場$28.4B（前年比242%増） | en | 未読 | #ai-trading #web-signal | articles/2026-08-06_3551_WEB_LLM-Trading-2026-Can-AI-Outperform-Humans-CoinEdition.md |
 | 311 | Build Multi-Agent AI Trading System with TradingAgents (2026): Bull/Bear Researcher対立設計・AAPL +26.62% | en | 未読 | #ai-trading #web-signal | articles/2026-08-06_3552_WEB_Build-Multi-Agent-AI-Trading-System-TradingAgents-2026.md |
+| 312 | Best AI Trading Agents vs Traditional Bots 2026 (GPTrader): 決定的差異比較表・失敗パターン・ハイブリッド設計推奨 | en | 未読 | #ai-trading #web-signal | articles/2026-08-07_3568_WEB_AI-Trading-Agents-vs-Traditional-Bots-2026-Comparison-GPTrader.md |
