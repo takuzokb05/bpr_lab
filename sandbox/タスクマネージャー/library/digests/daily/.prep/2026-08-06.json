@@ -1,0 +1,262 @@
+{
+  "date": "2026-08-06",
+  "generated_at": "2026-08-07T23:16:07.854121Z",
+  "article_count": 18,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-08-06_3539_WEB_Claude-Code-Updates-August-2026-Releasebot.md",
+      "title": "Claude Code Updates by Anthropic — August 2026 (Releasebot)",
+      "url": "https://releasebot.io/updates/anthropic/claude-code",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Releasebot が追跡する Claude Code の最新アップデートまとめ（2026年8月時点）。直近の変更として、worktree のより強固な分離・auto-allow の安全な処理・ultraplan 廃止・絵文字ショートコードのオートコンプリート追加・サブエージェント/バジェット/バックグラウンドセッションのコントロール改善が含まれる。セキュリティとリライアビリティに注力したリリースが連続している。バグ修正と小機能追加が週次ペースで続いており、特に worktree isolation の強化はマルチエージェント運用者に重要。ultraplan の廃止は計画フロー変更を意味し、既存ワークフロー確認が必要。",
+      "body_excerpt": "Releasebot が追跡する Claude Code の最新アップデートまとめ（2026年8月時点）。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-06_3540_WEB_Claude-Code-June-2026-10-New-Features-Sitepoint.md",
+      "title": "Claude Code June 2026: 10 New Features Devs Need to Know",
+      "url": "https://www.sitepoint.com/claude-code-june-2026-10-new-features-devs-need-to-know/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "SitePoint による 2026 年 6 月の Claude Code 新機能 10 選解説。主な追加機能は：(1) 階層型エージェント生成（親エージェントが最大3レベル深さの子エージェントを生成可能）、(2) ネストされたサブエージェント、(3) フォールバックモデルチェーン（モデル障害時の自動切り替え）、(4) コミュニティツールマーケットプレイス、(5) エージェントごとのコスト帰属、(6) スコープ付きパーミッション。複数モジュール・ファイルにまたがる大規模タスク分解が可能になり、エンタープライズ向けの構成が強化された。Artifacts でセッション出力を URL 共有できるライブページへ変換する機能も 6 月に追加。",
+      "body_excerpt": "SitePoint による 2026 年 6 月の Claude Code 新機能 10 選解説。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-06_3541_WEB_Complete-Beginners-Guide-Claude-Code-Skills-Agents-Hooks-TowardsAI.md",
+      "title": "A Complete Beginner's Guide to Claude Code: Skills, Agents, Hooks, Plugins, MCP & Cowork",
+      "url": "https://pub.towardsai.net/a-complete-beginners-guide-to-claude-code-skills-agents-hooks-plugins-mcp-085b26b73fdd",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Towards AI（2026年3月）掲載のゼロから始める Claude Code 完全ガイド。Claude Code のアーキテクチャを「memory・hooks・skills・subagents・plugins・MCP の分離されたレイヤー」として解説。Skills = SKILL.md ファイルを含むフォルダベースの命令パックでオンデマンドロード、Hooks = 毎セッション起動しアクション前後に実行されるルール、という区別が明確。スキルにはドメインロジックやヘルパーファイルがある場合、サブエージェントには並列独立作業、フックにはコードで規則を強制する場合に使う、という使い分け基準を提示。非エンジニア向けに書かれており、事前知識不要で読める。",
+      "body_excerpt": "Towards AI（2026年3月）掲載のゼロから始める Claude Code 完全ガイド。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-06_3542_WEB_Claude-Code-Skills-vs-Hooks-vs-Subagents-vs-MCP-Totalum.md",
+      "title": "Claude Code Skills in 2026: The Complete Guide (vs Hooks, vs Subagents, vs MCP)",
+      "url": "https://www.totalum.app/blog/claude-code-skills-totalum",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Totalum Blog による Skills・Hooks・Subagents・MCP の比較完全ガイド（2026年）。「いつどれを使うか」の判断フレームワークが中心。Skills: ドメインロジックやヘルパーファイルがある場合、Hooks: コードで規則を強制する場合、Subagents: 並列・独立した作業、MCP: 外部ツール・データへの接続。実践的なユースケース別のサンプル構成も掲載。注目点として「Context7・Code Review・Code Simplifier・Superpowers」などのコミュニティスキルへの言及、gstack（Y Combinator CEO Garry Tan が公開、GitHub 113K stars、23スキル以上）の紹介がある。Claude Code エコシステム全体像を把握するための優良リソース。",
+      "body_excerpt": "Totalum Blog による Skills・Hooks・Subagents・MCP の比較完全ガイド（2026年）。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-06_3543_WEB_12-Best-CLAUDE-md-Examples-Real-Repos-2026-Ayautomate.md",
+      "title": "12 Best CLAUDE.md Examples From Real Repos (2026)",
+      "url": "https://www.ayautomate.com/blog/best-claude-md-examples",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "実際のリポジトリから抽出した CLAUDE.md の優良サンプル 12 件を解説。2026年のベストプラクティスとして「100〜400行が最適（100行以下は不十分、400行超は過剰）」「コードスタイルルールはリンターに任せ CLAUDE.md には書かない」「ペーストされたコードやタスク固有の指示は入れない」という原則を示す。実例（Laravel API）の構成：Commands（test/lint/migrate fresh）、Architecture patterns（thin controllers、services for business logic、repositories for DB access）、Conventions（form requests for validation、no inline validation）。検証方法として「新規セッションでプロジェクト要約を依頼し、スタック・テストコマンド・プロジェクト固有の注意点が挙げられれば成功」という実用的なテスト手順も紹介。",
+      "body_excerpt": "実際のリポジトリから抽出した CLAUDE.md の優良サンプル 12 件を解説。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-06_3544_WEB_Claude-Code-Features-25-Business-July-2026-GenAI.md",
+      "title": "【2026年7月最新】Claude Codeでできること25機能｜業務自動化・MCP連携まで完全解説",
+      "url": "https://genai-ai.co.jp/ai-kanri/blog/cc-code-features-25/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "2026年7月時点で Claude Code で利用できる全25機能を業務視点で網羅解説した日本語記事（GenAI AI管理blog）。コーディング支援・テスト自動化・ドキュメント生成・MCP連携による外部ツール操作（Slack・GitHub・Notion・Figma・Jira 等）まで体系整理。特に MCP 連携機能が急速に拡大しており、現時点で数十種類以上の MCP サーバーが利用可能とされる。業務自動化ユースケース（請求書・レポート・議事録・データ照合等）も具体的に列挙。エンジニア以外の業務利用を強く意識した構成で、「何ができるか」全体像の確認に最適。",
+      "body_excerpt": "2026年7月時点で Claude Code で利用できる全25機能を業務視点で網羅解説した日本語記事。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-06_3545_WEB_Claude-Code-Automation-10-Case-Studies-2026-Uravation.md",
+      "title": "【2026年最新】Claude Code業務自動化10事例｜実装プロンプト全公開",
+      "url": "https://uravation.com/media/claude-code-automation-case-studies-2026/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "Claude Code を使った業務自動化の実装事例 10 件を、実際のプロンプトとともに公開した日本語記事（株式会社 Uravation）。対象領域：請求書処理・メール自動化・レポート生成・帳票作成・議事録化・契約書解析・月次集計・週報作成・データ照合・データクレンジング。導入期間の目安として「3〜6 週間で月 30〜80 時間の工数削減が見込める」という定量データを提示。非エンジニアでも実装可能なプロンプト設計が特徴。FX 自動取引など Python 系タスクとの親和性も高く、bpr_lab の自動化ユースケース検討に参考になる。",
+      "body_excerpt": "Claude Code を使った業務自動化の実装事例 10 件を実際のプロンプトとともに公開した日本語記事。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-06_3546_WEB_Claude-Code-Skills-17-gstack-Best-Practices-Elcamy.md",
+      "title": "Claude Code スキル集17選｜gstack・実践派エンジニアのベストプラクティス完全ガイド【2026年版】",
+      "url": "https://www.elcamy.com/blog/claude-code-skills-best-17",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "実践派エンジニアが厳選した Claude Code スキル 17 選を紹介する日本語記事（elcamy.com）。特筆事項として、gstack（Y Combinator 社長兼 CEO Garry Tan が公開した Claude Code 用スキルパック）の詳細解説が含まれる。gstack の概要：GitHub 113K stars 獲得、CEO・デザイナー・エンジニアリングマネージャー・リリースマネージャー・QA として機能する 23 スキル以上を提供、各スキルが異なるロールのペルソナで動作する多様な構成が特徴。他にも Context7・Code Review・Simplify・Morning（朝次ブリーフ）など実用スキルを網羅。bpr_lab の スキル設計・curate/digest スキル改善の参考になる。",
+      "body_excerpt": "実践派エンジニアが厳選した Claude Code スキル 17 選、gstack 詳細解説を含む日本語記事。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-06_3547_WEB_Claude-Agent-SDK-Plans-Credits-Production-2026-Totalum.md",
+      "title": "Claude Agent SDK in 2026: Complete Guide to Plans, Credits, and Shipping to Production",
+      "url": "https://www.totalum.app/blog/claude-agent-sdk-totalum-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Totalum Blog による Claude Agent SDK の 2026 年完全ガイド。2026 年 6 月 15 日より、サブスクリプションプランに独立した月次 Agent SDK クレジットプールが追加（会話用クレジットとは別枠）。プラン別クレジット：Pro $20/月・Max 5x $100/月・Max 20x $200/月。SDK の構成：subprocess モデル・ツール実行エンジン・セッション永続化レイヤー・パーミッションシステム・フックアーキテクチャ・マルチエージェント協調プロトコル・メモリスタックを内包する完全なアジェンティックランタイム。Built-in ツール: Read/Write/Edit/Bash/Glob/Grep/WebSearch/WebFetch 等。代替として Managed Agents（2026年4月ローンチ、Anthropic がハーネス・サンドボックス・セッションログを管理するホスト型 REST API）も紹介。",
+      "body_excerpt": "Totalum Blog による Claude Agent SDK の 2026 年完全ガイド（課金モデル・プラン・本番投入パターン）。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-06_3548_WEB_MCP-2026-Roadmap-Official-ModelContextProtocol.md",
+      "title": "The 2026 MCP Roadmap — Official Model Context Protocol Blog",
+      "url": "https://blog.modelcontextprotocol.io/posts/2026-mcp-roadmap/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Model Context Protocol 公式ブログが発表した 2026 年の MCP ロードマップ。現時点で 5,000 以上の MCP サーバーが利用可能で、あらゆる主要な AI コーディングツールがサポート済み。2026年7月28日付けの最新仕様では、ステートレスプロトコルコア・マルチラウンドトリップリクエスト・ヘッダーベースルーティング・キャッシュ可能なリスト結果・認可強化・正式な拡張フレームワーク・更新済み Tier 1 SDK が追加された。MCP は「実験的」から「AI エージェントが外部ツール・DB・API に接続するための標準方式」へと昇格済み。ロードマップには普通の Web サーバー上で軽量に動く MCP サーバーの普及促進が含まれる。公式一次情報として信頼性が高い。",
+      "body_excerpt": "Model Context Protocol 公式ブログによる 2026 年 MCP ロードマップ発表。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-06_3549_WEB_MCP-2026-07-28-Stateless-Web-Standard-Talentcloud.md",
+      "title": "MCP 2026-07-28で「普通のWebサイトがAI対応する時代」が近づいた",
+      "url": "https://talentcloud.jp/blog/mcp-2026-07-28-stateless",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-ecosystem",
+      "summary": "株式会社タレントクラウドが 2026-07-28 の MCP 仕様改定を日本語で詳解した記事。新仕様の核心として「ステートレスプロトコル」採用により、特別なインフラなしに普通の Web サーバー上で MCP サーバーを実装可能になったことを指摘。これにより「普通のWebサイトが AI 対応する時代」が実現に近づいた、という重要な示唆を提供。ビジネス活用の観点から、Slack MCP・DB MCP・Notion MCP の3つが業務効率化の核になり得ることを解説。GitHub MCP で自動コードレビュー、Slack MCP で定期報告自動化のユースケースも具体的。2026 年は楽楽精算・freee・kintone・サイボウズなど国産 SaaS の MCP 対応が本格化する見通し。",
+      "body_excerpt": "株式会社タレントクラウドが 2026-07-28 の MCP 仕様改定を日本語で詳解した記事。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-06_3550_WEB_Best-AI-Trading-Agents-2026-Comprehensive-Review-Pinggy.md",
+      "title": "Best AI Trading Agents in 2026: Do They Actually Make Money?",
+      "url": "https://pinggy.io/blog/best_ai_trading_agents/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "Pinggy Blog による 2026 年 AI トレーディングエージェントの包括レビュー。主要ポイント：(1) オープンソース AI 取引エージェントのエコシステムは 2026 年時点で技術的に成熟。(2) LLM エージェントは決算報告・ニュース・SNS・経済動向を横断分析し、ルールベース従来型とは異なる「推論エンジン」として機能。(3) 2026年5月に Robinhood が AI エージェントを証券口座に直接接続する機能を発表（CEO が「agentic finance の始まり」と表現）。(4) パフォーマンスの現実：バックテストは有望だが本番運用では取引コスト・スリッページ・市場体制変化でリターンが圧縮される。(5) マルチエージェント構造（Bull Researcher + Bear Researcher が対立する構成）が有効な設計として紹介。FX 自動取引開発の参考として直接利用可能。",
+      "body_excerpt": "Pinggy Blog による 2026 年 AI トレーディングエージェントの包括レビュー記事。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-06_3551_WEB_LLM-Trading-2026-Can-AI-Outperform-Humans-CoinEdition.md",
+      "title": "LLM Trading in 2026: Can AI Agents Actually Outperform Humans?",
+      "url": "https://coinedition.com/llm-trading-in-2026-can-ai-agents-actually-outperform-humans/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "CoinEdition による「LLM トレーディングエージェントは人間を上回れるか」を検証した分析記事（2026年）。現時点の結論は「混合的」：AI エージェント型自動取引は構造（多エージェントでの役割分担・推論エンジンとしての LLM 活用）において従来のアルゴリズムより有望だが、ライブ取引での実績はバックテストと乖離が大きい。重要な技術的区別：AI-Agentic Autonomous Trading Layer は単なるアルゴリズムボットではなく、複数の AI エージェントが特定機能を分担し外部データソースと通信しながら意思決定・執行する構造化アーキテクチャ。LLM の進化によりテクニカル・ファンダメンタルズ・心理面を統合した総合判断が可能になりつつある。agentic AI 市場は 2025 年に $28.4B（前年比 242% 増）に達した。",
+      "body_excerpt": "LLM トレーディングエージェントは人間を上回れるか？CoinEdition による 2026 年分析記事。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-06_3552_WEB_Build-Multi-Agent-AI-Trading-System-TradingAgents-2026.md",
+      "title": "Build a Multi-Agent AI Trading System with TradingAgents (2026)",
+      "url": "https://blog.pickmytrade.io/build-a-multi-agent-ai-trading-system-with-trading-agents-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "PickMyTrade Blog による TradingAgents フレームワークを使ったマルチエージェント AI 取引システム構築ガイド（2026年）。TradingAgents の現況：GitHub 51,300+ stars・9,300+ forks・世界全リポジトリ中 #390 位（2026年4月時点）、Apache 2.0 ライセンス。アーキテクチャ：7 専門エージェントが協調動作、Bull Researcher と Bear Researcher が対立的に議論してから取引判断。対応 LLM バックエンド：GPT・Claude・Gemini・Grok。パフォーマンス実績：AAPL で 26.62% 累積リターン vs 買い持ち -5.23%（2024年6〜11月）。GPT/Claude/Gemini/Grok を LLM バックエンドとして選択可能であり、bpr_lab の FX 自動取引システムへの Claude 組み込みの参考事例として有用。",
+      "body_excerpt": "TradingAgents フレームワークを使ったマルチエージェント AI 取引システム構築ガイド（2026年）。",
+      "fact_checked": true,
+      "fact_check_note": "リターン数値「26%超」は論文・公式サイトで確認 ✅。ただし記事の「2024年6〜11月」は誤り ⚠️。実際のバックテスト期間は2024年1月1日〜3月29日（出典: arXiv 2412.20138）。バイ＆ホールドとの比較差分 24.57pp という記述もあり、26.62%の絶対値は論文の数値と一致する可能性あり。期間情報の修正が必要。"
+    },
+    {
+      "file": "2026-08-06_3553_WEB_AI-Laws-2026-Key-Regulations-Practical-Guidance-Gunderson.md",
+      "title": "2026 AI Laws Update: Key Regulations and Practical Guidance",
+      "url": "https://www.gunder.com/en/news-insights/insights/2026-ai-laws-update-key-regulations-and-practical-guidance",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "法律事務所 Gunderson Dettmer による 2026 年 AI 規制の実務ガイド。主要内容：(1) 白宮の National Policy Framework for AI（2026年3月20日）：子どもの安全・言論の自由・イノベーション・労働力準備・連邦統一規制の優先事項。AI 規制専門の新連邦機関設立は回避し、既存の業界規制機関を活用する方針。(2) 任意の連邦フレームワーク（2026年8月）：Anthropic・OpenAI・Google・Meta 等約十数社が参加し、ホワイトハウスとフロンティアモデルの自主規制ガイドラインを確定。(3) Transparency in Frontier AI Act（SB 53）：年収 $5億超の開発者に対し、リスクフレームワーク公開・安全インシデント報告・内部告発保護を義務化、違反は最大 $100万/件。AI トレーディング・エージェントなど新技術開発の法的リスク把握に重要な一次情報。",
+      "body_excerpt": "法律事務所 Gunderson Dettmer による 2026 年 AI 規制の実務ガイド。",
+      "fact_checked": true,
+      "fact_check_note": "年収 $5億超の大型フロンティアモデル開発者への適用 ✅、違反最大 $100万/件 ✅、2026年1月1日施行 ✅。Morrison Foerster・WilmerHale・Wikipedia等複数ソースで確認済み。"
+    },
+    {
+      "file": "2026-08-06_3554_WEB_Top-Agentic-Frameworks-Applications-2026-JetBrains.md",
+      "title": "Top Agentic Frameworks for Building Applications 2026",
+      "url": "https://blog.jetbrains.com/pycharm/2026/06/top-agentic-frameworks-for-building-applications-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "JetBrains PyCharm ブログによる 2026 年主要 AI エージェントフレームワーク比較記事（2026年6月）。主要フレームワーク：LangChain（134K GitHub stars、1,000+ 組み込みインテグレーション、最多採用）・LangGraph（33,900 stars、月 3,450 万 DL、LangChain エコシステム内でのグラフ型エージェント）・Microsoft Agent Framework（AutoGen + Semantic Kernel の統合版、2026年4月2日 1.0 GA）・OpenHands・MetaGPT。注目点として AutoGen と Semantic Kernel が 2025年10月に Microsoft Agent Framework として統合された変化を報告。2026年は「フレームワーク乱立」から「成熟・統合」フェーズへ移行し、特に Microsoft の統合と Google LangGraph の成長が目立つ。",
+      "body_excerpt": "JetBrains PyCharm ブログによる 2026 年主要 AI エージェントフレームワーク比較記事（2026年6月）。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-06_3555_WEB_Microsoft-Agent-Framework-BUILD-2026-Official-Announcement.md",
+      "title": "Microsoft Agent Framework at BUILD 2026: Agent Harness, Hosted Agents, CodeAct, and more",
+      "url": "https://devblogs.microsoft.com/agent-framework/microsoft-agent-framework-at-build-2026-announce/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "Microsoft 公式開発者ブログによる BUILD 2026 での Agent Framework 発表内容。AutoGen と Semantic Kernel を統合した Microsoft Agent Framework が BUILD 2026 で新機能を発表。主な発表：Agent Harness（エージェントの実行管理基盤）・Hosted Agents（マネージド実行環境）・CodeAct（コード実行ベースのアクション）等。2026年4月2日に 1.0 GA に到達しており、信頼性が高まったエンタープライズ向けエージェントフレームワーク。Anthropic の Claude Agent SDK や Claude Code のマルチエージェント機能との比較において、Microsoft の対抗エコシステムの現況を把握するための一次情報。AI エージェントフレームワーク競合環境の理解に重要。",
+      "body_excerpt": "Microsoft 公式開発者ブログによる BUILD 2026 での Agent Framework 発表内容。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-06_3556_WEB_New-AI-Model-Releases-August-2026-Startup-Edition.md",
+      "title": "New AI Model Releases News — August 2026 (Startup Edition)",
+      "url": "https://blog.mean.ceo/new-ai-model-releases-news-august-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "mean.ceo ブログによる 2026 年 8 月 AI モデルリリース動向まとめ（Startup Edition）。最新動向：Meta から Muse Spark 1.2（2026年8月5日）・Alibaba から Qwen3.8 Max（2026年8月2日）・DeepSeek-V4-Flash-0731 が最新追跡モデルとして登場。GPT-5.6 Luna は OpenAI の新フラッグシップ名として活動中。Claude Opus 4.7（4月16日）→ Opus 4.8（5月28日、API デフォルト、$5/$25 per million tokens）→ Claude Fable 5（6月9日）の順で展開。2026年の重要な変化として AI モデルが「ソフトウェアパッチのように毎月リリース」される月次リズムが確立した。優位性は「タスクに合った正しいモデルを正しい価格・プライバシールールで選ぶ」能力に移行。",
+      "body_excerpt": "mean.ceo ブログによる 2026 年 8 月 AI モデルリリース動向まとめ（Startup Edition）。",
+      "fact_checked": true,
+      "fact_check_note": "Fable 5 リリース日 2026-06-09 ✅、Opus 4.8 価格 $5/$25 per million tokens ✅。いずれも複数ソースで確認済み。"
+    }
+  ],
+  "fact_checks": [
+    {
+      "file": "2026-08-06_3556_WEB_New-AI-Model-Releases-August-2026-Startup-Edition.md",
+      "topic": "Claude Fable 5 リリース日・Opus 4.8 価格",
+      "result": "PASS",
+      "note": "Fable 5 リリース日 2026-06-09 ✅、Opus 4.8 価格 $5/$25 per million tokens ✅。いずれも複数ソースで確認済み。"
+    },
+    {
+      "file": "2026-08-06_3552_WEB_Build-Multi-Agent-AI-Trading-System-TradingAgents-2026.md",
+      "topic": "TradingAgents AAPL 26.62% 累積リターン（バックテスト期間）",
+      "result": "PARTIAL",
+      "note": "リターン数値「26%超」は論文・公式サイトで確認 ✅。ただし記事の「2024年6〜11月」は誤り ⚠️。実際のバックテスト期間は2024年1月1日〜3月29日（出典: arXiv 2412.20138）。バイ＆ホールドとの比較差分 24.57pp という記述もあり、26.62%の絶対値は論文の数値と一致する可能性あり。期間情報の修正が必要。"
+    },
+    {
+      "file": "2026-08-06_3553_WEB_AI-Laws-2026-Key-Regulations-Practical-Guidance-Gunderson.md",
+      "topic": "AI規制 SB 53 対象収益閾値・違反金",
+      "result": "PASS",
+      "note": "年収 $5億超の大型フロンティアモデル開発者への適用 ✅、違反最大 $100万/件 ✅、2026年1月1日施行 ✅。Morrison Foerster・WilmerHale・Wikipedia等複数ソースで確認済み。"
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-08-05": 13,
+      "2026-08-04": 13,
+      "2026-08-03": 351,
+      "2026-08-02": 15,
+      "2026-08-01": 9,
+      "2026-07-31": 6,
+      "2026-07-30": 9
+    },
+    "recurring_themes": [
+      "claude",
+      "claude_code",
+      "mcp",
+      "agent",
+      "llm"
+    ]
+  }
+}
