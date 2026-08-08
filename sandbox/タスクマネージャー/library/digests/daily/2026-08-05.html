@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-08-05</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-08-05 | 13件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-08-05</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>MCP 2026-07-28仕様の最終確定が業界に波及し、Claude Codeエコシステムの実践ガイドが国内外で急増している。</p>
+<p>同時期にAI規制の「三波」が完成した週でもある：中国エージェントAI規制（7/15施行）・EU AI Act（8/2施行）・米国自主規制フレームワーク（8/4合意）。</p>
+<p>Claude Codeヘビーユーザーとして今日最も価値ある情報は、CLAUDE.md設計の実証知見と、エンタープライズMCP移行チェックリストの具体性だ。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>CLAUDE.mdの「書くべき内容」が収束してきた</h3>
+
+<p>日本語コミュニティでCLAUDE.md実践ガイドが2本同時に登場した。</p>
+<p>Qiitaのガイド（<a href="https://qiita.com/pythonista0328/items/7864c2728c5af628c0a0" target="_blank">リンク</a>）が示す核心は「Claudeがコードから推測できないルールだけを書く」という選別基準だ。特筆すべきは禁止事項の書き方——「〜を直接呼び出すことは禁止」という命令・禁止形式にするとClaudeの遵守率が実証的に向上するという知見で、5種のコピペ用テンプレート（個人・チーム・API連携・フロントエンド・バックエンド）も公開している。</p>
+
+<p>ソウゾウメディアのガイド（<a href="https://media.souzoh-official.com/claude-md/" target="_blank">リンク</a>）はより構造的で、CLAUDE.mdの4点の背骨「①プロジェクト目的・②絶対守るルール・③環境情報の在り処・④品質基準と完了条件」を提示し、規模別の構成例（単一ファイル→ディレクトリ別分割→hooks連携）を示している。チームでCLAUDE.mdを共有したことで「変なライブラリ提案」苦情がゼロになった事例や、コードレビュー指摘が半減した事例も掲載。2026年最新機能（Skills・routines連携）にも対応済みだ。</p>
+
+<p>両ガイドに共通する原則「200行を目安にファイル分割する」は、このリポジトリで既に実践している構成と一致している。</p>
+
+<h3>Claude Agent SDKとMCPエコシステムの成熟</h3>
+
+<p>alloq.digitalによるClaude Agent SDK完全ガイド（<a href="https://alloq.digital/en/blog/claude-agent-sdk/" target="_blank">リンク</a>）は、2026年の主要アップデートとして「サブエージェントの深さ3までのネスト（旧1から拡張）」「REPLのセッション永続化（code_execution_20260120）」「Workload Identity Federation（WIF）認証」を挙げている。よくある失敗——settings.jsonの構文エラー、コマンドパス解決失敗、サーバー起動失敗——への対処法が具体的で実践的だ。</p>
+
+<p>MCPサーバーのTop 10ガイド（<a href="https://www.totalum.app/blog/claude-code-mcp-servers-2026" target="_blank">リンク</a>）は2026-07-28新仕様への対応状況別にサーバーを評価しており、インストール前のベンダー信頼性確認という原則を強調している。</p>
+
+<h3>MCP 2026-07-28仕様が確定（一次ソース確認済み）</h3>
+
+<p>MCPローンチ以来最大の仕様改訂が7月28日に最終確定した（<a href="https://blog.modelcontextprotocol.io/posts/2026-07-28/" target="_blank">公式発表</a>）。</p>
+<p>核心はステートレスプロトコルへの転換だ。initializeハンドシェイク廃止・Mcp-Session-Id廃止・requestごとにcapabilitiesを送信する方式に変わり、スティッキーセッションなしのラウンドロビンLBで動作可能になった。これにより標準HTTPインフラやサーバーレス/エッジ環境への展開が現実的になる。</p>
+
+<p>MCPServers.orgの技術解説（<a href="https://blog.mcpservers.org/posts/mcp-spec-2026-07-28" target="_blank">リンク</a>）によれば、既存のステートフルサーバーからの移行は「セッション管理削除→ステートレスハンドラー書き換え→LBテスト」の3ステップチェックリストで対応できる。新拡張フレームワーク（MCP Apps: UI埋め込み、Tasks: 長時間非同期処理委譲）も正式化された。次期v2026-11-05ではRoots・Sampling・Loggingが削除予定のため、現在これらを使っている場合は移行計画が必要だ。</p>
+
+<p>MintMCPのエンタープライズガイド（<a href="https://www.mintmcp.com/blog/enterprise-development-guide-ai-agents" target="_blank">リンク</a>）は200以上のエージェントを運用する規模での可観測性（エージェントごとのコスト帰属・レイテンシ追跡）とMCPトンネルの権限管理を詳述。MCPトンネルのAPIが`/v1/organizations/tunnels`から`/v1/tunnels`（Claude API）に移動した点（`anthropic-beta: mcp-tunnels-2026-06-22`ヘッダー必要）は要確認だ。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>LLM 0.32リリース——CLIからリーズニングが見えるようになった（一次ソース確認済み）</h3>
+
+<p>Simon WillisonがLLM 0.32を2026年8月4日にリリースした（<a href="https://simonwillison.net/2026/Aug/4/new-release-of-llm/" target="_blank">リンク</a>）。初期リリース以来最重要とする今回の更新で、CLIでClaude Sonnet/OpusやGPT-4o系モデルの内部思考プロセスを直接見られる「リーズニングトレース表示」が加わった。Claude系モデルにはWebSearch・WebFetch・CodeExecution・AnthropicMCPがサーバーサイドツールとして提供され、クライアント側の複雑性が大幅に削減された。デフォルトモデルはGPT-5.6 Luna（$0.20/$1.20/Mトークン）に変更。`pip install -U llm`でアップグレードできる。</p>
+
+<p>あわせてTECH NOISYの8月4日分まとめ（<a href="https://tech-noisy.com/2026/08/05/ai-daily-news-2026-08-04/" target="_blank">リンク</a>）が伝える動向：Claude Opus 5（7月24日リリース）はOpus 4.8比でディープリーズニングと長期エージェント作業で大幅向上しつつ価格$5/$25/Mのままで、Fable 5の約半額という価格競争力が注目されている。Anthropicは旧Slackアプリを完全廃止しClaude Tag（claude.ai/tag）に全面移行（8月4日完了）。OpenAIはアクティブユーザー10億人超・導入企業200万社超を公表した。</p>
+
+<h3>AI規制の「三波」が完成——公務員として押さえておく構造</h3>
+
+<p>2026年夏、世界のAI規制が3つの異なるアプローチで同時に形成された。</p>
+
+<p>EU AI Act（8月2日施行）は高リスクAIシステム（医療・採用・信用評価等）にリスク管理・ログ&amp;トレーサビリティ・人間監視を義務化。汎用AIプロバイダーは透明性要件・著作権遵守・能力評価が必要で、ログ保存期間は最低3年だ。中国（7月15日施行）はAIエージェントの権限をティア1-3に分類し、意思決定の影響度・可逆性・金額規模に応じた事前届出を世界初の国家フレームワークとして制度化した。</p>
+
+<p>米国は対照的に自主規制路線を選択した（一次ソース確認済み）。Anthropic・OpenAI・Google・Meta等約12社とホワイトハウスが8月4日に合意したのは、フロンティアモデルのリリース前30日間、連邦政府への早期アクセスを提供する自主的枠組みで、強制力はない（<a href="https://ny1.com/nyc/all-boroughs/politics/2026/08/04/source--voluntary-federal-regulatory-framework-for-advanced-ai-models-finalized" target="_blank">出典</a>）。「Great American AI Act」が州法との連邦優越条項をめぐる対立で停滞していることへの業界側の先回り対応だ。</p>
+
+<p>EveAICore（<a href="https://eveaicore.com/blog/ai-regulation-2026-what-changed" target="_blank">リンク</a>）およびDualMedia（<a href="https://www.dualmedia.com/ai-governance-framework-2026/" target="_blank">リンク</a>）の分析が提示するAIチームへの即時アクションは共通している：①AIシステムインベントリ管理（用途・リスク分類・所有者の記録）、②リスクスコアリング（影響度×可逆性×自律度）、③改ざん防止ログ3年以上保存、④AI特有のインシデント対応フロー整備。公務員として組織でのAI導入議論が始まった際、これらは準拠性確認の出発点になる。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #ea580c; padding-left: 12px;">AIトレーディング</h2>
+
+<p>UCLA+MITチームのTradingAgents（<a href="https://tauricresearch.github.io/TradingAgents/" target="_blank">公式</a>）はGitHub Stars 80,000超を維持し、7つの専門エージェント（ファンダメンタル・センチメント・テクニカル・強気/弱気リサーチャー・トレーダー・リスクマネージャー・ファンドマネージャー）が協働するアーキテクチャだ。v0.2.4ではLangGraphチェックポイント再開・永続的意思決定ログが追加されAnthropicClaude全系列に対応している。AAPL 1四半期のバックテストで+26.62%（vs Buy-and-hold -5.23%）という数字は参考値として。ライブ取引実績はなく、FX自動取引との並行検証が前提になる。</p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>7日間のインプット推移は「2026-07-29: 11件 → 07-30: 9件 → 07-31: 6件 → 08-01: 9件 → 08-02: 15件 → 08-03: <strong>351件</strong> → 08-04: 13件 → 08-05: 13件」となっている。</p>
+
+<p>08-03の351件は明確な異常値であり、MCP 2026-07-28仕様リリース（7/28確定）やAI規制三波のタイミングと重なる。週明けの「まとめ記事ラッシュ」が起きたと見られ、その波が08-04〜05の定常ペースに収束している状態だ。</p>
+
+<p>継続テーマは引き続き `claude / claude_code / mcp / agent / llm` の5本柱。MCP 2026-07-28仕様の実装記事・移行ガイドは今後数週間増加し続ける見通しで、「既存のステートフルMCPサーバーをステートレスへ移行する」実装例の蓄積に注目したい。</p>
+
+</body>
+</html>

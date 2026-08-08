@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-08-04</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-08-04 | 13件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-08-04</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>EU AI Actが8月2日から「透明性義務」の施行フェーズに突入、AIチャットボットの開示義務とディープフェイクラベリングが世界的に義務化された。</p>
+<p>一方、Anthropicは9月1日からClaude Sonnet 5を値上げ（$2→$3/$10→$15/MTok）すると予告—現在の50%週次使用量ブーストは8月19日まで延長中。</p>
+<p>Sakana AIが日本語特化LLM API「Namazu」をローンチしたが実体はMoonshot AI「Kimi K2.6」のファインチューニング版（独自開発ではない）。</p>
+<p>Claude Codeエコシステムでは公開スキルの36.8%にセキュリティ問題があるという調査結果が出ており、スキル利用時の注意が必要。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>9月1日の価格改定と直近のAPI変更 ✅一次ソース確認済み</h3>
+
+<p>Anthropicが8月に入り複数の重要変更を実施中。<strong>Claude Sonnet 5のプロモーション価格（$2入力/$10出力/MTok）は8月31日で終了</strong>し、9月1日から$3/$15の標準料金に移行する。ただし新トークナイザーが同一テキストで約30%多くカウントするため、実効コスト増は50%超になる可能性がある（eesel AI / finout.io試算）。Claude Codeサブスクライバー向けの50%週次使用量ブーストは8月19日まで延長されているので、今週中の集中活用が得策。</p>
+
+<p>モデル廃止も進む。<strong>Opus 4.1は8月5日（本日）退役</strong>、Opus 4.7はFast modeが廃止されspeed: &quot;fast&quot;を指定するとエラーを返すようになった。移行先はOpus 5またはOpus 4.8。レガシーWorkbench APIと実験的プロンプトツールAPIは8月17日廃止予定。</p>
+
+<p>API面では<strong>Mid-conversation tool changes（ベータ）</strong>が登場。Fable 5/Mythos 5/Opus 4.8/Opus 5で、会話の途中でツールの追加・削除が可能になった（ヘッダー`mid-conversation-tool-changes-2026-07-01`で有効化）。プロンプトキャッシュを維持しながらツールセットを動的に変更できるのは、複雑なエージェントアーキテクチャにとって重要な機能追加。Fallbacksパラメータに&quot;default&quot;モードも追加され、Anthropic推奨のフォールバックモデルを自動適用できるようになった。</p>
+
+<p>&gt; 参考: <a href="https://blog.mean.ceo/anthropic-claude-news-august-2026/" target="_blank">Anthropic Claude News August 2026</a> / <a href="https://releasebot.io/updates/anthropic/claude-developer-platform" target="_blank">Developer Platform Updates</a></p>
+
+<h3>Claude Codeの実践活用—スキルのセキュリティと活用パターン</h3>
+
+<p>Claude Code Skillsに関して<strong>重要なセキュリティ警告</strong>が出た。Snyk社の調査によれば公開スキル全体の36.8%にセキュリティ問題が存在する。Prompt Injection・権限昇格・機密漏洩リスクが含まれており、安全な活用基準（公式リポジトリ・著名開発者のスキルを優先、SKILL.md内容のコードレビュー必須）を守ることが推奨されている。自作スキルを使うこのリポジトリの運用方針は正解といえる。</p>
+
+<p>実践ガイドとしては、データエンジニア向けにSkills（パイプライン最適化）・MCPs（BigQuery/Snowflake/dbt Cloud接続）・Hooks（デプロイ前データ検証）の3軸活用が解説された。FX自動取引のデータパイプライン設計にも転用できるパターンが多い。またClaude Code + Cursorのハイブリッドワークフローでは、Claude Codeをバックグラウンドエージェント（テスト実行・ドキュメント生成・セキュリティレビュー）として使いながらCursorでリアルタイム編集する分業が効率的とされている。CLAUDE.mdを両ツールで共有できるルールセットとして設計することがポイント。</p>
+
+<p>&gt; 参考: <a href="https://genai-ai.co.jp/ai-kanri/blog/cc-skills-guide/" target="_blank">Claude Code Skills セキュリティガイド</a> / <a href="https://thepipeandtheline.substack.com/p/intro-claude-code-for-data-engineers" target="_blank">Data Engineers向けガイド</a> / <a href="https://www.kunalganglani.com/blog/ai-coding-workflow-2026" target="_blank">AI Coding Workflow 2026</a></p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>EU AI Act施行開始—正確な制裁金ティアを把握する</h3>
+
+<p>2026年8月2日、EU AI Actが「適用」フェーズから「執行」フェーズへ移行した。ただし注意点がある：8月2日から始まったのは<strong>第50条の透明性義務のみ</strong>。具体的には(1)チャットボット等の対話型AIはユーザーにAIと対話していることを明示する義務、(2)AI生成・改変コンテンツ（ディープフェイク含む）へのラベル表示義務の2点だ。高リスクAI義務はDigital Omnibusパッケージにより2027年12月2日（製品組込型は2028年8月2日）まで猶予。</p>
+
+<p>制裁金についても誤情報が流通しているので整理する。<strong>透明性義務（第50条）違反の制裁金は最大€1,500万または年間売上高の3%</strong>（高い方）。7%は第5条の禁止行為違反に適用されるが、こちらの施行は2026年12月2日から。「7%が日本企業にも適用」という記事が出回っているが、これはティアの混同であり誤り（一次ソース確認済み）。日本企業でEUユーザーへのAIサービスを提供している場合、今すぐ対応が必要なのは「AIと対話していることの明示」と「AI生成コンテンツへの機械可読な透明性表示」の2点のみ。同日、カリフォルニア州AI透明化法も施行（月間100万超ユーザーのAI提供者に無料判定API提供義務）。</p>
+
+<p>&gt; 参考: <a href="https://digital-strategy.ec.europa.eu/en/news/commission-starts-enforcing-ai-act-rules-and-new-transparency-requirements-2-august" target="_blank">EU公式発表</a> / <a href="https://note.com/kotatsu_ai_jadc/n/n174f69d79d94" target="_blank">日本語解説（日本AI開発センター）</a></p>
+
+<h3>Sakana AI「Namazu」—国産LLMの実態 ✅一次ソース確認済み（注釈あり）</h3>
+
+<p>Sakana AIが8月3日、日本語特化LLM API「Sakana Namazu」の提供を開始した。日本語ベンチマーク（FairPoliticsQA 34.1%→56.3%等）での向上は確認されているが、<strong>モデルの実体はMoonshot AI「Kimi K2.6」の日本語・ビジネス向けファインチューニング版</strong>であり、独自開発モデルではない。価格は$0.95/M入力・$4.00/M出力。EU/EEA/UK/スイスでは現時点でGDPR対応中のためAPI提供なし。「国産LLM」として期待値を置くなら、この実態は把握しておきたい。</p>
+
+<h3>Microsoft Agent Framework GA</h3>
+
+<p>MicrosoftのAgent HarnessとFoundry Hosted AgentsがGA（一般提供）に到達。Build 2026（6月）でのプレビューから約2ヶ月。Microsoft Agent Control Specification（ACS）もエンタープライズ向けAIエージェントガバナンス標準として公開された。LlamaIndex Workflows 1.0、Pydantic AI V2と合わせてエージェントフレームワークの成熟期を示すマイルストーン。Claude Agent SDKとの比較・採用判断の参考情報として把握しておきたい。</p>
+
+<p>&gt; 参考: <a href="https://www.infoq.com/news/2026/08/agent-framework-harness-ga/" target="_blank">InfoQ - Agent Framework Harness GA</a></p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>過去7日の記事数推移：7/28–8/1は6〜11件/日と低調→8/2に15件（EU AI Act施行で急増）→8/3に351件（規制施行翌日のメディア爆発）→8/4は13件（落ち着き）。</p>
+
+<p>EU AI Actは昨日（8/3）のメディア爆発から一日で報道が沈静化した。ただし制裁金の誤情報（7%と3%の混同）は複数メディアで今日も拡散中—公務員・コンプライアンス文脈では正確な数字（透明性義務は3%）の把握が重要。</p>
+
+<p>Claude・Claude Code・MCP・agent・llmは今週も継続して最頻出テーマ。9月1日の価格改定は今後も週次で言及が増えると予想される。Sonnet 5の現プロモーション価格での活用余地は残り27日（8月31日まで）。</p>
+
+</body>
+</html>

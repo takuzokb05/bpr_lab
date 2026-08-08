@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-08-06</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-08-06 | 18件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-08-06</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>8月の Claude Code はセキュリティと信頼性強化を軸に週次リリースを継続。Skills・Hooks・Subagents・MCPの使い分けフレームワークが複数ソースで収束し、業務自動化の実装事例も充実してきた。MCPは2026-07-28の仕様改定でステートレス化が確定し「普通のWebサーバーがAI対応する時代」が現実へ。FX自動取引の参照事例として、マルチエージェントトレーディングフレームワーク（51K+ stars）の実績データも今回精査した。AI規制では米国でフロンティアモデル開発者への義務化法が2026年1月施行済み（一次ソース確認済み）。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>8月アップデートと6月10大機能の全体像</h3>
+
+<p>Releasebot が追跡する8月の Claude Code は、worktree のより強固な分離・auto-allow の安全な処理・ultraplan 廃止・絵文字ショートコードのオートコンプリート・サブエージェント/バジェット/バックグラウンドセッションのコントロール改善を含む。<strong>ultraplan が廃止された点は既存ワークフローの確認が必要</strong>。マルチエージェント運用者にとって worktree isolation の強化が最も重要な変更。[^1]</p>
+
+<p>6月の10大機能として SitePoint がまとめたのは、階層型エージェント生成（最大3レベル深さ）・フォールバックモデルチェーン（モデル障害時の自動切り替え）・コミュニティツールマーケットプレイス・エージェントごとのコスト帰属・スコープ付きパーミッション・Artifacts セッション出力の URL 共有（ライブページ化）の6点が特に実用的。複数ファイル・モジュールをまたぐ大規模タスク分解がエンタープライズ向けに整備された形。[^2]</p>
+
+<h3>Skills / Hooks / Subagents / MCPの判断フレームワーク</h3>
+
+<p>複数記事が同じフレームワークに収束している。<strong>Skills</strong>: ドメインロジックやヘルパーファイルがある場合、<strong>Hooks</strong>: コードで規則を強制する場合、<strong>Subagents</strong>: 並列・独立した作業、<strong>MCP</strong>: 外部ツール・データへの接続——この4軸で設計の迷いが解消される。[^3][^4]</p>
+
+<p>コミュニティスキルとして gstack（Y Combinator CEO Garry Tan が公開、GitHub 113K stars、23スキル以上、CEO・デザイナー・QAなど異なるロールのペルソナで動作）が際立つ。bpr_lab のスキル設計の参考として直接利用価値が高い。[^5][^6]</p>
+
+<p>CLAUDE.md のベストプラクティスとして「100〜400行が最適」「コードスタイルルールはリンターに任せる」「新規セッションでプロジェクト要約を依頼し、スタック・テストコマンド・プロジェクト固有の注意点が挙げられれば成功」という実用的なテスト手順が示された。[^7]</p>
+
+<h3>Claude Agent SDKの新課金モデルとMCPのステートレス化</h3>
+
+<p>2026年6月15日より Claude Agent SDK のサブスクリプションに独立した月次クレジットプールが追加（会話用クレジットとは別枠）。Pro $20/月・Max 5x $100/月・Max 20x $200/月。SDK は subprocess モデル・ツール実行エンジン・セッション永続化・パーミッション・フック・マルチエージェント協調・メモリスタックを内包する完全なアジェンティックランタイム。ホスト型 REST API の Managed Agents（2026年4月ローンチ）も選択肢として登場している。[^8]</p>
+
+<p>MCP は2026-07-28の仕様改定でステートレスプロトコルを採用し、特別なインフラなしに普通の Web サーバー上で MCP サーバーを実装可能になった。現在5,000以上の MCP サーバーが利用可能で、2026年は楽楽精算・freee・kintone など国産 SaaS の MCP 対応が本格化する見通し。一次情報として公式ブログが2026年ロードマップを発表済み。[^9][^10]</p>
+
+<p>業務自動化の実装事例として、Claude Code での請求書処理・メール自動化・議事録化・データ照合など10事例が実際のプロンプトとともに公開されており、「3〜6週間で月30〜80時間の工数削減」という定量データが示された。[^11]</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>フロンティアAI規制が義務化フェーズへ（一次ソース確認済み）</h3>
+
+<p>米国 Transparency in Frontier AI Act（SB 53）が2026年1月1日施行。<strong>年収$5億超の開発者</strong>に対し、リスクフレームワーク公開・安全インシデント報告・内部告発保護を義務化し、違反は最大$100万/件。Anthropic・OpenAI・Google・Meta 等約十数社がホワイトハウスと自主規制ガイドラインを確定（2026年8月）。AI トレーディング・エージェント開発の法的リスク把握において重要な一次情報。[^12]</p>
+
+<h3>エージェントフレームワークの統合フェーズ</h3>
+
+<p>2026年は「乱立」から「成熟・統合」フェーズへ移行。LangChain（134K stars）・LangGraph（月3,450万DL）・Microsoft Agent Framework（AutoGen + Semantic Kernel が2025年10月統合、2026年4月2日 1.0 GA）が主要3択に絞られてきた。BUILD 2026 では Agent Harness・Hosted Agents・CodeAct が追加発表され、Anthropic の Claude Agent SDK との対抗エコシステムが明確化。[^13][^14]</p>
+
+<h3>モデルリリースの月次リズム確立（一次ソース確認済み）</h3>
+
+<p>2026年はAIモデルが「ソフトウェアパッチのように毎月リリース」される月次リズムが定着。Claude 系は Opus 4.7（4月）→ Opus 4.8（5月、$5/$25 per million tokens）→ Fable 5（6月9日）の順で展開。8月はMeta Muse Spark 1.2（8/5）・Alibaba Qwen3.8 Max（8/2）・DeepSeek-V4-Flash-0731が競合ラインナップとして活動中。モデル優位性は「タスクに合った正しいモデルを正しい価格・プライバシールールで選ぶ」能力に移行。[^15]</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #ea580c; padding-left: 12px;">AIトレーディング</h2>
+
+<p>2026年のAIトレーディングエージェントは技術的に成熟段階へ。LLMエージェントは決算報告・ニュース・SNS・経済動向を横断分析し、ルールベース従来型とは異なる「推論エンジン」として機能する。Robinhood が2026年5月にAIエージェントを証券口座に直接接続する機能を発表し、CEOは「agentic finance の始まり」と表現。[^16]</p>
+
+<p>最も参考になる実装事例は <strong>TradingAgents</strong>（GitHub 51,300+ stars・9,300+ forks、Apache 2.0、GPT/Claude/Gemini/Grok が選択可能）。Bull Researcher と Bear Researcher が対立的に議論してから取引判断するマルチエージェント構造が有効な設計として確認されている。<strong>注意点</strong>: 記事が主張する「2024年6〜11月のバックテストでAAPL 26.62%」のうち、期間情報に誤りがあり実際のバックテスト期間は2024年1〜3月（arXiv 2412.20138 で確認）。リターン数値自体は論文と一致。[^17]（一次ソース確認済み・部分的修正あり）</p>
+
+<p>現時点の課題：バックテストは有望だが本番運用では取引コスト・スリッページ・市場体制変化でリターンが圧縮される。Claude をバックエンドに使った FX 自動取引実装の参考として、Bull/Bear デュアルエージェント構造は bpr_lab の次フェーズ設計に直接転用できる。[^18]</p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p><strong>直近7日の記事数推移</strong>: 7/30(9) → 7/31(6) → 8/1(9) → 8/2(15) → 8/3(351) → 8/4(13) → 8/5(13) → <strong>8/6(18)</strong></p>
+
+<p>8/3の351件は前後と桁違いの急増であり、何らかの大型リリースまたはイベントが重なった可能性が高い。その後は13〜18件の通常ペースに戻っており、今日の18件はやや多めだが安定圏内。</p>
+
+<p>継続している recurring themes（claude / claude_code / mcp / agent / llm）に変化はなく、今日は特に <strong>MCP のステートレス化</strong> と <strong>Skills判断フレームワーク</strong> の記事が集中した。業務自動化・AI規制・AIトレーディングへのエコシステム拡張が引き続きカバーされている。</p>
+
+<p>---</p>
+
+<p>[^1]: https://releasebot.io/updates/anthropic/claude-code</p>
+<p>[^2]: https://www.sitepoint.com/claude-code-june-2026-10-new-features-devs-need-to-know/</p>
+<p>[^3]: https://pub.towardsai.net/a-complete-beginners-guide-to-claude-code-skills-agents-hooks-plugins-mcp-085b26b73fdd</p>
+<p>[^4]: https://www.totalum.app/blog/claude-code-skills-totalum</p>
+<p>[^5]: https://www.totalum.app/blog/claude-code-skills-totalum</p>
+<p>[^6]: https://www.elcamy.com/blog/claude-code-skills-best-17</p>
+<p>[^7]: https://www.ayautomate.com/blog/best-claude-md-examples</p>
+<p>[^8]: https://www.totalum.app/blog/claude-agent-sdk-totalum-2026</p>
+<p>[^9]: https://blog.modelcontextprotocol.io/posts/2026-mcp-roadmap/</p>
+<p>[^10]: https://talentcloud.jp/blog/mcp-2026-07-28-stateless</p>
+<p>[^11]: https://uravation.com/media/claude-code-automation-case-studies-2026/</p>
+<p>[^12]: https://www.gunder.com/en/news-insights/insights/2026-ai-laws-update-key-regulations-and-practical-guidance</p>
+<p>[^13]: https://blog.jetbrains.com/pycharm/2026/06/top-agentic-frameworks-for-building-applications-2026/</p>
+<p>[^14]: https://devblogs.microsoft.com/agent-framework/microsoft-agent-framework-at-build-2026-announce/</p>
+<p>[^15]: https://blog.mean.ceo/new-ai-model-releases-news-august-2026/</p>
+<p>[^16]: https://pinggy.io/blog/best_ai_trading_agents/</p>
+<p>[^17]: https://blog.pickmytrade.io/build-a-multi-agent-ai-trading-system-with-trading-agents-2026/</p>
+<p>[^18]: https://coinedition.com/llm-trading-in-2026-can-ai-agents-actually-outperform-humans/</p>
+
+</body>
+</html>
