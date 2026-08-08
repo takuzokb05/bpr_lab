@@ -413,3 +413,6 @@
 | 389 | New AI Model Releases August 2026: Muse Spark 1.2・Qwen3.8 Max・DeepSeek-V4・GPT-5.6 Luna（Startup Edition） | en | 未読 | #ai-news #web-signal | articles/2026-08-06_3556_WEB_New-AI-Model-Releases-August-2026-Startup-Edition.md |
 | 390 | EU AI Act 執行開始 2026-08-02: チャットボット開示義務・€15M罰則・OpenAI/Anthropicへの高リスク規制精査 | en | 未読 | #ai-news #ai-regulation #web-signal | articles/2026-08-07_3567_WEB_EU-AI-Act-Enforcement-August-2-2026-HelpNetSecurity.md |
 | 391 | Monthly LLM News August 2026 (Augusto Digital): Qwen3.8 Max・GPT-5.6 Luna・DeepSeek-V4・MCP stateless化・推論コスト40〜60%減 | en | 未読 | #ai-news #web-signal | articles/2026-08-07_3569_WEB_Monthly-LLM-News-August-2026-Augusto-Digital.md |
+| 392 | 2026年8月LLMモデルラッシュ：クラウド/オープンウェイト/軽量の三極集中・EO14409期限・Qwen3.8 Max/GPT-5.6 Luna/Llama4 Scout | ja | 未読 | #ai-news #web-signal | articles/2026-08-08_3582_WEB_LLM-Model-Release-Rush-August-2026-Three-Poles.md |
+| 393 | EU AI Act 執行開始 公式プレスリリース（EC）: 透明性義務・€15M罰則・AI Omnibus高リスク延期・一次情報 | en | 未読 | #ai-news #ai-regulation #web-signal | articles/2026-08-08_3583_WEB_EU-AI-Act-Enforcement-August-2-2026-EC-Official-Press.md |
+| 394 | EU AI Act 透明性義務施行 法律実務解説（Cooley法律事務所）: 企業対応義務詳細・適用範囲・除外規定・段階的施行スケジュール | en | 未読 | #ai-news #ai-regulation #web-signal | articles/2026-08-08_3584_WEB_EU-AI-Act-Transparency-Obligations-August-2026-Cooley.md |

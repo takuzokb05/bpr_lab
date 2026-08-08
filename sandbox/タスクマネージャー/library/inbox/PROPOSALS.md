@@ -4616,3 +4616,47 @@ v2.1.224 で追加された Cross-Session SendMessage 機能により、複数 C
 
 **優先度:** 低（現状は単一セッションで十分）
 
+
+---
+
+## 2026-08-08 収集分の提案
+
+### 8. CLAUDE.md の 4象限ルール配置フレームワーク適用
+**出典:** articles/2026-08-08_3576_WEB_CLAUDE-md-Best-Practices-2026-AgentLint-Blog.md
+
+**提案内容:**
+AgentLint（CLAUDE.md静的解析ツール）が提唱する4象限ルール配置を本リポジトリの CLAUDE.md に適用することを提案。現在の CLAUDE.md に書かれているルールを以下の4象限に分類し、整理する:
+- **Hooks/パーミッション**: 「毎回実行されるべき操作（lint・test・コミットメッセージ形式等）」→ settings.json の hooks へ移動
+- **スキル**: 「文脈依存の作業手順（curate・digest・drop-pickup等）」→ .claude/skills/ へ移動済みだが再確認
+- **サブエージェント**: 「委任境界の定義（並列収集等）」→ agents/ で管理
+- **CLAUDE.md（残す）**: 「常時ONプロジェクトガイダンス」のみ200行以内に収める
+特に CLAUDE.md に「ルール」として書かれているが実施レイヤーがないものを棚卸しし、Hookまたはスキルに移動する。
+
+**優先度:** 中
+
+### 9. TradingAgents v0.3.1 + Claude Sonnet 5 対応を FX自動取引プロジェクトに反映
+**出典:** articles/2026-08-08_3581_WEB_Complete-Guide-Algorithmic-Trading-2026-AI-Expert-Advisors-MT5-MQL5.md
+
+**提案内容:**
+TradingAgents v0.3.1（2026年7月リリース）がClaude Sonnet 5に対応した。FX自動取引プロジェクトでTradingAgentsフレームワークを参考実装する際、Claude Sonnet 5（`claude-sonnet-5`）を使った Bull/Bear Researcher 対立設計が利用可能になった。現在の FX自動取引スクリプトにおける「市場分析」フェーズに、TradingAgents の多エージェント対立構造（強気/弱気アナリスト→リスク管理エージェント→執行判断）を取り入れることを検討する。なお、本番利用前に必ずバックテストと模擬取引での検証が必要。
+
+**優先度:** 中
+
+### 10. Anthropic API: mid-conversation tool changes β と code_execution_20260120 の活用検討
+**出典:** articles/2026-08-08_3579_WEB_Anthropic-Platform-Release-Notes-August-2026-Official.md
+
+**提案内容:**
+2点の新API機能が実装に影響する可能性がある:
+①**code_execution_20260120**: REPL状態永続化のコード実行ツール。Claude Sonnet 4.5+で使用可能。FX自動取引スクリプトのバックテストやデータ分析を Claude API 経由でインタラクティブに実行する際に活用できる。`type: "code_execution_20260120"` を指定するだけで従来の code_execution より高機能。
+②**mid-conversation tool changes beta**: 会話ターン間でツールの追加/削除が可能に（プロンプトキャッシュを維持したまま）。長時間の分析セッション中に動的にツールを切り替える設計が可能。ヘッダー: `anthropic-beta: mid-conversation-tool-changes-2026-07-01`。
+**なお**: レガシーWorkbenchとプロンプトツールAPIが2026年8月17日に廃止。利用中の場合は早急に移行が必要。
+
+**優先度:** 高（Workbench廃止は今月17日。現在使用していなければ不要）
+
+### 11. MCP 2026-07-28 仕様への移行計画確認
+**出典:** articles/2026-08-08_3578_WEB_MCP-2026-07-28-Breaking-Changes-Migration-Guide-DevelopersDigest.md
+
+**提案内容:**
+MCP 2026-07-28 仕様でhandshake廃止・ステートレス化・HTTP+SSE非推奨（1年offramp）の破壊的変更が確定した。本リポジトリの MCP サーバーを使用している場合は移行計画を立てる必要がある。Claude Code が接続する MCP サーバー（settings.json の `mcpServers`）を棚卸しし、HTTP+SSEベースのものがあれば移行対象に追加する。新仕様のメリット：ラウンドロビンLBで動作可能になり、スケーラビリティが向上。タスクマネージャーでは主にGitHub MCPを使用しており、Anthropic公式MCPが2026-07-28仕様に対応済みであれば問題なし。
+
+**優先度:** 低（1年のofframpあり、今すぐ対応不要だが計画を立てておく）
