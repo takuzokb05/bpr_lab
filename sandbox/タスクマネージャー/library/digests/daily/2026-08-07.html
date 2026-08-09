@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-08-07</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-08-07 | 13件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-08-07</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>Claude Code v2.1.224 が「自社インフラで動かす」と「セッション間でエージェントが会話する」という2大機能を正式追加（一次ソース確認済み）。</p>
+<p>同日、EU AI Actの透明性義務が施行開始。AIチャットボットへのラベル表示が法的義務になった（一次ソース確認済み）。</p>
+<p>MCPエコシステムはstateless仕様への移行が加速し、GoogleがCloud Runでの本番実績を公開。</p>
+<p>NVIDIAが「エージェント＝Pythonクラス1つ」というシンプルな設計思想のNOOAフレームワークを投入（一次ソース確認済み）。</p>
+<p>AI Tradingでは「LLMはシグナル生成専任、実行は決定論的システムへ」のハイブリッド設計が2026年のベストプラクティスとして定着しつつある。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>v2.1.224: 企業導入の壁を二枚同時に取り除いた</h3>
+
+<p><strong>一次ソース確認済み。</strong></p>
+<p>v2.1.224（2026-08-07リリース）の目玉は「Self-Hosted Environments（パブリックβ）」と「Cross-Session Messaging」の2本柱だ。</p>
+
+<p>Self-Hostedは、これまでAnthropicサーバー上でしか動かなかったClaude Codeセッションを、Team/Enterpriseプランの組織が自社インフラ上で起動できるようにする。Web・モバイル・デスクトップ・ルーティンのいずれの起動経路でも使えるが、コード・ビルド成果物・API鍵などはすべて組織のマシン上に留まり、Anthropicに送信されない。金融・医療・行政など機密データを扱うセクターにとってはゲームチェンジャーだ（<a href="https://claude.com/blog/run-claude-code-sessions-on-your-own-compute" target="_blank">公式ブログ</a>）。FX自動取引に置き換えると、口座APIキーや取引データをAnthropicに渡さずにClaude Codeエージェントを走らせる経路が公式に開いたことを意味する。</p>
+
+<p>Cross-Session Messagingは、`SendMessage`／`ListAgents`ツールを通じて異なるClaude Codeセッション間でメッセージをやり取りする機能。設定項目`crossSessionInbound`と`dialogExpiry`が新設され、bypassPermissionsなしのメッセージは承認待ちキューに積まれるなど、セキュリティと柔軟性のバランスが考慮されている。これはマルチマシン・マルチエージェント協調の基盤となる。なお、1セッションあたり200件のサブエージェントspawnキャップも同バージョンで廃止され、長期ルーティンでの制限がなくなった。</p>
+
+<p>参照: <a href="https://dev.classmethod.jp/en/articles/20260807-cc-updates-v2-1-224/" target="_blank">dev.classmethod.jp</a></p>
+
+<h3>マルチエージェント設計のリファレンスが揃った</h3>
+
+<p>v2.1.224と合わせて読むべき2本の実践記事が公開された。The Prompt Shelfが公式ドキュメントをベースにまとめた「6パターン」（Sequential Chain・Parallel Fan-Out・Hierarchical Delegation・Consensus/Voting・Peer Review Loop・Recursive Decomposition）と、Totalumによる本番環境向けサブエージェント運用ガイドだ。</p>
+
+<p>特に使えるのはConsensus/Votingパターン。同じ問題を複数エージェントで独立評価し多数決をとる構造は、日次収集ルーチンのSIGNAL/NOISE分類精度向上にそのまま応用できる。コスト最適化の観点からは、「答えだけ欲しいタスクにはサブエージェントをHaiku等の軽量モデルで並列実行する」戦略が推奨されている（`CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS`のデフォルトは20）。</p>
+
+<p>参照: <a href="https://thepromptshelf.dev/blog/claude-code-multi-agent-orchestration-patterns-2026/" target="_blank">thepromptshelf.dev</a> / <a href="https://www.totalum.app/blog/claude-code-subagents-totalum" target="_blank">totalum.app</a></p>
+
+<h3>MCPのstateless化——GoogleとBunが示す本番の姿</h3>
+
+<p>MCP 2026-07-28仕様のstateless化（`initialize`ハンドシェイク廃止、`Mcp-Session-Id`廃止、各リクエストが`_meta`で自己申告）により、MCPサーバーはCloud Run等のサーバーレス基盤に直接デプロイできるようになった。GoogleはCloud StorageやBigQueryなどのMCPサーバー群をCloud Runへ移行した経緯を公式ブログで公開。セッション親和性なしのhorizontal scalingが実現し、リクエストゼロ時のコストもゼロになったという。Workspace MCPサーバー群の新仕様への完全移行は2026-09予定、後方互換は2027-01まで。</p>
+
+<p>並行して、Bun単一プロセスで複数MCPサーバーをフリート運用する実装パターンも公開。「MCPサーバー1個＝プロセス1個＝メモリ増」という旧来の制約をサブルーター構造で解消するアプローチだ。移行で注意すべき落とし穴は「`tools/list`の返り値を動的に変えるとキャッシュが壊れる」点。Claude CodeのローカルMCP設計にも直接影響する。</p>
+
+<p>参照: <a href="https://developers.googleblog.com/scaling-ai-agent-infrastructure-with-the-mcp-stateless-updates/" target="_blank">developers.googleblog.com</a> / <a href="https://www.developersdigest.tech/blog/stateless-mcp-2026-spec-bun-fleet" target="_blank">developersdigest.tech</a> / <a href="https://wavect.io/blog/mcp-stateless-server-migration-2026/" target="_blank">wavect.io（移行ガイド）</a></p>
+
+<h3>Dreaming: エージェントが自律的に記憶を整理する</h3>
+
+<p>Claude Managed AgentsにDreaming・Outcomes・マルチエージェントオーケストレーションが追加されている（2026-05出荷、現在GA）。Dreamingはセッション間にバックグラウンドで走り、過去セッションのトランスクリプトを再読して記憶ストアを自律更新するプロセス。Harvey社ではタスク完了率が6倍に向上したという報告もある。「記憶の歪みリスク」や透明性の問題が指摘されており、変更diffをレビューしてから適用する「慎重モード」も用意されている。</p>
+
+<p>bpr_labのタスクマネージャーに置き換えると、alter-ego.mdの自動更新をdreamingパターンで設計する構想が具体的に見えてくる。</p>
+
+<p>参照: <a href="https://claude.com/blog/new-in-claude-managed-agents" target="_blank">claude.com/blog</a> / <a href="https://letsdatascience.com/blog/anthropic-dreaming-claude-managed-agents-self-improving-may-6" target="_blank">letsdatascience.com</a></p>
+
+<h3>NVIDIA NOOA: 「エージェント＝クラス1つ」という設計哲学</h3>
+
+<p><strong>一次ソース確認済み。</strong></p>
+<p>NVIDIAが2026-07-30にリリースしたNOOA（v0.0.8, Apache 2.0, `pip install nooa`）は、エージェントを単一のPythonクラスとして表現する。LiteLLM経由でOpenAI・Anthropic・Google・Mistral・Ollamaなど主要LLM全対応のmodel-agnosticな設計で、SWE-bench Verified 82.2%を達成。37組織で設立されたOpen Secure AI Allianceの技術基盤の一翼でもある。単一LLMへの依存を回避しながらテスト容易なエージェント設計を実現したい場合の選択肢として記録しておく。</p>
+
+<p>参照: <a href="https://thenewstack.io/nvidia-nooa-agent-framework/" target="_blank">thenewstack.io</a></p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>EU AI Act施行開始——公務員として把握必須</h3>
+
+<p><strong>一次ソース確認済み。</strong></p>
+<p>2026-08-02からEU AI Act Article 50（透明性義務）の執行が始まった。AIチャットボットはAIである旨を開示しなければならず、AI生成・改変コンテンツには機械可読マーキングが必要となった。ディープフェイクへの明確なラベル添付も義務化。違反には最大€1,500万または全世界年間売上高の3%の制裁金が課される。</p>
+
+<p>施行スケジュールの全体像：2026-12-02に性的AIコンテンツ禁止、2027-12-02に高リスクAIシステム規制（AI Omnibusで延期）、2028-08-02に規制製品への組み込み規制。日本・英国・カナダも追随してAI透明性ガイドラインを強化中。連携企業の規制リスク評価の軸として使える。</p>
+
+<p>参照: <a href="https://www.helpnetsecurity.com/2026/08/04/eu-ai-act-enforcement-ai-models/" target="_blank">helpnetsecurity.com</a></p>
+
+<h3>8月のLLMリリースラッシュ</h3>
+
+<p>Qwen3.8 Max（Alibaba）、DeepSeek-V4-Flash-0731、GPT-5.6 Luna、Meta Muse Spark 1.1と7月末〜8月初めにかけてリリースが続いている。推論コストは2025年比で主要モデル平均40〜60%減という試算が出ており、1Mトークンコンテキスト対応の標準化も進む。「どのモデルをどのタスクに・どの価格帯で・どのプライバシールールで使うか」が差別化の本丸になっている。</p>
+
+<p>参照: <a href="https://augusto.digital/insights/blogs/monthly-llm-news-august-2026/" target="_blank">augusto.digital</a></p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #ea580c; padding-left: 12px;">AIトレーディング</h2>
+
+<p>AI Trading Agentと従来型アルゴリズムボットの比較記事が出た。決定的な差は「適応性」と「監査性」のトレードオフだ。AIエージェントはニュース・SEC・SNSを組み合わせたリアルタイム判断ができる一方、「なぜその判断をしたか」が不透明で、存在しないニュースに基づくハルシネーション判断リスクがある。2026年のベストプラクティスとして示されているのは、「AIエージェントはシグナル生成・判断専任、実行とリスク管理は決定論的システムに分離する」ハイブリッド設計だ。現行FXボットの設計見直し時の参考軸として記録しておく。</p>
+
+<p>参照: <a href="https://gptrader.app/blog/best-ai-trading-agents-vs-traditional-bots-2026-comparison" target="_blank">gptrader.app</a></p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p><strong>過去7日との差分（claude / claude_code / mcp / agent / llm）:</strong></p>
+
+<p>8月3日に351件という異常なスパイク（前後の6〜18件と桁違い）が記録されており、原因は特定日の一括収集か外部イベントによる流入と推測される。本日の13件は通常レンジ内。</p>
+
+<p>テーマの顔ぶれに変化はなく、「claude・claude_code・mcp・agent・llm」が7日連続で継続最頻出テーマ。ただしv2.1.224リリースによりSelf-HostedとCross-Session Messagingが新規追加話題として浮上しており、来週以降のクラウドインフラ系・エンタープライズ導入事例記事の増加が見込まれる。MCPのstateless化も複数のソースが重複して取り上げており、エコシステム全体での実装ラッシュが始まっている段階と読める。</p>
+
+</body>
+</html>
