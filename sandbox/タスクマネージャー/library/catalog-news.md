@@ -416,3 +416,7 @@
 | 392 | 2026年8月LLMモデルラッシュ：クラウド/オープンウェイト/軽量の三極集中・EO14409期限・Qwen3.8 Max/GPT-5.6 Luna/Llama4 Scout | ja | 未読 | #ai-news #web-signal | articles/2026-08-08_3582_WEB_LLM-Model-Release-Rush-August-2026-Three-Poles.md |
 | 393 | EU AI Act 執行開始 公式プレスリリース（EC）: 透明性義務・€15M罰則・AI Omnibus高リスク延期・一次情報 | en | 未読 | #ai-news #ai-regulation #web-signal | articles/2026-08-08_3583_WEB_EU-AI-Act-Enforcement-August-2-2026-EC-Official-Press.md |
 | 394 | EU AI Act 透明性義務施行 法律実務解説（Cooley法律事務所）: 企業対応義務詳細・適用範囲・除外規定・段階的施行スケジュール | en | 未読 | #ai-news #ai-regulation #web-signal | articles/2026-08-08_3584_WEB_EU-AI-Act-Transparency-Obligations-August-2026-Cooley.md |
+| 395 | EU AI Act: What Actually Came Into Force on 2 August 2026 (Al Jazeera): Article 50施行・高リスクAI2027年12月延期 | en | 未読 | #ai-news #ai-regulation #web-signal | articles/2026-08-09_3594_WEB_EU-AI-Act-What-Came-Into-Force-August-2026-AlJazeera.md |
+| 396 | 【2026年8月7日】日本AIニュースまとめ: ソフトバンクAGENTIC STAR LLM Gateway・組織組み込みフェーズへ移行 | ja | 未読 | #ai-news #web-signal | articles/2026-08-09_3595_WEB_Japan-AI-News-August-7-2026-SoftBank-AGENTIC-STAR-note-kaz0.md |
+| 397 | 米政府AI大統領令(EO14409)の8月1日期限・成果物未公表——EU施行vs米国グリッドロックvs中国罰金の三極分化 | ja | 未読 | #ai-news #ai-regulation #web-signal | articles/2026-08-09_3596_WEB_White-House-AI-EO-Deadline-Missed-US-Gridlock-classmethod.md |
+| 398 | Sakana AI「Sakana Namazu」日本語特化LLM API提供開始（2026年8月3日）・国産LLM競争加速 (tech-noisy.com) | ja | 未読 | #ai-news #web-signal | articles/2026-08-09_3597_WEB_Sakana-Namazu-LLM-API-Launch-August-2026-tech-noisy.md |

@@ -4660,3 +4660,31 @@ TradingAgents v0.3.1（2026年7月リリース）がClaude Sonnet 5に対応し�
 MCP 2026-07-28 仕様でhandshake廃止・ステートレス化・HTTP+SSE非推奨（1年offramp）の破壊的変更が確定した。本リポジトリの MCP サーバーを使用している場合は移行計画を立てる必要がある。Claude Code が接続する MCP サーバー（settings.json の `mcpServers`）を棚卸しし、HTTP+SSEベースのものがあれば移行対象に追加する。新仕様のメリット：ラウンドロビンLBで動作可能になり、スケーラビリティが向上。タスクマネージャーでは主にGitHub MCPを使用しており、Anthropic公式MCPが2026-07-28仕様に対応済みであれば問題なし。
 
 **優先度:** 低（1年のofframpあり、今すぐ対応不要だが計画を立てておく）
+
+---
+
+## 2026-08-09 収集分
+
+### 12. スキルクリエイター（メタスキル）の bpr_lab への導入検討
+**出典:** articles/2026-08-09_3586_WEB_Claude-Skills-Introduction-August-2026-genai-ai.md / articles/2026-08-09_3587_WEB_Claude-Skills-Selection-Guide-2026-syusodo.md
+
+**提案内容:**
+Claude Code v2.1.145以降に「スキルクリエイター」（スキルを作るためのスキル）が登場した。AI への指示だけで新しいスキルの SKILL.md とスクリプトを自動生成できるメタスキル。タスクマネージャーの `.claude/skills/` に新スキルを追加する際、スキルクリエイターを使って SKILL.md のひな型を自動生成するワークフローを検討する。現在の手動作成プロセスを効率化できる可能性がある。また、/run・/verify・/run-skill-generator の3スキル連携も bpr_lab の品質管理フローに取り込める。
+
+**優先度:** 低（便利だが急ぎではない）
+
+### 13. Claude Agent SDK の「Dreaming」機能を情報収集ルーチンに応用検討
+**出典:** articles/2026-08-09_3590_WEB_Claude-Agent-SDK-Deep-Dive-2026-o-mega.md / articles/2026-08-09_3589_WEB_Agent-Teams-Claude-Code-SDK-Tutorial-kargarisaac.md
+
+**提案内容:**
+Claude Agent SDK の July 2026 アップデートで「Dreaming」（サブエージェントの投機的プリフィル・自律記憶整理）と「Outcomes」（構造化タスク完了追跡）が追加された。日次収集ルーチンの Agent 呼び出しに Dreaming を活用することで、SIGNAL/NOISE 判定の精度向上と処理速度向上が期待できる。また、Claude Finance（10個のプリビルトエージェント）が FX自動取引の市場分析フェーズに応用できる可能性がある。現状の Workflow スクリプトで agent() 呼び出しに `effort: "high"` を指定するだけで Dreaming が有効化されるか確認する。
+
+**優先度:** 中
+
+### 14. ソフトバンク「AGENTIC STAR LLM Gateway」の観察と国内AIエージェント市場動向の継続監視
+**出典:** articles/2026-08-09_3595_WEB_Japan-AI-News-August-7-2026-SoftBank-AGENTIC-STAR-note-kaz0.md
+
+**提案内容:**
+ソフトバンクが「AGENTIC STAR」SaaS版に複数 LLM を統合管理する「LLM Gateway」機能を標準搭載すると発表（2026年8月7日）。日本国内の AI 産業が「試す」から「組み込む」フェーズへ移行した転換点として、今後の国内エンタープライズ AI 市場の動向を継続的に観察する。特に法人向け LLM Gateway サービスの台頭は、bpr_lab の FX自動取引・業務自動化スクリプトのクラウド移行先の選択肢として検討対象となりうる。
+
+**優先度:** 低（情報収集継続のみ）
