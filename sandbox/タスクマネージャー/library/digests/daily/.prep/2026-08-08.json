@@ -1,0 +1,238 @@
+{
+  "date": "2026-08-08",
+  "generated_at": "2026-08-09T23:18:53.053432Z",
+  "article_count": 15,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-08-08_3570_WEB_Claude-Code-News-August-2026-Startup-Edition-MeanCEO.md",
+      "title": "Claude Code News August 2026 (Startup Edition)",
+      "url": "https://blog.mean.ceo/claude-code-news-august-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "2026年8月のClaude Code最新動向をスタートアップ視点でまとめたニュース記事。Claude Opus 5をデフォルトOpusモデルに追加、ダイナミックワークフローとネストされたサブエージェントの拡張、MCP・サンドボックス・モデルピッカーの改善。パブリックベータとして自己ホスト型環境の提供開始（Team/Enterpriseプラン）。Enterprise向けに推論フック（DLP適用）がベータ公開。スタートアップにとってClaude Codeは単なるコーディングツールを超え、実用的なインフラ基盤に進化しつつあるという評価。",
+      "body_excerpt": "Claude Code adds Claude Opus 5 as the default Opus model, expands dynamic workflows and nested subagents, and improves MCP, sandbox, model picker, and remote control behavior. Public beta self-hosted environments now available for Team and Enterprise plans. Enterprise inference hooks (DLP enforcement) in beta. Gateway spend-limit support, workspace trust prompts for `claude agents`, and Remote Control message starts by name added.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-08_3571_WEB_Claude-Code-Changelog-August-2026-Gradually.md",
+      "title": "Claude Code Changelog August 2026 — gradually.ai",
+      "url": "https://www.gradually.ai/en/changelogs/claude-code/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "gradually.aiによるClaude Code 2026年8月changeslog追跡まとめ。Opus 5デフォルト化・ダイナミックワークフロー（/loop拡張）・ネストサブエージェント強化が主要アップデート。自己ホスト型環境ベータ・Enterprise向けDLP推論フック・各種バグ修正。ガバナンス面ではspend-limit統合・ワークスペーストラストプロンプト・リモートコントロール改善を含む。",
+      "body_excerpt": "gradually.ai tracks Claude Code updates systematically. August 2026 highlights: Claude Opus 5 as default Opus model, dynamic workflow expansion (/loop command enhancement), nested subagent improvements, self-hosted environments public beta, Enterprise inference hooks beta for DLP, OAuth/session/UI/headless bug fixes, gateway spend-limit integration, workspace trust prompts, Remote Control name-based launch, accessibility improvements, improved photo handling.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-08_3572_WEB_Claude-Code-Best-Practices-10-Workflow-Tips-Senior-Engineers-Collabnix.md",
+      "title": "Claude Code Best Practices: 10 Workflow Tips Senior Engineers Swear By in 2026",
+      "url": "https://collabnix.com/claude-code-best-practices-10-workflow-tips-that-senior-engineers-swear-by-in-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "シニアエンジニアが実践するClaude Codeの10ワークフロー。①plan-then-build（1時間超タスク）②TDD red-green③コードベース監査④マルチリポジトリリファクタ⑤doc生成⑥セキュリティレビュー⑦エージェントスウォーム並列化⑧依存関係アップグレードが主軸。「スキルあるコントラクター」として扱い、CLAUDE.mdによる永続メモリが鍵。2025→2026の変化は「コンテキスト管理から成果の明確化」へのシフト。",
+      "body_excerpt": "10 workflow tips: plan-then-build for tasks over 1 hour, TDD red-green loop for pure logic, codebase audit pass for inherited repos, multi-repo refactor for contract changes, doc generation from code, paranoid security review pass, agent-swarm orchestration for parallel scopes, locked dependency upgrade flow. Treat Claude Code like a skilled contractor: clear scope, verification criteria, bounded tools, persistent memory via CLAUDE.md. 2025→2026 shift: less context management, more outcome specification.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-08_3573_WEB_Effective-Claude-Code-Workflows-2026-What-Changed-Medium.md",
+      "title": "Effective Claude Code Workflows in 2026: What Changed and What Works Now",
+      "url": "https://medium.com/data-science-collective/effective-claude-code-workflows-in-2026-what-changed-and-what-works-now-c93ebc6f8f50",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Data Science CollectiveのMedium記事。2026年のClaude Codeワークフロー変化を詳述。最大の変化は「コンテキスト管理から成果の明確化」へのシフト。Plan Mode活用、v2.1.0（2026年1月7日）の109 CLI改善。効果的なパターン8種（plan-then-build、TDD、監査、マルチリポジトリ、doc生成、セキュリティ、エージェントスウォーム、依存関係）は引き続き有効。Claude Codeが「シニアペアプログラマー」に進化したという評価。",
+      "body_excerpt": "Major shift from 2025: from managing context to specifying outcomes. Plan Mode collapses ambiguous decisions into a reviewed spec where each decision is near 100%. Version 2.1.0 shipped January 7, 2026 with 2.1.1 following with 109 CLI refinements. Winning pattern: treat as a senior pair programmer rather than an autocomplete. 8 workflow patterns remain core in 2026.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-08_3574_WEB_8-Best-Claude-Code-Workflows-Real-Use-Cases-2026-Ayautomate.md",
+      "title": "8 Claude Code Workflows With Real Use Cases (2026)",
+      "url": "https://www.ayautomate.com/blog/best-claude-code-workflows",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "実ユースケース付きの8つのClaude Codeワークフロー紹介。Plan Mode・TDD統合・コードベース監査・ドキュメント自動化・セキュリティパス・マルチリポジトリ変更・エージェントオーケストレーション・依存関係管理。各ワークフローに具体的なユースケースと実装例が付属。ayautomate.comの自動化特化ブログ記事。",
+      "body_excerpt": "8 Claude Code workflows with concrete use cases: Plan Mode for hour+ tasks, TDD integration, codebase audit, doc automation, security pass, multi-repo changes, agent orchestration, dependency management. Each workflow includes specific use cases and implementation examples for code generation, project management, and team onboarding.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-08_3575_WEB_Complete-Claude-Code-Setup-2026-Skills-Plugins-Config-Stackademic.md",
+      "title": "The Complete Claude Code Setup for 2026: Every Skill, Plugin, and Config Worth Installing",
+      "url": "https://blog.stackademic.com/the-complete-claude-code-setup-for-2026-every-skill-plugin-and-config-worth-installing-eaa32659df2d",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "2026年版Claude Code完全セットアップガイド。5層設定アーキテクチャ：①CLAUDE.md②スキル（新機能付与型+好み符号化型）③プラグイン④MCPコネクタ⑤パーミッション+フック。スキルの2種類（Capability Uplift vs Encoded Preference）の区別が明確。優先度付きインストール候補一覧付き。2026年7月Stackademic掲載。",
+      "body_excerpt": "5-layer configuration architecture: ①CLAUDE.md (always-on project guidance) ②Skills (Capability Uplift: abilities Claude doesn't have; Encoded Preference: team workflows) ③Plugins (bundle whole workflows) ④MCP connectors (GitHub, Linear, Notion) ⑤Permissions and hooks (safe unattended execution). Priority-ranked installation list. Skills distinction: Capability Uplift (doc/xlsx/browser) vs Encoded Preference (NDA review, weekly update format). Published July 2026 by Noor Mohammad on Stackademic.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-08_3576_WEB_CLAUDE-md-Best-Practices-2026-AgentLint-Blog.md",
+      "title": "CLAUDE.md Best Practices 2026 — AgentLint Blog",
+      "url": "https://www.agentlint.app/blog/claude-md-best-practices-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "AgentLint（CLAUDE.md静的解析ツール開発元）によるベストプラクティス。200行以下を目標、HTMLコメントはトークン無消費、CLAUDE.mdのルールは実施レイヤー必須。4象限ルール配置：強制→Hook/パーミッション、文脈知識→スキル、委任境界→サブエージェント、常時ONガイダンス→CLAUDE.md。2026年トレンドはCLAUDE.mdの短縮・厳格化とマルチファイル管理。AgentLintはCLAUDE.md品質を自動検証するツール。",
+      "body_excerpt": "AgentLint (CLAUDE.md static analysis tool) guidance: keep under ~200 lines (250+ burns >5% context budget). HTML comments (<!-- -->) cost zero tokens. CLAUDE.md rules are \"wishes\" without enforcement; pair each with Hook/CI/linter. 4-quadrant rule placement: Hooks/permissions (enforce), Skills (contextual knowledge), Subagents (delegation boundary), CLAUDE.md (always-on guidance). 2026 trend: shorter, stricter CLAUDE.md with AGENTS.md/.cursor/rules/.codex/instructions consistency.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-08_3577_WEB_Claude-Agent-SDK-2026-Plans-Credits-Production-Totalum.md",
+      "title": "Claude Agent SDK in 2026: Complete Guide to Plans, Credits, and Shipping to Production",
+      "url": "https://www.totalum.app/blog/claude-agent-sdk-totalum-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Claude Agent SDK（2025年9月にClaude Code SDKから改名）の2026年完全ガイド。Python/TypeScript対応、pip/npmでインストール。2026年6月15日より月次エージェントSDKクレジットプールをインタラクティブ利用から分離。本番原則：状態永続化（Postgres/Redis）、コストキャップのハーネス実装、max_turns設定、SDK組み込み使用量レポート。Managed AgentsとSDKの関係も解説。",
+      "body_excerpt": "Claude Agent SDK (renamed from Claude Code SDK in Sep 2025) ships in Python and TypeScript. Install: `pip install claude-agent-sdk` or `npm install @anthropic-ai/claude-agent-sdk`. As of June 15, 2026: subscription plans get a dedicated monthly Agent SDK credit pool separate from interactive Claude usage. Production patterns: durable state in Postgres/Redis/object storage (session is ephemeral); per-task/user/tenant cost caps in the agent harness; max_turns on every production run; built-in usage reporting for cost monitoring.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-08_3578_WEB_MCP-2026-07-28-Breaking-Changes-Migration-Guide-DevelopersDigest.md",
+      "title": "The MCP 2026-07-28 Rewrite: What Breaks and How to Migrate",
+      "url": "https://www.developersdigest.tech/blog/mcp-2026-07-28-breaking-changes",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Developers DigestによるMCP 2026-07-28仕様の破壊的変更＋移行ガイド。主要変更：handshake廃止・ステートレス化（ラウンドロビンLBで動作可能）・HTTP+SSE非推奨（1年offramp）・MCPアプリ+タスク拡張追加・OAuth/OIDC準拠認可。移行コスト試算と具体的コード変更例付き。既存ステートフルMCPサーバー保有開発者向けの実践的移行ガイド。",
+      "body_excerpt": "Breaking changes in MCP 2026-07-28: ①handshake removed (initialize/initialized + Mcp-Session-Id gone) ②stateless protocol (plain round-robin load balancers work now) ③HTTP+SSE transport deprecated (1-year offramp) ④MCP Apps (server-rendered UI) and Tasks extension (long-running work) added ⑤OAuth/OIDC-aligned authorization. Migration cost estimates and concrete code change examples for developers with existing stateful MCP servers.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-08_3579_WEB_Anthropic-Platform-Release-Notes-August-2026-Official.md",
+      "title": "Anthropic Platform Release Notes — August 2026 (Official)",
+      "url": "https://platform.claude.com/docs/en/release-notes/overview",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Anthropic公式プラットフォームリリースノート（2026年8月）。code_execution_20260120（REPL状態永続化）の全主要SDK対応、MCPトンネル管理APIの移行（新エンドポイント+ヘッダー）、レガシーWorkbench廃止（8月17日）、会話中途ツール変更ベータ（プロンプトキャッシュ維持しながらツール追加/削除）が主要更新。一次情報として価値が高い。",
+      "body_excerpt": "Key updates as of August 2026: ①code_execution_20260120 in all major SDKs (Python/TS/Go/Java/Ruby/PHP/C#) — REPL state persistence, available on Fable 5, Mythos 5, Opus 4.5+, Sonnet 4.5+ ②MCP tunnels API migrated from Admin API /v1/organizations/tunnels to Claude API /v1/tunnels (beta header: anthropic-beta: mcp-tunnels-2026-06-22) ③Legacy Workbench retirement August 17, 2026 ④Mid-conversation tool changes beta (Fable 5, Mythos 5, Opus 4.8, Opus 5): add/remove tools between turns while preserving prompt cache (header: mid-conversation-tool-changes-2026-07-01).",
+      "fact_checked": true,
+      "fact_check_note": "[CONFIRMED] Anthropic公式プラットフォームDoc・releasebot.ioともに8月17日廃止を確認。実験的Prompt Tools APIも同日廃止、ユーザーはデータエクスポート必須。"
+    },
+    {
+      "file": "2026-08-08_3580_WEB_AI-Agentic-Autonomous-Trading-Layers-2026-BrokerAnalysis.md",
+      "title": "AI-Agentic Autonomous Trading Layers 2026: Complete Review",
+      "url": "https://brokeranalysis.com/blog/ai-agentic-autonomous-trading-layers-2026-complete-review/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "AI取引フレームワークの2026年包括レビュー。TradingAgents（多エージェント、Bull/Bear対立構造、累積26.62% vs AAPL -5.23%）、ai-hedge-fund、FinRL、FinRobot評価。実用的アプローチ：AIを調査・フィルタ・アラートに使い、ルールベース自動化で執行のハイブリッドが現実的。実際の市場リターンは情報優位性依存の可能性を警告。MT5との連携評価も含む。",
+      "body_excerpt": "Review of major AI trading frameworks: TradingAgents (multi-LLM agents with Bull/Bear Researcher debate structure, 26.62% cumulative return on AAPL vs -5.23% buy-and-hold Jun-Nov 2024), ai-hedge-fund (named investor personas), FinRL/FinRL-Trading (reinforcement learning), FinRobot (equity research). Practical 2026 approach: AI for research/filtering/alerts + transparent rule-based execution under defined risk parameters. Warning: real returns may depend on information advantages or favorable market windows. MT5 integration, RL agents, multi-asset AI architectures evaluated.",
+      "fact_checked": true,
+      "fact_check_note": "[CONFIRMED] arxiv論文(2412.20138)および複数サードパーティが同数値を引用・確認。ただし特定期間・バックテストであり実際の市場運用との乖離に注意。"
+    },
+    {
+      "file": "2026-08-08_3581_WEB_Complete-Guide-Algorithmic-Trading-2026-AI-Expert-Advisors-MT5-MQL5.md",
+      "title": "The Complete Guide to Algorithmic Trading in 2026: AI Expert Advisors on MT5",
+      "url": "https://www.mql5.com/en/blogs/post/772143",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "MQL5公式ブログによるAI Expert Advisors MT5ガイド2026年版。ミリ秒執行・RL市場適応・マルチアセットアーキテクチャ。TradingAgents v0.3.1（2026年7月、Claude Sonnet 5対応）。LLMの強み：感情分析・ニュース解析・リアルタイムトレンド取得。マルチモーダルLLMによるチャート画像テクニカル分析も実用化。FX Prime Bot（Node.js+Python+ML+LLM+MT5）の構成事例。",
+      "body_excerpt": "MQL5 official blog guide on AI Expert Advisors in 2026: millisecond-precision execution, RL agents adapting to live markets, multi-asset AI architectures. TradingAgents v0.3.1 (July 2026) adds Claude Sonnet 5 support. LLM advantages: sentiment analysis, news analysis, real-time trend information from web. Multimodal LLMs can read chart images for technical analysis patterns. FX Prime Bot uses Node.js UI + Python core + ML + LLM sentiment analysis on MT5.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-08_3582_WEB_LLM-Model-Release-Rush-August-2026-Three-Poles.md",
+      "title": "2026年8月のLLMモデルラッシュ：クラウド・オープンウェイト・軽量の三極集中",
+      "url": "https://gotosocial.chinng-lab-srv.dev/llm-model-release-rush-august-2026/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "ai-news",
+      "summary": "2026年8月のLLMモデルラッシュ分析。2週間以内に複数主要プレイヤーがリリースした背景を、大統領令期限とQ3リソース配分の重なりとして解説。クラウド・オープンウェイト・軽量の「三極集中」という新たな競合構造。注目モデル：Qwen3.8 Max、DeepSeek-V4-Flash、GPT-5.6 Luna、Muse Spark 1.1、Llama 4 Scout（1000万トークンコンテキスト）。",
+      "body_excerpt": "2026年8月に主要AIプレイヤーが2週間以内に次世代LLMを相次ぎリリース。背景：米国大統領令EO 14409の設計期限（8月1日）とQ3リソース配分タイミングが重なる。三極集中：クラウド（OpenAI/Anthropic/Google）、オープンウェイト（Meta Llama 4）、軽量（エッジ向け）。注目モデル：Alibaba Qwen3.8 Max（8月2日）、DeepSeek-V4-Flash-0731、GPT-5.6 Luna、Meta Muse Spark 1.1。Llama 4 Scout（最大1000万トークンコンテキスト）。「モデルはソフトウェアパッチのように出荷される」新時代。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-08_3583_WEB_EU-AI-Act-Enforcement-August-2-2026-EC-Official-Press.md",
+      "title": "EU AI Act Enforcement Starts August 2, 2026: EC Official Press Release",
+      "url": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_1714",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "欧州委員会の公式プレスリリース。2026年8月2日よりEU AI Act施行開始。透明性義務：チャットボットのAI開示・ディープフェイクラベリング・AI生成コンテンツの機械可読マーク付与。違反罰則：最大1500万ユーロまたは世界売上高3%。AI Omnibusにより高リスクAI要件は2027年12月に延期。一次情報（公式プレスリリース）として最重要。",
+      "body_excerpt": "From 2 August 2026, AI Office and national authorities begin enforcing the AI Act. Transparency rules: chatbots must disclose AI interaction; deepfakes must be labelled; AI-generated content requires machine-readable marks. Penalties: up to €15 million or 3% of worldwide annual turnover. AI Omnibus delays high-risk AI system rules to December 2, 2027 and regulated-product high-risk AI to August 2, 2028. AI systems generating non-consensual sexual content banned from December 2, 2026.",
+      "fact_checked": true,
+      "fact_check_note": "[CONFIRMED] 複数独立ソース（Enterprise DNA、beam.ai、olakai.ai等）がEC公式発表を一致して確認。Article 50透明性義務（チャットボット開示・ディープフェイクラベリング）も同日施行確認済み。"
+    },
+    {
+      "file": "2026-08-08_3584_WEB_EU-AI-Act-Transparency-Obligations-August-2026-Cooley.md",
+      "title": "EU AI Act: Transparency Obligations Take Effect 2 August 2026 — Cooley Law Firm",
+      "url": "https://www.cooley.com/news/insight/2026/2026-08-03-eu-ai-act-transparency-obligations-take-effect-2-august-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "Cooley法律事務所によるEU AI Act 2026年8月2日施行の実務解説。企業対応必須の義務詳細（チャットボット開示・ディープフェイクラベリング・機械可読マーキング）。AI Omnibusによる高リスクAI要件延期（2027年12月）の影響評価。日本企業を含むEU域内サービス全グローバル企業に適用。適用範囲・除外規定・段階的施行の法的解釈提供。",
+      "body_excerpt": "Cooley law firm practical analysis: immediate compliance obligations for chatbots (AI/human disclosure), deepfakes and emotion recognition labelling, machine-readable marking of AI-generated content. AI Omnibus impact: high-risk AI system requirements delayed to Dec 2027. Legal risk: €15M or 3% of global turnover. Applies to all global companies serving EU markets including Japanese enterprises. Scope, exclusions, and phased enforcement schedule legal interpretation provided.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    }
+  ],
+  "fact_checks": [
+    {
+      "article_file": "2026-08-08_3580_WEB_AI-Agentic-Autonomous-Trading-Layers-2026-BrokerAnalysis.md",
+      "claim": "TradingAgentsのAAPL累積リターン26.62% vs buy-and-hold -5.23%（2024年6〜11月）",
+      "verdict": "confirmed",
+      "note": "arxiv論文(2412.20138)および複数サードパーティが同数値を引用・確認。ただし特定期間・バックテストであり実際の市場運用との乖離に注意。",
+      "sources": [
+        "https://arxiv.org/html/2412.20138v3",
+        "https://arxiv.org/pdf/2510.07920"
+      ]
+    },
+    {
+      "article_file": "2026-08-08_3583_WEB_EU-AI-Act-Enforcement-August-2-2026-EC-Official-Press.md",
+      "claim": "EU AI Act 2026年8月2日施行、違反罰則最大1500万ユーロまたは世界売上3%",
+      "verdict": "confirmed",
+      "note": "複数独立ソース（Enterprise DNA、beam.ai、olakai.ai等）がEC公式発表を一致して確認。Article 50透明性義務（チャットボット開示・ディープフェイクラベリング）も同日施行確認済み。",
+      "sources": [
+        "https://enterprisedna.co/resources/news/eu-ai-act-enforcement-live-august-2-2026/",
+        "https://beam.ai/agentic-insights/eu-ai-act-enforcement-august-2-2026-gpai-fines"
+      ]
+    },
+    {
+      "article_file": "2026-08-08_3579_WEB_Anthropic-Platform-Release-Notes-August-2026-Official.md",
+      "claim": "Legacy Workbench廃止日2026年8月17日",
+      "verdict": "confirmed",
+      "note": "Anthropic公式プラットフォームDoc・releasebot.ioともに8月17日廃止を確認。実験的Prompt Tools APIも同日廃止、ユーザーはデータエクスポート必須。",
+      "sources": [
+        "https://platform.claude.com/docs/en/release-notes/overview",
+        "https://releasebot.io/updates/anthropic"
+      ]
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-08-07": 13,
+      "2026-08-06": 18,
+      "2026-08-05": 13,
+      "2026-08-04": 13,
+      "2026-08-03": 351,
+      "2026-08-02": 15,
+      "2026-08-01": 9
+    },
+    "recurring_themes": [
+      "claude",
+      "claude_code",
+      "mcp",
+      "agent",
+      "llm"
+    ]
+  }
+}
