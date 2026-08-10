@@ -4688,3 +4688,31 @@ Claude Agent SDK の July 2026 アップデートで「Dreaming」（サブエ�
 ソフトバンクが「AGENTIC STAR」SaaS版に複数 LLM を統合管理する「LLM Gateway」機能を標準搭載すると発表（2026年8月7日）。日本国内の AI 産業が「試す」から「組み込む」フェーズへ移行した転換点として、今後の国内エンタープライズ AI 市場の動向を継続的に観察する。特に法人向け LLM Gateway サービスの台頭は、bpr_lab の FX自動取引・業務自動化スクリプトのクラウド移行先の選択肢として検討対象となりうる。
 
 **優先度:** 低（情報収集継続のみ）
+
+---
+
+## 2026-08-10 収集分
+
+### 15. 「自己学習フック」パターンをタスクマネージャーに導入検討
+**出典:** articles/2026-08-10_3598_WEB_Claude-Code-30-Skills-MCPs-Self-Learning-Hooks-Aumiqx.md
+
+**提案内容:**
+Aumiqx社の事例で「自己学習フック」（Self-Learning Hook）が紹介された：`PostToolUse` フックで Edit/Write ツール使用後にCLAUDE.mdを自動更新する仕組み。具体的には、Claude が新しいパターンやルールを発見した際、フック経由でCLAUDE.mdにその知見を自動追記させる。タスクマネージャーの `.claude/settings.json` に `PostToolUse` フックを追加し、作業ログから抽出した知見を CLAUDE.md の「過去の学習」セクションに自動追記する仕組みの構築を検討する。30スキルの全リストも参考にして、現在8スキルのタスクマネージャーのスキル拡充計画の素材にできる。
+
+**優先度:** 中
+
+### 16. スキルの3層スタック設計（プロジェクト/ユーザー/組織）の整理
+**出典:** articles/2026-08-10_3601_WEB_Claude-Code-Skills-Top7-Guide-2026-Uravation-JA.md / articles/2026-08-10_3600_WEB_Claude-Code-Skills-Guide-3Patterns-JA-Orca.md
+
+**提案内容:**
+2026年版スキル設計の標準として「3層スタック」が確立されつつある：①プロジェクト単位（.claude/skills/）②ユーザー単位（~/.claude/skills/）③組織単位（共有リポジトリ）。現在のタスクマネージャーのスキル（8個）は全てプロジェクト単位（①）に集中しているが、`/morning`・`/reading` 等の汎用スキルは②のユーザー単位に移してどのプロジェクトからでも呼び出せるようにすることを検討する。また、Orca の記事で指摘された「スキルが長すぎるとコンテキスト圧迫」の問題は、特に`/curate` スキルの分割（Step別のサブスキル化）で改善できる可能性がある。
+
+**優先度:** 中
+
+### 17. FX自動取引のLLM推論レイテンシ問題の把握と設計方針の明確化
+**出典:** articles/2026-08-10_3607_WEB_LLMs-in-Algorithmic-Trading-Architecture-Latency-Risk-Tokalpha.md / articles/2026-08-10_3606_WEB_Best-AI-Trading-Agents-2026-Consistent-Returns-Performance-DEV.md
+
+**提案内容:**
+Tokalpha Labs の技術解説により「LLMの応答レイテンシとHFT（高頻度取引）との根本的な非互換性」が明確になった。LLMを使った FX自動取引は「デイトレード・スウィングトレード以上の時間軸」（数時間〜数日）にのみ適用し、スキャルピング（数秒〜数分）には使わないという設計方針を FX自動取引プロジェクトの CLAUDE.md または STATUS.md に明記することを推奨する。また、「30日で+7% vs -15%」という実績のばらつきを踏まえ、小ロットでの紙トレード（デモ口座）での継続検証が引き続き重要であることを確認。
+
+**優先度:** 高（設計方針の明文化として即対応を推奨）
