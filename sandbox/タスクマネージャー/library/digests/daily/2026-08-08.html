@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-08-08</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-08-08 | 15件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-08-08</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>Claude Code が Opus 5 デフォルト化・ダイナミックワークフロー拡張・自己ホスト型環境ベータと一気に進化した週の情報が集積した日。EU AI Act の透明性義務（8月2日施行・一次ソース確認済み）と MCP 2026-07-28 仕様のステートレス化も要対応。FX 自動取引側では TradingAgents の多エージェント Bull/Bear 構造が実績数値付きで検証され（一次ソース確認済み）、LLM × MT5 の実践事例が充実。全体として「使える AI インフラ」が一段階成熟した一日。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>Opus 5 デフォルト化と「インフラ基盤」への脱皮</h3>
+
+<p>今週の Claude Code アップデートの核心は、Claude Opus 5 のデフォルト Opus モデル化とダイナミックワークフロー（`/loop` コマンド拡張）、ネストされたサブエージェントの強化だ。スタートアップ向けニュースレターや gradually.ai の更新追跡が共に「コーディングツールを超え実用的なインフラ基盤に進化しつつある」と評するのは大げさではなく、自己ホスト型環境のパブリックベータ（Team/Enterprise プラン）と Enterprise 向け推論フック（DLP 適用ベータ）が並走することで、組織の情報統制ポリシーと AI エージェント実行を両立させるレイヤーが整ったことを意味する[^1][^2]。</p>
+
+<p>ワークフロー論では複数ソースが同じ 8 パターン（Plan Mode → TDD → 監査 → マルチリポジトリ → ドキュメント → セキュリティ → エージェントスウォーム → 依存関係管理）を収束して引用しており、2025→2026 の変化が「コンテキスト管理の最適化から、成果の明確化」へのシフトだという主張で一致している。「スキルあるコントラクターとして扱い、境界・検証基準・ツール権限を明示する」という運用思想は、あなたの「小さく試して実績で引っ張る」スタイルと整合する[^3][^4][^5]。</p>
+
+<h3>セットアップ 5 層構造と CLAUDE.md のリファクタ</h3>
+
+<p>2026 年版 Claude Code セットアップの整理として、5 層アーキテクチャが明文化された。① CLAUDE.md（常時 ON）→ ② スキル（能力付与型 vs 好み符号化型）→ ③ プラグイン→ ④ MCP コネクタ → ⑤ パーミッション＋フック、という積み重ねだ[^6]。</p>
+
+<p>AgentLint（CLAUDE.md 静的解析ツール）のベストプラクティスはより刺さる: CLAUDE.md は 200 行未満が目標（250 行超でコンテキスト予算の 5% 超消費）、HTML コメント（`&lt;!-- --&gt;`）はトークン無消費で使えるため説明の整理に有用。そして「CLAUDE.md のルールは&quot;お願い&quot;に過ぎない——Hook/CI/リンターとペアにして初めて強制力を持つ」という指摘は、このリポジトリの CLAUDE.md 管理にも直接応用できる[^7]。</p>
+
+<h3>Claude Agent SDK と MCP の構造変化</h3>
+
+<p>Claude Agent SDK（2025 年 9 月に Claude Code SDK から改名）は 2026 年 6 月 15 日よりインタラクティブ利用とは独立した月次クレジットプールに分離された。本番運用の原則として「セッションはエフェメラル → 状態は Postgres/Redis に永続化」「タスク/ユーザー/テナント単位のコストキャップをハーネスに実装」が推奨されており、このリポジトリの自動 digest パイプライン設計とも直結する[^8]。</p>
+
+<p>MCP 2026-07-28 仕様はより破壊的だ。handshake 廃止・ステートレス化（ラウンドロビン LB で動作可）・HTTP+SSE 非推奨（1 年 offramp）が柱で、MCP Apps（サーバーレンダリング UI）と Tasks 拡張（長時間タスク）が追加された。既存の MCP サーバーをステートフルで構築していた場合は移行コストが発生する[^9]。</p>
+
+<p>Anthropic 公式リリースノートでは <strong>Legacy Workbench が 2026 年 8 月 17 日廃止</strong>（一次ソース確認済み）、会話中途ツール変更ベータ（プロンプトキャッシュを維持しながらターン間でツール追加/削除）が追加確認できる。Workbench を利用しているならデータエクスポートは今週中に[^10]。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>EU AI Act 透明性義務の施行開始（一次ソース確認済み）</h3>
+
+<p>2026 年 8 月 2 日より EU AI Act の透明性義務が施行された。欧州委員会公式プレスリリースおよび複数独立ソースが確認している。具体的には①チャットボットの AI 開示義務②ディープフェイクのラベリング③AI 生成コンテンツへの機械可読マーク付与が即時適用。違反罰則は最大 1,500 万ユーロまたは世界売上高 3%。高リスク AI システム要件は AI Omnibus により 2027 年 12 月に延期された[^11]。</p>
+
+<p>Cooley 法律事務所の実務解説では、適用対象は「EU 市場にサービスを提供するグローバル企業すべて」であり、日本企業も含む。公務員として組織の AI 導入を検討する際、EU 市場接続の有無に関わらず国際標準として先行参照する価値がある[^12]。</p>
+
+<h3>LLM リリースラッシュと「モデルはパッチのように出荷される」時代</h3>
+
+<p>8 月上旬に主要 AI プレイヤーが 2 週間以内で次世代 LLM を相次ぎリリースした。背景は米国大統領令 EO 14409 の設計期限（8 月 1 日）と Q3 リソース配分タイミングの重なり。クラウド（OpenAI/Anthropic/Google）・オープンウェイト（Meta Llama 4）・軽量（エッジ向け）の「三極集中」構造が固まりつつある。Llama 4 Scout の最大 1,000 万トークンコンテキストが特に注目点で、長大なコードベース全体を一度に処理するユースケースが現実的になってきた[^13]。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #ea580c; padding-left: 12px;">AIトレーディング</h2>
+
+<h3>TradingAgents と LLM × MT5 の実践（一次ソース確認済み）</h3>
+
+<p>AI 取引フレームワークの 2026 年評価が出揃った。TradingAgents（Bull/Bear Researcher が対立構造で議論するマルチ LLM エージェント）の AAPL 累積リターン 26.62%（vs buy-and-hold -5.23%、2024 年 6〜11 月バックテスト）は arxiv 論文(2412.20138)および複数サードパーティが確認している。ただし「特定期間のバックテストであり、情報優位性や市場環境への依存が排除できない」という警告は外せない[^14]。</p>
+
+<p>実用的なアーキテクチャ例として FX Prime Bot（Node.js UI + Python コア + ML + LLM センチメント分析 + MT5）が紹介されている。MT5 連携の LLM 活用は感情分析・ニュース解析・リアルタイムトレンド取得が主で、マルチモーダル LLM によるチャート画像のテクニカル分析も実用化段階とのこと。TradingAgents v0.3.1（2026 年 7 月）が Claude Sonnet 5 対応を追加した点は現行 EA 環境との接続を検討する際に確認価値がある[^15]。</p>
+
+<p>「AIを調査・フィルタ・アラートに使い、ルールベース自動化で執行するハイブリッド」という整理は、現在のあなたの EA 運用（FX 自動取引中）にそのまま当てはまるポジショニングだ。完全 AI 執行より AI + ルールベースのハイブリッドが 2026 年の現実解として複数ソースが収束している。</p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p><strong>記事数推移（過去 7 日）</strong></p>
+
+<p>| 日付 | 件数 | 備考 |</p>
+<p>|------|------|------|</p>
+<p>| 08-01 | 9 | |</p>
+<p>| 08-02 | 15 | EU AI Act 施行日 |</p>
+<p>| 08-03 | 351 | 急増（LLM リリースラッシュか） |</p>
+<p>| 08-04 | 13 | |</p>
+<p>| 08-05 | 13 | |</p>
+<p>| 08-06 | 18 | |</p>
+<p>| 08-07 | 13 | |</p>
+<p>| <strong>08-08</strong> | <strong>15</strong> | 本日 |</p>
+
+<p>08-03 の 351 件急増は LLM リリースラッシュ＋EU AI Act 同日前後の報道集積と思われ、08-04 以降は日常水準に戻っている。継続して高頻度で登場するテーマは `claude`・`claude_code`・`mcp`・`agent`・`llm` の 5 つで変わらず。本日の特徴は Claude Code ワークフロー記事の集積（7 本）と EU AI Act 実務解説の充実で、「使いこなし」と「ガバナンス」の両軸が同日に揃った構成となっている。</p>
+
+<p>---</p>
+
+<h2>脚注</h2>
+
+<p>[^1]: https://blog.mean.ceo/claude-code-news-august-2026/</p>
+<p>[^2]: https://www.gradually.ai/en/changelogs/claude-code/</p>
+<p>[^3]: https://collabnix.com/claude-code-best-practices-10-workflow-tips-that-senior-engineers-swear-by-in-2026/</p>
+<p>[^4]: https://medium.com/data-science-collective/effective-claude-code-workflows-in-2026-what-changed-and-what-works-now-c93ebc6f8f50</p>
+<p>[^5]: https://www.ayautomate.com/blog/best-claude-code-workflows</p>
+<p>[^6]: https://blog.stackademic.com/the-complete-claude-code-setup-for-2026-every-skill-plugin-and-config-worth-installing-eaa32659df2d</p>
+<p>[^7]: https://www.agentlint.app/blog/claude-md-best-practices-2026/</p>
+<p>[^8]: https://www.totalum.app/blog/claude-agent-sdk-totalum-2026</p>
+<p>[^9]: https://www.developersdigest.tech/blog/mcp-2026-07-28-breaking-changes</p>
+<p>[^10]: https://platform.claude.com/docs/en/release-notes/overview</p>
+<p>[^11]: https://ec.europa.eu/commission/presscorner/detail/en/ip_26_1714</p>
+<p>[^12]: https://www.cooley.com/news/insight/2026/2026-08-03-eu-ai-act-transparency-obligations-take-effect-2-august-2026</p>
+<p>[^13]: https://gotosocial.chinng-lab-srv.dev/llm-model-release-rush-august-2026/</p>
+<p>[^14]: https://brokeranalysis.com/blog/ai-agentic-autonomous-trading-layers-2026-complete-review/</p>
+<p>[^15]: https://www.mql5.com/en/blogs/post/772143</p>
+
+</body>
+</html>
