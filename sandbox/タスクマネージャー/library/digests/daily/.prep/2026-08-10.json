@@ -1,0 +1,166 @@
+{
+  "date": "2026-08-10",
+  "generated_at": "2026-08-11T23:17:04.322371Z",
+  "article_count": 10,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-08-10_3598_WEB_Claude-Code-30-Skills-MCPs-Self-Learning-Hooks-Aumiqx.md",
+      "title": "Claude Code Setup: 30 Skills, MCPs, and Self-Learning Hooks | Aumiqx",
+      "url": "https://aumiqx.com/learn/claude-code-skills-mcp-guide/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "実際のプロダクション開発チームが構築した「30個のスキル + MCPサーバー群 + 自己学習フック」の構成を詳細解説した実践記事。スキルの命名規約・ディレクトリ構成・MCPサーバーの選定基準（Slack/GitHub/Notion/Figma等）を具体的に紹介。特に「自己学習フック」（PostToolUseフックでCLAUDE.mdを自動更新する仕組み）は独自の工夫として注目。チームへの展開方法とオンボーディング設計にも言及。30スキルの全リストと各スキルのユースケース説明を含む実用的なリファレンス。大規模チームでのClaude Code標準化の具体的な知見を提供。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-10_3599_WEB_Claude-Code-Complete-Guide-2026-JA-Visionary.md",
+      "title": "Claude Codeの使い方完全ガイド｜基本操作からスキル・CLAUDE.md・業務自動化まで【2026年最新】",
+      "url": "https://visionary-jp.co.jp/claude-code-guide/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "ビジョナリージャパンによる2026年版Claude Code完全ガイド。インストールから始まり、CLAUDE.mdの書き方・スキルの作り方・MCPサーバー連携・業務自動化の実践事例まで網羅的に解説。日本語で読めるClaude Codeの包括的なリファレンスとして整備されており、エンジニア以外の業務担当者にも配慮した平易な説明が特徴。2026年7月時点の最新機能（Opus 4.8対応・3段階エージェント・コミュニティマーケットプレイス等）も反映済み。非エンジニアがClaude Codeを業務に導入する際の最初の読み物として適している。",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "AnthropicはClaude Opus 4.8を2026年5月28日にリリース（Anthropic公式、Axios等複数メディア確認済）。Dynamic Workflows機能含む。記事の記述は正確。"
+    },
+    {
+      "file": "2026-08-10_3600_WEB_Claude-Code-Skills-Guide-3Patterns-JA-Orca.md",
+      "title": "Claude Codeのスキルとは？作り方3パターン・活用例・注意点を解説 | Orca",
+      "url": "https://www.orcacoltd.jp/claude-code-skill-guide/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "Orca社によるClaude Code Skillsの実践ガイド。スキルの作り方を「手動作成」「Claudeに生成させる」「スキルから派生させる」の3パターンで解説。自動起動（コンテキスト連動）と明示的呼び出し（/スキル名）の使い分け、SKILL.mdの記述ルール、スキルの更新・廃止フローも説明。注意点として「スキルが長くなりすぎるとコンテキストを圧迫する」「チームで共有する場合の命名規約統一が重要」を指摘。具体的なユースケース（コードレビュー・デプロイ・レポート生成）のSKILL.mdサンプルを掲載。スキル作成3パターンの整理が有用なリファレンス。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-10_3601_WEB_Claude-Code-Skills-Top7-Guide-2026-Uravation-JA.md",
+      "title": "Claude Codeのスキル（Skills）とは？使い方・一覧・おすすめ7選 ｜ Uravation",
+      "url": "https://uravation.com/media/claude-code-skills-guide-2026/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "Uravationによるスキル活用の実践ガイド。おすすめスキル7選（コードレビュー・テスト生成・ドキュメント作成・デプロイ・セキュリティスキャン・パフォーマンス分析・i18n翻訳）をSKILL.mdのサンプルコードとともに紹介。各スキルのユースケース・期待される出力・チーム導入のメリットを説明。また「スキルのスタック設計」として、プロジェクト単位・ユーザー単位・組織単位の3層でスキルを配置する方法を解説。2026年時点での自動起動トリガーの書き方（TRIGGER section）についても詳述。SKILL.mdのサンプルが豊富で実装の参考になる。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-10_3602_WEB_MCP-2026-07-28-Migration-Guide-Local-to-Distributed-AAIF.md",
+      "title": "MCP 2026-07-28: From Local Tool to Distributed Protocol - Migration Guide (AAIF)",
+      "url": "https://aaif.io/blog/mcp-2026-07-28-whats-changing-and-how-to-migrate",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "AAIF（Agentic AI Foundation）による2026-07-28 MCP仕様への移行ガイド。主要変更点「ステートレスプロトコルコア」の実装移行方法を詳説。旧来のセッション維持型サーバーからステートレス型への書き直し手順、後方互換性の確保方法、OAuth/OIDCの認証強化対応を解説。スティッキーセッションや共有セッションストアを必要としない新アーキテクチャにより、Cloudflare WorkersやVercel等の標準インフラで動作可能になる。Extensions（Apps・Tasks）フレームワークへの移行方法も含む実践的な技術ガイド。既存MCPサーバーを2026-07-28仕様に移行する際の実装参考として有用。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-10_3603_WEB_MCP-Server-Best-Practices-2026-OAuth21-Security-CData-JA.md",
+      "title": "MCPサーバーの最新ベストプラクティスを解説！【2026年版】｜設計と運用 (CData)",
+      "url": "https://jp.cdata.com/blog/mcp-server-best-practices-2026",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-ecosystem",
+      "summary": "CData（エンタープライズデータ連携ツールベンダー）による2026年版MCPサーバーのベストプラクティス解説。2025年からHTTPベーストランスポートのOAuth 2.1が標準化されており、トークン処理・スコープ適用・セッションセキュリティの実装方法を具体的に説明。2026-07-28仕様対応としてステートレス設計・拡張性（Extensions）・タスク管理（Tasks）の組み込み方を解説。エンタープライズ環境でのMCPサーバー運用における認証・エラーハンドリング・レート制限・ログ設計のパターンを網羅的にカバー。本番運用品質のMCPサーバー設計に必要なセキュリティ知見を体系的に整理した実用ガイド。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-10_3604_WEB_Claude-Agent-SDK-Python-Tutorial-Tools-Hooks-Subagents-PythonAlchemist.md",
+      "title": "Claude Agent SDK Python Tutorial (2026) — Tools, Hooks, Subagents | PythonAlchemist",
+      "url": "https://www.pythonalchemist.com/blog/claude-agent-sdk-python",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "PythonAlchemistによるClaude Agent SDK Python実装チュートリアル。query()ループの仕組み・ツール定義・フックアーキテクチャ・サブエージェント連携・MCPサーバー接続の各ステップをコードサンプル付きで解説。特にカスタムツール実装（@tool デコレータパターン）とフック（PreToolUse/PostToolUse）の実装例が詳細。エージェントのセッション永続化・コスト制御・エラーリカバリーの実装方法も含む。最新のSDK 1.1.x（2026年対応）に合わせた内容で、PythonパッケージとしてのインストールからManaged Agentsデプロイまでをカバー。コードサンプルが豊富で実装の即座の参考になる。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-10_3605_WEB_How-to-Build-Claude-AI-Agent-Tutorial-2026-AIForAnything.md",
+      "title": "How to Build a Claude AI Agent from Scratch (2026 Tutorial) — AI for Anything",
+      "url": "https://aiforanything.io/blog/how-to-build-claude-ai-agent-tutorial-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "「AIForAnything」による2026年版Claude AIエージェント構築チュートリアル。基礎から始めて本番レベルのエージェントを構築するステップバイステップガイド。Claude Agent SDK（旧Claude Code SDK）を使ったPythonとTypeScriptの両実装例を提供。ツール実行エンジン・セッション永続化・パーミッションシステム・マルチエージェント協調の各コンポーネントを解説。旅行アシスタント・コードレビューボット・データ分析エージェントを具体的な構築例として使用。エージェントの本番デプロイ（Managed Agentsとホスティング）とコスト管理の戦略も含む。初心者から中級者向けの入門チュートリアルとして有用。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-10_3606_WEB_Best-AI-Trading-Agents-2026-Consistent-Returns-Performance-DEV.md",
+      "title": "Best AI Trading Agents in 2026: Can They Really Deliver Consistent Returns? (DEV Community)",
+      "url": "https://dev.to/lightningdev123/best-ai-trading-agents-in-2026-can-they-really-deliver-consistent-returns-2fgl",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "DEV Communityへの2026年AIトレーディングエージェント実績レビュー。TradingAgents（GitHub 80,000 stars）・ai-hedge-fund・FinRL等の主要OSS実装の実際のパフォーマンスを比較。30日間の実績で「S&P500比+7% vs -4.5%の超過リターン」を確認したケースがある一方、最初の1週間で15%超の損失を出したケースも報告。「公開情報から安定したアルファを得ることはそもそも困難」という厳しい評価を示しつつ、LLMトレーダーが従来のアルゴリズムに対して優位性を発揮する場面（決算発表・規制ニュース・マクロシフトの文脈的推論）についても分析。Robinhoodが2026年5月にAIエージェントとの直接ブローカー連携（「agentic finance」）を発表したことも言及。現実的な期待値設定に有用。",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "個別ケースの数値（+7%/-15%）は第三者検証不可。一般的な傾向としてFINQ AI ETFsがS&P500(10.07%)を上回る+15.30%〜+27.13%を達成した実績あり（The Next Web確認）。方向性は概ね整合するが、記事引用の具体数値はDEV Community投稿者の自己報告であり要注意。"
+    },
+    {
+      "file": "2026-08-10_3607_WEB_LLMs-in-Algorithmic-Trading-Architecture-Latency-Risk-Tokalpha.md",
+      "title": "LLMs in Algorithmic Trading: Architecture, Latency, Risk Management | Tokalpha Labs",
+      "url": "https://tokalpha.ai/blog/llms-in-algorithmic-trading",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "Tokalpha Labs（自律型トレードインフラ企業）によるLLMアルゴリズムトレーディング技術解説。従来の「if-thenルール」から「自然言語推論エンジン」への転換を詳述。LLMが決算トランスクリプト・ニュース・SNS・価格データを統合処理して売買判断を行う仕組みを解説。複数LLMバックエンド（GPT-5・Claude Opus 4.8・Gemini・Qwen・Kimi）の特性比較と適材適所の選択指針を提供。リアルタイム推論のレイテンシ問題（LLMの応答速度とHFTとの相性の悪さ）、マーケットマイクロストラクチャーとの統合、リスク管理層の設計についても論じる。2026年時点での業界スタンダードLLMトレードアーキテクチャを提示した技術参考記事。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    }
+  ],
+  "fact_checks": [
+    {
+      "article_file": "2026-08-10_3606_WEB_Best-AI-Trading-Agents-2026-Consistent-Returns-Performance-DEV.md",
+      "claim": "Robinhoodが2026年5月にAIエージェントとの直接ブローカー連携（「agentic finance」）を発表",
+      "verdict": "confirmed",
+      "note": "Robinhoodは2026年5月27日にModel Context Protocol (MCP)経由でAIエージェントとの直接ブローカー連携を発表（CNBC, Forbes, Robinhood公式newsroom確認済）。agentic trading accountとAgentic Credit Cardを提供。日付・内容ともに正確。"
+    },
+    {
+      "article_file": "2026-08-10_3599_WEB_Claude-Code-Complete-Guide-2026-JA-Visionary.md",
+      "claim": "Opus 4.8対応を2026年最新機能として記述",
+      "verdict": "confirmed",
+      "note": "AnthropicはClaude Opus 4.8を2026年5月28日にリリース（Anthropic公式、Axios等複数メディア確認済）。Dynamic Workflows機能含む。記事の記述は正確。"
+    },
+    {
+      "article_file": "2026-08-10_3606_WEB_Best-AI-Trading-Agents-2026-Consistent-Returns-Performance-DEV.md",
+      "claim": "30日間でS&P500比+7%超過リターン確認のケース・最初の1週間で15%超損失のケース",
+      "verdict": "plausible",
+      "note": "個別ケースの数値（+7%/-15%）は第三者検証不可。一般的な傾向としてFINQ AI ETFsがS&P500(10.07%)を上回る+15.30%〜+27.13%を達成した実績あり（The Next Web確認）。方向性は概ね整合するが、記事引用の具体数値はDEV Community投稿者の自己報告であり要注意。"
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-08-09": 13,
+      "2026-08-08": 15,
+      "2026-08-07": 13,
+      "2026-08-06": 18,
+      "2026-08-05": 13,
+      "2026-08-04": 13,
+      "2026-08-03": 351
+    },
+    "recurring_themes": [
+      "claude",
+      "claude_code",
+      "mcp",
+      "agent",
+      "llm"
+    ]
+  }
+}
