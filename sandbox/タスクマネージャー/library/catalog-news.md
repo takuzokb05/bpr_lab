@@ -420,3 +420,7 @@
 | 396 | 【2026年8月7日】日本AIニュースまとめ: ソフトバンクAGENTIC STAR LLM Gateway・組織組み込みフェーズへ移行 | ja | 未読 | #ai-news #web-signal | articles/2026-08-09_3595_WEB_Japan-AI-News-August-7-2026-SoftBank-AGENTIC-STAR-note-kaz0.md |
 | 397 | 米政府AI大統領令(EO14409)の8月1日期限・成果物未公表——EU施行vs米国グリッドロックvs中国罰金の三極分化 | ja | 未読 | #ai-news #ai-regulation #web-signal | articles/2026-08-09_3596_WEB_White-House-AI-EO-Deadline-Missed-US-Gridlock-classmethod.md |
 | 398 | Sakana AI「Sakana Namazu」日本語特化LLM API提供開始（2026年8月3日）・国産LLM競争加速 (tech-noisy.com) | ja | 未読 | #ai-news #web-signal | articles/2026-08-09_3597_WEB_Sakana-Namazu-LLM-API-Launch-August-2026-tech-noisy.md |
+| 399 | Microsoft Agent Framework Harness v1.13.0 GA: Foundry・セッションストア・テレメトリ・AutoGen+Semantic Kernelマージ版 | en | 未読 | #ai-news #ai-agent #web-signal | articles/2026-08-11_3617_WEB_Microsoft-Agent-Framework-Harness-GA-v1130.md |
+| 400 | LLM News August 2026 Monthly Roundup (augusto.digital): Opus 5・DeepSeek V4・Llama 4 Scout・Muse Spark 1.2・Qwen Image 3.0 | en | 未読 | #ai-news #llm-news #web-signal | articles/2026-08-11_3621_WEB_LLM-News-August-2026-Monthly-Model-Releases-Augusto.md |
+| 401 | AI規制グローバル動向 2026年8月 (Cubbbix): EU施行・中国初罰金・米国停滞・英国法案通過・インド立法予定・15カ国更新 | en | 未読 | #ai-news #regulation #web-signal | articles/2026-08-11_3622_WEB_AI-Regulation-Global-August-2026-Enforcement-Era-Cubbbix.md |
+| 402 | EU AI Act Article 50 施行開始 欧州委員会公式発表 (2026-08-02): チャットボットAI明示・ディープフェイクラベル・違反時€1500万 | en | 未読 | #ai-news #regulation #web-signal | articles/2026-08-11_3623_WEB_EU-AI-Act-Article50-Transparency-Enforcement-Commission.md |
