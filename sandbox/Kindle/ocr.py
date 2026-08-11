@@ -3,11 +3,16 @@ OCR Module for Kindle Auto-Capture Tool
 画像由来のPDFにテキスト層を付与し、検索可能PDF（NotebookLM取り込み用）にする
 """
 
+import collections
 import importlib.util
 import os
+import re
 import shutil
 import subprocess
 import sys
+import tempfile
+
+from PIL import Image
 
 # 不足しているものがあった際に案内する導入手順（日本語）
 # Ghostscript は --output-type pdf 指定で不要のため導入手順に含めない（実測確認済み）
@@ -21,6 +26,12 @@ INSTALL_GUIDE = (
 
 # winget既定のインストール先（PATH未反映の端末向けフォールバック）
 DEFAULT_TESSERACT_DIR = r"C:\Program Files\Tesseract-OCR"
+
+# ページ上部のうち、書名ヘッダーが載っている割合（クロップ後の画像基準）
+HEADER_RATIO = 0.06
+
+# ヘッダーから読み取った書名として認めない文字列（アプリ名だけが写った場合など）
+NON_TITLE_WORDS = {"kindle", "amazon kindle", "kindle for pc"}
 
 
 def _findTesseract() -> str | None:
@@ -191,3 +202,154 @@ def runOcr(
     print(f"   📊 ファイルサイズ: {fileSizeMb:.2f} MB")
 
     return True
+
+
+def cleanHeaderText(rawText: str) -> str | None:
+    """
+    ヘッダーのOCR結果を、ファイル名に使える書名候補に整形する
+
+    日本語のOCRは文字間に空白を入れてくるため（「グロースモ デル」等）、
+    日本語文字に挟まれた空白だけを詰める。英単語間の空白は語の区切りなので残す。
+
+    Args:
+        rawText: tesseract の生出力
+
+    Returns:
+        str | None: 整形後の書名候補。書名とみなせない場合は None
+    """
+    # 複数行が返った場合は最も長い行を採用する（短い行はノイズであることが多い）
+    lines = [line.strip() for line in rawText.splitlines() if line.strip()]
+    if not lines:
+        return None
+    text = max(lines, key=len)
+
+    # 日本語文字に挟まれた空白のみ除去し、残りの連続空白は1つにまとめる
+    text = re.sub(r"(?<=[^\x00-\x7F])[ \t]+(?=[^\x00-\x7F])", "", text)
+    text = re.sub(r"\s+", " ", text).strip()
+
+    # 記号だけ・極端に短い結果は誤読とみなす
+    if len(text) < 4:
+        return None
+    if not re.search(r"[0-9A-Za-z぀-ヿ一-鿿]", text):
+        return None
+    if text.strip().lower() in NON_TITLE_WORDS:
+        return None
+
+    return text
+
+
+def extractHeaderTitle(
+    imagePath: str,
+    headerRatio: float = HEADER_RATIO,
+    languages: str = "jpn+eng"
+) -> str | None:
+    """
+    ページ画像の上部を切り出してOCRし、書名ヘッダーを読み取る
+
+    新しいMicrosoft Store版Kindleはウィンドウタイトルが常に "Kindle" で書名を
+    含まないため、本文ページ上部に印字されている書名ヘッダーから補う。
+
+    Args:
+        imagePath: 対象のページ画像
+        headerRatio: 画像高さのうち、上から何割をヘッダーとみなすか
+        languages: OCR言語指定
+
+    Returns:
+        str | None: 読み取れた書名。読み取れない場合は None
+    """
+    tesseractPath = _findTesseract()
+    if tesseractPath is None:
+        return None
+
+    try:
+        with Image.open(imagePath) as img:
+            width, height = img.size
+            stripHeight = max(1, int(height * headerRatio))
+            headerStrip = img.crop((0, 0, width, stripHeight))
+            headerStrip.load()
+    except (OSError, ValueError) as e:
+        print(f"⚠️ ヘッダー読み取り用の画像を開けませんでした: {imagePath} ({e})")
+        return None
+
+    stripPath = None
+    try:
+        with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as tempFile:
+            stripPath = tempFile.name
+        headerStrip.save(stripPath, format="PNG")
+
+        # --psm 7 は「1行のテキスト」前提。取れなければ段落扱い(6)で読み直す
+        for pageSegMode in ("7", "6"):
+            try:
+                result = subprocess.run(
+                    [tesseractPath, stripPath, "stdout", "-l", languages, "--psm", pageSegMode],
+                    capture_output=True,
+                    text=True,
+                    encoding="utf-8",
+                    errors="replace",
+                    timeout=60,
+                )
+            except (subprocess.TimeoutExpired, OSError) as e:
+                print(f"⚠️ ヘッダーのOCRに失敗しました ({e})")
+                return None
+
+            if result.returncode != 0:
+                continue
+
+            title = cleanHeaderText(result.stdout or "")
+            if title:
+                return title
+
+        return None
+
+    finally:
+        if stripPath and os.path.exists(stripPath):
+            try:
+                os.remove(stripPath)
+            except OSError as e:
+                print(f"⚠️ 一時ファイルを削除できませんでした: {stripPath} ({e})")
+
+
+def detectBookTitleFromPages(imagePaths: list[str], sampleCount: int = 3) -> str | None:
+    """
+    複数ページのヘッダーをOCRし、複数ページで一致した結果だけを書名として採用する
+
+    ヘッダーが無い本では、OCRが背景の模様を拾って 'Tie OOO Ley) hn' のような
+    無意味な文字列を返す（実測）。1ページの結果をそのまま信じると、それが
+    ファイル名になってしまうため、2ページ以上で同一の文字列が読めた場合のみ
+    採用し、それ以外は None を返して呼び出し側の手入力に委ねる。
+
+    表紙・前付けにはヘッダーが無いので、本文中盤（全体の 1/4〜3/4）から選ぶ。
+
+    Args:
+        imagePaths: 撮影済みページ画像のパス一覧（順序どおり）
+        sampleCount: OCRするページ数
+
+    Returns:
+        str | None: 複数ページで一致した書名。確信が持てない場合は None
+    """
+    if not imagePaths:
+        return None
+
+    total = len(imagePaths)
+    start = total // 4
+    end = max(start + 1, total * 3 // 4)
+    span = end - start
+
+    indices = sorted({start + (i * span // max(1, sampleCount)) for i in range(sampleCount)})
+    indices = [i for i in indices if 0 <= i < total]
+
+    candidates = [
+        title for title in (extractHeaderTitle(imagePaths[i]) for i in indices) if title
+    ]
+
+    if len(candidates) < 2:
+        return None
+
+    # 同点の場合は先に読み取れたものが採用される（Counter は挿入順を保つ）
+    bestTitle, agreementCount = collections.Counter(candidates).most_common(1)[0]
+
+    # 誤読は毎回違う文字列になるため、一致しないものは書名とみなさない
+    if agreementCount < 2:
+        return None
+
+    return bestTitle

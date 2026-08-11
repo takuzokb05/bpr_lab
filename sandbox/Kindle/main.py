@@ -27,7 +27,7 @@ import pyautogui
 from pynput import keyboard
 
 from capture import AreaSelector, CaptureEngine, ClickPositionCapture
-from ocr import checkOcrAvailability, runOcr
+from ocr import checkOcrAvailability, detectBookTitleFromPages, runOcr
 from pdf_engine import PdfEngine
 from postprocess import computeChangingBbox, computeUnionBbox, cropImages
 from window_manager import WindowManager
@@ -120,6 +120,44 @@ def askYesNo(prompt: str) -> bool:
             return False
 
 
+def resolveBookTitle(
+    windowTitle: str | None,
+    imagePaths: list[str],
+    ocrAvailable: bool
+) -> str | None:
+    """
+    保存ファイル名に使う書名を決める
+
+    旧Kindle for PCはウィンドウタイトルが「書名 - Kindle」だったが、新しい
+    Microsoft Store版は常に "Kindle" を返し書名を含まない。そのため汎用名だった
+    場合に限り、ページ上部の書名ヘッダーをOCRして補い、それも失敗したら手入力を促す。
+
+    Args:
+        windowTitle: ウィンドウタイトル
+        imagePaths: 撮影済みページ画像（クロップ後）
+        ocrAvailable: Tesseractが使えるか
+
+    Returns:
+        str | None: 書名。決められなければ None（呼び出し側で既定名になる）
+    """
+    if not PdfEngine.isGenericWindowTitle(windowTitle):
+        return windowTitle
+
+    print("[書名] ウィンドウタイトルに書名が含まれないため、ページ上部から読み取ります...")
+
+    if ocrAvailable:
+        headerTitle = detectBookTitleFromPages(imagePaths)
+        if headerTitle:
+            print(f"[書名] ページヘッダーから取得しました: {headerTitle}")
+            return headerTitle
+        print("[書名] ヘッダーから書名を読み取れませんでした")
+    else:
+        print("[書名] OCRが使えないためヘッダーからは読み取れません")
+
+    typed = input("保存に使う書名を入力してください(空Enterで既定名): ").strip()
+    return typed or None
+
+
 def captureOneBook(
     windowManager: WindowManager,
     args: argparse.Namespace,
@@ -142,8 +180,9 @@ def captureOneBook(
         return False
     time.sleep(1.0)
 
-    bookTitle = windowManager.getWindowTitle()
-    print(f"[書名] {bookTitle}")
+    # 書名の確定は撮影後（ページヘッダーのOCRを使うため）。ここでは記録のみ
+    windowTitle = windowManager.getWindowTitle()
+    print(f"[ウィンドウ] {windowTitle}")
 
     # 撮影範囲の決定
     if args.manual_area:
@@ -241,6 +280,9 @@ def captureOneBook(
             if bbox:
                 cropImages(images, bbox)
                 print(f"[後処理] 余白を自動クロップしました: {bbox}")
+
+        # 書名の決定（クロップ後の画像を使う: ヘッダーが画像上端に来ている状態）
+        bookTitle = resolveBookTitle(windowTitle, images, ocrAvailable and not args.no_ocr)
 
         # PDF化 → OCR
         rawPdf = os.path.join(engine.tempDir, "raw.pdf")

@@ -10,8 +10,9 @@ from datetime import datetime
 import pytest
 from PIL import Image
 
+import ocr
 import pdf_engine
-from ocr import checkOcrAvailability
+from ocr import checkOcrAvailability, cleanHeaderText
 from pdf_engine import PdfEngine
 
 # 出力ファイル名の期待形式: {書名}_{YYYYMMDD}_{HHMM}[_連番].pdf
@@ -307,3 +308,126 @@ def test_checkOcrAvailabilityReturnsTupleShape():
     assert isinstance(isAvailable, bool)
     assert isinstance(message, str)
     assert message
+
+
+# --- isGenericWindowTitle ------------------------------------------------
+
+
+@pytest.mark.parametrize("title", ["Kindle", "kindle", "  KINDLE  ", "Amazon Kindle",
+                                   "Kindle for PC", "Kindle  for  PC", None, ""])
+def test_isGenericWindowTitleDetectsAppNameOnly(title):
+    """書名を含まない汎用ウィンドウタイトルが検出されること（新Store版対策）"""
+    assert PdfEngine.isGenericWindowTitle(title) is True
+
+
+@pytest.mark.parametrize("title", ["実践Python - Kindle", "吾輩は猫である", "はじめてのKindle"])
+def test_isGenericWindowTitleAcceptsRealTitles(title):
+    """書名を含むタイトルは汎用名とみなされないこと"""
+    assert PdfEngine.isGenericWindowTitle(title) is False
+
+
+# --- JPEG埋め込み --------------------------------------------------------
+
+
+def test_stageAsJpegConvertsAllPages(tmp_path):
+    """PDF埋め込み用にJPEGへ変換され、順序と枚数が保たれること"""
+    images = [makeImage(str(tmp_path / f"page_{i:04d}.png")) for i in range(3)]
+    stagingDir = str(tmp_path / "staging")
+    os.makedirs(stagingDir)
+
+    staged = PdfEngine._stageAsJpeg(images, stagingDir, quality=80)
+
+    assert len(staged) == len(images)
+    for path in staged:
+        with Image.open(path) as img:
+            assert img.format == "JPEG"
+
+
+def test_stageAsJpegFallsBackToOriginalOnFailure(tmp_path):
+    """変換できない画像は元パスのまま返し、他ページを巻き添えにしないこと"""
+    good = makeImage(str(tmp_path / "page_0000.png"))
+    broken = makeTruncatedPng(str(tmp_path / "page_0001.png"))
+    stagingDir = str(tmp_path / "staging")
+    os.makedirs(stagingDir)
+
+    staged = PdfEngine._stageAsJpeg([good, broken], stagingDir, quality=80)
+
+    assert len(staged) == 2
+    assert staged[1] == broken  # 壊れたページは元パスのまま
+
+
+def test_convertToPdfEmbedsJpegByDefault(tmp_path):
+    """既定ではJPEG(/DCTDecode)として埋め込まれること
+
+    サイズの大小は画像の内容次第（合成パターンではPNGの方が小さくなる）なので、
+    削減効果ではなく埋め込み形式そのものを検証する。
+    """
+    images = [makeImage(str(tmp_path / f"page_{i:04d}.png")) for i in range(2)]
+
+    jpegPdf = str(tmp_path / "jpeg.pdf")
+    pngPdf = str(tmp_path / "png.pdf")
+
+    PdfEngine.convertToPdf(images, outputPath=jpegPdf)
+    PdfEngine.convertToPdf(images, outputPath=pngPdf, jpegQuality=None)
+
+    assert b"/DCTDecode" in open(jpegPdf, "rb").read()
+    assert b"/DCTDecode" not in open(pngPdf, "rb").read()
+
+
+def test_convertToPdfKeepsOriginalImagesIntact(tmp_path):
+    """JPEG化は一時領域で行い、撮影済みのPNGを書き換えないこと"""
+    path = makeImage(str(tmp_path / "page_0001.png"))
+    before = open(path, "rb").read()
+
+    PdfEngine.convertToPdf([path], outputPath=str(tmp_path / "out.pdf"))
+
+    assert open(path, "rb").read() == before
+    with Image.open(path) as img:
+        assert img.format == "PNG"
+
+
+# --- 書名のヘッダー読み取り ----------------------------------------------
+
+
+def test_cleanHeaderTextRemovesSpacesBetweenJapanese():
+    """日本語文字間に入るOCRの空白が詰められること"""
+    assert cleanHeaderText("グロースモ デル 実践方法論") == "グロースモデル実践方法論"
+
+
+def test_cleanHeaderTextKeepsSpacesBetweenEnglishWords():
+    """英単語間の空白は語の区切りなので保持されること"""
+    assert cleanHeaderText("Thinking Fast and Slow") == "Thinking Fast and Slow"
+
+
+def test_cleanHeaderTextPicksLongestLine():
+    """複数行が返った場合、最も長い行が書名候補になること"""
+    assert cleanHeaderText("12\n本当の書名はこちら\nx") == "本当の書名はこちら"
+
+
+@pytest.mark.parametrize("rawText", ["", "  ", "|", "...", "abc", "Kindle", "kindle"])
+def test_cleanHeaderTextRejectsNonTitles(rawText):
+    """短すぎる・記号のみ・アプリ名だけの結果は書名として採用しないこと"""
+    assert cleanHeaderText(rawText) is None
+
+
+def test_detectBookTitleFromPagesRequiresAgreement(tmp_path, monkeypatch):
+    """ページ間で結果が食い違う場合は、誤読とみなして採用しないこと"""
+    pages = [str(tmp_path / f"page_{i}.png") for i in range(6)]
+    results = iter(["Tie OOO Ley) hn", "别の誤読", "さらに別の誤読"])
+    monkeypatch.setattr(ocr, "extractHeaderTitle", lambda path: next(results, None))
+
+    assert ocr.detectBookTitleFromPages(pages) is None
+
+
+def test_detectBookTitleFromPagesAdoptsMajority(tmp_path, monkeypatch):
+    """複数ページで一致した文字列が書名として採用されること"""
+    pages = [str(tmp_path / f"page_{i}.png") for i in range(6)]
+    results = iter(["正しい書名", "誤読", "正しい書名"])
+    monkeypatch.setattr(ocr, "extractHeaderTitle", lambda path: next(results, None))
+
+    assert ocr.detectBookTitleFromPages(pages) == "正しい書名"
+
+
+def test_detectBookTitleFromPagesReturnsNoneWithoutPages():
+    """撮影画像が無ければ None を返すこと"""
+    assert ocr.detectBookTitleFromPages([]) is None

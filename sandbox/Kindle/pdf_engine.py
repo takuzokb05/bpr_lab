@@ -6,9 +6,17 @@ Converts captured images to optimized PDF
 import img2pdf
 import os
 import re
+import shutil
+import tempfile
 from datetime import datetime
 
 from PIL import Image
+
+# PDFに埋め込む画像のJPEG品質。
+# NotebookLM等の取り込み先は1ソース200MBが上限で、PNGのままだと約290画面で超過する
+# （実測: 174画面で120MB = 0.69MB/画面）。q80ならサイズは約54%に減り、
+# 図中の小さな文字も判読できることを実測で確認済み。
+JPEG_QUALITY = 80
 
 
 class PdfEngine:
@@ -16,6 +24,9 @@ class PdfEngine:
 
     # ファイル名に使えないWindows禁止文字
     FORBIDDEN_CHARS_PATTERN = re.compile(r'[\\/:*?"<>|]')
+
+    # 書名を含まない汎用ウィンドウタイトル（新Store版Kindleは常に "Kindle" を返す）
+    GENERIC_WINDOW_TITLES = {"kindle", "amazon kindle", "kindle for pc"}
 
     # 「- Kindle」「- Kindle for PC」等のアプリ名サフィックス
     # 区切り文字（ハイフン類）は必須。区切りなしの末尾一致を許すと
@@ -88,6 +99,67 @@ class PdfEngine:
         return sanitized
 
     @staticmethod
+    def isGenericWindowTitle(title: str | None) -> bool:
+        """
+        ウィンドウタイトルが書名を含まない汎用名か判定する
+
+        旧Kindle for PCは「書名 - Kindle」だったが、新しいMicrosoft Store版は
+        常に "Kindle" を返すため、これを書名として採用してはいけない。
+
+        Args:
+            title: ウィンドウタイトル（None 可）
+
+        Returns:
+            bool: 書名として使えない汎用名なら True
+        """
+        if not title:
+            return True
+
+        normalized = re.sub(r"\s+", " ", title).strip().lower()
+        return normalized in PdfEngine.GENERIC_WINDOW_TITLES
+
+    @staticmethod
+    def _stageAsJpeg(imagePaths: list[str], stagingDir: str, quality: int) -> list[str]:
+        """
+        PDF埋め込み用に、画像をJPEGへ変換した一時ファイル群を作る
+
+        1枚の変換失敗で撮影分を失わないよう、失敗したページは元の画像パスを
+        そのまま使う（PDFは生成できるが、そのページだけ元サイズのまま残る）。
+
+        Args:
+            imagePaths: 変換元の画像パス一覧
+            stagingDir: 変換後ファイルの置き場（呼び出し側が後始末する）
+            quality: JPEG品質 (1-95)
+
+        Returns:
+            list[str]: img2pdf に渡すパス一覧（順序は入力どおり）
+        """
+        stagedPaths: list[str] = []
+        failedCount = 0
+
+        for index, imagePath in enumerate(imagePaths):
+            jpegPath = os.path.join(stagingDir, f"page_{index:04d}.jpg")
+            try:
+                with Image.open(imagePath) as img:
+                    # JPEGはアルファチャンネルを扱えないためRGBに落とす
+                    rgbImage = img.convert("RGB")
+                    rgbImage.load()
+
+                rgbImage.save(jpegPath, format="JPEG", quality=quality, optimize=True)
+                stagedPaths.append(jpegPath)
+
+            except (OSError, ValueError) as e:
+                print(f"⚠️ JPEG変換に失敗しました（元画像のまま埋め込みます）: "
+                      f"{os.path.basename(imagePath)} ({e})")
+                stagedPaths.append(imagePath)
+                failedCount += 1
+
+        if failedCount:
+            print(f"⚠️ JPEG変換に失敗したページ: {failedCount}件")
+
+        return stagedPaths
+
+    @staticmethod
     def getOutputPath(bookTitle: str | None = None) -> str:
         """
         Generate output path for PDF in Downloads folder
@@ -123,7 +195,8 @@ class PdfEngine:
     def convertToPdf(
         imagePaths: list[str],
         outputPath: str | None = None,
-        bookTitle: str | None = None
+        bookTitle: str | None = None,
+        jpegQuality: int | None = JPEG_QUALITY
     ) -> str:
         """
         Convert list of images to PDF
@@ -132,6 +205,7 @@ class PdfEngine:
             imagePaths: List of paths to image files (in order)
             outputPath: Optional custom output path. If None, uses Downloads folder
             bookTitle: 書名（outputPath 未指定時のファイル名に使う）
+            jpegQuality: 埋め込み時のJPEG品質。None なら元画像（PNG）のまま埋め込む
 
         Returns:
             str: Path to created PDF file
@@ -160,12 +234,23 @@ class PdfEngine:
         if outputPath is None:
             outputPath = PdfEngine.getOutputPath(bookTitle)
 
+        # JPEG化は一時ディレクトリで行い、撮影済みのPNGには手を触れない
+        # （失敗時に元画像から作り直せるようにするため）
+        stagingDir: str | None = None
+
         try:
             print(f"📄 PDF生成中... ({len(validPaths)}ページ)")
 
+            if jpegQuality is None:
+                embedPaths = validPaths
+            else:
+                print(f"🗜️ 画像をJPEG(q{jpegQuality})に変換しています...")
+                stagingDir = tempfile.mkdtemp(prefix="kindle_jpeg_")
+                embedPaths = PdfEngine._stageAsJpeg(validPaths, stagingDir, jpegQuality)
+
             # Convert images to PDF
             with open(outputPath, "wb") as f:
-                f.write(img2pdf.convert(validPaths))
+                f.write(img2pdf.convert(embedPaths))
 
             # Get file size
             fileSize = os.path.getsize(outputPath)
@@ -181,6 +266,11 @@ class PdfEngine:
         except Exception as e:
             print(f"❌ PDF生成エラー: {e}")
             raise
+
+        finally:
+            # 中間JPEGはPDFに書き出した時点で不要（元のPNGは呼び出し側が管理する）
+            if stagingDir and os.path.isdir(stagingDir):
+                shutil.rmtree(stagingDir, ignore_errors=True)
 
     @staticmethod
     def validateImages(imagePaths: list[str]) -> bool:
