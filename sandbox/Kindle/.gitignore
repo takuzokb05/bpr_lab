@@ -1,0 +1,6 @@
+# マシン固有の設定・生成物はリポジトリに含めない
+config.json
+__pycache__/
+.venv/
+*.png
+*.pdf

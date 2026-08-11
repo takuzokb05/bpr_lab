@@ -40,7 +40,7 @@
 | **スライド作成** | スライド作成の調査・試作 | 休眠 | `PLANS.md` / `docs/` |
 | **NotebookLM_pptx** | PDF/画像を高品質PPTXに変換（Gemini 3 Pro、クライアント側完結） | 休眠 | `README.md` / `素晴らしき修正ツール.html` |
 | **PDFをOCR** | Gemini APIによるステートフルOCR（スライディングウィンドウ→Markdown） | 休眠 | `README.md` / `Nanobanana/` |
-| **Kindle** | Kindle for PC 自動撮影→PDF変換ツール | 休眠 | `README.md` / `config.json` |
+| **Kindle** | Kindle for PC 自動撮影→OCR付き検索可能PDF化（NotebookLM取込用） | **稼働準備完了**（v2リライト済・実機E2E待ち） | `README.md` / `docs/HANDOVER_2026-08-11.md` |
 | **chrome拡張機能** | Chrome拡張（Kindleスクショ等） | 休眠 | `Kindleスクショ/` |
 | **HTML直す君** | 壊れたHTMLを修正するツール | 休眠 | `index.html` / `出力例.txt` |
 | **ganbarulist** | 妻向けToDoアプリ（心理学ベースの動機づけ設計、Vite） | 休眠 | `README.md` / `vite.config.js` |

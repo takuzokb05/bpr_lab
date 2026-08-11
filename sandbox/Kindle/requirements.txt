@@ -1,5 +1,8 @@
+# NOTE: keep comments ASCII-only (pip decodes this file with the locale codepage on Windows)
 pyautogui>=0.9.54
 Pillow>=10.0.0
 img2pdf>=0.5.0
 pynput>=1.7.6
 pygetwindow>=0.0.9
+# OCR text layer for searchable PDF (requires Tesseract + Ghostscript installed separately)
+ocrmypdf>=16.0.0
