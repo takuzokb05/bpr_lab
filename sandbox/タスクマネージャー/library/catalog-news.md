@@ -424,3 +424,4 @@
 | 400 | LLM News August 2026 Monthly Roundup (augusto.digital): Opus 5・DeepSeek V4・Llama 4 Scout・Muse Spark 1.2・Qwen Image 3.0 | en | 未読 | #ai-news #llm-news #web-signal | articles/2026-08-11_3621_WEB_LLM-News-August-2026-Monthly-Model-Releases-Augusto.md |
 | 401 | AI規制グローバル動向 2026年8月 (Cubbbix): EU施行・中国初罰金・米国停滞・英国法案通過・インド立法予定・15カ国更新 | en | 未読 | #ai-news #regulation #web-signal | articles/2026-08-11_3622_WEB_AI-Regulation-Global-August-2026-Enforcement-Era-Cubbbix.md |
 | 402 | EU AI Act Article 50 施行開始 欧州委員会公式発表 (2026-08-02): チャットボットAI明示・ディープフェイクラベル・違反時€1500万 | en | 未読 | #ai-news #regulation #web-signal | articles/2026-08-11_3623_WEB_EU-AI-Act-Article50-Transparency-Enforcement-Commission.md |
+| 403 | AI Washington Report 2026年8月号 (Mintz): Genesis Mission 50億ドル・GOLD EAGLE・FTC AIステアリング規制・イリノイ第三者監査義務化 | en | 未読 | #ai-news #ai-regulation #web-signal | articles/2026-08-12_3627_WEB_Mintz-AI-Washington-Report-August-2026-Federal-5B-Genesis.md |
