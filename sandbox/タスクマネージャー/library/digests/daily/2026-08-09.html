@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-08-09</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-08-09 | 13件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-08-09</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>EU AI Actの透明性義務（Article 50）が8月2日に正式施行、同時期に米国は大統領令期限を未達という「AI規制三極分化」が鮮明になった週。Claude側では Agent SDK エコシステムが急速に拡張し、Microsoft との本番グレード統合が確認済み。国内ではSakana AIが「Sakana Namazu」の日本語特化API提供を開始し、国産LLM競争が加速。FXトレーディング文脈では、LLMはバックオフィス補助主体・MT5+EA主力という2026年標準構成が複数記事から確認できた。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>スマートフォンリモート操作の3方式が整理された</h3>
+
+<p>Claude Codeをスマホから動かす方法として、① Remote Control、② SSH経由のターミナル、③ Claude.aiアプリ直接操作という3方式の比較解説が登場した。外出先からSEOデータ収集→分析→Slack自動投稿まで一気通貫で動かすユースケースが実例として紹介されており、bpr_labのクラウドセッション＋GitAutoSync構成に近い非同期エージェント運用パターンだ。</p>
+<p>(<a href="https://genai-ai.co.jp/ai-kanri/blog/cc-yt-remote-access-27/" target="_blank">記事</a>)</p>
+
+<h3>Claude Skillsがメタスキル（スキルクリエイター）まで進化</h3>
+
+<p>2026年8月時点でClaude Codeには標準バンドルスキルが9本（v2.1.145以降）搭載されており、AI指示だけで新スキルのSKILL.mdとスクリプトを自動生成できる「スキルクリエイター」が登場した。GPTsとの本質的な違いはローカルファイルベースでバージョン管理できる点で、bpr_labのSKILL.md方式と整合する設計哲学だ。</p>
+<p>(<a href="https://genai-ai.co.jp/ai-kanri/blog/cc-yt-claude-skills-intro-25/" target="_blank">入門記事</a>)</p>
+
+<p>合わせてスキル用途別厳選ガイドも登場。特に有用なのが「Hook vs Skill vs MCP の使い分け判断フロー」の整理——コードで規則を強制する場合はHook、ドメイン固有ロジックや補助ファイルが必要な場合はSkill、外部データ・ツール連携はMCPという基準だ。</p>
+<p>(<a href="https://syusodo.co.jp/tech-blog/articles/claude-code-skills" target="_blank">厳選ガイド</a>)</p>
+
+<h3>Microsoft Agent Framework HarnessがGAに到達（一次ソース確認済み）</h3>
+
+<p>v1.13.0でFoundry Hosted Agents統合・Claude Agent SDKコネクタ・ワークフローリプレイが安定版へ移行した。Build 2026プレビューから本番グレードに到達したことで、MSとAnthropicのAgent SDKインターオペラビリティが正式に企業利用に対応した節目となる。</p>
+<p>(<a href="https://devblogs.microsoft.com/agent-framework/the-microsoft-agent-framework-harness-is-now-released/" target="_blank">Microsoft公式ブログ</a>)</p>
+
+<h3>Agent SDK・MCPエコシステムの拡張加速</h3>
+
+<p>Claude Agent SDKの実装チュートリアルとして、1つのリードエージェントがチームを生成・並列タスク調整・後処理を担うパターンが公開された。Claude 4.7ではClaude Code内でのネイティブサブエージェントサポートが含まれており、LangGraph/OpenAI Agents SDKとの相互運用も可能。7月に追加されたDreaming（投機的プリフィル）・Outcomes・Claude Finance（10の金融特化エージェント）・Add-insも解説された。</p>
+<p>(<a href="https://kargarisaac.medium.com/agent-teams-with-claude-code-and-claude-agent-sdk-e7de4e0cb03e" target="_blank">チュートリアル</a> / <a href="https://o-mega.ai/articles/claude-agent-sdk-the-2026-deep-dive" target="_blank">技術深掘り</a>)</p>
+
+<p>日本語圏では国内最大117件のMCPサーバーカタログ（34カテゴリ）が公開された。Tier 1 SDK（TypeScript/Python）の月間DL数は5億件・累計10億DLを突破。2026-07-28新仕様（ステートレスコア・OAuth/OIDC強化）でCloudflare Workers/Vercel FunctionsでのMCPサーバー動作が可能になった。</p>
+<p>(<a href="https://aiagent-navi.com/special/mcp-directory/" target="_blank">MCPディレクトリ</a>)</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>EU施行・米国グリッドロック・中国罰金という三極分化</h3>
+
+<p>EU AI ActのArticle 50（チャットボット開示・ディープフェイクラベリング義務）が8月2日から施行開始。罰則は最大1500万ユーロまたは売上高3%。高リスクAI（採用・信用・教育・法執行等）は2027年12月まで延期される。（<strong>一次ソース確認済み</strong>。ただし合成メディアの既存製品には12月2日までの移行期間あり）</p>
+<p>(<a href="https://www.aljazeera.com/news/2026/8/6/what-came-into-force-with-the-eus-ai-act-this-week-and-what-didnt" target="_blank">Al Jazeera報道</a>)</p>
+
+<p>その対極として米国では、AI規制大統領令（EO14409）の2026年8月1日期限に成果物が公表されなかった。各州独自のAI法が進展しているが（2026年に15州が更新・施行）、連邦統一基準の不在がガバナンスの空白を生んでいる。日本企業・AI開発者にとって米国市場のコンプライアンス対応は「州法の複数対応」が現実的な選択肢となっている。</p>
+<p>(<a href="https://classmethod.jp/aixc/articles/20260801-whitehouse-eo14409/" target="_blank">Classmethod AIXC</a>)</p>
+
+<h3>国内AI産業：「試す」から「組み込む」フェーズへ</h3>
+
+<p>ソフトバンクが法人向けAIプラットフォーム「AGENTIC STAR」SaaS版に複数LLMを一元管理する「LLM Gateway」機能を標準搭載すると発表（8月7日）。業界全体として「AIを試す段階」から「AIを組織に組み込む段階」への移行が明確化している週だった。</p>
+<p>(<a href="https://note.com/kaz0/n/n960a8e8c9a05" target="_blank">note/kaz0</a>)</p>
+
+<p>Sakana AIが日本語特化LLM「Sakana Namazu」のAPI提供を開始（8月3日）。（<strong>一次ソース確認済み・留保あり</strong>：実態はMoonshot AIのKimi K2.6をベースにSakana独自チューニングを施した構成。価格は$0.95/1Mトークン入力/$4.00/1M出力。EU/EEA/英国/スイスはGDPR対応未完了のため提供不可）tsuzumi（NTT）・PLaMo（PFN）との三つ巴の国産LLM競争が加速している。</p>
+<p>(<a href="https://tech-noisy.com/2026/08/05/ai-daily-news-2026-08-04/" target="_blank">tech-noisy</a>)</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #ea580c; padding-left: 12px;">AIトレーディング</h2>
+
+<h3>2026年標準構成：MT5+EA主力、LLMはバックオフィス補助</h3>
+
+<p>証券・FX実務でのAI活用15ユースケース解説（2026年版）から、業界標準が整理できた。フロントの自動執行はリスク管理・説明責任の観点から人間監視が依然必須で、MT5+MQL5+AI補助（LLMは補助ツール、執行はEA）が実務標準だ。LLMが特に有効なのは①決算レポートのリサーチ要約、②コード補助（MQL5/Python）、③リスク管理レポート生成、④規制変更モニタリング等のミドル・バックオフィス領域。金融利用前提としてSOC2/ISO27001取得+データ非学習設定が必要で、各LLMの取得状況比較表が有用な一次情報として参照できる。</p>
+<p>(<a href="https://aipicks.jp/mag/ai-securities-fx-trading-2026" target="_blank">aipicks</a>)</p>
+
+<p>Claude Code + MT5連携のケーススタディ（961コール事例）も言及されており、Claude Codeがトレードロジック開発を支援した実例として参照価値がある。Robinhoodが「agentic finance」への口座接続を開始したことも業界転換点の文脈として記録しておく。</p>
+<p>(<a href="https://genai-ai.co.jp/ai-kanri/blog/cc-ai-stock-trading/" target="_blank">genai-ai</a>)</p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>過去7日の記事件数は概ね13〜18件で安定しているが、8月3日のみ351件と突出しており、前処理段階のデータ集積の揺れを示している（8月3日は同日中の重複カウントや過去分のまとめ取得が含まれる可能性あり）。</p>
+
+<p>今週のトピックは「claude」「claude_code」「mcp」「agent」「llm」が継続テーマとして確認されており、先週からの流れに変化はない。新規性があるのは<strong>EU AI Act施行</strong>（規制環境が実際に動き始めた）と<strong>Microsoft Agent Framework HarnessのGA</strong>（MS×Anthropicの本番統合が完了）の2点。Claude Skillsエコシステムの成熟（スキルクリエイター登場）も今週のトレンドとして記録に残る。</p>
+
+<p>---</p>
+<p>*対象日: 2026-08-09 / 記事数: 13 / 一次ソース確認: EU AI Act・Microsoft Agent Framework Harness・Sakana Namazu（留保付き）*</p>
+
+</body>
+</html>
