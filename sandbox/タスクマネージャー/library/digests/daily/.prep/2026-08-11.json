@@ -1,0 +1,262 @@
+{
+  "date": "2026-08-11",
+  "generated_at": "2026-08-12T23:16:39.312242Z",
+  "article_count": 18,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-08-11_3608_WEB_Claude-Code-v21224-Self-Hosted-Runner-Official-Anthropic.md",
+      "title": "Claude Code Self-Hosted Runner: Run Sessions on Your Own Infrastructure",
+      "url": "https://claude.com/blog/run-claude-code-sessions-on-your-own-compute",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Anthropic公式ブログ。Claude Code v2.1.224（2026-08-07リリース）でself-hosted environments（自己ホスト環境）がパブリックベータとして追加された。`claude self-hosted-runner`コマンドで自社マシンやコンテナをClaude Codeセッションの実行基盤として使用可能。Team・Enterpriseプランが対象。Fixed（常時起動）とOn-demand（セッション到着時に起動・終了）の2モードを提供。自社インフラ内のネットワークアクセス、カスタムツール、コンプライアンス要件に対応。WebセッションやモバイルアプリからもOK。企業データ主権を確保しながらAIエージェント活用が可能になる重要マイルストーン。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-11_3609_WEB_Claude-Code-v21224-Cross-Session-Agent-Messaging.md",
+      "title": "Claude Code 2.1.224: Cross-Session Agent Messaging via SendMessage",
+      "url": "https://www.digitalapplied.com/blog/claude-code-self-hosted-runners-cross-session-agent-messaging",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Claude Code v2.1.224で追加されたcross-session messaging機能の解説記事。`SendMessage`と`ListAgents`の2つの新ツールにより、異なるマシン上のClaude Codeセッション同士がメッセージを交換できるようになった（macOS・Linux対応）。self-hosted runnerと組み合わせることで、分散エージェント協調（複数マシン上のサブエージェントへのタスク委譲）が可能。マルチマシン・エンタープライズ用途でのエージェントネットワーク構築に向けた重要アップデート。既存のAgent toolとの組み合わせでより複雑な分散ワークフローを構成可能。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-11_3610_WEB_Claude-Code-August-2026-News-Features-Roundup.md",
+      "title": "Claude Code News August 2026: Self-Hosted Runners, Archive Plugins, Bug Fixes",
+      "url": "https://blog.mean.ceo/claude-code-news-august-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "スタートアップ向けClaude Code 2026年8月ニュースまとめ。主要追加機能：(1) self-hosted runner（自社インフラでのセッション実行）、(2) cross-session SendMessage（セッション間メッセージング）、(3) アーカイブプラグインソース（HTTPS zip経由でSHA-256ピン留めインストール）。バグ修正・改善：Bashコマンド実行の修正（claude-code-action）、/tui rewindの挙動改善、スラッシュコマンドメニューの整理、イベントループ停止削減による速度改善、VSCode Focus View追加、サンドボックス認証情報のマスク強化。7月から継続するチーム・エンタープライズ向け品質強化トレンド。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-11_3611_WEB_Claude-Code-Skills-Hooks-Non-Developer-Framework.md",
+      "title": "Claude Code Skills & Hooks: Non-Developer Decision Framework 2026",
+      "url": "https://pixelnthings.com/claude-code-skills-hooks-guide/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "非エンジニア向けのClaude Code Skills・Hooks実践ガイド。Skillsは「いつどのルールを適用するか」を制御し、Hooksは「Claude Codeのアクションの前後で何をするか」を自動化する。コンテンツパイプラインを実例にした意思決定フレームワーク（Skills vs Hooks vs MCP vs Subagentsの使い分け）を提供。ターミナルの専門用語なしで説明し、実際のワークフロー例を多数収録。自動化の閾値（何をすべきで何をすべきでないか）についても実践的に言及。非エンジニアでもClaude Codeの拡張機能を設計・活用できることを示す貴重な実践知見。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-11_3612_WEB_Claude-Code-Skills-vs-Hooks-vs-Subagents-Complete-Guide-Totalum.md",
+      "title": "Claude Code Skills 2026: Complete Guide vs Hooks vs Subagents vs MCP",
+      "url": "https://www.totalum.app/blog/claude-code-skills-totalum",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Claude Code Skillsの完全比較ガイド。Skillsは「再利用可能な命令セット」、Hooksは「イベント駆動自動化」、Subagentsは「並列タスク実行」、MCPは「外部ツール接続」という役割分担を明快に整理。バンドルスキル（/code-review, /verify, /run）の詳細とインストール方法。どのシナリオでどれを選ぶかの決定フレームワーク：単純な繰り返しルール→Skills、実行前後の自動検証→Hooks、重い並列処理→Subagents、外部データ統合→MCP。2026年時点の全バンドルスキル一覧と実践的ユースケース。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-11_3613_WEB_Claude-Code-CLI-Complete-Guide-Hooks-MCP-Skills-Crosley.md",
+      "title": "Claude Code CLI: Complete Guide — Hooks 21 Events, MCP, Skills Architecture",
+      "url": "https://blakecrosley.com/guides/claude-code",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Claude Code CLIの包括的アーキテクチャガイド。Hooksの21イベント（PreToolUse, PostToolUse等）の全パターン、MCPサーバーの接続と認証フロー、SKILL.mdの設計原則を体系的に解説。Commands vs Agents vs Skills vs MCPの役割整理：コマンドはCLIエントリポイント、エージェントは自律実行単位、スキルは命令パッケージ、MCPは外部統合。CLAUDE.mdの最適化・並列エージェントのgit worktree活用・コンテキスト管理のベストプラクティス。実際の生産用ワークフロー（CI/CD統合、自動テスト修正等）の実例付き。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-11_3614_WEB_MCP-2026-Architecture-Implementation-Enterprise-DEV.md",
+      "title": "Complete Guide to MCP 2026: Architecture, Implementation and Enterprise Roadmap",
+      "url": "https://dev.to/x4nent/complete-guide-to-mcp-model-context-protocol-in-2026-architecture-implementation-and-4a11",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "MCP（Model Context Protocol）の2026年版完全ガイド。JSON-RPC 2.0ベースの仕様、サーバー・クライアント・ホストの役割、ツール・リソース・プロンプトの3要素を解説。2026-07-28仕様のステートレスコア（セッション廃止→ロードバランサー下での水平スケール）、マルチラウンドトリップリクエスト、ヘッダーベースルーティング（Mcp-Methodヘッダー）、OAuth 2.1認証強化を詳述。エンタープライズロードマップ：マーケットプレイス化・ノーコード化・A2A連携が2026-2027に予定。普通のWebサーバー（Cloudflare Workers等）でMCPエンドポイントを実装可能に。2026年3月時点でSDKは月間9700万ダウンロード、GitHubスター8.1万超。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-11_3615_WEB_MCP-2026-Official-Roadmap-Stateless-Extensions.md",
+      "title": "MCP 2026 Official Roadmap: Stateless Core, Extensions, Multi-RT Requests",
+      "url": "https://blog.modelcontextprotocol.io/posts/2026-mcp-roadmap/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Model Context Protocol公式ブログのロードマップ記事。2026年の主要方針6点：(1)ステートレスプロトコルコアへの移行（セッション廃止・水平スケーリング対応）、(2)マルチラウンドトリップリクエスト対応、(3)ヘッダーベースルーティング、(4)キャッシュ可能なlistレスポンス（tools/listキャッシュ）、(5)認証強化（OAuth 2.1・OIDC）、(6)公式拡張フレームワーク（Apps・Tasks向けバージョニングされた拡張）。Tier 1 SDK（Python, TypeScript, Go, Java, Ruby, PHP, C#）の同期更新も計画。2026-07-28仕様はRC版として公開済み。現行MCP 2026-03-26仕様からの移行ガイドを含む。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-11_3616_WEB_Claude-Opus5-Benchmarks-SWEbench96-IMO2026-Perfect.md",
+      "title": "Claude Opus 5 Benchmarks: SWE-bench 96%, IMO 2026 Perfect Score",
+      "url": "https://codersera.com/blog/claude-opus-5-benchmarks-explained-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "2026年7月24日リリースのClaude Opus 5の全ベンチマーク詳細解説。主要スコア：SWE-bench Verified 96.0%（コーディング最高水準）、SWE-bench Pro 79.2%、Frontier-Bench 43.3%、Knowledge-work Elo 1861。ARC-AGI 3で次点モデルの3倍のスコアを記録。IMO 2026で42/42（金メダル）を達成（エージェントハーネス・外部ツール不使用）。価格：入力$5/出力$25（100万トークン）でOpus 4.8と同価格。コンテキスト窓1M・最大出力128K。BenchLMリーダーボード216モデル中3位（82.6/100）。Fable 5とほぼ同等性能で約半額のコスト効率を実現。FX取引システムの意思決定エンジンとしての活用可能性が高まっている。",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "✅ 確認: 複数の独立ソース（codersera.com, morphllm.com, claude5.ai, marktechpost.com）でSWE-bench Verified 96.0%を確認。IMO 2026の42/42（金メダル）もエージェントハーネス・外部ツール不使用で達成を複数ソースが裏付け。価格$5/$25も確認済み。"
+    },
+    {
+      "file": "2026-08-11_3617_WEB_Microsoft-Agent-Framework-Harness-GA-v1130.md",
+      "title": "Microsoft Agent Framework Harness GA: v1.13.0 Foundry, Durable Tasks",
+      "url": "https://devblogs.microsoft.com/agent-framework/the-microsoft-agent-framework-harness-is-now-released/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "MicrosoftがAgent Framework Harness v1.13.0をGA（一般提供）リリース（2026年8月）。AutoGenとSemantic Kernelのマージにより生まれたフレームワーク。v1.13.0の主要追加：豊富なFoundryホスティング・Responsesサポート、再利用可能なセッションストア、拡張されたテレメトリ・オブザーバビリティ（OpenTelemetry統合）、ワークフローリプレイ・承認機能。.NET・PythonでDurable TaskとAzure Functions統合変更。BUILD 2026での発表内容（Agent Harness, Hosted Agents, CodeAct）が正式リリースに。2026年主要エージェントフレームワーク：LangGraph 1.0、Claude Agent SDK、CrewAI 1.14、Microsoft Agent Framework 1.0、LlamaIndex Workflows 1.0、Pydantic AI V2。",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "✅ 確認（注記あり）: Agent Framework 1.0 GAは2026年4月2日、Harness GAは2026年7月22日（BUILD 2026発表後）。v1.13.0がFoundryホスティング・セッションストア・テレメトリ拡張を含む幅広アップデートを実施した点を確認。AutoGen+Semantic Kernelのマージによる統合フレームワークも確認。"
+    },
+    {
+      "file": "2026-08-11_3618_WEB_Best-AI-Trading-Agents-2026-Real-Returns-Analysis-Pinggy.md",
+      "title": "Best AI Trading Agents 2026: Do They Actually Make Money? Real Analysis",
+      "url": "https://pinggy.io/blog/best_ai_trading_agents/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "2026年の主要AIトレーディングエージェントのキュレーションレビューと実収益分析。主要OSSフレームワーク：TradingAgents（多エージェントLLM型）、ai-hedge-fund（投資家ペルソナ型）、FinRL（強化学習型）。eToro調査：米国リテール投資家のAIツール利用率は前年比75%増。実際の収益事例：$1,000スタートで最初の週に15%超の損失報告も、数ヶ月の良好相場で大幅利益の例も。LLMエージェントの課題：バックテスト困難・予測不能性・説明責任不明確・ハルシネーション（存在しない経済指標の捏造）・API遅延（高頻度不適）。結論：情報優位のない個人開発者の成功は主に好調な相場ウィンドウの恩恵が大きい。FXシステム開発の参考として。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-11_3619_WEB_AI-Trading-Agents-vs-Bots-2026-Smarter-Not-Safer-Bitsgap.md",
+      "title": "AI Trading Agents vs Bots 2026: Smarter Isn't Always Safer",
+      "url": "https://bitsgap.com/blog/ai-trading-agents-vs-trading-bots-in-2026-why-smarter-isnt-safer",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "Bitsgapによる2026年AIトレーディングエージェントvs従来ボットの詳細比較。ボット：決定論的ルール実行（予測可能・バックテスト容易）。エージェント：状況判断→計画→実行の循環（柔軟だが予測不能）。GPT-5・Claude Opus 4.8・Gemini・Qwen・Kimiなどが推論・ツール活用で大幅改善。主要リスク：(1)予測不能な意思決定、(2)バックテスト困難、(3)説明責任不明確。実用推奨：M15+タイムフレームのスイング・イントラデイ取引向き、高頻度スキャルピングは不適（LLM推論遅延のため）。リスク管理必須：事前のポジションサイジング制限・ドローダウン上限設定。MT5ベースFXシステムへの組み込み設計の参考情報として有用。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-11_3620_WEB_LLM-Trading-2026-Can-AI-Outperform-Humans-CoinEdition.md",
+      "title": "LLM Trading 2026: Can AI Agents Actually Outperform Humans?",
+      "url": "https://coinedition.com/llm-trading-in-2026-can-ai-agents-actually-outperform-humans/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "LLMを使ったトレーディングの2026年現状分析（CoinEdition）。実現できていること：収益報告精査・ニュース・SNS分析・経済トレンド分析・投資アイデア生成・動的ポジション調整の一貫した実行。主要フレームワーク：TradingAgents（多エージェント/LLM型、構造化推論）、ai-hedge-fund（投資家ペルソナ型マルチエージェント議論、GitHub公開）、FinRL（強化学習型、研究からライブブローカーまで）。制限要因：(1)ハルシネーション（存在しない経済指標捏造・価格パターン誤解釈）、(2)API遅延（OpenAI API往復遅延が高頻度スキャルピングを実質不可能に）、(3)情報優位なしの個人開発者は好調相場の幸運に依存。実用推奨：M15以上のタイムフレームに限定すること。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-11_3621_WEB_LLM-News-August-2026-Monthly-Model-Releases-Augusto.md",
+      "title": "LLM News August 2026: Monthly Roundup — Opus 5, DeepSeek V4, Model Rush",
+      "url": "https://augusto.digital/insights/blogs/monthly-llm-news-august-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "2026年8月の月次LLMニュースまとめ。主要モデルリリース（直近）：Seedance 2.5（ByteDance、8/8）、Muse Spark 1.2（Meta、8/6）、Qwen Image 3.0 Pro（Alibaba、8/5）、Claude Opus 5（Anthropic、7/24、$5/$25、競合比約半額）、Gemini 3.6 Flash（Google、7/21）。その他注目：DeepSeek V4 Preview（高性能V4-ProとV4-Flash 2階層）、Llama 4 Scout（最大1000万トークン対応）、Command A+（48言語・マルチモーダル）、Tencent Hy3（グローバル提供開始8/5）。背景：米国大統領令EO 14409のフレームワーク設計期限8/1が各社のリリース集中を促した可能性。月次リリースサイクルが「モデルはソフトウェアパッチのように出荷」される時代へ加速。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-11_3622_WEB_AI-Regulation-Global-August-2026-Enforcement-Era-Cubbbix.md",
+      "title": "AI Regulation Global Update August 2026: The Enforcement Era Begins",
+      "url": "https://cubbbix.com/blog/ai-regulation-august-2026-global-update/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "2026年8月のAI規制グローバル動向まとめ。EU：8/2からAI法第50条透明性義務施行（違反時最大€1500万または世界年間売上3%）。チャットボットはAI明示義務、ディープフェイクはラベル必須、機械読取可能マーク義務化。中国：AI規制の初の罰金が発令（コンパニオンAI規則違反）。米国：連邦先制立法が下院で停滞、カリフォルニア・コロラド州が独自規制を施行。英国：AI規制・安全法案が下院通過、10月にロイヤルアセント見込み。インド：秋議会で法定AIライアビリティフレームワーク確定予定。合計15カ国が2026年8月に規制を更新。世界的に「施行の時代」が開幕し、AI製品の規制コンプライアンスが必須要件に。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-11_3623_WEB_EU-AI-Act-Article50-Transparency-Enforcement-Commission.md",
+      "title": "EU AI Act Article 50 Transparency Now Enforced: Commission Official Notice",
+      "url": "https://commission.europa.eu/news-and-media/news/safer-and-more-transparent-ai-2026-08-02_en",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "欧州委員会公式発表（2026年8月2日）。EU AI法第50条（透明性義務）の施行開始。7月20日にガイドラインを採択済み。施行内容3点：(1)チャットボット等インタラクティブAIシステムはユーザーへのAI明示義務、(2)ディープフェイクはラベル付け必須、(3)AI生成・改変コンテンツに機械読取可能マーク義務化（自動検出可能な形式）。制裁：最大€1500万または世界年間売上の3%（高い方）。EU AI法の本格施行フェーズに突入。欧州市場にAIサービスを展開する全事業者（日本企業含む）への影響大。AI生成コンテンツのウォーターマーキング技術対応が実装要件として浮上。",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "✅ 確認: Cooley法律事務所・欧州委員会デジタル戦略サイト・EU AIファクトリー等の複数ソースで2026年8月2日施行を確認。罰則€15M or 世界年商3%も確認。ガイドライン採択は7月20日。機械読取可能ウォーターマーク義務は2026年12月まで猶予あり（記事の一部説明は若干省略あり）。"
+    },
+    {
+      "file": "2026-08-11_3624_WEB_Claude-Code-Best-Practices-8-Rules-Learned-Hard-Way.md",
+      "title": "Claude Code Best Practices: 8 Rules Learned the Hard Way",
+      "url": "https://www.iwoszapar.com/p/claude-code-best-practices",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "実務経験から得た8つのClaude Codeベストプラクティス。(1)CLAUDE.md: 200行以内・コマンド先頭記述・フォーマッター重複禁止。(2)Planモードを実行前に必ず使う（Anthropic内部：無構造試みの成功率33%）。(3)サブエージェントで調査をオフロード（コンテキスト節約）。(4)git worktree活用の並列エージェント（ファイル競合なし）。(5)Hooksをガードレールとして使う（実行前後の検証・ロールバック自動化）。(6)検証ループでハルシネーションを根絶（テスト→修正→再テスト）。(7)コンテキスト肥大化の定期リセット（メモリ/コンテキストの定期圧縮）。(8)チームMakefileで1コマンド習慣化。「技術より構造」がClaude Code高出力エンジニアと平均の差。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-11_3625_WEB_Claude-Agent-SDK-Deploy-Modal-TriggerDev-Serverless.md",
+      "title": "Claude Agent SDK: Deploy to Modal or Trigger.dev — Serverless Agentic Workflows",
+      "url": "https://www.mindstudio.ai/blog/claude-agent-sdk-modal-trigger-dev-deployment",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Claude Agent SDK（旧Claude Code SDK、2025年9月改名）のModal・Trigger.devへのサーバーレス展開ガイド。SDKの核心機能：Bash実行・ファイルシステム操作・Web検索等のツール統合と、複数ターンの推論ループ（計画→実行→観察→継続）。「コードでエージェントを駆動したい・ツールを渡したい・構造化された結果を得たい」ケースに最適。Python・TypeScript対応、MCPサポート、セッション管理、ホスト型実行モデル。実装パターン：プログラマティックに会話を制御し、ツール定義を渡し、構造化出力を取得。search demand：2025年5月の月間50件→2026年4月の14,800件に急増（296倍）。本番エージェントを無人実行させるための実践ガイド。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    }
+  ],
+  "fact_checks": [
+    {
+      "file": "2026-08-11_3616_WEB_Claude-Opus5-Benchmarks-SWEbench96-IMO2026-Perfect.md",
+      "target": "SWE-bench Verified 96.0% / IMO 2026 42/42満点",
+      "verdict": "✅ 確認",
+      "note": "複数の独立ソース（codersera.com, morphllm.com, claude5.ai, marktechpost.com）でSWE-bench Verified 96.0%を確認。IMO 2026の42/42（金メダル）もエージェントハーネス・外部ツール不使用で達成を複数ソースが裏付け。価格$5/$25も確認済み。"
+    },
+    {
+      "file": "2026-08-11_3623_WEB_EU-AI-Act-Article50-Transparency-Enforcement-Commission.md",
+      "target": "EU AI法第50条 2026年8月2日施行・罰則€1500万または年商3%",
+      "verdict": "✅ 確認",
+      "note": "Cooley法律事務所・欧州委員会デジタル戦略サイト・EU AIファクトリー等の複数ソースで2026年8月2日施行を確認。罰則€15M or 世界年商3%も確認。ガイドライン採択は7月20日。機械読取可能ウォーターマーク義務は2026年12月まで猶予あり（記事の一部説明は若干省略あり）。"
+    },
+    {
+      "file": "2026-08-11_3617_WEB_Microsoft-Agent-Framework-Harness-GA-v1130.md",
+      "target": "Microsoft Agent Framework Harness GA v1.13.0リリース",
+      "verdict": "✅ 確認（注記あり）",
+      "note": "Agent Framework 1.0 GAは2026年4月2日、Harness GAは2026年7月22日（BUILD 2026発表後）。v1.13.0がFoundryホスティング・セッションストア・テレメトリ拡張を含む幅広アップデートを実施した点を確認。AutoGen+Semantic Kernelのマージによる統合フレームワークも確認。"
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-08-10": 10,
+      "2026-08-09": 13,
+      "2026-08-08": 15,
+      "2026-08-07": 13,
+      "2026-08-06": 18,
+      "2026-08-05": 13,
+      "2026-08-04": 13
+    },
+    "recurring_themes": [
+      "claude",
+      "agent",
+      "mcp",
+      "trading",
+      "llm"
+    ]
+  }
+}
