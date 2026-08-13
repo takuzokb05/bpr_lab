@@ -23,6 +23,9 @@ sandbox/PDFをOCR/poppler/
 # git worktree・ネストされた独立リポジトリ（親では管理しない）
 .worktrees/
 
+# SessionEnd フックの自動生成物（反映後に削除する一時ファイル）
+sandbox/タスクマネージャー/.claude/session-review/
+
 # APIキーが平文記載されているため除外（要サニタイズ後に解除）
 sandbox/住宅比較/概要.md
 sandbox/slack_ai_news/
