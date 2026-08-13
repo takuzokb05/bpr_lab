@@ -4785,3 +4785,36 @@ FTCがAI出力の意図的操作（"ステアリング"）を欺瞞行為とし�
 
 **提案内容:**
 GENAI社の「PR Times自動クロール→判断→メール下書き」フローは、FX取引の「マーケットデータ取得→判断→注文生成」と構造的に同一のパターン。Claude Codeの業務自動化ノウハウ（MCP連携・外部データ取得・スケジュール実行）をFX自動取引システムの開発・デバッグサイクル加速に活用できる。特にMT5デバッグ・バックテスト結果解析のClaude Code統合を検討する。
+
+
+## 2026-08-13 収集分
+
+### 1. Claude Code Auto Mode デフォルト化への対応
+
+#### 1-1. settings.json の defaultPermissionMode 確認・更新
+**出典:** articles/2026-08-13_3630_WEB_Claude-Code-Auto-Mode-Default-Official-Aug14-2026.md
+
+**提案内容:**
+2026年8月14日よりPro/Max/TeamプランでAutoモードがデフォルト化。分類器は危険コマンドの89%を捕捉（旧手動14%比）。スケジュール実行・Routinesなどの自動化フローでの意図しない破壊的操作リスクを確認する必要がある。`.claude/settings.json` の `"defaultPermissionMode"` 設定を明示的に記述し、スケジュールタスクでは想定外の操作が起きないようHooks（PostToolUseで危険コマンドを検知）を追加検討。
+
+#### 1-2. スケジュールタスク向けフォールバック設計の再検討
+**出典:** articles/2026-08-13_3631_WEB_TechCrunch-Claude-Code-Auto-Mode-Default-Aug14.md
+
+**提案内容:**
+Enterprise/APIプランは当面オプトインのまま。クラウドRoutinesがEnterprise設定で動く場合は影響なし。ただし、Autoモードが組織に広がる前にスケジュールタスクの動作確認テストランを実施しておくことを推奨。
+
+### 2. MQL5 ML+LLM ハイブリッドトレーディングのFX自動取引への反映
+
+#### 2-1. MLシグナル+LLM確認のハイブリッドアーキテクチャ検討
+**出典:** articles/2026-08-13_3643_WEB_MQL5-Machine-Learning-LLM-Confirmation-MT5-Trading.md
+
+**提案内容:**
+MLモデルがシグナルを生成→LLMがファンダメンタル・ニュース文脈から確認/否定するハイブリッドアプローチは、FX自動取引プロジェクトへの直接応用候補。MT5のWebRequest制限（同期型・ホワイトリスト制限）はPythonブリッジで回避可能。MQL5のEAとPython/Claude Agentとの非同期通信設計パターンはFXプロジェクトの次フェーズ設計に組み込む価値がある。
+
+### 3. Claude Opus 5 エフォートトグルの活用
+
+#### 3-1. 収集・キュレーションルーチンでのエフォートコスト最適化
+**出典:** articles/2026-08-13_3640_WEB_Anthropic-Claude-Opus5-Official-July2026.md
+
+**提案内容:**
+Opus 5のエフォートトグル（low/medium/high）をRoutinesの各ステップに適用することでトークンコストを削減可能。例：WebSearch要約生成はlow、SIGNAL/NOISE分類はmedium、PROPOSALS.md生成はhighと使い分ける設計が有効。現行Routinesのモデル設定がOpus 5デフォルトに移行済みかを確認し、必要に応じてスキル定義ファイルにeffort指定を追加する。

@@ -425,3 +425,6 @@
 | 401 | AI規制グローバル動向 2026年8月 (Cubbbix): EU施行・中国初罰金・米国停滞・英国法案通過・インド立法予定・15カ国更新 | en | 未読 | #ai-news #regulation #web-signal | articles/2026-08-11_3622_WEB_AI-Regulation-Global-August-2026-Enforcement-Era-Cubbbix.md |
 | 402 | EU AI Act Article 50 施行開始 欧州委員会公式発表 (2026-08-02): チャットボットAI明示・ディープフェイクラベル・違反時€1500万 | en | 未読 | #ai-news #regulation #web-signal | articles/2026-08-11_3623_WEB_EU-AI-Act-Article50-Transparency-Enforcement-Commission.md |
 | 403 | AI Washington Report 2026年8月号 (Mintz): Genesis Mission 50億ドル・GOLD EAGLE・FTC AIステアリング規制・イリノイ第三者監査義務化 | en | 未読 | #ai-news #ai-regulation #web-signal | articles/2026-08-12_3627_WEB_Mintz-AI-Washington-Report-August-2026-Federal-5B-Genesis.md |
+| 404 | Claude Opus 5 リリース報道 (Axios): IPO準備中のAnthropic・Fable5相当を半値・エフォートトグル・エージェントコーディングSoTA | en | 未読 | #ai-news #anthropic #model-update #web-signal | articles/2026-08-13_3641_WEB_Axios-Claude-Opus5-Release-IPO-Prep.md |
+| 405 | Claude Opus 5 効率性・安全性改善詳細 (SiliconAngle): RSP準拠評価・$5/$25/1Mトークン・Auto Modeデフォルト化との相乗効果 | en | 未読 | #ai-news #anthropic #model-update #web-signal | articles/2026-08-13_3642_WEB_SiliconAngle-Claude-Opus5-Efficiency-Safety.md |
+| 406 | 【2026-08-01】世界AI週次まとめ (eguweb JA): AI供給力拡大・EU AI Act Article50施行・本番エージェント移行・産業AI基盤加速 | ja | 未読 | #ai-news #ai-regulation #web-signal | articles/2026-08-13_3644_WEB_Eguweb-AI-News-August2026-Weekly-JA.md |
