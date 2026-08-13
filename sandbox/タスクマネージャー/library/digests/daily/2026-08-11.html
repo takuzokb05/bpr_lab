@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-08-11</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-08-11 | 18件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-08-11</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>Claude Code v2.1.224でself-hosted runnerとcross-session messaging（`SendMessage`）が同時リリースされ、分散エージェント協調が実用段階へ。並行してMCP 2026ロードマップが公開され、ステートレス化・OAuth 2.1強化などエンタープライズ対応が加速。EU AI法第50条（一次ソース確認済み）が8/2施行、世界的に「AI規制執行フェーズ」が開幕した。FX自動取引文脈では、LLMエージェントはM15以上のタイムフレーム向きで高頻度スキャルピングは非推奨という業界コンセンサスが固まりつつある。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>Self-Hosted Runner × Cross-Session Messagingで分散エージェントが現実に</h3>
+
+<p>Claude Code v2.1.224（2026-08-07リリース）の最大の変化は、これら二つの機能の組み合わせにある。Self-hosted runnerは`claude self-hosted-runner`コマンドで自社マシン・コンテナをセッション実行基盤として使える機能（Team/Enterpriseプラン、パブリックベータ）。Fixed（常時起動）とOn-demand（セッション到着時のみ）の2モードを提供し、企業ネットワーク内のツールやコンプライアンス要件を満たしながら運用できる。[^1]</p>
+
+<p>これに`SendMessage`と`ListAgents`の2ツールが加わることで、<strong>異なるマシン上のClaude Codeセッション同士がメッセージを交換できる</strong>ようになった。複数サーバーにまたがるサブエージェントへのタスク委譲が可能になり、マルチマシン・エンタープライズ規模のエージェントネットワーク構築への道が開いた。[^2] 8月の主要バグ修正（Bashコマンド実行修正、/tui rewind改善、イベントループ停止削減）も含め、品質強化は7月から継続するトレンドだ。[^3]</p>
+
+<h3>Skills・Hooks・MCP・Subagents ── 4要素の棲み分けが整理される</h3>
+
+<p>Claude Code拡張機能の使い分けに関する解説記事が複数出揃い、2026年版のコンセンサスが形成されつつある。共通の整理はこうだ：<strong>単純な繰り返しルール→Skills、実行前後の自動検証→Hooks、重い並列処理→Subagents、外部データ統合→MCP</strong>。非エンジニア向けの実践ガイドも登場し、ターミナルの専門用語なしでワークフローを設計する事例が増えている。[^4][^5]</p>
+
+<p>Claude Code CLIの包括的アーキテクチャガイドでは、Hooksの21イベント（PreToolUse, PostToolUse等）の全パターン、git worktreeを使った並列エージェントのファイル競合回避、CLAUDE.mdの最適化（200行以内・コマンド先頭記述）が整理されている。「技術より構造がClaude Code高出力エンジニアと平均の差」という指摘は、日々CLAUDE.mdを育てているユーザーには刺さるはずだ。[^6][^7]</p>
+
+<h3>MCP 2026：ステートレス化とエンタープライズロードマップ</h3>
+
+<p>Model Context Protocol公式ブログが2026年の主要方針6点を発表した（一次ソース確認済み）。最重要変更は<strong>セッション廃止によるステートレスコアへの移行</strong>で、ロードバランサー下での水平スケールに対応。マルチラウンドトリップリクエスト、OAuth 2.1認証強化、tools/listキャッシュも計画済み。2026-07-28仕様はRC版として公開済み。Tier 1 SDK（Python, TypeScript, Go, Java, Ruby, PHP, C#）の同期更新も予定。2026年3月時点でSDKは月間9,700万ダウンロード、GitHubスター8.1万超と普及は加速している。[^8][^9]</p>
+
+<p>Claude Agent SDK（旧Claude Code SDK、2025年9月改名）のModal・Trigger.devへのサーバーレス展開も注目。2025年5月の月間50件から2026年4月に14,800件（296倍）に検索需要が急増しており、本番エージェントの無人実行ニーズが爆発的に増えている。[^10]</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>Claude Opus 5：SWE-bench 96%・IMO 2026満点（一次ソース確認済み）</h3>
+
+<p>2026年7月24日リリースのClaude Opus 5の主要スコア：SWE-bench Verified 96.0%（コーディング最高水準）、IMO 2026で42/42（金メダル、エージェントハーネス・外部ツール不使用）。複数の独立ソースで確認済み。価格は入力$5/出力$25（100万トークン）でOpus 4.8と同価格を維持、Fable 5とほぼ同等性能で約半額のコスト効率を実現。FX取引システムの意思決定エンジンとして検討価値が高まっている。[^11]</p>
+
+<h3>2026年8月：モデルリリースラッシュと規制執行の同時進行</h3>
+
+<p>8月はAI業界にとって二重の変曲点だ。リリース側ではSeedance 2.5（ByteDance）、DeepSeek V4 Preview（2階層）、Llama 4 Scout（最大1000万トークン）、Tencent Hy3（グローバル展開）など主要プレイヤーが出揃い、「モデルはソフトウェアパッチのように出荷」される時代が加速。米国大統領令EO 14409の設計期限8/1が各社リリース集中を促した可能性が指摘されている。[^12]</p>
+
+<p>規制側では<strong>EU AI法第50条が8/2に施行</strong>（一次ソース確認済み）。チャットボットのAI明示義務・ディープフェイクのラベル必須・AI生成コンテンツへの機械読取可能マーク義務化（2026年12月まで猶予あり）が発効。制裁は最大€1,500万または世界年間売上の3%。合計15カ国が8月に規制を更新しており、世界的に「施行フェーズ」が開幕した。[^13][^14]</p>
+
+<p>Microsoft Agent Framework Harness v1.13.0もGA（一次ソース確認済み・注記あり）。AutoGen + Semantic Kernelのマージ後継として、Foundryホスティング・セッションストア・OpenTelemetry統合が追加。[^15]</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #ea580c; padding-left: 12px;">AIトレーディング</h2>
+
+<p>3記事が同日登場し、LLMトレーディングの現状認識がほぼ収束している。<strong>共通の結論：M15以上のスイング・イントラデイ向き、高頻度スキャルピングは不適</strong>（LLM推論遅延のため）。</p>
+
+<p>主要リスクとして繰り返し挙げられているのが、(1)ハルシネーション（存在しない経済指標の捏造・価格パターン誤解釈）、(2)API遅延、(3)バックテスト困難、(4)説明責任の不明確さ。eToro調査ではAIツール利用率が前年比75%増だが、「情報優位のない個人開発者の成功は好調な相場ウィンドウの恩恵が大きい」という冷静な評価も。OSS主要フレームワークはTradingAgents（多エージェントLLM型）、ai-hedge-fund（投資家ペルソナ型）、FinRL（強化学習型）の3系統。MT5ベースFXシステムへの組み込みを検討する際の参考として。[^16][^17][^18]</p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>今日の記事数は<strong>18件</strong>で、過去7日間（平均13.6件/日）を大きく上回った。特に2026-08-06（18件）以来の高水準。</p>
+
+<ul>
+<li>**claude**：v2.1.224のself-hosted runner/SendMessageリリースが新しいピーク。CLIアーキテクチャ解説・ベストプラクティス記事が大量発生フェーズ継続</li>
+<li>**agent**：Microsoft Agent Framework GA・Claude Agent SDK需要急増と、エージェントフレームワーク競合状況（LangGraph 1.0, CrewAI 1.14, Pydantic AI V2）が並走</li>
+<li>**mcp**：ステートレス化ロードマップが公開。2026-03-26仕様からの移行が本格化する前の情報収集期</li>
+<li>**trading**：FX文脈でのLLMエージェント活用がM15以上タイムフレームに収束。「スマートだが安全ではない」という業界認識が定着</li>
+<li>**llm**：8月はモデルラッシュ＋規制施行という二重の変節点。Claude Opus 5の一次確認済みベンチマークが今後の評価基準を塗り替える可能性</li>
+</ul>
+
+<p>---</p>
+
+<p>[^1]: https://claude.com/blog/run-claude-code-sessions-on-your-own-compute</p>
+<p>[^2]: https://www.digitalapplied.com/blog/claude-code-self-hosted-runners-cross-session-agent-messaging</p>
+<p>[^3]: https://blog.mean.ceo/claude-code-news-august-2026/</p>
+<p>[^4]: https://pixelnthings.com/claude-code-skills-hooks-guide/</p>
+<p>[^5]: https://www.totalum.app/blog/claude-code-skills-totalum</p>
+<p>[^6]: https://blakecrosley.com/guides/claude-code</p>
+<p>[^7]: https://www.iwoszapar.com/p/claude-code-best-practices</p>
+<p>[^8]: https://dev.to/x4nent/complete-guide-to-mcp-model-context-protocol-in-2026-architecture-implementation-and-4a11</p>
+<p>[^9]: https://blog.modelcontextprotocol.io/posts/2026-mcp-roadmap/</p>
+<p>[^10]: https://www.mindstudio.ai/blog/claude-agent-sdk-modal-trigger-dev-deployment</p>
+<p>[^11]: https://codersera.com/blog/claude-opus-5-benchmarks-explained-2026/</p>
+<p>[^12]: https://augusto.digital/insights/blogs/monthly-llm-news-august-2026/</p>
+<p>[^13]: https://commission.europa.eu/news-and-media/news/safer-and-more-transparent-ai-2026-08-02_en</p>
+<p>[^14]: https://cubbbix.com/blog/ai-regulation-august-2026-global-update/</p>
+<p>[^15]: https://devblogs.microsoft.com/agent-framework/the-microsoft-agent-framework-harness-is-now-released/</p>
+<p>[^16]: https://pinggy.io/blog/best_ai_trading_agents/</p>
+<p>[^17]: https://bitsgap.com/blog/ai-trading-agents-vs-trading-bots-in-2026-why-smarter-isnt-safer</p>
+<p>[^18]: https://coinedition.com/llm-trading-in-2026-can-ai-agents-actually-outperform-humans/</p>
+
+</body>
+</html>
