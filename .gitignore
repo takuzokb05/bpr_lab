@@ -32,6 +32,7 @@ sandbox/slack_ai_news/
 sandbox/よかちょ一覧/
 # 機密が平文記載のため除外（サニタイズ後に解除可）
 sandbox/ai-teams/API_KEY.txt
+sandbox/ai-teams/ai_teams.db
 sandbox/タスクマネージャー/library/config/slack_webhook.txt
 sandbox/タスクマネージャー/library/config/slack_webhook_alerts.txt
 sandbox/PDFをOCR/GeminiVer.py
