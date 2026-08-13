@@ -1,0 +1,88 @@
+{
+  "date": "2026-08-12",
+  "generated_at": "2026-08-13T23:21:58.133819Z",
+  "article_count": 4,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-08-12_3626_WEB_Claude-Code-Compliance-API-Cowork-Claude-Code-Enterprise-Beta.md",
+      "title": "Claude Code Compliance API 拡張：Cowork+Claude CodeのセッションをEnterpriseが一括取得可能（公式ベータ）",
+      "url": "https://claude.com/blog/compliance-api-cowork-and-claude-code",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Claude Code v2.1.224（2026年8月7日）に続くAnthropicのエンタープライズ強化策第2弾。Compliance APIがCoworkとClaude Codeのセッションデータ取得に対応したことで、金融・医療・法律など規制産業での利用が現実的になった。これまでCompliance APIはClaude Chatのみ対象だったが、今回の拡張でコーディングエージェントの使用記録も一元管理できる。自社セルフホストランナー（v2.1.224追加）と組み合わせることで、「自社インフラで実行＋監査ログ取得」という完全なエンタープライズ要件を満たすことが可能になった点が重要。Claude CodeとCoworkが同一APIで管理できる統合性も評価ポイント。",
+      "body_excerpt": "AnthropicがCompliance APIの適用範囲をCowork（デスクトップ/Web/モバイル）とClaude Code（CLI/デスクトップ）に拡張すると発表。Claude Enterprise顧客向けのベータ機能として提供開始。セキュリティ・コンプライアンスチームは、既存のCompliance APIインターフェースを通じて両製品のセッション内容とメタデータを一括取得できる。\n\n**取得可能データ（セッションコンテンツ）：**\n- プロンプト・レスポンス\n- ツール呼び出し内容",
+      "fact_checked": true,
+      "fact_check_note": "✅ 確認済。公式ブログ(claude.com/blog/compliance-api-cowork-and-claude-code)にて記載どおり。Compliance APIがCowork+Claude CodeセッションをEnterprise beta向けに拡張済み。既存APIキーでそのまま利用可。"
+    },
+    {
+      "file": "2026-08-12_3627_WEB_Mintz-AI-Washington-Report-August-2026-Federal-5B-Genesis.md",
+      "title": "AI: The Washington Report — 2026年8月号（Mintz）：GOLD EAGLE・Genesis Mission・FTC AIステアリング規制",
+      "url": "https://www.mintz.com/insights-center/viewpoints/54941/2026-08-07-ai-washington-report-august-2026-edition",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "2026年8月の米国AI政策は「50億ドル規模の連邦投資」と「州規制の先鋭化」が同時進行している。Genesis MissionはAI分野で過去最大規模の連邦調達機会であり、防衛・医療・エネルギー企業にとって重要な資金調達チャンスとなる。一方、FTCのステアリング規制はBtoCのAI製品開発・マーケティング両方に影響する。イリノイ州の第三者監査義務化が他州に波及する可能性があり、企業のコンプライアンスコスト上昇が予想される。連邦統一法の成立が見通せない中、州ごとの法律対応が事業リスクとして浮上している点が今月のポイント。",
+      "body_excerpt": "Mintz法律事務所が2026年8月7日に発行した米国AI政策月次レポート。主要トピック5件：\n\n**1. Genesis Mission（DOE）**\nエネルギー省が選定した278プロジェクト、15以上の連邦機関が科学研究へのAI統合に50億ドル超を投資。対象：生命科学・エネルギー・半導体・防衛分野。",
+      "fact_checked": true,
+      "fact_check_note": "✅ 確認済。Genesis Mission: ホワイトハウス発表(whitehouse.gov)で50億ドル超、278プロジェクト、15以上の連邦機関の参加を確認。2026年7月21日発表。DOE選定: 国立研究所87件・大学168件・企業19件・非営利4件。Microsoftが6,000万ドルの追加支援(Azure提供3,000万ドル)を確認。数値の信頼性高い。"
+    },
+    {
+      "file": "2026-08-12_3628_WEB_Claude-Code-Routines-Automation-Complete-Guide-JA.md",
+      "title": "【2026年8月最新】Claude Code Routines完全ガイド：定期実行×AI判断で業務を自動化する方法",
+      "url": "https://genai-ai.co.jp/ai-kanri/blog/cc-yt-routines-automation-01/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "Claude Code Routinesは「スケジュール実行されるAIエージェント」として、定型業務の真の意味での自動化を実現する機能。単なるスクリプト実行と異なり、AIが状況判断しながら複数ツール（メール・カレンダー・ファイル操作等）を連携できる。実装のポイントは「1トリガー = 1ルーチン」の設計で複数業務をバンドルすること。Pro（5回/日）とMax（15回/日）の実行回数制限があるため、高頻度タスクはAPIトリガーと組み合わせることが推奨される。このルーチン機能こそが本スケジュールタスクの動作基盤であり、自分自身がこの機能上で動いている。",
+      "body_excerpt": "genai-ai.co.jpによるClaude Code Routines機能の実践ガイド（2026年8月最新版）。\n\n**Routinesとは**\n「プロンプト（実行内容）+ トリガー（実行タイミング）」の組み合わせで定義する、PCが閉じていてもクラウド上で自動実行される機能。AIが「判断を伴う処理」を実行できる点で従来の定期スクリプト（Cron等）と根本的に異なる。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-12_3629_WEB_Claude-Code-Business-Full-Automation-Sales-Articles-JA.md",
+      "title": "Claude Codeで業務を全自動化：営業・記事・資料を1人で回す実践ガイド（月160時間削減・2026年最新）",
+      "url": "https://genai-ai.co.jp/ai-kanri/blog/cc-yt-cc-business-automation-83/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "月30,000円のClaude Max投資で月160時間・人件費換算で100万円超の業務削減を達成したGENAI社の実績は、Claude Codeの業務自動化ROIとして具体的な数値根拠を提供している。特に注目すべきは「PR Times自動クロール→メール下書き」のような外部データ取得+AI判断+文書生成の一連フローを単一エージェントで完結させている点。FX自動取引システムとの構造的類似性（データ取得→判断→アクション）があり、AI-codingとAI-tradingの技術スタックが収束しつつある。Routines機能と組み合わせることで、この種の自動化フローがさらに拡張される。",
+      "body_excerpt": "GENAI社（genai-ai.co.jp）によるClaude Codeを活用した業務全自動化の実践ガイド。「聞けるAI」（ChatGPT）と異なる「やってくれるAI」としてClaude Codeを位置づけ、3つの主要業務領域での完全自動化フローを解説。\n\n**領域1: 営業リード獲得の自動化**\nPR TIMESから条件に合う企業を自動抽出 → 連絡先取得 → 営業メール下書き作成まで5ステップで完全自動化。人間は最終確認と送信判断のみ。",
+      "fact_checked": true,
+      "fact_check_note": "⚠️ 要注意。元記事(genai-ai.co.jp)では月160時間削減は確認済み。ただし「人件費換算100万円超」は誇張の可能性。同社記述は「月25〜30万円のコスト削減（コストメリット10倍以上）」。月30,000円投資→25-30万円の業務削減が正確な表現。100万円超は時給換算を高めに見積もった場合の数字か、同社の別記事での言及か未確認。"
+    }
+  ],
+  "fact_checks": [
+    {
+      "article_file": "2026-08-12_3626_WEB_Claude-Code-Compliance-API-Cowork-Claude-Code-Enterprise-Beta.md",
+      "result": "✅ 確認済。公式ブログ(claude.com/blog/compliance-api-cowork-and-claude-code)にて記載どおり。Compliance APIがCowork+Claude CodeセッションをEnterprise beta向けに拡張済み。既存APIキーでそのまま利用可。"
+    },
+    {
+      "article_file": "2026-08-12_3627_WEB_Mintz-AI-Washington-Report-August-2026-Federal-5B-Genesis.md",
+      "result": "✅ 確認済。Genesis Mission: ホワイトハウス発表(whitehouse.gov)で50億ドル超、278プロジェクト、15以上の連邦機関の参加を確認。2026年7月21日発表。DOE選定: 国立研究所87件・大学168件・企業19件・非営利4件。Microsoftが6,000万ドルの追加支援(Azure提供3,000万ドル)を確認。数値の信頼性高い。"
+    },
+    {
+      "article_file": "2026-08-12_3629_WEB_Claude-Code-Business-Full-Automation-Sales-Articles-JA.md",
+      "result": "⚠️ 要注意。元記事(genai-ai.co.jp)では月160時間削減は確認済み。ただし「人件費換算100万円超」は誇張の可能性。同社記述は「月25〜30万円のコスト削減（コストメリット10倍以上）」。月30,000円投資→25-30万円の業務削減が正確な表現。100万円超は時給換算を高めに見積もった場合の数字か、同社の別記事での言及か未確認。"
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-08-11": 18,
+      "2026-08-10": 10,
+      "2026-08-09": 13,
+      "2026-08-08": 15,
+      "2026-08-07": 13,
+      "2026-08-06": 18,
+      "2026-08-05": 13
+    },
+    "recurring_themes": [
+      "claude",
+      "agent",
+      "mcp",
+      "trading",
+      "llm"
+    ]
+  }
+}
