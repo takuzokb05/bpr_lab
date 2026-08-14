@@ -1,0 +1,238 @@
+{
+  "date": "2026-08-13",
+  "generated_at": "2026-08-14T23:17:28.668470Z",
+  "article_count": 15,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-08-13_3630_WEB_Claude-Code-Auto-Mode-Default-Official-Aug14-2026.md",
+      "title": "Auto mode is now the default in Claude Code for Pro, Max, and Team plans",
+      "url": "https://claude.com/blog/auto-mode-default-in-claude-code",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Anthropic公式ブログ。2026年8月14日より、Claude CodeのPro・Max・TeamプランでAutoモードがデフォルトの権限モードになると発表。Autoモードでは「不可逆・破壊的・環境外への操作」と判定されない限り、人間の承認を求めずに進む。旧手動承認ワークフローが危険コマンドを捕捉できたのは14%に対し、Autoモードの分類器は89%を捕捉。企業・API・AWS Bedrock・Google Cloud・Microsoft FoundryはしばらくオプトインのままだがAnthropic社は来月中にデフォルト化予定。既に別のデフォルトを設定済みのユーザーは一度のプロンプトで切り替え確認が行われる。",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "[CONFIRMED] 複数ソース確認済み。実験は1,053名有償テスターで実施。人間の捕捉率は正確には13.6%（記事の14%は丸め値）。セッション後半では人間の捕捉率が5%まで低下する一方、Autoモードの分類器は一定水準を維持。"
+    },
+    {
+      "file": "2026-08-13_3631_WEB_TechCrunch-Claude-Code-Auto-Mode-Default-Aug14.md",
+      "title": "Anthropic is turning Claude Code's auto mode on by default (TechCrunch)",
+      "url": "https://techcrunch.com/2026/08/09/anthropic-is-turning-claude-codes-auto-mode-on-by-default/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "TechCrunchによるClaude Code Autoモードデフォルト化のニュース報道。Anthropicの内部テストで、Autoモードの安全性分類器が危険なコマンドの89%を捕捉（旧来の手動承認ワークフローでは14%）という数値を引用。8月14日よりPro・Max・Teamプランでデフォルト有効化。ユーザーが独自設定をしている場合は変更されない。Enterprise・APIプランは当面オプトインのまま。AIエージェントが人間の割り込みなしに実行するデフォルト動作への移行という業界トレンドを反映した動き。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-13_3632_WEB_Simon-Willison-Claude-Code-Auto-Mode-Default.md",
+      "title": "Auto mode is now the default in Claude Code (Simon Willison)",
+      "url": "https://simonwillison.net/2026/Aug/8/auto-mode/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Simon Willison（著名AI解説者）によるClaude Code Autoモードデフォルト化のキュレーション・解説。Anthropicの公式発表内容を整理し、危険操作の分類基準（不可逆・破壊的・環境外への操作）を具体的に解説。既存ユーザーが自分のデフォルトを設定済みの場合は影響なし。Enterprise・Claude APIはしばらくオプトインのまま。自動化ワークフローを増加させる方向性が明確で、AIの自律性とユーザー信頼の関係を論じている。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-13_3633_WEB_GIGAZINE-Claude-Code-Auto-Mode-Default-JA.md",
+      "title": "Claude Codeオートモードがデフォルト有効化へ（GIGAZINE）",
+      "url": "https://gigazine.net/news/20260810-claude-code-auto-mode/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "GIGAZINE（日本語テクノロジーメディア）によるClaude Code Autoモードデフォルト化の解説記事。「コマンド実行のたびに人間に判断を求める」という従来の動作から、自律的に判断して実行へ移行する変更をわかりやすく説明。8月14日よりPro・Max・Teamプランで有効化予定。Autoモードの安全性分類器が危険コマンドを89%捕捉する一方で旧来は14%という具体数値を紹介。VSCodeのFocus view追加、サンドボックスの資格情報ファイルへのmode:\"mask\"追加などの関連アップデートも言及。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-13_3634_WEB_DigitalApplied-Claude-Code-Auto-Mode-Permission-Shift.md",
+      "title": "Claude Code Auto Mode Default August 14: Permission Model Shift Analysis",
+      "url": "https://www.digitalapplied.com/blog/claude-code-auto-mode-default-permission-model-shift",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "DigitalApplied.comによるClaude Code Autoモードのデフォルト化と権限モデルの変化を詳細分析した技術記事。8月14日にPro・Max・Teamプランでデフォルト有効化。Enterprise・Claude API・AWS/Google/Microsoftプラットフォームは来月中にデフォルト化の予定。分類器の仕組み（不可逆/破壊的/環境外操作の判定基準）を解説。危険コマンド捕捉率：Autoモード89% vs 旧手動14%。チームがAutoモードを企業向けに段階的に展開するための実践的ガイダンスを提供。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-13_3635_WEB_Makerkit-Claude-Code-Routines-Scheduled-Cloud-Agents.md",
+      "title": "Claude Code Routines: The Complete Guide to Scheduled Cloud Agents (Makerkit)",
+      "url": "https://makerkit.dev/blog/tutorials/claude-code-routines-guide",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Makerkitによる2026年版Claude Code Routinesの包括ガイド。2026年4月リリースのRoutines機能をClaude CodeをローカルDev툿から「スケジュールされたクラウド自動化プラットフォーム」に変えるものと位置づけ。Routineの構成要素（プロンプト・リポジトリ・コネクター）を解説。3種類のトリガー：スケジュール・API呼び出し・GitHubイベント。3種類の実行方法：Routines（クラウド、PC不要）・Desktopスケジュール（ローカル、アプリ起動必要）・/loop（セッション内）の違いを明確に説明。/scheduleコマンドまたはDesktopアプリのNew routineから設定可能。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-13_3636_WEB_Claude-Code-August2026-Update-Yougears-Lab-JA.md",
+      "title": "Claude・Claude Codeアップデート 2026年8月（業務ハックLab）",
+      "url": "https://yougears-lab.com/claude-update-20260805/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "業務ハックLabによる2026年8月のClaude・Claude Codeアップデートまとめ記事。8月上旬の主要変更点として、Opus 5がMax/Team Premium/Enterprise/Claude API向けのデフォルトOpusモデルに設定、APIキーへの有効期限設定機能追加（7日以上ならメール通知）、レガシーWorkbench（Claude Console）の2026年8月17日終了アナウンスなどを日本語でまとめ。Cowork・Claude Codeの最新機能に関する実務視点の解説も含む。Anthropicの開発者プラットフォーム更新の日本語キュレーション。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-13_3637_WEB_CodingNomads-Claude-Code-Extensions-Skills-MCP-Hooks.md",
+      "title": "Claude Code Extensions: Skills, MCP & Hooks (CodingNomads)",
+      "url": "https://codingnomads.com/claude-code-extensions-skills-mcp-hooks",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "CodingNomadsによるClaude Code拡張機能（Skills・MCP・Hooks）の体系的チュートリアル。動画・クイズ付き構造化コース形式。Skills（マークダウンで繰り返し可能なワークフローを定義）・MCP（外部データ・ツールへのアクセス）・Hooks（ライフサイクルイベントでの決定論的スクリプト実行）の違いと使い方を明快に整理。「Skillsが何をするか定義し、MCPがデータを提供し、Hooksがルールを強制する」という役割分担フレームワーク。MCPサーバーによるWebSearch・ページスクレイピング・データベースアクセスの実例を含む実践的ガイド。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-13_3638_WEB_GitHub-MCP-Server-Next-Spec-2026-07-28.md",
+      "title": "GitHub MCP Server supports the next MCP specification (2026-07-28)",
+      "url": "https://github.blog/changelog/2026-07-23-github-mcp-server-supports-the-next-mcp-specification/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "GitHub公式ChangelogによるGitHub MCPサーバーの2026-07-28 MCP仕様への対応発表。正式リリース前に新仕様をサポート開始した重要な動き。新仕様の核心「ステートレスコア」により、initialize ハンドシェイクとMcp-Session-Idヘッダーが廃止され、サーバーからのリクエストはリトライパターンに置換。これによりMCPサーバーがサーバーレス・エッジインフラにデプロイしやすくなる。GitHubが主要MCPサーバー提供者として仕様移行をリードしている構図。Tier 1 SDKはすべて2026-07-28仕様に対応済み。",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "[CONFIRMED] 公式MCP仕様ブログ・changelogで確認。SEP-2575によりinitialize/initializedハンドシェイクを削除、SEP-2567によりMcp-Session-Idヘッダーとプロトコルレベルセッションを削除。代わりに各リクエストの_metaフィールドにプロトコルバージョン・クライアント情報・ケーパビリティを含める完全ステートレス設計に。"
+    },
+    {
+      "file": "2026-08-13_3639_WEB_DigitalApplied-MCP-Stateless-Spec-Agent-Infrastructure.md",
+      "title": "MCP Just Went Stateless: What Changes for Your Servers (DigitalApplied)",
+      "url": "https://www.digitalapplied.com/blog/mcp-2026-07-28-stateless-spec-agent-infrastructure-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "DigitalApplied.comによるMCP 2026-07-28仕様の「ステートレス化」が既存サーバーインフラに与える影響の詳細技術分析。最大の変更点：initialize ハンドシェイク廃止・Mcp-Session-Idヘッダー廃止・server-initiated requestsをリトライパターンに置換。この変更でサーバーレスデプロイ・エッジ配信が可能になりスケールアップが容易に。既存ステートフルサーバーの移行手順を具体的に解説。Python SDK 2.0同時リリース（主要クラス名変更あり）。Tier 1 SDK（Python/TypeScript/Java/C#）すべてが対応済み。Rustは対応ベータ版。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-13_3640_WEB_Anthropic-Claude-Opus5-Official-July2026.md",
+      "title": "Introducing Claude Opus 5 (Anthropic Official)",
+      "url": "https://www.anthropic.com/news/claude-opus-5",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "AnthropicによるClaude Opus 5公式発表（2026年7月24日）。Claude Fable 5レベルの知性を半値で提供する位置づけ。価格：入力$5/1M tokens・出力$25/1M tokens。low/medium/high の「エフォートトグル」により、リクエストごとにコストと性能をトレードオフ可能。エージェントコーディングと知識業務ベンチマークで新SoTAを達成（SWE-bench 96%・IMO 2026完全正答）。Claude CodeのMax・Team Premium・Enterprise・APIでデフォルトのOpusモデルとして設定済み。Anthropicが2026年末のIPO準備中に投入する主力製品アップデート。",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "[CONFIRMED] SWE-bench Verified: 96.0%（正確な数値一致）。IMO 2026: 42/42満点で機械検証済みの証明を生成。価格: $5/1M input・$25/1M output（公式値と一致）。なお記事では「Fable 5レベルの知性を半値」と記述されているが、実際はFable 5と同等以上のスコアを多くのベンチマークで記録。"
+    },
+    {
+      "file": "2026-08-13_3641_WEB_Axios-Claude-Opus5-Release-IPO-Prep.md",
+      "title": "Anthropic releases new model, Opus 5 (Axios)",
+      "url": "https://www.axios.com/2026/07/24/anthropic-releases-new-model-opus-5",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "AxiosによるClaude Opus 5リリースニュース（2026年7月24日）。Anthropicが2026年末IPOに向けた準備の中でOpus 5を投入したことを報道。Opus 5はClaude Fable 5レベルの知性を半額で提供し、コスト効率と高性能の両立を目指す。エフォートトグル機能（low/medium/high）でリクエスト単位の性能チューニングが可能。エージェントコーディング・知識業務のベンチマークで新記録。Anthropicが競合と差別化するために価格競争力と性能を両立させた戦略を報道。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-13_3642_WEB_SiliconAngle-Claude-Opus5-Efficiency-Safety.md",
+      "title": "Anthropic launches Claude Opus 5 with efficiency, safety improvements (SiliconAngle)",
+      "url": "https://siliconangle.com/2026/07/24/anthropic-launches-claude-opus-5-efficiency-safety-improvements/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "SiliconAngleによるClaude Opus 5のリリース詳細分析。効率性とセーフティ改善の両立に焦点。Fable 5相当の知性を半値で実現する価格設定（入力$5/1M・出力$25/1M tokens）、エフォートトグル機能、エージェントコーディングベンチマーク新SoTA達成の詳細を解説。セーフティ面ではAnthropic Responsible Scaling Policy準拠の評価実施済み。Claude Code Auto modeのデフォルト化（8月14日）との組み合わせでより強力な自律AIエージェントを実現する文脈で報道。Anthropic IPO準備の一環としての製品投資と位置づけ。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-13_3643_WEB_MQL5-Machine-Learning-LLM-Confirmation-MT5-Trading.md",
+      "title": "Machine Learning Meets LLM Confirmation in MT5 Trading (MQL5)",
+      "url": "https://www.mql5.com/en/blogs/post/768203",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "MQL5.comブログの技術記事（2026年3月）。ML（機械学習）シグナルとLLMシグナル確認を組み合わせたMT5トレーディングシステムのアーキテクチャ解説。MLモデルが取引シグナルを生成し、LLMがファンダメンタル・ニュース文脈から確認/否定するハイブリッドアプローチ。MT5のWebRequest制限（同期型・ホワイトリスト制限・永続接続不可）を回避するためのPythonブリッジ構成を採用。実際のEAコードサンプル付き。MQL5とPython間の非同期通信で実現する実用的な設計パターン。FX自動取引にLLMを組み合わせる際の具体的実装ガイドとして有用。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-13_3644_WEB_Eguweb-AI-News-August2026-Weekly-JA.md",
+      "title": "【2026-08-01】世界のAI最新ニュース：AI供給力・透明性規制・本番エージェント・産業AI基盤（eguweb）",
+      "url": "https://eguweb.jp/ai/81270/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "ai-news",
+      "summary": "eguweb.jpによる2026年8月1日時点の世界AI最新ニュース週次まとめ。4つの主要テーマ：①AI供給力（データセンター・GPU投資加速）、②透明性規制（EU AI Act Article 50が8月2日から施行、AI生成コンテンツへの機械可読マーキング義務化）、③本番エージェント（AIエージェントがデモから実運用へ移行、企業は権限・ログ・評価・コスト管理が必要な段階へ）、④産業AI基盤（製造・医療・金融での特化型AI展開加速）。EU AI Act施行と本番AIエージェント運用開始が同時進行する歴史的なタイミングとして2026年8月を位置づける。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    }
+  ],
+  "fact_checks": [
+    {
+      "article_file": "2026-08-13_3630_WEB_Claude-Code-Auto-Mode-Default-Official-Aug14-2026.md",
+      "claim": "Autoモードの分類器は危険コマンドの89%を捕捉（旧手動承認は14%）",
+      "verdict": "CONFIRMED",
+      "note": "複数ソース確認済み。実験は1,053名有償テスターで実施。人間の捕捉率は正確には13.6%（記事の14%は丸め値）。セッション後半では人間の捕捉率が5%まで低下する一方、Autoモードの分類器は一定水準を維持。",
+      "sources": [
+        "https://cyberpress.org/claude-code-makes-auto-mode-default/",
+        "https://9to5mac.com/2026/08/14/psa-claude-code-enabling-auto-mode-as-default-next-week-anthropic-says/"
+      ]
+    },
+    {
+      "article_file": "2026-08-13_3640_WEB_Anthropic-Claude-Opus5-Official-July2026.md",
+      "claim": "SWE-bench 96%・IMO 2026完全正答・価格$5/$25 per 1M tokens",
+      "verdict": "CONFIRMED",
+      "note": "SWE-bench Verified: 96.0%（正確な数値一致）。IMO 2026: 42/42満点で機械検証済みの証明を生成。価格: $5/1M input・$25/1M output（公式値と一致）。なお記事では「Fable 5レベルの知性を半値」と記述されているが、実際はFable 5と同等以上のスコアを多くのベンチマークで記録。",
+      "sources": [
+        "https://www.morphllm.com/claude-benchmarks",
+        "https://www.edenai.co/post/claude-opus-5-benchmarks-scores-pricing-routing"
+      ]
+    },
+    {
+      "article_file": "2026-08-13_3638_WEB_GitHub-MCP-Server-Next-Spec-2026-07-28.md",
+      "claim": "MCP 2026-07-28仕様: initializeハンドシェイク廃止・Mcp-Session-Idヘッダー廃止",
+      "verdict": "CONFIRMED",
+      "note": "公式MCP仕様ブログ・changelogで確認。SEP-2575によりinitialize/initializedハンドシェイクを削除、SEP-2567によりMcp-Session-Idヘッダーとプロトコルレベルセッションを削除。代わりに各リクエストの_metaフィールドにプロトコルバージョン・クライアント情報・ケーパビリティを含める完全ステートレス設計に。",
+      "sources": [
+        "https://blog.modelcontextprotocol.io/posts/2026-07-28/",
+        "https://modelcontextprotocol.io/specification/2026-07-28/changelog"
+      ]
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-08-12": 4,
+      "2026-08-11": 18,
+      "2026-08-10": 10,
+      "2026-08-09": 13,
+      "2026-08-08": 15,
+      "2026-08-07": 13,
+      "2026-08-06": 18
+    },
+    "recurring_themes": [
+      "claude",
+      "agent",
+      "mcp",
+      "trading",
+      "llm"
+    ]
+  }
+}
