@@ -4818,3 +4818,31 @@ MLモデルがシグナルを生成→LLMがファンダメンタル・ニュー
 
 **提案内容:**
 Opus 5のエフォートトグル（low/medium/high）をRoutinesの各ステップに適用することでトークンコストを削減可能。例：WebSearch要約生成はlow、SIGNAL/NOISE分類はmedium、PROPOSALS.md生成はhighと使い分ける設計が有効。現行Routinesのモデル設定がOpus 5デフォルトに移行済みかを確認し、必要に応じてスキル定義ファイルにeffort指定を追加する。
+
+---
+
+## 2026-08-14 収集分（14件収集 → SIGNAL 14件）
+
+### 1. Claude Sonnet 5 価格永続化への対応
+
+#### 1-1. API利用コスト計画の安定化
+**出典:** articles/2026-08-14_3650_WEB_Claude-Sonnet5-Pricing-Permanent-2-10-per-MTok.md
+
+**提案内容:**
+Claude Sonnet 5の$2/$10/MTokが恒久価格になった（9/1値上げ撤回）。ただし新トークナイザーで同テキストが最大35%多くトークン化される点に注意。Routinesやキュレーションスキルの月間トークン消費量を実測して、バッチAPI（50%オフ）・プロンプトキャッシュ（最大90%オフ）との組み合わせでコスト最適化を計画することを推奨。
+
+### 2. AI Agent Frameworksの比較知見をFX自動取引に適用
+
+#### 2-1. LangGraph + FinGPT + Alpaca API スタック評価
+**出典:** articles/2026-08-14_3658_WEB_Top-AI-Agent-Frameworks-2026-LangGraph-Claude-SDK-ADK.md
+
+**提案内容:**
+2026年のAI取引自動化分野でLangGraph 1.0 + FinGPT（金融感情分析） + Alpaca API（執行）の組み合わせが最多採用とされている。FX自動取引プロジェクトの次フェーズ設計でこの3ツールスタックを参照アーキテクチャとして評価する価値がある。Claude Agent SDKとの比較（MCP統合の容易さ・コスト）も検討すること。
+
+### 3. 英国FCA AIガイダンスのFX自動取引コンプライアンス確認
+
+#### 3-1. モデル説明可能性要件への対応検討
+**出典:** articles/2026-08-14_3654_WEB_AI-Regulation-August2026-EU-Act-Enforcement-FCA-China.md
+
+**提案内容:**
+英国FCAが金融サービスAIガイダンスを公開。信用・投資判断でのモデル説明可能性要件が課せられ、6ヶ月実装期限。FX自動取引システムが英国規制対象の取引を含む場合、LLMシグナル生成根拠のログ保存設計が必要になる可能性がある。現在のシステムにモデル判断根拠の記録機能があるか確認を推奨。
