@@ -1176,3 +1176,19 @@
 | 1147 | Claude Sonnet 5 価格永続化 $2/$10/MTok (ExplainX): 9/1値上げ予定撤回・新トークナイザー35%増量注意・バッチAPI+キャッシュ最適化・Opus 5は$15/$75 | en | 未読 | #claude-ecosystem #pricing #model-update #web-signal | articles/2026-08-14_3650_WEB_Claude-Sonnet5-Pricing-Permanent-2-10-per-MTok.md |
 | 1148 | Anthropic SDK + MCP エンタープライズ展開ガイド (MintMCP): ステートレス移行手順・OAuth/OIDC・Compliance API監査ログ統合・ラウンドロビンLB対応・W3C Trace Context | en | 未読 | #claude-ecosystem #mcp #enterprise #web-signal | articles/2026-08-14_3651_WEB_Anthropic-SDK-MCP-Enterprise-Deployment-Guide.md |
 | 1149 | Claude Code 週次アップデート 2026/08/02週 (Qiita saitoko): v2.1.219-226変更点・Forkingデフォルト・Focus View・mask認証・Auto Mode予告・Opus 5 Fast Mode | ja | 未読 | #claude-code #update #web-signal | articles/2026-08-14_3657_WEB_ClaudeCode-Weekly-Update-Aug02Week-Fork-FocusView.md |
+
+---
+
+## 2026-08-15 収集分（9件SIGNAL）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 1150 | Claude Code Week 32 公式 Changelog (Aug 3–7): Self-Hosted Runners GA・サブエージェント上限撤廃・クロスセッションSendMessage・Forkingデフォルト化 | en | 未読 | #claude-code #self-hosted #subagents #web-signal | articles/2026-08-15_3659_WEB_Claude-Code-Week32-Self-Hosted-Runners-Subagent-Forking-Official.md |
+| 1151 | Claude Code Subagents 2026 実践ガイド (Tembo): fork型/新規型使い分け・worktree分離・コスト管理・エラーリトライ実装例 | en | 未読 | #claude-code #subagents #web-signal | articles/2026-08-15_3660_WEB_Claude-Code-Subagents-2026-Practical-Guide-Tembo.md |
+| 1152 | MCP 2026-07-28 ステートレス化 破壊的変更と移行手順 (MCPJam): handshake廃止・Session-Id廃止・6ステップ移行プロセス | en | 未読 | #claude-ecosystem #mcp #web-signal | articles/2026-08-15_3661_WEB_MCP-2026-07-28-Stateless-What-Breaks-Migration-MCPJam.md |
+| 1153 | MCP ステートレス化入門 (Flavio Copes): 何が楽になるか・何が変わらないか・旧新スペック対比コード例 | en | 未読 | #claude-ecosystem #mcp #web-signal | articles/2026-08-15_3662_WEB_MCP-Stateless-Explained-FlavioCoples.md |
+| 1154 | Claude Code 8月アップデート3点を「エージェント組織の統治」として読む (Qiita berrylove JA): セルフホスト・上限撤廃・クロスセッションの組織設計的意味 | ja | 未読 | #claude-code #update #web-signal | articles/2026-08-15_3663_WEB_ClaudeCode-August2026-Updates-AgentOrganization-Qiita-Berrylove.md |
+| 1155 | Zenn投稿をClaude Code Skillsで自動化 (zenn.dev katsuo_dev JA): SKILL.md→frontmatter生成→zenn-cli publish 自動化実装例 | ja | 未読 | #claude-code #skills #automation #web-signal | articles/2026-08-15_3664_WEB_ClaudeCode-Zenn-Article-Automation-Skills-202608.md |
+| 1156 | 【2026年8月】Claude Codeサブエージェント機能 非エンジニア向け解説 (genai-ai.co.jp JA): 部下チーム比喩・fork型/新規型・Cowork連携 | ja | 未読 | #claude-code #subagents #web-signal | articles/2026-08-15_3670_WEB_Claude-Code-Subagent-Function-2026-August-GenAI-JA.md |
+| 1157 | 【2026年8月】Claude Code Plan Mode 解説 (genai-ai.co.jp JA): /plan切り替え・ファイル編集制限・explore→plan→codeワークフロー | ja | 未読 | #claude-code #plan-mode #web-signal | articles/2026-08-15_3671_WEB_Claude-Code-PlanMode-2026-August-GenAI-JA.md |
+| 1158 | 【2026年8月】Claude Codeデスクトップアプリ入門 (genai-ai.co.jp JA): ターミナル不要・Cowork・Auto Modeデフォルト・セルフホスト接続 | ja | 未読 | #claude-code #desktop #web-signal | articles/2026-08-15_3672_WEB_Claude-Code-Desktop-App-Setup-2026-August-GenAI-JA.md |

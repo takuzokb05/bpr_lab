@@ -4846,3 +4846,31 @@ Claude Sonnet 5の$2/$10/MTokが恒久価格になった（9/1値上げ撤回）
 
 **提案内容:**
 英国FCAが金融サービスAIガイダンスを公開。信用・投資判断でのモデル説明可能性要件が課せられ、6ヶ月実装期限。FX自動取引システムが英国規制対象の取引を含む場合、LLMシグナル生成根拠のログ保存設計が必要になる可能性がある。現在のシステムにモデル判断根拠の記録機能があるか確認を推奨。
+
+---
+
+## 2026-08-15 収集分（14件収集 → SIGNAL 14件）
+
+### 1. MCP 2026-07-28 ステートレス化への対応計画
+
+#### 1-1. FX自動取引プロジェクトのMCPサーバー移行計画
+**出典:** articles/2026-08-15_3661_WEB_MCP-2026-07-28-Stateless-What-Breaks-Migration-MCPJam.md, articles/2026-08-15_3662_WEB_MCP-Stateless-Explained-FlavioCoples.md
+
+**提案内容:**
+MCP 2026-07-28 仕様はステートレス化の破壊的変更を含む（initialize/initialized ハンドシェイク廃止・Mcp-Session-Id 削除）。FX自動取引プロジェクトでMCPサーバーを使っている場合、SDK更新前にセッション状態の棚卸しと移行テストが必要。Python SDK 2.0 Beta は既に対応済み。タスクマネージャーの `.claude/` 配下でMCPを利用している場合も同様。8月中に影響調査を完了しておくことを推奨。
+
+### 2. Self-Hosted Runnersの情報収集ルーチンへの活用検討
+
+#### 2-1. スケジュールルーチンのセルフホスト化検討
+**出典:** articles/2026-08-15_3659_WEB_Claude-Code-Week32-Self-Hosted-Runners-Subagent-Forking-Official.md
+
+**提案内容:**
+Claude Code Self-Hosted Runners（Team/Enterprise Plan）により、この日次収集ルーチン自体を自社VPS上で実行できるようになった。現在はAnthropicクラウドVM上で動作しているが、ConoHa VPSでセルフホストランナーを稼働させることで「内部ネットワークアクセス・コスト可視化・データ主権確保」が可能。MT5との連携を含むFX自動取引ルーチンも同一インフラで動かせる可能性がある。Team/Enterprise プランへの移行コストとのトレードオフを評価すること。
+
+### 3. Zenn/Qiita 投稿自動化スキルの追加検討
+
+#### 3-1. タスクマネージャーへの投稿自動化スキル追加
+**出典:** articles/2026-08-15_3664_WEB_ClaudeCode-Zenn-Article-Automation-Skills-202608.md
+
+**提案内容:**
+Zenn投稿自動化のスキル実装パターン（SKILL.md + TRIGGER セクション + zenn-cli 統合）が公開されている。タスクマネージャーに週次ダイジェストのZenn/Note投稿自動化スキルを追加することで、library の知見をアウトプットに変換するワークフローを構築できる。現行 `digest` スキルの出力をベースに投稿フォーマット変換→公開まで自動化するスキル設計を検討する。

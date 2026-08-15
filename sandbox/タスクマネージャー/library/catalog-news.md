@@ -432,3 +432,15 @@
 | 408 | 【2026年8月版】生成AI主要8サービス料金早見表 (Business Insider Japan): GPT-5.6 3ティア・Gemini 3.6 Flash・Grok 4.5・Sakana Namazu・MiniMax H3・Claude Sonnet 5永続価格 | ja | 未読 | #ai-news #pricing #model-update #web-signal | articles/2026-08-14_3655_WEB_BusinessInsider-Japan-AI-Pricing-Aug2026-8Services.md |
 | 409 | LLM News August 2026: Gemini 3.7 Flash・GLM-5.3・Grok 4.6・Qwen Image 3.0・Claude Sonnet 5永続・MCP ステートレス化・Anthropic IPO準備 (augusto.digital) | en | 未読 | #ai-news #model-update #anthropic #web-signal | articles/2026-08-14_3656_WEB_LLM-News-August2026-Gemini37-Grok46-GLM53-Releases.md |
 | 410 | Top AI Agent Frameworks 2026 本番比較 (Towards AI): LangGraph 1.0・Claude Agent SDK・Microsoft Agent Framework・Google ADK・A2A+MCP必須化・FX自動取引推奨スタック | en | 未読 | #ai-news #ai-agents #frameworks #web-signal | articles/2026-08-14_3658_WEB_Top-AI-Agent-Frameworks-2026-LangGraph-Claude-SDK-ADK.md |
+
+---
+
+## 2026-08-15 収集分（5件SIGNAL）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 411 | AIモデルリリース August 2026 タイムライン (LLMGateway): Gemini 3.7 Flash・Grok 4.6・Muse Spark 1.2・18モデル15プロバイダー確認 | en | 未読 | #ai-news #model-update #web-signal | articles/2026-08-15_3665_WEB_AI-Model-Releases-August2026-Timeline-LLMGateway.md |
+| 412 | AI Model Releases August 2026 (BenchLM): Kimi K3最大オープンウェイト・Gemini 3.7 Flash・月10件超リリース速度・ベンチマーク比較 | en | 未読 | #ai-news #model-update #web-signal | articles/2026-08-15_3666_WEB_AI-Model-Releases-August2026-BenchLM.md |
+| 413 | New AI Model Releases August 2026 Startup Edition (MeanCEO): Opus 5半額・GPT-5.6三ティア・Grok 4.6・モデル選択指針 | en | 未読 | #ai-news #model-update #web-signal | articles/2026-08-15_3667_WEB_New-AI-Model-Releases-August2026-StartupEdition-MeanCEO.md |
+| 414 | AI Regulation August 2026 Startup Edition (MeanCEO): EU施行・米国グリッドロック・英国法案通過・中国罰金・15カ国更新 | en | 未読 | #ai-news #ai-regulation #web-signal | articles/2026-08-15_3668_WEB_AI-Regulation-August2026-Enforcement-Era-MeanCEO.md |
+| 415 | EU AI Act Article 50 施行 法律実務解説 (Morgan Lewis): 8月2日義務化内容・GPAI評価義務・高リスク延期2027年12月・コンプライアンスチェックリスト | en | 未読 | #ai-news #ai-regulation #eu-ai-act #web-signal | articles/2026-08-15_3669_WEB_EU-AI-Act-Article50-Transparency-MorganLewis-August2026.md |
