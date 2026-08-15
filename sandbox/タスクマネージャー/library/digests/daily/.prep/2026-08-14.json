@@ -1,0 +1,226 @@
+{
+  "date": "2026-08-14",
+  "generated_at": "2026-08-15T23:15:57.191584Z",
+  "article_count": 14,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-08-14_3645_WEB_ClaudeCode-August2026-News-Self-Hosted-Subagent-Fork-Default.md",
+      "title": "Claude Code August 2026: Self-Hosted Sessions & Subagent Forking Default",
+      "url": "https://blog.mean.ceo/claude-code-news-august-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Claude Codeが2026年8月に「スタートアップの実用インフラ」として定着。主な変更：Auto Modeのデフォルト化（8/14より Pro/Max/Team）、サブエージェントforkingデフォルト有効化、クロスセッションメッセージング、self-hostedセッション（Team/Enterprise）一般提供。安全性データ：1,053名テスターで危険コマンドの89%をAIが検知（人間は13.6%）。「コーディングアシスタント」から「常時稼働チームインフラ」へのポジション転換。",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "Anthropic公式ブログ・changelogで確認。Auto Mode 8/14よりPro/Max/Teamでデフォルト化（confirmed via claude.com/blog）。Subagent forking 8/13よりデフォルト有効（non-teammate agentはバックグラウンドデフォルト）。ただし89%検知数値はAnthropicの内部テスト由来で外部からは確認不可。"
+    },
+    {
+      "file": "2026-08-14_3646_WEB_ClaudeCode-Best-Practices-10-Tips-Senior-Engineers.md",
+      "title": "Claude Code Best Practices: 10 Workflow Tips Senior Engineers Use",
+      "url": "https://collabnix.com/claude-code-best-practices-10-workflow-tips-that-senior-engineers-swear-by-in-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "シニアエンジニア実践の10 Tips：CLAUDE.md≤200行・Plan Mode（Shift+Tab）→実行・サブエージェントで調査分離・git worktreeで並列開発・Hookをガードレール化・gh CLIでGitHub直接操作・Makefileでチームコマンド統一・MCP接続・検証ループ・@参照でコンテキスト管理。Anthropic社内テスト：構造化アプローチで無ガイド33%から大幅改善。Makefileの make ai-review/test/security/changelog が特に便利。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-14_3647_WEB_ClaudeCode-Setup-4Months-Daily-Use-MCP-Hooks-Skills.md",
+      "title": "Claude Code Setup After 4 Months of Daily Use: MCP Hooks Skills",
+      "url": "https://okhlopkov.com/claude-code-setup-mcp-hooks-skills-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "4ヶ月間のClaude Code毎日使用後の実践セットアップ記録。MCP（DB/GitHub/Notion接続）・Hooks（PostToolUse等12イベント活用）・Skills（チーム全員がSKILL.mdで同一ワークフロー共有）の三層運用。CLAUDE.md進化記録（初週→4ヶ月後）、失敗から学んだアンチパターン（サブエージェント乱用・過長CLAUDE.md・Hook過多）を実測値と共に公開。具体的config例あり。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-14_3648_WEB_CLAUDE-md-Skills-Rules-Hooks-MCP-Agents-Complete.md",
+      "title": "CLAUDE.md, Skills, Rules, Hooks, MCP, Agents — 全拡張機能体系化",
+      "url": "https://jorgepit-14189.medium.com/claude-md-skills-rules-hooks-mcp-agents-045f3131d78f",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Claude Codeの全拡張層を体系化：CLAUDE.md（毎セッション自動読込）・Skills（特定作業時のみ呼び出し）・Rules（段階的ルール管理）・Hooks（全ツール前後に確定実行）・MCP（外部接続）・Agents（サブエージェント分岐）。使い分け基準：常時適用→CLAUDE.md、特定作業のみ→Skills、コードで強制→Hooks、外部接続→MCP。内蔵スキル一覧：/code-review /debug /batch /loop /doctor /run /verify。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-14_3649_WEB_ClaudeCode-Complete-Guide-2026-MCP-Subagents-Git-Workflows.md",
+      "title": "Claude Code Complete Guide 2026: MCP, Subagents & Git Workflows",
+      "url": "https://www.jitendrazaa.com/blog/ai/claude-code-complete-guide-2026-from-basics-to-advanced-mcp-2/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "2026年8月時点の包括的Claude Codeガイド。MCP（TypeScript/Pythonサーバー実装チュートリアル）・サブエージェント（fork型 vs clean型）・git worktree並列開発・IDE統合設定・Auto Modeセーフガード設定を網羅。Claude Code SDKのquery()ループとMessages APIの差異を実装レベルで解説。コードサンプル豊富。初心者から上級者まで対応する構成。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-14_3650_WEB_Claude-Sonnet5-Pricing-Permanent-2-10-per-MTok.md",
+      "title": "Claude Sonnet 5 Pricing Made Permanent: $2/$10 per Million Tokens",
+      "url": "https://explainx.ai/blog/anthropic-sonnet-5-permanent-pricing-august-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Anthropicが8/10発表：Claude Sonnet 5の入力$2/出力$10（/MTok）を恒久価格に。当初9/1に$3/$15へ値上げ予定だったが撤回。開発者・企業にとってコスト予測が安定化。注意：新トークナイザーで同テキストが最大35%多トークンに変換される（実効コスト増）。バッチAPI（50%オフ）・プロンプトキャッシュ（最大90%オフ）活用で最適化可能。Opus 5は$15/$75、Fast Modeは$10/$50（Opus 5利用）。",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "8/10発表の価格永続化を複数ソースで確認。OpenRouter・platform.claude.com・techjournal.orgが$2/$10を恒久価格として掲載。9/1の$3/$15への値上げは公式に撤回確認。トークナイザー変更による実効コスト増の注記も妥当。"
+    },
+    {
+      "file": "2026-08-14_3651_WEB_Anthropic-SDK-MCP-Enterprise-Deployment-Guide.md",
+      "title": "Anthropic Claude SDK + MCP: Enterprise AI Agent Deployment Guide",
+      "url": "https://www.mintmcp.com/blog/enterprise-development-guide-ai-agents",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Claude Agent SDK + MCP 2026-07-28仕様のエンタープライズ向け実装ガイド。ステートレスコアへの移行手順・OAuth/OIDC認証設定・Python/TypeScriptでのMCP接続実装例。エンタープライズ課題解決：認証一元管理・ゲートウェイアクセス制御・Compliance API監査ログ統合。セッション管理→リクエスト単位への移行でラウンドロビンLB対応・スケーラビリティ大幅向上。W3C Trace Contextで分散トレーシング対応。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-14_3652_WEB_AI-Trading-Agents-vs-Bots-2026-Smarter-Not-Safer.md",
+      "title": "AI Trading Agents vs Bots 2026: Smarter Isn't Safer",
+      "url": "https://bitsgap.com/blog/ai-trading-agents-vs-trading-bots-in-2026-why-smarter-isnt-safer",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "AIトレーディングエージェントvs従来型ボットの実態比較。従来ボット：固定if/thenルール、レジーム変化非対応。AIエージェント：LLMを推論エンジンとして価格+感情+ニュース+オンチェーン+資金調達レートを統合。現実：バックテスト結果は良好でも実取引でのギャップ大（手数料・スリッページ・レジーム変化）。「スマートだが安全ではない」が核心。推奨本番スタック：LangChain + FinGPT + Alpaca API。FX自動取引開発者向けに直接参考になる実践知識。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-14_3653_WEB_AI-Trading-Agents-Complete-Guide-Autonomous-Investing.md",
+      "title": "AI Trading Agents 2026: Complete Guide to Autonomous Investing",
+      "url": "https://assetwhisper.com/ai-trading-agents-in-2026-the-complete-guide-to-autonomous-investing/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "自律型AI投資エージェントの2026年包括ガイド。アーキテクチャ：価格データ+ソーシャル感情+ニュース+オンチェーンウォレット+資金調達レート+流動性変化を統合したLLM推論エンジン。実用レベル評価：トレードアイデア生成・リバランス・アラートは有効。完全自律取引は高リスク。FX適用：マクロ指標解析によるポジションサイジング提案が実用的。現状の最適解は「人間判断を補完するツール」。MT5+LLM統合の技術スタック例も記載。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-14_3654_WEB_AI-Regulation-August2026-EU-Act-Enforcement-FCA-China.md",
+      "title": "AI Regulation August 2026: EU €47M Enforcement, FCA, China Update",
+      "url": "https://skycrumbs.com/blog/ai-regulation-august-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "2026年8月AI規制主要動向。【EU】透明性義務8/2発効（AI接触開示・AI生成コンテンツマーキング義務化）。EU AI Officeが3社に€4,700万制裁（EU AI Act初の重大執行事例）。【中国】生成AIラベリング要件強化（SNS・ニュース・短動画・AI音声に拡大）。【英国FCA】AI in Financial Servicesガイダンス：信用・投資判断のモデル説明可能性要件、6ヶ月実装期限。【南アフリカ】国家AIポリシー2026草案公開。金融システムへの影響が大きい英国FCA動向はFX自動取引に直接関連。",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "8/2発効直後にEU AI Officeが3社（採用HR: €18M、信用スコアラー: €14M、小売: €15M）に計€47M制裁を確認。arturmarkus.com / enterprisedna.co / qzで内訳含め一致。8/2透明性義務発効も確認済み。"
+    },
+    {
+      "file": "2026-08-14_3655_WEB_BusinessInsider-Japan-AI-Pricing-Aug2026-8Services.md",
+      "title": "【2026年8月版】生成AI主要8サービス料金早見表（Business Insider Japan）",
+      "url": "https://www.businessinsider.jp/article/2608-how-much-did-major-generative-ai-service-fees/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "ai-news",
+      "summary": "Business Insider Japan による2026年8月時点の主要生成AIサービス料金比較。ChatGPT（GPT-5.6: Sol/Terra/Luna 3ティア）、Gemini 3.6 Flash、Grok 4.5、Claude Sonnet 5（$2/$10永続化）、Sakana Namazu（8/3開始・日本語特化LLM API）、MiniMax H3（8/2公開・全モダル統合）を横断比較。日本円換算価格・為替影響・トークナイザー変更による実効コスト増も解説。Claude Sonnet 5の価格永続化がコスト計画に与える影響を具体的に解説。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-14_3656_WEB_LLM-News-August2026-Gemini37-Grok46-GLM53-Releases.md",
+      "title": "LLM News August 2026: Gemini 3.7, Grok 4.6, GLM-5.3, Price Cuts",
+      "url": "https://augusto.digital/insights/blogs/monthly-llm-news-august-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "2026年8月LLMニュース月次まとめ。新モデルリリース：Gemini 3.7 Flash（8/13・最速モデル）、GLM-5.3（8/14・Z.ai）、Grok 4.6（8/6・xAI）、Qwen Image 3.0/3.0 Pro（8/5・Alibaba画像特化）、Seedance 2.5（8/8・ByteDance動画生成）。Claude Sonnet 5価格永続化（$2/$10）。MCP 2026-07-28仕様によるエージェントインフラのステートレス化でエンタープライズ採用加速。EU AI Act 8/2透明性義務発効。Anthropic 10月IPO準備中。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-14_3657_WEB_ClaudeCode-Weekly-Update-Aug02Week-Fork-FocusView.md",
+      "title": "Claude Code 週次アップデートまとめ（2026/08/02週）Qiita",
+      "url": "https://qiita.com/saitoko/items/a95cbb5888835be0f7fd",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "v2.1.219〜v2.1.226の変更点日本語まとめ（Qiita）。主な新機能：(1) サブエージェントforkingデフォルト有効（非チームメートエージェントはバックグラウンドデフォルト）、(2) VS Code Focus View（Ctrl+Alt+F でツールログ折りたたみ）、(3) 認証情報ファイルmode:\"mask\"対応（Linux/WSL）、(4) Auto Mode 8/14デフォルト化予告。バグ修正：feature-flag処理・Bashコマンド実行・/tui rewind挙動。Opus 5がFast Modeデフォルトになりコスト$10/$50 MTok。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-14_3658_WEB_Top-AI-Agent-Frameworks-2026-LangGraph-Claude-SDK-ADK.md",
+      "title": "Top AI Agent Frameworks 2026: LangGraph, Claude SDK, Google ADK",
+      "url": "https://pub.towardsai.net/top-ai-agent-frameworks-in-2026-a-production-ready-comparison-7ba5e39ad56d",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "2026年AIエージェントフレームワーク本番比較（Towards AI）。主要7フレームワーク：LangGraph 1.0・Claude Agent SDK・CrewAI 1.14・Microsoft Agent Framework 1.0（AutoGen+Semantic Kernel統合）・Google ADK（Vertex AI/Gemini向け）・LlamaIndex Workflows 1.0・Pydantic AI V2。2026年傾向：クラウドプロバイダー統合・A2A+MCP対応必須化・マルチモーダル標準化・チェックポイント/human-in-the-loop標準機能化。FX自動取引にはLangGraph+FinGPT+Alpaca APIの組み合わせが最多採用。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    }
+  ],
+  "fact_checks": [
+    {
+      "article_file": "2026-08-14_3645_WEB_ClaudeCode-August2026-News-Self-Hosted-Subagent-Fork-Default.md",
+      "claim": "Auto Modeデフォルト化（8/14より Pro/Max/Team）、サブエージェントforkingデフォルト有効化",
+      "verdict": "確認済み",
+      "note": "Anthropic公式ブログ・changelogで確認。Auto Mode 8/14よりPro/Max/Teamでデフォルト化（confirmed via claude.com/blog）。Subagent forking 8/13よりデフォルト有効（non-teammate agentはバックグラウンドデフォルト）。ただし89%検知数値はAnthropicの内部テスト由来で外部からは確認不可。",
+      "sources": [
+        "https://claude.com/blog/auto-mode-default-in-claude-code",
+        "https://code.claude.com/docs/en/changelog"
+      ]
+    },
+    {
+      "article_file": "2026-08-14_3650_WEB_Claude-Sonnet5-Pricing-Permanent-2-10-per-MTok.md",
+      "claim": "Claude Sonnet 5 入力$2/出力$10（/MTok）を恒久価格に。9/1値上げ撤回",
+      "verdict": "確認済み",
+      "note": "8/10発表の価格永続化を複数ソースで確認。OpenRouter・platform.claude.com・techjournal.orgが$2/$10を恒久価格として掲載。9/1の$3/$15への値上げは公式に撤回確認。トークナイザー変更による実効コスト増の注記も妥当。",
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/pricing",
+        "https://techjournal.org/claude-sonnet-5-pricing-now-permanent"
+      ]
+    },
+    {
+      "article_file": "2026-08-14_3654_WEB_AI-Regulation-August2026-EU-Act-Enforcement-FCA-China.md",
+      "claim": "EU AI Officeが3社に€4,700万制裁（EU AI Act初の重大執行事例）",
+      "verdict": "確認済み",
+      "note": "8/2発効直後にEU AI Officeが3社（採用HR: €18M、信用スコアラー: €14M、小売: €15M）に計€47M制裁を確認。arturmarkus.com / enterprisedna.co / qzで内訳含め一致。8/2透明性義務発効も確認済み。",
+      "sources": [
+        "https://www.arturmarkus.com/eu-ai-office-issues-first-e47-million-in-fines-against-three-companies-for-high-risk-ai-violations-hiring-platform-gets-e18m-credit-scorer-e14m-retail-chain-e15m/",
+        "https://enterprisedna.co/resources/news/eu-ai-act-enforcement-fines-live-gpai-august-2026/"
+      ]
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-08-13": 15,
+      "2026-08-12": 4,
+      "2026-08-11": 18,
+      "2026-08-10": 10,
+      "2026-08-09": 13,
+      "2026-08-08": 15,
+      "2026-08-07": 13
+    },
+    "recurring_themes": [
+      "claude",
+      "agent",
+      "mcp",
+      "trading",
+      "llm"
+    ]
+  }
+}
