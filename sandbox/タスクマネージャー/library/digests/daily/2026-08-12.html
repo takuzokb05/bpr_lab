@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-08-12</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-08-12 | 4件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-08-12</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>8月12日は「Claude Codeのエンタープライズ成熟」と「実務自動化の具体化」が二軸で進んだ日。Compliance APIの拡張でClaude Codeが規制産業に本格浸透できる体制が整い、同時に国内ユーザー向けにはRoutinesと業務自動化のガイドが公開された。米国では連邦政府が50億ドル超のAI投資（Genesis Mission）を展開しており、政策動向も無視できないフェーズへ。本日の収集記事は4本と少なめだが、内容の密度は高い。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>Compliance APIがCowork+Claude Codeに拡張、エンタープライズ実用化が現実に</h3>
+
+<p>（一次ソース確認済み）Anthropicは、Compliance APIの適用範囲をCoworkとClaude Codeに拡張したと公式ブログで発表した。Claude Enterprise顧客はベータ機能として、プロンプト・レスポンス・ツール呼び出し内容などのセッションデータを既存のAPIキーで一元取得できるようになった。</p>
+
+<p>これはClaude Code v2.1.224（8月7日）で追加された自社セルフホストランナー対応と組み合わせることで意味が大きくなる。「自社インフラで実行＋監査ログ取得」という要件を同一Anthropicスタック内で完結できるため、金融・医療・法律など規制産業での採用障壁が実質的に消えた。Claude CodeとCoworkを同一APIで管理できる統合性も、IT管理コスト削減の観点で評価できる。</p>
+
+<p>Claude Codeをヘビーに使う立場からすると、個人利用に直接影響はないが、業務での公式利用・組織導入を検討する際の説得材料として活用できる情報だ。</p>
+
+<p>参照: &lt;https://claude.com/blog/compliance-api-cowork-and-claude-code&gt;</p>
+
+<h3>Routinesガイドと業務自動化事例が国内で相次いで公開</h3>
+
+<p>genai-ai.co.jpが「Claude Code Routines完全ガイド」と「業務全自動化実践ガイド」を同日に公開した。この2本は表裏一体の内容で、前者がRoutinesの仕組みと制限（Pro: 5回/日、Max: 15回/日）を解説し、後者がその実運用事例を示している。</p>
+
+<p>業務自動化ガイドでは、PR TIMESから企業を自動抽出→営業メール下書きというフローを単一エージェントで完結させる例が紹介されている。（一次ソース確認済み）月30,000円のClaude Max投資で月25〜30万円相当の業務削減を達成したという数値は、同社サイトで確認できた。※「100万円超」は時給高め見積もりの可能性があり要割引。</p>
+
+<p>注目点は、このフロー構造が「データ取得→判断→アクション」という点でFX自動取引システムと本質的に同じだということだ。AI-CodingとAI-Tradingの技術スタックが収束しつつある。高頻度タスクはAPIトリガーとRoutinesを組み合わせる設計が推奨されており、ダイジェスト生成を含む定型処理の設計見直しに使える観点だ。</p>
+
+<p>参照:</p>
+<ul>
+<li>Routinesガイド: &lt;https://genai-ai.co.jp/ai-kanri/blog/cc-yt-routines-automation-01/&gt;</li>
+<li>業務自動化ガイド: &lt;https://genai-ai.co.jp/ai-kanri/blog/cc-yt-cc-business-automation-83/&gt;</li>
+</ul>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>米国AI政策：50億ドル連邦投資「Genesis Mission」と州規制の二重圧力</h3>
+
+<p>（一次ソース確認済み）Mintz法律事務所の月次レポート（2026年8月号）によると、米国AI政策は「連邦の大規模投資」と「州規制の先鋭化」が同時進行している。</p>
+
+<p>Genesis Mission（DOE）は278プロジェクトに50億ドル超を投じる連邦史上最大級のAI調達機会で、Microsoftが6,000万ドルの追加支援を表明している。生命科学・エネルギー・半導体・防衛が対象となっており、防衛・医療・エネルギー分野の企業には重要な資金調達機会だ。</p>
+
+<p>一方でFTCのAIステアリング規制はBtoC製品のマーケティング・開発両面に影響し、イリノイ州の第三者監査義務化が他州に波及する可能性がある。連邦統一法の成立見通しが立たない中、州ごとの法律対応がコンプライアンスリスクとして顕在化している。公務員・行政の立場からは、この「連邦-州の分断」がDXプロジェクト設計に与える影響を注視したい。</p>
+
+<p>参照: &lt;https://www.mintz.com/insights-center/viewpoints/54941/2026-08-07-ai-washington-report-august-2026-edition&gt;</p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p><strong>本日の収集: 4本（過去7日平均: 14.3本）</strong></p>
+
+<p>過去7日のカウント: 8/11(18), 8/10(10), 8/9(13), 8/8(15), 8/7(13), 8/6(18), 8/5(13)</p>
+
+<p>本日は平均を大幅に下回る4本。ただし内容は厚く、Compliance API・Routines・業務自動化・米国AI政策という主要ドメインをほぼカバーしている。</p>
+
+<p>継続テーマ（claude / agent / mcp / trading / llm）のうち、本日は <strong>claude・agent</strong> が中心。<strong>mcp・trading・llm</strong> への言及はなかった。特にtradingは数日空白が続いている印象があり、次の収集でFX/トレーディング系記事があれば優先ピックアップを推奨。</p>
+
+<p>Routinesの記事は本日初出のため、次回以降の同テーマは差分（新機能・制限変更・実用事例追加）のみ記述する。</p>
+
+</body>
+</html>

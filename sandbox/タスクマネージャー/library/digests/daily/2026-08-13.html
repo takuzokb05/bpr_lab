@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-08-13</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-08-13 | 15件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-08-13</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>本日最大のニュースは <strong>Claude Code Autoモードの8月14日デフォルト化</strong>。Pro・Max・Teamプランユーザーは今日から挙動が変わる。並行して <strong>Claude Opus 5の7月リリース後の評価記事</strong>が複数流入し、性能・価格両面での「CP比最強」路線が定着しつつある。MCPエコシステムは2026-07-28仕様のステートレス化という静かな革命が進行中。FXトレーディング側では ML×LLM ハイブリッド構成の実装論文が参考になる。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>Autoモードがデフォルトへ（一次ソース確認済み）</h3>
+
+<p>8月14日より、Claude CodeのPro・Max・TeamプランでAutoモードがデフォルトの権限モードになった。Anthropicの公式発表によると、同モードの安全性分類器は「不可逆・破壊的・環境外への操作」と判定されない限り自動実行し、危険コマンドの捕捉率は<strong>89%</strong>。旧来の手動承認ワークフローが捕捉できていた14%（正確には13.6%）から大幅な改善だ。1,053名の有償テスターによる実験では、セッション後半で人間の捕捉率が5%まで低下することも確認されており、「人間が見張るより機械に任せた方が安全」という逆説的な判断が下された。</p>
+
+<p>Enterprise・API・AWS Bedrock・Google Cloud・Microsoft Foundryは来月中にデフォルト化予定。既に独自設定を持つユーザーは一度のプロンプトで確認が行われる。GIGAZINEの日本語解説記事では、VSCode Focus view追加やサンドボックスへの `mode:&quot;mask&quot;` 追加などの付随アップデートも紹介されている。</p>
+
+<p>&gt; 出典: <a href="https://claude.com/blog/auto-mode-default-in-claude-code" target="_blank">Anthropic公式</a> / <a href="https://techcrunch.com/2026/08/09/anthropic-is-turning-claude-codes-auto-mode-on-by-default/" target="_blank">TechCrunch</a> / <a href="https://simonwillison.net/2026/Aug/8/auto-mode/" target="_blank">Simon Willison</a> / <a href="https://gigazine.net/news/20260810-claude-code-auto-mode/" target="_blank">GIGAZINE</a> / <a href="https://www.digitalapplied.com/blog/claude-code-auto-mode-default-permission-model-shift" target="_blank">DigitalApplied</a></p>
+
+<h3>Routines・拡張機能の体系的解説</h3>
+
+<p>Makerkitによる「<a href="https://makerkit.dev/blog/tutorials/claude-code-routines-guide" target="_blank">Claude Code Routinesの完全ガイド</a>」が公開。2026年4月リリースのRoutines機能をローカルDevツールから「スケジュールされたクラウド自動化プラットフォーム」への転換と位置づける内容で、3種類のトリガー（スケジュール・API・GitHubイベント）と3種類の実行方法（クラウドRoutines・Desktopスケジュール・/loop）の違いを明快に整理している。ちなみに今あなたが読んでいるこのダイジェストもRoutinesで自動生成されている。</p>
+
+<p>CodingNomadsはSkills・MCP・Hooksの役割分担を「Skillsが何をするかを定義し、MCPがデータを提供し、Hooksがルールを強制する」という一言フレームワークで整理した<a href="https://codingnomads.com/claude-code-extensions-skills-mcp-hooks" target="_blank">チュートリアル</a>を公開。動画・クイズ付きの構造化コース形式で、MCPサーバーによるWebSearch・スクレイピング・DBアクセスの実例も含む実践的な内容だ。</p>
+
+<p>業務ハックLabの<a href="https://yougears-lab.com/claude-update-20260805/" target="_blank">8月アップデートまとめ</a>によると、Opus 5がMax/Team Premium/Enterprise/APIのデフォルトOpusに設定済み、APIキーへの有効期限設定機能追加（7日以上でメール通知）、レガシーWorkbench（Claude Console）の8月17日終了という3点が8月上旬の主要変更点。<strong>8月17日はレガシーWorkbenchの終了日</strong>なので、まだConsoleを使っている場合は移行要。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>Claude Opus 5: 「Fable 5相当の知性を半値で」（一次ソース確認済み）</h3>
+
+<p>7月24日に発表されたClaude Opus 5が各メディアで改めて取り上げられている。価格は入力 <strong>$5/1M tokens・出力 $25/1M tokens</strong>（Fable 5の約半額）で、SWE-bench Verified <strong>96.0%</strong>・IMO 2026 <strong>42/42完全正答</strong>（機械検証済み証明）という数値が確認されている。エフォートトグル（low/medium/high）によりリクエスト単位でコスト-性能をトレードオフできるのが最大の特徴。Claude CodeのMax/Team Premium/Enterprise/APIではデフォルトのOpusモデルとして既に稼働中。</p>
+
+<p>Axiosはこのリリースを「Anthropicの2026年末IPO準備の一環」と報道。SiliconAngleはResponsible Scaling Policy準拠の安全評価とAuto modeデフォルト化との組み合わせで「より強力な自律AIエージェントが実現する」と分析している。</p>
+
+<p>&gt; 出典: <a href="https://www.anthropic.com/news/claude-opus-5" target="_blank">Anthropic公式</a> / <a href="https://www.axios.com/2026/07/24/anthropic-releases-new-model-opus-5" target="_blank">Axios</a> / <a href="https://siliconangle.com/2026/07/24/anthropic-launches-claude-opus-5-efficiency-safety-improvements/" target="_blank">SiliconAngle</a></p>
+
+<h3>MCP ステートレス化：静かな革命（一次ソース確認済み）</h3>
+
+<p>GitHub MCPサーバーが<a href="https://github.blog/changelog/2026-07-23-github-mcp-server-supports-the-next-mcp-specification/" target="_blank">2026-07-28仕様</a>に対応。この仕様では `initialize` ハンドシェイクと `Mcp-Session-Id` ヘッダーが廃止され、完全ステートレス設計に移行した（SEP-2575/SEP-2567）。各リクエストの `_meta` フィールドにプロトコルバージョン・クライアント情報・ケーパビリティを含める設計に変わり、サーバーレス・エッジインフラへのデプロイが容易になる。Python SDK 2.0も同時リリース（主要クラス名変更あり）。Tier 1 SDK（Python/TypeScript/Java/C#）はすべて対応済み、Rustはベータ版。</p>
+
+<p>MCPサーバーを自前でホストしている場合は移行手順の確認が必要。DigitalAppliedの<a href="https://www.digitalapplied.com/blog/mcp-2026-07-28-stateless-spec-agent-infrastructure-2026" target="_blank">詳細技術分析</a>が参考になる。</p>
+
+<h3>EU AI Act：2026年8月から実装フェーズへ</h3>
+
+<p>eguweb.jpの<a href="https://eguweb.jp/ai/81270/" target="_blank">週次まとめ</a>によると、EU AI Act Article 50が8月2日から施行開始し、AI生成コンテンツへの機械可読マーキングが義務化された。本番AIエージェントの運用が始まるタイミングと規制施行が重なる「歴史的なタイミング」として分析されており、企業は権限・ログ・評価・コスト管理の整備が急務な段階に入っている。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #ea580c; padding-left: 12px;">AIトレーディング</h2>
+
+<p>MQL5.comに実践的なハイブリッドアーキテクチャの<a href="https://www.mql5.com/en/blogs/post/768203" target="_blank">技術記事</a>が掲載。MLモデルが取引シグナルを生成し、LLMがファンダメンタル・ニュース文脈からそれを確認/否定する構成。MT5のWebRequest制限（同期型・ホワイトリスト制限・永続接続不可）を回避するためのPythonブリッジを採用しており、MQL5とPython間の非同期通信で実現する設計パターンはそのまま参照できる水準。現在運用中のFX EAにLLMシグナル確認レイヤーを追加する際の実装参考として有用。</p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>過去7日の収集件数は 18→13→15→13→10→18→4（8/6〜8/12）から本日15件。前日(8/12)の4件から大幅増だが、8/11と8/6の18件水準には達していない。<strong>claude・agent・mcp・trading・llm</strong> が7日間を通じて継続する主要テーマであり、今日は特に `claude` と `mcp` に集中した構成だった。</p>
+
+<p>注目すべき差分は「Autoモードのデフォルト化」が複数メディアで重複報道される形で収集件数を押し上げたこと。単一トピックへの集中は、それだけ業界全体の関心が一点に集まっているサインでもある。MCPステートレス化は収集件数こそ少ないが、エコシステム全体への影響が大きく今後もウォッチが必要。</p>
+
+</body>
+</html>
