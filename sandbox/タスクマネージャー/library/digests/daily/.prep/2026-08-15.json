@@ -1,0 +1,214 @@
+{
+  "date": "2026-08-15",
+  "generated_at": "2026-08-16T23:18:44.428453Z",
+  "article_count": 14,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-08-15_3659_WEB_Claude-Code-Week32-Self-Hosted-Runners-Subagent-Forking-Official.md",
+      "title": "Claude Code Week 32 (Aug 3–7, 2026): Self-Hosted Runners & Subagent Forking — Official Changelog",
+      "url": "https://code.claude.com/docs/en/whats-new/2026-w32",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "2026年8月7日のメジャーリリース内容：(1) **Self-Hosted Runners GA（Team/Enterprise）** — `claude self-hosted-runner` コマンドで自社インフラ上でセッション実行可能、内部サービスアクセス可、Fixed/On-demand 2モード；(2) **サブエージェント200件/セッション上限撤廃** — 階層型エージェント組織が実質無制限に；(3) **クロスセッション SendMessage アップグレード** — 異マシン間セッション通信・ListAgents ツール正式対応；(4) **デフォルトサブエージェントフォーキング** — `subagent_type: \"fork\"` が会話・プロンプトキャッシュを継承でコスト削減；(5) **GitLab MR サポート強化** — マーケットプレイス対応；(6) **Compliance API 拡張** — Cowork/Code 全プラットフォームに統合。「どこで動くか・誰の声を聞くか・何本スポーン可能か」の3軸が同時に変わった最重要アップデート。",
+      "body_excerpt": "Anthropic 公式 Claude Code Docs の Week 32（2026年8月3〜7日）変更まとめ。",
+      "fact_checked": true,
+      "fact_check_note": "[CONFIRMED] Self-Hosted Runners（複数ソース確認）、サブエージェント上限撤廃（200→無制限、ただし同時実行・深さ制限は残存）、クロスセッションメッセージングの3点すべて確認済み。v2.1.224、2026-08-07リリース。記事内「GA」表記だが検索結果では \"public beta\" の表現もあり（Team/Enterprise）。軽微な差異。"
+    },
+    {
+      "file": "2026-08-15_3660_WEB_Claude-Code-Subagents-2026-Practical-Guide-Tembo.md",
+      "title": "Claude Code Subagents: A 2026 Practical Guide",
+      "url": "https://www.tembo.io/blog/claude-code-subagents",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Tembo.io によるClaude Code サブエージェント実践ガイド。fork vs 新規サブエージェントの使い分け（fork型：親会話コンテキスト・プロンプトキャッシュ継承でコスト削減、新規型：独立コンテキストが必要な場合）、worktree 分離 vs 共有の選択基準、200件上限撤廃後の設計思想（フラット型→階層型エージェント組織）、コスト管理（キャッシュヒット率最大化・エフォートレベル調整）を解説。エラーリトライ・タイムアウト処理の実装例、並列実行でのレース条件回避パターンも含む。本番運用経験に基づいた実践的な内容。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-15_3661_WEB_MCP-2026-07-28-Stateless-What-Breaks-Migration-MCPJam.md",
+      "title": "MCP 2026-07-28 Goes Stateless: What Breaks and How to Migrate",
+      "url": "https://mcpjam.substack.com/p/mcp-2026-07-28-goes-stateless-what",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "MCPJam による MCP 2026-07-28 スペックの破壊的変更解説。ステートレス化の核心：「initialize/initialized ハンドシェイクの廃止」「Mcp-Session-Id の削除」「各リクエストへのプロトコルバージョン・クライアント情報・ケイパビリティの埋め込み」。移行ステップ：①隠れセッション状態の棚卸し → ②server/discover 実装 → ③ヘッダー・ボディパリティ検証 → ④list 結果の決定論的キャッシュ対応 → ⑤レガシーパスの並走 → ⑥ラウンドロビン・認証・リプレイテスト。重要な注意点：「ステートレスMCPはステートレスソフトウェアではない」— アプリ層の状態（承認フロー、セッションデータ）は引き続き明示的に管理が必要。SDK Beta（Python/TypeScript/Go/C#）で先行移行可能。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-15_3662_WEB_MCP-Stateless-Explained-FlavioCoples.md",
+      "title": "MCP is now stateless: what the 2026-07-28 update changes",
+      "url": "https://flaviocopes.com/mcp-2026-07-28-stateless/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Flavio Copes による MCP ステートレス化の平易な解説。ステートレス化で何が楽になるか：ラウンドロビンLBの直接適用可能、サーバーレス・エッジへのデプロイ、スティッキーセッション不要、ゲートウェイでのディープパケットインスペクション不要。何が変わらないか：アプリロジック層の状態管理は引き続き必要。旧スペック(initialize handshake)と新スペック(Mcp-Method ヘッダーベース)の対比コード例付き。MCPJam 記事と相補的な入門向け解説。開発者が移行前に読む最短コースとして機能する。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-15_3663_WEB_ClaudeCode-August2026-Updates-AgentOrganization-Qiita-Berrylove.md",
+      "title": "Claude Code の8月アップデート3点を「エージェント組織の統治」として読む",
+      "url": "https://qiita.com/berrylove/items/e5df42c20e0b23b07f71",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "Qiita 記事。2026年8月のClaude Codeアップデート3点を「エージェント組織の統治」という概念フレームで再解釈。①セルフホストランナー：「どの計算機上で動くか」の主権が組織に移る（データ主権・内部サービスアクセス）、②サブエージェント上限撤廃：フラット型から多層階層型エージェント組織への移行が現実的に、③クロスセッションメッセージング：非同期コミュニケーションで「意思決定の委任」が可能に。実務での活用方針（既存ワークフローへの段階的導入、コスト計算 = 上限なし × キャッシュ継承）も言及。技術的正確さと組織設計視点を兼ね備えた良質な日本語解説。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-15_3664_WEB_ClaudeCode-Zenn-Article-Automation-Skills-202608.md",
+      "title": "Zenn投稿をClaude Code Skillsで自動化してみた",
+      "url": "https://zenn.dev/katsuo_dev/articles/202608-claude-code-zenn-automation",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "Zenn 記事。Claude Code Skillsを使ってZenn記事投稿ワークフローを自動化した実践報告。SKILL.md にZenn記事のフォーマット・frontmatter規則・投稿手順を定義し、スラッシュコマンド1本で「下書き→frontmatter生成→zenn-cli publish」までを自動化。2026年8月時点の最新仕様：npm 経由インストールは非推奨でネイティブインストーラー推奨。/model コマンドでOpus/Sonnet/Haikuを使い分けてコスト最適化。TRIGGER セクションにより記事種別（技術/雑記/日記）を自動判定してテンプレート切り替え。個人ブログ・技術記事執筆への Claude Code スキル応用事例として参考になる具体的実装。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-15_3665_WEB_AI-Model-Releases-August2026-Timeline-LLMGateway.md",
+      "title": "New AI Model Releases — August 2026 Timeline",
+      "url": "https://llmgateway.io/timeline",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "LLM Gateway によるAIモデルリリースタイムライン（2026年8月分）。確認済み18モデル・15プロバイダー。主要リリース：Gemini 3.7 Flash (Google, 2026-08-13)、Grok 4.6 (xAI, 2026-08-06)、Muse Spark 1.2 (Meta, 2026-08-06)、Qwen Image 3.0/3.0 Pro (Alibaba, 2026-08-05)、Seedance 2.5 (ByteDance, 2026-08-08)。Claude Opus 5 は7月24日リリース済み（Fable 5相当を半額）。モデルがソフトウェアパッチ並みの頻度でリリースされる時代へ。バイト別・タスク別価格比較も掲載。定量データが充実した参照記事。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-15_3666_WEB_AI-Model-Releases-August2026-BenchLM.md",
+      "title": "AI Model Releases in August 2026: Confirmed Updates",
+      "url": "https://benchlm.ai/model-updates/releases/august-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "BenchLM によるAIモデルリリース確認情報（2026年8月）。Anthropic は Claude Opus 5 を frontier 相当・半額で投入、Google は Gemini 3.5 Pro をディレイしつつ Gemini 3.7 Flash をリリース、Moonshot AI は Kimi K3 を史上最大のオープンウェイトモデルとして公開。月10件超のリリース速度と価格競争の激化。各モデルのベンチマーク比較（MMLU・HumanEval・MATH等）を掲載。定量データ中心の信頼性の高い参照記事。モデル選定に活用できる客観的指標をまとめている。",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "[CONFIRMED_WITH_NOTE] Kimi K3「史上最大オープンウェイト」は2.8Tパラメータで確認済み（Moonshot AI、2026-07-16 API公開・2026-07-27 ウェイト公開）。ただしリリース日は7月であり8月ではない点に注意。その他Gemini 3.7 Flash、Claude Opus 5等のモデル群は複数ソースで確認。"
+    },
+    {
+      "file": "2026-08-15_3667_WEB_New-AI-Model-Releases-August2026-StartupEdition-MeanCEO.md",
+      "title": "New AI Model Releases News | August, 2026 (STARTUP EDITION)",
+      "url": "https://blog.mean.ceo/new-ai-model-releases-news-august-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "MeanCEO スタートアップ向け月次AIモデルリリースニュース（2026年8月）。主要モデル：Claude Opus 5（frontier 相当・競合比半額・エフォートトグル搭載）、GPT-5.6（Sol/Terra/Luna 3ティア展開）、Grok 4.6（SpaceXAI、コーディング特化）、Kimi K3（史上最大オープンウェイト、Moonshot AI）、Gemini 3.7 Flash（コスト効率型）。スタートアップ目線でのモデル選択指針：高精度タスク=Opus 5、コスト重視=Sonnet 5/Gemini Flash、コーディング=Grok 4.6。8月13日時点で10件の新リリース。月ごとのモデル動向追跡に適したソース。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-15_3668_WEB_AI-Regulation-August2026-Enforcement-Era-MeanCEO.md",
+      "title": "AI Regulation News | August, 2026 (STARTUP EDITION)",
+      "url": "https://blog.mean.ceo/ai-regulation-news-august-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "MeanCEO による2026年8月のAI規制動向まとめ。EU AI Act が2026年8月2日から Article 50（透明性規制）本格施行開始：チャットボット自動識別・ディープフェイクラベル・AIコンテンツマーキング義務化、違反時最大€1500万または全世界年間売上3%。米国「Great American AI Act」は州先取り条項を巡り下院で行き詰まり（グリッドロック継続）。英国 AI Regulation and Safety Bill が庶民院通過（王室裁可は10月見込み）。中国ではコンパニオンAI規制で12社に計420万元の罰金（初の集中執行）。15カ国が規制を更新した「施行の時代」開幕を宣言する包括的記事。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-15_3669_WEB_EU-AI-Act-Article50-Transparency-MorganLewis-August2026.md",
+      "title": "EU AI Act's Transparency Rules: What Went Into Effect on 2 August 2026?",
+      "url": "https://www.morganlewis.com/blogs/sourcingatmorganlewis/2026/08/eu-ai-acts-transparency-rules-what-went-into-effect-on-2-august",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "Morgan Lewis（法律事務所）による EU AI Act Article 50 施行（2026年8月2日）の法的解説。施行済み透明性義務：①チャットボット自動識別義務、②感情認識/生体分類システムの利用開示、③ディープフェイクラベル義務（機械可読マーク含む）。違反制裁：最大€1500万または全世界年間売上3%。**移行期間の注意**：生成AIシステムの「マーキング・検出」義務については既存製品に2026年12月2日まで移行期間あり。GPAI（汎用AI）プロバイダーへの月次システミックリスク評価義務（10^25 FLOP閾値超）。高リスクAIシステム（Annex III：採用・与信・教育・法執行等）の全面義務化は2027年12月2日に延期。コンプライアンス対応のチェックリストとして機能する法律実務向け解説。7月15日の Morgan Lewis 記事（June 16 改正）とは別の最新記事。",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "[CONFIRMED] EU AI Act Article 50施行日（2026-08-02）、チャットボット自動識別義務、ディープフェイクラベル義務、罰金最大€1500万または全世界年間売上3%、すべて複数公式・法律ソースで確認済み（EC公式・artificialintelligenceact.eu等）。"
+    },
+    {
+      "file": "2026-08-15_3670_WEB_Claude-Code-Subagent-Function-2026-August-GenAI-JA.md",
+      "title": "【2026年8月最新】Claude Codeのサブエージェント機能とは？非エンジニア向け解説",
+      "url": "https://genai-ai.co.jp/ai-kanri/blog/cc-subagent/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "GenAI-AI.co.jp による非エンジニア向けサブエージェント機能解説（2026年8月最新版）。サブエージェントを「部下チームへの仕事分担」に例えて解説。コンテキスト肥大化問題の解決策として登場、並列処理による速度向上の仕組みを図解。2026年8月の主要変更：上限撤廃（旧200件→無制限）、fork型（親会話継承・コスト削減）と新規型の使い分けガイド。非エンジニアがCowork/デスクトップアプリ経由でサブエージェントを活用する具体的シナリオ（資料作成・メール処理・リサーチ・データ整理）を紹介。「スマホで外出先から複数タスクを並列処理させる」ユースケースも解説。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-15_3671_WEB_Claude-Code-PlanMode-2026-August-GenAI-JA.md",
+      "title": "【2026年8月最新】Claude CodeのPlan Mode とは？使い方・切り替え・活用法解説",
+      "url": "https://genai-ai.co.jp/ai-kanri/blog/cc-plan-mode/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "GenAI-AI.co.jp による Plan Mode の非エンジニア向け解説（2026年8月最新）。Plan Mode は「設計図を確認してから施工する」専用モード。切り替え方法：/plan コマンドまたは Shift+Tab。Plan Mode 中の制限：ファイル編集不可、質問応答のみ可能。使いどころ：大規模改修前・複雑なリファクタリング・新機能追加の前段階・多ファイル横断変更の影響確認。「Don't implement yet」プロンプトとの比較（Plan Mode の方がより明示的で確実）。プラン確認後に通常モードへ切り替えて実行する流れも解説。Anthropic 推奨の explore→plan→code ワークフローに対応。非エンジニアが実装ミスを防ぐための最重要機能として紹介。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-15_3672_WEB_Claude-Code-Desktop-App-Setup-2026-August-GenAI-JA.md",
+      "title": "【2026年8月最新】Claude Codeデスクトップアプリ完全入門｜ターミナル不要で業務自動化",
+      "url": "https://genai-ai.co.jp/ai-kanri/blog/cc-yt-desktop-app-mastery-01/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "GenAI-AI.co.jp によるClaude Codeデスクトップアプリの入門ガイド（2026年8月）。「ターミナル不要」時代のセットアップ手順を動画解説形式で提供。主要機能：Cowork（フォルダ指定→自動実行、Pro プラン以上）、デスクトップアプリからのスキル・フック設定、セルフホストランナー対応時の接続設定。業務活用シナリオ：書類作成・データ整理・メール自動化・Routines による定期処理。2026年8月の最新仕様：ネイティブインストーラー推奨（npm 非推奨化）、Auto Mode デフォルト有効化（8月14日〜）。非エンジニアが Claude Code を日常業務に使うための最短セットアップガイドとして機能。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    }
+  ],
+  "fact_checks": [
+    {
+      "file": "2026-08-15_3659_WEB_Claude-Code-Week32-Self-Hosted-Runners-Subagent-Forking-Official.md",
+      "verdict": "CONFIRMED",
+      "note": "Self-Hosted Runners（複数ソース確認）、サブエージェント上限撤廃（200→無制限、ただし同時実行・深さ制限は残存）、クロスセッションメッセージングの3点すべて確認済み。v2.1.224、2026-08-07リリース。記事内「GA」表記だが検索結果では \"public beta\" の表現もあり（Team/Enterprise）。軽微な差異。",
+      "checked_at": "2026-08-16T23:19:36.176381Z"
+    },
+    {
+      "file": "2026-08-15_3666_WEB_AI-Model-Releases-August2026-BenchLM.md",
+      "verdict": "CONFIRMED_WITH_NOTE",
+      "note": "Kimi K3「史上最大オープンウェイト」は2.8Tパラメータで確認済み（Moonshot AI、2026-07-16 API公開・2026-07-27 ウェイト公開）。ただしリリース日は7月であり8月ではない点に注意。その他Gemini 3.7 Flash、Claude Opus 5等のモデル群は複数ソースで確認。",
+      "checked_at": "2026-08-16T23:19:36.176404Z"
+    },
+    {
+      "file": "2026-08-15_3669_WEB_EU-AI-Act-Article50-Transparency-MorganLewis-August2026.md",
+      "verdict": "CONFIRMED",
+      "note": "EU AI Act Article 50施行日（2026-08-02）、チャットボット自動識別義務、ディープフェイクラベル義務、罰金最大€1500万または全世界年間売上3%、すべて複数公式・法律ソースで確認済み（EC公式・artificialintelligenceact.eu等）。",
+      "checked_at": "2026-08-16T23:19:36.176406Z"
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-08-14": 14,
+      "2026-08-13": 15,
+      "2026-08-12": 4,
+      "2026-08-11": 18,
+      "2026-08-10": 10,
+      "2026-08-09": 13,
+      "2026-08-08": 15
+    },
+    "recurring_themes": [
+      "claude",
+      "agent",
+      "mcp",
+      "trading",
+      "llm"
+    ]
+  }
+}
