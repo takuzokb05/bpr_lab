@@ -444,3 +444,14 @@
 | 413 | New AI Model Releases August 2026 Startup Edition (MeanCEO): Opus 5半額・GPT-5.6三ティア・Grok 4.6・モデル選択指針 | en | 未読 | #ai-news #model-update #web-signal | articles/2026-08-15_3667_WEB_New-AI-Model-Releases-August2026-StartupEdition-MeanCEO.md |
 | 414 | AI Regulation August 2026 Startup Edition (MeanCEO): EU施行・米国グリッドロック・英国法案通過・中国罰金・15カ国更新 | en | 未読 | #ai-news #ai-regulation #web-signal | articles/2026-08-15_3668_WEB_AI-Regulation-August2026-Enforcement-Era-MeanCEO.md |
 | 415 | EU AI Act Article 50 施行 法律実務解説 (Morgan Lewis): 8月2日義務化内容・GPAI評価義務・高リスク延期2027年12月・コンプライアンスチェックリスト | en | 未読 | #ai-news #ai-regulation #eu-ai-act #web-signal | articles/2026-08-15_3669_WEB_EU-AI-Act-Article50-Transparency-MorganLewis-August2026.md |
+
+---
+
+## 2026-08-16 収集分（4件SIGNAL）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 416 | AI Updates August 2026 (LocalAIZone): 10件リリース6プロバイダー・Gemini 3.7 Flash/Grok 4.6/Muse Spark 1.2/Qwen Image 3.0・Opus 5半額・Anthropic IPO準備 | en | 未読 | #ai-news #model-update #web-signal | articles/2026-08-16_3675_WEB_AI-Updates-August-2026-LocalAIZone.md |
+| 417 | EU AI Act Compliance 2026 ハイリスクAI義務 (Salt Security): 8/2施行Article 9/12/14/17・マルチエージェントコンプライアンス境界・APIセキュリティ観点の実務対応 | en | 未読 | #ai-news #ai-regulation #eu-ai-act #web-signal | articles/2026-08-16_3677_WEB_EU-AI-Act-Compliance-2026-SaltSecurity.md |
+| 418 | 【2026年8月版】AIまとめ モデル効率化・エージェント実装・規制の現在地 (eguweb JA): 高性能低コスト競争・本番エージェント長時間動作・EU施行・日本ガイドライン | ja | 未読 | #ai-news #ai-regulation #model-update #web-signal | articles/2026-08-16_3681_WEB_AI-Matome-August2026-Summary-EguWeb-JA.md |
+| 419 | EU AI Act 2026年8月 ハイリスク規制2027年延期と日本企業対応 (BTNcon JA): Annex III 2027/12・Annex I 2028/8延期・AI推進法ガイドラインベース・AIエージェントHuman-in-the-Loop要件 | ja | 未読 | #ai-news #ai-regulation #eu-ai-act #web-signal | articles/2026-08-16_3682_WEB_EU-AI-Act-August2026-HighRisk-Delay-BTNcon-JA.md |

@@ -353,3 +353,11 @@
 | 322 | Machine Learning Meets LLM Confirmation in MT5 (MQL5): MLシグナル+LLMファンダメンタル確認ハイブリッド・Pythonブリッジ設計・EAコードサンプル付 | en | 未読 | #ai-trading #mt5 #llm-trading #web-signal | articles/2026-08-13_3643_WEB_MQL5-Machine-Learning-LLM-Confirmation-MT5-Trading.md |
 | 323 | AI Trading Agents vs Bots 2026 スマート≠安全 (Bitsgap): 従来ボットvsLLM推論エンジン・実取引ギャップ（手数料/スリッページ）・推奨スタック LangChain+FinGPT+Alpaca | en | 未読 | #ai-trading #llm-trading #comparison #web-signal | articles/2026-08-14_3652_WEB_AI-Trading-Agents-vs-Bots-2026-Smarter-Not-Safer.md |
 | 324 | AI Trading Agents 2026 完全ガイド 自律型投資 (AssetWhisper): LLMアーキテクチャ・マクロ指標解析によるFXポジションサイジング・「人間補完ツール」が最適解 | en | 未読 | #ai-trading #llm-trading #autonomous #web-signal | articles/2026-08-14_3653_WEB_AI-Trading-Agents-Complete-Guide-Autonomous-Investing.md |
+
+---
+
+## 2026-08-16 収集分（1件SIGNAL）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 325 | AI Trading Agent Forex MT4/MT5統合 2026 (GPTrader): MQL5↔LLM翻訳レイヤー必須・MT5 MCPブリッジでClaude連携・FX向けLLM評価フレームワーク | en | 未読 | #ai-trading #mt5 #llm-trading #mcp #web-signal | articles/2026-08-16_3680_WEB_AI-Trading-Agent-Forex-MT4-MT5-Integration-GPTrader.md |

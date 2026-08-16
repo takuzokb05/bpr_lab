@@ -1192,3 +1192,15 @@
 | 1156 | 【2026年8月】Claude Codeサブエージェント機能 非エンジニア向け解説 (genai-ai.co.jp JA): 部下チーム比喩・fork型/新規型・Cowork連携 | ja | 未読 | #claude-code #subagents #web-signal | articles/2026-08-15_3670_WEB_Claude-Code-Subagent-Function-2026-August-GenAI-JA.md |
 | 1157 | 【2026年8月】Claude Code Plan Mode 解説 (genai-ai.co.jp JA): /plan切り替え・ファイル編集制限・explore→plan→codeワークフロー | ja | 未読 | #claude-code #plan-mode #web-signal | articles/2026-08-15_3671_WEB_Claude-Code-PlanMode-2026-August-GenAI-JA.md |
 | 1158 | 【2026年8月】Claude Codeデスクトップアプリ入門 (genai-ai.co.jp JA): ターミナル不要・Cowork・Auto Modeデフォルト・セルフホスト接続 | ja | 未読 | #claude-code #desktop #web-signal | articles/2026-08-15_3672_WEB_Claude-Code-Desktop-App-Setup-2026-August-GenAI-JA.md |
+
+---
+
+## 2026-08-16 収集分（5件SIGNAL）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 1159 | Claude Usage Limits 2026 全変更履歴タイムライン (ExplainX): Pro/Max/Team/Enterprise制限比較・auto-continue機能追加・Auto Modeデフォルト化・プラン選択指針 | en | 未読 | #claude-code #usage-limits #web-signal | articles/2026-08-16_3673_WEB_Claude-Usage-Limits-2026-Timeline-ExplainX.md |
+| 1160 | Cloudflare MCP v2 次世代MCPインフラ (公式ブログ): ステートレス化でラウンドロビンLB対応・OAuth 2.1/OIDC・Extensionsフレームワーク・Workers上構築ガイド | en | 未読 | #claude-ecosystem #mcp #cloudflare #web-signal | articles/2026-08-16_3674_WEB_Cloudflare-MCP-v2-Next-Generation.md |
+| 1161 | 【2026年8月】Claude Code料金体系まとめ (genai-ai.co.jp JA): Pro/Max/Team/Enterprise比較・Opus 5追加/Opus 4.1廃止・mode:mask認証新機能 | ja | 未読 | #claude-code #pricing #model-update #web-signal | articles/2026-08-16_3676_WEB_ClaudeCode-Pricing-August2026-GenAI-JA.md |
+| 1162 | Claude Code Subagents 完全ガイド 2026 (SkillsHub): ネストサブエージェント深さ5・Dynamic Workflows・Performance Outcomes Grader・3〜5並列が最適 | en | 未読 | #claude-code #subagents #web-signal | articles/2026-08-16_3678_WEB_ClaudeCode-Subagents-Complete-Guide-2026-SkillsHub.md |
+| 1163 | MCPサーバー構築・運用ガイド エンタープライズ向け (CData JA): エンタープライズMCP元年・国産SaaS対応・MCPメッシュ・A2Aプロトコル展望 | ja | 未読 | #claude-ecosystem #mcp #enterprise #web-signal | articles/2026-08-16_3679_WEB_MCP-Server-Understanding-Deploying-Enterprise-CData-JA.md |

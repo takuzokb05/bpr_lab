@@ -4874,3 +4874,23 @@ Claude Code Self-Hosted Runners（Team/Enterprise Plan）により、この日�
 
 **提案内容:**
 Zenn投稿自動化のスキル実装パターン（SKILL.md + TRIGGER セクション + zenn-cli 統合）が公開されている。タスクマネージャーに週次ダイジェストのZenn/Note投稿自動化スキルを追加することで、library の知見をアウトプットに変換するワークフローを構築できる。現行 `digest` スキルの出力をベースに投稿フォーマット変換→公開まで自動化するスキル設計を検討する。
+
+---
+
+## 2026-08-16 収集分（10件収集 → SIGNAL 10件）
+
+### 1. MT5 MCPブリッジ経由のClaude直接連携
+
+#### 1-1. FX自動取引プロジェクトへのMT5 MCPブリッジ導入検討
+**出典:** articles/2026-08-16_3680_WEB_AI-Trading-Agent-Forex-MT4-MT5-Integration-GPTrader.md
+
+**提案内容:**
+MT5 MCPブリッジを使えば、MetaTrader 5の取引機能をMCPツールとしてClaude（またはHermes）に公開できることが確認された。現在のFX自動取引プロジェクトのアーキテクチャ（Python経由）とMCPブリッジ経由（Claude Agent SDK + MCP）を比較評価することを推奨。特に「MQL5の決定論的・低レイテンシ特性とLLM推論の確率論的・高レイテンシ特性を橋渡す翻訳レイヤーの設計」が本番稼働の鍵であることが明記されており、現行設計のこの部分を文書化・強化する価値がある。
+
+### 2. マルチエージェントとEU AI Actコンプライアンス
+
+#### 2-1. AIエージェントチーム設計における規制境界の明確化
+**出典:** articles/2026-08-16_3677_WEB_EU-AI-Act-Compliance-2026-SaltSecurity.md, articles/2026-08-16_3682_WEB_EU-AI-Act-August2026-HighRisk-Delay-BTNcon-JA.md
+
+**提案内容:**
+EU AI Actでは「マルチエージェントアーキテクチャにおいてハイリスク機能を実行する全エージェント」がコンプライアンス境界に含まれる。FX自動売買など金融判断を含むAIエージェントはハイリスク分類になる可能性が高い。日本向けは罰則なしのガイドライン対応（Human-in-the-Loop要件）だが、欧州向けサービス展開を検討する際は設計段階からArticle 12のログ・追跡性要件を組み込む必要がある。現行FX自動取引のログ設計を今後の規制対応視点で見直すタイミングとして検討。
