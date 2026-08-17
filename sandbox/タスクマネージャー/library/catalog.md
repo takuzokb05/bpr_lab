@@ -1204,3 +1204,15 @@
 | 1161 | 【2026年8月】Claude Code料金体系まとめ (genai-ai.co.jp JA): Pro/Max/Team/Enterprise比較・Opus 5追加/Opus 4.1廃止・mode:mask認証新機能 | ja | 未読 | #claude-code #pricing #model-update #web-signal | articles/2026-08-16_3676_WEB_ClaudeCode-Pricing-August2026-GenAI-JA.md |
 | 1162 | Claude Code Subagents 完全ガイド 2026 (SkillsHub): ネストサブエージェント深さ5・Dynamic Workflows・Performance Outcomes Grader・3〜5並列が最適 | en | 未読 | #claude-code #subagents #web-signal | articles/2026-08-16_3678_WEB_ClaudeCode-Subagents-Complete-Guide-2026-SkillsHub.md |
 | 1163 | MCPサーバー構築・運用ガイド エンタープライズ向け (CData JA): エンタープライズMCP元年・国産SaaS対応・MCPメッシュ・A2Aプロトコル展望 | ja | 未読 | #claude-ecosystem #mcp #enterprise #web-signal | articles/2026-08-16_3679_WEB_MCP-Server-Understanding-Deploying-Enterprise-CData-JA.md |
+
+---
+
+## 2026-08-17 収集分（5件SIGNAL）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 1164 | Claude認証システム障害 8月16日 (ExplainX): 21:58 UTC発生・36分で復旧・claude.ai/API/Code/Cowork全影響・SLA 99.9%範囲内だが30日で3回目 | en | 未読 | #claude-ecosystem #outage #web-signal | articles/2026-08-17_3683_WEB_Claude-Auth-Outage-August16-2026-ExplainX.md |
+| 1165 | 【2026年8月前半】Claude & Claude Code新機能まとめ（kawaidesign note JA）: Focus view・サブエージェント上限撤廃・Remote Control resume・mode:mask認証 | ja | 未読 | #claude-code #update #web-signal | articles/2026-08-17_3684_WEB_Claude-Code-August2026-NoteKawai-NewFeatures-JA.md |
+| 1166 | Claude活用術 完全ガイド Cowork/Code/Chrome連携 (genai-ai.co.jp JA): 10h→3h短縮事例・スキルプリロード+永続メモリ+Hooks三位一体運用 | ja | 未読 | #claude-code #automation #web-signal | articles/2026-08-17_3685_WEB_Claude-Sogo-Guide-Cowork-Code-Chrome-GenAI-JA.md |
+| 1167 | Claude Sonnet 5 価格永久固定 $2/$10 (EnterpriseDNA): 9月値上げ撤回・GPT-4o/$2.5/$10・Gemini 2.0 Pro/$3.5/$10.5より競争力・量成長戦略へシフト | en | 未読 | #claude-ecosystem #pricing #web-signal | articles/2026-08-17_3686_WEB_Anthropic-Sonnet5-Pricing-Permanent-EnterpriseDNA.md |
+| 1168 | Claude API 破壊的変更5件〜11月期限 (Ecorpit): Workbench廃止(8/17)・実験的プロンプトAPI廃止・SDK旧バージョン終了(11/1)・/v1/tokenize廃止(11/15) | en | 未読 | #claude-ecosystem #api-migration #web-signal | articles/2026-08-17_3687_WEB_Claude-API-Breaking-Changes-5-Deadlines-Nov2026-Ecorpit.md |

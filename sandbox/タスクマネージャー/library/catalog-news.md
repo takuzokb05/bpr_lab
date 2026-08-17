@@ -455,3 +455,11 @@
 | 417 | EU AI Act Compliance 2026 ハイリスクAI義務 (Salt Security): 8/2施行Article 9/12/14/17・マルチエージェントコンプライアンス境界・APIセキュリティ観点の実務対応 | en | 未読 | #ai-news #ai-regulation #eu-ai-act #web-signal | articles/2026-08-16_3677_WEB_EU-AI-Act-Compliance-2026-SaltSecurity.md |
 | 418 | 【2026年8月版】AIまとめ モデル効率化・エージェント実装・規制の現在地 (eguweb JA): 高性能低コスト競争・本番エージェント長時間動作・EU施行・日本ガイドライン | ja | 未読 | #ai-news #ai-regulation #model-update #web-signal | articles/2026-08-16_3681_WEB_AI-Matome-August2026-Summary-EguWeb-JA.md |
 | 419 | EU AI Act 2026年8月 ハイリスク規制2027年延期と日本企業対応 (BTNcon JA): Annex III 2027/12・Annex I 2028/8延期・AI推進法ガイドラインベース・AIエージェントHuman-in-the-Loop要件 | ja | 未読 | #ai-news #ai-regulation #eu-ai-act #web-signal | articles/2026-08-16_3682_WEB_EU-AI-Act-August2026-HighRisk-Delay-BTNcon-JA.md |
+
+---
+
+## 2026-08-17 収集分（1件SIGNAL）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 420 | Sonnet 5値上げ永久撤回・Claude Code上限撤廃 他 Top 10 AI News 8月12日 (BlurBrahLab Medium): Sonnet5 $2/$10永久化・サブエージェント上限撤廃・MCP採用加速・EU AI Act施行 | en | 未読 | #ai-news #model-update #claude-ecosystem #web-signal | articles/2026-08-17_3688_WEB_Sonnet5-Permanent-Price-Top10-AI-News-August12-Medium.md |

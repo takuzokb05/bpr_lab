@@ -361,3 +361,11 @@
 | # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
 |---|---|---|---|---|---|
 | 325 | AI Trading Agent Forex MT4/MT5統合 2026 (GPTrader): MQL5↔LLM翻訳レイヤー必須・MT5 MCPブリッジでClaude連携・FX向けLLM評価フレームワーク | en | 未読 | #ai-trading #mt5 #llm-trading #mcp #web-signal | articles/2026-08-16_3680_WEB_AI-Trading-Agent-Forex-MT4-MT5-Integration-GPTrader.md |
+
+---
+
+## 2026-08-17 収集分（1件SIGNAL）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 326 | Best Agentic AI Tools for Algorithmic Trading 2026 (ServicesGround): LangChain/FinGPT/OpenBB/Alpaca推奨スタック・エージェントvsボット本質的違い・完全自律より支援ワークフロー推奨 | en | 未読 | #ai-trading #agentic-ai #llm-trading #web-signal | articles/2026-08-17_3689_WEB_Best-Agentic-AI-Tools-Algorithmic-Trading-2026-ServicesGround.md |
