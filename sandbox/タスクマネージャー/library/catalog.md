@@ -1216,3 +1216,19 @@
 | 1166 | Claude活用術 完全ガイド Cowork/Code/Chrome連携 (genai-ai.co.jp JA): 10h→3h短縮事例・スキルプリロード+永続メモリ+Hooks三位一体運用 | ja | 未読 | #claude-code #automation #web-signal | articles/2026-08-17_3685_WEB_Claude-Sogo-Guide-Cowork-Code-Chrome-GenAI-JA.md |
 | 1167 | Claude Sonnet 5 価格永久固定 $2/$10 (EnterpriseDNA): 9月値上げ撤回・GPT-4o/$2.5/$10・Gemini 2.0 Pro/$3.5/$10.5より競争力・量成長戦略へシフト | en | 未読 | #claude-ecosystem #pricing #web-signal | articles/2026-08-17_3686_WEB_Anthropic-Sonnet5-Pricing-Permanent-EnterpriseDNA.md |
 | 1168 | Claude API 破壊的変更5件〜11月期限 (Ecorpit): Workbench廃止(8/17)・実験的プロンプトAPI廃止・SDK旧バージョン終了(11/1)・/v1/tokenize廃止(11/15) | en | 未読 | #claude-ecosystem #api-migration #web-signal | articles/2026-08-17_3687_WEB_Claude-API-Breaking-Changes-5-Deadlines-Nov2026-Ecorpit.md |
+
+---
+
+## 2026-08-18 収集分（9件SIGNAL）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 1169 | Claude Code v2.1.234 + Compliance API全面展開（Aug 17）: 自動セッション継続・認証情報セキュリティ強化・GitLab MR・クロスセッション@メンション・Enterprise eDiscovery対応 | en | 未読 | #claude-code #update #compliance #web-signal | articles/2026-08-18_3690_WEB_Claude-Code-v2234-Compliance-API-Aug17-Releasebot.md |
+| 1170 | Anthropic Developer Platform August 2026 (Releasebot): APIキー有効期限設定・workspace-idレスポンスヘッダー・agent-memory安定順序・Sonnet 5 $2/$10恒久確定 | en | 未読 | #claude-ecosystem #api #pricing #web-signal | articles/2026-08-18_3691_WEB_Anthropic-DevPlatform-August2026-APIKeyExpiry-WorkspaceID.md |
+| 1171 | LLM News August 2026 月次まとめ (Augusto Digital): 18モデル15プロバイダー・Opus 5半額・Kimi K3史上最大OW・Gemini 3.7 Flash・価格破壊トレンド・エージェント成熟 | en | 未読 | #ai-news #model-update #web-signal | articles/2026-08-18_3692_WEB_LLM-News-August2026-AgentBreakthroughs-PriceCuts-Augusto.md |
+| 1172 | 生成AIニュース ベスト5（2026-08-07〜14）（GAIS JA）: neoAI Work・デジタルガレージAI基盤・AIエージェント共通規格・ウォーターマーク技術・EU AI Act実務影響 | ja | 未読 | #ai-news #ai-regulation #web-signal | articles/2026-08-18_3693_WEB_GenAI-News-Best5-Aug07-14-2026-GAIS-JA.md |
+| 1173 | 2026年8月17日 AIニュースまとめ（まめ note JA）: OpenAI巨大DC・AIエージェント共通規格・AI生成物ウォーターマーク・AIへの社会的信頼調査 | ja | 未読 | #ai-news #web-signal | articles/2026-08-18_3694_WEB_AI-News-August17-2026-Mame-Note-JA.md |
+| 1174 | 【2026年8月最新】Claude Code日本語設定ガイド（genai-ai.co.jp JA）: CLAUDE.md日本語強制・文字化け対処・ファイル名注意点・非エンジニア活用・Claude Code Web research preview | ja | 未読 | #claude-code #claude-md #web-signal | articles/2026-08-18_3695_WEB_Claude-Code-Japanese-Settings-August2026-GenAI-JA.md |
+| 1175 | AI Model Releases August 2026 確認済み18件（BenchLM）: Gemini 3.7 Flash・Grok 4.6・Seedance 2.5・Qwen Image 3.0・月次過去最多水準・モデル選定コスト増大 | en | 未読 | #ai-news #model-update #web-signal | articles/2026-08-18_3696_WEB_AI-Model-Releases-Confirmed-August2026-BenchLM.md |
+| 1176 | Claude Codeのskillsアイデア大全20選（Qiita kamome_susume JA）: 開発効率化/品質管理/ドキュメント/情報収集の4カテゴリ・SKILL.md500行以内・チーム展開設計 | ja | 未読 | #claude-code #skills #web-signal | articles/2026-08-18_3697_WEB_Claude-Code-Skills-Ideas-20sen-Qiita-JA.md |
+| 1177 | TradingAgents v0.3.1（TauricResearch）: Claude Sonnet 5/Fable 5対応・Alpha Vantageルックアヘードバグ修正・Bedrock APIキー認証・チェックポイント再開 | en | 未読 | #ai-trading #tradingagents #claude-ecosystem #web-signal | articles/2026-08-18_3698_WEB_TradingAgents-v031-ClaudeSonnet5-Fable5-Support-July2026.md |

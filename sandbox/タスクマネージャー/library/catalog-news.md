@@ -463,3 +463,14 @@
 | # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
 |---|---|---|---|---|---|
 | 420 | Sonnet 5値上げ永久撤回・Claude Code上限撤廃 他 Top 10 AI News 8月12日 (BlurBrahLab Medium): Sonnet5 $2/$10永久化・サブエージェント上限撤廃・MCP採用加速・EU AI Act施行 | en | 未読 | #ai-news #model-update #claude-ecosystem #web-signal | articles/2026-08-17_3688_WEB_Sonnet5-Permanent-Price-Top10-AI-News-August12-Medium.md |
+
+---
+
+## 2026-08-18 収集分（4件SIGNAL）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 421 | LLM News August 2026 月次まとめ (Augusto Digital): 18モデル15プロバイダー・Opus 5半額・Kimi K3史上最大OW・Gemini 3.7 Flash・価格破壊・エージェント成熟 | en | 未読 | #ai-news #model-update #web-signal | articles/2026-08-18_3692_WEB_LLM-News-August2026-AgentBreakthroughs-PriceCuts-Augusto.md |
+| 422 | 生成AIニュース ベスト5（2026-08-07〜14）（GAIS JA）: neoAI Work・AI基盤・エージェント共通規格・ウォーターマーク・EU AI Act実務影響 | ja | 未読 | #ai-news #ai-regulation #web-signal | articles/2026-08-18_3693_WEB_GenAI-News-Best5-Aug07-14-2026-GAIS-JA.md |
+| 423 | 2026年8月17日 AIニュースまとめ（まめ note JA）: OpenAI巨大DC・AIエージェント共通規格・ウォーターマーク・AIへの社会的信頼調査 | ja | 未読 | #ai-news #web-signal | articles/2026-08-18_3694_WEB_AI-News-August17-2026-Mame-Note-JA.md |
+| 424 | AI Model Releases August 2026 確認済み18件（BenchLM）: Gemini 3.7 Flash・Grok 4.6・Seedance 2.5・Qwen Image 3.0・月次過去最多・モデル選定コスト増大 | en | 未読 | #ai-news #model-update #web-signal | articles/2026-08-18_3696_WEB_AI-Model-Releases-Confirmed-August2026-BenchLM.md |

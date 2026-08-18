@@ -4894,3 +4894,35 @@ MT5 MCPブリッジを使えば、MetaTrader 5の取引機能をMCPツールと�
 
 **提案内容:**
 EU AI Actでは「マルチエージェントアーキテクチャにおいてハイリスク機能を実行する全エージェント」がコンプライアンス境界に含まれる。FX自動売買など金融判断を含むAIエージェントはハイリスク分類になる可能性が高い。日本向けは罰則なしのガイドライン対応（Human-in-the-Loop要件）だが、欧州向けサービス展開を検討する際は設計段階からArticle 12のログ・追跡性要件を組み込む必要がある。現行FX自動取引のログ設計を今後の規制対応視点で見直すタイミングとして検討。
+
+---
+
+## 2026-08-18 収集分（9件収集 → SIGNAL 9件）
+
+### 1. TradingAgents v0.3.1へのアップデートとルックアヘードバグ修正
+
+#### 1-1. FX自動取引プロジェクト: TradingAgents v0.3.1適用の検討
+**出典:** articles/2026-08-18_3698_WEB_TradingAgents-v031-ClaudeSonnet5-Fable5-Support-July2026.md
+
+**提案内容:**
+TradingAgents v0.3.1（2026年7月リリース）でAlpha Vantageのルックアヘードバグが修正された（バックテストで将来データが混入する重大バグ）。FX自動取引プロジェクトでTradingAgentsを参照している場合、バックテスト精度の観点から早急にv0.3.1へのアップデートを検討すること。またClaude Sonnet 5/Fable 5サポートが追加されたため、最新AnthropicモデルでのパフォーマンスYT比較が可能になった。Bedrock APIキー認証対応によりAWS Bedrock経由でのコスト管理も選択肢に加わった。
+
+### 2. Anthropic APIキー有効期限設定の導入
+
+#### 2-1. FX自動取引・収集ルーチン: APIキー有効期限管理の強化
+**出典:** articles/2026-08-18_3691_WEB_Anthropic-DevPlatform-August2026-APIKeyExpiry-WorkspaceID.md
+
+**提案内容:**
+Anthropic ConsoleでAPIキーの有効期限が設定可能になった。VPS上で動作するFX自動取引・X投稿収集スクリプトが使用するAPIキーに対して、定期ローテーションポリシー（例: 90日）を設定することを推奨。`.env`ファイルのAPIキー更新手順をFX自動取引プロジェクトのドキュメントに追加すること。また`anthropic-workspace-id`レスポンスヘッダーをログに記録することで、コスト分配のトレースが容易になる。
+
+### 3. Claude Code スキルアイデア20選を参考にした新スキル追加
+
+#### 3-1. タスクマネージャー: 新スキル候補の追加検討
+**出典:** articles/2026-08-18_3697_WEB_Claude-Code-Skills-Ideas-20sen-Qiita-JA.md
+
+**提案内容:**
+Qiitaのスキルアイデア20選を参考に、現行スキル群（collect-x-articles/curate/digest/drop-pickup/reading/ocr-extract等）に加えて以下を検討:
+- **changelog生成スキル**: 日次収集コミットから週次変更サマリーを自動生成
+- **PR説明文生成スキル**: 収集ルーチンのPR作成を自動化
+- **CLAUDE.md自動更新スキル**: ルーチン実行時のエラーパターンを自動でCLAUDE.mdに反映
+

@@ -369,3 +369,11 @@
 | # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
 |---|---|---|---|---|---|
 | 326 | Best Agentic AI Tools for Algorithmic Trading 2026 (ServicesGround): LangChain/FinGPT/OpenBB/Alpaca推奨スタック・エージェントvsボット本質的違い・完全自律より支援ワークフロー推奨 | en | 未読 | #ai-trading #agentic-ai #llm-trading #web-signal | articles/2026-08-17_3689_WEB_Best-Agentic-AI-Tools-Algorithmic-Trading-2026-ServicesGround.md |
+
+---
+
+## 2026-08-18 収集分（1件SIGNAL）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 327 | TradingAgents v0.3.1（TauricResearch）: Claude Sonnet 5/Fable 5対応・Alpha Vantageルックアヘードバグ修正（重大）・Bedrock APIキー認証・チェックポイント再開 | en | 未読 | #ai-trading #tradingagents #claude-ecosystem #web-signal | articles/2026-08-18_3698_WEB_TradingAgents-v031-ClaudeSonnet5-Fable5-Support-July2026.md |
