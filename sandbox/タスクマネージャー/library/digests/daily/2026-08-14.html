@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-08-14</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-08-14 | 14件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-08-14</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>8月14日は「Claude Codeが常時稼働チームインフラへ転換した日」として記録される一日だった。Auto ModeのPro/Max/Teamデフォルト化とサブエージェントforkingデフォルト有効化が同日に適用（一次ソース確認済み）。Sonnet 5の価格$2/$10が恒久化され、EU AI Actは€47M制裁で初の本格執行フェーズに入った。AIトレーディング分野では「スマートだが安全ではない」という実態論が相次ぎ発表され、FX自動取引運用者には直接参考になる知見が集積した。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>8/14の構造転換：「アシスタント」から「インフラ」へ</h3>
+
+<p>本日付でClaude Codeに複数の重要変更が適用された（<a href="https://claude.com/blog/auto-mode-default-in-claude-code" target="_blank">一次ソース確認済み</a>）。<strong>Auto ModeがPro/Max/Teamアカウントでデフォルト有効</strong>になり、これまで手動で切り替えていた作業が不要になった。同時に<strong>サブエージェントforkingがデフォルト有効</strong>（non-teamateエージェントはバックグラウンド実行がデフォルト）となり、並列エージェントの起動コストが大幅に下がった。<strong>Self-hostedセッション</strong>（Team/Enterprise）も一般提供開始。Anthropicの内部テストでは1,053名テスターを対象に危険コマンドの89%をAIが検知（人間検知率13.6%と比較）という安全性データも公開されたが、この数値は外部未検証。</p>
+
+<p>これらの変化を一言で言えば、Claude Codeは「使うツール」から「常時走らせるインフラ」に立場を変えた。git worktreeで並列ブランチ開発、Auto Modeで自律実行、self-hostedでチーム共有という三層が今日からデフォルト状態となる。</p>
+
+<h3>ベストプラクティス記事の集積——何を優先すべきか</h3>
+
+<p>同日、Claude Codeの運用知見をまとめた記事が複数公開された。Qiitaの<a href="https://qiita.com/saitoko/items/a95cbb5888835be0f7fd" target="_blank">週次アップデートまとめ</a>はv2.1.219〜v2.1.226の変更を日本語でまとめており、VS Code Focus View（Ctrl+Alt+F）や認証情報マスク対応など実務的な細部を押さえている。</p>
+
+<p><a href="https://collabnix.com/claude-code-best-practices-10-workflow-tips-that-senior-engineers-swear-by-in-2026/" target="_blank">シニアエンジニア実践の10 Tips</a>では、CLAUDE.mdを200行以内に保つ、Plan Mode（Shift+Tab）→実行の二段構えにする、MakefileでチームコマンドをAI用に標準化するという三点が特に実績値付きで紹介された。4ヶ月間の毎日使用記録を公開した<a href="https://okhlopkov.com/claude-code-setup-mcp-hooks-skills-2026/" target="_blank">実践セットアップ記事</a>では、失敗から学んだアンチパターン（サブエージェント乱用・過長CLAUDE.md・Hook過多）が具体的configと共に記録されており、現在の運用を見直す際の対照表として使える。</p>
+
+<p>全拡張機能の体系を整理した<a href="https://jorgepit-14189.medium.com/claude-md-skills-rules-hooks-mcp-agents-045f3131d78f" target="_blank">Medium記事</a>は、CLAUDE.md（常時）・Skills（特定作業時）・Hooks（コード強制）・MCP（外部接続）・Agents（分岐）という5層の使い分け基準を整理しており、設計の参照点として保存しておく価値がある。</p>
+
+<h3>Sonnet 5・エコシステム価格の恒久化</h3>
+
+<p><a href="https://platform.claude.com/docs/en/about-claude/pricing" target="_blank">一次ソース確認済み</a>：Claude Sonnet 5の入力$2/出力$10（/MTok）が恒久価格に確定した。当初9/1に$3/$15へ値上げ予定だったが公式に撤回。ただし新トークナイザーで同テキストが最大35%多トークンに変換されるため実効コストは上昇することに注意。バッチAPI（50%オフ）・プロンプトキャッシュ（最大90%オフ）との組み合わせが最適化の鍵。Opus 5は$15/$75、Fast Mode（Opus 5利用）は$10/$50。Business Insider Japanが<a href="https://www.businessinsider.jp/article/2608-how-much-did-major-generative-ai-service-fees/" target="_blank">日本円換算の料金比較表</a>を公開しており、他社（GPT-5.6/Gemini 3.6/Grok 4.5/Sakana Namazu）との横断比較ができる。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>EU AI Act：初の本格執行、€47M制裁（一次ソース確認済み）</h3>
+
+<p>8/2に透明性義務が発効したEU AI Actは、発効直後にEU AI Officeが採用HR事業者（€18M）・信用スコアラー（€14M）・小売チェーン（€15M）の計3社に合計€4,700万の制裁を課した（<a href="https://www.arturmarkus.com/eu-ai-office-issues-first-e47-million-in-fines/" target="_blank">複数ソース一致確認</a>）。これはEU AI Act初の重大執行事例として記録される。</p>
+
+<p>英国FCAは金融サービス向けAIガイダンスを発表し、信用・投資判断モデルへの説明可能性要件と6ヶ月の実装期限を課した。FX自動取引を運用する立場からは、英国FCAの動向が特に注目点となる。中国でも生成AIラベリング要件がSNS・ニュース・短動画・AI音声に拡大。</p>
+
+<h3>8月のLLMリリース動向</h3>
+
+<p>Gemini 3.7 Flash（8/13・最速クラス）、GLM-5.3（8/14・Z.ai）、Grok 4.6（8/6・xAI）、Qwen Image 3.0/3.0 Pro（8/5・画像特化）、Seedance 2.5（8/8・ByteDance動画）とモデルリリースが連続した週だった。AIエージェントフレームワーク比較（<a href="https://pub.towardsai.net/top-ai-agent-frameworks-in-2026-a-production-ready-comparison-7ba5e39ad56d" target="_blank">Towards AI</a>）では、2026年の傾向としてA2A+MCP対応必須化・マルチモーダル標準化・human-in-the-loop標準機能化が挙げられている。なおAnthropicは10月IPO準備中との情報も流れている（未確認）。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #ea580c; padding-left: 12px;">AIトレーディング</h2>
+
+<p>本日2本の記事がAIトレーディングの実態を解説した。<a href="https://bitsgap.com/blog/ai-trading-agents-vs-trading-bots-in-2026-why-smarter-isnt-safer" target="_blank">Bitsgap記事</a>のタイトル「Smarter Isn&#x27;t Safer（賢くても安全ではない）」が核心を突いている。LLMを推論エンジンとして価格・感情・ニュース・オンチェーン・資金調達レートを統合するAIエージェントは確かに従来型if/thenボットより賢いが、バックテスト結果と実取引のギャップ（手数料・スリッページ・レジーム変化）が大きい。現状の推奨は「人間判断を補完するツール」として使うことで、トレードアイデア生成・リバランス・アラートは有効とされる。</p>
+
+<p>FX適用の観点では、マクロ指標解析によるポジションサイジング提案が実用的とされ、推奨スタックとしてLangChain + FinGPT + Alpaca API（または MT5 + LLM統合）が複数記事で言及されている。</p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>過去7日の記事数推移：8/7(13)→8/8(15)→8/9(13)→8/10(10)→8/11(18)→8/12(4)→8/13(15)→本日(14)。8/12の急減は週末効果と思われる。平均12.6本/日に対して本日は標準的なボリューム。</p>
+
+<p>recurring_themesはclaude・agent・mcp・trading・llmが継続。本日の差分は「Claude Codeの変更が最大化した日」という点で、Auto Mode・forking・self-hosted・価格固定が同日にそろった構造転換の節目だった。EU AI Act執行フェーズ入りも初出ではなく、8/2発効からの延長線上にある。Anthropic IPO観測が初めて浮上したが一次ソース未確認のため継続モニタリング推奨。</p>
+
+<p>---</p>
+
+<p>*ダイジェスト自動生成 | ソース: 14記事 | 一次ソース確認済み: 3件*</p>
+
+</body>
+</html>

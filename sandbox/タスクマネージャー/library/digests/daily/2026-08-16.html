@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-08-16</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-08-16 | 10件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-08-16</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>Claude Code の制限体系・料金・サブエージェント設計が同日に3本の記事で整理された日。MCP v2（Cloudflare）とエンタープライズMCP（CData）で「MCPの本番化」が加速している様子も見えてくる。EU AI Act の透明性義務（第50条）が8月2日に施行済みだが、「ハイリスク義務は2027年まで延期」という重要な誤解解消記事も同日入電。FX自動取引のMT5×LLM連携アーキテクチャの参照情報も加わった。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>使用制限・料金体系の整理</h3>
+
+<p>2026年8月時点のClaude Code料金・制限について英語・日本語双方から記事が届いた。大きな変化は二点：8月14日に<strong>Auto-continueチェックボックス</strong>（使用制限リセット時に自動でセッション再開）が追加されたこと、そしてPro/Max/Teamでオートモードがデフォルト化されたこと。モデル面では8月5日にOpus 4.1が廃止されOpus 5がデフォルトとなり、API単価はOpus 5: $15/$75/1Mトークン、Sonnet 5: $2/$10（永続価格）に落ち着いた。</p>
+
+<p>日本語記事（genai-ai.co.jp）は、サンドボックスの資格情報ファイルへの`mode: &quot;mask&quot;`追加にも言及している。Linux/WSL環境で実値を渡さずに外部API呼び出しが可能になる機能で、業務ツール統合のセキュリティ設計に使える。</p>
+
+<ul>
+<li>Claude Usage Limits 2026 Timeline: https://explainx.ai/blog/claude-usage-limits-2026-timeline-explained</li>
+<li>Claude Code料金体系まとめ（日本語）: https://genai-ai.co.jp/ai-kanri/blog/cc-claude-code-pricing/</li>
+</ul>
+
+<h3>サブエージェント：2026年8月の実践指針</h3>
+
+<p>Claude Code のサブエージェント完全ガイド（SkillsHub）から実運用で使える知見を抜粋する。<strong>3〜5並列が大半のタスクで最適で、10を超えると統合オーバーヘッドが効率化を上回る</strong>という経験則は、自分のDynamic Workflowsの設計にそのまま適用できる。August 2026で追加された機能：組み込みサブエージェントタイプ・ネスト（深さ5）・Performance Outcomes Grader（自動品質再チェック）。fork型（既存コンテキスト継承）と新規型の使い分け判断フローも整理されており、ロング・ランニングなエージェントチームを組む前の参照先として有用。</p>
+
+<ul>
+<li>https://skills-hub.ai/blog/claude-code-subagents-2026</li>
+</ul>
+
+<h3>MCP v2：ステートレス化がエンタープライズ採用を加速</h3>
+
+<p>Cloudflare公式ブログがMCP 2026-07-28新仕様への対応を解説した（一次情報）。最大の変更点は<strong>プロトコルのステートレス化</strong>で、スティッキーセッションや共有セッションストアが不要になりラウンドロビンLBで動作可能になった。加えてOAuth 2.1/OIDCによる認証強化でエンタープライズグレードの本番運用が現実的になってきた。</p>
+
+<p>CData（日本語）はこれを受けて「2026年を<strong>エンタープライズMCP元年</strong>」と定義し、主要4ベンダー全社のMCP採用を確認。国産SaaS（楽楽精算・freee・kintone・サイボウズ）のMCP対応本格化も記録している。将来展望ではMCPサーバー同士が連携する「MCPメッシュ」とA2Aプロトコルとの統合を予測しており、タスクマネージャーのMCP活用設計の中長期参照として価値がある。</p>
+
+<ul>
+<li>Cloudflare MCP v2: https://blog.cloudflare.com/mcp-v2/</li>
+<li>MCPサーバー構築・運用ガイド（CData）: https://jp.cdata.com/blog/understanding-and-deploying-mcp-servers</li>
+</ul>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>8月のモデルリリース加速と業界構図</h3>
+
+<p>LocalAIZone（<strong>一次ソース確認済み</strong>）によると8月だけで6プロバイダーから10件の新モデルリリースが記録された。注目はGemini 3.7 Flash（Google、8月13日リリース確認済み・API価格$0.75/$3.75/1Mトークン）、Grok 4.6（xAI、8月6日）、Muse Spark 1.2（Meta）、Qwen Image 3.0（Alibaba）。Claude Opus 5はフロンティアモデルの半額程度で投入され、Anthropicは10月IPOに向けて動いている。</p>
+
+<p>eguweb.jp（日本語）はこの動向を3軸で整理している：①<strong>モデル効率化</strong>（高性能×低コストの競合が激化）、②<strong>エージェント実装</strong>（本番エージェントが主要ベンダーの中心テーマ、長時間動作の安全設計が焦点）、③規制の現在地（後述）。リリース速度の加速がモデル品質評価を困難にしているという観察は自分の技術選定基準にも影響する。</p>
+
+<ul>
+<li>https://local-ai-zone.github.io/blog/ai-updates-august-2026.html</li>
+<li>https://eguweb.jp/ai/81355/</li>
+</ul>
+
+<h3>EU AI Act：「8月完全施行」という誤解を解消する</h3>
+
+<p>EU AI Act について重要な整理が入電した。<strong>施行済みの義務はArticle 50（透明性：AI通知・ディープフェイク表示・機械可読マーキング）のみ</strong>（8月2日、一次ソース確認済み）。よく言われる「2026年8月完全施行」は誤りで、ハイリスク義務には大幅な延期がある：</p>
+
+<ul>
+<li>Annex III（スタンドアロン型ハイリスクAI）：**2027年12月2日**延期（確認済み）</li>
+<li>Annex I（製品組込型）：**2028年8月2日**延期（確認済み）</li>
+</ul>
+
+<p>マルチエージェントアーキテクチャでは「ハイリスク機能を実行する全エージェント」がコンプライアンス境界に含まれる点（Salt Security）は、AIエージェントチーム設計時の注意事項として記録しておく。</p>
+
+<p>日本については：AI推進法は罰則なしのガイドラインベース。総務省・経産省のAI事業者ガイドライン第1.2版（2026年3月）でAIエージェントへのHuman-in-the-Loop要件が明確化された。FX自動取引など業務AIシステムの法的リスク設計に直結する。</p>
+
+<ul>
+<li>EU AI Act Compliance 2026（Salt Security）: https://salt.security/eu-ai-act-compliance  ※一次ソース確認済み</li>
+<li>EU AI Act 日本企業実務対応（BTNcon）: https://www.btncon.com/blog/eu-ai-act-full-enforcement-2026  ※一次ソース確認済み</li>
+</ul>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #ea580c; padding-left: 12px;">AIトレーディング</h2>
+
+<p>MT4/MT5向けAIトレーディングエージェントのアーキテクチャ解説（GPTrader）が届いた。FX自動取引プロジェクトのMT5×Claude連携を設計する上で核心的な知見がある：</p>
+
+<p><strong>MQL5（決定論的・低レイテンシ）とLLM推論（確率論的・高レイテンシ）の特性差を吸収する「翻訳レイヤー（ミドルウェア）」の品質がシステム実用性を左右する。</strong></p>
+
+<p>MT5 MCPブリッジを使えばMCPツールとしてLLMエージェント（Hermes・Claude）にMetaTrader 5の取引機能を公開できる。この設計思想は現在運用中のFX自動取引システムのClaude連携拡張時の直接参照先になる。</p>
+
+<ul>
+<li>https://gptrader.app/blog/best-ai-trading-agent-forex-mt4-mt5-integration</li>
+</ul>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>過去7日の記事数：08/09(13) → 08/10(10) → 08/11(18) → 08/12(4) → 08/13(15) → 08/14(14) → 08/15(14) → <strong>08/16(10)</strong>。</p>
+
+<p>週平均（約13件/日）をやや下回る10件。ただし主要5テーマ（claude・agent・mcp・trading・llm）は継続しており、量より質の日だった印象。特に「MCP本番化」は過去7日で最も具体的な記事群が揃った日で、Cloudflare公式 + CData日本語の組み合わせでインフラ〜実装まで一貫した知識が補充された。EU AI Act の誤解解消（延期情報の確定）は法的リスク認識を更新する情報として重要。</p>
+
+</body>
+</html>

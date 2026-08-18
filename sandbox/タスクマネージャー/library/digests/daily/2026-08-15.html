@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-08-15</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-08-15 | 14件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-08-15</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>Claude Code Week 32（v2.1.224）の大型アップデートが確定：Self-Hosted Runners GA・サブエージェント上限撤廃・フォーキングによるコスト削減の3点が同時に着地した（一次ソース確認済み）。MCP仕様が2026-07-28でステートレス化し移行期に入っており、既存サーバーの改修が必要。AI規制ではEU AI Act Article 50が8月2日から本格施行、違反時€1500万または売上3%の制裁が始まった。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>Week 32: 「どこで動くか・誰の声を聞くか・何本スポーン可能か」が変わった</h3>
+
+<p><strong>一次ソース確認済み</strong> — Anthropic公式ドキュメント（code.claude.com/docs）に記載のとおり、2026年8月7日リリースのv2.1.224は3つの軸で同時に変化した。</p>
+
+<p>まず <strong>Self-Hosted Runners</strong>（Team/Enterprise向けパブリックベータ）。`claude self-hosted-runner` コマンドで自社インフラ上でセッションを実行でき、VPNやイントラネットへの直接アクセスが可能になる。Fixed（専有）とOn-demand（従量）の2モードがある。現在の組織でAI活用の提案をするなら、「データが外に出ない」形で実績を作れるのは大きな説得材料になりうる。</p>
+
+<p>次に <strong>サブエージェント上限の撤廃</strong>。200件/セッション制限がなくなり、多層階層型のエージェント組織が実質無制限に構成できる。同時実行数や深さの制限は残るが、設計の自由度は大幅に上がった。Temboの実践ガイドによれば、fork型（親の会話コンテキスト・プロンプトキャッシュを継承）と新規起動型の使い分けがコスト管理の鍵になる。大量タスクを並列化する前にキャッシュヒット率の設計を先に考えるのが実運用上の順序。</p>
+
+<p>そして <strong>クロスセッションSendMessageのアップグレード</strong>。異なるマシン間のセッション同士がメッセージを送り合えるようになり、非同期の「意思決定委任」が可能になった。Qiitaのberrylove記事はこの変化を「エージェント組織の統治」と表現しており、技術的正確さと組織設計視点を両立させた良質な日本語解説になっている（https://qiita.com/berrylove/items/e5df42c20e0b23b07f71）。</p>
+
+<p>非エンジニア向けには、GenAI-AI.co.jpが同日にサブエージェント・Plan Mode・デスクトップアプリの3本を公開。「ターミナル不要」時代の入り口として機能する。Auto Modeが8月14日からデフォルト有効化されており、デスクトップアプリのセットアップコストがさらに下がった。ZennのKatsuo氏によるSkills自動化レポート（Zenn記事投稿ワークフローをスラッシュコマンド1本化）も、Skillsのユースケース参考として使える。</p>
+
+<h3>MCP 2026-07-28：ステートレス化の移行期</h3>
+
+<p>MCPの仕様が破壊的変更された。「initialize/initializedハンドシェイクの廃止」「Mcp-Session-Idの削除」「各リクエストへのプロトコルバージョン埋め込み」が核心。MCPJamとFlavio Copesの両記事（相補的で一方が入門向け）をセットで読むのが最短コース。</p>
+
+<p>ステートレス化で楽になること：ラウンドロビンLBがそのまま使える、サーバーレス・エッジへのデプロイが可能、スティッキーセッション不要。ただし「ステートレスMCPはステートレスソフトウェアではない」— アプリ層の認証フロー・セッションデータは明示的に管理し続ける必要がある。SDK Beta（Python/TypeScript/Go/C#）で先行移行可能。</p>
+
+<p>移行ステップ：①隠れセッション状態の棚卸し → ②server/discover実装 → ③ヘッダー・ボディパリティ検証 → ④list結果の決定論的キャッシュ対応 → ⑤レガシーパスの並走 → ⑥テスト（ラウンドロビン・認証・リプレイ）。</p>
+
+<p>参考：MCPJam（https://mcpjam.substack.com/p/mcp-2026-07-28-stateless-what）、Flavio Copes（https://flaviocopes.com/mcp-2026-07-28-stateless/）</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>モデルリリースラッシュ：8月だけで10件超</h3>
+
+<p>8月に入ってからのモデルリリース速度はソフトウェアパッチ並みになっている（LLM Gateway集計：18モデル・15プロバイダー）。主要なもの：</p>
+
+<ul>
+<li>**Gemini 3.7 Flash**（Google, 8/13）— コスト効率型</li>
+<li>**Grok 4.6**（xAI, 8/6）— コーディング特化</li>
+<li>**Kimi K3**（Moonshot AI）— 2.8Tパラメータ、史上最大オープンウェイト（※一次ソース確認済み。ただしリリース日は7月であり8月ではない点に注意）</li>
+<li>**Claude Opus 5** — frontier相当・競合比半額、エフォートトグル搭載（7月24日リリース済み）</li>
+</ul>
+
+<p>スタートアップ目線の選択指針：高精度=Opus 5、コスト重視=Sonnet 5/Gemini Flash、コーディング=Grok 4.6。自動トレーディングのロジック生成など精度優先タスクにはOpus 5が候補に挙がる。</p>
+
+<h3>EU AI Act Article 50が本格施行（8月2日〜）：一次ソース確認済み</h3>
+
+<p>Morgan Lewis（法律事務所）の解説を元にした要点（EC公式・artificialintelligenceact.eu等で確認済み）：</p>
+
+<p>施行済み義務：①チャットボット自動識別、②感情認識・生体分類システムの利用開示、③ディープフェイクラベル（機械可読マーク含む）。違反制裁：<strong>最大€1500万または全世界年間売上3%</strong>。ただし生成AIの「マーキング・検出」義務は既存製品に<strong>2026年12月2日まで移行期間あり</strong>。高リスクAIシステム（採用・与信・教育・法執行等）の全面義務化は<strong>2027年12月2日に延期</strong>。</p>
+
+<p>公務員の立場では、AIツール調達・利用規程の改定タイミングを見極める参照点になる。EU域外でも「全世界年間売上3%」の条文は意識しておく価値がある。</p>
+
+<p>米国では「Great American AI Act」が州先取り条項を巡り下院で行き詰まり（グリッドロック継続）。英国はAI Regulation and Safety Billが庶民院通過（王室裁可は10月見込み）。中国ではコンパニオンAI規制で12社に計420万元の罰金（初の集中執行）。</p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>過去7日の記事数：15（8/8）→ 13（8/9）→ 10（8/10）→ 18（8/11）→ 4（8/12）→ 15（8/13）→ 14（8/14）→ <strong>14（8/15）</strong>。8/12の急落は週末収集の谷で、その前後は安定したペース。</p>
+
+<p>継続テーマ（claude・agent・mcp・trading・llm）のうち、<strong>今日は trading 記事がゼロ</strong>。FX自動取引関連の情報は8日連続でカバーされていたが今日は空白。明日以降再開されるか注視。</p>
+
+<p>claude・agentカテゴリは Week 32 アップデートで記事密度が高い1日だった。MCPステートレス化は先週から継続する移行テーマで、エンジニア向け解説の充実期に入っている。</p>
+
+</body>
+</html>
