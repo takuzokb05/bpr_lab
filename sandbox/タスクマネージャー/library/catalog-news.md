@@ -474,3 +474,13 @@
 | 422 | 生成AIニュース ベスト5（2026-08-07〜14）（GAIS JA）: neoAI Work・AI基盤・エージェント共通規格・ウォーターマーク・EU AI Act実務影響 | ja | 未読 | #ai-news #ai-regulation #web-signal | articles/2026-08-18_3693_WEB_GenAI-News-Best5-Aug07-14-2026-GAIS-JA.md |
 | 423 | 2026年8月17日 AIニュースまとめ（まめ note JA）: OpenAI巨大DC・AIエージェント共通規格・ウォーターマーク・AIへの社会的信頼調査 | ja | 未読 | #ai-news #web-signal | articles/2026-08-18_3694_WEB_AI-News-August17-2026-Mame-Note-JA.md |
 | 424 | AI Model Releases August 2026 確認済み18件（BenchLM）: Gemini 3.7 Flash・Grok 4.6・Seedance 2.5・Qwen Image 3.0・月次過去最多・モデル選定コスト増大 | en | 未読 | #ai-news #model-update #web-signal | articles/2026-08-18_3696_WEB_AI-Model-Releases-Confirmed-August2026-BenchLM.md |
+
+---
+
+## 2026-08-19 収集分（3件SIGNAL）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 425 | EU AI Act 透明性義務 2026年8月2日施行 (Cooley Law): Article 50（AI開示・機械可読マーキング）・罰則€1,500万or年売上3%・高リスク要件は2027年12月まで延期 | en | 未読 | #ai-news #ai-regulation #eu-ai-act #web-signal | articles/2026-08-19_3712_WEB_EU-AI-Act-Transparency-August2-2026-Article50-Cooley-Law.md |
+| 426 | AIニュース週次 2026年8月10-16日 (CANTABILE JA): Meta Muse Glimmer・Gemini月間10億人突破・GPT-5.6/Grok 4.5投入・音声インタフェース競争 | ja | 未読 | #ai-news #model-update #web-signal | articles/2026-08-19_3713_WEB_AI-News-Weekly-August10-16-2026-Gemini1B-Meta-MuseGlimmer-Cantabile-JA.md |
+| 427 | LLMモデルラッシュ 2026年8月 三極集中 (chinng-lab JA): EO 14409期限/Q3→同時多発リリース・GLM-5.3/Gemini 3.7 Flash/Qwen3.8 Max・クラウド/OW/軽量三極化 | ja | 未読 | #ai-news #model-update #web-signal | articles/2026-08-19_3714_WEB_LLM-Model-Release-Rush-August2026-Three-Clusters-Cloud-OpenWeight-Edge-JA.md |

@@ -4926,3 +4926,53 @@ Qiitaのスキルアイデア20選を参考に、現行スキル群（collect-x-
 - **PR説明文生成スキル**: 収集ルーチンのPR作成を自動化
 - **CLAUDE.md自動更新スキル**: ルーチン実行時のエラーパターンを自動でCLAUDE.mdに反映
 
+
+---
+
+## 2026-08-19 収集分（17件収集 → SIGNAL 17件）
+
+### 1. MCP 2026-07-28仕様への対応
+
+#### 1-1. タスクマネージャー: MCPサーバーの2026-07-28対応確認
+**出典:** articles/2026-08-19_3703_WEB_MCP-2026-07-28-Official-Spec-Stateless-Core-MCP-Blog.md
+
+**提案内容:**
+MCP v2026-07-28仕様で破壊的変更が発生。主な変更: (1)initialize/initializedハンドシェイク廃止、(2)Mcp-Session-Idヘッダー削除、(3)Roots/Sampling/Logging非推奨。Claude Codeが接続しているMCPサーバー（GitHub MCP等）がすでに対応済みか確認し、未対応のものは12ヶ月猶予内で移行計画を立てること。新仕様ではステートレスになるためスケーリングが大幅に向上する。
+
+#### 1-2. FX自動取引: MCP Stateless移行のインフラへの影響評価
+**出典:** articles/2026-08-19_3704_WEB_MCP-Stateless-Scaling-Agent-Infrastructure-Google-Developers-Blog.md
+
+**提案内容:**
+GoogleがMCP v2026-07-28のステートレス化によるAIエージェントインフラのスケーリング効果を解説。FX自動取引プロジェクトでMCP経由のツール統合を計画している場合、新仕様のステートレスコアを採用することで負荷分散・障害耐性が向上する。VPS上のPythonスクリプトから直接MCP呼び出しする構成ではなく、ステートレスMCPサーバー経由の設計を推奨。
+
+### 2. Claude Code Auto Mode デフォルト化への対応
+
+#### 2-1. タスクマネージャー: 日次ルーチンのAuto Mode影響確認
+**出典:** articles/2026-08-19_3709_WEB_Claude-Latest-Features-August2026-Chat-Cowork-Code-Complete-Guide-GenAI-JA.md
+
+**提案内容:**
+Claude Code Auto Modeがデフォルト化された（権限の暗黙的承認）。日次収集ルーチン（daily-collect-and-curate）でツール実行時の権限プロンプトが変化している可能性がある。settings.jsonのpermissionsを見直し、意図しない操作が実行されないよう確認すること。特にgit push等の外部へのwrite操作の権限設定を明示的に制御することを推奨。
+
+### 3. Claude Agent SDK agent-memory APIの活用
+
+#### 3-1. FX自動取引: エージェントメモリによる取引履歴の永続化
+**出典:** articles/2026-08-19_3706_WEB_Claude-Agent-SDK-2026-Production-Plans-Credits-Totalum.md
+
+**提案内容:**
+Anthropic Claude Agent SDKに`agent-memory-2026-07-22`ベータヘッダーが追加され、メモリリスト取得が安定化。FX自動取引エージェントに取引履歴・ポジション情報・センチメント履歴をメモリとして保持させることで、セッション間での学習・改善が可能になる。現在のVPS+Python実装にメモリ永続化レイヤーを追加する設計を検討すること。
+
+### 4. TradingAgents 7エージェント構成アーキテクチャの参照
+
+#### 4-1. FX自動取引: マルチエージェント構成の参考実装
+**出典:** articles/2026-08-19_3711_WEB_TradingAgents-Open-Source-80kStars-MultiAgent-LLM-Python-AlgoInsights.md
+
+**提案内容:**
+TradingAgents（80k+ GitHub stars）の7エージェント構成（4アナリスト並列→2リサーチャー対立論陣→リスクマネージャー→トレーダー）はFX自動取引プロジェクトのアーキテクチャ参考として価値が高い。特に「買い論と売り論を別エージェントが構築し、リスクマネージャーが裁定する」パターンは現行のルールベース判断より合理的。Claude Sonnet 5サポート済み（v0.3.1）なのでClaude Codeプロジェクト内から直接試用可能。
+
+### 5. EU AI Act透明性義務への対応
+
+#### 5-1. 情報収集ルーチン: AI生成コンテンツへの機械可読マーキング検討
+**出典:** articles/2026-08-19_3712_WEB_EU-AI-Act-Transparency-August2-2026-Article50-Cooley-Law.md
+
+**提案内容:**
+EU AI Act Article 50が2026年8月2日施行。AI生成コンテンツへの機械可読マーキング義務化。情報収集・キュレーションの成果物（ダイジェスト等）を外部公開する場合、生成AIによる要約であることの明示が求められる可能性がある。現状は個人内利用のため影響は限定的だが、将来的なOSS公開・共有を視野に入れる場合は早めにメタデータスキームを設計しておくことを推奨。
