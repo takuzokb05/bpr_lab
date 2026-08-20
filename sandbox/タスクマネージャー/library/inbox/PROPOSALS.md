@@ -4976,3 +4976,23 @@ TradingAgents（80k+ GitHub stars）の7エージェント構成（4アナリス
 
 **提案内容:**
 EU AI Act Article 50が2026年8月2日施行。AI生成コンテンツへの機械可読マーキング義務化。情報収集・キュレーションの成果物（ダイジェスト等）を外部公開する場合、生成AIによる要約であることの明示が求められる可能性がある。現状は個人内利用のため影響は限定的だが、将来的なOSS公開・共有を視野に入れる場合は早めにメタデータスキームを設計しておくことを推奨。
+
+---
+
+## 2026-08-20 収集分
+
+### 6. Claude Code運用改善
+
+#### 6-1. 情報収集ルーチン: Concise出力スタイルの適用検討
+**出典:** articles/2026-08-20_3716_WEB_ClaudeCode-v21237-ANTHROPIC-DEFAULT-MODEL-Concise-OutputStyle-DevelopersIO.md
+
+**提案内容:**
+Claude Code v2.1.237でConcise出力スタイルが追加された。情報収集ルーチンのような長時間実行セッションでは、逐次の実況コメントが省かれることで見通しが改善する可能性がある。グローバルsettings.jsonに`"outputStyle": "Concise"`を追加することを検討。なお`/clear`または新セッション開始後に有効化される点に注意。また`ANTHROPIC_DEFAULT_MODEL`環境変数によりルーチン実行時のデフォルトモデルを固定できる（Sonnet等コスト効率の高いモデルを自動適用）。
+
+### 7. FX自動取引: MT5×LLM連携実装
+
+#### 7-1. FX自動取引: ファイルベースLLM連携の最初の実装として採用検討
+**出典:** articles/2026-08-20_3718_WEB_LLM-FX-API-MT5-Integration-3Methods-Claude-GPT-HedgrowJA.md
+
+**提案内容:**
+hedgrow mediaの記事が整理した3方式（ファイルベース→Pythonミドルウェア→直接MQL5）は、FX自動取引プロジェクトの実装ロードマップに直接使える。現在のConoHa VPS+MT5構成では「ファイルベース連携」が最も実装リスクが低い（ブローカー設定不要、既存MT5 EAへの最小限の追加）。Claude APIを使ったLLMフィルタ追加の最初のステップとして採用を検討。APIキーはMQL5ソース内にハードコード禁止・バックテスト環境では動作しない点に注意。
