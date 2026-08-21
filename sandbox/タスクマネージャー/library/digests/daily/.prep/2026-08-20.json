@@ -1,0 +1,91 @@
+{
+  "date": "2026-08-20",
+  "generated_at": "2026-08-21T23:16:28.468887Z",
+  "article_count": 4,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-08-20_3716_WEB_ClaudeCode-v21237-ANTHROPIC-DEFAULT-MODEL-Concise-OutputStyle-DevelopersIO.md",
+      "title": "Claude Code v2.1.236〜v2.1.237：ANTHROPIC_DEFAULT_MODEL・Concise出力スタイル追加",
+      "url": "https://dev.classmethod.jp/en/articles/20260820-cc-updates-v2-1-237/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Claude Code v2.1.236〜237の実用的アップデート2点が特に重要。①ANTHROPIC_DEFAULT_MODELは既存環境変数との使い分けが必要な設計で、モデルのデフォルト固定とセッション単位の上書きを両立する。②Concise出力スタイルは長年の要望だった「実況コメント削減」を解決する機能で、グローバル設定には settings.json への記述が必要（/config は現プロジェクト限定）。また claude-api スキルのコンテキスト削減（200K→25K）は長期セッションでの費用対効果向上に直結する実質的な改善。LLMゲートウェイ経由のプロンプトキャッシュ修正も、カスタム環境利用者には重要な bugfix。",
+      "body_excerpt": "DevelopersIO（クラスメソッド）による2026年8月20日付けClaude Code最新アップデート解説。v2.1.236（8月19日）とv2.1.237（8月20日）の主要変更点を網羅。\n\n**v2.1.236の主な追加機能:**\n- ANTHROPIC_DEFAULT_MODEL環境変数（新セッション開始モデルを設定。/modelコマンドで都度上書き可能かつ再起動後も維持。既存ANTHROPIC_MODELとの違いはこの永続性）",
+      "fact_checked": true,
+      "fact_check_note": "確認済み: ANTHROPIC_DEFAULT_MODELとConcise出力スタイルの追加はv2.1.237で正確。LLMゲートウェイキャッシュ修正も確認。(Sources: dev.classmethod.jp, releasebot.io)"
+    },
+    {
+      "file": "2026-08-20_3717_WEB_ClaudeCode-ConciseOutputStyle-Config-Enable-Guide-ExplainX.md",
+      "title": "Claude Code Concise出力スタイル完全ガイド：有効化・設定・注意点",
+      "url": "https://explainx.ai/blog/claude-code-concise-output-style-config-august-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Claude Code Concise出力スタイルの設定方法詳細解説。特に「/configは現プロジェクト限定・グローバル反映にはsettings.json直接編集が必要」「/clear後または新セッション開始後に有効化」という2点の制約が実用上重要。機能自体はシンプルだが、長年の痛点（過度な実況コメント）を解決する実用的な追加。Boris Chernyの「band aid」発言は、将来的により根本的な改善が来ることを示唆している。",
+      "body_excerpt": "explainx.aiによるClaude Code v2.1.237の「Concise出力スタイル」に特化した解説記事（2026年8月20日）。\n\n**機能概要:**\nConcise出力スタイルは「前置き（preamble）と実況（running commentary）を省き、結果を先頭に書く」スタイル変更。モデルの思考深度・作業品質は変わらない（出力の表現方法だけが変わる）。",
+      "fact_checked": true,
+      "fact_check_note": "確認済み: Concise出力スタイルの設定方法（/config vs settings.json）の記述は正確。(Sources: releasebot.io, changelogs.info)"
+    },
+    {
+      "file": "2026-08-20_3718_WEB_LLM-FX-API-MT5-Integration-3Methods-Claude-GPT-HedgrowJA.md",
+      "title": "LLM × FX API × MT5 連携ガイド：Claude/GPTをMT5に繋ぐ3つの実装手順",
+      "url": "https://media.hedgrow.io/ja/fx/articles/llm-fx-api-mt5-renkei",
+      "source": "web",
+      "lang": "ja",
+      "theme": "ai-trading",
+      "summary": "MT5とLLMを連携させるFX自動売買実装の3アーキテクチャを実用的に解説した日本語ガイド。ファイルベース→Pythonミドルウェア→直接MQL5の順に複雑性とレイテンシのトレードオフが整理されており、自分のスキルセットと要件に応じて選択できる。FX自動取引プロジェクトを進める上で「LLMをどう組み込むか」の実装設計に直接使える一次情報。バックテスト非対応の注意点やAPIキー管理など実践的なリスク管理知見も含む。",
+      "body_excerpt": "hedgrow mediaによるLLM（Claude/GPT）とMetaTrader5（MT5）を連携してFX自動売買に活用するための実装ガイド（日本語）。3つのアーキテクチャを体系的に整理し、実装コード例・コスト管理・セキュリティを含む包括的解説。\n\n**3つの接続方式:**",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-20_3719_WEB_AI-News-August2026-Astra-Math-ChatGPT-1B-GPT56-Price-Kraviona.md",
+      "title": "2026年8月AIニュースまとめ：Astra数学10問解決・ChatGPT10億人・GPT-5.6価格80%引き",
+      "url": "https://kraviona.com/blog/latest-ai-news-august-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "2026年8月の主要AI動向を6軸で整理。Astraの数学問題解決は「AIが人類の科学的知識拡張に貢献した初例」として歴史的意味を持つ。ChatGPT・Gemini同時10億人突破とGPT-5.6の80%値下げは市場規模と競争激化を示す。セキュリティ面では主要3ラボ全てで制御問題が報告されており、AI安全の実装課題が続いていることも重要。規制面ではUS・EUともに締め付けが進行中。",
+      "body_excerpt": "kraviona.comによる2026年8月のAI主要ニュースまとめ記事。研究突破・ユーザー数・価格競争・新モデル・セキュリティ・規制の6軸で整理。\n\n**主要トピック:**",
+      "fact_checked": true,
+      "fact_check_note": "要注意: GPT-5.6値下げは「Luna 80%・Terra 20%」の2段階（全モデル80%引きではない）。価格変更は7月30日（8月ではない）。ChatGPT 10億人は「週次アクティブ」、Gemini 10億人は「月次アクティブ」で指標が異なる。Astra数学突破の独立確認は検索で得られなかった。(Sources: openai.com, cnbc.com, techcrunch.com, forbes.com)"
+    }
+  ],
+  "fact_checks": [
+    {
+      "article_file": "2026-08-20_3716_WEB_ClaudeCode-v21237-ANTHROPIC-DEFAULT-MODEL-Concise-OutputStyle-DevelopersIO.md",
+      "verdict": "confirmed",
+      "notes": "v2.1.237の機能（ANTHROPIC_DEFAULT_MODEL・Concise出力スタイル・LLMゲートウェイキャッシュ修正）を複数ソースで確認。"
+    },
+    {
+      "article_file": "2026-08-20_3717_WEB_ClaudeCode-ConciseOutputStyle-Config-Enable-Guide-ExplainX.md",
+      "verdict": "confirmed",
+      "notes": "Concise出力スタイルの設定方法と制約について正確。"
+    },
+    {
+      "article_file": "2026-08-20_3719_WEB_AI-News-August2026-Astra-Math-ChatGPT-1B-GPT56-Price-Kraviona.md",
+      "verdict": "partial",
+      "notes": "GPT-5.6値下げは「Luna 80%・Terra 20%」の2段階であり「全体80%引き」は不正確。ChatGPT/Gemini 10億人は指標が異なる（週次 vs 月次）。Astra数学突破は単独確認不可。"
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-08-19": 17,
+      "2026-08-18": 9,
+      "2026-08-17": 7,
+      "2026-08-16": 10,
+      "2026-08-15": 14,
+      "2026-08-14": 14,
+      "2026-08-13": 15
+    },
+    "recurring_themes": [
+      "claude",
+      "agent",
+      "mcp",
+      "trading",
+      "llm"
+    ]
+  }
+}
