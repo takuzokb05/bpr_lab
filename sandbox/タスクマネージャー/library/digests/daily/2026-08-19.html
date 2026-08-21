@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-08-19</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-08-19 | 17件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-08-19</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>MCP v2026-07-28のステートレス化仕様が各所で詳解され、エージェントインフラの設計論が一段階進んだ日。Claude Code v2.1.234のアップデートはワークフロー論・Tips集・日本語実務解説と三方向から補完され、「重いCLAUDE.md問題」への処方箋が固まりつつある。AIトレーディングはバックテストと本番の乖離という課題が改めて可視化された。EU AI Act透明性義務が8月2日に施行済みで法的リスクが現実化している（一次ソース確認済み）。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>v2.1.234が整えた「長いセッション」基盤</h3>
+
+<p>今月のClaude Codeは地味だが実用的なアップデートが積み重なっている。最も運用インパクトが大きいのは<strong>使用制限リセット時のセッション自動継続</strong>。これまでリセット後に再起動が必要だったが、継続するようになった。GitLab MRバッジ対応・Remote Control同期強化・認証情報漏洩への強化保護も加わり、チーム利用環境が着実に整備されている（<a href="https://www.gradually.ai/en/changelogs/claude-code/" target="_blank">gradually.ai changelog</a>）。</p>
+
+<p>日本語解説でも補足されており、Focus View（VS Code拡張・Ctrl+Alt+Fで切替）・Auto Modeデフォルト化・Compliance API拡張（Cowork＋Code統合監査）・Claude Sonnet 5の価格$2/$10/MTokの恒久維持（9月値上げ撤廃）が確認されている（<a href="https://yougears-lab.com/claude-update-20260805/" target="_blank">業務ハックLab</a>・<a href="https://genai-ai.co.jp/ai-kanri/blog/cc-claude-latest-30/" target="_blank">genai-ai.co.jp</a>）。</p>
+
+<h3>CLAUDE.md肥大化問題への処方箋が固まった</h3>
+
+<p>複数のワークフロー論・Tips集が同じ結論に収束している。CLAUDE.md最適化が最大レバレッジとして全記事が一致する一方、「長すぎると重要ルールが埋没する」という逆説の解決策として、<strong>Hooksへの移行</strong>が2026年の主流アプローチとして浮上。PreToolUse/PostToolUseハンドラーをプロンプト制約の代替として使うことで、CLAUDE.mdはコンテキスト情報に特化させる設計が推奨されている。</p>
+
+<p>「Claudeがすでに正しく動作している指示は削除またはHook化」という判断基準は、重い設定を抱えているユーザーには直接使える指針だ。また、Plan→Build二段階アプローチとTDDループの組み合わせは1つの会話スレッドで設計から実装まで完結させる実績が報告されており、長セッション継続性との相性が良い（<a href="https://smartscope.blog/en/generative-ai/claude/claude-code-best-practices-advanced-2026/" target="_blank">SmartScope</a>・<a href="https://agentsroom.dev/claude-code-tips" target="_blank">AgentsRoom</a>・<a href="https://medium.com/data-science-collective/effective-claude-code-workflows-in-2026-what-changed-and-what-works-now-c93ebc6f8f50" target="_blank">Medium/DataScienceCollective</a>）。</p>
+
+<h3>MCPのステートレス化でエージェントインフラが変わる（一次ソース確認済み）</h3>
+
+<p>MCP v2026-07-28が業界最大の改訂として複数方向から詳解された。<strong>initialize/initializedハンドシェイクとMcp-Session-Idヘッダの廃止</strong>が最大の変更で、全リクエストが自己記述的になったことでロードバランサーが任意インスタンスにルーティング可能となる。要するに、MCPサーバーが普通のステートレスWebサービスとして扱えるようになった。</p>
+
+<p>GoogleはこれをDevelopers Blogで詳解しており、Anthropic・Microsoft・Googleが共同でエコシステムを構築している構図が改めて明確化された。Enterprise Managed AuthorizationがStableに昇格し、組織がMCPサーバー認可を一元管理できるようになったことも見逃せない。移行コストは低く、12ヶ月の猶予期間が設けられている（<a href="https://blog.modelcontextprotocol.io/posts/2026-07-28/" target="_blank">MCP公式ブログ</a>・<a href="https://www.developersdigest.tech/blog/mcp-2026-07-28-breaking-changes" target="_blank">Developers Digest</a>・<a href="https://developers.googleblog.com/scaling-ai-agent-infrastructure-with-the-mcp-stateless-updates/" target="_blank">Google Developers Blog</a>）。</p>
+
+<p>Claude Agent SDK（Claude Codeと同じエージェントループを開発者向けに公開）の本番投入ガイドも公開されており、agent-memory-2026-07-22 betaヘッダによるメモリAPI安定化がプロダクション利用の実用的な道筋を示している（<a href="https://www.totalum.app/blog/claude-agent-sdk-totalum-2026" target="_blank">Totalum</a>）。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>EU AI Act透明性義務が施行（一次ソース確認済み）</h3>
+
+<p>2026年8月2日にArticle 50透明性義務が発効。AIとのインタラクション開示・AI生成コンテンツへの機械可読マーキングが義務化された。違反罰則は最大€1,500万または世界年間売上高の3%。ただし<strong>「高リスク」AI運用要件は2027年12月2日まで延期</strong>（Digital Omnibuパッケージ）されており、運用インパクトは段階的。なお生成AIのマーキング義務のみ2026年12月2日まで移行期間がある（<a href="https://www.cooley.com/news/insight/2026/2026-08-03-eu-ai-act-transparency-obligations-take-effect-2-august-2026" target="_blank">Cooley Law</a>）。</p>
+
+<h3>2026年8月のLLMモデルラッシュ：三極化構造が鮮明</h3>
+
+<p>米国大統領令EO 14409の期限とQ3区切りが重なり、8月にリリースが集中。クラウドAPI（GPT-5.6/Gemini 3.6/Claude Sonnet 5）・オープンウェイト（Meta Muse Glimmer）・軽量エッジ（Qwen系）の三極化が顕著で、Gemini月間利用者10億人突破・Grok 4.5コーディング特化投入など主要プレイヤーの動きが一巡した。音声インタフェース競争（macOS版Gemini音声/Grok Voice/GPT-Live）も同時並行で進んでいる（<a href="https://cantabile.alhinc.jp/culture/12288/" target="_blank">CANTABILE</a>・<a href="https://gotosocial.chinng-lab-srv.dev/llm-model-release-rush-august-2026/" target="_blank">chinng-lab-srv</a>）。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #ea580c; padding-left: 12px;">AIトレーディング</h2>
+
+<h3>LLMトレーディングの現実：バックテストと本番の乖離</h3>
+
+<p>LLMを使った自動取引について、2026年の現状評価が出揃った。バックテストでは好成績を記録するが、本番では取引コスト・スリッページ・マーケットレジーム変化で大幅乖離するのが典型パターンとして繰り返し報告されている。注目すべきはRobinhoodが2026年5月にAIエージェントの証券口座直接接続を発表した点で、「アジェンティックファイナンスの始まり」として業界の注目を集めている。</p>
+
+<p>オープンソースのTradingAgentsは記事では「80,000+スター」と表記されているが、<strong>実際は約60,000スター</strong>（複数ソース確認で不一致判明）。LangGraph上の7エージェント構成（アナリスト→リサーチャー→リスクマネージャー→トレーダー）というアーキテクチャ自体は原著論文由来で信頼性が高い（<a href="https://coinedition.com/llm-trading-in-2026-can-ai-agents-actually-outperform-humans/" target="_blank">CoinEdition</a>・<a href="https://algoinsights.medium.com/tradingagents-an-open-source-multi-agent-llm-trading-framework-in-python-48a8e4bdd1be" target="_blank">AlgoInsights/Medium</a>）。</p>
+
+<p>FX自動取引への応用としては、マルチモーダルLLMによるチャート画像読み込みと外部センチメント分析の多層フィルター組み合わせが実例として紹介された。まず汎用LLM（Claude/Perplexity等）をリサーチ・分析ツールとして使うところから段階的に特化ツールへ移行する構成が推奨されている（<a href="https://genai-ai.co.jp/ai-kanri/blog/cc-ai-stock-trading/" target="_blank">genai-ai.co.jp</a>）。</p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>過去7日の記事数推移：12日(4)→13日(15)→14日(14)→15日(14)→16日(10)→17日(7)→18日(9)→<strong>19日(17)</strong>。19日は先週の高水準（13-15日の14-15本/日）に匹敵するボリューム。MCP・agent・claudeは7日間継続してトップテーマに残っており、ステートレス化仕様の周辺コンテンツが量・質ともに充実してきた。tradingも継続テーマで、現実評価（本番乖離）とアーキテクチャ論が交互に登場するサイクルに入っている。modelテーマは三極化構造の確立とともに個別リリース速報より構造分析寄りにシフトしつつある。</p>
+
+</body>
+</html>
