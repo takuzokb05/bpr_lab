@@ -4996,3 +4996,35 @@ Claude Code v2.1.237でConcise出力スタイルが追加された。情報収�
 
 **提案内容:**
 hedgrow mediaの記事が整理した3方式（ファイルベース→Pythonミドルウェア→直接MQL5）は、FX自動取引プロジェクトの実装ロードマップに直接使える。現在のConoHa VPS+MT5構成では「ファイルベース連携」が最も実装リスクが低い（ブローカー設定不要、既存MT5 EAへの最小限の追加）。Claude APIを使ったLLMフィルタ追加の最初のステップとして採用を検討。APIキーはMQL5ソース内にハードコード禁止・バックテスト環境では動作しない点に注意。
+
+---
+
+## 2026-08-21 収集分
+
+### 8. Claude Code運用改善
+
+#### 8-1. 情報収集ルーチン: サンドボックス資格情報のmask設定（v2.1.221+）
+**出典:** articles/2026-08-21_3722_WEB_ClaudeCode-SlashCommand-Complete-Reference-August2026-Qiita.md / articles/2026-08-21_3729_WEB_ClaudeCode-VSCode-FocusView-MaskMode-August2026-Uravation-JA.md
+
+**提案内容:**
+Claude Code v2.1.221でサンドボックス資格情報ファイルに`mode: "mask"`が追加された。これによりLinux/WSL環境でAPIキー等の実値を渡さずに外部APIを呼べるようになった（セキュリティ向上）。現在の情報収集ルーチンがAPIキーを環境変数経由で渡している場合、この設定への移行を検討。またVS Code拡張のFocus viewでツールログを折りたたむことで長時間ルーチンの進捗視認性が向上する（Ctrl+Alt+F）。
+
+#### 8-2. 情報収集ルーチン: /verify・/code-review自律実行廃止への対応
+**出典:** articles/2026-08-21_3722_WEB_ClaudeCode-SlashCommand-Complete-Reference-August2026-Qiita.md
+
+**提案内容:**
+Claude Code 2026年8月から/verify・/code-review・/deep-researchの自律実行が段階的廃止中。既存のスキル・フックでこれらのコマンドを自律実行するものがあれば確認・修正が必要。Opus 5がデフォルトOpusモデルになったことで1Mコンテキスト対応かつOpus 4.8と同価格になった点は情報収集ルーチンのコスト影響が軽微で好材料。
+
+### 9. Claude Ecosystem活用
+
+#### 9-1. FX自動取引: Claude Finance 10エージェントのFX転用検討
+**出典:** articles/2026-08-21_3724_WEB_ClaudeAgentSDK-2026-Dreaming-Outcomes-Finance-TecniForge.md
+
+**提案内容:**
+AnthropicがClaude Agent SDK 2026でClaude Finance（10個のプレビルドエージェント）を発表。財務分析・レポート生成向けとして設計されているが、FX自動取引プロジェクトへの転用ポテンシャルがある。特に「Outcomes（成果物追跡・ゴール到達度可視化）」機能はFX取引結果の自動レポート生成に直接活用できる。Managed Agentsのライブ設定更新（再起動不要）はトレード戦略の動的切り替えにも有望。
+
+#### 9-2. FX自動取引/情報収集ルーチン: MCP 2026-07-28ステートレス化への対応
+**出典:** articles/2026-08-21_3725_WEB_MCP-2026-07-28-Stateless-Core-AllVendors-LabMemo-JA.md
+
+**提案内容:**
+MCP 2026-07-28仕様でプロトコルがステートレス化（セッションハンドシェイク廃止）。既存のMCPサーバーを自作または利用している場合は12ヶ月の移行猶予内での対応が必要。一方でステートレス化により水平スケーリングが可能になり、FX自動取引のMCP連携をより信頼性高く構成できる。現在のVPS構成でMCPサーバーを使っている場合、接続方式をリモートMCP（新標準）へ移行することを中期計画に追加することを推奨。

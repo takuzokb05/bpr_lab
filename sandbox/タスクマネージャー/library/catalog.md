@@ -1260,3 +1260,17 @@
 | 1196 | Claude Code Concise出力スタイル詳細解説 (explainx.ai EN): /config vs グローバルsettings.json の違い・/clear後に有効化・Boris Cherny「暫定対処」発言・品質維持確認 | en | 未読 | #claude-code #output-style #web-signal | articles/2026-08-20_3717_WEB_ClaudeCode-ConciseOutputStyle-Config-Enable-Guide-ExplainX.md |
 | 1197 | LLM × FX API × MT5 連携ガイド (hedgrow media JA): ファイルベース/Pythonミドルウェア/MQL5直接の3方式・レイテンシ比較・APIキー管理・バックテスト非対応の注意 | ja | 未読 | #ai-trading #mt5 #llm-trading #web-signal | articles/2026-08-20_3718_WEB_LLM-FX-API-MT5-Integration-3Methods-Claude-GPT-HedgrowJA.md |
 | 1198 | 2026年8月AIニュースまとめ (kraviona.com EN): Astra数学10問解決$2K・ChatGPT/Gemini各10億MAU・GPT-5.6価格80%引き・3ラボ制御問題・US規制正式化 | en | 未読 | #ai-news #model-update #ai-regulation #web-signal | articles/2026-08-20_3719_WEB_AI-News-August2026-Astra-Math-ChatGPT-1B-GPT56-Price-Kraviona.md |
+
+---
+
+## 2026-08-21 収集分（7件SIGNAL）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 1199 | 9 Claude Code Plugins August 2026 (Medium hii_mohit EN): 公式250+/コミュニティ2000+プラグイン中から9選・MCP上位5: Figma/Playwright/Vercel/PostgreSQL/GitHub・3層カスタマイズ設計 | en | 未読 | #claude-code #plugins #web-signal | articles/2026-08-21_3720_WEB_ClaudeCode-Plugins-9-Must-Install-August2026-Medium.md |
+| 1200 | Best Claude Code Plugins 2026 Scrimba: 11本テスト→4本推奨・Skills/Hooks/Subagentsの3層評価軸・コンテキスト肥大化リスク警告・最小限導入設計思想 | en | 未読 | #claude-code #plugins #web-signal | articles/2026-08-21_3721_WEB_ClaudeCode-BestPlugins-11Tested-4Recommended-Scrimba.md |
+| 1201 | Claude Codeコマンド完全ガイド 2026年8月版 (Qiita superdora-cloud JA): /review→/code-review統合・/agents廃止・v2.1.221 mode:"mask"・Focus View・Opus 5デフォルト化 | ja | 未読 | #claude-code #command-reference #web-signal | articles/2026-08-21_3722_WEB_ClaudeCode-SlashCommand-Complete-Reference-August2026-Qiita.md |
+| 1202 | Claude Code マルチエージェント 3層構成 2026ガイド (Tembo EN): セッション内サブエージェント/Agent Teams/外部オーケストレーター・SDK標準化で個別実装不要 | en | 未読 | #claude-code #multi-agent #orchestration #web-signal | articles/2026-08-21_3723_WEB_ClaudeCode-MultiAgent-3Tier-Architecture-2026-Tembo.md |
+| 1203 | Claude Agent SDK 2026 Dreaming・Outcomes・Finance 10 Agents (TecniForge EN): Code with Claudeイベント発表・ライブMCP更新・100K+ツール出力・外部実行モード | en | 未読 | #claude-ecosystem #agent-sdk #web-signal | articles/2026-08-21_3724_WEB_ClaudeAgentSDK-2026-Dreaming-Outcomes-Finance-TecniForge.md |
+| 1204 | MCP完全ガイド2026 各社対応まとめ (LabMemo JA): 2026-07-28ステートレス化・Multi Round-Trip・OAuth/OIDC強化・Linux Foundation寄贈・4社採用・国内117選 | ja | 未読 | #claude-ecosystem #mcp #spec #web-signal | articles/2026-08-21_3725_WEB_MCP-2026-07-28-Stateless-Core-AllVendors-LabMemo-JA.md |
+| 1205 | VSCode×Claude Code連携 2026年8月版 (Uravation JA): Focus View (Ctrl+Alt+F)・v2.1.221 mode:"mask"・自動承認設定・できること25選・Opus 5対応 | ja | 未読 | #claude-code #vscode #web-signal | articles/2026-08-21_3729_WEB_ClaudeCode-VSCode-FocusView-MaskMode-August2026-Uravation-JA.md |

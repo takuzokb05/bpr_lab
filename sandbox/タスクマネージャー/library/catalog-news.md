@@ -485,3 +485,13 @@
 | 426 | AIニュース週次 2026年8月10-16日 (CANTABILE JA): Meta Muse Glimmer・Gemini月間10億人突破・GPT-5.6/Grok 4.5投入・音声インタフェース競争 | ja | 未読 | #ai-news #model-update #web-signal | articles/2026-08-19_3713_WEB_AI-News-Weekly-August10-16-2026-Gemini1B-Meta-MuseGlimmer-Cantabile-JA.md |
 | 427 | LLMモデルラッシュ 2026年8月 三極集中 (chinng-lab JA): EO 14409期限/Q3→同時多発リリース・GLM-5.3/Gemini 3.7 Flash/Qwen3.8 Max・クラウド/OW/軽量三極化 | ja | 未読 | #ai-news #model-update #web-signal | articles/2026-08-19_3714_WEB_LLM-Model-Release-Rush-August2026-Three-Clusters-Cloud-OpenWeight-Edge-JA.md |
 | 428 | 2026年8月AIニュースまとめ (kraviona.com EN): Astra数学10問解決$2K・ChatGPT/Gemini各10億MAU・GPT-5.6 80%値下げ・3大ラボ制御問題・米国規制正式化 | en | 未読 | #ai-news #model-update #ai-regulation #web-signal | articles/2026-08-20_3719_WEB_AI-News-August2026-Astra-Math-ChatGPT-1B-GPT56-Price-Kraviona.md |
+
+---
+
+## 2026-08-21 収集分（3件SIGNAL）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 429 | LLM Model Release Timeline 2026 (LLMGateway EN): 8月だけで7社12モデル・GLM-5.2 Turbo(8/17)・Gemini 3.7 Flash(8/13)・Claude Opus 5半額・GPT-5.6三系統・音声競争激化 | en | 未読 | #ai-news #model-update #web-signal | articles/2026-08-21_3726_WEB_LLM-Model-Release-August2026-12Models-7Vendors-LLMGateway.md |
+| 430 | TLT AI Brief August 2026 (UK Law): EU AI Act 8/2透明性義務施行・チャットボットAI明示・ディープフェイクラベル義務・米GOLD EAGLE・英国初代AI大臣任命・コロラド州未成年AI規制 | en | 未読 | #ai-news #ai-regulation #eu-ai-act #web-signal | articles/2026-08-21_3727_WEB_EU-AI-Act-August2-2026-Enforcement-Transparency-UK-TLT.md |
+| 431 | awesome-ai-agents-2026 GitHub (EN): 300+リソース20+カテゴリ毎月更新・MS Agent Framework 1.0 GA(4/3)・Google ADK・Pydantic AI V2・LlamaIndex Workflows 1.0・MCP Linux Foundation寄贈 | en | 未読 | #ai-news #ai-agent #frameworks #web-signal | articles/2026-08-21_3728_WEB_AwesomeAIAgents-2026-300Plus-Frameworks-GitHub.md |
