@@ -1274,3 +1274,17 @@
 | 1203 | Claude Agent SDK 2026 Dreaming・Outcomes・Finance 10 Agents (TecniForge EN): Code with Claudeイベント発表・ライブMCP更新・100K+ツール出力・外部実行モード | en | 未読 | #claude-ecosystem #agent-sdk #web-signal | articles/2026-08-21_3724_WEB_ClaudeAgentSDK-2026-Dreaming-Outcomes-Finance-TecniForge.md |
 | 1204 | MCP完全ガイド2026 各社対応まとめ (LabMemo JA): 2026-07-28ステートレス化・Multi Round-Trip・OAuth/OIDC強化・Linux Foundation寄贈・4社採用・国内117選 | ja | 未読 | #claude-ecosystem #mcp #spec #web-signal | articles/2026-08-21_3725_WEB_MCP-2026-07-28-Stateless-Core-AllVendors-LabMemo-JA.md |
 | 1205 | VSCode×Claude Code連携 2026年8月版 (Uravation JA): Focus View (Ctrl+Alt+F)・v2.1.221 mode:"mask"・自動承認設定・できること25選・Opus 5対応 | ja | 未読 | #claude-code #vscode #web-signal | articles/2026-08-21_3729_WEB_ClaudeCode-VSCode-FocusView-MaskMode-August2026-Uravation-JA.md |
+
+
+---
+
+## 2026-08-22 収集分（6件SIGNAL）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 1206 | Claude Code Productivity Tips 2026 (TowardsAI EN): Plan-then-build・CLAUDE.md 200行制限・/rewind活用・最初プロンプトに検証基準を含める・1時間超のタスクはサブタスク分解 | en | 未読 | #claude-code #tips #workflow #web-signal | articles/2026-08-22_3730_WEB_ClaudeCode-Productivity-Tips-2026-TowardsAI.md |
+| 1207 | Claude Code Best Practices: What Docs Don't Cover (chudi.dev EN): Commands/Agents/Skills/Hooks/MCP/Memory 6要素オーケストレーション・Skills=知識/MCP=行動/Hooks=強制の役割分担・CLAUDE.md 200行設計 | en | 未読 | #claude-code #best-practices #mcp #hooks #web-signal | articles/2026-08-22_3731_WEB_ClaudeCode-BestPractices-WhatOfficialDocsDontCover-Chudi.md |
+| 1208 | 2026年生成AI 10大ニュース（london3.jp JA）: GPT-5.6正式公開・Anthropic 650億ドル突破・Qwen3.8-Max(2.4T)史上最大OW・OX Alpha匿名モデル・MCP Linux Foundation寄贈・AI規制各国整備 | ja | 未読 | #ai-news #model-update #mcp #web-signal | articles/2026-08-22_3732_WEB_GenAI-2026-Top10-News-August-London3-JA.md |
+| 1209 | AIモーニングブリーフィング 2026-08-18（note JA）: Anthropic年換算売上650億ドル突破・OpenAI×NVIDIAオハイオ20年契約・AI「インフラ争い」フェーズへ転換・EU規制加速 | ja | 未読 | #ai-news #anthropic #openai #infrastructure #web-signal | articles/2026-08-22_3733_WEB_AI-Morning-Brief-Anthropic-650B-OpenAI-Ohio-20260818-JA.md |
+| 1210 | Claude 活用事例10選 2026年最新（0120.co.jp JA）: 月1500件80%自動処理・契約書レビュー68.8%削減・報告書作成70%削減・Fable 5/Opus 4.8検証済みプロンプト集・非エンジニア向け | ja | 未読 | #claude-ecosystem #business-case #web-signal | articles/2026-08-22_3734_WEB_Claude-Katsuyou-Cases-10-Business-2026-0120-JA.md |
+| 1211 | Claude Code 導入事例10選 日本企業ROI解説（Uravation JA）: 平均68%工数削減・回収期間2.3ヶ月・10の実装パターン・CLAUDE.md標準化が鍵・中小企業でも費用対効果あり | ja | 未読 | #claude-code #business-case #roi #web-signal | articles/2026-08-22_3735_WEB_ClaudeCode-Implementation-Cases-10-Japan-ROI-Uravation-JA.md |

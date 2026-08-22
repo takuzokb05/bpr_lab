@@ -5028,3 +5028,25 @@ AnthropicがClaude Agent SDK 2026でClaude Finance（10個のプレビルドエ�
 
 **提案内容:**
 MCP 2026-07-28仕様でプロトコルがステートレス化（セッションハンドシェイク廃止）。既存のMCPサーバーを自作または利用している場合は12ヶ月の移行猶予内での対応が必要。一方でステートレス化により水平スケーリングが可能になり、FX自動取引のMCP連携をより信頼性高く構成できる。現在のVPS構成でMCPサーバーを使っている場合、接続方式をリモートMCP（新標準）へ移行することを中期計画に追加することを推奨。
+
+## 2026-08-22 収集分
+
+### 10. Claude Ecosystem / API活用
+
+#### 10-1. Files API GA対応（ベータヘッダー削除）
+**出典:** 検索結果: Anthropic Claude Developer Platform August 2026 (releasebot.io)
+
+**提案内容:**
+Files API（`/v1/files`エンドポイント）が正式GA。`files-api-2025-04-14`ベータヘッダーが不要になった。現在のコードやスキルでこのヘッダーを付与しているものがあれば削除可能（後方互換性あり）。また、Skills APIとFiles APIがMicrosoft Foundry経由でも利用可能になった。
+
+#### 10-2. Claude Code v2.1.234+ セッション自動継続の活用
+**出典:** 検索結果: Claude Code Changelog August 2026 (gradually.ai / releasebot.io)
+
+**提案内容:**
+Claude Code v2.1.234でレート制限リセット時のセッション自動継続が追加された。日次収集ルーチン等の長時間タスクが途中でレート制限に当たっても自動的に再開されるようになり、手動介入が不要になる。また、`notify_when_idle`（v2.1.237）でアイドル時通知も可能。現在のスケジュールタスクの信頼性向上に繋がる。
+
+#### 10-3. Claude Opus 4.1 廃止対応（2026年8月5日退役済み）
+**出典:** 検索結果: Claude API Updates August 2026 (releasebot.io)
+
+**提案内容:**
+`claude-opus-4-1-20250805`モデルが2026年8月5日にAPI退役済み。FX自動取引プロジェクトや情報収集ルーチンでこのモデルIDを指定している箇所がないか確認し、`claude-opus-4-8`または`claude-opus-5`へ移行すること。

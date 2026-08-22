@@ -495,3 +495,12 @@
 | 429 | LLM Model Release Timeline 2026 (LLMGateway EN): 8月だけで7社12モデル・GLM-5.2 Turbo(8/17)・Gemini 3.7 Flash(8/13)・Claude Opus 5半額・GPT-5.6三系統・音声競争激化 | en | 未読 | #ai-news #model-update #web-signal | articles/2026-08-21_3726_WEB_LLM-Model-Release-August2026-12Models-7Vendors-LLMGateway.md |
 | 430 | TLT AI Brief August 2026 (UK Law): EU AI Act 8/2透明性義務施行・チャットボットAI明示・ディープフェイクラベル義務・米GOLD EAGLE・英国初代AI大臣任命・コロラド州未成年AI規制 | en | 未読 | #ai-news #ai-regulation #eu-ai-act #web-signal | articles/2026-08-21_3727_WEB_EU-AI-Act-August2-2026-Enforcement-Transparency-UK-TLT.md |
 | 431 | awesome-ai-agents-2026 GitHub (EN): 300+リソース20+カテゴリ毎月更新・MS Agent Framework 1.0 GA(4/3)・Google ADK・Pydantic AI V2・LlamaIndex Workflows 1.0・MCP Linux Foundation寄贈 | en | 未読 | #ai-news #ai-agent #frameworks #web-signal | articles/2026-08-21_3728_WEB_AwesomeAIAgents-2026-300Plus-Frameworks-GitHub.md |
+
+---
+
+## 2026-08-22 収集分（2件SIGNAL）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 432 | 2026年生成AI 10大ニュース（london3.jp JA）: GPT-5.6正式公開・Anthropic 650億ドル突破・Qwen3.8-Max(2.4T)史上最大OW・OX Alpha匿名モデル・MCP Linux Foundation寄贈・AI規制各国整備 | ja | 未読 | #ai-news #model-update #mcp #web-signal | articles/2026-08-22_3732_WEB_GenAI-2026-Top10-News-August-London3-JA.md |
+| 433 | AIモーニングブリーフィング 2026-08-18（note JA）: Anthropic年換算売上650億ドル突破・OpenAI×NVIDIAオハイオ20年契約・「モデル性能」から「インフラ争い」へ転換・各国AI規制加速 | ja | 未読 | #ai-news #anthropic #openai #infrastructure #web-signal | articles/2026-08-22_3733_WEB_AI-Morning-Brief-Anthropic-650B-OpenAI-Ohio-20260818-JA.md |
