@@ -1,0 +1,166 @@
+{
+  "date": "2026-08-21",
+  "generated_at": "2026-08-22T23:16:32.382110Z",
+  "article_count": 10,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-08-21_3720_WEB_ClaudeCode-Plugins-9-Must-Install-August2026-Medium.md",
+      "title": "9 Claude Code Plugins Every Developer Should Install in 2026",
+      "url": "https://medium.com/@hii_mohit/9-claude-code-plugins-every-developer-should-install-in-2026-9a35b8fe5a83",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "2026年8月時点のClaude Codeプラグインエコシステム紹介記事。公式マーケットプレイスには250以上のプラグイン、コミュニティカタログには2,000以上が存在する中から厳選9本を解説。プラグインはスキル・エージェント・フック・MCPサーバー・言語サーバーをバンドルし、/pluginコマンドで一括導入できる。人気MCP：Figma（デザイントークン抽出・コード生成）、Playwright（E2Eテスト・スクリーンショット）、Vercel（デプロイ・ログ管理）、PostgreSQL（DBクエリ・スキーマ確認）、GitHub（PR作成・Issue管理）。Claude Code 2026の3層カスタマイズ（Skills・Hooks・Subagents）との組み合わせ方も解説。実務ユースケース付き。",
+      "body_excerpt": "Medium記事。2026年8月、開発者が今すぐインストールすべきClaude Codeプラグイン9選を実践的に紹介。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-21_3721_WEB_ClaudeCode-BestPlugins-11Tested-4Recommended-Scrimba.md",
+      "title": "Best Claude Code Plugins in 2026: 11 Tested, 4 Worth Keeping",
+      "url": "https://scrimba.com/articles/best-claude-code-plugins-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Scrimbaが11本のClaude Codeプラグインを実テストし、4本を推奨するという実践的な比較レポート。選定基準はプラグインをSkills（長期専門知識の読み込み）・Hooks（ライフサイクルイベントの確定実行）・Subagents（独立コンテキスト）の3層に整理した上で、各層での価値を評価。技術系タスクではコードレビュー自動化・テスト補助・CI/CD連携が高評価。重要な警告として「過剰プラグイン導入によるコンテキスト肥大化リスク」を指摘し、必要最小限の導入を推奨する設計思想を提唱。250以上の公式プラグインの中から厳選する基準も提示しており、初期設定ガイドとして活用できる。",
+      "body_excerpt": "Scrimba記事。11本のClaude Codeプラグインを実際にテストし4本を実用推奨するレポート形式記事。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-21_3722_WEB_ClaudeCode-SlashCommand-Complete-Reference-August2026-Qiita.md",
+      "title": "Claude Codeコマンド完全ガイド【2026年8月版】スラッシュ・CLI一覧",
+      "url": "https://qiita.com/superdora-cloud/items/979295520a85f28e0cab",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "2026年8月版のClaude Codeコマンドリファレンス。スラッシュコマンドとCLIコマンドを網羅した一覧で、コマンドの頻繁な変更履歴も記録。注目点：①/review→/code-review統合、/forkの再定義、/agents廃止など2026年内で多数のコマンド整理が行われた②/verify・/code-review・/deep-researchの自律実行が段階的廃止中③v2.1.221でサンドボックス資格情報ファイルにmode: \"mask\"追加（Linux/WSLで外部APIを実値を渡さず呼出し可能）④VS Code拡張のFocus view追加（ツールログ折りたたみ）。Opus 5がデフォルトOpusモデルとして追加（1Mコンテキスト、Opus 4.8と同価格）。コマンド仕様追跡に実用的なリファレンス記事。",
+      "body_excerpt": "Qiita記事。2026年8月版のClaude Codeスラッシュコマンド・CLIコマンド一覧の完全ガイド。",
+      "fact_checked": true,
+      "fact_check_note": "✅確認済み: Claude Opus 5は2026年7月24日リリース。1Mコンテキスト、価格はOpus 4.8と同じ（$5/$25 per million tokens）。デフォルトthinking on、128k max output（Anthropic公式・MarkTechPost・eesel AI）"
+    },
+    {
+      "file": "2026-08-21_3723_WEB_ClaudeCode-MultiAgent-3Tier-Architecture-2026-Tembo.md",
+      "title": "Claude Code Multi-Agent Orchestration: 2026 Guide (3-Tier)",
+      "url": "https://www.tembo.io/blog/claude-code-multi-agent-orchestration",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Claude Code 2026のマルチエージェント構成を3層に整理した実践ガイド。①同一セッション内のサブエージェント（タスク分解・軽量並列処理）②Agent Teams機能（独立したコンテキストウィンドウを持つ並列チームメート、チームリードが指揮・統合）③外部オーケストレーター（複数リポジトリ・チーム横断の大規模構成）。Claude Agent SDKへの機能統合により、これらのパターンが各チームの個別実装なしに利用可能になった点が2026年の大きな変化。チームメートはタスクリスト経由で相互メッセージ可能。並列エージェントでの品質向上・完了時間短縮の実例を掲載。FX自動取引などの複雑タスクにも応用できるアーキテクチャ。",
+      "body_excerpt": "Tembo記事。Claude Code 2026のマルチエージェントオーケストレーション実践ガイド。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-21_3724_WEB_ClaudeAgentSDK-2026-Dreaming-Outcomes-Finance-TecniForge.md",
+      "title": "Claude Agent SDK 2026: Dreaming・Outcomes・Claude Finance 10 Agents",
+      "url": "https://tecniforge.com/claude-agent-sdk-2026-features/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Anthropicが「Code with Claude」開発者イベントで発表したClaude Agent SDK 2026の主要機能。①Dreaming：長期計画・仮説立案・バックグラウンド処理の機能②Outcomes：成果物追跡・ゴール到達度の可視化③マルチエージェントオーケストレーション（SDK標準機能化）④Claude Finance：10個のプレビルドエージェント（財務分析・レポート生成等）。Managed Agentsの強化：アクティブセッション中にツール・MCP設定のライブ更新が可能（再起動不要）、100K+トークンのツール出力をサポート、ツール実行を自前インフラで行いながらオーケストレーションはAnthropicに委託する「外部実行」モードも追加。FX自動取引などへの応用ポテンシャルが高い。",
+      "body_excerpt": "TecniForge記事。AnthropicのCode with Claudeイベントで発表されたClaude Agent SDK 2026の新機能詳細解説。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-21_3725_WEB_MCP-2026-07-28-Stateless-Core-AllVendors-LabMemo-JA.md",
+      "title": "MCP完全ガイド2026：2026-07-28仕様・各社対応・Server自作",
+      "url": "https://labmemo.com/mcp-server-openai-google-microsoft-ai-2026/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-ecosystem",
+      "summary": "2026年のMCP（Model Context Protocol）を日本語で包括的に解説。最大の変化は2026-07-28仕様での「プロトコルのステートレス化」で、セッション依存が廃止され一般的なWebサービスと同様の水平スケーリングが可能に。その他主要変更点：Multi Round-Trip Requests、ヘッダーベースルーティング、キャッシュ可能なlistレスポンス、OAuth/OIDC認証強化、拡張フレームワーク正式化。MCPはLinux Foundationに寄贈され、Anthropic・OpenAI・Microsoft・Google全4社が採用表明（事実上の業界標準）。日本語圏では国内117選MCPディレクトリ（34カテゴリ）が整備済み。Sansanなど国内SaaSの公式MCP提供事例も増加中。",
+      "body_excerpt": "LabMemoのMCP完全ガイド。2026-07-28仕様の詳細とOpenAI・Google・Microsoft各社の対応状況、自作方法を網羅。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-21_3726_WEB_LLM-Model-Release-August2026-12Models-7Vendors-LLMGateway.md",
+      "title": "LLM Model Release Timeline August 2026: 12 Models from 7 Vendors",
+      "url": "https://llmgateway.io/timeline/2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "LLM Gatewayの2026年モデルリリースタイムライン。2026年8月だけで7プロバイダーから12モデルがリリース。主要リリース：GLM-5.2 Turbo（Z.AI、8/17）、Gemini 3.7 Flash（Google、8/13）、Qwen Image 3.0 Pro・Qwen Image 3.0（Alibaba、8/5）、Qwen3.8 Max（Alibaba、8/2）。年間注目リリース：Claude Opus 5（フロンティア比約半額でIPO（10月目標）前にリリース）、GPT-5.6（Sol/Terra/Luna三系統）、Gemini 3.1、DeepSeek-V4、Llama 4。共通トレンド：高性能×低コスト化が全社一致で進行、音声処理機能の充実（Grok Voice・GPT-Live・macOS Gemini音声入力）。MCPの2026-07-28 RC公開もこの時期の大型トピック。",
+      "body_excerpt": "LLM Gatewayが提供する2026年のAIモデルリリース年間タイムライン。定量データとプロバイダー別分類。",
+      "fact_checked": true,
+      "fact_check_note": "✅確認済み: Gemini 3.7 Flashは2026年8月13日リリース。DeepSWE v1.1が49.0%→65.3%に向上、価格$0.75/$3.75 per M tokens、1Mコンテキスト維持（Google公式blog, 9to5google）"
+    },
+    {
+      "file": "2026-08-21_3727_WEB_EU-AI-Act-August2-2026-Enforcement-Transparency-UK-TLT.md",
+      "title": "EU AI Act 2026年8月2日施行・透明性義務開始・英国AI大臣任命",
+      "url": "https://www.tlt.com/insights-and-events/insight/tlts-ai-brief-august-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "2026年8月の主要AI規制動向。①EU AI Act：8月2日から透明性義務が本格施行開始。チャットボットはAIであることをユーザーに明示義務、ディープフェイクはラベル表示義務。高リスクAIシステムの義務適用は2027年12月2日（単独）・2028年8月2日（製品組込み）に延期。②EU評議会がAIルール簡素化・合理化を最終承認（6月29日）③米国：コロラド州が全米初の未成年者向けAIチャットボット規制法を制定④米国Trump政権が「GOLD EAGLE」（官民連携クリアリングハウス）を7月14日に始動（財務省・国土安全保障省・国防省共同）⑤英国：新首相就任直後にKanishka Narayan氏を初代AI担当大臣に任命。企業への実務影響分析を含む一次情報ベースのブリーフ。",
+      "body_excerpt": "英国法律事務所TLTによる2026年8月AIブリーフ。EU AI Act施行・英米規制動向を網羅。",
+      "fact_checked": true,
+      "fact_check_note": "✅確認済み: EU AI Act透明性義務（Article 50）は2026年8月2日に施行済み。チャットボットのAI明示義務・ディープフェイクラベル義務が発効。高リスクAI義務は2027/12/2・2028/8/2に延期（Goodwin Law, Cooley, European Commission公式）"
+    },
+    {
+      "file": "2026-08-21_3728_WEB_AwesomeAIAgents-2026-300Plus-Frameworks-GitHub.md",
+      "title": "awesome-ai-agents-2026: AIエージェント・フレームワーク300選（毎月更新）",
+      "url": "https://github.com/caramaschiHG/awesome-ai-agents-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "2026年のAIエージェントエコシステムを俯瞰できるキュレーションリスト（300+リソース、20+カテゴリ、毎月更新）。主要フレームワーク動向：①Microsoft Agent Framework 1.0（AutoGen+Semantic Kernelを統合、Python/.NET同時GA 2026/4/3、YAMLによる宣言的エージェント設定）②Google ADK（Vertex AI/Gemini向けネイティブフレームワーク、マルチモーダル対応）③Pydantic AI V2（6/23、capability中心設計）④LlamaIndex Workflows 1.0（6/22）⑤MCP 2026-07-28 RC（ステートレス化、Claude/Microsoft Agent Frameworkがネイティブ対応最深化、Linux Foundation寄贈・全4大ベンダー採用）。EU AI法高リスク義務2026/8/2施行。AIエージェント開発の現在地を把握するのに最適なリファレンス。",
+      "body_excerpt": "GitHubのキュレーションリスト。300以上のAIエージェント・フレームワーク・ツールを20以上のカテゴリに分類（毎月更新）。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-21_3729_WEB_ClaudeCode-VSCode-FocusView-MaskMode-August2026-Uravation-JA.md",
+      "title": "VSCode×Claude Code 2026年8月版：Focus View・マスクモード・自動承認設定",
+      "url": "https://uravation.com/media/claude-code-vscode-integration-complete-guide-2026/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "2026年8月時点のVSCode×Claude Code連携ガイド。主な新機能：①VS Code拡張にFocus view追加（ツール実行ログを折りたたみ、会話の見通しを確保）②v2.1.221でサンドボックス資格情報ファイルにmode: \"mask\"追加（Linux/WSLで外部API実値を渡さず呼出し可能、セキュリティ向上）。設定方法：自動承認（allowedTools設定）、セッションプロキシ設定、IDE拡張との連携。Claude Code 2026年8月版できること25選（コーディング・レビュー・テスト・デプロイ・文書作成等）も掲載。Cowork GA後の非エンジニア向けとVSCode開発者向けの使い分け比較も有益。Opus 5デフォルト化（1Mコンテキスト）によるコーディング体験向上についても言及。",
+      "body_excerpt": "株式会社Uravation記事。VSCode拡張とClaude Code連携の2026年8月版実践ガイド。最新アップデートと設定方法を網羅。",
+      "fact_checked": true,
+      "fact_check_note": "✅確認済み: Claude Opus 5は2026年7月24日リリース。1Mコンテキスト、価格はOpus 4.8と同じ（$5/$25 per million tokens）。デフォルトthinking on、128k max output（Anthropic公式・MarkTechPost・eesel AI）"
+    }
+  ],
+  "fact_checks": [
+    {
+      "article": "3727_EU-AI-Act",
+      "claim": "EU AI Act透明性義務 2026年8月2日施行開始",
+      "result": "CONFIRMED",
+      "source": "https://www.goodwinlaw.com/en/insights/publications/2026/08/alerts-technology-dpc-eu-ai-act-transparency-obligations-now-in-force"
+    },
+    {
+      "article": "3722/3729_Claude-Opus5",
+      "claim": "Opus 5がデフォルトOpusモデル、1Mコンテキスト、Opus 4.8と同価格",
+      "result": "CONFIRMED",
+      "source": "https://www.marktechpost.com/2026/07/24/meet-the-new-claude-opus-5-frontier-class-agentic-coding-and-computer-use-at-unchanged-opus-pricing/"
+    },
+    {
+      "article": "3726_LLM-Release-Timeline",
+      "claim": "Gemini 3.7 Flash が8月13日リリース",
+      "result": "CONFIRMED",
+      "source": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-3-7-flash/"
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-08-20": 4,
+      "2026-08-19": 17,
+      "2026-08-18": 9,
+      "2026-08-17": 7,
+      "2026-08-16": 10,
+      "2026-08-15": 14,
+      "2026-08-14": 14
+    },
+    "recurring_themes": [
+      "claude",
+      "agent",
+      "mcp",
+      "llm",
+      "trading"
+    ]
+  }
+}
