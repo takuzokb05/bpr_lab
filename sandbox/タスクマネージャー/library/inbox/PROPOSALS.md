@@ -5050,3 +5050,27 @@ Claude Code v2.1.234でレート制限リセット時のセッション自動継
 
 **提案内容:**
 `claude-opus-4-1-20250805`モデルが2026年8月5日にAPI退役済み。FX自動取引プロジェクトや情報収集ルーチンでこのモデルIDを指定している箇所がないか確認し、`claude-opus-4-8`または`claude-opus-5`へ移行すること。
+
+---
+
+## 2026-08-23 収集分
+
+### 11. Anthropic Python SDK v1.0 移行対応
+
+#### 11-1. FX自動取引・情報収集ルーチンの SDK 移行
+**出典:** articles/2026-08-23_3737_WEB_Anthropic-Python-SDK-v1-0-httpx2-Breaking-Changes-Migration.md
+
+**提案内容:**
+Anthropic Python SDK v1.0.0（2026-08-20リリース）でBreaking Changesが発生。影響を受ける変更：
+- `httpx` → `httpx2` 移行（インポートが変わる場合あり）
+- `AnthropicBedrock` でAWSリージョン未設定時にエラー（従来はus-east-1デフォルト）
+- async `.with_raw_response` の結果に `await response.parse()` が必要
+- Text Completions API完全削除
+
+FX自動取引プロジェクト（`sandbox/FX自動取引/`）・情報収集ルーチン（`sandbox/タスクマネージャー/.claude/skills/`）で `anthropic` パッケージを使っているスクリプトを確認し、Claude Code v2.1.239の `/claude-api upgrade` コマンドで半自動移行すること。
+
+#### 11-2. Claude Code `keybindingFlavor` 設定の周知
+**出典:** articles/2026-08-23_3736_WEB_ClaudeCode-v21238-v21239-98Changes-KeybindingFlavor-Bedrock-Fix-DevelopersIO.md
+
+**提案内容:**
+Claude Code v2.1.238から `settings.json` に `"keybindingFlavor": "readline"` を追加することでBashスタイルのキーボードショートカットが有効になる（Ctrl+Wで前の単語削除等、ターミナル作業者に有用）。`sandbox/タスクマネージャー/CLAUDE.md` や Claude Code 設定ドキュメントに追記検討。
