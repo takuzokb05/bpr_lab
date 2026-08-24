@@ -388,3 +388,11 @@
 | 329 | TradingAgents Open Source Python (AlgoInsights): 80k+GitHub stars・LangGraph・7エージェント構成・GPT/Claude/Gemini/Grok対応・AAPL 26.62% vs BH -5.23% | en | 未読 | #ai-trading #tradingagents #web-signal | articles/2026-08-19_3711_WEB_TradingAgents-Open-Source-80kStars-MultiAgent-LLM-Python-AlgoInsights.md |
 | 330 | AI自動株取引 始め方 2026年8月 (genai-ai.co.jp JA): マルチモーダルLLMでチャート+テキスト評価・Claude段階活用・FX Prime Bot事例 | ja | 未読 | #ai-trading #llm-trading #web-signal | articles/2026-08-19_3715_WEB_AI-Stock-Trading-LLM-Personal-Investor-Guide-August2026-GenAI-JA.md |
 | 331 | LLM × FX API × MT5 連携実装ガイド (hedgrow media JA): ファイルベース/Pythonミドルウェア/MQL5直接の3方式・レイテンシ比較・APIキー管理・バックテスト非対応注意 | ja | 未読 | #ai-trading #mt5 #llm-trading #web-signal | articles/2026-08-20_3718_WEB_LLM-FX-API-MT5-Integration-3Methods-Claude-GPT-HedgrowJA.md |
+
+---
+
+## 2026-08-24 収集分（1件SIGNAL）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 332 | AI Trading Agents vs Trading Bots 2026: Why Smarter Isn't Safer (Bitsgap EN): LLMは分析レイヤーに限定・非決定論的挙動でリスク管理複雑化・ハイブリッド設計が現実解・情報優位なき自律運用は限定的 | en | 未読 | #ai-trading #llm-trading #risk-management #web-signal | articles/2026-08-24_3740_WEB_AITradingAgents-vs-Bots-2026-Hype-Risks-Smarter-Not-Safer-Bitsgap.md |

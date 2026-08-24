@@ -504,3 +504,11 @@
 |---|---|---|---|---|---|
 | 432 | 2026年生成AI 10大ニュース（london3.jp JA）: GPT-5.6正式公開・Anthropic 650億ドル突破・Qwen3.8-Max(2.4T)史上最大OW・OX Alpha匿名モデル・MCP Linux Foundation寄贈・AI規制各国整備 | ja | 未読 | #ai-news #model-update #mcp #web-signal | articles/2026-08-22_3732_WEB_GenAI-2026-Top10-News-August-London3-JA.md |
 | 433 | AIモーニングブリーフィング 2026-08-18（note JA）: Anthropic年換算売上650億ドル突破・OpenAI×NVIDIAオハイオ20年契約・「モデル性能」から「インフラ争い」へ転換・各国AI規制加速 | ja | 未読 | #ai-news #anthropic #openai #infrastructure #web-signal | articles/2026-08-22_3733_WEB_AI-Morning-Brief-Anthropic-650B-OpenAI-Ohio-20260818-JA.md |
+
+---
+
+## 2026-08-24 収集分（1件SIGNAL）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 434 | 生成AI関連ニュース ベスト5（2026-08-07〜2026-08-14, gais.jp JA）: Sonnet5価格永続化($2/$10維持)・Gemini 3.7 Flash(8/13)・EU AI Act透明性義務施行・GLM-5.2 Turbo・Anthropic 4機能GA | ja | 未読 | #ai-news #model-update #ai-regulation #anthropic #web-signal | articles/2026-08-24_3741_WEB_GenAI-News-August07-14-2026-Best5-Sonnet5Pricing-Gemini37Flash-GAIS-JA.md |

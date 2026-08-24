@@ -5074,3 +5074,34 @@ FX自動取引プロジェクト（`sandbox/FX自動取引/`）・情報収集�
 
 **提案内容:**
 Claude Code v2.1.238から `settings.json` に `"keybindingFlavor": "readline"` を追加することでBashスタイルのキーボードショートカットが有効になる（Ctrl+Wで前の単語削除等、ターミナル作業者に有用）。`sandbox/タスクマネージャー/CLAUDE.md` や Claude Code 設定ドキュメントに追記検討。
+
+---
+
+## 2026-08-24 収集分
+
+### 12. Computer Use GA & FX自動取引 設計方針
+
+#### 12-1. Computer Use / Browser Use GA → FX自動取引での活用可能性
+**出典:** articles/2026-08-24_3739_WEB_Anthropic-ComputerUse-BrowserUse-FilesAPI-SkillsAPI-GA-EnterpriseDNA.md
+
+**提案内容:**
+2026年8月19日にComputer Use (`computer_toolset_20260801`) と Browser Use がGAに移行。FX自動取引プロジェクトへの活用可能性：
+- MT5のGUIをComputer Useで操作する「バックアッププラン」が現実的になった（APIが利用できない証券会社への対応）
+- Browser Useでブローカーサイトのデータ取得・残高確認を自動化するケースが考えられる
+
+ただし、本番FXトレードでComputer Useを直接使うと非決定論的挙動リスクが高く、現状では「デバッグ・設定時の補助ツール」としての活用が適切。
+
+#### 12-2. FX自動取引 アーキテクチャ方針の裏付け
+**出典:** articles/2026-08-24_3740_WEB_AITradingAgents-vs-Bots-2026-Hype-Risks-Smarter-Not-Safer-Bitsgap.md
+
+**提案内容:**
+Bitsgap の「AI Trading Agents vs Bots 2026」分析記事が、現在のFX自動取引プロジェクトのハイブリッド設計方針を支持する内容。「LLMは分析・シグナル生成レイヤーに限定し、実際の注文執行はルールベース（MT5 EA）または人間の最終判断を挟む」という設計が2026年現在の業界コンセンサスと一致していることが確認できた。
+
+**FX自動取引 CLAUDE.md への追記提案:**
+```
+## 設計方針（根拠あり）
+LLMは「市場分析・ニュースサマリー・シグナル生成」レイヤーに限定する。
+実際の注文執行はMT5のルールベースEAまたは人間の最終判断を経ること。
+完全自律LLMエージェントによる注文執行は2026年現在の業界コンセンサスに反する。
+（参考: Bitsgap「AI Trading Agents vs Bots 2026」2026-08-24収集）
+```

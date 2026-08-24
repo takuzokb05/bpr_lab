@@ -1288,3 +1288,11 @@
 | 1209 | AIモーニングブリーフィング 2026-08-18（note JA）: Anthropic年換算売上650億ドル突破・OpenAI×NVIDIAオハイオ20年契約・AI「インフラ争い」フェーズへ転換・EU規制加速 | ja | 未読 | #ai-news #anthropic #openai #infrastructure #web-signal | articles/2026-08-22_3733_WEB_AI-Morning-Brief-Anthropic-650B-OpenAI-Ohio-20260818-JA.md |
 | 1210 | Claude 活用事例10選 2026年最新（0120.co.jp JA）: 月1500件80%自動処理・契約書レビュー68.8%削減・報告書作成70%削減・Fable 5/Opus 4.8検証済みプロンプト集・非エンジニア向け | ja | 未読 | #claude-ecosystem #business-case #web-signal | articles/2026-08-22_3734_WEB_Claude-Katsuyou-Cases-10-Business-2026-0120-JA.md |
 | 1211 | Claude Code 導入事例10選 日本企業ROI解説（Uravation JA）: 平均68%工数削減・回収期間2.3ヶ月・10の実装パターン・CLAUDE.md標準化が鍵・中小企業でも費用対効果あり | ja | 未読 | #claude-code #business-case #roi #web-signal | articles/2026-08-22_3735_WEB_ClaudeCode-Implementation-Cases-10-Japan-ROI-Uravation-JA.md |
+
+---
+
+## 2026-08-24 収集分（1件SIGNAL）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 1212 | Anthropic Computer Use / Browser Use / Files API / Agent Skills API 全4機能GA（8月19日）: computer_toolset_20260801として統合提供・フルスタック自律エージェントがエンプラPROD利用可能に | en | 未読 | #claude-ecosystem #computer-use #files-api #agent-sdk #web-signal | articles/2026-08-24_3739_WEB_Anthropic-ComputerUse-BrowserUse-FilesAPI-SkillsAPI-GA-EnterpriseDNA.md |
