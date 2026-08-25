@@ -1,0 +1,82 @@
+{
+  "date": "2026-08-24",
+  "generated_at": "2026-08-25T23:16:08.138035Z",
+  "article_count": 3,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-08-24_3739_WEB_Anthropic-ComputerUse-BrowserUse-FilesAPI-SkillsAPI-GA-EnterpriseDNA.md",
+      "title": "Anthropic Computer Use / Browser Use / Files API / Agent Skills API — 全てGA（2026年8月19日）",
+      "url": "https://enterprisedna.co/resources/news/anthropic-browser-use-computer-use-skills-api-enterprise-ga-august-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "2026年8月19日は、AnthropicのAIエージェント基盤が一斉に成熟を迎えた日として位置づけられる。Computer Use・Browser Use・Files API・Agent Skills APIの4機能が同日にGA移行。\n\n- **Computer Use** (`computer_toolset_20260801`): デスクトップ画面の直接操作。ベータ期間中のフィードバックを基に安定性・精度が大幅向上。企業内RPA代替から複合エージェントの目・手として機能する。\n- **Browser Use**: Webブラウジング専用ツール。APIの`allowed_domains`/`blocked_domains`設定でアクセス範囲を制御可能（同日発表のManaged Agents機能強化と連携）。\n- **Files API**: マルチターン会話でのファイル参照やエージェントへのデータ注入が標準化。\n- **Agent Skills API**: `claude agent skills`コマンドと対応するAPIエンドポイントが安定版に。\n\nこの同日GA移行により、「Managed Agent + Skills + Computer/Browser Use + Files」を組み合わせたフルスタックの自律エージェントが、エンタープライズのプロダクション環境で正式に構築可能になった。Anthropicのプラットフォームとしての完成度を示す重要マイルストーン。",
+      "body_excerpt": "2026年8月19日、AnthropicはAIエージェント基盤の4機能を同日にGA（正式版）移行。これは年内最大規模のプラットフォームアップデートと評価されている。\n\n**GA移行の4機能:**\n1. **Computer Use** — `computer_toolset_20260801` として提供。AIがデスクトップ画面を直接操作可能。",
+      "fact_checked": true,
+      "fact_check_note": "✅ 確認済み: 2026年8月19日にComputer Use (computer_toolset_20260801)・Browser Use (browser_toolset_20260801)・Files API・Agent Skills API (/v1/skills) が同日GA。複数の独立したソース（Enterprise DNA, AI Catchup, Digital Applied等）で一致。"
+    },
+    {
+      "file": "2026-08-24_3740_WEB_AITradingAgents-vs-Bots-2026-Hype-Risks-Smarter-Not-Safer-Bitsgap.md",
+      "title": "AI Trading Agents vs Trading Bots in 2026: Why Smarter Isn't Safer",
+      "url": "https://bitsgap.com/blog/ai-trading-agents-vs-trading-bots-in-2026-why-smarter-isnt-safer",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "2026年現在のAI取引エージェントとTrading Botsの実態を、技術・リスク・現実の結果の3軸で比較した分析記事。\n\n主要な知見：「よりスマートなAI（LLM）が必ずしも取引において安全・有利ではない」という逆説が中心テーマ。LLMの動的判断力は魅力的だが、非決定論的な挙動がリスク管理を複雑にする。TradingAgents・ai-hedge-fund等の成熟したオープンソースフレームワークでマルチエージェントLLM設定を午後半日で構築できる技術的環境は整っているが、実際の収益は「情報優位性」の有無に依存する。\n\nFX自動取引プロジェクトへの示唆：LLMをシグナル生成・分析レイヤーに限定し、実際の売買執行はMT5のルールベースEAまたは人間判断を挟む「ハイブリッド設計」が2026年の現実的最適解。これは本リポジトリのFX自動取引サブプロジェクトの設計方針と整合する。",
+      "body_excerpt": "2026年のAI取引エージェントと従来型取引ボットの比較分析。「より賢いAIは必ずしもより安全ではない」というテーゼで実際のリスク・ワークフロー・推奨設計を解説。\n\n**Trading Botsの特徴（2026年）:**\n- ルールベース・決定論的・予測可能なリスクプロファイル",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-24_3741_WEB_GenAI-News-August07-14-2026-Best5-Sonnet5Pricing-Gemini37Flash-GAIS-JA.md",
+      "title": "生成AI関連ニュース ベスト5（2026-08-07〜2026-08-14）— Sonnet 5価格永続・Gemini 3.7 Flash等",
+      "url": "https://gais.jp/news-2026-08-14/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "ai-news",
+      "summary": "gais.jpが毎週公開する日本語の生成AIニューストップ5記事（8月7日〜14日分）。\n\n主要5ニュースの概要：① Claude Sonnet 5価格永続化（$2/$10 MTok維持）はエンタープライズコスト計画に好影響、② Gemini 3.7 Flash GAはコスト最適化の選択肢拡大、③ EU AI Act透明性義務は日本企業も欧州展開時に対応必須、④ GLM-5.2 Turboはコスト競争激化を示す指標、⑤ Anthropic 4機能GA（Computer Use等）は8/19時点での最重要ニュース。\n\n日本語での週次まとめとして継続的参照価値あり。AI活用・開発者・ビジネス担当者向けに技術・ビジネス両面を簡潔に整理している点が強み。",
+      "body_excerpt": "gais.jpによる2026年8月7日〜14日の生成AI関連ニューストップ5まとめ記事。\n\n**1位: Claude Sonnet 5の価格永続化（8月10日）**\nAnthropicが入門価格（$2/$10 per MTok）を標準価格として維持。9月1日からの値上げ（$3/$15）を撤回。エンタープライズ向けコスト見通しが改善。AIエージェント実用化の追い風。",
+      "fact_checked": true,
+      "fact_check_note": "✅ 確認済み: 2026年8月10日にAnthropicが$2/$10 per MTok（Sonnet 5）の価格永続化を公式X（@claudeai）で発表。9月1日からの$3/$15への値上げ撤回は複数メディアが報道。価格情報はplatform.claude.com/docs/en/about-claude/pricingでも確認可能。"
+    }
+  ],
+  "fact_checks": [
+    {
+      "article_file": "2026-08-24_3739_WEB_Anthropic-ComputerUse-BrowserUse-FilesAPI-SkillsAPI-GA-EnterpriseDNA.md",
+      "claim": "Anthropic 4機能（Computer Use/Browser Use/Files API/Agent Skills API）が2026年8月19日に同日GA",
+      "result": "confirmed",
+      "sources": [
+        "https://enterprisedna.co/resources/news/anthropic-browser-use-computer-use-skills-api-enterprise-ga-august-2026/",
+        "https://aicatchup.com/news/claude-platform-computer-browser-skills-files-ga"
+      ]
+    },
+    {
+      "article_file": "2026-08-24_3741_WEB_GenAI-News-August07-14-2026-Best5-Sonnet5Pricing-Gemini37Flash-GAIS-JA.md",
+      "claim": "Claude Sonnet 5価格を$2/$10 per MTokで永続化（2026年8月10日）",
+      "result": "confirmed",
+      "sources": [
+        "https://x.com/claudeai/status/2086891169217122586",
+        "https://techjournal.org/claude-sonnet-5-pricing-now-permanent"
+      ]
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-08-23": 3,
+      "2026-08-22": 6,
+      "2026-08-21": 10,
+      "2026-08-20": 4,
+      "2026-08-19": 17,
+      "2026-08-18": 9,
+      "2026-08-17": 7
+    },
+    "recurring_themes": [
+      "claude",
+      "agent",
+      "llm",
+      "mcp",
+      "trading"
+    ]
+  }
+}
