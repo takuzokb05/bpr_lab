@@ -396,3 +396,11 @@
 | # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
 |---|---|---|---|---|---|
 | 332 | AI Trading Agents vs Trading Bots 2026: Why Smarter Isn't Safer (Bitsgap EN): LLMは分析レイヤーに限定・非決定論的挙動でリスク管理複雑化・ハイブリッド設計が現実解・情報優位なき自律運用は限定的 | en | 未読 | #ai-trading #llm-trading #risk-management #web-signal | articles/2026-08-24_3740_WEB_AITradingAgents-vs-Bots-2026-Hype-Risks-Smarter-Not-Safer-Bitsgap.md |
+
+---
+
+## 2026-08-25 収集分（1件SIGNAL）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 333 | Best AI Agents for Forex Trading 2026 Review（GPTrader EN）: FX Prime Bot(MT5+LLMセンチメント)・TradingAgents(マルチエージェント統合分析)・バックテスト vs ライブ乖離問題・LLMの予測不可挙動リスク・FX特有24/5マーケット対応 | en | 未読 | #ai-trading #forex #llm-trading #mt5 #web-signal | articles/2026-08-25_3751_WEB_Best-AI-Agents-Forex-Trading-2026-FXPrimeBot-TradingAgents-GPTrader.md |

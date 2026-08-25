@@ -512,3 +512,13 @@
 | # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
 |---|---|---|---|---|---|
 | 434 | 生成AI関連ニュース ベスト5（2026-08-07〜2026-08-14, gais.jp JA）: Sonnet5価格永続化($2/$10維持)・Gemini 3.7 Flash(8/13)・EU AI Act透明性義務施行・GLM-5.2 Turbo・Anthropic 4機能GA | ja | 未読 | #ai-news #model-update #ai-regulation #anthropic #web-signal | articles/2026-08-24_3741_WEB_GenAI-News-August07-14-2026-Best5-Sonnet5Pricing-Gemini37Flash-GAIS-JA.md |
+
+---
+
+## 2026-08-25 収集分（3件SIGNAL）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 435 | LLM News August 2026: Agent Breakthroughs & 50% Price Cuts（augusto.digital EN）: Sonnet 5($2/$10特別価格8/31まで)・8月18モデルリリース・コスト/インテリジェンス比50%低下・EU AI Act Article 50施行・長文/長期記憶トレンドへ | en | 未読 | #ai-news #model-update #llm-pricing #web-signal | articles/2026-08-25_3744_WEB_LLM-News-August2026-AgentBreakthroughs-50pct-PriceCuts-Augusto.md |
+| 436 | AI Agents News Week of August 25 2026（AIAgentStore EN）: AWS Bedrock AgentCore Web Search GA(8/21)・Google Gemini Enterprise Agent Platform・EU AI Act高リスク要件施行・Singapore IMADアジェンティックAI Governance Framework | en | 未読 | #ai-news #ai-agent #ai-regulation #aws #web-signal | articles/2026-08-25_3745_WEB_AI-Agents-News-Week-August25-2026-AIAgentStore.md |
+| 437 | AI Model Releases August 2026: 18 Models from 15 Providers（BenchLM EN）: Qwen3.8-Max(2.4T最大OW)・OX Alpha匿名モデル・Sonnet 5/Gemini 3.7 Flash/GLM-5.2 Turbo・20日で11モデル超・定量差別化困難な段階に | en | 未読 | #ai-news #model-update #llm-benchmark #web-signal | articles/2026-08-25_3752_WEB_AI-Model-Releases-August2026-18Models-15Providers-BenchLM.md |

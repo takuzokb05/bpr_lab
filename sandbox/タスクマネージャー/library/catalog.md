@@ -1296,3 +1296,18 @@
 | # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
 |---|---|---|---|---|---|
 | 1212 | Anthropic Computer Use / Browser Use / Files API / Agent Skills API 全4機能GA（8月19日）: computer_toolset_20260801として統合提供・フルスタック自律エージェントがエンプラPROD利用可能に | en | 未読 | #claude-ecosystem #computer-use #files-api #agent-sdk #web-signal | articles/2026-08-24_3739_WEB_Anthropic-ComputerUse-BrowserUse-FilesAPI-SkillsAPI-GA-EnterpriseDNA.md |
+
+---
+
+## 2026-08-25 収集分（8件SIGNAL）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 1213 | Claude Code 8月前半の新機能（KAWAI Note JA）: Focus view(Ctrl+Alt+F)・Concise output style・/design研究プレビュー・xhigh effortモード・Staggeredファンアウトのコスト削減効果を実務優先順で解説 | ja | 未読 | #claude-code #update #tips #web-signal | articles/2026-08-25_3746_WEB_ClaudeCode-August2026-FrontHalf-Update-FocusView-Concise-Design-KAWAI-JA.md |
+| 1214 | Claude Code業務自動化10事例・実装プロンプト全公開（Uravation JA）: 請求書〜データクレンジング10業務・月30〜80h削減実績・CLAUDE.md/スキル/フックの設計パターン公開・費用対効果試算付き | ja | 未読 | #claude-code #business-case #automation #web-signal | articles/2026-08-25_3747_WEB_ClaudeCode-Automation-10Cases-PromptPublic-Uravation-JA.md |
+| 1215 | Claude・Claude Codeアップデート 2026年8月（業務ハックLab JA）: Sonnet 5提供開始・Admin API GA・Managed Agents allowed_domains追加・MCP 2026-07-28対応・Computer Use/Files API/Skills API全GA | ja | 未読 | #claude-code #claude-ecosystem #update #web-signal | articles/2026-08-25_3748_WEB_Claude-ClaudeCode-Update-August2026-AdminAPI-ManagedAgents-YouGears-JA.md |
+| 1216 | Claude Code Advanced Best Practices 2026: 11 Techniques（SmartScope EN）: CLAUDE.md=お願い/Hooks=保証の役割分担・4層アーキテクチャ決定フレームワーク・サブエージェント並列化・スキルtrigger設計・3層Permission管理 | en | 未読 | #claude-code #best-practices #hooks #subagents #web-signal | articles/2026-08-25_3749_WEB_ClaudeCode-Advanced-BestPractices-11Tech-Hooks-Subagents-SmartScope.md |
+| 1217 | Claude Agent SDK Complete Guide（hidekazu-konishi EN）: 旧Claude Code SDKから改名・1000+MCPサーバー統合・mcp__servername__toolname命名規則・Managed Agents設定・エンタープライズ認証/監査証跡要件 | en | 未読 | #claude-ecosystem #agent-sdk #mcp #web-signal | articles/2026-08-25_3750_WEB_ClaudeAgentSDK-Complete-Guide-MCP-Enterprise-HidekzuKonishi.md |
+| 1218 | MCP 2026-07-28公式仕様リリース（MCP Blog EN）: ステートレスコア/LB不要・Multi RTT・OAuth/OIDC強化・MCP Apps拡張(UIプッシュ)・TypeScript/Python SDK 10億DL超・全主要ベンダー採用 | en | 未読 | #claude-ecosystem #mcp #official #web-signal | articles/2026-08-25_3742_WEB_MCP-2026-07-28-Official-Spec-Stateless-Core-Apps-Extension-MCP-Blog.md |
+| 1219 | Cloudflare MCP v2解説（Cloudflare Blog EN）: Workers ネイティブMCPホスティング・ゼロコールドスタート・sticky session問題解消・WAF/R2統合・OAuth/OIDC・Workers KV+Durable Objects実装パターン | en | 未読 | #claude-ecosystem #mcp #cloudflare #web-signal | articles/2026-08-25_3743_WEB_Cloudflare-MCP-v2-NextGeneration-Stateless-Edge-Blog.md |
+| 1220 | MCP 2026-07-28 移行ガイド（AAIF EN）: セッションID→ヘッダー移行手順・security_schemes宣言・apps_config設定・Tier1 SDK v3.0+で自動対応・カナリアリリース推奨・後方互換性維持 | en | 未読 | #claude-ecosystem #mcp #migration #web-signal | articles/2026-08-25_3753_WEB_MCP-2026-07-28-Migration-Guide-Stateless-OAuth-AAIF.md |
