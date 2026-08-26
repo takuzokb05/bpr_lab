@@ -1311,3 +1311,27 @@
 | 1218 | MCP 2026-07-28公式仕様リリース（MCP Blog EN）: ステートレスコア/LB不要・Multi RTT・OAuth/OIDC強化・MCP Apps拡張(UIプッシュ)・TypeScript/Python SDK 10億DL超・全主要ベンダー採用 | en | 未読 | #claude-ecosystem #mcp #official #web-signal | articles/2026-08-25_3742_WEB_MCP-2026-07-28-Official-Spec-Stateless-Core-Apps-Extension-MCP-Blog.md |
 | 1219 | Cloudflare MCP v2解説（Cloudflare Blog EN）: Workers ネイティブMCPホスティング・ゼロコールドスタート・sticky session問題解消・WAF/R2統合・OAuth/OIDC・Workers KV+Durable Objects実装パターン | en | 未読 | #claude-ecosystem #mcp #cloudflare #web-signal | articles/2026-08-25_3743_WEB_Cloudflare-MCP-v2-NextGeneration-Stateless-Edge-Blog.md |
 | 1220 | MCP 2026-07-28 移行ガイド（AAIF EN）: セッションID→ヘッダー移行手順・security_schemes宣言・apps_config設定・Tier1 SDK v3.0+で自動対応・カナリアリリース推奨・後方互換性維持 | en | 未読 | #claude-ecosystem #mcp #migration #web-signal | articles/2026-08-25_3753_WEB_MCP-2026-07-28-Migration-Guide-Stateless-OAuth-AAIF.md |
+
+---
+
+## 2026-08-26 収集分（3件収集 → SIGNAL 3件 claude-code/ai-trading）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 1221 | MT5の大型アップデート: AIアシスタント内蔵（MQL5 Blog Aug22 EN）: MCP対応・ポジション/チャート認識・MT5自律操作・3週間で1兆トークン処理・外部API統合不要の新設計パラダイム | en | 未読 | #ai-trading #mt5 #mcp #web-signal | articles/2026-08-26_3754_WEB_MT5-AI-Assistant-Major-Update-MQL5-Aug22.md |
+| 1222 | MetaTrader 5にAIが到来（MQL5 Blog Aug19 EN）: 内蔵AI vs 外部LLM統合の設計比較・レイテンシ/コスト/セキュリティ観点・MQL5 Liteモデル・FX自動売買開発設計の前提転換 | en | 未読 | #ai-trading #mt5 #llm-trading #web-signal | articles/2026-08-26_3755_WEB_AI-Has-Arrived-MetaTrader5-Trading-Is-Changing-MQL5.md |
+| 1223 | Piebald-AI/claude-code-system-prompts（GitHub EN）: 全515プロンプト・バージョン別トークン数・Agent Explore=862tk/Plan=1066tk・27内蔵ツール定義・サブエージェントプロンプト全収録 | en | 未読 | #claude-code #system-prompt #research #web-signal | articles/2026-08-26_3756_WEB_Piebald-AI-Claude-Code-System-Prompts-Token-Tracker.md |
+
+### NOISEとして除外（2026-08-26）
+| 候補 | 理由 |
+|---|---|
+| Claude Code Changelog Aug 2026 (gradually.ai) | 2026-08-08_002として収録済み |
+| Claude Code Updates Aug 2026 (Releasebot) | 2026-08-06_001として収録済み |
+| Anthropic Python SDK v1.0 (Releasebot) | 2026-08-23_002として収録済み |
+| MCP 2026-07-28 Spec (MCP Blog) | 2026-08-25収録済み |
+| EU AI Act Aug 2 (Cooley) | 2026-08-19_3712として収録済み |
+| MT5 Algorithmic Trading AI 2026 (MQL5 articles/22718) | 2026-06-27_007として収録済み |
+| Top AI Agent Frameworks 2026 (TowardsAI) | 2026-08-14収録済み |
+| AI Trading Agents vs Bots 2026 (Bitsgap) | 2026-08-24_002として収録済み |
+| Claude Code okhlopkov setup 2026 | 2026-08-14収録済み |
+| X JSON全4件 | total_fetched=0（VPS収集データなし）|
