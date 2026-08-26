@@ -1,0 +1,202 @@
+{
+  "date": "2026-08-25",
+  "generated_at": "2026-08-26T23:16:29.123144Z",
+  "article_count": 12,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-08-25_3742_WEB_MCP-2026-07-28-Official-Spec-Stateless-Core-Apps-Extension-MCP-Blog.md",
+      "title": "MCP 2026-07-28 公式仕様リリース — ステートレスコア・Apps拡張・OAuth強化",
+      "url": "https://blog.modelcontextprotocol.io/posts/2026-07-28/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Model Context Protocol（MCP）の最新仕様 2026-07-28 が正式リリース。主要変更点：(1) ステートレスプロトコルコア—セッションストアや DPI 不要でラウンドロビンLBで動作可能に。(2) Multi Round-Trip Requests、ヘッダーベースルーティング、キャッシュ可能リスト結果。(3) OAuth/OIDCによる認証強化。(4) MCP Apps拡張—サーバーがReactダッシュボード等のUIコンポーネントをホストへプッシュ可能。(5) Tasks・サブスクリプション・進行通知の正式化。TypeScript/Python SDKともに10億ダウンロード超。Anthropic・Cloudflare・AWS等全主要ベンダーが採用。既存ステートフルサーバーからの移行はヘッダーベースセッション管理が推奨パス。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-25_3743_WEB_Cloudflare-MCP-v2-NextGeneration-Stateless-Edge-Blog.md",
+      "title": "Cloudflare が解説する次世代 MCP v2 — エッジ統合とステートレス設計",
+      "url": "https://blog.cloudflare.com/mcp-v2/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Cloudflare公式ブログがMCP 2026-07-28仕様（MCP v2）を解説。Cloudflare WorkersはネイティブMCPサーバーホスティングに対応し、ステートレス設計によりエッジでのゼロコールドスタート運用が可能。主要ポイント：(1) ヘッダーベースルーティングにより従来の「sticky session」問題を解消。(2) CloudflareのWAF・Ratelimiting・R2ストレージとシームレスに連携。(3) OAuth/OIDCのサポートによりエンタープライズ認証が容易化。(4) MCPサーバーの分散デプロイに最適な環境を提供。具体的な実装パターン（Workers KV + Durable Objects）も紹介。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-25_3744_WEB_LLM-News-August2026-AgentBreakthroughs-50pct-PriceCuts-Augusto.md",
+      "title": "LLM News August 2026: Agent Breakthroughs & Price Cuts 50%",
+      "url": "https://augusto.digital/insights/blogs/monthly-llm-news-august-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "2026年8月のLLM市場総括。主要トピック：(1) Claude Sonnet 5がリリース—$2/$10（入力/出力）per Mトークン（8月31日まで特別価格、通常$3/$15）、全プランで即時利用可能。(2) Gemini 3.7 Flash（8月13日）、GLM-5.2 Turbo（8月17日）、Qwen Image 3.0 Pro（8月5日）等18モデルが8月にリリース。(3) コスト/インテリジェンス比が前年比約50%低下。(4) EU AI Act Article 50の透明性義務（8月2日施行）—AI生成コンテンツの機械可読マーキング必須化。(5) OpenAI Private Safety Processing（ゼロデータ保持+クロスターン安全検知）のプレビュー公開。トレンド：長文・長期記憶・マルチモーダルへのシフト。",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "[CONFIRMED] EU AI Act Article 50の透明性義務（8月2日施行）—AI生成コンテンツの機械可読マーキング必須化: 施行日2026年8月2日は正確。ただし義務の主体はプロバイダー・デプロイヤー。2026年8月2日以前に市場投入済みシステムは2026年12月2日まで猶予期間あり。"
+    },
+    {
+      "file": "2026-08-25_3745_WEB_AI-Agents-News-Week-August25-2026-AIAgentStore.md",
+      "title": "AI Agents News — Week of August 25, 2026",
+      "url": "https://aiagentstore.ai/ai-agent-news/this-week",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "2026年8月25日週のAIエージェント最新動向。主要ニュース：(1) AWS Bedrock AgentCoreのWeb Search機能がGA（8月21日）—管理型サーバーサイドツールで、データがAWSアカウント外に出ずにリアルタイム引用付きWeb検索が可能。(2) Google Cloud Gemini Enterprise Agent Platformがリリース—Vertex AIとAgentspaceを統合した企業向けエージェント構築・スケーリング・ガバナンスプラットフォーム。(3) EU AI Actの高リスクAIシステム要件が8月2日に施行。(4) Singapore IMADのアジェンティックAI向けモデルガバナンスフレームワーク（各エージェントに検証可能デジタルID+監査証跡を要求）が先行事例として注目。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-25_3746_WEB_ClaudeCode-August2026-FrontHalf-Update-FocusView-Concise-Design-KAWAI-JA.md",
+      "title": "【2026年8月最新】Claude & Claude Code 8月前半の新機能｜実務で使う順番",
+      "url": "https://note.com/kawaidesign/n/ne7bbae7d0b1a",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "KAWAI氏によるClaude Code 2026年8月前半アップデートの実務向け解説。主要新機能と実務優先順位：(1) Focus view切り替え（Ctrl+Alt+F）—チャットメニューをシンプル化し集中作業に最適。(2) Concise output styleモード—前置き省略・結果先行の出力、プロンプトで「簡潔に」不要になる。(3) /designコマンド研究プレビュー—Claude Design のアートボードワークフローをCLI/デスクトップに統合。(4) xhigh effortモード（Opus 4.7向け）—複雑な推論タスクで精度向上。(5) Staggeredファンアウト—同一プレフィクス兄弟エージェントがキャッシュ済みプロンプトを再利用しコスト削減。実務への適用順序とユースケース別の使い分けを具体例付きで解説。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-25_3747_WEB_ClaudeCode-Automation-10Cases-PromptPublic-Uravation-JA.md",
+      "title": "【2026年最新】Claude Code業務自動化10事例｜実装プロンプト全公開",
+      "url": "https://uravation.com/media/claude-code-automation-case-studies-2026/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "Uravation社によるClaude Code業務自動化10事例の実装プロンプト付き解説。対象業務：請求書・メール・レポート・帳票・議事録・契約書・月次集計・週報・データ照合・データクレンジング。成果：3〜6週間の導入期間で月30〜80時間の工数削減実績。各事例でCLAUDE.mdのテンプレート、スキル設計、フック活用パターンを公開。具体的プロンプトが公開されている点が実践的。特に帳票自動生成とデータ照合の事例は高精度（誤差率0.1%未満）を達成。SMB〜中堅企業向けの費用対効果（月10〜50万円相当の工数削減）も試算付き。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-25_3748_WEB_Claude-ClaudeCode-Update-August2026-AdminAPI-ManagedAgents-YouGears-JA.md",
+      "title": "Claude・Claude Codeアップデート 2026年8月 — Admin API GA・Managed Agents強化",
+      "url": "https://yougears-lab.com/claude-update-20260805/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "業務ハックLabによるClaude/Claude Code 2026年8月アップデート総括。主要変更点：(1) Claude Sonnet 5の提供開始—従来比で推論精度・コーディング能力が大幅向上。(2) Admin APIのユーザー管理エンドポイントGA—Enterprise組織のメンバー・招待・グループ・カスタムロール管理が可能。(3) Managed AgentsのWeb Search/Fetch ツールに allowed_domains/blocked_domains 設定が追加—エンタープライズセキュリティ対応。(4) MCP 2026-07-28仕様サポート拡張—ステートレスコア・OAuth・バージョン拡張に対応。(5) Computer Use・Browser Use・Skills API・Files APIのClaude Platform GA。業務活用の観点から各機能の使い方と注意点を解説。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-25_3749_WEB_ClaudeCode-Advanced-BestPractices-11Tech-Hooks-Subagents-SmartScope.md",
+      "title": "Claude Code Advanced Best Practices 2026: 11 Techniques — Hooks・Subagents・Context",
+      "url": "https://smartscope.blog/en/generative-ai/claude/claude-code-best-practices-advanced-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "SmartScope社によるClaude Code 2026年上級ベストプラクティス11選。主要テクニック：(1) CLAUDE.md vs Hooks の使い分け—CLAUDE.mdは「お願い」、Hooksは「必ず実行される保証」。ゼロ例外の要件はHooksで実装。(2) アーキテクチャ決定フレームワーク—ルール強制→Hooks、文脈知識→Skills、委任境界→Subagents、常時ガイダンス→CLAUDE.md。(3) サブエージェント並列化—独立タスクは並列Subagentで壁時計時間を削減。(4) コンテキスト管理—/compactコマンドとworktreeの組み合わせでセッション効率化。(5) スキルのトリガー設計—description句をジョブ記述ではなくトリガー条件として書く。(6) Permissionsの段階管理—グローバル・プロジェクト・ローカルの三層で権限を分離。実際のコード例付き。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-25_3750_WEB_ClaudeAgentSDK-Complete-Guide-MCP-Enterprise-HidekzuKonishi.md",
+      "title": "Claude Agent SDK Complete Guide — MCPサーバー統合・エンタープライズ展開",
+      "url": "https://hidekazu-konishi.com/entry/claude_agent_sdk_complete_guide.html",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Claude Agent SDK（旧Claude Code SDK、2025年9月に改名）の包括的ガイド。主要内容：(1) SDKはClaude Codeを動かすのと同じハーネスを開発者向けに公開—ファイル読み書き・シェルコマンド・Web検索・コード編集・MCPサーバー呼び出しが可能。(2) MCP統合—1000以上の公開コミュニティMCPサーバーに接続可能、命名規則はmcp__servername__toolname。(3) エンタープライズ展開—一元認証・監査証跡・ガバナンスコントロールが本番環境で必要。(4) Managed Agents—anthropic-managed-agentsパッケージによりサーバーホスト型エージェントを構築可能、allowed_domains等でセキュリティ制御。(5) ビルトインのツールループ・コンテキスト管理・リトライハンドリングを提供。ドキュメントは2026年6月時点で最新。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-25_3751_WEB_Best-AI-Agents-Forex-Trading-2026-FXPrimeBot-TradingAgents-GPTrader.md",
+      "title": "Best AI Agents for Forex Trading 2026 — FX Prime Bot・TradingAgents レビュー",
+      "url": "https://gptrader.app/ai-trading/best-ai-agents-for-forex-trading-2026-review",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "GPTraderによるFX取引向けAIエージェント2026年レビュー。主要評価エージェント：(1) FX Prime Bot—MT5連携、機械学習+LLMセンチメント分析、高度な自動取引。(2) TradingAgents—マルチエージェントLLMフレームワーク、ファンダメンタル+テクニカル+センチメント統合分析。(3) ai-hedge-fund、FinRL-Trading。評価基準：バックテスト vs ライブ乖離・スリッページ対応・ドローダウン管理。結論：バックテストでは印象的な成果を示すが、ライブ取引ではトランザクションコスト・スリッページ・マーケットレジーム変化が実績を大きく削る。LLMは固定ルールシステムより柔軟だが予測不可で説明責任が困難。FX特有の24/5マーケット・通貨ペアの相関・経済指標への対応方法も詳述。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-25_3752_WEB_AI-Model-Releases-August2026-18Models-15Providers-BenchLM.md",
+      "title": "AI Model Releases August 2026: 18 Models from 15 Providers — BenchLM Tracker",
+      "url": "https://benchlm.ai/model-updates/releases/august-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "BenchLMによる2026年8月のAIモデルリリース確定情報まとめ。確認済みリリース18モデル（15プロバイダー）：主要モデル—Claude Sonnet 5（Anthropic、$2/$10入出力）、Gemini 3.7 Flash（Google、8月13日）、GLM-5.2 Turbo（Z.AI、8月17日）、Qwen Image 3.0 Pro/Qwen Image 3.0（Alibaba、8月5日）、Qwen3.8-Max（2.4兆パラメータ、最大オープンウェイトモデル）、OX Alpha（匿名、正体不明）、Meta Muse Spark 1.2+Muse Code、Seed 2.1 Turbo（ByteDance）、Nemotron 3.5 Lightning（NVIDIA）。特記：8月は20日間で11モデル以上リリース—テストペースを超えたリリース速度。コスト/インテリジェンス比が複数ティアで約50%低下。LLM性能競争が定量的な差別化困難な段階に突入しつつある。",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "[PARTIALLY_CORRECT] Claude Sonnet 5: $2/$10 per Mトークン（8月31日まで特別価格、通常$3/$15）: 価格は正確（$2/$10）。ただし「8月31日まで特別価格」は誤り — 2026年8月中旬以降に永久価格として確定。$3/$15への値上げは撤回済み。 / [CONFIRMED] Qwen3.8-Max: 2.4兆パラメータ、最大オープンウェイトモデル: 2026年8月3日リリース。2.4兆パラメータ（MoE、95Bアクティブ）。オープンウェイト公開はリリース約1週間後。最大オープンウェイトモデルの主張は発表時点で正確。"
+    },
+    {
+      "file": "2026-08-25_3753_WEB_MCP-2026-07-28-Migration-Guide-Stateless-OAuth-AAIF.md",
+      "title": "MCP 2026-07-28 移行ガイド — ステートレス化・OAuth対応の実装手順",
+      "url": "https://aaif.io/blog/mcp-2026-07-28-whats-changing-and-how-to-migrate",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "AAIF（Agentic AI Foundation）によるMCP 2026-07-28仕様への移行ガイド。主要変更点と移行手順：(1) ステートレスコア移行—セッションIDをHTTPヘッダーに移動、サーバー側セッションストレージ不要に。既存コードの変更箇所：セッション初期化ロジックの削除、ヘッダーパースの追加。(2) OAuth/OIDC対応—新しいsecurity_schemesフィールドで認証方式を宣言。(3) MCP Apps拡張—サーバーがUI要素をプッシュする場合はapps_config設定が必要。(4) Tier 1 SDK（TypeScript/Python）はv3.0+で自動対応—既存SDK利用者は依存関係を更新するだけでほぼ完了。後方互換性：旧クライアントは引き続きサポートされるが新機能は利用不可。本番環境移行は段階的移行（カナリアリリース）を推奨。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    }
+  ],
+  "fact_checks": [
+    {
+      "article_file": "2026-08-25_3752_WEB_AI-Model-Releases-August2026-18Models-15Providers-BenchLM.md",
+      "claim": "Claude Sonnet 5: $2/$10 per Mトークン（8月31日まで特別価格、通常$3/$15）",
+      "verdict": "PARTIALLY_CORRECT",
+      "note": "価格は正確（$2/$10）。ただし「8月31日まで特別価格」は誤り — 2026年8月中旬以降に永久価格として確定。$3/$15への値上げは撤回済み。",
+      "sources": [
+        "https://www.anthropic.com/news/claude-sonnet-5",
+        "https://explainx.ai/blog/anthropic-sonnet-5-permanent-pricing-august-2026"
+      ]
+    },
+    {
+      "article_file": "2026-08-25_3744_WEB_LLM-News-August2026-AgentBreakthroughs-50pct-PriceCuts-Augusto.md",
+      "claim": "EU AI Act Article 50の透明性義務（8月2日施行）—AI生成コンテンツの機械可読マーキング必須化",
+      "verdict": "CONFIRMED",
+      "note": "施行日2026年8月2日は正確。ただし義務の主体はプロバイダー・デプロイヤー。2026年8月2日以前に市場投入済みシステムは2026年12月2日まで猶予期間あり。",
+      "sources": [
+        "https://www.cooley.com/news/insight/2026/2026-08-03-eu-ai-act-transparency-obligations-take-effect-2-august-2026",
+        "https://artificialintelligenceact.eu/article/50/"
+      ]
+    },
+    {
+      "article_file": "2026-08-25_3752_WEB_AI-Model-Releases-August2026-18Models-15Providers-BenchLM.md",
+      "claim": "Qwen3.8-Max: 2.4兆パラメータ、最大オープンウェイトモデル",
+      "verdict": "CONFIRMED",
+      "note": "2026年8月3日リリース。2.4兆パラメータ（MoE、95Bアクティブ）。オープンウェイト公開はリリース約1週間後。最大オープンウェイトモデルの主張は発表時点で正確。",
+      "sources": [
+        "https://mlq.ai/news/alibaba-launches-qwen38-max-a-24-trillion-parameter-open-weight-ai-model/",
+        "https://www.datacamp.com/blog/qwen3-8-max"
+      ]
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-08-24": 3,
+      "2026-08-23": 3,
+      "2026-08-22": 6,
+      "2026-08-21": 10,
+      "2026-08-20": 4,
+      "2026-08-19": 17,
+      "2026-08-18": 9
+    },
+    "recurring_themes": [
+      "claude",
+      "agent",
+      "llm",
+      "trading",
+      "mcp"
+    ]
+  }
+}
