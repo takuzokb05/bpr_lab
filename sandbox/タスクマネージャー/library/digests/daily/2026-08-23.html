@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-08-23</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-08-23 | 3件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-08-23</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>Claude Codeが週5本ペースで更新を続け、v2.1.235〜v2.1.241の7バージョンが8月中旬に相次いでリリース。</p>
+<p>98件の変更を含むv2.1.238〜239では `keybindingFlavor: &quot;readline&quot;` によるBashスタイルキーバインドと</p>
+<p>Bedrock二重課金バグ修正が目玉となった。一方、Anthropic Python SDK v1.0.0が正式GAとなり、</p>
+<p>httpx2移行・Python 3.10+必須・Text Completions廃止など複数のBreaking Changeが確定。</p>
+<p>既存スクリプトを持つユーザーは早期の移行確認が必要。（全記事一次ソース確認済み × 2本）</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>v2.1.238〜241：週5本リリース体制と実用機能の充実</h3>
+
+<p>8月17〜22日の1週間で、Claude CodeはHavopticの集計によれば7バージョンをリリースした。最も変更が多かったのは</p>
+<p>v2.1.238〜239の合算で、DevelopersIOが技術詳解を公開している（一次ソース確認済み）。</p>
+
+<p><strong>現場で使えるキーバインド強化</strong>：v2.1.238で追加された `keybindingFlavor: &quot;readline&quot;` は、</p>
+<p>`settings.json` に1行追加するだけでClaude Codeターミナル内でBashスタイルのキーボードショートカットが使える</p>
+<p>ようになる。`Ctrl+W` で直前の単語削除、`Alt+F` / `Ctrl+→` で単語単位の移動など、</p>
+<p>Bash使いなら即戦力になる設定だ。</p>
+
+<p><strong>Bedrock二重課金バグの修正</strong>：Content-TypeヘッダーをトリムするプロキシをBedrock経由で使っていた場合に</p>
+<p>サイレントに二重請求されていたバグが修正された。Bedrock経由で運用しているユーザーは更新を推奨する。</p>
+
+<p><strong>コスト透明性の向上</strong>：v2.1.239でデータレジデンシーワークスペース向けに1.1×US推論プレミアムを含む</p>
+<p>正確なコスト見積もりが追加された。クラウド利用コストの把握がしやすくなっている。</p>
+
+<p>その他 v2.1.235〜241の主要変化は以下のとおり：</p>
+<ul>
+<li>v2.1.237：カスタムゲートウェイのプロンプトキャッシュ修正 ＋ Concise出力スタイル追加</li>
+<li>v2.1.236：新セッション開始時のモデル制御拡張</li>
+<li>v2.1.235：スペルチェック機能（オプション）追加</li>
+</ul>
+
+<p>&gt; 参考: <a href="https://dev.classmethod.jp/en/articles/20260822-cc-updates-v2-1-239/" target="_blank">DevelopersIO 詳解記事</a> /</p>
+<p>&gt; <a href="https://www.havoptic.com/tools/claude-code" target="_blank">Havopticバージョントラッカー</a></p>
+
+<h3>Anthropic Python SDK v1.0.0 正式GA：移行は早めに（一次ソース確認済み）</h3>
+
+<p>2026年8月20日、待望だったAnthropicのPython SDK v1.0.0がリリースされた。</p>
+<p>主なBreaking Changeを整理する：</p>
+
+<p>| 変更点 | 影響 |</p>
+<p>|--------|------|</p>
+<p>| httpx → httpx2 移行 | カスタムHTTPクライアントを使っている場合は要修正 |</p>
+<p>| Python 3.9以下のサポート終了 | 3.10+必須 |</p>
+<p>| Text Completions API削除 | 使用中なら Messages API へ移行 |</p>
+<p>| async `.with_raw_response` 変更 | `await response.parse()` が必要になった |</p>
+<p>| AnthropicBedrock AWSリージョン未設定時エラー化 | 公式記事には未記載のBreaking Change（リリースノートで確認） |</p>
+
+<p>`temperature`・`top_p`・`top_k` パラメータも Messagesメソッドから削除されているので、</p>
+<p>引数で直接渡していたスクリプトは確認が必要だ。</p>
+
+<p><strong>移行の手順</strong>：Claude Code v2.1.239以降では `/claude-api upgrade` コマンドが</p>
+<p>0.x→1.x移行を半自動化してくれる。まずClaude Codeをアップデートして</p>
+<p>このコマンドを実行するのが最短ルートとなる。</p>
+
+<p>&gt; 参考: <a href="https://github.com/anthropics/anthropic-sdk-python/releases" target="_blank">GitHub リリースページ</a></p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>過去7日間の記事数（Havoptic含む観測）：8/16=10、8/17=7、8/18=9、8/19=17、8/20=4、8/21=10、8/22=6 → 本日=3。</p>
+
+<p>8/19のスパイク（17件）以降、件数は落ち着いてきた。ただし「claude」「agent」「mcp」「llm」「trading」</p>
+<p>の5テーマが継続してキーワードに出現しており、Claude Code関連の週次アップデート報道サイクルは</p>
+<p>定常化している様子。FX自動取引（trading）テーマは今日の収集には入らなかったが過去7日の頻出キーワードに</p>
+<p>残っている。次の収集タイミングで意識的に拾いたいドメインだ。</p>
+
+<p>---</p>
+<p>*生成: 2026-08-24 | ソース: 中間JSON 3件 | fact_check済: 2/3件*</p>
+
+</body>
+</html>

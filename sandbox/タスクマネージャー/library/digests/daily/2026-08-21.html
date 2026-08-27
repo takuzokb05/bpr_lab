@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-08-21</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-08-21 | 10件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-08-21</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>Claude Codeプラグインエコシステムの成熟（公式250本超・コミュニティ2,000本超）と、VSCode連携の新機能（Focus View・マスクモード）が同日に複数メディアから報告された一日。</p>
+<p>Agent SDK 2026の「Dreaming」「Outcomes」機能、MCP 2026-07-28仕様のステートレス化と業界標準化も大きな動き。</p>
+<p>規制面ではEU AI Act透明性義務が8月2日から施行済み（一次ソース確認済み）で、企業の実務対応が本格化している。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>プラグインエコシステムが成熟期へ</h3>
+
+<p>Claude Codeのプラグイン市場が量・質ともに充実してきた。MediumとScrimbaが同日に異なる視点の記事を公開したことで、現状の全体像が見えやすくなっている。</p>
+
+<p>公式マーケットプレイスには250本以上、コミュニティカタログには2,000本超が存在する。Mediumの記事（&lt;https://medium.com/@hii_mohit/9-claude-code-plugins-every-developer-should-install-in-2026-9a35b8fe5a83&gt;）では実務ユースケース付きで9本を推奨し、Figma・Playwright・Vercel・PostgreSQL・GitHubのMCPが上位に挙げられている。`/plugin`コマンドで一括導入できる点も今年の大きな改善だ。</p>
+
+<p>一方Scrimbaのレポート（&lt;https://scrimba.com/articles/best-claude-code-plugins-2026/&gt;）は11本を実テストして4本のみを推奨する厳しめの評価を出しており、「過剰プラグイン導入によるコンテキスト肥大化リスク」を明示的に警告している。Skills・Hooks・Subagentsの3層でプラグインを評価する枠組みも提示しており、導入判断の基準として使える。「まず触ってみる」派には良いカウンターバランスになる視点だ。</p>
+
+<h3>コマンドとVSCode統合：2026年8月の現状</h3>
+
+<p>Qiitaのコマンド完全ガイド（&lt;https://qiita.com/superdora-cloud/items/979295520a85f28e0cab&gt;）はコマンド体系の変遷を整理しており、2026年内で行われた整理が把握できる。`/review`→`/code-review`統合、`/fork`の再定義、`/agents`廃止など、スラッシュコマンドの大規模な棚卸しが行われた。また、v2.1.221でサンドボックス資格情報ファイルに`mode: &quot;mask&quot;`が追加され、Linux/WSL環境で外部APIに実値を渡さずに呼び出せるようになった点はセキュリティ改善として重要。<strong>一次ソース確認済み：Opus 5が2026年7月24日リリース、1Mコンテキスト、Opus 4.8と同価格（$5/$25/Mトークン）。</strong></p>
+
+<p>VSCode連携の最新状況をまとめたUravation記事（&lt;https://uravation.com/media/claude-code-vscode-integration-complete-guide-2026/&gt;）も同じ内容を日本語で補足しており、Focus view（ツールログ折りたたみ）とマスクモードの実設定手順が丁寧に解説されている。Opus 5デフォルト化による1Mコンテキスト拡大でコーディング体験が向上している点も確認済みだ。</p>
+
+<h3>マルチエージェントアーキテクチャとSDKの進化</h3>
+
+<p>Temboのマルチエージェントガイド（&lt;https://www.tembo.io/blog/claude-code-multi-agent-orchestration&gt;）は、Claude Code 2026の構成を3層で整理している。①同一セッション内のサブエージェント（軽量並列処理）②Agent Teams（独立コンテキストの並列チームメート、タスクリスト経由で相互メッセージ可能）③外部オーケストレーター（複数リポジトリ横断）。Claude Agent SDKへの統合により、これらが個別実装不要で使えるようになったのが2026年の変化の核心だ。</p>
+
+<p>TecniForge記事（&lt;https://tecniforge.com/claude-agent-sdk-2026-features/&gt;）は「Code with Claude」開発者イベントで発表されたAgent SDK 2026の新機能を詳報している。「Dreaming」（長期計画・バックグラウンド処理）、「Outcomes」（成果物追跡・ゴール到達度可視化）、「Claude Finance」（財務分析・レポート生成等の10エージェント）が主要トピック。Managed Agentsの強化点として、アクティブセッション中にツール・MCP設定のライブ更新が可能になり（再起動不要）、100K+トークンのツール出力サポートも追加された。ツール実行を自前インフラで行いつつオーケストレーションをAnthropicに委託する「外部実行」モードは、セキュリティ要件の厳しい組織向けに有用なオプションだ。</p>
+
+<h3>MCPが事実上の業界標準へ</h3>
+
+<p>LabMemoの日本語MCP完全ガイド（&lt;https://labmemo.com/mcp-server-openai-google-microsoft-ai-2026/&gt;）は、2026-07-28仕様の最大の変化「プロトコルのステートレス化」を解説している。セッション依存が廃止され、一般的なWebサービスと同様の水平スケーリングが可能になった。Anthropic・OpenAI・Microsoft・Google全4社が採用表明し、Linux Foundationへの寄贈も決定。国内では117選MCPディレクトリ（34カテゴリ）が整備され、SansanなどのSaaSも公式MCP提供を開始している。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>2026年8月のLLMリリースラッシュ</h3>
+
+<p>LLM Gatewayのタイムライン（&lt;https://llmgateway.io/timeline/2026&gt;）によると、8月だけで7プロバイダーから12モデルがリリースされている。<strong>一次ソース確認済み：Gemini 3.7 Flashが8月13日リリース（DeepSWE 49.0%→65.3%、$0.75/$3.75/Mトークン、1Mコンテキスト）。</strong> 他にはGLM-5.2 Turbo（Z.AI）、Qwen Image 3.0 Pro・Qwen3.8 Max（Alibaba）が続く。全社共通のトレンドは「高性能×低コスト化」と音声処理機能の充実で、Grok Voice・GPT-Live・macOS Gemini音声入力が競合する。</p>
+
+<h3>EU AI Act施行と各国規制の動き</h3>
+
+<p>TLT法律事務所のブリーフ（&lt;https://www.tlt.com/insights-and-events/insight/tlts-ai-brief-august-2026&gt;）は、<strong>一次ソース確認済み：EU AI Act Article 50（透明性義務）が2026年8月2日に本格施行。</strong> チャットボットのAI明示義務・ディープフェイクラベル義務が発効した。高リスクAIシステムへの義務適用は2027/12/2・2028/8/2に延期されており、企業には準備期間がある。</p>
+
+<p>各国動向：コロラド州が全米初の未成年者向けAIチャットボット規制法を制定、米国Trump政権が官民連携クリアリングハウス「GOLD EAGLE」を7月14日に始動、英国では初代AI担当大臣（Kanishka Narayan氏）が任命された。公務員として規制動向の把握は必須だ。</p>
+
+<h3>AIエージェントエコシステムの全体図</h3>
+
+<p>GitHubの`awesome-ai-agents-2026`（&lt;https://github.com/caramaschiHG/awesome-ai-agents-2026&gt;）は300+リソース・20+カテゴリで毎月更新されるキュレーションリスト。主要フレームワーク動向として、Microsoft Agent Framework 1.0（AutoGen+Semantic Kernelを統合、YAMLによる宣言的エージェント設定）、Google ADK、Pydantic AI V2、LlamaIndex Workflows 1.0などが2026年に相次いでGA。エージェント開発の現在地を俯瞰するリファレンスとして有用だ。</p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>過去7日の収集件数：8/14=14、8/15=14、8/16=10、8/17=7、8/18=9、8/19=17、8/20=4、8/21=10（本日）。</p>
+
+<p>8/19の急増（17件）から8/20に急落（4件）したのは週末効果とみられる。8/21は10件で平均回帰している。継続的に登場するテーマはclaude・agent・mcp・llm・tradingで変化なし。</p>
+
+<p>今週特に密度が高いのはClaude Codeプラグイン記事群で、複数メディアが同日に近い内容を公開しているのは、プラグインエコシステムが評価・比較できる成熟段階に入ったことを示している。MCPのステートレス化とLinux Foundation移管は先週から続くMCP標準化の流れの一部で、全ベンダー採用が確定したことで今後は「どのMCPサーバーを使うか」の実装フェーズに移行していく見込みだ。</p>
+
+<p>FX自動取引関連記事は本日なし。Claude Finance（Agent SDK）の登場は間接的に関連するが、トレーディング応用の具体記事は引き続き待ちの状態。</p>
+
+</body>
+</html>

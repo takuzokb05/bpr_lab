@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-08-24</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-08-24 | 3件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-08-24</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>8月19日に起きたAnthropicの4機能同日GA（Computer Use / Browser Use / Files API / Agent Skills API）が引き続き業界の話題の中心。</p>
+<p>Claude Sonnet 5の価格永続化（$2/$10 per MTok）もエンタープライズ計画の安心材料として定着しつつある。</p>
+<p>一方、AI取引エージェントとルールベースBotの比較分析は、FX自動取引の設計指針として参照価値が高い内容だった。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>Anthropicプラットフォームが「フルスタック自律エージェント」時代へ突入（一次ソース確認済み）</h3>
+
+<p>2026年8月19日は、Anthropicのエージェント基盤が一斉に成熟を迎えた日として記録される。Computer Use・Browser Use・Files API・Agent Skills APIの4機能が同日にGA（正式版）移行した。</p>
+
+<ul>
+<li>**Computer Use**（`computer_toolset_20260801`）: デスクトップ画面を直接操作。ベータ期間のフィードバックで安定性・精度が大幅向上し、企業内RPA代替やマルチエージェントの「目と手」として機能する。</li>
+<li>**Browser Use**（`browser_toolset_20260801`）: Webブラウジング専用ツール。`allowed_domains`/`blocked_domains`でアクセス範囲を制御でき、Managed Agentsとの連携で安全な自動閲覧が可能。</li>
+<li>**Files API**: マルチターン会話でのファイル参照・エージェントへのデータ注入が標準化。会話をまたいだ知識の受け渡しが正式サポートされた。</li>
+<li>**Agent Skills API**: `claude agent skills`コマンドと対応エンドポイントが安定版に。Claude Codeユーザーがスキルを公式APIとして扱えるようになった。</li>
+</ul>
+
+<p>この4機能が揃ったことで「Managed Agent + Skills + Computer/Browser Use + Files」を組み合わせたフルスタックの自律エージェントが、エンタープライズのプロダクション環境で正式に構築可能になった。Anthropicがモデルプロバイダーからプラットフォームへと完全に転換したことを示すマイルストーンと見ていい。</p>
+
+<p>&gt; 参照: <a href="https://enterprisedna.co/resources/news/anthropic-browser-use-computer-use-skills-api-enterprise-ga-august-2026/" target="_blank">Enterprise DNA</a></p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>Sonnet 5価格永続化と直近2週間の主要ニュース（一次ソース確認済み）</h3>
+
+<p>gais.jpが8月7〜14日分の生成AIニューストップ5をまとめている。ここ数週間の流れを把握するために参照価値が高い。</p>
+
+<p>最も注目すべきは<strong>Claude Sonnet 5の価格永続化</strong>（8月10日）。Anthropicは9月1日からの値上げ（$3/$15 per MTok）を撤回し、現行の$2/$10を標準価格として維持することを公式X（@claudeai）で発表した。AIエージェントを長期運用するエンタープライズにとってコスト見通しの改善は大きく、自動取引プロジェクトや定期実行スケジュールのLLM呼び出しコストも計画しやすくなった。</p>
+
+<p>その他の注目点：Gemini 3.7 Flash GAによるコスト最適化の選択肢拡大、EU AI Actの透明性義務（日本企業も欧州展開時に対応必須）、GLM-5.2 TurboによるLLMコスト競争の激化など、モデル間の価格・性能競争は2026年後半も続く見込み。</p>
+
+<p>&gt; 参照: <a href="https://gais.jp/news-2026-08-14/" target="_blank">gais.jp</a></p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #ea580c; padding-left: 12px;">AIトレーディング</h2>
+
+<h3>「賢いAIは必ずしも安全ではない」——2026年のLLM取引エージェント設計論</h3>
+
+<p>Bitsgapの分析記事は、AI取引エージェントと従来型ルールベースBotを技術・リスク・実績の3軸で比較している。結論は明快で「よりスマートなAI（LLM）が必ずしも取引において安全・有利ではない」という逆説だ。</p>
+
+<p>LLMの動的判断力は魅力的だが、非決定論的な挙動がリスク管理を複雑にする。TradingAgentsやai-hedge-fundのようなオープンソースフレームワークでマルチエージェントLLM設定を半日で構築できる技術環境は整っているが、実際の収益は「情報優位性」の有無に依存するという指摘は重要。</p>
+
+<p><strong>FX自動取引プロジェクトへの示唆</strong>：LLMをシグナル生成・分析レイヤーに限定し、売買執行はMT5のルールベースEAまたは人間判断を挟む「ハイブリッド設計」が2026年の現実的最適解。これは本リポジトリのFX自動取引サブプロジェクトの現在の設計方針と整合している。「まず小さく試して実績で引っ張る」アプローチでLLMレイヤーを段階的に拡大するのが堅実だ。</p>
+
+<p>&gt; 参照: <a href="https://bitsgap.com/blog/ai-trading-agents-vs-trading-bots-in-2026-why-smarter-isnt-safer" target="_blank">Bitsgap</a></p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<h3>記事数の急落と8/19ビッグバンの余波</h3>
+
+<p>過去7日間の記事収集数を見ると、8/19（17件）→ 8/21（10件）→ 8/22（6件）→ 8/23（3件）→ 8/24（3件）と急落している。8/19の急騰はAnthropicの4機能同日GA発表によるメディア集中だった。現在は「発表直後の興奮」が収まり、消化・統合フェーズに入ったと見ていい。</p>
+
+<p>「claude」「agent」「llm」「mcp」「trading」の5テーマが引き続き出現頻度の上位を占めており、Claude Codeエコシステムとトレーディング自動化の2軸は安定したトレンドとして継続中。次の大きな波は9月の値上げ撤回後のモデル動向、またはEU AI Act施行状況の続報になりそう。</p>
+
+</body>
+</html>

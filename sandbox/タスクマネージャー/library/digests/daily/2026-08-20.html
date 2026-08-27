@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-08-20</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-08-20 | 4件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-08-20</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>本日のダイジェストは4記事と少量だが、Claude Code v2.1.237の機能アップデートが実用度高く2本立て。</p>
+<p>「Concise出力スタイル」は長年の痛点だった実況コメント問題を直撃する機能で、設定の注意点がある。</p>
+<p>FX自動売買方面では、MT5×LLM連携の実装アーキテクチャ比較が直接使える資料として入手。</p>
+<p>業界全体ではGPT-5.6の大幅値下げとAstraの数学突破が話題だが、一部情報に誤記あり（後述）。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>v2.1.237：ANTHROPIC_DEFAULT_MODEL と Concise出力スタイル（一次ソース確認済み）</h3>
+
+<p>DevelopersIO が2本のアップデートをまとめた解説から、実運用に直結する2点が際立つ。</p>
+
+<p><strong>ANTHROPIC_DEFAULT_MODEL</strong>（v2.1.236追加）は、新セッション開始時のデフォルトモデルを環境変数で固定する仕組み。</p>
+<p>既存の `ANTHROPIC_MODEL` との違いは「永続性」で、`/model` コマンドで都度上書きできる一方、</p>
+<p>再起動後も設定が維持される。複数モデルを使い分けながら「普段はこのモデルで」という基準が欲しい場合に有効だ。</p>
+
+<p><strong>Concise出力スタイル</strong>（v2.1.237追加）は、前置きと実況コメントを省いて結果を先頭に出力するスタイル変更。</p>
+<p>思考の深さや作業品質は変わらず、「で、何ができたの？」という情報密度が上がる。</p>
+<p>explainx.ai の詳細ガイドによれば、設定には2つの罠がある。</p>
+
+<ul>
+<li>**`/config` はカレントプロジェクト限定**。グローバルに効かせるには `settings.json` を直接編集する必要がある</li>
+<li>**`/clear` または新セッション開始後**に有効化される（即時反映ではない）</li>
+</ul>
+
+<p>Boris Cherny が「band aid」と表現した点も見逃せない。</p>
+<p>つまりこれは暫定措置であり、将来的により根本的な出力制御改善が来ることを示唆している。</p>
+
+<p>また、claude-api スキルのコンテキスト削減（200K→25K）は長期セッション時のコスト改善として実質的な恩恵が大きい。</p>
+<p>LLMゲートウェイ経由のプロンプトキャッシュ修正も、カスタム環境利用者には重要な bugfix。</p>
+
+<p>参考:</p>
+<ul>
+<li><a href="https://dev.classmethod.jp/en/articles/20260820-cc-updates-v2-1-237/" target="_blank">DevelopersIO解説</a></li>
+<li><a href="https://explainx.ai/blog/claude-code-concise-output-style-config-august-2026" target="_blank">Concise設定ガイド（explainx.ai）</a></li>
+</ul>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>2026年8月の主要トピック（一部情報に注意）（一次ソース確認済み）</h3>
+
+<p>kraviona.com の8月AIニュースまとめから抜粋。ただし原記事にいくつか不正確な記述があり、</p>
+<p>ファクトチェックで確認が取れたもののみ以下に記載する。</p>
+
+<p><strong>ChatGPT と Gemini の規模</strong>：</p>
+<p>ChatGPT が週次アクティブ10億人、Gemini が月次アクティブ10億人を突破。</p>
+<p>ただし「週次」と「月次」で指標が異なる点に注意――同じ土俵の比較ではない。</p>
+
+<p><strong>GPT-5.6 の価格改定（7月30日実施）</strong>：</p>
+<p>原記事は「全モデル80%引き」と記載しているが正確には「Luna 80%・Terra 20%」の2段階。</p>
+<p>一律に理解すると見積もりが狂うため注意が必要。</p>
+
+<p><strong>Astra の数学問題解決</strong>：</p>
+<p>「AIが人類の科学的知識拡張に貢献した初例」と報じられているが、</p>
+<p>独立した一次ソースでの確認が取れなかった。この情報の扱いは要留保。</p>
+
+<p><strong>AI安全と規制</strong>：</p>
+<p>主要3ラボ全てで制御問題が報告されており、US・EU 双方で規制強化が進行中。</p>
+<p>規制に敏感な公務員の立場からは、今後の業務適用ガイドラインの動向を継続注視したい。</p>
+
+<p>参考:</p>
+<ul>
+<li><a href="https://kraviona.com/blog/latest-ai-news-august-2026" target="_blank">kraviona.com 8月AIニュース</a></li>
+</ul>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #ea580c; padding-left: 12px;">AIトレーディング</h2>
+
+<h3>MT5 × LLM 連携：3つのアーキテクチャ比較（未検証記事）</h3>
+
+<p>hedgrow media による日本語実装ガイドは、MT5とClaude/GPTを繋ぐ3方式を体系的に整理している。</p>
+<p>自動売買プロジェクトの「LLM組み込み設計」を検討するタイミングで参照できる一次情報。</p>
+
+<p>3アーキテクチャの概要：</p>
+
+<p>1. <strong>ファイルベース連携</strong>（MQL5 ↔ テキストファイル ↔ Python ↔ LLM API）：</p>
+<p>実装が最も簡単で、MQL5スキル不要。レイテンシが高い。検証・プロトタイプ向け。</p>
+
+<p>2. <strong>Pythonミドルウェア</strong>（MQL5 ↔ Socket ↔ Python Server ↔ LLM API）：</p>
+<p>リアルタイム性が向上し、複雑なロジックを Python 側で持てる。本番移行の現実的な選択肢。</p>
+
+<p>3. <strong>直接MQL5実装</strong>（MQL5内でHTTPリクエスト ↔ LLM API）：</p>
+<p>レイテンシ最小だが、MQL5の深い知識が必要。メンテナンスコストが高い。</p>
+
+<p>注意点として、LLMの判断をそのままトレードに反映する構成はバックテストが難しい。</p>
+<p>「LLMで戦略候補を絞り → ルールベースで実行判断」という分業が堅実とされている。</p>
+<p>また API キー管理（MT5端末内への平文保存は危険）にも言及あり。</p>
+
+<p>参考:</p>
+<ul>
+<li><a href="https://media.hedgrow.io/ja/fx/articles/llm-fx-api-mt5-renkei" target="_blank">hedgrow media MT5×LLM連携ガイド</a></li>
+</ul>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>過去7日間の記事数推移：8/13(15)→8/14(14)→8/15(14)→8/16(10)→8/17(7)→8/18(9)→8/19(17)→8/20(4)</p>
+
+<p>8/19 に17件と週間ピークを打った翌日、本日は4件と急減。週明けの情報整理タイミングと重なった可能性が高い。</p>
+<p>常時テーマとして claude・agent・mcp・trading・llm が7日連続で登場しており、</p>
+<p>この5領域が情報収集パイプラインの主柱として安定していることが確認できる。</p>
+
+<p>本日は claude-code テーマが2本入り、実装寄りの具体情報が充実した日。</p>
+<p>MCP関連は本日0本だったが、先週来の連続登場から一時的な空白と見られる。</p>
+<p>trading テーマは MT5×LLM の実装ガイドで継続カバー。</p>
+
+</body>
+</html>
