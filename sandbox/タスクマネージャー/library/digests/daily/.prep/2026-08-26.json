@@ -1,0 +1,79 @@
+{
+  "date": "2026-08-26",
+  "generated_at": "2026-08-27T23:18:23.503416Z",
+  "article_count": 3,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-08-26_3754_WEB_MT5-AI-Assistant-Major-Update-MQL5-Aug22.md",
+      "title": "MT5の大型アップデート: AIアシスタントが内蔵、新時代のトレードが始まる",
+      "url": "https://www.mql5.com/en/blogs/post/774589",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "2026年7月に MetaTrader 5 がAIアシスタントを正式内蔵。MCP（Model Context Protocol）フル対応で、トレーディング端末・市場データ・MetaEditorと直接連携できる。従来のチャットボットと異なり、ポジション・口座情報・チャートデータを理解し、MT5を自律操作（オーダー発注・ストップレベル設定・チャート操作）が可能な真のエージェントとして機能する。チャート上のインジケーターやシグナルツールも視覚認識。「単一タスクを複数アクションのシーケンスに分解・実行」というエージェント的挙動を持ち、外部API統合不要でAIトレードが完結する新時代が始まった。リリース後3週間でユーザーが処理したトークン数は1兆超（無料MQL5 Liteモデル）。AI×MT5の開発設計の前提が根本的に変わる可能性がある重要アップデート。",
+      "body_excerpt": "MT5's Major Update: AI Assistant Built In — A New Generation of Trading Begins (MQL5 Blog, August 22, 2026)\n\nIn July 2026, MetaTrader 5 received its long-awaited AI Assistant — a major turning point that changes the trading environment. The platform now integrates a full-fledged AI Assistant with support for the Model Context Protocol (MCP), allowing it to work directly with market data, the trading terminal, and MetaEditor.\n\nKey capabilities:",
+      "fact_checked": true,
+      "fact_check_note": "確認済み。MetaTrader 5 Build 6030ベータ版が2026年7月16日、正式版が2026年7月24日にリリース。MCPサポートと内蔵AIアシスタントは実際に実装されている（Finance Magnates、MQL5フォーラム等複数ソースで確認）。「1兆トークン」主張は独立したソースで裏取りできず未確認。"
+    },
+    {
+      "file": "2026-08-26_3755_WEB_AI-Has-Arrived-MetaTrader5-Trading-Is-Changing-MQL5.md",
+      "title": "MetaTrader 5にAIが到来：トレードが変わる！",
+      "url": "https://www.mql5.com/en/blogs/post/774316",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "MQL5ブログ（2026年8月19日）がMT5内蔵AIアシスタントについて詳報。①リアルタイムのチャート・残高・ポジション認識、②自然言語でのオーダー発注・チャート操作、③インジケーター視覚認識、④マルチステップエージェント実行が可能。MCP対応で端末内完結型の設計が特徴。従来の「WebRequest経由でClaude/GPT API呼び出し」設計との比較で、レイテンシ・コスト・セキュリティの観点で新しい選択肢となる。外部API統合なしでAIトレードが完結する点は設計の前提を変えうる。プロプライエタリなコードなしで、テキスト指示だけでアルゴリズム的タスクを実行可能。FX自動売買の開発者にとって、内蔵AI vs. 外部LLM統合の設計判断を再考する必要が生じている。",
+      "body_excerpt": "AI Has Arrived in MetaTrader 5: Trading Is Changing! (MQL5 Blog, August 19, 2026)\n\nAnalysis of MetaTrader 5's new built-in AI Assistant, covering the impact on trading workflows and the MT5 ecosystem.\n\nKey capabilities of the built-in AI Assistant:",
+      "fact_checked": true,
+      "fact_check_note": "確認済み。記事0と同一リリースを別観点で解説。MQL5公式ブログへの直接リンクあり（2026年8月19日付）。2026年8月21日の追加アップデートでAlibabaやCerebras等の新LLMプロバイダーが追加されたことも確認。"
+    },
+    {
+      "file": "2026-08-26_3756_WEB_Piebald-AI-Claude-Code-System-Prompts-Token-Tracker.md",
+      "title": "GitHub: Piebald-AI/claude-code-system-prompts — 全システムプロンプト＆トークン数トラッカー",
+      "url": "https://github.com/Piebald-AI/claude-code-system-prompts",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Claude Codeの全システムプロンプトとトークン数をバージョンごとに追跡するOSSリポジトリ。v2.1.246（2026年8月25日）時点で515件以上のプロンプトを収録。含まれる内容：①メインシステムプロンプト、②27個の内蔵ツール定義、③サブエージェントプロンプト（Plan/Explore/Task）、④ユーティリティプロンプト群（CLAUDE.md・compact・statusline・magic docs・WebFetch・Bashコマンド・セキュリティレビュー・エージェント作成）。Agent Prompt: Explore=862トークン、Plan mode=1,066トークンなど具体的なトークン数を記録。内部変数（ツール名リスト・利用可能サブエージェント等）を含むものは±20程度の誤差あり。Claude Codeの内部動作の研究・コスト最適化・プロンプト設計改善に活用できる一次情報ソース。Claude Code開発者・研究者向けの必須参照リポジトリ。",
+      "body_excerpt": "Repository: Piebald-AI/claude-code-system-prompts\n\nAll parts of Claude Code's system prompt, 27 builtin tool descriptions, sub agent prompts (Plan/Explore/Task), utility prompts (CLAUDE.md, compact, statusline, magic docs, WebFetch, Bash cmd, security review, agent creation). Updated for each Claude Code version.\n\nAs of Claude Code v2.1.246 (August 25th, 2026), the repository contains an up-to-date list of all Claude Code's various system prompts and their associated token counts.",
+      "fact_checked": true,
+      "fact_check_note": "確認済み。Piebald-AI/claude-code-system-promptsリポジトリは実在し、v2.1.246（2026年8月25日）でのプロンプト数515件超はGitHubのREADME内容と一致。ツール記述数は記事では27個と記載されているが、検索結果では24個のキャッシュも存在し若干の差異あり（バージョン依存の可能性）。"
+    }
+  ],
+  "fact_checks": [
+    {
+      "article": "2026-08-26_3754_WEB_MT5-AI-Assistant-Major-Update-MQL5-Aug22.md",
+      "verdict": "確認済み",
+      "note": "MT5 AI Assistantリリース実在確認。1兆トークン主張は未検証。"
+    },
+    {
+      "article": "2026-08-26_3755_WEB_AI-Has-Arrived-MetaTrader5-Trading-Is-Changing-MQL5.md",
+      "verdict": "確認済み",
+      "note": "同上。追加LLMプロバイダー追加(2026-08-21)も確認。"
+    },
+    {
+      "article": "2026-08-26_3756_WEB_Piebald-AI-Claude-Code-System-Prompts-Token-Tracker.md",
+      "verdict": "概ね確認済み",
+      "note": "リポジトリ実在・バージョン一致。ツール数に若干の差異（27 vs 24、バージョン依存）。"
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-08-25": 12,
+      "2026-08-24": 3,
+      "2026-08-23": 3,
+      "2026-08-22": 6,
+      "2026-08-21": 10,
+      "2026-08-20": 4,
+      "2026-08-19": 17
+    },
+    "recurring_themes": [
+      "claude",
+      "agent",
+      "mcp",
+      "llm",
+      "trading"
+    ]
+  }
+}
