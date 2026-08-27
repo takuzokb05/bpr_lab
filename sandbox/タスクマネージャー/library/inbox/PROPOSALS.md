@@ -5166,3 +5166,37 @@ MT5内蔵アシスタントで代替できる可能性がある。
 
 （参考: MQL5 Blog posts 774589, 774316, 2026-08-26収集）
 ```
+
+---
+
+## 2026-08-27 収集分
+
+### 15. Claudeforce（Salesforce統合）とCursor悪用サイバー攻撃 → Claude Codeのエンタープライズ展開とセキュリティ設計
+
+#### 15-1. Claudeforce → エンタープライズAIエージェント参考設計
+**出典:** articles/2026-08-27_3759_WEB_Salesforce-Anthropic-Claudeforce-CRM-AI-37Skills-Partnership.md
+
+**提案内容:**
+Salesforceが37のプリビルトスキルでClaude CRMを統合したClaudeforce発表。Claude Code/タスクマネージャーのスキル設計において「ドメイン特化スキル × アクション実行」の参考アーキテクチャとなる。
+→ FX自動売買での活用ヒント:「FX取引特化スキルセット（市場分析・ポジション管理・リスク評価）」のスキル群化を検討。
+
+#### 15-2. Cursor悪用サイバー攻撃事例 → Claude Code のセキュリティ設定見直し
+**出典:** articles/2026-08-27_3764_WEB_AI-Tech-News-August27-2026-Nvidia-HuggingFace-Anthropic-Nscale-Cursor-Attack.md
+
+**提案内容:**
+ロシア語圏サイバー犯罪者がCursorコーディングエージェントを悪用し7社侵害（認証情報窃取・アカウント乗っ取り）。Claude Codeでも同様のリスクあり。
+
+CLAUDE.md/settings.json への追記検討:
+```
+## セキュリティ原則（2026-08-27追記）
+- APIキー・認証情報をコードやログに含めない（credential_leakフックを設置）
+- PreToolUse hookでリポジトリ外への書き込みをブロック
+- Managed Agents使用時はallowed_domainsで外部通信先を限定
+- セッションログを定期監査し意図しない外部アクセスを検出
+```
+
+#### 15-3. 新MCPロードマップのDPoP認証 → FX自動売買MCPサーバー設計方針
+**出典:** articles/2026-08-27_3761_WEB_New-MCP-Roadmap-August22-2026-AgentIdentity-DPoP-Tasks-5Priorities.md
+
+**提案内容:**
+MCPの次期セキュリティ標準として「DPoP（Demonstrating Proof of Possession）+ Workload Identity Federation」でAPIキーを廃止する方向性が示された。FX自動売買でのMCPサーバー設計でも将来的なDPoP対応を念頭に置く（現時点は実装不要、仕様追跡を継続）。

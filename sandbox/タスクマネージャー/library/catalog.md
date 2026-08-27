@@ -1335,3 +1335,30 @@
 | AI Trading Agents vs Bots 2026 (Bitsgap) | 2026-08-24_002として収録済み |
 | Claude Code okhlopkov setup 2026 | 2026-08-14収録済み |
 | X JSON全4件 | total_fetched=0（VPS収集データなし）|
+| X JSON全4件 | total_fetched=0（VPS収集データなし）|
+
+---
+
+## 2026-08-27 収集分（8件収集 → SIGNAL 8件 ai-news/claude-ecosystem/claude-code）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 1224 | Nvidia、Hugging Faceを129億ドルで買収合意（TechCrunch EN）: オープンソース最大モデルハブを掌握・2023年45億ドル評価から約3倍・年商1.5億ドル・競合チップメーカーへの対抗強化・クラウド再参入 | en | 未読 | #ai-news #nvidia #open-source #m-and-a #web-signal | articles/2026-08-27_3757_WEB_Nvidia-Acquires-Hugging-Face-12.9B-Open-Source-AI-TechCrunch.md |
+| 1225 | Anthropic、Nscaleと$45B・6年間クラウド計算契約（TechCrunch EN）: West Virginia・460MW・Vera Rubin 2027年後半稼働・1ヶ月でVolta$10B+AMD$5B+Nscale$45B = $60B計算確保競争 | en | 未読 | #claude-ecosystem #infrastructure #compute #web-signal | articles/2026-08-27_3758_WEB_Anthropic-Nscale-45B-Cloud-Computing-Deal-Vera-Rubin-West-Virginia.md |
+| 1226 | Salesforce-Anthropic「Claudeforce」発表（Salesforce公式 EN）: CRMにClaude直接統合・37プリビルト営業スキル・Agentforce/Slack連携・AIエージェントがダッシュボードを置き換えるパラダイムシフト | en | 未読 | #claude-ecosystem #enterprise #salesforce #web-signal | articles/2026-08-27_3759_WEB_Salesforce-Anthropic-Claudeforce-CRM-AI-37Skills-Partnership.md |
+| 1227 | Claude Cowork 内蔵ブラウザ追加（Claude Blog EN）: 拡張機能不要・サイドパネルでページナビ/クリック/入力・Pro/Max/Team展開中・Enterprise即時利用可・自律Webタスク完了が現実に | en | 未読 | #claude-ecosystem #cowork #browser #web-signal | articles/2026-08-27_3760_WEB_Claude-Cowork-Built-In-Browser-Desktop-App-No-Extension-Needed.md |
+| 1228 | 新MCPロードマップ（MCP Blog Aug22 EN）: 5優先領域——エージェントMessages/HTTP-Unification/DPoP認証（APIキー廃止方向）/プログレッシブディスカバリ/SDK体験向上・コントリビューターラダー運用開始 | en | 未読 | #claude-ecosystem #mcp #roadmap #security #web-signal | articles/2026-08-27_3761_WEB_New-MCP-Roadmap-August22-2026-AgentIdentity-DPoP-Tasks-5Priorities.md |
+| 1229 | Claude Code 8月アップデートまとめ（Origami.sa EN）: /designスキル・Concise Output Style・Auto Modeデフォルト化（plain-language許可ルール）・セッション自動継続・GitLab MR対応 | en | 未読 | #claude-code #update #design-skill #auto-mode #web-signal | articles/2026-08-27_3762_WEB_Claude-Code-August2026-Design-Skill-Concise-AutoMode-Default-Origami.md |
+| 1230 | Anthropic Model Hardware Standard（MHS）リサーチプレビュー（Anthropic EN）: AIエージェントが物理デバイスを安全操作する共有仕様・科学研究機関・先進製造業者向け・フィジカルAI標準化の第一歩 | en | 未読 | #claude-ecosystem #ai-safety #hardware #research #web-signal | articles/2026-08-27_3763_WEB_Anthropic-Model-Hardware-Standard-MHS-AI-Physical-Devices.md |
+| 1231 | AI/テックニュース 2026-08-27（TechStartups EN）: Nvidia $12.9B HuggingFace買収・Anthropic $45B Nscale・Claudeforce・Cursor悪用サイバー攻撃7社被害・Gemini 3.5 Transcribe・Groq3 3431tk/s | en | 未読 | #ai-news #security #model-update #web-signal | articles/2026-08-27_3764_WEB_AI-Tech-News-August27-2026-Nvidia-HuggingFace-Anthropic-Nscale-Cursor-Attack.md |
+
+### NOISEとして除外（2026-08-27）
+| 候補 | 理由 |
+|---|---|
+| X JSON全4件 | total_fetched=0（VPS収集データなし）|
+| Claude Code best practices collabnix.com | 2026-08-14_3646として収録済み |
+| towardsai.net Claude Code Productivity Tips | 2026-08-22_3730として収録済み |
+| AI regulation skycrumbs Aug 2026 | 2026-08-14_3654として収録済み |
+| llm-stats.com/llm-updates | 複数回収録済み |
+| coinedition.com LLM trading | 複数回収録済み |
+| origami.sa /design skill（8月前半）| KAWAI Note JA（2026-08-25_3746）でカバー済みの部分重複あるが新規URL・詳細情報あり → SIGNAL |
