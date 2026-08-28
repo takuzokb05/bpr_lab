@@ -5200,3 +5200,52 @@ CLAUDE.md/settings.json への追記検討:
 
 **提案内容:**
 MCPの次期セキュリティ標準として「DPoP（Demonstrating Proof of Possession）+ Workload Identity Federation」でAPIキーを廃止する方向性が示された。FX自動売買でのMCPサーバー設計でも将来的なDPoP対応を念頭に置く（現時点は実装不要、仕様追跡を継続）。
+
+---
+
+## 2026-08-28 収集分
+
+### 16. Claude Code Week 34 新機能 → settings.jsonとFX自動取引設定への適用
+
+#### 16-1. Concise出力スタイル → 日次収集ルーチンと調査セッションへの適用
+**出典:** articles/2026-08-28_3765_WEB_ClaudeCode-Week34-Official-Design-Concise-RemoteControl-GA.md
+
+**提案内容:**
+Claude Code v2.1.237で追加されたConcise出力スタイルは、日次収集ルーチンのような自動化セッションに特に有効。結果から始まりpreambleを省くため、スクロールログが読みやすくなり、コンテキスト消費も抑制される。
+
+settings.json への追記候補：
+```json
+{
+  "outputStyle": "Concise"
+}
+```
+
+ただし、エラー・セキュリティ警告・危険な操作の確認は常に全文表示される（後退なし）。
+
+#### 16-2. ANTHROPIC_DEFAULT_MODEL環境変数 → FX自動売買システムの設定管理
+**出典:** articles/2026-08-28_3765_WEB_ClaudeCode-Week34-Official-Design-Concise-RemoteControl-GA.md
+
+**提案内容:**
+新設の `ANTHROPIC_DEFAULT_MODEL` 環境変数で、セッション開始時のデフォルトモデルを固定できる。FX自動売買ではコスト最適化のため、日常シグナル分析はSonnet 5（$2/$10）、複雑な戦略評価はOpus 5（$5/$25）を使い分けたい。
+
+```bash
+# 日次定期実行（シグナル生成）
+ANTHROPIC_DEFAULT_MODEL=claude-sonnet-5 python signal_gen.py
+
+# 週次戦略評価
+ANTHROPIC_DEFAULT_MODEL=claude-opus-5 python strategy_review.py
+```
+
+### 17. Kimi K3 + Computer Use GA → FX自動売買コスト構造見直し
+
+#### 17-1. Kimi K3 ($3/$15, MIT) → 低コスト代替推論の選択肢
+**出典:** articles/2026-08-28_3767_WEB_Kimi-K3-2-8T-OpenWeight-Largest-Moonshot-AI-VentureBeat.md
+
+**提案内容:**
+Kimi K3は$3/$15/Mトークンで修正MITライセンス（商用利用可）。OpenAI SDK互換なのでClaude API呼び出しの一部を差し替えるだけで試せる。FX自動売買で「毎回推論が走る低重要度タスク（速報ニュース分類・簡易センチメント判定）」をKimi K3で処理し、クリティカルな判断（戦略選択・ポジション計算）はClaude Opus 5に割り当てる二層構成を検討する価値あり。
+
+#### 17-2. Computer Use + Browser Use GA → 経済指標スクレイピング
+**出典:** articles/2026-08-28_3769_WEB_Anthropic-DevPlatform-AdminAPI-GA-ComputerUse-BrowserUse-SkillsGA.md
+
+**提案内容:**
+Anthropicが `browser_toolset_20260801` を正式リリース（beta終了）。FX自動売買システムでの経済指標（Investing.com・外為どっとコム等）の定時スクレイピングをBrowser Useで自動化する案が現実的になった。現在のPythonスクレイパーが構造変更で壊れやすい部分を Browser Use + Claude に置き換えることで保守コストを下げられる。ただしlatencyとコストのトレードオフを確認してから採用判断すること。

@@ -1362,3 +1362,20 @@
 | llm-stats.com/llm-updates | 複数回収録済み |
 | coinedition.com LLM trading | 複数回収録済み |
 | origami.sa /design skill（8月前半）| KAWAI Note JA（2026-08-25_3746）でカバー済みの部分重複あるが新規URL・詳細情報あり → SIGNAL |
+
+---
+
+## 2026-08-28 収集分（4件SIGNAL）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 1232 | Claude Code Week 34公式ログ（code.claude.com EN）: v2.1.234-239・/design artboard生成（research preview, Pro以上）・Concise出力スタイル（結果先頭・前置き排除）・Remote Control正式GA（スマホからセッション開始）・auto-continue・spellcheck・ANTHROPIC_DEFAULT_MODEL等 | en | 未読 | #claude-code #update #design-skill #concise #remote-control #web-signal | articles/2026-08-28_3765_WEB_ClaudeCode-Week34-Official-Design-Concise-RemoteControl-GA.md |
+| 1233 | Claude Code /design コマンド詳解（ExplainX EN）: 5ステップワークフロー（記述→artboard生成→選択→編集→実装）・Artifacts基盤・トークン消費大・既存DSとの整合未確認・research preview制限・従来手動ワークフローの統合 | en | 未読 | #claude-code #design-skill #workflow #web-signal | articles/2026-08-28_3766_WEB_ClaudeCode-Design-Command-Artboards-Deep-Dive-ExplainX.md |
+| 1234 | Anthropic DevPlatform 8月アップデート全解説（Releasebot EN）: Computer Use GA(computer_toolset_20260801)・Browser Use新ツールセット(browser_toolset_20260801)・Files/Skills API beta終了・Admin API GA・anthropic-workspace-id header・Sonnet 5価格永続化($2/$10)・Opus 5確定($5/$25) | en | 未読 | #claude-ecosystem #api #computer-use #admin-api #model-update #web-signal | articles/2026-08-28_3769_WEB_Anthropic-DevPlatform-AdminAPI-GA-ComputerUse-BrowserUse-SkillsGA.md |
+| 1235 | Claude Opus 5 Fable 5の半額でフロンティア級（Technology.org EN）: $5/$25/Mトークン(Opus 4.8同価格)・1Mコンテキスト・128k最大出力・思考モードデフォルト有効・MaxプランデフォルトモデルがOpus 5・IPO前戦略的価格設定 | en | 未読 | #claude-ecosystem #model-update #pricing #web-signal | articles/2026-08-28_3771_WEB_ClaudeOpus5-HalfPrice-Fable5-IPO-Anthropic-July2026.md |
+
+### NOISEとして除外（2026-08-28）
+| 候補 | 理由 |
+|---|---|
+| X JSON全8件（2026-08-26・08-28各4ドメイン）| total_fetched=0（VPS収集データなし） |
+| drop.md | URLなし（テンプレートのみ） |

@@ -404,3 +404,11 @@
 | # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
 |---|---|---|---|---|---|
 | 333 | Best AI Agents for Forex Trading 2026 Review（GPTrader EN）: FX Prime Bot(MT5+LLMセンチメント)・TradingAgents(マルチエージェント統合分析)・バックテスト vs ライブ乖離問題・LLMの予測不可挙動リスク・FX特有24/5マーケット対応 | en | 未読 | #ai-trading #forex #llm-trading #mt5 #web-signal | articles/2026-08-25_3751_WEB_Best-AI-Agents-Forex-Trading-2026-FXPrimeBot-TradingAgents-GPTrader.md |
+
+---
+
+## 2026-08-28 収集分（1件SIGNAL）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 334 | 証券・FXの現場でAIができること15選 2026年版（aipicks.jp JA）: エージェント型AI移行加速・Robinhood証券口座接続事例・LLMは指標解釈/レポート生成/最適化提案に最適・ハイブリッド構成（AI研究+ルールベース執行）が現実解・キルスイッチの重要性 | ja | 未読 | #ai-trading #forex #llm-trading #agent-finance #web-signal | articles/2026-08-28_3770_WEB_AI-Securities-FX-Trading-15-UseCases-2026-Practical-JA.md |

@@ -524,3 +524,12 @@
 | 437 | AI Model Releases August 2026: 18 Models from 15 Providers（BenchLM EN）: Qwen3.8-Max(2.4T最大OW)・OX Alpha匿名モデル・Sonnet 5/Gemini 3.7 Flash/GLM-5.2 Turbo・20日で11モデル超・定量差別化困難な段階に | en | 未読 | #ai-news #model-update #llm-benchmark #web-signal | articles/2026-08-25_3752_WEB_AI-Model-Releases-August2026-18Models-15Providers-BenchLM.md |
 | 438 | Nvidia、Hugging Faceを$12.9Bで買収合意（TechCrunch EN）: OSS最大モデルハブ掌握・2023比3倍評価・チップ競争の新局面・クラウド再参入 | en | 未読 | #ai-news #nvidia #open-source #m-and-a #web-signal | articles/2026-08-27_3757_WEB_Nvidia-Acquires-Hugging-Face-12.9B-Open-Source-AI-TechCrunch.md |
 | 439 | AI/テックニュース 2026-08-27（TechStartups EN）: Nvidia-HuggingFace・Anthropic $45B Nscale・Claudeforce・Cursor悪用7社被害・Gemini 3.5 Transcribe・Groq3 3431tk/s | en | 未読 | #ai-news #security #model-update #web-signal | articles/2026-08-27_3764_WEB_AI-Tech-News-August27-2026-Nvidia-HuggingFace-Anthropic-Nscale-Cursor-Attack.md |
+
+---
+
+## 2026-08-28 収集分（2件SIGNAL）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 440 | Kimi K3: 史上最大2.8兆パラメータオープンウェイト（VentureBeat EN）: MoE推論35B active・KDA独自アーキテクチャ・1Mコンテキスト・Frontend Code Arena 1位・Modified MIT商用可・$3/$15/Mトークン・オープンソースが独自モデルと実質同等に | en | 未読 | #ai-news #model-release #open-source #moonshot #web-signal | articles/2026-08-28_3767_WEB_Kimi-K3-2-8T-OpenWeight-Largest-Moonshot-AI-VentureBeat.md |
+| 441 | 2026年8月LLMモデルラッシュ三極集中（JA）: Qwen3.8-Max(2.4T, $2/$6)・Kimi K3(2.8T, MIT)・LFM2.5-2.6B(スマホ30tok/s)・Gemma 4 E2B(RasPi5)・EO14409期限が投入集中の背景・安いモデル×賢い使い方が勝ち筋 | ja | 未読 | #ai-news #model-release #llm-pricing #edge-ai #web-signal | articles/2026-08-28_3768_WEB_LLM-Model-Release-Rush-August2026-Cloud-OpenWeight-Edge-JA.md |
