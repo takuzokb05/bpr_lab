@@ -1645,6 +1645,71 @@ drop.md: URLなし（処理対象なし）
 
 ---
 
+## 2026-08-25 収集分（8件収集 → SIGNAL 8件 claude-code/ecosystem）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 903 | [2026-08-25_3742](articles/2026-08-25_3742_WEB_MCP-2026-07-28-Official-Spec-Stateless-Core-Apps-Extension-MCP-Blog.md) | MCP 2026-07-28公式仕様: ステートレスコア・OAuth強化・Apps拡張・Tasks・Roots/Sampling/Logging廃止予告 | claude-ecosystem | 未読 | #web-signal #mcp |
+| 904 | [2026-08-25_3743](articles/2026-08-25_3743_WEB_Cloudflare-MCP-v2-NextGeneration-Stateless-Edge-Blog.md) | Cloudflare: 次世代MCP v2 — エッジ統合とステートレス設計の詳解 | claude-ecosystem | 未読 | #web-signal #mcp |
+| 905 | [2026-08-25_3746](articles/2026-08-25_3746_WEB_ClaudeCode-August2026-FrontHalf-Update-FocusView-Concise-Design-KAWAI-JA.md) | 【JA】Claude Code 8月前半新機能実務ガイド: Focus View・Concise・/design・AutoMode既定変更（KAWAI） | claude-code | 未読 | #web-signal |
+| 906 | [2026-08-25_3747](articles/2026-08-25_3747_WEB_ClaudeCode-Automation-10Cases-PromptPublic-Uravation-JA.md) | 【JA】Claude Code業務自動化10事例・実装プロンプト全公開（Uravation） | claude-code | 未読 | #web-signal |
+| 907 | [2026-08-25_3748](articles/2026-08-25_3748_WEB_Claude-ClaudeCode-Update-August2026-AdminAPI-ManagedAgents-YouGears-JA.md) | 【JA】Claude/Claude Codeアップデート8月: Admin API GA・Managed Agents強化・Skills API（YouGears） | claude-code | 未読 | #web-signal |
+| 908 | [2026-08-25_3749](articles/2026-08-25_3749_WEB_ClaudeCode-Advanced-BestPractices-11Tech-Hooks-Subagents-SmartScope.md) | Claude Code Advanced Best Practices 2026: 11 Techniques — Hooks・Subagents・コンテキスト管理（SmartScope） | claude-code | 未読 | #web-signal |
+| 909 | [2026-08-25_3750](articles/2026-08-25_3750_WEB_ClaudeAgentSDK-Complete-Guide-MCP-Enterprise-HidekzuKonishi.md) | Claude Agent SDK Complete Guide: MCPサーバー統合・エンタープライズ展開（hidekazu-konishi） | claude-ecosystem | 未読 | #web-signal |
+| 910 | [2026-08-25_3753](articles/2026-08-25_3753_WEB_MCP-2026-07-28-Migration-Guide-Stateless-OAuth-AAIF.md) | MCP 2026-07-28移行ガイド: ステートレス化・OAuth対応の実装手順（AAIF） | claude-ecosystem | 未読 | #web-signal #mcp |
+
+---
+
+## 2026-08-26 収集分（1件収集 → SIGNAL 1件 claude-code）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 911 | [2026-08-26_3756](articles/2026-08-26_3756_WEB_Piebald-AI-Claude-Code-System-Prompts-Token-Tracker.md) | GitHub: Piebald-AI/claude-code-system-prompts — 全システムプロンプト＆トークン数トラッカー（OSSツール） | claude-code | 未読 | #web-signal |
+
+---
+
+## 2026-08-27 収集分（6件収集 → SIGNAL 6件 claude-code/ecosystem）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 912 | [2026-08-27_3758](articles/2026-08-27_3758_WEB_Anthropic-Nscale-45B-Cloud-Computing-Deal-Vera-Rubin-West-Virginia.md) | Anthropic $450億Nscaleクラウド契約: Vera Rubin採用・West Virginia・コンピュート争奪戦新局面 | claude-ecosystem | 未読 | #web-signal #anthropic |
+| 913 | [2026-08-27_3759](articles/2026-08-27_3759_WEB_Salesforce-Anthropic-Claudeforce-CRM-AI-37Skills-Partnership.md) | Salesforce × Anthropic「Claudeforce」: CRM × Claude AI統合・37スキル・プレスリリース公式 | claude-ecosystem | 未読 | #web-signal #anthropic |
+| 914 | [2026-08-27_3760](articles/2026-08-27_3760_WEB_Claude-Cowork-Built-In-Browser-Desktop-App-No-Extension-Needed.md) | Claude Cowork内蔵ブラウザ: 拡張機能不要・デスクトップアプリで完結・自律Webタスク（公式blog） | claude-ecosystem | 未読 | #web-signal |
+| 915 | [2026-08-27_3761](articles/2026-08-27_3761_WEB_New-MCP-Roadmap-August22-2026-AgentIdentity-DPoP-Tasks-5Priorities.md) | 新MCPロードマップ (2026-08-22): Agent Identity・DPoP Security・Tasks拡張・5優先項目 | claude-ecosystem | 未読 | #web-signal #mcp |
+| 916 | [2026-08-27_3762](articles/2026-08-27_3762_WEB_Claude-Code-August2026-Design-Skill-Concise-AutoMode-Default-Origami.md) | Claude Code August 2026: /designスキル・Concise出力スタイル・AutoMode既定化（Origami） | claude-code | 未読 | #web-signal |
+| 917 | [2026-08-27_3763](articles/2026-08-27_3763_WEB_Anthropic-Model-Hardware-Standard-MHS-AI-Physical-Devices.md) | Anthropic Model Hardware Standard (MHS) Research Preview: AI物理デバイス制御標準 | claude-ecosystem | 未読 | #web-signal #anthropic |
+
+---
+
+## 2026-08-28 収集分（4件収集 → SIGNAL 4件 claude-code/ecosystem）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 918 | [2026-08-28_3765](articles/2026-08-28_3765_WEB_ClaudeCode-Week34-Official-Design-Concise-RemoteControl-GA.md) | Claude Code Week 34 公式: /design・Concise出力スタイル・Remote Control GA（公式ドキュメント） | claude-code | 未読 | #web-signal |
+| 919 | [2026-08-28_3766](articles/2026-08-28_3766_WEB_ClaudeCode-Design-Command-Artboards-Deep-Dive-ExplainX.md) | Claude Code /designコマンド詳解: 5ステップワークフローと実際の制限・利用シナリオ（ExplainX） | claude-code | 未読 | #web-signal |
+| 920 | [2026-08-28_3769](articles/2026-08-28_3769_WEB_Anthropic-DevPlatform-AdminAPI-GA-ComputerUse-BrowserUse-SkillsGA.md) | Anthropic Developer Platform 8月: Computer Use GA・Browser Useツールセット・Admin API・Skills API正式化 | claude-ecosystem | 未読 | #web-signal #anthropic |
+| 921 | [2026-08-28_3771](articles/2026-08-28_3771_WEB_ClaudeOpus5-HalfPrice-Fable5-IPO-Anthropic-July2026.md) | Claude Opus 5: Fable 5の半額でフロンティア級性能・IPO前の戦略的価格設定・1Mコンテキスト | claude-ecosystem | 未読 | #web-signal |
+
+---
+
+## 2026-08-29 収集分（7件収集 → SIGNAL 6件 claude-code/ecosystem、NOISE 1件）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 922 | [2026-08-29_3772](articles/2026-08-29_3772_WEB_ClaudeCode-Week35-Changelog-LoopsBreakdown-ModelPicker-PromptCache.md) | Claude Code Week 35 Changelog: Loopsブレイクダウン・ModelPicker設定・PromptCache TTL・zstd圧縮75MB化 | claude-code | 未読 | #web-signal |
+| 923 | [2026-08-29_3773](articles/2026-08-29_3773_WEB_ClaudeCode-CrossSession-Messaging-Official-Docs-ListAgents-SendMessage.md) | Claude Code クロスセッションメッセージング公式ドキュメント: ListAgents・SendMessage・セキュリティ設計（v2.1.224+） | claude-code | 未読 | #web-signal |
+| 924 | [2026-08-29_3774](articles/2026-08-29_3774_WEB_ClaudeAgentSDK-Python-Tutorial-Build-First-Agent-Medium-Aug2026.md) | Claude Agent SDK Python実践チュートリアル（Medium/Google Developer Experts, Aug 2026）: @tool・query()・リポジトリトリアージエージェント構築 | claude-ecosystem | 未読 | #web-signal |
+| 925 | [2026-08-29_3775](articles/2026-08-29_3775_WEB_Claude-Academy-Launch-4D-AI-Fluency-Framework-Free-Courses-Aug2026.md) | Claude Academy ローンチ (2026-08-20): 4D AI Fluency Framework・無料コース・認定パス・Claude for Teachers | claude-ecosystem | 未読 | #web-signal |
+| 926 | [2026-08-29_3776](articles/2026-08-29_3776_WEB_ClaudeCode-Plugins-2026-Best-Guide-Composio-Superpowers-FrontendDesign.md) | Claude Code Plugins 2026厳選ガイド: Superpowers・Frontend Design 27.7万インストール・Composio・5〜6本スタック推奨 | claude-code | 未読 | #web-signal |
+| 927 | [2026-08-29_3777](articles/2026-08-29_3777_WEB_CLAUDE-md-Best-Practices-Complete-2026-Guide-DEV-Community.md) | CLAUDE.md Best Practices完全ガイド2026（DEV.to）: 200行以内・精度低下データ・HTMLコメント無料コンテキスト・Structure > Prose | claude-code | 未読 | #web-signal |
+
+### NOISEとして除外（2026-08-29）
+| 候補 | 理由 |
+|---|---|
+| CoinEdition LLM Trading AI Outperform Humans | 2026-08-19収集済み（記事3710番、catalog-trading.md #328）と同一URL |
+
+---
+
 ## ドメイン別統計（累計）
 
 | ドメイン | 2026-05-27 | 2026-05-28 | 2026-05-29 | 2026-05-30 | 2026-05-31 | 2026-06-01 | 2026-06-02 | 2026-06-03 | 2026-06-04 | 2026-06-05 | 2026-06-06 | 2026-06-07 | 2026-06-08 | 2026-06-09 | 2026-06-10 | 2026-06-11 | 2026-06-12 | 2026-06-13 | 2026-06-14 | 2026-06-16 | 2026-06-17 | 2026-06-18 | 2026-06-19 | 2026-06-20 | 2026-06-21 | 2026-06-22 | 2026-06-23 | 2026-06-24 | 2026-06-25 | 2026-06-26 | 2026-06-27 | 2026-06-28 | 2026-06-29 | 2026-06-30 | 2026-07-01 | 2026-07-02 | 2026-07-03 | 2026-07-04 | 2026-07-05 | 2026-07-06 | 2026-07-07 | 2026-07-08 | 2026-07-09 | 2026-07-10 | 2026-07-11 | 2026-07-12 | 2026-07-13 | 2026-07-14 | 2026-07-15 | 累計 |
