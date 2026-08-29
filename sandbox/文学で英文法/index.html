@@ -1,0 +1,1879 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#18232E">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="文学で英文法">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<title>文学で英文法｜大学受験ドリル</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#E5E8E0; --card:#FAFBF7; --ink:#18232E; --ink-soft:#5A6A75; --line:#C9CFC4;
+  --vt:#12614A; --vt-bg:#DCEDE4; --vi:#54479B; --vi-bg:#E4E0F4; --wrong:#9E2B2B;
+  --amber:#8A5B0B; --amber-bg:#F6EBD6;
+  --display:"Bricolage Grotesque",system-ui,sans-serif;
+  --jp:"Zen Kaku Gothic New",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--jp);line-height:1.75;padding:0 0 4rem}
+.wrap{max-width:44rem;margin:0 auto;padding:0 1.1rem}
+.hidden{display:none!important}
+button{font-family:inherit}
+button:focus-visible{outline:2px solid var(--vi);outline-offset:2px}
+
+header{padding:2rem 0 .4rem}
+.eyebrow{font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(1.6rem,6.5vw,2.4rem);line-height:1.08;letter-spacing:-.02em;margin:.35rem 0 .6rem}
+.lede{color:var(--ink-soft);font-size:.9rem;max-width:32rem}
+
+.sechead{font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;color:var(--ink-soft);margin:1.6rem 0 .55rem;display:flex;justify-content:space-between;align-items:baseline}
+
+/* 診断カード */
+.diagcard{background:var(--ink);color:#fff;border-radius:2px;padding:1.15rem 1rem;display:grid;gap:.5rem}
+.diagcard h2{font-family:var(--display);font-weight:800;font-size:1.15rem;line-height:1.25}
+.diagcard p{font-size:.82rem;color:#C7D0D8}
+.diagcard .go{margin-top:.35rem;font-family:var(--mono);font-size:.85rem;font-weight:600;background:#fff;color:var(--ink);border:none;border-radius:2px;padding:.7rem;cursor:pointer;width:100%}
+.dbars{display:grid;gap:.45rem;margin:.35rem 0 .1rem}
+.dbar{display:grid;grid-template-columns:3.2rem 1fr 2.6rem;align-items:center;gap:.55rem;font-family:var(--mono);font-size:.72rem}
+.dbar .track{height:6px;background:#3A4A57;position:relative}
+.dbar .track i{position:absolute;inset:0 auto 0 0;background:#fff;width:0}
+.dbar.struct .track i{background:#E8A33D}
+.dbar b{font-weight:600;text-align:right}
+.diagcard .again{background:none;border:1px solid #4C5C69;color:#C7D0D8;font-family:var(--mono);font-size:.76rem;border-radius:2px;padding:.5rem;cursor:pointer;width:100%}
+.diagverdict{font-size:.84rem;line-height:1.7;border-top:1px solid #3A4A57;padding-top:.6rem;margin-top:.2rem}
+
+/* 土台トラック */
+.track-list{display:grid;gap:.45rem}
+.lv{background:var(--card);border:1px solid var(--line);border-radius:2px;padding:.8rem .9rem;text-align:left;cursor:pointer;display:grid;grid-template-columns:2.6rem 1fr auto;align-items:center;gap:.7rem;transition:border-color .15s ease}
+.lv:hover{border-color:var(--ink)}
+.lv .no{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;color:var(--vi);background:var(--vi-bg);border-radius:2px;padding:.15rem 0;text-align:center;font-weight:600}
+.lv .nm{font-size:.92rem;font-weight:500;line-height:1.4}
+.lv .nm small{display:block;font-size:.72rem;color:var(--ink-soft);font-weight:400}
+.lv .st{font-family:var(--mono);font-size:.7rem;color:var(--ink-soft);white-space:nowrap}
+
+.works{display:grid;gap:.6rem}
+.work{background:var(--card);border:1px solid var(--line);border-radius:2px;padding:1rem;text-align:left;cursor:pointer;display:grid;gap:.15rem;transition:border-color .15s ease}
+.work:hover{border-color:var(--ink)}
+.work-top{display:flex;justify-content:space-between;align-items:baseline;gap:.6rem}
+.work-t{font-family:var(--display);font-weight:600;font-size:1.15rem}
+.work-a{font-size:.75rem;color:var(--ink-soft)}
+.work-m{font-family:var(--mono);font-size:.72rem;color:var(--ink-soft);display:flex;gap:.8rem;margin-top:.35rem;align-items:center}
+.pct{font-weight:600;color:var(--ink)}
+.minibar{flex:1;height:2px;background:var(--line);position:relative;max-width:8rem}
+.minibar i{position:absolute;inset:0 auto 0 0;background:var(--vt);width:0}
+.alt{display:grid;gap:.5rem;margin-top:.9rem}
+.btn-line{font-family:var(--mono);font-size:.85rem;font-weight:500;background:#fff;color:var(--ink);border:1px solid var(--ink);border-radius:2px;padding:.75rem;cursor:pointer}
+.btn-line:disabled{opacity:.35;cursor:default;border-color:var(--line)}
+.reset{background:none;border:none;color:var(--ink-soft);font-size:.75rem;text-decoration:underline;cursor:pointer;padding:.4rem 0}
+
+/* 設定 */
+.opts{margin-top:1.4rem;border-top:1px solid var(--line);padding-top:.8rem}
+.opt{display:flex;align-items:flex-start;gap:.6rem;cursor:pointer;font-size:.82rem;line-height:1.6}
+.opt input{margin-top:.35rem;width:1rem;height:1rem;accent-color:var(--vi)}
+.opt small{display:block;color:var(--ink-soft);font-size:.74rem}
+
+.meter{display:flex;align-items:center;gap:.7rem;margin:1.4rem 0 1rem}
+.bar{flex:1;height:3px;background:var(--line);position:relative;overflow:hidden}
+.bar i{position:absolute;inset:0 auto 0 0;background:var(--ink);width:0;transition:width .3s ease}
+.count{font-family:var(--mono);font-size:.75rem;color:var(--ink-soft);white-space:nowrap}
+.quit{background:none;border:none;color:var(--ink-soft);font-size:.72rem;cursor:pointer;text-decoration:underline}
+
+.qcard{background:var(--card);border:1px solid var(--line);border-radius:2px;padding:1.25rem 1.05rem}
+.src{font-size:.76rem;color:var(--ink-soft);border-left:2px solid var(--ink);padding-left:.55rem;margin-bottom:.85rem;line-height:1.5}
+.src b{font-weight:700;color:var(--ink);font-size:.82rem}
+.src span{display:block;font-family:var(--mono);font-size:.66rem;letter-spacing:.06em}
+.qjp{font-size:.85rem;color:var(--ink-soft);margin-bottom:.75rem}
+.instr{font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;color:var(--ink-soft);margin-bottom:.5rem}
+
+/* 英文表示：inline フローにして句読点の前に空白が入らないようにする */
+.sentence{font-family:var(--mono);font-size:1rem;line-height:2.5}
+.slot{display:inline-flex;align-items:center;justify-content:center;min-width:3.2rem;height:1.7rem;padding:0 .5rem;border:1.5px dashed var(--line);border-radius:2px;font-size:.8rem;color:var(--ink-soft);background:#fff;vertical-align:middle}
+.slot.fill-vt{border:1.5px solid var(--vt);background:var(--vt-bg);color:var(--vt);font-weight:600}
+.slot.fill-vi{border:1.5px solid var(--vi);background:var(--vi-bg);color:var(--vi);font-weight:600}
+
+.part{font-family:var(--mono);font-size:1rem;background:none;border:none;cursor:pointer;border-bottom:2px solid var(--line);padding:.1rem;color:var(--ink);line-height:2.2;display:inline-block;margin-right:.35rem}
+.part:hover:not(:disabled){border-bottom-color:var(--ink)}
+.part sup{font-size:.65rem;color:var(--ink-soft);margin-right:.15rem}
+.part:disabled{cursor:default}
+.part.correct{border-bottom-color:var(--vt);background:var(--vt-bg);color:var(--vt);font-weight:600}
+.part.wrong{border-bottom-color:var(--wrong);background:#F6E3E3;color:var(--wrong)}
+
+/* 単語タップ（土台トラック） */
+.tok{font-family:var(--mono);font-size:.98rem;background:#fff;border:1px solid var(--line);border-radius:2px;cursor:pointer;padding:.18rem .38rem;color:var(--ink);margin:0 .18rem .3rem 0;display:inline-block;line-height:1.5}
+.tok:hover:not(:disabled){border-color:var(--ink)}
+.tok:disabled{cursor:default}
+.tok.plain{background:none;border-color:transparent;cursor:default}
+.tok.hitS{border-color:var(--vi);background:var(--vi-bg);color:var(--vi);font-weight:600}
+.tok.hitV{border-color:var(--vt);background:var(--vt-bg);color:var(--vt);font-weight:600}
+.tok.miss{border-color:var(--wrong);background:#F6E3E3;color:var(--wrong)}
+.tok.chunk{border-color:var(--amber);background:var(--amber-bg);color:var(--amber);font-weight:600}
+.legend{font-family:var(--mono);font-size:.68rem;color:var(--ink-soft);margin-top:.5rem}
+.legend em{font-style:normal;padding:.05rem .3rem;border-radius:2px}
+.legend .s{background:var(--vi-bg);color:var(--vi)}
+.legend .v{background:var(--vt-bg);color:var(--vt)}
+
+.choices{display:grid;gap:.5rem;margin-top:1.1rem}
+.choices.grid2{grid-template-columns:1fr 1fr}
+.choice{font-family:var(--mono);font-size:.95rem;text-align:left;background:#fff;border:1px solid var(--line);border-radius:2px;padding:.72rem .9rem;cursor:pointer;color:var(--ink);transition:border-color .15s ease}
+.choice.jp{font-family:var(--jp);font-size:.86rem;line-height:1.6}
+.choice:hover:not(:disabled){border-color:var(--ink)}
+.choice:disabled{cursor:default}
+.choice.correct{border-color:var(--vt);background:var(--vt-bg);color:var(--vt);font-weight:600}
+.choice.wrong{border-color:var(--wrong);background:#F6E3E3;color:var(--wrong)}
+.choice.picked{border-color:var(--ink);background:#EFF1EC}
+
+/* 2段階解答：理由 */
+.why{margin-top:1.1rem;border-top:1px dashed var(--line);padding-top:.9rem;display:none}
+.why.show{display:block;animation:rise .22s ease}
+.why h4{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;color:var(--amber);margin-bottom:.15rem}
+.why p.q{font-size:.86rem;margin-bottom:.6rem}
+.why .choice{font-family:var(--jp);font-size:.85rem;line-height:1.55}
+
+.verdict{margin-top:1.05rem;padding-top:.95rem;border-top:1px solid var(--line);display:none}
+.verdict.show{display:block;animation:rise .22s ease}
+@keyframes rise{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.vhead{display:flex;align-items:center;gap:.5rem;margin-bottom:.45rem;flex-wrap:wrap}
+.vmark{font-family:var(--display);font-weight:800;font-size:1rem}
+.ok{color:var(--vt)} .ng{color:var(--wrong)} .half{color:var(--amber)}
+.tag{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;padding:.12rem .45rem;border-radius:2px;font-weight:600;background:var(--vi-bg);color:var(--vi)}
+.verdict p{font-size:.88rem}
+.fix{font-family:var(--mono);font-size:.85rem;color:var(--vt);margin-top:.4rem}
+.fix:empty{display:none}
+
+.pat{margin-top:.8rem;border-left:3px solid var(--vt);background:#fff;padding:.6rem .75rem;font-family:var(--mono);font-size:.83rem;line-height:1.9}
+.pat:empty{display:none}
+.pat .lbl{display:block;font-size:.62rem;letter-spacing:.14em;color:var(--ink-soft);margin-bottom:.2rem}
+.pat em{font-style:normal;color:var(--vt);font-weight:600}
+.pat s{color:var(--wrong);text-decoration-thickness:1px}
+
+.moretog{margin-top:.7rem;width:100%;font-family:var(--mono);font-size:.76rem;letter-spacing:.06em;background:none;border:1px dashed var(--line);border-radius:2px;color:var(--ink-soft);padding:.5rem;cursor:pointer}
+.moretog:hover{border-color:var(--ink);color:var(--ink)}
+.more{margin-top:.7rem;font-size:.85rem;background:#fff;border:1px solid var(--line);padding:.75rem .8rem;line-height:1.85}
+.more h4{font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;color:var(--ink-soft);font-weight:500;margin-bottom:.3rem}
+.next{margin-top:.95rem;width:100%;font-family:var(--mono);font-size:.88rem;font-weight:600;background:var(--ink);color:#fff;border:none;border-radius:2px;padding:.8rem;cursor:pointer}
+
+.result{background:var(--card);border:1px solid var(--line);padding:1.5rem 1.1rem;text-align:center}
+.score{font-family:var(--display);font-weight:800;font-size:2.9rem;line-height:1}
+.score small{font-size:1.05rem;color:var(--ink-soft);font-weight:600}
+.result>p{font-size:.88rem;color:var(--ink-soft);margin:.5rem 0 1.1rem}
+.weak{text-align:left;border-top:1px solid var(--line);padding-top:.9rem;margin-bottom:1.1rem}
+.weak h3{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;color:var(--ink-soft);margin-bottom:.5rem}
+.weak-row{display:flex;justify-content:space-between;font-size:.85rem;padding:.25rem 0;border-bottom:1px dotted var(--line)}
+.weak-row b{font-family:var(--mono);color:var(--wrong);font-weight:600}
+
+/* 診断結果 */
+.dres{text-align:left;border-top:1px solid var(--line);padding-top:1.1rem;margin-top:.4rem}
+.dres .dbar{color:var(--ink)}
+.dres .dbar .track{background:var(--line)}
+.dres .dbar .track i{background:var(--vt)}
+.dres .dbar.struct .track i{background:var(--amber)}
+.dres .msg{font-size:.88rem;line-height:1.85;margin-top:1rem;background:#fff;border:1px solid var(--line);padding:.85rem .8rem}
+.dres .msg b{color:var(--ink)}
+
+/* 直してほしいところ（弟 → 兄） */
+.memo{margin-top:1.2rem;border-top:1px solid var(--line);padding-top:.9rem}
+.memo h3{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;color:var(--ink-soft);margin-bottom:.5rem;display:flex;justify-content:space-between}
+.memo-list{display:grid;gap:.3rem}
+.memo-list:empty{display:none}
+.memo-row{background:#fff;border:1px solid var(--line);border-radius:2px;padding:.5rem .6rem;font-size:.8rem;line-height:1.55;display:flex;gap:.4rem;align-items:flex-start}
+.memo-row span{flex:1}
+.memo-row b{display:block;font-family:var(--mono);font-size:.65rem;color:var(--ink-soft);font-weight:500;letter-spacing:.04em}
+.memo-row button{background:none;border:none;color:var(--ink-soft);font-size:1rem;cursor:pointer;padding:0 .1rem;line-height:1.2}
+.memo-act{display:grid;gap:.4rem;grid-template-columns:1fr 2.8rem;margin-top:.55rem}
+.memo-out{width:100%;font-family:var(--mono);font-size:.72rem;border:1px solid var(--ink);border-radius:2px;padding:.55rem;background:#fff;color:var(--ink);min-height:9rem;margin-top:.5rem;line-height:1.6;resize:vertical}
+.fbtog{margin-top:.7rem;width:100%;font-family:var(--mono);font-size:.74rem;background:none;border:1px dashed var(--line);border-radius:2px;color:var(--ink-soft);padding:.5rem;cursor:pointer}
+.fbtog:hover{border-color:var(--amber);color:var(--amber)}
+.fbbox{margin-top:.5rem;display:none}
+.fbbox.show{display:block}
+.fbbox textarea{width:100%;font-family:var(--jp);font-size:.86rem;border:1px solid var(--line);border-radius:2px;padding:.55rem;min-height:4.5rem;background:#fff;color:var(--ink);line-height:1.6;resize:vertical}
+.fbbox .save{margin-top:.4rem;width:100%;font-family:var(--mono);font-size:.8rem;font-weight:600;background:var(--amber);color:#fff;border:none;border-radius:2px;padding:.6rem;cursor:pointer}
+.fbdone{font-family:var(--mono);font-size:.74rem;color:var(--vt);margin-top:.6rem}
+footer{margin-top:2.2rem;font-size:.76rem;color:var(--ink-soft);text-align:center}
+@media (max-width:24rem){.choices.grid2{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">大学受験英文法 / 読んだ作品の場面から</div>
+  <h1>文学で、英文法</h1>
+  <p class="lede">例文はすべて、授業で読んだ作品の一場面。解説は「一行の判定」「型」「もっと詳しく」の3段。急ぐ日は上だけ、余裕がある日は全部読む。</p>
+</header>
+
+<section id="home">
+  <div class="sechead"><span>まず、いまの状態を見る</span></div>
+  <div id="diagBox"></div>
+
+  <div class="sechead"><span>土台トラック — 文の骨を見る</span><span id="trackNote"></span></div>
+  <div class="track-list" id="trackList"></div>
+
+  <div class="sechead"><span>作品から解く</span><span id="workNote"></span></div>
+  <div class="works" id="works"></div>
+  <div class="alt">
+    <button class="btn-line" id="mixAll">全作品ミックス（10問）</button>
+    <button class="btn-line" id="weakOnly">苦手な問題だけ</button>
+  </div>
+
+  <div class="opts">
+    <label class="opt"><input type="checkbox" id="whyToggle">
+      <span>答えのあとに「なぜ？」も答える
+        <small>まぐれ当たりを潰す。理由を外したら不正解として記録される。急ぐ日はオフでいい。</small>
+      </span>
+    </label>
+  </div>
+  <div class="memo" id="memoBox"></div>
+  <button class="reset" id="reset">学習記録を消す</button>
+</section>
+
+<section id="quiz" class="hidden">
+  <div class="meter">
+    <div class="bar"><i id="bar"></i></div>
+    <div class="count" id="count"></div>
+    <button class="quit" id="quit">中断</button>
+  </div>
+  <div class="qcard">
+    <div class="src" id="src"></div>
+    <div class="qjp" id="qjp"></div>
+    <div class="instr" id="instr"></div>
+    <div class="sentence" id="sentence"></div>
+    <div class="legend hidden" id="legend"></div>
+    <div class="choices" id="choices"></div>
+    <div class="why" id="why">
+      <h4>なぜ？</h4>
+      <p class="q" id="whyq">その形になる理由はどれ？</p>
+      <div class="choices" id="whyChoices"></div>
+    </div>
+    <div class="verdict" id="verdict">
+      <div class="vhead"><span class="vmark" id="mark"></span><span class="tag" id="vtag"></span></div>
+      <p id="explain"></p>
+      <div class="fix" id="fixline"></div>
+      <div class="pat" id="pat"></div>
+      <button class="moretog" id="moretog">もっと詳しく ＋</button>
+      <div class="more hidden" id="more"></div>
+      <button class="fbtog" id="fbtog">ここ、直してほしい ＋</button>
+      <div class="fbbox" id="fbbox">
+        <textarea id="fbtext" placeholder="どこが分かりにくかった？ 一言でいい。"></textarea>
+        <button class="save" id="fbsave">メモに残す</button>
+      </div>
+      <div class="fbdone hidden" id="fbdone">メモに残した。ホームからまとめて送れる。</div>
+      <button class="next" id="next">次へ</button>
+    </div>
+  </div>
+</section>
+
+<section id="result" class="hidden">
+  <div class="result">
+    <div class="score"><span id="scoreNum">0</span><small id="scoreDen"> / 10</small></div>
+    <p id="scoreMsg"></p>
+    <div class="dres hidden" id="dresBox"></div>
+    <div class="weak hidden" id="weakBox"><h3>取りこぼした項目</h3><div id="weakList"></div></div>
+    <div class="alt">
+      <button class="btn-line" id="retryWrong">間違えた問題を、もう一度</button>
+      <button class="btn-line" id="toHome">最初の画面へ</button>
+    </div>
+  </div>
+</section>
+
+<footer id="foot"></footer>
+</div>
+
+<script>
+/* ===================================================================
+   文学で英文法 — データ
+   ex  = 一行の判定 / pat = 型 / more = もっと詳しく
+   wa  = WHY[tag] の中で正しい理由のインデックス（2段階解答用）
+   =================================================================== */
+
+const WORKS = {
+  RG:{title:"山月記",             author:"中島敦"},
+  LM:{title:"檸檬",               author:"梶井基次郎"},
+  MK:{title:"蜜柑",               author:"芥川龍之介"},
+  RS:{title:"羅生門",             author:"芥川龍之介"},
+  ML:{title:"走れメロス",         author:"太宰治"},
+  HS:{title:"少年の日の思い出",   author:"ヘルマン・ヘッセ"},
+  TB:{title:"高瀬舟",             author:"森鷗外"},
+  YJ:{title:"夢十夜",             author:"夏目漱石"}
+};
+
+/* 文法項目ごとの「理由」の選択肢。正解は各問の wa が指す。 */
+const WHY = {
+"自他動詞":[
+  "他動詞だから、うしろの名詞に直結する",
+  "自動詞だから、名詞につなぐのに前置詞が要る",
+  "動詞と前置詞で1つの塊（群動詞）だから、前置詞を外せない"],
+"知覚動詞":[
+  "知覚動詞は、目的語のあとに 原形 か -ing を取る",
+  "この動詞は、目的語のあとに to do を取る",
+  "受動態なので、消えていた to が復活する"],
+"使役動詞":[
+  "make・let・have は、目的語のあとに原形を取る",
+  "get・want は、目的語のあとに to do を取る",
+  "help だけは、原形でも to do でもよい"],
+"分詞":[
+  "修飾される名詞が「する側」なので -ing",
+  "修飾される名詞が「される側」なので過去分詞",
+  "感情を引き起こす側（もの・事）が主語なので -ing",
+  "感情を受け取る人が主語なので -ed"],
+"分詞構文":[
+  "意味上の主語（＝主節の主語）が「する側」なので -ing",
+  "意味上の主語が「される側」なので過去分詞",
+  "主語が主節と違うので、分詞の前に主語を置く"],
+"時制":[
+  "過去のある時点より前のことなので had + 過去分詞",
+  "現在まで続いていることなので have + 過去分詞",
+  "起きた順に並べているだけなので、両方とも過去形でよい"],
+"関係詞":[
+  "うしろが欠けのない完全な文なので、関係副詞",
+  "うしろが不完全な文（欠けがある）なので、関係代名詞",
+  "先行詞がなく、それ自体に先行詞を含むので what",
+  "「〜の」という所有の関係なので whose"],
+"仮定法":[
+  "現在の事実に反する話なので、if 節は過去形／主節は would + 原形",
+  "過去の事実に反する話なので、if 節は had p.p.／主節は would have p.p.",
+  "実際に起こりうる条件なので、仮定法ではなく直説法",
+  "wish・as if のあとなので、時制を1つ古いほうへずらす"],
+"動名詞":[
+  "すでにしたことを指すので -ing",
+  "これからすることを指すので to do",
+  "前置詞のうしろなので -ing"],
+"不定詞":[
+  "「〜するために」という目的を表すので to do",
+  "この動詞は 原形／to do を取る（-ing は取らない）",
+  "「そして結局〜した」という結果を表すので only to do",
+  "too … to do で「…すぎて〜できない」"],
+"比較":[
+  "than があるので比較級",
+  "範囲を示す the があるので最上級",
+  "as … as の同等比較なので原級",
+  "the 比較級, the 比較級 で「〜すればするほど」"],
+"接続詞":[
+  "「〜するまでずっと」という継続なので until",
+  "「〜するまでには」という期限なので by the time",
+  "形容詞のあとに that 節が続くので、前置詞は要らない",
+  "「〜かどうか」なので whether（that では表せない）"],
+"前置詞":[
+  "相手に渡すための動きなので to",
+  "一点を狙う・ぶつける意図なので at",
+  "中へ入る動きなので into"],
+"進行形":[
+  "状態を表す動詞なので、進行形にしない",
+  "人が意識してする動作なので、進行形にできる",
+  "いままさに進行中なので、進行形にする"],
+"熟語":[
+  "cannot help -ing で「〜せずにはいられない」。うしろは動名詞",
+  "help + O + (to) do で「〜するのを手伝う」。うしろは原形か to do",
+  "群動詞なので、受動態にしても前置詞が残る",
+  "have no choice but to do で「〜するほかない」。うしろは to 不定詞"],
+"助動詞":[
+  "過去のことへの推量なので must have + 過去分詞",
+  "過去のことへの後悔・非難なので should have + 過去分詞",
+  "いまのことへの推量なので must + 原形",
+  "過去の習慣「〜したものだった」なので would + 原形"],
+"受動態":[
+  "動作を受ける側が主語なので be + 過去分詞",
+  "動作をする側が主語なので、能動態のままでよい",
+  "群動詞なので、受動態にしても前置詞が文末に残る",
+  "使役・知覚動詞を受動態にすると、消えていた to が復活する"],
+"強調構文":[
+  "It is … that … で、間にはさんだ部分を強調している",
+  "形式主語の it で、本当の主語は that 以下",
+  "not … until 〜 の強調で「〜して初めて…した」"],
+"倒置":[
+  "否定の副詞が文頭に出たので、主語と（助）動詞が入れ替わる",
+  "場所を表す副詞句が文頭に出たので、主語と動詞が入れ替わる",
+  "文頭に出ているだけなので、語順はそのままでよい"],
+"同格":[
+  "直前の名詞の中身を説明しているので、同格の that（うしろは完全な文）",
+  "関係代名詞の that で、うしろは欠けのある不完全な文",
+  "「〜かどうか」を表すので whether"]
+};
+
+const DATA = [
+/* ---------------- 山月記 ---------------- */
+{id:"RG1", work:"RG", tag:"自他動詞", format:"fill", kind:"vt", wa:0,
+ jp:"二人は夜明けまで詩について語り合った。",
+ pre:"They discussed", post:"poetry until dawn.", opts:["about","—（そのまま）"], ans:1,
+ ex:"discuss は「〜について」の意味まで動詞が抱えている。about は不要。",
+ pat:"<em>discuss + 名詞</em>　／　<s>discuss about</s>",
+ more:"同じ型の他動詞に mention・marry・enter・reach・approach・attend・resemble・oppose・answer・obey。逆に talk は自動詞で talk about が必要。「話す」系のうち直結できるのは discuss だけ、と押さえておくと混ざらない。"},
+{id:"RG2", work:"RG", tag:"自他動詞", format:"fill", kind:"vi", wa:1,
+ jp:"袁傪は夜明け前、その林にたどり着いた。",
+ pre:"Yuan Can arrived", post:"the woods before dawn.", opts:["at","to","—（そのまま）"], ans:0,
+ ex:"arrive は自動詞。地点を示す前置詞が要る。",
+ pat:"<em>arrive at 地点 / arrive in 都市</em>　／　<s>arrive to</s>",
+ more:"「着く」の3語をセットで整理しておくと出題に強い。reach は他動詞で直結（reach the woods）、get は get to、arrive は arrive at/in。同じ日本語訳でも型が全部違う、という典型例。"},
+{id:"RG3", work:"RG", tag:"自他動詞", format:"fill", kind:"vi", wa:1,
+ jp:"彼は草むらから聞こえる声に耳を傾けた。",
+ pre:"He listened", post:"the voice in the grass.", opts:["to","at","—（そのまま）"], ans:0,
+ ex:"listen は自動詞なので、to なしでは目的語を取れない。",
+ pat:"<em>listen to + 名詞</em>　／　<em>hear + 名詞</em>",
+ more:"listen は意識して耳を傾ける自動詞、hear は自然に聞こえてくる他動詞。同じ関係が see（他動詞・見える）と look at（自動詞・目を向ける）、watch（他動詞・じっと見る）にもある。5語まとめて型で覚える。"},
+{id:"RG4", work:"RG", tag:"知覚動詞", format:"fill", kind:"vt", wa:0,
+ jp:"彼は闇の中で誰かがすすり泣くのを聞いた。",
+ pre:"He heard someone", post:"in the darkness.", opts:["weeping","to weep"], ans:0,
+ ex:"知覚動詞は目的語のあとに原形か -ing を取る。to 不定詞は取らない。",
+ pat:"<em>hear / see / feel + O + 原形 or -ing</em>　／　<s>+ to do</s>",
+ more:"原形は動作の全体を、-ing は進行中の一場面を見聞きした感じになる。ただし受動態にすると to が復活する（He was heard to weep.）。この「受動態で to が戻る」が正誤問題の定番の狙い所。"},
+{id:"RG5", work:"RG", tag:"分詞構文", format:"fill", kind:"vt", wa:0,
+ jp:"友の声を聞いて、袁傪は車を止めた。",
+ pre:"", post:"his friend's voice, Yuan Can stopped the carriage.", opts:["Hearing","Heard"], ans:0,
+ ex:"主語（Yuan Can）が「聞く」側なので現在分詞。",
+ pat:"<em>-ing = 主語がする側</em>　／　<em>過去分詞 = 主語がされる側</em>",
+ more:"元の文は When he heard his friend's voice, ... 。主語が主節と同じだから接続詞ごと省略できる。判定手順は、①カンマまでの主語を主節から補う ②その主語が「する側」か「される側」かを見る、の2ステップだけ。"},
+{id:"RG6", work:"RG", tag:"分詞", format:"fill", kind:"vt", wa:1,
+ jp:"彼は、忘れられた自分の詩を書き留めてほしいと願った。",
+ pre:"He wanted his", post:"poems to be written down.", opts:["forgotten","forgetting"], ans:0,
+ ex:"forget は他動詞。他動詞の過去分詞は「〜される」の意味になる。",
+ pat:"<em>他動詞の p.p. = 〜される</em>　／　<em>自動詞の p.p. = 〜してしまった</em>",
+ more:"対で覚えると一発。broken window（壊された窓／他動詞）↔ fallen leaves（落ちた葉／自動詞）、a retired teacher（退職した先生）。自動詞か他動詞かの知識が、そのまま分詞の意味判定に効いてくる場所。"},
+{id:"RG7", work:"RG", tag:"時制", format:"fill", kind:"vt", wa:0,
+ jp:"袁傪が見つけたときには、彼はすでに虎になっていた。",
+ pre:"By the time Yuan Can found him, he", post:"a tiger.", opts:["had already become","already became"], ans:0,
+ ex:"過去のある時点より前に完了している＝過去完了。",
+ pat:"<em>過去の基準時 + それより前 → had + 過去分詞</em>",
+ more:"By the time / when / before / after が基準時の目印。ただし before・after は前後関係が語自体で明らかなので、過去形のままでも許される。「すでに」「〜してしまっていた」という訳が出てきたら過去完了を疑う。"},
+{id:"RG8", work:"RG", tag:"関係詞", format:"fill", kind:"vt", wa:0,
+ jp:"彼は、人間の声を失った夜のことを覚えていた。",
+ pre:"He remembered the night", post:"he lost his human voice.", opts:["when","which"], ans:0,
+ ex:"うしろが欠けのない完全な文なので関係副詞 when。",
+ pat:"<em>関係副詞 + 完全な文</em>　／　<em>関係代名詞 + 不完全な文</em>",
+ more:"判定は先行詞ではなく、うしろの文に欠けがあるかだけで決まる。which を使うなら lost の目的語が欠けている必要がある（the voice which he lost）。時＝when、場所＝where、理由＝why、方法＝how。"},
+{id:"RG9", work:"RG", tag:"仮定法", format:"fill", kind:"vt", wa:1,
+ jp:"もっと謙虚であったなら、彼はすべてを失わずに済んだだろう。",
+ pre:"If he had been humbler, he", post:"everything.", opts:["would not have lost","would not lose"], ans:0,
+ ex:"if 節が had＋過去分詞なら、主節は would have＋過去分詞。",
+ pat:"<em>If + had p.p. , S would have p.p.</em>（過去の事実に反する）",
+ more:"現在の話なら If + 過去形 , would + 原形（仮定法過去）。時制を1つ古いほうへずらすのが共通ルール。if 節の中に would を入れないこと、be 動詞は were が原則（If I were you）も一緒に押さえる。"},
+{id:"RG10", work:"RG", tag:"動名詞", format:"fill", kind:"vt", wa:0,
+ jp:"彼は家族を置き去りにしたことを悔やんだ。",
+ pre:"He regretted", post:"his family behind.", opts:["leaving","to leave"], ans:0,
+ ex:"regret -ing は「〜したことを後悔する」。",
+ pat:"<em>-ing = すでにしたこと</em>　／　<em>to do = これからすること</em>",
+ more:"同じ対比が remember・forget・try・stop にも効く。remember to do（忘れずに〜する）／remember -ing（〜したのを覚えている）、stop to do（〜するために立ち止まる）／stop -ing（〜するのをやめる）。1つの原則で5語まとめて処理できる。"},
+{id:"RG11", work:"RG", tag:"使役動詞", format:"fill", kind:"vt", wa:0,
+ jp:"自尊心が、彼を他の詩人たちから遠ざけた。",
+ pre:"His pride made him", post:"away from other poets.", opts:["keep","to keep"], ans:0,
+ ex:"make / let / have は目的語のあとに原形不定詞を取る。",
+ pat:"<em>make・let・have + O + 原形</em>　／　<em>get + O + to do</em>",
+ more:"知覚動詞と同じく、受動態にすると to が現れる（He was made to keep away.）。help は原形でも to do でも可という例外。「使役・知覚は原形、受動になったら to」がまとめ方。"},
+{id:"RG12", work:"RG", tag:"接続詞", format:"error", wa:2,
+ jp:"彼は、自分の才能が本物ではないことを恐れていた。",
+ parts:["He was","afraid of","that his talent","was not real."], ans:1,
+ ex:"be afraid のあとに that 節を続けるとき、of は不要。",
+ fix:"He was afraid that his talent was not real.",
+ pat:"<em>be afraid that + 文</em>　／　<em>be afraid of + 名詞・動名詞</em>",
+ more:"形容詞のあとに that 節が来るときは前置詞が消える、というのが原則。be sure that / be proud that / be aware that も同じ。of を残してしまうのが典型的なミスで、正誤問題ではここが狙われる。"},
+
+/* ---------------- 檸檬 ---------------- */
+{id:"LM1", work:"LM", tag:"自他動詞", format:"fill", kind:"vi", wa:1,
+ jp:"檸檬は、本の山の上にのっていた。",
+ pre:"The lemon was", post:"on the pile of books.", opts:["lying","laying"], ans:0,
+ ex:"檸檬「が」ある。うしろに名詞がないので自動詞 lie。",
+ pat:"<em>lie（自）lie - lay - lain - lying</em><br><em>lay（他）lay - laid - laid - laying</em>",
+ more:"判定はうしろに名詞があるかどうかだけ。もう一つ、「嘘をつく」の lie（lie - lied - lied）があり、これだけ活用が規則変化。3系統を並べて一度書き出しておくと迷わなくなる。夢十夜の rise / raise もまったく同じ関係。"},
+{id:"LM2", work:"LM", tag:"自他動詞", format:"fill", kind:"vt", wa:0,
+ jp:"彼は檸檬を、本の山の上に置いた。",
+ pre:"He", post:"the lemon on the pile of books.", opts:["laid","lay"], ans:0,
+ ex:"the lemon に手を出しているので他動詞 lay、その過去形 laid。",
+ pat:"<em>He laid the lemon.</em>（置いた）／ <em>He lay on the bed.</em>（横たわった）",
+ more:"混乱の元は、lay（他動詞の原形）と lay（lie の過去形）が同じ綴りで衝突していること。だから原形・活用で判断せず、うしろに名詞があるかで切る。名詞があれば他動詞なので laid、なければ lie 系。"},
+{id:"LM3", work:"LM", tag:"自他動詞", format:"fill", kind:"vt", wa:0,
+ jp:"彼は三条通の書店に入った。",
+ pre:"He entered", post:"the bookstore on Sanjo Street.", opts:["into","—（そのまま）"], ans:1,
+ ex:"enter は直結。場所を表す前置詞は要らない。",
+ pat:"<em>enter + 場所</em>　／　<em>go into + 場所</em>",
+ more:"ただし enter into という形自体は存在し、「（契約・議論・関係）に入る」という抽象的な意味のときだけ使う（enter into an agreement）。物理的に部屋へ入るときには使わない、という線引き。"},
+{id:"LM4", work:"LM", tag:"自他動詞", format:"fill", kind:"vi", wa:2,
+ jp:"彼は胸の中の憂鬱を、取り除くことができなかった。",
+ pre:"He could not get rid", post:"the gloom in his chest.", opts:["of","—（そのまま）"], ans:0,
+ ex:"get rid of で1つの塊。of まで含めて他動詞のようにふるまう。",
+ pat:"<em>get rid of + 名詞</em>（群動詞）",
+ more:"look for・take care of・put up with・deal with なども同じ群動詞。受動態にするときに前置詞を落とさないのがポイントで、He was taken care of. のように文末に前置詞が残る。これも正誤問題の頻出パターン。"},
+{id:"LM5", work:"LM", tag:"分詞", format:"fill", kind:"vt", wa:1,
+ jp:"彼は、小さな果物屋で売られている檸檬を見つけた。",
+ pre:"He found a lemon", post:"at a small fruit shop.", opts:["sold","selling"], ans:0,
+ ex:"檸檬は「売られる」側なので過去分詞。",
+ pat:"<em>名詞 + -ing（〜している）</em>　／　<em>名詞 + p.p.（〜される）</em>",
+ more:"a lemon sold at the shop = a lemon which was sold at the shop。関係代名詞＋be動詞が省かれた形と考えると分かりやすい。分詞1語だけなら名詞の前（a broken window）、2語以上の塊なら名詞のうしろ、という位置のルールもある。"},
+{id:"LM6", work:"LM", tag:"関係詞", format:"fill", kind:"vt", wa:2,
+ jp:"彼が欲しかったのは、たった一つの檸檬だった。",
+ pre:"", post:"he wanted was a single lemon.", opts:["What","That"], ans:0,
+ ex:"先行詞がなく、wanted の目的語も欠けている＝関係代名詞 what。",
+ pat:"<em>what = the thing(s) which</em>（先行詞を含む）",
+ more:"what のうしろは必ず不完全な文になる。That にすると接続詞になり、wanted の目的語が宙に浮いてしまう。What he wanted was 〜 は英作文でも強力な型で、「〜なのは…だ」と言いたいときにそのまま使える。"},
+{id:"LM7", work:"LM", tag:"比較", format:"fill", kind:"vt", wa:0,
+ jp:"その冷たい重みほど、彼の気を晴らすものはなかった。",
+ pre:"Nothing made him feel", post:"than its cold weight.", opts:["better","best"], ans:0,
+ ex:"than があるので比較級。最上級に than は付かない。",
+ pat:"<em>Nothing is 比較級 than A</em> ＝ A が一番",
+ more:"最上級を使わずに最上級の意味を出す型。This is the most interesting book. ／ No other book is more interesting than this. ／ Nothing is as interesting as this. の3つは書き換え問題の定番なので、セットで音読しておくといい。"},
+{id:"LM8", work:"LM", tag:"不定詞", format:"fill", kind:"vt", wa:0,
+ jp:"彼は画集を積み上げて、奇妙な城を作った。",
+ pre:"He piled up the art books", post:"a strange castle.", opts:["to make","making"], ans:0,
+ ex:"「〜するために」という目的を表す不定詞。",
+ pat:"<em>to do = 〜するために</em>（in order to / so as to で明示も可）",
+ more:"分詞構文の making にすると「そして作った」という結果の意味に寄り、意図がぼやける。逆に「…、そして〜した」と結果を表したいときは、only to do（結局〜した）を使う。目的か結果かで形が変わる。"},
+{id:"LM9", work:"LM", tag:"分詞構文", format:"fill", kind:"vt", wa:0,
+ jp:"檸檬を本の山の上に残して、彼は丸善を出た。",
+ pre:"", post:"the lemon on the pile, he walked out of Maruzen.", opts:["Leaving","Left"], ans:0,
+ ex:"he が「残す」側で、うしろに目的語もあるので現在分詞。",
+ pat:"<em>Leaving O, S V</em> ＝ As he left O, S V",
+ more:"うしろに the lemon という目的語が残っている時点で、能動の -ing に決まる。Left にすると「残されて」となり、彼のほうが置いていかれたことになってしまう。目的語の有無は分詞構文でも強い手がかり。"},
+{id:"LM10", work:"LM", tag:"仮定法", format:"fill", kind:"vt", wa:0,
+ jp:"もしその檸檬が爆発したら店は燃え上がる、と彼は想像した。",
+ pre:"He imagined that if the lemon", post:", the store would burn.", opts:["exploded","explodes"], ans:0,
+ ex:"主節が would なので、if 節は過去形（仮定法過去）。",
+ pat:"<em>If + 過去形 , S would + 原形</em>（現在の事実に反する）",
+ more:"「もし〜なら」でも、実際に起こりうる条件なら直説法で If it rains, we will stay home. となる。仮定法かどうかは、話し手が「事実に反する」と思っているかで決まる。檸檬が爆弾になるのは空想なので仮定法。"},
+{id:"LM11", work:"LM", tag:"時制", format:"fill", kind:"vt", wa:0,
+ jp:"彼は、こんなに自由な気持ちになったことがないと気づいた。",
+ pre:"He realized that he", post:"so free before.", opts:["had never felt","never felt"], ans:0,
+ ex:"realized（過去）の時点までの経験なので過去完了。",
+ pat:"<em>had + p.p. + never / ever / before</em>（過去までの経験）",
+ more:"現在完了 has never felt は「今まで」の話になるので、過去の場面を語るこの文では使えない。基準が現在なら現在完了、過去のある時点なら過去完了。基準時をどこに置いているかで選ぶ。"},
+{id:"LM12", work:"LM", tag:"進行形", format:"error", wa:0,
+ jp:"檸檬はとても新鮮な香りがしたので、彼は鼻に近づけた。",
+ parts:["The lemon was smelling","so fresh","that he held it","to his nose."], ans:0,
+ ex:"smell は状態を表す動詞なので、原則として進行形にしない。",
+ fix:"The lemon smelled so fresh that he held it to his nose.",
+ pat:"<em>状態動詞は進行形にしない</em>：smell / taste / feel / look / seem / know / belong / resemble / contain",
+ more:"ただし人が意識的にする動作として使うときは進行形になる。He is smelling the lemon.（匂いを嗅いでいる）は正しい。「ものが〜の香りがする」なら状態、「人が嗅ぐ」なら動作。主語が何かで判断する。"},
+
+/* ---------------- 蜜柑 ---------------- */
+{id:"MK1", work:"MK", tag:"自他動詞", format:"fill", kind:"vt", wa:0,
+ jp:"少女は窓の掛け金に手が届かなかった。",
+ pre:"The girl could not reach", post:"the window latch.", opts:["to","—（そのまま）"], ans:1,
+ ex:"reach は直結。「〜に届く」でも to は不要。",
+ pat:"<em>reach + 場所・もの</em>　／　<s>reach to</s>",
+ more:"「手を伸ばす（届いてはいない）」なら reach for the latch。to ではなく for なのが要注意で、reach for は「取ろうとする」動作、reach は「到達する」結果を表す。前置詞ひとつで意味が変わる典型。"},
+{id:"MK2", work:"MK", tag:"自他動詞", format:"fill", kind:"vi", wa:1,
+ jp:"少女は窓から身を乗り出した。",
+ pre:"She leaned", post:"the window.", opts:["out of","—（そのまま）"], ans:0,
+ ex:"lean は自動詞。方向を示す前置詞なしでは目的語を取れない。",
+ pat:"<em>lean out of</em>（乗り出す）／ <em>lean on</em>（寄りかかる）／ <em>lean against</em>（もたせかける）",
+ more:"自動詞は、どの前置詞と組むかで意味が変わる。だから単語だけ覚えても使えない。動詞＋前置詞のセットで、意味ごと音読して入れるのが結局いちばん速い。羅生門の lean against the pillar と対にして確認するといい。"},
+{id:"MK3", work:"MK", tag:"自他動詞", format:"fill", kind:"vi", wa:2,
+ jp:"少年たちは姉を待っていた。",
+ pre:"The boys were waiting", post:"their sister.", opts:["for","to","—（そのまま）"], ans:0,
+ ex:"wait for がセット。wait 単独では目的語を取れない。",
+ pat:"<em>wait for + 人・もの</em>　／　<em>wait to do</em>（〜するのを待つ）",
+ more:"群動詞なので受動態でも for が残る（He was waited for.）。同じ意味の await は他動詞で直結する（await the train）。wait for と await を対で覚えておくと、書き換え問題に対応できる。"},
+{id:"MK4", work:"MK", tag:"前置詞", format:"fill", kind:"vt", wa:0,
+ jp:"少女は三人の少年に、五つの蜜柑を投げてやった。",
+ pre:"She threw five oranges", post:"the three boys.", opts:["to","at"], ans:0,
+ ex:"渡すために投げているので to。at だとぶつける意図になる。",
+ pat:"<em>throw A to B</em>（渡すために）／ <em>throw A at B</em>（ぶつけるために）",
+ more:"at には「一点を狙う・敵意」のニュアンスがある。同じ対比が shout to（呼びかける）／shout at（怒鳴りつける）、smile at、laugh at（あざ笑う）。和訳では見分けがつかないので、前置詞そのもので判断する。"},
+{id:"MK5", work:"MK", tag:"知覚動詞", format:"fill", kind:"vt", wa:0,
+ jp:"私は三人の少年が踏切で待っているのを見た。",
+ pre:"I saw three boys", post:"at the crossing.", opts:["waiting","to wait"], ans:0,
+ ex:"see も知覚動詞。目的語のあとは原形か -ing。",
+ pat:"<em>see + O + 原形 or -ing</em>　／　<s>+ to do</s>",
+ more:"原形なら動作を最初から最後まで見た、-ing なら進行中の場面を見た、というニュアンスの差。受動態では to が復活する（They were seen to wait.）。hear・feel・watch・notice も同じ仲間。"},
+{id:"MK6", work:"MK", tag:"分詞構文", format:"fill", kind:"vt", wa:0,
+ jp:"隅に座ったまま、私は黙って彼女を見ていた。",
+ pre:"", post:"in the corner, I watched her in silence.", opts:["Sitting","Sat"], ans:0,
+ ex:"I が「座っている」側なので現在分詞。",
+ pat:"<em>分詞構文の意味上の主語 = 主節の主語</em>",
+ more:"主語が違う場合は分詞の前に主語を置く（独立分詞構文）。It being cold, we stayed home. 主語がずれたまま書くと懸垂分詞という誤りになり、正誤問題で狙われる。分詞構文を見たら、まず主節の主語を確認する。"},
+{id:"MK7", work:"MK", tag:"時制", format:"fill", kind:"vt", wa:0,
+ jp:"彼女が窓を開けたとき、汽車はすでにトンネルに入っていた。",
+ pre:"The train", post:"the tunnel when she opened the window.", opts:["had already entered","already entered"], ans:0,
+ ex:"opened（過去）よりも前に起きているので過去完了。",
+ pat:"<em>when + 過去形</em> を基準に、それより前は <em>had + p.p.</em>",
+ more:"already・just・never が付いていたら過去完了を疑う目印になる。逆に時間の流れどおりに出来事を並べるだけなら、両方とも過去形でよい。「どちらが先か」を示したいときに使うのが過去完了。"},
+{id:"MK8", work:"MK", tag:"関係詞", format:"fill", kind:"vt", wa:0,
+ jp:"そこが、少年たちが待っていた踏切だった。",
+ pre:"That was the crossing", post:"the three boys were waiting.", opts:["where","which"], ans:0,
+ ex:"うしろが完全な文なので関係副詞 where。",
+ pat:"<em>where + 完全な文</em>　／　<em>which + 不完全な文</em>",
+ more:"先行詞が場所でも、うしろが不完全なら which を使う（the crossing which they passed は passed の目的語が欠けている）。「場所だから where」ではなく、あくまでうしろの文の形で決まる。ここを取り違える人が多い。"},
+{id:"MK9", work:"MK", tag:"接続詞", format:"fill", kind:"vt", wa:0,
+ jp:"空から蜜柑が降ってくるまで、私は彼女を理解していなかった。",
+ pre:"I did not understand her", post:"the oranges fell from the sky.", opts:["until","by the time"], ans:0,
+ ex:"「〜するまでずっと」という継続なので until。",
+ pat:"<em>until = 〜するまでずっと（継続）</em>　／　<em>by the time = 〜するまでには（完了）</em>",
+ more:"not ... until 〜 で「〜して初めて…した」。強調構文にすると It was not until the oranges fell that I understood her. となり、これが入試の超頻出の書き換え。高瀬舟にも同じ型が出てくる。"},
+{id:"MK10", work:"MK", tag:"比較", format:"fill", kind:"vt", wa:0,
+ jp:"あの光景ほど心を打つものはなかった。",
+ pre:"Nothing could be", post:"than that scene.", opts:["more moving","most moving"], ans:0,
+ ex:"than があるので比較級。",
+ pat:"<em>Nothing is 比較級 than A</em> ＝ A が一番",
+ more:"moving（感動させる）と moved（感動した）の使い分けも一緒に狙われる。感情を引き起こす側のもの・場面が主語なら -ing、感情を受け取る人が主語なら -ed。interesting / interested、boring / bored も同じ理屈。"},
+{id:"MK11", work:"MK", tag:"不定詞", format:"fill", kind:"vt", wa:1,
+ jp:"その光景は、私に疲れを忘れさせてくれた。",
+ pre:"The sight helped me", post:"my fatigue.", opts:["forget","forgetting"], ans:0,
+ ex:"help + O + (to) do。原形でも to do でもよいが、-ing は取らない。",
+ pat:"<em>help + O + (to) do</em>",
+ more:"help は原形と to 不定詞の両方を許す例外的な動詞。紛らわしいのが cannot help -ing（〜せずにはいられない）で、こちらは動名詞。help の直後に目的語（人）があるかどうかで、2つの型を切り分ける。"},
+{id:"MK12", work:"MK", tag:"熟語", format:"error", wa:0,
+ jp:"私は暖かい心持ちになるのを、抑えることができなかった。",
+ parts:["I could not","help","to feel","warm at heart."], ans:2,
+ ex:"cannot help -ing で「〜せずにはいられない」。あとに続くのは動名詞。",
+ fix:"I could not help feeling warm at heart.",
+ pat:"<em>cannot help -ing</em> ＝ <em>cannot but do</em> ＝ <em>have no choice but to do</em>",
+ more:"この help は「避ける」という意味。3つの言い換えは形がそれぞれ違う（-ing／原形／to do）ので、混ぜないよう並べて覚える。直前の問題の help + O + (to) do と紛らわしいのが狙い所。"},
+
+/* ---------------- 羅生門 ---------------- */
+{id:"RS1", work:"RS", tag:"自他動詞", format:"fill", kind:"vt", wa:0,
+ jp:"下人は梯子のいちばん上にたどり着いた。",
+ pre:"The servant reached", post:"the top of the ladder.", opts:["to","up to","—（そのまま）"], ans:2,
+ ex:"reach は他動詞。「〜に」でも to は要らない。",
+ pat:"<em>reach + 場所</em>　／　<s>reach to</s>",
+ more:"同じ「着く」でも arrive at、get to、reach（直結）と型が全部違う。蜜柑の「掛け金に手が届かない」でも同じ reach が出てくる。訳ではなく型で覚え直す場所。"},
+{id:"RS2", work:"RS", tag:"自他動詞", format:"fill", kind:"vi", wa:1,
+ jp:"下人は門の柱に身をもたせかけて、雨のやむのを待っていた。",
+ pre:"He leaned", post:"the pillar of the gate.", opts:["against","—（そのまま）"], ans:0,
+ ex:"lean は自動詞。名詞につなぐには前置詞が要る。",
+ pat:"<em>lean against</em>（もたせかける）／ <em>lean on</em>（寄りかかる）／ <em>lean out of</em>（乗り出す）",
+ more:"蜜柑の少女は lean out of the window（窓から乗り出す）だった。同じ lean でも前置詞で意味が変わる。自動詞は「動詞＋前置詞」を一組の音として入れるのが結局いちばん速い。"},
+{id:"RS3", work:"RS", tag:"自他動詞", format:"fill", kind:"vt", wa:0,
+ jp:"下人は音を立てずに老婆へ近づいた。",
+ pre:"He approached", post:"the old woman without a sound.", opts:["to","—（そのまま）"], ans:1,
+ ex:"approach は他動詞。直結する。",
+ pat:"<em>approach + 名詞</em>　／　<s>approach to</s>",
+ more:"discuss・mention・marry・enter・reach・attend・resemble・oppose・answer・obey と同じ仲間。どれも日本語では「〜に」「〜について」となるので、訳から入ると全部間違える。"},
+{id:"RS4", work:"RS", tag:"自他動詞", format:"fill", kind:"vi", wa:2,
+ jp:"下人は自分の飢えに耐えることができなかった。",
+ pre:"He could not put up", post:"his own hunger.", opts:["with","for","—（そのまま）"], ans:0,
+ ex:"put up with で1つの塊。with まで含めて他動詞のようにふるまう。",
+ pat:"<em>put up with + 名詞</em>（群動詞）",
+ more:"檸檬の get rid of と同じ構造。3語で1つの動詞だと思って音ごと覚える。受動態にすると前置詞が文末に残る（Such hunger cannot be put up with.）。"},
+{id:"RS5", work:"RS", tag:"分詞構文", format:"fill", kind:"vi", wa:1,
+ jp:"葬られないまま、死骸が楼の上を埋めていた。",
+ pre:"", post:"unburied, the bodies filled the upper floor.", opts:["Left","Leaving"], ans:0,
+ ex:"主語（the bodies）は「置き去りにされる」側なので過去分詞。",
+ pat:"<em>過去分詞 = 主語がされる側</em>　／　<em>-ing = 主語がする側</em>",
+ more:"檸檬の Leaving the lemon on the pile, he walked out... と正反対の形。あちらは「彼が残す」側だから -ing。判定は毎回同じで、①主語を主節から補う ②する側かされる側か、の2手だけ。"},
+{id:"RS6", work:"RS", tag:"知覚動詞", format:"fill", kind:"vt", wa:0,
+ jp:"下人は、老婆が死人の髪を抜いているのを見た。",
+ pre:"He saw an old woman", post:"out a corpse's hair.", opts:["pulling","to pull"], ans:0,
+ ex:"知覚動詞は目的語のあとに原形か -ing を取る。to 不定詞は取らない。",
+ pat:"<em>see / hear / feel + O + 原形 or -ing</em>　／　<s>+ to do</s>",
+ more:"-ing は「その動作の途中を見た」感じ。受動態にすると to が復活する（She was seen to pull out the hair.）。この受動での to 復活が正誤問題の定番。"},
+{id:"RS7", work:"RS", tag:"時制", format:"fill", kind:"vi", wa:0,
+ jp:"彼が梯子を登ったとき、雨はまだやんでいなかった。",
+ pre:"The rain", post:"when he climbed the ladder.", opts:["had not stopped","did not stop"], ans:0,
+ ex:"climbed（過去）の時点までの状態なので過去完了。",
+ pat:"<em>過去の基準時 + それより前・それまで → had + 過去分詞</em>",
+ more:"when 節が基準時を作る。「まだ〜していなかった」「すでに〜していた」が過去完了の目印。時間順に並べるだけなら両方とも過去形でよい。"},
+{id:"RS8", work:"RS", tag:"関係詞", format:"fill", kind:"vt", wa:0,
+ jp:"それが、老婆が髪を抜いていた理由だった。",
+ pre:"That was the reason", post:"she pulled out the hair.", opts:["why","which"], ans:0,
+ ex:"うしろが欠けのない完全な文なので関係副詞 why。",
+ pat:"<em>関係副詞（when / where / why / how）+ 完全な文</em>",
+ more:"which を使うなら pulled out の目的語が欠けている必要がある。先行詞が reason だから why、ではなく、うしろの文に欠けがあるかで決まる。山月記の when、蜜柑の where と同じ判定。"},
+{id:"RS9", work:"RS", tag:"仮定法", format:"fill", kind:"vt", wa:1,
+ jp:"老婆が何も言わなかったら、下人は着物を奪わなかっただろう。",
+ pre:"If she had said nothing, he", post:"her clothes.", opts:["would not have taken","would not take"], ans:0,
+ ex:"if 節が had + 過去分詞なので、主節は would have + 過去分詞。",
+ pat:"<em>If + had p.p. , S would have p.p.</em>（過去の事実に反する）",
+ more:"現在の話なら If + 過去形 , would + 原形。時制を1つ古いほうへずらすのが共通ルール。if 節の中に would を入れないことも一緒に押さえる。"},
+{id:"RS10", work:"RS", tag:"助動詞", format:"fill", kind:"vi", wa:0,
+ jp:"老婆は何日も飢えていたにちがいない。",
+ pre:"She", post:"for many days.", opts:["must have been starving","must be starving"], ans:0,
+ ex:"過去のことへの推量なので must have + 過去分詞。",
+ pat:"<em>must have p.p. = 〜したにちがいない</em>　／　<em>must + 原形 = 今〜にちがいない</em>",
+ more:"過去への推量・後悔はこの4つで足りる。must have p.p.（したにちがいない）／ should have p.p.（すべきだったのに）／ cannot have p.p.（したはずがない）／ may have p.p.（したかもしれない）。並べて一度書き出す。"},
+{id:"RS11", work:"RS", tag:"熟語", format:"fill", kind:"vt", wa:3,
+ jp:"下人は盗人になるほかなかった。",
+ pre:"He had no choice", post:"a thief.", opts:["but to become","but becoming","but become"], ans:0,
+ ex:"have no choice but to do で「〜するほかない」。うしろは to 不定詞。",
+ pat:"<em>have no choice but to do</em> ＝ <em>cannot but do</em> ＝ <em>cannot help -ing</em>",
+ more:"意味は同じなのに、うしろの形が to do / 原形 / -ing と3つとも違う。蜜柑の cannot help feeling と並べて覚えると混ざらない。形が違うことこそが出題される。"},
+{id:"RS12", work:"RS", tag:"倒置", format:"error", wa:0,
+ jp:"老婆の言葉を聞くまで、彼はこれほどの怒りを感じたことがなかった。",
+ parts:["Never he had felt","such anger","before he heard","her words."], ans:0,
+ ex:"否定の副詞 Never が文頭に出たので、主語と助動詞が入れ替わる。",
+ fix:"Never had he felt such anger before he heard her words.",
+ pat:"<em>Never / Little / Not only + 助動詞 + S + V</em>（倒置）",
+ more:"文頭に否定の副詞が来たら疑問文と同じ語順にする、と覚える。Not only did he take her clothes, but he also ran away. も同じ。倒置は正誤問題と整序問題の常連。"},
+
+/* ---------------- 走れメロス ---------------- */
+{id:"ML1", work:"ML", tag:"自他動詞", format:"fill", kind:"vt", wa:0,
+ jp:"メロスは妹を若い牧人に嫁がせた。",
+ pre:"Melos", post:"his sister to a young shepherd.", opts:["married","married with"], ans:0,
+ ex:"marry は他動詞。「〜と」につられて with を入れない。",
+ pat:"<em>marry + 人</em>（結婚する）／ <em>marry A to B</em>（A を B に嫁がせる）／ <s>marry with</s>",
+ more:"結婚している状態は be married to（to であって with ではない）。discuss・enter・reach と同じ「前置詞を足したくなる他動詞」の仲間で、訳から入ると必ず事故る。"},
+{id:"ML2", work:"ML", tag:"自他動詞", format:"fill", kind:"vi", wa:1,
+ jp:"メロスは王の残虐に異を唱えた。",
+ pre:"Melos objected", post:"the king's cruelty.", opts:["to","against","—（そのまま）"], ans:0,
+ ex:"object は自動詞。反対する相手には to が要る。",
+ pat:"<em>object to + 名詞・動名詞</em>　／　<em>oppose + 名詞</em>（直結）",
+ more:"意味がほぼ同じなのに object は to が要り、oppose は直結する。この対は入試で狙われやすい。object to の to は前置詞なので、うしろは -ing になる（object to being treated）。"},
+{id:"ML3", work:"ML", tag:"自他動詞", format:"fill", kind:"vt", wa:0,
+ jp:"メロスは恐れずに王に答えた。",
+ pre:"He answered", post:"the king without fear.", opts:["to","—（そのまま）"], ans:1,
+ ex:"answer は他動詞。「〜に答える」でも to は要らない。",
+ pat:"<em>answer + 人・質問</em>　／　<s>answer to</s>",
+ more:"ただし answer to は「（人）に対して責任を負う」という別の意味では使う。reply は自動詞で reply to が要る。answer と reply で型が逆、と覚える。"},
+{id:"ML4", work:"ML", tag:"自他動詞", format:"fill", kind:"vi", wa:2,
+ jp:"メロスは友に再会するのを楽しみにしていた。",
+ pre:"He looked forward", post:"his friend again.", opts:["to seeing","to see"], ans:0,
+ ex:"look forward to の to は前置詞。うしろは動名詞になる。",
+ pat:"<em>look forward to + -ing</em>　／　<s>look forward to + 原形</s>",
+ more:"to を見ると不定詞だと思ってしまうのが罠。前置詞の to を取る熟語は他に be used to -ing（慣れている）、object to -ing、devote oneself to -ing。「to のあとが -ing になる組」としてまとめて覚える。"},
+{id:"ML5", work:"ML", tag:"不定詞", format:"fill", kind:"vt", wa:2,
+ jp:"メロスは広場へ走ったが、日はまさに沈もうとしていた。",
+ pre:"He ran to the square", post:"the sun setting.", opts:["only to find","only finding"], ans:0,
+ ex:"「〜したが、結局…だった」という結果を表す only to do。",
+ pat:"<em>only to do = そして結局〜した</em>（結果）／ <em>to do = 〜するために</em>（目的）",
+ more:"檸檬の to make a strange castle は目的の to。同じ to 不定詞でも、前に only が付くと結果に変わる。他に never to do（そして二度と〜しなかった）も結果用法。"},
+{id:"ML6", work:"ML", tag:"時制", format:"fill", kind:"vt", wa:0,
+ jp:"彼が川に着いたときには、橋はすでに流されていた。",
+ pre:"By the time he reached the river, the bridge", post:"away.", opts:["had been washed","was washed"], ans:0,
+ ex:"reached（過去）より前に完了しているので過去完了。受動なので had been + 過去分詞。",
+ pat:"<em>had been + 過去分詞</em>（過去のある時点より前に、〜されていた）",
+ more:"By the time が基準時を作る。過去完了と受動が重なると had been p.p. の形になる。山月記の had already become と同じ判断を、受動でやっているだけ。"},
+{id:"ML7", work:"ML", tag:"仮定法", format:"fill", kind:"vi", wa:0,
+ jp:"いま走るのをやめたら、友は死ぬだろう。",
+ pre:"If he", post:"running now, his friend would die.", opts:["stopped","stops"], ans:0,
+ ex:"主節が would なので、if 節は過去形（仮定法過去）。",
+ pat:"<em>If + 過去形 , S would + 原形</em>（現在の事実に反する）",
+ more:"実際に起こりうる条件なら直説法で If he stops running, his friend will die. になる。仮定法かどうかは、話し手が「そんなことはしない」と思っているかで決まる。メロスは走るのをやめない前提なので仮定法。"},
+{id:"ML8", work:"ML", tag:"比較", format:"fill", kind:"vi", wa:3,
+ jp:"走れば走るほど、彼の足は重くなった。",
+ pre:"The more he ran,", post:"his legs became.", opts:["the heavier","heavier","the heaviest"], ans:0,
+ ex:"The 比較級 …, the 比較級 … で「〜すればするほど…」。",
+ pat:"<em>The + 比較級 …, the + 比較級 …</em>",
+ more:"うしろの the を落とすのが定番のミス。語順にも注意で、形容詞・副詞は必ず the の直後に前へ出る（the heavier his legs became）。整序問題で頻出。"},
+{id:"ML9", work:"ML", tag:"分詞構文", format:"fill", kind:"vi", wa:1,
+ jp:"濁流に力を使い果たし、メロスは木の下に横たわった。",
+ pre:"", post:"by the flood, Melos lay down under a tree.", opts:["Exhausted","Exhausting"], ans:0,
+ ex:"主語（Melos）は「疲れさせられる」側なので過去分詞。",
+ pat:"<em>過去分詞 = 主語がされる側</em>　／　<em>-ing = 主語がする側</em>",
+ more:"感情・状態を表す動詞では、人が主語なら -ed、原因のほうが主語なら -ing。The flood was exhausting.（濁流はへとへとにさせるものだった）と比べると差が見える。少年の日の思い出の excited / exciting と同じ理屈。"},
+{id:"ML10", work:"ML", tag:"関係詞", format:"fill", kind:"vt", wa:1,
+ jp:"それが、彼が守らねばならない約束だった。",
+ pre:"This was the promise", post:"he had to keep.", opts:["which","where"], ans:0,
+ ex:"うしろは keep の目的語が欠けた不完全な文なので関係代名詞。",
+ pat:"<em>関係代名詞 + 不完全な文</em>　／　<em>関係副詞 + 完全な文</em>",
+ more:"「場所だから where」と決めてしまう人は多いが、判定はいつでも「うしろの文に欠けがあるか」だけ。蜜柑の crossing where（完全な文）と並べて確認しておく。"},
+{id:"ML11", work:"ML", tag:"使役動詞", format:"fill", kind:"vt", wa:0,
+ jp:"王はメロスを三日間だけ行かせた。",
+ pre:"The king let him", post:"for three days.", opts:["go","to go"], ans:0,
+ ex:"make / let / have は目的語のあとに原形不定詞を取る。",
+ pat:"<em>make・let・have + O + 原形</em>　／　<em>get + O + to do</em>",
+ more:"山月記の made him keep away と同じ型。make は受動態にすると to が戻る（He was made to keep away.）。「使役・知覚は原形、受動になったら to」。"},
+{id:"ML12", work:"ML", tag:"接続詞", format:"error", wa:3,
+ jp:"メロスは、友がまだ生きているかどうか分からなかった。",
+ parts:["Melos did not know","that his friend","was still alive","or not."], ans:1,
+ ex:"「〜かどうか」は whether。that では表せない。",
+ fix:"Melos did not know whether his friend was still alive or not.",
+ pat:"<em>whether … or not = 〜かどうか</em>　／　<em>that + 文 = 〜ということ</em>",
+ more:"if も「〜かどうか」に使えるが、直後に or not を置く形や前置詞のうしろでは使えない。迷ったら whether が安全。名詞節の中身が「イエスかノーか」なら whether、断定なら that。"},
+
+/* ---------------- 少年の日の思い出 ---------------- */
+{id:"HS1", work:"HS", tag:"自他動詞", format:"fill", kind:"vt", wa:0,
+ jp:"彼はそのクジャクヤママユのことを誰にも言わなかった。",
+ pre:"He mentioned", post:"the moth to no one.", opts:["about","—（そのまま）"], ans:1,
+ ex:"mention は「〜について言う」の意味まで抱えている。about は不要。",
+ pat:"<em>mention + 名詞</em>　／　<s>mention about</s>",
+ more:"山月記の discuss とまったく同じ型。「〜について」という訳が出るのに直結する動詞は discuss・mention・consider・describe。逆に talk・speak は about が要る。"},
+{id:"HS2", work:"HS", tag:"自他動詞", format:"fill", kind:"vi", wa:1,
+ jp:"その晩、彼はエーミールに謝った。",
+ pre:"He apologized", post:"Emil that evening.", opts:["to","—（そのまま）"], ans:0,
+ ex:"apologize は自動詞。謝る相手には to が要る。",
+ pat:"<em>apologize to 人 for 事</em>",
+ more:"人と事で前置詞が違うのがポイント（apologize to Emil for taking the moth）。同じ型に complain to 人 about 事、talk to 人 about 事。「人には to、事には for / about」でまとめられる。"},
+{id:"HS3", work:"HS", tag:"自他動詞", format:"fill", kind:"vi", wa:1,
+ jp:"その蛾は、彼のポケットの中でつぶれて転がっていた。",
+ pre:"The moth", post:"crushed in his pocket.", opts:["lay","laid"], ans:0,
+ ex:"蛾「が」ある状態。うしろに名詞がないので自動詞 lie の過去形 lay。",
+ pat:"<em>lie（自）lie - lay - lain</em>　／　<em>lay（他）lay - laid - laid</em>",
+ more:"判定はうしろに名詞があるかだけ。ここには crushed という分詞しかないので自動詞。檸檬の He laid the lemon on the pile（名詞あり→他動詞）と並べると差がはっきりする。"},
+{id:"HS4", work:"HS", tag:"自他動詞", format:"fill", kind:"vi", wa:2,
+ jp:"彼は自分のしたことを償うことができなかった。",
+ pre:"He could not make up", post:"what he had done.", opts:["for","—（そのまま）"], ans:0,
+ ex:"make up for で1つの塊。for まで含めて他動詞のようにふるまう。",
+ pat:"<em>make up for + 名詞</em>（群動詞）",
+ more:"make up だけだと「作り上げる・仲直りする・化粧する」で意味が変わる。群動詞は前置詞まで含めて1語。get rid of、put up with、look forward to と同じ扱い。"},
+{id:"HS5", work:"HS", tag:"分詞", format:"fill", kind:"vt", wa:1,
+ jp:"彼は手の中の、つぶれた翅を見つめた。",
+ pre:"He stared at the", post:"wings in his hand.", opts:["crushed","crushing"], ans:0,
+ ex:"翅は「つぶされる」側なので過去分詞。",
+ pat:"<em>名詞 + p.p.（〜される）</em>　／　<em>名詞 + -ing（〜している）</em>",
+ more:"分詞1語なら名詞の前（crushed wings）、2語以上の塊なら名詞のうしろ（wings crushed in his pocket）。檸檬の a lemon sold at a shop が後置の例。位置のルールも一緒に押さえる。"},
+{id:"HS6", work:"HS", tag:"使役動詞", format:"fill", kind:"vt", wa:0,
+ jp:"母は彼に、行って謝らせた。",
+ pre:"His mother made him", post:"and apologize.", opts:["go","to go"], ans:0,
+ ex:"make は目的語のあとに原形不定詞を取る。",
+ pat:"<em>make・let・have + O + 原形</em>",
+ more:"受動態にすると to が現れる（He was made to go and apologize.）。彼が自分の意志で行ったのではない、というこの場面の意味とも合っている。使役の受動は正誤問題の常連。"},
+{id:"HS7", work:"HS", tag:"時制", format:"fill", kind:"vt", wa:0,
+ jp:"ポケットから取り出したとき、蛾はすでに壊れてしまっていた。",
+ pre:"The moth", post:"when he took it out.", opts:["had already been damaged","was already damaged"], ans:0,
+ ex:"took（過去）より前に起きているので過去完了。受動なので had been + 過去分詞。",
+ pat:"<em>had been + 過去分詞</em>（過去のある時点より前に、〜されていた）",
+ more:"already が付いていたら過去完了を疑う目印。走れメロスの had been washed away と同じ形。基準時（took）をどこに置いているかを先に決めてから形を選ぶ。"},
+{id:"HS8", work:"HS", tag:"関係詞", format:"fill", kind:"vt", wa:3,
+ jp:"エーミールは、その収集を誰もが賞賛する少年だった。",
+ pre:"Emil was the boy", post:"collection everyone admired.", opts:["whose","which"], ans:0,
+ ex:"「その少年の収集」という所有の関係なので whose。",
+ pat:"<em>whose + 名詞</em>（所有）／ <em>which + 不完全な文</em>",
+ more:"whose のうしろには冠詞のない名詞が直接くる（whose collection）。ここを which にすると collection の前が空いて文が壊れる。所有格の関係代名詞は人にも物にも使える（a house whose roof is red）。"},
+{id:"HS9", work:"HS", tag:"仮定法", format:"fill", kind:"vi", wa:1,
+ jp:"あの蛾に手を触れなければ、何も起こらなかっただろう。",
+ pre:"If he had not touched the moth,", post:"at all.", opts:["nothing would have happened","nothing would happen"], ans:0,
+ ex:"if 節が had + 過去分詞なので、主節は would have + 過去分詞。",
+ pat:"<em>If + had p.p. , S would have p.p.</em>（過去の事実に反する）",
+ more:"実際には触れてしまったので、過去の事実に反する仮定。山月記の If he had been humbler と同じ形。if 節と主節で時制がずれる混合仮定法（If he had not touched it, he would be happy now.）も余裕があれば。"},
+{id:"HS10", work:"HS", tag:"動名詞", format:"fill", kind:"vt", wa:0,
+ jp:"彼は、あの部屋から蛾を持ち出したことを認めた。",
+ pre:"He admitted", post:"the moth from the room.", opts:["taking","to take"], ans:0,
+ ex:"admit は「すでにしたこと」を目的語に取るので -ing。",
+ pat:"<em>admit / enjoy / finish / avoid / mind + -ing</em>　／　<s>+ to do</s>",
+ more:"-ing しか取らない動詞は「すでに起きたこと・いましていること」を指すものが多い（admit, enjoy, finish, avoid, escape, mind, give up）。逆に to do しか取らないのは「これからのこと」（want, hope, decide, promise, expect）。時間の向きで分けられる。"},
+{id:"HS11", work:"HS", tag:"助動詞", format:"fill", kind:"vt", wa:1,
+ jp:"彼は、触る前にエーミールに一言たずねるべきだった。",
+ pre:"He", post:"Emil before touching it.", opts:["should have asked","should ask"], ans:0,
+ ex:"「〜すべきだったのに、しなかった」という過去への後悔なので should have + 過去分詞。",
+ pat:"<em>should have p.p. = 〜すべきだったのに</em>　／　<em>should + 原形 = これから〜すべきだ</em>",
+ more:"羅生門の must have been starving（したにちがいない）と同じ仲間。過去への推量・後悔は must have / should have / cannot have / may have の4つ。この場面の後悔そのものが should have p.p. の意味。"},
+{id:"HS12", work:"HS", tag:"分詞", format:"error", wa:3,
+ jp:"はじめてその収集を見たとき、彼はとても興奮した。",
+ parts:["He was very","exciting","when he first saw","the collection."], ans:1,
+ ex:"感情を受け取る人が主語なので excited。exciting は「わくわくさせる側」。",
+ fix:"He was very excited when he first saw the collection.",
+ pat:"<em>人 + -ed（感情を受ける）</em>　／　<em>もの・事 + -ing（感情を起こす）</em>",
+ more:"interesting / interested、boring / bored、surprising / surprised、moving / moved も同じ。蜜柑の more moving（光景が感動させる側）と、この excited（人が受け取る側）を並べると一発で分かる。"},
+
+/* ---------------- 高瀬舟 ---------------- */
+{id:"TB1", work:"TB", tag:"自他動詞", format:"fill", kind:"vt", wa:0,
+ jp:"庄兵衛は月明かりの中で罪人の顔を見つめていた。",
+ pre:"Shobei watched", post:"the prisoner's face in the moonlight.", opts:["at","—（そのまま）"], ans:1,
+ ex:"watch は他動詞。直結する。",
+ pat:"<em>watch + 名詞</em>（じっと見る）／ <em>look at + 名詞</em>（目を向ける）",
+ more:"「見る」の3語で型が全部違う。see は他動詞（見える）、watch は他動詞（じっと見る）、look は自動詞で look at。山月記の listen to / hear と同じ構図が「見る」でも起きている。"},
+{id:"TB2", work:"TB", tag:"自他動詞", format:"fill", kind:"vi", wa:1,
+ jp:"庄兵衛は、その穏やかな顔をじっと見つめた。",
+ pre:"Shobei stared", post:"the man's calm face.", opts:["at","—（そのまま）"], ans:0,
+ ex:"stare は自動詞。目を向ける先には at が要る。",
+ pat:"<em>stare at</em>　／　<em>watch + 名詞</em>（直結）",
+ more:"直前の watch と並べると、意味はほとんど同じなのに型が逆だと分かる。訳語で判断すると必ずどちらかを間違える。at は「一点を狙う」感覚で、gaze at、glance at も同じ。"},
+{id:"TB3", work:"TB", tag:"自他動詞", format:"fill", kind:"vt", wa:0,
+ jp:"喜助は一言も言わずに役人に従った。",
+ pre:"Kisuke obeyed", post:"the officer without a word.", opts:["to","—（そのまま）"], ans:1,
+ ex:"obey は他動詞。「〜に従う」でも to は要らない。",
+ pat:"<em>obey + 人・規則</em>　／　<s>obey to</s>",
+ more:"「〜に」で to を足したくなる他動詞の代表格。answer・marry・approach・reach・enter・attend・resemble も同じ。逆に listen・object・apologize・reply は自動詞で前置詞が要る。2列に分けて書き出しておくと事故らない。"},
+{id:"TB4", work:"TB", tag:"自他動詞", format:"fill", kind:"vi", wa:2,
+ jp:"庄兵衛には、その男の落ち着きが説明できなかった。",
+ pre:"Shobei could not account", post:"the man's calm.", opts:["for","—（そのまま）"], ans:0,
+ ex:"account for で1つの塊。for まで含めて他動詞のようにふるまう。",
+ pat:"<em>account for + 名詞</em>（群動詞）＝ <em>explain + 名詞</em>（直結）",
+ more:"意味が同じ explain は他動詞で直結する。群動詞と単独の他動詞で言い換えられるペアは書き換え問題で狙われる。account for / explain、put up with / tolerate、look into / investigate。"},
+{id:"TB5", work:"TB", tag:"分詞構文", format:"fill", kind:"vt", wa:1,
+ jp:"罪について問われると、喜助は静かに話しはじめた。",
+ pre:"", post:"about his crime, Kisuke began to speak quietly.", opts:["Asked","Asking"], ans:0,
+ ex:"主語（Kisuke）は「たずねられる」側なので過去分詞。",
+ pat:"<em>過去分詞 = 主語がされる側</em>　／　<em>-ing = 主語がする側</em>",
+ more:"元の文は When he was asked about his crime, ... 。受動の分詞構文では being が省かれて過去分詞だけが残る。だから文頭に過去分詞が来ていたら「される側」だと即断できる。"},
+{id:"TB6", work:"TB", tag:"知覚動詞", format:"fill", kind:"vt", wa:0,
+ jp:"彼は、舟が闇の中をゆっくり進むのを感じた。",
+ pre:"He felt the boat", post:"slowly through the dark.", opts:["move","to move"], ans:0,
+ ex:"feel も知覚動詞。目的語のあとは原形か -ing。",
+ pat:"<em>see / hear / feel / watch + O + 原形 or -ing</em>　／　<s>+ to do</s>",
+ more:"原形は動作の全体を、-ing は進行中の一場面を捉えた感じ。ここは舟が進み続けているので moving でも自然。受動態にすれば to が復活する（The boat was felt to move.）。"},
+{id:"TB7", work:"TB", tag:"時制", format:"fill", kind:"vt", wa:0,
+ jp:"喜助が帰ったとき、弟はすでに自分で喉を切っていた。",
+ pre:"His brother", post:"his own throat when Kisuke came home.", opts:["had already cut","already cut"], ans:0,
+ ex:"came（過去）より前に起きているので過去完了。",
+ pat:"<em>過去の基準時 + それより前 → had + 過去分詞</em>",
+ more:"この一文の時間関係が、そのまま作品の核心（弟が先に自分で切っていた）になっている。already・just・never が付いていたら過去完了を疑う。when 節が基準時。"},
+{id:"TB8", work:"TB", tag:"関係詞", format:"fill", kind:"vt", wa:1,
+ jp:"弟が使った剃刀は、まだそこにあった。",
+ pre:"The razor", post:"his brother had used was still there.", opts:["which","where"], ans:0,
+ ex:"うしろは used の目的語が欠けた不完全な文なので関係代名詞。",
+ pat:"<em>関係代名詞 + 不完全な文</em>　／　<em>関係副詞 + 完全な文</em>",
+ more:"この文は関係詞節が主語の中に挟まっている。The razor ( which his brother had used ) was still there. と括ると、主語は The razor、動詞は was だと見える。長い文はまず括って骨を出す。"},
+{id:"TB9", work:"TB", tag:"仮定法", format:"fill", kind:"vt", wa:3,
+ jp:"彼はまるで、大金を与えられたかのような顔をしていた。",
+ pre:"He looked as if he", post:"a fortune.", opts:["had been given","was given"], ans:0,
+ ex:"as if のあとは事実に反するので、時制を1つ古くする。",
+ pat:"<em>as if / wish + 過去形</em>（今の事実に反する）／ <em>+ had p.p.</em>（過去の事実に反する）",
+ more:"二百文しかもらっていないのに大金を得たような顔、という場面なので事実に反する。I wish I were rich.（今の願望）／ I wish I had been rich.（過去への願望）も同じ仕組み。仮定法は「1つ古くする」だけ。"},
+{id:"TB10", work:"TB", tag:"比較", format:"fill", kind:"vi", wa:2,
+ jp:"彼はこの舟の上ほど幸せだったことはなかった。",
+ pre:"He had never been", post:"as he was on that boat.", opts:["so happy","happier"], ans:0,
+ ex:"うしろの as に対応するので、同等比較の原級。",
+ pat:"<em>not so / as 原級 as A</em>　／　<em>比較級 than A</em>",
+ more:"than があれば比較級、as があれば原級。檸檬の Nothing made him feel better than … と型が違うだけで、言いたいこと（それが一番）は同じ。3つの言い換えをセットで音読しておく。"},
+{id:"TB11", work:"TB", tag:"強調構文", format:"fill", kind:"vt", wa:2,
+ jp:"その話を聞いて初めて、庄兵衛には分かったのだった。",
+ pre:"", post:"he heard the story that Shobei understood.", opts:["It was not until","It was until"], ans:0,
+ ex:"not … until 〜 を強調構文にした形。「〜して初めて…した」。",
+ pat:"<em>It was not until A that B</em> ＝ B did not happen until A",
+ more:"蜜柑の I did not understand her until the oranges fell. をこの形に書き換えると It was not until the oranges fell that I understood her. になる。入試の超頻出。この一文をそのまま覚えてしまうのが早い。"},
+{id:"TB12", work:"TB", tag:"同格", format:"error", wa:0,
+ jp:"庄兵衛は、この男は罪人なのかという疑いを振り払えなかった。",
+ parts:["Shobei could not","escape the doubt","which the man","was a criminal."], ans:2,
+ ex:"doubt の中身を説明する同格の節なので that（うしろは完全な文）。",
+ fix:"Shobei could not escape the doubt that the man was a criminal.",
+ pat:"<em>名詞 + that + 完全な文</em>（同格）／ <em>名詞 + which + 不完全な文</em>（関係代名詞）",
+ more:"同格の that を取れる名詞は fact・idea・news・doubt・feeling・hope など「中身を持てる」名詞。判定はいつもどおりで、うしろが完全なら同格の that、欠けがあれば関係代名詞。"},
+
+/* ---------------- 夢十夜 ---------------- */
+{id:"YJ1", work:"YJ", tag:"自他動詞", format:"fill", kind:"vt", wa:0,
+ jp:"彼は女より百年長く生きた。",
+ pre:"He survived", post:"her by a hundred years.", opts:["from","—（そのまま）"], ans:1,
+ ex:"survive は他動詞。「〜より長生きする」も直結する。",
+ pat:"<em>survive + 人</em>（〜より長生きする）／ <em>survive + 事故など</em>（〜を生きのびる）",
+ more:"「〜から生き残る」につられて from を入れるのが定番のミス。前置詞を足したくなる他動詞は discuss・mention・reach・enter・approach・obey・attend。全部「訳に前置詞が入っているのに英語では直結する」組。"},
+{id:"YJ2", work:"YJ", tag:"自他動詞", format:"fill", kind:"vi", wa:1,
+ jp:"赤い日が、何度も昇っては沈んだ。",
+ pre:"The red sun", post:"and set again and again.", opts:["rose","raised"], ans:0,
+ ex:"日「が」昇る。うしろに名詞がないので自動詞 rise。",
+ pat:"<em>rise（自）rise - rose - risen</em>　／　<em>raise（他）raise - raised - raised</em>",
+ more:"lie / lay とまったく同じ関係。判定はうしろに名詞があるかだけ。rise は自分で上がる、raise は何かを持ち上げる。檸檬の lie / lay と並べて、2組まとめて一度書き出しておく。"},
+{id:"YJ3", work:"YJ", tag:"自他動詞", format:"fill", kind:"vt", wa:0,
+ jp:"彼は真珠貝を頭の上まで持ち上げた。",
+ pre:"He", post:"the pearl shell above his head.", opts:["raised","rose"], ans:0,
+ ex:"the pearl shell に手を出しているので他動詞 raise。",
+ pat:"<em>He raised the shell.</em>（持ち上げた）／ <em>The sun rose.</em>（昇った）",
+ more:"直前の問題と同じ場面で、うしろに名詞があるかないかだけが違う。名詞があれば他動詞（raise / lay）、なければ自動詞（rise / lie）。この2問を対にして声に出すのがいちばん速い。"},
+{id:"YJ4", work:"YJ", tag:"自他動詞", format:"fill", kind:"vi", wa:2,
+ jp:"彼は女の死を乗り越えることができなかった。",
+ pre:"He could not get", post:"her death.", opts:["over","—（そのまま）"], ans:0,
+ ex:"get over で1つの塊。over まで含めて他動詞のようにふるまう。",
+ pat:"<em>get over + 名詞</em>（群動詞）",
+ more:"get は組む前置詞で意味が総取り替えになる。get to（着く）、get over（乗り越える）、get rid of（取り除く）、get through（やり遂げる）。get 単独では意味が決まらない、と考える。"},
+{id:"YJ5", work:"YJ", tag:"分詞", format:"fill", kind:"vi", wa:0,
+ jp:"落ちてくる露のそばで、白い百合が一輪咲いていた。",
+ pre:"A white lily was blooming beside the", post:"dew.", opts:["falling","fallen"], ans:0,
+ ex:"露は「落ちている」最中なので現在分詞。",
+ pat:"<em>名詞 + -ing（〜している）</em>　／　<em>名詞 + p.p.（〜される・〜してしまった）</em>",
+ more:"fall は自動詞なので、その過去分詞 fallen は「落ちてしまった」（fallen leaves = 落ち葉）。他動詞の過去分詞は「〜される」、自動詞の過去分詞は「〜してしまった」。ここは落下の途中なので -ing。"},
+{id:"YJ6", work:"YJ", tag:"知覚動詞", format:"fill", kind:"vt", wa:0,
+ jp:"彼は、頭の上を日が昇り沈むのを聞いた。",
+ pre:"He heard the sun", post:"and set above him.", opts:["rise","to rise"], ans:0,
+ ex:"知覚動詞は目的語のあとに原形か -ing を取る。",
+ pat:"<em>hear / see / feel + O + 原形 or -ing</em>　／　<s>+ to do</s>",
+ more:"原形は動作の全体（昇りきって沈むまで）を捉えた感じになるので、この場面には原形が合う。受動態では to が復活する（The sun was heard to rise.）。"},
+{id:"YJ7", work:"YJ", tag:"時制", format:"fill", kind:"vi", wa:0,
+ jp:"百合が咲いたとき、百年はすでに過ぎていた。",
+ pre:"A hundred years", post:"when the lily bloomed.", opts:["had already passed","already passed"], ans:0,
+ ex:"bloomed（過去）より前に完了しているので過去完了。",
+ pat:"<em>過去の基準時 + それより前 → had + 過去分詞</em>",
+ more:"「百年はもう来ていたんだな」という作品の最後の一行が、そのまま過去完了。基準時（bloomed）より前に完了している、という関係を形で示すのが過去完了の役目。"},
+{id:"YJ8", work:"YJ", tag:"受動態", format:"fill", kind:"vt", wa:3,
+ jp:"彼は、盲目の子を背負わされていた。",
+ pre:"He was made", post:"the blind child on his back.", opts:["to carry","carry"], ans:0,
+ ex:"使役動詞を受動態にすると、消えていた to が復活する。",
+ pat:"<em>make O do</em> → <em>O be made to do</em>",
+ more:"能動では原形（His fear made him carry the child.）、受動では to do。知覚動詞も同じ（see him wait → he was seen to wait）。「能動は原形、受動は to」とだけ覚えれば、使役も知覚もこれ一つで足りる。"},
+{id:"YJ9", work:"YJ", tag:"仮定法", format:"fill", kind:"vi", wa:3,
+ jp:"彼は、百年が一夜のうちに過ぎたかのように感じた。",
+ pre:"He felt as if a hundred years", post:"in a single night.", opts:["had passed","passed"], ans:0,
+ ex:"as if のあとは事実に反するので、時制を1つ古くする。",
+ pat:"<em>as if + had p.p.</em>（過去の事実に反する）／ <em>as if + 過去形</em>（今の事実に反する）",
+ more:"実際には百年かかっているので事実に反する。高瀬舟の as if he had been given a fortune と同じ形。wish も同じ仕組みで動く。「1つ古くする」がすべての仮定法に共通する操作。"},
+{id:"YJ10", work:"YJ", tag:"助動詞", format:"fill", kind:"vi", wa:3,
+ jp:"彼は毎晩、女の墓のそばに座ったものだった。",
+ pre:"He", post:"by her grave every evening.", opts:["would sit","should sit"], ans:0,
+ ex:"「〜したものだった」という過去の習慣なので would。",
+ pat:"<em>would + 原形 = 〜したものだった</em>（過去の習慣）／ <em>used to + 原形 = 以前は〜だった</em>",
+ more:"used to は「今はもうしていない」という含みがあり、過去の状態にも使える（There used to be a tree.）。would は動作にしか使えない。every evening のような反復の目印があれば would。"},
+{id:"YJ11", work:"YJ", tag:"不定詞", format:"fill", kind:"vt", wa:3,
+ jp:"彼は怖くて、背中の子の顔を見ることができなかった。",
+ pre:"He was", post:"look at the child's face.", opts:["too afraid to","so afraid to"], ans:0,
+ ex:"too … to do で「…すぎて〜できない」。",
+ pat:"<em>too 形容詞 to do</em> ＝ <em>so 形容詞 that S cannot do</em>",
+ more:"so … that … に書き換えると He was so afraid that he could not look at … になる。書き換え問題の定番。so … to do という形は存在しないので、to を使うなら too。"},
+{id:"YJ12", work:"YJ", tag:"進行形", format:"error", wa:0,
+ jp:"彼は、背中の子が自分の子であることを知っていた。",
+ parts:["He was knowing","that the child","on his back","was his own son."], ans:0,
+ ex:"know は状態を表す動詞なので、原則として進行形にしない。",
+ fix:"He knew that the child on his back was his own son.",
+ pat:"<em>状態動詞は進行形にしない</em>：know / believe / belong / resemble / contain / smell / taste / seem",
+ more:"檸檬の The lemon was smelling も同じ誤り。ただし人が意識してする動作なら進行形になる（He is smelling the lemon.）。know にはその用法がないので、常に進行形にできない。"}
+];
+
+/* ===================================================================
+   土台トラック用データ（BONE）
+   toks = 単語 / s = 主語のトークン番号 / v = 主節の動詞のトークン番号
+   p = 文型 / trap = 動詞と間違えやすいトークン
+   role = {f:開始, t:終了, a:0=名詞 1=形容詞 2=副詞} かたまりの働き
+   例文はすべて DATA と同じ文。同じ文を別の角度でもう一度見る。
+   =================================================================== */
+const PATTERNS = [
+  {k:"SV",   d:"うしろに名詞がない"},
+  {k:"SVO",  d:"V のうしろの名詞は S と別物"},
+  {k:"SVC",  d:"V のうしろの語は S とイコール"},
+  {k:"SVOO", d:"名詞が2つ、たがいに別物"},
+  {k:"SVOC", d:"名詞のあとの語が、その名詞とイコール"}
+];
+
+const BONE = [
+{id:"B01", w:"RG", p:"SVO",  s:[4,5], v:[6],   trap:[0], role:{f:0,t:3,a:2},
+ toks:["Hearing","his","friend's","voice,","Yuan","Can","stopped","the","carriage."],
+ note:"Hearing は分詞。文全体の動詞は stopped。カンマまでは丸ごと修飾（副詞のはたらき）。"},
+{id:"B02", w:"RG", p:"SVC",  s:[0], v:[1], trap:[6],
+ toks:["He","was","afraid","that","his","talent","was","not","real."],
+ note:"主節は He was afraid（S＝He、C＝afraid）。2つめの was は that 節の中の動詞。"},
+{id:"B03", w:"RG", p:"SVC",  s:[7], v:[8,10], trap:[5], role:{f:0,t:6,a:2},
+ toks:["By","the","time","Yuan","Can","found","him,","he","had","already","become","a","tiger."],
+ note:"found は By the time 節の中の動詞。主節の動詞は had become（2語で1つ）。"},
+{id:"B04", w:"RG", p:"SVO",  s:[0], v:[1], trap:[6], role:{f:4,t:9,a:1},
+ toks:["He","remembered","the","night","when","he","lost","his","human","voice."],
+ note:"lost は関係詞節の中。主節は He remembered the night。"},
+{id:"B05", w:"RG", p:"SVOC", s:[0,1], v:[2], trap:[4],
+ toks:["His","pride","made","him","keep","away","from","other","poets."],
+ note:"made him keep で SVOC。keep は原形不定詞で、him の状態を説明する C。"},
+{id:"B06", w:"RG", p:"SVOC", s:[0], v:[1], trap:[3],
+ toks:["He","heard","someone","weeping","in","the","darkness."],
+ note:"weeping は someone の状態を説明する C。文の動詞は heard。"},
+{id:"B40", w:"RG", p:"SVO",  s:[0], v:[1], trap:[7],
+ toks:["He","wanted","his","forgotten","poems","to","be","written","down."],
+ note:"written は to be written の一部で、動詞ではない。文の動詞は wanted。"},
+{id:"B41", w:"RG", p:"SVOO", s:[0,1], v:[2], trap:[],
+ toks:["Yuan","Can","gave","him","a","promise","about","his","poems."],
+ note:"him ≠ a promise。別物の名詞が2つ並んでいるので SVOO。"},
+
+{id:"B07", w:"LM", p:"SVC",  s:[0,1,2], v:[3], trap:[2], role:{f:0,t:2,a:0},
+ toks:["What","he","wanted","was","a","single","lemon."],
+ note:"What he wanted の3語で1つの主語（名詞のはたらき）。文の動詞は was。"},
+{id:"B08", w:"LM", p:"SVO",  s:[0], v:[1], trap:[4], role:{f:4,t:9,a:1},
+ toks:["He","found","a","lemon","sold","at","a","small","fruit","shop."],
+ note:"sold 以下は lemon を説明する修飾（形容詞のはたらき）。文の動詞は found。"},
+{id:"B09", w:"LM", p:"SVOC", s:[0], v:[1], trap:[3],
+ toks:["Nothing","made","him","feel","better","than","its","cold","weight."],
+ note:"主語は Nothing。made him feel で SVOC。"},
+{id:"B10", w:"LM", p:"SVO",  s:[0], v:[1], trap:[7], role:{f:6,t:10,a:2},
+ toks:["He","piled","up","the","art","books","to","make","a","strange","castle."],
+ note:"to make 以下は「〜するために」で副詞のはたらき。文の動詞は piled。"},
+{id:"B11", w:"LM", p:"SVC",  s:[0,1], v:[2], trap:[7],
+ toks:["The","lemon","smelled","so","fresh","that","he","held","it","to","his","nose."],
+ note:"smelled + 形容詞なので SVC（lemon = fresh）。held は that 節の中の動詞。"},
+{id:"B12", w:"LM", p:"SV",   s:[6], v:[7], trap:[0], role:{f:0,t:5,a:2},
+ toks:["Leaving","the","lemon","on","the","pile,","he","walked","out","of","Maruzen."],
+ note:"Leaving は分詞構文。主語は he、動詞は walked。out of Maruzen は修飾。"},
+
+{id:"B13", w:"MK", p:"SVO",  s:[0], v:[1,3], trap:[8], role:{f:5,t:11,a:2},
+ toks:["I","did","not","understand","her","until","the","oranges","fell","from","the","sky."],
+ note:"fell は until 節の中の動詞。主節の動詞は did (not) understand。"},
+{id:"B14", w:"MK", p:"SVC",  s:[0], v:[1], trap:[8,9], role:{f:4,t:9,a:1},
+ toks:["That","was","the","crossing","where","the","three","boys","were","waiting."],
+ note:"were waiting は関係詞節の中。主節は That was the crossing（That = the crossing）。"},
+{id:"B15", w:"MK", p:"SVO",  s:[0], v:[1], trap:[],
+ toks:["She","threw","five","oranges","to","the","three","boys."],
+ note:"to the three boys は前置詞つきの修飾。名詞が1つだけなので SVOO ではなく SVO。"},
+{id:"B16", w:"MK", p:"SVOC", s:[0,1], v:[2], trap:[4],
+ toks:["The","sight","helped","me","forget","my","fatigue."],
+ note:"helped me forget で SVOC。forget は原形不定詞。"},
+{id:"B17", w:"MK", p:"SVO",  s:[4], v:[5], trap:[0], role:{f:0,t:3,a:2},
+ toks:["Sitting","in","the","corner,","I","watched","her","in","silence."],
+ note:"Sitting は分詞構文。主語は I、動詞は watched。"},
+{id:"B18", w:"MK", p:"SVO",  s:[0,1], v:[2,4], trap:[9],
+ toks:["The","train","had","already","entered","the","tunnel","when","she","opened","the","window."],
+ note:"主節の動詞は had entered。opened は when 節の中。"},
+
+{id:"B19", w:"RS", p:"SVO",  s:[2], v:[1,3], trap:[8],
+ toks:["Never","had","he","felt","such","anger","before","he","heard","her","words."],
+ note:"倒置で助動詞 had が主語 he の前に出ている。動詞は had felt。"},
+{id:"B20", w:"RS", p:"SVO",  s:[2,3], v:[4], trap:[0], role:{f:0,t:1,a:2},
+ toks:["Left","unburied,","the","bodies","filled","the","upper","floor."],
+ note:"Left は分詞構文（される側）。主語は the bodies、動詞は filled。"},
+{id:"B21", w:"RS", p:"SVOC", s:[0], v:[1], trap:[5],
+ toks:["He","saw","an","old","woman","pulling","out","a","corpse's","hair."],
+ note:"pulling は an old woman の状態を説明する C。文の動詞は saw。"},
+{id:"B22", w:"RS", p:"SVO",  s:[0], v:[1], trap:[6], role:{f:5,t:8,a:1},
+ toks:["He","had","no","choice","but","to","become","a","thief."],
+ note:"become は to 不定詞の一部。文の動詞は had（持っていた）。"},
+
+{id:"B23", w:"ML", p:"SVC",  s:[6,7], v:[8], trap:[3],
+ toks:["The","more","he","ran,","the","heavier","his","legs","became."],
+ note:"主節はカンマのうしろ。主語は his legs、動詞は became（legs = heavier）。"},
+{id:"B24", w:"ML", p:"SV",   s:[4], v:[5], trap:[0],
+ toks:["Exhausted","by","the","flood,","Melos","lay","down","under","a","tree."],
+ note:"Exhausted は分詞構文。lay は lie（横たわる）の過去形で自動詞。"},
+{id:"B25", w:"ML", p:"SVOC", s:[0,1], v:[2], trap:[4],
+ toks:["The","king","let","him","go","for","three","days."],
+ note:"let him go で SVOC。go は原形不定詞で、him が何をするかを説明する C。"},
+{id:"B26", w:"ML", p:"SV",   s:[0], v:[1], trap:[7], role:{f:5,t:10,a:2},
+ toks:["He","ran","to","the","square","only","to","find","the","sun","setting."],
+ note:"find は to 不定詞の一部。文の動詞は ran。only to find 以下は修飾。"},
+{id:"B43", w:"ML", p:"SVOO", s:[0,1], v:[2], trap:[],
+ toks:["The","king","showed","Melos","no","mercy."],
+ note:"Melos ≠ no mercy。別物の名詞が2つ並ぶので SVOO。"},
+
+{id:"B27", w:"HS", p:"SVC",  s:[0,1], v:[2], trap:[],
+ toks:["The","moth","lay","crushed","in","his","pocket."],
+ note:"lay は lie の過去形（自動詞）。crushed は蛾の状態を説明する C。"},
+{id:"B28", w:"HS", p:"SVOC", s:[0,1], v:[2], trap:[4],
+ toks:["His","mother","made","him","go","and","apologize."],
+ note:"made him go で SVOC。go は原形不定詞。"},
+{id:"B29", w:"HS", p:"SVC",  s:[0], v:[1], trap:[7], role:{f:4,t:7,a:1},
+ toks:["Emil","was","the","boy","whose","collection","everyone","admired."],
+ note:"admired は関係詞節の中。主節は Emil was the boy（Emil = the boy）。"},
+{id:"B30", w:"HS", p:"SVO",  s:[0], v:[1], trap:[2], role:{f:2,t:4,a:0},
+ toks:["He","admitted","taking","the","moth","from","the","room."],
+ note:"taking 以下は admitted の目的語（名詞のはたらき）。文の動詞は admitted。"},
+
+{id:"B31", w:"TB", p:"SVO",  s:[4], v:[5], trap:[0,7], role:{f:0,t:3,a:2},
+ toks:["Asked","about","his","crime,","Kisuke","began","to","speak","quietly."],
+ note:"Asked は分詞構文、speak は to 不定詞の一部。文の動詞は began。"},
+{id:"B32", w:"TB", p:"SV",   s:[0,1], v:[7], trap:[6], role:{f:2,t:6,a:1},
+ toks:["The","razor","which","his","brother","had","used","was","still","there."],
+ note:"関係詞節（which ... used）を括ると、主語は The razor、動詞は was。"},
+{id:"B33", w:"TB", p:"SVOC", s:[0], v:[1], trap:[4],
+ toks:["He","felt","the","boat","move","slowly","through","the","dark."],
+ note:"felt the boat move で SVOC。move は原形不定詞。"},
+{id:"B34", w:"TB", p:"SVC",  s:[0], v:[1,3], trap:[8],
+ toks:["He","had","never","been","so","happy","as","he","was","on","that","boat."],
+ note:"主節の動詞は had been。うしろの was は as 節の中。"},
+{id:"B42", w:"TB", p:"SVOO", s:[0,1], v:[2], trap:[],
+ toks:["The","officer","gave","Kisuke","two","hundred","mon."],
+ note:"Kisuke ≠ two hundred mon。別物の名詞が2つなので SVOO。"},
+
+{id:"B35", w:"YJ", p:"SVO",  s:[0], v:[1], trap:[],
+ toks:["He","raised","the","pearl","shell","above","his","head."],
+ note:"raise は他動詞。うしろに名詞（the pearl shell）が直結している。"},
+{id:"B36", w:"YJ", p:"SV",   s:[0,1,2], v:[3,5], trap:[],
+ toks:["The","red","sun","rose","and","set","again","and","again."],
+ note:"rose も set も自動詞。うしろに名詞がないので SV。"},
+{id:"B37", w:"YJ", p:"SV",   s:[0], v:[1], trap:[8],
+ toks:["He","felt","as","if","a","hundred","years","had","passed","in","a","single","night."],
+ note:"had passed は as if 節の中。主節は He felt だけ。"},
+{id:"B38", w:"YJ", p:"SVC",  s:[0], v:[1], trap:[5], role:{f:4,t:9,a:2},
+ toks:["He","was","too","afraid","to","look","at","the","child's","face."],
+ note:"look は to 不定詞の一部。文の動詞は was（He = afraid）。"},
+{id:"B39", w:"YJ", p:"SVOC", s:[0], v:[1], trap:[4,6],
+ toks:["He","heard","the","sun","rise","and","set","above","him."],
+ note:"rise・set は原形不定詞で C。文の動詞は heard。"}
+];
+
+/* 意味は同じ・構造が違うペア（Lv4） */
+const PAIRS = [
+{id:"P01", ask:"SVOC",
+ a:{s:"I found the book easy.",    p:"SVOC", jp:"その本は簡単だと分かった"},
+ b:{s:"I found the book easily.",  p:"SVO",  jp:"その本を簡単に見つけた"},
+ note:"easy は the book とイコールの補語。easily は副詞で found を修飾しているだけ。1文字違いで文型も意味も変わる。訳から入ると絶対に決まらない。"},
+{id:"P02", ask:"SVOC",
+ a:{s:"She made him a hero.", p:"SVOC", jp:"彼を英雄にした"},
+ b:{s:"She made him a cake.", p:"SVOO", jp:"彼にケーキを作ってやった"},
+ note:"him = a hero なら SVOC、him ≠ a cake なら SVOO。名詞が2つ並んだら「その2つがイコールか」だけを見る。"},
+{id:"P03", ask:"SVOC",
+ a:{s:"They called him Melos.",      p:"SVOC", jp:"彼をメロスと呼んだ"},
+ b:{s:"They called him from Tokyo.", p:"SVO",  jp:"東京から彼に電話した"},
+ note:"him = Melos なので SVOC。from Tokyo は前置詞つきの修飾なので、文型には数えない。"},
+{id:"P04", ask:"SVOO",
+ a:{s:"He gave me a lemon.",     p:"SVOO", jp:"私に檸檬をくれた"},
+ b:{s:"He gave a lemon to me.",  p:"SVO",  jp:"檸檬を私にくれた"},
+ note:"意味はほぼ同じでも、to が付いた瞬間に me は目的語ではなく修飾になる。前置詞が付いた名詞は O にも C にもならない。"},
+{id:"P05", ask:"SVC",
+ a:{s:"The tiger looked dangerous.", p:"SVC", jp:"その虎は危険に見えた"},
+ b:{s:"The tiger looked at him.",    p:"SV",  jp:"その虎は彼に目を向けた"},
+ note:"look + 形容詞は「〜に見える」で補語を取る。look at は自動詞＋前置詞で、うしろは修飾。同じ look でも型が違う。"},
+{id:"P06", ask:"SVC",
+ a:{s:"He got angry.",      p:"SVC", jp:"彼は怒った"},
+ b:{s:"He got the letter.", p:"SVO", jp:"彼はその手紙を受け取った"},
+ note:"get + 形容詞は「〜になる」、get + 名詞は「手に入れる」。うしろが名詞か形容詞かで文型が切り替わる。"},
+{id:"P07", ask:"SVOC",
+ a:{s:"She left the door open.", p:"SVOC", jp:"ドアを開けたままにした"},
+ b:{s:"She left the room.",      p:"SVO",  jp:"部屋を出ていった"},
+ note:"the door = open なので SVOC。目的語のあとに形容詞が残っていたら、まず SVOC を疑う。"},
+{id:"P08", ask:"SVO",
+ a:{s:"He ran the shop.",    p:"SVO", jp:"彼はその店を経営していた"},
+ b:{s:"He ran to the shop.", p:"SV",  jp:"彼はその店へ走った"},
+ note:"run は自動詞（走る）にも他動詞（経営する）にもなる。うしろに名詞が直結していれば他動詞、前置詞をはさめば自動詞。"},
+{id:"P09", ask:"SVOC",
+ a:{s:"The story made him cry.",  p:"SVOC", jp:"その話は彼を泣かせた"},
+ b:{s:"The story made no sense.", p:"SVO",  jp:"その話は意味をなさなかった"},
+ note:"make + O + 原形は使役で SVOC。make + 名詞だけなら SVO。同じ made でもうしろの形で決まる。"},
+{id:"P10", ask:"SVC",
+ a:{s:"He turned pale.",     p:"SVC", jp:"彼は青ざめた"},
+ b:{s:"He turned the page.", p:"SVO", jp:"彼はページをめくった"},
+ note:"turn + 形容詞は「〜になる」で become と同じはたらき。turn + 名詞は「回す・めくる」。"},
+{id:"P11", ask:"SVC",
+ a:{s:"He kept silent.",       p:"SVC", jp:"彼は黙ったままでいた"},
+ b:{s:"He kept the promise.",  p:"SVO", jp:"彼は約束を守った"},
+ note:"keep + 形容詞は「〜のままでいる」、keep + 名詞は「守る・保つ」。He = silent なので SVC。"},
+{id:"P12", ask:"SVOO",
+ a:{s:"The sight gave me hope.", p:"SVOO", jp:"その光景は私に希望を与えた"},
+ b:{s:"The sight made me sad.",  p:"SVOC", jp:"その光景は私を悲しくさせた"},
+ note:"me ≠ hope なので SVOO、me = sad なので SVOC。名詞のあとに来るのが名詞か形容詞か、そしてイコールかどうか。"}
+];
+
+/* 診断セット：同じ英文について「意味」と「構造」を続けて聞く */
+const DIAG = [
+{b:"B07", m:["彼が欲しかったのは、たった一つの檸檬だった。","彼はたった一つの檸檬だけを買った。","彼が求めたものは、檸檬ではなかった。","たった一つの檸檬が、彼を求めていた。"]},
+{b:"B01", m:["友の声を聞いて、袁傪は車を止めた。","袁傪の声を聞いて、友が車を止めた。","車を止めてから、袁傪は友の声を聞いた。","友の声が、車を止めさせようとした。"]},
+{b:"B08", m:["彼は、小さな果物屋で売られている檸檬を見つけた。","彼は小さな果物屋を見つけて、そこで檸檬を売った。","小さな果物屋が、彼に檸檬を売った。","彼は檸檬を売るために小さな果物屋を探した。"]},
+{b:"B40", m:["彼は、忘れられた自分の詩を書き留めてほしいと願った。","彼は、自分が忘れてしまった詩を思い出そうとした。","彼は詩を書き留めることを忘れてしまった。","忘れられた詩のほうが、彼に書かれたがっていた。"]},
+{b:"B13", m:["空から蜜柑が降ってくるまで、私は彼女を理解していなかった。","私が彼女を理解するまで、蜜柑は空から降ってこなかった。","私が彼女を理解しなかったので、蜜柑は落ちてこなかった。","空から蜜柑が降ってきても、私は彼女を理解できなかった。"]},
+{b:"B14", m:["そこが、三人の少年が待っていた踏切だった。","三人の少年は、その踏切が来るのを待っていた。","そこは、三人の少年が渡っていった踏切だった。","その踏切では、三人の少年が待つことになっていた。"]}
+];
+
+/* ===================================================================
+   学習記録
+   =================================================================== */
+const VERSION="1.1";
+const KEY="bungaku-eibunpo.v1";       /* 問題ごとの正誤（旧版と互換） */
+const MKEY="bungaku-eibunpo.meta.v1"; /* 設定と診断結果 */
+const FKEY="bungaku-eibunpo.memo.v1"; /* 「直してほしいところ」メモ */
+/* localStorage が使えない環境（file:// のプライベートブラウズ等）でも
+   セッション中は MEM 側で成立させる。例外で画面が止まらないこと。 */
+const MEM={};
+const store={
+  load(k,fb){
+    try{ const v=localStorage.getItem(k); if(v) return JSON.parse(v); }catch(e){}
+    return (MEM[k]!==undefined) ? MEM[k] : fb;
+  },
+  save(k,o){ MEM[k]=o; try{ localStorage.setItem(k,JSON.stringify(o)); }catch(e){} }
+};
+let stats=store.load(KEY,{});
+let meta =store.load(MKEY,{whyOn:true,diag:null});
+let memos=store.load(FKEY,[]);
+if(typeof meta.whyOn!=="boolean") meta.whyOn=true;
+if(!Array.isArray(memos)) memos=[];
+
+function saveStats(){ store.save(KEY,stats); }
+function saveMeta(){ store.save(MKEY,meta); }
+function saveMemos(){ store.save(FKEY,memos); }
+function rec(id,ok){
+  const s=stats[id]||{c:0,w:0};
+  ok? s.c++ : s.w++; s.t=Date.now();
+  stats[id]=s; saveStats();
+}
+/* 未挑戦を優先し、誤答が多いほど高確率。0以下に落とさない（落とすと抽選が固定化する） */
+function weight(id){
+  const s=stats[id];
+  if(!s) return 5;
+  return Math.max(0.25, 1 + s.w*4 - Math.min(s.c,3));
+}
+/* 重み付き抽選 → 同じ文法項目が連続しないように並べ直す */
+function pickSet(pool,n,tagOf){
+  const picked=pool.map(x=>({x,k:Math.random()*weight(idOf(x))}))
+                   .sort((a,b)=>b.k-a.k).slice(0,n).map(o=>o.x);
+  if(!tagOf) return picked;
+  /* 残りが多い項目から先に出す。こうすると同じ項目の隣接が理論上の最小になる */
+  const out=[], rest=picked.slice();
+  let last=null;
+  while(rest.length){
+    const cnt={};
+    rest.forEach(x=>{ const t=tagOf(x); cnt[t]=(cnt[t]||0)+1; });
+    let best=-1, bestC=-1;
+    rest.forEach((x,i)=>{
+      const t=tagOf(x);
+      if(t===last) return;
+      if(cnt[t]>bestC){ bestC=cnt[t]; best=i; }
+    });
+    if(best<0) best=0;
+    last=tagOf(rest[best]);
+    out.push(rest.splice(best,1)[0]);
+  }
+  return out;
+}
+function idOf(x){ return x.__sid || x.id; }
+function workStat(code){
+  const list=DATA.filter(q=>q.work===code);
+  let c=0,w=0,done=0;
+  list.forEach(q=>{const s=stats[q.id]; if(s){done++;c+=s.c;w+=s.w;}});
+  return {total:list.length, done, pct:(c+w)?Math.round(c/(c+w)*100):null};
+}
+function setStat(ids){
+  let c=0,w=0,done=0;
+  ids.forEach(id=>{const s=stats[id]; if(s){done++;c+=s.c;w+=s.w;}});
+  return {total:ids.length, done, pct:(c+w)?Math.round(c/(c+w)*100):null};
+}
+function shuffle(a){ for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+
+/* ===================================================================
+   土台トラックの定義
+   =================================================================== */
+const ROLE_LABEL=["名詞のはたらき","形容詞のはたらき","副詞のはたらき"];
+const LEVELS=[
+ {no:"Lv0", nm:"かたまりの、はたらき", sub:"色のついた部分は 名詞・形容詞・副詞 のどれ？", key:"r"},
+ {no:"Lv1", nm:"動詞さがし",           sub:"この文を動かしている動詞をひとつ選ぶ",       key:"v"},
+ {no:"Lv2", nm:"主語さがし",           sub:"動詞を出したうえで、その主語を選ぶ",         key:"s"},
+ {no:"Lv3", nm:"文型を決める",         sub:"SV / SVO / SVC / SVOO / SVOC のどれか",      key:"p"},
+ {no:"Lv4", nm:"意味は同じ、構造がちがう", sub:"訳では決まらないことを体で覚える",        key:"x"}
+];
+function levelPool(key){
+  if(key==="x") return PAIRS.map(p=>({t:"pr", d:p, __sid:p.id}));
+  if(key==="r") return BONE.filter(b=>b.role).map(b=>({t:"br", d:b, __sid:b.id+":r"}));
+  return BONE.map(b=>({t:"b"+key, d:b, __sid:b.id+":"+key}));
+}
+
+/* ===================================================================
+   「直してほしいところ」メモ — 弟が書き、兄がまとめて受け取る
+   =================================================================== */
+function currentContext(){
+  const it = queue[idx];
+  if(!it) return {label:"", text:""};
+  if(it.t==="g"){
+    const q=it.d, w=WORKS[q.work];
+    const text = q.format==="fill"
+      ? (q.pre?q.pre+" ":"")+"["+q.opts[q.ans]+"]"+(/^[,.;:!?)]/.test(q.post)?"":" ")+q.post
+      : q.parts.join(" ");
+    return {label:w.title+" "+q.id+" / "+q.tag, text:text};
+  }
+  if(it.t==="pr") return {label:"Lv4 対比 "+it.d.id, text:it.d.a.s+" ／ "+it.d.b.s};
+  if(it.t==="dm"||it.t==="dv") return {label:"診断 "+it.b.id, text:it.b.toks.join(" ")};
+  const nm={bv:"Lv1 動詞さがし",bs:"Lv2 主語さがし",bp:"Lv3 文型",br:"Lv0 はたらき"}[it.t];
+  return {label:nm+" "+it.d.id, text:it.d.toks.join(" ")};
+}
+function addMemo(note, withContext){
+  const c = withContext ? currentContext() : {label:"",text:""};
+  memos.push({l:c.label, s:c.text, n:note, at:Date.now()});
+  saveMemos();
+}
+function memoText(){
+  const d=new Date(), z=n=>String(n).padStart(2,"0");
+  return "【文学で英文法 v"+VERSION+"】直してほしいところ "+memos.length+"件\n\n"
+    + memos.map((m,i)=>
+        (i+1)+". "+(m.l||"（ツール全体について）")
+        + (m.s?"\n   "+m.s:"")
+        + "\n   → "+m.n
+      ).join("\n\n")
+    + "\n\n（"+d.getFullYear()+"-"+z(d.getMonth()+1)+"-"+z(d.getDate())+"）";
+}
+function buildMemo(){
+  const box=$("memoBox"); box.innerHTML="";
+  const h=document.createElement("h3");
+  h.innerHTML='<span>直してほしいところ</span><span>'+(memos.length?memos.length+"件":"まだなし")+'</span>';
+  box.appendChild(h);
+
+  const list=document.createElement("div"); list.className="memo-list";
+  memos.forEach((m,i)=>{
+    const r=document.createElement("div"); r.className="memo-row";
+    const sp=document.createElement("span");
+    const lb=document.createElement("b"); lb.textContent=m.l||"ツール全体について";
+    sp.appendChild(lb); sp.appendChild(document.createTextNode(m.n)); /* 本文は textContent で入れる */
+    const x=document.createElement("button"); x.textContent="×"; x.setAttribute("aria-label","消す");
+    x.addEventListener("click",()=>{ memos.splice(i,1); saveMemos(); buildMemo(); });
+    r.appendChild(sp); r.appendChild(x); list.appendChild(r);
+  });
+  box.appendChild(list);
+
+  const act=document.createElement("div"); act.className="memo-act";
+  const cp=document.createElement("button"); cp.className="btn-line";
+  cp.textContent = memos.length ? "まとめてコピー（"+memos.length+"件）" : "まだ書いていない";
+  cp.disabled = !memos.length;
+  const add=document.createElement("button"); add.className="btn-line"; add.textContent="＋";
+  add.title="ツール全体について書く";
+  act.appendChild(cp); act.appendChild(add); box.appendChild(act);
+
+  const fb=document.createElement("div"); fb.className="fbbox";
+  const ta=document.createElement("textarea"); ta.placeholder="ツール全体について気づいたこと";
+  const sv=document.createElement("button"); sv.className="save"; sv.textContent="メモに残す";
+  fb.appendChild(ta); fb.appendChild(sv); box.appendChild(fb);
+
+  const out=document.createElement("textarea"); out.className="memo-out hidden"; out.readOnly=true;
+  box.appendChild(out);
+
+  add.addEventListener("click",()=>{
+    const open=fb.classList.toggle("show");
+    add.textContent = open ? "−" : "＋";
+    if(open) ta.focus();
+  });
+  sv.addEventListener("click",()=>{
+    const v=ta.value.trim(); if(!v) return;
+    addMemo(v,false); buildMemo();
+  });
+  cp.addEventListener("click",()=>{
+    const t=memoText();
+    out.classList.remove("hidden"); out.value=t;
+    const fallback=()=>{ out.focus(); out.select(); cp.textContent="長押しでコピー"; };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t).then(()=>{ cp.textContent="コピーした。LINEに貼って送る"; }, fallback);
+    }else fallback();
+  });
+}
+
+/* ===================================================================
+   画面
+   =================================================================== */
+const $=id=>document.getElementById(id);
+let queue=[], idx=0, score=0, wrongs=[], mode="work";
+let phase="main", pickedMain=-1, mainOk=false, whyMap=[], dScore={m:0,s:0};
+
+function show(v){ ["home","quiz","result"].forEach(s=>$(s).classList.toggle("hidden",s!==v)); window.scrollTo(0,0); }
+
+function buildHome(){
+  /* --- 診断カード --- */
+  const box=$("diagBox"); box.innerHTML="";
+  const card=document.createElement("div"); card.className="diagcard";
+  if(!meta.diag){
+    card.innerHTML='<h2>まず、いまの状態を測る</h2>'+
+      '<p>読んだことのある3作品から6文。1文につき「意味」と「構造」を続けて聞きます。5分ほど。</p>';
+    const b=document.createElement("button"); b.className="go"; b.textContent="診断をはじめる（12問）";
+    b.addEventListener("click",startDiag); card.appendChild(b);
+  }else{
+    const d=meta.diag, n=d.n||6;
+    card.innerHTML='<h2>いまの状態</h2>'+
+      '<div class="dbars">'+
+      '<div class="dbar"><span>意味</span><span class="track"><i style="width:'+(d.m/n*100)+'%"></i></span><b>'+d.m+' / '+n+'</b></div>'+
+      '<div class="dbar struct"><span>構造</span><span class="track"><i style="width:'+(d.s/n*100)+'%"></i></span><b>'+d.s+' / '+n+'</b></div>'+
+      '</div><div class="diagverdict">'+diagVerdict(d.m,d.s,n)+'</div>';
+    const b=document.createElement("button"); b.className="again"; b.textContent="もう一度、診断する";
+    b.addEventListener("click",startDiag); card.appendChild(b);
+  }
+  box.appendChild(card);
+
+  /* --- 土台トラック --- */
+  const tl=$("trackList"); tl.innerHTML="";
+  LEVELS.forEach(L=>{
+    const pool=levelPool(L.key);
+    const st=setStat(pool.map(idOf));
+    const b=document.createElement("button"); b.className="lv";
+    b.innerHTML='<span class="no">'+L.no+'</span>'+
+      '<span class="nm">'+L.nm+'<small>'+L.sub+'</small></span>'+
+      '<span class="st">'+(st.pct===null?"未挑戦":st.pct+"%")+'</span>';
+    b.addEventListener("click",()=>startTrack(L));
+    tl.appendChild(b);
+  });
+  $("trackNote").textContent = BONE.length+"文 + "+PAIRS.length+"組";
+
+  /* --- 作品 --- */
+  const wbox=$("works"); wbox.innerHTML="";
+  Object.keys(WORKS).forEach(code=>{
+    const w=WORKS[code], st=workStat(code);
+    const b=document.createElement("button"); b.className="work";
+    b.innerHTML='<div class="work-top"><span class="work-t">'+w.title+'</span><span class="work-a">'+w.author+'</span></div>'+
+      '<div class="work-m"><span>'+st.total+'問</span><span class="minibar"><i style="width:'+(st.pct||0)+'%"></i></span>'+
+      '<span class="pct">'+(st.pct===null?"未挑戦":"正答率 "+st.pct+"%")+'</span></div>';
+    b.addEventListener("click",()=>startWork(DATA.filter(q=>q.work===code)));
+    wbox.appendChild(b);
+  });
+  $("workNote").textContent = Object.keys(WORKS).length+"作品 / 全"+DATA.length+"問";
+
+  const weak=DATA.filter(q=>stats[q.id]&&stats[q.id].w>0);
+  $("weakOnly").disabled = weak.length===0;
+  $("weakOnly").textContent = weak.length? "苦手な問題だけ（"+weak.length+"問）" : "苦手な問題だけ（まだなし）";
+  $("whyToggle").checked = meta.whyOn;
+  buildMemo();
+  $("foot").textContent = Object.keys(WORKS).length+"作品・全"+DATA.length+"問　＋　土台トラック "+
+    (BONE.length*3+BONE.filter(b=>b.role).length+PAIRS.length)+"問　—　1回10問、毎日1セットが目安。　v"+VERSION;
+}
+function diagVerdict(m,s,n){
+  if(m-s>=2) return "<b>意味は取れている。取れていないのは骨のほうだ。</b>これは単語や知識の不足ではなく、読み方の癖。土台トラックの Lv1「動詞さがし」から始めるのが早い。";
+  if(s>=n-1&&m>=n-1) return "意味も構造も取れている。あとは作品ごとの問題で、文法項目を一つずつ潰していく段階。";
+  if(m<=n/2) return "まず英文そのものに慣れる段階。作品から解く方を先に回して、知っている場面の英文を増やすといい。";
+  return "構造は半分ほど取れている。土台トラックの Lv2・Lv3 まで進めると、長い文でも骨が見えるようになる。";
+}
+
+/* ===================================================================
+   出題
+   =================================================================== */
+function startWork(pool){
+  mode="work";
+  queue=pickSet(pool.map(q=>({t:"g",d:q,__sid:q.id})), Math.min(10,pool.length), it=>it.d.tag);
+  begin();
+}
+function startList(items,all){
+  mode="work";
+  queue = all? shuffle(items.slice()) : pickSet(items, Math.min(10,items.length), it=>it.d.tag||it.t);
+  begin();
+}
+function startTrack(L){
+  mode="track";
+  const pool=levelPool(L.key);
+  queue=pickSet(pool, Math.min(10,pool.length), it=>it.d.p||it.t);
+  begin();
+}
+function startDiag(){
+  mode="diag";
+  dScore={m:0,s:0};
+  queue=[];
+  DIAG.forEach(d=>{
+    const b=BONE.find(x=>x.id===d.b);
+    queue.push({t:"dm", d:d, b:b});
+    queue.push({t:"dv", d:d, b:b});
+  });
+  begin();
+}
+function begin(){ idx=0; score=0; wrongs=[]; show("quiz"); render(); }
+
+function srcLine(code, tagText){
+  const w=WORKS[code];
+  return w ? '<b>'+w.title+'</b>　'+w.author+'<span>'+(tagText||"")+'</span>'
+           : '<b>'+(tagText||"")+'</b>';
+}
+function tokenize(box, d, o){
+  o=o||{};
+  box.innerHTML="";
+  d.toks.forEach((t,i)=>{
+    const b=document.createElement("button");
+    b.className="tok"; b.textContent=t;
+    if(o.plain) b.classList.add("plain");
+    if(o.chunk && i>=o.chunk[0] && i<=o.chunk[1]) b.classList.add("chunk");
+    if(o.markV && d.v.indexOf(i)>=0) b.classList.add("hitV");
+    if(o.markS && d.s.indexOf(i)>=0) b.classList.add("hitS");
+    if(o.onPick) b.addEventListener("click",()=>o.onPick(i));
+    else b.disabled=true;
+    box.appendChild(b);
+    box.appendChild(document.createTextNode(" "));
+  });
+}
+function resetCard(){
+  phase="main"; pickedMain=-1; mainOk=false; whyOk=true; whyMap=[];
+  $("sentence").innerHTML=""; $("choices").innerHTML=""; $("choices").className="choices";
+  $("whyChoices").innerHTML=""; $("why").classList.remove("show");
+  $("verdict").classList.remove("show");
+  $("fixline").textContent=""; $("pat").innerHTML=""; $("explain").textContent="";
+  $("more").classList.add("hidden"); $("more").innerHTML=""; $("moretog").textContent="もっと詳しく ＋";
+  $("moretog").classList.add("hidden");
+  $("legend").classList.add("hidden"); $("legend").innerHTML="";
+  $("qjp").textContent=""; $("vtag").textContent="";
+  $("fbbox").classList.remove("show"); $("fbtext").value="";
+  $("fbtog").classList.remove("hidden"); $("fbtog").textContent="ここ、直してほしい ＋";
+  $("fbdone").classList.add("hidden");
+}
+function optionButtons(list, cls, onPick){
+  const box=$("choices"); box.innerHTML="";
+  list.forEach((o,i)=>{
+    const b=document.createElement("button");
+    b.className="choice"+(cls?" "+cls:""); b.textContent=o;
+    b.addEventListener("click",()=>onPick(i));
+    box.appendChild(b);
+  });
+}
+
+function render(){
+  resetCard();
+  const it=queue[idx];
+  $("count").textContent=(idx+1)+" / "+queue.length;
+  $("bar").style.width=(idx/queue.length*100)+"%";
+
+  if(it.t==="g"){
+    const q=it.d;
+    $("src").innerHTML=srcLine(q.work,q.tag);
+    $("qjp").textContent=q.jp;
+    if(q.format==="fill"){
+      $("instr").textContent="空欄に入るものを選ぶ";
+      const sent=$("sentence");
+      if(q.pre) sent.append(document.createTextNode(q.pre+" "));
+      const slot=document.createElement("span");
+      slot.className="slot"; slot.id="slot"; slot.textContent="?";
+      sent.append(slot);
+      /* 句読点で始まる後半に空白を入れない（"exploded , the store" を防ぐ） */
+      let post=q.post;
+      if(!/^[,.;:!?)]/.test(post)) post=" "+post;
+      if(!q.pre) post=post.replace(/^\s+/,"");
+      sent.append(document.createTextNode(post));
+      optionButtons(q.opts,null,i=>pickMain(i,i===q.ans));
+    }else{
+      $("instr").textContent="誤りを含む箇所をひとつ選ぶ";
+      const marks=["①","②","③","④"];
+      q.parts.forEach((p,i)=>{
+        const b=document.createElement("button");
+        b.className="part"; b.innerHTML='<sup>'+marks[i]+'</sup>'+p;
+        b.addEventListener("click",()=>pickMain(i,i===q.ans));
+        $("sentence").appendChild(b);
+      });
+    }
+  }
+  else if(it.t==="bv" || it.t==="dv"){
+    const d= it.t==="dv" ? it.b : it.d;
+    $("src").innerHTML=srcLine(d.w, it.t==="dv"?"構造":"動詞さがし");
+    $("instr").textContent="この文を動かしている動詞をタップ";
+    tokenize($("sentence"), d, {onPick:i=>pickMain(i, d.v.indexOf(i)>=0)});
+  }
+  else if(it.t==="bs"){
+    const d=it.d;
+    $("src").innerHTML=srcLine(d.w,"主語さがし");
+    $("instr").textContent="緑が動詞。その主語をタップ";
+    tokenize($("sentence"), d, {markV:true, onPick:i=>pickMain(i, d.s.indexOf(i)>=0)});
+    $("legend").classList.remove("hidden");
+    $("legend").innerHTML='<em class="v">緑 = 動詞</em>';
+  }
+  else if(it.t==="bp"){
+    const d=it.d;
+    $("src").innerHTML=srcLine(d.w,"文型");
+    $("instr").textContent="S と V を示した。この文の型はどれ？";
+    tokenize($("sentence"), d, {markV:true, markS:true, plain:false});
+    $("legend").classList.remove("hidden");
+    $("legend").innerHTML='<em class="s">紫 = 主語</em>　<em class="v">緑 = 動詞</em>';
+    $("choices").className="choices grid2";
+    const box=$("choices"); box.innerHTML="";
+    PATTERNS.forEach(P=>{
+      const b=document.createElement("button"); b.className="choice"; b.textContent=P.k;
+      b.addEventListener("click",()=>pickMain(P.k, P.k===d.p));
+      box.appendChild(b);
+    });
+  }
+  else if(it.t==="br"){
+    const d=it.d;
+    $("src").innerHTML=srcLine(d.w,"かたまりの働き");
+    $("instr").textContent="色のついた部分は、何のはたらきをしている？";
+    tokenize($("sentence"), d, {plain:true, chunk:[d.role.f,d.role.t]});
+    optionButtons(ROLE_LABEL,"jp",i=>pickMain(i,i===d.role.a));
+  }
+  else if(it.t==="pr"){
+    const p=it.d;
+    $("src").innerHTML='<b>意味は同じ、構造がちがう</b><span>文型</span>';
+    $("instr").textContent=p.ask+" なのはどっち？";
+    it.order = it.order || shuffle([p.a,p.b]);
+    const box=$("choices"); box.innerHTML="";
+    it.order.forEach(o=>{
+      const b=document.createElement("button"); b.className="choice";
+      b.innerHTML=o.s+'<br><span style="font-family:var(--jp);font-size:.76rem;color:var(--ink-soft)">'+o.jp+'</span>';
+      b.addEventListener("click",()=>pickMain(o, o.p===p.ask));
+      box.appendChild(b);
+    });
+  }
+  else if(it.t==="dm"){
+    const d=it.b;
+    $("src").innerHTML=srcLine(d.w,"意味");
+    $("instr").textContent="この英文の意味に合うものを選ぶ";
+    tokenize($("sentence"), d, {plain:true});
+    it.order = it.order || shuffle(it.d.m.map((s,i)=>({s:s,ok:i===0})));
+    const box=$("choices"); box.innerHTML="";
+    it.order.forEach(o=>{
+      const b=document.createElement("button"); b.className="choice jp"; b.textContent=o.s;
+      b.addEventListener("click",()=>pickMain(o,o.ok));
+      box.appendChild(b);
+    });
+  }
+}
+
+/* ===================================================================
+   解答（2段階：答え → なぜ）
+   =================================================================== */
+let whyOk=true;
+function interactive(){
+  const it=queue[idx];
+  if(it.t==="g" && it.d.format==="error") return Array.prototype.slice.call($("sentence").querySelectorAll(".part"));
+  if(it.t==="bv"||it.t==="bs"||it.t==="dv")  return Array.prototype.slice.call($("sentence").querySelectorAll(".tok"));
+  return Array.prototype.slice.call($("choices").querySelectorAll(".choice"));
+}
+function toksOf(d,arr){ return arr.map(i=>d.toks[i].replace(/[,.]$/,"")).join(" "); }
+
+function pickMain(pick, ok){
+  if(phase!=="main") return;
+  pickedMain=pick; mainOk=ok;
+  const it=queue[idx];
+  const needWhy = it.t==="g" && meta.whyOn && WHY[it.d.tag] && typeof it.d.wa==="number";
+  if(needWhy){
+    phase="why";
+    interactive().forEach((b,n)=>{ b.disabled=true; if(n===pick) b.classList.add("picked"); });
+    showWhy(it.d);
+  }else{
+    finishItem();
+  }
+}
+function showWhy(q){
+  whyMap=shuffle(WHY[q.tag].map((s,i)=>({s:s, ok:i===q.wa})));
+  const box=$("whyChoices"); box.innerHTML="";
+  whyMap.forEach((o,n)=>{
+    const b=document.createElement("button"); b.className="choice"; b.textContent=o.s;
+    b.addEventListener("click",()=>pickWhy(n));
+    box.appendChild(b);
+  });
+  $("why").classList.add("show");
+  $("why").scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+function pickWhy(n){
+  if(phase!=="why") return;
+  whyOk = whyMap[n].ok;
+  Array.prototype.slice.call($("whyChoices").querySelectorAll(".choice")).forEach((b,i)=>{
+    b.disabled=true;
+    if(whyMap[i].ok) b.classList.add("correct"); else if(i===n) b.classList.add("wrong");
+  });
+  finishItem();
+}
+
+function reveal(){
+  const it=queue[idx], els=interactive();
+  if(it.t==="g"){
+    const q=it.d;
+    els.forEach((b,n)=>{ b.disabled=true; b.classList.remove("picked");
+      if(n===q.ans) b.classList.add("correct"); else if(n===pickedMain) b.classList.add("wrong"); });
+    if(q.format==="fill"){
+      const slot=$("slot");
+      slot.textContent=q.opts[q.ans].replace("—（そのまま）","直結");
+      slot.classList.add(q.kind==="vt"?"fill-vt":"fill-vi");
+    }
+  }else if(it.t==="bv"||it.t==="dv"){
+    const d=(it.t==="dv")?it.b:it.d;
+    els.forEach((b,n)=>{ b.disabled=true;
+      if(d.v.indexOf(n)>=0) b.classList.add("hitV"); else if(n===pickedMain) b.classList.add("miss"); });
+  }else if(it.t==="bs"){
+    const d=it.d;
+    els.forEach((b,n)=>{ b.disabled=true;
+      if(d.s.indexOf(n)>=0) b.classList.add("hitS");
+      else if(n===pickedMain && d.v.indexOf(n)<0) b.classList.add("miss"); });
+  }else if(it.t==="bp"){
+    els.forEach(b=>{ b.disabled=true;
+      if(b.textContent===it.d.p) b.classList.add("correct");
+      else if(b.textContent===pickedMain) b.classList.add("wrong"); });
+  }else if(it.t==="br"){
+    els.forEach((b,n)=>{ b.disabled=true;
+      if(n===it.d.role.a) b.classList.add("correct"); else if(n===pickedMain) b.classList.add("wrong"); });
+  }else if(it.t==="pr"){
+    els.forEach((b,n)=>{ b.disabled=true;
+      if(it.order[n].p===it.d.ask) b.classList.add("correct");
+      else if(it.order[n]===pickedMain) b.classList.add("wrong"); });
+  }else if(it.t==="dm"){
+    els.forEach((b,n)=>{ b.disabled=true;
+      if(it.order[n].ok) b.classList.add("correct");
+      else if(it.order[n]===pickedMain) b.classList.add("wrong"); });
+  }
+}
+
+function finishItem(){
+  phase="done";
+  reveal();
+  const it=queue[idx];
+  const ok = mainOk && whyOk;
+  const half = mainOk && !whyOk;
+
+  if(mode==="diag"){
+    if(it.t==="dm"){ if(mainOk) dScore.m++; } else { if(mainOk) dScore.s++; }
+    if(mainOk) score++;
+  }else{
+    rec(idOf(it), ok);
+    if(ok) score++; else wrongs.push(it);
+  }
+
+  $("mark").textContent = ok?"正解":(half?"惜しい":"不正解");
+  $("mark").className   = "vmark "+(ok?"ok":(half?"half":"ng"));
+
+  if(it.t==="g"){
+    const q=it.d;
+    $("vtag").textContent=q.tag;
+    $("explain").textContent=(half?"答えは合っていた。でも理由が違う。ここが一番大事なところ。 ":"")+q.ex;
+    if(q.fix) $("fixline").textContent="→ "+q.fix;
+    $("pat").innerHTML='<span class="lbl">型</span>'+q.pat;
+    $("more").innerHTML='<h4>もっと詳しく</h4>'+q.more;
+    $("moretog").classList.remove("hidden");
+  }
+  else if(it.t==="bv"||it.t==="dv"){
+    const d=(it.t==="dv")?it.b:it.d;
+    $("vtag").textContent="骨";
+    $("explain").textContent=d.note;
+    $("pat").innerHTML='<span class="lbl">この文の骨</span><em>S = '+toksOf(d,d.s)+'</em>　／　<em>V = '+toksOf(d,d.v)+'</em>　／　<em>'+d.p+'</em>';
+  }
+  else if(it.t==="bs"){
+    const d=it.d;
+    $("vtag").textContent="骨";
+    $("explain").textContent=d.note;
+    $("pat").innerHTML='<span class="lbl">この文の骨</span><em>S = '+toksOf(d,d.s)+'</em>　／　<em>V = '+toksOf(d,d.v)+'</em>　／　<em>'+d.p+'</em>';
+  }
+  else if(it.t==="bp"){
+    const d=it.d, P=PATTERNS.find(x=>x.k===d.p);
+    $("vtag").textContent="文型";
+    $("explain").textContent=d.note;
+    $("pat").innerHTML='<span class="lbl">判定</span><em>'+d.p+'</em>　'+P.d+
+      '<br>① V のうしろに名詞があるか ② その名詞は S とイコールか ③ 名詞が2つなら、その2つがイコールか';
+  }
+  else if(it.t==="br"){
+    const d=it.d;
+    $("vtag").textContent="はたらき";
+    $("explain").textContent=d.note;
+    const chunk=d.toks.slice(d.role.f,d.role.t+1).join(" ");
+    $("pat").innerHTML='<span class="lbl">はたらき</span><em>'+ROLE_LABEL[d.role.a]+'</em>　… '+chunk;
+  }
+  else if(it.t==="pr"){
+    const p=it.d;
+    $("vtag").textContent="文型";
+    $("explain").textContent=p.note;
+    $("pat").innerHTML='<span class="lbl">対比</span><em>'+p.a.s+'</em> → '+p.a.p+'<br><em>'+p.b.s+'</em> → '+p.b.p;
+  }
+  else if(it.t==="dm"){
+    $("vtag").textContent="意味";
+    $("explain").textContent = mainOk ? "意味は取れている。次はこの文の構造を見る。" : "ここは意味のほうを取り違えている。";
+  }
+
+  $("next").textContent = idx===queue.length-1 ? "結果を見る" : "次へ";
+  $("verdict").classList.add("show");
+  $("bar").style.width=((idx+1)/queue.length*100)+"%";
+  $("verdict").scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+
+/* ===================================================================
+   結果
+   =================================================================== */
+function finish(){
+  show("result");
+  const n=queue.length;
+  if(mode==="diag"){
+    const dn=DIAG.length;
+    meta.diag={m:dScore.m, s:dScore.s, n:dn, at:Date.now()};
+    saveMeta();
+    $("scoreNum").textContent=dScore.m+dScore.s;
+    $("scoreDen").textContent=" / "+n;
+    $("scoreMsg").textContent="";
+    $("weakBox").classList.add("hidden");
+    $("dresBox").classList.remove("hidden");
+    $("dresBox").innerHTML=
+      '<div class="dbars">'+
+      '<div class="dbar"><span>意味</span><span class="track"><i style="width:'+(dScore.m/dn*100)+'%"></i></span><b>'+dScore.m+' / '+dn+'</b></div>'+
+      '<div class="dbar struct"><span>構造</span><span class="track"><i style="width:'+(dScore.s/dn*100)+'%"></i></span><b>'+dScore.s+' / '+dn+'</b></div>'+
+      '</div><div class="msg">'+diagVerdict(dScore.m,dScore.s,dn)+'</div>';
+    $("retryWrong").disabled=true;
+    $("retryWrong").textContent="診断は記録した";
+    return;
+  }
+  $("dresBox").classList.add("hidden");
+  $("scoreNum").textContent=score;
+  $("scoreDen").textContent=" / "+n;
+  const r=score/n;
+  $("scoreMsg").textContent = r===1 ? "全問正解。次は和訳だけを見て、英文を口で言えるか試す番。"
+    : r>=0.8 ? "あと少し。落とした項目は「型」だけでも声に出しておこう。"
+    : r>=0.5 ? "半分は取れている。間違えたものだけ回すのが一番早い。"
+    : "まずは間違えた問題だけ繰り返す。全部を一度に覚えようとしないこと。";
+  const byTag={};
+  wrongs.forEach(it=>{
+    const k = it.t==="g" ? it.d.tag : (it.t==="pr" ? "文型（対比）" : {bv:"動詞さがし",bs:"主語さがし",bp:"文型",br:"かたまりの働き"}[it.t]);
+    byTag[k]=(byTag[k]||0)+1;
+  });
+  const keys=Object.keys(byTag).sort((a,b)=>byTag[b]-byTag[a]);
+  $("weakBox").classList.toggle("hidden", keys.length===0);
+  $("weakList").innerHTML = keys.map(k=>'<div class="weak-row"><span>'+k+'</span><b>'+byTag[k]+'問</b></div>').join("");
+  $("retryWrong").disabled = wrongs.length===0;
+  $("retryWrong").textContent = wrongs.length? "間違えた"+wrongs.length+"問を、もう一度" : "間違いなし";
+}
+
+/* ===================================================================
+   イベント
+   =================================================================== */
+$("moretog").addEventListener("click",()=>{
+  const m=$("more"), nowHidden=m.classList.toggle("hidden");
+  $("moretog").textContent = nowHidden ? "もっと詳しく ＋" : "閉じる −";
+});
+$("next").addEventListener("click",()=>{ if(idx<queue.length-1){ idx++; render(); } else finish(); });
+$("quit").addEventListener("click",()=>{ buildHome(); show("home"); });
+$("toHome").addEventListener("click",()=>{ buildHome(); show("home"); });
+$("retryWrong").addEventListener("click",()=>{ if(wrongs.length) startList(wrongs,true); });
+$("mixAll").addEventListener("click",()=>startWork(DATA));
+$("weakOnly").addEventListener("click",()=>{
+  const weak=DATA.filter(q=>stats[q.id]&&stats[q.id].w>0).map(q=>({t:"g",d:q,__sid:q.id}));
+  if(weak.length) startList(weak, weak.length<=12);
+});
+$("whyToggle").addEventListener("change",e=>{ meta.whyOn=e.target.checked; saveMeta(); });
+$("fbtog").addEventListener("click",()=>{
+  const open=$("fbbox").classList.toggle("show");
+  $("fbtog").textContent = open ? "閉じる −" : "ここ、直してほしい ＋";
+  if(open) $("fbtext").focus();
+});
+$("fbsave").addEventListener("click",()=>{
+  const v=$("fbtext").value.trim(); if(!v) return;
+  addMemo(v,true);
+  $("fbtext").value="";
+  $("fbbox").classList.remove("show");
+  $("fbtog").classList.add("hidden");
+  $("fbdone").classList.remove("hidden");
+});
+$("reset").addEventListener("click",()=>{
+  if(confirm("これまでの正答記録と診断結果をすべて消します。（直してほしいところのメモは残ります）")){
+    stats={}; meta.diag=null; saveStats(); saveMeta(); buildHome();
+  }
+});
+
+buildHome(); show("home");
+</script>
+</body>
+</html>

@@ -11,6 +11,7 @@
 - **bpr_lab は「実験場（sandbox）リポジトリ」**。単一プロダクトではなく、業務効率化ツール・調査・個人アプリなど **30個の独立サブプロジェクト**が `sandbox/` 配下に並ぶ。
 - 各サブPJは基本的に **self-contained**（自前の CLAUDE.md / docs / .claude を持つものが多い）。作業時はそのPJディレクトリを作業ディレクトリにする。
 - **統合ハブは `sandbox/タスクマネージャー`**。蔵書管理（library/、記事2700件超）・情報収集スキル群・session-review 運用がここに集約されている（詳細はそちらの STATUS.md）。
+- **GitHub Pages を `main` のルートから公開中。** ルートの `.nojekyll`（Jekyll停止）と `eibunpo/`（「文学で英文法」への短いURLの入口）はそのための最小限の追加。配布URL: https://takuzokb05.github.io/bpr_lab/eibunpo/
 - ルート直下の `src/` `web/` `data/` はリポジトリ初期の足場（未精査）。旧ルート `library/` は 2026-07-16 にタスクマネージャー `library/` へ統合済み（記事3,595件に一本化。経緯は `library/MOVED.md`）。収集ルーチン2本（daily-collect-and-curate / weekly-digest）の出力先も同日修正済み。
 - **PC⇔スマホ同期**: PC側で GitAutoSync（15分毎の自動fetch+安全時のみff-pull）が稼働。クラウドセッションからPCに届けたい変更は main へのマージまで完了させること（詳細はルート `CLAUDE.md`）。
 
@@ -28,6 +29,7 @@
 | **FX自動取引** | AI活用のFX自動取引システム。ConoHa VPS + MT5デモで稼働構成あり | 稼働中 | `STATUS.md` / `.claude/CLAUDE.md` / `src/` |
 | **自作LLM** | 学習しながらLLMを内製しai-councilへ組込む。G検定対策(2026-07-04目標)兼 | 稼働中 | `CLAUDE.md`（現状ほぼ計画のみ） |
 | **flash-study** | 資格試験向け学習ツール。RSVPフラッシュ読み＋4択クイズ。Phase2までprototype完成 | 稼働中 | `CLAUDE.md` / `prototype/index.html` |
+| **文学で英文法** | 弟（高2）向け大学受験英文法ドリル。文学作品の場面で出題。単一HTML・8作品96問＋文型トラック。**GitHub Pages で公開中**（`/eibunpo/`） | 稼働中 | `README.md` / `index.html` |
 | **よかちょ一覧** | 横浜市 固定資産税(償却資産)業務のブラウザ完結ツール群。外部通信なし | 休眠 | `CLAUDE.md` / `一品一覧化/` / `index.html` |
 | **償却資産RAG提案** | 償却資産税部署へのRAG導入提案資料（引継ぎ用） | 休眠 | `CLAUDE.md` / `*.pdf`（成果物） |
 | **マニュアル更新** | 共用部分代行管理のAIチャットボット構想。調査・構想段階 | 休眠 | `CLAUDE.md` / `research/` |
@@ -54,7 +56,7 @@
 | **Google研修** | Google研修のレポート／要約成果物 | 休眠 | `output/*.pdf` / `docs/` |
 | **壁打ちのもう一人の自分** | 空ディレクトリ（要確認: タスクマネージャーの alter-ego/壁打ちへ統合済みか） | 空 | （中身なし） |
 
-**内訳: 稼働中 5 / 休眠 24 / 空 1 = 30 ディレクトリ。** 別途アーカイブzip 2本（`よかちょ一覧.zip` / `償却資産RAG提案.zip`）がルートに存在。
+**内訳: 稼働中 6 / 休眠 24 / 空 1 = 31 ディレクトリ。** 別途アーカイブzip 2本（`よかちょ一覧.zip` / `償却資産RAG提案.zip`）がルートに存在。
 
 ---
 
