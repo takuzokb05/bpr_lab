@@ -5249,3 +5249,46 @@ Kimi K3は$3/$15/Mトークンで修正MITライセンス（商用利用可）�
 
 **提案内容:**
 Anthropicが `browser_toolset_20260801` を正式リリース（beta終了）。FX自動売買システムでの経済指標（Investing.com・外為どっとコム等）の定時スクレイピングをBrowser Useで自動化する案が現実的になった。現在のPythonスクレイパーが構造変更で壊れやすい部分を Browser Use + Claude に置き換えることで保守コストを下げられる。ただしlatencyとコストのトレードオフを確認してから採用判断すること。
+
+---
+
+## 2026-08-30 収集分
+
+### 1. Claude Code設定への反映提案
+
+#### 1-1. --restricted modeを信頼できないコードベース閲覧時のデフォルトに
+**出典:** articles/2026-08-30_3778_WEB_ClaudeCode-Aug29-Update-Linux75MB-RestrictedMode-TokenDetail.md
+
+**提案内容:**
+Claude Code v2.1.245以降で利用可能な`--restricted`フラグを、外部リポジトリのレビューや未信頼コードの閲覧時の標準起動オプションとしてCLAUDE.mdに記載する。
+
+```bash
+# 未信頼コードレビュー時の推奨起動コマンド
+claude --restricted  # Bash・WebFetch無効、working dir内ファイルのみ
+```
+
+bypassPermissionsも拒否されるため、セキュリティ上のリスクを大幅に低減できる。特にFX自動取引リポジトリのコードレビューや外部ライブラリの調査時に有効。
+
+#### 1-2. /permissionsのAuto modeタブでallow/denyルールを整備
+**出典:** articles/2026-08-30_3778_WEB_ClaudeCode-Aug29-Update-Linux75MB-RestrictedMode-TokenDetail.md
+
+**提案内容:**
+`/permissions`コマンドのAuto modeタブに追加できるallow/denyルールを、各プロジェクトのCLAUDE.mdに対応するsettings.jsonとして明示的に管理する。現在のpermissions設定の棚卸しタイミングを月1回スケジュールすることを検討。
+
+### 2. FX自動取引への反映提案
+
+#### 2-1. AIエージェントフレームワークの移行検討（AutoGen → LangGraph or MS Agent Framework）
+**出典:** articles/2026-08-30_3784_WEB_AI-Agent-Framework-Selection-LangGraph-CrewAI-AutoGen-MetaGPT-2026-JA.md
+
+**提案内容:**
+FX自動取引システムのマルチエージェント構成でAutoGenを使用している場合、1〜2年以内のメンテナンスモード移行を見据えて移行先を検討すること。
+
+候補：
+- **LangGraph**: 複雑な状態管理・条件分岐のあるトレードワークフローに最適。金融機関での本番実績あり
+- **Microsoft Agent Framework 1.0**: エンタープライズセキュリティ・A2A+MCP標準対応が必要な場合
+
+#### 2-2. TradingAgentsフレームワークのOpus 5対応確認
+**出典:** articles/2026-08-30_3780_WEB_Claude-Opus5-vs-Fable5-Benchmarks-Pricing-DataCamp.md
+
+**提案内容:**
+TradingAgents v0.3.1（Claude Sonnet 5/Fable 5対応済み）を使用中の場合、Opus 5（$5/$25/M）が費用対効果で最優先選択肢となった。現在Sonnet 5またはFable 5を使用している場合、Opus 5への切り替えを検討する（コーディング・知識作業ベンチマークで同等以上の性能を半額で提供）。

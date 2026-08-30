@@ -1719,3 +1719,25 @@ drop.md: URLなし（処理対象なし）
 | ai-trading | 3件 | 3件 | 4件 | 3件 | 2件 | 1件 | 3件 | 2件 | 3件 | 3件 | 3件 | 2件 | 4件 | 0件 | 1件 | 3件 | 2件 | 4件 | 1件 | 2件 | 3件 | 39件 | 2件 | 1件 | 1件 | 2件 | 2件 | 1件 | 2件 | 3件 | 1件 | 6件 | 2件 | 0件 | 1件 | 4件 | 4件 | 0件 | 0件 | 0件 | 1件 | 0件 | 0件 | 1件 | 0件 | 0件 | 1件 | 2件 | 0件 | 128件 |
 | ai-news | 4件 | 2件 | 3件 | 2件 | 2件 | 4件 | 1件 | 2件 | 4件 | 2件 | 4件 | 3件 | 2件 | 4件 | 2件 | 2件 | 4件 | 1件 | 6件 | 1件 | 2件 | 52件 | 2件 | 2件 | 4件 | 3件 | 3件 | 2件 | 3件 | 2件 | 5件 | 12件 | 4件 | 2件 | 2件 | 5件 | 5件 | 1件 | 3件 | 4件 | 6件 | 7件 | 7件 | 1件 | 3件 | 4件 | 6件 | 3件 | 2件 | 212件 |
 | **合計** | **19件** | **13件** | **16件** | **12件** | **12件** | **15件** | **12件** | **12件** | **14件** | **18件** | **16件** | **20件** | **20件** | **14件** | **9件** | **12件** | **17件** | **23件** | **11件** | **16件** | **15件** | **238件** | **15件** | **15件** | **8件** | **11件** | **12件** | **16件** | **12件** | **11件** | **9件** | **29件** | **10件** | **7件** | **9件** | **18件** | **13件** | **7件** | **7件** | **22件** | **12件** | **15件** | **13件** | **4件** | **13件** | **11件** | **11件** | **12件** | **4件** | **880件** |
+
+---
+
+## 2026-08-30 収集分（7件収集 → SIGNAL 7件）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 928 | [2026-08-30_3778](articles/2026-08-30_3778_WEB_ClaudeCode-Aug29-Update-Linux75MB-RestrictedMode-TokenDetail.md) | Claude Code Aug 29 Update: Linux 75MB化・restricted mode・/cost token detail（ExplainX EN） | claude-code | 未読 | #web-signal |
+| 929 | [2026-08-30_3779](articles/2026-08-30_3779_WEB_ClaudeCode-MCP-Servers-Practical-June2026-Zenn-JA.md) | Claude CodeでMCPサーバーを試した実践まとめ: GitHub/PostgreSQL/Playwright/Context7（Zenn JA） | claude-ecosystem | 未読 | #web-signal |
+| 930 | [2026-08-30_3780](articles/2026-08-30_3780_WEB_Claude-Opus5-vs-Fable5-Benchmarks-Pricing-DataCamp.md) | Claude Opus 5 vs Fable 5: $5/$25 vs $10/$50・Frontier-Bench比較・用途別選定指針（DataCamp EN） | claude-ecosystem | 未読 | #web-signal |
+| 931 | [2026-08-30_3781](articles/2026-08-30_3781_WEB_ClaudeCode-Hooks-Tutorial-2026-GilRicardo.md) | Claude Code Hooks Tutorial 2026: enforcement/observability/side effects全21イベント（GilRicardo EN） | claude-code | 未読 | #web-signal |
+| 932 | [2026-08-30_3782](articles/2026-08-30_3782_WEB_Claude-AI-MCP-Servers-Practical-Guide-2026-FrugalTesting.md) | Claude AI × MCP実践ガイド2026: ステートレス化・allowed/blockedDomains・Microsoft Foundry対応（FrugalTesting EN） | claude-ecosystem | 未読 | #web-signal |
+| 933 | [2026-08-30_3783](articles/2026-08-30_3783_WEB_Claude-Agent-SDK-11-Steps-Guide-2026-TechInsider.md) | Claude Agent SDK 11ステップガイド2026: @tool・query()・subagent並列・リポジトリトリアージ実装（TechInsider EN） | claude-ecosystem | 未読 | #web-signal |
+| 934 | [2026-08-30_3784](articles/2026-08-30_3784_WEB_AI-Agent-Framework-Selection-LangGraph-CrewAI-AutoGen-MetaGPT-2026-JA.md) | AIエージェントフレームワーク選定2026: LangGraph/CrewAI/MS Agent Framework 1.0・A2A+MCP標準化（Arpable JA） | ai-news | 未読 | #web-signal |
+
+### NOISEとして除外（2026-08-30）
+| 候補 | 理由 |
+|---|---|
+| X JSON全4件（2026-08-30各4ドメイン） | total_fetched=0（VPS収集データなし） |
+| drop.md | URLなし（テンプレートのみ） |
+| aireleasetracker.com/latest | トラッカーページ（一次情報なし） |
+| gptrader.app AI trading 88% returns | 過度な成果主張のプロモーション記事 |

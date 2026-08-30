@@ -1379,3 +1379,24 @@
 |---|---|
 | X JSON全8件（2026-08-26・08-28各4ドメイン）| total_fetched=0（VPS収集データなし） |
 | drop.md | URLなし（テンプレートのみ） |
+
+---
+
+## 2026-08-30 収集分（7件収集 → SIGNAL 6件 claude-code/ecosystem）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|-----|---------|------|------|-----|--------|
+| 1236 | Claude Code Aug 29 Update（ExplainX EN）: Linux 75MB化（4.5x削減）・CLI起動高速化・/cost/usage/tasksトークン詳細・--restricted mode（Bash/WebFetch除去・working dir限定）・/permissions Auto modeタブ・v2.1.245 glibc起動クラッシュ修正 | en | 未読 | #claude-code #update #security #web-signal | articles/2026-08-30_3778_WEB_ClaudeCode-Aug29-Update-Linux75MB-RestrictedMode-TokenDetail.md |
+| 1237 | Claude CodeでMCPサーバーを試した実践まとめ（Zenn JA、2026-06-13）: GitHub公式・PostgreSQL・Playwright・Context7の4系統設定例・ステートレス仕様対応安定稼働確認 | ja | 未読 | #claude-ecosystem #mcp #web-signal | articles/2026-08-30_3779_WEB_ClaudeCode-MCP-Servers-Practical-June2026-Zenn-JA.md |
+| 1238 | Claude Opus 5 vs Fable 5: Benchmarks and Pricing（DataCamp EN）: Opus 5が$5/$25でFable 5の半額・Frontier-Bench/GDPval-AAで同等以上・Fable 5はMythos-class安全審査版・一般用途はOpus 5が最適 | en | 未読 | #claude-ecosystem #model-update #pricing #web-signal | articles/2026-08-30_3780_WEB_Claude-Opus5-vs-Fable5-Benchmarks-Pricing-DataCamp.md |
+| 1239 | Claude Code Hooks Tutorial 2026（GilRicardo EN）: enforcement/observability/side effectsの3用途・全21イベント使い分け・デプロイ+自動ログの複合パターン・CLAUDE.md連携・セキュリティ設計 | en | 未読 | #claude-code #hooks #web-signal | articles/2026-08-30_3781_WEB_ClaudeCode-Hooks-Tutorial-2026-GilRicardo.md |
+| 1240 | Claude AI × MCP実践ガイド2026（FrugalTesting EN）: 2026-07-28仕様ステートレス化・allowed/blockedDomains・Skills/Files API Microsoft Foundry対応・SDK全4大Tier1対応済み・97億/月DL | en | 未読 | #claude-ecosystem #mcp #api #web-signal | articles/2026-08-30_3782_WEB_Claude-AI-MCP-Servers-Practical-Guide-2026-FrugalTesting.md |
+| 1241 | Claude Agent SDK 11ステップガイド2026（TechInsider EN）: @tool・query()・subagent並列・リポジトリトリアージ完全実装例・GitHub MCP連携・約90分で構築完了 | en | 未読 | #claude-ecosystem #agent-sdk #web-signal | articles/2026-08-30_3783_WEB_Claude-Agent-SDK-11-Steps-Guide-2026-TechInsider.md |
+
+### NOISEとして除外（2026-08-30）
+| 候補 | 理由 |
+|---|---|
+| X JSON全4件（2026-08-30各4ドメイン） | total_fetched=0（VPS収集データなし） |
+| drop.md | URLなし（テンプレートのみ） |
+| aireleasetracker.com/latest | トラッカーページ（一次情報なし） |
+| gptrader.app AI trading 88% returns | 過度な成果主張のプロモーション記事 |

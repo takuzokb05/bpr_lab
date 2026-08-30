@@ -533,3 +533,11 @@
 |---|---|---|---|---|---|
 | 440 | Kimi K3: 史上最大2.8兆パラメータオープンウェイト（VentureBeat EN）: MoE推論35B active・KDA独自アーキテクチャ・1Mコンテキスト・Frontend Code Arena 1位・Modified MIT商用可・$3/$15/Mトークン・オープンソースが独自モデルと実質同等に | en | 未読 | #ai-news #model-release #open-source #moonshot #web-signal | articles/2026-08-28_3767_WEB_Kimi-K3-2-8T-OpenWeight-Largest-Moonshot-AI-VentureBeat.md |
 | 441 | 2026年8月LLMモデルラッシュ三極集中（JA）: Qwen3.8-Max(2.4T, $2/$6)・Kimi K3(2.8T, MIT)・LFM2.5-2.6B(スマホ30tok/s)・Gemma 4 E2B(RasPi5)・EO14409期限が投入集中の背景・安いモデル×賢い使い方が勝ち筋 | ja | 未読 | #ai-news #model-release #llm-pricing #edge-ai #web-signal | articles/2026-08-28_3768_WEB_LLM-Model-Release-Rush-August2026-Cloud-OpenWeight-Edge-JA.md |
+
+---
+
+## 2026-08-30 収集分（1件SIGNAL）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 442 | AIエージェントフレームワーク選定ガイド2026（Arpable JA）: LangGraph月3000万DL・CrewAI v1.13.0・Microsoft Agent Framework 1.0（AutoGenメンテナンスモード移行）・A2A+MCP標準化・富士通マルチAIエージェントフレームワーク | ja | 未読 | #ai-news #ai-agent #framework #mcp #web-signal | articles/2026-08-30_3784_WEB_AI-Agent-Framework-Selection-LangGraph-CrewAI-AutoGen-MetaGPT-2026-JA.md |
