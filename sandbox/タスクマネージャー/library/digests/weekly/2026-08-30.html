@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Weekly Digest 2026-08-30</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --bg-card: #ffffff;
+    --text: #1a1a1a;
+    --text-secondary: #555;
+    --text-tertiary: #888;
+    --border: #e0e0e0;
+    --border-light: #f0f0f0;
+    --accent-claude: #3b6fcd;
+    --accent-claude-bg: #eef3fc;
+    --accent-eco: #2a8f5c;
+    --accent-eco-bg: #edf7f1;
+    --accent-trade: #c7742e;
+    --accent-trade-bg: #fdf3ea;
+    --accent-news: #7c4dab;
+    --accent-news-bg: #f5eefb;
+    --accent-action: #c53030;
+    --accent-action-bg: #fef2f2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06);
+    --shadow-hover: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #111;
+      --bg-card: #1a1a1a;
+      --text: #e8e8e8;
+      --text-secondary: #aaa;
+      --text-tertiary: #777;
+      --border: #333;
+      --border-light: #252525;
+      --accent-claude: #6b9eff;
+      --accent-claude-bg: #1a2540;
+      --accent-eco: #4dbd7a;
+      --accent-eco-bg: #152a1e;
+      --accent-trade: #e8a05e;
+      --accent-trade-bg: #2a1f12;
+      --accent-news: #b488e0;
+      --accent-news-bg: #221533;
+      --accent-action: #f56565;
+      --accent-action-bg: #2d1515;
+      --shadow: 0 1px 3px rgba(0,0,0,0.3);
+      --shadow-hover: 0 2px 8px rgba(0,0,0,0.4);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #111;
+    --bg-card: #1a1a1a;
+    --text: #e8e8e8;
+    --text-secondary: #aaa;
+    --text-tertiary: #777;
+    --border: #333;
+    --border-light: #252525;
+    --accent-claude: #6b9eff;
+    --accent-claude-bg: #1a2540;
+    --accent-eco: #4dbd7a;
+    --accent-eco-bg: #152a1e;
+    --accent-trade: #e8a05e;
+    --accent-trade-bg: #2a1f12;
+    --accent-news: #b488e0;
+    --accent-news-bg: #221533;
+    --accent-action: #f56565;
+    --accent-action-bg: #2d1515;
+    --shadow: 0 1px 3px rgba(0,0,0,0.3);
+    --shadow-hover: 0 2px 8px rgba(0,0,0,0.4);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    font-size: 16px;
+  }
+
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid var(--border);
+  }
+
+  header .date {
+    font-size: 0.85rem;
+    color: var(--text-tertiary);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.3rem;
+  }
+
+  header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+  }
+
+  header .meta {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+  }
+
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 2.5rem 0 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 1.5rem 0 0.6rem;
+  }
+
+  p {
+    margin-bottom: 0.8rem;
+    color: var(--text);
+  }
+
+  .summary-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow);
+  }
+
+  .summary-box p {
+    font-size: 1.05rem;
+    line-height: 1.9;
+  }
+
+  .domain-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.15rem 0.6rem;
+    border-radius: 3px;
+    margin-right: 0.4rem;
+    vertical-align: middle;
+  }
+
+  .tag-claude { background: var(--accent-claude-bg); color: var(--accent-claude); }
+  .tag-eco { background: var(--accent-eco-bg); color: var(--accent-eco); }
+  .tag-trade { background: var(--accent-trade-bg); color: var(--accent-trade); }
+  .tag-news { background: var(--accent-news-bg); color: var(--accent-news); }
+
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.15s;
+  }
+
+  .card:hover { box-shadow: var(--shadow-hover); }
+
+  .card h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+  }
+
+  .card p, .card li {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+  }
+
+  .card ul {
+    margin: 0.4rem 0 0 1.2rem;
+  }
+
+  .card li {
+    margin-bottom: 0.3rem;
+  }
+
+  .timeline {
+    border-left: 3px solid var(--border);
+    padding-left: 1.5rem;
+    margin: 1rem 0;
+  }
+
+  .timeline-item {
+    margin-bottom: 1.2rem;
+    position: relative;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -1.75rem;
+    top: 0.5rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent-claude);
+    border: 2px solid var(--bg);
+  }
+
+  .timeline-item .day {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    margin-bottom: 0.2rem;
+  }
+
+  .cross-domain {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent-news);
+    border-radius: 4px;
+    padding: 1rem 1.2rem;
+    margin-bottom: 1rem;
+  }
+
+  .cross-domain h4 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+
+  .cross-domain p {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+  }
+
+  .action-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: action-counter;
+  }
+
+  .action-list li {
+    counter-increment: action-counter;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.2rem 1rem 3rem;
+    margin-bottom: 0.8rem;
+    position: relative;
+    box-shadow: var(--shadow);
+  }
+
+  .action-list li::before {
+    content: counter(action-counter);
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent-action);
+    background: var(--accent-action-bg);
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  .action-list .priority {
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-block;
+    padding: 0.1rem 0.4rem;
+    border-radius: 3px;
+    margin-bottom: 0.3rem;
+  }
+
+  .priority-high { background: var(--accent-action-bg); color: var(--accent-action); }
+  .priority-mid { background: var(--accent-trade-bg); color: var(--accent-trade); }
+
+  .action-list .title {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .action-list .reason {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+  }
+
+  .watchlist {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    margin: 1rem 0;
+  }
+
+  @media (max-width: 600px) {
+    .watchlist { grid-template-columns: 1fr; }
+    .container { padding: 1.2rem 1rem 3rem; }
+    header h1 { font-size: 1.3rem; }
+  }
+
+  .watchlist-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.8rem 1rem;
+  }
+
+  .watchlist-item .label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.2rem;
+  }
+
+  .watchlist-item p {
+    font-size: 0.92rem;
+    margin: 0;
+  }
+
+  footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-light);
+    font-size: 0.8rem;
+    color: var(--text-tertiary);
+    text-align: center;
+  }
+
+  .article-ref {
+    font-size: 0.78rem;
+    color: var(--text-tertiary);
+  }
+
+  .stat-row {
+    display: flex;
+    gap: 1rem;
+    margin: 1rem 0;
+    flex-wrap: wrap;
+  }
+
+  .stat-box {
+    flex: 1;
+    min-width: 120px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.8rem 1rem;
+    text-align: center;
+  }
+
+  .stat-box .num {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--accent-claude);
+    line-height: 1.2;
+  }
+
+  .stat-box .label {
+    font-size: 0.78rem;
+    color: var(--text-tertiary);
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <div class="date">WEEKLY DIGEST</div>
+  <h1>Anthropicの全方位展開と、AI業界の地殻変動が同時進行した1週間</h1>
+  <div class="meta">2026-08-24 〜 2026-08-30 / 39記事・2日次ダイジェストから統合</div>
+</header>
+
+<div class="stat-row">
+  <div class="stat-box">
+    <div class="num">39</div>
+    <div class="label">収集記事</div>
+  </div>
+  <div class="stat-box">
+    <div class="num">$60B+</div>
+    <div class="label">Anthropic計算資源投資</div>
+  </div>
+  <div class="stat-box">
+    <div class="num">18</div>
+    <div class="label">8月モデルリリース数</div>
+  </div>
+  <div class="stat-box">
+    <div class="num">2.8T</div>
+    <div class="label">Kimi K3パラメータ</div>
+  </div>
+</div>
+
+<!-- ===== 1. 今週のサマリー ===== -->
+<h2>1. 今週のサマリー</h2>
+
+<div class="summary-box">
+  <p>Anthropicが1週間で3つの巨大ディールを発表し（Nscale $45B・Claudeforce・Coworkブラウザ内蔵）、「モデル提供者」から「フルスタックAIプラットフォーム企業」への変貌を一気に可視化した週だった。同時にNvidiaがHugging Faceを$12.9Bで買収合意し、オープンソースAIの流通基盤がハードウェア企業の傘下に入るという地殻変動が起きた。Claude Codeは /design・Concise出力・Remote Control GA・クロスセッション通信と矢継ぎ早にアップデートを重ね、もはや「コーディングツール」ではなくマルチエージェント開発プラットフォームとしての輪郭が明確になった。FX自動取引の文脈では、MT5にネイティブAIアシスタントが搭載されたことが最大のニュースであり、外部LLM連携 vs. ビルトインAIというアーキテクチャ選択の再考を迫る。</p>
+</div>
+
+
+<!-- ===== 2. 継続トレンド総括 ===== -->
+<h2>2. 今週ずっと話題だったもの</h2>
+
+<h3><span class="domain-tag tag-eco">Ecosystem</span> Anthropicプラットフォーム4機能GA → エンタープライズ展開の加速</h3>
+
+<div class="timeline">
+  <div class="timeline-item">
+    <div class="day">8/19（前週）</div>
+    <p>Computer Use・Browser Use・Files API・Agent Skills APIが同日GA。記事17本の爆発的カバレッジ。</p>
+  </div>
+  <div class="timeline-item">
+    <div class="day">8/24</div>
+    <p>記事数が3本に減少し「消化フェーズ」に移行。EnterpriseDNAがフルスタック自律エージェント構築パターンとして体系化。</p>
+  </div>
+  <div class="timeline-item">
+    <div class="day">8/27</div>
+    <p>Claudeforce（Salesforce連携、37スキル）発表。CRMの画面操作をエージェントが代替する象徴的事例に。</p>
+  </div>
+  <div class="timeline-item">
+    <div class="day">8/28</div>
+    <p>Releasebot記事がSDKアップデート（Python 1.2.0, TS 0.122.0）を詳報。BetaSkill → BetaContainerSkillのリネームなど、APIが安定期に入った兆候。</p>
+  </div>
+</div>
+
+<h3><span class="domain-tag tag-eco">Ecosystem</span> MCP 2026-07-28：ステートレス革命の実装段階へ</h3>
+
+<div class="timeline">
+  <div class="timeline-item">
+    <div class="day">8/25</div>
+    <p>公式スペック・Cloudflareのエッジ実装解説・AAIFの移行ガイドが同日に揃い踏み。ステートレスコア（サーバー側セッションストア不要）により、ラウンドロビンLBでのスケールアウトが可能に。TypeScript/Python SDK v3.0+で自動対応。</p>
+  </div>
+  <div class="timeline-item">
+    <div class="day">8/27</div>
+    <p>新ロードマップ発表（8/22付）。5つの優先事項: エージェントメッセージングプリミティブ、HTTPネイティブ統一、DPoP+Workload Identity Federation（APIキー廃止方向）、ツールディスカバリ改善、SDK DX向上。ガバナンスにContributor Ladder・WG・SEPプロセスが整備。</p>
+  </div>
+</div>
+
+<h3><span class="domain-tag tag-claude">Claude Code</span> 週2回のチェンジログと急速な機能積み上げ</h3>
+
+<div class="timeline">
+  <div class="timeline-item">
+    <div class="day">8/25</div>
+    <p>日本語の実践記事が急増。Focus View・Concise出力・xhighエフォート・スタッガードファンアウトの導入順ガイド（KAWAI）、業務自動化10事例（Uravation、月30〜80時間削減の実績）、11のベストプラクティス（SmartScope「CLAUDE.mdはリクエスト、Hooksは保証」）。</p>
+  </div>
+  <div class="timeline-item">
+    <div class="day">8/28</div>
+    <p>Week 34公式チェンジログ: /designリサーチプレビュー、Concise出力スタイル、Remote Control GA。Auto Modeが平文の soft_deny/hard_deny パーミッションルールに対応し、プロジェクトレベルのオーバーライド不可に。</p>
+  </div>
+  <div class="timeline-item">
+    <div class="day">8/29</div>
+    <p>Week 35チェンジログ: /usageにLoops分解表示、modelPicker設定、promptCacheTtl設定。Linuxバイナリ340MB→75MBに圧縮。プラグインエコシステム記事ではSuperpowers・Frontend Design・Context7・Claude Memが実用トップ層として定着。</p>
+  </div>
+</div>
+
+<h3><span class="domain-tag tag-trade">Trading</span> AI取引エージェントへの慎重論と、MT5ネイティブAIの登場</h3>
+
+<div class="timeline">
+  <div class="timeline-item">
+    <div class="day">8/24</div>
+    <p>Bitsgap「スマートなAI≠安全なAI」論。LLMの非決定性が従来型ボットより高リスクと指摘。ハイブリッド設計（LLMは分析、執行はルールベース）を推奨。</p>
+  </div>
+  <div class="timeline-item">
+    <div class="day">8/25</div>
+    <p>GPTraderのFX AIエージェント比較。バックテスト性能と実運用の乖離（取引コスト・スリッページ・レジームシフト）を数値で確認。</p>
+  </div>
+  <div class="timeline-item">
+    <div class="day">8/26</div>
+    <p>MT5にネイティブAIアシスタントが搭載（MCP対応、MQL5 Liteモデル、3週間で1兆トークン処理）。外部API不要のリアルタイム取引支援。アーキテクチャ選択の転換点。</p>
+  </div>
+  <div class="timeline-item">
+    <div class="day">8/28</div>
+    <p>aipicks.jpが証券・FX取引の15ユースケースを体系化。キルスイッチの重要性を「取引が動くかどうかの100倍重要」と強調。</p>
+  </div>
+</div>
+
+
+<!-- ===== 3. 重要トピック（ドメイン別） ===== -->
+<h2>3. 今週の重要トピック</h2>
+
+<h3><span class="domain-tag tag-claude">Claude Code</span></h3>
+
+<div class="card">
+  <h4>/design コマンド：ターミナルの中でUIデザインが完結する</h4>
+  <p>Week 34で導入されたリサーチプレビュー。Artifacts上でアートボードを生成し、選択→インラインWYSIWYG編集→実装までセッション内で完結する5ステップワークフロー。ExplainXの詳細解説によれば、複数アートボードではトークン消費が大きく、デザインシステム継承は未確認だが、中間的なプロトタイピングには実用レベル。<span class="domain-tag tag-eco">Ecosystem</span>のCoworkブラウザ内蔵と合わせ、外部ツールへの切り替えが減少する方向。</p>
+  <p class="article-ref">関連: #3762, #3765, #3766</p>
+</div>
+
+<div class="card">
+  <h4>Concise出力スタイル：結果ファーストの応答</h4>
+  <p>v2.1.237で導入。結果を先頭に置き、説明・ナレーションを省略（エラーやセキュリティ事項のみ例外）。/config またはsettings.jsonで設定可能。従来の「簡潔に」プロンプトが不要になり、トークン消費とノイズが同時に減る。</p>
+  <p class="article-ref">関連: #3746, #3762, #3765</p>
+</div>
+
+<div class="card">
+  <h4>クロスセッション通信：マルチエージェント並列監視が現実に</h4>
+  <p>v2.1.224（8/7）以降、異なるターミナル/ワークツリーのClaude Codeインスタンス間でListAgents/SendMessageによるテキスト通信が可能。OSユーザースコープで隔離され、パーミッション分類器による事前検査あり。並列FX市場監視やストラテジー分離運用に直接適用可能なインフラ。</p>
+  <p class="article-ref">関連: #3773</p>
+</div>
+
+<div class="card">
+  <h4>プラグインエコシステムの成熟</h4>
+  <p>9,000+プラグイン中、実運用は約100本。Superpowers（plan→spec→test、マルチサブエージェントTDD）、Frontend Design（約27.7万インストール）、Context7（最新ライブラリドキュメントをオンデマンド注入）が実用トップ層。「5〜6本に絞るのがベスト、10本超はパフォーマンス劣化」というガイダンスも。</p>
+  <p class="article-ref">関連: #3776</p>
+</div>
+
+<div class="card">
+  <h4>CLAUDE.mdのベストプラクティス：200行以下を裏付けるデータ</h4>
+  <p>Chromaの2025年ベンチマークで、テスト対象の全18モデル（Opus 4含む）がコンテキスト長の増加に伴い精度低下（95%→60%）することが確認された。CLAUDE.mdを200行以内に保つ実践的根拠。HTMLコメントでの人間向けメモ（Claudeのコンテキストに入らない＝実質コスト0）という技も紹介。</p>
+  <p class="article-ref">関連: #3777</p>
+</div>
+
+<h3><span class="domain-tag tag-eco">Ecosystem</span></h3>
+
+<div class="card">
+  <h4>Claude Cowork：ブラウザ内蔵でセットアップ不要のWeb操作</h4>
+  <p>Coworkデスクトップアプリにサイドパネル型の内蔵ブラウザが追加。ナビゲーション・クリック・フォーム入力・ダッシュボードデータ取得をユーザーの通常ブラウザから完全分離した環境で実行。Pro/Max/Team向けに順次展開中、Enterpriseは既に利用可能。拡張機能のインストールなしでBrowser Use的な操作が完結するのは、導入ハードルの大幅低下を意味する。</p>
+  <p class="article-ref">関連: #3760</p>
+</div>
+
+<div class="card">
+  <h4>Claude Agent SDK：カスタムエージェント構築の標準ツール</h4>
+  <p>Claude Code SDKからリネーム（2025年9月）された同SDKの包括ガイドが公開。Claude Codeと同じハーネス（ファイルI/O・シェル・検索・MCP接続）をPythonから呼び出し可能。Managed Agentsパッケージ（anthropic-managed-agents）でサーバーホスト型エージェントにドメインセキュリティを付与。実践チュートリアル（Mediumの90分レポジトリトリアージエージェント）も登場し、CLI外でのエージェント構築が身近に。</p>
+  <p class="article-ref">関連: #3750, #3774</p>
+</div>
+
+<div class="card">
+  <h4>Claude Academy：Anthropic社内研修の外部公開</h4>
+  <p>8/20にローンチ。社内で使っていた「4D AI Fluency Framework」（Discover/Define/Deploy/Develop）を無料公開。開発者チュートリアル・認定パス・進捗トラッキング付き。8/28には「Claude for Teachers」（K-12向け）も追加。OpenAI・Google・Microsoftとの教育市場争奪戦の一手。</p>
+  <p class="article-ref">関連: #3775</p>
+</div>
+
+<div class="card">
+  <h4>Model Hardware Standard (MHS)：エージェントが物理デバイスを操作する時代</h4>
+  <p>Anthropicが8/27にリサーチプレビュー公開。AIエージェントが安全に物理デバイスを操作するための共有仕様。当面は研究室・製造業者向けだが、Computer Use → Browser Use → Physical Device Useという拡張の方向性が明確に見える。</p>
+  <p class="article-ref">関連: #3763</p>
+</div>
+
+<h3><span class="domain-tag tag-trade">Trading</span></h3>
+
+<div class="card">
+  <h4>MT5ネイティブAIアシスタント：外部LLM連携の再考を迫る</h4>
+  <p>7月にMT5に搭載された組み込みAIアシスタント（MCP対応）が、8月の利用実績で1兆トークン超を記録。リアルタイムのポジション認識・自然言語注文・チャート上インジケーター視覚認識・マルチステップ実行が可能。MQL5 Liteモデルは無料で、外部API（Claude/GPT）への WebRequestが不要になる。レイテンシ・コスト・セキュリティ全面で外部連携より有利な可能性があり、FX自動取引プロジェクトのアーキテクチャ選択に直接影響する。</p>
+  <p class="article-ref">関連: #3754, #3755</p>
+</div>
+
+<div class="card">
+  <h4>ハイブリッド設計の合意形成</h4>
+  <p>今週の取引関連記事4本がほぼ同じ結論に収束した。「LLMは分析・リサーチ・アラートに使い、執行はルールベースEA or 人間判断で」。aipicks.jpの15ユースケース記事は、システムの「止められること」（キルスイッチ・ロスキャップ）を「動くこと」の100倍重要と表現。Robinhoodの5月のAIエージェント直接証券接続も言及されており、「エージェンティック・ファイナンス」というカテゴリが形成されつつある。</p>
+  <p class="article-ref">関連: #3740, #3751, #3770</p>
+</div>
+
+<h3><span class="domain-tag tag-news">News / Industry</span></h3>
+
+<div class="card">
+  <h4>Nvidia、Hugging Faceを$12.9Bで買収合意</h4>
+  <p>2023年評価額$4.5Bの約3倍。2025年に$500Mの投資を拒否された後の全社買収。目的: オープンソースモデル流通ハブの掌握、顧客のNvidiaハードウェアロックイン強化、クラウド再参入。オープンソースAIの「中立的プラットフォーム」としてのHugging Faceの性格が変質する可能性があり、オープンウェイトモデルのホスティング先分散（自前ミラー等）を検討するタイミング。</p>
+  <p class="article-ref">関連: #3757, #3764</p>
+</div>
+
+<div class="card">
+  <h4>Anthropicの計算資源調達：1ヶ月で$60B超</h4>
+  <p>Nscale $45B（ウェストバージニア、Vera Rubinチップ、2027年稼働）、Volta $10B（ノルウェー）、AMD $5B（7月）。10月予定のIPOに向けた実行力の可視化と、来年以降のモデル世代への布石。計算資源の確保が競争優位の直接的な源泉になる時代。</p>
+  <p class="article-ref">関連: #3758, #3764</p>
+</div>
+
+<div class="card">
+  <h4>8月のモデルリリースラッシュ：18モデル・15プロバイダー</h4>
+  <p>20日間で18モデルがリリース。注目: Kimi K3（2.8Tパラメータ MoE、オープンウェイト最大、DeepSeek V4 Proの1.75倍、$3/$15）、Opus 5（$5/$25、Fable 5の半額）、Qwen3.8-Max（2.4T MoE、$2/$6）。コスト/知性比が前年比約50%低下。BenchLMトラッカーによれば「評価能力を超えるペース」。米国大統領令14409の8/1設計期限もリリースラッシュの一因。</p>
+  <p class="article-ref">関連: #3752, #3767, #3768, #3771</p>
+</div>
+
+<div class="card">
+  <h4>Cursorを悪用したサイバー攻撃の報告</h4>
+  <p>ロシア語話者のサイバー犯罪者がCursorコーディングアシスタントを武器化し、4〜5月に少なくとも7社を侵害。「セキュリティシミュレーション」と偽って侵入。エージェント型コーディングツールのセキュリティリスクが現実のインシデントとして顕在化した初の公開事例。Claude Codeユーザーとしても、Auto Modeのパーミッション設計やHooksによるガードレールの重要性を再認識すべき。</p>
+  <p class="article-ref">関連: #3764</p>
+</div>
+
+
+<!-- ===== 4. ドメイン横断分析 ===== -->
+<h2>4. ドメイン横断分析</h2>
+
+<div class="cross-domain">
+  <h4>エージェントがUIを置き換える：Claude Code → Claudeforce → Cowork</h4>
+  <p>Claude Codeがターミナルから開発プラットフォームへ進化する動きと、ClaudeforceがSalesforceのダッシュボードUIを自然言語エージェントで代替する動き、Coworkがブラウザ操作をサイドパネルに内蔵する動きは、すべて同じベクトル上にある。「人間がUIを操作する」から「エージェントが直接アクションを実行し、人間は結果を確認する」への不可逆的シフト。MHSによる物理デバイス操作はその延長線上にある。</p>
+</div>
+
+<div class="cross-domain">
+  <h4>MCPの成熟がClaude Code/取引/エンタープライズを接続する</h4>
+  <p>MCP 2026-07-28のステートレス化は、Claude CodeのMCPサーバー接続を安定化させると同時に、MT5のネイティブAIアシスタント（MCP対応）との親和性を高め、Claudeforceのようなエンタープライズ統合の基盤にもなる。来るDPoP認証への移行はAPIキー管理の負荷を下げるが、FX取引のMCP統合ではセキュリティ設計の更新が必要。3つのドメインがMCPという共通基盤で接続されつつある。</p>
+</div>
+
+<div class="cross-domain">
+  <h4>オープンウェイトの台頭がコストティアリング戦略を現実にする</h4>
+  <p>Kimi K3（$3/$15）・Qwen3.8-Max（$2/$6）・LFM2.5（スマホ上30 tok/s）の登場により、「安価/軽量モデルで分類・ドラフト、フロンティアモデルで戦略判断」というコストティアリングが実現可能に。FX自動取引では、ニュース分類やインジケーター読み取りを軽量モデルで処理し、エントリー/エグジット判断のみOpus 5やSonnet 5を使う設計が合理的。Claude Codeでも、ルーチンタスクをSonnet 5、複雑な推論をOpus 5のxhighエフォートで使い分ける運用が定着しつつある。</p>
+</div>
+
+<div class="cross-domain">
+  <h4>「エージェンティック」時代のセキュリティ：攻撃面の拡大</h4>
+  <p>Cursorの悪用事例、Claude CodeのAuto Modeパーミッション設計（soft_deny/hard_deny）、Browser Useのドメインallow/blockリスト、MCP DPoP認証、Singapore IMDAのエージェントデジタルID — 今週の記事群はエージェントのセキュリティという共通テーマで横串を刺せる。自律度が上がるほど攻撃面は広がり、「止められること」が「動くこと」より重要になる。取引のキルスイッチとコーディングエージェントのパーミッション設計は、抽象レベルでは同じ問題。</p>
+</div>
+
+
+<!-- ===== 5. アクション提案 ===== -->
+<h2>5. アクション提案</h2>
+
+<ol class="action-list">
+  <li>
+    <span class="priority priority-high">優先度: 高</span>
+    <span class="title">MT5ネイティブAIアシスタントの評価と、FX自動取引アーキテクチャの再検討</span>
+    <span class="reason">MT5組み込みAIがMCP対応・無料・低レイテンシで登場し、3週間で1兆トークンの実績を出した（#3754, #3755）。現行の外部LLM連携設計と比較して、レイテンシ・コスト・セキュリティのトレードオフを実機で検証する価値がある。まずMT5のAIアシスタント機能をデモ環境で触り、現行EAとの統合可能性を見る。今やるべき理由: 機能が急速に進化中で、アーキテクチャ判断を後回しにすると手戻りが大きくなる。</span>
+  </li>
+  <li>
+    <span class="priority priority-high">優先度: 高</span>
+    <span class="title">Claude Code のConcise出力 + /design を日常ワークフローに組み込む</span>
+    <span class="reason">Week 34-35で正式導入されたConcise出力は、トークン消費とノイズの同時削減に直結する（#3765）。/designはプロトタイプ作業でのタブ切り替えを不要にする（#3766）。settings.jsonに「output_style: concise」を設定し、次のUI作業で/designを試用するだけで効果を確認できる。今やるべき理由: 既にGAまたはリサーチプレビューとして利用可能であり、設定変更のみで即効性がある。</span>
+  </li>
+  <li>
+    <span class="priority priority-mid">優先度: 中</span>
+    <span class="title">CLAUDE.mdの200行以内ダイエット</span>
+    <span class="reason">Chromaのベンチマークがコンテキスト長増加による精度低下を実証した（#3777）。現在のリポジトリのCLAUDE.mdファイル群をGrepで総行数確認し、200行超のものをHTMLコメント活用やHooksへの移行で圧縮する。SmartScopeの「CLAUDE.mdはリクエスト、Hooksは保証」ガイドライン（#3749）を判断基準に使う。</span>
+  </li>
+  <li>
+    <span class="priority priority-mid">優先度: 中</span>
+    <span class="title">クロスセッション通信を活用したFX並列監視のPoC</span>
+    <span class="reason">ListAgents/SendMessageによるClaude Codeインスタンス間通信が公式ドキュメント化された（#3773）。異なるターミナルで通貨ペア別・戦略別のエージェントを走らせ、テキストメッセージで協調させる構成のPoCを組む価値がある。Agent SDK（#3774）を使えばCLI外からも同様のマルチエージェント構成が可能。</span>
+  </li>
+  <li>
+    <span class="priority priority-mid">優先度: 中</span>
+    <span class="title">MCP DPoP認証への移行準備（ロードマップ追跡）</span>
+    <span class="reason">8/22のMCPロードマップでDPoP + Workload Identity FederationがAPIキー置換の方向性として明示された（#3761）。現在のMCPサーバー接続がAPIキーベースの場合、移行タイムラインを追跡し、先行して認証設計を見直しておく。Cloudflareの実装パターン（#3743）が参考になる。</span>
+  </li>
+</ol>
+
+
+<!-- ===== 6. 来週の注目ポイント ===== -->
+<h2>6. 来週の注目ポイント</h2>
+
+<div class="watchlist">
+  <div class="watchlist-item">
+    <div class="label">モデル</div>
+    <p>Claude Sonnet 5の$2/$10恒久化後の市場反応。8月末の「プロモ期間」表記が消え、新規顧客の流入加速があるか。Opus 5の実運用レポートが出始めるタイミング。</p>
+  </div>
+  <div class="watchlist-item">
+    <div class="label">Claude Code</div>
+    <p>/designの改善（デザインシステム継承・パフォーマンス）。Week 36チェンジログ。プラグインエコシステムの公式キュレーション動向。</p>
+  </div>
+  <div class="watchlist-item">
+    <div class="label">Nvidia-HF</div>
+    <p>買収の正式契約・規制当局審査の開始。オープンソースコミュニティの反応とHF代替プラットフォーム（ModelScope等）への流出動向。</p>
+  </div>
+  <div class="watchlist-item">
+    <div class="label">MT5 AI</div>
+    <p>ネイティブAIアシスタントのアップデート頻度。MQL5コミュニティでの利用事例蓄積。外部LLM連携との比較ベンチマーク。</p>
+  </div>
+  <div class="watchlist-item">
+    <div class="label">規制</div>
+    <p>EU AI Act透明性要件（8/2発効）後の初の執行事例。12/2までの猶予期間内での業界対応状況。</p>
+  </div>
+  <div class="watchlist-item">
+    <div class="label">IPO</div>
+    <p>Anthropic 10月IPOに向けた財務情報公開・ロードショー開始の兆候。Nscaleの IPO動向（Microsoft撤退後のAnthropicアンカー）。</p>
+  </div>
+</div>
+
+
+<footer>
+  <p>AI Weekly Digest 2026-08-30 — 39記事・2日次ダイジェストから自動生成</p>
+  <p>sandbox/タスクマネージャー/library/ 配下の蔵書から統合</p>
+</footer>
+
+</div>
+</body>
+</html>
