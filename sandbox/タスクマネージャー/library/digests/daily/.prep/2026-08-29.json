@@ -1,0 +1,118 @@
+{
+  "date": "2026-08-29",
+  "generated_at": "2026-08-30T23:17:24.452433Z",
+  "article_count": 6,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-08-29_3772_WEB_ClaudeCode-Week35-Changelog-LoopsBreakdown-ModelPicker-PromptCache.md",
+      "title": "Claude Code Week 35 Changelog: Loops Breakdown・ModelPicker・PromptCache設定",
+      "url": "https://www.gradually.ai/en/changelogs/claude-code/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Week 35の最大のユーザー価値は「ループ可視化」「モデルコスト最適化」「起動高速化・軽量化」の3点。Loopsブレイクダウンにより、日次収集のような繰り返しタスクのトークン消費を定量的に追跡できるようになる。`modelPricing`マネージド設定はエンタープライズユーザーが契約割引を`/cost`に正確に反映できる実用機能。Linux向けの起動クラッシュ修正と75MBへのダウンサイズ（従来比78%削減）はCI/CD・VPS環境で即効果あり。",
+      "body_excerpt": "Claude Code Week 35（2026-08-25〜29）のリリース詳細：\n\n**新機能（主要）:**\n- `/usage`にLoopsブレイクダウン追加 — ループ実行回数・合計トークン・実行あたりトークン・最終実行時刻を表示。リソース集約タスクの特定が容易に",
+      "fact_checked": true,
+      "fact_check_note": "CONFIRMED: v2.1.247（2026-08-26リリース）で確認。Loopsブレイクダウン（run count/total tokens/tokens per run/last run）、modelPicker設定、promptCacheTtl/subagentPromptCacheTtl設定の追加を複数ソースが裏付け。75MBダウンサイズ・Linuxクラッシュ修正は独立確認できず（否定情報もなし）。"
+    },
+    {
+      "file": "2026-08-29_3773_WEB_ClaudeCode-CrossSession-Messaging-Official-Docs-ListAgents-SendMessage.md",
+      "title": "Claude Code クロスセッションメッセージング公式ドキュメント: ListAgents・SendMessage",
+      "url": "https://code.claude.com/docs/en/cross-session-messaging",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Claude Codeの新しいマルチエージェント協調機能。v2.1.224から複数セッション間でのテキストメッセージ送受信が可能になり、並列開発ワークフローの連携が格段に向上した。セキュリティ設計が堅牢（OSユーザー分離・パーミッションクラシファイア通過）で、送信されたメッセージが相手セッションの権限を昇格させることは不可能。FX自動取引のような複数エージェントが並列で異なる市場・戦略を監視するユースケースに直接応用可能。",
+      "body_excerpt": "v2.1.224（2026-08-07リリース）から搭載されたクロスセッションメッセージング機能の公式リファレンス。\n\n**仕組み:**\n- 別のターミナルやworktreeで動く複数のClaudeインスタンスが互いにメッセージを見つけて送信できる",
+      "fact_checked": true,
+      "fact_check_note": "CONFIRMED: v2.1.224（2026-08-07リリース）でListAgents+SendMessage搭載を複数ソースが確認。macOS/Linux対応、Windows非対応、Bedrock/GCP/Foundry非対応。テキストのみ共有・会話履歴・権限は非転送というセキュリティ設計も裏付けられた。"
+    },
+    {
+      "file": "2026-08-29_3774_WEB_ClaudeAgentSDK-Python-Tutorial-Build-First-Agent-Medium-Aug2026.md",
+      "title": "Build Your First AI Agent in Python: Claude Agent SDK 実践ガイド (Medium, August 2026)",
+      "url": "https://medium.com/google-developer-experts/build-your-first-ai-agent-in-python-a-hands-on-guide-to-the-claude-agent-sdk-cb5ba3239dcf",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Claude Agent SDKの入門として最適な実践ガイド。「チャットボットとエージェントの本質的違い」をコードで示しながら、最小限のPythonでAI Agentを構築する手順を丁寧に解説。Claude Codeのスキル・フック・サブエージェントとの設計思想の共通点が理解でき、FX自動取引エージェントへの応用にも直接結びつく内容。`@tool`デコレータパターン・`client.query()`の使い方は日次収集ルーチン・情報収集エージェントの自作に活用可能。",
+      "body_excerpt": "Medium/Google Developer Expertsに掲載された2026年8月の実践チュートリアル。\n\n**Claude Agent SDKとは:**\n- AnthropicのオープンソースPython/TypeScriptライブラリ",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-29_3775_WEB_Claude-Academy-Launch-4D-AI-Fluency-Framework-Free-Courses-Aug2026.md",
+      "title": "Claude Academy ローンチ: 4D AI Fluency Framework・無料コース・認定パス (2026-08-20)",
+      "url": "https://explainx.ai/blog/claude-academy-launch-4d-ai-fluency-framework-august-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Claude Academyは単なる「製品マニュアル」でなく、AnthropicのAI人材育成ノウハウを外部化したプラットフォーム。4D Fluency Frameworkは「AIに何を委任するか」「どのようにコンテキストを管理するか」という実務判断に直結する。Claude for Teachersは教育市場へのGoogle・OpenAIとの競争を示す。認定パスの提供はビジネス採用・研修コストの削減にも繋がり、エンタープライズ普及を加速させる狙いがある。",
+      "body_excerpt": "Anthropicが2026年8月20日に「Claude Academy」を公式ローンチ。\n\n**Claude Academyとは:**\n- AnthropicがどのようにAI教育をスケールするかの公式学習ハブ",
+      "fact_checked": true,
+      "fact_check_note": "CONFIRMED: 2026-08-20〜21ローンチ確認。4D Fluency FrameworkはDelegation・Description・Discernment・Diligenceの4要素で確認。31コース・14レッスン・クイズ付きの無料コース。ローンチ日は記事の「8/20」とほぼ一致（±1日）。"
+    },
+    {
+      "file": "2026-08-29_3776_WEB_ClaudeCode-Plugins-2026-Best-Guide-Composio-Superpowers-FrontendDesign.md",
+      "title": "Claude Code Plugins 2026 厳選ガイド: Superpowers・Frontend Design・Composio他",
+      "url": "https://composio.dev/content/top-claude-code-plugins",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "2026年のClaude Codeプラグインエコシステムの成熟を示す記事。9,000以上のプラグインのうち実用的なのは100本程度という選択コストの問題が顕在化。Superpowersによるマルチサブエージェント実行・Frontend Designによるデザイン特化・Composioによる外部サービス統合が三柱。Context7の「常に最新ドキュメント参照」は特にClaude Agent SDK/MCPの仕様変更追従に有効。5〜6本のフォーカスドスタックというガイドラインは具体的で即実践可能。",
+      "body_excerpt": "2026年6月時点で9,000以上のClaude Codeプラグインが存在。本番実用は約100本。\n\n**TOP推奨プラグイン:**",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-29_3777_WEB_CLAUDE-md-Best-Practices-Complete-2026-Guide-DEV-Community.md",
+      "title": "CLAUDE.md Best Practices 完全ガイド 2026年版 (DEV Community)",
+      "url": "https://dev.to/nishilbhave/claudemd-best-practices-the-complete-2026-guide-435j",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Chromaの精度低下データ（95%→60%）が特に価値ある定量情報。200行ガイドラインの根拠として明示できる。HTML commentゼロコストトリック・Structure > Prose原則は既存のCLAUDE.md運用改善に即実践可能。「何を書くか」より「どう書くか」（構造・簡潔さ・ワークスタイル明記）に焦点を当てた実践的ガイドとして、定期的なCLAUDE.mdレビューの基準として活用できる。",
+      "body_excerpt": "**CLAUDE.mdとは:**\nセッション開始時にClaude Codeが自動ロードするプロジェクト永続メモリ。コマンド・アーキテクチャ・規約をコードから推定できない形で与える。\n\n**2026年ベストプラクティス:**",
+      "fact_checked": false,
+      "fact_check_note": ""
+    }
+  ],
+  "fact_checks": [
+    {
+      "file": "2026-08-29_3772_WEB_ClaudeCode-Week35-Changelog-LoopsBreakdown-ModelPicker-PromptCache.md",
+      "checked": true,
+      "result": "CONFIRMED",
+      "note": "v2.1.247（2026-08-26リリース）で確認。Loopsブレイクダウン（run count/total tokens/tokens per run/last run）、modelPicker設定、promptCacheTtl/subagentPromptCacheTtl設定の追加を複数ソースが裏付け。75MBダウンサイズ・Linuxクラッシュ修正は独立確認できず（否定情報もなし）。"
+    },
+    {
+      "file": "2026-08-29_3773_WEB_ClaudeCode-CrossSession-Messaging-Official-Docs-ListAgents-SendMessage.md",
+      "checked": true,
+      "result": "CONFIRMED",
+      "note": "v2.1.224（2026-08-07リリース）でListAgents+SendMessage搭載を複数ソースが確認。macOS/Linux対応、Windows非対応、Bedrock/GCP/Foundry非対応。テキストのみ共有・会話履歴・権限は非転送というセキュリティ設計も裏付けられた。"
+    },
+    {
+      "file": "2026-08-29_3775_WEB_Claude-Academy-Launch-4D-AI-Fluency-Framework-Free-Courses-Aug2026.md",
+      "checked": true,
+      "result": "CONFIRMED",
+      "note": "2026-08-20〜21ローンチ確認。4D Fluency FrameworkはDelegation・Description・Discernment・Diligenceの4要素で確認。31コース・14レッスン・クイズ付きの無料コース。ローンチ日は記事の「8/20」とほぼ一致（±1日）。"
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-08-28": 7,
+      "2026-08-27": 8,
+      "2026-08-26": 3,
+      "2026-08-25": 12,
+      "2026-08-24": 3,
+      "2026-08-23": 3,
+      "2026-08-22": 6
+    },
+    "recurring_themes": [
+      "claude",
+      "agent",
+      "mcp",
+      "trading",
+      "model"
+    ]
+  }
+}
