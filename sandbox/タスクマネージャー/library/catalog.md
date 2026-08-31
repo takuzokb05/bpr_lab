@@ -1400,3 +1400,27 @@
 | drop.md | URLなし（テンプレートのみ） |
 | aireleasetracker.com/latest | トラッカーページ（一次情報なし） |
 | gptrader.app AI trading 88% returns | 過度な成果主張のプロモーション記事 |
+
+---
+
+## 2026-08-31 収集分（11件収集 → SIGNAL 11件 claude-code/ecosystem）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|-----|---------|------|------|-----|--------|
+| 1242 | Claude Code Guide 2026: 25機能デモ付き完全ガイド（MarkTechPost EN）: Opus 4.6 1Mトークン・AgentTeams並列3段階・/effort xhigh・非エンジニア業務自動化事例・デモ動画付き包括ガイド | en | 未読 | #claude-code #features #guide #web-signal | articles/2026-08-31_3785_WEB_ClaudeCode-Guide-25Features-Examples-Demo-MarkTechPost.md |
+| 1243 | CLAUDE.md Best Practices Ultimate Guide 2026（Amit Ray EN）: 200行以内・コマンドを先頭に・フォーマッタ重複なし・HTMLブロックコメントでゼロコストメモ・「良CLAUDE.mdは30分の往復問答を消す」 | en | 未読 | #claude-code #claude-md #best-practices #web-signal | articles/2026-08-31_3786_WEB_CLAUDE-md-Best-Practices-Ultimate-Guide-2026-AmitRay.md |
+| 1244 | CLAUDE.md Best Practices 10-Section Template（Blink EN）: プロジェクト概要/技術スタック/コマンド/規約/アーキテクチャ/重要ファイル/避けるパターン/外部依存/デプロイ/よくある問題の10構造・即使用可能テンプレート | en | 未読 | #claude-code #claude-md #best-practices #web-signal | articles/2026-08-31_3787_WEB_CLAUDE-md-Best-Practices-10Section-Template-Blink.md |
+| 1245 | CLAUDE.md Best Practices Complete 2026 Guide（Maketocreate EN）: 3原則（短く・コマンド先頭・重複なし）・HTMLブロックコメントゼロコスト技法・2026年最新機能対応テンプレートと多数コード例 | en | 未読 | #claude-code #claude-md #best-practices #web-signal | articles/2026-08-31_3788_WEB_CLAUDE-md-Best-Practices-Complete-2026-Maketocreate.md |
+| 1246 | Claude Code最新v2.1.237：30リリース5週間ガイド（Uravation JA）: Focus View・/team-onboarding・PermissionDenied Hook・PID名前空間分離・フリッカーフリーレンダリング60%速度向上・高頻度更新サイクル整理 | ja | 未読 | #claude-code #update #hooks #web-signal | articles/2026-08-31_3789_WEB_ClaudeCode-v2-1-237-30Releases-5Weeks-Uravation-JA.md |
+| 1247 | MCP Cheat Sheet 2026完全リファレンス（Webfuse EN）: ステートレスコア・Extensionsフレームワーク・Tasksエクステンション・MCP Apps(UIプッシュ)・認証強化・Agentic AI Foundation(Linux Foundation)ガバナンス | en | 未読 | #claude-ecosystem #mcp #reference #web-signal | articles/2026-08-31_3790_WEB_MCP-Cheat-Sheet-Complete-Reference-2026-Webfuse.md |
+| 1248 | MCP Best Guide 2026（200OK Solutions EN）: 4大AIベンダー全採用・業界標準定着・クライアント/サーバーアーキテクチャ解説・Claude CodeがMCP経由でワークフロー全体を自動化する実例多数 | en | 未読 | #claude-ecosystem #mcp #guide #web-signal | articles/2026-08-31_3791_WEB_MCP-Best-Guide-2026-200oksolutions.md |
+| 1249 | MCP 2026 Complete Developer's Guide（Essamamdani EN）: ステートレスコア化・Extensionsフレームワーク・Tasksエクステンション・MCP Apps・認証強化・廃止ポリシー導入・SDK実装コード例 | en | 未読 | #claude-ecosystem #mcp #developer #web-signal | articles/2026-08-31_3792_WEB_MCP-2026-Complete-Developers-Guide-Essamamdani.md |
+| 1250 | MCPが新ロードマップ公開 長時間処理・AIエージェント認証5分野重点化（GIGAZINE JA 2026-08-24）: Tasks・OAuth2.1・MCP Apps・statelessコア・MCPメッシュ/A2A統合の伏線・「MCP誕生以来最大の改定」 | ja | 未読 | #claude-ecosystem #mcp #roadmap #web-signal | articles/2026-08-31_3793_WEB_MCP-NewRoadmap-LongRunning-AgentAuth-5Fields-GIGAZINE-JA.md |
+| 1251 | Quollio MCPサーバー機能正式リリース 2026-08-26（Prtimes JA）: QDIC（データインテリジェンスクラウド）にMCP統合・Claude CodeからデータカタログAPIに直接アクセス可能・国内エンタープライズ先行事例 | ja | 未読 | #claude-ecosystem #mcp #product-release #web-signal | articles/2026-08-31_3794_WEB_Quollio-MCP-Server-Release-August2026-Prtimes-JA.md |
+| 1252 | Claude Agent SDKチュートリアル2026（SerpAPI EN）: Python v0.2.139/TS v0.3.233・毎週リリース・Opus4.8/Sonnet4.6/Haiku4.5選択・インプロセスMCPサーバー・セーフティフック・サブエージェント委譲・プロダクションデプロイ | en | 未読 | #claude-ecosystem #agent-sdk #tutorial #web-signal | articles/2026-08-31_3795_WEB_Build-AI-Agent-Claude-Agent-SDK-Tutorial-2026-SerpAPI.md |
+
+### NOISEとして除外（2026-08-31）
+| 候補 | 理由 |
+|---|---|
+| X JSON全8件（2026-08-30・08-31各4ドメイン）| total_fetched=0（VPS収集データなし） |
+| drop.md | URLなし（テンプレートのみ） |

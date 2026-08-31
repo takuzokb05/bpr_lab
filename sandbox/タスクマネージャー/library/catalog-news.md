@@ -541,3 +541,13 @@
 | # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
 |---|---|---|---|---|---|
 | 442 | AIエージェントフレームワーク選定ガイド2026（Arpable JA）: LangGraph月3000万DL・CrewAI v1.13.0・Microsoft Agent Framework 1.0（AutoGenメンテナンスモード移行）・A2A+MCP標準化・富士通マルチAIエージェントフレームワーク | ja | 未読 | #ai-news #ai-agent #framework #mcp #web-signal | articles/2026-08-30_3784_WEB_AI-Agent-Framework-Selection-LangGraph-CrewAI-AutoGen-MetaGPT-2026-JA.md |
+
+---
+
+## 2026-08-31 収集分（3件収集 → SIGNAL 3件 ai-news）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 443 | 【2026年8月最新】生成AIトレンド完全ガイド（genai-ai.co.jp JA）: AIエージェントへの移行加速・Gartner「2026末40%企業アプリがエージェント搭載」・Claude Code/Codex/Copilot Agent定着・EU AI Act 8月2日施行・AI事業者ガイドライン1.2版 | ja | 未読 | #ai-news #ai-agent #regulation #trend #web-signal | articles/2026-08-31_3798_WEB_GenAI-Trends-Complete-Guide-August2026-JA-genai-ai.md |
+| 444 | EU AI Act Gets Real August 2026（Axios EN）: Article 50透明性義務8月2日発効・欧州委員会ガイドライン7月20日採用・制裁€1500万or売上3%・任意CoP公開・高リスクAI完全義務化は2027年12月に延期 | en | 未読 | #ai-news #regulation #eu-ai-act #transparency #web-signal | articles/2026-08-31_3799_WEB_EU-AI-Act-Gets-Real-August2026-Axios.md |
+| 445 | 生成AIニュース2026年最新まとめ（GDF JA）: neoAI複数工程エージェント基盤・DG×DGBT推薦〜決済統合EC・EU AI Act 8月2日施行・AI事業者ガイドライン1.2版・Qwen3.8-Max 2.4T・コスト約50%低下 | ja | 未読 | #ai-news #regulation #model-release #agent-business #web-signal | articles/2026-08-31_3800_WEB_GenAI-News-2026-Trends-Summary-GDF-JA.md |

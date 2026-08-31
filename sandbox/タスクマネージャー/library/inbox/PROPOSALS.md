@@ -5292,3 +5292,33 @@ FX自動取引システムのマルチエージェント構成でAutoGenを使�
 
 **提案内容:**
 TradingAgents v0.3.1（Claude Sonnet 5/Fable 5対応済み）を使用中の場合、Opus 5（$5/$25/M）が費用対効果で最優先選択肢となった。現在Sonnet 5またはFable 5を使用している場合、Opus 5への切り替えを検討する（コーディング・知識作業ベンチマークで同等以上の性能を半額で提供）。
+
+---
+
+## 2026-08-31 収集分からの提案
+
+### 3. CLAUDE.md 改善提案（複数ガイドの横断分析）
+
+**出典:** articles/2026-08-31_3786_WEB_CLAUDE-md-Best-Practices-Ultimate-Guide-2026-AmitRay.md, articles/2026-08-31_3787_WEB_CLAUDE-md-Best-Practices-10Section-Template-Blink.md, articles/2026-08-31_3788_WEB_CLAUDE-md-Best-Practices-Complete-2026-Maketocreate.md
+
+**提案内容:**
+複数のCLAUDE.mdベストプラクティスガイド（2026年8月）を横断分析した結果、現在のbpr_labのCLAUDE.mdに以下の改善余地がある可能性：
+
+- ①ファイル先頭にtest/build/lintコマンドを明示（「ROI最大化セクション」）
+- ②フォーマッタが自動強制するスタイルルールの重複を排除（トークン節約）
+- ③HTMLブロックコメント（`<!-- -->`）を使った人間向けメモ（Claude Codeのコンテキストに渡されないためトークン0）
+- ④各サブプロジェクトのCLAUDE.mdを200行以内に収める棚卸し
+
+### 4. FX自動取引ハイブリッドアーキテクチャの論文的裏付け
+
+**出典:** articles/2026-08-31_3797_WEB_Agentic-Trading-LLM-Agents-Financial-Markets-ArXiv-2026.md
+
+**提案内容:**
+2026年5月ArXiv論文がFX自動取引システムの現在のアーキテクチャ方針を支持している。「AI分析→人間判断→ルールベース執行→バックテスト検証→デモ練習→ハードリスク上限」の6ステップが推奨される。TradingAgentsの実例（30日7%リターン/22%ドローダウン）がバックテストと本番の乖離問題を実証しており、本番投入前のデモ環境での十分な検証期間の設定を推奨。
+
+### 5. TradingAgents v0.4.0 ルックアヘッドバイアス修正の確認
+
+**出典:** articles/2026-08-31_3796_WEB_Best-OpenSource-AI-Trading-Agents-GitHub-2026-GPTrader.md
+
+**提案内容:**
+TradingAgents v0.4.0（2026年8月リリース）がルックアヘッドバイアス（先読みバイアス）修正と、GPT-5.6/GLM-5.3対応を追加。FX自動取引でTradingAgentsフレームワークを参照している場合、バックテスト結果が過去のルックアヘッドバイアスにより過大評価されていた可能性があるため、v0.4.0での再検証を推奨。

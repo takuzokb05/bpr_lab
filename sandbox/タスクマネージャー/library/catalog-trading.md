@@ -412,3 +412,12 @@
 | # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
 |---|---|---|---|---|---|
 | 334 | 証券・FXの現場でAIができること15選 2026年版（aipicks.jp JA）: エージェント型AI移行加速・Robinhood証券口座接続事例・LLMは指標解釈/レポート生成/最適化提案に最適・ハイブリッド構成（AI研究+ルールベース執行）が現実解・キルスイッチの重要性 | ja | 未読 | #ai-trading #forex #llm-trading #agent-finance #web-signal | articles/2026-08-28_3770_WEB_AI-Securities-FX-Trading-15-UseCases-2026-Practical-JA.md |
+
+---
+
+## 2026-08-31 収集分（2件収集 → SIGNAL 2件 ai-trading）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 335 | Best Open Source AI Trading Agents GitHub 2026（GPTrader EN）: TradingAgents(80k★・v0.4.0ルックアヘッドバイアス修正・GPT-5.6/GLM-5.3対応)・AI Hedge Fund(45k★)・FinRL・TradingGoose・構造化JSON出力への移行 | en | 未読 | #ai-trading #open-source #llm-trading #framework #web-signal | articles/2026-08-31_3796_WEB_Best-OpenSource-AI-Trading-Agents-GitHub-2026-GPTrader.md |
+| 336 | Agentic Trading: When LLM Agents Meet Financial Markets（ArXiv 2026-05）: バックテスト vs ライブ乖離・TradingAgents 30日7%リターン/22%ドローダウン/再現性なし・推奨ハイブリッドワークフロー（AI分析→人間判断→ルールベース執行） | en | 未読 | #ai-trading #llm-trading #arxiv #research #web-signal | articles/2026-08-31_3797_WEB_Agentic-Trading-LLM-Agents-Financial-Markets-ArXiv-2026.md |
