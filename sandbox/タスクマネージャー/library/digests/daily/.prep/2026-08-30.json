@@ -1,0 +1,124 @@
+{
+  "date": "2026-08-30",
+  "generated_at": "2026-08-31T23:17:36.159924Z",
+  "article_count": 7,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-08-30_3778_WEB_ClaudeCode-Aug29-Update-Linux75MB-RestrictedMode-TokenDetail.md",
+      "title": "Claude Code Aug 29 Update: Linux 75MB化・restricted mode・token detail",
+      "url": "https://explainx.ai/blog/claude-code-weekly-update-faster-startup-token-visibility-august-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "2026年8月29日リリースのClaude Code最新アップデート詳解。主要変更点5点：\n1. **Linuxバイナリ75MB化**: zstd圧縮採用により~340MBから~75MB（約4.5倍削減）。CIダウンロード時間・デプロイ速度が大幅改善\n2. **高速起動**: CLIがサンドボックスロード前に起動開始する設計変更で体感速度向上\n3. **/cost・/usage・/tasksにトークン詳細表示**: セッション/タスク単位のトークン消費量の可視化を強化\n4. **--restricted mode**: Bash実行・WebFetchツールを削除、ファイルツールをworking dir内に限定、bypassPermissionsを拒否するセキュリティ強化モード。信頼できないコードベース閲覧・レビュー用途に最適\n5. **/permissionsにAuto modeタブ**: デフォルトルールセット表示とUI操作によるallow/denyルール追記が可能に\nv2.1.245はLinux最新glibcでの起動クラッシュを修正。",
+      "body_excerpt": "Claude Code's Aug 29, 2026 update includes CLI that starts before the sandbox loads, Linux download drops to ~75 MB, and /cost, /usage, and /tasks get new token detail. A new --restricted mode removes the built-in tools that run commands or code and WebFetch, keeps file tools inside the working directory, and refuses bypassPermissions. An Auto mode tab was added to the /permissions interface that surfaces the default rule set and lets you append your own allow/deny rules through the UI. Claude Code 2.1.245 fixes a critical startup crash affecting Linux users on the latest glibc versions.",
+      "fact_checked": true,
+      "fact_check_note": "✅ 確認済み: Linux ~75MB化・restricted mode・token detail・高速起動、いずれも複数の変更履歴サイト（releasebot.io, explainx.ai等）で裏付け取れた。v2.1.245のLinux glibc crashバグ修正も確認。"
+    },
+    {
+      "file": "2026-08-30_3779_WEB_ClaudeCode-MCP-Servers-Practical-June2026-Zenn-JA.md",
+      "title": "Claude Codeで使えるMCPサーバーを試してみた——実用的だったものを整理する",
+      "url": "https://zenn.dev/long910/articles/2026-06-13-mcp-servers-practical",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-ecosystem",
+      "summary": "Zenn記事（2026-06-13）によるClaude Code × MCPサーバー実践活用まとめ。試した4系統の評価：\n1. **GitHub公式MCPサーバー**: PR作成・Issue検索を自然言語で実行可能。設定ファイルにpersonal access tokenを記述するだけで即使用可能\n2. **PostgreSQL MCPサーバー**: DB接続でマイグレーションSQL自動生成。テーブル追加・カラム定義・制約・インデックスを一括生成してくれた\n3. **Playwright/Puppeteer**: ブラウザ操作をClaudeが直接制御するE2Eテスト自動化。テストコード生成から実行まで一気通貫\n4. **Context7**: 任意ライブラリのライブドキュメントをコンテキストに直接取り込む。ライブラリバージョン違いによるハルシネーション激減\nMCP 2026-07-28仕様対応の4大Tier1 SDKが全対応済みで安定稼働を確認。ステートレスプロトコル化で設定がシンプルになった点も好評。",
+      "body_excerpt": "Claude Codeで使えるMCPサーバーをいくつか試してみました。実用的だったものを中心に設定方法と活用例をまとめます。\n実際に使って効果があったのは次の4つです：GitHub公式MCPサーバー・PostgreSQL MCPサーバー・Playwright（E2E自動化）・Context7（ライブドキュメント取込）。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-30_3780_WEB_Claude-Opus5-vs-Fable5-Benchmarks-Pricing-DataCamp.md",
+      "title": "Claude Opus 5 vs Fable 5: Benchmarks and Pricing",
+      "url": "https://www.datacamp.com/blog/claude-opus-5-vs-claude-fable-5",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "DataCampによるClaude Opus 5（2026年7月24日）とFable 5（2026年6月9日）の詳細比較：\n- **価格差**: Opus 5が$5/$25/Mトークン、Fable 5が$10/$50/Mトークン（ちょうど2倍）。Opus 5はOpus 4.8と同価格で性能が大幅向上\n- **性能**: Opus 5がFrontier-Bench・GDPval-AAでFable 5を一部上回る。コーディング・知識作業タスクでは実質同等以上\n- **共通仕様**: 両モデル1Mコンテキスト・最大128k出力対応\n- **使い分け**: Opus 5は思考モードデフォルト有効・Maxプランデフォルトモデルとなりコスパ最優先の標準モデル。Fable 5はMythos-class安全審査版・政府輸出規制ゲート対応が必要な場合のみ選択\n- **IPO戦略**: Opus 5の価格設定はAnthropicのIPO前の市場拡大戦略の一環と分析",
+      "body_excerpt": "Claude Opus 5 launched on July 24, 2026, at $5 per million input tokens, while Claude Fable 5 released on June 9, 2026, at exactly double that ($10/$50). Anthropic says Opus 5 is the new state-of-the-art on coding and knowledge-work evaluations like Frontier-Bench and GDPval-AA, and on some benchmarks, it actually beats Fable 5 outright. Pick Fable 5 only if you have a specific need for its safeguard-gated positioning or Mythos-class routing; pick Opus 5 for essentially every general coding, agentic, and knowledge-work task.",
+      "fact_checked": true,
+      "fact_check_note": "✅ 確認済み: Opus 5価格は$5/$25/Mトークン（2026-07-24リリース）を複数ソースが裏付け。Frontier-Bench v0.1スコアは43.3%と確認。ただし「Fable 5を一部上回る」という記事の主張は検索結果に明示なし（Opus 5がOpus 4.8の2倍超という文脈のみ）—誇大表現の可能性あり、要注意。"
+    },
+    {
+      "file": "2026-08-30_3781_WEB_ClaudeCode-Hooks-Tutorial-2026-GilRicardo.md",
+      "title": "Claude Code Hooks Tutorial 2026",
+      "url": "https://www.gilricardo.com/blog/claude-code-hooks-tutorial-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "2026年版Claude Code Hooks実践チュートリアル（Ricardo Gil）。全21イベントをカバーした包括的なHooks活用ガイド：\n- **Hooksの3用途**: ①enforcement（lint実行・安全ゲート・監査ログ）②observability（コマンドロギング・Slack通知・実行履歴）③automatic side effects（フォーマット自動適用・ファイルタグ付け）\n- **複合パターン**: スラッシュコマンドでデプロイトリガー + PostToolUse hookでBashコマンド自動ログの組み合わせ例を実装\n- **イベント別使い分け**: PreToolUse（実行前バリデーション）・PostToolUse（実行後処理）・Stop（セッション終了時）など各イベントの適切なユースケース解説\n- **CLAUDE.mdとの連携**: Hooksをproject-specificに設定するCLAUDE.md記述パターン\n- **セキュリティ設計**: 外部コマンド実行の権限設計・シェルインジェクション防止のベストプラクティス",
+      "body_excerpt": "Hooks are used for enforcement (lint, safety gates, audit), observability (logging, notifications), and automatic side effects (formatting, tagging). A slash command can trigger a deployment, and a PostToolUse hook on Bash can automatically log every command that deployment runs. This tutorial covers all 21 hook events and how to combine them with CLAUDE.md and subagents for production workflows.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-30_3782_WEB_Claude-AI-MCP-Servers-Practical-Guide-2026-FrugalTesting.md",
+      "title": "Claude AI and MCP Servers: The Developer's Practical Guide for 2026",
+      "url": "https://www.frugaltesting.com/blog/claude-ai-and-mcp-servers-the-developers-practical-guide-for-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "開発者向けClaude AI × MCPサーバー実践ガイド2026（FrugalTesting）。主要トピック：\n1. **MCP 2026-07-28仕様の破壊的変更**: ステートレスプロトコルコアへ転換（従来の双方向ステートフル → リクエスト/レスポンス型）。ラウンドロビンLB対応、Mcp-Methodヘッダーでルーティング、toolsリストをtlsMs期間クライアントキャッシュ可能に\n- **エコシステム規模**: 月間SDK Downloads 97億回超・GitHubスター86,000+。Linux Foundation傘下Agentic AI Foundationが統治\n2. **Managed Agents新機能**: allowed_domains/blocked_domainsでweb_search・web_fetchが参照できるサイトをAIエージェントベースで制限可能\n3. **クラウド展開**: Skills API・Files APIがMicrosoft Foundry経由で利用可能。Google Cloud Vertex AIにcomputer use・browser useが近日対応\n4. **SDK対応状況**: 4大Tier1 SDK（Python・TypeScript・Java・.NET）が2026-07-28仕様に全対応済み",
+      "body_excerpt": "The Model Context Protocol 2026-07-28 release candidate includes a stateless protocol core, Extensions framework, Tasks, MCP Apps, authorization hardening, and a formal deprecation policy. MCP now has over 9,700 million monthly SDK downloads and 86,000+ GitHub stars. You can now restrict which sites a Claude Managed Agents agent's web_search and web_fetch tools can reach by setting allowed_domains or blocked_domains. The Skills API and the Files API are also available through Microsoft Foundry.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-30_3783_WEB_Claude-Agent-SDK-11-Steps-Guide-2026-TechInsider.md",
+      "title": "How to Use the Claude Agent SDK: 11 Steps, 90 Min [2026]",
+      "url": "https://tech-insider.org/au/how-to-use-claude-agent-sdk-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Claude Agent SDKの11ステップ完全入門ガイド（Tech Insider、2026年）。約90分でPythonエージェントを構築：\n- **基本構造**: @toolデコレータで任意のPython関数をClaudeが呼べるツールに変換、query()関数でエージェントループ実行\n- **組み込みツール群**: ファイルR/W・Bash実行・WebSearch・サブエージェント並列起動がゼロ設定で利用可能\n- **実装例（リポジトリトリアージエージェント）**: ①TODO/FIXME/HACKコメント + コードスメルをスキャン ②各発見をサブエージェントに委譲して重大度評価 ③Markdownレポートに集約出力\n- **MCPとの組み合わせ**: GitHub公式MCPサーバー連携でPR作成・Issue検索を自然言語操作\n- **特徴**: Anthropicが無償公開するOSSで数行のPythonから始められる。内部でClaude Codeのコアエンジンを呼び出すためフル機能アクセス可能\n- **2026年時点の位置付け**: Claude Code CLIの機能をライブラリとして利用したい開発者・CI/CDパイプライン組み込み用途に最適",
+      "body_excerpt": "The Claude Agent SDK is a free open-source SDK provided by Anthropic that allows calling Claude Code's core engine as a library, enabling autonomous AI agents with capabilities like file read/write, Bash execution, web search, and subagent launch through just a few lines of Python code. This guide walks through 11 steps to build your first agent in approximately 90 minutes.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-30_3784_WEB_AI-Agent-Framework-Selection-LangGraph-CrewAI-AutoGen-MetaGPT-2026-JA.md",
+      "title": "AIエージェントフレームワーク選定ガイド【2026年版】LangGraph・CrewAI・AutoGen・MetaGPT比較",
+      "url": "https://arpable.com/artificial-intelligence/ai-multiagent-development-frameworks-guide/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "ai-news",
+      "summary": "2026年版AIエージェントフレームワーク実務選定ガイド（Arpable）。勢力図の主要変化と選定指針：\n- **LangGraph**: 月間PyPIダウンロード3000万超。金融機関・製造業での本番採用が増加。状態管理・ループ制御が強力で複雑なワークフローに最適\n- **CrewAI v1.13.0**（2026年4月）: ロールベースマルチエージェント協調。GPT-5・マルチモーダル対応追加。小中規模チームシミュレーションに向く\n- **Microsoft Agent Framework 1.0**（2026年4月3日リリース）: Semantic Kernel + AutoGenを統合した統一エンタープライズ基盤。厳格セキュリティ要件対応\n- **AutoGen**: メンテナンスモード移行。長期プロジェクトは1〜2年内の移行検討が必要\n- **プロトコル標準化**: Microsoftの新フレームワーク・富士通研究所フレームワークともにGoogle A2A + Anthropic MCP対応でエコシステム横断通信が可能に\n- **選定指針**: エンタープライズ → Microsoft Agent Framework、複雑ワークフロー → LangGraph、チーム協調シミュレーション → CrewAI",
+      "body_excerpt": "LangGraph・CrewAI・AutoGen・MetaGPTのどれを選ぶべきか、2026年現在の実務判断基準をまとめます。MicrosoftがAutoGenをメンテナンスモードに移行し新たにAgent Framework 1.0をリリースするなど、フレームワーク群の勢力図が大きく動いています。Fujitsu Research InstituteもGoogle A2AプロトコルとAnthropic MCP対応フレームワークを公開しました。",
+      "fact_checked": true,
+      "fact_check_note": "✅ 概ね確認済み: Microsoft Agent Framework 1.0は2026-04-03リリースを確認（一部ソースは04-02）。AutoGenのメンテナンスモード移行は事実だが移行開始時期は2025年10月（記事の4月2026年との記述とズレあり）。記事の大枠は正確。"
+    }
+  ],
+  "fact_checks": [
+    {
+      "file": "2026-08-30_3778_WEB_ClaudeCode-Aug29-Update-Linux75MB-RestrictedMode-TokenDetail.md",
+      "result": "✅ 確認済み: Linux ~75MB化・restricted mode・token detail・高速起動、いずれも複数の変更履歴サイト（releasebot.io, explainx.ai等）で裏付け取れた。v2.1.245のLinux glibc crashバグ修正も確認。"
+    },
+    {
+      "file": "2026-08-30_3780_WEB_Claude-Opus5-vs-Fable5-Benchmarks-Pricing-DataCamp.md",
+      "result": "✅ 確認済み: Opus 5価格は$5/$25/Mトークン（2026-07-24リリース）を複数ソースが裏付け。Frontier-Bench v0.1スコアは43.3%と確認。ただし「Fable 5を一部上回る」という記事の主張は検索結果に明示なし（Opus 5がOpus 4.8の2倍超という文脈のみ）—誇大表現の可能性あり、要注意。"
+    },
+    {
+      "file": "2026-08-30_3784_WEB_AI-Agent-Framework-Selection-LangGraph-CrewAI-AutoGen-MetaGPT-2026-JA.md",
+      "result": "✅ 概ね確認済み: Microsoft Agent Framework 1.0は2026-04-03リリースを確認（一部ソースは04-02）。AutoGenのメンテナンスモード移行は事実だが移行開始時期は2025年10月（記事の4月2026年との記述とズレあり）。記事の大枠は正確。"
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-08-29": 6,
+      "2026-08-28": 7,
+      "2026-08-27": 8,
+      "2026-08-26": 3,
+      "2026-08-25": 12,
+      "2026-08-24": 3,
+      "2026-08-23": 3
+    },
+    "recurring_themes": [
+      "claude",
+      "agent",
+      "mcp",
+      "model",
+      "trading"
+    ]
+  }
+}
