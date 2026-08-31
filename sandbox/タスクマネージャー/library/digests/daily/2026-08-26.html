@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-08-26</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-08-26 | 3件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-08-26</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>MetaTrader 5（MT5）がAIアシスタントをネイティブ内蔵し、FX自動売買の設計前提が根本から変わりつつある。</p>
+<p>外部API統合不要でチャート・ポジション・オーダーをAIが直接操作できる新アーキテクチャが正式稼働中。</p>
+<p>Claude Code側では、全バージョンのシステムプロンプトとトークン数を追跡するOSSリポジトリが充実しており、内部動作の透明性が上がっている。</p>
+<p>本日は記事数3件と少なめ（前日12件から減少）だが、いずれもFX自動売買ユーザーにとって直接行動につながる情報。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #ea580c; padding-left: 12px;">AIトレーディング</h2>
+
+<h3>MT5内蔵AIアシスタント: 設計の前提が変わった（一次ソース確認済み）</h3>
+
+<p>2026年7月、MetaTrader 5 Build 6030が正式リリースされ、<strong>AIアシスタントがプラットフォームにネイティブ内蔵</strong>された。</p>
+<p>MCPフル対応の設計により、AIはトレーディング端末・市場データ・MetaEditorと直接連携し、外部APIを介さずに自律的な操作が可能になった。</p>
+
+<p>これまでのMT5×AI統合は「WebRequest経由でClaude/GPT APIを呼び出す」アーキテクチャが主流だったが、今回のアップデートはその前提を覆す。</p>
+<p><strong>チャート・残高・ポジション情報をリアルタイムで理解した上で、自然言語指示だけでオーダー発注・ストップレベル設定・チャート操作を実行</strong>できる。</p>
+<p>インジケーターの視覚認識にも対応しており、「単一タスクを複数アクションのシーケンスに分解・実行」するエージェント的な挙動を持つ。</p>
+
+<p>2026年8月21日の追加アップデートでAlibaba・Cerebrasなど新LLMプロバイダーも追加。</p>
+<p>選択肢が広がる一方で、FX自動売買の開発者にとっては「内蔵AI vs. 外部LLM統合」の設計判断を改めて考える必要が生じている。</p>
+<p>レイテンシ・コスト・セキュリティの観点で、端末内完結型はアドバンテージを持つ。</p>
+
+<p>なお「リリース後3週間で1兆トークン処理」という主張は独立したソースでの裏取りが取れておらず、この数字単独では過信しないこと。</p>
+
+<ul>
+<li>参照: <a href="https://www.mql5.com/en/blogs/post/774589" target="_blank">MT5 AI Assistant Major Update (MQL5 Aug 22)</a></li>
+<li>参照: <a href="https://www.mql5.com/en/blogs/post/774316" target="_blank">AI Has Arrived in MetaTrader 5 (MQL5 Aug 19)</a></li>
+</ul>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>全システムプロンプトを追跡するOSSリポジトリ（一次ソース確認済み）</h3>
+
+<p><a href="https://github.com/Piebald-AI/claude-code-system-prompts" target="_blank">Piebald-AI/claude-code-system-prompts</a>は、Claude Codeのバージョンごとにシステムプロンプト・ツール定義・トークン数を記録し続けるOSSリポジトリ。</p>
+<p>2026年8月25日時点のv2.1.246で<strong>515件以上のプロンプトを収録</strong>しており、Claude Codeヘビーユーザーにとっての一次情報ソースとなっている。</p>
+
+<p>収録内容は幅広い。メインシステムプロンプトと27個の内蔵ツール定義に加え、Plan/Explore/Taskのサブエージェントプロンプト、CLAUDE.md・compact・statusline・WebFetch・セキュリティレビュー・エージェント作成といったユーティリティプロンプトもバージョン管理されている。</p>
+<p>具体的なトークン数も記録されており（Explore=862トークン、Plan mode=1,066トークンなど）、コスト最適化やプロンプト設計の改善に直接活用できる。</p>
+
+<p>このリポジトリは、Claude Codeの内部動作を理解して使い方を最適化したいユーザーにとって必須の参照先。</p>
+<p>なお、ツール数は記事では27個と記載されているが、バージョンによって24個のキャッシュも存在するため、バージョン依存の差異がある点に注意。</p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>過去7日間の記事収集件数: 8/19=17, 8/20=4, 8/21=10, 8/22=6, 8/23=3, 8/24=3, 8/25=12 → <strong>8/26=3</strong>。</p>
+
+<p>本日は静かな一日だが、継続して浮上しているテーマは <strong>claude・agent・mcp・llm・trading</strong> の5本柱。</p>
+<p>MT5のMCPネイティブ対応は「mcpがトレーディング端末にまで普及している」というトレンドの具体的な着地点であり、今後のFX自動売買設計への影響は継続してウォッチが必要。</p>
+<p>Claude Code側ではシステムプロンプト追跡リポジトリという形で「内部透明性の向上」が進んでおり、ツール定義・トークン数の変化を継続的に確認できる環境が整ってきた。</p>
+
+</body>
+</html>

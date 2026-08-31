@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-08-27</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-08-27 | 8件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-08-27</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>8月27日は「AIインフラ再編の一日」と呼ぶべき動きが集中した。NvidiaがHugging Faceを約1.9兆円で買収合意し、オープンソースAIの主要拠点が半導体最大手の傘下へ。AnthropicはNscaleと6年間450億ドルのコンピュート大型契約を締結し、コンピュート軍拡は月間600億ドル規模に到達。ClaudeはCoworkに内蔵ブラウザを追加し、AIエージェントによる自律Webタスクが実用フェーズへ。MCPは新ロードマップでエージェントIDとセキュリティ標準を打ち出し、Anthropicは物理デバイス制御標準（MHS）も発表した。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>Claude Codeの8月アップデート：Auto Modeが主役</h3>
+
+<p>Origami.saのまとめによれば、2026年8月のClaude Code最大の変化は<strong>Auto Modeのデフォルト化</strong>だ（<a href="https://origami.sa/en/blog/claude-code-august-2026/" target="_blank">記事</a>）。許可ポリシーをplain-English（`soft_deny`/`hard_deny`）で記述できるようになり、プロジェクト設定をユーザー設定より優先させるセキュリティ強化も加わった。CLAUDE.mdの設計方針に直結する変更で、現在のプロジェクト設定を見直すタイミングかもしれない。</p>
+
+<p>あわせて<strong>Conciseアウトプットスタイル</strong>も導入。前置きや手順説明を省いて結果から始める出力スタイルで、コードレビューや一問一答の往復が速くなる。`/design`スキルはCLI上でUI/UXモックアップの設計からコード生成まで完結させるワークフローで、Claude Code上でのプロダクト開発の幅が広がる。その他、GitLabマージリクエスト対応・セッション間メッセージング・フォークサブエージェントのデフォルト並列実行も追加された。</p>
+
+<h3>Cowork内蔵ブラウザ：エージェントが自律でWebを操作</h3>
+
+<p>Claude Coworkデスクトップアプリが<strong>組み込みブラウザ</strong>を搭載した（<a href="https://claude.com/blog/cowork-built-in-browser" target="_blank">公式ブログ</a>）。タスクがWebサイトを必要とする際、サイドパネルにブラウザが開き、Claudeがページ閲覧・クリック・フォーム入力・ダッシュボード読み取りを自律実行する。拡張機能不要・セットアップゼロで、ユーザーの既存ブラウザとは完全分離。Pro/Max/Teamは数日内にmacOS/Windows/Linux（β）で展開、Enterpriseはすでに利用可能だ。コネクタが存在しないポータルでも動くため、MCP未対応の業務システムへの橋渡しとしてすぐ使える。</p>
+
+<h3>Claudeforce：SalesforceのCRMにClaudeが組み込まれる</h3>
+
+<p>SalesforceとAnthropicが<strong>Claudeforce</strong>を発表（<a href="https://www.salesforce.com/news/press-releases/2026/08/26/salesforce-and-anthropic-announce-claudeforce/" target="_blank">プレスリリース</a>）。37種のプリビルト営業スキルでCRM全体にClaudeのインテリジェンスを直接統合し、Agentforce・Slack上でライブデータ照会やアクション実行を従来UIなしで完結できる。エンタープライズのアプリケーションダッシュボードをAIエージェントが置き換えるパラダイムシフトの、これまでで最大規模の事例といえる。</p>
+
+<h3>MCPロードマップ更新：エージェントIDとDPoP認証が次期フォーカス</h3>
+
+<p>8月22日、MCPコアメンテナーが新ロードマップを公開した（<a href="https://blog.modelcontextprotocol.io/posts/mcp-roadmap/" target="_blank">ロードマップ</a>）。7月28日のステートレスコア＋HTTP単一トランスポート仕様から5週間後のアップデートで、次の5領域を優先する。① Tasksとサブスクリプションによるエージェントメッセージングプリミティブ、② HTTP-Nativeトランスポート統一、③ <strong>DPoP＋Workload Identity FederationでAPIキーを廃止する方向のエージェントID・エンタープライズセキュリティ</strong>、④ ツール結果処理とプログレッシブディスカバリ、⑤ SDK開発者体験の向上。FX自動取引でMCPサーバーを活用している場合、③のDPoP認証対応がいずれ必要になる見込み。</p>
+
+<h3>Anthropic MHS：AIエージェントが物理デバイスを操作する標準仕様（一次ソース確認済み）</h3>
+
+<p>Anthropicが<strong>Model Hardware Standard（MHS）</strong>のリサーチプレビューを発表（<a href="https://www.anthropic.com/news/model-hardware-standard-research-preview" target="_blank">公式</a>）。「AIエージェントが物理デバイスを安全に操作するための共有仕様」で、HHMI Janelia Research Campusと共同開発。顕微鏡・液体ハンドラー・ロボットアームなどの制御を想定し、MCPベース・モデル非依存・将来オープンソース化予定。科学研究機関・先進製造業者向けの初期提供で、デジタルからフィジカルへのエージェント展開を標準化する業界初の試みだ。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>Nvidia、Hugging Faceを1.9兆円で買収合意（一次ソース確認済み）</h3>
+
+<p>NvidiaがHugging Faceを<strong>129億ドル</strong>で買収合意に達したと複数メディアが報道した（<a href="https://techcrunch.com/2026/08/26/nvidia-closes-in-on-hugging-face-acquisition/" target="_blank">TechCrunch</a>）。2023年の評価額45億ドルから約3倍、年商約1.5億ドル・収益化目前の段階での取得だ。なおBusiness Insiderは署名前の段階とも伝えており、確定情報ではない点に留意が必要。Nvidiaの戦略的意図は明確で、オープンソースAIエコシステムの主要配布ハブを抑えることで独自チップ以外のメーカーへの対抗力を高め、クラウドコンピューティング事業への再参入もねらう。OpenAI・AnthropicらクローズドモデルとNvidiaが一体化したオープン陣営という構図が生まれるなら、業界の力学は大きく変わる。</p>
+
+<p>Nvidiaは同日、Groq 3を買収したことも報じられており、3,431トークン/秒の推論速度と長文コンテキスト処理4倍高速化をポートフォリオに加えた。</p>
+
+<h3>Anthropic $45Bコンピュート契約：1ヶ月で累計600億ドル（一次ソース確認済み）</h3>
+
+<p>AnthropicがNscale（英国、2024年創業）と<strong>6年間450億ドル</strong>のクラウドコンピューティング契約を締結（<a href="https://techcrunch.com/2026/08/26/anthropic-continues-compute-gobbling-streak-in-45-billion-deal-with-nscale/" target="_blank">TechCrunch</a>）。西バージニア州の460MW規模データセンターにNvidiaのVera Rubin（次世代チップ）を導入し、2027年後半稼働開始。8月のVolta $10B・7月のAMD $5Bに続き、1ヶ月間のコンピュート先行投資は累計<strong>$60B</strong>超に達する。Claudeモデルのサービス信頼性確保が急務であることの裏返しでもある。</p>
+
+<h3>AIエージェントの悪用リスクが現実化：Cursorを使った不正アクセス事例</h3>
+
+<p>Cursorを悪用したロシア語圏サイバー犯罪者が7社を侵害したという報告が出た（<a href="https://techstartups.com/2026/08/27/top-tech-news-today-august-27-2026-amazon-apple-google-meta-nvidia-openai-salesforce-more/" target="_blank">ダイジェスト</a>）。コーディングエージェントが強力な自動化ツールである以上、悪意のある攻撃者にとっても攻撃ツールになりうる。AIエージェントを業務に組み込む際は、権限スコープの最小化・監査ログの整備・Soft/Hard denyルールの明文化が欠かせない。Claude CodeのAuto Modeの許可ルール設計が今後ますます重要になる。</p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>過去7日の収集件数：8/20: 4件 → 8/21: 10件 → 8/22: 6件 → 8/23: 3件 → 8/24: 3件 → 8/25: 12件 → 8/26: 3件 → 本日: 8件。週を通じて<strong>claude・agent・mcp・model</strong>が繰り返し登場している。</p>
+
+<p>本日の特徴は、これまで「予告・ロードマップ」フェーズだったAnthropicのエコシステム拡張策（Cowork、MHS、MCPロードマップ）が<strong>発表→即日展開</strong>のフェーズに移行したこと。コンピュート投資（累計$60B超）も単なる資金調達ではなく「Claudeの処理能力を担保するためのインフラ確保」として一貫した文脈になっている。MCPの継続的な言及も、エージェント標準化が収集対象の中心軸として定着しつつあることを示している。</p>
+
+</body>
+</html>

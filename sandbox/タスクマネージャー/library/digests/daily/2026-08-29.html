@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-08-29</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-08-29 | 6件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-08-29</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>Week 35アップデートでClaude Codeがまた一歩実用性を高めた。ループ実行コストの可視化・モデルコスト最適化・起動軽量化という三本柱が揃い、日次収集ルーチンのような繰り返しタスクの運用管理がより精密になる。エコシステム側ではClaude Academyが無料AI教育プラットフォームとして本格始動し、SDKの実践ガイドも充実。CLAUDE.mdベストプラクティスとプラグイン選定ガイドは即日の運用改善に使える知見だ。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>Week 35：ループ可視化でルーチン運用が変わる</h3>
+
+<p>Claude Code v2.1.247（2026-08-26リリース）がWeek 35のハイライトとして届いた。（<strong>一次ソース確認済み</strong>）</p>
+
+<p>最も運用に効くのが `/usage` コマンドへの <strong>Loopsブレイクダウン追加</strong>だ。ループ実行回数・合計トークン・実行あたりトークン・最終実行時刻が一覧で確認できるようになった。日次収集のような繰り返しタスクがトークンを何件消費しているか定量的に把握でき、コスト異常の早期発見につながる。エンタープライズ向けの `modelPricing` マネージド設定も追加され、契約割引を `/cost` に正確に反映できるようになった。起動バイナリは75MBへのダウンサイズ（従来比78%削減）で、CI/CDやVPS環境での取り回しが軽くなる。</p>
+
+<ul>
+<li>参照: https://www.gradually.ai/en/changelogs/claude-code/</li>
+</ul>
+
+<h3>クロスセッションメッセージング：マルチエージェント協調が実用フェーズへ</h3>
+
+<p>v2.1.224（2026-08-07リリース）から搭載された `ListAgents` + `SendMessage` の公式ドキュメントが整備された。（<strong>一次ソース確認済み</strong>）</p>
+
+<p>別ターミナルやworktreeで動く複数のClaudeインスタンスが互いを検出してテキストメッセージを送受信できる。セキュリティ設計が堅牢で、送信されたメッセージが相手セッションの権限を昇格させることは設計上不可能。OSユーザー分離・パーミッションクラシファイア通過が前提のため、FX自動取引のように複数エージェントが異なる戦略・市場を並列監視するアーキテクチャに直接応用できる。macOS/Linux対応、Windows・Bedrock・GCP非対応という制約は押さえておきたい。</p>
+
+<ul>
+<li>参照: https://code.claude.com/docs/en/cross-session-messaging</li>
+</ul>
+
+<h3>プラグインエコシステムの成熟と「5本に絞れ」ルール</h3>
+
+<p>2026年6月時点でClaude Codeプラグインは9,000本超。ただし本番実用に耐えるのは約100本という選択コスト問題が顕在化している。Composioが示すガイドラインは「5〜6本のフォーカスドスタック」だ。</p>
+
+<p>実用三本柱として紹介されているのが、<strong>Superpowers</strong>（マルチサブエージェント並列実行）・<strong>Frontend Design</strong>（デザイン特化）・<strong>Composio</strong>（外部サービス統合）。中でも <strong>Context7</strong> は「常に最新ドキュメント参照」でClaude Agent SDK/MCPの仕様変更追従に有効で、APIの変化が速い現状に刺さる。</p>
+
+<ul>
+<li>参照: https://composio.dev/content/top-claude-code-plugins</li>
+</ul>
+
+<h3>CLAUDE.md：「何を書くか」より「どう書くか」</h3>
+
+<p>DEV Communityの2026年版ベストプラクティスガイドは、定量データが光る。ベクターDBのChromaで適切なCLAUDE.mdなしでは精度95%→60%に低下するという具体的な数字は、「書かなくていい」という甘えを排除する。</p>
+
+<p>実践指針として明確なのが <strong>Structure &gt; Prose</strong>（箇条書き・見出しを優先）と <strong>HTML commentゼロコストトリック</strong>（`&lt;!-- hidden instructions --&gt;` はトークンを消費しない隠し記法）。200行ガイドラインの根拠を示しながら、ワークスタイルを明示することの重要性を強調している。定期的なCLAUDE.mdレビューの基準として手元に置いておきたい。</p>
+
+<ul>
+<li>参照: https://dev.to/nishilbhave/claudemd-best-practices-the-complete-2026-guide-435j</li>
+</ul>
+
+<h3>Claude Agent SDK入門：チャットボットとエージェントの本質的違い</h3>
+
+<p>MediumのGoogle Developer Experts掲載ガイドがClaude Agent SDKの入門として整理されている。`@tool` デコレータパターン・`client.query()` の最小構成でAIエージェントを動かす手順はそのまま日次収集ルーチンや情報収集エージェント自作の参考になる。Claude Codeのスキル・フック・サブエージェントと設計思想を共有しているため、Claude Code運用者にとって概念的な橋渡しになる内容だ。</p>
+
+<ul>
+<li>参照: https://medium.com/google-developer-experts/build-your-first-ai-agent-in-python-a-hands-on-guide-to-the-claude-agent-sdk-cb5ba3239dcf</li>
+</ul>
+
+<h3>Claude Academy：Anthropicの教育市場本格参入</h3>
+
+<p>2026-08-20にClaude Academyが公式ローンチ。（<strong>一次ソース確認済み</strong>）</p>
+
+<p>単なる製品マニュアルではなく、AI人材育成ノウハウを外部化したプラットフォームとして設計されている。コアフレームワークは <strong>4D AI Fluency</strong>（Delegation・Description・Discernment・Diligence）で、「AIに何を委任するか」「どうコンテキストを管理するか」という実務判断に直結する。31コース・14レッスン・クイズ付きで全て無料。「小さく試して実績で引っ張る」スタイルなら、まず1コース触って組織内での紹介材料にするのが自然な入り口だ。</p>
+
+<ul>
+<li>参照: https://explainx.ai/blog/claude-academy-launch-4d-ai-fluency-framework-august-2026</li>
+</ul>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>過去7日の収集件数は 2026-08-25 の12件をピークに、以降は3〜8件に落ち着いている。本日（08-29）は6件と中位安定。recurring_themesとして「claude」「agent」「mcp」「trading」「model」が7日連続で浮上しており、Claude Codeのエコシステム整備（クロスセッション・プラグイン・Academy）とエージェントアーキテクチャへの関心が引き続き収束している。</p>
+
+<p>08-25前後の急増（12件）は、Claude Code公式CLが週35アップデートに合わせて一気に出揃ったタイミングと重なる。「trading」テーマは連続浮上しているが、本日の収集では明示的なFX・取引記事はなし。引き続きクロスセッションメッセージング（マルチエージェント並列監視）の文脈で間接的に関連している状態。</p>
+
+</body>
+</html>

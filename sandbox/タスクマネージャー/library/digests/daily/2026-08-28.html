@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-08-28</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-08-28 | 7件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-08-28</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>Claude Codeは`/design`コマンドとConcise出力スタイルを正式投入（Week 34）、Anthropic APIはComputer Use・Browser Use・Skills APIをすべて同時GA化した。並行してClaude Opus 5がFable 5の半額という戦略的価格で定着、Kimi K3（2.8兆パラメータ）が「オープンウェイトがフロンティアに並んだ転換点」として注目を集めている。FX自動取引の文脈では、AI×エージェントの実務ユースケースが整理されつつあり、モデルコストの多極化が具体的な設計判断に影響し始めている。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>Week 34で揃った3本柱</h3>
+
+<p>Claude Code公式Week 34（v2.1.234–239）で3つの主要機能が同時に揃った。</p>
+
+<p><strong>`/design`コマンド（research preview）</strong>は、`/design &lt;brief&gt;`を打つだけでArtifacts基盤の複数UIアートボードを生成→選択→実装まで1セッションで完結する。従来はデザインツールとCLIを行き来していたワークフローが1コマンドに圧縮された形だ。ExplainX.aiの実践レポートによると最も効果的な使い方は「実装フェーズ中に素早いプロトタイプが必要な場面」で、ステークホルダー向け完成デザインや全画面設計レビューには不向きとされる。トークン消費が増える点は留意が必要だが、Pro以上で即日使える。</p>
+
+<p><strong>Concise出力スタイル（v2.1.237）</strong>は、`/config`または`settings.json`の`&quot;outputStyle&quot;:&quot;Concise&quot;`で有効化できる。結果を先頭に置きナレーションを省く設計で、エラー・セキュリティ警告は常に全文表示される。コードを素早く確認したいヘビーユーザーには体感が変わる変更だ。</p>
+
+<p><strong>Remote Control正式GA</strong>により、スマホのCodeタブに作業マシンがデバイスカードとして現れ、タップ→ディレクトリ選択→セッション開始のフローが確立した。外出先からの操作起点として使える。</p>
+
+<h3>Anthropic APIが一斉beta卒業（一次ソース確認済み）</h3>
+
+<p>2026年8月19日、Computer Use・Browser Use・Files API・Skills APIが一斉にGA移行した。注目はツールセット名の確定：`computer_toolset_20260801`がバッチアクション対応でラウンドトリップ20–40%削減・コスト約30%低下、`browser_toolset_20260801`が要素参照・フォーム入力・タブ管理を担う。Admin APIもGA化し、メンバー・グループ・カスタムロール管理が本番APIで扱えるようになった。</p>
+
+<p>これらすべてのbeta卒業により、「本番組み込みのための条件」が整ったと評価できる。SDK側もPython 1.2.0等がbetaヘッダーを自動排除し、`BetaSkill`→`BetaContainerSkill`へのリネームが行われた。</p>
+
+<h3>Claude Opus 5の価格が定着（一次ソース確認済み）</h3>
+
+<p>7月24日発表のClaude Opus 5（$5/$25/Mトークン）は、Fable 5（$10/$50）の半額・Opus 4.8と同価格という位置づけが複数ソースで確認された。1Mコンテキスト・128k最大出力・思考モードデフォルト有効。Maxプランのデフォルトモデルに設定されており、IPO（10月予定）前の二層価格戦略として機能している。実務設計として、複雑な一回限り分析（バックテスト解釈・戦略立案）にOpus 5、日常的なシグナル生成にSonnet 5（$2/$10）という使い分けが費用対効果の観点から有力になる。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>Kimi K3：オープンウェイトがフロンティアと並んだ（一次ソース確認済み）</h3>
+
+<p>中国Moonshot AIのKimi K3（2.8兆パラメータMoE）は、複数の独立ソースがパラメータ規模とFrontend Code Arena 1位を確認した。DeepSeek V4 Pro（1.6兆）比約75%増のスケールだが、推論時アクティブは約35B。アーキテクチャはKimi Delta Attention（KDA）とAttention Residualsを独自採用し、1Mトークンコンテキスト・ネイティブビジョン・思考モード・OpenAI SDK互換を備える。Modified MITライセンス、$3/$15/Mトークンという価格設定は、Sonnet 5と競合するレンジだ。なおVentureBeatが「7月27日重み公開」と報じたが、実際は7月26日だったことが確認されている。</p>
+
+<p>FX自動取引での活用観点では、<strong>低コスト推論の新たな選択肢</strong>として重要。速報分類・定型分析の処理コストを下げ、フロンティアモデルを戦略判断に集中させるハイブリッド構成が現実解として浮上する。</p>
+
+<h3>2026年8月のLLMリリースラッシュとコスト多極化</h3>
+
+<p>米国大統領令EO 14409の設計期限（8月1日）が各社のリリース集中を招いた構図が浮かび上がる。Qwen3.8-Max（2.4T, $2/$6）・Kimi K3（2.8T, $3/$15）・GLM-5.2（744B, MIT）がオープンウェイト側で並立し、エッジ側ではLFM2.5-2.6B（スマホ30tok/s）・Gemma 4 E2B（RasPi5動作）が登場した。「タスクに応じたモデル使い分け」が2026年の必須スキルになっているという分析は、実務判断に直結する。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #ea580c; padding-left: 12px;">AIトレーディング</h2>
+
+<p>日本の証券・FX実務での2026年版ユースケース整理（aipicks.jp）によると、最大の変化点は「エージェント型」への移行だ。AIが市場データ読み込み→戦略選択→執行まで一貫実行する形が現実のサービスに登場しており、Robinhoodの証券口座直接接続（2026年5月）が象徴的事例として取り上げられている。</p>
+
+<p>現実解として提示されているのは、<strong>AI（研究・フィルタリング・アラート）＋ルールベースEA（執行）のハイブリッド</strong>構成だ。LLMは売買判定より「指標解釈・レポート生成・最適化提案」に向いているという評価は、現在のFX自動取引運用アーキテクチャとも整合する。小さな成功事例を積み上げるアプローチとして、まずシグナルフィルタリングへのLLM組み込みから試す「助走レーン」思考が活きる場面だ。</p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>過去7日の記事件数推移：8/21（10件）→ 8/22（6件）→ 8/23（3件）→ 8/24（3件）→ 8/25（12件）→ 8/26（3件）→ 8/27（8件）→ <strong>8/28（7件）</strong>。週を通じて平均6.4件で安定している。</p>
+
+<p>常連テーマは `claude / agent / mcp / model / trading` の5本。今日は特に <strong>claude・model・trading</strong> が密度高く登場した。Anthropic APIの一斉GA化は「agentとmcpの本番組み込み」を加速させる構造変化として捉えられ、次週以降もエコシステム関連の記事が高密度で続くと予想される。モデル価格帯の分散（$2–$15/Mトークン）が固まりつつあり、「どのタスクにどのモデルを使うか」の設計判断が今後の差別化要因になる。</p>
+
+</body>
+</html>
