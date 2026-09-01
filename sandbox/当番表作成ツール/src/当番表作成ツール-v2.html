@@ -394,6 +394,16 @@ h1, h2, h3, h4 { font-weight: 700; }
       }
     } catch (e) {
       console.error('データの読み込みに失敗しました。初期データを使用します:', e);
+      // 破損データを退避してから初期化する（次の保存で上書きされて復旧不能になるのを防ぐ）
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          localStorage.setItem(STORAGE_KEY + '_broken_backup', raw);
+          alert('保存されていたデータが読み込めなかったため、初期状態で起動します。\n読み込めなかったデータはブラウザ内に退避してあります。\nJSONの控えがある場合は「出力」タブの「JSONインポート」から復元してください。');
+        }
+      } catch (e2) {
+        console.error('破損データの退避に失敗しました:', e2);
+      }
     }
     return createDefaultData();
   }
@@ -418,6 +428,10 @@ h1, h2, h3, h4 { font-weight: 700; }
     undoHistory.push(JSON.stringify(state.assignments));
     if (undoHistory.length > MAX_UNDO_HISTORY) undoHistory.shift();
   }
+
+  // オーバーレイクリックでモーダルを閉じる際の確認文（nullなら確認なしで閉じる）。
+  // 未保存の編集内容を持つモーダルが誤クリックで無言破棄されるのを防ぐ
+  let modalCloseGuard = null;
 
   // ==========================================================
   // 状態
@@ -523,14 +537,25 @@ h1, h2, h3, h4 { font-weight: 700; }
     for (let y = currentYear - 1; y <= currentYear + 2; y++) {
       yearOptions.push({ value: y, label: y + '年' });
     }
+    // 年月変更時: 日番号・日付キーに紐づく当月限定の設定をまとめてリセットする
+    // （祝日・勤務日上書きに加え、日別時間帯設定と枠の適用日も旧月から持ち越さない）
+    const resetMonthDependentSettings = () => {
+      state.calendar.holidays = [];
+      state.calendar.workdayOverrides = [];
+      state.calendar.dayTimeSettings = {};
+      for (const slot of state.slots) {
+        slot.specificDays = [];
+      }
+    };
+
     const yearSelect = createSelect(yearOptions, state.calendar.year);
     yearSelect.addEventListener('change', () => {
       state.calendar.year = parseInt(yearSelect.value, 10);
-      state.calendar.holidays = [];
-      state.calendar.workdayOverrides = [];
+      resetMonthDependentSettings();
       saveData();
-      renderCalendarTab(container.parentNode.querySelector('.tab-content') || container);
+      renderActiveTab();
       renderGrid();
+      showToast('年の変更に伴い、祝日・日別の設定をリセットしました');
     });
     row.appendChild(yearSelect);
 
@@ -541,11 +566,11 @@ h1, h2, h3, h4 { font-weight: 700; }
     const monthSelect = createSelect(monthOptions, state.calendar.month);
     monthSelect.addEventListener('change', () => {
       state.calendar.month = parseInt(monthSelect.value, 10);
-      state.calendar.holidays = [];
-      state.calendar.workdayOverrides = [];
+      resetMonthDependentSettings();
       saveData();
       renderActiveTab();
       renderGrid();
+      showToast('月の変更に伴い、祝日・日別の設定をリセットしました');
     });
     row.appendChild(monthSelect);
     container.appendChild(row);
@@ -786,7 +811,15 @@ h1, h2, h3, h4 { font-weight: 700; }
         showToast('最低1つの枠が必要です');
         return;
       }
+      if (!confirm(`枠「${slot.name}」を削除しますか？\nこの枠の割り当てと、この枠への曜日固定設定も削除されます。`)) return;
       state.slots = state.slots.filter(s => s.id !== slot.id);
+      // この枠を参照する曜日固定・割り当てを掃除する（削除済み枠IDへの参照残置防止）
+      for (const s of state.staff) {
+        if (s.fixedDays) s.fixedDays = s.fixedDays.filter(fd => fd.slotId !== slot.id);
+      }
+      for (const dateKey of Object.keys(state.assignments)) {
+        delete state.assignments[dateKey][slot.id];
+      }
       saveData();
       renderActiveTab();
       renderGrid();
@@ -1061,9 +1094,14 @@ h1, h2, h3, h4 { font-weight: 700; }
 
     // 削除
     row.appendChild(createButton('削除', 'btn-sm btn-danger', () => {
+      if (!confirm(`タグ「${tag.name}」を削除しますか？\n職員からも外れます。`)) return;
       // タグを職員から除去
       for (const s of state.staff) {
         s.tags = (s.tags || []).filter(t => t !== tag.id);
+      }
+      // 枠の対象タグ設定からも除去する（削除済みタグIDへの参照残置防止）
+      for (const slot of state.slots) {
+        slot.allowedTags = (slot.allowedTags || []).filter(t => t !== tag.id);
       }
       state.tags = state.tags.filter(t => t.id !== tag.id);
       saveData();
@@ -1168,10 +1206,17 @@ h1, h2, h3, h4 { font-weight: 700; }
     const actions = el('div', 'card-actions');
     actions.appendChild(createButton('編集', 'btn-sm btn-outline', () => openStaffModal(staff)));
     actions.appendChild(createButton('削除', 'btn-sm btn-danger', () => {
+      if (!confirm(`「${staff.name}」さんを削除しますか？\n当番表の割り当てからも外れます。`)) return;
       state.staff = state.staff.filter(s => s.id !== staff.id);
       // ペア参照を解除
       for (const s of state.staff) {
         if (s.trainingPairId === staff.id) s.trainingPairId = null;
+      }
+      // 割り当て済みのセルからも除去する（削除済み職員IDへの参照残置防止）
+      for (const dateKey of Object.keys(state.assignments)) {
+        for (const slotId of Object.keys(state.assignments[dateKey])) {
+          state.assignments[dateKey][slotId] = state.assignments[dateKey][slotId].filter(id => id !== staff.id);
+        }
       }
       saveData();
       renderActiveTab();
@@ -1376,6 +1421,9 @@ h1, h2, h3, h4 { font-weight: 700; }
     overlay.classList.remove('hidden');
     clearElement(overlay);
 
+    // 編集途中の誤クリック（背景クリック）による無言破棄を防ぐ
+    modalCloseGuard = '編集内容は保存されていません。保存せずに閉じますか？';
+
     const modal = el('div', 'modal');
 
     // ヘッダー
@@ -1447,6 +1495,7 @@ h1, h2, h3, h4 { font-weight: 700; }
   }
 
   function closeModal() {
+    modalCloseGuard = null;
     const overlay = document.getElementById('modal-overlay');
     overlay.classList.add('hidden');
     clearElement(overlay);
@@ -1839,10 +1888,20 @@ h1, h2, h3, h4 { font-weight: 700; }
       runAutoAssign();
     }));
     btnGroup.appendChild(createButton('割り当てをクリア', 'btn-outline btn-sm', () => {
-      state.assignments = {};
+      // 表示中の月の割り当てだけを対象にする（他月のデータは残す）
+      const monthPrefix = `${state.calendar.year}-${String(state.calendar.month).padStart(2, '0')}`;
+      const monthKeys = Object.keys(state.assignments).filter(k => k.startsWith(monthPrefix));
+      const count = monthKeys.reduce((sum, k) => sum + Object.values(state.assignments[k]).flat().length, 0);
+      if (count === 0) {
+        showToast('クリアする割り当てはありません');
+        return;
+      }
+      if (!confirm(`${state.calendar.month}月の割り当て${count}件を消します。よろしいですか？\n（直後なら「元に戻す」ボタンで復元できます）`)) return;
+      pushUndo();
+      for (const k of monthKeys) delete state.assignments[k];
       saveData();
       renderGrid();
-      showToast('割り当てをクリアしました');
+      showToast('割り当てをクリアしました（「元に戻す」で復元できます）');
     }));
     btnGroup.appendChild(createButton('当番回数を確認', 'btn-outline btn-sm', () => {
       const counts = countCurrentAssignments();
@@ -2215,6 +2274,24 @@ h1, h2, h3, h4 { font-weight: 700; }
       availabilityRatio[s.id] = Math.max(raw, 0.1); // 0除算防止
     }
 
+    // ペアsingleモードで実効枠数を正確にカウントするヘルパー
+    // ペア(single)は2人で1枠消費、それ以外は1人1枠消費
+    const countFilledSlots = (arr) => {
+      let count = 0;
+      const counted = new Set();
+      for (const id of arr) {
+        if (counted.has(id)) continue;
+        counted.add(id);
+        const obj = state.staff.find(s => s.id === id);
+        // singleモードのペアは相手とセットで1枠
+        if (obj && obj.trainingPairId && (obj.pairSlotMode === 'single') && arr.includes(obj.trainingPairId) && !counted.has(obj.trainingPairId)) {
+          counted.add(obj.trainingPairId);
+        }
+        count++;
+      }
+      return count;
+    };
+
     let workDayIndex = 0; // 枠処理順ローテーション用
     for (let day = 1; day <= daysInMonth; day++) {
       // 日単位スキップ廃止: この日にアクティブな枠があるかで判定
@@ -2247,65 +2324,45 @@ h1, h2, h3, h4 { font-weight: 700; }
         eligibleSlotCountToday[s.id] = cnt;
       }
 
-      for (const slot of rotatedSlots) {
-
-        // 日の時間帯設定でこのスロットが対象外なら飛ばす
-        if (!isSlotActiveForDay(slot, day)) continue;
-
+      // 1人（またはペア）を指定枠に割り当てるヘルパー
+      const assignOne = (staffId, slot) => {
+        const arr = assignments[dateKey][slot.id];
         const needed = slot.requiredCount;
+        const staffObj = state.staff.find(s => s.id === staffId);
+        const hasPair = staffObj && staffObj.trainingPairId;
+        const isSingle = hasPair && (staffObj.pairSlotMode === 'single');
 
-        // ペアsingleモードで実効枠数を正確にカウントするヘルパー
-        // ペア(single)は2人で1枠消費、それ以外は1人1枠消費
-        const countFilledSlots = (arr) => {
-          let count = 0;
-          const counted = new Set();
-          for (const id of arr) {
-            if (counted.has(id)) continue;
-            counted.add(id);
-            const obj = state.staff.find(s => s.id === id);
-            // singleモードのペアは相手とセットで1枠
-            if (obj && obj.trainingPairId && (obj.pairSlotMode === 'single') && arr.includes(obj.trainingPairId) && !counted.has(obj.trainingPairId)) {
-              counted.add(obj.trainingPairId);
-            }
-            count++;
+        // 枠に空きがあるかチェック（ペアdoubleなら2枠必要）
+        const filled = countFilledSlots(arr);
+        const slotsNeeded = (hasPair && !isSingle) ? 2 : 1;
+        if (filled + slotsNeeded > needed) return false;
+
+        // 本人を割り当て
+        arr.push(staffId);
+        assignedToday.add(staffId);
+        assignCount[staffId] = (assignCount[staffId] || 0) + 1;
+        slotAssignCount[slot.id][staffId] = (slotAssignCount[slot.id][staffId] || 0) + 1;
+        if (dowAssignCount[staffId]) dowAssignCount[staffId][dow] = (dowAssignCount[staffId][dow] || 0) + 1;
+
+        // ペア相手も同じ枠に入れる
+        if (hasPair) {
+          const pairId = staffObj.trainingPairId;
+          if (!arr.includes(pairId) && !assignedToday.has(pairId)) {
+            arr.push(pairId);
+            assignedToday.add(pairId);
+            assignCount[pairId] = (assignCount[pairId] || 0) + 1;
+            slotAssignCount[slot.id][pairId] = (slotAssignCount[slot.id][pairId] || 0) + 1;
+            if (dowAssignCount[pairId]) dowAssignCount[pairId][dow] = (dowAssignCount[pairId][dow] || 0) + 1;
           }
-          return count;
-        };
+        }
+        return true;
+      };
 
-        // 1人（またはペア）を割り当てるヘルパー
-        const assignOne = (staffId) => {
-          const arr = assignments[dateKey][slot.id];
-          const staffObj = state.staff.find(s => s.id === staffId);
-          const hasPair = staffObj && staffObj.trainingPairId;
-          const isSingle = hasPair && (staffObj.pairSlotMode === 'single');
-
-          // 枠に空きがあるかチェック（ペアdoubleなら2枠必要）
-          const filled = countFilledSlots(arr);
-          const slotsNeeded = (hasPair && !isSingle) ? 2 : 1;
-          if (filled + slotsNeeded > needed) return false;
-
-          // 本人を割り当て
-          arr.push(staffId);
-          assignedToday.add(staffId);
-          assignCount[staffId] = (assignCount[staffId] || 0) + 1;
-          slotAssignCount[slot.id][staffId] = (slotAssignCount[slot.id][staffId] || 0) + 1;
-          if (dowAssignCount[staffId]) dowAssignCount[staffId][dow] = (dowAssignCount[staffId][dow] || 0) + 1;
-
-          // ペア相手も同じ枠に入れる
-          if (hasPair) {
-            const pairId = staffObj.trainingPairId;
-            if (!arr.includes(pairId) && !assignedToday.has(pairId)) {
-              arr.push(pairId);
-              assignedToday.add(pairId);
-              assignCount[pairId] = (assignCount[pairId] || 0) + 1;
-              slotAssignCount[slot.id][pairId] = (slotAssignCount[slot.id][pairId] || 0) + 1;
-              if (dowAssignCount[pairId]) dowAssignCount[pairId][dow] = (dowAssignCount[pairId][dow] || 0) + 1;
-            }
-          }
-          return true;
-        };
-
-        // Step 1: 曜日固定のアサインを確定
+      // Step 1: 全枠の曜日固定を先に確定する。
+      // ローテーション順で固定枠より後に処理される枠の固定職員が、
+      // 先行枠の通常候補として取られるのを防ぐ（ハード制約はStep 2に優先）
+      for (const slot of state.slots) {
+        if (!isSlotActiveForDay(slot, day)) continue;
         const fixedStaff = [];
         for (const s of shuffledStaff) {
           if (!s.fixedDays) continue;
@@ -2317,14 +2374,20 @@ h1, h2, h3, h4 { font-weight: 700; }
             }
           }
         }
-
         for (const staffId of fixedStaff) {
-          if (countFilledSlots(assignments[dateKey][slot.id]) >= needed) break;
+          if (countFilledSlots(assignments[dateKey][slot.id]) >= slot.requiredCount) break;
           if (assignedToday.has(staffId)) continue;
-          assignOne(staffId);
+          assignOne(staffId, slot);
         }
+      }
 
-        // Step 2: 残りの枠を埋める
+      // Step 2: 残りの枠をローテーション順に埋める
+      for (const slot of rotatedSlots) {
+
+        // 日の時間帯設定でこのスロットが対象外なら飛ばす
+        if (!isSlotActiveForDay(slot, day)) continue;
+
+        const needed = slot.requiredCount;
         if (countFilledSlots(assignments[dateKey][slot.id]) >= needed) continue;
 
         // 割り当て候補を取得（シャッフル済みリストベースで登録順バイアスなし）
@@ -2378,7 +2441,7 @@ h1, h2, h3, h4 { font-weight: 700; }
             continue;
           }
 
-          assignOne(staffId);
+          assignOne(staffId, slot);
         }
       }
     }
@@ -2395,6 +2458,7 @@ h1, h2, h3, h4 { font-weight: 700; }
       const keyB = formatDate(year, month, dayB);
       if (!assignments[keyA] || !assignments[keyB]) continue;
 
+      const dowB = getDayOfWeek(year, month, dayB);
       for (const slot of state.slots) {
         const arrA = assignments[keyA][slot.id] || [];
         const arrB = assignments[keyB][slot.id] || [];
@@ -2406,16 +2470,23 @@ h1, h2, h3, h4 { font-weight: 700; }
           const sObj = state.staff.find(s => s.id === staffId);
           if (sObj && sObj.trainingPairId) continue;
 
+          // 曜日固定でこの枠に入っている職員は退去させない（ハード制約は連続回避より優先）
+          if (sObj && (sObj.fixedDays || []).some(fd => fd.slotId === slot.id && fd.weekdays.includes(dowB))) continue;
+
           // dayBのその日の全割り当て済み職員を取得（重複防止）
           const dayBAllAssigned = new Set(Object.values(assignments[keyB]).flat());
 
-          const dowB = getDayOfWeek(year, month, dayB);
           const keyPrev = wi > 0 ? formatDate(year, month, workDays[wi - 1]) : null;
           const prevAll = keyPrev && assignments[keyPrev] ? new Set(Object.values(assignments[keyPrev]).flat()) : new Set();
 
           // スワップ候補: dayBの他枠に未割り当て + dayAにもいない + 前日にもいない
+          // ペア職員は1人分の置換に相手を同伴できず分離してしまうため候補から外す
           const swapCandidates = getEligibleStaff(slot, keyB, dayB, dowB, dayBAllAssigned, assignments, shuffledStaff)
-            .filter(cid => !arrA.includes(cid) && !prevAll.has(cid));
+            .filter(cid => {
+              if (arrA.includes(cid) || prevAll.has(cid)) return false;
+              const cObj = state.staff.find(s => s.id === cid);
+              return !(cObj && cObj.trainingPairId);
+            });
 
           if (swapCandidates.length > 0) {
             // 回数バランスを考慮: 重み付き回数が最も少ない候補を選ぶ
@@ -2779,19 +2850,21 @@ h1, h2, h3, h4 { font-weight: 700; }
       reader.addEventListener('load', () => {
         try {
           const data = JSON.parse(reader.result);
-          // 最低限のバリデーション
-          if (!data.calendar || !data.slots || !data.staff) {
+          // 型まで検証する（配列であるべき項目にオブジェクト等が入った破損stateの保存を防ぐ）
+          if (!data.calendar || typeof data.calendar !== 'object' ||
+              !Array.isArray(data.slots) || !Array.isArray(data.staff)) {
             showToast('無効なデータ形式です');
             return;
           }
+          if (!confirm(`現在のデータを読み込んだ内容（職員${data.staff.length}人）で置き換えます。よろしいですか？`)) return;
           const defaults = createDefaultData();
           state = {
-            calendar: { ...defaults.calendar, ...(data.calendar || {}) },
-            slots: data.slots || defaults.slots,
-            tags: data.tags || defaults.tags,
-            staff: data.staff || defaults.staff,
-            assignments: data.assignments || defaults.assignments,
-            neoIds: data.neoIds || defaults.neoIds,
+            calendar: { ...defaults.calendar, ...data.calendar },
+            slots: data.slots,
+            tags: Array.isArray(data.tags) ? data.tags : defaults.tags,
+            staff: data.staff,
+            assignments: (data.assignments && typeof data.assignments === 'object' && !Array.isArray(data.assignments)) ? data.assignments : defaults.assignments,
+            neoIds: (data.neoIds && typeof data.neoIds === 'object' && !Array.isArray(data.neoIds)) ? data.neoIds : defaults.neoIds,
           };
           saveData();
           renderTabs();
@@ -2802,6 +2875,9 @@ h1, h2, h3, h4 { font-weight: 700; }
           showToast('JSONの読み込みに失敗しました');
           console.error('インポートエラー:', e);
         }
+      });
+      reader.addEventListener('error', () => {
+        showToast('ファイルの読み込みに失敗しました');
       });
       reader.readAsText(file);
     });
@@ -2981,6 +3057,7 @@ h1, h2, h3, h4 { font-weight: 700; }
     const overlay = document.getElementById('modal-overlay');
     overlay.addEventListener('click', (e) => {
       if (e.target === overlay) {
+        if (modalCloseGuard && !confirm(modalCloseGuard)) return;
         closeModal();
         renderGrid();
       }
