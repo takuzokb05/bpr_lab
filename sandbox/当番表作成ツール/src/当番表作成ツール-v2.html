@@ -369,7 +369,6 @@ h1, h2, h3, h4 { font-weight: 700; }
       tags: [],
       staff: [],
       assignments: {},
-      neoIds: {},
     };
   }
 
@@ -389,7 +388,6 @@ h1, h2, h3, h4 { font-weight: 700; }
           tags: data.tags || defaults.tags,
           staff: data.staff || defaults.staff,
           assignments: data.assignments || defaults.assignments,
-          neoIds: data.neoIds || defaults.neoIds,
         };
       }
     } catch (e) {
@@ -2757,7 +2755,7 @@ h1, h2, h3, h4 { font-weight: 700; }
   // NEO連携タブ
   // ==========================================================
   function renderNeoTab(container) {
-    const hint = textEl('p', '', 'デスクネッツNEOにCSVインポートするには、各職員のNEOシステムIDを設定してください。初回のみ設定が必要です。');
+    const hint = textEl('p', '', 'デスクネッツNEOのスケジュールに取り込める形式でCSVを出力します。登録先（共有アカウントや自分自身）はNEO側のインポート画面で選ぶ仕組みのため、1つのファイルは1つの登録先にしか入れられません。用途に合わせて選んでください。');
     hint.style.fontSize = '13px';
     hint.style.color = '#6B7280';
     hint.style.marginBottom = '12px';
@@ -2768,34 +2766,28 @@ h1, h2, h3, h4 { font-weight: 700; }
       return;
     }
 
-    // NEO ID一覧テーブル
-    const table = el('table', 'grid-table');
-    table.style.minWidth = 'auto';
-    const thead = el('thead');
-    const headRow = el('tr');
-    headRow.appendChild(textEl('th', '', '職員名'));
-    headRow.appendChild(textEl('th', '', 'NEOシステムID'));
-    thead.appendChild(headRow);
-    table.appendChild(thead);
+    const addModeRow = (buttonLabel, buttonClass, handler, description) => {
+      const row = el('div', 'form-row');
+      row.style.alignItems = 'center';
+      row.style.marginBottom = '10px';
+      row.appendChild(createButton(buttonLabel, buttonClass, handler));
+      const desc = textEl('span', '', description);
+      desc.style.fontSize = '12px';
+      desc.style.color = '#6B7280';
+      row.appendChild(desc);
+      container.appendChild(row);
+    };
 
-    const tbody = el('tbody');
-    for (const staff of state.staff) {
-      const row = el('tr');
-      row.appendChild(textEl('td', '', staff.name));
+    addModeRow('まとめて1枚のCSV', 'btn-primary', downloadNeoCombinedCsv,
+      '課内当番など共有アカウントの予定として入れる用。予定名が「枠名（職員名）」になり、誰の当番か分かります。');
+    addModeRow('職員ごとのCSVをZIPで', 'btn-outline', downloadNeoPersonalZip,
+      '各職員が自分の予定として入れる用。ZIPを展開すると職員名付きのCSVが1人1枚できます（当番のない職員は含まれません）。');
 
-      const idCell = el('td');
-      const idInput = createInput('text', state.neoIds[staff.id] || '', 'form-input form-input-md', '例: 12345');
-      const staffId = staff.id;
-      idInput.addEventListener('change', () => {
-        state.neoIds[staffId] = idInput.value.trim();
-        saveData();
-      });
-      idCell.appendChild(idInput);
-      row.appendChild(idCell);
-      tbody.appendChild(row);
-    }
-    table.appendChild(tbody);
-    container.appendChild(table);
+    const importHint = textEl('p', '', '取り込み方: NEOのスケジュールのインポート画面でファイルを選び、「先頭行は無視する」にチェック、文字コードはUTF-8を指定してください。');
+    importHint.style.fontSize = '12px';
+    importHint.style.color = '#6B7280';
+    importHint.style.marginTop = '8px';
+    container.appendChild(importHint);
   }
 
   // ==========================================================
@@ -2807,7 +2799,6 @@ h1, h2, h3, h4 { font-weight: 700; }
 
     area.appendChild(createButton('Excelにコピー', 'btn-primary btn-lg', copyToClipboard));
     area.appendChild(createButton('印刷', 'btn-outline btn-lg', () => window.print()));
-    area.appendChild(createButton('NEO用CSVダウンロード', 'btn-outline btn-lg', downloadNEOCsv));
     area.appendChild(createButton('JSONエクスポート', 'btn-outline', exportJSON));
     area.appendChild(createButton('JSONインポート', 'btn-outline', importJSON));
     const undoBtn = createButton('元に戻す', 'btn-outline btn-sm', undoAssignment);
@@ -2824,18 +2815,22 @@ h1, h2, h3, h4 { font-weight: 700; }
     area.appendChild(notice);
   }
 
-  function exportJSON() {
-    const json = JSON.stringify(state, null, 2);
-    const blob = new Blob([json], { type: 'application/json' });
+  /** Blobをファイルとしてダウンロードさせる共通ヘルパー */
+  function downloadBlob(filename, blob) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    const { year, month } = state.calendar;
-    a.download = `当番表データ_${year}年${month}月.json`;
+    a.download = filename;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
+  function exportJSON() {
+    const json = JSON.stringify(state, null, 2);
+    const { year, month } = state.calendar;
+    downloadBlob(`当番表データ_${year}年${month}月.json`, new Blob([json], { type: 'application/json' }));
     showToast('JSONをエクスポートしました');
   }
 
@@ -2864,7 +2859,6 @@ h1, h2, h3, h4 { font-weight: 700; }
             tags: Array.isArray(data.tags) ? data.tags : defaults.tags,
             staff: data.staff,
             assignments: (data.assignments && typeof data.assignments === 'object' && !Array.isArray(data.assignments)) ? data.assignments : defaults.assignments,
-            neoIds: (data.neoIds && typeof data.neoIds === 'object' && !Array.isArray(data.neoIds)) ? data.neoIds : defaults.neoIds,
           };
           saveData();
           renderTabs();
@@ -2952,21 +2946,35 @@ h1, h2, h3, h4 { font-weight: 700; }
     }
   }
 
-  function downloadNEOCsv() {
+  // NEO CSVヘッダー（V8.0のエクスポート列構成に準拠。
+  // ID系の列はインポート時の登録先決定に使われないため空欄で出力する）
+  const NEO_CSV_HEADERS = [
+    'ユーザー/グループシステムID', '氏名/グループ名', 'ID（システムID）',
+    '開始日', '開始時刻', '終了日', '終了時刻',
+    '予定', '予定詳細', '場所', '場所詳細', '内容',
+    '情報公開レベル', '外出区分', '重要度', '予約種別',
+    '帯状', 'フラグ', 'アイコン番号', '承認依頼', '確認通知メール',
+    '所有者ID', '所有者名',
+  ];
+
+  function escapeCsvValue(v) {
+    const s = String(v);
+    if (s.includes(',') || s.includes('"') || s.includes('\n')) {
+      return '"' + s.replace(/"/g, '""') + '"';
+    }
+    return s;
+  }
+
+  /**
+   * NEO用CSVの行配列を組み立てる（先頭はヘッダー行）。
+   * @param {string|null} targetStaffId 指定時はその職員の予定のみ / nullで全員分
+   * @param {boolean} includeNameInTitle trueで予定欄を「枠名（職員名）」にする（共有アカウント用）
+   */
+  function buildNeoCsvRows(targetStaffId, includeNameInTitle) {
     const { year, month } = state.calendar;
     const daysInMonth = getDaysInMonth(year, month);
 
-    // NEO CSVヘッダー
-    const neoHeaders = [
-      'ユーザー/グループシステムID', '氏名/グループ名', 'ID（システムID）',
-      '開始日', '開始時刻', '終了日', '終了時刻',
-      '予定', '予定詳細', '場所', '場所詳細', '内容',
-      '情報公開レベル', '外出区分', '重要度', '予約種別',
-      '帯状', 'フラグ', 'アイコン番号', '承認依頼', '確認通知メール',
-      '所有者ID', '所有者名',
-    ];
-
-    const rows = [neoHeaders.join(',')];
+    const rows = [NEO_CSV_HEADERS.join(',')];
 
     for (let day = 1; day <= daysInMonth; day++) {
       if (!hasAnyActiveSlot(day)) continue;
@@ -2977,19 +2985,20 @@ h1, h2, h3, h4 { font-weight: 700; }
         if (!isSlotActiveForDay(slot, day)) continue;
         const assigned = getAssignmentsForCell(dateKey, slot.id);
         for (const staffId of assigned) {
+          if (targetStaffId && staffId !== targetStaffId) continue;
           const staffObj = state.staff.find(s => s.id === staffId);
           if (!staffObj) continue;
 
-          const neoId = state.neoIds[staffId] || '';
+          const title = includeNameInTitle ? `${slot.name}（${staffObj.name}）` : slot.name;
           const row = [
-            neoId,                    // ユーザーシステムID
-            staffObj.name,            // 氏名
+            '',                       // ユーザーシステムID（登録先はNEOのインポート画面で選ぶため空欄）
+            staffObj.name,            // 氏名（参考情報。インポートでは使われない）
             '',                       // ID
             dateStr,                  // 開始日
             slot.startTime,           // 開始時刻
             dateStr,                  // 終了日
             slot.endTime,             // 終了時刻
-            slot.name,                // 予定
+            title,                    // 予定
             '',                       // 予定詳細
             '',                       // 場所
             '',                       // 場所詳細
@@ -3006,31 +3015,152 @@ h1, h2, h3, h4 { font-weight: 700; }
             '',                       // 所有者ID
             '',                       // 所有者名
           ];
-
-          // CSVエスケープ
-          const escaped = row.map(v => {
-            const s = String(v);
-            if (s.includes(',') || s.includes('"') || s.includes('\n')) {
-              return '"' + s.replace(/"/g, '""') + '"';
-            }
-            return s;
-          });
-          rows.push(escaped.join(','));
+          rows.push(row.map(escapeCsvValue).join(','));
         }
       }
     }
+    return rows;
+  }
 
-    const csvContent = '\uFEFF' + rows.join('\r\n'); // BOM付きUTF-8
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `当番表_${year}年${month}月_NEO.csv`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  /** 行配列をBOM付きUTF-8のCSV文字列にする */
+  function buildNeoCsvContent(rows) {
+    return '\uFEFF' + rows.join('\r\n');
+  }
+
+  /** まとめて1枚: 共有アカウント/組織の予定として1ファイルでインポートする用 */
+  function downloadNeoCombinedCsv() {
+    const { year, month } = state.calendar;
+    const rows = buildNeoCsvRows(null, true);
+    if (rows.length <= 1) {
+      showToast('割り当てがありません。先に自動割り当てを実行してください');
+      return;
+    }
+    const blob = new Blob([buildNeoCsvContent(rows)], { type: 'text/csv;charset=utf-8;' });
+    downloadBlob(`当番表_${year}年${month}月_NEO.csv`, blob);
     showToast('CSVをダウンロードしました');
+  }
+
+  /** ファイル名に使えない文字を置き換える */
+  function sanitizeFileName(name) {
+    return name.replace(/[\\/:*?"<>|]/g, '_').trim() || '名前なし';
+  }
+
+  /** 個人別: 職員1人ごとのCSVをZIPにまとめてダウンロードする（各自が自分の予定としてインポートする用） */
+  function downloadNeoPersonalZip() {
+    const { year, month } = state.calendar;
+    const files = [];
+    const usedNames = new Set();
+    for (const staff of state.staff) {
+      const rows = buildNeoCsvRows(staff.id, false);
+      if (rows.length <= 1) continue; // 当番のない職員は出力しない
+      const base = sanitizeFileName(staff.name);
+      let candidate = base;
+      let seq = 2;
+      while (usedNames.has(candidate)) candidate = `${base}_${seq++}`; // 同姓同名のファイル名衝突回避
+      usedNames.add(candidate);
+      files.push({ name: `当番表_${year}年${month}月_${candidate}.csv`, content: buildNeoCsvContent(rows) });
+    }
+    if (files.length === 0) {
+      showToast('割り当てがありません。先に自動割り当てを実行してください');
+      return;
+    }
+    downloadBlob(`当番表_${year}年${month}月_個人別NEO.zip`, buildZip(files));
+    showToast(`ZIPをダウンロードしました（${files.length}人分）`);
+  }
+
+  // ==========================================================
+  // ZIP生成（無圧縮STORE方式・外部ライブラリ不使用）
+  // ==========================================================
+  const ZIP_VERSION_NEEDED = 20;     // 展開に必要なZIPバージョン(2.0)
+  const ZIP_FLAG_UTF8 = 0x0800;      // ファイル名がUTF-8であることを示すフラグ(bit 11)
+  const ZIP_METHOD_STORE = 0;        // 無圧縮
+  const ZIP_LOCAL_HEADER_SIZE = 30;
+  const ZIP_CENTRAL_HEADER_SIZE = 46;
+  const ZIP_EOCD_SIZE = 22;
+  const ZIP_SIG_LOCAL = 0x04034b50;
+  const ZIP_SIG_CENTRAL = 0x02014b50;
+  const ZIP_SIG_EOCD = 0x06054b50;
+  const ZIP_CRC32_POLY = 0xEDB88320;
+  const DOS_EPOCH_YEAR = 1980;
+
+  let crc32Table = null;
+  function getCrc32Table() {
+    if (crc32Table) return crc32Table;
+    crc32Table = new Uint32Array(256);
+    for (let n = 0; n < 256; n++) {
+      let c = n;
+      for (let k = 0; k < 8; k++) c = (c & 1) ? (ZIP_CRC32_POLY ^ (c >>> 1)) : (c >>> 1);
+      crc32Table[n] = c >>> 0;
+    }
+    return crc32Table;
+  }
+
+  function crc32(bytes) {
+    const table = getCrc32Table();
+    let c = 0xFFFFFFFF;
+    for (let i = 0; i < bytes.length; i++) {
+      c = table[(c ^ bytes[i]) & 0xFF] ^ (c >>> 8);
+    }
+    return (c ^ 0xFFFFFFFF) >>> 0;
+  }
+
+  /** ファイル群 [{name, content}] から無圧縮ZIPのBlobを作る */
+  function buildZip(files) {
+    const encoder = new TextEncoder();
+    const now = new Date();
+    // ZIPヘッダーが要求するDOS形式の日時
+    const dosTime = (now.getHours() << 11) | (now.getMinutes() << 5) | Math.floor(now.getSeconds() / 2);
+    const dosDate = ((now.getFullYear() - DOS_EPOCH_YEAR) << 9) | ((now.getMonth() + 1) << 5) | now.getDate();
+
+    const localParts = [];
+    const centralParts = [];
+    let offset = 0;
+    for (const file of files) {
+      const nameBytes = encoder.encode(file.name);
+      const dataBytes = encoder.encode(file.content);
+      const crc = crc32(dataBytes);
+
+      const local = new DataView(new ArrayBuffer(ZIP_LOCAL_HEADER_SIZE));
+      local.setUint32(0, ZIP_SIG_LOCAL, true);
+      local.setUint16(4, ZIP_VERSION_NEEDED, true);
+      local.setUint16(6, ZIP_FLAG_UTF8, true);
+      local.setUint16(8, ZIP_METHOD_STORE, true);
+      local.setUint16(10, dosTime, true);
+      local.setUint16(12, dosDate, true);
+      local.setUint32(14, crc, true);
+      local.setUint32(18, dataBytes.length, true); // 圧縮後サイズ（無圧縮なので元サイズと同値）
+      local.setUint32(22, dataBytes.length, true); // 元サイズ
+      local.setUint16(26, nameBytes.length, true);
+      local.setUint16(28, 0, true);                // 拡張フィールド長
+      localParts.push(new Uint8Array(local.buffer), nameBytes, dataBytes);
+
+      const central = new DataView(new ArrayBuffer(ZIP_CENTRAL_HEADER_SIZE));
+      central.setUint32(0, ZIP_SIG_CENTRAL, true);
+      central.setUint16(4, ZIP_VERSION_NEEDED, true);
+      central.setUint16(6, ZIP_VERSION_NEEDED, true);
+      central.setUint16(8, ZIP_FLAG_UTF8, true);
+      central.setUint16(10, ZIP_METHOD_STORE, true);
+      central.setUint16(12, dosTime, true);
+      central.setUint16(14, dosDate, true);
+      central.setUint32(16, crc, true);
+      central.setUint32(20, dataBytes.length, true);
+      central.setUint32(24, dataBytes.length, true);
+      central.setUint16(28, nameBytes.length, true);
+      // 30〜41バイト目（拡張・コメント長、ディスク番号、属性）はすべて0のまま
+      central.setUint32(42, offset, true);         // 対応するローカルヘッダーの位置
+      centralParts.push(new Uint8Array(central.buffer), nameBytes);
+
+      offset += ZIP_LOCAL_HEADER_SIZE + nameBytes.length + dataBytes.length;
+    }
+
+    const centralSize = centralParts.reduce((sum, p) => sum + p.length, 0);
+    const eocd = new DataView(new ArrayBuffer(ZIP_EOCD_SIZE));
+    eocd.setUint32(0, ZIP_SIG_EOCD, true);
+    eocd.setUint16(8, files.length, true);   // このディスク上のエントリ数
+    eocd.setUint16(10, files.length, true);  // 総エントリ数
+    eocd.setUint32(12, centralSize, true);
+    eocd.setUint32(16, offset, true);        // セントラルディレクトリ開始位置
+    return new Blob([...localParts, ...centralParts, new Uint8Array(eocd.buffer)], { type: 'application/zip' });
   }
 
   // ==========================================================
