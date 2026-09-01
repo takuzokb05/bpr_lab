@@ -1403,7 +1403,7 @@
 
 ---
 
-## 2026-08-31 収集分（11件収集 → SIGNAL 11件 claude-code/ecosystem）
+## 2026-08-31 収集分（16件収集 → SIGNAL 16件 claude-code/ecosystem/ai-trading/ai-news）
 
 | # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
 |-----|---------|------|------|-----|--------|
@@ -1418,9 +1418,40 @@
 | 1250 | MCPが新ロードマップ公開 長時間処理・AIエージェント認証5分野重点化（GIGAZINE JA 2026-08-24）: Tasks・OAuth2.1・MCP Apps・statelessコア・MCPメッシュ/A2A統合の伏線・「MCP誕生以来最大の改定」 | ja | 未読 | #claude-ecosystem #mcp #roadmap #web-signal | articles/2026-08-31_3793_WEB_MCP-NewRoadmap-LongRunning-AgentAuth-5Fields-GIGAZINE-JA.md |
 | 1251 | Quollio MCPサーバー機能正式リリース 2026-08-26（Prtimes JA）: QDIC（データインテリジェンスクラウド）にMCP統合・Claude CodeからデータカタログAPIに直接アクセス可能・国内エンタープライズ先行事例 | ja | 未読 | #claude-ecosystem #mcp #product-release #web-signal | articles/2026-08-31_3794_WEB_Quollio-MCP-Server-Release-August2026-Prtimes-JA.md |
 | 1252 | Claude Agent SDKチュートリアル2026（SerpAPI EN）: Python v0.2.139/TS v0.3.233・毎週リリース・Opus4.8/Sonnet4.6/Haiku4.5選択・インプロセスMCPサーバー・セーフティフック・サブエージェント委譲・プロダクションデプロイ | en | 未読 | #claude-ecosystem #agent-sdk #tutorial #web-signal | articles/2026-08-31_3795_WEB_Build-AI-Agent-Claude-Agent-SDK-Tutorial-2026-SerpAPI.md |
+| 1253 | Best Open Source AI Trading Agents GitHub 2026（GPTrader EN）: TradingAgents 80k★v0.4.0（ルックアヘッドバイアス修正・GPT-5.6対応）・AI Hedge Fund 45.3k★・FinRL・FinRobot・TradingGoose・構造化JSON出力への移行 | en | 未読 | #ai-trading #open-source #framework #web-signal | articles/2026-08-31_3796_WEB_Best-OpenSource-AI-Trading-Agents-GitHub-2026-GPTrader.md |
+| 1254 | Agentic Trading: LLM Agents × 金融市場 体系的レビュー（ArXiv 2026-05）: バックテストと本番の乖離・TradingAgents 30日+7%/22%DD・2026年推奨ハイブリッドワークフロー・マルチエージェント主流 | en | 未読 | #ai-trading #research #arxiv #web-signal | articles/2026-08-31_3797_WEB_Agentic-Trading-LLM-Agents-Financial-Markets-ArXiv-2026.md |
+| 1255 | 【2026年8月最新】生成AIトレンド完全ガイド（genai-ai.co.jp JA）: AIエージェント移行加速・Gartner「企業向けアプリ40%エージェント搭載へ」・EU AI Act 8月2日施行・日本AIガイドライン1.2版 | ja | 未読 | #ai-news #trends #regulation #web-signal | articles/2026-08-31_3798_WEB_GenAI-Trends-Complete-Guide-August2026-JA-genai-ai.md |
+| 1256 | The EU AI Act Gets Real（Axios EN 2026-08-28）: Article 50透明性義務8月2日発効・チャットボット開示義務・制裁€1500万/売上3%・高リスクAI完全義務化は2027年12月まで猶予 | en | 未読 | #ai-news #regulation #eu-ai-act #web-signal | articles/2026-08-31_3799_WEB_EU-AI-Act-Gets-Real-August2026-Axios.md |
+| 1257 | 生成AIニュース2026年最新まとめ（GDF JA）: AIエージェント普及・Qwen3.8-Max 2.4Tパラメータコスト50%低下・neoAI/デジタルガレージ国内事例・EU AI Act透明性義務・AIガイドライン1.2版 | ja | 未読 | #ai-news #trends #japan #web-signal | articles/2026-08-31_3800_WEB_GenAI-News-2026-Trends-Summary-GDF-JA.md |
 
 ### NOISEとして除外（2026-08-31）
 | 候補 | 理由 |
 |---|---|
 | X JSON全8件（2026-08-30・08-31各4ドメイン）| total_fetched=0（VPS収集データなし） |
 | drop.md | URLなし（テンプレートのみ） |
+
+---
+
+## 2026-09-01 収集分（13件収集 → SIGNAL 4件 claude-code/ai-news）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|-----|---------|------|------|-----|--------|
+| 1258 | 【2026年8月版】Claude Code 新機能まとめ（note AI worker JA）: Auto モードデフォルト化・/design UIスキル・Concise output・自然文 allow/deny ルール・サブエージェントライブストリーミング・バイナリ 340MB→75MB | ja | 未読 | #claude-code #update #features #web-signal | articles/2026-09-01_3801_WEB_ClaudeCode-August2026-NewFeatures-AIworker-Note-JA.md |
+| 1259 | 2026 State and Federal AI Legislation Updates（CDT EN）: CT SB 5包括的AI法・Colorado SB 24-205高リスクAI義務化・34州以上でチャットボット法案100件・AI生成ヌード画像禁止12月施行 | en | 未読 | #ai-news #regulation #us-law #web-signal | articles/2026-09-01_3802_WEB_US-AI-State-Federal-Legislation-2026-CDT.md |
+| 1260 | 生成AIニュースまとめ 2026年8月17-23日（TECH NOISY JA）: GPT-5.6 Sol/Terra/Luna正式公開・Gemini 3.6 Flash・Grok 4.5・音声機能充実・エージェント型コーディングツール実用化 | ja | 未読 | #ai-news #weekly-digest #model-release #web-signal | articles/2026-09-01_3803_WEB_GenAI-Weekly-News-2026-08-17-23-TechNoisy-JA.md |
+| 1261 | Claude Code × MCP 連携完全ガイド 7パターン+OAuth設定（Uravation JA）: HTTP transport主流化・SSE非推奨・社内CRM/オウンドメディア/PostgreSQL実務事例・5層アーキテクチャ中でのMCP位置付け | ja | 未読 | #claude-code #mcp #integration #web-signal | articles/2026-09-01_3804_WEB_ClaudeCode-MCP-Integration-Complete-Guide-7Patterns-OAuth-Uravation-JA.md |
+
+### NOISEとして除外（2026-09-01）
+| 候補 | 理由 |
+|---|---|
+| X JSON全8件（2026-08-30・08-31各4ドメイン） | total_fetched=0（VPS収集データなし） |
+| drop.md | URLなし（テンプレートのみ） |
+| gradually.ai/en/changelogs/claude-code/ | 2026-08-19収集済み（記事3699・3762等）と同一URL |
+| origami.sa/en/blog/claude-code-august-2026/ | 2026-08-27収集済み（記事3762）と同一URL |
+| blog.modelcontextprotocol.io/posts/2026-07-28/ | 2026-08-01収集済み（記事3138・3742等）と同一URL |
+| mql5.com/en/blogs/post/769403 | 2026-05-30収集済み（記事056・968）と同一URL |
+| zylos.ai/research/claude-agent-sdk-managed-agents | 2026-07-15収集済み（記事892・1570）と同一URL |
+| bitsgap.com/blog/ai-trading-agents-vs-trading-bots | 2026-08-24収集済み（記事3740等）と同一URL |
+| llm-stats.com/ai-news | 2026-06-29収集済み（記事704・097等）と同一ドメイン |
+| jorgepit Medium CLAUDE.md Skills Rules Hooks | 2026-08-14収集済み（記事3648）と同一URL |
+| uravation.com/media/claude-code-features-20-2026/ | 2026-08-01収集済み（記事3142）と同一URL |

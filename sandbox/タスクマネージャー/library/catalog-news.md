@@ -551,3 +551,12 @@
 | 443 | 【2026年8月最新】生成AIトレンド完全ガイド（genai-ai.co.jp JA）: AIエージェントへの移行加速・Gartner「2026末40%企業アプリがエージェント搭載」・Claude Code/Codex/Copilot Agent定着・EU AI Act 8月2日施行・AI事業者ガイドライン1.2版 | ja | 未読 | #ai-news #ai-agent #regulation #trend #web-signal | articles/2026-08-31_3798_WEB_GenAI-Trends-Complete-Guide-August2026-JA-genai-ai.md |
 | 444 | EU AI Act Gets Real August 2026（Axios EN）: Article 50透明性義務8月2日発効・欧州委員会ガイドライン7月20日採用・制裁€1500万or売上3%・任意CoP公開・高リスクAI完全義務化は2027年12月に延期 | en | 未読 | #ai-news #regulation #eu-ai-act #transparency #web-signal | articles/2026-08-31_3799_WEB_EU-AI-Act-Gets-Real-August2026-Axios.md |
 | 445 | 生成AIニュース2026年最新まとめ（GDF JA）: neoAI複数工程エージェント基盤・DG×DGBT推薦〜決済統合EC・EU AI Act 8月2日施行・AI事業者ガイドライン1.2版・Qwen3.8-Max 2.4T・コスト約50%低下 | ja | 未読 | #ai-news #regulation #model-release #agent-business #web-signal | articles/2026-08-31_3800_WEB_GenAI-News-2026-Trends-Summary-GDF-JA.md |
+
+---
+
+## 2026-09-01 収集分（2件収集 → SIGNAL 2件 ai-news）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 446 | 2026 State and Federal AI Legislation Updates（CDT EN）: Connecticut CT SB 5包括的AI法・Colorado SB 24-205高リスクAI義務化・34州以上チャットボット法案100件・AI生成ヌード画像禁止12月施行・連邦AI規制法案は未成立 | en | 未読 | #ai-news #regulation #us-law #compliance #web-signal | articles/2026-09-01_3802_WEB_US-AI-State-Federal-Legislation-2026-CDT.md |
+| 447 | 生成AIニュースまとめ 2026年8月17-23日（TECH NOISY JA）: GPT-5.6 Sol/Terra/Luna正式公開・Gemini 3.6 Flash・Grok 4.5・Grok Voice/GPT-Live音声機能・エージェント型コーディングツール実用化・ChatGPT for Teens発表 | ja | 未読 | #ai-news #weekly-digest #model-release #voice-ai #web-signal | articles/2026-09-01_3803_WEB_GenAI-Weekly-News-2026-08-17-23-TechNoisy-JA.md |
