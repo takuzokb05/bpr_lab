@@ -1,0 +1,241 @@
+{
+  "date": "2026-08-31",
+  "generated_at": "2026-09-01T23:19:16.423372Z",
+  "article_count": 16,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-08-31_3785_WEB_ClaudeCode-Guide-25Features-Examples-Demo-MarkTechPost.md",
+      "title": "Claude Code Guide 2026: 25 Features with Examples + Demo",
+      "url": "https://www.marktechpost.com/2026/06/14/claude-code-guide-2026-25-features-with-examples-demo/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "MarkTechPostによるClaude Code 25機能デモ付き完全ガイド（2026年6月）。主要ポイント: ①Opus 4.6モデルが1Mトークンコンテキストをサポート、出力上限64K〜128Kに拡張、②AgentTeamsによる並列大規模タスク実行（最大3段階の階層的サブエージェント）、③/effort コマンドでOpus 4.7のxhighエフォートモード活用、④非エンジニアの業務自動化も実例多数掲載。コーディング支援・バグ修正・テスト生成から業務自動化・MCP連携まで全機能をカバーした包括ガイド。デモ動画付きで実践的価値が高い。",
+      "body_excerpt": "Claude Code Guide 2026: 25 Features with Examples + Demo — MarkTechPost comprehensive guide covering all 25+ Claude Code capabilities including code assistance, bug fixing, test generation, business automation, MCP integration, web scraping, and file operations.",
+      "fact_checked": true,
+      "fact_check_note": "[MOSTLY_CONFIRMED] CONFIRMED（修正あり）: Claude Opus 4.6は2026年2月5日リリース。1Mトークンコンテキスト（ベータ）は事実。出力上限は「64K〜128K」ではなく128Kが正確（docs.anthropic.com確認）。200K超プロンプトにはプレミアム価格が適用。 (出典: https://docs.anthropic.com/en/release-notes/api)"
+    },
+    {
+      "file": "2026-08-31_3786_WEB_CLAUDE-md-Best-Practices-Ultimate-Guide-2026-AmitRay.md",
+      "title": "Best Practices for CLAUDE.md: The Ultimate Guide 2026",
+      "url": "https://amitray.com/best-practices-for-claude-md/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Amit Ray氏によるCLAUDE.md究極ガイド。核心ポイント: ①200行以内に収める（長い＝毎セッションのトークンコスト増）、②先頭に test/build/lint コマンドを明記（ROI最大化セクション）、③フォーマッタが自動強制するスタイルルールを重複させない、④HTMLブロックコメントはClaudeのコンテキストに渡されないため人間向けメモをコストゼロで書ける。「CLAUDE.mdが良ければClaude Codeはコードベースを即座に理解、悪ければ30分の往復問答が必要」という価値を具体的に示す。実際のコード例とよくある失敗パターンも掲載。",
+      "body_excerpt": "Best Practices for CLAUDE.md: The Ultimate Guide 2026 — Amit Ray's comprehensive guide on writing effective CLAUDE.md files. Covers conciseness, command-first structure, avoiding duplication with formatters, and token optimization tricks.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-31_3787_WEB_CLAUDE-md-Best-Practices-10Section-Template-Blink.md",
+      "title": "CLAUDE.md Best Practices: 10-Section Template That Makes Claude Code 10x Better",
+      "url": "https://blink.new/blog/claude-md-best-practices",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Blink社のCLAUDE.md実践テンプレート。「10セクション」の構成: ①プロジェクト概要、②技術スタック（具体的バージョン記載）、③ビルド/テストコマンド（exact invocations）、④コーディング規約、⑤アーキテクチャ概要、⑥重要ファイル・ディレクトリ一覧、⑦避けるべきパターン、⑧外部依存・API、⑨デプロイ手順、⑩よくある問題と解決策。各セクションの具体的な記述例を示し、テンプレート形式で即使用可能。「10倍改善」の定量主張は誇張があるが、構造化フレームワークとしての実用性は高い。CLAUDE.mdを「プロジェクト向けの永続システムプロンプト」と位置づけて設計。",
+      "body_excerpt": "CLAUDE.md Best Practices: The 10-Section Template That Makes Claude Code 10× Better — Blink's practical template with 10 essential sections for optimal Claude Code performance.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-31_3788_WEB_CLAUDE-md-Best-Practices-Complete-2026-Maketocreate.md",
+      "title": "CLAUDE.md Best Practices: The Complete 2026 Guide",
+      "url": "https://maketocreate.com/claude-md-best-practices-the-complete-2026-guide/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Maketocreate.comによるCLAUDE.md完全ガイド2026年版。3原則: ①短く保つ（200行以下）、②コマンドを先頭に（test/build/lint）、③フォーマッタと重複しない。HTMLブロックコメントによるゼロコストのhuman向けメモ技法が実践的。2026年の最新Claude Code機能に対応した具体的テンプレートと実際のコード例を多数提供。DEV Communityの人気記事を踏まえた内容で、「CLAUDE.mdはプロジェクトごとの永続システムプロンプト」として機能することを解説。Claude Code セッション間での一貫した動作を実現するための必読ガイド。",
+      "body_excerpt": "CLAUDE.md Best Practices: The Complete 2026 Guide — Maketocreate's comprehensive guide covering all aspects of writing effective CLAUDE.md files for Claude Code projects.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-31_3789_WEB_ClaudeCode-v2-1-237-30Releases-5Weeks-Uravation-JA.md",
+      "title": "【2026年8月】Claude Code最新v2.1.237｜新機能と変更点（30リリース5週間ガイド）",
+      "url": "https://uravation.com/media/claude-code-v2-1-101-30-releases-5-weeks-guide-2026/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "Uravation社による日本語のClaude Code大量アップデート整理記事。v2.1.69〜v2.1.101（March-April：5週間30リリース）の重要機能を解説: ①Focus View（Ctrl+Alt+Fトグル）、②/team-onboarding コマンド、③PermissionDenied Hook（拒否イベントの自動処理）、④PID名前空間分離（セキュリティ強化）、⑤フリッカーフリーレンダリングエンジン（60%速度向上）。最新v2.1.237（2026年8月）まで対応した総合ガイド。日本語で「5週間30リリース」という高頻度更新サイクルを把握できる唯一に近いまとめ。運用者が見落としがちな破壊的変更も整理。",
+      "body_excerpt": "Uravationによる2026年Claude Code大量アップデート解説。v2.1.69〜v2.1.101（30件以上）と最新v2.1.237まで網羅した日本語ガイド。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-31_3790_WEB_MCP-Cheat-Sheet-Complete-Reference-2026-Webfuse.md",
+      "title": "MCP Cheat Sheet: Complete Model Context Protocol Reference (2026)",
+      "url": "https://www.webfuse.com/mcp-cheat-sheet",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "2026-07-28 MCP仕様に準拠したチートシート。主要トピック: ①ステートレスプロトコルコア（ラウンドロビンLBの背後に配置可能・スケーラビリティ向上）、②Extensionsフレームワーク（カスタム拡張機構）、③Tasksエクステンション（長時間・信頼性の高いエージェントタスク対応）、④MCP Apps（ReactダッシュボードなどのUIコンポーネントをサーバーからホストアプリにプッシュ）、⑤認証強化・正式廃止ポリシー。ガバナンス: Anthropic・OpenAI・BlockがAgentic AI Foundation（Linux Foundation傘下）でMCP標準化を主導（2025年12月〜）。即引用可能なリファレンス形式で実用性高い。",
+      "body_excerpt": "MCP Cheat Sheet: Complete Model Context Protocol Reference (2026) — Webfuse's comprehensive cheat sheet covering the 2026-07-28 MCP specification, including stateless protocol, Extensions framework, Tasks, MCP Apps, and authentication.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-31_3791_WEB_MCP-Best-Guide-2026-200oksolutions.md",
+      "title": "Best Guide to the Model Context Protocol (MCP) in 2026",
+      "url": "https://www.200oksolutions.com/blog/best-guide-to-the-model-context-protocol-mcp-in-2026/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "200OK SolutionsによるMCP 2026年完全ガイド。2026年現在の位置づけ: OpenAI・Google・Microsoft・AnthropicがMCPを全採用し業界標準として定着。接続先の多様性: Google Drive・Jira・Slack・データベース・ブラウザなど。仕組み: クライアント/サーバーアーキテクチャでAIアシスタントが外部データ・ツールにアクセス。Claude CodeがMCP経由でワークフロー全体（ファイル操作→コード生成→CI/CD→デプロイ）を自動化できる実例を多数掲載。「AIがファイルを編集する」から「ワークフロー全体を操作する」への進化を解説。実装手順とユースケース別ガイドを提供。",
+      "body_excerpt": "Best Guide to the Model Context Protocol (MCP) in 2026 — 200OK Solutions' comprehensive guide to MCP as the industry standard for AI-to-tool connectivity, now adopted by all major AI providers.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-31_3792_WEB_MCP-2026-Complete-Developers-Guide-Essamamdani.md",
+      "title": "MCP 2026: The Complete Developer's Guide to Model Context Protocol",
+      "url": "https://essamamdani.com/blog/complete-guide-model-context-protocol-mcp-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "開発者向けMCP完全ガイド2026年版。2026-07-28仕様（RC）の主要変更を詳説: ①ステートレスプロトコルコア化（スケーラビリティ・デプロイ容易性向上）、②Extensionsフレームワーク（サードパーティ拡張の公式機構）、③Tasksエクステンション（長時間・信頼性タスク—最初の公式Extension）、④MCP Appsエクステンション（サーバーがReactダッシュボード等UIコンポーネントをホストアプリにプッシュ）、⑤認証強化、⑥正式廃止ポリシー導入。SDK実装コード例・サーバー実装方法・デプロイ手順まで実践的に解説。「MCP誕生以来最大の改定」への適応に必須の資料。",
+      "body_excerpt": "MCP 2026: The Complete Developer's Guide to Model Context Protocol — Essa Mamdani's technical deep dive into the 2026-07-28 MCP specification changes, with implementation code examples.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-31_3793_WEB_MCP-NewRoadmap-LongRunning-AgentAuth-5Fields-GIGAZINE-JA.md",
+      "title": "MCPが新ロードマップ公開、長時間処理やAIエージェント認証など5分野重点化（GIGAZINE）",
+      "url": "https://gigazine.net/news/20260824-mcp-roadmap/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-ecosystem",
+      "summary": "GIGAZINEが2026年8月24日に報道したMCP新ロードマップ解説記事。5重点分野: ①長時間処理・信頼性（Tasksエクステンション）、②AIエージェント認証・認可の強化（OAuth 2.1対応等）、③MCP Appsによるインタラクティブなユーザーインターフェース配信、④エンタープライズ向けスケーラビリティ（ラウンドロビンLB対応・statelessコア）、⑤MCPメッシュ・A2A統合への伏線。2026-07-28仕様RCが「MCP誕生以来最大の改定」であることを日本語で解説。Anthropic・OpenAI・Blockが共同でLinux Foundation傘下のAgentic AI Foundationを通じて標準化推進。日本語一次報道として価値大。",
+      "body_excerpt": "GIGAZINEによる2026年8月24日のMCP新ロードマップ発表報道。5重点分野を日本語で解説。",
+      "fact_checked": true,
+      "fact_check_note": "[CONFIRMED] CONFIRMED: 2026年8月MCPロードマップ更新確認。長時間タスク（Tasksエクステンション）・エージェント認証（DPoP・Workload Identity Federation・ID-JAG）を重点化。IETFのOAuth/WIMSEワーキンググループと連携。blog.modelcontextprotocol.ioで詳細公開。 (出典: https://blog.modelcontextprotocol.io/posts/2026-mcp-roadmap/)"
+    },
+    {
+      "file": "2026-08-31_3794_WEB_Quollio-MCP-Server-Release-August2026-Prtimes-JA.md",
+      "title": "Quollio、MCPサーバー機能を正式リリース（2026年8月26日）",
+      "url": "https://prtimes.jp/main/html/rd/p/000000039.000090718.html",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-ecosystem",
+      "summary": "Quollio Technologies社のPRTimes公式プレスリリース（2026年8月26日）。「Quollio Data Intelligence Cloud（QDIC）」の新機能として「MCPサーバー機能」を正式提供開始。Claude CodeなどのAIアシスタントがMCPプロトコル経由でQDICのデータカタログ・データ系譜情報・データ品質メタデータに直接アクセス可能になる。エンタープライズ・データガバナンスプラットフォームへのMCP統合は国内での先行事例として貴重。データカタログとAIコーディングツールの連携ユースケース（カラム説明の自動補完・データ品質の自動チェック等）を提示。PRTimesの一次情報として信頼性高い。",
+      "body_excerpt": "Quollio Technologies株式会社が2026年8月26日、QDIC（Quollio Data Intelligence Cloud）にMCPサーバー機能を正式提供開始したプレスリリース。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-31_3795_WEB_Build-AI-Agent-Claude-Agent-SDK-Tutorial-2026-SerpAPI.md",
+      "title": "Build an AI Agent with the Claude Agent SDK (Tutorial 2026)",
+      "url": "https://serpapi.com/blog/build-an-ai-agent-with-claude-agent-sdk/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "SerpAPIによるClaude Agent SDKのステップバイステップチュートリアル。SDK概要: Python版（v0.2.139/PyPI）とTS版（@anthropic-ai/claude-agent-sdk v0.3.233/npm）が毎週リリース中。Claude Codeを動かすのと同じエージェントループをライブラリとして提供—ファイルアクセス・シェルコマンド・Web検索・パーミッション処理・マルチエージェント協調がOut-of-the-boxで利用可能。チュートリアル内容: インストール→初回エージェント作成→モデル選択（Opus 4.8/Sonnet 4.6/Haiku 4.5）→パーミッションロックダウン→インプロセスMCPサーバーでカスタムツール統合→セーフティフック→サブエージェント委譲→プロダクションデプロイ。生APIループを書かずに済む実用的な入門。",
+      "body_excerpt": "SerpAPI's step-by-step tutorial on building an AI agent using the Claude Agent SDK. Covers installation, agent creation, model selection, permissions, MCP integration, safety hooks, subagents, and production deployment.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-31_3796_WEB_Best-OpenSource-AI-Trading-Agents-GitHub-2026-GPTrader.md",
+      "title": "Best Open Source AI Trading Agents on GitHub 2026",
+      "url": "https://gptrader.app/ai-trading/best-open-source-ai-trading-agents-github-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "GPTraderによる2026年GitHubオープンソースAIトレーディングエージェント比較。主要フレームワーク: ①TradingAgents（80,000+スター・15,500+フォーク・LangGraph基盤・2026年8月v0.4.0—ルックアヘッドバイアス修正・GPT-5.6/GLM-5.3対応）、②AI Hedge Fund（45.3k Stars・Valuation/Sentiment/Fundamentals/Technicals/Risk Manager等専門エージェント群）、③FinRL（強化学習ベース）、④FinRobot、⑤TradingGoose（個別株・ポートフォリオ管理・完全OSSに移行）。2026年の技術トレンド: 構造化JSON出力への移行（OpenAI Responses API/Anthropic tool-use）によりFree-textパースを廃止。本番対応に向けた品質向上。FX自動取引システム構築の参考として価値高い。",
+      "body_excerpt": "GPTrader's comprehensive comparison of open-source AI trading agents on GitHub in 2026, covering TradingAgents, AI Hedge Fund, FinRL, FinRobot, and TradingGoose with their latest updates.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-31_3797_WEB_Agentic-Trading-LLM-Agents-Financial-Markets-ArXiv-2026.md",
+      "title": "Agentic Trading: When LLM Agents Meet Financial Markets",
+      "url": "https://arxiv.org/abs/2605.19337",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "2026年5月公開のArXiv論文—LLMエージェントの金融市場適用に関する体系的レビュー。主要知見: ①バックテストでは強いリターンを示すが、本番では取引コスト・スリッページ・市場レジーム変化により大きな乖離が生じる、②TradingAgents実例: 30日で約7%リターン（S&P500の4.5%超過）だが22%ドローダウン・再現性なし、③2026年推奨ワークフロー「AI for context → トレーダーが判断 → ルールベースBotが執行 → バックテスト検証 → デモ練習 → ハードリスク上限」、④マルチエージェント構成（Fundamental/Technical/Sentiment/Risk Managerエージェント）が主流。学術的一次情報として信頼性最高。FX自動取引設計の理論的裏付けとして有用。",
+      "body_excerpt": "ArXiv paper (2026-05) providing a systematic review of LLM agents applied to financial markets, covering performance gaps between backtesting and live trading, real-world results, and recommended hybrid workflow.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-31_3798_WEB_GenAI-Trends-Complete-Guide-August2026-JA-genai-ai.md",
+      "title": "【2026年8月最新】生成AIトレンド完全ガイド｜注目の技術動向・活用事例・ビジネスへの影響",
+      "url": "https://genai-ai.co.jp/ai-kanri/blog/cc-generative-ai-trends/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "ai-news",
+      "summary": "genai-ai.co.jpによる2026年8月の生成AIトレンド包括まとめ。主要5トレンド: ①「生成AIを使う」から「AIに仕事を任せる」へのステージ移行が加速、②Gartner予測「2026年末までに企業向けアプリの40%がタスク特化AIエージェント搭載（2025年5%未満→急拡大）」、③Claude Code・OpenAI Codex・GitHub Copilot Agentなどエージェント型コーディングツールが現実のツールとして定着（ファイル操作・コマンド実行・デプロイまで自律化）、④EU AI Act 2026年8月2日から透明性義務本格適用、⑤日本AI事業者ガイドライン1.2版でAIエージェントへの人間監視要件を明記。日本語ビジネス実務者向けの横断的整理として価値あり。",
+      "body_excerpt": "genai-ai.co.jpによる2026年8月時点の生成AIトレンド総合ガイド。AIエージェントへの移行、Gartner予測、コーディングエージェント普及、EU AI Act規制、日本のAIガイドライン最新動向を整理。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-08-31_3799_WEB_EU-AI-Act-Gets-Real-August2026-Axios.md",
+      "title": "The EU AI Act Gets Real (August 2026)",
+      "url": "https://www.axios.com/2026/08/28/eu-ai-act-gets-real",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "Axiosによる2026年8月28日報道。EU AI Act透明性義務（Article 50）が8月2日から本格施行。具体的な施行内容: ①チャットボット・AI生成コンテンツへの開示義務が発効、②欧州委員会が7月20日に準拠ガイドラインを採用、③違反時の制裁は最大€1500万または全世界年間売上高の3%（高い方）、④AI生成コンテンツ透明性に関する任意行動規範（Code of Practice）を公開。延期事項: 高リスクAI（採用ツール・信用スコアリング・教育・法執行・国境管理・重要インフラ等）への完全義務化は2027年12月2日に延期。製品組み込みAIは2028年8月まで猶予。EU市場に製品を提供する日本企業への影響も大きい規制一次情報。",
+      "body_excerpt": "Axios's August 28, 2026 report on the EU AI Act transparency obligations taking effect August 2, covering what actually applies now, penalties, and deferred requirements for high-risk AI systems.",
+      "fact_checked": true,
+      "fact_check_note": "[CONFIRMED] CONFIRMED: 2026年8月2日にEU AI Act施行開始。GPAI透明性・エンフォースメント規定が発効（違反は最大€15M/3%売上高）。高リスクAI義務は2027年12月/2028年8月に延期済み（Regulation (EU) 2026/1744）。 (出典: https://digital-strategy.ec.europa.eu/en/news/commission-starts-enforcing-ai-act-rules-and-new-transparency-requirements-2-august)"
+    },
+    {
+      "file": "2026-08-31_3800_WEB_GenAI-News-2026-Trends-Summary-GDF-JA.md",
+      "title": "生成AIニュース2026年最新まとめ｜押さえるべき重要動向を解説",
+      "url": "https://www.gdf.co.jp/posts/generative-ai-news-2026-trends",
+      "source": "web",
+      "lang": "ja",
+      "theme": "ai-news",
+      "summary": "GDF社による2026年生成AI重要動向まとめ（日本語）。主要4トレンド: ①AIエージェント普及加速（neoAIが複数工程対応エージェント基盤を追加、デジタルガレージ×DGBTが推薦〜決済統合EC基盤を提供）、②EU AI Act 2026年8月2日透明性義務発効、③AI事業者ガイドライン1.2版でエージェントへの人間監視義務を明記、④モデル競争の激化（Qwen3.8-Max 2.4Tパラメータ・コスト約50%低下・「安いモデル×賢い使い方」が勝ち筋）。ビジネス実務者向けの日本語情報源として規制・技術・ビジネス3軸を横断的に整理している点が価値。国内企業のAIエージェント導入動向の把握に適した資料。",
+      "body_excerpt": "GDF社による2026年の生成AI重要動向まとめ。AIエージェント普及、EU AI Act規制、大規模モデル競争、日本企業の導入事例を日本語で整理した包括的ニュースまとめ。",
+      "fact_checked": false,
+      "fact_check_note": ""
+    }
+  ],
+  "fact_checks": [
+    {
+      "file": "2026-08-31_3785_WEB_ClaudeCode-Guide-25Features-Examples-Demo-MarkTechPost.md",
+      "claim": "Opus 4.6が1Mトークンコンテキストをサポート、出力上限64K〜128K",
+      "result": "CONFIRMED（修正あり）: Claude Opus 4.6は2026年2月5日リリース。1Mトークンコンテキスト（ベータ）は事実。出力上限は「64K〜128K」ではなく128Kが正確（docs.anthropic.com確認）。200K超プロンプトにはプレミアム価格が適用。",
+      "verdict": "mostly_confirmed",
+      "source": "https://docs.anthropic.com/en/release-notes/api"
+    },
+    {
+      "file": "2026-08-31_3799_WEB_EU-AI-Act-Gets-Real-August2026-Axios.md",
+      "claim": "EU AI Actが2026年8月に本格施行",
+      "result": "CONFIRMED: 2026年8月2日にEU AI Act施行開始。GPAI透明性・エンフォースメント規定が発効（違反は最大€15M/3%売上高）。高リスクAI義務は2027年12月/2028年8月に延期済み（Regulation (EU) 2026/1744）。",
+      "verdict": "confirmed",
+      "source": "https://digital-strategy.ec.europa.eu/en/news/commission-starts-enforcing-ai-act-rules-and-new-transparency-requirements-2-august"
+    },
+    {
+      "file": "2026-08-31_3793_WEB_MCP-NewRoadmap-LongRunning-AgentAuth-5Fields-GIGAZINE-JA.md",
+      "claim": "MCPが新ロードマップ公開、長時間処理やAIエージェント認証など5分野重点化",
+      "result": "CONFIRMED: 2026年8月MCPロードマップ更新確認。長時間タスク（Tasksエクステンション）・エージェント認証（DPoP・Workload Identity Federation・ID-JAG）を重点化。IETFのOAuth/WIMSEワーキンググループと連携。blog.modelcontextprotocol.ioで詳細公開。",
+      "verdict": "confirmed",
+      "source": "https://blog.modelcontextprotocol.io/posts/2026-mcp-roadmap/"
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-08-30": 7,
+      "2026-08-29": 6,
+      "2026-08-28": 7,
+      "2026-08-27": 8,
+      "2026-08-26": 3,
+      "2026-08-25": 12,
+      "2026-08-24": 3
+    },
+    "recurring_themes": [
+      "claude",
+      "agent",
+      "mcp",
+      "model",
+      "trading"
+    ]
+  }
+}
