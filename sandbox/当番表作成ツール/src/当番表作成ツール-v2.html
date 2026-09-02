@@ -2783,7 +2783,7 @@ h1, h2, h3, h4 { font-weight: 700; }
     addModeRow('職員ごとのCSVをZIPで', 'btn-outline', downloadNeoPersonalZip,
       '各職員が自分の予定として入れる用。ZIPを展開すると職員名付きのCSVが1人1枚できます（当番のない職員は含まれません）。');
 
-    const importHint = textEl('p', '', '取り込み方: NEOのスケジュールのインポート画面でファイルを選び、「先頭行は無視する」にチェック、文字コードはUTF-8を指定してください。');
+    const importHint = textEl('p', '', '取り込み方: NEOのスケジュールのインポート画面でファイルを選び、文字コードはUTF-8（BOMなし）、区切り文字はカンマを指定してください。ヘッダー行なしで出力するため「先頭行は無視する」にはチェックを入れないでください。');
     importHint.style.fontSize = '12px';
     importHint.style.color = '#6B7280';
     importHint.style.marginTop = '8px';
@@ -2946,35 +2946,28 @@ h1, h2, h3, h4 { font-weight: 700; }
     }
   }
 
-  // NEO CSVヘッダー（V8.0のエクスポート列構成に準拠。
-  // ID系の列はインポート時の登録先決定に使われないため空欄で出力する）
-  const NEO_CSV_HEADERS = [
-    'ユーザー/グループシステムID', '氏名/グループ名', 'ID（システムID）',
-    '開始日', '開始時刻', '終了日', '終了時刻',
-    '予定', '予定詳細', '場所', '場所詳細', '内容',
-    '情報公開レベル', '外出区分', '重要度', '予約種別',
-    '帯状', 'フラグ', 'アイコン番号', '承認依頼', '確認通知メール',
-    '所有者ID', '所有者名',
-  ];
+  // NEO CSVは19列固定・ヘッダー行なし（庁内で実運用確認済みのインポート形式に準拠）。
+  // 列順: ID, 開始日, 開始時刻, 終了日, 終了時刻, 予定, 予定詳細, 場所, 場所詳細, 内容,
+  //       情報公開レベル, 外出区分, 重要度, 予約種別, フラグ, アイコン番号, 承認依頼,
+  //       通知の方法：メール, 通知の方法：伝言
+  // インポート設定: 文字コード=BOMなしUTF-8 / 区切り=カンマ / 「先頭行は無視する」はチェックしない
+  const NEO_CSV_COLUMN_COUNT = 19;
+  const NEO_NEW_RECORD_ID = '0'; // ID列: 新規追加は0
 
-  function escapeCsvValue(v) {
-    const s = String(v);
-    if (s.includes(',') || s.includes('"') || s.includes('\n')) {
-      return '"' + s.replace(/"/g, '""') + '"';
-    }
-    return s;
+  /** 全フィールドをダブルクォートする（内容欄に改行を含み得るNEO形式の流儀に合わせる） */
+  function quoteCsvValue(v) {
+    return '"' + String(v).replace(/"/g, '""') + '"';
   }
 
   /**
-   * NEO用CSVの行配列を組み立てる（先頭はヘッダー行）。
+   * NEO用CSVのデータ行配列を組み立てる（ヘッダー行は含めない）。
    * @param {string|null} targetStaffId 指定時はその職員の予定のみ / nullで全員分
    * @param {boolean} includeNameInTitle trueで予定欄を「枠名（職員名）」にする（共有アカウント用）
    */
   function buildNeoCsvRows(targetStaffId, includeNameInTitle) {
     const { year, month } = state.calendar;
     const daysInMonth = getDaysInMonth(year, month);
-
-    const rows = [NEO_CSV_HEADERS.join(',')];
+    const rows = [];
 
     for (let day = 1; day <= daysInMonth; day++) {
       if (!hasAnyActiveSlot(day)) continue;
@@ -2991,9 +2984,7 @@ h1, h2, h3, h4 { font-weight: 700; }
 
           const title = includeNameInTitle ? `${slot.name}（${staffObj.name}）` : slot.name;
           const row = [
-            '',                       // ユーザーシステムID（登録先はNEOのインポート画面で選ぶため空欄）
-            staffObj.name,            // 氏名（参考情報。インポートでは使われない）
-            '',                       // ID
+            NEO_NEW_RECORD_ID,        // ID（新規追加は0）
             dateStr,                  // 開始日
             slot.startTime,           // 開始時刻
             dateStr,                  // 終了日
@@ -3003,35 +2994,33 @@ h1, h2, h3, h4 { font-weight: 700; }
             '',                       // 場所
             '',                       // 場所詳細
             '',                       // 内容
-            '全員に公開',              // 情報公開レベル
-            '社内',                    // 外出区分
-            '普通',                    // 重要度
-            '予定あり',                // 予約種別
-            '0',                      // 帯状
-            '0',                      // フラグ
-            '0',                      // アイコン番号
-            '0',                      // 承認依頼
-            '0',                      // 確認通知メール
-            '',                       // 所有者ID
-            '',                       // 所有者名
+            '',                       // 情報公開レベル
+            '',                       // 外出区分
+            '',                       // 重要度
+            '',                       // 予約種別
+            '',                       // フラグ
+            '',                       // アイコン番号
+            '',                       // 承認依頼
+            '',                       // 通知の方法：メール
+            '',                       // 通知の方法：伝言
           ];
-          rows.push(row.map(escapeCsvValue).join(','));
+          rows.push(row.map(quoteCsvValue).join(','));
         }
       }
     }
     return rows;
   }
 
-  /** 行配列をBOM付きUTF-8のCSV文字列にする */
+  /** 行配列をBOMなしUTF-8・CRLFのCSV文字列にする */
   function buildNeoCsvContent(rows) {
-    return '\uFEFF' + rows.join('\r\n');
+    return rows.join('\r\n');
   }
 
   /** まとめて1枚: 共有アカウント/組織の予定として1ファイルでインポートする用 */
   function downloadNeoCombinedCsv() {
     const { year, month } = state.calendar;
     const rows = buildNeoCsvRows(null, true);
-    if (rows.length <= 1) {
+    if (rows.length === 0) {
       showToast('割り当てがありません。先に自動割り当てを実行してください');
       return;
     }
@@ -3052,7 +3041,7 @@ h1, h2, h3, h4 { font-weight: 700; }
     const usedNames = new Set();
     for (const staff of state.staff) {
       const rows = buildNeoCsvRows(staff.id, false);
-      if (rows.length <= 1) continue; // 当番のない職員は出力しない
+      if (rows.length === 0) continue; // 当番のない職員は出力しない
       const base = sanitizeFileName(staff.name);
       let candidate = base;
       let seq = 2;
