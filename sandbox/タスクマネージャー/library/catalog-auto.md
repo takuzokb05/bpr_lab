@@ -1741,3 +1741,72 @@ drop.md: URLなし（処理対象なし）
 | drop.md | URLなし（テンプレートのみ） |
 | aireleasetracker.com/latest | トラッカーページ（一次情報なし） |
 | gptrader.app AI trading 88% returns | 過度な成果主張のプロモーション記事 |
+
+---
+
+## 2026-08-31 収集分（16件収集 → SIGNAL 16件）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 935 | [2026-08-31_3785](articles/2026-08-31_3785_WEB_ClaudeCode-Guide-25Features-Examples-Demo-MarkTechPost.md) | Claude Code Guide 2026: 25機能+デモ例示（MarkTechPost EN） | claude-code | 未読 | #web-signal |
+| 936 | [2026-08-31_3786](articles/2026-08-31_3786_WEB_CLAUDE-md-Best-Practices-Ultimate-Guide-2026-AmitRay.md) | CLAUDE.md Best Practices Ultimate Guide 2026（AmitRay EN） | claude-code | 未読 | #web-signal |
+| 937 | [2026-08-31_3787](articles/2026-08-31_3787_WEB_CLAUDE-md-Best-Practices-10Section-Template-Blink.md) | CLAUDE.md Best Practices: 10-Section Templateガイド（Blink EN） | claude-code | 未読 | #web-signal |
+| 938 | [2026-08-31_3788](articles/2026-08-31_3788_WEB_CLAUDE-md-Best-Practices-Complete-2026-Maketocreate.md) | CLAUDE.md Best Practices: The Complete 2026 Guide（Maketocreate EN） | claude-code | 未読 | #web-signal |
+| 939 | [2026-08-31_3789](articles/2026-08-31_3789_WEB_ClaudeCode-v2-1-237-30Releases-5Weeks-Uravation-JA.md) | 【2026年8月】Claude Code最新v2.1.237｜30リリース5週間ガイド（Uravation JA） | claude-code | 未読 | #web-signal |
+| 940 | [2026-08-31_3790](articles/2026-08-31_3790_WEB_MCP-Cheat-Sheet-Complete-Reference-2026-Webfuse.md) | MCP Cheat Sheet 2026: 完全リファレンス（Webfuse EN） | claude-ecosystem | 未読 | #web-signal |
+| 941 | [2026-08-31_3791](articles/2026-08-31_3791_WEB_MCP-Best-Guide-2026-200oksolutions.md) | Best Guide to MCP 2026（200oksolutions EN） | claude-ecosystem | 未読 | #web-signal |
+| 942 | [2026-08-31_3792](articles/2026-08-31_3792_WEB_MCP-2026-Complete-Developers-Guide-Essamamdani.md) | MCP 2026: Complete Developer Guide（Essamamdani EN） | claude-ecosystem | 未読 | #web-signal |
+| 943 | [2026-08-31_3793](articles/2026-08-31_3793_WEB_MCP-NewRoadmap-LongRunning-AgentAuth-5Fields-GIGAZINE-JA.md) | MCPが新ロードマップ公開、長時間処理やAIエージェント認証など5分野重点化（GIGAZINE JA） | claude-ecosystem | 未読 | #web-signal |
+| 944 | [2026-08-31_3794](articles/2026-08-31_3794_WEB_Quollio-MCP-Server-Release-August2026-Prtimes-JA.md) | Quollio、MCPサーバー機能を正式リリース（2026年8月26日）（PR Times JA） | claude-ecosystem | 未読 | #web-signal |
+| 945 | [2026-08-31_3795](articles/2026-08-31_3795_WEB_Build-AI-Agent-Claude-Agent-SDK-Tutorial-2026-SerpAPI.md) | Build an AI Agent with Claude Agent SDK チュートリアル 2026（SerpAPI EN） | claude-ecosystem | 未読 | #web-signal |
+| 946 | [2026-08-31_3796](articles/2026-08-31_3796_WEB_Best-OpenSource-AI-Trading-Agents-GitHub-2026-GPTrader.md) | Best Open Source AI Trading Agents on GitHub 2026（GPTrader EN） | ai-trading | 未読 | #web-signal |
+| 947 | [2026-08-31_3797](articles/2026-08-31_3797_WEB_Agentic-Trading-LLM-Agents-Financial-Markets-ArXiv-2026.md) | Agentic Trading: LLMエージェントが金融市場を変える（ArXiv風 EN） | ai-trading | 未読 | #web-signal |
+| 948 | [2026-08-31_3798](articles/2026-08-31_3798_WEB_GenAI-Trends-Complete-Guide-August2026-JA-genai-ai.md) | 【2026年8月最新】生成AIトレンド完全ガイド（genai-ai.co.jp JA） | ai-news | 未読 | #web-signal |
+| 949 | [2026-08-31_3799](articles/2026-08-31_3799_WEB_EU-AI-Act-Gets-Real-August2026-Axios.md) | The EU AI Act Gets Real - August 2026（Axios EN） | ai-news | 未読 | #web-signal |
+| 950 | [2026-08-31_3800](articles/2026-08-31_3800_WEB_GenAI-News-2026-Trends-Summary-GDF-JA.md) | 生成AIニュース2026年最新まとめ（GDF JA） | ai-news | 未読 | #web-signal |
+
+### NOISEとして除外（2026-08-31）
+| 候補 | 理由 |
+|---|---|
+| X JSON全4件（2026-08-31各4ドメイン） | total_after_dedup=0（VPS収集データなし） |
+| drop.md | URLなし（テンプレートのみ） |
+
+---
+
+## 2026-09-01 収集分（4件収集 → SIGNAL 4件）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 951 | [2026-09-01_3801](articles/2026-09-01_3801_WEB_ClaudeCode-August2026-NewFeatures-AIworker-Note-JA.md) | 【2026年8月版】Claude Code 新機能まとめ（note ai__worker JA） | claude-code | 未読 | #web-signal |
+| 952 | [2026-09-01_3802](articles/2026-09-01_3802_WEB_US-AI-State-Federal-Legislation-2026-CDT.md) | 2026 State and Federal AI Legislation Updates（CDT EN） | ai-news | 未読 | #web-signal |
+| 953 | [2026-09-01_3803](articles/2026-09-01_3803_WEB_GenAI-Weekly-News-2026-08-17-23-TechNoisy-JA.md) | 生成AIニュースまとめ 2026年8月17〜23日（Tech Noisy JA） | ai-news | 未読 | #web-signal |
+| 954 | [2026-09-01_3804](articles/2026-09-01_3804_WEB_ClaudeCode-MCP-Integration-Complete-Guide-7Patterns-OAuth-Uravation-JA.md) | 【2026年最新】Claude Code × MCP 連携完全ガイド｜7パターン+OAuth（Uravation JA） | claude-code | 未読 | #web-signal |
+
+---
+
+## 2026-09-02 収集分（12件収集 → SIGNAL 12件）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 955 | [2026-09-02_3805](articles/2026-09-02_3805_WEB_ClaudeCode-AllUpdates-March2026-Explained-Builder.md) | Every Claude Code Update From March 2026, Explained（builder.io EN） | claude-code | 未読 | #web-signal |
+| 956 | [2026-09-02_3806](articles/2026-09-02_3806_WEB_ClaudeCode-Linux75MB-FasterStartup-TokenVisibility-Aug2026-ExplainX.md) | Claude Code Update: 4.5x Smaller Linux Build ~75MB（Aug 2026, explainx.ai EN） | claude-code | 未読 | #web-signal |
+| 957 | [2026-09-02_3807](articles/2026-09-02_3807_WEB_ClaudeCode-Setup-4Months-MCP-Hooks-Skills-2026-Okhlopkov.md) | My Claude Code Setup After 4 Months: MCP・Hooks・Skills実践（okhlopkov.com EN） | claude-code | 未読 | #web-signal |
+| 958 | [2026-09-02_3808](articles/2026-09-02_3808_WEB_ClaudeCode-AdvancedBestPractices-Hooks-Subagents-Context-2026-SmartScope.md) | Claude Code Advanced Best Practices: Hooks・Subagents・Context Management 2026（SmartScope EN） | claude-code | 未読 | #web-signal |
+| 959 | [2026-09-02_3809](articles/2026-09-02_3809_WEB_Anthropic-ReleaseNotes-September2026-Fable51-SDK-Releasebot.md) | Anthropic Release Notes Sep 2026: Fable 5.1・SDK統合・Sonnet 5価格確定（Releasebot EN） | claude-ecosystem | 未読 | #web-signal |
+| 960 | [2026-09-02_3810](articles/2026-09-02_3810_WEB_Microsoft-AgentFramework-BUILD2026-Harness-CodeAct-HostedAgents.md) | Microsoft Agent Framework at BUILD 2026: MAF 1.0 GA・Agent Harness・CodeAct（MS DevBlog EN） | claude-ecosystem | 未読 | #web-signal |
+| 961 | [2026-09-02_3811](articles/2026-09-02_3811_WEB_MCP-Spec-202607-GIGAZINE-Stateless-AgentAuth-JA.md) | MCP仕様「2026-07-28」ステートレス化・Enterprise-Managed Authorization安定版（gihyo.jp JA） | claude-ecosystem | 未読 | #web-signal |
+| 962 | [2026-09-02_3812](articles/2026-09-02_3812_WEB_Claude-AgentSDK-2026-Plans-Credits-ProductionGuide-Totalum.md) | Claude Agent SDK 2026: Plans・Credits・本番移行完全ガイド（Totalum EN） | claude-ecosystem | 未読 | #web-signal |
+| 963 | [2026-09-02_3813](articles/2026-09-02_3813_WEB_MT5-AI-Assistant-Builtin-MCP-Aug2026-MQL5.md) | MetaTrader 5 AI Assistant組み込み: MCP対応・1兆トークン処理・自律取引実行（MQL5公式 EN） | ai-trading | 未読 | #web-signal |
+| 964 | [2026-09-02_3814](articles/2026-09-02_3814_WEB_LLM-Trading-2026-CanAgentsOutperformHumans-CoinEdition.md) | LLM Trading 2026: AIエージェントは人間を超えられるか？現実的評価（CoinEdition EN） | ai-trading | 未読 | #web-signal |
+| 965 | [2026-09-02_3815](articles/2026-09-02_3815_WEB_AI-Model-Releases-September2026-Fable51-Qwen-Gemini-MeanCEO.md) | 2026年9月AIモデルリリース速報: Fable 5.1・Qwen3.8・Gemini 3.x系（mean.ceo EN） | ai-news | 未読 | #web-signal |
+| 966 | [2026-09-02_3816](articles/2026-09-02_3816_WEB_US-State-AI-Legislation-2026-Midyear-TechPolicy.md) | 2026年前半米国AI州法立法状況: 34州100本超チャットボット法案・カリフォルニア新法（TechPolicy.Press EN） | ai-news | 未読 | #web-signal |
+
+### NOISEとして除外（2026-09-02）
+| 候補 | 理由 |
+|---|---|
+| X JSON全8件（2026-08-30〜31各4ドメイン） | tweets=0（VPS収集データなし） |
+| drop.md | URLなし（テンプレートのみ） |
+| mcp.directory/blog/claude-code-best-practices | 既存記事と内容重複 |
+| pinggy.io best-ai-trading-agents | リスト型プロモーション記事 |
+| kiteworks.com AI regulation 2026 | ベンダーサイトのコンプライアンス販促 |
+| aws.amazon.com aws-mcp-server | 2026年5月リリース・既存カバレッジと重複 |
