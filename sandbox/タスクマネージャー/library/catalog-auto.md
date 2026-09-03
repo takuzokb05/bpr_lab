@@ -1810,3 +1810,29 @@ drop.md: URLなし（処理対象なし）
 | pinggy.io best-ai-trading-agents | リスト型プロモーション記事 |
 | kiteworks.com AI regulation 2026 | ベンダーサイトのコンプライアンス販促 |
 | aws.amazon.com aws-mcp-server | 2026年5月リリース・既存カバレッジと重複 |
+
+---
+
+## 2026-09-03 収集分（4件収集 → SIGNAL 4件）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 967 | [2026-09-03_3817](articles/2026-09-03_3817_WEB_ClaudeCode-Weekly-Limits-50Percent-Promo-Sept13-AICatchup.md) | Claude Code +50%週間上限プロモーション9月13日まで延長（AI Catchup EN） | claude-code | 未読 | #web-signal |
+| 968 | [2026-09-03_3818](articles/2026-09-03_3818_WEB_ClaudeCode-Limits-17Percent-Cut-September2026-ExplainX.md) | Claude Code制限17%カット9月14日以降：定量分析タイムライン（explainx.ai EN） | claude-code | 未読 | #web-signal |
+| 969 | [2026-09-03_3819](articles/2026-09-03_3819_WEB_MT5-AI-Agent-Architecture-Guide-LLM-Loop-Orchestrator-MQL5.md) | MT5向けAIエージェントアーキテクチャ設計：LLM-in-Loop/Orchestrator/Executor 3パターン（MQL5公式 EN） | ai-trading | 未読 | #web-signal |
+| 970 | [2026-09-03_3820](articles/2026-09-03_3820_WEB_GenAI-Daily-News-2026-09-01-Anthropic-Safety-Report-TechNoisy-JA.md) | 生成AIニュース2026-09-01：Anthropic安全性レポート・GenAI.mil・Runway Solaris（TECH NOISY JA） | ai-news | 未読 | #web-signal |
+
+### NOISEとして除外（2026-09-03）
+| 候補 | 理由 |
+|---|---|
+| X JSON全4件（2026-09-03 4ドメイン） | tweets=0（VPS収集データなし） |
+| drop.md | URLなし（テンプレートのみ） |
+| claude.com/blog/bringing-mcp-2026-07-28-to-claude | 既存記事と重複（2026-07-28_3107） |
+| mcp.directory/blog/claude-code-best-practices | 既存記事と重複（2026-05-02_1244） |
+| medium.com/data-science-collective/effective-claude-code-workflows-in-2026 | 既存記事と重複（2026-08-08_3573） |
+| assetwhisper.com/ai-trading-agents-in-2026 | 既存記事と重複（2026-08-14_3653） |
+| gunder.com 2026-ai-laws | 既存記事と重複（2026-07-21_3048） |
+| regolo.ai ai-privacy llm-providers | 既存記事と重複（2026-07-06_795） |
+| uravation.com/media/claude-code-v2-1-101 | 既存記事と重複（2026-08-31_3789） |
+| uravation.com/media/claude-md-writing-guide | 既存記事と重複（2026-06-07_178） |
+| その他重複URL多数 | 既存カバレッジと重複 |

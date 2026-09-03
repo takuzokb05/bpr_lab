@@ -5322,3 +5322,24 @@ TradingAgents v0.3.1（Claude Sonnet 5/Fable 5対応済み）を使用中の場�
 
 **提案内容:**
 TradingAgents v0.4.0（2026年8月リリース）がルックアヘッドバイアス（先読みバイアス）修正と、GPT-5.6/GLM-5.3対応を追加。FX自動取引でTradingAgentsフレームワークを参照している場合、バックテスト結果が過去のルックアヘッドバイアスにより過大評価されていた可能性があるため、v0.4.0での再検証を推奨。
+
+---
+
+## 2026-09-03 分析提案
+
+### 6. MT5組み込みAI AssistantのMCPアーキテクチャをFX自動取引に活用
+
+**出典:** articles/2026-09-03_3819_WEB_MT5-AI-Agent-Architecture-Guide-LLM-Loop-Orchestrator-MQL5.md
+
+**提案内容:**
+MQL5公式ブログ（2026年8月21日）が整理した3アーキテクチャパターン（LLM-in-Loop/Orchestrator/Executor）は、FX自動取引プロジェクトの現在の設計方針と照合する価値がある。
+特に「実行モジュール（OrderSend/修正/クローズ）を専用モジュールとして分離し、ポジション照合で事後検証する」パターンは、現在のMT5エージェント設計に取り込める可能性がある。
+MT5 AI AssistantのMCPプロトコル対応（2026年8月リリース）を使うことで、外部LLMとのインターフェースを標準化できる点も注目。
+
+### 7. Claude Code制限カット（9月14日〜17%削減）を考慮した作業計画の見直し
+
+**出典:** articles/2026-09-03_3818_WEB_ClaudeCode-Limits-17Percent-Cut-September2026-ExplainX.md
+
+**提案内容:**
+9月13日のプロモーション終了後、Claude Codeの週間利用上限が17%削減予定。現在進行中の重要タスク（FX自動取引実装、flash-study、etc.）は9月13日までに優先的に進めることを推奨。
+/usageコマンドでの消費量モニタリングを習慣化し、サブエージェント並列度の調整も検討する。
