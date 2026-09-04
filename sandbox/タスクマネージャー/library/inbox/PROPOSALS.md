@@ -5343,3 +5343,22 @@ MT5 AI AssistantのMCPプロトコル対応（2026年8月リリース）を使�
 **提案内容:**
 9月13日のプロモーション終了後、Claude Codeの週間利用上限が17%削減予定。現在進行中の重要タスク（FX自動取引実装、flash-study、etc.）は9月13日までに優先的に進めることを推奨。
 /usageコマンドでの消費量モニタリングを習慣化し、サブエージェント並列度の調整も検討する。
+
+
+---
+
+## 2026-09-04 分析提案
+
+### 8. 日本METI AI Guidelines for Business 更新（9月10日）への対応確認
+
+**出典:** articles/2026-09-04_3825_WEB_RadicalDataScience-AI-News-Bulletin-September-2026.md
+
+**提案内容:**
+日本METIが2026年9月10日にAI Guidelines for Business の更新版を公開予定（ウォーターマーク推奨の追加を含む）。Claude Fable 5.1はC2PA Content Credentialsをサポートするため、生成コンテンツの出所表明が容易になった。FX自動取引プロジェクトや他のAI活用業務での生成コンテンツ管理に関して、9月10日以降の新ガイドラインを確認し、必要に応じてワークフローに反映することを推奨。
+
+### 9. aiweekly.co を日次収集クエリに追加することを検討
+
+**出典:** articles/2026-09-04_3821_WEB_AIWeekly-AI-News-September-2-2026-Daily.md
+
+**提案内容:**
+aiweekly.co（AI Weekly）は今回初めてライブラリに追加された新ドメイン。デイリーエディション形式でAIニュースを集約・一次情報への参照付きで配信している。VPS側collect_x.pyや収集クエリに `site:aiweekly.co` を追加するか、日次収集ルーチンのWebSearchクエリ候補に組み込むことを検討する価値がある。

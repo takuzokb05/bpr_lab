@@ -1836,3 +1836,39 @@ drop.md: URLなし（処理対象なし）
 | uravation.com/media/claude-code-v2-1-101 | 既存記事と重複（2026-08-31_3789） |
 | uravation.com/media/claude-md-writing-guide | 既存記事と重複（2026-06-07_178） |
 | その他重複URL多数 | 既存カバレッジと重複 |
+
+---
+
+## 2026-09-04 収集分（5件収集 → SIGNAL 5件）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 971 | [2026-09-04_3821](articles/2026-09-04_3821_WEB_AIWeekly-AI-News-September-2-2026-Daily.md) | AI Weekly デイリー 2026-09-02：AgentZ・SafeMind・Astra・Fable 5.1 GA（aiweekly.co EN） | ai-news | 未読 | #web-signal |
+| 972 | [2026-09-04_3822](articles/2026-09-04_3822_WEB_AIWeekly-AI-News-September-3-2026-Daily.md) | AI Weekly デイリー 2026-09-03：MS Agent Framework 1.17・Genesys AVA・EU AI Act施行（aiweekly.co EN） | ai-news | 未読 | #web-signal |
+| 973 | [2026-09-04_3823](articles/2026-09-04_3823_WEB_AIAgentStore-AI-Agents-News-Week-September-3-2026.md) | AI Agents News 2026年9月3日週：AgentZ・Clearance・Genesys AVA・Qwen 2.4T（aiagentstore.ai EN） | ai-news | 未読 | #web-signal |
+| 974 | [2026-09-04_3824](articles/2026-09-04_3824_WEB_BusinessInsider-Japan-AI-Service-Pricing-September-2026.md) | 【2026年9月版】生成AI主要8サービス料金早見表：GPT-5.6・Gemini 3.7・Grok Bot登場（BI Japan JA） | ai-news | 未読 | #web-signal |
+| 975 | [2026-09-04_3825](articles/2026-09-04_3825_WEB_RadicalDataScience-AI-News-Bulletin-September-2026.md) | AI News Briefs September 2026：Fable 5.1・EU AI Act・ブラジル規制・METI更新（RadicalDataSci EN） | ai-news | 未読 | #web-signal |
+
+### NOISEとして除外（2026-09-04）
+| 候補 | 理由 |
+|---|---|
+| X JSON全4件（2026-09-03 4ドメイン） | tweets=0（VPS収集データなし）→archive済み |
+| drop.md | URLなし（テンプレートのみ） |
+| collabnix.com Claude Code 10 workflow tips | 既存記事と重複（2026-07-08_812、2026-08-14_3646） |
+| syusodo.co.jp Claude Code skills 2026 | 既存記事と重複（2026-07-11_852、2026-08-09_3587） |
+| assetwhisper.com AI trading agents 2026 | 既存記事と重複（2026-08-14_3653） |
+| cubbbix.com AI regulation September 2026 | 既存記事と重複（2026-08-11_3622） |
+| kiteworks.com AI regulation | 既存記事と重複（2026-05-04_153） |
+| frugaltesting.com Claude AI MCP servers | 既存記事と重複（2026-08-30_3782） |
+| gunder.com 2026 AI laws | 既存記事と重複（2026-07-21_3048、2026-08-06_3553） |
+| elcamy.com Claude Code skills 17 | 既存記事と重複（2026-08-06_3546） |
+| blog.mean.ceo September 2026 AI models | 既存記事と重複（2026-09-02_3815） |
+| hidekazu-konishi Claude Agent SDK | 既存記事と重複（2026-07-04_766） |
+| alloq.digital Claude Agent SDK | 既存記事と重複（2026-08-05_3528） |
+| smartscope.blog Claude Code advanced | 既存記事と重複（2026-09-02_3808） |
+| dev.to/nishilbhave CLAUDE.md best practices | 既存記事と重複（2026-07-25_3075） |
+| amitray.com CLAUDE.md best practices | 既存記事と重複（2026-06-02_093） |
+| maketocreate.com CLAUDE.md guide | 既存記事と重複（2026-08-31_3788） |
+| local-ai-zone September 2026 AI updates | 既存記事と重複（2026-08-16_3675） |
+| aiagentstore.ai July/August weeks | 既存記事と重複（2026-07-26_3097、2026-08-25_3745） |
+| その他重複URL多数 | 既存カバレッジと重複 |
