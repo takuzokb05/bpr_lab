@@ -560,3 +560,24 @@
 |---|---|---|---|---|---|
 | 446 | 2026 State and Federal AI Legislation Updates（CDT EN）: Connecticut CT SB 5包括的AI法・Colorado SB 24-205高リスクAI義務化・34州以上チャットボット法案100件・AI生成ヌード画像禁止12月施行・連邦AI規制法案は未成立 | en | 未読 | #ai-news #regulation #us-law #compliance #web-signal | articles/2026-09-01_3802_WEB_US-AI-State-Federal-Legislation-2026-CDT.md |
 | 447 | 生成AIニュースまとめ 2026年8月17-23日（TECH NOISY JA）: GPT-5.6 Sol/Terra/Luna正式公開・Gemini 3.6 Flash・Grok 4.5・Grok Voice/GPT-Live音声機能・エージェント型コーディングツール実用化・ChatGPT for Teens発表 | ja | 未読 | #ai-news #weekly-digest #model-release #voice-ai #web-signal | articles/2026-09-01_3803_WEB_GenAI-Weekly-News-2026-08-17-23-TechNoisy-JA.md |
+
+---
+
+## 2026-09-05 収集分（11件収集 → SIGNAL 4件 ai-news）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 448 | AI Regulation September 2026: Global Update & Deadlines（Cubbbix EN）: EU第1波コンプライアンス検査開始・カリフォルニアSB1047（Frontier AI Safety Act）Newsom知事9月30日期限・テキサスTRAIGA苦情受付・ブラジル9/16上院採決・インド9/21審議 | en | 未読 | #ai-news #regulation #eu-ai-act #california #global #web-signal | articles/2026-09-05_3831_WEB_AIRegulation-September2026-GlobalUpdate-EU-US-Brazil-Cubbbix.md |
+| 449 | AI Model Releases September 2026 Tracker（DigitalApplied EN）: Claude Fable 5.1（9/1、C2PA・1M ctx・キャッシュ75%OFF）・Qwen3.8 27B（9/2）・医療特化Ling-3.0-flash（9/4、124B）・GPT-6 Astra（9/3、$10/$50/1M・1.05M ctx・コンピューターユース） | en | 未読 | #ai-news #model-release #tracker #fable51 #gpt6 #web-signal | articles/2026-09-05_3832_WEB_AIModelReleases-September2026-Tracker-Fable51-GPT6Astra-DigitalApplied.md |
+| 450 | OpenAI GPT-6 Astra rollout announcement（CNBC EN）: 9月3日限定→4日有料ユーザー段階展開・$10/$50/1Mトークン・1.05Mコンテキスト・推論ベンチ満点・コンピューターユース・7月HuggingFaceインシデント後の安全強化・AWS経由も提供 | en | 未読 | #ai-news #model-release #gpt6-astra #openai #computer-use #web-signal | articles/2026-09-05_3833_WEB_OpenAI-GPT6-Astra-Release-StagedRollout-CNBC.md |
+| 451 | OpenAI GPT-6 Astra「AGIの始まり」Brockman発言（Fortune EN）: Greg Brockman社長「start of AGI」コメント・コンピューターユースデモ詳細（Web/ファイル/アプリ操作）・GPT-5.6 Sol比全項目改善・安全制限詳細・Fortune独自のAGI文脈分析 | en | 未読 | #ai-news #model-release #gpt6-astra #openai #agi #computer-use #web-signal | articles/2026-09-05_3834_WEB_OpenAI-GPT6-Astra-AGI-ComputerUse-Brockman-Fortune.md |
+
+### NOISEとして除外（2026-09-05 ai-news）
+| 候補 | 理由 |
+|---|---|
+| aiagentstore.ai/ai-agent-news/2026-september | アグリゲーターページ（日次更新、一次情報なし） |
+| 9to5mac.com/2026/09/04/openai-gpt-6-astra | CNBC/Fortune報道と同一ニュースの三次カバレッジ |
+| blog.mean.ceo/new-ai-model-releases-news-september-2026/ | 既収集（2026-09-02 #3815） |
+| businessinsider.jp/article/2609-... | 既収集（2026-09-04 #3824） |
+| cdt.org/insights/2026-state-and-federal-ai-legislation-updates/ | 既収集（2026-09-01 #3802） |
+| lmmarketcap.com/new-ai-models | 既収集（2026-07-18 #3011） |

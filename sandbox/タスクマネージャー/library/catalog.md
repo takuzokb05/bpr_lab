@@ -1455,3 +1455,30 @@
 | llm-stats.com/ai-news | 2026-06-29収集済み（記事704・097等）と同一ドメイン |
 | jorgepit Medium CLAUDE.md Skills Rules Hooks | 2026-08-14収集済み（記事3648）と同一URL |
 | uravation.com/media/claude-code-features-20-2026/ | 2026-08-01収集済み（記事3142）と同一URL |
+
+---
+
+## 2026-09-05 収集分（11件収集 → SIGNAL 9件）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|-----|---------|------|------|-----|--------|
+| 1262 | Claude Codeで個人開発アプリを作る実践チュートリアル【2026年版】（ShiftB JA）: ターミナルセットアップ→CLAUDE.md設定→サブエージェント→MCP連携、インディー開発事例（LP→問い合わせ50件超）、CLAUDE.mdアンチパターン vs 成功パターン比較 | ja | 未読 | #claude-code #tutorial #indie-dev #web-signal | articles/2026-09-05_3826_WEB_ClaudeCode-IndieApp-Tutorial-2026-ShiftB-JA.md |
+| 1263 | Claude Agent SDK: Capabilities, Comparison, and Ecosystem Guide（AIAgentsHub EN）: SDK vs CLI比較・LangGraph/Autogen/OpenAI Agents SDKとの比較表・query()エントリーポイント・マルチエージェント・MCP統合・Python v0.2.139/TS v0.3.233 | en | 未読 | #claude-ecosystem #agent-sdk #comparison #web-signal | articles/2026-09-05_3827_WEB_ClaudeAgentSDK-Capabilities-Comparison-Ecosystem-AIAgentsHub.md |
+| 1264 | Claude Cowork最大ユースケースは「誰も担当したくない地味な事務作業」Anthropic発表（The Decoder EN）: Business process 33.4%・Content creation 16.4%・非技術ユーザーが流入した経緯・「delegation rather than conversation」設計思想 | en | 未読 | #claude-ecosystem #cowork #non-engineer #anthropic-data #web-signal | articles/2026-09-05_3828_WEB_ClaudeCowork-MundaneOfficeWork-AnthropicData-TheDecoder.md |
+| 1265 | Claude Cowork 17名クリエーター実態調査: 機能する15例・離脱した4例（BuildToLaunch EN）: ニュースレター半自動化・Notion+GドライブリサーチなどSIGNAL15件。失敗: リアルタイムSNS分析・複雑API連携・長期管理。Pro $20/月で軽量タスクは実用十分 | en | 未読 | #claude-ecosystem #cowork #real-world #workflow #web-signal | articles/2026-09-05_3829_WEB_ClaudeCowork-17Creators-RealWorkflows-BuildToLaunch.md |
+| 1266 | Anthropicの実利用データが示すCoworkの本当のユーザー像（Traversaal EN）: 非エンジニア比率が予想を大幅上回る・Sales/HR/Accounting急増・「明確なゴールがある繰り返しタスク」が最適用途・#3828と組み合わせると立体的把握 | en | 未読 | #claude-ecosystem #cowork #non-engineer #anthropic-data #web-signal | articles/2026-09-05_3830_WEB_ClaudeCowork-NonDevelopers-WhoIsActuallyUsing-Traversaal.md |
+
+### NOISEとして除外（2026-09-05 claude-code/claude-ecosystem）
+| 候補 | 理由 |
+|---|---|
+| gradually.ai/en/changelogs/claude-code/ | 既収集（2026-07-02以降複数回） |
+| ayautomate.com/blog/best-claude-code-workflows | 既収集（2026-08-08） |
+| blakecrosley.com/guides/claude-code | 既収集（2026-05-18以降複数回） |
+| firecrawl.dev/blog/best-claude-code-skills | 既収集（2026-05-01以降複数回） |
+| mcp.directory/blog/claude-code-best-practices | 既収集（2026-05-02以降複数回） |
+| elcamy.com/blog/claude-code-skills-best-17 | 既収集（2026-07-09以降複数回） |
+| agentlint.app/blog/claude-md-best-practices-2026/ | 既収集（2026-08-08） |
+| blog.cloudflare.com/mcp-v2/ | 既収集（2026-08-16以降複数回） |
+| hidekazu-konishi.com/entry/claude_agent_sdk_complete_guide.html | 既収集（2026-08-01以降複数回） |
+| totalum.app/blog/claude-agent-sdk-totalum-2026 | 既収集（2026-08-02以降複数回） |
+| aiagentstore.ai/ai-agent-news/2026-september | アグリゲーターページ、一次情報なし |
