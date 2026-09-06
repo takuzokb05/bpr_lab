@@ -581,3 +581,22 @@
 | businessinsider.jp/article/2609-... | 既収集（2026-09-04 #3824） |
 | cdt.org/insights/2026-state-and-federal-ai-legislation-updates/ | 既収集（2026-09-01 #3802） |
 | lmmarketcap.com/new-ai-models | 既収集（2026-07-18 #3011） |
+
+---
+
+## 2026-09-06 収集分（12件収集 → SIGNAL 3件 ai-news）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 452 | September 2026 AI Model Updates: Every Launch（Local AI Zone EN）: GPT-6 Astra（9/3、$10/$50/1M、1.05Mctx）・Fable 5.1/Mythos 5.1（9/1 GA）・World Labs Atlas（空間知能初モデル）・Gemini 3.5/3.6/3.7 Flash・Nova 2 Sonic。9月は6モデル/5プロバイダー | en | 未読 | #ai-news #model-release #tracker #gpt6 #fable51 #atlas #web-signal | articles/2026-09-06_3836_WEB_September2026-AI-Model-Releases-GPT6-Gemini-Nova-Atlas.md |
+| 453 | 〖AI News まとめ〗生成AI ニュースレポート 2026-09-06（Qiita aakan JA）: Fable 5.1/Mythos 5.1 GA+キャッシュ75%OFF・GPT-6 Astra（computer use対応）・EU AI Actコンプライアンス検査開始・OpenAI Daybreak for Frontline Defenders発表・MAI-Transcribe-2（競合比10倍速/60言語） | ja | 未読 | #ai-news #daily-digest #model-release #eu-ai-act #web-signal | articles/2026-09-06_3837_WEB_GenAI-Daily-News-2026-09-06-Qiita-JA.md |
+| 454 | US-EU AI規制対立（Al Jazeera EN）: EUがG20でAI規制緩和を主張する米国と対立・EU AI Act高リスクシステムへのコンプライアンス検査9月開始・UK職場監視技術コンサルテーション9/30締切・ブラジル9/16上院採決・カリフォルニアSB1047知事署名9/30デッドライン | en | 未読 | #ai-news #regulation #eu-ai-act #us-policy #california #web-signal | articles/2026-09-06_3844_WEB_US-EU-AI-Regulation-September2026-Diverge-Compliance-AlJazeera.md |
+
+### NOISEとして除外（2026-09-06 ai-news）
+| 候補 | 理由 |
+|---|---|
+| blog.mean.ceo/claude-code-news-september-2026/ | アグリゲーター型ページ、一次情報なし |
+| llmgateway.io/timeline | リスト型ページ、一次情報なし |
+| swadeshisync.com/ai-news-till-3rd-september-2026/ | 9/3以前分で既収集と重複 |
+| tech-noisy.com/2026/09/05/ai-daily-news-2026-09-04/ | 9/4分は既収集（9/5以前）との重複度高 |
+| llm-stats.com/llm-updates | リスト型ページ |

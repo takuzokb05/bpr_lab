@@ -1482,3 +1482,20 @@
 | hidekazu-konishi.com/entry/claude_agent_sdk_complete_guide.html | 既収集（2026-08-01以降複数回） |
 | totalum.app/blog/claude-agent-sdk-totalum-2026 | 既収集（2026-08-02以降複数回） |
 | aiagentstore.ai/ai-agent-news/2026-september | アグリゲーターページ、一次情報なし |
+
+---
+
+## 2026-09-06 収集分（12件収集 → SIGNAL 1件 claude-ecosystem）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 1267 | Anthropic Alignment & Security Update — Mythos 5.1・Fable 5.1 GA、キャッシュリードコスト75%削減、C2PA・テキスト透かし対応、Skills API/Files API がMicrosoft Foundry対応、Admin APIベータ卒業 | en | 未読 | #claude-ecosystem #model-update #security #mcp #web-signal | articles/2026-09-06_3835_WEB_Anthropic-Mythos51-Fable51-Cache75Percent-Off-Security.md |
+
+### NOISEとして除外（2026-09-06 claude-code/claude-ecosystem）
+| 候補 | 理由 |
+|---|---|
+| blog.cloudflare.com/mcp-v2/ | 既収集（2026-08-16 #3674, 2026-08-25 #3743） |
+| blog.modelcontextprotocol.io/posts/mcp-roadmap/ | 既収集（2026-08-27 #3761） |
+| dev.to/nishilbhave/claudemd-best-practices-the-complete-2026-guide-435j | 既収集（2026-07-25 #3075, 2026-08-29 #3777） |
+| medium.com/data-science-collective/effective-claude-code-workflows-in-2026 | 既収集（2026-05-29 #035, 2026-08-19 #3700） |
+| genai-ai.co.jp/ai-kanri/blog/cc-skills-guide/ | 既収集（2026-08-04 #3523） |

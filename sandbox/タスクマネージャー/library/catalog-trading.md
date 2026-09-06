@@ -421,3 +421,20 @@
 |---|---|---|---|---|---|
 | 335 | Best Open Source AI Trading Agents GitHub 2026（GPTrader EN）: TradingAgents(80k★・v0.4.0ルックアヘッドバイアス修正・GPT-5.6/GLM-5.3対応)・AI Hedge Fund(45k★)・FinRL・TradingGoose・構造化JSON出力への移行 | en | 未読 | #ai-trading #open-source #llm-trading #framework #web-signal | articles/2026-08-31_3796_WEB_Best-OpenSource-AI-Trading-Agents-GitHub-2026-GPTrader.md |
 | 336 | Agentic Trading: When LLM Agents Meet Financial Markets（ArXiv 2026-05）: バックテスト vs ライブ乖離・TradingAgents 30日7%リターン/22%ドローダウン/再現性なし・推奨ハイブリッドワークフロー（AI分析→人間判断→ルールベース執行） | en | 未読 | #ai-trading #llm-trading #arxiv #research #web-signal | articles/2026-08-31_3797_WEB_Agentic-Trading-LLM-Agents-Financial-Markets-ArXiv-2026.md |
+
+---
+
+## 2026-09-06 収集分（12件収集 → SIGNAL 1件 ai-trading）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 337 | 2026年AI×FX最前線（FinancialSynapse JA）: FX Prime Bot（MT5+Node.js+Python+LLMセンチメント分析）のハイブリッドアーキテクチャ解説・LLM単体価格予測は不可能・「LLMは情報整理アシスタント」に徹するのが2026年の正解・機械学習/強化学習との役割分担 | ja | 未読 | #ai-trading #forex #llm-trading #architecture #fx #web-signal | articles/2026-09-06_3843_WEB_AI-FX-LLM-2026-Architecture-FXPrimeBot-MT5-FinancialSynapse-JA.md |
+
+### NOISEとして除外（2026-09-06 ai-trading）
+| 候補 | 理由 |
+|---|---|
+| pinggy.io/blog/best_ai_trading_agents/ | 既収集（2026-06-04 #121, 2026-07-26 #3095, 2026-08-06 #3550, 2026-08-11 #3618） |
+| github.com/tauricresearch/tradingagents | 既収集（2026-07-10 #842, URLはreleases経由） |
+| gptrader.app/blog/best-ai-trading-agents-vs-traditional-bots-2026-comparison | アグリゲーター・比較記事でSIGNAL不足 |
+| crypto.news/leading-ai-day-trading-bots-in-2026-why-most-fail | 暗号通貨フォーカス、FX自動取引との関連性低 |
+| quantlabsnet.com/post/llm-showdown-which-ai-powers-the-best-python-algo-trading-bot-generator-in-2026 | 既収集類似記事多数で重複度高 |

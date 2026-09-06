@@ -5362,3 +5362,21 @@ MT5 AI AssistantのMCPプロトコル対応（2026年8月リリース）を使�
 
 **提案内容:**
 aiweekly.co（AI Weekly）は今回初めてライブラリに追加された新ドメイン。デイリーエディション形式でAIニュースを集約・一次情報への参照付きで配信している。VPS側collect_x.pyや収集クエリに `site:aiweekly.co` を追加するか、日次収集ルーチンのWebSearchクエリ候補に組み込むことを検討する価値がある。
+
+---
+
+## 2026-09-06 分析提案
+
+### 10. Anthropic キャッシュリードコスト75%削減（Fable 5.1/Mythos 5.1 GA）の活用確認
+
+**出典:** articles/2026-09-06_3835_WEB_Anthropic-Mythos51-Fable51-Cache75Percent-Off-Security.md
+
+**提案内容:**
+2026年9月1日のFable 5.1/Mythos 5.1 GA時にキャッシュリードコストが75%削減された（Anthropic公式）。FX自動取引プロジェクトや情報収集ルーチンでClaude APIを大量使用している場合、prompt_caching を有効化することで運用コストを大幅削減できる。現在の実装でCache-Control ヘッダーを設定しているか確認し、未設定の場合は追加を検討する。なお、Fable 5.1が生成するテキストにはAnthropicのテキスト透かしが含まれるようになった点も運用上確認が必要。
+
+### 11. EU AI Act コンプライアンス検査開始（9月）と日本企業への影響
+
+**出典:** articles/2026-09-06_3844_WEB_US-EU-AI-Regulation-September2026-Diverge-Compliance-AlJazeera.md
+
+**提案内容:**
+EU AI Actの高リスクシステムへの移行期間が2026年8月2日に終了し、9月からEU AI Officeと24か国の監督機関が最初の一斉コンプライアンス検査を開始した。EUユーザー・取引先が存在する業務でAIツールを使用している場合は、高リスクシステム（採用・金融・公共サービス等）への該当確認を行う必要がある。カリフォルニアSB 1047（フロンティアAIモデルの安全義務法案）のNewsom知事署名/拒否デッドラインは9月30日で、成立した場合は日本からAnthropicAPIを経由するサービスにも将来的に影響する可能性がある。
