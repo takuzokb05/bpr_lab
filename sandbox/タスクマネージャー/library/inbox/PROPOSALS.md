@@ -5380,3 +5380,31 @@ aiweekly.co（AI Weekly）は今回初めてライブラリに追加された新
 
 **提案内容:**
 EU AI Actの高リスクシステムへの移行期間が2026年8月2日に終了し、9月からEU AI Officeと24か国の監督機関が最初の一斉コンプライアンス検査を開始した。EUユーザー・取引先が存在する業務でAIツールを使用している場合は、高リスクシステム（採用・金融・公共サービス等）への該当確認を行う必要がある。カリフォルニアSB 1047（フロンティアAIモデルの安全義務法案）のNewsom知事署名/拒否デッドラインは9月30日で、成立した場合は日本からAnthropicAPIを経由するサービスにも将来的に影響する可能性がある。
+
+---
+
+## 2026-09-07 収集分
+
+### 1. Claude Code settings.json への反映提案
+
+#### 1-1. bashOutputMaxChars / taskOutputMaxChars の明示的設定
+**出典:** articles/2026-09-07_3845_WEB_ClaudeCode-News-September-2026-StartupEdition-MeanCEO.md
+
+**提案内容:**
+Claude Code v2.1.257以降、`.claude/settings.json` に `bashOutputMaxChars` と `taskOutputMaxChars` を設定できる（最大128,000文字）。デフォルトより大きな値にすることで長いコマンド出力がファイルに落ちずインラインで受け取れる。タスクマネージャーの情報収集スキルなどPythonスクリプト出力が多いケースで有効。
+
+```json
+{
+  "bashOutputMaxChars": 65536,
+  "taskOutputMaxChars": 65536
+}
+```
+
+### 2. FX自動取引プロジェクトへの反映提案
+
+#### 2-1. TradingAgents v0.4.0 アップデート確認
+**出典:** WebSearch結果（TradingAgents GitHub）
+
+**提案内容:**
+TradingAgentsがv0.4.0をリリース（80,000スター超）。主な変更: FRED macroデータ・ソーシャルセンチメントのlook-ahead/point-in-time修正（バックテスト精度向上）、GPT-5.6/GLM-5.3モデル対応追加、CLIチェックポイント再開機能。FX自動取引プロジェクトでLLMエージェント組み込みを検討する場合、最新版の変更内容を確認しサンプルコードをアップデートすることを推奨。
+
