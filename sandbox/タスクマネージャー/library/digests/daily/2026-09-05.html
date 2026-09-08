@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-09-05</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-09-05 | 9件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-09-05</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>OpenAIがGPT-6 Astra（9/3）を投入し、Greg Brockmanが「AGIの始まり」と宣言——業界の空気が一変した週の終わりだった。一方AnthropicはClaude Fable 5.1（9/1）でキャッシュ読み取りを75%値下げし、コスト競争でも静かに対抗。Coworkの利用統計が初めて公開され「誰も担当したくない地味なオフィスワーク」が最大ユースケース（33.4%）と判明。EU AI Act Article 50は8月2日施行で第1波コンプライアンス検査がスタートし、規制実務が現実の問題になってきた。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>Coworkの実態：「委譲」ツールとしての定着</h3>
+
+<p>Anthropicが初の公式利用統計を公開し、The DecoderとTraversaal AIがそれぞれ独自分析を掲載した（<a href="https://the-decoder.com/claude-coworks-biggest-use-case-is-the-mundane-office-work-nobody-wants-to-own-anthropic-says/" target="_blank">The Decoder</a> / <a href="https://blog.traversaal.ai/claude-code-non-developers-who-is-claude-cowork-actually-for/" target="_blank">Traversaal</a>）。</p>
+
+<p>用途別1位は「Business process &amp; operations」（33.4%）。内訳はステータスレポート集約・オンボーディングチェックリスト・スプレッドシート照合など、いわゆる「担当がいない地味業務」。2位の「Content creation &amp; copywriting」（16.4%）とあわせると上位2カテゴリで約半数を占める。</p>
+
+<p>注目はユーザー層の変化だ。2026年4月のGA以降、Sales・HR・Accounting部門での急増を確認。設計思想「delegation rather than conversation（会話ではなく委譲）」が統計データで裏付けられた形で、公務員業務との親和性を考えると「定型書類・横断集計・週次報告書整形」のパターンがそのまま使える。</p>
+
+<p>BuildToLaunchのクリエイター17人調査（<a href="https://buildtolaunch.substack.com/p/claude-cowork-use-cases-real-workflows" target="_blank">Substack</a>）では15件の成功事例と4件の離脱事例が整理されている。離脱の原因は「リアルタイムデータ依存」「多ステップ外部API連携のエラー処理」「長期プロジェクトでのコンテキスト消失」。逆に言えば「ゴールが明確で繰り返し発生するバッチタスク」に絞れば Pro $20/月でも実用十分という結論は、業務自動化の取捨選択基準として使える。</p>
+
+<h3>Claude Code実践ガイドとAgent SDK</h3>
+
+<p>ShiftB.devが2026年版の個人開発チュートリアル（<a href="https://shiftb.dev/articles/claude-code-tutorial-indie-dev" target="_blank">リンク</a>）を公開。CLAUDE.md設計のアンチパターン比較とPlan Modeと実装の分離手順が特に実践的。非エンジニア向け5分起動手順とCowork連携フローも網羅されており、社内展開の説明資料として流用できる構成。</p>
+
+<p>AI Agents HubはClaude Agent SDK包括ガイド（<a href="https://www.aiagentshub.net/blog/claude-agent-sdk-guide" target="_blank">リンク</a>）を掲載。Python版 v0.2.139 / TypeScript版 v0.3.233（2026年8月時点）、週次リリースサイクル。LangGraph・Autogen・OpenAI Agents SDKとの比較表が収録されており、SDK選定の際の一次チェックとして有用。コスト管理（2026年6月15日から従量課金分離）の実装パターンも詳述されている。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>GPT-6 Astra：「AGIの始まり」発言と業界への衝撃</h3>
+
+<p>OpenAIはGPT-6 Astraを9月3日に信頼パートナー向け限定プレビュー、4日に有料ユーザーへ段階展開した（CNBC <a href="https://www.cnbc.com/2026/09/03/open-ai-astra-gpt-6-cyber.html" target="_blank">一次ソース確認済み</a> / <a href="https://fortune.com/2026/09/03/openai-debuts-gpt-6-astra-computer-use-greg-brockman-says-start-of-agi/" target="_blank">Fortune</a>）。</p>
+
+<p>主要スペック：入力$10・出力$50 per 1Mトークン（一次ソース確認済み）、コンテキスト1.05Mトークン。ベンチマークはFrontierMath Tier4 97.6%、ARC-AGI-3 99.9%、ExploitBench 100%（一次ソース確認済み）。コンピューターユース機能搭載でWebブラウジング・ファイル操作・アプリ操作を人間と同様に実行できる。</p>
+
+<p>Greg Brockmanの「AGIの始まり」発言はFortune独占で掲載され、7月Hugging Faceインシデント後の安全強化策（サイバーセキュリティ等の特定カテゴリを限定版で拒否）とあわせて業界議論を呼んでいる。FX自動売買の観点では、コンピューターユース＋1Mコンテキストの組み合わせが複数取引所横断の戦略評価に使える可能性がある。</p>
+
+<h3>Claude Fable 5.1 vs GPT-6 Astra：9月のモデル戦争</h3>
+
+<p>DigitalAppliedの月次リリーストラッカー（<a href="https://www.digitalapplied.com/blog/ai-model-releases-september-2026-tracker" target="_blank">一次ソース確認済み</a>）によると、9月第1週だけでFable 5.1（9/1）・Qwen3.8 27B（9/2）・GPT-6 Astra（9/3）・Ling-3.0-flash医療特化版（9/4）が出揃った。</p>
+
+<p>Fable 5.1（一次ソース確認済み）は1Mトークンコンテキスト・C2PA Content Credentials対応・プロンプトキャッシュ読み取り75%値下げ（$1→$0.25/MTok）が柱。Claude Mythos 5.1も同日リリース（記事未掲載）。業界全体では「推論モデルの主流化」「GPT-4レベル性能の低コスト化競争」が加速している。</p>
+
+<h3>EU AI Act：規制が実務フェーズへ</h3>
+
+<p>Cubbbixの9月AI規制グローバルアップデート（<a href="https://cubbbix.com/blog/ai-regulation-september-2026-global-update" target="_blank">一次ソース確認済み</a>）。EU AI Act Article 50（チャットボット開示義務・AIコンテンツ標示・ディープフェイクラベリング）は8月2日施行済みで（一次ソース確認済み）、9月から欧州AI局＋24カ国当局による第1波コンプライアンス検査が開始。違反制裁はMax（€1,500万または全世界年商3%）。ハイリスクAI文書化義務は2027-12-02に延期（Article 50は延期対象外）。</p>
+
+<p>米国はカリフォルニアSB1047の9月30日署名/拒否期限が焦点、テキサスTRAIGA・コロラドSB24-205も動き出している。AI活用を推進する立場なら、部署内ツール導入に際してのAIコンテンツ標示ポリシー整備が今後の必須事項になる。</p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>過去7日の記事収集数は8/31の16件をピークに9/1（4件）・9/2（12件）・9/3（4件）・9/4（5件）・9/5（9件）と波がある。claude・agent・mcp・llm・tradingが継続的に出現するコアテーマ。</p>
+
+<p>本日の9件は量的には平常ベースだが、GPT-6 Astraの「AGI発言」とFable 5.1の大型値下げが同一週に重なり、質的密度が高かった。FX自動売買（trading）は今週収集記事なし——Claude Codeとの連携事例は引き続きウォッチ継続。</p>
+
+<p>---</p>
+<p>*生成: 2026-09-06 | ソース: 中間JSON 2026-09-05.json | 記事数: 9件（一次ソース確認済み3件）*</p>
+
+</body>
+</html>

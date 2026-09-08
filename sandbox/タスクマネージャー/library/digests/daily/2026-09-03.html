@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-09-03</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-09-03 | 4件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-09-03</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>Claude Codeの週間利用制限に関して「プロモ終了後17%カット」という具体的な数字が複数ソースで確認された。</p>
+<p>9月13日（PT）までの+50%プロモを最大限活用しつつ、14日以降の制限変更に備えた運用調整が求められる。</p>
+<p>MT5向けAIエージェント設計の一次ガイドが公開され、FX自動取引とLLM統合の実装パターンが整理された。</p>
+<p>Anthropicはサンドボックス脱出事案への対応レポートを公開し、エージェント安全設計の参照資料が充実している。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<p><strong>9月13日まで：+50%プロモを使い切れ</strong>（一次ソース確認済み）</p>
+
+<p>AnthropicによるClaude Codeの週間利用上限+50%プロモーションが、9月13日（PT）23:59まで延長されている。</p>
+<p>8月後半から4度繰り返された延長であり、実質的な制限緩和として機能してきたが、今回が最終延長となる見込みだ。</p>
+<p>Maxプランユーザーは `/usage` コマンドで消費状況をリアルタイム確認できる。重要タスクは9月13日までに優先実行する価値がある。</p>
+
+<p><strong>9月14日以降：17%カットの数学を理解する</strong>（一次ソース確認済み・要注意）</p>
+
+<p>explainx.aiによる定量分析が注目される。Anthropic公式の表現は「+25%引き上げ（5月以前比）」だが、現行の+50%プロモ基準から見ると実質17%減となる。</p>
+<p>2つの数字が並立しているのは表現の違いであり、claudelab.net等の解説で数学的根拠が確認されている。</p>
+<p>対策として推奨されるのは3点：①`/usage` による日次モニタリング習慣化、②重要な大規模タスクの9月13日集中実行、③サブエージェントの並列度を抑えた省コスト設計への見直し。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #ea580c; padding-left: 12px;">AIトレーディング</h2>
+
+<p><strong>MT5にLLMを組み込む3つのパターン</strong>（一次ソース確認済み・日付修正あり）</p>
+
+<p>MQL5公式ブログが「MT5向けAIエージェントのアーキテクチャ設計」ガイドを公開した。</p>
+<p>提示される統合パターンは3つ：<strong>LLM-in-the-Loop</strong>（判断ループにLLMを挿入）、<strong>LLM-as-Orchestrator</strong>（LLMが複数ツールを指揮）、<strong>LLM-as-Executor</strong>（LLMが直接注文執行）。</p>
+
+<p>実用面での要点は責務分離だ。OrderSend/修正/クローズの各モジュールを独立させ、ポジション照合とAPIエラーハンドリングを明示的に設計する必要がある。</p>
+<p>ローカルLLM（Ollama）を使えばインターネット接続なしの閉域構成も可能で、レイテンシ要件の厳しいスキャルパー戦略にも適用できる。</p>
+<p>スキャルパー（スピード優先→LLM非同期）とスウィング（調査優先→LLM同期）での使い分けも提案されており、運用中の戦略タイプによって設計を変えるべきというのが示唆だ。</p>
+
+<p>なお、記事が「8月リリース」と記載するMCP対応の初期リリースは実際にはBuild 6060（2026年7月23日）。8月21日のBuild 6140はLLMプロバイダー拡充の拡張版であるため注意。</p>
+
+<p>&gt; 参照: &lt;https://www.mql5.com/en/blogs/post/774492&gt;</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<p><strong>Anthropic安全性レポートとその他9月1日の動き</strong></p>
+
+<p>TECH NOISY JAによる9月1日の公式発表まとめから主要5点：</p>
+
+<ul>
+<li>**Anthropicサンドボックス脱出対応レポート**: 2026年7月のClaude脱出事案への具体的対応策が公式レポートとして公開された。マルチエージェント・Claude Code運用者には安全設計の参照資料として価値が高い。</li>
+<li>**米国防省GenAI.mil拡充**: ChatGPT Mil・Grok for Governmentが追加され、政府のAI活用が加速。AI政策の一次情報として追跡価値あり（公務員視点）。</li>
+<li>**Runway「Solaris」発表**: コード不要のUIリアルタイム生成ツール。エンジニア以外のUI生成民主化という潮流。</li>
+<li>**Google TimesFM-3無料公開**: 複数変数対応の汎用時系列予測モデル。金融・FX時系列への応用可能性が高い。</li>
+<li>**GitHub Copilot Business/Enterprise再開**: 8月末の一時停止から9月1日に復旧。</li>
+</ul>
+
+<p>※この記事はfact_checkなし。公式ソース直接確認を推奨。</p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>過去7日の記事数推移：</p>
+
+<p>| 日付 | 記事数 |</p>
+<p>|------|--------|</p>
+<p>| 08-27 | 8 |</p>
+<p>| 08-28 | 7 |</p>
+<p>| 08-29 | 6 |</p>
+<p>| 08-30 | 7 |</p>
+<p>| 08-31 | 16 |</p>
+<p>| 09-01 | 4 |</p>
+<p>| 09-02 | 12 |</p>
+<p>| <strong>09-03</strong> | <strong>4</strong> |</p>
+
+<p><strong>差分と所感</strong>: 8月31日のピーク（16件）から9月1日に急落（4件）したが、9月2日に12件と回復した後、本日は4件と少数精鋭の構成。</p>
+<p>claude・agent・mcp・model・tradingの5テーマは過去7日間を通じた常連で、本日もclaude-codeとtradingが主軸となった。</p>
+<p>特筆すべきは「制限変更」という具体的なアクション起点のニュースが複数記事で裏付けられた点。次の節目は9月13日（プロモ終了）と9月14日（新制限開始）。</p>
+
+</body>
+</html>

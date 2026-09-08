@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-09-06</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-09-06 | 5件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-09-06</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>9月6日は「規制の夜明け」とも呼べる転換点だった。EU AI Actが本格的なコンプライアンス検査フェーズに突入する一方、Anthropicがキャッシュコストを75%削減し価格競争に打って出た。AIモデルは週次リリースが当たり前になり、GPT-6 Astra・Fable 5.1・World Labs Atlasが9月最初の週だけで出揃った。FX自動取引との接点では、「LLMは価格予測の主役ではなくセンチメント分析のアシスタント」という業界知見がますます固まりつつある。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>Fable 5.1・Mythos 5.1 GA ＋ キャッシュ75%削減（一次ソース確認済み）</h3>
+
+<p>9月1日付けでAnthropicがFable 5.1とMythos 5.1を同時リリースした。Fable 5.1は価格をFable 5と据え置き（$10/$50 per MTok）のまま、キャッシュリードコストを<strong>$1.00→$0.25/M（75%削減）</strong>という大幅なコスト改善を実現。Terminal-Bench-Scienceスコアは52.6%（Fable 5の24.7%から倍増）、1Mコンテキスト・128K出力対応と能力面でも向上している。</p>
+
+<p>コスト面での変化はClaude Codeのヘビーユーザーに直撃する話だ。プロンプトキャッシュを積極活用している場合、同じ使用量で請求が実質的に圧縮される。長文コンテキストを持ち回るエージェント構成（MCP連携・複数ツール呼び出し）では恩恵が大きい。</p>
+
+<p>Mythos 5.1はライフサイエンス・サイバーセキュリティ組織向けの制限版モデルで一般利用者への影響は限定的だが、Admin APIのベータ卒業やMicrosoft Foundry経由でのSkills API/Files API展開など、エンタープライズ方面の整備が着実に進んでいる。</p>
+
+<p>&gt; 参照: https://explainx.ai/blog/anthropic-alignment-security-update-mythos-cyber-incidents-september-2026</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>9月第1週：主要モデルリリースの高密度化（一次ソース確認済み）</h3>
+
+<p>9月は6モデル/5プロバイダーが確認済みという異常な密度でスタートした。中でも注目はGPT-6 Astra（9/3 GA）だ。computer use対応・1.05Mコンテキスト・価格$10/$50という仕様で、Greg Brockman氏が「AGIの始まり」と発言（Fortune誌で確認）。ソフトウェアエンジニアリング・科学・3D/CADタスクでSOTAを主張しており、Claude Codeとの競合軸が明確になってきた。</p>
+
+<p>World Labs Atlasは「Spatial Intelligence（空間知能）」という新カテゴリを提示。Googleは月内にGemini Flash系3バリアントを連発するという週次対抗アップデート戦略を取っており、AIモデル選択の複雑さは今後も増す一方だ。</p>
+
+<p>日本語情報では、Qiitaのaakan氏まとめ（9/6付け）がMicrosoftのMAI-Transcribe-2（競合比最大10倍速、60言語対応）やOpenAIのサイバー防衛10億ドル投資（Daybreak for Frontline Defenders・Defense Factory）を取り上げている。</p>
+
+<p>&gt; 参照:</p>
+<p>&gt; - https://local-ai-zone.github.io/blog/September_2026_AI_Model_Updates.html</p>
+<p>&gt; - https://qiita.com/aakan/items/bd6199661b6a33d2b433</p>
+
+<h3>EU AI Act コンプライアンス検査開始、米は規制緩和路線を鮮明化（一次ソース確認済み）</h3>
+
+<p>8月2日に高リスクシステムへの移行期間が終了し、9月からEU AI OfficeおよびEU24か国監督機関が本格的なコンプライアンス検査を開始した。違反時の制裁は最大€35M または全世界年間売上の7%という厳しいもので、EU向けサービスを持つ組織は対応コストが現実化している。</p>
+
+<p>一方で米国はG20閣僚会議でAI規制緩和を明確に主張、産業成長優先の路線を維持。カリフォルニアのSB 1047（フロンティアAIモデルの安全義務法案）は知事署名デッドラインが9/30に迫っており、動向要注視だ。</p>
+
+<p>公務員として制度調査に慎重なユーザーにとって、EU AI Actのコンプライアンス要件は将来の行政DX・AI調達に直結する知識として蓄積価値がある。</p>
+
+<p>&gt; 参照: https://www.aljazeera.com/news/2026/9/2/us-pushes-looser-approach-to-ai-regulation-while-eu-pushes-new-law</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #ea580c; padding-left: 12px;">AIトレーディング</h2>
+
+<h3>FX Prime Bot に見るLLM×FX 2026年の役割分担</h3>
+
+<p>日本語記事（FinancialSynapse）がMT5＋Node.js＋Python＋LLMのハイブリッドアーキテクチャを持つ「FX Prime Bot」の構成を解説している。bpr_labのFX自動取引と近い技術スタックであり、参照価値が高い。</p>
+
+<p>核心的なポイントは役割分担の明確化だ：<strong>LLMは「価格予測の主力」ではなく「センチメント分析・情報整理のアシスタント」</strong>として使う、というのが2026年時点での業界コンセンサスとして固まっている。突発的経済イベントへのAI対応の限界を素直に認めた上で、機械学習・強化学習との組み合わせで運用するのが現実解とされている。</p>
+
+<p>現行の取引システムでLLMを活用する場合、この「センチメント補助」の位置づけを維持しつつ、Fable 5.1のキャッシュコスト削減でAPIコールコストを最適化できる可能性がある。</p>
+
+<p>&gt; 参照: https://financialsynapse.com/ai-fx-llm-forcast/</p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>過去7日の記事数: 08/30（16件）→ 08/31（4件）→ 09/01（4件）→ 09/02（12件）→ 09/03（4件）→ 09/04（5件）→ 09/05（9件）→ 09/06（5件）</p>
+
+<p>週次の変動幅が大きい（4〜16件）が、recurring_themesは `claude / agent / mcp / llm / trading` で安定している。9月に入りモデルリリースが重なったことで「競合比較」視点の記事が増加傾向にある。EU AI Act施行との絡みで「規制×AI」テーマが浮上しており、これは先週まで表に出ていなかった新たな軸だ。Anthropicのコスト削減・新モデルGA攻勢は今週のみ集中トピックとして注目が集まっており、来週以降はユースケース報告（実際に何が速くなったか）が続くと予測される。</p>
+
+</body>
+</html>

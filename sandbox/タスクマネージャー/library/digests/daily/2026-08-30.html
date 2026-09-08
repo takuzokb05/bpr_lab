@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Daily Digest - 2026-08-30</title>
+<style>
+  :root { --bg: #fafafa; --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111; --text: #e5e5e5; --muted: #9ca3af; --border: #374151; }
+    a { color: #60a5fa; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; padding: 2rem 1rem; max-width: 800px; margin: 0 auto; font-size: 16px; }
+  h1 { font-size: 1.6rem; margin: 1.5rem 0 0.8rem; }
+  h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  h3 { font-size: 1.1rem; margin: 1.2rem 0 0.4rem; }
+  p { margin: 0.6rem 0; }
+  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
+  li { margin: 0.3rem 0; }
+  a { color: #2563eb; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="meta">2026-08-30 | 7件の記事から生成</div>
+<h1>AIデイリーダイジェスト: 2026-08-30</h1>
+
+<h2>今日のハイライト</h2>
+
+<p>Claude Code v2.1.245が大型アップデート——Linuxバイナリ75MB化・restricted mode・token詳細表示が同時リリース。</p>
+<p>MCP周辺の記事が集中し、GitHub・PostgreSQL・Playwright・Context7の実践知見が充実。</p>
+<p>モデル選択の実務判断材料として、Opus 5とFable 5の価格・性能比較（一次ソース確認済み）が出た。</p>
+<p>エージェントフレームワーク勢力図も変動中——AutoGenがメンテナンスモードへ、Microsoft Agent Framework 1.0が登場。</p>
+<p>今日は全7本、Claude Code / エコシステム記事が中心でトレーディング系は0本。</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #2563eb; padding-left: 12px;">Claude Code・エコシステム</h2>
+
+<h3>8月29日アップデート：3つの即効性ある変更（一次ソース確認済み）</h3>
+
+<p>8月29日リリースのClaude Code最新版は、ヘビーユーザーほど恩恵が大きい。</p>
+<p>まず <strong>Linuxバイナリが約75MB</strong>（従来比約1/4.5）に圧縮された（zstd採用）。CI/CD環境でのインストール時間短縮に直結する。</p>
+<p>次に <strong>`/cost`・`/usage`・`/tasks` コマンドにトークン詳細表示</strong> が追加された。セッション・タスク単位でトークン消費がわかるようになったため、コスト最適化の打ち手が立てやすくなった。</p>
+<p>`/permissions` 画面には <strong>Auto modeタブ</strong> が加わり、デフォルトルールセットの確認とallow/denyルールのUI追記が可能になった。</p>
+
+<p>もっとも注目すべきは <strong>`--restricted mode`</strong> の追加だ。Bash実行・WebFetchを無効化し、ファイルツールをworking dir内に限定するセキュリティ強化モード。信頼できないコードベースのレビュー・監査用途に使える。「小さく試して実績を積む」スタイルで、まずレビュー専用セッションにこのモードを組み合わせてみると判断しやすい。</p>
+<p>v2.1.245はLinux最新glibc環境での起動クラッシュバグも修正済み。[^1]</p>
+
+<h3>Hooks + MCPで広がる自動化の射程</h3>
+
+<p>今日はHooksとMCPに関する実践記事が計3本出た。ストーリーとして読むと「Claude Codeの自動化できる範囲がさらに広がった」という一言に集約できる。</p>
+
+<p><strong>Hooksの活用パターン</strong>（2026年チュートリアル、全21イベント対応）は3軸に整理される——①enforcement（lint・安全ゲート・監査ログ）②observability（コマンドロギング・Slack通知）③automatic side effects（フォーマット自動適用）。</p>
+<p>スラッシュコマンドでデプロイをトリガーし、PostToolUse hookでBashコマンドを自動ログする複合パターンは、運用中のFX自動取引ログ管理にそのまま転用できる発想だ。[^2]</p>
+
+<p><strong>MCP実践</strong>では4系統が有用と評価されている——GitHub公式MCP（PR作成・Issue検索を自然言語で）、PostgreSQL MCP（マイグレーションSQL自動生成）、Playwright（E2Eテスト自動化）、Context7（ライブドキュメント取り込みでハルシネーション激減）。</p>
+<p>MCPの2026-07-28仕様では <strong>ステートレスプロトコルコア</strong> に転換しており、設定シンプル化・ロードバランサ対応が実現した。月間97億回超のSDKダウンロードを誇り、Linux Foundation傘下Agentic AI Foundationが統治する本格エコシステムになった。[^3][^4]</p>
+
+<h3>Claude Agent SDK：90分でエージェント構築</h3>
+
+<p>Anthropicが無償公開するClaude Agent SDKのハンズオンガイド（Tech Insider）が出た。</p>
+<p>`@tool` デコレータで任意のPython関数をClaudeが呼べるツールに変換、`query()` でエージェントループを起動するだけで、ファイルR/W・Bash実行・WebSearch・サブエージェント並列起動がゼロ設定で使える。</p>
+<p>実装例として「リポジトリトリアージエージェント」（TODO/FIXME/HACKコメントをスキャン→サブエージェントで重大度評価→Markdownレポート集約）が示されており、CI組み込みの構成参考になる。[^5]</p>
+
+<p>---</p>
+
+<h2 style="border-left: 4px solid #9333ea; padding-left: 12px;">AIニュース・業界動向</h2>
+
+<h3>モデル選択の実務判断材料：Opus 5 vs Fable 5（一次ソース確認済み）</h3>
+
+<p>DataCampがClaude Opus 5（2026-07-24リリース）とFable 5（2026-06-09）の詳細比較を公開した。</p>
+<p><strong>価格差はちょうど2倍</strong>——Opus 5が$5/$25/Mトークン、Fable 5が$10/$50/Mトークン。</p>
+<p>両モデルとも1Mコンテキスト・最大128k出力に対応し、コーディング・知識作業ではほぼ同等以上の性能。</p>
+<p>実務的な使い分けは明快：<strong>Fable 5が必要なのは政府輸出規制ゲートやMythos-class安全審査が必須の場合のみ</strong>、それ以外はOpus 5一択でコストを半減できる。</p>
+
+<p>注：「Opus 5がFable 5を上回る」という記事の一部主張は一次ソースで確認できず、誇大表現の可能性がある。Frontier-Bench v0.1スコア43.3%（Opus 5）は確認済み。[^6]</p>
+
+<h3>フレームワーク勢力図の地殻変動（一次ソース確認済み）</h3>
+
+<p>エージェントフレームワーク選定の判断基準が更新された。</p>
+<p><strong>AutoGenがメンテナンスモード</strong>に移行済み（移行開始は2025年10月）。長期プロジェクトでは1〜2年内の移行計画が必要になる。</p>
+<p>代替として注目すべきは <strong>Microsoft Agent Framework 1.0</strong>（2026-04-03リリース確認済み）——Semantic Kernel + AutoGenを統合した統一エンタープライズ基盤で、厳格セキュリティ要件にも対応。</p>
+<p><strong>LangGraph</strong> は月間PyPIダウンロード3000万超、金融機関・製造業での本番採用が増加しており複雑ワークフローの本命。</p>
+<p><strong>CrewAI v1.13.0</strong>（2026年4月）はGPT-5・マルチモーダル対応を追加しチームシミュレーション用途で健在。</p>
+
+<p>富士通研究所フレームワークを含め、主要プレーヤーはすべてGoogle A2A + Anthropic MCPに対応済みで、エコシステム横断通信が実現した。[^7]</p>
+
+<p>---</p>
+
+<h2>継続トレンド</h2>
+
+<p>過去7日間の記事数推移：23日(3)→24日(3)→25日(12)→26日(3)→27日(8)→28日(7)→29日(6)→<strong>本日(7)</strong>。</p>
+
+<p>ピーク（25日の12本）から落ち着いてきたが、<strong>claude・agent・mcp</strong> の3テーマは7日連続でランクイン。</p>
+<p>本日はこれに <strong>model（Opus 5比較）</strong> と <strong>フレームワーク選定</strong> が加わった。</p>
+<p>トレーディング系テーマは過去7日間のrecurring themesに「trading」が含まれるが、本日は関連記事ゼロ。FX自動取引周辺の動向はしばらく収集待ち。</p>
+
+<p>MCPの2026-07-28仕様対応が各所で言及されるようになっており、ステートレス化の実装事例が来週以降も増加する見込み。Claude Code Hooksも引き続き実践記事が出続けており、定着フェーズに入ったと判断できる。</p>
+
+<p>---</p>
+
+<p>[^1]: https://explainx.ai/blog/claude-code-weekly-update-faster-startup-token-visibility-august-2026</p>
+<p>[^2]: https://www.gilricardo.com/blog/claude-code-hooks-tutorial-2026</p>
+<p>[^3]: https://zenn.dev/long910/articles/2026-06-13-mcp-servers-practical</p>
+<p>[^4]: https://www.frugaltesting.com/blog/claude-ai-and-mcp-servers-the-developers-practical-guide-for-2026</p>
+<p>[^5]: https://tech-insider.org/au/how-to-use-claude-agent-sdk-2026/</p>
+<p>[^6]: https://www.datacamp.com/blog/claude-opus-5-vs-claude-fable-5</p>
+<p>[^7]: https://arpable.com/artificial-intelligence/ai-multiagent-development-frameworks-guide/</p>
+
+</body>
+</html>
