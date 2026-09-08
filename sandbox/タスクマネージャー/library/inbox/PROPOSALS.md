@@ -5408,3 +5408,28 @@ Claude Code v2.1.257以降、`.claude/settings.json` に `bashOutputMaxChars` �
 **提案内容:**
 TradingAgentsがv0.4.0をリリース（80,000スター超）。主な変更: FRED macroデータ・ソーシャルセンチメントのlook-ahead/point-in-time修正（バックテスト精度向上）、GPT-5.6/GLM-5.3モデル対応追加、CLIチェックポイント再開機能。FX自動取引プロジェクトでLLMエージェント組み込みを検討する場合、最新版の変更内容を確認しサンプルコードをアップデートすることを推奨。
 
+
+---
+
+## 2026-09-08 収集分からの提案
+
+### 1. Claude Code Skills管理 — /skill-doctor の活用
+
+**出典:** articles/2026-09-08_3850_WEB_ClaudeCode-2-1-261-SkillDoctor-PolicyDiagnostics-ccleaks.md
+
+**提案内容:**
+Claude Code v2.1.261から`/skill-doctor`コマンドが追加された。タスクマネージャーでは現在8個のスキルが登録されているが、定期的に/skill-doctorを実行して未使用スキルやコンテキスト消費量過大なスキルを特定・剪定することを推奨。また`bashOutputMaxChars`に加え`taskOutputMaxChars`も128K文字まで設定可能になったため、情報収集スキルの長いPython出力に合わせて設定値を最適化することを検討。
+
+### 2. CLAUDE.md vs settings.json のセキュリティ指針
+
+**出典:** articles/2026-09-08_3852_WEB_ClaudeCode-Security-BestPractices-Permissions-Hooks-MCP-GeneralAnalysis.md
+
+**提案内容:**
+General Analysisの調査で「CLAUDE.mdに書いたルールはエージェントが意図せず上書きする可能性がある」ことが明示された。重要な強制ルール（機密ファイルアクセス禁止・特定Bashコマンドのdeny等）はsettings.jsonのdeny/askルールまたはhooksで実装すべき。タスクマネージャーのCLAUDE.mdを見直し、「ルール」として書かれている内容のうちセキュリティクリティカルなものをsettings.jsonへ移行する検討を推奨。
+
+### 3. MCP 2026-07-28 ステートレス化 — FX自動取引MCPサーバーへの影響
+
+**出典:** articles/2026-09-08_3854_WEB_MCP-2026-07-28-Stateless-Migration-Guide-AAIF.md
+
+**提案内容:**
+MCP 2026-07-28仕様でプロトコルレベルがステートレス化された（セッション・初期化ハンドシェイク廃止）。FX自動取引プロジェクトでMCPサーバーを利用している場合、SDK更新（TypeScript/Python）による動作確認が必要。ステートレス設計済みなら追加コスト最小だが、セッション依存の実装がある場合は要リファクタリング。TypeScript/Python SDKを最新版に更新して互換性を確認することを推奨。

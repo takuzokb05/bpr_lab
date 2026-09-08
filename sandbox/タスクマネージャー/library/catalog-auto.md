@@ -1872,3 +1872,39 @@ drop.md: URLなし（処理対象なし）
 | local-ai-zone September 2026 AI updates | 既存記事と重複（2026-08-16_3675） |
 | aiagentstore.ai July/August weeks | 既存記事と重複（2026-07-26_3097、2026-08-25_3745） |
 | その他重複URL多数 | 既存カバレッジと重複 |
+
+---
+
+## 2026-09-08 収集分（9件収集 → SIGNAL 8件）
+
+X投稿: 全12JSON（3日分 4ドメイン）tweets=0（VPS収集データなし）
+drop.md: URLなし（テンプレートのみ）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 976 | [2026-09-08_3850](articles/2026-09-08_3850_WEB_ClaudeCode-2-1-261-SkillDoctor-PolicyDiagnostics-ccleaks.md) | Claude Code 2.1.261: /skill-doctor追加・ポリシー診断強化・bashOutputMaxChars 128K設定（ccleaks.com EN） | claude-code | 未読 | #web-signal |
+| 977 | [2026-09-08_3851](articles/2026-09-08_3851_WEB_ClaudeCode-August2026-ForkMode-AutoMode-CrossSession-Techbytes.md) | Claude Code 2026年8月: Fork Mode/Auto modeデフォルト化・Cross-session messaging・Self-hosted（Techbytes EN） | claude-code | 未読 | #web-signal |
+| 978 | [2026-09-08_3852](articles/2026-09-08_3852_WEB_ClaudeCode-Security-BestPractices-Permissions-Hooks-MCP-GeneralAnalysis.md) | Claude Codeセキュリティベストプラクティス: Permissions/Hooks/MCP/Sandbox/CI-CD（GeneralAnalysis EN） | claude-code | 未読 | #web-signal |
+| 979 | [2026-09-08_3853](articles/2026-09-08_3853_WEB_ClaudeCode-DataEngineers-Skills-MCP-Hooks-ThePipeAndTheLine.md) | データエンジニア向けClaude Code: Skills/MCP(BigQuery/Snowflake)/Hooks/dbt連携（ThePipeAndTheLine EN） | claude-code | 未読 | #web-signal |
+| 980 | [2026-09-08_3854](articles/2026-09-08_3854_WEB_MCP-2026-07-28-Stateless-Migration-Guide-AAIF.md) | MCP 2026-07-28 移行ガイド: ステートレス化・Multi Round-Trip・Mcp-Methodヘッダー（AAIF EN） | claude-ecosystem | 未読 | #web-signal |
+| 981 | [2026-09-08_3856](articles/2026-09-08_3856_WEB_ClaudeCode-Skills-WhatIs-HowTo-CloudForAll-JA.md) | Claude Code Skillsとは？作り方・使い方・活用事例（CloudForAll JA） | claude-code | 未読 | #web-signal |
+
+### NOISEとして除外（2026-09-08）
+| 候補 | 理由 |
+|---|---|
+| X JSON全12件（2026-09-06〜08 4ドメイン） | tweets=0（VPS収集データなし）→archive済み |
+| drop.md | URLなし（テンプレートのみ） |
+| pinggy.io/blog/best_ai_trading_agents/ | 既収集（2026-06-04 #121, 2026-07-26 #3095, 2026-08-06 #3550, 2026-08-11 #3618） |
+| gradually.ai/en/changelogs/claude-code/ | 既収集（2026-08-08_3571） |
+| medium.com/data-science-collective/effective-claude-code-workflows | 既収集（2026-08-19_3700） |
+| ayautomate.com/blog/best-claude-code-workflows | 既収集（2026-08-08_3574, 2026-06-26_649） |
+| releasebot.io（各種） | 既収集（複数） |
+| o-mega.ai/articles/claude-agent-sdk-the-2026-deep-dive | 既収集（2026-07-11_845, 2026-07-21_3041） |
+| blog.modelcontextprotocol.io/posts/2026-07-28/ | 既収集（2026-08-05_3530, 2026-08-25_3742） |
+| blog.cloudflare.com/mcp-v2/ | 既収集（2026-08-16_3674） |
+| uravation.com/media/claude-md-best-practices-2026/ | 既収集（2026-06-20_585） |
+| qiita.com/nogataka/items/ad9995fb1b3db7055740 | 既収集（複数） |
+| tecniforge.com/claude-agent-sdk-2026-features/ | 既収集（2026-08-21_3724） |
+| devblogs.microsoft.com/agent-framework/microsoft-agent-framework-at-build-2026-announce/ | 既収集（2026-09-02_3810） |
+| blog.jetbrains.com/pycharm/2026/06/top-agentic-frameworks | 既収集（2026-08-06_3554） |
+| blog.pickmytrade.io multi-agent trading | 既収集（2026-07-25_3084） |

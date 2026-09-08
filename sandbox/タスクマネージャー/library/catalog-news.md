@@ -600,3 +600,12 @@
 | swadeshisync.com/ai-news-till-3rd-september-2026/ | 9/3以前分で既収集と重複 |
 | tech-noisy.com/2026/09/05/ai-daily-news-2026-09-04/ | 9/4分は既収集（9/5以前）との重複度高 |
 | llm-stats.com/llm-updates | リスト型ページ |
+
+---
+
+## 2026-09-08 収集分（ai-news: 2件SIGNAL）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 455 | EU AI Act 2026年9月: 透明性義務発効・コンプライアンス検査開始（HR/銀行/医療3分野）・高リスク義務は2027-12延期（LegalNodes EN） | en | 未読 | #ai-news #regulation #eu-ai-act #compliance #web-signal | articles/2026-09-08_3855_WEB_EU-AI-Act-2026-September-Compliance-Enforcement-LegalNodes.md |
+| 456 | AI最新ニュースまとめ No.128 2026-09-01: GPT-5.6全プラン展開・Grok Bot/Gemini 3.7 Flash発表・NIKKEI KAI MCP・NEC×Anthropic協業（メディアターミナル JA） | ja | 未読 | #ai-news #llm #model-release #mcp #nec-anthropic #web-signal | articles/2026-09-08_3857_WEB_AI-News-September1-2026-LLM-Agent-NEC-Anthropic-MediaTerminal-JA.md |
