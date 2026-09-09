@@ -5433,3 +5433,28 @@ General Analysisの調査で「CLAUDE.mdに書いたルールはエージェン�
 
 **提案内容:**
 MCP 2026-07-28仕様でプロトコルレベルがステートレス化された（セッション・初期化ハンドシェイク廃止）。FX自動取引プロジェクトでMCPサーバーを利用している場合、SDK更新（TypeScript/Python）による動作確認が必要。ステートレス設計済みなら追加コスト最小だが、セッション依存の実装がある場合は要リファクタリング。TypeScript/Python SDKを最新版に更新して互換性を確認することを推奨。
+
+---
+
+## 2026-09-09 収集分からの提案
+
+### 1. Anthropic Managed Agents 新機能 — GitHub-Loaded Skills と Budget Controls の活用
+
+**出典:** articles/2026-09-09_3861_WEB_Anthropic-DevPlatform-September2026-AdminAPI-GA-ManagedAgentsBudget-Releasebot.md
+
+**提案内容:**
+Claude Managed Agentsに「GitHub-Loaded Skills」機能が追加された。タスクマネージャーの `.claude/skills/` 配下に蓄積されているスキル群（情報収集・curate・digest等）を GitHubリポジトリから直接ロードするManaged Agentsセッションに組み込むことが可能になった。また Budget Controls（支出上限）・Geo-Pinned Inference（データ所在地指定）も追加されたため、コスト管理が必要なルーチンタスク（日次収集等）でManaged Agentsの採用を検討するタイミングかもしれない。
+
+### 2. NSA/CISA/FBI 勧告 — APIキー管理とアクセス監視の見直し
+
+**出典:** articles/2026-09-09_3860_WEB_NSA-CISA-FBI-Chinese-AI-Distillation-Advisory-AA26-251A-CISA.md
+
+**提案内容:**
+NSA等は「不正アカウントによる産業規模モデル蒸留」が行われていると断定した。Anthropic・OpenAI側が「疑わしいアカウントの応答を静かに劣化させる」対応をとる可能性があるため、FX自動取引・情報収集ルーチン等でAPIを大量利用する場合は「誤検知による品質劣化」に注意が必要。VPS上のAPIキーが漏洩・共有されていないか確認し、anthropic-workspace-idヘッダー（新機能）を活用してリクエスト監査ログを整備することを推奨。
+
+### 3. Meta Muse ローンチ — パーソナルAIエージェント競争の本格化
+
+**出典:** articles/2026-09-09_3859_WEB_Meta-Muse-Personal-AI-Agent-Launch-September8-AboutFB.md
+
+**提案内容:**
+MetaのMuse（専用Secure VM・Google Workspace等連携・$0-$100/月）ローンチはAnthropicのManaged Agents・OpenAI Agentsと直接競合する。現在FX自動取引やタスクマネージャー系ツールで「ユーザーの代わりにアクションを取る」エージェント設計を検討している場合、Museのアーキテクチャ（専用VM分離・承認ゲート設計・プロアクティブ通知）は参考になる設計パターン。特に「エージェントが作業中にユーザー承認が必要なときに通知する」設計は、FX自動売買の売買承認フローに応用可能。

@@ -1888,6 +1888,8 @@ drop.md: URLなし（テンプレートのみ）
 | 979 | [2026-09-08_3853](articles/2026-09-08_3853_WEB_ClaudeCode-DataEngineers-Skills-MCP-Hooks-ThePipeAndTheLine.md) | データエンジニア向けClaude Code: Skills/MCP(BigQuery/Snowflake)/Hooks/dbt連携（ThePipeAndTheLine EN） | claude-code | 未読 | #web-signal |
 | 980 | [2026-09-08_3854](articles/2026-09-08_3854_WEB_MCP-2026-07-28-Stateless-Migration-Guide-AAIF.md) | MCP 2026-07-28 移行ガイド: ステートレス化・Multi Round-Trip・Mcp-Methodヘッダー（AAIF EN） | claude-ecosystem | 未読 | #web-signal |
 | 981 | [2026-09-08_3856](articles/2026-09-08_3856_WEB_ClaudeCode-Skills-WhatIs-HowTo-CloudForAll-JA.md) | Claude Code Skillsとは？作り方・使い方・活用事例（CloudForAll JA） | claude-code | 未読 | #web-signal |
+| 982 | [2026-09-08_3855](articles/2026-09-08_3855_WEB_EU-AI-Act-2026-September-Compliance-Enforcement-LegalNodes.md) | EU AI Act 2026年9月: コンプライアンス要件・施行スケジュール・事業リスク（LegalNodes EN） | ai-news | 未読 | #web-signal |
+| 983 | [2026-09-08_3857](articles/2026-09-08_3857_WEB_AI-News-September1-2026-LLM-Agent-NEC-Anthropic-MediaTerminal-JA.md) | AI最新ニュースまとめ 2026年9月1日: LLM・AIエージェント・NEC×Anthropic・Grok Bot（MediaTerminal JA） | ai-news | 未読 | #web-signal |
 
 ### NOISEとして除外（2026-09-08）
 | 候補 | 理由 |
@@ -1908,3 +1910,47 @@ drop.md: URLなし（テンプレートのみ）
 | devblogs.microsoft.com/agent-framework/microsoft-agent-framework-at-build-2026-announce/ | 既収集（2026-09-02_3810） |
 | blog.jetbrains.com/pycharm/2026/06/top-agentic-frameworks | 既収集（2026-08-06_3554） |
 | blog.pickmytrade.io multi-agent trading | 既収集（2026-07-25_3084） |
+
+---
+
+## 2026-09-09 収集分（6件収集 → SIGNAL 6件）
+
+X投稿: VPS収集データなし（inbox/x/ にJSONファイルなし）
+drop.md: URLなし（テンプレートのみ）
+
+| # | ファイル | タイトル（要約） | テーマ | 状態 | タグ |
+|---|---|---|---|---|---|
+| 984 | [2026-09-09_3858](articles/2026-09-09_3858_WEB_NVIDIA-Acquires-HuggingFace-13B-Confirmed-NVIDIABlog.md) | NVIDIA が Hugging Face を約$13Bで正式買収発表（2026年9月3日・NVIDIA公式ブログ） | ai-news | 未読 | #web-signal |
+| 985 | [2026-09-09_3859](articles/2026-09-09_3859_WEB_Meta-Muse-Personal-AI-Agent-Launch-September8-AboutFB.md) | Meta パーソナルAIエージェント「Muse」正式ローンチ — 専用Secure VM・$0/$20/$100/月（about.fb.com EN） | ai-news | 未読 | #web-signal |
+| 986 | [2026-09-09_3860](articles/2026-09-09_3860_WEB_NSA-CISA-FBI-Chinese-AI-Distillation-Advisory-AA26-251A-CISA.md) | NSA・CISA・FBI が中国AI企業6社の産業規模モデル蒸留を正式警告 — AA26-251A（CISA公式 EN） | ai-news | 未読 | #web-signal |
+| 987 | [2026-09-09_3861](articles/2026-09-09_3861_WEB_Anthropic-DevPlatform-September2026-AdminAPI-GA-ManagedAgentsBudget-Releasebot.md) | Anthropic DevPlatform 9月更新: Admin API GA・Managed Agents Budget/Geo/Skills・Fable 5.1 GA（Releasebot EN） | claude-ecosystem | 未読 | #web-signal |
+| 988 | [2026-09-09_3862](articles/2026-09-09_3862_WEB_AI-Brief-September-9-2026-MetaMuse-NSA-OpenAI-NvidiaHF-ArtificiallyIntimidating.md) | AI Brief Sep 9, 2026: Meta Muse・NSA中国AI警告・OpenAI数学賞・NVIDIA-HF（ArtificiallyIntimidating EN） | ai-news | 未読 | #web-signal |
+| 989 | [2026-09-09_3863](articles/2026-09-09_3863_WEB_Top-Tech-News-September-9-2026-Google-Meta-OpenAI-TechStartups.md) | Top Tech News Sep 9, 2026: Google AlphaGenome・Meta Muse・OpenAI数学・NVIDIA-HF（TechStartups EN） | ai-news | 未読 | #web-signal |
+
+### NOISEとして除外（2026-09-09）
+| 候補 | 理由 |
+|---|---|
+| medium.com/data-science-collective/effective-claude-code-workflows | 既収集（2026-08-08_3571、2026-06-03、2026-05-29） |
+| collabnix.com/claude-code-best-practices-10-workflow-tips | 既収集（2026-08-14_3640） |
+| ayautomate.com/blog/best-claude-code-workflows | 既収集（2026-08-08_3574） |
+| gilricardo.com/blog/claude-code-hooks-tutorial-2026 | 既収集（2026-08-30_3774） |
+| totalum.app/blog/claude-code-skills-totalum | 既収集（2026-07-09_845） |
+| agentlint.app/blog/claude-md-best-practices-2026/ | 既収集（2026-08-08_3573） |
+| blog.modelcontextprotocol.io/posts/mcp-roadmap/ | 既収集（複数） |
+| blog.cloudflare.com/mcp-v2/ | 既収集（2026-08-16_3674） |
+| pinggy.io/blog/best_ai_trading_agents/ | 既収集（複数） |
+| gptrader.app各種 | 既収集（複数） |
+| assetwhisper.com/ai-trading-agents | 既収集（2026-08-14_3641） |
+| releasebot.io/updates/anthropic/claude-code（Claude Code分） | 既収集（2026-08-06_3531） |
+| havoptic.com/tools/claude-code | 既収集（2026-08-23_3733） |
+| dev.to/lightningdev123/best-ai-trading-agents | 既収集（2026-08-10_3603） |
+| hatchworks.com/blog/claude/claude-agent-sdk | 既収集（2026-06-05_205） |
+| wavespeed.ai/blog Claude Managed vs SDK | 既収集（2026-05-04_1634） |
+| llm-stats.com/llm-updates | 既収集（2026-09-01_010） |
+| local-ai-zone.github.io/blog/September_2026 | 既収集（2026-09-06_002） |
+| aljazeera.com US-EU AI regulation | 既収集（2026-09-06_010） |
+| cubbbix.com/blog/ai-regulation-september-2026 | 既収集（2026-09-05_006） |
+| financialsynapse.com/ai-fx-llm-forcast/ | 既収集（2026-09-06_009） |
+| aiweekly.co（rolling URL） | 既収集（rolling URL、09-04_001、09-04_002） |
+| aiagentstore.ai/ai-agent-news/this-week（rolling URL） | 既収集（rolling URL、09-04_003、09-05_007） |
+| uravation.com（各種） | 既収集（複数） |
