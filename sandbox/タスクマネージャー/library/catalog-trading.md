@@ -438,3 +438,23 @@
 | gptrader.app/blog/best-ai-trading-agents-vs-traditional-bots-2026-comparison | アグリゲーター・比較記事でSIGNAL不足 |
 | crypto.news/leading-ai-day-trading-bots-in-2026-why-most-fail | 暗号通貨フォーカス、FX自動取引との関連性低 |
 | quantlabsnet.com/post/llm-showdown-which-ai-powers-the-best-python-algo-trading-bot-generator-in-2026 | 既収集類似記事多数で重複度高 |
+
+---
+
+## 2026-09-10 収集分（ai-trading: 2件SIGNAL）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 338 | MT5 Build 6180 AIアシスタント大幅拡張（FX News Group EN）: 9/4リリース・Strategy Testerレポート/ログ取得・分析・最適化起動支援・インジケーター追加・EA/ターミナルログアクセス——自然言語でMT5操作が可能なコパイロットに進化 | en | 未読 | #ai-trading #mt5 #ai-assistant #strategy-tester #web-signal | articles/2026-09-10_3866_WEB_MT5-Build6180-AI-Assistant-StrategyTester-September2026.md |
+| 339 | MT5 Platform Build 6180 AI Features詳細（MQL5公式フォーラム EN）: AIアシスタントがStrategy Tester統合コパイロットに・最適化の起動・テスターレポート分析・EAログ連携・Claude Code+MT5 MCP構成との組み合わせで強力なAI駆動取引システム構築へ | en | 未読 | #ai-trading #mt5 #ai-assistant #mql5 #strategy-tester #web-signal | articles/2026-09-10_3870_WEB_MQL5Forum-MT5-Build6180-AIAssistant-Details.md |
+
+### NOISEとして除外（2026-09-10 ai-trading）
+| 候補 | 理由 |
+|---|---|
+| pinggy.io/blog/best_ai_trading_agents/ | 既収集（複数回） |
+| bitsgap.com/blog/ai-trading-agents-vs-trading-bots-in-2026 | 既収集（複数回） |
+| coinedition.com/llm-trading-in-2026-can-ai-agents-actually-outperform-humans/ | 既収集（複数回） |
+| assetwhisper.com/ai-trading-agents-in-2026 | 既収集（2026-07-13 #875, 2026-08-14 #3653） |
+| gptrader.app/* | 既収集（複数URL、複数回） |
+| fxnx.com/en/blog/best-llm-forex-2026-tested-ranked | 既収集（2026-07-28 #3111） |
+| medium.com/@wise_crimson_lion_733 | 既収集（2026-06-08 #196） |

@@ -609,3 +609,21 @@
 |---|---|---|---|---|---|
 | 455 | EU AI Act 2026年9月: 透明性義務発効・コンプライアンス検査開始（HR/銀行/医療3分野）・高リスク義務は2027-12延期（LegalNodes EN） | en | 未読 | #ai-news #regulation #eu-ai-act #compliance #web-signal | articles/2026-09-08_3855_WEB_EU-AI-Act-2026-September-Compliance-Enforcement-LegalNodes.md |
 | 456 | AI最新ニュースまとめ No.128 2026-09-01: GPT-5.6全プラン展開・Grok Bot/Gemini 3.7 Flash発表・NIKKEI KAI MCP・NEC×Anthropic協業（メディアターミナル JA） | ja | 未読 | #ai-news #llm #model-release #mcp #nec-anthropic #web-signal | articles/2026-09-08_3857_WEB_AI-News-September1-2026-LLM-Agent-NEC-Anthropic-MediaTerminal-JA.md |
+
+---
+
+## 2026-09-10 収集分（ai-news: 2件SIGNAL）
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 457 | 米国AI規制 September 2026（Vorplabs EN）: Colorado ADMT施行（雇用・融資・住宅の自動意思決定に説明責任+オプトアウト義務）・California SB1047 Newsom署名期限9/30・FTC対CMG初の具体的AI欺まん執行命令・Connecticut SB 5が2026年最包括的AI法制成立 | en | 未読 | #ai-news #regulation #us-policy #colorado-admt #california-ai #ftc #web-signal | articles/2026-09-10_3867_WEB_Vorplabs-US-AI-Regulation-September2026-Colorado-California-FTC.md |
+| 458 | AI規制ニュース September 2026 スタートアップ版（Mean CEO EN）: EU AI Act Article 11技術ファイル審査フェーズ突入・欧州24カ国市場監視機関が第一波コンプライアンス検査実施中・34州で100本近いチャットボット規制法案・記録保持/人間監視/開示の義務化が現実に | en | 未読 | #ai-news #regulation #eu-ai-act #us-policy #startup #web-signal | articles/2026-09-10_3868_WEB_MeanCEO-AI-Regulation-September2026-Startup-Edition.md |
+
+### NOISEとして除外（2026-09-10 ai-news）
+| 候補 | 理由 |
+|---|---|
+| local-ai-zone.github.io/blog/September_2026_AI_Model_Updates.html | 既収集（2026-09-06 #3836） |
+| cubbbix.com/blog/ai-regulation-september-2026-global-update | 既収集（2026-09-05 #3831） |
+| businessinsider.jp/article/2609-how-much-did-major-generative-ai-service-fees/ | 既収集（2026-09-04 #3824） |
+| llmgateway.io/timeline | 既収集（2026-08-15 #3665、同一URL・同一トラッカー） |
+| llm-stats.com/llm-updates | 既収集（複数回） |

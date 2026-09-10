@@ -1499,3 +1499,29 @@
 | dev.to/nishilbhave/claudemd-best-practices-the-complete-2026-guide-435j | 既収集（2026-07-25 #3075, 2026-08-29 #3777） |
 | medium.com/data-science-collective/effective-claude-code-workflows-in-2026 | 既収集（2026-05-29 #035, 2026-08-19 #3700） |
 | genai-ai.co.jp/ai-kanri/blog/cc-skills-guide/ | 既収集（2026-08-04 #3523） |
+
+---
+
+## 2026-09-10 収集分（Web: 7件収集 → SIGNAL 3件 claude-code/claude-ecosystem | X: 0件（データなし））
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 1268 | Claude Fable 5.1 & Mythos 5.1 正式発表（Anthropic公式）: 9/1 GA・Fable 5比ベンチマーク全超・Terminal-Bench-Science 52.6（Fable 5: 24.7）・キャッシュリード75%削減（$1.25→$0.25/MTok）・EFS新セキュリティアーキテクチャ・Claude Codeのデフォルトモデルに即日採用・Mythos 5.1は制限付きアクセス | en | 未読 | #claude-ecosystem #model-update #fable51 #pricing #web-signal | articles/2026-09-10_3864_WEB_Anthropic-Claude-Fable51-Mythos51-Launch-Official-September2026.md |
+| 1269 | VentureBeat: Fable 5.1・Mythos 5.1、キャッシュ75%削減とEFSで価格競争力強化（9/1）: 同価格のまま高effortで大幅性能向上・GPT-5.6 Sol超え・Sonnet 5の値上げ見送り（$2/$10継続）・Managed AgentsにGitHubスキル/geo-ピン推論追加 | en | 未読 | #claude-ecosystem #model-update #fable51 #pricing #efs #web-signal | articles/2026-09-10_3865_WEB_VentureBeat-Claude-Fable51-75pctCacheReduction-EFS-September2026.md |
+| 1270 | Claude Skills & MCP Servers 2026実践ガイド（Codersera EN）: Skills=How（方法論）MCP=What（リソース）の明確区別・推奨アーキテクチャは「外部システム1本MCP+薄いSkillでオーケストレーション」・Classmethodが実測したMCPトークン削減効果・月間検索9,900回・Skillインストール2分 | en | 未読 | #claude-code #skills #mcp #practitioner-guide #web-signal | articles/2026-09-10_3869_WEB_Codersera-Claude-Skills-MCP-Practitioner-Guide-2026.md |
+
+### NOISEとして除外（2026-09-10 claude-code/claude-ecosystem）
+| 候補 | 理由 |
+|---|---|
+| www.gradually.ai/en/changelogs/claude-code/ | 既収集（2026-08-08 #3571, 2026-08-29 #3777等複数回） |
+| releasebot.io/updates/anthropic/claude-code | 既収集（複数回） |
+| releasebot.io/updates/anthropic/claude-developer-platform | 既収集（2026-09-09 #3861等） |
+| collabnix.com/claude-code-best-practices-10-workflow-tips | 既収集（2026-07-08 #812, 2026-08-14 #3646） |
+| marmelab.com/blog/2026/04/24/claude-code-tips | 既収集（2026-05-28 #032） |
+| blog.modelcontextprotocol.io/posts/mcp-roadmap/ | 既収集（2026-08-27 #3761） |
+| alloq.digital/en/blog/claude-agent-sdk/ | 既収集（2026-08-05 #3528） |
+| hidekazu-konishi.com/entry/claude_agent_sdk_complete_guide.html | 既収集（2026-08-01 #3144, 2026-08-25 #3750） |
+| totalum.app/blog/claude-agent-sdk-totalum-2026 | 既収集（複数回） |
+| dev.to/nishilbhave/claudemd-best-practices | 既収集（2026-07-25 #3075, 2026-08-29 #3777） |
+| buildcamp.io/guides/the-ultimate-guide-to-claudemd | 既収集（2026-07-13 #873） |
+| blink.new/blog/claude-md-best-practices | 既収集（2026-06-12 #248） |
