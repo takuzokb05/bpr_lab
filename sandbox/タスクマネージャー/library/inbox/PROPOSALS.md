@@ -5479,3 +5479,31 @@ MetaのMuse（専用Secure VM・Google Workspace等連携・$0-$100/月）ロー
 
 **提案内容:**
 Claude Fable 5.1（2026年9月1日GA）でキャッシュリードコストが$1.25→$0.25/MTok（75%削減）になった。日次収集ルーチン（情報収集+キュレーション）はClaudeの長いシステムプロンプトを毎回送信しており、プロンプトキャッシュが有効に機能している場合、このコスト削減が直接効いてくる。スケジュール設定や使用量モニタリングで節約効果を確認することを推奨。また同モデルのClaude CodeデフォルトモデルへのなったことでClaude Codeの品質も向上している可能性があり、長時間実行のルーチンタスクでの恩恵が期待できる。
+
+---
+
+## 2026-09-11 収集分からの提案
+
+### 1. Claude Code設定: bashOutputMaxChars / taskOutputMaxChars を拡張して日次収集ルーチンの出力トランケート問題を解消
+
+**出典:** articles/2026-09-11_3871_WEB_ClaudeCode-September2026-Changelog-v21263-gradually.md
+
+**提案内容:**
+Claude Code v2.1.x から `bashOutputMaxChars` / `taskOutputMaxChars` 設定で出力上限を最大128Kまで拡張できるようになった。日次収集ルーチン（daily-collect-and-curate）ではPythonスクリプトを通じて大量のテキストを処理しており、デフォルト上限（数万文字）を超えると切り捨てが起きてキュレーション精度が下がる可能性がある。`.claude/settings.json` または `~/.claude/settings.json` に以下を追加することを検討：
+```json
+{
+  "bashOutputMaxChars": 131072,
+  "taskOutputMaxChars": 131072
+}
+```
+
+### 2. Claude Code実験的機能: Function Hooksのスキル自動化への応用
+
+**出典:** articles/2026-09-11_3872_WEB_ClaudeCode-Function-Hooks-Preview-Flag-claudefast.md
+
+**提案内容:**
+Claude CodeにFunction Hooks（フラグ付きプレビュー）が追加された。従来のLifecycle Hooks（ツール呼び出し前後などのイベント）より細粒度で、特定の関数・ツール呼び出し時のみフックできる。`sandbox/タスクマネージャー/.claude/skills/` 配下の各スキルにおいて：
+- `collect-x-articles` スキルのAPI呼び出し前にレート制限チェックを挿入
+- `drop-pickup` スキルでGmailコネクタ呼び出し前に未処理件数のログ出力
+- `digest` スキルのWebFetch実行前にドメインホワイトリスト検証
+などへの応用が考えられる。`~/.claude/settings.json` の `experimental` フラグで有効化後、動作確認することを推奨。

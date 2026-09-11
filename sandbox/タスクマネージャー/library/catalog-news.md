@@ -627,3 +627,13 @@
 | businessinsider.jp/article/2609-how-much-did-major-generative-ai-service-fees/ | 既収集（2026-09-04 #3824） |
 | llmgateway.io/timeline | 既収集（2026-08-15 #3665、同一URL・同一トラッカー） |
 | llm-stats.com/llm-updates | 既収集（複数回） |
+
+---
+
+## 2026-09-11 収集分（ai-news: 0件SIGNAL）
+
+### NOISEとして除外（2026-09-11 ai-news）
+| 候補 | 理由 |
+|---|---|
+| local-ai-zone.github.io/blog/September_2026_AI_Model_Updates.html | 既収集（2026-09-06 #3836） |
+| cubbbix.com/blog/ai-regulation-september-2026-global-update | 既収集（2026-09-05 #3831） |

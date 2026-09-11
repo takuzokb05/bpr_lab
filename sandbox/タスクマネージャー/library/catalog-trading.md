@@ -458,3 +458,13 @@
 | gptrader.app/* | 既収集（複数URL、複数回） |
 | fxnx.com/en/blog/best-llm-forex-2026-tested-ranked | 既収集（2026-07-28 #3111） |
 | medium.com/@wise_crimson_lion_733 | 既収集（2026-06-08 #196） |
+
+---
+
+## 2026-09-11 収集分（ai-trading: 0件SIGNAL）
+
+### NOISEとして除外（2026-09-11 ai-trading）
+| 候補 | 理由 |
+|---|---|
+| coinedition.com/llm-trading-in-2026-can-ai-agents-actually-outperform-humans/ | 既収集（2026-07-14 #887, 2026-08-06 #3551, 2026-08-19 #3710, 2026-09-02 #3814） |
+| financialsynapse.com/ai-fx-llm-forcast/ | 既収集（2026-09-06 #3843） |

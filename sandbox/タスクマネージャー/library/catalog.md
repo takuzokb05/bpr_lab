@@ -1525,3 +1525,20 @@
 | dev.to/nishilbhave/claudemd-best-practices | 既収集（2026-07-25 #3075, 2026-08-29 #3777） |
 | buildcamp.io/guides/the-ultimate-guide-to-claudemd | 既収集（2026-07-13 #873） |
 | blink.new/blog/claude-md-best-practices | 既収集（2026-06-12 #248） |
+
+---
+
+## 2026-09-11 収集分（Web: 10件収集 → SIGNAL 1件 claude-code | X: 0件（データなし））
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 1271 | Claude Code Function Hooks — フラグ付きプレビュー（claudefa.st EN）: Lifecycle Hooksとは異なり「特定の関数/ツール呼び出し」に直接フック可能な新機能・experimental フラグで有効化・バリデーション/ロギング/確認ダイアログなどの用途・シンリンク経由ファイルアクセスのセキュリティバグ修正も同時実施 | en | 未読 | #hooks #claude-code #new-feature #experimental #function-hooks #web-signal | articles/2026-09-11_3872_WEB_ClaudeCode-Function-Hooks-Preview-Flag-claudefast.md |
+
+### NOISEとして除外（2026-09-11 claude-code/claude-ecosystem）
+| 候補 | 理由 |
+|---|---|
+| www.gradually.ai/en/changelogs/claude-code/ | 既収集（2026-07-02 #735, 2026-08-08 #3571, 2026-08-29 #3772等複数回） |
+| okhlopkov.com/claude-code-setup-mcp-hooks-skills-2026/ | 既収集（2026-04-18 #007, 2026-08-14 #3647） |
+| cryptul.co.jp/insights/articles/009-claude-evolution-timeline | 既収集（2026-06-12 #247） |
+| uravation.com/media/claude-code-update-operation-guide-2026/ | 既収集（2026-06-11 #227） |
+| digitalapplied.com/blog/claude-agent-sdk-production-patterns-guide | 既収集（2026-05-05 #1343, 2026-06-06 #150） |
