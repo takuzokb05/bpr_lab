@@ -5507,3 +5507,37 @@ Claude CodeにFunction Hooks（フラグ付きプレビュー）が追加され�
 - `drop-pickup` スキルでGmailコネクタ呼び出し前に未処理件数のログ出力
 - `digest` スキルのWebFetch実行前にドメインホワイトリスト検証
 などへの応用が考えられる。`~/.claude/settings.json` の `experimental` フラグで有効化後、動作確認することを推奨。
+
+---
+
+## 2026-09-12 分析から
+
+### 3. Anthropic Python SDK v1.0 (httpx2) の FX自動取引システムへの影響確認
+
+**出典:** articles/2026-09-12_3886_WEB_AnthropicPythonSDK-v1-Breaking-Migration-DigitalApplied.md, articles/2026-09-12_3887_WEB_AnthropicSDKPython-v1-0-0-GitHub-ReleaseNotes.md
+
+**提案内容:**
+Anthropic Python SDK v1.0.0（2026-08-20リリース）はHTTPクライアントをhttpx→httpx2に変更する破壊的変更を含む。`sandbox/FX自動取引/` のコードがAnthropicのAPIを直接呼び出している場合は以下を確認・対応:
+- `pip install anthropic` で v1.0.0 以上に更新済みか確認
+- OpenTelemetry/LangSmith等の監視スタックを使用している場合: `HTTPXClientInstrumentor` → `HTTPX2ClientInstrumentor` への更新が必要
+- `httpx` を直接インポートしているコードがある場合: `httpx2.alias_httpx()` を起動時に呼び出すか `httpx2` に直接切り替える
+- Python 3.10 未満で動作している場合: Python バージョンのアップグレードが必要
+
+### 4. `claude plugin eval` をスキル品質保証に活用する
+
+**出典:** articles/2026-09-12_3882_WEB_ClaudeCode-2-1-269-PluginEval-AITLDR.md
+
+**提案内容:**
+Claude Code v2.1.269 で `claude plugin eval` が追加された。`sandbox/タスクマネージャー/.claude/skills/` 配下の各スキル（curate, digest, drop-pickup等）にevalスイートを追加することで:
+- スキルが自然なフレーズで適切に呼び出されるか定量評価（WITH vs W/OUT スコア）
+- スキル更新後の品質担保（JSON+HTMLレポートでCI的に使用可能）
+- スキルが有効に貢献しているかのデルタ値で不要スキルの検出
+
+各スキルのSKILL.mdに `eval_cases:` セクションを追加する形式での実装を検討。
+
+### 5. MCP 2026-07-28 ステートレス仕様への対応検討
+
+**出典:** articles/2026-09-12_3888_WEB_MCP-2026-Roadmap-Stateless-Extensions-Obot.md
+
+**提案内容:**
+MCP 2026-07-28仕様でプロトコルがステートレス化（ハンドシェイク廃止・セッションIDなし）。`sandbox/タスクマネージャー/` で使用中のMCPサーバー（Gmail等）が新仕様に対応したSDKバージョンを使用しているか確認。メリット: LBスティッキールーティング不要でスケールアウト容易。新機能としてMCP Apps（iframe UI）・Tasks（非同期ツール呼び出し）が利用可能になるため、WebSearch結果の非同期収集など長時間タスクへの応用も検討。

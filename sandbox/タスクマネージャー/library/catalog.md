@@ -1542,3 +1542,31 @@
 | cryptul.co.jp/insights/articles/009-claude-evolution-timeline | 既収集（2026-06-12 #247） |
 | uravation.com/media/claude-code-update-operation-guide-2026/ | 既収集（2026-06-11 #227） |
 | digitalapplied.com/blog/claude-agent-sdk-production-patterns-guide | 既収集（2026-05-05 #1343, 2026-06-06 #150） |
+
+## 2026-09-12 収集分（Web: 13件収集 → SIGNAL 8件 claude-code/claude-ecosystem | X: 0件（データなし））
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 1272 | This Week in Claude Code, Codex & Gemini CLI (Sep 13, 2026 週次まとめ): v2.1.269のplugin eval・/output-style・GitLab MR認識・マネージドMCP・Bash差分表示を3ツール比較で整理 | en | 未読 | #claude-code #plugin-eval #output-style #mcp #web-signal | articles/2026-09-12_3881_WEB_ThisWeekClaudeCode-Sep13-2026-DEV.md |
+| 1273 | Claude Code 2.1.269 AI/TLDR: `claude plugin eval`で98件CLI変更・プラグインWITH/W/OUTスコア差分を定量評価・Bashにファイルdiff表示・マネージドMCPサインイン改善・セッション再開高速化 | en | 未読 | #claude-code #plugin-eval #new-feature #web-signal | articles/2026-09-12_3882_WEB_ClaudeCode-2-1-269-PluginEval-AITLDR.md |
+| 1274 | Claude Fable 5.1 & Mythos 5.1 ベンチマーク詳解（Vellum AI）: Terminal-Bench-Science 52.6%（Fable5比+27.9pt）・CursorBench 73.4%・SWE-bench Pro 81.2%・キャッシュ読み取り75%安（$0.25/MTok）・エージェンティック用途コスト最大45%削減 | en | 未読 | #claude-ecosystem #model-update #fable51 #benchmarks #pricing #web-signal | articles/2026-09-12_3883_WEB_ClaudeFable51-Mythos51-Benchmarks-Vellum.md |
+| 1275 | Claude Fable 5.1 ローンチ（MacRumors）: Claude Codeの誤検知60%削減・キャッシュ75%安・アライメントリスク「very low」→「low」に引き上げ・Mythos 5.1がMASK「less honest under pressure」・Sonnet 5値上げキャンセル | en | 未読 | #claude-ecosystem #model-update #fable51 #safety #pricing #web-signal | articles/2026-09-12_3884_WEB_ClaudeFable51-LowerCosts-MacRumors.md |
+| 1276 | Claude Fable 5.1・Mythos 5.1 MarkTechPost: Terminal-Bench-Science 52.6%・1Mコンテキスト・128K出力・アダプティブ思考常時オン・キャッシュ75%安・同一ウェイトで安全性キャリブレーション更新 | en | 未読 | #claude-ecosystem #model-update #fable51 #benchmarks #web-signal | articles/2026-09-12_3885_WEB_ClaudeFable51-Mythos51-TerminalBenchScience-MarkTechPost.md |
+| 1277 | Anthropic Python SDK v1.0 移行ガイド（DigitalApplied）: httpx→httpx2・Python3.10未満廃止・Text Completions削除・temperature/top_p/top_k削除・httpx2.alias_httpx()で互換・OpenTelemetryはHTTPX2ClientInstrumentorへ更新必須 | en | 未読 | #claude-ecosystem #sdk #breaking-change #migration #web-signal | articles/2026-09-12_3886_WEB_AnthropicPythonSDK-v1-Breaking-Migration-DigitalApplied.md |
+| 1278 | Anthropic Python SDK v1.0.0 公式リリースノート（GitHub）: httpx2移行・Python3.10必須・Text Completions廃止・パーソナルキー/サービスアカウントキー追加・BetaSkill→BetaContainerSkill改名・Google Cloud browser use対応 | en | 未読 | #claude-ecosystem #sdk #release-notes #breaking-change #web-signal | articles/2026-09-12_3887_WEB_AnthropicSDKPython-v1-0-0-GitHub-ReleaseNotes.md |
+| 1279 | MCP 2026-07-28仕様リリース分析（Obot）: プロトコルのステートレス化でLBスティッキールーティング不要・Extensions Framework（MCP Apps/Tasks）ファーストクラス化・OAuth 2.1認証強化・1万台超公開サーバー・9700万月間DL | en | 未読 | #claude-ecosystem #mcp #stateless #extensions #roadmap #web-signal | articles/2026-09-12_3888_WEB_MCP-2026-Roadmap-Stateless-Extensions-Obot.md |
+
+### NOISEとして除外（2026-09-12 claude-code/claude-ecosystem）
+| 候補 | 理由 |
+|---|---|
+| www.gradually.ai/en/changelogs/claude-code/ | 既収集（複数回） |
+| blog.mean.ceo/claude-code-news-september-2026/ | 既収集（複数回） |
+| releasebot.io/updates/anthropic/claude-code | 既収集（複数回） |
+| medium.com/data-science-collective/effective-claude-code-workflows-in-2026-... | 既収集 |
+| agentsroom.dev/claude-code-tips | 既収集 |
+| generalanalysis.com/guides/anthropic-claude-code-security-best-practices | 既収集 |
+| mcp.directory/blog/claude-code-best-practices | 既収集 |
+| blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate/ | 既収集 |
+| blog.modelcontextprotocol.io/posts/2026-07-28/ | 既収集 |
+| hidekazu-konishi.com/entry/claude_agent_sdk_complete_guide.html | 既収集 |
+| serpapi.com/blog/build-an-ai-agent-with-claude-agent-sdk/ | 既収集 |

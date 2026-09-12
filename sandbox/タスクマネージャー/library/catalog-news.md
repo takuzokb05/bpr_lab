@@ -637,3 +637,25 @@
 |---|---|
 | local-ai-zone.github.io/blog/September_2026_AI_Model_Updates.html | 既収集（2026-09-06 #3836） |
 | cubbbix.com/blog/ai-regulation-september-2026-global-update | 既収集（2026-09-05 #3831） |
+
+## 2026-09-12 収集分（ai-news: 5件SIGNAL | ai-trading: 0件SIGNAL | X: 0件（データなし））
+
+| # | タイトル（要約） | 言語 | 状態 | タグ | ファイル |
+|---|---|---|---|---|---|
+| 459 | DeepSeek V4.1-Flash公式（2026-09-10）: 552B MoE・KVキャッシュ890バイト/トークン（V4-Flashの1/4）・FP4量子化+クロスレイヤーアテンション再利用・1Mコンテキスト・$0.15/MTok（未キャッシュ）・MITオープンウェイト・9/14からv4-proが自動ルーティング | en | 未読 | #ai-news #llm #deepseek #kv-cache #open-weights #model-release #web-signal | articles/2026-09-12_3889_WEB_DeepSeekV4-1-Flash-Official-KVCache890B.md |
+| 460 | DeepSeek V4.1-Flash技術解説（MarkTechPost）: Causal Encoder-Decoder・FP4 KVキャッシュ量子化（FP16→FP4で4倍圧縮）+クロスレイヤーアテンション再利用で890バイト/トークン達成・45Tトークン学習・ネイティブマルチモーダル | en | 未読 | #ai-news #llm #deepseek #kv-cache #architecture #web-signal | articles/2026-09-12_3890_WEB_DeepSeekV4-1-Flash-FP4-KVCache-MarkTechPost.md |
+| 461 | DeepSeek V4.1-Flash KVキャッシュ深掘り（Context Studios）: FP4量子化でアテンションヘッド毎4倍削減・クロスレイヤー再利用で1Mコンテキスト=約890MBのキャッシュ・同一ハードでバッチサイズ拡大・サービングコスト大幅削減 | en | 未読 | #ai-news #llm #deepseek #kv-cache #technical #web-signal | articles/2026-09-12_3891_WEB_DeepSeekV4-1-Flash-890Bytes-KVCache-ContextStudios.md |
+| 462 | EU AI Act施行状況（BrightDefense）: 2026-08-02から Article 50/GPAI施行・高リスク延期（2027-2028）・第一波検査がHR/小売銀行/民間医療で開始・違反罰則最大€3500万/7%・12/02に移行期間終了 | en | 未読 | #ai-news #regulation #eu-ai-act #compliance #enforcement #web-signal | articles/2026-09-12_3892_WEB_EUAIAct-Enforcement-September2026-BrightDefense.md |
+| 463 | AIガバナンス施行時代の企業対応（GrowToYourFullest）: EU Article 50施行・コロラドADMT・カリフォルニアSB1000・ブラジルAI法2338/2023（9/16採決予定）・NIST SP 1353（コメント締切10/15）・実践5ステップ（台帳整備・高リスク評価・人間監視文書化等） | en | 未読 | #ai-news #regulation #eu-ai-act #us-policy #brazil #nist #enterprise #web-signal | articles/2026-09-12_3893_WEB_AIGovernance-Enforcement-Enterprise-GrowToYourFullest.md |
+
+### NOISEとして除外（2026-09-12 ai-news/ai-trading）
+| 候補 | 理由 |
+|---|---|
+| local-ai-zone.github.io/blog/September_2026_AI_Model_Updates.html | 既収集（2026-09-06 #3836） |
+| cubbbix.com/blog/ai-regulation-september-2026-global-update | 既収集（2026-09-05 #3831） |
+| vorplabs.com/ai-regulatory-updates/united-states/2026-09/... | 既収集（2026-09-10 #3867） |
+| llmgateway.io/timeline | 既収集（複数回） |
+| github.com/alpaca-23/test/issues/244-245 | 自動生成テストリポジトリのissue、一次情報なし |
+| financialsynapse.com/ai-fx-llm-forcast/ | 既収集（2026-09-11 #3880） |
+| dev.to/lightningdev123/best-ai-trading-agents-2026 | 既収集 |
+| bitsgap.com/blog/ai-trading-agents-vs-trading-bots-in-2026 | 既収集 |
