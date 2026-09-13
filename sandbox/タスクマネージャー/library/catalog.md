@@ -1570,3 +1570,22 @@
 | blog.modelcontextprotocol.io/posts/2026-07-28/ | 既収集 |
 | hidekazu-konishi.com/entry/claude_agent_sdk_complete_guide.html | 既収集 |
 | serpapi.com/blog/build-an-ai-agent-with-claude-agent-sdk/ | 既収集 |
+
+## 2026-09-13 収集分（Web: 10件収集 → SIGNAL 5件 claude-code/claude-ecosystem | X: 0件（空データ））
+| 1280 | Claude Code週次制限変更（DigitalApplied 2026-09-14〜）: +50%プロモが09-13終了→恒久+25%（元標準比）が09-14から開始。Pro/Max/Teamとも同比率調整。プロモ比で実頭数は減るが2026年5月以前より+25%恒久確保 | en | 未読 | #claude-code #limits #update #web-signal | articles/2026-09-13_3899_WEB_ClaudeCode-WeeklyLimits-Sep14-Change.md |
+| 1281 | Claude Code 2.1.268セキュリティ修正（Freedom.tech 2026-09-10）: !付きdenyルールのスコープリーク修正・シンボリックリンク経由のdenyルール適用漏れ修正・MCPシークレット出力漏洩防止・WebFetch 300秒タイムアウト追加——denyルール使用者は即時更新を推奨 | en | 未読 | #claude-code #security #deny-rules #mcp #web-signal | articles/2026-09-13_3900_WEB_ClaudeCode-2-1-268-SecurityFixes.md |
+| 1282 | Claude Code 2.1.269新機能（AICatchup 2026-09-11）: `claude plugin eval`でJSON+HTMLスコアリングレポート・`/output-style`でセッション中スタイル切替・Bashツール結果にファイルdiff追加——git権限確認リグレッションあり（2.1.270で修正予定） | en | 未読 | #claude-code #plugin-eval #output-style #new-feature #web-signal | articles/2026-09-13_3901_WEB_ClaudeCode-2-1-269-Features.md |
+| 1283 | AIエージェントフレームワーク2026年ランキング（Ampcome）: LangGraph・CrewAI・Microsoft Agent Framework（AutoGen+SK統合・2026-04 GA）・Google ADK・OpenAI Agents SDK・Claude Agent SDK（2026-04 GA）等10選。エンタープライズ選定基準: GAステータス・MCP互換性・オブザーバビリティ | en | 未読 | #claude-ecosystem #agent-framework #comparison #enterprise #web-signal | articles/2026-09-13_3902_WEB_AI-Agent-Frameworks-2026-Ranked-Enterprise.md |
+| 1284 | Claude活用おすすめMCPサーバー15選（株式会社仁頼 2026年4月版）: GitHub/Slack/Google Drive/Exa等を日本語で詳解。設定例・ユースケース・セキュリティTips。MCP公開サーバー1万超・SDK月次5億DL近くの普及状況も解説 | ja | 未読 | #claude-ecosystem #mcp #japanese #setup-guide #web-signal | articles/2026-09-13_3903_WEB_Claude-MCPServers-15Sen-Jinrai-JA.md |
+
+### NOISEとして除外（2026-09-13 claude-code/claude-ecosystem）
+| 候補 | 理由 |
+|---|---|
+| ccleaks.com/news/claude-code-2-1-268-sep-2026 | freedom.tech版と同趣旨（security fixes）、重複 |
+| aicatchup.com/news/claude-code-weekly-limits-permanent-25-percent | digitalapplied版と同趣旨 |
+| qcode.cc/en/claude-weekly-limit-september-2026 | 同テーマ3本目 |
+| istarsoft.com/guides/claude-code-weekly-limits-august-31-september-14-conflict | 同テーマ4本目 |
+| blakecrosley.com/guides/claude-code | 既収集（複数） |
+| dev.to/galian/claude-code-workflow-best-practices | 既収集 |
+| mcp.directory/blog/claude-code-best-practices | 既収集 |
+| ikh4ever.medium.com/claude-md-best-practices | 既収集 |

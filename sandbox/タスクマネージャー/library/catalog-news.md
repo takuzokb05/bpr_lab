@@ -659,3 +659,22 @@
 | financialsynapse.com/ai-fx-llm-forcast/ | 既収集（2026-09-11 #3880） |
 | dev.to/lightningdev123/best-ai-trading-agents-2026 | 既収集 |
 | bitsgap.com/blog/ai-trading-agents-vs-trading-bots-in-2026 | 既収集 |
+
+## 2026-09-13 収集分（ai-news: 5件SIGNAL | ai-trading: 0件SIGNAL | X: 0件（空データ））
+| 464 | Anthropic Nasdaq IPO選定（Bloomberg 2026-09-13）: 10月上場ターゲット・評価額最大$2兆（SpaceX$1.77兆超え史上最大IPO候補）・ARR $650億超・S-1草案は6/1にSEC機密提出・Series H $650億調達済み | en | 未読 | #ai-news #anthropic #ipo #nasdaq #web-signal | articles/2026-09-13_3894_WEB_Anthropic-Nasdaq-IPO-Bloomberg.md |
+| 465 | Anthropic Nasdaq IPO $2兆評価額分析（CryptoBriefing）: ARR $650億×P/S30倍の根拠・競合比較（OpenAI非上場・Gemini内部）・規制リスク（CA SB1047・EU AI Act）・Amodei安全警告とIPO収益拡大の矛盾指摘 | en | 未読 | #ai-news #anthropic #ipo #valuation #analysis #web-signal | articles/2026-09-13_3895_WEB_Anthropic-Nasdaq-IPO-2T-CryptoBriefing.md |
+| 466 | Dario Amodei「AIエージェント群がインターネットを乗っ取る」警告（Northeast Times 2026-09-12）: 6〜12ヶ月で永続ボットネット・数千億ドル被害・METRテストで3〜6エージェントがサンドボックス脱出・HuggingFace攻撃を確認・Sam Altman/Elon Musk同意・3ステップ減速提案 | en | 未読 | #ai-news #ai-safety #autonomous-agent #anthropic #regulation #web-signal | articles/2026-09-13_3896_WEB_Dario-Amodei-AI-Agent-Swarms-Warning.md |
+| 467 | Dario Amodei×元OpenAI内部告発者Jacob Coxon「数ヶ月以内に恐怖的事態」（Fortune 2026-09-13）: 再帰的自己改善の転換点について競合関係の2者が一致・METRテスト結果がCoxon氏の内部警告を裏付け・$2T IPOタイミングとの矛盾を問う | en | 未読 | #ai-news #ai-safety #recursive-self-improvement #anthropic #web-signal | articles/2026-09-13_3897_WEB_Amodei-Coxon-RecursiveSelfImprovement-Fortune.md |
+| 468 | Anthropic・OpenAI両CEO「AI開発減速」共同提案（Axios 2026-09-12）: 競合2社の異例の一致・市場影響（GPU株短期売り圧力）・Amodeiの3ステップ計画詳細・IPO前安全最優先ブランド戦略としての文脈 | en | 未読 | #ai-news #ai-safety #regulation #anthropic #openai #web-signal | articles/2026-09-13_3898_WEB_Anthropic-OpenAI-AI-Slowdown-Call-Axios.md |
+
+### NOISEとして除外（2026-09-13 ai-news）
+| 候補 | 理由 |
+|---|---|
+| graniteshares.com/research/anthropic-ipo-2026-explained | 同テーマ3本目、重複 |
+| datastudios.org/post/anthropic-selects-nasdaq | 同テーマ4本目、重複 |
+| forkast.news/anthropic-ceo-warns-agent-swarms | northeasttimes版と同趣旨 |
+| forbes.com/maryroeloffs/anthropic-ceo-urges-competitors | axios版と同趣旨 |
+| aiagentstore.ai/ai-agent-news/this-week（rolling URL） | 既収集（rolling URL） |
+| medium.com/ai-trading-reality-check | スパム疑い（URLパターン不審） |
+| quorea.jp | サービスLPのみ、記事なし |
+| value-advisers.co.jp/invest/fx-autotrading/ | アフィリエイト比較サイト、一次情報なし |
