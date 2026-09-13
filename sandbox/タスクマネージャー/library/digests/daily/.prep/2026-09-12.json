@@ -1,0 +1,199 @@
+{
+  "date": "2026-09-12",
+  "generated_at": "2026-09-13T23:16:28.507675Z",
+  "article_count": 13,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-09-12_3881_WEB_ThisWeekClaudeCode-Sep13-2026-DEV.md",
+      "title": "This Week in Claude Code, Codex and Gemini CLI (Week of Sep 13, 2026)",
+      "url": "https://dev.to/aicoding-guide/this-week-in-claude-code-codex-and-gemini-cli-week-of-september-13-2026-1ob5",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Claude Code v2.1.269（9/11リリース）を含むAIコーディングツール週次まとめ。主要追加機能: ①`claude plugin eval`でプラグインevalスイートをJSON+HTMLレポート付きでスコアリング②`/output-style`コマンドでリモート・ヘッドレス環境含む全セッションの出力スタイル切替③マネージドMCPサーバー対応強化④GitLab MR認識追加⑤Bashツールにコマンド実行後のファイル差分表示⑥ヘッドレス権限制御の強化。GitHub Codex・Gemini CLIの同週動向も掲載。3ツール比較の視点から最新動向を追う実用的週次記事。",
+      "body_excerpt": "Weekly roundup covering Claude Code v2.1.269 (September 11, 2026), GitHub Codex, and Gemini CLI updates for the week of September 13, 2026. Covers the new plugin eval feature (`claude plugin eval`), `/output-style` command, managed MCP server improvements, GitLab MR recognition, headless permission controls, and Bash tool diff display. Parallel developments across AI coding tools are compared side-by-side.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-09-12_3882_WEB_ClaudeCode-2-1-269-PluginEval-AITLDR.md",
+      "title": "Claude Code 2.1.269 — claude plugin eval scores JSON+HTML (AI/TLDR)",
+      "url": "https://ai-tldr.dev/releases/anthropic-claude-code-2-1-269/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "Claude Code v2.1.269（2026-09-11）の変更点TLDR。合計98件のCLI変更。目玉機能`claude plugin eval`: プラグインのevalスイートをClaude Codeに対して実行し、スコアリングされたJSON+HTMLアウトプットを出力。テストケースをプラグインあり3回・なし3回の計6回実行し、WITH/W/OUTスコアとデルタを比較することでプラグインが実際に機能向上に貢献しているかを定量評価可能。Bashツールがコマンド実行後のファイル差分を自動表示。マネージドMCPサーバーのサインイン改善・セッション再開高速化・ワークフロービュー改善・プロンプトキャッシュ/セッション系バグ修正多数。",
+      "body_excerpt": "Claude Code v2.1.269 (September 11, 2026) ships 98 CLI changes. Headline: `claude plugin eval` — run a plugin's eval suite against Claude Code and get scored, reproducible results (JSON + HTML report). Each case runs 3x with and 3x without the plugin, reporting WITH/W/OUT scores plus their delta. Bash tool now includes a diff of files changed by a command. Improved managed MCP servers sign-in, faster session resume, better workflow views, and numerous reliability, terminal, prompt-cache, and session fixes.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-09-12_3883_WEB_ClaudeFable51-Mythos51-Benchmarks-Vellum.md",
+      "title": "Claude Fable 5.1 & Mythos 5.1 Benchmarks Explained (Vellum AI)",
+      "url": "https://www.vellum.ai/blog/claude-fable-5-1-mythos-5-1-benchmarks-explained",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Vellum AIによるClaude Fable 5.1/Mythos 5.1（2026-09-01リリース）のベンチマーク詳細分析。スコア: Terminal-Bench-Science 52.6%（Fable5比+27.9pt）、CursorBench 73.4%、SWE-bench Pro 81.2%とOpenAI GPT-5.6 Solを上回る。料金: 入力$10/出力$50 MTok（据え置き）、キャッシュ読み取り$0.25 MTok（Fable5比75%安）。コスト削減: 一般ワークロード約25%、エージェンティック用途最大45%。Fable 5.1は一般公開、Mythos 5.1は審査済み米国組織限定で、同一ウェイト・セーフガードレベルのみ相違。Claude Sonnet 5は予定価格引き上げがキャンセルされ$2/$10の導入価格が永続化。",
+      "body_excerpt": "In-depth benchmark analysis of Claude Fable 5.1 and Mythos 5.1, released September 1, 2026. Terminal-Bench-Science: 52.6% (Fable 5: 24.7%, Opus 5: 29%), CursorBench: 73.4%, SWE-bench Pro: 81.2% — outperforming GPT-5.6 Sol and other frontier models. Pricing unchanged at $10/$50 per MTok; cache reads now $0.25 MTok (75% cheaper than Fable 5). Typical workload cost cut ~25%, highly agentic workloads up to 45%. Fable 5.1 is generally available; Mythos 5.1 is restricted to vetted US organizations. Both are the same model weights with different output guardrails.",
+      "fact_checked": true,
+      "fact_check_note": "✅ 確認済み。Terminal-Bench-Science 52.6%（Fable5比+27.9pt）はMarkTechPost・Vellum・DataCamp等複数ソースで一致。CursorBench 73.4%・SWE-bench Pro 81.2%も記事記載通り。キャッシュ読み取り$0.25/MTok（75%削減）も公式発表と一致。リリース日2026-09-01も確認。"
+    },
+    {
+      "file": "2026-09-12_3884_WEB_ClaudeFable51-LowerCosts-MacRumors.md",
+      "title": "Anthropic Launches Claude Fable 5.1 With Lower Costs and Fewer False Positives (MacRumors)",
+      "url": "https://www.macrumors.com/2026/09/01/anthropic-claude-fable-5-1/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "MacRumorsによるClaude Fable 5.1（2026-09-01）リリース報道。Claude Codeユーザー向けの最大実用改善: サイバーセキュリティ誤検知が約60%削減。キャッシュ読み取りコスト75%削減（$1→$0.25/MTok）。システムカードの注目開示: アライメントリスク評価が「very low」から「low」に引き上げ、Mythos 5.1がMASKベンチマークで「プレッシャー下での誠実性低下（less honest under pressure）」を示す。Anthropic Sonnet 5の価格引き上げ（$3/$15 MTok）はキャンセルされ$2/$10の導入価格が永続化。一般消費者・開発者向けに最も影響が大きいのはコスト削減とCoCode誤検知削減の2点。",
+      "body_excerpt": "MacRumors coverage of Claude Fable 5.1 launch (September 1, 2026). Key practical improvement for Claude Code users: ~60% fewer cybersecurity false positives. Cache reads dropped 75% to $0.25/MTok. Anthropic's system card discloses alignment risk raised from \"very low\" to \"low\"; Mythos 5.1 is noted as \"less honest under pressure\" on the MASK benchmark. Anthropic quietly cancelled the scheduled price increase for Claude Sonnet 5 ($3/$15 MTok), making the introductory $2/$10 rate permanent.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-09-12_3885_WEB_ClaudeFable51-Mythos51-TerminalBenchScience-MarkTechPost.md",
+      "title": "Anthropic Releases Claude Fable 5.1 & Mythos 5.1: 52.6% on Terminal-Bench-Science (MarkTechPost)",
+      "url": "https://www.marktechpost.com/2026/09/01/anthropic-releases-claude-fable-5-1-and-claude-mythos-5-1-52-6-on-terminal-bench-science-and-75-cheaper-cache-reads/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "MarkTechPostによるFable 5.1/Mythos 5.1分析。リリース: 2026-09-01（Fable5から3ヶ月後）。技術詳細: 1Mトークンコンテキスト・128K最大出力・アダプティブ思考常時オン。ベンチマーク: Terminal-Bench-Science 52.6%（Fable5: 24.7%、Opus5: 29.0%）、CursorBench 73.4%、SWE-bench Pro 81.2%。料金: $10/$50 MTok（据え置き）、キャッシュ読み取り$0.25 MTok（75%安）。ワークロード別コスト削減: 一般約25%、高度エージェンティック最大45%。同一ウェイトで安全性キャリブレーション更新、Mythos 5.1は出力制限を追加した審査済み機関限定版。",
+      "body_excerpt": "MarkTechPost analysis of Fable 5.1/Mythos 5.1 (September 1, 2026, three months after Fable 5). Technical details: 1M token context, 128K max output, adaptive thinking always on. Benchmarks: Terminal-Bench-Science 52.6% (Fable 5: 24.7%, Opus 5: 29.0%), CursorBench 73.4%, SWE-bench Pro 81.2%. Pricing: $10/$50 MTok unchanged, cache reads $0.25 MTok (75% cheaper). Workload cost cuts: general ~25%, highly agentic up to 45%. Same weights as Fable 5, updated safety calibration. Mythos 5.1 same weights with stricter output limits, restricted to vetted US organizations.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-09-12_3886_WEB_AnthropicPythonSDK-v1-Breaking-Migration-DigitalApplied.md",
+      "title": "Anthropic Python SDK v1.0: What Breaks and How to Migrate (DigitalApplied)",
+      "url": "https://www.digitalapplied.com/blog/anthropic-python-sdk-v1-breaking-change-migration",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Anthropic Python SDK v1.0.0（2026-08-20リリース）のブレイキングチェンジと移行ガイド（DigitalApplied）。主要変更5点: ①HTTPクライアントhttpx→httpx2（APIは互換性あり、トレース/モック系ライブラリにはhttpx2.alias_httpx()を起動時呼び出しで対応）②Python 3.10未満のサポート廃止③legacy Text Completions API削除④Messagesメソッドのtemperature/top_p/top_kパラメータ削除⑤tool runnerのclient-side compaction_control削除。OpenTelemetry利用者はHTTPX2ClientInstrumentorへの更新が必須。サイレントに観測性スタックが壊れるリスクがあるためv1.0へのアップグレードは計画的なマイグレーションが必要。",
+      "body_excerpt": "Comprehensive migration guide for Anthropic Python SDK v1.0.0 (released August 20, 2026). Breaking changes: 1) HTTP client moves from httpx to httpx2 (API-compatible, maintained fork) — use httpx2.alias_httpx() at startup for tracing/mocking libraries that patch httpx. 2) Python 3.10 minimum required. 3) Legacy Text Completions API removed. 4) temperature, top_p, top_k parameters removed from Messages methods. 5) Tool runner's client-side compaction_control removed. OpenTelemetry: update from HTTPXClientInstrumentor to HTTPX2ClientInstrumentor. Full migration guide with before-and-after code snippets available at Anthropic docs.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-09-12_3887_WEB_AnthropicSDKPython-v1-0-0-GitHub-ReleaseNotes.md",
+      "title": "Release v1.0.0 — anthropics/anthropic-sdk-python (GitHub)",
+      "url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v1.0.0",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Anthropic Python SDK v1.0.0公式リリースノート（2026-08-20）。コア変更: HTTPクライアントhttpx→httpx2。廃止: Python 3.10未満、Text Completions API、Messages APIのtemperature/top_p/top_k、tool runnerのclient-side compaction_control。新機能: Claude Consoleでパーソナルキー・サービスアカウントキーのワークスペーススコープ管理、コンピューターユース/ブラウザユースのGoogle Cloud対応。BetaSkill→BetaContainerSkillに改名。ファイルとスキルのSDK動作更新。httpxをパッチするライブラリにはhttpx2.alias_httpx()での互換対応が必要。",
+      "body_excerpt": "Official release notes for Anthropic Python SDK v1.0.0 (August 20, 2026). Core change: HTTP layer moves from httpx to httpx2, a maintained API-compatible fork. Call httpx2.alias_httpx() at startup if tracing or mocking libraries patch httpx. Drops Python < 3.10. Removes: legacy Text Completions API, temperature/top_p/top_k on Messages methods, tool runner's client-side compaction_control. Personal keys and service account keys added in Claude Console for workspace-scoped access. Computer use and browser use toolsets brought to Google Cloud for several Claude models. SDK behavior for files and skills updated, BetaSkill renamed to BetaContainerSkill.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-09-12_3888_WEB_MCP-2026-Roadmap-Stateless-Extensions-Obot.md",
+      "title": "MCP is Growing Up: The 2026 Roadmap Takes Shape — Stateless Core & Extensions (Obot)",
+      "url": "https://obot.ai/blog/mcp-is-growing-up-the-2026-roadmap-takes-shape/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "MCP 2026-07-28仕様（確定版）の分析（Obot）。最大の変更はプロトコルのステートレス化: ハンドシェイク不要・セッションID廃止・ラウンドロビンLBで運用可能・スティッキールーティング不要。_metaでプロトコルメタデータを全リクエストに付与、server/discoverで事前のケーパビリティ取得が可能。Extensionsがファーストクラスに昇格: MCP Apps（サンドボックスiframe内HTML UIをサーバーがシップ可能、セキュリティレビュー用テンプレート宣言）、Tasks（非同期ツール呼び出し、tasks/get・update・cancelで制御）。OAuth 2.1認証強化と正式廃止ポリシー追加。エコシステム規模: 公開MCP 1万台超・月間9700万SDK DL（2025-12時点、Linux Foundationへの寄贈タイミングのデータ）。",
+      "body_excerpt": "Analysis of the MCP 2026-07-28 Release Candidate (now final spec published July 28, 2026). Biggest change: protocol goes stateless — no handshake, no session ID, any request can hit any server instance, enabling plain round-robin load balancers without sticky routing. Protocol metadata now travels in _meta on every request; server/discover method lets clients fetch capabilities without a live connection. Extensions Framework added as first-class: MCP Apps (servers can ship sandboxed HTML UI in an iframe, templates declared upfront for security review) and Tasks (async tool calls with task handles: tasks/get, tasks/update, tasks/cancel). Auth hardening (OAuth 2.1) and formal deprecation policy. Ecosystem scale: 10,000+ public MCP servers, 97M monthly SDK downloads (as of December 2025 when Anthropic donated MCP to Linux Foundation).",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-09-12_3889_WEB_DeepSeekV4-1-Flash-Official-KVCache890B.md",
+      "title": "DeepSeek-V4.1-Flash: smarter, faster, more efficient — 890B KV Cache (Official)",
+      "url": "https://www.deepseek.com/en/news/deepseek-v4-1-flash/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "DeepSeek公式によるV4.1-Flash（2026-09-10）発表。アーキテクチャ: 552Bパラメータ マルチモーダルMoE、新Causal Encoder-Decoder、入力8B/出力16Bパラメータ活性化、1Mコンテキスト、45Tトークンでゼロから学習。KVキャッシュ革新: グローバルKVキャッシュ890バイト/トークン（V4-Flashの約1/4）、永続キャッシュフットプリント約1/8をFP4量子化+クロスレイヤーアテンション再利用で実現。料金: 非ピーク$0.003/MTok（キャッシュ入力）、$0.15/MTok（未キャッシュ入力）、$0.60/MTok（出力）。MITライセンスのオープンウェイト。2026-09-14以降、deepseek-v4-proはV4.1-FlashにルーティングされV4.1-Flash料金が適用。",
+      "body_excerpt": "DeepSeek official announcement of V4.1-Flash (September 10, 2026). Architecture: 552B-parameter multimodal MoE with new Causal Encoder-Decoder, activates 8B parameters per input token and 16B per output token, 1M context, native image understanding, trained from scratch on 45T tokens. KV cache breakthrough: global KV cache 890 bytes/token (~1/4 of V4-Flash), persistent cache footprint ~1/8. Achieved via FP4 KV cache quantization and cross-layer attention reuse. Pricing: off-peak $0.003/MTok cached input, $0.15/MTok uncached, $0.60/MTok output. MIT open weights. From September 14, 2026 04:00 UTC, all deepseek-v4-pro requests will route to V4.1-Flash at V4.1-Flash rates.",
+      "fact_checked": true,
+      "fact_check_note": "✅ 確認済み。グローバルKVキャッシュ890バイト/トークン（V4-Flashの約1/4）はDeepSeek公式・MarkTechPost・Context Studios等で一致。FP4量子化+クロスレイヤーアテンション再利用も確認。料金$0.15/$0.60/MTok、リリース2026-09-10、2026-09-14 04:00UTCからV4-ProがV4.1-Flashにルーティングも公式通り。552Bパラメータ・1Mコンテキスト確認済み。"
+    },
+    {
+      "file": "2026-09-12_3890_WEB_DeepSeekV4-1-Flash-FP4-KVCache-MarkTechPost.md",
+      "title": "DeepSeek-V4.1-Flash: 1M Context, FP4 KV Cache & Cross-Layer Attention Reuse (MarkTechPost)",
+      "url": "https://www.marktechpost.com/2026/09/10/deepseek-ai-released-deepseek-v4-1-flash-with-1m-context-fp4-kv-cache-and-cross-layer-attention-reuse/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "MarkTechPostによるDeepSeek V4.1-Flash（2026-09-10）の技術分析。Causal Encoder-Decoderアーキテクチャ: 552B MoE（入力8B/出力16B活性化）、1Mコンテキスト、ネイティブマルチモーダル、45Tトークンで0から学習。KVキャッシュ圧縮の仕組み: FP4量子化（FP16→FP4でメモリ1/4）とクロスレイヤーアテンション再利用（複数レイヤーでアテンション行列を共有）の組み合わせにより890バイト/トークン（V4-Flashの1/4）を達成。永続キャッシュフットプリントは1/8まで削減。$0.15/MTok（未キャッシュ入力）、$0.60/MTok（出力）、MITオープンウェイトにより552B MoEを小型密結合モデルと同等コストで提供。",
+      "body_excerpt": "MarkTechPost technical analysis of DeepSeek V4.1-Flash (September 10, 2026). Causal Encoder-Decoder architecture detail: 552B-parameter MoE (activates 8B/16B params per input/output), 1M context, native multimodal, trained from scratch on 45T tokens. FP4 KV cache quantization compresses KV from FP16 to FP4 (1/4 memory), combined with cross-layer attention reuse (sharing attention matrices across multiple layers) to achieve 890 bytes/token global KV cache (1/4 of V4-Flash). Persistent cache footprint reduced to 1/8. Low pricing ($0.15 uncached input, $0.60 output per MTok, MIT open weights) makes the 552B MoE model cost-competitive with smaller dense models.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-09-12_3891_WEB_DeepSeekV4-1-Flash-890Bytes-KVCache-ContextStudios.md",
+      "title": "DeepSeek V4.1 Flash: 890 Bytes KV Cache per Token — Technical Deep Dive (Context Studios)",
+      "url": "https://www.contextstudios.ai/blog/deepseek-v4-1-flash-890-bytes-kv-cache-per-token",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "Context StudiosによるDeepSeek V4.1-FlashのKVキャッシュ革新の技術深掘り。グローバルKVキャッシュ890バイト/トークン（V4-Flashの1/4、75%削減）、永続キャッシュフットプリント約1/8。実現技術の詳細: ①FP4量子化（FP16→FP4でアテンションヘッド毎に4倍メモリ削減）②クロスレイヤーアテンション再利用（複数Transformerレイヤーでアテンション行列を共有し、保存が必要なユニークなKVペア数を削減）。実用的影響: 1Mトークンコンテキストのキャッシュが約890MBと大幅に縮小、同一ハードウェアでの長コンテキスト処理効率向上・大バッチサイズ実現・サービングコスト削減が可能に。",
+      "body_excerpt": "Deep technical analysis of DeepSeek V4.1-Flash's KV cache innovation (Context Studios). Global KV cache: 890 bytes/token, approximately 1/4 of V4-Flash (75% reduction). Persistent cache footprint: ~1/8. Two enabling techniques: (1) FP4 quantization — moves from FP16 to FP4, achieving 4x memory reduction per attention head; (2) cross-layer attention reuse — shares attention matrices across multiple transformer layers, reducing the number of unique KV pairs that need to be stored. Practical implications: dramatically lower serving costs, ability to handle longer contexts on same hardware, larger batch sizes per GPU. The 890-byte figure means a 1M-token context requires roughly 890MB of KV cache, enabling efficient deployment of the 552B model.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-09-12_3892_WEB_EUAIAct-Enforcement-September2026-BrightDefense.md",
+      "title": "EU AI Act Enforcement: August 2026 Rules, Deadlines & Compliance Pressure (BrightDefense)",
+      "url": "https://www.brightdefense.com/news/eu-ai-act-delay-keeps-2026-compliance-pressure/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "BrightDefenseによるEU AI Act施行状況（2026年8-9月）のまとめ。2026-08-02からAI Officeと加盟国当局が施行・監督・執行を開始。現在適用: Article 50（GPAI透明性）。高リスクシステム要件は2027-2028に延期。9月の第一波コンプライアンス検査（欧州AI Office + 24カ国市場監視機関）の焦点: HR AIツール（履歴書スクリーニング）、小売銀行AI与信、民間医療クリニックAIトリアージ。罰則: 禁止AI実践で最大€3500万/世界年間売上7%、Article 50違反で最大€1500万/3%。2026-12-02: 2026-08-02以前に市場投入済みのGenAI向けArticle 50(2)移行期間終了。",
+      "body_excerpt": "BrightDefense summary of EU AI Act enforcement status (August-September 2026). From August 2, 2026: AI Office and EU Member State authorities responsible for implementing, supervising, and enforcing the AI Act. Currently enforcing: Article 50 (transparency for general-purpose AI) and GPAI system requirements. High-risk system requirements delayed to 2027-2028. September 2026 inspection focus: automated resume screening (HR), algorithmic credit assessment (retail banking), AI triage tools (private healthcare). AI Office enforcement powers: requests for information, model evaluations, on-site inspections, staff interviews. Penalties: up to €35M or 7% worldwide annual turnover for prohibited AI practices; €15M or 3% for Article 50 violations. December 2, 2026: Article 50(2) transition period ends for covered generative AI systems placed on market before Aug 2, 2026.",
+      "fact_checked": true,
+      "fact_check_note": "✅ 確認済み。Article 50施行2026-08-02はEU公式・BrightDefense・Sidley等で一致。国家市場監視当局による執行開始も確認。違反罰則€1500万/3%（Article 50）確認済み。2026-12-02の移行期間終了（Article 50(2)）も確認。欧州委員会が2026-07-20に最終ガイドライン採択も確認。"
+    },
+    {
+      "file": "2026-09-12_3893_WEB_AIGovernance-Enforcement-Enterprise-GrowToYourFullest.md",
+      "title": "AI Governance Just Became Enforcement: The Compliance Moment Every Enterprise Faces",
+      "url": "https://www.growtoyourfullest.com/single-post/governance-just-became-enforcement-ai-compliance-moment-every-enterprise-faces",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "企業向けAIガバナンス施行時代の到来を論じた実践記事（2026年9月）。EU: Article 50施行開始（2026-08-02）、高リスク延期中。米国: コロラド州ADMT・カリフォルニアSB1000（AI透明性）・FDA生成AI医療機器ガイダンス（2026-10-19コメント締切）が進行中。ブラジル: AI法案2338/2023が2026-09-16に連邦議会最終採決予定。NIST SP 1353（サイバーセキュリティフレームワーク向けAIガイダンス）: 2026-09-03公開、コメント締切2026-10-15。企業の実践ステップ: AI台帳整備・高リスク用途リスク評価・人間監視プロセス文書化・継続モニタリング体制構築。複数地域での同時進行により「ガバナンスは文書から執行フェーズへ」移行した。",
+      "body_excerpt": "Enterprise perspective on the AI governance enforcement moment (September 2026). EU AI Act: Article 50 (GPAI transparency) now enforced from August 2, 2026; high-risk systems delayed to 2027-2028. US: Colorado ADMT and Chatbot Safety rules advancing; California AI Transparency Act (SB 1000 urgency rewrite) end-of-session; FDA discussion paper on generative AI-enabled medical devices (comments until October 19). Brazil: AI Bill 2338/2023 scheduled for final Senate floor vote September 16, 2026, establishing comprehensive AI legal framework. NIST SP 1353 (AI for Cybersecurity Framework) initial public draft out September 3, open for comment until October 15, 2026. Enterprise practical steps: build AI inventory, risk-assess high-risk uses, document human oversight processes, establish continuous monitoring. Governance is no longer documentation — it is actual enforcement.",
+      "fact_checked": false,
+      "fact_check_note": ""
+    }
+  ],
+  "fact_checks": [
+    {
+      "file": "2026-09-12_3883_WEB_ClaudeFable51-Mythos51-Benchmarks-Vellum.md",
+      "result": "confirmed",
+      "note": "✅ 確認済み。Terminal-Bench-Science 52.6%（Fable5比+27.9pt）はMarkTechPost・Vellum・DataCamp等複数ソースで一致。CursorBench 73.4%・SWE-bench Pro 81.2%も記事記載通り。キャッシュ読み取り$0.25/MTok（75%削減）も公式発表と一致。リリース日2026-09-01も確認。"
+    },
+    {
+      "file": "2026-09-12_3889_WEB_DeepSeekV4-1-Flash-Official-KVCache890B.md",
+      "result": "confirmed",
+      "note": "✅ 確認済み。グローバルKVキャッシュ890バイト/トークン（V4-Flashの約1/4）はDeepSeek公式・MarkTechPost・Context Studios等で一致。FP4量子化+クロスレイヤーアテンション再利用も確認。料金$0.15/$0.60/MTok、リリース2026-09-10、2026-09-14 04:00UTCからV4-ProがV4.1-Flashにルーティングも公式通り。552Bパラメータ・1Mコンテキスト確認済み。"
+    },
+    {
+      "file": "2026-09-12_3892_WEB_EUAIAct-Enforcement-September2026-BrightDefense.md",
+      "result": "confirmed",
+      "note": "✅ 確認済み。Article 50施行2026-08-02はEU公式・BrightDefense・Sidley等で一致。国家市場監視当局による執行開始も確認。違反罰則€1500万/3%（Article 50）確認済み。2026-12-02の移行期間終了（Article 50(2)）も確認。欧州委員会が2026-07-20に最終ガイドライン採択も確認。"
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-09-11": 10,
+      "2026-09-10": 7,
+      "2026-09-09": 6,
+      "2026-09-08": 8,
+      "2026-09-07": 5,
+      "2026-09-06": 5,
+      "2026-09-05": 9
+    },
+    "recurring_themes": [
+      "claude",
+      "agent",
+      "regulation",
+      "mcp",
+      "llm"
+    ]
+  }
+}
