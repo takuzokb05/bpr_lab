@@ -678,3 +678,13 @@
 | medium.com/ai-trading-reality-check | スパム疑い（URLパターン不審） |
 | quorea.jp | サービスLPのみ、記事なし |
 | value-advisers.co.jp/invest/fx-autotrading/ | アフィリエイト比較サイト、一次情報なし |
+
+## 2026-09-14 収集分（Web: 15件収集 → SIGNAL 2件 ai-news | X: 0件（空データ））
+| 469 | 生成AI 202609版一気整理（Qiita aokikenichi）: GPT-6 Astra/Fable5.1/DeepSeek V4.1 Flash/Sakana Fugu Ultra v2・競争軸変化（ベンチマーク→エージェント完遂率）・推論モデル/世界モデル/Physical AI・企業アプリ40%エージェント化見通し・Amodei/Altman減速提案 | ja | 未読 | #ai-news #model-release #ai-agent #japanese #web-signal | articles/2026-09-14_3913_WEB_GenAI-202609-整理-Qiita.md |
+| 470 | AI規制グローバル動向2026年9月（Cubbbix）: EU AI Act初回コンプライアンス検査開始・CA SB1047知事署名期限9/30・ブラジルAI法案9/16採決・中国/インド執行強化フェーズ・9月が「準備→実施」転換点・実務チェックリスト付き | en | 未読 | #ai-news #ai-regulation #eu-ai-act #california-sb1047 #global #web-signal | articles/2026-09-14_3914_WEB_AIRegulation-September2026-Global.md |
+
+### NOISEとして除外（2026-09-14 ai-news）
+| 候補 | 理由 |
+|---|---|
+| aiagentstore.ai/ai-agent-news/this-week | 既収集（rolling URL、2026-09-13で既除外） |
+| financialsynapse.com/ai-fx-llm-forcast/ | 既収集（2026-09-06 #3843） |

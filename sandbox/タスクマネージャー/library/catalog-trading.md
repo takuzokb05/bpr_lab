@@ -468,3 +468,13 @@
 |---|---|
 | coinedition.com/llm-trading-in-2026-can-ai-agents-actually-outperform-humans/ | 既収集（2026-07-14 #887, 2026-08-06 #3551, 2026-08-19 #3710, 2026-09-02 #3814） |
 | financialsynapse.com/ai-fx-llm-forcast/ | 既収集（2026-09-06 #3843） |
+
+## 2026-09-14 収集分（Web: 15件収集 → SIGNAL 1件 ai-trading | X: 0件（空データ））
+| 340 | TradingAgents v0.4.0（GitHub TauricResearch 80k stars）: 2026年リリース変遷v0.2.0→v0.3.0→v0.4.0・マルチプロバイダーLLM（GPT-5.x/Claude 4.x等）・ルックアヘードバイアス修正・CLI checkpoint・30日バックテスト7%リターン/22%ドローダウン・データ品質問題が最重要改善点 | en | 未読 | #ai-trading #trading-agents #multi-agent-llm #github #web-signal | articles/2026-09-14_3912_WEB_TradingAgents-v040-Framework-GitHub.md |
+
+### NOISEとして除外（2026-09-14 ai-trading）
+| 候補 | 理由 |
+|---|---|
+| assetwhisper.com/ai-trading-agents-in-2026 | 既収集（2026-07-13 #875, 2026-08-14 #3653） |
+| pinggy.io/blog/best_ai_trading_agents/ | 既収集（複数回） |
+| medium.com/@wise_crimson_lion_733 | 既収集（2026-06-08 #196） |

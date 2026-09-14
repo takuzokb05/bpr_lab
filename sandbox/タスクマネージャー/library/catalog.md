@@ -1589,3 +1589,21 @@
 | dev.to/galian/claude-code-workflow-best-practices | 既収集 |
 | mcp.directory/blog/claude-code-best-practices | 既収集 |
 | ikh4ever.medium.com/claude-md-best-practices | 既収集 |
+
+## 2026-09-14 収集分（Web: 15件収集 → SIGNAL 10件 claude-code/claude-ecosystem | X: 0件（空データ））
+| 1285 | Claude Code 9月2026年リリースノート（Releasebot）: v2.1.268〜v2.1.270 — gitコマンド権限確認バグ修正・マネージドMCPサーバー追加・プラグイン即時反映・Fullscreendiff・Plugin Eval・OutputStyle切替・Sonnet 5価格$2/$10正式確定 | en | 未読 | #claude-code #release-notes #update #web-signal | articles/2026-09-14_3904_WEB_ClaudeCode-September2026-ReleaseNotes-Releasebot.md |
+| 1286 | Claude Code ニュース2026年9月スタートアップ版（mean.ceo）: v2.1.261→v2.1.270の変遷・Agent Teamsで開発3日→1日に・Plugin Eval CI組み込み・Managed MCPサーバー・Fable 5.1統合・Claude Code on Web急増 | en | 未読 | #claude-code #startup #agent-teams #update #web-signal | articles/2026-09-14_3905_WEB_ClaudeCode-News-September2026-StartupEdition.md |
+| 1287 | Claude Code ベストプラクティス10ヒント（Collabnix）: CLAUDE.md 200行以内・Plan Mode先行・具体的プロンプト・セッション管理（/rewind/compact/clear）・ghコマンド統合・Makefile化・並列サブエージェント・/checkpoint・Hooks自動検証・Skills化。週4時間節約の定量報告 | en | 未読 | #claude-code #best-practices #workflow #skills #hooks #web-signal | articles/2026-09-14_3906_WEB_ClaudeCode-BestPractices-10Tips-Collabnix.md |
+| 1288 | Claude Skills チュートリアル（Techsy 2026年5月）: 10分でSkill作成・SKILL.mdの2部構成（YAMLフロントマター＋指示本文）・MCP vs Skills vs Hooks 判断マトリクス・daily-standupスキル実装例 | en | 未読 | #claude-code #skills #tutorial #mcp-vs-skills #web-signal | articles/2026-09-14_3907_WEB_ClaudeSkills-Tutorial-BuildFirstSkill-Techsy.md |
+| 1289 | Claude Skills完全ガイド（Duet.so）: SKILL.md・MCP・Subagents・Agent Teams使い分け・判断フローチャート・実際のSKILL.mdサンプル（コードレビュー/日次収集/PRドラフト）・設計判断の理由説明付き | en | 未読 | #claude-code #skills #mcp #subagents #agent-teams #web-signal | articles/2026-09-14_3908_WEB_ClaudeSkills-CompleteGuide-SKILL-MCP-Subagents-Teams.md |
+| 1290 | Claude Agent SDK vs Managed Agents 比較（Hatchworks）: SDKはローカルホスト型・Managed Agents（2026年4月GA）はAnthropicホスト型・公式推奨「プロト→SDK/本番→Managed」・7種SDK対応・FXシステムへの応用ガイド付き | en | 未読 | #claude-ecosystem #agent-sdk #managed-agents #production #web-signal | articles/2026-09-14_3909_WEB_ClaudeAgentSDK-vs-ManagedAgents-Hatchworks.md |
+| 1291 | MCP 2026-07-28最終仕様（公式ブログ）: MCPローンチ以来最大改訂・ステートレス化（セッション廃止・通常HTTP水平スケール）・Multi Round-Trip Requests・OAuth準拠認証強化・MCP Apps/Tasksエクステンション・Tier 1 SDK累計10億DL突破 | en | 未読 | #claude-ecosystem #mcp #spec-update #stateless #web-signal | articles/2026-09-14_3910_WEB_MCP-2026-07-28-Spec-OfficialBlog.md |
+| 1292 | Anthropic リリースノート2026年9月（releases.sh）: workspace-idヘッダー追加・BetaSkill→BetaContainerSkillリネーム・Sonnet 5価格確定・Skills/Files API → Microsoft Foundryで利用可・Computer use → Vertex AIまもなく提供 | en | 未読 | #claude-ecosystem #api-update #release-notes #microsoft-foundry #web-signal | articles/2026-09-14_3911_WEB_Anthropic-API-ReleaseNotes-September2026.md |
+| 1293 | Claude Code 非エンジニア活用ガイド（MetaHeroes 2026年最新）: 日本語指示のみ・Claude Cowork（ブラウザ版）でターミナル不要・議事録/Excel/メール/評価シート/X投稿の5事例・法人向け承認フロー設定と機密データ管理の注意点 | ja | 未読 | #claude-code #non-engineer #japanese #business-use #web-signal | articles/2026-09-14_3915_WEB_ClaudeCode-非エンジニア-活用-MetaHeroes.md |
+| 1294 | Claude Managed Agents本番運用ガイド2026（The AI Corner）: REST API・$0.08/時間・4ステップ開始・7種SDK対応・長時間バックグラウンド処理に最適・Agent SDKとの併用パターン・日次収集ルーチンへの応用 | en | 未読 | #claude-ecosystem #managed-agents #production #agent-sdk #web-signal | articles/2026-09-14_3916_WEB_ClaudeManagedAgents-Guide2026.md |
+
+### NOISEとして除外（2026-09-14 claude-code/claude-ecosystem）
+| 候補 | 理由 |
+|---|---|
+| assetwhisper.com/ai-trading-agents-in-2026 | 既収集（2026-07-13 #875, 2026-08-14 #3653） |
+| aiagentstore.ai/ai-agent-news/this-week | 既収集（rolling URL、2026-09-13で既除外） |

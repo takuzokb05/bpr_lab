@@ -5541,3 +5541,24 @@ Claude Code v2.1.269 で `claude plugin eval` が追加された。`sandbox/タ�
 
 **提案内容:**
 MCP 2026-07-28仕様でプロトコルがステートレス化（ハンドシェイク廃止・セッションIDなし）。`sandbox/タスクマネージャー/` で使用中のMCPサーバー（Gmail等）が新仕様に対応したSDKバージョンを使用しているか確認。メリット: LBスティッキールーティング不要でスケールアウト容易。新機能としてMCP Apps（iframe UI）・Tasks（非同期ツール呼び出し）が利用可能になるため、WebSearch結果の非同期収集など長時間タスクへの応用も検討。
+
+---
+
+## 2026-09-14 収集分
+
+### 1. TradingAgents v0.4.0 のルックアヘードバイアス修正を FX自動取引システムに反映
+
+**出典:** articles/2026-09-14_3912_WEB_TradingAgents-v040-Framework-GitHub.md
+
+**提案内容:**
+TradingAgents v0.4.0 でFREDマクロ・ソーシャルセンチメント・決定ログメモリのルックアヘード/ポイントインタイム問題が修正された。`sandbox/FX自動取引/` のバックテストコードで同様のバイアスが混入していないか確認を推奨:
+- バックテスト中に「未来の」データを参照していないか（close価格をbar確定前に参照するなど）
+- センチメント分析に使うニュースデータに「現在時刻より未来」のタイムスタンプが混入していないか
+- TradingAgents v0.4.0への更新（または設計参考）を検討（CLI checkpoint resume機能追加・GPT-5.6/GLM-5.3モデル対応）
+
+### 2. Managed Agents の非同期バックグラウンド処理を日次収集ルーチンに応用検討
+
+**出典:** articles/2026-09-14_3909_WEB_ClaudeAgentSDK-vs-ManagedAgents-Hatchworks.md, articles/2026-09-14_3916_WEB_ClaudeManagedAgents-Guide2026.md
+
+**提案内容:**
+Claude Managed Agents（$0.08/時間）は長時間非同期バックグラウンドタスクに適している。現在の日次収集ルーチン（scheduled task）は約1時間かかる場合があり、Managed Agentsへの移行でタイムアウトリスクを低減できる可能性。ただし現状のscheduled taskで問題なく動作しているため、実際に問題が生じたタイミングで検討するのが適切。
