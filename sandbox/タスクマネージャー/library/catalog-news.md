@@ -688,3 +688,17 @@
 |---|---|
 | aiagentstore.ai/ai-agent-news/this-week | 既収集（rolling URL、2026-09-13で既除外） |
 | financialsynapse.com/ai-fx-llm-forcast/ | 既収集（2026-09-06 #3843） |
+
+## 2026-09-15 収集分（Web: 8件収集 → SIGNAL 4件 ai-news | X: 0件（空データ））
+| 471 | カリフォルニア州AI子ども保護法成立（知事府公式、2026年9月10日）: 全米最強の13法律パッケージ・チャットボット事前リスクアセスメント義務・被害1件最大$100万罰金・コンパニオンチャットボット危機プロトコル義務・おもちゃ4年禁止・「アダムの法」命名 | en | 未読 | #ai-news #ai-regulation #california #child-safety #chatbot #web-signal | articles/2026-09-15_3919_WEB_California-AI-ChildSafety-Chatbot-Law-September2026.md |
+| 472 | AI News Today 2026年9月15日デイリー（AI Weekly）: Claude Opus 5発表・ClaudeTagがAnthropicコードの65%生成・GPT-6 Astraフロンティア発表・Digit 5人型ロボット（$2.5B SPAC・$3億受注）・Pro-Human Assembly議会会議・Cloudflareクローラーブロック本日発効 | en | 未読 | #ai-news #daily-digest #claude-opus-5 #gpt-6 #robotics #ai-regulation #web-signal | articles/2026-09-15_3920_WEB_AINews-September15-2026-Daily-Digest.md |
+| 473 | 2026年AIコンプライアンス法律ガイド（Hinshaw & Culbertson法律事務所）: EU AI Act/CA CPRA/コロラドADMT・高リスク用途（採用/金融/医療）が最初に規制・今すぐ取るべき4アクション（インベントリ・高リスク特定・契約見直し・AIポリシー文書化） | en | 未読 | #ai-news #ai-regulation #compliance #eu-ai-act #california #legal #web-signal | articles/2026-09-15_3921_WEB_AI-Compliance-Laws-2026-Hinshaw-Organization.md |
+| 474 | 2026年9月AIモデルリリース全記録（LLM Reference）: Claude Fable 5.1/GPT-6 Astra/Gemini 3.8 Flash/Muse Spark 1.3/DeepSeek V4.1-Flash/医療特化Ling-3.0-flash-sante/OSS GLM-5.3-Flash（MIT）/Sakana Fugu Ultra v2.0・計33モデル | en | 未読 | #ai-news #model-release #llm-releases #september-2026 #web-signal | articles/2026-09-15_3922_WEB_September2026-LLM-AI-Model-Releases.md |
+
+### NOISEとして除外（2026-09-15 ai-news）
+| 候補 | 理由 |
+|---|---|
+| edsource.org/updates/newsom-signs | gov.ca.gov（一次情報）に対する二次報道 |
+| broadbandbreakfast.com/california-governor | 同テーマ3本目、重複 |
+| vorplabs.com/ai-regulatory-updates/united-states/2026-09 | 既収集（2026-09-10_005） |
+| local-ai-zone.github.io/blog/September_2026_AI_Model_Updates | 既収集（2026-09-11_008） |

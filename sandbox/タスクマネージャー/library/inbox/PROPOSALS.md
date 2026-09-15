@@ -5562,3 +5562,21 @@ TradingAgents v0.4.0 でFREDマクロ・ソーシャルセンチメント・決�
 
 **提案内容:**
 Claude Managed Agents（$0.08/時間）は長時間非同期バックグラウンドタスクに適している。現在の日次収集ルーチン（scheduled task）は約1時間かかる場合があり、Managed Agentsへの移行でタイムアウトリスクを低減できる可能性。ただし現状のscheduled taskで問題なく動作しているため、実際に問題が生じたタイミングで検討するのが適切。
+
+---
+
+## 2026-09-15 収集分
+
+### 1. Claude Opus 5 発表 — FX自動取引エージェントのモデル選定を再評価
+
+**出典:** articles/2026-09-15_3920_WEB_AINews-September15-2026-Daily-Digest.md
+
+**提案内容:**
+本日（9月15日）、AnthropicがClaude Opus 5を発表（長期エージェント向け・コーディング/知識タスクでSOTA）。`sandbox/FX自動取引/` で現在使用モデルを確認し、Opus 5 GA後に切り替えを検討する価値がある。特にマルチステップの市場分析・戦略評価・コードデバッグを担うエージェント部分に効果が見込まれる。ClaudeTagがAnthropicのプロダクトコード65%を生成中という実績も参考に。Opus 5 GA時期・価格が確定したタイミングで再評価を推奨。
+
+### 2. California AI子ども保護法 — AI産業全体へのコンプライアンス先行サインとして把握
+
+**出典:** articles/2026-09-15_3919_WEB_California-AI-ChildSafety-Chatbot-Law-September2026.md, articles/2026-09-15_3921_WEB_AI-Compliance-Laws-2026-Hinshaw-Organization.md
+
+**提案内容:**
+カリフォルニア州が9月10日にAIチャットボット向け全米最強の規制を成立。直接関係するのは対消費者向けAI製品だが、規制強化のトレンドとしてFX自動取引や業務AIへの波及可能性を把握しておく。特に「リスクアセスメント義務化」「高リスク用途の先行規制」の方向性はHinshaw法律事務所ガイドが整理。自社サービス化を検討する際の参考資料として保管推奨。

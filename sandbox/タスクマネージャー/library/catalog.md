@@ -1607,3 +1607,16 @@
 |---|---|
 | assetwhisper.com/ai-trading-agents-in-2026 | 既収集（2026-07-13 #875, 2026-08-14 #3653） |
 | aiagentstore.ai/ai-agent-news/this-week | 既収集（rolling URL、2026-09-13で既除外） |
+
+## 2026-09-15 収集分（Web: 8件収集 → SIGNAL 3件 claude-ecosystem | X: 0件（空データ））
+| 1295 | Claude Fable 5.1 GA GitHub Copilot（GitHub公式changelog）: Copilot Pro+以上でFable 5.1選択可・claude-fable-5-1モデルID・1Mコンテキスト/128K出力・$10/$50/MTok・キャッシュリード$0.25（75%削減）・長期エージェントタスク最適 | en | 未読 | #claude-ecosystem #fable-5-1 #github-copilot #model-release #web-signal | articles/2026-09-15_3917_WEB_ClaudeFable51-GA-GitHub-Copilot.md |
+| 1296 | Claude Academy 無料AIコース（EdTech Innovation Hub）: 2026年8月20日ローンチ・academy.claude.com・メールのみ無料・3対象層（初心者/業務活用者/開発者）・25コース＋チュートリアル・4D AI Fluency Framework・LinkedIn修了バッジ・職場展開ガイド | en | 未読 | #claude-ecosystem #claude-academy #learning #free-course #web-signal | articles/2026-09-15_3918_WEB_ClaudeAcademy-Free-AI-Courses-Workplace.md |
+| 1297 | MCP 2026年ニュース・ステートレス転換（OpenClaw Direct）: 2026-07-28仕様がローンチ以来最大改訂・セッション廃止・水平スケール容易・Multi Round-Trip Requests・Mcp-Methodヘッダールーティング・MCP Apps/Tasks・Tier 1 SDK 10億DL | en | 未読 | #claude-ecosystem #mcp #stateless #spec-2026-07-28 #web-signal | articles/2026-09-15_3923_WEB_MCP-2026-News-Stateless-Protocol-OpenClaw.md |
+
+### NOISEとして除外（2026-09-15 claude-ecosystem）
+| 候補 | 理由 |
+|---|---|
+| coursiv.io/blog/claude-academy | #1296（Claude Academy）と同トピック、重複 |
+| buildfastwithai.com/blogs/claude-academy | 同上 |
+| gradually.ai/en/changelogs/claude-code/ | 既収集（2026-09-11_001） |
+| releasebot.io/updates/anthropic/claude-code | 既収集（複数） |
