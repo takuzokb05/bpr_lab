@@ -1620,3 +1620,31 @@
 | buildfastwithai.com/blogs/claude-academy | 同上 |
 | gradually.ai/en/changelogs/claude-code/ | 既収集（2026-09-11_001） |
 | releasebot.io/updates/anthropic/claude-code | 既収集（複数） |
+
+## 2026-09-16 収集分（Web: 8件収集 → SIGNAL 8件 claude-code | X: 0件（空データ））
+| 1298 | Claude Code Hooksガイド2026（Uravation JA）: PreToolUse/PostToolUse等12種以上フックイベント解説・settings.json記載例・シェルスクリプト連携・環境変数受け渡し・SessionStart/SessionEnd等2026新イベント対応・「絶対実行保証」でCIガードレールとして機能 | ja | 未読 | #claude-code #hooks #automation #settings #web-signal | articles/2026-09-16_3924_WEB_ClaudeCode-Hooks-Guide-2026-Uravation-JA.md |
+| 1299 | Claude Code Plugin開発ガイド2026（Uravation JA）: Hooks/Slash Command/MCP Server/Agentを1ディレクトリにバンドル→`claude /plugin install github:org/plugin`1行でチーム展開・plugin.json設定・権限スコープ・MCP統合パターン・マーケットプレース登録 | ja | 未読 | #claude-code #plugin #mcp #hooks #team-sharing #web-signal | articles/2026-09-16_3925_WEB_ClaudeCode-Plugin-Development-Hooks-MCP-Uravation-JA.md |
+| 1300 | Claude Code完全設定ガイド2026（Qiita/emi_ndk）: 本番運用向け包括ガイド・Hooks全設定（PreToolUse/PostToolUse/PreCompact）・Skills 3層構造・MCPサーバー権限スコープ設計・企業向けsettings.json管理パターン・/ultraplan運用。設定ファイルサンプル多数 | ja | 未読 | #claude-code #hooks #skills #mcp #settings #production #web-signal | articles/2026-09-16_3926_WEB_ClaudeCode-Complete-Setup-2026-Hooks-Skills-MCP-Qiita-JA.md |
+| 1301 | Claude Skills vs MCP 使い分け3判断軸（Qiita/Ngen）: 1ヶ月実務から導出・①内部手順書か外部接続パイプか②実行保証必要か③外部API/DBアクセス必要か。判断フローチャート・Slack投稿→MCP/コードレビュー→Skills の実装例・三者（Skills/MCP/Hooks）関係整理 | ja | 未読 | #claude-code #skills #mcp #hooks #decision-framework #web-signal | articles/2026-09-16_3927_WEB_ClaudeSkills-vs-MCP-3DecisionAxes-Qiita-Ngen-JA.md |
+| 1302 | Claude Code Hooksカタログ2026（note/ai_dev_notes）: 副業時給2倍達成者によるコピペ即使えパターン集・lint自動実行/危険コマンドブロック/テスト失敗自動リトライ/ファイル保存後フォーマット/SessionEnd todo.md更新/デスクトップ通知。settings.json例と効果値付き | ja | 未読 | #claude-code #hooks #catalog #copy-paste #web-signal | articles/2026-09-16_3928_WEB_ClaudeCode-Hooks-Catalog-2026-CopyPaste-Note-JA.md |
+| 1303 | Claude Code Skills・Hooks・MCP 業務自動化実践レシピ（romptn Magazine）: 3機能使い分け原則（Skills=再利用/Hooks=保証/MCP=外部連携）・レシピ例：コードレビューSkill・コミット前Hooks・Slack MCP通知・3機能組合せフロー（朝会議録→整形→投稿→確認）・「まずHooksから」学習順序 | ja | 未読 | #claude-code #skills #hooks #mcp #workflow #beginner #web-signal | articles/2026-09-16_3929_WEB_ClaudeCode-Skills-Hooks-MCP-PracticalRecipe-Romptn-JA.md |
+| 1304 | Claude Code 非エンジニア完全ガイド2026（Uravation JA）: Claude Coworkブラウザ版でターミナル不要・経理月20-40時間削減・営業週報8時間→45分（実測）・業務別プロンプト集（経理/法務/営業/人事/マーケ）・失敗パターン対比（コード書こうとする→日本語依頼だけ） | ja | 未読 | #claude-code #non-engineer #business-use #japanese #cowork #web-signal | articles/2026-09-16_3930_WEB_ClaudeCode-NonEngineer-CompleteGuide-2026-Uravation-JA.md |
+| 1305 | 非エンジニアClaude Code活用事例（StartLink）: マーケ/営業/経理の業務自動化実例・HubSpot連携・Excel/PDF/CSV直接処理・プロンプト例+期待出力+所要時間付き・「プロンプトエンジニアリング不要、業務知識をそのまま指示」推奨・Claude Teams設定・権限管理 | ja | 未読 | #claude-code #non-engineer #business-use #hubspot #web-signal | articles/2026-09-16_3931_WEB_ClaudeCode-NonEngineer-UseCases-Marketing-Sales-StartLink-JA.md |
+
+### NOISEとして除外（2026-09-16 claude-code）
+| 候補 | 理由 |
+|---|---|
+| gradually.ai/en/changelogs/claude-code/ | 既収集（2026-09-11_001） |
+| releasebot.io/updates/anthropic/claude-code | 既収集（複数） |
+| medium.com/data-science-collective/effective-claude-code-workflows-in-2026 | 既収集（2026-05-29, 2026-08-19） |
+| agentsroom.dev/claude-code-tips | 既収集（2026-08-19_003） |
+| dev.to/galian/claude-code-workflow-best-practices | 既収集（2026-06-21_002） |
+| coinedition.com/llm-trading-in-2026-can-ai-agents-actually-outperform-humans/ | 既収集（複数） |
+| pinggy.io/blog/best_ai_trading_agents/ | 既収集（複数） |
+| bitsgap.com/blog/ai-trading-agents-vs-trading-bots-in-2026 | 既収集（2026-09-01_007） |
+| blog.modelcontextprotocol.io/posts/2026-07-28/ | 既収集（2026-08-19_005） |
+| aaif.io/blog/mcp-2026-07-28 | 既収集（2026-08-25_012） |
+| local-ai-zone.github.io/blog/September_2026_AI_Model_Updates.html | 既収集（2026-09-11_3878） |
+| aipicks.jp/mag/ai-securities-fx-trading-2026 | 既収集（2026-08-09_3592） |
+| cubbbix.com/blog/ai-regulation-september-2026-global-update | 既収集（2026-09-05_3831） |
+| llmreference.com/changelog/2026-09 | 既収集（2026-09-15_007） |
