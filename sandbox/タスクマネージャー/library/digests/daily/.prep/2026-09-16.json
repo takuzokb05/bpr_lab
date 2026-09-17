@@ -1,0 +1,123 @@
+{
+  "date": "2026-09-16",
+  "generated_at": "2026-09-17T23:15:37.726551Z",
+  "article_count": 8,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-09-16_3924_WEB_ClaudeCode-Hooks-Guide-2026-Uravation-JA.md",
+      "title": "Claude Code Hooksガイド2026 - 自動化設定完全版（Uravation）",
+      "url": "https://uravation.com/media/claude-code-hooks-guide-2026/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "2026年最新版のClaude Code Hooksガイド（株式会社Uravation）。PreToolUse/PostToolUseなどの12種類以上のフックイベントを使ってコード品質ゲート・セキュリティチェック・自動フォーマットを設定する方法を詳解。フックはCLAUDE.mdやSkillsと異なり「絶対に実行される」保証があり、CI的なガードレールとして機能する。settings.jsonへの書き方・シェルスクリプト連携・環境変数受け渡しまで実践的な設定手順を網羅。Claude Code 2026年版の新フックイベント（SessionStart/SessionEnd等）にも対応。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-09-16_3925_WEB_ClaudeCode-Plugin-Development-Hooks-MCP-Uravation-JA.md",
+      "title": "Claude Code Plugin開発ガイド2026 - Hooks/MCP統合（Uravation）",
+      "url": "https://uravation.com/media/claude-code-plugin-development-hooks-mcp-integration-2026/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "2026年のClaude Code Plugin機能の開発手法をまとめた実践ガイド（株式会社Uravation）。Pluginは Hooks/Slash Command/MCP Server/Agentを1ディレクトリにバンドルし、`claude /plugin install github:org/plugin`の1行でチーム全員に展開できる仕組み。JSON形式のplugin.jsonによる設定・パッケージ管理・権限スコープ設定を解説。MCP Serverとの統合パターン（内部ツール→MCPサーバー化→Pluginに同梱）も紹介。チーム規模での展開・バージョン管理・プラグインマーケットプレース登録の手順まで含む。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-09-16_3926_WEB_ClaudeCode-Complete-Setup-2026-Hooks-Skills-MCP-Qiita-JA.md",
+      "title": "Claude Code完全設定ガイド2026 - Hooks/Skills/MCP/権限 本番運用（Qiita/emi_ndk）",
+      "url": "https://qiita.com/emi_ndk/items/56b2fc8bf4e7ed5ba7f3",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "Qiitaに掲載されたClaude Code本番運用向けの包括的設定ガイド（著者: emi_ndk）。主な内容：①Hooks全設定（PreToolUse/PostToolUse/PreCompact等）でコード品質・セキュリティチェックを自動化②Skills 3層構造（プロジェクト/ユーザー/システム）の使い分け③MCPサーバー権限スコープ設計④settings.jsonの企業向け管理パターン⑤claude /ultraplanとリモートセッションの運用。「Hooks/Skills/MCP/権限を全部入りで本番運用する」がコンセプトで、各機能の判断基準（いつSkillsでいつMCPか）を明確化。実際の設定ファイルサンプル多数掲載。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-09-16_3927_WEB_ClaudeSkills-vs-MCP-3DecisionAxes-Qiita-Ngen-JA.md",
+      "title": "Claude Skills vs MCP 使い分け3つの判断軸（Qiita/Ngen）",
+      "url": "https://qiita.com/Ngen/items/30c129861893e6b1a672",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "Qiitaに掲載されたClaude SkillsとMCPの使い分けに関する実践的分析記事（著者: Ngen）。1ヶ月間の実務使用から導き出した3つの判断軸：①「Claude内に置く手順書か/外の世界と繋ぐパイプか」（Skills=内部知識・手順 vs MCP=外部システム接続）②「実行保証が必要か」（保証必要→Hooks、任意→Skills/MCP）③「外部API/DBアクセスが必要か」（必要→MCP、不要→Skills）。具体的な判断フローチャートと実装例（Slackに投稿したいケース→MCP、コードレビュー手順→Skills）を掲載。Skills vs MCP vs Hooks の三者間の関係も整理されており、設計判断の指針として有用。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-09-16_3928_WEB_ClaudeCode-Hooks-Catalog-2026-CopyPaste-Note-JA.md",
+      "title": "Claude Code Hooksカタログ2026 - コピペで即効果（note/ai_dev_notes）",
+      "url": "https://note.com/ai_dev_notes/n/nfe79dfbb8eeb",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "AI実務での副業時給2倍を達成した実践者によるClaude Code Hooksカタログ（note掲載）。コピペで即使えるHooksパターンをシーン別に整理。主な収録パターン：①コミット前の自動lint実行（PostToolUse: Bash）②危険コマンド検出ブロック（PreToolUse: Bash、rm -rf等を正規表現で検知）③テスト失敗時の自動リトライ（PostToolUse）④ファイル保存後の自動フォーマット（PostToolUse: Write）⑤セッション終了時のtodo.md自動更新（SessionEnd）⑥長時間処理のデスクトップ通知（PostToolUse）。各パターンにsettings.json記載例と実際の効果（所要時間・エラー削減率）を付記。2026年版の新フックイベントにも対応。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-09-16_3929_WEB_ClaudeCode-Skills-Hooks-MCP-PracticalRecipe-Romptn-JA.md",
+      "title": "Claude Code Skills・Hooks・MCP 使い分け業務自動化実践レシピ（romptn Magazine）",
+      "url": "https://romptn.com/article/105358",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "romptn Magazineに掲載されたClaude Code 3機能（Skills/Hooks/MCP）の業務シーン別使い分けガイド。使い分けの基本原則：「Skillsは知識・手順の再利用」「Hooksは自動実行の保証」「MCPは外部システム連携」。具体的なレシピ例：①コードレビュースキル（Skills）→ /review-pr コマンドで標準化②コミット前の品質チェック（Hooks）→ PreToolUse: GitでLint自動実行③Slack通知（MCP）→ 長時間タスク完了後に自動投稿。3機能を組み合わせた業務自動化フロー（朝会議録→Skills整形→MCP投稿→Hooks確認）も紹介。初心者向けに「まずHooksから始める」学習順序も提案。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-09-16_3930_WEB_ClaudeCode-NonEngineer-CompleteGuide-2026-Uravation-JA.md",
+      "title": "Claude Code 非エンジニア完全ガイド2026 - 業務活用プロンプト集（Uravation）",
+      "url": "https://uravation.com/media/claude-code-non-engineer-complete-guide-2026/",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "非エンジニア向けClaude Code活用の包括ガイド（株式会社Uravation 2026年版）。ターミナル不要のClaude Cowork（ブラウザ版）を活用し日本語指示のみで業務自動化を実現。主な定量成果：経理業務1人あたり月20〜40時間削減、営業チーム10名の週次報告書作成が8時間→45分（3ヶ月実測）。業務別プロンプト集：①経理・仕訳確認②法務・契約書チェック③営業・提案書作成④人事・評価シート⑤マーケ・SNS投稿。非エンジニアが失敗するパターン（「コードを書こうとする」）と正解（「日本語で依頼する」だけ）の対比も明示。ブラウザ版・デスクトップ版の使い分け、機密データ管理の注意点も含む。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-09-16_3931_WEB_ClaudeCode-NonEngineer-UseCases-Marketing-Sales-StartLink-JA.md",
+      "title": "非エンジニアのClaude Code活用事例 - マーケ・営業・経理の業務自動化（StartLink）",
+      "url": "https://start-link.jp/hubspot-ai/ai/claude-code-practice/claude-code-non-engineer-use-cases",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "StartLinkによるClaude Code非エンジニア活用の実例まとめ。HubSpotとの連携事例を含む実務ベースの事例集。主なシーン：①マーケティング（競合分析レポート自動生成・SNSコンテンツ量産）②営業（提案書カスタマイズ・議事録→タスク変換）③経理（仕訳整合チェック・月次レポート作成）。Claude Coworkのファイルアップロード機能でExcel・PDF・CSVを直接処理する手順も紹介。「プロンプトエンジニアリング不要、業務知識をそのまま指示する」アプローチを推奨。各事例に実際のプロンプト例・期待出力・所要時間を付記。社内展開時のClaude Teams設定・権限管理も含む。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    }
+  ],
+  "fact_checks": [],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-09-15": 7,
+      "2026-09-14": 13,
+      "2026-09-13": 10,
+      "2026-09-12": 13,
+      "2026-09-11": 10,
+      "2026-09-10": 7,
+      "2026-09-09": 6
+    },
+    "recurring_themes": [
+      "claude",
+      "agent",
+      "mcp",
+      "regulation",
+      "llm"
+    ]
+  }
+}
