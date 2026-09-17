@@ -5580,3 +5580,28 @@ Claude Managed Agents（$0.08/時間）は長時間非同期バックグラウ�
 
 **提案内容:**
 カリフォルニア州が9月10日にAIチャットボット向け全米最強の規制を成立。直接関係するのは対消費者向けAI製品だが、規制強化のトレンドとしてFX自動取引や業務AIへの波及可能性を把握しておく。特に「リスクアセスメント義務化」「高リスク用途の先行規制」の方向性はHinshaw法律事務所ガイドが整理。自社サービス化を検討する際の参考資料として保管推奨。
+
+---
+
+## 2026-09-17 収集分
+
+### 1. Claude Fable 5.1 cache reads 75%減 — FX自動取引の長期エージェントコスト試算
+
+**出典:** articles/2026-09-17_3933_WEB_ClaudeFable51-Official-WhatsNew-BreakingChanges-API-Docs.md
+
+**提案内容:**
+Claude Fable 5.1のcache reads価格が$1.00→$0.25/MTok（75%減）。`sandbox/FX自動取引/` でFable 5系モデルを使う場合、同一プロンプトを繰り返すエージェントループでの大幅コスト削減が期待できる。特に長い市場分析プロンプトや戦略文書をキャッシュする設計にすれば効果大。FX自動取引のモデルをclause-fable-5-1に更新する際、tool_choice: any/toolを使っていれば削除が必要（破壊的変更）。移行前にtool_choiceの使用箇所確認を推奨。
+
+### 2. Agentic AI Trading 4層アーキテクチャ — FX自動取引の設計参考
+
+**出典:** articles/2026-09-17_3936_WEB_AgenticAITrading-Complete-Guide-2026-4LayerArchitecture-AllAboutAI.md
+
+**提案内容:**
+AllAboutAIの4層アーキテクチャ（ペルソナ/戦略文書→リサーチスキル→実行モデル→30-120秒ハートビートモニター）は`sandbox/FX自動取引/`の設計に直接応用できる。特にハートビートモニターパターン（サブエージェントが定期的にポジションを確認）はMT5の現在ポジション管理に使える設計。Hyperliquid/Polymarket/Robinhood MCP連携の事例はMT5 MCP化の参考に。現実的経済性（月額$220・目標週$100）のベンチマークとして活用を推奨。
+
+### 3. GitHub HydraFusion — ai-teamsへのマルチモデル最適化応用
+
+**出典:** articles/2026-09-17_3935_WEB_September2026-AIAgent-Tools-Wave-HydraFusion-MagiCrew-Mireye.md
+
+**提案内容:**
+GitHubがClaude Opus 5比で同等結果を36-67%コスト削減で実現するHydraFusion（Cascade/Critique/Singleパターン）をresearch previewリリース。`sandbox/ai-teams/`（AI Council）のマルチエージェント議論フレームワークに類似した「Critiqueパターン（ピアレビューサイクル）」がある。ai-teamsの実装にCascadeパターン（安価なモデルで処理→必要時に上位モデルにエスカレーション）を取り入れることでコスト最適化が可能か検討を推奨。

@@ -1648,3 +1648,63 @@
 | aipicks.jp/mag/ai-securities-fx-trading-2026 | 既収集（2026-08-09_3592） |
 | cubbbix.com/blog/ai-regulation-september-2026-global-update | 既収集（2026-09-05_3831） |
 | llmreference.com/changelog/2026-09 | 既収集（2026-09-15_007） |
+
+## 2026-09-17 収集分（Web: 8件収集 → SIGNAL 8件 claude-code/claude-ecosystem/ai-trading/ai-news | X: 0件（空データ））
+| 1306 | Claude Code Hooks vs Skills vs Subagents: 3つの拡張メカニズムと使い分け（AINexusDaily EN）: 「Hooks=決定を除去/Skills=決定を追加/Subagents=決定を隔離」フレーム・各メカニズムの発火タイミング・オーバーヘッド・落とし穴（Hooksの無限ループ・Skillsの記述肥大化・Subagentsのフォローアップ不可）・最大のミス「always要件をwhen relevantとして実装」 | en | 未読 | #claude-code #hooks #skills #subagents #decision-framework #web-signal | articles/2026-09-17_3932_WEB_ClaudeCode-Hooks-vs-Skills-vs-Subagents-Decision-AINexusDaily.md |
+| 1307 | Claude Fable 5.1 公式Docs: 変更点・破壊的変更・新機能（platform.claude.com EN）: forced tool use廃止・thinking blockモデル固有化・append-only管理必須。新機能: ターン毎effort変更beta・turn-scoped system messages・progress updates beta・cache reads $0.25/MTok（75%減）・C2PA content provenance | en | 未読 | #claude-ecosystem #fable-5-1 #api-update #breaking-changes #cache-pricing #web-signal | articles/2026-09-17_3933_WEB_ClaudeFable51-Official-WhatsNew-BreakingChanges-API-Docs.md |
+| 1308 | MCP 2026 大型アップデート: ステートレス化・エンタープライズ対応（ITDaily EN）: ステートフル→リクエスト中心アーキテクチャ・ラウンドロビンLB対応・Mcp-Method/Nameヘッダールーティング・tools/listキャッシュ・廃止コンポーネント12ヶ月保証・AAIF（Linux Foundation）ガバナンス | en | 未読 | #claude-ecosystem #mcp #stateless #enterprise #spec-2026-07-28 #web-signal | articles/2026-09-17_3934_WEB_MCP-Protocol-2026-StatelessUpdate-Production-Enterprise-ITDaily.md |
+| 1309 | 2026年9月初旬 AIエージェントツール波: HydraFusion・MagiCrew・Mireye他（DutchStartup EN）: GitHub HydraFusion（3パターン並列オーケストレーション・Claude Opus 5比36-67%コスト削減）・Mireye（YC S26・ロケーションインフラMCP・366フィールド）・MagiCrew（Apache 2.0オープンソースマルチエージェント）・Nex・Tabbit AI他 | en | 未読 | #ai-news #agent-tools #github-hydrafusion #mireye #magicrew #september-2026 #web-signal | articles/2026-09-17_3935_WEB_September2026-AIAgent-Tools-Wave-HydraFusion-MagiCrew-Mireye.md |
+| 1310 | Agentic AI Trading 完全ガイド2026（AllAboutAI EN）: 3要件定義・4層アーキテクチャ（ペルソナ文書/リサーチスキル/実行モデル/ハートビートモニター30-120秒）・推奨プラットフォーム（Hyperliquid/Polymarket/Robinhood MCP）・Codex 5.5がClaude Opusより高監視行動で優位・経済性（初期$30-200/月$220/目標週$100〜月$1000） | en | 未読 | #ai-trading #agentic-trading #architecture #hyperliquid #polymarket #web-signal | articles/2026-09-17_3936_WEB_AgenticAITrading-Complete-Guide-2026-4LayerArchitecture-AllAboutAI.md |
+| 1311 | Claude Code Workflow: 出荷できるコードを書く最良実践（DEV.io EN）: Plan Mode→実装フロー・CLAUDE.mdはバージョン管理生きた文書・Skillsは週1回以上のタスクに・Subagentsでコンテキスト汚染防止・Hooksをガードレールに・「インフラとして使う人 vs チャットボットとして使う人」格差が拡大中 | en | 未読 | #claude-code #workflow #plan-mode #skills #hooks #best-practices #web-signal | articles/2026-09-17_3937_WEB_ClaudeCode-Workflow-BestPractices-ShipCode-DEVcommunity.md |
+| 1312 | CLAUDE.md・Skills・Subagents・Hooks 使い分けフレームワーク（BuildThisNow EN）: 4プリミティブのトークンコスト・発火タイミング・強制力比較。Hooks（法律）> CLAUDE.md/Skills（指針）> Subagents（ワーカー）の優先順序。Hooksのみモデル外で動作→常に最優先 | en | 未読 | #claude-code #hooks #skills #subagents #claude-md #decision-framework #web-signal | articles/2026-09-17_3938_WEB_ClaudeCode-CLAUDE-md-Skills-Subagents-Hooks-DecisionFramework-BuildThisNow.md |
+| 1313 | Claude Code Skills 用途別一覧と使い方（UnionAI JA）: Skills=SKILL.md+スクリプト・アセットのフォルダパック。用途別4カテゴリ（コード品質/ドキュメント/開発フロー/プロジェクト固有）・/reviewスキルの実装例・gstack（113K stars）紹介・チーム品質基準の統一・10時間→30分の効率化実例 | ja | 未読 | #claude-code #skills #team-sharing #use-cases #japanese #gstack #web-signal | articles/2026-09-17_3939_WEB_ClaudeCode-Skills-UseCases-Guide-UnionAI-JA.md |
+
+### NOISEとして除外（2026-09-17）
+| 候補 | 理由 |
+|---|---|
+| gradually.ai/en/changelogs/claude-code/ | 既収集（2026-09-11_001） |
+| releasebot.io（各種） | 既収集（複数） |
+| medium.com/data-science-collective/effective-claude-code-workflows | 既収集（2026-05-29, 2026-08-19） |
+| collabnix.com/claude-code-best-practices-10-workflow-tips | 既収集（複数） |
+| smartscope.blog/...claude-code-best-practices-advanced-2026/ | 既収集（2026-07-25, 2026-09-02） |
+| the-ai-corner.com/p/claude-best-practices-power-user-guide | 既収集（近似記事複数） |
+| ayautomate.com（各種） | 既収集（複数） |
+| okhlopkov.com/claude-code-setup-mcp-hooks-skills | 既収集（2026-03-27, 2026-08-14） |
+| blakecrosley.com/guides/claude-code | 既収集（2026-08-02） |
+| totalum.app/blog/claude-code-skills-totalum | 既収集（複数） |
+| jitendrazaa.com/blog/ai/claude-code-complete-guide-2026 | 既収集（2026-08-14） |
+| gilricardo.com/blog/claude-code-hooks-tutorial-2026 | 既収集（2026-08-30） |
+| marktechpost.com/2026/06/14/claude-code-guide-2026-25-features | 既収集（2026-06-17） |
+| boringbot.substack.com/p/claude-code-skills-subagents-hooks | 既収集（2026-06-03） |
+| pub.towardsai.net/claude-code-extensions-explained | 既収集（複数） |
+| ofox.ai/blog/claude-code-hooks-subagents-skills-complete-guide | 既収集（2026-06-17） |
+| blog.modelcontextprotocol.io/posts/2026-07-28/ | 既収集（複数） |
+| blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate/ | 既収集（複数） |
+| blog.cloudflare.com/mcp-v2/ | 既収集（2026-08-16） |
+| pinggy.io/blog/best_ai_trading_agents/ | 既収集（複数） |
+| bitsgap.com/blog/ai-trading-agents-vs-trading-bots | 既収集（複数） |
+| assetwhisper.com/ai-trading-agents | 既収集（2026-07-13） |
+| gptrader.app各種 | 既収集（複数） |
+| dev.to/lightningdev123/best-ai-trading-agents | 既収集（2026-08-10） |
+| blog.pickmytrade.io/build-a-multi-agent-ai-trading-system | 既収集（複数） |
+| allabtai.com/agentic-ai-trading/ | 既収集（2026-09-17_3936 上記にて追加） |
+| llmgateway.io/timeline | 既収集（2026-08-15） |
+| llm-stats.com/ai-news | 既収集（複数） |
+| llmreference.com/changelog/2026-09 | 既収集（2026-09-15_007） |
+| anthropic.com/claude-fable-and-mythos-5-1 | 既収集（2026-09-10_3864） |
+| macrumors.com/2026/09/01/anthropic-claude-fable-5-1/ | 既収集（2026-09-12_3884） |
+| platform.claude.com/docs/en/about-claude/models/introducing-claude-fable-5-and-claude-mythos-5 | 既収集（2026-06-20） |
+| shakudo.io/blog/top-9-ai-agent-frameworks | 既収集（2026-07-12） |
+| aiagentstore.ai/ai-agent-news/this-week（rolling URL） | 既収集（複数） |
+| devblogs.microsoft.com/agent-framework/microsoft-agent-framework-at-build-2026-announce/ | 既収集（複数） |
+| dutchstartup.ai（上記にて追加） | 追加済み（3935） |
+| financialsynapse.com/ai-fx-llm-forcast/ | 既収集（2026-09-11） |
+| aismiley.co.jp/ai_news/claude-skills/ | 既収集（2026-04-08） |
+| jinrai.co.jp/blog/2026/03/26/claude-code-use-cases/ | 既収集（2026-05-14） |
+| elcamy.com/blog/claude-code-skills-best-17 | 既収集（2026-08-06） |
+| uravation.com/media/claude-skills-complete-guide-corporate-team-2026/ | 既収集（2026-07-06） |
+| qiita.com/nogataka/items/ad9995fb1b3db7055740 | 既収集（2026-04-18） |
+| wentz-design.com/post/claude-code-skills-2026-06/ | 既収集（2026-07-08） |
+| genai-ai.co.jp/ai-kanri/blog/cc-skills-guide/ | 既収集（2026-08-04） |
+| fidx.co.jp（国産LLM） | 既収集（複数） |
+| arakiplaw.com/insight/2658/ | 既収集（2026-04-14） |
