@@ -1,0 +1,136 @@
+{
+  "date": "2026-09-17",
+  "generated_at": "2026-09-18T23:15:51.603365Z",
+  "article_count": 8,
+  "user_context": "> このファイルは会話履歴・DIAアセスメント・自己分析から抽出した人物プロファイルです。\n> `/analyze-me` の出力を元に継続的に更新されます（Append-only: 矛盾は上書きせず変化として記録）。\n---\n- **技術は即採用、制度は徹底調査**。新しいツールや技術は「まず触ってみる」が、組織制度や人事に関わる判断は入念にリサーチしてから動く\n- **小さく試して実績で引っ張る**。いきなり大きな提案をせず、小さな成功事例を積み上げてから横展開する（「助走レーン」思考）",
+  "articles": [
+    {
+      "file": "2026-09-17_3932_WEB_ClaudeCode-Hooks-vs-Skills-vs-Subagents-Decision-AINexusDaily.md",
+      "title": "Claude Code Hooks vs Skills vs Subagents: Three Ways to Extend and When Each Backfires",
+      "url": "https://ainexusdaily.vercel.app/article/2026-09-13-claude-code-hooks-vs-skills-vs-subagents-three-ways-to-extend-the-agent-and-when",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "2026年9月13日公開。Claude Codeの3大拡張メカニズムを判断軸付きで徹底比較した実践記事。\n\n**核心フレーム**: 「Hooks はモデルから決定を取り除く、Skills は決定を追加する、Subagents は決定を隔離する」\n\n**Hooks**（決定論的）: PreToolUse/Stop等のライフサイクルイベントで必ず発火。「必ず起こること」に使用（常にリンターを走らせる、.envファイルへのアクセスをブロックする等）。落とし穴: exit code 2 の誤用で無限ループ。\n\n**Skills**（確率的）: セッション開始時に説明文のみロード（数十トークン）し、関連性をモデルが判断して呼び出し。コードレビューやリリースノート草案等のオプションワークフローに最適。落とし穴: 説明文の肥大化が全ターンを圧迫し誤ルーティングを招く。\n\n**Subagents**（隔離実行）: 独自コンテキストウィンドウを持つ分離実行、最終サマリーのみ返却。コードベース横断検索やログ分析に最適。落とし穴: タスク途中でのフォローアップ質問不可、サマリーで詳細が失われる。約2万トークンのオーバーヘッド。\n\n**最大の信頼性ミス**: 「always（常に）」要件を「when relevant（関連する場合）」として実装すること。両者は実行時に正反対の挙動をする。\n\n拡張メカニズム選択の優先順序: 強制→Hooks、contextual知識→Skills、委譲境界→Subagents、常時稼働プロジェクト指針→CLAUDE.md（短く）。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-09-17_3933_WEB_ClaudeFable51-Official-WhatsNew-BreakingChanges-API-Docs.md",
+      "title": "Claude Fable 5.1 公式ドキュメント: 変更点・破壊的変更・新機能一覧",
+      "url": "https://platform.claude.com/docs/en/models/fable-5-1/whats-new-fable-5-1",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "Claude Fable 5.1（2026-09-01 GA）の一次情報。API開発者向けの移行必須知識。\n\n**モデルID**: claude-fable-5-1 / claude-mythos-5-1（Project Glasswing限定）\n**コンテキスト**: 1Mトークン（デフォルト兼最大）、max output 128kトークン\n\n**破壊的変更3件**:\n1. **forced tool use廃止**: tool_choice: any/tool が400エラー（tool_choice: auto または strict tool useに移行）\n2. **thinking blockのモデル固有化**: Fable 5.1のthinking blockは旧モデルで読み取り不可、会話履歴をまたぐモデル切り替え時に注意\n3. **turn編集でthinking無効化**: 過去ターンを編集するとthinking blockが失効、append-onlyで管理が必須\n\n**新機能5件（いずれもbeta）**:\n1. ターン毎のeffort変更（mid-conversation-output-config-2026-07-01 betaヘッダー）\n2. turn-scoped system messages（clear_at: next_user_message、キャッシュを温めたまま一時的指示追加）\n3. ツール呼び出し間のprogress updates（thinking.display: \"updates\"でユーザー向けステータス行を取得）\n4. cache reads 75%値下げ → $0.25/MTok（Fable 5の$1.00/MTokから）\n5. content provenance（statistical text watermark + C2PA署名付きメディア）\n\n**Fable 5からの挙動変化**（コード変更なしで発生）:\n- 並列ツール呼び出し減少（1ターン1ツールになりやすい）\n- progress update数減少（高effort時）\n- 低effortで検索ツールを呼ばずメモリ回答が増加\n- 散文が密になる（長文・段落少）\n- チャットでの書式設定（太字・ヘッダー・リスト）が減少\n\n**価格**: 入力$10/出力$50/MTok（Fable 5と同額）、cache reads $0.25/MTok（75%減）\n**利用可能**: Claude API（claude-fable-5-1）、Amazon Bedrock、Google Cloud、Microsoft Foundry\n\n**移行手順**: (1)model IDをclause-fable-5-1に更新 (2)forced tool useを削除 (3)thinking blockをappend-onlyで管理 (4)effortを再調整 (5)eval再実施",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "【確認済み】cache reads $0.25/MTok（75%減）・入力$10/出力$50/MTok・forced tool use廃止→400エラー はいずれも正確。1点修正: 記事の「Fable 5.1のthinking blockは旧モデルで読み取り不可」は逆方向の記述ミス→正確には「Fable 5.1は旧モデルのthinking blockを読めるが、旧モデルはFable 5.1のthinking blockを読めない」。出典: anthropic.com公式・VentureBeat・llm-stats.com"
+    },
+    {
+      "file": "2026-09-17_3934_WEB_MCP-Protocol-2026-StatelessUpdate-Production-Enterprise-ITDaily.md",
+      "title": "MCP protocol receives major update: more secure and production-ready",
+      "url": "https://itdaily.com/news/software/mcp-2026-update-specs/",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-ecosystem",
+      "summary": "2026-07-28仕様のMCPプロトコル大型アップデートを解説する記事（ITdaily.com）。\n\n**最大の変更: ステートレス・リクエスト中心アーキテクチャ**\n- ステートフル（セッション維持必須）→ ステートレス（各リクエストが情報を自己完結）\n- 結果: 普通のラウンドロビン負荷分散器の後段でサーバーが動作可能に\n- Mcp-Method / Mcp-Name HTTPヘッダーでゲートウェイがルーティング・認可を直接実行可能\n- tools/listレスポンスをクライアントがキャッシュできるようになった\n\n**実際の影響**:\n- 以前は「スティッキーセッション+共有セッションストア+ディープパケットインスペクション」が必要だったサーバーが、シンプルなロードバランサーと Mcp-Method ヘッダーだけで運用可能に\n- エンタープライズ規模でのMCP本格導入が現実的に\n\n**その他の改善**:\n- セキュリティ強化（厳格な認可制御+ローカル結果キャッシュ）\n- 廃止コンポーネントは最低12ヶ月動作保証（開発者の移行猶予）\n- TypeScript・Python・Go・C# SDKも同時更新（v2）\n\n**ガバナンス**: Agentic AI Foundation（Linux Foundation傘下）がAnthropicやOpenAI・Google・Microsoft・AWSと共に管理。2024年のオープンソース化から18ヶ月の実運用フィードバックを反映した安定版。月間SDKダウンロード9,700万回超・GitHub star 86,000超。",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "【確認済み】MCP 2026-07-28仕様のステートレス化・Agentic AI Foundation（Linux Foundation傘下）・12ヶ月廃止猶予保証はいずれも正確。月間SDKダウンロード数「9,700万回超」はPython+TypeScript SDKで約9,700万/月と一致。GitHub stars 86,000超は今回のWebSearch結果では数値確認できず（unverified）。出典: AAIF公式・VentureBeat・Google Developers Blog"
+    },
+    {
+      "file": "2026-09-17_3935_WEB_September2026-AIAgent-Tools-Wave-HydraFusion-MagiCrew-Mireye.md",
+      "title": "2026年9月初旬 新AIエージェントツール群: HydraFusion・MagiCrew・Mireye他",
+      "url": "https://dutchstartup.ai/en/news/a-wave-of-new-ai-agent-tools-is-emerging-around-early-september-2026",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-news",
+      "summary": "2026年9月3〜4日に集中リリースされた新AIエージェントインフラツール群の速報（DutchStartup.ai）。\n\n**GitHub HydraFusion**（2026-09-04 research preview）\n- GitHub公式のマルチモデルオーケストレーション機能\n- 3パターン: Single（1モデル）、Cascade（低コストモデル→必要時エスカレーション）、Critique（ピアレビューサイクル）\n- Claude Opus 5と同等以上の結果をトークンコスト36〜67%削減で実現\n\n**Mireye**（YC Summer 2026）\n- AIエージェントの物理的場所決定向けロケーションインフラ\n- 米国内の366フィールドをAPI+MCPサーバーで提供\n- 保険リスク評価・不動産テック・ロボティクス向け\n\n**MagiCrew**（Apache 2.0オープンソース）\n- 特化型AIエージェントを組み合わせてリサーチ・分析・報告・プレゼン\n- Product Hunt 3日: 6つのマーケットプレイスエージェント\n\n**その他**\n- **Nex**: Claude連携のGTMワークフロー向けコラボレーション層（PH Winner）\n- **Tabbit AI**: GPT-5.x・Claude・Gemini・DeepSeek対応クロスプラットフォームブラウザ\n- **Agent Looker**: 有害エージェント行動のセキュリティスキャン\n- **ARBR**: ガバナンス機能付きマルチプロバイダーゲートウェイ\n- **Grove**: 開発者エージェント共有ターミナル環境\n\n**注目点**: HydraFusionはGitHub公式のマルチモデル最適化機能として、AI開発者の日常ツールに直接組み込まれる可能性が高い。MCP対応ツール（Mireye等）が急増している。",
+      "body_excerpt": "",
+      "fact_checked": true,
+      "fact_check_note": "【確認済み】HydraFusion は2026-09-04 research preview として正確にリリース。トークンコスト削減は「36〜67%」と記事に記載されているが、実際のベンチマーク値はTerminalBench 2.1で67%・CheckpointBenchで65%（vs Claude Opus 5）。36%という数値の出典は不明だが上限67%は正確。「Claude Opus 5と同等以上の結果」→TerminalBenchで4.9ポイント上昇と一致。出典: GitHub Blog公式・VentureBeat・GIGAZINE"
+    },
+    {
+      "file": "2026-09-17_3936_WEB_AgenticAITrading-Complete-Guide-2026-4LayerArchitecture-AllAboutAI.md",
+      "title": "Agentic AI Trading: The Complete 2026 Guide — Architecture, Platforms, Economics",
+      "url": "https://www.allabtai.com/agentic-ai-trading/",
+      "source": "web",
+      "lang": "en",
+      "theme": "ai-trading",
+      "summary": "AllAboutAI による2026年版エージェント型AI取引の包括ガイド。\n\n**定義**（2026年版の3要件）:\n1. 自律的なプラットフォームAPI経由の意思決定（人間の承認不要）\n2. 意味ある時間軸での持続的稼働（分単位以上）\n3. 人間の再プロンプトなしのリアルタイム市場適応\n\n**2026年に可能になった背景**:\n- 推論モデルが複数時間の長時間タスクでドリフトしなくなった\n- 長時間稼働プリミティブ（Codexの/goalコマンド等）の成熟\n- サブエージェントの低コスト化（監視ループに最小トークンコスト）\n- Hyperliquid・Polymarket・RobinhoodのAPI/MCPアクセス拡大\n\n**4層アーキテクチャ**:\n1. **ペルソナ/戦略文書**: リスク許容度・決定ルールのエンコード\n2. **リサーチスキル**: 銘柄探索用並列サブエージェント（候補評価）\n3. **実行モデル**: 取引ロジック・ポジション管理\n4. **ハートビートモニター**: 30〜120秒毎の繰り返し決定ループ\n\n**推奨プラットフォーム**:\n- Hyperliquid: 永久デリバ（高レバ）\n- Polymarket: 予測市場（5分サイクルBTC）\n- Robinhood: MCP統合で規制対応US株\n\n**モデル評価**: Codex 5.5（高推論）がClaude Opusより高監視行動・高速ポジション回転で優位（ヘッドトゥヘッドテスト）\n\n**現実的経済性**:\n- 初期資本: $30〜200\n- 月額サブスク: $220\n- 趣味: 週$100、本格稼働: 月$1,000\n\n**主要リスク**: ループの途中自己終了、古いデータ誤解釈、過取引、プラットフォーム設定ミス（HyperliquidのHIP-3 DEXルーティング等がサイレントに破損）。分散がショートタイムフレームを支配するため数百回の取引でのみ戦略を検証可能。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-09-17_3937_WEB_ClaudeCode-Workflow-BestPractices-ShipCode-DEVcommunity.md",
+      "title": "Claude Code Workflow: Best Practices That Ship Code",
+      "url": "https://dev.to/galian/claude-code-workflow-best-practices-that-ship-code-na",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "DEV.io掲載のClaude Code実用ワークフロー記事。「実際に出荷できるコード」を書くための習慣論。\n\n**中核ワークフロー（7つの習慣）**:\n1. **精簡なCLAUDE.md**: バージョン管理された生きた文書、知識はリポジトリと共に移動。肥大化・陳腐化は何もないより悪い\n2. **Plan Mode優先**: Shift+Tab×2でPlan Mode、そこで複数決定を集約（各決定が約100%の確率でランディング）、実装前に仕様をレビュー\n3. **ノイジーな調査にはSubagents**: コンテキスト汚染防止\n4. **gitワークツリーで並列エージェント**: 複数ブランチを独立して並列実行\n5. **Hooksをガードレールとして**: lint・安全チェック・副作用の自動化\n6. **繰り返しタスクはSkillに**: 週1回以上のタスク、一貫した出力要件があるもの（コードレビュー・コンテンツフォーマット・リサーチ統合等）\n7. **検証ループ**: 幻覚を殺すための反復確認\n\n**「インフラとして使う人 vs チャットボットとして使う人」格差**:\n- 自動ロードされるファイル・必要時に発火するSkills・眠っている間に動くワークフローを構築する人が加速\n- 毎回プロンプトを書く人との差が月を追うごとに拡大\n- \"The people pulling ahead are building systems\"（先行する人はシステムを構築している）\n\n**拡張プリミティブの使い分け要約**:\n- 強制すべきルール → Hooks/権限\n- contextual知識 → Skills\n- 委譲境界 → Subagents\n- 常時稼働プロジェクト指針 → CLAUDE.md（短く）",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-09-17_3938_WEB_ClaudeCode-CLAUDE-md-Skills-Subagents-Hooks-DecisionFramework-BuildThisNow.md",
+      "title": "CLAUDE.md, Skills, Subagents, Hooks: When to Use Which",
+      "url": "https://www.buildthisnow.com/blog/tools/claude-code-skills-vs-subagents-vs-hooks",
+      "source": "web",
+      "lang": "en",
+      "theme": "claude-code",
+      "summary": "BuildThisNow.com によるClaude Code 4プリミティブの役割分担ガイド。トークンコスト・発火タイミング・強制力を軸にした明確な判断フレームワーク。\n\n**4プリミティブの定義と用途**:\n\n**CLAUDE.md** — 「Claudeが常に知っていること」\n- 毎セッションターンにロードされる\n- リポジトリレイアウト・命名規則・ハード制約等の普遍的知識\n- 肥大化はすべてのターンのコストを増加させる → 短く最新に保つ\n\n**Skills** — 「オンデマンドのプレイブック」\n- 初期オーバーヘッド: 約100トークン（名前と説明のみ）\n- モデルがタスクに合わせて関連Skillを呼び出す（確率的）\n- ステップバイステップの手順をモデルが選択的に実行\n\n**Hooks** — 「Claudeが制御できない強制ルール」\n- ライフサイクルイベントで確定的に発火（モデルの外部で実行）\n- モデルはHooksを無効化・迂回できない\n- 安全チェック・lint・監査等の「例外なし要件」に使用\n\n**Subagents** — 「隔離コンテキストの並列ワーカー」\n- 生成オーバーヘッド: 約20,000トークン\n- 独立したコンテキストウィンドウを持つ分離実行\n- 並列実行・制限付きツールセット・コンテキスト分離が必要な場合のみ使用\n\n**優先順序**: Hooks（法律=強制）> CLAUDE.md/Skills（指針=勧告）> Subagents（スコープワーカー）\n\nHooks は優先度最上位（モデル外で動作）。競合する場合、Hooks が常に勝つ。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    },
+    {
+      "file": "2026-09-17_3939_WEB_ClaudeCode-Skills-UseCases-Guide-UnionAI-JA.md",
+      "title": "Claude Code skillsとは？用途別一覧と使い方も解説",
+      "url": "https://www.unionai.co.jp/blog/claude-code-skills",
+      "source": "web",
+      "lang": "ja",
+      "theme": "claude-code",
+      "summary": "株式会社UnionAIによるClaude Code Skills解説記事（日本語）。概念説明から実務活用分類まで。\n\n**Skillsの基本構造**: SKILL.md + 任意のスクリプト・アセットから構成されるフォルダベースの指示パック。`/skill-name` でClaude Codeが専門家として振る舞う。\n\n**用途別カテゴリ**:\n- **コード品質**: コードレビュー（PR差分+ガイドライン参照）、テスト生成（カバレッジ基準適用）\n- **ドキュメント**: PR説明自動生成、API仕様生成（OpenAPI準拠）\n- **開発フロー**: デプロイ手順実行、リリースノート作成\n- **プロジェクト固有**: ドメイン知識（業務用語辞書）、チーム規約適用\n\n**実装例**: `/review`スキルがリポジトリのコーディングガイドラインを参照しながら自動チェックリストを生成。10時間かかっていたタスクを30分に短縮できると報告。\n\n**コミュニティリソース**: gstack（Garry Tan作、113K GitHub stars）が23スキル+8パワーツール+4バイナリを提供する代表的公開スキルパック。\n\n**Skillsのメリット**: バージョン管理可能・チーム共有可能・特定タスクに集中した小さな指示で高精度。チーム全員が同じ品質基準でClaude Codeを使える。",
+      "body_excerpt": "",
+      "fact_checked": false,
+      "fact_check_note": ""
+    }
+  ],
+  "fact_checks": [
+    {
+      "file": "2026-09-17_3933_WEB_ClaudeFable51-Official-WhatsNew-BreakingChanges-API-Docs.md",
+      "result": "【確認済み】cache reads $0.25/MTok（75%減）・入力$10/出力$50/MTok・forced tool use廃止→400エラー はいずれも正確。1点修正: 記事の「Fable 5.1のthinking blockは旧モデルで読み取り不可」は逆方向の記述ミス→正確には「Fable 5.1は旧モデルのthinking blockを読めるが、旧モデルはFable 5.1のthinking blockを読めない」。出典: anthropic.com公式・VentureBeat・llm-stats.com"
+    },
+    {
+      "file": "2026-09-17_3935_WEB_September2026-AIAgent-Tools-Wave-HydraFusion-MagiCrew-Mireye.md",
+      "result": "【確認済み】HydraFusion は2026-09-04 research preview として正確にリリース。トークンコスト削減は「36〜67%」と記事に記載されているが、実際のベンチマーク値はTerminalBench 2.1で67%・CheckpointBenchで65%（vs Claude Opus 5）。36%という数値の出典は不明だが上限67%は正確。「Claude Opus 5と同等以上の結果」→TerminalBenchで4.9ポイント上昇と一致。出典: GitHub Blog公式・VentureBeat・GIGAZINE"
+    },
+    {
+      "file": "2026-09-17_3934_WEB_MCP-Protocol-2026-StatelessUpdate-Production-Enterprise-ITDaily.md",
+      "result": "【確認済み】MCP 2026-07-28仕様のステートレス化・Agentic AI Foundation（Linux Foundation傘下）・12ヶ月廃止猶予保証はいずれも正確。月間SDKダウンロード数「9,700万回超」はPython+TypeScript SDKで約9,700万/月と一致。GitHub stars 86,000超は今回のWebSearch結果では数値確認できず（unverified）。出典: AAIF公式・VentureBeat・Google Developers Blog"
+    }
+  ],
+  "trend_context": {
+    "past_7_days_counts": {
+      "2026-09-16": 8,
+      "2026-09-15": 7,
+      "2026-09-14": 13,
+      "2026-09-13": 10,
+      "2026-09-12": 13,
+      "2026-09-11": 10,
+      "2026-09-10": 7
+    },
+    "recurring_themes": [
+      "claude",
+      "mcp",
+      "agent",
+      "regulation",
+      "llm"
+    ]
+  }
+}
