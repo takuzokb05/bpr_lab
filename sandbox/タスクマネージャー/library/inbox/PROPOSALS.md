@@ -5605,3 +5605,35 @@ AllAboutAIの4層アーキテクチャ（ペルソナ/戦略文書→リサー�
 
 **提案内容:**
 GitHubがClaude Opus 5比で同等結果を36-67%コスト削減で実現するHydraFusion（Cascade/Critique/Singleパターン）をresearch previewリリース。`sandbox/ai-teams/`（AI Council）のマルチエージェント議論フレームワークに類似した「Critiqueパターン（ピアレビューサイクル）」がある。ai-teamsの実装にCascadeパターン（安価なモデルで処理→必要時に上位モデルにエスカレーション）を取り入れることでコスト最適化が可能か検討を推奨。
+
+---
+
+## 2026-09-18 収集分
+
+### 1. Claude Code Projects パラレルベータ — 日次収集ルーチンへの活用検討
+
+**出典:** articles/2026-09-18_3940_WEB_ClaudeCode-Projects-Parallel-Beta-ParallelThreads-CloudSessions.md
+
+**提案内容:**
+Claude Code Projectsの新しいパラレルスレッド機能（9/17ベータ）は、日次収集ルーチンの並列化に応用できる可能性がある。現在はScheduledTask→単一セッションで全Step（収集→キュレーション→コミット）を直列実行しているが、将来的にProjectsで「WebSearch収集エージェント×4ドメイン」を並列スレッドで実行→「キュレーション」コーディネーターが統合する設計が可能。1日200スレッド制限・各スレッドがUsage消費することに注意。まずはPro/Maxでウェイトリストに参加確認を推奨。
+
+### 2. Anthropic SDK BetaSkill→BetaContainerSkill破壊的変更 — SDK利用箇所の確認
+
+**出典:** articles/2026-09-18_3941_WEB_AnthropicAPI-September2026-AdminAPI-GA-SDKUpdates-SonnetPricing.md
+
+**提案内容:**
+SDKのBetaSkillがBetaContainerSkillにリネームされた（September 2026）。`sandbox/FX自動取引/` や `sandbox/ai-teams/` でAnthropicのPython/TS SDKをBeta Skillsとともに使用している箇所がある場合、SDK更新時に破壊的変更となる。事前に`grep -r "BetaSkill"` で影響箇所を確認することを推奨。
+
+### 3. Claude Code Plugins化 — curate/digest/drop-pickupスキルのパッケージ配布
+
+**出典:** articles/2026-09-18_3945_WEB_ClaudeCode-Plugins-Complete-Guide-Marketplace-InternalDist-Uravation-JA.md
+
+**提案内容:**
+2026年9月にPlugin機能が正式化。`sandbox/タスクマネージャー/.claude/skills/` 下のcurate/digest/drop-pickup/research-ccスキルをPluginとしてパッケージ化することで、バージョン管理・配布・Plugin evalによる品質保証が可能になる。現状はローカルSkillsとして機能しているが、他リポジトリ・別セッションへの持ち運びがPlugin化で容易になる。Plugin evalで収集品質のCI的テストも検討価値あり。
+
+### 4. FX自動取引: LLM=シグナル/EA=執行ハイブリッドの追認 + MT5 GPT-EA参考実装
+
+**出典:** articles/2026-09-18_3942_WEB_AITrading-Agents-vs-Bots-2026-HybridApproach-Risks-Bitsgap.md, articles/2026-09-18_3943_WEB_ChatGPT-FX-EA-AutoTrade-MT5-GPT-Integration-NoteJA.md
+
+**提案内容:**
+Bitsgapの分析（LLM=調査フィルタリング/ルールベース=執行）と note.com の GPT-EA実装（LLM→MQL5→MT5の3層）はいずれも`sandbox/FX自動取引/`の設計方針と一致。特に後者はMT5+ChatGPT APIを直接繋ぐMQL5テンプレートの実装例として参考価値が高い。現在のFX自動取引でLLMシグナル生成部分を実装する際の参照として推奨。TradingAgentsの30日7%/22%ドローダウンはFX設計での現実的ベンチマーク。

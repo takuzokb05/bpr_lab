@@ -1708,3 +1708,26 @@
 | genai-ai.co.jp/ai-kanri/blog/cc-skills-guide/ | 既収集（2026-08-04） |
 | fidx.co.jp（国産LLM） | 既収集（複数） |
 | arakiplaw.com/insight/2658/ | 既収集（2026-04-14） |
+
+## 2026-09-18 収集分（Web: 8件収集 → SIGNAL 8件 claude-code/claude-ecosystem/ai-trading/ai-news | X: 0件（空データ））
+| 1314 | Claude Code Projects 大幅リニューアルベータ: パラレルクラウドセッション・共有メモリ（ITechPost/MarkTechPost EN）: コーディネーターが目標をスレッドに分割・各スレッドがフルCC クラウドセッション・ラップトップ閉じても継続実行・coordinator/workerでモデル独立設定・共有メモリ＋プロジェクトライブラリ・1日200スレッド上限・Pro/Max優先ウェイトリストあり | en | 未読 | #claude-code #projects #parallel #cloud-sessions #multi-agent #web-signal | articles/2026-09-18_3940_WEB_ClaudeCode-Projects-Parallel-Beta-ParallelThreads-CloudSessions.md |
+| 1315 | Anthropic Developer Platform September 2026: Admin API GA・code_execution REPL・SDK更新・Sonnet価格確定（Releasebot EN）: Admin API GA（Enterprise org管理）・anthropic-workspace-idヘッダー追加・全言語SDKがcode_execution_20260120（REPL永続化）対応・BetaSkill→BetaContainerSkillリネーム・Sonnet 5価格$2/$10/MTok恒久確定（値上げ撤回）・Fable 5.1キャッシュリード$0.25/MTok | en | 未読 | #claude-ecosystem #api-update #sdk #admin-api #pricing #code-execution #web-signal | articles/2026-09-18_3941_WEB_AnthropicAPI-September2026-AdminAPI-GA-SDKUpdates-SonnetPricing.md |
+| 1316 | AI Trading Agents vs Bots 2026: スマートが安全とは限らない（Bitsgap EN）: エージェントは戦略をその場で変更可能だが再現性低い・TradingAgents実測30日7%（S&P500比4.5%）ただし22%ドローダウン・バックテストと実運用の乖離はコスト/スリッページ/レジームチェンジ・推奨: AI=調査フィルタリング担当・ルールベース=執行担当のハイブリッド | en | 未読 | #ai-trading #llm-trading #agentic-trading #risk #hybrid-approach #web-signal | articles/2026-09-18_3942_WEB_AITrading-Agents-vs-Bots-2026-HybridApproach-Risks-Bitsgap.md |
+| 1317 | ChatGPT（生成AI）売買判断連携FX自動売買EA開発【MT5実装例】（Note JA）: GPT-EAテンプレート2026年版・LLM→MQL5→MT5の3層アーキテクチャ・AI=シグナル生成/EA=執行のハイブリッド設計・再現性高いテンプレートあり | ja | 未読 | #ai-trading #fx-ea #mt5 #chatgpt #mql5 #japanese #web-signal | articles/2026-09-18_3943_WEB_ChatGPT-FX-EA-AutoTrade-MT5-GPT-Integration-NoteJA.md |
+| 1318 | Claude Code アップデート完全ガイド【2026年9月】Cowork拡大・Plugin Eval・managed MCP（Uravation JA）: v2.1.261 Opus5/Fable5.1/Sonnet5対応・CoworkがWeb/モバイル版に拡大・Plugin evalでCI的テスト・managed MCP本番運用・ヘッドレスパーミッション制御・GitLab MR認識 | ja | 未読 | #claude-code #cowork #plugin-eval #managed-mcp #japanese #web-signal | articles/2026-09-18_3944_WEB_ClaudeCode-UpdateGuide-September2026-Cowork-PluginEval-Uravation-JA.md |
+| 1319 | Claude Code Plugins完全ガイド【2026年9月正式機能】作成・配布・Marketplace（Uravation JA）: PluginsはSkills/Hooks/MCP設定をパッケージ化して配布可能な正式機能・SKILL.md+hooks.json+メタデータ構造・社内配布（settings.json）vs Marketplace公開・Plugin evalで品質保証・SkillsはローカルのみPluginsはバージョン管理・配布機能あり | ja | 未読 | #claude-code #plugins #marketplace #distribution #plugin-eval #japanese #web-signal | articles/2026-09-18_3945_WEB_ClaudeCode-Plugins-Complete-Guide-Marketplace-InternalDist-Uravation-JA.md |
+| 1320 | 【2026年9月】主要AIニュースまとめ: GPT-6 Astra・Fable 5.1・Fugu Max・DeepSeek V4.1（Snowsystem JA）: 9月33モデルリリース（過去最多水準）・GPT-6 Astraエージェント化（推論速度+30%/PC操作対応）・Fable 5.1/Mythos 5.1（Terminal-Bench-Science 24.7→52.6）・Sakana Fugu Max/Fugu Ultra v2・DeepSeek V4.1 Flash・GLM-5.3-Flash（320B/1M ctx）・ChatGPT Images 2.5（Sketch機能/レイテンシ50%減） | ja | 未読 | #ai-news #model-release #gpt-6 #fable-5-1 #sakana-ai #deepseek #september-2026 #japanese #web-signal | articles/2026-09-18_3946_WEB_JapanAINews-September2026-GPT6Astra-Fable51-FuguMax-DeepSeekV4-Snowsystem-JA.md |
+| 1321 | Salesforce Agentforce 7専門AIエージェント＋CrewAI A2A本番対応（2026年9月）（DutchStartup EN）: Casey/Paige/Carter/Hunter/Marshall/Piper/Fin（7ドメイン専門）・CrewAI A2Aがエンタープライズ本番対応・GitHub HydraFusionマルチモデルオーケストレーションプレビュー・Wavespace「Beyond the Chatbox」可視エージェント推論+人間承認UX | en | 未読 | #ai-news #salesforce-agentforce #crewai #enterprise-ai #multi-agent #september-2026 #web-signal | articles/2026-09-18_3947_WEB_Salesforce-Agentforce-7Agents-CrewAI-A2A-September2026-EnterpriseAI.md |
+
+### NOISEとして除外（2026-09-18）
+| 候補 | 理由 |
+|---|---|
+| releasebot.io（Claude Code分） | 既収集（複数） |
+| llmreference.com/changelog/2026-09 | 既収集（2026-09-15_007） |
+| pinggy.io/blog/best_ai_trading_agents/ | 既収集（複数） |
+| allabtai.com/agentic-ai-trading/ | 既収集（2026-09-17_3936） |
+| gptrader.app/ai-trading/best-ai-trading-agents-2026 | 既収集（複数） |
+| assetwhisper.com/ai-trading-agents-in-2026 | 既収集（複数） |
+| snowsystem.net/ai/ai-news-202609/ | 初出・追加済み（3946） |
+| uravation.com/media/claude-code-update-operation-guide-2026/ | 初出・追加済み（3944） |
+| uravation.com/media/claude-code-plugins-marketplace-complete-guide-2026/ | 初出・追加済み（3945） |

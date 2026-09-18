@@ -1954,3 +1954,11 @@ drop.md: URLなし（テンプレートのみ）
 | aiweekly.co（rolling URL） | 既収集（rolling URL、09-04_001、09-04_002） |
 | aiagentstore.ai/ai-agent-news/this-week（rolling URL） | 既収集（rolling URL、09-04_003、09-05_007） |
 | uravation.com（各種） | 既収集（複数） |
+| itechpost.com/articles/237367 | 追加済み（2026-09-18_3940） |
+| marktechpost.com/2026/09/17/anthropic-launches-claude-code-projects-in-beta | 追加済み（2026-09-18_3940） |
+| releasebot.io/updates/anthropic/claude-developer-platform（Sep 2026分） | 追加済み（2026-09-18_3941） |
+| bitsgap.com/blog/ai-trading-agents-vs-trading-bots-in-2026 | 追加済み（2026-09-18_3942） |
+| note.com/sayama_ocha/n/nb22d3c2cbaa2 | 追加済み（2026-09-18_3943） |
+| uravation.com/media/claude-code-update-operation-guide-2026/ | 追加済み（2026-09-18_3944） |
+| uravation.com/media/claude-code-plugins-marketplace-complete-guide-2026/ | 追加済み（2026-09-18_3945） |
+| snowsystem.net/ai/ai-news-202609/ | 追加済み（2026-09-18_3946） |
